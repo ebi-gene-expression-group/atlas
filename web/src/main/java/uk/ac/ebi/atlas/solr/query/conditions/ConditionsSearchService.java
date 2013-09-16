@@ -53,10 +53,6 @@ public class ConditionsSearchService {
 
     public Collection<IndexedContrast> findContrasts(String queryString) {
 
-        if (StringUtils.isEmpty(queryString)) {
-            return Lists.newArrayList();
-        }
-
         try {
             QueryResponse queryResponse = conditionsSolrServer.query(queryBuilder.buildFullTestSearchQuery(queryString));
             List<ConditionProperty> beans = queryResponse.getBeans(ConditionProperty.class);

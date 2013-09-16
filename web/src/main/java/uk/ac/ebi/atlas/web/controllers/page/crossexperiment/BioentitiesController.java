@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,13 +48,17 @@ public class BioentitiesController {
     @RequestMapping(value = "/query")
     public String showResultPage(@RequestParam (value="condition", required = false) String condition, Model model) {
 
-        model.addAttribute("entityIdentifier", condition);
+        if(StringUtils.isNotBlank(condition)){
 
-        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(condition);
+            model.addAttribute("entityIdentifier", condition);
 
-        model.addAttribute("bioentities", bioentityExpressions);
+            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(condition);
 
-        model.addAttribute("preferences", new DifferentialRequestPreferences());
+            model.addAttribute("bioentities", bioentityExpressions);
+
+            model.addAttribute("preferences", new DifferentialRequestPreferences());
+
+        }
 
         return "bioEntities";
     }
