@@ -57,7 +57,7 @@
                var="differentialBioentityExpression">
         <tr>
             <td class="horizontal-header-cell">
-                ${differentialBioentityExpression.bioentityId}
+                ${differentialBioentityExpression.bioentityName}
             </td>
             <c:if test="${empty entityIdentifier}">
                 <td class="horizontal-header-cell">

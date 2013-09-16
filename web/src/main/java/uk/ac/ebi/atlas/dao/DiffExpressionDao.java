@@ -25,11 +25,13 @@ public class DiffExpressionDao {
     static final String LOG_2_FOLD = "LOG2FOLD";
     static final String TSTAT = "TSTAT";
     static final String IDENTIFIER = "IDENTIFIER";
+    static final String NAME = "NAME";
     static final String ORGANISM = "ORGANISM";
     static final String DESIGNELEMENT = "DESIGNELEMENT";
 
     static final String SELECT_QUERY = new StringBuilder()
             .append("SELECT ").append(IDENTIFIER).append(", ")
+            .append(NAME).append(", ")
             .append(DESIGNELEMENT).append(", ")
             .append(ORGANISM).append(", ")
             .append(EXPERIMENT).append(", ")
@@ -114,7 +116,6 @@ public class DiffExpressionDao {
         }
 
         String[] getValues() {
-//            values.add(String.valueOf(RESULT_SIZE));
             return values.toArray(new String[values.size()]);
         }
 

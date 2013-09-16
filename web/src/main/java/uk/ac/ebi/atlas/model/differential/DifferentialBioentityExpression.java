@@ -22,9 +22,13 @@
 
 package uk.ac.ebi.atlas.model.differential;
 
+import org.apache.commons.lang.StringUtils;
+
 public class DifferentialBioentityExpression {
 
     private String bioentityId;
+
+    private String bioentityName;
 
     private String experimentAccession;
 
@@ -34,9 +38,10 @@ public class DifferentialBioentityExpression {
 
     private String designElement;
 
-    public DifferentialBioentityExpression(String bioentityId, String experimentAccession, DifferentialExpression expression,
+    public DifferentialBioentityExpression(String bioentityId, String bioentityName, String experimentAccession, DifferentialExpression expression,
                                            String species, String designElement) {
         this.bioentityId = bioentityId;
+        this.bioentityName = bioentityName;
         this.experimentAccession = experimentAccession;
         this.expression = expression;
         this.species = species;
@@ -73,5 +78,9 @@ public class DifferentialBioentityExpression {
 
     public String getDesignElement() {
         return designElement;
+    }
+
+    public String getBioentityName() {
+        return StringUtils.isEmpty(bioentityName) ? bioentityId : bioentityName;
     }
 }
