@@ -84,13 +84,13 @@ abstract class TablePage extends GlobalSearchPage {
         return Lists.transform(tableCells, getText);
     }
 
-    protected List<String> getRowValues(WebElement table, int rowIndex) {
-        List<WebElement> tableCells = getRow(table, rowIndex);
+    protected List<String> getRowValues(WebElement table, int oneBasedRowIndex) {
+        List<WebElement> tableCells = getRow(table, oneBasedRowIndex);
         return Lists.transform(tableCells, getText);
     }
 
-    protected List<WebElement> getRow(WebElement table, int rowIndex) {
-        String xPath = String.format(ROW_CELLS_XPATH_TEMPLATE, rowIndex);
+    protected List<WebElement> getRow(WebElement table, int oneBasedRowIndex) {
+        String xPath = String.format(ROW_CELLS_XPATH_TEMPLATE, oneBasedRowIndex);
         return table.findElements(By.xpath(xPath));
     }
 

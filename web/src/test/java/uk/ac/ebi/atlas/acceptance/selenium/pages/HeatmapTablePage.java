@@ -142,6 +142,10 @@ public class HeatmapTablePage extends TablePage {
         return queryFactorValues.subList(getGeneExpressionStartingRowIndex(), queryFactorValues.size());
     }
 
+    public List<String> getHeatmapHeaders(){
+        return getTableHeaders(this.getHeatmapTable());
+    }
+
     public List<String> getSelectedProfiles() {
         return getFirstColumnValues(getHeatmapTable());
     }
@@ -214,9 +218,13 @@ public class HeatmapTablePage extends TablePage {
         return firstTableRow.subList(getGeneExpressionStartingRowIndex(), firstTableRow.size());
     }
 
-    public List<String> getGeneProfile(int zeroBasedRowIndex) {
-        List<String> rowValues = getRowValues(getHeatmapTable(), zeroBasedRowIndex);
+    public List<String> getGeneProfile(int oneBasedRowIndex) {
+        List<String> rowValues = getRowValues(getHeatmapTable(), oneBasedRowIndex);
         return rowValues.subList(getGeneExpressionStartingRowIndex(), rowValues.size());
+    }
+
+    public List<String> getHeatmapRow(int oneBasedRowIndex){
+        return getRowValues(getHeatmapTable(), oneBasedRowIndex);
     }
 
 

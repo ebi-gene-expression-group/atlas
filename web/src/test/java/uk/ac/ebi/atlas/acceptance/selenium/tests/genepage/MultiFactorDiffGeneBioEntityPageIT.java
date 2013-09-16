@@ -56,6 +56,13 @@ public class MultiFactorDiffGeneBioEntityPageIT extends SinglePageSeleniumFixtur
         assertThat(subject.getPValues(), hasItems("8.94 × 10-4", "0.186"));
     }
 
+    @Test
+    public void checkHeatmap() {
+        assertThat(subject.getHeatmapHeaders(), contains("Identifier", "Organism", "Contrast", "Adjusted P-value"));
+        assertThat(subject.getHeatmapRow(1), contains("AT3G11340", "Arabidopsis thaliana", "treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'", ""));
+    }
+
+
     //This will fail with PhantomJS
     @Test
     public void checkContrastSummaryTooltipTableHeader() {
