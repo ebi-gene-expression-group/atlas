@@ -30,12 +30,12 @@
         <constructor-arg value="http://${solr.host}:8983/solr/gxa"/>
     </bean>
 
-    <bean scope="singleton" id="conditionsSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
-        <constructor-arg value="http://${solr.host}:8983/solr/conditions"/>
+    <bean scope="singleton" id="differentialConditionsSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+        <constructor-arg value="http://${solr.host}:8983/solr/differentialConditions"/>
     </bean>
 
-    <bean scope="singleton" id="factorsSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
-        <constructor-arg value="http://${solr.host}:8983/solr/factors"/>
+    <bean scope="singleton" id="baselineConditionsSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+        <constructor-arg value="http://${solr.host}:8983/solr/baselineConditions"/>
     </bean>
 
 </beans>

@@ -34,11 +34,11 @@
         <constructor-arg value="http://lime.ebi.ac.uk:8983/solr/gxa"/>
     </bean>
 
-    <bean scope="singleton" id="conditionsSolrServer" class="uk.ac.ebi.atlas.solr.DummyUpdateSolrServer">
+    <bean scope="singleton" id="differentialConditionsSolrServer" class="uk.ac.ebi.atlas.solr.DummyUpdateSolrServer">
         <constructor-arg value="http://lime.ebi.ac.uk:8983/solr/conditions"/>
     </bean>
 
-    <bean scope="singleton" id="factorsSolrServer" class="uk.ac.ebi.atlas.solr.DummyUpdateSolrServer">
+    <bean scope="singleton" id="baselineConditionsSolrServer" class="uk.ac.ebi.atlas.solr.DummyUpdateSolrServer">
         <constructor-arg value="http://lime.ebi.ac.uk:8983/solr/factors"/>
     </bean>
 </beans>

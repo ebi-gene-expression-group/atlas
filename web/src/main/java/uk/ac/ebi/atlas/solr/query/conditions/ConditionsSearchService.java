@@ -24,8 +24,6 @@ package uk.ac.ebi.atlas.solr.query.conditions;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -41,20 +39,20 @@ import java.util.List;
 @Scope("singleton")
 public class ConditionsSearchService {
 
-    private SolrServer conditionsSolrServer;
+    private SolrServer differentialConditionsSolrServer;
 
     private ConditionsSolrQueryBuilder queryBuilder;
 
     @Inject
-    public ConditionsSearchService(SolrServer conditionsSolrServer, ConditionsSolrQueryBuilder queryBuilder) {
-        this.conditionsSolrServer = conditionsSolrServer;
+    public ConditionsSearchService(SolrServer differentialConditionsSolrServer, ConditionsSolrQueryBuilder queryBuilder) {
+        this.differentialConditionsSolrServer = differentialConditionsSolrServer;
         this.queryBuilder = queryBuilder;
     }
 
     public Collection<IndexedContrast> findContrasts(String queryString) {
 
         try {
-            QueryResponse queryResponse = conditionsSolrServer.query(queryBuilder.buildFullTestSearchQuery(queryString));
+            QueryResponse queryResponse = differentialConditionsSolrServer.query(queryBuilder.buildFullTestSearchQuery(queryString));
             List<ConditionProperty> beans = queryResponse.getBeans(ConditionProperty.class);
 
             Collection<IndexedContrast> result = Collections2.transform(beans, new Function<ConditionProperty, IndexedContrast>() {

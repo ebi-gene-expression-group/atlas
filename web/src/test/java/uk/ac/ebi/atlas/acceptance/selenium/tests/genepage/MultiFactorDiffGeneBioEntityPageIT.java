@@ -88,15 +88,15 @@ public class MultiFactorDiffGeneBioEntityPageIT extends SinglePageSeleniumFixtur
     @Test
     public void checkContrastSummaryTooltipTableThirdRow() {
         assertThat(subject.getContrastSummaryTooltipTableData(0, 2, 0), is("time"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 2, 1), is("4"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 2, 2), is("4"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 2, 1), is("4 hours"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 2, 2), is("4 hours"));
     }
 
     @Test
     public void checkContrastSummaryTooltipTableFourthRow() {
         assertThat(subject.getContrastSummaryTooltipTableData(0, 3, 0), is("age"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 3, 1), is("6-7"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 3, 2), is("6-7"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 3, 1), is("6-7 weeks"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 3, 2), is("6-7 weeks"));
     }
 
     @Test

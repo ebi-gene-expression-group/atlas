@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.solr.admin.index.conditions;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
@@ -42,15 +41,15 @@ public class ConditionsIndex {
 
     private static final Logger LOGGER = Logger.getLogger(ConditionsIndex.class);
 
-    private SolrServer conditionsSolrServer;
+    private SolrServer differentialConditionsSolrServer;
 
     private ConditionPropertiesBuilder conditionPropertiesBuilder;
 
     private ExperimentTrader experimentTrader;
 
     @Inject
-    public ConditionsIndex(SolrServer conditionsSolrServer, ConditionPropertiesBuilder conditionPropertiesBuilder, ExperimentTrader experimentTrader) {
-        this.conditionsSolrServer = conditionsSolrServer;
+    public ConditionsIndex(SolrServer differentialConditionsSolrServer, ConditionPropertiesBuilder conditionPropertiesBuilder, ExperimentTrader experimentTrader) {
+        this.differentialConditionsSolrServer = differentialConditionsSolrServer;
         this.conditionPropertiesBuilder = conditionPropertiesBuilder;
         this.experimentTrader = experimentTrader;
     }
@@ -77,9 +76,9 @@ public class ConditionsIndex {
                 Collection<ConditionProperty> conditionProperties =
                         conditionPropertiesBuilder.buildProperties((DifferentialExperiment)experiment);
 
-                conditionsSolrServer.addBeans(conditionProperties);
+                differentialConditionsSolrServer.addBeans(conditionProperties);
 
-                conditionsSolrServer.commit();
+                differentialConditionsSolrServer.commit();
             }
 
         } catch (SolrServerException | IOException e) {
@@ -90,8 +89,8 @@ public class ConditionsIndex {
 
     public void removeConditions(String accession) {
         try {
-            conditionsSolrServer.deleteByQuery("experiment_accession:" + accession);
-            conditionsSolrServer.commit();
+            differentialConditionsSolrServer.deleteByQuery("experiment_accession:" + accession);
+            differentialConditionsSolrServer.commit();
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
@@ -100,7 +99,7 @@ public class ConditionsIndex {
 
     void optimize() {
         try {
-            conditionsSolrServer.optimize();
+            differentialConditionsSolrServer.optimize();
 
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);

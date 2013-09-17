@@ -149,40 +149,22 @@ http://wiki.apache.org/solr/SchemaXml
 
         <field name="experiment_accession" type="string" indexed="true" stored="true"/>
 
-        <field name="group_type" type="string" stored="true"/>
+        <field name="assay_group_id" type="string" stored="true"/>
 
-        <field name="contrast_id" type="string" indexed="true" stored="true"/>
+        <field name="conditions" type="string" indexed="true" stored="true" multiValued="true"/>
 
-        <field name="property_values" type="string" indexed="true" stored="true" multiValued="true"/>
-
-        <!--ToDo: check if the following fields are needed-->
-        <!--<field name="property_value_autocomplete" type="text_standard" indexed="true" stored="false"/>-->
-
-        <!--<field name="property_value_edgengram" type="text_edgengram" indexed="true" stored="false" omitNorms="true"/>-->
-
-        <!--<field name="property_value_lower" type="text_lower" indexed="true" stored="false"/>-->
-
-        <field name="property_value_search" type="text" indexed="true" stored="false" multiValued="true"/>
+        <field name="conditions_search" type="text" indexed="true" stored="false" multiValued="true"/>
 
         <field name="_version_" type="long" indexed="true" stored="true"/>
 
         <field name="text" type="string" indexed="true" stored="false" multiValued="true"/>
+
     </fields>
 
-    <defaultSearchField>property_value_search</defaultSearchField>
+    <defaultSearchField>conditions_search</defaultSearchField>
 
     <solrQueryParser defaultOperator="OR"/>
 
-    <!-- <![CDATA[ copyField commands copy one field to another at the time a document
-         is added to the index.  It's used either to index the same field differently,
-         or to add multiple fields to the same field for easier/faster searching.  ]]> -->
-
-    <!--<copyField source="property_value" dest="property_value_autocomplete"/>-->
-
-    <!--<copyField source="property_value" dest="property_value_edgengram"/>-->
-
-    <!--<copyField source="property_value" dest="property_value_lower"/>-->
-
-    <copyField source="property_values" dest="property_value_search"/>
+    <copyField source="conditions" dest="conditions_search"/>
 
 </schema>

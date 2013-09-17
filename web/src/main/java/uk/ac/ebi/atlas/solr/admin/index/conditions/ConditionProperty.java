@@ -32,35 +32,35 @@ public class ConditionProperty {
     @Field("experiment_accession")
     private String experimentAccession;
 
-    @Field("group_type")
-    private String groupType;
+    @Field("assay_group_type")
+    private String assayGroupType;
 
     @Field("contrast_id")
     private String contrastId;
 
-    @Field("property_values")
+    @Field("conditions")
     private Collection<String> values;
 
     //Required by solr
     public ConditionProperty() {
     }
 
-    public ConditionProperty(String experimentAccession, String groupType, String contrastId, Collection<String> values) {
+    public ConditionProperty(String experimentAccession, String assayGroupType, String contrastId, Collection<String> values) {
         this.experimentAccession = experimentAccession;
-        this.groupType = groupType;
+        this.assayGroupType = assayGroupType;
         this.contrastId = contrastId;
         this.values = values;
     }
 
     @Override
-    public int hashCode() {return Objects.hash(experimentAccession, groupType, contrastId, values);}
+    public int hashCode() {return Objects.hash(experimentAccession, assayGroupType, contrastId, values);}
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {return true;}
         if (obj == null || getClass() != obj.getClass()) {return false;}
         final ConditionProperty other = (ConditionProperty) obj;
-        return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.groupType, other.groupType) && Objects.equals(this.contrastId, other.contrastId) && Objects.equals(this.values, other.values);
+        return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.assayGroupType, other.assayGroupType) && Objects.equals(this.contrastId, other.contrastId) && Objects.equals(this.values, other.values);
     }
 
     public String getExperimentAccession() {
@@ -72,12 +72,12 @@ public class ConditionProperty {
         this.experimentAccession = experimentAccession;
     }
 
-    public String getGroupType() {
-        return groupType;
+    public String getAssayGroupType() {
+        return assayGroupType;
     }
 
-    public void setGroupType(String groupType) {
-        this.groupType = groupType;
+    public void setAssayGroupType(String assayGroupType) {
+        this.assayGroupType = assayGroupType;
     }
 
     public String getContrastId() {

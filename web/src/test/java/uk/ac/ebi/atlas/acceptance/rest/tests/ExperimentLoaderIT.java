@@ -177,7 +177,7 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
     }
 
     private Response queryConditionIndex(String experimentAccession){
-        return RestAssured.get("http://lime:8983/solr/conditions/select?q=experiment_accession:"
+        return RestAssured.get("http://lime:8983/solr/differentialConditions/select?q=experiment_accession:"
                 + experimentAccession + "&wt=json&indent=true");
     }
 
