@@ -27,6 +27,7 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.Resource;
@@ -46,9 +47,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -74,7 +75,7 @@ public class MicroarrayProfilesTSVWriterTest {
     private ObjectInputStream<MicroarrayProfile> inputStreamMock;
 
     @Mock
-    private PrintWriter responeWriterMock;
+    private PrintWriter responseWriterMock;
 
     @Mock
     private MicroarrayExperiment experimentMock;
@@ -158,13 +159,23 @@ public class MicroarrayProfilesTSVWriterTest {
 
     @Test
     public void testWrite() throws Exception {
-        subject.setResponseWriter(responeWriterMock);
+        subject.setResponseWriter(responseWriterMock);
         subject.write(inputStreamMock, conditions);
+        String tsvFileMashead = subject.getTsvFileMasthead();
 
-        verify(responeWriterMock).write(subject.getTsvFileMasthead() + "\n");
-        verify(responeWriterMock).write("Gene name\tDesign Element\tcond1.p-value\tcond1.log2foldchange\tcond1.t-statistic\tcond2.p-value\tcond2.log2foldchange\tcond2.t-statistic\n", 0, 131);
+        ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-        verify(responeWriterMock, times(1)).flush();
+        verify(responseWriterMock).write(stringArgumentCaptor.capture());
+
+        assertThat(stringArgumentCaptor.getValue(), startsWith("# Expression Atlas version:"));
+
+        assertThat(stringArgumentCaptor.getValue() , containsString(
+                "\n# Query: Genes matching: '', up differentially expressed in any contrast given the False Discovery Rate cutoff: 0 in experiment ACCESSION" +
+                        "\n# Timestamp: "));
+
+        verify(responseWriterMock).write("Gene name\tDesign Element\tcond1.p-value\tcond1.log2foldchange\tcond1.t-statistic\tcond2.p-value\tcond2.log2foldchange\tcond2.t-statistic\n", 0, 131);
+
+        verify(responseWriterMock, times(1)).flush();
     }
 
     @Test

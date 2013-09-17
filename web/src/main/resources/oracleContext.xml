@@ -20,5 +20,14 @@
   ~
   ~ http://gxa.github.com/gxa
   -->
-
-<Context antiJARLocking="true" antiResourceLocking="true" />
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <bean id="dataSourceOracle" class="oracle.jdbc.pool.OracleDataSource">
+        <property name="dataSourceName" value="ds"/>
+        <property name="URL" value="${oracle.jdbc.url}"/>
+        <property name="user" value="${oracle.jdbc.username}"/>
+        <property name="password" value="${oracle.jdbc.password}"/>
+    </bean>
+</beans>

@@ -16,7 +16,7 @@
 //@RunWith(SpringJUnit4ClassRunner.class)
 //@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 //@WebAppConfiguration
-//@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml"})
+//@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 //public class ConditionsSearchServiceIT {
 //
 //    @Inject
