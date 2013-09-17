@@ -88,14 +88,6 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <bean id="dataSourceOracle" class="oracle.jdbc.pool.OracleDataSource">
-        <property name="dataSourceName" value="ds"/>
-        <property name="URL" value="${oracle.jdbc.url}"/>
-        <property name="user" value="${oracle.jdbc.username}"/>
-        <property name="password" value="${oracle.jdbc.password}"/>
-    </bean>
-
-
     <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="classpath:atlas-schema.sql"/>
     </jdbc:initialize-database>
