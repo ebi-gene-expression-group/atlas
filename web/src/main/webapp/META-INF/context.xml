@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" antiResourceLocking="true" >
-    <Parameter name="contextConfigLocation" value="classpath:applicationContext.xml classpath:solrContext.xml file:${user.home}/oracleContext.xml"/>
-</Context>
