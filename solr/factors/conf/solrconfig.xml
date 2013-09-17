@@ -107,7 +107,7 @@
     <!--
     you need to specify this as a JVM property: -Dsolr.data.dir=...
     -->
-    <dataDir>${solr.data.dir}conditions/</dataDir>
+    <dataDir>${solr.data.dir}factors/</dataDir>
 
 
     <!-- The DirectoryFactory to use for indexes.
