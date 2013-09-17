@@ -4,44 +4,39 @@ import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentTrader;
 
 import java.io.IOException;
 import java.util.Collection;
 
-public abstract class ExperimentIndex<T extends Experiment, M> {
+public abstract class ExperimentDesignIndex<T extends Experiment, M> {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentIndex.class);
+    private static final Logger LOGGER = Logger.getLogger(ExperimentDesignIndex.class);
 
     private SolrServer solrServer;
 
     private PropertiesBuilder<T, M> propertiesBuilder;
 
-    private ExperimentTrader experimentTrader;
 
-
-    public ExperimentIndex(SolrServer solrServer, PropertiesBuilder<T, M> propertiesBuilder, ExperimentTrader experimentTrader) {
+    public ExperimentDesignIndex(SolrServer solrServer, PropertiesBuilder<T, M> propertiesBuilder) {
         this.solrServer = solrServer;
         this.propertiesBuilder = propertiesBuilder;
-        this.experimentTrader = experimentTrader;
     }
 
-    public void updateConditions(String experimentAccession) {
+    public void updateConditions(T experiment) {
 
-        LOGGER.info("<updateConditions> " + experimentAccession);
+        LOGGER.info("<updateConditions> " + experiment.getAccession());
 
-        removeConditions(experimentAccession);
+        removeConditions(experiment.getAccession());
 
-        addConditions(experimentAccession);
+        addConditions(experiment);
 
         //ToDO: (NK) Do we need to optimise after every experiment?
         optimize();
 
     }
 
-    public void addConditions(String experimentAccession) {
+    public void addConditions(T experiment) {
         try {
-            T experiment = getExperiment(experimentAccession);
 
             Collection<M> propertiesBeans = propertiesBuilder.buildProperties(experiment);
 
@@ -74,6 +69,4 @@ public abstract class ExperimentIndex<T extends Experiment, M> {
         }
 
     }
-
-    protected abstract T getExperiment(String accesstion);
 }
