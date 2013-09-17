@@ -103,6 +103,9 @@
                 <configuration>
                     <!-- application path always starts with /-->
                     <path>/gxa</path>
+                    <mode>
+                        both
+                    </mode>
                     <contextFile>
                         gxa.xml
                     </contextFile>
