@@ -34,7 +34,7 @@ import java.util.List;
 
 public class BioEntityPage extends HeatmapTablePage {
 
-    private static final String PAGE_LOCATION = "/gxa/";
+    static final String PAGE_LOCATION = "/gxa/";
 
     private String bioEntityIdentifier;
 
@@ -120,7 +120,7 @@ public class BioEntityPage extends HeatmapTablePage {
     public void clickInfoCard(boolean expectToOpen) {
         infoPaneHeader.click();
 
-        if(!expectToOpen){
+        if (!expectToOpen) {
             By infoCardBodyId = By.id("infoBody");
             WebDriverWait wait = new WebDriverWait(driver, 4L);
             wait.until(ExpectedConditions.invisibilityOfElementLocated(infoCardBodyId));
@@ -145,16 +145,16 @@ public class BioEntityPage extends HeatmapTablePage {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
     }
 
-    public List<String> getContrastColumn(){
-        return getColumnValues(this.diffHeatmapTable, 3);
+    public List<String> getContrastColumn() {
+        return getColumnValues(this.diffHeatmapTable, getContrastColumnIndex());
     }
 
-    public List<String> getPValues(){
-        return getColumnValues(this.diffHeatmapTable, 4);
+    public List<String> getPValues() {
+        return getColumnValues(this.diffHeatmapTable, getContrastColumnIndex() + 1);
     }
 
     public String getContrastSummaryTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex) {
-        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, 3);
+        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, getContrastColumnIndex());
         hoverOnElement(firstContrastDescriptionCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
@@ -166,7 +166,7 @@ public class BioEntityPage extends HeatmapTablePage {
     //This is not working with PhantomJS browser :((
     public String getContrastSummaryTooltipTableData(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableRowIndex,
                                                      int zeroBasedTooltipTableColumnIndex) {
-        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, 3);
+        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, getContrastColumnIndex());
         hoverOnElement(firstContrastDescriptionCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//tr[" + (zeroBasedTooltipTableRowIndex + 1)
@@ -177,7 +177,7 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public String getContrastSummaryTooltipExperimentDescription(int zeroBasedExpressionLevelIndex) {
-        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, 3);
+        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, getContrastColumnIndex());
         hoverOnElement(firstContrastDescriptionCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastExperimentDescription']");
@@ -187,13 +187,18 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public String getContrastSummaryTooltipContrastDescription(int zeroBasedExpressionLevelIndex) {
-        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, 3);
+        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, getContrastColumnIndex());
         hoverOnElement(firstContrastDescriptionCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastDescription']");
         WebDriverWait wait = new WebDriverWait(driver, 2L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
+    }
+
+    public String getLinkInDiffTableRow(int oneBasedExpressionLevelIndex) {
+        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, oneBasedExpressionLevelIndex, getContrastColumnIndex());
+        return firstContrastDescriptionCell.findElements(By.tagName("a")).get(0).getAttribute("href").toString();
     }
 
     public String getWidgetBody() {
@@ -241,4 +246,10 @@ public class BioEntityPage extends HeatmapTablePage {
 
         return globalSearchPointers.get(0).getText();
     }
+
+    protected int getContrastColumnIndex() {
+        return 3;
+    }
+
+
 }

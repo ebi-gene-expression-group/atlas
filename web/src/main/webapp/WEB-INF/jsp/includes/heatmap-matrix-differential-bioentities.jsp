@@ -59,7 +59,7 @@
             <td class="horizontal-header-cell">
                 ${differentialBioentityExpression.bioentityName}
             </td>
-            <c:if test="${empty entityIdentifier}">
+            <c:if test="${not singleBioentityPage}">
                 <td class="horizontal-header-cell">
                      ${differentialBioentityExpression.designElement}
                 </td>
