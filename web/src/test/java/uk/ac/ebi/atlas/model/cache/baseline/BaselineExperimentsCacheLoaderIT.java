@@ -50,7 +50,7 @@ import static org.hamcrest.Matchers.hasItems;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class BaselineExperimentsCacheLoaderIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-30352";

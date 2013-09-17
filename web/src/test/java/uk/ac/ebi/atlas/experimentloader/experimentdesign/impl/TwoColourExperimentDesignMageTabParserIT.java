@@ -39,7 +39,7 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class TwoColourExperimentDesignMageTabParserIT {
 
     private static final String TWO_COLOUR_EXPERIMENT_ACCESSION = "E-GEOD-43049";

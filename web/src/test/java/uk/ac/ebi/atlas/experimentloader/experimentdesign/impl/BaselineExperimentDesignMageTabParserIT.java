@@ -38,7 +38,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class BaselineExperimentDesignMageTabParserIT {
 
     private static final String EXPERIMENT_ACCESSION_E_MTAB_513 = "E-MTAB-513";
