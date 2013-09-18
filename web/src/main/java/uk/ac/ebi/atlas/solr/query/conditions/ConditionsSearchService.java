@@ -28,7 +28,7 @@ import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionProperty;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -53,11 +53,11 @@ public class ConditionsSearchService {
 
         try {
             QueryResponse queryResponse = differentialConditionsSolrServer.query(queryBuilder.buildFullTestSearchQuery(queryString));
-            List<ConditionProperty> beans = queryResponse.getBeans(ConditionProperty.class);
+            List<DifferentialCondition> beans = queryResponse.getBeans(DifferentialCondition.class);
 
-            Collection<IndexedContrast> result = Collections2.transform(beans, new Function<ConditionProperty, IndexedContrast>() {
+            Collection<IndexedContrast> result = Collections2.transform(beans, new Function<DifferentialCondition, IndexedContrast>() {
                 @Override
-                public IndexedContrast apply(ConditionProperty conditionProperty) {
+                public IndexedContrast apply(DifferentialCondition conditionProperty) {
                     return new IndexedContrast(conditionProperty.getExperimentAccession(), conditionProperty.getContrastId());
                 }
             });

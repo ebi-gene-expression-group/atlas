@@ -39,7 +39,9 @@ import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommand;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommandTrader;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexOperation;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
 import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
@@ -93,10 +95,13 @@ public class ExperimentCRUDTest {
     private ExperimentTrader experimentTraderMock;
 
     @Mock
-    private ConditionsIndex conditionsIndexMock;
+    DifferentialExperiment differentialExperimentMock;
 
     @Mock
-    DifferentialExperiment differentialExperimentMock;
+    private IndexCommandTrader indexCommandTraderMock;
+
+    @Mock
+    private IndexCommand indexCommandMock;
 
     @Before
     public void setUp() throws Exception {
@@ -110,12 +115,13 @@ public class ExperimentCRUDTest {
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
 
+        given(indexCommandTraderMock.getIndexCommandForExperiment(eq(EXPERIMENT_ACCESSION), any(IndexOperation.class))).willReturn(indexCommandMock);
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
 
 
         subject = new ExperimentCRUD(transcriptProfileLoaderMock,
                 arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDAOMock, transcriptProfileDAOMock,
-                experimentDesignFileWriterBuilderMock, experimentTraderMock, conditionsIndexMock);
+                experimentDesignFileWriterBuilderMock, experimentTraderMock, indexCommandTraderMock);
     }
 
     @Test
@@ -170,5 +176,6 @@ public class ExperimentCRUDTest {
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, null, false, ACCESS_KEY));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        verify(indexCommandMock).execute();
     }
 }

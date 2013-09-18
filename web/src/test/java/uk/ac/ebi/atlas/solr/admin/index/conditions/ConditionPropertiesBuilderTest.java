@@ -11,6 +11,8 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.differential.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -24,7 +26,7 @@ import static org.mockito.Mockito.mock;
 @RunWith(MockitoJUnitRunner.class)
 public class ConditionPropertiesBuilderTest {
 
-    private ConditionPropertiesBuilder subject;
+    private DifferentialConditionsBuilder subject;
 
     @Mock
     private DifferentialExperiment experimentMock;
@@ -61,15 +63,15 @@ public class ConditionPropertiesBuilderTest {
         given(experimentMock.getContrasts()).willReturn(Sets.newHashSet(contrastMock));
         given(experimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
 
-        subject = new ConditionPropertiesBuilder();
+        subject = new DifferentialConditionsBuilder();
     }
 
     @Test
     public void testBuildProperties() throws Exception {
 
-        Collection<ConditionProperty> result = subject.buildProperties(experimentMock);
+        Collection<DifferentialCondition> result = subject.buildProperties(experimentMock);
 
         assertThat(result.size(), is(2));
-        assertThat(result.contains(new ConditionProperty("EXP-1", "reference", "g1_g2", Sets.newHashSet("fv1", "sv1"))), is(true));
+        assertThat(result.contains(new DifferentialCondition("EXP-1", "reference", "g1_g2", Sets.newHashSet("fv1", "sv1"))), is(true));
     }
 }

@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.solr.admin.index.conditions;
+package uk.ac.ebi.atlas.solr.admin.index.conditions.differential;
 
 
 import com.google.common.collect.Lists;
@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsBuilder;
 
 import javax.inject.Named;
 import java.util.Collection;
@@ -38,11 +39,11 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class ConditionPropertiesBuilder {
+public class DifferentialConditionsBuilder extends ConditionsBuilder<DifferentialExperiment> {
 
-    public Collection<ConditionProperty> buildProperties(DifferentialExperiment experiment) {
+    public Collection<DifferentialCondition> buildProperties(DifferentialExperiment experiment) {
 
-        Collection<ConditionProperty> conditions = Lists.newLinkedList();
+        Collection<DifferentialCondition> conditions = Lists.newLinkedList();
 
         Set<Contrast> contrasts = experiment.getContrasts();
            for (Contrast contrast : contrasts) {
@@ -53,12 +54,12 @@ public class ConditionPropertiesBuilder {
         return conditions;
        }
 
-       protected Collection<ConditionProperty> buildPropertiesForAssayGroup(DifferentialExperiment experiment,
+       protected Collection<DifferentialCondition> buildPropertiesForAssayGroup(DifferentialExperiment experiment,
                                                                             String assayGroupType,
                                                                             String contrastId,
                                                                             AssayGroup assayGroup) {
 
-           Collection<ConditionProperty> conditions = Sets.newHashSet();
+           Collection<DifferentialCondition> conditions = Sets.newHashSet();
 
            for (String assayAccession : assayGroup) {
                Map<String,String> properties = experiment.getExperimentDesign().getFactors(assayAccession);
@@ -70,9 +71,9 @@ public class ConditionPropertiesBuilder {
                    values.add(properties.get(name));
 
                }
-               ConditionProperty conditionProperty = new ConditionProperty(experiment.getAccession(),
+               DifferentialCondition differentialCondition = new DifferentialCondition(experiment.getAccession(),
                        assayGroupType, contrastId, values);
-               conditions.add(conditionProperty);
+               conditions.add(differentialCondition);
            }
 
            return conditions;

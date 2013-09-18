@@ -20,14 +20,14 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.solr.admin.index.conditions;
+package uk.ac.ebi.atlas.solr.admin.index.conditions.differential;
 
 import org.apache.solr.client.solrj.beans.Field;
 
 import java.util.Collection;
 import java.util.Objects;
 
-public class ConditionProperty {
+public class DifferentialCondition {
 
     @Field("experiment_accession")
     private String experimentAccession;
@@ -42,25 +42,14 @@ public class ConditionProperty {
     private Collection<String> values;
 
     //Required by solr
-    public ConditionProperty() {
+    public DifferentialCondition() {
     }
 
-    public ConditionProperty(String experimentAccession, String assayGroupType, String contrastId, Collection<String> values) {
+    public DifferentialCondition(String experimentAccession, String assayGroupType, String contrastId, Collection<String> values) {
         this.experimentAccession = experimentAccession;
         this.assayGroupType = assayGroupType;
         this.contrastId = contrastId;
         this.values = values;
-    }
-
-    @Override
-    public int hashCode() {return Objects.hash(experimentAccession, assayGroupType, contrastId, values);}
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {return true;}
-        if (obj == null || getClass() != obj.getClass()) {return false;}
-        final ConditionProperty other = (ConditionProperty) obj;
-        return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.assayGroupType, other.assayGroupType) && Objects.equals(this.contrastId, other.contrastId) && Objects.equals(this.values, other.values);
     }
 
     public String getExperimentAccession() {
@@ -95,4 +84,16 @@ public class ConditionProperty {
     public void setValues(Collection<String> values) {
         this.values = values;
     }
+
+    @Override
+    public int hashCode() {return Objects.hash(experimentAccession, assayGroupType, contrastId, values);}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {return true;}
+        if (obj == null || getClass() != obj.getClass()) {return false;}
+        final DifferentialCondition other = (DifferentialCondition) obj;
+        return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.assayGroupType, other.assayGroupType) && Objects.equals(this.contrastId, other.contrastId) && Objects.equals(this.values, other.values);
+    }
+
 }

@@ -33,7 +33,8 @@ import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommandTrader;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexOperation;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
 import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
@@ -61,7 +62,7 @@ public class ExperimentCRUD {
     private TranscriptProfileDAO transcriptProfileDAO;
     private ExperimentTrader experimentTrader;
 
-    private ConditionsIndex conditionsIndex;
+    private IndexCommandTrader indexCommandTrader;
 
     @Inject
     public ExperimentCRUD(TranscriptProfilesLoader transcriptProfileLoader,
@@ -70,7 +71,10 @@ public class ExperimentCRUD {
                           DesignElementMappingLoader designElementLoader,
                           ExperimentDAO experimentDAO,
                           TranscriptProfileDAO transcriptProfileDAO,
-                          ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder, ExperimentTrader experimentTrader, ConditionsIndex conditionsIndex) {
+                          ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
+                          ExperimentTrader experimentTrader,
+                          IndexCommandTrader indexCommandTrader) {
+
         this.transcriptProfileLoader = transcriptProfileLoader;
         this.arrayDesignDao = arrayDesignDao;
         this.transcriptProfileDAO = transcriptProfileDAO;
@@ -79,7 +83,7 @@ public class ExperimentCRUD {
         this.experimentDAO = experimentDAO;
         this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;
-        this.conditionsIndex = conditionsIndex;
+        this.indexCommandTrader = indexCommandTrader;
     }
 
     public UUID importExperiment(String accession, ExperimentType experimentType, boolean isPrivate) throws IOException {
@@ -110,7 +114,7 @@ public class ExperimentCRUD {
         //experiment can be indexed only after it's been added to the DB, since fetching experiment
         //from cache gets this experiment from the DB first
         if (!isPrivate) {
-            conditionsIndex.addConditions(accession);
+            indexCommandTrader.getIndexCommandForExperiment(accession, IndexOperation.ADD).execute();
         }
 
         return uuid;
@@ -154,13 +158,14 @@ public class ExperimentCRUD {
 
         ExperimentDTO experiment = experimentDAO.findExperiment(experimentAccession, true);
 
+        indexCommandTrader.getIndexCommandForExperiment(experimentAccession, IndexOperation.REMOVE).execute();
+
         experimentTrader.removeExperimentFromCache(experiment.getExperimentAccession(), experiment.getExperimentType());
 
         experimentDAO.deleteExperiment(experimentAccession);
 
         transcriptProfileDAO.deleteTranscriptProfilesForExperiment(experimentAccession);
 
-        conditionsIndex.removeConditions(experimentAccession);
     }
 
     public List<ExperimentDTO> findAllExperiments() {
@@ -171,9 +176,11 @@ public class ExperimentCRUD {
         experimentDAO.updateExperiment(experimentAccession, isPrivate);
 
         if (!isPrivate) {
-            conditionsIndex.updateConditions(experimentAccession);
+            indexCommandTrader.getIndexCommandForExperiment(experimentAccession, IndexOperation.UPDATE).execute();
+
         } else {
-            conditionsIndex.removeConditions(experimentAccession);
+            indexCommandTrader.getIndexCommandForExperiment(experimentAccession, IndexOperation.REMOVE).execute();
+
         }
 
     }
@@ -190,13 +197,13 @@ public class ExperimentCRUD {
         String accession = experiment.getExperimentAccession();
         ExperimentType type = experiment.getExperimentType();
         try {
+            if (!experiment.isPrivate()) {
+                indexCommandTrader.getIndexCommandForExperiment(accession, IndexOperation.UPDATE).execute();
+            }
             experimentTrader.removeExperimentFromCache(accession, type);
             generateExperimentDesignFile(accession, type);
             LOGGER.info("updated design for experiment " + accession);
 
-            if (!experiment.isPrivate()) {
-                conditionsIndex.updateConditions(accession);
-            }
         } catch (IOException e) {
             throw new IllegalStateException("<updateExperimentDesign> error generateExperimentDesignFile : ", e);
         }

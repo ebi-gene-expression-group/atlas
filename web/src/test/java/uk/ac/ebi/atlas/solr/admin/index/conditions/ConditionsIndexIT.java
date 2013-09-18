@@ -34,6 +34,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCacheLoader;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsIndex;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -46,7 +47,7 @@ public class ConditionsIndexIT {
 
     private static final String DIFFERENTIAL_ACCESION = "E-GEOD-22351";
     @Inject
-    private ConditionsIndex subject;
+    private BaselineConditionsIndex subject;
 
     @Inject
     private DifferentialExperimentsCacheLoader cacheLoader;
