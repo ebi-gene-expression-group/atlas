@@ -559,8 +559,6 @@
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>
                 <mail.smtp.auth>false</mail.smtp.auth>
-                <oracle.jdbc.username>atlas3</oracle.jdbc.username>
-                <oracle.jdbc.password>atlas3</oracle.jdbc.password>
             </properties>
         </profile>
         <profile>
