@@ -25,14 +25,20 @@ public class IndexCommandTrader {
         this.differentialConditionIndex = differentialConditionIndex;
     }
 
-    public IndexCommand getIndexCommandForExperiment(String experimentAccession, IndexOperation indexOperation) {
+    public IndexCommand getIndexCommand(String experimentAccession, IndexOperation indexOperation) {
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+        return getIndexCommand(experiment, indexOperation);
+    }
+
+    protected IndexCommand getIndexCommand(Experiment experiment, IndexOperation indexOperation) {
         if (experiment instanceof DifferentialExperiment) {
             return indexOperation.getIndexCommand((DifferentialExperiment) experiment, differentialConditionIndex);
         } else if (experiment instanceof BaselineExperiment) {
             return indexOperation.getIndexCommand((BaselineExperiment) experiment, baselineConditionIndex);
         }
 
-        throw new IllegalStateException("Experiment " + experimentAccession + " cannot be indexed");
+        throw new IllegalStateException("Experiment " + experiment.getAccession() + " cannot be indexed");
     }
+
+
 }

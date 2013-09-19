@@ -114,7 +114,7 @@ public class ExperimentCRUD {
         //experiment can be indexed only after it's been added to the DB, since fetching experiment
         //from cache gets this experiment from the DB first
         if (!isPrivate) {
-            indexCommandTrader.getIndexCommandForExperiment(accession, IndexOperation.ADD).execute();
+            indexCommandTrader.getIndexCommand(accession, IndexOperation.ADD).execute();
         }
 
         return uuid;
@@ -158,7 +158,9 @@ public class ExperimentCRUD {
 
         ExperimentDTO experiment = experimentDAO.findExperiment(experimentAccession, true);
 
-        indexCommandTrader.getIndexCommandForExperiment(experimentAccession, IndexOperation.REMOVE).execute();
+        if (!experiment.isPrivate()) {
+            indexCommandTrader.getIndexCommand(experimentAccession, IndexOperation.REMOVE).execute();
+        }
 
         experimentTrader.removeExperimentFromCache(experiment.getExperimentAccession(), experiment.getExperimentType());
 
@@ -176,13 +178,9 @@ public class ExperimentCRUD {
         experimentDAO.updateExperiment(experimentAccession, isPrivate);
 
         if (!isPrivate) {
-            indexCommandTrader.getIndexCommandForExperiment(experimentAccession, IndexOperation.UPDATE).execute();
-
-        } else {
-            indexCommandTrader.getIndexCommandForExperiment(experimentAccession, IndexOperation.REMOVE).execute();
+            indexCommandTrader.getIndexCommand(experimentAccession, IndexOperation.UPDATE).execute();
 
         }
-
     }
 
     public int updateAllExperimentDesigns() {
@@ -198,7 +196,7 @@ public class ExperimentCRUD {
         ExperimentType type = experiment.getExperimentType();
         try {
             if (!experiment.isPrivate()) {
-                indexCommandTrader.getIndexCommandForExperiment(accession, IndexOperation.UPDATE).execute();
+                indexCommandTrader.getIndexCommand(accession, IndexOperation.UPDATE).execute();
             }
             experimentTrader.removeExperimentFromCache(accession, type);
             generateExperimentDesignFile(accession, type);
