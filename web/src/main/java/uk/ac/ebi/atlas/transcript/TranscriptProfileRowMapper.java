@@ -22,26 +22,22 @@
 
 package uk.ac.ebi.atlas.transcript;
 
-import com.google.common.collect.Lists;
+import com.google.common.base.Splitter;
 import org.springframework.jdbc.core.RowMapper;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
+import java.util.List;
 
 public class TranscriptProfileRowMapper implements RowMapper<TranscriptProfile> {
 
     @Override
     public TranscriptProfile mapRow(ResultSet resultSet, int i) throws SQLException {
-        String geneId = resultSet.getString("gene_id");
-        String transcriptId = resultSet.getString("transcript_id");
-        Array array = resultSet.getArray("transcript_expressions");
-        Object[] resultArray = (Object[]) array.getArray();
-        Double[] expressions = Arrays.copyOf(resultArray, resultArray.length, Double[].class);
-        TranscriptProfile profile = new TranscriptProfile(geneId, transcriptId, Lists.newArrayList(expressions));
-        array.free();
-        return profile;
+        String geneId = resultSet.getString("GENE_IDENTIFIER");
+        String transcriptId = resultSet.getString("TRANSCRIPT_IDENTIFIER");
+        String csvTranscriptExpressions = resultSet.getString("TRANSCRIPT_EXPRESSIONS");
+        List<String> transcriptExpressions = Splitter.on(",").splitToList(csvTranscriptExpressions);
+        return new TranscriptProfile(geneId, transcriptId, transcriptExpressions);
     }
 }

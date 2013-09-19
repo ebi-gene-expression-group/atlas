@@ -30,7 +30,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.web.controllers.rest.admin.LoadExperimentsController;
@@ -70,16 +69,10 @@ public class DifferentialGeneProfileServiceIT {
 
     @Before
     public void initDatabase() throws IOException {
-        loadExperimentsController.loadExperiment(E_GEOD_38400, ExperimentType.DIFFERENTIAL, false);
-        loadExperimentsController.loadExperiment(E_GEOD_22351, ExperimentType.DIFFERENTIAL, false);
-        loadExperimentsController.loadExperiment(E_MTAB_698, ExperimentType.DIFFERENTIAL, false);
     }
 
     @After
     public void tearDown() throws IOException {
-        loadExperimentsController.deleteExperiment(E_GEOD_38400);
-        loadExperimentsController.deleteExperiment(E_GEOD_22351);
-        loadExperimentsController.deleteExperiment(E_MTAB_698);
     }
 
     @Test

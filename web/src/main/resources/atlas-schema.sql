@@ -7,13 +7,26 @@ CREATE TABLE IF NOT EXISTS RNASEQ_BSLN_TRANSCRIPTS(
     PRIMARY KEY (EXPERIMENT, GENE_IDENTIFIER, TRANSCRIPT_IDENTIFIER)
 );
 
--- CREATE TABLE IF NOT EXISTS bioentity_name(
---     identifier VARCHAR(255) NOT NULL,
---     name VARCHAR(255) NOT NULL,
---     organism  VARCHAR(255),
---     type VARCHAR(50),
---     PRIMARY KEY (identifier, organism, type)
--- );
+CREATE TABLE IF NOT EXISTS EXPERIMENT(
+    ACCESSION VARCHAR(255) NOT NULL,
+    TYPE VARCHAR(50) NOT NULL,
+    PRIVATE VARCHAR(1) NOT NULL,
+    LAST_UPDATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+    ACCESS_KEY VARCHAR(50),
+    PRIMARY KEY (ACCESSION)
+);
+
+CREATE OR REPLACE VIEW PUBLIC_EXPERIMENT AS
+SELECT ACCESSION, TYPE, LAST_UPDATE
+FROM EXPERIMENT WHERE PRIVATE='F';
+
+CREATE TABLE IF NOT EXISTS bioentity_name(
+    identifier VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    organism  VARCHAR(255),
+    type VARCHAR(50),
+    PRIMARY KEY (identifier, organism, type)
+);
 
 CREATE TABLE IF NOT EXISTS designelement_mapping(
     designelement VARCHAR(255) NOT NULL,
@@ -23,11 +36,5 @@ CREATE TABLE IF NOT EXISTS designelement_mapping(
     PRIMARY KEY (designelement, arraydesign)
 );
 
--- CREATE OR REPLACE VIEW public_experiment AS
--- SELECT ACCESSION, type, last_update
--- FROM experiment WHERE PRIVATE=false;
-
 -- enable the next statement only after successful migration
 DROP TABLE IF EXISTS experiment_configuration;
-
--- ALTER TABLE EXPERIMENT ADD COLUMN IF NOT EXISTS access_key VARCHAR(50) NOT NULL;

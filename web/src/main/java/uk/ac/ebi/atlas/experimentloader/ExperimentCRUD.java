@@ -35,8 +35,6 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommandTrader;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexOperation;
-import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
-import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -53,31 +51,25 @@ public class ExperimentCRUD {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
 
-    private TranscriptProfilesLoader transcriptProfileLoader;
     private ArrayDesignDao arrayDesignDao;
     private ConfigurationTrader configurationTrader;
     private DesignElementMappingLoader designElementLoader;
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
     private ExperimentDAO experimentDAO;
-    private TranscriptProfileDAO transcriptProfileDAO;
     private ExperimentTrader experimentTrader;
 
     private IndexCommandTrader indexCommandTrader;
 
     @Inject
-    public ExperimentCRUD(TranscriptProfilesLoader transcriptProfileLoader,
-                          ArrayDesignDao arrayDesignDao,
+    public ExperimentCRUD(ArrayDesignDao arrayDesignDao,
                           ConfigurationTrader configurationTrader,
                           DesignElementMappingLoader designElementLoader,
                           ExperimentDAO experimentDAO,
-                          TranscriptProfileDAO transcriptProfileDAO,
                           ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
                           ExperimentTrader experimentTrader,
                           IndexCommandTrader indexCommandTrader) {
 
-        this.transcriptProfileLoader = transcriptProfileLoader;
         this.arrayDesignDao = arrayDesignDao;
-        this.transcriptProfileDAO = transcriptProfileDAO;
         this.configurationTrader = configurationTrader;
         this.designElementLoader = designElementLoader;
         this.experimentDAO = experimentDAO;
@@ -97,9 +89,6 @@ public class ExperimentCRUD {
         generateExperimentDesignFile(accession, experimentType);
 
         switch (experimentType) {
-            case BASELINE:
-                loadTranscripts(accession);
-                break;
             case MICROARRAY:
             case TWOCOLOUR:
                 loadArrayDesign(accession, ArrayDesignType.MICRO_ARRAY);
@@ -131,15 +120,6 @@ public class ExperimentCRUD {
         experimentDesignFileWriter.write(accession);
     }
 
-    void loadTranscripts(String accession) {
-        try {
-            transcriptProfileLoader.load(accession);
-        } catch (IOException e) {
-            LOGGER.error("<loadTranscripts> error reading from file: " + e.getMessage());
-            throw new IllegalStateException(e.getMessage());
-        }
-    }
-
     void loadArrayDesign(String accession, ArrayDesignType arrayDesignType) {
 
         MicroarrayExperimentConfiguration microarrayExperimentConfiguration =
@@ -165,8 +145,6 @@ public class ExperimentCRUD {
         experimentTrader.removeExperimentFromCache(experiment.getExperimentAccession(), experiment.getExperimentType());
 
         experimentDAO.deleteExperiment(experimentAccession);
-
-        transcriptProfileDAO.deleteTranscriptProfilesForExperiment(experimentAccession);
 
     }
 

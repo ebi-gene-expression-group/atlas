@@ -29,42 +29,40 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TranscriptProfileRowMapperTest {
 
-    public static final String TRANSCRIPT_ID = "transcript_id";
+    public static final String TRANSCRIPT_IDENTIFIER_COLUMN_NAME = "TRANSCRIPT_IDENTIFIER";
+    private static final String TRANSCRIPT_EXPRESSIONS_COLUMN_NAME = "TRANSCRIPT_EXPRESSIONS";
     private TranscriptProfileRowMapper subject;
 
     @Mock
     private ResultSet resultSetMock;
 
-    @Mock
-    private Array arrayMock;
+    private String transcriptExpressions = "1.1,2";
 
     @Before
     public void setUp() throws Exception {
         subject = new TranscriptProfileRowMapper();
 
-        Object[] array = new Object[]{new Double(1), new Double(2)};
-
-        when(resultSetMock.getString(TRANSCRIPT_ID)).thenReturn(TRANSCRIPT_ID);
-        when(resultSetMock.getArray("transcript_expressions")).thenReturn(arrayMock);
-        when(arrayMock.getArray()).thenReturn(array);
+        given(resultSetMock.getString(TRANSCRIPT_IDENTIFIER_COLUMN_NAME)).willReturn(TRANSCRIPT_IDENTIFIER_COLUMN_NAME);
+        given(resultSetMock.getString(TRANSCRIPT_EXPRESSIONS_COLUMN_NAME)).willReturn(transcriptExpressions);
 
     }
 
     @Test
     public void testMapRow() throws Exception {
+        //given
         TranscriptProfile transcriptProfile = subject.mapRow(resultSetMock, 0);
-        assertThat(transcriptProfile.getTranscriptId(), is(TRANSCRIPT_ID));
-        assertThat(transcriptProfile.getExpressions(), contains(1D, 2D));
+        //then
+        assertThat(transcriptProfile.getTranscriptId(), is(TRANSCRIPT_IDENTIFIER_COLUMN_NAME));
+        assertThat(transcriptProfile.getExpressions(), contains(1.1D, 2D));
     }
 }

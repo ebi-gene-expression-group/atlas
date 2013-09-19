@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.Lists;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -33,12 +35,14 @@ public class TranscriptProfile implements Serializable {
 
     private String transcriptId;
 
-    private List<Double> expressions;
+    private List<Double> expressions = Lists.newArrayList();
 
-    public TranscriptProfile(String geneId, String transcriptId, List<Double> expressions) {
+    public TranscriptProfile(String geneId, String transcriptId, List<String> expressions) {
         this.geneId = geneId;
         this.transcriptId = transcriptId;
-        this.expressions = expressions;
+        for (String expression: expressions) {
+            this.expressions.add(Double.parseDouble(expression));
+        }
     }
 
     public String getGeneId() {
