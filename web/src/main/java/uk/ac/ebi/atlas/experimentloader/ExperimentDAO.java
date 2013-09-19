@@ -46,32 +46,32 @@ import static com.google.common.base.Preconditions.checkState;
 public class ExperimentDAO {
 
     private static final String INSERT_NEW_EXPERIMENT = "INSERT INTO experiment " +
-            "(experiment_accession, experiment_type, private, access_key) VALUES (?, ?, ?, ?)";
+            "(accession, type, private, access_key) VALUES (?, ?, ?, ?)";
 
-    private static final String DELETE_EXPERIMENT = "DELETE FROM experiment WHERE experiment_accession = ?";
+    private static final String DELETE_EXPERIMENT = "DELETE FROM experiment WHERE accession = ?";
 
-    private static final String UPDATE_EXPERIMENT = "UPDATE experiment SET private = ? where experiment_accession = ?";
+    private static final String UPDATE_EXPERIMENT = "UPDATE experiment SET private = ? where accession = ?";
 
-    private static final String PING_EXPERIMENT = "SELECT COUNT (1) FROM experiment WHERE experiment_accession = ?";
+    private static final String PING_EXPERIMENT = "SELECT COUNT (1) FROM experiment WHERE accession = ?";
 
     private static final String SELECT_ALL_EXPERIMENTS = "SELECT * FROM experiment";
 
-    private static final String SELECT_EXPERIMENT_BY_ACCESSION = "SELECT * FROM experiment WHERE experiment_accession = ?";
+    private static final String SELECT_EXPERIMENT_BY_ACCESSION = "SELECT * FROM experiment WHERE accession = ?";
 
-    private static final String SELECT_EXPERIMENTS_BY_ACCESSION = "SELECT * FROM experiment WHERE experiment_accession IN(:accessions)";
+    private static final String SELECT_EXPERIMENTS_BY_ACCESSION = "SELECT * FROM experiment WHERE accession IN(:accessions)";
 
-    private static final String SELECT_PUBLIC_EXPERIMENTS_BY_ACCESSION = "SELECT * FROM experiment WHERE experiment_accession IN(:accessions) and private = FALSE";
+    private static final String SELECT_PUBLIC_EXPERIMENTS_BY_ACCESSION = "SELECT * FROM experiment WHERE accession IN(:accessions) and private = 'F'";
 
-    private static final String SELECT_PUBLIC_EXPERIMENT_BY_ACCESSION = "SELECT * FROM experiment WHERE experiment_accession = ? and private = FALSE";
+    private static final String SELECT_PUBLIC_EXPERIMENT_BY_ACCESSION = "SELECT * FROM experiment WHERE accession = ? and private = 'F'";
 
-    private static final String SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE = "SELECT experiment_accession " +
-            "FROM public_experiment WHERE experiment_type IN(:experimentTypes)";
+    private static final String SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE = "SELECT accession " +
+            "FROM public_experiment WHERE type IN(:experimentTypes)";
 
-    private static final String SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY = "SELECT * FROM experiment WHERE experiment_accession = ? AND access_key = ?";
+    private static final String SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY = "SELECT * FROM experiment WHERE accession = ? AND access_key = ?";
 
 
     @Inject
-    @Qualifier("dataSource")
+    @Qualifier("dataSourceOracle")
     private DataSource dataSource;
 
     /**
@@ -105,7 +105,7 @@ public class ExperimentDAO {
 
         UUID accessKeyUUID = UUID.randomUUID();
 
-        jdbcTemplate.update(INSERT_NEW_EXPERIMENT, experimentAccession, experimentType.name(), isPrivate, accessKeyUUID);
+        jdbcTemplate.update(INSERT_NEW_EXPERIMENT, experimentAccession, experimentType.name(), toString(isPrivate), accessKeyUUID.toString());
 
         return accessKeyUUID;
     }
@@ -157,12 +157,16 @@ public class ExperimentDAO {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-        int recordsCount = jdbcTemplate.update(UPDATE_EXPERIMENT, isPrivate, experimentAccession);
+        int recordsCount = jdbcTemplate.update(UPDATE_EXPERIMENT, toString(isPrivate), experimentAccession);
 
         if (recordsCount == 0){
             throw new IllegalArgumentException("Experiment not found for accession " + experimentAccession);
         }
 
+    }
+
+    private String toString(boolean isPrivate) {
+        return isPrivate ? "T" : "F";
     }
 
     public boolean isImported(String experimentAccession) {
