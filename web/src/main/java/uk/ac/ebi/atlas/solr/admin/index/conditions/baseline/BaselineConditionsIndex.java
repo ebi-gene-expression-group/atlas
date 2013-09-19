@@ -18,5 +18,18 @@ public class BaselineConditionsIndex extends ConditionsIndex<BaselineExperiment>
         super(factorSolrServer, propertiesBuilder);
     }
 
+    @Override
+    public void updateConditions(BaselineExperiment experiment) {
+        //ToDo: remove this method when BaselineConditionsBuilder is implemented
+    }
 
+    @Override
+    public void addConditions(BaselineExperiment experiment) {
+        //ToDo: remove this method when BaselineConditionsBuilder is implemented
+    }
+
+    @Override
+    public void removeConditions(String accession) {
+        //ToDo: remove this method when BaselineConditionsBuilder is implemented
+    }
 }

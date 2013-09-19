@@ -115,7 +115,7 @@ public class ExperimentCRUDTest {
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
 
-        given(indexCommandTraderMock.getIndexCommandForExperiment(eq(EXPERIMENT_ACCESSION), any(IndexOperation.class))).willReturn(indexCommandMock);
+        given(indexCommandTraderMock.getIndexCommand(eq(EXPERIMENT_ACCESSION), any(IndexOperation.class))).willReturn(indexCommandMock);
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
 
 
