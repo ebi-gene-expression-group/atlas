@@ -26,16 +26,12 @@
 package uk.ac.ebi.atlas.model.cache.baseline;
 
 import com.google.common.collect.Sets;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
@@ -60,22 +56,6 @@ public class BaselineExperimentsCacheLoaderIT {
     @Inject
     private BaselineExperimentsCacheLoader subject;
 
-    @Inject
-    private ExperimentDAO experimentDAO;
-
-    @Before
-    public void setUp() throws Exception {
-
-        experimentDAO.addExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
-        experimentDAO.addExperiment(ILLUMINA_EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        experimentDAO.deleteExperiment(EXPERIMENT_ACCESSION);
-        experimentDAO.deleteExperiment(ILLUMINA_EXPERIMENT_ACCESSION);
-    }
 
     @Test
     public void firstRunIsCorrect() throws Exception {

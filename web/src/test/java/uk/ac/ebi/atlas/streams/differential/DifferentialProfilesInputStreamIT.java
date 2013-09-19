@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.streams.differential;
 
 import com.google.common.collect.Sets;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,8 +32,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -89,12 +86,9 @@ public class DifferentialProfilesInputStreamIT {
 
     private DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
 
-    @Inject
-    private ExperimentDAO experimentDAO;
 
     @Before
     public void setUp() throws Exception {
-        experimentDAO.addExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
 
         subject = inputStreamFactory.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION);
 
@@ -110,11 +104,6 @@ public class DifferentialProfilesInputStreamIT {
 
         rnaSeqRequestContext = rnaSeqRequestContextBuilder.build();
 
-    }
-
-    @After
-    public void tearDown(){
-        experimentDAO.deleteExperiment(EXPERIMENT_ACCESSION);
     }
 
 

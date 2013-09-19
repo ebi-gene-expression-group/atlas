@@ -22,8 +22,6 @@
 
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,8 +29,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.differential.DifferentialExperimentsCacheLoader;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsIndex;
 
@@ -57,18 +53,6 @@ public class ConditionsIndexIT {
     @Qualifier("dataSource")
     private DataSource dataSource;
 
-    @Inject
-    private ExperimentDAO experimentDAO;
-
-    @Before
-    public void setUp() {
-        experimentDAO.addExperiment(DIFFERENTIAL_ACCESION, ExperimentType.DIFFERENTIAL, false);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        experimentDAO.deleteExperiment(DIFFERENTIAL_ACCESION);
-    }
 
 
     //TODO: Use embedded (in memory) Solr!
