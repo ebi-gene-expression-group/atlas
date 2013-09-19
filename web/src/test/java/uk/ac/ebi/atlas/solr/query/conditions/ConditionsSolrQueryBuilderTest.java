@@ -50,5 +50,4 @@ public class ConditionsSolrQueryBuilderTest {
         assertThat(query, is("conditions_search:\"liver cancer\""));
     }
 
-
 }

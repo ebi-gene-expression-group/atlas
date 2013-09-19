@@ -37,8 +37,7 @@ public class DifferentialBioentityExpressions extends ArrayList<DifferentialBioe
     private Double minDownRegulated;
     private Double maxDownRegulated;
 
-    public DifferentialBioentityExpressions(int totalNumberOfResults){
-        this.totalNumberOfResults = totalNumberOfResults;
+    public DifferentialBioentityExpressions(){
     }
 
     public DifferentialBioentityExpressions(List<DifferentialBioentityExpression> differentialBioentityExpressions, int totalNumberOfResults) {
