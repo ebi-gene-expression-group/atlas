@@ -121,7 +121,6 @@ public class BaselineExperimentBuilderTest {
         assertThat(experiment.getAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(experiment.getExperimentRunAccessions(), hasItems(RUN_ACCESSION1, RUN_ACCESSION2));
         assertThat(experiment.getDefaultFilterFactors(), hasItem(factor));
-        assertThat(experiment.getFactorGroup(RUN_ACCESSION1), is(factorGroupMock));
         assertThat(experiment.getDefaultQueryFactorType(), is(FACTOR_TYPE));
         assertThat(experiment.getDescription(), is(DESCRIPTION));
         assertThat(experiment.getDisplayName(), is(DISPLAY_NAME));

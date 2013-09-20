@@ -156,14 +156,6 @@ public class ExperimentTest {
     }
 
     @Test
-    public void getFactorGroupShouldDelegateToExperimentalRun() {
-        //when
-        subject.getFactorGroup(RUN_ACCESSION_1);
-        //then
-        verify(experimentRun1Mock, times(1)).getFactorGroup();
-    }
-
-    @Test
     public void testFilteredFactorValues() {
         //given
         Set<Factor> filteredFactors = Sets.newHashSet(factorMock1, factorMock2);

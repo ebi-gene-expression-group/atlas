@@ -26,10 +26,7 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
-import java.text.MessageFormat;
 import java.util.*;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 public class BaselineExperiment extends Experiment {
 
@@ -56,13 +53,6 @@ public class BaselineExperiment extends Experiment {
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
         this.experimentRuns = experimentRuns;
-    }
-
-    public FactorGroup getFactorGroup(String experimentRunAccession) {
-        ExperimentRun experimentRun = getExperimentRun(experimentRunAccession);
-        checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, experimentRunAccession));
-
-        return experimentRun.getFactorGroup();
     }
 
     public Set<String> getExperimentRunAccessions() {

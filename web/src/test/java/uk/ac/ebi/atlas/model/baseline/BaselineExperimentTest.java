@@ -90,10 +90,6 @@ public class BaselineExperimentTest {
 
     }
 
-    @Test
-    public void testGetFactorGroup() throws Exception {
-        assertThat(subject.getFactorGroup(RUN_ACCESSION1), is(factorGroupMock1));
-    }
 
     @Test
     public void testGetExperimentRunAccessions() throws Exception {
