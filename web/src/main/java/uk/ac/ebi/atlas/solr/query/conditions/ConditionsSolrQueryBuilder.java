@@ -40,6 +40,6 @@ public class ConditionsSolrQueryBuilder {
     }
 
     String buildQueryString(String queryString){
-        return CONDITIONS_SEARCH_FIELD + ":\"" + queryString.trim()+"\"";
+        return CONDITIONS_SEARCH_FIELD + ":" + queryString.trim();
     }
 }
