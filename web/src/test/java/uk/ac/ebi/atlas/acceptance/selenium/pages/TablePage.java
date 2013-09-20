@@ -76,17 +76,12 @@ abstract class TablePage extends GlobalSearchPage {
 
     protected List<String> getFirstColumnValues(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(FIRST_COLUMN_CELLS_XPATH));
-        return Lists.transform(tableCells, getText);
+        return toStrings(tableCells);
     }
 
     protected List<String> getSecondColumnValues(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(SECOND_COLUMN_CELLS_XPATH));
-        return Lists.transform(tableCells, getText);
-    }
-
-    protected List<String> getRowValues(WebElement table, int oneBasedRowIndex) {
-        List<WebElement> tableCells = getRow(table, oneBasedRowIndex);
-        return Lists.transform(tableCells, getText);
+        return toStrings(tableCells);
     }
 
     protected List<WebElement> getRow(WebElement table, int oneBasedRowIndex) {
@@ -98,14 +93,19 @@ abstract class TablePage extends GlobalSearchPage {
         return getRow(table, 1);
     }
 
+    protected List<String> getRowValues(WebElement table, int oneBasedRowIndex) {
+        List<WebElement> tableCells = getRow(table, oneBasedRowIndex);
+        return toStrings(tableCells);
+    }
+
     protected List<String> getLastRowValues(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(LAST_ROW_CELLS_XPATH));
-        return Lists.transform(tableCells, getText);
+        return toStrings(tableCells);
     }
 
     protected List<String> getLastColumnValues(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(LAST_COLUMN_CELLS_XPATH));
-        return Lists.transform(tableCells, getText);
+        return toStrings(tableCells);
     }
 
     protected WebElement getCellFromFirstTableRow(WebElement table, int columnIndex) {
@@ -125,7 +125,7 @@ abstract class TablePage extends GlobalSearchPage {
     protected List<String> getColumnValues(WebElement table, int columnIndex) {
         String xPath = String.format(COLUMN_CELLS_XPATH, columnIndex);
         List<WebElement> tableCells = table.findElements(By.xpath(xPath));
-        return Lists.transform(tableCells, getText);
+        return toStrings(tableCells);
     }
 
     protected String getTableBottomCellValue(WebElement table, int columnIndex) {
@@ -145,7 +145,7 @@ abstract class TablePage extends GlobalSearchPage {
 
     protected List<String> getTableHeaders(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(TABLE_HEADERS_XPATH));
-        return Lists.transform(tableCells, getText);
+        return toStrings(tableCells);
     }
 
     protected int getTableColumnsCount(WebElement table) {
@@ -160,11 +160,13 @@ abstract class TablePage extends GlobalSearchPage {
         return table.findElement(By.xpath(xPath));
     }
 
-    private Function<WebElement, String> getText = new Function<WebElement, String>() {
-        public String apply(WebElement tableCell) {
-            return tableCell.getText();
+    private List<String> toStrings(List<WebElement> tableCells){
+        List<String> strings = Lists.newArrayList();
+        for (WebElement webElement: tableCells){
+             strings.add(webElement.getText());
         }
-    };
+        return strings;
+    }
 
     public String getExperimentDescription() {
         return experimentDescription.getText();

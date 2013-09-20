@@ -148,7 +148,7 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
     }
 
     //ToDo: these three tests are failing because the table is ajax... needs fix, must use Selenium Wait condition
-/*
+
     @Test
     public void sortOnFirstColumn() {
         assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstAccession));
@@ -167,8 +167,6 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
 
     @Test
     public void sortOnSecondColumn() {
-        assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstAccession));
-        assertThat(subject.getLastExperimentInfo(), hasItem(defaultLastAccession));
         subject.clickSecondColumnHeader();
         List<ExperimentInfo> allInfos = Lists.newArrayList(baselineInfos);
         allInfos.addAll(differentialInfos);
@@ -217,5 +215,5 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
             assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(9).getExperimentAccession()));
         }
     }
-    */
+
 }
