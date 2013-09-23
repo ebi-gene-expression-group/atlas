@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -45,7 +44,6 @@ public class BaselineExperimentBuilder {
     private Set<String> species;
     private String description;
     private String displayName;
-    private Map<String, ExperimentRun> experimentRuns;
     private String defaultQueryType;
     private boolean hasExtraInfoFile;
     private Set<Factor> defaultFilterFactors;
@@ -73,11 +71,6 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withDescription(String description) {
         this.description = description;
-        return this;
-    }
-
-    public BaselineExperimentBuilder withExperimentRuns(Map<String, ExperimentRun> experimentRuns) {
-        this.experimentRuns = experimentRuns;
         return this;
     }
 
@@ -135,7 +128,7 @@ public class BaselineExperimentBuilder {
         checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
         checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
-        checkState(MapUtils.isNotEmpty(experimentRuns), "Please provide a non empty set of ExperimentRun objects");
+        checkState(CollectionUtils.isNotEmpty(assayGroups), "Please provide a non empty set of AssayGroup objects");
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
         checkState(menuFilterFactorTypes != null, "Please provide a set of menu filter factor types");
         checkState(speciesMapping != null, "Please provide a map of species mappings");
@@ -143,7 +136,6 @@ public class BaselineExperimentBuilder {
         checkState(experimentDesign != null, "Please provide a ExperimentDesign object");
 
         ExperimentalFactors experimentalFactors = experimentalFactorsBuilder
-                .withExperimentRuns(experimentRuns.values())
                 .withOrderedFactorGroups(orderedFactorGroups)
                 .withMenuFilterFactorTypes(menuFilterFactorTypes)
                 .withFactorNamesByType(factorNamesByType)
@@ -153,7 +145,7 @@ public class BaselineExperimentBuilder {
             displayName = experimentAccession;
         }
 
-        return new BaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, experimentRuns, description,
+        return new BaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
                 displayName, species, speciesMapping, defaultQueryType, defaultFilterFactors, hasExtraInfoFile,
                 pubMedIds, experimentDesign, assayGroups);
     }

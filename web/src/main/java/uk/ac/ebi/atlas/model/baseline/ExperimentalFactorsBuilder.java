@@ -24,19 +24,19 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
 public class ExperimentalFactorsBuilder {
-
-    private Collection<ExperimentRun> experimentRuns;
 
     private Map<String, String> factorNamesByType = new HashMap<>();
 
@@ -54,12 +54,6 @@ public class ExperimentalFactorsBuilder {
         return this;
     }
 
-    public ExperimentalFactorsBuilder withExperimentRuns(Collection<ExperimentRun> experimentRuns) {
-
-        this.experimentRuns = experimentRuns;
-        return this;
-    }
-
     public ExperimentalFactorsBuilder withMenuFilterFactorTypes(Set<String> menuFilterFactorTypes) {
 
         this.menuFilterFactorTypes = menuFilterFactorTypes;
@@ -67,7 +61,6 @@ public class ExperimentalFactorsBuilder {
     }
 
     public ExperimentalFactors create() {
-        checkState(CollectionUtils.isNotEmpty(experimentRuns), "Please provide a non empty set of ExperimentRun objects");
         checkState(menuFilterFactorTypes != null, "Please provide a set of menu filter factor types");
 
         SortedSetMultimap<String, Factor> factorsByType = buildFactorsByType();

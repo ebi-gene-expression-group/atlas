@@ -112,7 +112,6 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withDefaultQueryType(factorsConfig.getDefaultQueryFactorType())
                 .withDefaultFilterFactors(defaultFilterFactors)
                 .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
-                .withExperimentRuns(processedExperimentRuns)
                 .withOrderedFactorGroups(orderedFactorGroups)
                 .withExtraInfo(hasExtraInfoFile)
                 .withFactorNamesByType(mageTabParser.getFactorNamesByType())

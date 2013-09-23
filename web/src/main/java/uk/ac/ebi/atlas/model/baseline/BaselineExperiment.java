@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.Sets;
+import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -37,14 +39,12 @@ public class BaselineExperiment extends Experiment {
 
     private Set<Factor> defaultFilterFactors;
 
-    private Map<String, ExperimentRun> experimentRuns;
-
     private ExperimentalFactors experimentalFactors;
 
     private Set<AssayGroup> assayGroups;
 
     BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
-                       Map<String, ExperimentRun> experimentRuns, String description,
+                       String description,
                        String displayName, Set<String> species, Map<String, String> speciesMapping,
                        String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile,
                        List<String> pubMedIds, ExperimentDesign experimentDesign, Set<AssayGroup> assayGroups) {
@@ -54,16 +54,15 @@ public class BaselineExperiment extends Experiment {
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
-        this.experimentRuns = experimentRuns;
         this.assayGroups = assayGroups;
     }
 
     public Set<String> getExperimentRunAccessions() {
-        return experimentRuns.keySet();
-    }
-
-    private ExperimentRun getExperimentRun(String experimentRunAccession) {
-        return experimentRuns.get(experimentRunAccession);
+        Set<String> experimentRuns = Sets.newHashSet();
+        for (AssayGroup assayGroup : assayGroups) {
+            CollectionUtils.addAll(experimentRuns, assayGroup.iterator());
+        }
+        return experimentRuns;
     }
 
     public String getDefaultQueryFactorType() {

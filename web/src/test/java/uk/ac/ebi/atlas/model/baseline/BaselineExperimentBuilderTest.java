@@ -32,9 +32,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.differential.AssayGroup;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -75,6 +77,8 @@ public class BaselineExperimentBuilderTest {
 
     private Map<String, String> speciesMap = Maps.newHashMap();
 
+    private Set<AssayGroup> assayGroups = Sets.newHashSet();
+
     @Before
     public void setUp() throws Exception {
         subject = new BaselineExperimentBuilder(new ExperimentalFactorsBuilder());
@@ -91,14 +95,13 @@ public class BaselineExperimentBuilderTest {
         when(runMock2.getAccession()).thenReturn(RUN_ACCESSION2);
         when(factorGroupMock.getFactorByType(FACTOR_TYPE)).thenReturn(factor);
         when(factorGroupMock.iterator()).thenReturn(Sets.newHashSet(factor).iterator());
+
+        assayGroups.add(new AssayGroup("g1", RUN_ACCESSION1));
+        assayGroups.add(new AssayGroup("g2", RUN_ACCESSION2));
     }
 
     @Test
     public void testCreate() throws Exception {
-
-        Map<String, ExperimentRun> experimentRunsMock = Maps.newHashMap();
-        experimentRunsMock.put(runMock1.getAccession(), runMock1);
-        experimentRunsMock.put(runMock2.getAccession(), runMock2);
 
         List<FactorGroup> orderedFactorGroupsMock = Lists.newArrayList();
 
@@ -109,13 +112,13 @@ public class BaselineExperimentBuilderTest {
                 .withDescription(DESCRIPTION)
                 .withDisplayName(DISPLAY_NAME)
                 .withOrderedFactorGroups(orderedFactorGroupsMock)
-                .withExperimentRuns(experimentRunsMock)
                 .withExtraInfo(false)
                 .withMenuFilterFactorTypes(Sets.newHashSet(FACTOR_TYPE))
                 .withFactorNamesByType(nameMap)
                 .withSpeciesMapping(speciesMap)
                 .withPubMedIds(Lists.newArrayList(PUBMEDID))
                 .withExperimentDesign(experimentDesignMock)
+                .withAssayGroups(assayGroups)
                 .create();
 
         assertThat(experiment.getAccession(), is(EXPERIMENT_ACCESSION));
