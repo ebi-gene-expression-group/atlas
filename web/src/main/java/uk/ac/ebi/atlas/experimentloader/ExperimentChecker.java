@@ -88,13 +88,13 @@ public class ExperimentChecker {
 
     void checkDifferentialFiles(String experimentAccession) {
         Set<String> differentialExperimentPathTemplates =
-                Sets.newHashSet("diff.experiment.configuration.path.template", "diff.experiment.data.path.template", "diff.experiment.raw-counts.path.template");
+                Sets.newHashSet("experiment.configuration.path.template", "diff.experiment.data.path.template", "diff.experiment.raw-counts.path.template");
 
         checkFilesPermissions(differentialExperimentPathTemplates, experimentAccession);
     }
 
     void checkMicroarrayFiles(String experimentAccession) {
-        checkFilePermission("diff.experiment.configuration.path.template", experimentAccession);
+        checkFilePermission("experiment.configuration.path.template", experimentAccession);
         MicroarrayExperimentConfiguration microarrayConfiguration =
                         configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
         for (String arrayDesign : microarrayConfiguration.getArrayDesignNames()) {
@@ -104,7 +104,7 @@ public class ExperimentChecker {
     }
 
     void checkTwoColourFiles(String experimentAccession) {
-        checkFilePermission("diff.experiment.configuration.path.template", experimentAccession);
+        checkFilePermission("experiment.configuration.path.template", experimentAccession);
         MicroarrayExperimentConfiguration microarrayExperimentConfiguration =
                 configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
 
