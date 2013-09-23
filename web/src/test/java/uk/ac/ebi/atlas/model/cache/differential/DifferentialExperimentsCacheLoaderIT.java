@@ -80,10 +80,10 @@ public class DifferentialExperimentsCacheLoaderIT {
         assertThat(contrast.getId(), is("g1_g2"));
         assertThat(contrast.getDisplayName(), startsWith("genotype:'expressing"));
 
-        AssayGroup expectedAssayGroup = new AssayGroup("SRR057596", "SRR057597", "SRR057598");
+        AssayGroup expectedAssayGroup = new AssayGroup("g1", "SRR057596", "SRR057597", "SRR057598");
         assertThat(contrast.getReferenceAssayGroup(), is(expectedAssayGroup));
 
-        expectedAssayGroup = new AssayGroup("SRR057599", "SRR057600", "SRR057601");
+        expectedAssayGroup = new AssayGroup("g2", "SRR057599", "SRR057600", "SRR057601");
         assertThat(contrast.getTestAssayGroup(), is(expectedAssayGroup));
     }
 
