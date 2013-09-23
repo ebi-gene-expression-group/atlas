@@ -46,36 +46,36 @@ public class DifferentialConditionsBuilder extends ConditionsBuilder<Differentia
         Collection<DifferentialCondition> conditions = Lists.newLinkedList();
 
         Set<Contrast> contrasts = experiment.getContrasts();
-           for (Contrast contrast : contrasts) {
-               conditions.addAll(buildPropertiesForAssayGroup(experiment, "reference", contrast.getId(), contrast.getReferenceAssayGroup()));
-               conditions.addAll(buildPropertiesForAssayGroup(experiment, "test", contrast.getId(), contrast.getTestAssayGroup()));
-           }
+        for (Contrast contrast : contrasts) {
+            conditions.addAll(buildPropertiesForAssayGroup(experiment, "reference", contrast.getId(), contrast.getReferenceAssayGroup()));
+            conditions.addAll(buildPropertiesForAssayGroup(experiment, "test", contrast.getId(), contrast.getTestAssayGroup()));
+        }
 
         return conditions;
-       }
+    }
 
-       protected Collection<DifferentialCondition> buildPropertiesForAssayGroup(DifferentialExperiment experiment,
-                                                                            String assayGroupType,
-                                                                            String contrastId,
-                                                                            AssayGroup assayGroup) {
+    protected Collection<DifferentialCondition> buildPropertiesForAssayGroup(DifferentialExperiment experiment,
+                                                                             String assayGroupType,
+                                                                             String contrastId,
+                                                                             AssayGroup assayGroup) {
 
-           Collection<DifferentialCondition> conditions = Sets.newHashSet();
+        Collection<DifferentialCondition> conditions = Sets.newHashSet();
 
-           for (String assayAccession : assayGroup) {
-               Map<String,String> properties = experiment.getExperimentDesign().getFactors(assayAccession);
+        for (String assayAccession : assayGroup) {
+            Map<String, String> properties = experiment.getExperimentDesign().getFactors(assayAccession);
 
-               properties.putAll(experiment.getExperimentDesign().getSamples(assayAccession));
+            properties.putAll(experiment.getExperimentDesign().getSamples(assayAccession));
 
-               Set<String> values = new HashSet<>();
-               for (String name : properties.keySet()) {
-                   values.add(properties.get(name));
+            Set<String> values = new HashSet<>();
+            for (String name : properties.keySet()) {
+                values.add(properties.get(name));
 
-               }
-               DifferentialCondition differentialCondition = new DifferentialCondition(experiment.getAccession(),
-                       assayGroupType, contrastId, values);
-               conditions.add(differentialCondition);
-           }
+            }
+            DifferentialCondition differentialCondition = new DifferentialCondition(experiment.getAccession(),
+                    assayGroupType, contrastId, values);
+            conditions.add(differentialCondition);
+        }
 
-           return conditions;
-       }
+        return conditions;
+    }
 }

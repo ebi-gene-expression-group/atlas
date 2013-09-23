@@ -36,8 +36,8 @@ public class ConditionPropertiesBuilderTest {
         given(experimentMock.getAccession()).willReturn("EXP-1");
 
         Contrast contrastMock = mock(Contrast.class);
-        given(contrastMock.getReferenceAssayGroup()).willReturn(new AssayGroup("Assay1", "Assay2"));
-        given(contrastMock.getTestAssayGroup()).willReturn(new AssayGroup("Assay3"));
+        given(contrastMock.getReferenceAssayGroup()).willReturn(new AssayGroup("id1", "Assay1", "Assay2"));
+        given(contrastMock.getTestAssayGroup()).willReturn(new AssayGroup("id1", "Assay3"));
         given(contrastMock.getId()).willReturn("g1_g2");
 
         ExperimentDesign experimentDesignMock = mock(ExperimentDesign.class);

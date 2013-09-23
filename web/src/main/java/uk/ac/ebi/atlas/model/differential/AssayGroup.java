@@ -1,16 +1,18 @@
 package uk.ac.ebi.atlas.model.differential;
 
-import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
 public class AssayGroup implements Iterable<String>{
 
+    private String id;
+
     private Set<String> assayAccessions;
 
-    public AssayGroup(String... assayAccessions) {
+    public AssayGroup(String id, String... assayAccessions) {
         this.assayAccessions = Sets.newHashSet(assayAccessions);
     }
 
@@ -19,14 +21,18 @@ public class AssayGroup implements Iterable<String>{
         return assayAccessions.iterator();
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return Objects.equal(this.getClass(), other.getClass())
-                && Objects.equal(this.assayAccessions, ((AssayGroup) other).assayAccessions);
+    public String getId() {
+        return id;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(assayAccessions);
+    public int hashCode() {return Objects.hash(id, assayAccessions);}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {return true;}
+        if (obj == null || getClass() != obj.getClass()) {return false;}
+        final AssayGroup other = (AssayGroup) obj;
+        return Objects.equals(this.id, other.id) && Objects.equals(this.assayAccessions, other.assayAccessions);
     }
 }

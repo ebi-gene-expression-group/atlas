@@ -20,16 +20,15 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.model.ConfigurationTrader;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.inject.Inject;
 
@@ -40,33 +39,33 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class DifferentialExperimentConfigurationIT {
+public class ExperimentConfigurationIT {
 
     private static final String ARRAY_DESIGN = "ARRAY_DESIGN";
 
     @Inject
     private ConfigurationTrader configurationTrader;
 
-    private DifferentialExperimentConfiguration subject;
-
-    @Before
-    public void setUp() throws Exception {
-        subject = configurationTrader.getDifferentialExperimentConfiguration("E-GEOD-22351");
-    }
-
-    @Test
-    public void testGetAssayAccessions() throws Exception {
-        AssayGroup assayGroup = subject.getAssayGroup("g1");
-        assertThat(assayGroup, is(new AssayGroup("SRR057596", "SRR057598", "SRR057597")));
-    }
+    private ExperimentConfiguration subject;
 
     @Test
     public void testGetContrast() throws Exception {
+        subject = configurationTrader.getDifferentialExperimentConfiguration("E-GEOD-22351");
         Contrast contrast = subject.getContrast("g1_g2", ARRAY_DESIGN);
         assertThat(contrast.getDisplayName(), is("genotype:\'expressing human TDP-43\' vs \'non transgenic\'"));
         assertThat(Sets.newHashSet(contrast.getReferenceAssayGroup()), containsInAnyOrder("SRR057596", "SRR057598", "SRR057597"));
         assertThat(Sets.newHashSet(contrast.getTestAssayGroup()), containsInAnyOrder("SRR057599", "SRR057600", "SRR057601"));
         assertThat(contrast.getArrayDesignAccession(), is(ARRAY_DESIGN));
+    }
+
+    @Test
+    public void testGetAssayGroups() throws Exception {
+//        subject = configurationTrader.getDifferentialExperimentConfiguration("E-MTAB-513");
+//        Set<AssayGroup> assayGroups = subject.getAssayGroups();
+//
+//        assertThat(assayGroups, hasSize(16));
+//        assertThat(assayGroups, hasItem(new AssayGroup("g7", "ERR030882")));
+
     }
 
 }

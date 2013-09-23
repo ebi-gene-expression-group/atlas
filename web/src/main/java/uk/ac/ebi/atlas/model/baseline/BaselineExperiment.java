@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.model.baseline;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.differential.AssayGroup;
 
 import java.util.*;
 
@@ -40,12 +41,13 @@ public class BaselineExperiment extends Experiment {
 
     private ExperimentalFactors experimentalFactors;
 
+    private Set<AssayGroup> assayGroups;
 
     BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        Map<String, ExperimentRun> experimentRuns, String description,
                        String displayName, Set<String> species, Map<String, String> speciesMapping,
                        String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile,
-                       List<String> pubMedIds, ExperimentDesign experimentDesign) {
+                       List<String> pubMedIds, ExperimentDesign experimentDesign, Set<AssayGroup> assayGroups) {
 
         super(ExperimentType.BASELINE, accession, lastUpdate, displayName, description,
                 hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
@@ -53,6 +55,7 @@ public class BaselineExperiment extends Experiment {
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
         this.experimentRuns = experimentRuns;
+        this.assayGroups = assayGroups;
     }
 
     public Set<String> getExperimentRunAccessions() {
@@ -73,5 +76,9 @@ public class BaselineExperiment extends Experiment {
 
     public ExperimentalFactors getExperimentalFactors() {
         return experimentalFactors;
+    }
+
+    public Set<AssayGroup> getAssayGroups() {
+        return assayGroups;
     }
 }

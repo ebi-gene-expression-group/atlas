@@ -27,6 +27,7 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.differential.AssayGroup;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -58,6 +59,7 @@ public class BaselineExperimentBuilder {
     private ExperimentDesign experimentDesign;
     private Date lastUpdate;
     private String investigationTitle;
+    private Set<AssayGroup> assayGroups;
 
     @Inject
     BaselineExperimentBuilder(ExperimentalFactorsBuilder experimentalFactorsBuilder) {
@@ -124,6 +126,11 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
+    public BaselineExperimentBuilder withAssayGroups(Set<AssayGroup> assayGroups) {
+        this.assayGroups = assayGroups;
+        return this;
+    }
+
     public BaselineExperiment create() {
         checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
         checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
@@ -148,7 +155,7 @@ public class BaselineExperimentBuilder {
 
         return new BaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, experimentRuns, description,
                 displayName, species, speciesMapping, defaultQueryType, defaultFilterFactors, hasExtraInfoFile,
-                pubMedIds, experimentDesign);
+                pubMedIds, experimentDesign, assayGroups);
     }
 
 

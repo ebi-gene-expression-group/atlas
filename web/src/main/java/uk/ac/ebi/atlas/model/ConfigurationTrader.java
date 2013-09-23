@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperimentConfiguration;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperimentConfiguration;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 
 import javax.inject.Named;
@@ -49,21 +48,21 @@ public class ConfigurationTrader {
     private static final Logger LOGGER = Logger.getLogger(ConfigurationTrader.class);
 
     @Value("#{configuration['experiment.factors.path.template']}")
-    private String baselineConfigurationPathTemplate;
+    private String baselineFactorsConfigurationPathTemplate;
 
-    @Value("#{configuration['diff.experiment.configuration.path.template']}")
+    @Value("#{configuration['experiment.configuration.path.template']}")
     private String differentialConfigurationPathTemplate;
 
     public BaselineExperimentConfiguration getFactorsConfiguration(String experimentAccession) {
-        XMLConfiguration xmlConfiguration = getXmlConfiguration(baselineConfigurationPathTemplate, experimentAccession);
+        XMLConfiguration xmlConfiguration = getXmlConfiguration(baselineFactorsConfigurationPathTemplate, experimentAccession);
         return new BaselineExperimentConfiguration(xmlConfiguration);
     }
 
-    public DifferentialExperimentConfiguration getDifferentialExperimentConfiguration(String experimentAccession) {
+    public ExperimentConfiguration getDifferentialExperimentConfiguration(String experimentAccession) {
         return getDifferentialExperimentConfiguration(experimentAccession, false);
     }
 
-    private DifferentialExperimentConfiguration getDifferentialExperimentConfiguration(String experimentAccession, boolean isMicroarray) {
+    private ExperimentConfiguration getDifferentialExperimentConfiguration(String experimentAccession, boolean isMicroarray) {
 
         XMLConfiguration xmlConfiguration = getXmlConfiguration(differentialConfigurationPathTemplate, experimentAccession);
         xmlConfiguration.setExpressionEngine(new XPathExpressionEngine());
@@ -71,7 +70,7 @@ public class ConfigurationTrader {
         if (isMicroarray) {
             return new MicroarrayExperimentConfiguration(xmlConfiguration, document);
         }
-        return new DifferentialExperimentConfiguration(xmlConfiguration, document);
+        return new ExperimentConfiguration(xmlConfiguration, document);
     }
 
 
