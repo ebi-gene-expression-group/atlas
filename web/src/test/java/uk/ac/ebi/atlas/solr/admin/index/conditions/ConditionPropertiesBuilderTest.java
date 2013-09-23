@@ -36,8 +36,8 @@ public class ConditionPropertiesBuilderTest {
         given(experimentMock.getAccession()).willReturn("EXP-1");
 
         Contrast contrastMock = mock(Contrast.class);
-        given(contrastMock.getReferenceAssayGroup()).willReturn(new AssayGroup("id1", "Assay1", "Assay2"));
-        given(contrastMock.getTestAssayGroup()).willReturn(new AssayGroup("id1", "Assay3"));
+        given(contrastMock.getReferenceAssayGroup()).willReturn(new AssayGroup("g1", "Assay1", "Assay2"));
+        given(contrastMock.getTestAssayGroup()).willReturn(new AssayGroup("g2", "Assay3"));
         given(contrastMock.getId()).willReturn("g1_g2");
 
         ExperimentDesign experimentDesignMock = mock(ExperimentDesign.class);
@@ -72,6 +72,6 @@ public class ConditionPropertiesBuilderTest {
         Collection<DifferentialCondition> result = subject.buildProperties(experimentMock);
 
         assertThat(result.size(), is(2));
-        assertThat(result.contains(new DifferentialCondition("EXP-1", "reference", "g1_g2", Sets.newHashSet("fv1", "sv1"))), is(true));
+        assertThat(result.contains(new DifferentialCondition("EXP-1", "g1", "g1_g2", Sets.newHashSet("fv1", "sv1"))), is(true));
     }
 }

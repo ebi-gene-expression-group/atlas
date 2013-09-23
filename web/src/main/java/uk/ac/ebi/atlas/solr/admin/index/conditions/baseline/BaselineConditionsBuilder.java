@@ -11,8 +11,6 @@ import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsBuilder;
 
 import javax.inject.Named;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 @Named
@@ -22,30 +20,24 @@ public class BaselineConditionsBuilder extends ConditionsBuilder<BaselineExperim
     public Collection<Condition> buildProperties(BaselineExperiment experiment) {
         Collection<Condition> conditions = Lists.newLinkedList();
 
-
+        Set<AssayGroup> assayGroups = experiment.getAssayGroups();
+        for (AssayGroup assayGroup : assayGroups) {
+            conditions.addAll(buildPropertiesForAssayGroup(experiment, assayGroup));
+        }
 
         return conditions;
 
     }
 
-    protected Collection<Condition> buildPropertiesForAssayGroup(Experiment experiment,
-                                                                             String assayGroupType,
-                                                                             AssayGroup assayGroup) {
+    protected Collection<Condition> buildPropertiesForAssayGroup(Experiment experiment, AssayGroup assayGroup) {
 
         Collection<Condition> conditions = Sets.newHashSet();
 
         for (String assayAccession : assayGroup) {
-            Map<String, String> properties = experiment.getExperimentDesign().getFactors(assayAccession);
 
-            properties.putAll(experiment.getExperimentDesign().getSamples(assayAccession));
-
-            Set<String> values = new HashSet<>();
-            for (String name : properties.keySet()) {
-                values.add(properties.get(name));
-
-            }
+            Set<String> values = collectAssayProperties(experiment.getExperimentDesign(), assayAccession);
             Condition condition = new Condition(experiment.getAccession(),
-                    assayGroupType, values);
+                    assayGroup.getId(), values);
             conditions.add(condition);
         }
 

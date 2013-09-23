@@ -33,8 +33,6 @@ import java.util.*;
 
 public class BaselineExperiment extends Experiment {
 
-    private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found";
-
     private String defaultQueryFactorType;
 
     private Set<Factor> defaultFilterFactors;

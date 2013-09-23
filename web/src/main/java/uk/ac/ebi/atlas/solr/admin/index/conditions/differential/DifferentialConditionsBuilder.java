@@ -33,8 +33,6 @@ import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsBuilder;
 
 import javax.inject.Named;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 @Named
@@ -47,32 +45,24 @@ public class DifferentialConditionsBuilder extends ConditionsBuilder<Differentia
 
         Set<Contrast> contrasts = experiment.getContrasts();
         for (Contrast contrast : contrasts) {
-            conditions.addAll(buildPropertiesForAssayGroup(experiment, "reference", contrast.getId(), contrast.getReferenceAssayGroup()));
-            conditions.addAll(buildPropertiesForAssayGroup(experiment, "test", contrast.getId(), contrast.getTestAssayGroup()));
+            conditions.addAll(buildPropertiesForAssayGroup(experiment, contrast.getId(), contrast.getReferenceAssayGroup()));
+            conditions.addAll(buildPropertiesForAssayGroup(experiment, contrast.getId(), contrast.getTestAssayGroup()));
         }
 
         return conditions;
     }
 
     protected Collection<DifferentialCondition> buildPropertiesForAssayGroup(DifferentialExperiment experiment,
-                                                                             String assayGroupType,
                                                                              String contrastId,
                                                                              AssayGroup assayGroup) {
 
         Collection<DifferentialCondition> conditions = Sets.newHashSet();
 
         for (String assayAccession : assayGroup) {
-            Map<String, String> properties = experiment.getExperimentDesign().getFactors(assayAccession);
+            Set<String> values = collectAssayProperties(experiment.getExperimentDesign(), assayAccession);
 
-            properties.putAll(experiment.getExperimentDesign().getSamples(assayAccession));
-
-            Set<String> values = new HashSet<>();
-            for (String name : properties.keySet()) {
-                values.add(properties.get(name));
-
-            }
             DifferentialCondition differentialCondition = new DifferentialCondition(experiment.getAccession(),
-                    assayGroupType, contrastId, values);
+                    assayGroup.getId(), contrastId, values);
             conditions.add(differentialCondition);
         }
 
