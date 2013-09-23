@@ -23,50 +23,23 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions.differential;
 
 import org.apache.solr.client.solrj.beans.Field;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 
 import java.util.Collection;
 import java.util.Objects;
 
-public class DifferentialCondition {
-
-    @Field("experiment_accession")
-    private String experimentAccession;
-
-    @Field("assay_group_type")
-    private String assayGroupType;
+public class DifferentialCondition extends Condition {
 
     @Field("contrast_id")
     private String contrastId;
-
-    @Field("conditions")
-    private Collection<String> values;
 
     //Required by solr
     public DifferentialCondition() {
     }
 
-    public DifferentialCondition(String experimentAccession, String assayGroupType, String contrastId, Collection<String> values) {
-        this.experimentAccession = experimentAccession;
-        this.assayGroupType = assayGroupType;
+    public DifferentialCondition(String experimentAccession, String assayGroupId, String contrastId, Collection<String> values) {
+        super(experimentAccession, assayGroupId, values);
         this.contrastId = contrastId;
-        this.values = values;
-    }
-
-    public String getExperimentAccession() {
-
-        return experimentAccession;
-    }
-
-    public void setExperimentAccession(String experimentAccession) {
-        this.experimentAccession = experimentAccession;
-    }
-
-    public String getAssayGroupType() {
-        return assayGroupType;
-    }
-
-    public void setAssayGroupType(String assayGroupType) {
-        this.assayGroupType = assayGroupType;
     }
 
     public String getContrastId() {
@@ -77,23 +50,18 @@ public class DifferentialCondition {
         this.contrastId = contrastId;
     }
 
-    public Collection<String> getValues() {
-        return values;
-    }
-
-    public void setValues(Collection<String> values) {
-        this.values = values;
-    }
-
     @Override
-    public int hashCode() {return Objects.hash(experimentAccession, assayGroupType, contrastId, values);}
+    public int hashCode() {return Objects.hash(super.hashCode(), contrastId);}
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {return true;}
         if (obj == null || getClass() != obj.getClass()) {return false;}
         final DifferentialCondition other = (DifferentialCondition) obj;
-        return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.assayGroupType, other.assayGroupType) && Objects.equals(this.contrastId, other.contrastId) && Objects.equals(this.values, other.values);
+        return Objects.equals(this.getExperimentAccession(), other.getExperimentAccession())
+                && Objects.equals(this.getAssayGroupId(), other.getAssayGroupId())
+                && Objects.equals(this.contrastId, other.contrastId)
+                && Objects.equals(this.getValues(), other.getValues());
     }
 
 }

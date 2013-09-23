@@ -20,14 +20,14 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.solr.admin.index.conditions.baseline;
+package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
 import org.apache.solr.client.solrj.beans.Field;
 
 import java.util.Collection;
 import java.util.Objects;
 
-public class BaselineCondition {
+public class Condition {
 
     @Field("experiment_accession")
     private String experimentAccession;
@@ -38,10 +38,10 @@ public class BaselineCondition {
     @Field("conditions")
     private Collection<String> values;
 
-    public BaselineCondition() {
+    public Condition() {
     }
 
-    public BaselineCondition(String experimentAccession, String assayGroupId, Collection<String> values) {
+    public Condition(String experimentAccession, String assayGroupId, Collection<String> values) {
         this.experimentAccession = experimentAccession;
         this.assayGroupId = assayGroupId;
         this.values = values;
@@ -78,7 +78,7 @@ public class BaselineCondition {
     public boolean equals(Object obj) {
         if (this == obj) {return true;}
         if (obj == null || getClass() != obj.getClass()) {return false;}
-        final BaselineCondition other = (BaselineCondition) obj;
+        final Condition other = (Condition) obj;
         return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.assayGroupId, other.assayGroupId) && Objects.equals(this.values, other.values);
     }
 }
