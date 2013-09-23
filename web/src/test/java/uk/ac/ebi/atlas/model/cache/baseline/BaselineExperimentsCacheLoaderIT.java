@@ -41,6 +41,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.hasSize;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -48,8 +49,6 @@ import static org.hamcrest.Matchers.hasItems;
 public class BaselineExperimentsCacheLoaderIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-30352";
-    private static final String ILLUMINA_EXPERIMENT_ACCESSION = "E-MTAB-513";
-    private static final String RUN_ACCESSION = "SRR306774";
 
     @Inject
     private BaselineExperimentsCacheLoader subject;
@@ -67,7 +66,7 @@ public class BaselineExperimentsCacheLoaderIT {
 
 
     @Test
-    public void ExperimentShouldOnlyContainRunsFromDataFile() throws IOException, ParseException {
+    public void experimentShouldOnlyContainRunsFromDataFile() throws IOException, ParseException {
         BaselineExperiment experiment = subject.load("E-MTAB-513");
 
         assertThat(experiment.getExperimentRunAccessions(), hasItems(
@@ -76,6 +75,15 @@ public class BaselineExperimentsCacheLoaderIT {
             "ERR030880", "ERR030881", "ERR030882", "ERR030883",
             "ERR030884", "ERR030885", "ERR030886", "ERR030887"
         ));
+
+    }
+
+    @Test
+    public void experimentShouldContainAssayGroups() throws IOException, ParseException {
+        BaselineExperiment experiment = subject.load("E-MTAB-513");
+
+        assertThat(experiment.getAssayGroups(), hasSize(16));
+
     }
 
 

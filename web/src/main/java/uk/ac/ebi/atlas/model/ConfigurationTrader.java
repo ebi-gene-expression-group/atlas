@@ -51,20 +51,20 @@ public class ConfigurationTrader {
     private String baselineFactorsConfigurationPathTemplate;
 
     @Value("#{configuration['experiment.configuration.path.template']}")
-    private String differentialConfigurationPathTemplate;
+    private String configurationPathTemplate;
 
     public BaselineExperimentConfiguration getFactorsConfiguration(String experimentAccession) {
         XMLConfiguration xmlConfiguration = getXmlConfiguration(baselineFactorsConfigurationPathTemplate, experimentAccession);
         return new BaselineExperimentConfiguration(xmlConfiguration);
     }
 
-    public ExperimentConfiguration getDifferentialExperimentConfiguration(String experimentAccession) {
-        return getDifferentialExperimentConfiguration(experimentAccession, false);
+    public ExperimentConfiguration getExperimentConfiguration(String experimentAccession) {
+        return getExperimentConfiguration(experimentAccession, false);
     }
 
-    private ExperimentConfiguration getDifferentialExperimentConfiguration(String experimentAccession, boolean isMicroarray) {
+    private ExperimentConfiguration getExperimentConfiguration(String experimentAccession, boolean isMicroarray) {
 
-        XMLConfiguration xmlConfiguration = getXmlConfiguration(differentialConfigurationPathTemplate, experimentAccession);
+        XMLConfiguration xmlConfiguration = getXmlConfiguration(configurationPathTemplate, experimentAccession);
         xmlConfiguration.setExpressionEngine(new XPathExpressionEngine());
         Document document = parseConfigurationXml(experimentAccession);
         if (isMicroarray) {
@@ -75,11 +75,11 @@ public class ConfigurationTrader {
 
 
     public MicroarrayExperimentConfiguration getMicroarrayExperimentConfiguration(String experimentAccession) {
-        return (MicroarrayExperimentConfiguration) getDifferentialExperimentConfiguration(experimentAccession, true);
+        return (MicroarrayExperimentConfiguration) getExperimentConfiguration(experimentAccession, true);
     }
 
     private Document parseConfigurationXml(String experimentAccession) {
-        Path path = Paths.get(MessageFormat.format(differentialConfigurationPathTemplate, experimentAccession));
+        Path path = Paths.get(MessageFormat.format(configurationPathTemplate, experimentAccession));
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();

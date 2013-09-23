@@ -37,6 +37,7 @@ import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.model.cache.ExperimentsCacheLoader;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParserBuilder;
+import uk.ac.ebi.atlas.model.differential.AssayGroup;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -102,6 +103,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(columnHeaders, processedExperimentRuns);
 
+        Set<AssayGroup> assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
+
         return baselineExperimentBuilder.forSpecies(getSpecies(mageTabParser))
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
@@ -117,6 +120,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withSpeciesMapping(speciesMapping)
                 .withPubMedIds(pubMedIds)
                 .withExperimentDesign(experimentDesign)
+                .withAssayGroups(assayGroups)
                 .create();
 
     }

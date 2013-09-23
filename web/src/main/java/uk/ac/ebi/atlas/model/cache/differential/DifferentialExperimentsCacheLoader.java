@@ -53,7 +53,7 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
-        ExperimentConfiguration experimentConfiguration = configurationTrader.getDifferentialExperimentConfiguration(experimentAccession);
+        ExperimentConfiguration experimentConfiguration = configurationTrader.getExperimentConfiguration(experimentAccession);
         Set<Contrast> contrasts = experimentConfiguration.getContrasts();
 
         return new DifferentialExperiment(experimentAccession, experimentDTO.getLastUpdate(), contrasts, experimentDescription, hasExtraInfoFile, species, pubMedIds, experimentDesign);

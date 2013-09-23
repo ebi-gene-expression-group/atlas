@@ -28,12 +28,13 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.differential.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.inject.Inject;
+import java.util.Set;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -50,7 +51,7 @@ public class ExperimentConfigurationIT {
 
     @Test
     public void testGetContrast() throws Exception {
-        subject = configurationTrader.getDifferentialExperimentConfiguration("E-GEOD-22351");
+        subject = configurationTrader.getExperimentConfiguration("E-GEOD-22351");
         Contrast contrast = subject.getContrast("g1_g2", ARRAY_DESIGN);
         assertThat(contrast.getDisplayName(), is("genotype:\'expressing human TDP-43\' vs \'non transgenic\'"));
         assertThat(Sets.newHashSet(contrast.getReferenceAssayGroup()), containsInAnyOrder("SRR057596", "SRR057598", "SRR057597"));
@@ -60,12 +61,14 @@ public class ExperimentConfigurationIT {
 
     @Test
     public void testGetAssayGroups() throws Exception {
-//        subject = configurationTrader.getDifferentialExperimentConfiguration("E-MTAB-513");
-//        Set<AssayGroup> assayGroups = subject.getAssayGroups();
-//
-//        assertThat(assayGroups, hasSize(16));
-//        assertThat(assayGroups, hasItem(new AssayGroup("g7", "ERR030882")));
+        subject = configurationTrader.getExperimentConfiguration("E-MTAB-513");
+        Set<AssayGroup> assayGroups = subject.getAssayGroups();
+
+        assertThat(assayGroups, hasSize(16));
+        assertThat(assayGroups, hasItem(new AssayGroup("g7", "ERR030882")));
 
     }
+
+
 
 }

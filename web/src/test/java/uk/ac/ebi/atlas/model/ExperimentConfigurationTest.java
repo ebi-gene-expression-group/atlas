@@ -81,7 +81,7 @@ public class ExperimentConfigurationTest {
     @Before
     public void setUp() throws Exception {
         when(xmlConfigurationMock.getStringArray("analytics/contrasts/contrast/@id")).thenReturn(new String[]{CONTRAST_ID});
-        when(xmlConfigurationMock.getStringArray("/configuration/analytics/assay_groups/assay_group/@id")).thenReturn(new String[]{REFERENCE_ASSAY_GROUP, TEST_ASSAY_GROUP});
+        when(xmlConfigurationMock.getStringArray("/analytics/assay_groups/assay_group/@id")).thenReturn(new String[]{REFERENCE_ASSAY_GROUP, TEST_ASSAY_GROUP});
         when(xmlConfigurationMock.getStringArray("analytics/assay_groups/assay_group[@id=\'" + REFERENCE_ASSAY_GROUP + "\']/assay")).thenReturn(new String[]{REFERENCE_ASSAY_GROUP});
         when(xmlConfigurationMock.getStringArray("analytics/assay_groups/assay_group[@id=\'" + TEST_ASSAY_GROUP + "\']/assay")).thenReturn(new String[]{TEST_ASSAY_GROUP});
         when(xmlConfigurationMock.configurationAt("analytics/contrasts/contrast[@id=\'" + CONTRAST_ID + "\']")).thenReturn(configurationMock);
