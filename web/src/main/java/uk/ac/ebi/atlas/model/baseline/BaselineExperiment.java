@@ -22,12 +22,10 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.collect.Sets;
-import org.apache.commons.collections.CollectionUtils;
+import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.differential.AssayGroup;
 
 import java.util.*;
 
@@ -39,13 +37,13 @@ public class BaselineExperiment extends Experiment {
 
     private ExperimentalFactors experimentalFactors;
 
-    private Set<AssayGroup> assayGroups;
+    private AssayGroups assayGroups;
 
     BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description,
                        String displayName, Set<String> species, Map<String, String> speciesMapping,
                        String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile,
-                       List<String> pubMedIds, ExperimentDesign experimentDesign, Set<AssayGroup> assayGroups) {
+                       List<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups) {
 
         super(ExperimentType.BASELINE, accession, lastUpdate, displayName, description,
                 hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
@@ -56,11 +54,7 @@ public class BaselineExperiment extends Experiment {
     }
 
     public Set<String> getExperimentRunAccessions() {
-        Set<String> experimentRuns = Sets.newHashSet();
-        for (AssayGroup assayGroup : assayGroups) {
-            CollectionUtils.addAll(experimentRuns, assayGroup.iterator());
-        }
-        return experimentRuns;
+        return assayGroups.getAssayAccessions();
     }
 
     public String getDefaultQueryFactorType() {
@@ -75,7 +69,7 @@ public class BaselineExperiment extends Experiment {
         return experimentalFactors;
     }
 
-    public Set<AssayGroup> getAssayGroups() {
+    public AssayGroups getAssayGroups() {
         return assayGroups;
     }
 }

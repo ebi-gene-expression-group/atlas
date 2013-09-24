@@ -30,12 +30,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.differential.AssayGroup;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -72,7 +72,8 @@ public class BaselineExperimentTest {
 
     private Map<String, String> speciesMapping = Maps.newHashMap();
 
-    private Set<AssayGroup> assayGroups = Sets.newHashSet();
+    @Mock
+    private AssayGroups assayGroupsMock;
 
     private BaselineExperiment subject;
 
@@ -84,13 +85,14 @@ public class BaselineExperimentTest {
         when(runMock2.getAccession()).thenReturn(RUN_ACCESSION2);
 
 
-        assayGroups.add(new AssayGroup("g1", RUN_ACCESSION1));
-        assayGroups.add(new AssayGroup("g2", RUN_ACCESSION2));
+        when(assayGroupsMock.iterator()).thenReturn(Sets.newHashSet(new AssayGroup("g1", RUN_ACCESSION1), new AssayGroup("g2", RUN_ACCESSION2)).iterator());
+        when(assayGroupsMock.getAssayAccessions()).thenReturn(Sets.newHashSet(RUN_ACCESSION1, RUN_ACCESSION2));
+        when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newHashSet("g1", "g2"));
 
         subject = new BaselineExperiment("accession", new Date(), experimentalFactorsMock,
-                 "description", "displayName", Sets.newHashSet("species"), speciesMapping,
+                "description", "displayName", Sets.newHashSet("species"), speciesMapping,
                 DEFAULT_QUERY_FACTOR_TYPE, Sets.newHashSet(factorMock), true, Lists.newArrayList(PUBMEDID)
-                , experimentDesignMock, assayGroups);
+                , experimentDesignMock, assayGroupsMock);
 
 
     }

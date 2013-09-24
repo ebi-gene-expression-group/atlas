@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.base.Objects;
+import uk.ac.ebi.atlas.model.AssayGroup;
 
 public class Contrast implements Comparable<Contrast> {
     private String id;

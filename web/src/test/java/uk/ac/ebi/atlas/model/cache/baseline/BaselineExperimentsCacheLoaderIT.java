@@ -82,7 +82,7 @@ public class BaselineExperimentsCacheLoaderIT {
     public void experimentShouldContainAssayGroups() throws IOException, ParseException {
         BaselineExperiment experiment = subject.load("E-MTAB-513");
 
-        assertThat(experiment.getAssayGroups(), hasSize(16));
+        assertThat(experiment.getAssayGroups().getAssayGroupIds(), hasSize(16));
 
     }
 

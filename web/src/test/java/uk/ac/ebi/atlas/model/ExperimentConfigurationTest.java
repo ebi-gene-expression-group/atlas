@@ -30,7 +30,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.w3c.dom.Document;
-import uk.ac.ebi.atlas.model.differential.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -109,7 +108,7 @@ public class ExperimentConfigurationTest {
 
     @Test
     public void testGetAssayGroups() throws Exception {
-        Set<AssayGroup> assayGroups = subject.getAssayGroups();
-        assertThat(assayGroups, hasSize(2));
+        AssayGroups assayGroups = subject.getAssayGroups();
+        assertThat(assayGroups.getAssayGroupIds(), hasSize(2));
     }
 }

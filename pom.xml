@@ -609,6 +609,8 @@
                 <solr.host>lime</solr.host>
                 <h2.database.location>${user.home}/ATLAS3.TEST/data/h2/atlas</h2.database.location>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
+                <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
             </properties>
         </profile>
 
