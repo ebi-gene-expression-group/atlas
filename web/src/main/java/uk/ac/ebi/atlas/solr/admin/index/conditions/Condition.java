@@ -27,44 +27,27 @@ import org.apache.solr.client.solrj.beans.Field;
 import java.util.Collection;
 import java.util.Objects;
 
-public class ConditionProperty {
+public class Condition {
 
     @Field("experiment_accession")
     private String experimentAccession;
 
-    @Field("assay_group_type")
-    private String assayGroupType;
-
-    @Field("contrast_id")
-    private String contrastId;
+    @Field("assay_group_id")
+    private String assayGroupId;
 
     @Field("conditions")
     private Collection<String> values;
 
-    //Required by solr
-    public ConditionProperty() {
+    public Condition() {
     }
 
-    public ConditionProperty(String experimentAccession, String assayGroupType, String contrastId, Collection<String> values) {
+    public Condition(String experimentAccession, String assayGroupId, Collection<String> values) {
         this.experimentAccession = experimentAccession;
-        this.assayGroupType = assayGroupType;
-        this.contrastId = contrastId;
+        this.assayGroupId = assayGroupId;
         this.values = values;
     }
 
-    @Override
-    public int hashCode() {return Objects.hash(experimentAccession, assayGroupType, contrastId, values);}
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {return true;}
-        if (obj == null || getClass() != obj.getClass()) {return false;}
-        final ConditionProperty other = (ConditionProperty) obj;
-        return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.assayGroupType, other.assayGroupType) && Objects.equals(this.contrastId, other.contrastId) && Objects.equals(this.values, other.values);
-    }
-
     public String getExperimentAccession() {
-
         return experimentAccession;
     }
 
@@ -72,20 +55,12 @@ public class ConditionProperty {
         this.experimentAccession = experimentAccession;
     }
 
-    public String getAssayGroupType() {
-        return assayGroupType;
+    public String getAssayGroupId() {
+        return assayGroupId;
     }
 
-    public void setAssayGroupType(String assayGroupType) {
-        this.assayGroupType = assayGroupType;
-    }
-
-    public String getContrastId() {
-        return contrastId;
-    }
-
-    public void setContrastId(String contrastId) {
-        this.contrastId = contrastId;
+    public void setAssayGroupId(String assayGroupId) {
+        this.assayGroupId = assayGroupId;
     }
 
     public Collection<String> getValues() {
@@ -94,5 +69,16 @@ public class ConditionProperty {
 
     public void setValues(Collection<String> values) {
         this.values = values;
+    }
+
+    @Override
+    public int hashCode() {return Objects.hash(experimentAccession, assayGroupId, values);}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {return true;}
+        if (obj == null || getClass() != obj.getClass()) {return false;}
+        final Condition other = (Condition) obj;
+        return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.assayGroupId, other.assayGroupId) && Objects.equals(this.values, other.values);
     }
 }

@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,10 +30,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.differential.AssayGroup;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -55,10 +54,7 @@ public class ExperimentTest {
 
     @Mock
     private ExperimentalFactors experimentalFactorsMock;
-    @Mock
-    private ExperimentRun experimentRun1Mock;
-    @Mock
-    private ExperimentRun experimentRun2Mock;
+
     @Mock
     private FactorGroup factorGroupMock1;
     @Mock
@@ -76,29 +72,20 @@ public class ExperimentTest {
     private ExperimentDesign experimentDesignMock;
 
     private BaselineExperiment subject;
+    private Set<AssayGroup> assayGroups = Sets.newHashSet();
 
     @Before
     public void initializeSubject() {
 
-        when(experimentRun1Mock.getAccession()).thenReturn(RUN_ACCESSION_1);
-        when(experimentRun2Mock.getAccession()).thenReturn(RUN_ACCESSION_2);
-
-        when(experimentRun1Mock.getFactorGroup()).thenReturn(factorGroupMock1);
-        when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroupMock2);
-
-        Map<String, ExperimentRun> experimentRunsMock = Maps.newHashMap();
-        experimentRunsMock.put(experimentRun1Mock.getAccession(), experimentRun1Mock);
-        experimentRunsMock.put(experimentRun2Mock.getAccession(), experimentRun2Mock);
-
         List<FactorGroup> orderedFactorGroups = Lists.newArrayList(factorGroupMock1, factorGroupMock2);
 
-        when(experimentalFactorsBuilderMock.withExperimentRuns(experimentRunsMock.values()))
-                .thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.withMenuFilterFactorTypes(anySet())).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.withFactorNamesByType(anyMap())).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.withOrderedFactorGroups(orderedFactorGroups)).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.create()).thenReturn(experimentalFactorsMock);
 
+        assayGroups.add(new AssayGroup("g1", RUN_ACCESSION_1));
+        assayGroups.add(new AssayGroup("g2", RUN_ACCESSION_2));
 
         subject = new BaselineExperimentBuilder(experimentalFactorsBuilderMock)
                 .forSpecies(Sets.newHashSet(SPECIE))
@@ -108,11 +95,11 @@ public class ExperimentTest {
                 .withDefaultFilterFactors(Collections.EMPTY_SET)
                 .withMenuFilterFactorTypes(Collections.EMPTY_SET)
                 .withFactorNamesByType(Collections.EMPTY_MAP)
-                .withExperimentRuns(experimentRunsMock)
                 .withSpeciesMapping(Collections.EMPTY_MAP)
                 .withDisplayName(DISPLAY_NAME)
                 .withPubMedIds(Lists.newArrayList(PUBMEDID))
                 .withExperimentDesign(experimentDesignMock)
+                .withAssayGroups(assayGroups)
                 .create();
 
     }
@@ -153,14 +140,6 @@ public class ExperimentTest {
         subject.getDefaultQueryFactorType();
 
         assertThat(subject.getDefaultFilterFactors(), is(Collections.EMPTY_SET));
-    }
-
-    @Test
-    public void getFactorGroupShouldDelegateToExperimentalRun() {
-        //when
-        subject.getFactorGroup(RUN_ACCESSION_1);
-        //then
-        verify(experimentRun1Mock, times(1)).getFactorGroup();
     }
 
     @Test

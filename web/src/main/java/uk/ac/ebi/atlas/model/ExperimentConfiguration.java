@@ -1,4 +1,26 @@
-package uk.ac.ebi.atlas.model.differential;
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.configuration.Configuration;
@@ -6,11 +28,13 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import uk.ac.ebi.atlas.model.differential.AssayGroup;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.xml.xpath.*;
 import java.util.Set;
 
-public class DifferentialExperimentConfiguration {
+public class ExperimentConfiguration {
 
     private XMLConfiguration xmlConfiguration;
 
@@ -18,7 +42,7 @@ public class DifferentialExperimentConfiguration {
 
     private XPath xpath = XPathFactory.newInstance().newXPath();
 
-    public DifferentialExperimentConfiguration(XMLConfiguration xmlConfiguration, Document document) {
+    public ExperimentConfiguration(XMLConfiguration xmlConfiguration, Document document) {
         this.xmlConfiguration = xmlConfiguration;
         this.document = document;
     }
@@ -34,7 +58,7 @@ public class DifferentialExperimentConfiguration {
             parseContrastConfiguration("analytics[" + (i + 1) + "]/contrasts/contrast/@id", arrayDesignAccession, contrasts);
         }
 
-        // in case no array designs
+        // in case no array designs (case of RNA-seq)
         if (arrayDesigns.getLength() == 0) {
             parseContrastConfiguration("analytics/contrasts/contrast/@id", null, contrasts);
         }
@@ -70,12 +94,23 @@ public class DifferentialExperimentConfiguration {
                 assayAccessions[i] = node.getTextContent();
             }
 
-            return new AssayGroup(assayAccessions);
+            return new AssayGroup(id, assayAccessions);
 
         } catch (XPathExpressionException e) {
             throw new IllegalStateException("Problem parsing configuration file.", e);
         }
     }
 
+    public Set<AssayGroup> getAssayGroups() {
+        Set<AssayGroup> assayGroups = Sets.newHashSet();
+
+        String[] assayGoupIds = xmlConfiguration.getStringArray("/analytics/assay_groups/assay_group/@id");
+
+        for (String assayGoupId : assayGoupIds) {
+            assayGroups.add(getAssayGroup(assayGoupId));
+        }
+
+        return assayGroups;
+    }
 
 }

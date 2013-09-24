@@ -86,7 +86,7 @@ public class ExperimentalFactorsTest {
 
         ExperimentalFactorsBuilder builder = new ExperimentalFactorsBuilder();
         List<FactorGroup> factorGroups = Lists.newArrayList(factorGroup1, factorGroup2);
-        subject = builder.withExperimentRuns(experimentRunMocks)
+        subject = builder
                 .withMenuFilterFactorTypes(Sets.newHashSet("TYPE1", "TYPE2"))
                 .withOrderedFactorGroups(factorGroups)
                 .withFactorNamesByType(factorNameByType)

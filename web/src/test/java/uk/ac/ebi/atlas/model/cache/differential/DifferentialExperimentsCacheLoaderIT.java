@@ -22,16 +22,12 @@
 
 package uk.ac.ebi.atlas.model.cache.differential;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -52,18 +48,6 @@ public class DifferentialExperimentsCacheLoaderIT {
     @Inject
     private DifferentialExperimentsCacheLoader subject;
 
-    @Inject
-    private ExperimentDAO experimentDAO;
-
-    @Before
-    public void setUp() throws Exception {
-        experimentDAO.addExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        experimentDAO.deleteExperiment(EXPERIMENT_ACCESSION);
-    }
 
     @Test
     public void shouldHaveExactlyOneSpecies() throws IOException, ParseException {
@@ -96,10 +80,10 @@ public class DifferentialExperimentsCacheLoaderIT {
         assertThat(contrast.getId(), is("g1_g2"));
         assertThat(contrast.getDisplayName(), startsWith("genotype:'expressing"));
 
-        AssayGroup expectedAssayGroup = new AssayGroup("SRR057596", "SRR057597", "SRR057598");
+        AssayGroup expectedAssayGroup = new AssayGroup("g1", "SRR057596", "SRR057597", "SRR057598");
         assertThat(contrast.getReferenceAssayGroup(), is(expectedAssayGroup));
 
-        expectedAssayGroup = new AssayGroup("SRR057599", "SRR057600", "SRR057601");
+        expectedAssayGroup = new AssayGroup("g2", "SRR057599", "SRR057600", "SRR057601");
         assertThat(contrast.getTestAssayGroup(), is(expectedAssayGroup));
     }
 

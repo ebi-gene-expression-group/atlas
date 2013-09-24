@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.commands.download;
 
 import com.google.common.collect.Sets;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,8 +30,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
@@ -59,9 +56,6 @@ public class MicroarrayProfilesTSVWriterIT {
     @Inject
     private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
 
-    @Inject
-    private ExperimentDAO experimentDAO;
-
     private MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
 
     private MicroarrayExperiment microarrayExperiment;
@@ -69,15 +63,8 @@ public class MicroarrayProfilesTSVWriterIT {
     @Before
     public void setUp() throws Exception {
 
-        experimentDAO.addExperiment(MICROARRAY_EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY, false);
-
         microarrayExperiment = microarrayExperimentsCache.getExperiment(MICROARRAY_EXPERIMENT_ACCESSION);
 
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        experimentDAO.deleteExperiment(MICROARRAY_EXPERIMENT_ACCESSION);
     }
 
     @Test

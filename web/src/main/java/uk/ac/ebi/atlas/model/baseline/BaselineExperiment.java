@@ -22,55 +22,45 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.Sets;
+import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.differential.AssayGroup;
 
-import java.text.MessageFormat;
 import java.util.*;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 public class BaselineExperiment extends Experiment {
-
-    private static final String EXPERIMENT_RUN_NOT_FOUND = "ExperimentRun {0} not found";
 
     private String defaultQueryFactorType;
 
     private Set<Factor> defaultFilterFactors;
 
-    private Map<String, ExperimentRun> experimentRuns;
-
     private ExperimentalFactors experimentalFactors;
 
+    private Set<AssayGroup> assayGroups;
 
     BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
-                       Map<String, ExperimentRun> experimentRuns, String description,
+                       String description,
                        String displayName, Set<String> species, Map<String, String> speciesMapping,
                        String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile,
-                       List<String> pubMedIds, ExperimentDesign experimentDesign) {
+                       List<String> pubMedIds, ExperimentDesign experimentDesign, Set<AssayGroup> assayGroups) {
 
         super(ExperimentType.BASELINE, accession, lastUpdate, displayName, description,
                 hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
-        this.experimentRuns = experimentRuns;
-    }
-
-    public FactorGroup getFactorGroup(String experimentRunAccession) {
-        ExperimentRun experimentRun = getExperimentRun(experimentRunAccession);
-        checkNotNull(experimentRun, MessageFormat.format(EXPERIMENT_RUN_NOT_FOUND, experimentRunAccession));
-
-        return experimentRun.getFactorGroup();
+        this.assayGroups = assayGroups;
     }
 
     public Set<String> getExperimentRunAccessions() {
-        return experimentRuns.keySet();
-    }
-
-    private ExperimentRun getExperimentRun(String experimentRunAccession) {
-        return experimentRuns.get(experimentRunAccession);
+        Set<String> experimentRuns = Sets.newHashSet();
+        for (AssayGroup assayGroup : assayGroups) {
+            CollectionUtils.addAll(experimentRuns, assayGroup.iterator());
+        }
+        return experimentRuns;
     }
 
     public String getDefaultQueryFactorType() {
@@ -83,5 +73,9 @@ public class BaselineExperiment extends Experiment {
 
     public ExperimentalFactors getExperimentalFactors() {
         return experimentalFactors;
+    }
+
+    public Set<AssayGroup> getAssayGroups() {
+        return assayGroups;
     }
 }

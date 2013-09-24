@@ -25,28 +25,23 @@
 
 package uk.ac.ebi.atlas.model.cache.baseline;
 
-import com.google.common.collect.Sets;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Set;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.hasSize;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -54,70 +49,24 @@ import static org.hamcrest.Matchers.hasItems;
 public class BaselineExperimentsCacheLoaderIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-30352";
-    private static final String ILLUMINA_EXPERIMENT_ACCESSION = "E-MTAB-513";
-    private static final String RUN_ACCESSION = "SRR306774";
 
     @Inject
     private BaselineExperimentsCacheLoader subject;
 
-    @Inject
-    private ExperimentDAO experimentDAO;
-
-    @Before
-    public void setUp() throws Exception {
-
-        experimentDAO.addExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
-        experimentDAO.addExperiment(ILLUMINA_EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        experimentDAO.deleteExperiment(EXPERIMENT_ACCESSION);
-        experimentDAO.deleteExperiment(ILLUMINA_EXPERIMENT_ACCESSION);
-    }
 
     @Test
     public void firstRunIsCorrect() throws Exception {
         //given
         BaselineExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
-        FactorGroup experimentRun = experiment.getFactorGroup(RUN_ACCESSION);
         //then
-        assertThat(experimentRun.getFactorByType("ORGANISM_PART").getValue(), is(equalTo("liver")));
         Set<String> species = experiment.getSpecies();
         assertThat(species, hasItems("Monodelphis domestica", "Gallus gallus", "Homo sapiens"));
         assertThat(species, not(hasItem("Ornithorhynchus anatinus")));
     }
 
-    @Test
-    public void experimentRunShouldContainTheRightFactorsTest() throws Exception {
-        Factor organismFactor = new Factor("ORGANISM","Mus musculus");
-        Factor organismPartFactor = new Factor("ORGANISM_PART","liver");
-        //given
-        BaselineExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
-        //when
-        FactorGroup factorGroup = experiment.getFactorGroup(RUN_ACCESSION);
-        //then
-        assertThat(factorGroup.containsAll(Sets.newHashSet(organismFactor, organismPartFactor)), is(true));
-
-    }
 
     @Test
-    public void illuminaBodymapExperimentRunShouldContainTheRightFactorsTest() throws Exception {
-        Factor organismPartFactor = new Factor("ORGANISM_PART","liver");
-        //given
-        BaselineExperiment experiment = subject.load(ILLUMINA_EXPERIMENT_ACCESSION);
-        //when
-        FactorGroup factorGroup = experiment.getFactorGroup("ERR030887");
-        //then
-        assertThat(factorGroup.getFactorByType("PHENOTYPE"), is(nullValue()));
-        assertThat(factorGroup.getFactorByType("PROTOCOL"), is(nullValue()));
-        assertThat(factorGroup.getFactorByType("ORGANISM_PART"), is(organismPartFactor));
-
-    }
-
-    @Test
-    public void ExperimentShouldOnlyContainRunsFromDataFile() throws IOException, ParseException {
+    public void experimentShouldOnlyContainRunsFromDataFile() throws IOException, ParseException {
         BaselineExperiment experiment = subject.load("E-MTAB-513");
 
         assertThat(experiment.getExperimentRunAccessions(), hasItems(
@@ -126,6 +75,15 @@ public class BaselineExperimentsCacheLoaderIT {
             "ERR030880", "ERR030881", "ERR030882", "ERR030883",
             "ERR030884", "ERR030885", "ERR030886", "ERR030887"
         ));
+
+    }
+
+    @Test
+    public void experimentShouldContainAssayGroups() throws IOException, ParseException {
+        BaselineExperiment experiment = subject.load("E-MTAB-513");
+
+        assertThat(experiment.getAssayGroups(), hasSize(16));
+
     }
 
 

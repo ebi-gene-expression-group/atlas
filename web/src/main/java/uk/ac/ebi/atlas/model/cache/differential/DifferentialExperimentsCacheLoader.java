@@ -25,11 +25,11 @@ package uk.ac.ebi.atlas.model.cache.differential;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
+import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.cache.ExperimentsCacheLoader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperimentConfiguration;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -53,8 +53,8 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
-        DifferentialExperimentConfiguration differentialExperimentConfiguration = configurationTrader.getDifferentialExperimentConfiguration(experimentAccession);
-        Set<Contrast> contrasts = differentialExperimentConfiguration.getContrasts();
+        ExperimentConfiguration experimentConfiguration = configurationTrader.getExperimentConfiguration(experimentAccession);
+        Set<Contrast> contrasts = experimentConfiguration.getContrasts();
 
         return new DifferentialExperiment(experimentAccession, experimentDTO.getLastUpdate(), contrasts, experimentDescription, hasExtraInfoFile, species, pubMedIds, experimentDesign);
 

@@ -38,7 +38,7 @@ public class TranscriptProfileTest {
 
     @Before
     public void setUp() throws Exception {
-        this.subject = new TranscriptProfile(GENE_ID, TRANSCRIPT_ID, Lists.newArrayList(2D, 3D));
+        this.subject = new TranscriptProfile(GENE_ID, TRANSCRIPT_ID, Lists.newArrayList("2", "3"));
     }
 
     @Test

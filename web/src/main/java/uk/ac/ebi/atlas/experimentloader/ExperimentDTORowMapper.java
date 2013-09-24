@@ -38,17 +38,17 @@ public class ExperimentDTORowMapper implements RowMapper<ExperimentDTO> {
     }
 
     ExperimentDTO buildExperimentDTO(ResultSet resultSet) throws SQLException {
-        String experimentAccession = resultSet.getString("experiment_accession");
-        ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("experiment_type"));
+        String experimentAccession = resultSet.getString("accession");
+        ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("type"));
         Date lastUpdate = resultSet.getTimestamp("last_update");
-        boolean isPrivate = resultSet.getBoolean("private");
-        UUID accessKeyUUID = (UUID)resultSet.getObject("access_key");
+        boolean isPrivate = "T".equals(resultSet.getString("private"));
+        String accessKeyUUID = resultSet.getString("access_key");
         return new ExperimentDTO(
                   experimentAccession
                 , experimentType
                 , lastUpdate
                 , isPrivate
-                , accessKeyUUID.toString());
+                , accessKeyUUID);
     }
 
 }

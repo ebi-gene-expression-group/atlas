@@ -1,15 +1,11 @@
 package uk.ac.ebi.atlas.dao;
 
 import com.google.common.collect.Lists;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedContrast;
 
@@ -29,19 +25,6 @@ public class DiffExpressionDaoIT {
     @Inject
     private DiffExpressionDao subject;
 
-    @Inject
-    private ExperimentDAO experimentDAO;
-
-    @Before
-    public void setUp() throws Exception {
-        experimentDAO.addExperiment(E_MTAB_1066, ExperimentType.MICROARRAY, false);
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        experimentDAO.deleteExperiment(E_MTAB_1066);
-    }
 
     @Test
     public void testGetExpressions() throws Exception {

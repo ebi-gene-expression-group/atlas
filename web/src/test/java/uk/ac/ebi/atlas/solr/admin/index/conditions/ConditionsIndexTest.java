@@ -30,15 +30,14 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.ExperimentTrader;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsIndex;
 
 import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyCollection;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConditionsIndexTest {
@@ -50,43 +49,30 @@ public class ConditionsIndexTest {
     @Mock
     private SolrServer solrServerMock;
     @Mock
-    private ConditionPropertiesBuilder conditionsPropertiesBuilderMock;
-    @Mock
-    private ExperimentTrader experimentTraderMock;
+    private DifferentialConditionsBuilder conditionsPropertiesBuilderMock;
+
     @Mock
     private DifferentialExperiment differentialExperimentMock;
 
     @Before
     public void setUp() throws Exception {
-        given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
+        given(differentialExperimentMock.getAccession()).willReturn(EXPERIMENT_ACCESSION);
         given(conditionsPropertiesBuilderMock.buildProperties(differentialExperimentMock)).willReturn(CollectionUtils.EMPTY_COLLECTION);
-        subject = new ConditionsIndex(solrServerMock, conditionsPropertiesBuilderMock, experimentTraderMock);
+        subject = new DifferentialConditionsIndex(solrServerMock, conditionsPropertiesBuilderMock);
     }
 
     @Test
     public void updateConditionsShouldReindexDiffExperiment() throws Exception {
-        subject.updateConditions(EXPERIMENT_ACCESSION);
+        subject.updateConditions(differentialExperimentMock);
 
         ArgumentCaptor<String> deleteQueryCaptor = ArgumentCaptor.forClass(String.class);
 
         verify(solrServerMock).deleteByQuery(deleteQueryCaptor.capture());
         assertThat(deleteQueryCaptor.getValue(), endsWith(EXPERIMENT_ACCESSION));
 
-        verify(experimentTraderMock).getPublicExperiment(EXPERIMENT_ACCESSION);
-
         verify(conditionsPropertiesBuilderMock).buildProperties(differentialExperimentMock);
 
         verify(solrServerMock).addBeans(CollectionUtils.EMPTY_COLLECTION);
-    }
-
-    @Test
-    public void updateConditionsShouldNotIndexBaselineExperiment() throws Exception {
-        given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(mock(BaselineExperiment.class));
-
-        subject.updateConditions(EXPERIMENT_ACCESSION);
-
-        verify(solrServerMock, times(0)).addBeans(anyCollection());
-
     }
 
 }

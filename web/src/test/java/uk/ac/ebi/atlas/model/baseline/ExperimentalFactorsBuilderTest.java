@@ -28,28 +28,20 @@ import com.google.common.collect.SortedSetMultimap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.contains;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentalFactorsBuilderTest {
     ExperimentalFactorsBuilder subject;
 
-    @Mock
-    private ExperimentRun experimentRun1Mock;
-    @Mock
-    private ExperimentRun experimentRun2Mock;
     private Factor factorWithType1 = new Factor("TYPE1", "VALUE1");
     private Factor factorWithType2 = new Factor("TYPE2", "VALUE2");
     private Factor factorWithType2DifferentValue = new Factor("TYPE2", "DIFFERENT_VALUE2");
@@ -62,13 +54,8 @@ public class ExperimentalFactorsBuilderTest {
             .add(factorWithType1);
 
 
-    private Collection<ExperimentRun> experimentRunMocks;
-
     @Before
     public void setUp() throws Exception {
-        experimentRunMocks = Lists.newArrayList(experimentRun1Mock, experimentRun2Mock);
-        when(experimentRun1Mock.getFactorGroup()).thenReturn(factorGroup1);
-        when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroup2);
 
         Map<String, String> factorNameByType = new HashMap<>();
         factorNameByType.put("TYPE1", "NAME1");
@@ -78,8 +65,7 @@ public class ExperimentalFactorsBuilderTest {
         List<FactorGroup> factorGroups = Lists.newArrayList(factorGroup1, factorGroup2);
 
         subject = new ExperimentalFactorsBuilder();
-        subject.withExperimentRuns(experimentRunMocks)
-                .withMenuFilterFactorTypes(Sets.newHashSet("TYPE1"))
+        subject.withMenuFilterFactorTypes(Sets.newHashSet("TYPE1"))
                 .withOrderedFactorGroups(factorGroups)
                 .withFactorNamesByType(factorNameByType);
     }
@@ -103,15 +89,7 @@ public class ExperimentalFactorsBuilderTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void testCreateWithEmptyRun() throws Exception {
-        subject.withExperimentRuns(null);
-        subject.withMenuFilterFactorTypes(Sets.newHashSet("TYPE1"));
-        subject.create();
-    }
-
-    @Test(expected = IllegalStateException.class)
     public void testCreateWithNullMenuFilterFactorTypes() throws Exception {
-        subject.withExperimentRuns(experimentRunMocks);
         subject.withMenuFilterFactorTypes(null);
         subject.create();
     }

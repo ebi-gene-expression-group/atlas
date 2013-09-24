@@ -33,9 +33,8 @@ import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
-import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
-import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommandTrader;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexOperation;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -52,34 +51,31 @@ public class ExperimentCRUD {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
 
-    private TranscriptProfilesLoader transcriptProfileLoader;
     private ArrayDesignDao arrayDesignDao;
     private ConfigurationTrader configurationTrader;
     private DesignElementMappingLoader designElementLoader;
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
     private ExperimentDAO experimentDAO;
-    private TranscriptProfileDAO transcriptProfileDAO;
     private ExperimentTrader experimentTrader;
 
-    private ConditionsIndex conditionsIndex;
+    private IndexCommandTrader indexCommandTrader;
 
     @Inject
-    public ExperimentCRUD(TranscriptProfilesLoader transcriptProfileLoader,
-                          ArrayDesignDao arrayDesignDao,
+    public ExperimentCRUD(ArrayDesignDao arrayDesignDao,
                           ConfigurationTrader configurationTrader,
                           DesignElementMappingLoader designElementLoader,
                           ExperimentDAO experimentDAO,
-                          TranscriptProfileDAO transcriptProfileDAO,
-                          ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder, ExperimentTrader experimentTrader, ConditionsIndex conditionsIndex) {
-        this.transcriptProfileLoader = transcriptProfileLoader;
+                          ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
+                          ExperimentTrader experimentTrader,
+                          IndexCommandTrader indexCommandTrader) {
+
         this.arrayDesignDao = arrayDesignDao;
-        this.transcriptProfileDAO = transcriptProfileDAO;
         this.configurationTrader = configurationTrader;
         this.designElementLoader = designElementLoader;
         this.experimentDAO = experimentDAO;
         this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;
-        this.conditionsIndex = conditionsIndex;
+        this.indexCommandTrader = indexCommandTrader;
     }
 
     public UUID importExperiment(String accession, ExperimentType experimentType, boolean isPrivate) throws IOException {
@@ -93,9 +89,6 @@ public class ExperimentCRUD {
         generateExperimentDesignFile(accession, experimentType);
 
         switch (experimentType) {
-            case BASELINE:
-                loadTranscripts(accession);
-                break;
             case MICROARRAY:
             case TWOCOLOUR:
                 loadArrayDesign(accession, ArrayDesignType.MICRO_ARRAY);
@@ -110,7 +103,7 @@ public class ExperimentCRUD {
         //experiment can be indexed only after it's been added to the DB, since fetching experiment
         //from cache gets this experiment from the DB first
         if (!isPrivate) {
-            conditionsIndex.addConditions(accession);
+            indexCommandTrader.getIndexCommand(accession, IndexOperation.ADD).execute();
         }
 
         return uuid;
@@ -125,15 +118,6 @@ public class ExperimentCRUD {
                         .build();
 
         experimentDesignFileWriter.write(accession);
-    }
-
-    void loadTranscripts(String accession) {
-        try {
-            transcriptProfileLoader.load(accession);
-        } catch (IOException e) {
-            LOGGER.error("<loadTranscripts> error reading from file: " + e.getMessage());
-            throw new IllegalStateException(e.getMessage());
-        }
     }
 
     void loadArrayDesign(String accession, ArrayDesignType arrayDesignType) {
@@ -154,13 +138,14 @@ public class ExperimentCRUD {
 
         ExperimentDTO experiment = experimentDAO.findExperiment(experimentAccession, true);
 
+        if (!experiment.isPrivate()) {
+            indexCommandTrader.getIndexCommand(experimentAccession, IndexOperation.REMOVE).execute();
+        }
+
         experimentTrader.removeExperimentFromCache(experiment.getExperimentAccession(), experiment.getExperimentType());
 
         experimentDAO.deleteExperiment(experimentAccession);
 
-        transcriptProfileDAO.deleteTranscriptProfilesForExperiment(experimentAccession);
-
-        conditionsIndex.removeConditions(experimentAccession);
     }
 
     public List<ExperimentDTO> findAllExperiments() {
@@ -171,11 +156,9 @@ public class ExperimentCRUD {
         experimentDAO.updateExperiment(experimentAccession, isPrivate);
 
         if (!isPrivate) {
-            conditionsIndex.updateConditions(experimentAccession);
-        } else {
-            conditionsIndex.removeConditions(experimentAccession);
-        }
+            indexCommandTrader.getIndexCommand(experimentAccession, IndexOperation.UPDATE).execute();
 
+        }
     }
 
     public int updateAllExperimentDesigns() {
@@ -190,13 +173,13 @@ public class ExperimentCRUD {
         String accession = experiment.getExperimentAccession();
         ExperimentType type = experiment.getExperimentType();
         try {
+            if (!experiment.isPrivate()) {
+                indexCommandTrader.getIndexCommand(accession, IndexOperation.UPDATE).execute();
+            }
             experimentTrader.removeExperimentFromCache(accession, type);
             generateExperimentDesignFile(accession, type);
             LOGGER.info("updated design for experiment " + accession);
 
-            if (!experiment.isPrivate()) {
-                conditionsIndex.updateConditions(accession);
-            }
         } catch (IOException e) {
             throw new IllegalStateException("<updateExperimentDesign> error generateExperimentDesignFile : ", e);
         }

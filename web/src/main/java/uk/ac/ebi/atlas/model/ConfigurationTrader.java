@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperimentConfiguration;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperimentConfiguration;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 
 import javax.inject.Named;
@@ -49,38 +48,38 @@ public class ConfigurationTrader {
     private static final Logger LOGGER = Logger.getLogger(ConfigurationTrader.class);
 
     @Value("#{configuration['experiment.factors.path.template']}")
-    private String baselineConfigurationPathTemplate;
+    private String baselineFactorsConfigurationPathTemplate;
 
-    @Value("#{configuration['diff.experiment.configuration.path.template']}")
-    private String differentialConfigurationPathTemplate;
+    @Value("#{configuration['experiment.configuration.path.template']}")
+    private String configurationPathTemplate;
 
     public BaselineExperimentConfiguration getFactorsConfiguration(String experimentAccession) {
-        XMLConfiguration xmlConfiguration = getXmlConfiguration(baselineConfigurationPathTemplate, experimentAccession);
+        XMLConfiguration xmlConfiguration = getXmlConfiguration(baselineFactorsConfigurationPathTemplate, experimentAccession);
         return new BaselineExperimentConfiguration(xmlConfiguration);
     }
 
-    public DifferentialExperimentConfiguration getDifferentialExperimentConfiguration(String experimentAccession) {
-        return getDifferentialExperimentConfiguration(experimentAccession, false);
+    public ExperimentConfiguration getExperimentConfiguration(String experimentAccession) {
+        return getExperimentConfiguration(experimentAccession, false);
     }
 
-    private DifferentialExperimentConfiguration getDifferentialExperimentConfiguration(String experimentAccession, boolean isMicroarray) {
+    private ExperimentConfiguration getExperimentConfiguration(String experimentAccession, boolean isMicroarray) {
 
-        XMLConfiguration xmlConfiguration = getXmlConfiguration(differentialConfigurationPathTemplate, experimentAccession);
+        XMLConfiguration xmlConfiguration = getXmlConfiguration(configurationPathTemplate, experimentAccession);
         xmlConfiguration.setExpressionEngine(new XPathExpressionEngine());
         Document document = parseConfigurationXml(experimentAccession);
         if (isMicroarray) {
             return new MicroarrayExperimentConfiguration(xmlConfiguration, document);
         }
-        return new DifferentialExperimentConfiguration(xmlConfiguration, document);
+        return new ExperimentConfiguration(xmlConfiguration, document);
     }
 
 
     public MicroarrayExperimentConfiguration getMicroarrayExperimentConfiguration(String experimentAccession) {
-        return (MicroarrayExperimentConfiguration) getDifferentialExperimentConfiguration(experimentAccession, true);
+        return (MicroarrayExperimentConfiguration) getExperimentConfiguration(experimentAccession, true);
     }
 
     private Document parseConfigurationXml(String experimentAccession) {
-        Path path = Paths.get(MessageFormat.format(differentialConfigurationPathTemplate, experimentAccession));
+        Path path = Paths.get(MessageFormat.format(configurationPathTemplate, experimentAccession));
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();

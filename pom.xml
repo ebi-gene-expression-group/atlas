@@ -103,6 +103,11 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+                <excludes>
+                    <exclude>
+                        oracleContext.xml
+                    </exclude>
+                </excludes>
             </resource>
         </resources>
         <testResources>
@@ -563,6 +568,19 @@
         </profile>
         <profile>
             <id>integration.test</id>
+            <!-- include dev datasource  -->
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>
+                                oracleContext.xml
+                            </include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
             <!-- embedded tomcat started by mvn in bamboo plan -->
             <properties>
                 <solr.host>localhost</solr.host>
@@ -573,6 +591,19 @@
         </profile>
         <profile>
             <id>local.integration.test</id>
+            <!-- include dev datasource  -->
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>
+                                oracleContext.xml
+                            </include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
             <properties>
                 <!-- change to integrate with a solr running on localhost rather than the default remote host -->
                 <solr.host>lime</solr.host>

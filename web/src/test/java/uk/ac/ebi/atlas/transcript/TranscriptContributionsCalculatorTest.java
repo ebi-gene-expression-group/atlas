@@ -52,10 +52,10 @@ public class TranscriptContributionsCalculatorTest {
 
     private List<TranscriptProfile> transcriptProfiles;
 
-    private TranscriptProfile profile1 = new TranscriptProfile(GENE_ID, "T1", Lists.newArrayList(1d, 1d, 3d));
-    private TranscriptProfile profile2 = new TranscriptProfile(GENE_ID, "T2", Lists.newArrayList(1d, 2d, 3d));
-    private TranscriptProfile profile3 = new TranscriptProfile(GENE_ID, "T3", Lists.newArrayList(1d, 3d, 3d));
-    private TranscriptProfile profile4 = new TranscriptProfile(GENE_ID, "T4", Lists.newArrayList(1d, 4d, 3d));
+    private TranscriptProfile profile1 = new TranscriptProfile(GENE_ID, "T1", Lists.newArrayList("1","1","3"));
+    private TranscriptProfile profile2 = new TranscriptProfile(GENE_ID, "T2", Lists.newArrayList("1", "2", "3"));
+    private TranscriptProfile profile3 = new TranscriptProfile(GENE_ID, "T3", Lists.newArrayList("1", "3", "3"));
+    private TranscriptProfile profile4 = new TranscriptProfile(GENE_ID, "T4", Lists.newArrayList("1", "4", "3"));
 
     @Before
     public void initSubject() throws Exception {

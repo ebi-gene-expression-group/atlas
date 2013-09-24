@@ -39,9 +39,10 @@ import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommand;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommandTrader;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexOperation;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
-import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
 import java.io.IOException;
 
@@ -62,9 +63,6 @@ public class ExperimentCRUDTest {
 
     @Mock
     private CSVWriter csvWriterMock;
-
-    @Mock
-    private TranscriptProfilesLoader transcriptProfileLoaderMock;
 
     @Mock
     private ArrayDesignDao arrayDesignDaoMock;
@@ -93,15 +91,17 @@ public class ExperimentCRUDTest {
     private ExperimentTrader experimentTraderMock;
 
     @Mock
-    private ConditionsIndex conditionsIndexMock;
+    DifferentialExperiment differentialExperimentMock;
 
     @Mock
-    DifferentialExperiment differentialExperimentMock;
+    private IndexCommandTrader indexCommandTraderMock;
+
+    @Mock
+    private IndexCommand indexCommandMock;
 
     @Before
     public void setUp() throws Exception {
 
-        when(transcriptProfileLoaderMock.load(EXPERIMENT_ACCESSION)).thenReturn(0);
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(microarrayExperimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
 
@@ -110,12 +110,13 @@ public class ExperimentCRUDTest {
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
 
+        given(indexCommandTraderMock.getIndexCommand(eq(EXPERIMENT_ACCESSION), any(IndexOperation.class))).willReturn(indexCommandMock);
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
 
 
-        subject = new ExperimentCRUD(transcriptProfileLoaderMock,
-                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDAOMock, transcriptProfileDAOMock,
-                experimentDesignFileWriterBuilderMock, experimentTraderMock, conditionsIndexMock);
+        subject = new ExperimentCRUD(
+                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDAOMock,
+                experimentDesignFileWriterBuilderMock, experimentTraderMock, indexCommandTraderMock);
     }
 
     @Test
@@ -132,18 +133,6 @@ public class ExperimentCRUDTest {
     public void shouldThrowIllegalStateExceptionWhenWritingExperimentDesignFails() throws Exception {
         willThrow(new IOException()).given(experimentDesignFileWriterMock).write(EXPERIMENT_ACCESSION);
         subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
-    }
-
-    @Test
-    public void testLoadTranscripts() throws Exception {
-        subject.loadTranscripts(EXPERIMENT_ACCESSION);
-        verify(transcriptProfileLoaderMock).load(EXPERIMENT_ACCESSION);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testTranscriptLoaderException() throws Exception {
-        willThrow(new IOException(TEST_EXCEPTION)).given(transcriptProfileLoaderMock).load(EXPERIMENT_ACCESSION);
-        subject.loadTranscripts(EXPERIMENT_ACCESSION);
     }
 
     @Test
@@ -170,5 +159,6 @@ public class ExperimentCRUDTest {
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, null, false, ACCESS_KEY));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        verify(indexCommandMock).execute();
     }
 }

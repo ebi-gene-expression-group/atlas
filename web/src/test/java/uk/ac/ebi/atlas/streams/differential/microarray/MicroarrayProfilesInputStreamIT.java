@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.streams.differential.microarray;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,10 +31,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.Regulation;
@@ -82,9 +79,6 @@ public class MicroarrayProfilesInputStreamIT {
     private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
 
     @Inject
-    private ExperimentDAO experimentDAO;
-
-    @Inject
     private DesignElementMappingLoader designElementLoader;
 
     private MicroarrayRequestContext microarrayRequestContext;
@@ -98,8 +92,6 @@ public class MicroarrayProfilesInputStreamIT {
     @Before
     public void initSubject() throws Exception {
 
-        experimentDAO.addExperiment(EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY, false);
-
         designElementLoader.loadMappings(ARRAY_DESIGN_ACCESSION, ArrayDesignType.MICRO_ARRAY);
 
         subject = inputStreamFactory.createMicroarrayProfileInputStream(EXPERIMENT_ACCESSION, ARRAY_DESIGN_ACCESSION);
@@ -112,11 +104,6 @@ public class MicroarrayProfilesInputStreamIT {
         microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
                 .withPreferences(microarrayRequestPreferences).build();
 
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        experimentDAO.deleteExperiment(EXPERIMENT_ACCESSION);
     }
 
     @Test

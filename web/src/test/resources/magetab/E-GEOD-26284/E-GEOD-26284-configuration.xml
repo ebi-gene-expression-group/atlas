@@ -1,0 +1,325 @@
+<configuration>
+    <analytics>
+        <assay_groups>
+          <assay_group id="g1">
+                <assay>SRR317068</assay>
+                <assay>SRR317069</assay>
+          </assay_group>
+          <assay_group id="g2">
+                <assay>SRR534307</assay>
+                <assay>SRR534308</assay>
+          </assay_group>
+          <assay_group id="g3">
+                <assay>SRR317050</assay>
+                <assay>SRR317051</assay>
+          </assay_group>
+          <assay_group id="g4">
+                <assay>SRR315307</assay>
+                <assay>SRR315308</assay>
+          </assay_group>
+          <assay_group id="g5">
+                <assay>SRR307915</assay>
+                <assay>SRR307916</assay>
+          </assay_group>
+          <assay_group id="g6">
+                <assay>SRR315317</assay>
+                <assay>SRR315318</assay>
+          </assay_group>
+          <assay_group id="g7">
+                <assay>SRR315332</assay>
+                <assay>SRR315333</assay>
+          </assay_group>
+          <assay_group id="g8">
+                <assay>SRR307909</assay>
+                <assay>SRR307910</assay>
+          </assay_group>
+          <assay_group id="g9">
+                <assay>SRR534334</assay>
+                <assay>SRR534335</assay>
+          </assay_group>
+          <assay_group id="g10">
+                <assay>SRR315303</assay>
+                <assay>SRR315304</assay>
+          </assay_group>
+          <assay_group id="g11">
+                <assay>SRR534289</assay>
+                <assay>SRR534290</assay>
+          </assay_group>
+          <assay_group id="g12">
+                <assay>SRR315330</assay>
+                <assay>SRR315331</assay>
+          </assay_group>
+          <assay_group id="g13">
+                <assay>SRR534299</assay>
+                <assay>SRR534300</assay>
+          </assay_group>
+          <assay_group id="g14">
+                <assay>SRR307901</assay>
+                <assay>SRR307902</assay>
+          </assay_group>
+          <assay_group id="g15">
+                <assay>SRR317048</assay>
+                <assay>SRR317049</assay>
+          </assay_group>
+          <assay_group id="g16">
+                <assay>SRR317044</assay>
+                <assay>SRR317045</assay>
+          </assay_group>
+          <assay_group id="g17">
+                <assay>SRR307905</assay>
+                <assay>SRR307906</assay>
+          </assay_group>
+          <assay_group id="g18">
+                <assay>SRR307926</assay>
+                <assay>SRR307927</assay>
+          </assay_group>
+          <assay_group id="g19">
+                <assay>SRR534309</assay>
+                <assay>SRR534310</assay>
+          </assay_group>
+          <assay_group id="g20">
+                <assay>SRR387661</assay>
+                <assay>SRR387662</assay>
+          </assay_group>
+          <assay_group id="g21">
+                <assay>SRR307911</assay>
+                <assay>SRR307912</assay>
+          </assay_group>
+          <assay_group id="g22">
+                <assay>SRR317036</assay>
+          </assay_group>
+          <assay_group id="g23">
+                <assay>SRR317042</assay>
+                <assay>SRR317043</assay>
+          </assay_group>
+          <assay_group id="g24">
+                <assay>SRR307930</assay>
+                <assay>SRR307931</assay>
+          </assay_group>
+          <assay_group id="g25">
+                <assay>SRR307917</assay>
+                <assay>SRR307918</assay>
+          </assay_group>
+          <assay_group id="g26">
+                <assay>SRR534305</assay>
+                <assay>SRR534306</assay>
+          </assay_group>
+          <assay_group id="g27">
+                <assay>SRR315327</assay>
+                <assay>SRR315328</assay>
+                <assay>SRR315329</assay>
+          </assay_group>
+          <assay_group id="g28">
+                <assay>SRR307925</assay>
+          </assay_group>
+          <assay_group id="g29">
+                <assay>SRR315320</assay>
+                <assay>SRR315321</assay>
+                <assay>SRR315322</assay>
+          </assay_group>
+          <assay_group id="g30">
+                <assay>SRR307907</assay>
+                <assay>SRR307908</assay>
+          </assay_group>
+          <assay_group id="g31">
+                <assay>SRR307913</assay>
+                <assay>SRR307914</assay>
+          </assay_group>
+          <assay_group id="g32">
+                <assay>SRR534297</assay>
+                <assay>SRR534298</assay>
+          </assay_group>
+          <assay_group id="g33">
+                <assay>SRR317035</assay>
+          </assay_group>
+          <assay_group id="g34">
+                <assay>SRR315336</assay>
+                <assay>SRR315337</assay>
+          </assay_group>
+          <assay_group id="g35">
+                <assay>SRR317037</assay>
+                <assay>SRR317038</assay>
+          </assay_group>
+          <assay_group id="g36">
+                <assay>SRR534293</assay>
+                <assay>SRR534294</assay>
+          </assay_group>
+          <assay_group id="g37">
+                <assay>SRR315334</assay>
+                <assay>SRR315335</assay>
+          </assay_group>
+          <assay_group id="g38">
+                <assay>SRR317052</assay>
+                <assay>SRR317053</assay>
+          </assay_group>
+          <assay_group id="g39">
+                <assay>SRR315305</assay>
+                <assay>SRR315306</assay>
+          </assay_group>
+          <assay_group id="g40">
+                <assay>SRR317041</assay>
+          </assay_group>
+          <assay_group id="g41">
+                <assay>SRR307899</assay>
+                <assay>SRR307900</assay>
+          </assay_group>
+          <assay_group id="g42">
+                <assay>SRR534319</assay>
+                <assay>SRR534320</assay>
+                <assay>SRR534321</assay>
+                <assay>SRR534322</assay>
+                <assay>SRR534323</assay>
+                <assay>SRR534324</assay>
+          </assay_group>
+          <assay_group id="g43">
+                <assay>SRR307919</assay>
+          </assay_group>
+          <assay_group id="g44">
+                <assay>SRR307903</assay>
+                <assay>SRR307904</assay>
+          </assay_group>
+          <assay_group id="g45">
+                <assay>SRR534311</assay>
+                <assay>SRR534312</assay>
+                <assay>SRR534313</assay>
+                <assay>SRR534314</assay>
+                <assay>SRR534315</assay>
+                <assay>SRR534316</assay>
+          </assay_group>
+          <assay_group id="g46">
+                <assay>SRR534295</assay>
+                <assay>SRR534296</assay>
+          </assay_group>
+          <assay_group id="g47">
+                <assay>SRR317060</assay>
+                <assay>SRR317061</assay>
+          </assay_group>
+          <assay_group id="g48">
+                <assay>SRR315325</assay>
+                <assay>SRR315326</assay>
+          </assay_group>
+          <assay_group id="g49">
+                <assay>SRR317040</assay>
+          </assay_group>
+          <assay_group id="g50">
+                <assay>SRR315309</assay>
+                <assay>SRR315310</assay>
+          </assay_group>
+          <assay_group id="g51">
+                <assay>SRR317062</assay>
+                <assay>SRR317063</assay>
+          </assay_group>
+          <assay_group id="g52">
+                <assay>SRR317056</assay>
+                <assay>SRR317057</assay>
+          </assay_group>
+          <assay_group id="g53">
+                <assay>SRR307932</assay>
+                <assay>SRR307933</assay>
+          </assay_group>
+          <assay_group id="g54">
+                <assay>SRR534317</assay>
+                <assay>SRR534318</assay>
+          </assay_group>
+          <assay_group id="g55">
+                <assay>SRR317046</assay>
+                <assay>SRR317047</assay>
+          </assay_group>
+          <assay_group id="g56">
+                <assay>SRR315301</assay>
+                <assay>SRR315302</assay>
+          </assay_group>
+          <assay_group id="g57">
+                <assay>SRR534328</assay>
+                <assay>SRR534329</assay>
+                <assay>SRR534330</assay>
+                <assay>SRR534331</assay>
+                <assay>SRR534332</assay>
+                <assay>SRR534333</assay>
+          </assay_group>
+          <assay_group id="g58">
+                <assay>SRR307923</assay>
+                <assay>SRR307924</assay>
+          </assay_group>
+          <assay_group id="g59">
+                <assay>SRR534326</assay>
+                <assay>SRR534327</assay>
+          </assay_group>
+          <assay_group id="g60">
+                <assay>SRR307920</assay>
+          </assay_group>
+          <assay_group id="g61">
+                <assay>SRR317066</assay>
+                <assay>SRR317067</assay>
+          </assay_group>
+          <assay_group id="g62">
+                <assay>SRR534303</assay>
+                <assay>SRR534304</assay>
+          </assay_group>
+          <assay_group id="g63">
+                <assay>SRR315313</assay>
+                <assay>SRR315314</assay>
+          </assay_group>
+          <assay_group id="g64">
+                <assay>SRR534301</assay>
+                <assay>SRR534302</assay>
+          </assay_group>
+          <assay_group id="g65">
+                <assay>SRR315323</assay>
+                <assay>SRR315324</assay>
+          </assay_group>
+          <assay_group id="g66">
+                <assay>SRR315299</assay>
+                <assay>SRR315300</assay>
+          </assay_group>
+          <assay_group id="g67">
+                <assay>SRR317054</assay>
+                <assay>SRR317055</assay>
+          </assay_group>
+          <assay_group id="g68">
+                <assay>SRR307921</assay>
+                <assay>SRR307922</assay>
+          </assay_group>
+          <assay_group id="g69">
+                <assay>SRR315319</assay>
+          </assay_group>
+          <assay_group id="g70">
+                <assay>SRR317064</assay>
+                <assay>SRR317065</assay>
+          </assay_group>
+          <assay_group id="g71">
+                <assay>SRR534325</assay>
+          </assay_group>
+          <assay_group id="g72">
+                <assay>SRR317058</assay>
+                <assay>SRR317059</assay>
+          </assay_group>
+          <assay_group id="g73">
+                <assay>SRR317039</assay>
+          </assay_group>
+          <assay_group id="g74">
+                <assay>SRR534291</assay>
+                <assay>SRR534292</assay>
+          </assay_group>
+          <assay_group id="g75">
+                <assay>SRR307897</assay>
+                <assay>SRR307898</assay>
+          </assay_group>
+          <assay_group id="g76">
+                <assay>SRR315315</assay>
+                <assay>SRR315316</assay>
+          </assay_group>
+          <assay_group id="g77">
+                <assay>SRR315311</assay>
+          </assay_group>
+          <assay_group id="g78">
+                <assay>SRR307928</assay>
+                <assay>SRR307929</assay>
+          </assay_group>
+          <assay_group id="g79">
+                <assay>SRR315297</assay>
+                <assay>SRR315298</assay>
+          </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

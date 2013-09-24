@@ -128,19 +128,8 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
         expect().body(is("Experiment E-GEOD-21860 successfully updated.")).when()
                 .get("updateExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=true");
 
-        expect().body("experimentAccession", contains(DIFFERENTIAL_EXPERIMENT_ACCESSION))
-                .and().body("isPrivate", contains(true))
-                .when().get("listExperiments?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
-
-        assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(0));
-
-
         expect().body(is("Experiment E-GEOD-21860 successfully updated.")).when()
                 .get("updateExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=false");
-
-        expect().body("experimentAccession", contains(DIFFERENTIAL_EXPERIMENT_ACCESSION))
-                .and().body("isPrivate", contains(false))
-                .when().get("listExperiments?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
 
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(4));
 
@@ -153,16 +142,10 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
         expect().body(is("Experiment E-GEOD-21860 successfully deleted.")).when()
                 .get("deleteExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
 
-        expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
-
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(0));
 
         expect().body(startsWith("Experiment " + DIFFERENTIAL_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
                 .get("loadExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&type=DIFFERENTIAL&private=false");
-
-        expect().body("experimentAccession", hasItem(DIFFERENTIAL_EXPERIMENT_ACCESSION))
-                .and().body("isPrivate", contains(false))
-                .when().get("listExperiments?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
 
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(4));
 

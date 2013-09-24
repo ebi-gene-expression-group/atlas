@@ -20,21 +20,16 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.solr.admin.index.experiment;
+package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
 
-import org.apache.solr.client.solrj.beans.Field;
+public class BaselineBioentitiesCount {
 
-import java.util.Collection;
+    private String species;
 
-public class FactorProperty {
+    private String experimentName;
 
-    @Field("experiment_accession")
-    private String experimentAccession;
+    private String experimentLink;
 
-    @Field("assay_group_id")
-    private String assayGroupId;
-
-    @Field("conditions")
-    private Collection<String> values;
+    private int count;
 
 }

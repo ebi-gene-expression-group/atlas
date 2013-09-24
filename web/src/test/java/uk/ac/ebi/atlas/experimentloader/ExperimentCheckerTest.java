@@ -102,7 +102,7 @@ public class ExperimentCheckerTest {
         String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
         when(configurationPropertiesMock.getProperty("diff.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("diff.experiment.raw-counts.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
+        when(configurationPropertiesMock.getProperty("experiment.configuration.path.template")).thenReturn(pathTemplate);
         subject.checkDifferentialFiles(EXPERIMENT_ACCESSION);
         verify(configurationPropertiesMock, times(3)).getProperty(anyString());
         tempFile.delete();
@@ -114,7 +114,7 @@ public class ExperimentCheckerTest {
         String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
         when(configurationPropertiesMock.getProperty("microarray.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.normalized.data.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
+        when(configurationPropertiesMock.getProperty("experiment.configuration.path.template")).thenReturn(pathTemplate);
         subject.checkMicroarrayFiles(EXPERIMENT_ACCESSION);
         verify(configurationPropertiesMock, times(3)).getProperty(anyString());
         tempFile.delete();
@@ -126,7 +126,7 @@ public class ExperimentCheckerTest {
         String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
         when(configurationPropertiesMock.getProperty("microarray.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.log-fold-changes.data.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
+        when(configurationPropertiesMock.getProperty("experiment.configuration.path.template")).thenReturn(pathTemplate);
         subject.checkTwoColourFiles(EXPERIMENT_ACCESSION);
         verify(configurationPropertiesMock, times(3)).getProperty(anyString());
         tempFile.delete();
@@ -152,7 +152,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("experiment.analysis-method.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("diff.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("diff.experiment.raw-counts.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
+        when(configurationPropertiesMock.getProperty("experiment.configuration.path.template")).thenReturn(pathTemplate);
         subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.DIFFERENTIAL);
         verify(configurationPropertiesMock, times(4)).getProperty(anyString());
         tempFile.delete();
@@ -165,7 +165,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("experiment.analysis-method.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.normalized.data.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
+        when(configurationPropertiesMock.getProperty("experiment.configuration.path.template")).thenReturn(pathTemplate);
         subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.MICROARRAY);
         verify(configurationPropertiesMock, times(4)).getProperty(anyString());
         tempFile.delete();
@@ -178,7 +178,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("experiment.analysis-method.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.log-fold-changes.data.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
+        when(configurationPropertiesMock.getProperty("experiment.configuration.path.template")).thenReturn(pathTemplate);
         subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.TWOCOLOUR);
         verify(configurationPropertiesMock, times(4)).getProperty(anyString());
         tempFile.delete();
@@ -191,7 +191,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("experiment.analysis-method.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.experiment.data.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("microarray.normalized.data.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("diff.experiment.configuration.path.template")).thenReturn(pathTemplate);
+        when(configurationPropertiesMock.getProperty("experiment.configuration.path.template")).thenReturn(pathTemplate);
         subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.MICRORNA);
         verify(configurationPropertiesMock, times(4)).getProperty(anyString());
         tempFile.delete();
