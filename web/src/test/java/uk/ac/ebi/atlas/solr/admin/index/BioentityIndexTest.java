@@ -77,7 +77,7 @@ public class BioentityIndexTest {
 
     @Before
     public void setUp() throws Exception {
-        tempDirectoryPath = Paths.get(System.getProperty("java.io.tmpdir"), "bioentity-properties/mirbase");
+        tempDirectoryPath = Paths.get(System.getProperty("java.io.tmpdir"), "bioentity_properties/mirbase");
 
         tempDirectoryPath = Files.createDirectories(tempDirectoryPath);
         tsvFilePath1 = Files.createFile(tempDirectoryPath.resolve("temp-file1.tsv"));
@@ -85,7 +85,7 @@ public class BioentityIndexTest {
         nonTsvFilePath = Files.createFile(tempDirectoryPath.resolve("temp-file.abc"));
 
 
-        reactomePath = Paths.get(System.getProperty("java.io.tmpdir"), "bioentity-properties/reactome");
+        reactomePath = Paths.get(System.getProperty("java.io.tmpdir"), "bioentity_properties/reactome");
         reactomePath = Files.createDirectories(reactomePath);
         reactomeFilePath1 = Files.createFile(reactomePath.resolve("react-file1.tsv"));
 
