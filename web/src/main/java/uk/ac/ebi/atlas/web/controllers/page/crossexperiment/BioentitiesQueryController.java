@@ -36,12 +36,12 @@ import javax.inject.Inject;
 
 @Controller
 @Scope("request")
-public class BioentitiesController {
+public class BioentitiesQueryController {
 
     private DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
 
     @Inject
-    public BioentitiesController(DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder) {
+    public BioentitiesQueryController(DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder) {
         this.differentialBioentityExpressionsBuilder = differentialBioentityExpressionsBuilder;
     }
 

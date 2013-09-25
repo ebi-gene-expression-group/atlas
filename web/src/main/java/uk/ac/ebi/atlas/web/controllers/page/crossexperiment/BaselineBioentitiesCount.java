@@ -28,8 +28,46 @@ public class BaselineBioentitiesCount {
 
     private String experimentName;
 
-    private String experimentLink;
+    private String experimentAccession;
 
     private int count;
 
+    public BaselineBioentitiesCount(String experimentName, String species, String experimentAccession, int count){
+        this.experimentAccession = experimentAccession;
+        this.experimentName = experimentName;
+        this.species = species;
+        this.count = count;
+    }
+
+    public String getExperimentAccession() {
+        return experimentAccession;
+    }
+
+    public void setExperimentAccession(String experimentAccession) {
+        this.experimentAccession = experimentAccession;
+    }
+
+    public String getExperimentName() {
+        return experimentName;
+    }
+
+    public void setExperimentName(String experimentName) {
+        this.experimentName = experimentName;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }
