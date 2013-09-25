@@ -20,39 +20,38 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.mirna;
+package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class HairpinRNADiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
+public class BaselineBioentitiesPageIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "hsa-mir-767";
-
-    private BioEntityPage subject;
+    private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes", "openPanelIndex=2");
+        subject = new BioEntitiesPage(driver, "brain");
         subject.get();
     }
 
     @Test
-    public void checkPaneExpansion() {
-        assertThat(subject.isDifferentialProfileExpanded(), is(true));
+    public void checkBaselineExperimentCounts() {
+        //given
+        subject.clickBaselineProfile();
+
+        assertThat(subject.getBaselineCounts(), hasSize(2));
+        assertThat(subject.getBaselineCounts().get(0).getExperimentAccession(), is("E-MTAB-513"));
+        assertThat(subject.getBaselineCounts().get(0).getExperimentName(), is("E-MTAB-513"));
+        assertThat(subject.getBaselineCounts().get(0).getCount(), is(123));
+        assertThat(subject.getBaselineCounts().get(0).getSpecies(), startsWith("pa"));
+        assertThat(subject.getBaselineCounts().get(1).getExperimentAccession(), is("E-MTAB-599"));
+        assertThat(subject.getBaselineCounts().get(1).getExperimentName(), is("E-MTAB-599"));
     }
 
-    @Test
-    public void checkMatureRNADiffProfilesArePresentForHairpinRNA() {
-        subject.clickDisplayLevelsButton();
-        assertThat(subject.getContrastColumn(), contains("disease state: 'sepsis' vs 'control'",
-                "disease state: 'sepsis' vs 'control'",
-                "disease state: 'sepsis' vs 'control'"));
-        assertThat(subject.getPValues(), hasItems("0.001", "0.002", "0.031"));
-    }
 
 }

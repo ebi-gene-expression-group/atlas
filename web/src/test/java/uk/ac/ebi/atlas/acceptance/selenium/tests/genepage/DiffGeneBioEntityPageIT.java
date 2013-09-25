@@ -39,7 +39,6 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
     protected void getStartingPage() {
         subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes", "cutoff=0.5&openPanelIndex=2");
         subject.get();
-        subject.useDiffHeatmapTable();
     }
 
     @Test

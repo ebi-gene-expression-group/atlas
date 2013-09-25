@@ -131,11 +131,6 @@ public class HeatmapTablePage extends TablePage {
         return heatmapTable;
     }
 
-    protected void setHeatmapTable(WebElement heatmapTable) {
-        this.heatmapTable = heatmapTable;
-    }
-
-
     public List<String> getFactorValueHeaders() {
         List<String> queryFactorValues = getTableHeaders(getHeatmapTable());
         //and we need to remove the last header value, because is related to the organism part column

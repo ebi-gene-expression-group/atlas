@@ -86,6 +86,10 @@
         <put-attribute name="footer" value=""/>
     </definition>
 
+    <definition name="baselineCounts-widget" extends="widget.base.definition">
+        <put-attribute name="body" value="/WEB-INF/jsp/baselineCounts-widget.jsp"/>
+    </definition>
+
     <definition name="heatmap-widget" extends="widget.base.definition">
         <put-attribute name="body" value="/WEB-INF/jsp/heatmap-widget.jsp"/>
     </definition>
