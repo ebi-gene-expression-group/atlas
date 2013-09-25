@@ -119,41 +119,6 @@ public final class ExperimentDispatcher {
         return requestURL;
     }
 
-    @RequestMapping(value = "/widgets/heatmap/protein")
-    public String dispatchWidget(HttpServletRequest request,
-                                 @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
-                                 @RequestParam(value = "propertyType", required = false) String propertyType,
-                                 @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
-                                 Model model) {
-
-        String species = null;
-        try{
-            species = solrQueryService.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
-        } catch(Exception e){
-            model.addAttribute("errorMessage", "Species could not be determined");
-            return "widget-error";
-        }
-        String experimentAccession = applicationProperties.getExperimentAccessionBySpecies(species);
-
-        if (!StringUtils.isEmpty(experimentAccession)) {
-            Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-
-            prepareModel(request, model, experiment);
-
-            String requestURL = getRequestURL(request);
-
-            String mappedSpecies = experiment.getRequestSpeciesName(species);
-
-            String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
-
-            return "forward:" + requestURL + "?type=" + experiment.getType().getParent() + organismParameters;
-        } else {
-            model.addAttribute("identifier", bioEntityAccession);
-            return "widget-error";
-        }
-
-    }
-
     private String getRequestURL(HttpServletRequest request) {
         String contextPath = request.getContextPath();
         String requestURI = request.getRequestURI();
