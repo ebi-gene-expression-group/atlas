@@ -27,8 +27,8 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.DiffExpressionDao;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
-import uk.ac.ebi.atlas.solr.query.conditions.ConditionsSearchService;
-import uk.ac.ebi.atlas.solr.query.conditions.IndexedContrast;
+import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
+import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,19 +43,19 @@ public class DifferentialBioentityExpressionsBuilder {
 
     private DiffExpressionDao diffExpressionDao;
 
-    private ConditionsSearchService conditionsSearchService;
+    private DifferentialConditionsSearchService differentialConditionsSearchService;
 
     @Inject
-    public DifferentialBioentityExpressionsBuilder(DiffExpressionDao diffExpressionDao, ConditionsSearchService conditionsSearchService) {
+    public DifferentialBioentityExpressionsBuilder(DiffExpressionDao diffExpressionDao, DifferentialConditionsSearchService differentialConditionsSearchService) {
         this.diffExpressionDao = diffExpressionDao;
-        this.conditionsSearchService = conditionsSearchService;
+        this.differentialConditionsSearchService = differentialConditionsSearchService;
     }
 
     public DifferentialBioentityExpressions build(String query) {
 
         checkArgument(StringUtils.isNotBlank(query));
 
-        Collection<IndexedContrast> contrasts = conditionsSearchService.findContrasts(query);
+        Collection<IndexedAssayGroup> contrasts = differentialConditionsSearchService.findContrasts(query);
 
         if (contrasts.isEmpty()){
             return new DifferentialBioentityExpressions();

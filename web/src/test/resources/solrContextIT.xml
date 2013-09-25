@@ -35,10 +35,10 @@
     </bean>
 
     <bean scope="singleton" id="differentialConditionsSolrServer" class="uk.ac.ebi.atlas.solr.DummyUpdateSolrServer">
-        <constructor-arg value="http://lime.ebi.ac.uk:8983/solr/conditions"/>
+        <constructor-arg value="http://lime.ebi.ac.uk:8983/solr/differentialConditions"/>
     </bean>
 
     <bean scope="singleton" id="baselineConditionsSolrServer" class="uk.ac.ebi.atlas.solr.DummyUpdateSolrServer">
-        <constructor-arg value="http://lime.ebi.ac.uk:8983/solr/factors"/>
+        <constructor-arg value="http://lime.ebi.ac.uk:8983/solr/baselineConditions"/>
     </bean>
 </beans>

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.dao;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.RowMapper;
 import uk.ac.ebi.atlas.model.ContrastTrader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -7,9 +8,13 @@ import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Named
+@Scope("prototype")
 class DifferentialBioentityExpressionRowMapper implements RowMapper<DifferentialBioentityExpression> {
 
     //Used to handle positive/negative infinite values in the DB
@@ -17,13 +22,14 @@ class DifferentialBioentityExpressionRowMapper implements RowMapper<Differential
 
     private ContrastTrader contrastTrader;
 
+    @Inject
     DifferentialBioentityExpressionRowMapper(ContrastTrader contrastTrader) {
         this.contrastTrader = contrastTrader;
     }
 
     @Override
     public DifferentialBioentityExpression mapRow(ResultSet rs, int rowNum) throws SQLException {
-        String experimentAccession = rs.getString(DiffExpressionDao.EXPERIMENT);
+        String experimentAccession = rs.getString(AssayGroupQueryBuilder.EXPERIMENT);
         String contrastId = rs.getString(DiffExpressionDao.CONTRASTID);
         Contrast contrast = contrastTrader.getContrast(experimentAccession, contrastId);
         DifferentialExpression expression = buildDifferentialExpression(rs.getDouble(DiffExpressionDao.PVALUE), rs.getDouble(DiffExpressionDao.LOG_2_FOLD), rs.getString(DiffExpressionDao.TSTAT), contrast);

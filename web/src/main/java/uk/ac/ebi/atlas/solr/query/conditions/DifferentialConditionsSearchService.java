@@ -37,28 +37,28 @@ import java.util.List;
 
 @Named
 @Scope("singleton")
-public class ConditionsSearchService {
+public class DifferentialConditionsSearchService {
 
     private SolrServer differentialConditionsSolrServer;
 
     private ConditionsSolrQueryBuilder queryBuilder;
 
     @Inject
-    public ConditionsSearchService(SolrServer differentialConditionsSolrServer, ConditionsSolrQueryBuilder queryBuilder) {
+    public DifferentialConditionsSearchService(SolrServer differentialConditionsSolrServer, ConditionsSolrQueryBuilder queryBuilder) {
         this.differentialConditionsSolrServer = differentialConditionsSolrServer;
         this.queryBuilder = queryBuilder;
     }
 
-    public Collection<IndexedContrast> findContrasts(String queryString) {
+    public Collection<IndexedAssayGroup> findContrasts(String queryString) {
 
         try {
             QueryResponse queryResponse = differentialConditionsSolrServer.query(queryBuilder.buildFullTestSearchQuery(queryString));
             List<DifferentialCondition> beans = queryResponse.getBeans(DifferentialCondition.class);
 
-            Collection<IndexedContrast> result = Collections2.transform(beans, new Function<DifferentialCondition, IndexedContrast>() {
+            Collection<IndexedAssayGroup> result = Collections2.transform(beans, new Function<DifferentialCondition, IndexedAssayGroup>() {
                 @Override
-                public IndexedContrast apply(DifferentialCondition conditionProperty) {
-                    return new IndexedContrast(conditionProperty.getExperimentAccession(), conditionProperty.getContrastId());
+                public IndexedAssayGroup apply(DifferentialCondition conditionProperty) {
+                    return new IndexedAssayGroup(conditionProperty.getExperimentAccession(), conditionProperty.getContrastId());
                 }
             });
 

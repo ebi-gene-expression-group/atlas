@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
-import uk.ac.ebi.atlas.solr.query.conditions.IndexedContrast;
+import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -28,7 +28,7 @@ public class DiffExpressionDaoIT {
 
     @Test
     public void testGetExpressions() throws Exception {
-        IndexedContrast indexedContrast1 = new IndexedContrast("E-MTAB-1066", "g2_g3");
+        IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
         List<DifferentialBioentityExpression> expressions = subject.getExpressions(Lists.newArrayList(indexedContrast1));
         assertThat(expressions.size(), is(22));
@@ -39,7 +39,7 @@ public class DiffExpressionDaoIT {
 
     @Test
     public void testGetResultCount() throws Exception {
-        IndexedContrast indexedContrast1 = new IndexedContrast("E-MTAB-1066", "g2_g3");
+        IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
         int resultCount = subject.getResultCount(Lists.newArrayList(indexedContrast1));
         assertThat(resultCount, is(22));

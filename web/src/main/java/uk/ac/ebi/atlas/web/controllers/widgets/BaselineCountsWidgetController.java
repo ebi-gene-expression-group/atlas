@@ -31,7 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import uk.ac.ebi.atlas.web.controllers.page.crossexperiment.BaselineBioentitiesCount;
+import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 
 import java.util.List;
 
