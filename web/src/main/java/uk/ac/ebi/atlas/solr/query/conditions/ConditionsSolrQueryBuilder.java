@@ -36,6 +36,7 @@ public class ConditionsSolrQueryBuilder {
     public SolrQuery buildFullTestSearchQuery(String queryString) {
 
         SolrQuery solrQuery = new SolrQuery(buildQueryString(queryString));
+        solrQuery.setRows(1000);
         return solrQuery;
     }
 

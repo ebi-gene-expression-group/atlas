@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
+package uk.ac.ebi.atlas.model.baseline;
 
 public class BaselineBioentitiesCount {
 

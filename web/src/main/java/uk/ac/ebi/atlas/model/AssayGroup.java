@@ -53,6 +53,10 @@ public class AssayGroup implements Iterable<String>{
         return id;
     }
 
+    public String getFirstAssayAccession() {
+        return assayAccessions.iterator().next();
+    }
+
     @Override
     public int hashCode() {return Objects.hash(id, assayAccessions);}
 

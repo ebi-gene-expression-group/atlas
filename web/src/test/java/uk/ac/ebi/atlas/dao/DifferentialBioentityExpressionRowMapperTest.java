@@ -34,7 +34,7 @@ public class DifferentialBioentityExpressionRowMapperTest {
     public void setUp() throws Exception {
         when(contrastTraderMock.getContrast("e1", "c1")).thenReturn(contrast);
 
-        when(resultSetMock.getString(DiffExpressionDao.EXPERIMENT)).thenReturn("e1");
+        when(resultSetMock.getString(AssayGroupQueryBuilder.EXPERIMENT)).thenReturn("e1");
         when(resultSetMock.getString(DiffExpressionDao.CONTRASTID)).thenReturn("c1");
         when(resultSetMock.getString(DiffExpressionDao.IDENTIFIER)).thenReturn("id1");
         when(resultSetMock.getString(DiffExpressionDao.ORGANISM)).thenReturn("org1");

@@ -26,6 +26,7 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.*;
 
@@ -71,5 +72,16 @@ public class BaselineExperiment extends Experiment {
 
     public AssayGroups getAssayGroups() {
         return assayGroups;
+    }
+
+    public String getSpeciesByAssayGroup(String assayGroupId) {
+        FactorSet factors = getExperimentDesign().getFactorsForAssayGroup(assayGroups.getAssayGroup(assayGroupId));
+        for (Factor factor : factors) {
+            if (factor.getType().equalsIgnoreCase("organism")) {
+                return factor.getValue();
+            }
+        }
+
+        return getFirstSpecies().toLowerCase();
     }
 }

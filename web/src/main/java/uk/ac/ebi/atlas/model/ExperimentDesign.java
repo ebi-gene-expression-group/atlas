@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.model;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.io.Serializable;
 import java.util.*;
@@ -136,6 +137,12 @@ public class ExperimentDesign implements Serializable {
         }
 
         return row.toArray(new String[row.size()]);
+    }
+
+    public FactorSet getFactorsForAssayGroup(AssayGroup assayGroup) {
+//        We assume that all assays belonging to one AssayGroup have the same FactorSet
+
+        return FactorSet.create(getFactors(assayGroup.getFirstAssayAccession()));
     }
 
     private class ExperimentDesignValues extends HashMap<String, String> {
