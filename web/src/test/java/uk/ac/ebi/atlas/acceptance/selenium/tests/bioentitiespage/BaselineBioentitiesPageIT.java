@@ -53,5 +53,4 @@ public class BaselineBioentitiesPageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getBaselineCounts().get(1).getExperimentName(), is("E-MTAB-599"));
     }
 
-
 }

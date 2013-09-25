@@ -86,6 +86,7 @@ public class BioEntitiesPage extends BioEntityPage {
         String experimentName = StringUtils.substringAfter(linkText, "-").trim();
 
         String experimentAccession = StringUtils.substringAfterLast(linkHref, "/");
+        experimentAccession = StringUtils.substringBeforeLast(experimentAccession, "?");
 
         int baselineCount = Integer.parseInt(StringUtils.substringBetween(countElement.getText(),"(",")"));
 
