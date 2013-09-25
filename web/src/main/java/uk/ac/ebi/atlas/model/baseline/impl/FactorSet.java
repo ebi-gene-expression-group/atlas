@@ -109,4 +109,13 @@ public class FactorSet implements FactorGroup {
     }
 
 
+    public static FactorSet create(Map<String, String> factorValueByType) {
+        FactorSet factorSet = new FactorSet();
+        for (String factorType : factorValueByType.keySet()) {
+            Factor factor = new Factor(factorType, factorValueByType.get(factorType));
+            factorSet.add(factor);
+        }
+
+        return factorSet;
+    }
 }

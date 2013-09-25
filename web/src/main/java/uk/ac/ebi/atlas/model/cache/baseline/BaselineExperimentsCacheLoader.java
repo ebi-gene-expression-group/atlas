@@ -24,20 +24,21 @@ package uk.ac.ebi.atlas.model.cache.baseline;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.cache.ExperimentsCacheLoader;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParserBuilder;
-import uk.ac.ebi.atlas.model.differential.AssayGroup;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -83,7 +84,9 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         String[] columnHeaders = ArrayUtils.remove(experimentRunHeaders, GENE_ID_COLUMN_INDEX);
 
-        Set<String> processedRunAccessions = extractProcessedRunAccessions(columnHeaders);
+        AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
+
+        Set<String> processedRunAccessions = assayGroups.getAssayAccessions();
 
         BaselineExperimentBuilder baselineExperimentBuilder = createExperimentBuilder();
 
@@ -99,11 +102,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withProcessedRunAccessions(processedRunAccessions)
                 .build();
 
-        Map<String, ExperimentRun> processedExperimentRuns = mageTabParser.getProcessedExperimentRuns();
+        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(columnHeaders, assayGroups, experimentDesign);
 
-        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(columnHeaders, processedExperimentRuns);
-
-        Set<AssayGroup> assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 
         return baselineExperimentBuilder.forSpecies(getSpecies(mageTabParser))
                 .withAccession(experimentAccession)
@@ -138,35 +138,21 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         return requiredFactorTypes;
     }
 
-    Set<String> extractProcessedRunAccessions(String[] columnHeaders) {
+    List<FactorGroup> extractOrderedFactorGroups(String[] columnHeaders, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
 
-        Set<String> processedRunAccessions = Sets.newHashSet();
+            List<FactorGroup> factorGroups = Lists.newArrayList();
 
-        for (String columnHeader : columnHeaders) {
-            String[] columnRuns = columnHeader.split(",");
+            for (String groupId : columnHeaders) {
+                AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
+                String firstExperimentRun = assayGroup.iterator().next();
 
-            for (String columnRun : columnRuns) {
-                columnRun = columnRun.trim();
-
-                processedRunAccessions.add(columnRun);
+                Map<String, String> factors = experimentDesign.getFactors(firstExperimentRun);
+                factorGroups.add(FactorSet.create(factors));
 
             }
+            return factorGroups;
+
         }
-        return processedRunAccessions;
-    }
-
-    List<FactorGroup> extractOrderedFactorGroups(String[] columnHeaders, final Map<String, ExperimentRun> experimentRuns) {
-
-        List<FactorGroup> factorGroups = Lists.newArrayList();
-
-        for (String columnHeader : columnHeaders) {
-            String firstRunAccessionOfTheGroup = StringUtils.substringBefore(columnHeader, ",").trim();
-            ExperimentRun firstExperimentRunOfTheGroup = experimentRuns.get(firstRunAccessionOfTheGroup);
-            factorGroups.add(firstExperimentRunOfTheGroup.getFactorGroup());
-        }
-        return factorGroups;
-
-    }
 
     protected abstract BaselineExperimentBuilder createExperimentBuilder();
 

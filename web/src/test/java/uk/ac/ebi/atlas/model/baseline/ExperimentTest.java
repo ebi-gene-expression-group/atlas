@@ -29,8 +29,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.differential.AssayGroup;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,8 +47,8 @@ public class ExperimentTest {
     private static final String DISPLAY_NAME = "DISPLAY NAME";
     private static final String PUBMEDID = "PUBMEDID";
     private static final String SPECIE = "homo sapiens";
-    private static final String RUN_ACCESSION_1 = "ENS0";
-    private static final String RUN_ACCESSION_2 = "ENS1";
+    private static final String RUN_ACCESSION1 = "ENS0";
+    private static final String RUN_ACCESSION2 = "ENS1";
     private static final String DESCRIPTION = "aDescription";
     private static final String CELLULAR_COMPONENT = "CELLULAR_COMPONENT";
     private static final String ORGANISM_PART = "ORGANISM_PART";
@@ -72,7 +73,9 @@ public class ExperimentTest {
     private ExperimentDesign experimentDesignMock;
 
     private BaselineExperiment subject;
-    private Set<AssayGroup> assayGroups = Sets.newHashSet();
+
+    @Mock
+    private AssayGroups assayGroupsMock;
 
     @Before
     public void initializeSubject() {
@@ -84,8 +87,9 @@ public class ExperimentTest {
         when(experimentalFactorsBuilderMock.withOrderedFactorGroups(orderedFactorGroups)).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.create()).thenReturn(experimentalFactorsMock);
 
-        assayGroups.add(new AssayGroup("g1", RUN_ACCESSION_1));
-        assayGroups.add(new AssayGroup("g2", RUN_ACCESSION_2));
+        when(assayGroupsMock.iterator()).thenReturn(Sets.newHashSet(new AssayGroup("g1", RUN_ACCESSION1), new AssayGroup("g2", RUN_ACCESSION2)).iterator());
+        when(assayGroupsMock.getAssayAccessions()).thenReturn(Sets.newHashSet(RUN_ACCESSION1, RUN_ACCESSION2));
+        when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newHashSet("g1", "g2"));
 
         subject = new BaselineExperimentBuilder(experimentalFactorsBuilderMock)
                 .forSpecies(Sets.newHashSet(SPECIE))
@@ -99,14 +103,14 @@ public class ExperimentTest {
                 .withDisplayName(DISPLAY_NAME)
                 .withPubMedIds(Lists.newArrayList(PUBMEDID))
                 .withExperimentDesign(experimentDesignMock)
-                .withAssayGroups(assayGroups)
+                .withAssayGroups(assayGroupsMock)
                 .create();
 
     }
 
     @Test
     public void testExperimentRunAccessions() {
-        assertThat(subject.getExperimentRunAccessions(), containsInAnyOrder(RUN_ACCESSION_1, RUN_ACCESSION_2));
+        assertThat(subject.getExperimentRunAccessions(), containsInAnyOrder(RUN_ACCESSION1, RUN_ACCESSION2));
     }
 
     @Test

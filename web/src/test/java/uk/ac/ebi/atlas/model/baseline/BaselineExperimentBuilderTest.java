@@ -30,13 +30,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.differential.AssayGroup;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -77,7 +77,8 @@ public class BaselineExperimentBuilderTest {
 
     private Map<String, String> speciesMap = Maps.newHashMap();
 
-    private Set<AssayGroup> assayGroups = Sets.newHashSet();
+    @Mock
+    private AssayGroups assayGroupsMock;
 
     @Before
     public void setUp() throws Exception {
@@ -96,8 +97,9 @@ public class BaselineExperimentBuilderTest {
         when(factorGroupMock.getFactorByType(FACTOR_TYPE)).thenReturn(factor);
         when(factorGroupMock.iterator()).thenReturn(Sets.newHashSet(factor).iterator());
 
-        assayGroups.add(new AssayGroup("g1", RUN_ACCESSION1));
-        assayGroups.add(new AssayGroup("g2", RUN_ACCESSION2));
+        when(assayGroupsMock.iterator()).thenReturn(Sets.newHashSet(new AssayGroup("g1", RUN_ACCESSION1), new AssayGroup("g2", RUN_ACCESSION2)).iterator());
+        when(assayGroupsMock.getAssayAccessions()).thenReturn(Sets.newHashSet(RUN_ACCESSION1, RUN_ACCESSION2));
+        when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newHashSet("g1", "g2"));
     }
 
     @Test
@@ -118,7 +120,7 @@ public class BaselineExperimentBuilderTest {
                 .withSpeciesMapping(speciesMap)
                 .withPubMedIds(Lists.newArrayList(PUBMEDID))
                 .withExperimentDesign(experimentDesignMock)
-                .withAssayGroups(assayGroups)
+                .withAssayGroups(assayGroupsMock)
                 .create();
 
         assertThat(experiment.getAccession(), is(EXPERIMENT_ACCESSION));

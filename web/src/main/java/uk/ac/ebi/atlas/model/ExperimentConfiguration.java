@@ -28,7 +28,6 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import uk.ac.ebi.atlas.model.differential.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.xml.xpath.*;
@@ -101,7 +100,7 @@ public class ExperimentConfiguration {
         }
     }
 
-    public Set<AssayGroup> getAssayGroups() {
+    public AssayGroups getAssayGroups() {
         Set<AssayGroup> assayGroups = Sets.newHashSet();
 
         String[] assayGoupIds = xmlConfiguration.getStringArray("/analytics/assay_groups/assay_group/@id");
@@ -110,7 +109,7 @@ public class ExperimentConfiguration {
             assayGroups.add(getAssayGroup(assayGoupId));
         }
 
-        return assayGroups;
+        return new AssayGroups(assayGroups);
     }
 
 }

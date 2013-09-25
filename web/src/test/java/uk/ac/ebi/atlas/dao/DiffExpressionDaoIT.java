@@ -31,9 +31,9 @@ public class DiffExpressionDaoIT {
         IndexedContrast indexedContrast1 = new IndexedContrast("E-MTAB-1066", "g2_g3");
 
         List<DifferentialBioentityExpression> expressions = subject.getExpressions(Lists.newArrayList(indexedContrast1));
-        assertThat(expressions.size(), is(50));
-        assertThat(expressions.get(0).getBioentityId(), is("FBgn0032801"));
-        assertThat(expressions.get(1).getBioentityId(), is("FBgn0040393"));
+        assertThat(expressions.size(), is(22));
+        assertThat(expressions.get(0).getBioentityId(), is("FBgn0040393"));
+        assertThat(expressions.get(1).getBioentityId(), is("FBgn0017561"));
 
     }
 
@@ -42,7 +42,7 @@ public class DiffExpressionDaoIT {
         IndexedContrast indexedContrast1 = new IndexedContrast("E-MTAB-1066", "g2_g3");
 
         int resultCount = subject.getResultCount(Lists.newArrayList(indexedContrast1));
-        assertThat(resultCount, is(129));
+        assertThat(resultCount, is(22));
     }
 
 }

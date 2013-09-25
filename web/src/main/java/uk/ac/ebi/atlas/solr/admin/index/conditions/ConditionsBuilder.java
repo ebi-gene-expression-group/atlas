@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
+import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
@@ -20,7 +21,10 @@ public abstract class ConditionsBuilder<T extends Experiment> {
 
         Set<String> values = new HashSet<>();
         for (String name : properties.keySet()) {
-            values.add(properties.get(name));
+            String value = properties.get(name);
+            if (StringUtils.isNotBlank(value)) {
+                values.add(value);
+            }
 
         }
         return values;

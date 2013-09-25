@@ -25,8 +25,8 @@ package uk.ac.ebi.atlas.model.baseline;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.differential.AssayGroup;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 @Named
@@ -57,7 +58,7 @@ public class BaselineExperimentBuilder {
     private ExperimentDesign experimentDesign;
     private Date lastUpdate;
     private String investigationTitle;
-    private Set<AssayGroup> assayGroups;
+    private AssayGroups assayGroups;
 
     @Inject
     BaselineExperimentBuilder(ExperimentalFactorsBuilder experimentalFactorsBuilder) {
@@ -119,7 +120,7 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
-    public BaselineExperimentBuilder withAssayGroups(Set<AssayGroup> assayGroups) {
+    public BaselineExperimentBuilder withAssayGroups(AssayGroups assayGroups) {
         this.assayGroups = assayGroups;
         return this;
     }
@@ -128,7 +129,8 @@ public class BaselineExperimentBuilder {
         checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
         checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
-        checkState(CollectionUtils.isNotEmpty(assayGroups), "Please provide a non empty set of AssayGroup objects");
+        checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
+        checkState(CollectionUtils.isNotEmpty(assayGroups.getAssayGroupIds()), "Please provide a non empty set of AssayGroup objects");
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
         checkState(menuFilterFactorTypes != null, "Please provide a set of menu filter factor types");
         checkState(speciesMapping != null, "Please provide a map of species mappings");

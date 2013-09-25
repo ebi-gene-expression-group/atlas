@@ -28,11 +28,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.model.differential.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.inject.Inject;
-import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -62,9 +60,9 @@ public class ExperimentConfigurationIT {
     @Test
     public void testGetAssayGroups() throws Exception {
         subject = configurationTrader.getExperimentConfiguration("E-MTAB-513");
-        Set<AssayGroup> assayGroups = subject.getAssayGroups();
+        AssayGroups assayGroups = subject.getAssayGroups();
 
-        assertThat(assayGroups, hasSize(16));
+        assertThat(assayGroups.getAssayGroupIds(), hasSize(16));
         assertThat(assayGroups, hasItem(new AssayGroup("g7", "ERR030882")));
 
     }

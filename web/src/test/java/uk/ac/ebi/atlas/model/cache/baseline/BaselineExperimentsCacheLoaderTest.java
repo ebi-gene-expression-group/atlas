@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.model.cache.baseline;
 
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,6 +30,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperimentBuilder;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
@@ -40,8 +40,6 @@ import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParserBuilder;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -90,6 +88,9 @@ public class BaselineExperimentsCacheLoaderTest {
     @Mock
     private TsvReaderBuilder tsvReaderBuilderMock;
 
+    @Mock
+    private AssayGroups assayGroupsMock;
+
     private BaselineExperimentsCacheLoader subject;
 
     private static String PATH_TEMPLATE_FAKE = "FAKE_PATH_TEMPLATE";
@@ -120,31 +121,6 @@ public class BaselineExperimentsCacheLoaderTest {
         assertThat(species, contains(SPECIES));
     }
 
-    @Test
-    public void testExtractOrderedFactorGroups() throws Exception {
-
-        String[] columnHeaders = {COLUMN_HEADER12, COLUMN_HEADER3};
-        Map<String, ExperimentRun> experimentRuns = Maps.newHashMap();
-        experimentRuns.put(COLUMN_HEADER1, experimentRunMock1);
-        experimentRuns.put(COLUMN_HEADER3, experimentRunMock2);
-
-        when(experimentRunMock1.getFactorGroup()).thenReturn(factorGroupMock1);
-        when(experimentRunMock2.getFactorGroup()).thenReturn(factorGroupMock2);
-
-        List<FactorGroup> factorGroups = subject.extractOrderedFactorGroups(columnHeaders, experimentRuns);
-
-        assertThat(factorGroups, contains(factorGroupMock1, factorGroupMock2));
-    }
-
-    @Test
-    public void testExtractProcessedRunAccessions() throws Exception {
-
-        String[] columnHeaders = {COLUMN_HEADER12, COLUMN_HEADER3, COLUMN_HEADER1};
-
-        Set<String> runAccessions = subject.extractProcessedRunAccessions(columnHeaders);
-
-        assertThat(runAccessions, containsInAnyOrder(COLUMN_HEADER1, COLUMN_HEADER2, COLUMN_HEADER3));
-    }
 
     @Test
     public void testGetRequiredFactorTypes() throws Exception {

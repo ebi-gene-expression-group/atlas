@@ -27,7 +27,6 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
 import org.apache.velocity.util.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
@@ -119,11 +118,6 @@ public class MageTabLimpopoParser implements uk.ac.ebi.atlas.model.cache.baselin
             result.put(key, prettifyFactorType(map.get(key)));
         }
         return result;
-    }
-
-    @Override
-    public Map<String, ExperimentRun> getProcessedExperimentRuns() {
-        return MapUtils.unmodifiableMap(processedExperimentRuns);
     }
 
     protected Map<String, ExperimentRun> extractProcessedExperimentRuns() {

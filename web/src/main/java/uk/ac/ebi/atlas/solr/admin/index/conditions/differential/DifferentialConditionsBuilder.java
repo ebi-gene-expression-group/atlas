@@ -26,7 +26,7 @@ package uk.ac.ebi.atlas.solr.admin.index.conditions.differential;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.differential.AssayGroup;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsBuilder;

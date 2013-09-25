@@ -1,13 +1,9 @@
 package uk.ac.ebi.atlas.model.cache.baseline.magetab;
 
-import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
-
 import java.util.Map;
 import java.util.Set;
 
 public interface MageTabParser {
-
-    Map<String, ExperimentRun> getProcessedExperimentRuns();
 
     Set<String> extractSpecies();
 
