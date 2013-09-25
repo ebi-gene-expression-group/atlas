@@ -39,7 +39,6 @@ public class ENSEMBLHairpinRNADiffGeneBioEntityPageIT extends SinglePageSelenium
     protected void getStartingPage() {
         subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes", "openPanelIndex=2");
         subject.get();
-        subject.useDiffHeatmapTable();
     }
 
     @Test

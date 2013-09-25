@@ -28,9 +28,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BioEntityPage extends HeatmapTablePage {
 
@@ -78,6 +80,7 @@ public class BioEntityPage extends HeatmapTablePage {
 
     @FindBy(css = "#global-search-results > li > a")
     private List<WebElement> globalSearchPointers;
+    private Iterable<? extends String> diffHeatmapHeaders;
 
     public BioEntityPage(WebDriver driver) {
         super(driver, null);
@@ -95,6 +98,10 @@ public class BioEntityPage extends HeatmapTablePage {
         this.type = type;
     }
 
+    public WebElement getDiffHeatmapTable(){
+        return diffHeatmapTable;
+    }
+
     @Override
     protected String getPageURI() {
         return PAGE_LOCATION + type + "/" + bioEntityIdentifier;
@@ -102,10 +109,6 @@ public class BioEntityPage extends HeatmapTablePage {
 
     protected String getBioEntityIdentifier() {
         return bioEntityIdentifier;
-    }
-
-    public void useDiffHeatmapTable() {
-        super.setHeatmapTable(diffHeatmapTable);
     }
 
     public String getBioEntityCardTitle() {
@@ -251,5 +254,21 @@ public class BioEntityPage extends HeatmapTablePage {
         return 3;
     }
 
+    public void clickBaselineProfile() {
+        baselinePaneHeader.click();
 
+        By byBaselineProfileBodyId = By.id("baselineProfileBody");
+        FluentWait wait = new WebDriverWait(driver, 3L).pollingEvery(10, TimeUnit.MILLISECONDS);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(byBaselineProfileBodyId));
+
+    }
+
+
+    public List<String> getDiffHeatmapHeaders() {
+        return getTableHeaders(diffHeatmapTable);
+    }
+
+    public List<String> getDiffHeatmapRow(int oneBasedRowIndex) {
+        return getRowValues(diffHeatmapTable, oneBasedRowIndex);
+    }
 }

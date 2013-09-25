@@ -30,7 +30,7 @@
 
 <c:if test="${not empty baselineCounts}">
 
-    <table>
+    <table id="baselineCountsTable">
         <tbody>
         <tr>
             <td>
@@ -48,7 +48,7 @@
                         ${baselineCount.species} - ${baselineCount.experimentName}
                     </a>
                 </td>
-                <td>
+                <td class="count">
                     (${baselineCount.count})
                 </td>
             </tr>

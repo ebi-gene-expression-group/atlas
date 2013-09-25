@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.web.controllers.widgets;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,7 +57,7 @@ public class BaselineCountsWidgetController {
 
     private BaselineBioentitiesCount buildBaselineCount(String experimentAccession) {
         return new BaselineBioentitiesCount(experimentAccession,
-                "pa" + RandomStringUtils.random(3, new char[]{'c','h','i','u','b','o'}) + "ngo patongo", experimentAccession, RandomUtils.nextInt());
+                "pa" + RandomStringUtils.random(3, new char[]{'c','h','i','u','b','o'}) + "ngo patongo", experimentAccession, 123);
     }
 
 }
