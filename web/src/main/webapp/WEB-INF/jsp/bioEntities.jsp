@@ -229,7 +229,7 @@
                     <c:when test="${param.condition != null}">
 
                         new Biojs.AtlasHeatmap({
-                            featuresUrl: '/gxa/widgets/baselinecounts?condition=${entityIdentifier}',
+                            featuresUrl: '/gxa/widgets/baselinecounts?condition=${param.condition}',
                             target: "widgetBody"
                         });
 
