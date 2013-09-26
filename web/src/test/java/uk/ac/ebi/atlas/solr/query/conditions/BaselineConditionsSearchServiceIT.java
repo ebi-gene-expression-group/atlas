@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import java.util.Collection;
 
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,7 +25,6 @@ public class BaselineConditionsSearchServiceIT {
     @Test
     public void testFindContrasts() throws Exception {
         Collection<IndexedAssayGroup> contrasts = subject.findAssayGroups("liver");
-        assertThat(contrasts.size(), is(25));
         assertThat(contrasts, hasItem(new IndexedAssayGroup("E-GEOD-30352", "g6")));
     }
 }
