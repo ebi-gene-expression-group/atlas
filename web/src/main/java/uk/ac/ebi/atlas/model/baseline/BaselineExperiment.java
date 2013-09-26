@@ -78,7 +78,7 @@ public class BaselineExperiment extends Experiment {
         FactorSet factors = getExperimentDesign().getFactorsForAssayGroup(assayGroups.getAssayGroup(assayGroupId));
         for (Factor factor : factors) {
             if (factor.getType().equalsIgnoreCase("organism")) {
-                return factor.getValue();
+                return factor.getValue().toLowerCase();
             }
         }
 
