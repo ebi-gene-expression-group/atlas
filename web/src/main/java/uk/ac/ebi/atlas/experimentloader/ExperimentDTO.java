@@ -42,7 +42,7 @@ public class ExperimentDTO {
 
     private Set<String> species;
 
-    private String pubmedId;
+    private Set<String> pubmedIds;
 
     private String title;
 
@@ -107,12 +107,12 @@ public class ExperimentDTO {
         this.species = species;
     }
 
-    public String getPubmedId() {
-        return pubmedId;
+    public Set<String> getPubmedIds() {
+        return pubmedIds;
     }
 
-    public void setPubmedId(String pubmedId) {
-        this.pubmedId = pubmedId;
+    public void setPubmedIds(Set<String> pubmedIds) {
+        this.pubmedIds = pubmedIds;
     }
 
     public String getTitle() {
