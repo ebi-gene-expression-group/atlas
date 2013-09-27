@@ -44,17 +44,14 @@ public class ExperimentTrader {
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
     private MicroarrayExperimentsCache microarrayExperimentsCache;
     private ExperimentDAO experimentDAO;
-    private ApplicationProperties applicationProperties;
 
     @Inject
     ExperimentTrader(ExperimentDAO experimentDAO,
-                     ApplicationProperties applicationProperties,
                      BaselineExperimentsCache baselineExperimentsCache,
                      RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                      MicroarrayExperimentsCache microarrayExperimentsCache) {
 
         this.experimentDAO = experimentDAO;
-        this.applicationProperties = applicationProperties;
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
