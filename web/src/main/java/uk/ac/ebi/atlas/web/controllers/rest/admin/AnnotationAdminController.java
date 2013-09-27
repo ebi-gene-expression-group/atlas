@@ -38,14 +38,14 @@ import java.util.Set;
 @Controller
 @Scope("request")
 @RequestMapping("/admin")
-public class UpdateAnnotationsController {
+public class AnnotationAdminController {
 
     private GeneNamesImportCommand geneNamesImportCommand;
 
     private DesignElementMappingLoader designElementLoader;
 
     @Inject
-    public UpdateAnnotationsController(GeneNamesImportCommand geneNamesImportCommand, DesignElementMappingLoader designElementLoader) {
+    public AnnotationAdminController(GeneNamesImportCommand geneNamesImportCommand, DesignElementMappingLoader designElementLoader) {
         this.geneNamesImportCommand = geneNamesImportCommand;
 
         this.designElementLoader = designElementLoader;

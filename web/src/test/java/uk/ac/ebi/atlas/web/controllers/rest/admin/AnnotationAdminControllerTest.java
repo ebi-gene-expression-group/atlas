@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest;
+package uk.ac.ebi.atlas.web.controllers.rest.admin;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -32,7 +32,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.GeneNamesImportCommand;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
-import uk.ac.ebi.atlas.web.controllers.rest.admin.UpdateAnnotationsController;
+import uk.ac.ebi.atlas.web.controllers.rest.admin.AnnotationAdminController;
 
 import java.util.Set;
 
@@ -41,7 +41,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class updateAnnotationsControllerTest {
+public class AnnotationAdminControllerTest {
 
     public static final String ARRAY_DESIGN = "arrayDesign";
     public static final String SPECIES = "species";
@@ -49,7 +49,7 @@ public class updateAnnotationsControllerTest {
 
     public static final ArrayDesignType ARRAY_DESIGN_TYPE = ArrayDesignType.MICRO_ARRAY;
 
-    UpdateAnnotationsController subject;
+    AnnotationAdminController subject;
 
     @Mock
     private GeneNamesImportCommand geneNamesImportCommandMock;
@@ -59,7 +59,7 @@ public class updateAnnotationsControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new UpdateAnnotationsController(geneNamesImportCommandMock, designElementLoaderMock);
+        subject = new AnnotationAdminController(geneNamesImportCommandMock, designElementLoaderMock);
     }
 
     @Test

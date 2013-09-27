@@ -82,8 +82,12 @@ public class ExperimentCRUD {
         checkNotNull(accession);
         checkNotNull(experimentType);
 
-        if (experimentDAO.isImported(accession)) {
-            throw new IllegalStateException("Experiment with experimentAccession " + accession + " has been already imported.");
+        UUID uuid = experimentDAO.addExperiment(accession, experimentType, isPrivate);
+
+        //experiment can be indexed only after it's been added to the DB, since fetching experiment
+        //from cache gets this experiment from the DB first
+        if (!isPrivate) {
+            indexCommandTrader.getIndexCommand(accession, IndexOperation.ADD).execute();
         }
 
         generateExperimentDesignFile(accession, experimentType);
@@ -96,14 +100,6 @@ public class ExperimentCRUD {
             case MICRORNA:
                 loadArrayDesign(accession, ArrayDesignType.MICRO_RNA);
                 break;
-        }
-
-        UUID uuid = experimentDAO.addExperiment(accession, experimentType, isPrivate);
-
-        //experiment can be indexed only after it's been added to the DB, since fetching experiment
-        //from cache gets this experiment from the DB first
-        if (!isPrivate) {
-            indexCommandTrader.getIndexCommand(accession, IndexOperation.ADD).execute();
         }
 
         return uuid;

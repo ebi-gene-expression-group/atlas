@@ -32,7 +32,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
-import uk.ac.ebi.atlas.web.controllers.rest.admin.LoadExperimentsController;
+import uk.ac.ebi.atlas.web.controllers.rest.admin.ExperimentAdminController;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -65,7 +65,7 @@ public class DifferentialGeneProfileServiceIT {
     private DifferentialGeneProfileService subject;
 
     @Inject
-    private LoadExperimentsController loadExperimentsController;
+    private ExperimentAdminController experimentAdminController;
 
     @Before
     public void initDatabase() throws IOException {

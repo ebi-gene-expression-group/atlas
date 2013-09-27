@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.experimentloader;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -102,13 +103,18 @@ public class ExperimentDAO {
 
     public UUID addExperiment(String experimentAccession, ExperimentType experimentType, boolean isPrivate) {
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        try {
 
-        UUID accessKeyUUID = UUID.randomUUID();
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-        jdbcTemplate.update(INSERT_NEW_EXPERIMENT, experimentAccession, experimentType.name(), toString(isPrivate), accessKeyUUID.toString());
+            UUID accessKeyUUID = UUID.randomUUID();
 
-        return accessKeyUUID;
+            jdbcTemplate.update(INSERT_NEW_EXPERIMENT, experimentAccession, experimentType.name(), toString(isPrivate), accessKeyUUID.toString());
+            return accessKeyUUID;
+
+        }catch (DuplicateKeyException e){
+            throw new IllegalStateException("Experiment with experimentAccession " + experimentAccession + " has been already imported.");
+        }
     }
 
     public void deleteExperiment(String experimentAccession) {
