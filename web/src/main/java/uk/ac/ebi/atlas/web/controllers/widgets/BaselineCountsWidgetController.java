@@ -22,42 +22,40 @@
 
 package uk.ac.ebi.atlas.web.controllers.widgets;
 
-import com.google.common.collect.Lists;
-import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.commands.BaselineBioentityCountsBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 
+import javax.inject.Inject;
 import java.util.List;
 
 @Controller
 @Scope("request")
 public class BaselineCountsWidgetController {
 
+    private BaselineBioentityCountsBuilder baselineBioentityCountsBuilder;
+
+    @Inject
+    public BaselineCountsWidgetController(BaselineBioentityCountsBuilder baselineBioentityCountsBuilder) {
+        this.baselineBioentityCountsBuilder = baselineBioentityCountsBuilder;
+    }
+
     @RequestMapping(value = "/widgets/baselinecounts")
     public String showResultPage(@RequestParam(value="condition", required = false) String condition, Model model) {
 
         if(StringUtils.isNotBlank(condition)){
 
-            List<BaselineBioentitiesCount> baselineCounts = buildBaselineCounts();
+            List<BaselineBioentitiesCount> baselineCounts = baselineBioentityCountsBuilder.build(condition);
 
             model.addAttribute("baselineCounts", baselineCounts);
 
         }
         return "baselineCounts-widget";
-    }
-
-    private List<BaselineBioentitiesCount> buildBaselineCounts() {
-        return Lists.newArrayList(buildBaselineCount("E-MTAB-513"), buildBaselineCount("E-MTAB-599"));
-    }
-
-    private BaselineBioentitiesCount buildBaselineCount(String experimentAccession) {
-        return new BaselineBioentitiesCount(experimentAccession,
-                "pa" + RandomStringUtils.random(3, new char[]{'c','h','i','u','b','o'}) + "ngo patongo", experimentAccession, 123);
     }
 
 }

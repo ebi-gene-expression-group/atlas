@@ -70,5 +70,20 @@ public class AssayGroupQueryBuilderTest {
 
     }
 
+    @Test
+    public void testBuildAssayGroupQuery() throws Exception {
+        IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("exp1", "g1");
+        IndexedAssayGroup indexedContrast2 = new IndexedAssayGroup("exp2", "g2");
+
+        List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
+        AssayGroupQuery query = subject.withAssayGroupOrContrast(BaselineExpressionDao.ASSAYGROUPID)
+                .withIndexedAssayGroupsOrContrasts(indexedContrasts)
+                .withSelectPart(BaselineExpressionDao.SELECT_QUERY)
+                .withExtraCondition(BaselineExpressionDao.GROUP_BY_EXPERIMENT_ASSAYGROUPID).build();
+
+        assertThat(query.getQuery(), is("SELECT EXPERIMENT, ASSAYGROUPID, COUNT(IDENTIFIER) FROM RNASEQ_BSLN_EXPRESSIONS  subpartition( ABOVE_CUTOFF ) WHERE ((EXPERIMENT=? AND ASSAYGROUPID=? ) OR (EXPERIMENT=? AND ASSAYGROUPID=? )) group by EXPERIMENT, ASSAYGROUPID"));
+        assertThat(query.getValues(), is(new String[]{"exp1", "g1", "exp2", "g2"}));
+
+    }
 
 }
