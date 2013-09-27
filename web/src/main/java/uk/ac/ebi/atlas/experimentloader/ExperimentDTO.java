@@ -44,6 +44,8 @@ public class ExperimentDTO {
 
     private String pubmedId;
 
+    private String title;
+
     public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Date lastUpdate, boolean isPrivate, String accessKey) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
@@ -111,5 +113,13 @@ public class ExperimentDTO {
 
     public void setPubmedId(String pubmedId) {
         this.pubmedId = pubmedId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
