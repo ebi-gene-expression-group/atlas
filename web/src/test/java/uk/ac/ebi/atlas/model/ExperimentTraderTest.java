@@ -80,7 +80,7 @@ public class ExperimentTraderTest {
 
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.MICRORNA)).thenReturn(Sets.newHashSet(E_TABM_713));
 
-        subject = new ExperimentTrader(experimentDAOMock, applicationPropertiesMock,
+        subject = new ExperimentTrader(experimentDAOMock,
                                         baselineExperimentsCacheMock,
                                         rnaSeqDiffExperimentsCacheMock,
                                         microarrayExperimentsCacheMock);
