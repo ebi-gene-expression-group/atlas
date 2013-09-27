@@ -27,7 +27,8 @@ import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 
 public class BaselineBioentitiesPageIT extends SinglePageSeleniumFixture {
 
@@ -44,13 +45,11 @@ public class BaselineBioentitiesPageIT extends SinglePageSeleniumFixture {
         //given
         subject.clickBaselineProfile();
 
-        assertThat(subject.getBaselineCounts(), hasSize(2));
-        assertThat(subject.getBaselineCounts().get(0).getExperimentAccession(), is("E-MTAB-513"));
-        assertThat(subject.getBaselineCounts().get(0).getExperimentName(), is("E-MTAB-513"));
-        assertThat(subject.getBaselineCounts().get(0).getCount(), is(123));
-        assertThat(subject.getBaselineCounts().get(0).getSpecies(), startsWith("pa"));
-        assertThat(subject.getBaselineCounts().get(1).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(subject.getBaselineCounts().get(1).getExperimentName(), is("E-MTAB-599"));
+        assertThat(subject.getBaselineCounts(), hasSize(11));
+        assertThat(subject.getBaselineCounts().get(0).getExperimentAccession(), is("E-GEOD-26284"));
+        assertThat(subject.getBaselineCounts().get(0).getExperimentName(), is("ENCODE cell lines"));
+        assertThat(subject.getBaselineCounts().get(0).getCount(), is(37));
+
     }
 
 }

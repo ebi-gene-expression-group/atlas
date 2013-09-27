@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.dao;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.RowMapper;
 import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
@@ -29,7 +30,8 @@ public class BaselineBioentitiesCountRowMapper implements RowMapper<BaselineBioe
         int count = rs.getInt(BaselineExpressionDao.COUNT_IDENTIFIER);
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
+        String species = StringUtils.capitalize(experiment.getSpeciesByAssayGroup(assayGroupId));
         return new BaselineBioentitiesCount(experiment.getDisplayName(),
-                experiment.getSpeciesByAssayGroup(assayGroupId), experimentAccession, count);
+                species, experimentAccession, count);
     }
 }
