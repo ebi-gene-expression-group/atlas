@@ -42,16 +42,16 @@ import java.util.UUID;
 @Controller
 @Scope("request")
 @RequestMapping("/admin")
-public class LoadExperimentsController {
+public class ExperimentAdminController {
 
-    private static final Logger LOGGER = Logger.getLogger(LoadExperimentsController.class);
+    private static final Logger LOGGER = Logger.getLogger(ExperimentAdminController.class);
 
     private ExperimentChecker experimentChecker;
     private ExperimentCRUD experimentCRUD;
 
 
     @Inject
-    public LoadExperimentsController(ExperimentChecker experimentChecker,
+    public ExperimentAdminController(ExperimentChecker experimentChecker,
                                      ExperimentCRUD experimentCRUD) {
         this.experimentChecker = experimentChecker;
         this.experimentCRUD = experimentCRUD;

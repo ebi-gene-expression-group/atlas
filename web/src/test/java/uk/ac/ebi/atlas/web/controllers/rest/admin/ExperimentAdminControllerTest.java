@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest;
+package uk.ac.ebi.atlas.web.controllers.rest.admin;
 
 import com.google.common.collect.Lists;
 import org.junit.Before;
@@ -34,7 +34,7 @@ import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
-import uk.ac.ebi.atlas.web.controllers.rest.admin.LoadExperimentsController;
+import uk.ac.ebi.atlas.web.controllers.rest.admin.ExperimentAdminController;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -48,7 +48,7 @@ import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LoadExperimentsControllerTest {
+public class ExperimentAdminControllerTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String EXCEPTION_MESSAGE = "EXCEPTION_MESSAGE";
@@ -66,12 +66,12 @@ public class LoadExperimentsControllerTest {
     @Mock
     private ExperimentCRUD experimentCRUDMock;
 
-    private LoadExperimentsController subject;
+    private ExperimentAdminController subject;
 
     @Before
     public void setUp() throws Exception {
 
-        subject = new LoadExperimentsController(experimentCheckerMock, experimentCRUDMock);
+        subject = new ExperimentAdminController(experimentCheckerMock, experimentCRUDMock);
 
         given(experimentDAOMock.findPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(null);
         given(experimentDAOMock.findAllExperiments()).willReturn(
