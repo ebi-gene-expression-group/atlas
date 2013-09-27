@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
@@ -32,7 +33,7 @@ public class Experiment implements Serializable {
     private ExperimentType type;
     private ExperimentDesign experimentDesign;
     private SortedSet<String> species;
-    private List<String> pubMedIds;
+    private Set<String> pubMedIds;
     private Map<String, String> speciesMapping;
     private String accession;
     private String description;
@@ -41,7 +42,7 @@ public class Experiment implements Serializable {
     private Date lastUpdate;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds, ExperimentDesign experimentDesign) {
+                      boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
@@ -55,7 +56,7 @@ public class Experiment implements Serializable {
     }
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String description, boolean hasExtraInfoFile,
-                      Set<String> species, Map<String, String> speciesMapping, List<String> pubMedIds, ExperimentDesign experimentDesign) {
+                      Set<String> species, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
         this(type, accession, lastUpdate, null, description, hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
     }
 
@@ -95,7 +96,7 @@ public class Experiment implements Serializable {
     }
 
     public List<String> getPubMedIds() {
-        return Collections.unmodifiableList(pubMedIds);
+        return Lists.newArrayList(pubMedIds);
     }
 
     public String getFirstSpecies() {

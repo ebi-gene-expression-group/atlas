@@ -23,8 +23,10 @@
 package uk.ac.ebi.atlas.model.cache.baseline;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.velocity.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
@@ -38,13 +40,13 @@ import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.cache.ExperimentsCacheLoader;
 import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser;
-import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParserBuilder;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 
 //Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder every time the load method is invoked
 //The reason to do so is that Guava CacheBuilder, that is the one only client of this class, is not spring managed.
@@ -54,25 +56,21 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
     private static final int HEADER_LINE_INDEX = 0;
     private final TsvReaderBuilder tsvReaderBuilder;
 
-    private MageTabParserBuilder mageTabParserBuilder;
-
     private ConfigurationTrader configurationTrader;
 
     @Inject
     protected BaselineExperimentsCacheLoader(TsvReaderBuilder tsvReaderBuilder,
-                                             MageTabParserBuilder mageTabParserBuilder,
                                              ConfigurationTrader configurationTrader,
                                              @Value("#{configuration['experiment.magetab.path.template']}")
                                              String experimentDataFilePathTemplate) {
 
-        this.mageTabParserBuilder = mageTabParserBuilder;
         this.configurationTrader = configurationTrader;
         this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(experimentDataFilePathTemplate);
     }
 
     @Override
-    protected BaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription, Set<String> species,
-                                      List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
+    protected BaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
+                                      boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
@@ -86,8 +84,6 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 
-        Set<String> processedRunAccessions = assayGroups.getAssayAccessions();
-
         BaselineExperimentBuilder baselineExperimentBuilder = createExperimentBuilder();
 
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
@@ -96,16 +92,11 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
 
-        MageTabParser mageTabParser = mageTabParserBuilder
-                .forExperimentAccession(experimentAccession)
-                .withRequiredFactorTypes(requiredFactorTypes)
-                .withProcessedRunAccessions(processedRunAccessions)
-                .build();
-
         List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(columnHeaders, assayGroups, experimentDesign);
 
+        Map<String, String> factorNamesByType = getFactorNamesByType(experimentDesign, requiredFactorTypes);
 
-        return baselineExperimentBuilder.forSpecies(getSpecies(mageTabParser))
+        return baselineExperimentBuilder.forSpecies(experimentDTO.getSpecies())
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)
@@ -114,10 +105,10 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
                 .withOrderedFactorGroups(orderedFactorGroups)
                 .withExtraInfo(hasExtraInfoFile)
-                .withFactorNamesByType(mageTabParser.getFactorNamesByType())
+                .withFactorNamesByType(factorNamesByType)
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
                 .withSpeciesMapping(speciesMapping)
-                .withPubMedIds(pubMedIds)
+                .withPubMedIds(experimentDTO.getPubmedIds())
                 .withExperimentDesign(experimentDesign)
                 .withAssayGroups(assayGroups)
                 .create();
@@ -140,19 +131,60 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
     List<FactorGroup> extractOrderedFactorGroups(String[] columnHeaders, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
 
-            List<FactorGroup> factorGroups = Lists.newArrayList();
+        List<FactorGroup> factorGroups = Lists.newArrayList();
 
-            for (String groupId : columnHeaders) {
-                AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
-                String firstExperimentRun = assayGroup.iterator().next();
+        for (String groupId : columnHeaders) {
+            AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
+            String firstExperimentRun = assayGroup.iterator().next();
 
-                Map<String, String> factors = experimentDesign.getFactors(firstExperimentRun);
-                factorGroups.add(FactorSet.create(factors));
-
-            }
-            return factorGroups;
+            Map<String, String> factors = experimentDesign.getFactors(firstExperimentRun);
+            factorGroups.add(FactorSet.create(factors));
 
         }
+        return factorGroups;
+
+    }
+
+    protected Map<String, String> getFactorNamesByType(ExperimentDesign experimentDesign, Set<String> requiredFactorTypes) {
+        Map<String, String> factorNamesByType = Maps.newHashMap();
+
+        SortedSet<String> factorTypes = experimentDesign.getFactorHeaders();
+        for (String factorType : factorTypes) {
+            String normalizedFactorType = Factor.normalize(factorType);
+            if (requiredFactorTypes.contains(normalizedFactorType)) {
+                factorNamesByType.put(normalizedFactorType, prettifyFactorType(factorType));
+            }
+        }
+        return factorNamesByType;
+    }
+
+    protected String prettifyFactorType(String factorType) {
+        StringBuilder result = new StringBuilder();
+        String[] split = factorType.replaceAll("_", " ").split(" ");
+        for (String token : split) {
+            int nbUpperCase = countUpperCaseLetters(token);
+            if (nbUpperCase > 1) {
+                result.append(token);
+            } else {
+                token = token.toLowerCase();
+                token = StringUtils.capitalizeFirstLetter(token);
+                result.append(token);
+            }
+            result.append(" ");
+        }
+
+        return result.toString().trim();
+    }
+
+    protected int countUpperCaseLetters(String token) {
+        int nbUpperCase = 0;
+        for (int i = 0; i < token.length(); i++) {
+            if (Character.isUpperCase(token.charAt(i))) {
+                nbUpperCase++;
+            }
+        }
+        return nbUpperCase;
+    }
 
     protected abstract BaselineExperimentBuilder createExperimentBuilder();
 

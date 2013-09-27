@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -91,7 +90,7 @@ public class BaselineExperimentTest {
 
         subject = new BaselineExperiment("accession", new Date(), experimentalFactorsMock,
                 "description", "displayName", Sets.newHashSet("species"), speciesMapping,
-                DEFAULT_QUERY_FACTOR_TYPE, Sets.newHashSet(factorMock), true, Lists.newArrayList(PUBMEDID)
+                DEFAULT_QUERY_FACTOR_TYPE, Sets.newHashSet(factorMock), true, Sets.newHashSet(PUBMEDID)
                 , experimentDesignMock, assayGroupsMock);
 
 

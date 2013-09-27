@@ -34,7 +34,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 
 @Named
@@ -49,14 +48,15 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
 
     @Override
     protected DifferentialExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
-                                          Set<String> species, List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
+                                          boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
         ExperimentConfiguration experimentConfiguration = configurationTrader.getExperimentConfiguration(experimentAccession);
         Set<Contrast> contrasts = experimentConfiguration.getContrasts();
 
-        return new DifferentialExperiment(experimentAccession, experimentDTO.getLastUpdate(), contrasts, experimentDescription, hasExtraInfoFile, species, pubMedIds, experimentDesign);
+        return new DifferentialExperiment(experimentAccession, experimentDTO.getLastUpdate(), contrasts,
+                experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), experimentDTO.getPubmedIds(), experimentDesign);
 
     }
 }

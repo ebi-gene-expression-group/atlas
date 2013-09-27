@@ -39,8 +39,6 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 
-import java.util.Date;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
@@ -83,21 +81,26 @@ public class MicroarrayExperimentsCacheLoaderTest {
     @Before
     public void setUp() throws Exception {
         subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, "{0}{1}", experimentDAOMock);
-        subject.setMageTabLimpopoUtils(mageTabLimpopoUtilsMock);
+
         when(experimentDTOMock.getExperimentAccession()).thenReturn(ACCESSION);
+        when(experimentDTOMock.getExperimentType()).thenReturn(ExperimentType.MICROARRAY);
+        when(experimentDTOMock.getAccessKey()).thenReturn(ACCESS_KEY);
+        when(experimentDTOMock.getPubmedIds()).thenReturn(Sets.newHashSet("pubmed1"));
+        when(experimentDTOMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIES));
+
+
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
         when(experimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGNS)));
         when(mageTabLimpopoUtilsMock.parseInvestigation(ACCESSION)).thenReturn(investigationMock);
 
-        ExperimentDTO experimentDTO = new ExperimentDTO(ACCESSION, ExperimentType.MICROARRAY, new Date(), false, ACCESS_KEY);
-        when(experimentDAOMock.findPublicExperiment(ACCESSION)).thenReturn(experimentDTO);
+        when(experimentDAOMock.findPublicExperiment(ACCESSION)).thenReturn(experimentDTOMock);
     }
 
     @Test
     public void testLoad() throws Exception {
-        MicroarrayExperiment microarrayExperiment = subject.load(experimentDTOMock, "description", Sets.newHashSet(SPECIES),
-                                                                 null, false, experimentDesignMock);
+        MicroarrayExperiment microarrayExperiment = subject.load(experimentDTOMock, "description",
+                false, experimentDesignMock);
         assertThat(microarrayExperiment.getAccession(), is(ACCESSION));
         assertThat(microarrayExperiment.getArrayDesignAccessions(), hasItem(ARRAYDESIGNS));
         assertThat(microarrayExperiment.getSpecies(), hasItem(SPECIES));

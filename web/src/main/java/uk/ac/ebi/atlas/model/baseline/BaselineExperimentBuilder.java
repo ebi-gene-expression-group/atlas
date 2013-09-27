@@ -54,7 +54,7 @@ public class BaselineExperimentBuilder {
     private Map<String, String> speciesMapping;
     private String experimentAccession;
     private List<FactorGroup> orderedFactorGroups;
-    private List<String> pubMedIds;
+    private Set<String> pubMedIds;
     private ExperimentDesign experimentDesign;
     private Date lastUpdate;
     private String investigationTitle;
@@ -110,7 +110,7 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
-    public BaselineExperimentBuilder withPubMedIds(List<String> pubMedIds) {
+    public BaselineExperimentBuilder withPubMedIds(Set<String> pubMedIds) {
         this.pubMedIds = pubMedIds;
         return this;
     }

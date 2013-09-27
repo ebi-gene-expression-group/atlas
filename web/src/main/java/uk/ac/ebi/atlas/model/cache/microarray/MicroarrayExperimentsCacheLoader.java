@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -58,8 +57,8 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
     }
 
     @Override
-    protected MicroarrayExperiment load(ExperimentDTO experimentDTO, String experimentDescription, Set<String> species,
-                                        List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
+    protected MicroarrayExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
+                                        boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 
@@ -73,8 +72,8 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
         boolean hasLogFoldChangeFile = Files.exists(Paths.get(logFoldChangeFileLocation));
 
         return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession, experimentDTO.getLastUpdate(),
-                                        contrasts, experimentDescription, hasExtraInfoFile, species, arrayDesignNames,
-                                        hasLogFoldChangeFile, pubMedIds, experimentDesign);
+                                        contrasts, experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), arrayDesignNames,
+                                        hasLogFoldChangeFile, experimentDTO.getPubmedIds(), experimentDesign);
 
     }
 }

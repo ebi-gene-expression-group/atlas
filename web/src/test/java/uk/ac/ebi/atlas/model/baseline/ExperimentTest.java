@@ -101,7 +101,7 @@ public class ExperimentTest {
                 .withFactorNamesByType(Collections.EMPTY_MAP)
                 .withSpeciesMapping(Collections.EMPTY_MAP)
                 .withDisplayName(DISPLAY_NAME)
-                .withPubMedIds(Lists.newArrayList(PUBMEDID))
+                .withPubMedIds(Sets.newHashSet(PUBMEDID))
                 .withExperimentDesign(experimentDesignMock)
                 .withAssayGroups(assayGroupsMock)
                 .create();

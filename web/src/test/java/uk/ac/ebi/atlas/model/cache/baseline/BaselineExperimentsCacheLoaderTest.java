@@ -102,7 +102,7 @@ public class BaselineExperimentsCacheLoaderTest {
         when(tsvReaderBuilderMock.build()).thenReturn(experimentDataTsvReaderMock);
 
         subject =
-                new BaselineExperimentsCacheLoader(tsvReaderBuilderMock, mageTabParserBuilderMock, configurationTraderMock, PATH_TEMPLATE_FAKE){
+                new BaselineExperimentsCacheLoader(tsvReaderBuilderMock, configurationTraderMock, PATH_TEMPLATE_FAKE){
 
                     @Override
                     protected BaselineExperimentBuilder createExperimentBuilder() {

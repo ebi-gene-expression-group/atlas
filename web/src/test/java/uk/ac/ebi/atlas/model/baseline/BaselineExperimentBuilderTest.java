@@ -118,7 +118,7 @@ public class BaselineExperimentBuilderTest {
                 .withMenuFilterFactorTypes(Sets.newHashSet(FACTOR_TYPE))
                 .withFactorNamesByType(nameMap)
                 .withSpeciesMapping(speciesMap)
-                .withPubMedIds(Lists.newArrayList(PUBMEDID))
+                .withPubMedIds(Sets.newHashSet(PUBMEDID))
                 .withExperimentDesign(experimentDesignMock)
                 .withAssayGroups(assayGroupsMock)
                 .create();

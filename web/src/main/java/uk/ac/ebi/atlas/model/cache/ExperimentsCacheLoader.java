@@ -25,9 +25,7 @@ package uk.ac.ebi.atlas.model.cache;
 import com.google.common.cache.CacheLoader;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -39,16 +37,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.util.List;
-import java.util.Set;
 
 public abstract class ExperimentsCacheLoader<T extends Experiment> extends CacheLoader<String, T> {
     private static final Logger LOGGER = Logger.getLogger(ExperimentsCacheLoader.class);
 
     @Value("#{configuration['experiment.extra-info-image.path.template']}")
     private String extraInfoPathTemplate;
-
-    private MageTabLimpopoUtils mageTabLimpopoUtils;
 
     private ArrayExpressClient arrayExpressClient;
 
@@ -60,12 +54,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
     }
 
     @Inject
-    public void setMageTabLimpopoUtils(MageTabLimpopoUtils mageTabLimpopoUtils) {
-        this.mageTabLimpopoUtils = mageTabLimpopoUtils;
-    }
-
-    @Inject
-    public void setMageTabLimpopoUtils(ExperimentDAO experimentDAO) {
+    public void setExperimentDAO(ExperimentDAO experimentDAO) {
         this.experimentDAO = experimentDAO;
     }
 
@@ -92,40 +81,22 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
         ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
 
-        MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
+        String experimentDescription = fetchExperimentDescription(experimentAccession, experimentDTO);
 
-        String experimentDescription = fetchExperimentDescription(experimentAccession, investigation);
-
-        Set<String> species = extractSpecies(investigation);
-
-        List<String> pubMedIds = extractPubMedIds(investigation);
-
-        return load(experimentDTO, experimentDescription, species, pubMedIds, hasExtraInfoFile, experimentDesign);
+        return load(experimentDTO, experimentDescription, hasExtraInfoFile, experimentDesign);
 
     }
 
-    protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription, Set<String> species,
-                              List<String> pubMedIds, boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
+    protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription,
+                              boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
 
-    final String fetchExperimentDescription(String experimentAccession, MAGETABInvestigation investigation) {
+    final String fetchExperimentDescription(String experimentAccession, ExperimentDTO experimentDTO) {
         try {
             return arrayExpressClient.fetchExperimentName(experimentAccession);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-            return extractInvestigationTitle(investigation);
+            return experimentDTO.getTitle();
         }
-    }
-
-    final Set<String> extractSpecies(MAGETABInvestigation investigation) {
-        return mageTabLimpopoUtils.extractSpeciesFromSDRF(investigation);
-    }
-
-    final List<String> extractPubMedIds(MAGETABInvestigation investigation) {
-        return mageTabLimpopoUtils.extractPubMedIdsFromIDF(investigation);
-    }
-
-    final String extractInvestigationTitle(MAGETABInvestigation investigation) {
-        return mageTabLimpopoUtils.extractInvestigationTitle(investigation);
     }
 
 

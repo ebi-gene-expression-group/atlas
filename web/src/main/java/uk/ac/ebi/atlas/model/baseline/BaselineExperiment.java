@@ -28,7 +28,10 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 public class BaselineExperiment extends Experiment {
 
@@ -44,7 +47,7 @@ public class BaselineExperiment extends Experiment {
                        String description,
                        String displayName, Set<String> species, Map<String, String> speciesMapping,
                        String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile,
-                       List<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups) {
+                       Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups) {
 
         super(ExperimentType.BASELINE, accession, lastUpdate, displayName, description,
                 hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
