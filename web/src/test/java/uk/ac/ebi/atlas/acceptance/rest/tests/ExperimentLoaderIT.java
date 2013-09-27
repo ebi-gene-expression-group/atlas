@@ -47,7 +47,7 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
     @After
     public void cleanup() {
         expect().body(containsString(EXPERIMENT_ACCESSION)).
-            when().get("updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=false");
+            when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=false");
     }
 
     @Test
@@ -126,10 +126,10 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
     public void testUpdateDifferentialExperiment(){
 
         expect().body(is("Experiment E-GEOD-21860 successfully updated.")).when()
-                .get("updateExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=true");
+                .get("updateStatus?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=true");
 
         expect().body(is("Experiment E-GEOD-21860 successfully updated.")).when()
-                .get("updateExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=false");
+                .get("updateStatus?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=false");
 
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(4));
 
