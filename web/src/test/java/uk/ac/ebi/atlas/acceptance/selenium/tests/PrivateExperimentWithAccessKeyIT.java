@@ -55,7 +55,7 @@ public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
     public void init() {
 
         expect().body(containsString(EXPERIMENT_ACCESSION))
-                .when().get("updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=true");
+                .when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=true");
 
         String jsonResponse = given().get("listExperiments?accession=" + EXPERIMENT_ACCESSION).body().asString();
 
@@ -68,7 +68,7 @@ public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
     @After
     public void cleanup() {
         expect().body(containsString(EXPERIMENT_ACCESSION))
-                .when().get("updateExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=false");
+                .when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=false");
     }
 
     @Test(expected = NoSuchElementException.class)

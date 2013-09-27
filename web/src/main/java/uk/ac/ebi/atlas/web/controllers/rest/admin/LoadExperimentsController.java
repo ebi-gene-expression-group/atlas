@@ -85,7 +85,7 @@ public class LoadExperimentsController {
         return "Experiment " + experimentAccession + " successfully deleted.";
     }
 
-    @RequestMapping("/updateExperiment")
+    @RequestMapping("/updateStatus")
     @ResponseBody
     public String updateExperiment(@RequestParam("accession") String experimentAccession,
                                    @RequestParam("private") boolean isPrivate) {
