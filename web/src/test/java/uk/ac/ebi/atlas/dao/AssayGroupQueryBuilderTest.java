@@ -103,7 +103,7 @@ public class AssayGroupQueryBuilderTest {
                 .withSelectPart(BaselineExpressionDao.SELECT_QUERY)
                 .withExtraCondition(BaselineExpressionDao.GROUP_BY_EXPERIMENT_ASSAYGROUPID).build();
 
-        assertThat(query.getQuery(), is("SELECT EXPERIMENT, ASSAYGROUPID, COUNT(IDENTIFIER) FROM RNASEQ_BSLN_EXPRESSIONS  subpartition( ABOVE_CUTOFF ) WHERE ((EXPERIMENT=? AND ASSAYGROUPID=? ) OR (EXPERIMENT=? AND ASSAYGROUPID=? )) group by EXPERIMENT, ASSAYGROUPID"));
+        assertThat(query.getQuery(), is("SELECT EXPERIMENT, ASSAYGROUPID, COUNT(IDENTIFIER) as COUNT FROM RNASEQ_BSLN_EXPRESSIONS  subpartition( ABOVE_CUTOFF ) WHERE ((EXPERIMENT=? AND ASSAYGROUPID=? ) OR (EXPERIMENT=? AND ASSAYGROUPID=? )) group by EXPERIMENT, ASSAYGROUPID order by COUNT desc"));
         assertThat(query.getParams(), is(new String[]{"exp1", "g1", "exp2", "g2"}));
 
     }
