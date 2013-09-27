@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.model.cache.baseline;
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -109,16 +108,6 @@ public class BaselineExperimentsCacheLoaderTest {
                         throw new UnsupportedOperationException();
                     }
                 };
-    }
-
-    @Test
-    public void testGetSpecies() throws Exception {
-
-        when(mageTabParserMock.extractSpecies()).thenReturn(Sets.newHashSet(SPECIES));
-
-        Set<String> species = subject.getSpecies(mageTabParserMock);
-
-        assertThat(species, contains(SPECIES));
     }
 
 

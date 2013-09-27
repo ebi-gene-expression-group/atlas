@@ -39,7 +39,6 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.cache.ExperimentsCacheLoader;
-import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -113,11 +112,6 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withAssayGroups(assayGroups)
                 .create();
 
-    }
-
-    Set<String> getSpecies(MageTabParser mageTabParser) {
-
-        return mageTabParser.extractSpecies();
     }
 
     Set<String> getRequiredFactorTypes(String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
