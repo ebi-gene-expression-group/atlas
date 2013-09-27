@@ -35,7 +35,7 @@ public class BaselineExpressionDaoIT {
         assertThat(bioentitiesCounts, hasSize(1));
         assertThat(bioentitiesCounts.get(0).getExperimentAccession(), is(E_MTAB_599));
         assertThat(bioentitiesCounts.get(0).getCount(), is(17719));
-        assertThat(bioentitiesCounts.get(0).getSpecies(), is("mus musculus"));
+        assertThat(bioentitiesCounts.get(0).getSpecies(), is("Mus musculus"));
 
     }
 
