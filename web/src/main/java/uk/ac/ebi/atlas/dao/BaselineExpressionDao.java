@@ -25,8 +25,9 @@ public class BaselineExpressionDao {
             .append(AssayGroupQueryBuilder.EXPERIMENT).append(", ")
             .append(ASSAYGROUPID).append(", ")
             .append(COUNT_IDENTIFIER)
-            .append("FROM RNASEQ_BSLN_EXPRESSIONS  subpartition( ABOVE_CUTOFF ) ")
+            .append(" FROM RNASEQ_BSLN_EXPRESSIONS  subpartition( ABOVE_CUTOFF ) ")
             .toString();
+    static final String GROUP_BY_EXPERIMENT_ASSAYGROUPID = "group by EXPERIMENT, ASSAYGROUPID";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -46,7 +47,7 @@ public class BaselineExpressionDao {
         AssayGroupQuery query = assayGroupQueryBuilder.withSelectPart(SELECT_QUERY)
                 .withIndexedAssayGroupsOrContrasts(indexedAssayGroups)
                 .withAssayGroupOrContrast(ASSAYGROUPID)
-                .withExtraCondition("group by EXPERIMENT, ASSAYGROUPID")
+                .withExtraCondition(GROUP_BY_EXPERIMENT_ASSAYGROUPID)
                 .build();
 
         return jdbcTemplate.query(query.getQuery(), rowMapper, query.getValues());

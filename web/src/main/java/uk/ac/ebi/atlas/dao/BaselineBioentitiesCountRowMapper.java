@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.dao;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.RowMapper;
-import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
@@ -16,13 +15,10 @@ import java.sql.SQLException;
 @Scope("prototype")
 public class BaselineBioentitiesCountRowMapper implements RowMapper<BaselineBioentitiesCount> {
 
-    private ExperimentTrader experimentTrader;
-
     private BaselineExperimentsCache baselineExperimentsCache;
 
     @Inject
-    public BaselineBioentitiesCountRowMapper(ExperimentTrader experimentTrader, BaselineExperimentsCache baselineExperimentsCache) {
-        this.experimentTrader = experimentTrader;
+    public BaselineBioentitiesCountRowMapper( BaselineExperimentsCache baselineExperimentsCache) {
         this.baselineExperimentsCache = baselineExperimentsCache;
     }
 
