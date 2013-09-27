@@ -30,7 +30,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import uk.ac.ebi.atlas.web.controllers.page.crossexperiment.BaselineBioentitiesCount;
+import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
