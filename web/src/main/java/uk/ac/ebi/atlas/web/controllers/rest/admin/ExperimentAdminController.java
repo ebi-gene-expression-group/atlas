@@ -96,9 +96,9 @@ public class ExperimentAdminController {
 
     @RequestMapping(value = "/listExperiments", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public String listExperiments(@RequestParam(value="accession", required = false) Set<String> experimentAccessions) {
+    public String listExperiments(@RequestParam(value = "accession", required = false) Set<String> experimentAccessions) {
         List<ExperimentDTO> experiments;
-        if(CollectionUtils.isEmpty(experimentAccessions)){
+        if (CollectionUtils.isEmpty(experimentAccessions)) {
             experiments = experimentCRUD.findAllExperiments();
         } else {
             experiments = experimentCRUD.findExperiments(experimentAccessions);
@@ -109,8 +109,15 @@ public class ExperimentAdminController {
 
     @RequestMapping("/updateAllExperimentDesigns")
     @ResponseBody
-    public String updateAllExperimentDesigns()  {
+    public String updateAllExperimentDesigns() {
         int updatedExperimentsCount = experimentCRUD.updateAllExperimentDesigns();
+        return "Experiment design was updated for " + updatedExperimentsCount + " experiments";
+    }
+
+    @RequestMapping("/updateAllExperiments")
+    @ResponseBody
+    public String updateAllExperiments() throws IOException {
+        int updatedExperimentsCount = experimentCRUD.updateAllExperiments();
         return "Experiment design was updated for " + updatedExperimentsCount + " experiments";
     }
 

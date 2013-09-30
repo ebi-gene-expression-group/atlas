@@ -126,8 +126,8 @@ public class BaselineExperimentBuilder {
     }
 
     public BaselineExperiment create() {
-        checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
-        checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
+//        checkState(CollectionUtils.isNotEmpty(species), "Please provide a non blank species");
+//        checkState(StringUtils.isNotBlank(description), "Please provide a non blank description");
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
         checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
         checkState(CollectionUtils.isNotEmpty(assayGroups.getAssayGroupIds()), "Please provide a non empty set of AssayGroup objects");

@@ -46,9 +46,7 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
 
             ExperimentDTO experiment = experimentByAccession.get(experimentAccession);
 
-            if (experiment != null) {
-                experiment.addSpecie(specie);
-            } else {
+            if (experiment == null) {
 
                 ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("type"));
                 Date lastUpdate = resultSet.getTimestamp("last_update");
@@ -67,10 +65,14 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
                         , isPrivate
                         , accessKeyUUID);
 
-                experiment.addSpecie(specie);
 
                 experimentByAccession.put(experimentAccession, experiment);
             }
+
+            if (!StringUtils.isBlank(specie)) {
+                experiment.addSpecie(specie);
+            }
+
 
         }
 

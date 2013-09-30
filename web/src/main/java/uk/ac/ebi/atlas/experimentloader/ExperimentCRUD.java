@@ -87,8 +87,6 @@ public class ExperimentCRUD {
         checkNotNull(experimentType);
 
 
-
-
         ExperimentDTO experimentDTO = experimentDTOBuilder.forExperimentAccession(accession)
                 .withExperimentType(experimentType).withPrivate(isPrivate).build();
 
@@ -175,6 +173,16 @@ public class ExperimentCRUD {
         }
         return experiments.size();
     }
+
+    public int updateAllExperiments() throws IOException {
+        List<ExperimentDTO> experiments = experimentDAO.findAllExperiments();
+        for (ExperimentDTO experiment : experiments) {
+            deleteExperiment(experiment.getExperimentAccession());
+            importExperiment(experiment.getExperimentAccession(), experiment.getExperimentType(), experiment.isPrivate());
+        }
+        return experiments.size();
+    }
+
 
     void updateExperimentDesign(ExperimentDTO experiment) {
         String accession = experiment.getExperimentAccession();
