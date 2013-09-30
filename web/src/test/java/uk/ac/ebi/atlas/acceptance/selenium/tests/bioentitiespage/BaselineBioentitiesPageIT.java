@@ -25,6 +25,9 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
+import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
+
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -45,10 +48,13 @@ public class BaselineBioentitiesPageIT extends SinglePageSeleniumFixture {
         //given
         subject.clickBaselineProfile();
 
-        assertThat(subject.getBaselineCounts(), hasSize(11));
-        assertThat(subject.getBaselineCounts().get(0).getExperimentAccession(), is("E-GEOD-26284"));
-        assertThat(subject.getBaselineCounts().get(0).getExperimentName(), is("ENCODE cell lines"));
-        assertThat(subject.getBaselineCounts().get(0).getCount(), is(37));
+        List<BaselineBioentitiesCount> baselineCounts = subject.getBaselineCounts();
+
+        assertThat(baselineCounts, hasSize(11));
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-513"));
+        assertThat(baselineCounts.get(0).getExperimentName(), is("Illumina Body Map"));
+        assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
+        assertThat(baselineCounts.get(0).getCount(), is(233));
 
     }
 

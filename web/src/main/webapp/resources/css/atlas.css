@@ -81,7 +81,11 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a {
     vertical-align: inherit;
     border: none;
     margin: 0px;
-    padding: 1px;
+    padding: 2px;
+}
+
+#atlas-content td.count {
+    padding-left: 10px;
 }
 
 #atlas-content form, #dialog-form form {

@@ -44,7 +44,7 @@
         <c:forEach var="baselineCount" items="${baselineCounts}">
             <tr>
                 <td>
-                    <a class="thick-link" href="${base}/experiments/${baselineCount.experimentAccession}?queryFactorType=ORGANISM_PART&queryFactorValues=${param.condition}" title="experiment">
+                    <a class="bioEntityCardLink" href="${base}/experiments/${baselineCount.experimentAccession}?queryFactorType=ORGANISM_PART&queryFactorValues=${param.condition}" title="experiment">
                         ${baselineCount.species} - ${baselineCount.experimentName}
                     </a>
                 </td>
