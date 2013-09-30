@@ -134,7 +134,7 @@ public class BaselineExperimentBuilder {
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
         checkState(menuFilterFactorTypes != null, "Please provide a set of menu filter factor types");
         checkState(speciesMapping != null, "Please provide a map of species mappings");
-        checkState(CollectionUtils.isNotEmpty(pubMedIds), "Please provide a non blank pubMedIds");
+//        checkState(CollectionUtils.isNotEmpty(pubMedIds), "Please provide a non blank pubMedIds");
         checkState(experimentDesign != null, "Please provide a ExperimentDesign object");
 
         ExperimentalFactors experimentalFactors = experimentalFactorsBuilder

@@ -23,52 +23,58 @@
 package uk.ac.ebi.atlas.experimentloader;
 
 import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<ExperimentDTO>{
+public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<ExperimentDTO>> {
     @Override
     public List<ExperimentDTO> extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+        Map<String, ExperimentDTO> experimentByAccession = Maps.newHashMap();
 
-        while (resultSet.next()){
-
+        while (resultSet.next()) {
             String experimentAccession = resultSet.getString("accession");
-            ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("type"));
-            Date lastUpdate = resultSet.getTimestamp("last_update");
-            boolean isPrivate = "T".equals(resultSet.getString("private"));
-            String accessKeyUUID = resultSet.getString("access_key");
-            String title = resultSet.getString("title");
-            Set<String> pumedIds = Sets.newHashSet(Splitter.on(", ").split(resultSet.getString("pubmed_Ids")));
+            String specie = resultSet.getString("species_name");
 
-            Set<String> species = Sets.newHashSet(resultSet.getString("species"));
+            ExperimentDTO experiment = experimentByAccession.get(experimentAccession);
 
-            while(resultSet.next()){
-                species.add(resultSet.getString("species"));
+            if (experiment != null) {
+                experiment.addSpecie(specie);
+            } else {
+
+                ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("type"));
+                Date lastUpdate = resultSet.getTimestamp("last_update");
+                boolean isPrivate = "T".equals(resultSet.getString("private"));
+                String accessKeyUUID = resultSet.getString("access_key");
+                String title = resultSet.getString("title");
+
+                String pubmed_ids = resultSet.getString("pubmed_Ids");
+                Set<String> pumedIds = StringUtils.isBlank(pubmed_ids)? new HashSet<String>() : Sets.newHashSet(Splitter.on(", ").split(pubmed_ids));
+
+                experiment = new ExperimentDTO(experimentAccession
+                        , experimentType
+                        , pumedIds
+                        , title
+                        , lastUpdate
+                        , isPrivate
+                        , accessKeyUUID);
+
+                experiment.addSpecie(specie);
+
+                experimentByAccession.put(experimentAccession, experiment);
             }
-
-            return new ExperimentDTO(
-                    experimentAccession
-                    , experimentType
-                    , species
-                    , pumedIds
-                    , title
-                    , lastUpdate
-                    , isPrivate
-                    , accessKeyUUID);
 
         }
 
-
-
-
+        return Lists.newArrayList(experimentByAccession.values());
 
 
     }

@@ -99,6 +99,9 @@ public class ExperimentCRUDTest {
     @Mock
     private IndexCommand indexCommandMock;
 
+    @Mock
+    private ExperimentDTOBuilder exparimentDTOBuilderMock;
+
     @Before
     public void setUp() throws Exception {
 
@@ -116,7 +119,7 @@ public class ExperimentCRUDTest {
 
         subject = new ExperimentCRUD(
                 arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDAOMock,
-                experimentDesignFileWriterBuilderMock, experimentTraderMock, indexCommandTraderMock);
+                experimentDesignFileWriterBuilderMock, experimentTraderMock, indexCommandTraderMock, exparimentDTOBuilderMock);
     }
 
     @Test
@@ -157,7 +160,7 @@ public class ExperimentCRUDTest {
 
     @Test
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
-        subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, null, false, ACCESS_KEY));
+        subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, null, null, null, false));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
         verify(indexCommandMock).execute();
     }

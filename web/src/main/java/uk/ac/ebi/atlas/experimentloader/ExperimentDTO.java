@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentloader;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Date;
@@ -62,6 +63,17 @@ public class ExperimentDTO {
         this.lastUpdate = lastUpdate;
         this.isPrivate = isPrivate;
         this.accessKey = accessKey;
+    }
+
+    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Set<String> pubmedIds, String title, Date lastUpdate, boolean aPrivate, String accessKey) {
+        this.accessKey = accessKey;
+        this.experimentAccession = experimentAccession;
+        this.experimentType = experimentType;
+        this.lastUpdate = lastUpdate;
+        isPrivate = aPrivate;
+        this.pubmedIds = pubmedIds;
+        this.title = title;
+        species = Sets.newHashSet();
     }
 
     public String getExperimentAccession() {
@@ -122,6 +134,10 @@ public class ExperimentDTO {
 
     public String getTitle() {
         return title;
+    }
+
+    public void addSpecie(String specie) {
+        species.add(specie);
     }
 
 }

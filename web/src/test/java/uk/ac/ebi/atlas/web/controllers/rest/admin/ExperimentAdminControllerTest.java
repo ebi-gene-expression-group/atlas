@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers.rest.admin;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,9 +35,7 @@ import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
-import uk.ac.ebi.atlas.web.controllers.rest.admin.ExperimentAdminController;
 
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.UUID;
 
@@ -75,8 +74,10 @@ public class ExperimentAdminControllerTest {
 
         given(experimentDAOMock.findPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(null);
         given(experimentDAOMock.findAllExperiments()).willReturn(
-                Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, new Date(), false, ACCESS_KEY)));
-        given(experimentDAOMock.addExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false)).willReturn(UUID.randomUUID());
+                Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, null, null, null, false)));
+        ExperimentDTO experimentDTO = new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, Sets.newHashSet("human", "mouse"),
+                        Sets.newHashSet("1", "2"), "Illumina", false);
+        given(experimentDAOMock.addExperiment(experimentDTO)).willReturn(UUID.randomUUID());
     }
 
     @Test
@@ -104,11 +105,11 @@ public class ExperimentAdminControllerTest {
     @Test
     public void testListExperiments() throws Exception {
         given(experimentCRUDMock.findAllExperiments())
-            .willReturn(Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE,
+            .willReturn(Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, Sets.newHashSet("mouse"), Sets.newHashSet("1"), "title",
                     new GregorianCalendar(39 + 1900, 12, 12).getTime(), false, ACCESS_KEY)));
 
         assertThat(subject.listExperiments(null), is(
-                "[{\"accessKey\":\"AN_UUID\",\"experimentAccession\":\"EXPERIMENT_ACCESSION\",\"experimentType\":\"BASELINE\",\"lastUpdate\":\"Jan 12, 1940 12:00:00 AM\",\"isPrivate\":false}]"));
+                "[{\"accessKey\":\"AN_UUID\",\"experimentAccession\":\"EXPERIMENT_ACCESSION\",\"experimentType\":\"BASELINE\",\"lastUpdate\":\"Jan 12, 1940 12:00:00 AM\",\"isPrivate\":false,\"species\":[\"mouse\"],\"pubmedIds\":[\"1\"],\"title\":\"title\"}]"));
     }
 
 }

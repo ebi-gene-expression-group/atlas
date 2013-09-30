@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentloader;
 
+import com.google.common.collect.Sets;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +36,6 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -44,7 +44,7 @@ import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:testOracleContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:testDBContext.xml"})
 public class ExperimentDAOIT {
 
     private static final String E_MTAB_513 = "E-MTAB-513";
@@ -67,36 +67,50 @@ public class ExperimentDAOIT {
 
     @Before
     public void setUp() throws Exception {
-        subject.addExperiment(E_MTAB_513, TYPE_BASELINE, false);
-        subject.addExperiment(DIFFERENTIAL_ACCESION, TYPE_DIFFERENTIAL, false);
-        subject.addExperiment(MICROARRAY_ACCESSION, TYPE_MICROARRAY, false);
-        subject.addExperiment(MICRORNA_ACCESSION, TYPE_MICRORNA, false);
+        ExperimentDTO mtab513 = new ExperimentDTO(E_MTAB_513, TYPE_BASELINE, Sets.newHashSet("human", "mouse"),
+                Sets.newHashSet("1", "2"), "Illumina", false);
+        ExperimentDTO mtab1066 = new ExperimentDTO(E_MTAB_1066, TYPE_MICROARRAY, Sets.newHashSet("bird"),
+                Sets.newHashSet("1", "2"), "diff", false);
+
+        ExperimentDTO mtabPrivate = new ExperimentDTO("Secret_111", TYPE_MICROARRAY, Sets.newHashSet("cow"),
+                Sets.newHashSet("1"), "diff", true);
+
+        subject.addExperiment(mtab513);
+        subject.addExperiment(mtab1066);
+        subject.addExperiment(mtabPrivate);
     }
 
     @After
     public void tearDown() throws Exception {
-        subject.deleteExperiment(E_MTAB_513);
-        subject.deleteExperiment(DIFFERENTIAL_ACCESION);
-        subject.deleteExperiment(MICROARRAY_ACCESSION);
-        subject.deleteExperiment(MICRORNA_ACCESSION);
+        try {
+            subject.deleteExperiment(E_MTAB_513);
+        } catch (Exception e) {
+        }
+        try {
+            subject.deleteExperiment(E_MTAB_1066);
+        } catch (Exception e) {
+        }
+        try {
+            subject.deleteExperiment("Secret_111");
+        } catch (Exception e) {
+
+        }
     }
 
     @Test
     public void testFindExperiments() throws Exception {
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
-        assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_513, TYPE_BASELINE, new Date(), false, ACCESS_KEY)));
+        assertThat(experimentDTOs, hasSize(3));
+        assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_513, TYPE_BASELINE, Sets.newHashSet(""), Sets.newHashSet(""), "", false)));
     }
 
     @Test
     public void testFindExperimentByType() throws Exception {
         Set<String> experimentAccessions = subject.findPublicExperimentAccessions(TYPE_BASELINE);
         assertThat(experimentAccessions, hasItem(E_MTAB_513));
-        experimentAccessions = subject.findPublicExperimentAccessions(TYPE_DIFFERENTIAL);
-        assertThat(experimentAccessions, hasItem(DIFFERENTIAL_ACCESION));
         experimentAccessions = subject.findPublicExperimentAccessions(TYPE_MICROARRAY);
-        assertThat(experimentAccessions, hasItem(MICROARRAY_ACCESSION));
-        experimentAccessions = subject.findPublicExperimentAccessions(TYPE_MICRORNA);
-        assertThat(experimentAccessions, hasItem(MICRORNA_ACCESSION));
+        assertThat(experimentAccessions, hasItem(E_MTAB_1066));
+
     }
 
     @Test
@@ -115,11 +129,13 @@ public class ExperimentDAOIT {
     public void testAddExperiment() throws Exception {
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
         int size = experimentDTOs.size();
-        subject.addExperiment(E_MTAB_1066, TYPE_MICROARRAY, false);
+        ExperimentDTO mtabNew = new ExperimentDTO("new", TYPE_MICROARRAY, Sets.newHashSet("cow"),
+                        Sets.newHashSet("1"), "diff", true);
+        subject.addExperiment(mtabNew);
         experimentDTOs = subject.findAllExperiments();
         assertThat(experimentDTOs.size(), is(size + 1));
-        assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_1066, TYPE_MICROARRAY, new Date(), false, ACCESS_KEY)));
-        subject.deleteExperiment(E_MTAB_1066);
+        assertThat(experimentDTOs, hasItem(mtabNew));
+        subject.deleteExperiment("new");
     }
 
     @Test
@@ -128,7 +144,6 @@ public class ExperimentDAOIT {
         int size = experimentDTOs.size();
         subject.deleteExperiment(E_MTAB_513);
         assertThat(subject.findAllExperiments().size(), is(size - 1));
-        subject.addExperiment(E_MTAB_513, ExperimentType.BASELINE, false);
     }
 
     @Test
@@ -143,7 +158,7 @@ public class ExperimentDAOIT {
     @Test
     public void isImportedShouldReturnImportState() throws Exception {
         assertThat(subject.isImported(E_MTAB_513), is(true));
-        assertThat(subject.isImported(E_MTAB_1066), is(false));
+        assertThat(subject.isImported("NEW"), is(false));
     }
 
 }
