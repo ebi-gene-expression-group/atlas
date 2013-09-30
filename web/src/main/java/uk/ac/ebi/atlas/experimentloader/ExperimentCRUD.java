@@ -30,6 +30,7 @@ import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
@@ -59,6 +60,7 @@ public class ExperimentCRUD {
     private ExperimentTrader experimentTrader;
 
     private IndexCommandTrader indexCommandTrader;
+    private ExperimentDTOBuilder experimentDTOBuilder;
 
     @Inject
     public ExperimentCRUD(ArrayDesignDao arrayDesignDao,
@@ -67,7 +69,8 @@ public class ExperimentCRUD {
                           ExperimentDAO experimentDAO,
                           ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
                           ExperimentTrader experimentTrader,
-                          IndexCommandTrader indexCommandTrader) {
+                          IndexCommandTrader indexCommandTrader,
+                          ExperimentDTOBuilder experimentDTOBuilder) {
 
         this.arrayDesignDao = arrayDesignDao;
         this.configurationTrader = configurationTrader;
@@ -76,13 +79,20 @@ public class ExperimentCRUD {
         this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;
         this.indexCommandTrader = indexCommandTrader;
+        this.experimentDTOBuilder = experimentDTOBuilder;
     }
 
     public UUID importExperiment(String accession, ExperimentType experimentType, boolean isPrivate) throws IOException {
         checkNotNull(accession);
         checkNotNull(experimentType);
 
-        UUID uuid = experimentDAO.addExperiment(accession, experimentType, isPrivate);
+
+
+
+        ExperimentDTO experimentDTO = experimentDTOBuilder.forExperimentAccession(accession)
+                .withExperimentType(experimentType).withPrivate(isPrivate).build();
+
+        UUID uuid = experimentDAO.addExperiment(experimentDTO);
 
         //experiment can be indexed only after it's been added to the DB, since fetching experiment
         //from cache gets this experiment from the DB first
@@ -106,14 +116,15 @@ public class ExperimentCRUD {
 
     }
 
-    void generateExperimentDesignFile(String accession, ExperimentType experimentType) throws IOException {
+    ExperimentDesign generateExperimentDesignFile(String accession, ExperimentType experimentType) throws IOException {
 
         ExperimentDesignFileWriter experimentDesignFileWriter =
                 experimentDesignFileWriterBuilder.forExperimentAccession(accession)
                         .withExperimentType(experimentType)
                         .build();
 
-        experimentDesignFileWriter.write(accession);
+        return experimentDesignFileWriter.write(accession);
+
     }
 
     void loadArrayDesign(String accession, ArrayDesignType arrayDesignType) {

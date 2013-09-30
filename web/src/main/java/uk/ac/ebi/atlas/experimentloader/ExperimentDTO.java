@@ -27,6 +27,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Date;
 import java.util.Set;
+import java.util.UUID;
 
 public class ExperimentDTO {
 
@@ -46,9 +47,18 @@ public class ExperimentDTO {
 
     private String title;
 
-    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Date lastUpdate, boolean isPrivate, String accessKey) {
+    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Set<String> species, Set<String> pubmedIds,
+                         String title, boolean isPrivate) {
+        this(experimentAccession, experimentType, species, pubmedIds, title, null, isPrivate, UUID.randomUUID().toString());
+    }
+
+    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Set<String> species, Set<String> pubmedIds,
+                         String title, Date lastUpdate, boolean isPrivate, String accessKey) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
+        this.species = species;
+        this.pubmedIds = pubmedIds;
+        this.title = title;
         this.lastUpdate = lastUpdate;
         this.isPrivate = isPrivate;
         this.accessKey = accessKey;
@@ -86,6 +96,9 @@ public class ExperimentDTO {
         return Objects.toStringHelper(this)
                 .add("ExperimentAccession", experimentAccession)
                 .add("ExperimentType", experimentType)
+                .add("species", species)
+                .add("pubmedIds", pubmedIds)
+                .add("title", title)
                 .add("isPrivate", isPrivate)
                 .add("accessKey", accessKey)
                 .add("lastUpdate", lastUpdate).toString();
@@ -103,23 +116,12 @@ public class ExperimentDTO {
         return species;
     }
 
-    public void setSpecies(Set<String> species) {
-        this.species = species;
-    }
-
     public Set<String> getPubmedIds() {
         return pubmedIds;
-    }
-
-    public void setPubmedIds(Set<String> pubmedIds) {
-        this.pubmedIds = pubmedIds;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }

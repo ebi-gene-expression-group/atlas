@@ -50,7 +50,7 @@ public class ExperimentDesignFileWriter<T extends AbstractSDRFNode> {
         this.experimentType = experimentType;
     }
 
-    public void write(String experimentAccession) throws IOException {
+    public ExperimentDesign write(String experimentAccession) throws IOException {
         try {
 
             ExperimentDesign experimentDesign = mageTabParser.parse(experimentAccession);
@@ -58,6 +58,7 @@ public class ExperimentDesignFileWriter<T extends AbstractSDRFNode> {
             csvWriter.writeNext(columnHeaders);
             csvWriter.writeAll(experimentDesign.asTableData());
             csvWriter.flush();
+            return experimentDesign;
         }finally {
             csvWriter.close();
         }

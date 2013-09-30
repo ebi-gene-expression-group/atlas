@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentloader;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -45,9 +46,6 @@ import static com.google.common.base.Preconditions.checkState;
 @Named
 @Scope("prototype")
 public class ExperimentDAO {
-
-    private static final String INSERT_NEW_EXPERIMENT = "INSERT INTO experiment " +
-            "(accession, type, private, access_key) VALUES (?, ?, ?, ?)";
 
     private static final String DELETE_EXPERIMENT = "DELETE FROM experiment WHERE accession = ?";
 
@@ -99,6 +97,37 @@ public class ExperimentDAO {
         List<String> experimentAccessions = jdbcTemplate.queryForList(SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE, parameters, String.class);
 
         return Sets.newHashSet(experimentAccessions);
+    }
+
+    private static final String INSERT_NEW_EXPERIMENT = "INSERT INTO experiment " +
+            "(accession, type, private, access_key, pubmed_ids, title) VALUES (?, ?, ?, ?, ?, ?)";
+
+    private static final String INSERT_EXPERIMENT_SPECIE = "INSERT INTO experiment_species (experiment_accession, species_name) values (?, ?)";
+
+    public UUID addExperiment(ExperimentDTO experimentDTO) {
+        String experimentAccession = experimentDTO.getExperimentAccession();
+
+        try {
+
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+            UUID accessKeyUUID = UUID.randomUUID();
+
+            String pubmedIds = Joiner.on(", ").join(experimentDTO.getPubmedIds());
+
+            jdbcTemplate.update(INSERT_NEW_EXPERIMENT, experimentAccession,
+                    experimentDTO.getExperimentType().name(), toString(experimentDTO.isPrivate()),
+                    accessKeyUUID.toString(), pubmedIds, experimentDTO.getTitle());
+
+            for (String species: experimentDTO.getSpecies()){
+                jdbcTemplate.update(INSERT_EXPERIMENT_SPECIE, experimentAccession, species);
+            }
+
+            return accessKeyUUID;
+
+        }catch (DuplicateKeyException e){
+            throw new IllegalStateException("Experiment with experimentAccession " + experimentAccession + " has been already imported.");
+        }
     }
 
     public UUID addExperiment(String experimentAccession, ExperimentType experimentType, boolean isPrivate) {
@@ -204,4 +233,5 @@ public class ExperimentDAO {
             throw new ResourceNotFoundException("No experiments found for experiment accession: " + experimentAccessions);
         }
     }
+
 }
