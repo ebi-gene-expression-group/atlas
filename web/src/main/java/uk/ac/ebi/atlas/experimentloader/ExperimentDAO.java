@@ -54,18 +54,18 @@ public class ExperimentDAO {
 
     private static final String PING_EXPERIMENT = "SELECT COUNT (1) FROM experiment WHERE accession = ?";
 
-    private static final String SELECT_EXPERIMENT_BY_ACCESSION = "SELECT * FROM EXPERIMENT LEFT OUTER JOIN  EXPERIMENT_SPECIES on EXPERIMENT_SPECIES.EXPERIMENT_ACCESSION=EXPERIMENT.ACCESSION WHERE accession = ?";
+    private static final String SELECT_EXPERIMENT_BY_ACCESSION = "SELECT * FROM EXPERIMENT LEFT OUTER JOIN  EXPERIMENT_SPECIES on EXPERIMENT_SPECIES.EXPERIMENT=EXPERIMENT.ACCESSION WHERE accession = ?";
 
-    private static final String SELECT_EXPERIMENTS_BY_ACCESSION = "SELECT * FROM EXPERIMENT LEFT OUTER JOIN  EXPERIMENT_SPECIES on EXPERIMENT_SPECIES.EXPERIMENT_ACCESSION=EXPERIMENT.ACCESSION WHERE accession IN(:accessions)";
+    private static final String SELECT_EXPERIMENTS_BY_ACCESSION = "SELECT * FROM EXPERIMENT LEFT OUTER JOIN  EXPERIMENT_SPECIES on EXPERIMENT_SPECIES.EXPERIMENT=EXPERIMENT.ACCESSION WHERE accession IN(:accessions)";
 
-    private static final String SELECT_PUBLIC_EXPERIMENTS_BY_ACCESSION = "SELECT * FROM experiment LEFT OUTER JOIN  EXPERIMENT_SPECIES on EXPERIMENT_SPECIES.EXPERIMENT_ACCESSION=EXPERIMENT.ACCESSION WHERE accession IN(:accessions) and private = 'F'";
+    private static final String SELECT_PUBLIC_EXPERIMENTS_BY_ACCESSION = "SELECT * FROM experiment LEFT OUTER JOIN  EXPERIMENT_SPECIES on EXPERIMENT_SPECIES.EXPERIMENT=EXPERIMENT.ACCESSION WHERE accession IN(:accessions) and private = 'F'";
 
-    private static final String SELECT_PUBLIC_EXPERIMENT_BY_ACCESSION = "SELECT * FROM experiment LEFT OUTER JOIN  EXPERIMENT_SPECIES on EXPERIMENT_SPECIES.EXPERIMENT_ACCESSION=EXPERIMENT.ACCESSION WHERE accession = ? and private = 'F'";
+    private static final String SELECT_PUBLIC_EXPERIMENT_BY_ACCESSION = "SELECT * FROM experiment LEFT OUTER JOIN  EXPERIMENT_SPECIES on EXPERIMENT_SPECIES.EXPERIMENT=EXPERIMENT.ACCESSION WHERE accession = ? and private = 'F'";
 
     private static final String SELECT_PUBLIC_EXPERIMENTS_BY_EXPERIMENT_TYPE = "SELECT accession " +
             "FROM public_experiment WHERE type IN(:experimentTypes)";
 
-    private static final String SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY = "SELECT * FROM experiment LEFT OUTER JOIN  EXPERIMENT_SPECIES on EXPERIMENT_SPECIES.EXPERIMENT_ACCESSION=EXPERIMENT.ACCESSION  WHERE accession = ? AND access_key = ?";
+    private static final String SELECT_EXPERIMENT_BY_ACCESSION_AND_ACCESS_KEY = "SELECT * FROM experiment LEFT OUTER JOIN  EXPERIMENT_SPECIES on EXPERIMENT_SPECIES.EXPERIMENT=EXPERIMENT.ACCESSION  WHERE accession = ? AND access_key = ?";
 
 
     @Inject
@@ -81,7 +81,7 @@ public class ExperimentDAO {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         String query = "SELECT * FROM EXPERIMENT\n" +
-                "LEFT OUTER JOIN  EXPERIMENT_SPECIES on EXPERIMENT_SPECIES.EXPERIMENT_ACCESSION=EXPERIMENT.ACCESSION";
+                "LEFT OUTER JOIN  EXPERIMENT_SPECIES on EXPERIMENT_SPECIES.EXPERIMENT=EXPERIMENT.ACCESSION";
         return jdbcTemplate.query(query, new ExperimentDTOResultSetExtractor());
     }
 
@@ -103,7 +103,7 @@ public class ExperimentDAO {
     private static final String INSERT_NEW_EXPERIMENT = "INSERT INTO experiment " +
             "(accession, type, private, access_key, pubmed_ids, title) VALUES (?, ?, ?, ?, ?, ?)";
 
-    private static final String INSERT_EXPERIMENT_SPECIE = "INSERT INTO experiment_species (experiment_accession, species_name) values (?, ?)";
+    private static final String INSERT_EXPERIMENT_SPECIE = "INSERT INTO EXPERIMENT_SPECIES (EXPERIMENT, SPECIES) values (?, ?)";
 
     public UUID addExperiment(ExperimentDTO experimentDTO) {
         String experimentAccession = experimentDTO.getExperimentAccession();

@@ -42,7 +42,7 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
 
         while (resultSet.next()) {
             String experimentAccession = resultSet.getString("accession");
-            String specie = resultSet.getString("species_name");
+            String specie = resultSet.getString("species");
 
             ExperimentDTO experiment = experimentByAccession.get(experimentAccession);
 
@@ -65,14 +65,12 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
                         , isPrivate
                         , accessKeyUUID);
 
-
                 experimentByAccession.put(experimentAccession, experiment);
             }
 
             if (!StringUtils.isBlank(specie)) {
                 experiment.addSpecie(specie);
             }
-
 
         }
 
