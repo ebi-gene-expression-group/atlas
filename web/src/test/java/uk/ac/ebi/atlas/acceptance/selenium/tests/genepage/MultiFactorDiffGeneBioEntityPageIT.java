@@ -50,15 +50,14 @@ public class MultiFactorDiffGeneBioEntityPageIT extends SinglePageSeleniumFixtur
     public void checkSelectedProfiles() {
         subject.clickDisplayLevelsButton();
         assertThat(subject.getContrastColumn(), contains(
-                "treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'",
-                "treatment: 'salicylic acid' vs 'Silwet' at time: '28 hours' in ecotype: 'Col-0'"));
-        assertThat(subject.getPValues(), hasItems("8.94 × 10-4", "0.186"));
+                "treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'"));
+        assertThat(subject.getPValues(), hasItems("8.94 × 10-4"));
     }
 
     @Test
     public void checkHeatmap() {
         assertThat(subject.getDiffHeatmapHeaders(), contains("Gene", "Organism", "Contrast", "Adjusted P-value"));
-        assertThat(subject.getDiffHeatmapRow(1), contains("AT3G11340", "Arabidopsis thaliana", "treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'", ""));
+        assertThat(subject.getDiffHeatmapRow(1), contains("F11B9.23", "Arabidopsis thaliana", "treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'", ""));
     }
 
 
