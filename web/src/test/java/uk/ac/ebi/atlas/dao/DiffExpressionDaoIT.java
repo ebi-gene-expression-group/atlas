@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -45,4 +46,19 @@ public class DiffExpressionDaoIT {
         assertThat(resultCount, is(22));
     }
 
+    @Test
+    public void testGetExpressionsForGene() throws Exception {
+        List<DifferentialBioentityExpression> expressions = subject.getExpressions("AT1G02220");
+        assertThat(expressions, hasSize(2));
+        assertThat(expressions.get(0).getBioentityId(), is("AT1G02220"));
+        assertThat(expressions.get(0).getExperimentAccession(), is("E-GEOD-38400"));
+        assertThat(expressions.get(1).getBioentityId(), is("AT1G02220"));
+        assertThat(expressions.get(1).getExperimentAccession(), is("E-TABM-51"));
+    }
+
+    @Test
+    public void testGetResultCountForGene() throws Exception {
+        assertThat(subject.getResultCount("AT1G02220"), is(2));
+
+    }
 }
