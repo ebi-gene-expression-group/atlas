@@ -67,11 +67,6 @@ public class MageTabLimpopoUtilsIT {
     }
 
     @Test
-    public void testExtractSpeciesFromSDRF() throws Exception {
-        assertThat(subject.extractSpeciesFromSDRF(investigation), contains(HOMO_SAPIENS));
-    }
-
-    @Test
     public void testExtractPubMedIdsFromIDF() throws Exception {
         assertThat(subject.extractPubMedIdsFromIDF(investigation), contains(PUBMED_ID));
     }
@@ -80,7 +75,6 @@ public class MageTabLimpopoUtilsIT {
     public void testParseInvestigation() throws Exception {
         MAGETABInvestigation magetabInvestigation = subject.parseInvestigation("E-MTAB-513");
         assertThat(magetabInvestigation, is(not(nullValue())));
-        assertThat(subject.extractSpeciesFromSDRF(magetabInvestigation), contains(HOMO_SAPIENS));
         assertThat(subject.extractPubMedIdsFromIDF(investigation), contains(PUBMED_ID));
     }
 }

@@ -35,8 +35,6 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperimentBuilder;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParser;
-import uk.ac.ebi.atlas.model.cache.baseline.magetab.MageTabParserBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -50,15 +48,8 @@ import static org.mockito.Mockito.when;
 public class BaselineExperimentsCacheLoaderTest {
 
     public static final String SPECIES = "species";
-    public static final String COLUMN_HEADER12 = "SRR12345,SRR23456";
-    public static final String COLUMN_HEADER3 = "SRR34567";
-    public static final String COLUMN_HEADER1 = "SRR12345";
-    public static final String COLUMN_HEADER2 = "SRR23456";
     public static final String DEFAULT_QUERY_FACTOR_TYPE = "defaultQueryFactorType";
     public static final String FACTOR_TYPE = "factorType";
-
-    @Mock
-    private MageTabParser mageTabParserMock;
 
     @Mock
     private ExperimentRun experimentRunMock1;
@@ -74,9 +65,6 @@ public class BaselineExperimentsCacheLoaderTest {
 
     @Mock
     private Factor factorMock;
-
-    @Mock
-    private MageTabParserBuilder mageTabParserBuilderMock;
 
     @Mock
     private ConfigurationTrader configurationTraderMock;

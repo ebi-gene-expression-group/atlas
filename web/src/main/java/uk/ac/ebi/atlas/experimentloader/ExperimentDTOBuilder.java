@@ -45,6 +45,8 @@ public class ExperimentDTOBuilder {
     private ExperimentType experimentType;
     private boolean isPrivate;
 
+    private Set<String> species;
+
     @Inject
     public ExperimentDTOBuilder(MageTabLimpopoUtils mageTabLimpopoUtils){
 
@@ -66,14 +68,17 @@ public class ExperimentDTOBuilder {
         return this;
     }
 
+    public ExperimentDTOBuilder withSpecies(Set<String> species) {
+        this.species = species;
+        return this;
+    }
+
     public ExperimentDTO build(){
 
         try {
 
             MAGETABInvestigation magetabInvestigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
             String title = mageTabLimpopoUtils.extractInvestigationTitle(magetabInvestigation);
-
-            Set<String> species = mageTabLimpopoUtils.extractSpeciesFromSDRF(magetabInvestigation);
 
             Set<String> pubmedIds = Sets.newHashSet(mageTabLimpopoUtils.extractPubMedIdsFromIDF(magetabInvestigation));
 
@@ -85,10 +90,5 @@ public class ExperimentDTOBuilder {
             throw new IllegalStateException(e.getMessage());
         }
 
-    }
-
-    public ExperimentDTOBuilder withSpecies(Set<String> species) {
-
-        return null;
     }
 }

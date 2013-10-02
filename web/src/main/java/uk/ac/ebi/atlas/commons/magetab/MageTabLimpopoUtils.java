@@ -22,13 +22,10 @@
 
 package uk.ac.ebi.atlas.commons.magetab;
 
-import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.CharacteristicsAttribute;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.arrayexpress2.magetab.parser.MAGETABParser;
 
@@ -39,9 +36,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Named
 @Scope("prototype")
@@ -54,20 +49,6 @@ public class MageTabLimpopoUtils {
 
     @Value("#{configuration['experiment.magetab.idf.path.template']}")
     private String idfPathTemplate;
-
-    public Set<String> extractSpeciesFromSDRF(MAGETABInvestigation investigation) {
-        Set<String> species = Sets.newHashSet();
-        Collection<SourceNode> sourceNodes = investigation.SDRF.getNodes(SourceNode.class);
-        for (SourceNode sourceNode : sourceNodes) {
-            for (CharacteristicsAttribute characteristic : sourceNode.characteristics) {
-                if (characteristic.type.equalsIgnoreCase("ORGANISM")) {
-                    species.add(characteristic.getAttributeValue());
-                }
-            }
-        }
-
-        return species;
-    }
 
     public List<String> extractPubMedIdsFromIDF(MAGETABInvestigation investigation) {
         return investigation.IDF.pubMedId;
