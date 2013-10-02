@@ -33,7 +33,7 @@
     <thead>
     <tr>
         <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
-            <div>Identifier</div>
+            <div>Gene</div>
         </th>
         <c:if test="${not singleBioentityPage}">
             <th  id="design-element-header" class="horizontal-header-cell" style="padding: 5px; text-align:center;">
