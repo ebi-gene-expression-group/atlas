@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.solr.query.conditions;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Sets;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -63,7 +64,7 @@ public class BaselineConditionsSearchService {
                 }
             });
 
-            return result;
+            return Sets.newHashSet(result);
         } catch (SolrServerException e) {
             throw new IllegalStateException("Conditions index query failed!", e);
         }
