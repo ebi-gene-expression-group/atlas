@@ -120,7 +120,9 @@ public class BioentityIndexMonitor extends Observable {
 
         failureReason = e;
         status = Status.FAILED;
-        totalTimeStopwatch.stop();
+        if (totalTimeStopwatch.isRunning()){
+            totalTimeStopwatch.stop();
+        }
         notifyStatus();
     }
 

@@ -31,9 +31,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDTORowMapper;
 import uk.ac.ebi.atlas.geneannotation.mirna.MiRNAEntity;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
