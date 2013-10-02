@@ -54,7 +54,7 @@ public class BaselineBioentitiesPageIT extends SinglePageSeleniumFixture {
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-513"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Illumina Body Map"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(0).getCount(), is(233));
+        assertThat(baselineCounts.get(0).getCount(), is(158));
 
     }
 

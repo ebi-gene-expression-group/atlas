@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentloader.experimentdesign.impl;
 
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +33,8 @@ import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import javax.inject.Inject;
+import java.io.IOException;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -60,7 +63,6 @@ public class BaselineExperimentDesignMageTabParserIT {
         subject.setValueAndUnitJoiner(valueAndUnitJoiner);
     }
 
-
     @Test
     public void testExtractCharacteristics513() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513);
@@ -71,6 +73,22 @@ public class BaselineExperimentDesignMageTabParserIT {
     public void testExtractCharacteristics26284() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_GEOD_26284);
         assertThat(experimentDesign.getSampleHeaders(), containsInAnyOrder("sex", "biosource provider", "cell line", "cellular component", "organism part", "karyotype", "disease state", "cell type", "Organism"));
+    }
+
+    @Test
+    public void testGetSpeciesForAssays() throws IOException {
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513);
+        Set<String> species = experimentDesign.getSpeciesForAssays(Sets.newHashSet("ERR030886", "ERR030883"));
+        assertThat(species, containsInAnyOrder("Homo sapiens"));
+
+    }
+
+    @Test
+    public void testGetSpeciesForAssaysOnMultispeciesExperiment() throws IOException {
+        ExperimentDesign experimentDesign = subject.parse("E-GEOD-30352");
+        Set<String> species = experimentDesign.getSpeciesForAssays(Sets.newHashSet("SRR306848", "SRR306747"));
+        assertThat(species, containsInAnyOrder("Homo sapiens", "Monodelphis domestica"));
+
     }
 
 }

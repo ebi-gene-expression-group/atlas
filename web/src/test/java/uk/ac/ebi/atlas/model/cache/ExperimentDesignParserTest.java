@@ -23,6 +23,8 @@
 package uk.ac.ebi.atlas.model.cache;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +36,7 @@ import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -48,22 +51,24 @@ import static uk.ac.ebi.atlas.model.cache.ExperimentDesignParser.extractMatching
 public class ExperimentDesignParserTest {
 
     private static final String EXPERIMENT_ACCESSION = "ACCESSION";
-    private static final String FIRST_ASSAY = "C1";
+    private static final String ASSAY_ACCESSION_1 = "C1";
     private static final String RD_INSTAR_LARVA = "3rd instar larva";
-    private static final String LAST_ASSAY = "WT3";
+    private static final String ASSAY_ACCESSION_2 = "WT3";
     private static final String DUMMY = "dummy";
-    private static final String DEVELOPMENTAL_STAGE = "DevelopmentalStage";
-    private static final String STRAIN_OR_LINE = "StrainOrLine";
+    private static final String SAMPLE_NAME_1 = "DevelopmentalStage";
+    private static final String SAMPLE_NAME_2 = "StrainOrLine";
     private static final String GENOTYPE = "GENOTYPE";
     private static final String OREGON_R = "Oregon R";
     private static final String CYC_C_MUTANT = "cycC mutant";
     private static final String A_AFFY_35 = "A-AFFY-35";
     private static final String ASSAY = "Assay";
     private static final String ARRAY = "Array";
+    private static final String SPECIES_1 = "Drosophila melanogaster";
+    private static final String SPECIES_2 = "Rabbit";
 
     private static final String[] HEADER_LINE = new String[]{ASSAY, ARRAY, "Sample Characteristics[DevelopmentalStage]", "Sample Characteristics[Genotype]", "Sample Characteristics[Organism]", "Sample Characteristics[StrainOrLine]", "Factor Values[GENOTYPE]"};
-    private static final String[] FIRST_LINE = new String[]{FIRST_ASSAY, A_AFFY_35, RD_INSTAR_LARVA, "w1118; +; cycCY5", "Drosophila melanogaster", "", CYC_C_MUTANT};
-    private static final String[] LAST_LINE = new String[]{LAST_ASSAY, A_AFFY_35, RD_INSTAR_LARVA, "wild_type", "Drosophila melanogaster", OREGON_R, "wild_type"};
+    private static final String[] FIRST_LINE = new String[]{ASSAY_ACCESSION_1, A_AFFY_35, RD_INSTAR_LARVA, "w1118; +; cycCY5", SPECIES_1, "", CYC_C_MUTANT};
+    private static final String[] LAST_LINE = new String[]{ASSAY_ACCESSION_2, A_AFFY_35, RD_INSTAR_LARVA, "wild_type", SPECIES_2, OREGON_R, "wild_type"};
     private static final List<String[]> DATA = Lists.newArrayList(HEADER_LINE, FIRST_LINE, LAST_LINE);
 
     @Mock
@@ -90,33 +95,33 @@ public class ExperimentDesignParserTest {
     public void testParseHeaders() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         assertThat(experimentDesign.getFactorHeaders(), contains(GENOTYPE));
-        assertThat(experimentDesign.getSampleHeaders(), contains(DEVELOPMENTAL_STAGE, "Genotype", "Organism", STRAIN_OR_LINE));
+        assertThat(experimentDesign.getSampleHeaders(), contains(SAMPLE_NAME_1, "Genotype", "Organism", SAMPLE_NAME_2));
     }
 
     @Test
     public void testParseFactors() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getFactorValue(FIRST_ASSAY, GENOTYPE), is(CYC_C_MUTANT));
-        assertThat(experimentDesign.getFactorValue(FIRST_ASSAY, DUMMY), is(nullValue()));
+        assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, GENOTYPE), is(CYC_C_MUTANT));
+        assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
         assertThat(experimentDesign.getFactorValue(DUMMY, GENOTYPE), is(nullValue()));
     }
 
     @Test
     public void testParseSamples() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getSampleValue(FIRST_ASSAY, DEVELOPMENTAL_STAGE), is(RD_INSTAR_LARVA));
-        assertThat(experimentDesign.getSampleValue(LAST_ASSAY, DEVELOPMENTAL_STAGE), is(RD_INSTAR_LARVA));
-        assertThat(experimentDesign.getSampleValue(FIRST_ASSAY, STRAIN_OR_LINE), is(""));
-        assertThat(experimentDesign.getSampleValue(LAST_ASSAY, STRAIN_OR_LINE), is(OREGON_R));
-        assertThat(experimentDesign.getSampleValue(FIRST_ASSAY, DUMMY), is(nullValue()));
-        assertThat(experimentDesign.getSampleValue(DUMMY, DEVELOPMENTAL_STAGE), is(nullValue()));
+        assertThat(experimentDesign.getSampleValue(ASSAY_ACCESSION_1, SAMPLE_NAME_1), is(RD_INSTAR_LARVA));
+        assertThat(experimentDesign.getSampleValue(ASSAY_ACCESSION_2, SAMPLE_NAME_1), is(RD_INSTAR_LARVA));
+        assertThat(experimentDesign.getSampleValue(ASSAY_ACCESSION_1, SAMPLE_NAME_2), is(""));
+        assertThat(experimentDesign.getSampleValue(ASSAY_ACCESSION_2, SAMPLE_NAME_2), is(OREGON_R));
+        assertThat(experimentDesign.getSampleValue(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
+        assertThat(experimentDesign.getSampleValue(DUMMY, SAMPLE_NAME_1), is(nullValue()));
     }
 
     @Test
     public void testAssays() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getArrayDesign(FIRST_ASSAY), is(A_AFFY_35));
-        assertThat(experimentDesign.getArrayDesign(LAST_ASSAY), is(A_AFFY_35));
+        assertThat(experimentDesign.getArrayDesign(ASSAY_ACCESSION_1), is(A_AFFY_35));
+        assertThat(experimentDesign.getArrayDesign(ASSAY_ACCESSION_2), is(A_AFFY_35));
     }
 
     @Test
@@ -128,7 +133,14 @@ public class ExperimentDesignParserTest {
     @Test
     public void testGetAllRunOrAssay() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getAllRunOrAssay(), contains(FIRST_ASSAY, LAST_ASSAY));
+        assertThat(experimentDesign.getAllRunOrAssay(), contains(ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
+    }
+
+    @Test
+    public void testGetSpeciesForAssays(){
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
+        Set<String> species = experimentDesign.getSpeciesForAssays(Sets.newHashSet(ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
+        assertThat(species, Matchers.containsInAnyOrder(SPECIES_1, SPECIES_2));
     }
 
     @Test

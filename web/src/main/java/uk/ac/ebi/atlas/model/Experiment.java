@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
@@ -33,7 +34,7 @@ public class Experiment implements Serializable {
     private ExperimentType type;
     private ExperimentDesign experimentDesign;
     private SortedSet<String> species;
-    private Set<String> pubMedIds;
+    private SortedSet<String> pubMedIds;
     private Map<String, String> speciesMapping;
     private String accession;
     private String description;
@@ -52,7 +53,7 @@ public class Experiment implements Serializable {
         this.hasExtraInfoFile = hasExtraInfoFile;
         this.species = new TreeSet<>(species);
         this.speciesMapping = speciesMapping;
-        this.pubMedIds = pubMedIds;
+        this.pubMedIds = Sets.newTreeSet(pubMedIds);
     }
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String description, boolean hasExtraInfoFile,

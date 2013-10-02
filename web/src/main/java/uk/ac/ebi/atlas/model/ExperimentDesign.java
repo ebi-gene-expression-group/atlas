@@ -145,17 +145,18 @@ public class ExperimentDesign implements Serializable {
         return FactorSet.create(getFactors(assayGroup.getFirstAssayAccession()));
     }
 
-//    public String getSpeciesByAssayGroup(String assayGroupId) {
-//        FactorSet factors = getFactorsForAssayGroup(assayGroups.getAssayGroup(assayGroupId));
-//        for (Factor factor : factors) {
-//            if (factor.getType().equalsIgnoreCase("organism")) {
-//                return factor.getValue().toLowerCase();
-//            }
-//        }
-//
-//        throw IllegalStateException();
-//        return getFirstSpecies().toLowerCase();
-//    }
+    public Set<String> getSpeciesForAssays(Set<String> assayAccessions) {
+        Set<String> species = Sets.newHashSet();
+        for (String assayAccession: assayAccessions){
+            Map<String, String> samples = getSamples(assayAccession);
+            for (String sampleName : samples.keySet()){
+                if ("organism".equalsIgnoreCase(sampleName)){
+                    species.add(samples.get(sampleName));
+                }
+            }
+        }
+        return species;
+    }
 
     private class ExperimentDesignValues extends HashMap<String, String> {
 

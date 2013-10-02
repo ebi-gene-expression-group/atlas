@@ -86,9 +86,14 @@ public class ExperimentCRUD {
         checkNotNull(accession);
         checkNotNull(experimentType);
 
+        ExperimentDesign experimentDesign = generateExperimentDesignFile(accession, experimentType);
+
+        Set<String> assayAccessions = configurationTrader.getExperimentConfiguration(accession).getAssayAccessions();
+
+        Set<String> species = experimentDesign.getSpeciesForAssays(assayAccessions);
 
         ExperimentDTO experimentDTO = experimentDTOBuilder.forExperimentAccession(accession)
-                .withExperimentType(experimentType).withPrivate(isPrivate).build();
+                .withExperimentType(experimentType).withPrivate(isPrivate).withSpecies(species).build();
 
         UUID uuid = experimentDAO.addExperiment(experimentDTO);
 
@@ -97,8 +102,6 @@ public class ExperimentCRUD {
         if (!isPrivate) {
             indexCommandTrader.getIndexCommand(accession, IndexOperation.ADD).execute();
         }
-
-        generateExperimentDesignFile(accession, experimentType);
 
         switch (experimentType) {
             case MICROARRAY:

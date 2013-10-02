@@ -87,4 +87,8 @@ public class ExperimentDTOBuilder {
 
     }
 
+    public ExperimentDTOBuilder withSpecies(Set<String> species) {
+
+        return null;
+    }
 }

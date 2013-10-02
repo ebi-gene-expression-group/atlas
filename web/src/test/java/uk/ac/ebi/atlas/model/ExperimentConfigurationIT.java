@@ -31,6 +31,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.inject.Inject;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -65,6 +66,24 @@ public class ExperimentConfigurationIT {
         assertThat(assayGroups.getAssayGroupIds(), hasSize(16));
         assertThat(assayGroups, hasItem(new AssayGroup("g7", "ERR030882")));
 
+    }
+
+    @Test
+    public void testGetBaselineAssayAccessions(){
+        subject = configurationTrader.getExperimentConfiguration("E-MTAB-513");
+        Set<String> assayAccessions = subject.getAssayAccessions();
+
+        assertThat(assayAccessions, hasSize(16));
+        assertThat(assayAccessions, hasItems("ERR030876","ERR030887"));
+    }
+
+    @Test
+    public void testGetDifferentialAssayAccessions(){
+        subject = configurationTrader.getExperimentConfiguration("E-GEOD-22351");
+        Set<String> assayAccessions = subject.getAssayAccessions();
+
+        assertThat(assayAccessions, hasSize(6));
+        assertThat(assayAccessions, hasItems("SRR057596","SRR057598","SRR057600"));
     }
 
 

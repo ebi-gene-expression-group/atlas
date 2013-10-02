@@ -100,6 +100,26 @@ public class ExperimentConfiguration {
         }
     }
 
+    public Set<String> getAssayAccessions(){
+        try {
+
+            XPathExpression expr = xpath.compile("/configuration/analytics/assay_groups/assay_group/assay");
+
+            Set<String> assayAccessions = Sets.newHashSet();
+
+            NodeList nl = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
+            for (int i = 0; i < nl.getLength(); i++) {
+                Node node = nl.item(i);
+                assayAccessions.add(node.getTextContent());
+            }
+
+            return assayAccessions;
+
+        } catch (XPathExpressionException e) {
+            throw new IllegalStateException("Problem parsing configuration file.", e);
+        }
+    }
+
     public AssayGroups getAssayGroups() {
         Set<AssayGroup> assayGroups = Sets.newHashSet();
 

@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentloader.experimentdesign.impl;
 
+import com.google.common.collect.Sets;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,10 +33,10 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -54,7 +55,15 @@ public class MicroArrayExperimentDesignMageTabParserIT {
 
         assertThat(experimentDesign.asTableData().size(), is(6));
         assertThat(experimentDesign.asTableData().get(0), arrayContaining("G-DBZ1","A-AFFY-36","8 to 12 weeks","fresh_sample","adult","normal","wild type","birth","Mus musculus","pancreas","female","C57BL/6","dibenzazepine 10 micromoles per kilogram"));
-        assertThat(experimentDesign.asTableData().get(5), arrayContaining("G-Vehicle3","A-AFFY-36","8 to 12 weeks","fresh_sample","adult","normal","wild type","birth","Mus musculus","pancreas","female","C57BL/6","none"));
+        assertThat(experimentDesign.asTableData().get(5), arrayContaining("G-Vehicle3", "A-AFFY-36", "8 to 12 weeks", "fresh_sample", "adult", "normal", "wild type", "birth", "Mus musculus", "pancreas", "female", "C57BL/6", "none"));
+
+    }
+
+    @Test
+    public void testGetSpeciesForAssays() throws IOException {
+        ExperimentDesign experimentDesign = subject.parse(MICROARRAY_EXPERIMENT_ACCESSION);
+        Set<String> species = experimentDesign.getSpeciesForAssays(Sets.newHashSet("G-DBZ2", "G-Vehicle2"));
+        assertThat(species, containsInAnyOrder("Mus musculus"));
 
     }
 
