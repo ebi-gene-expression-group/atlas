@@ -35,7 +35,7 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import javax.inject.Inject;
 
 @Controller
-@Scope("request")
+@Scope("prototype")
 public class BioentitiesQueryController {
 
     private DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
@@ -52,7 +52,7 @@ public class BioentitiesQueryController {
 
             model.addAttribute("entityIdentifier", condition);
 
-            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(condition);
+            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withCondition(condition).build();
 
             model.addAttribute("bioentities", bioentityExpressions);
 

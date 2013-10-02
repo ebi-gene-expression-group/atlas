@@ -29,6 +29,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.commands.DifferentialBioentityExpressionsBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -42,24 +43,26 @@ public class GenePageController extends BioEntityPageController {
 
     private String[] bioentityPropertyNames;
 
-    private DifferentialGeneProfileService differentialGeneProfileService;
+    private DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
 
     @Value("#{configuration['index.property_names.genepage']}")
     void setBioentityPropertyNames(String[] bioentityPropertyNames) {
         this.bioentityPropertyNames = bioentityPropertyNames;
     }
 
+
+
     @Inject
-    void setDifferentialGeneProfileService(DifferentialGeneProfileService differentialGeneProfileService) {
-        this.differentialGeneProfileService = differentialGeneProfileService;
+    void setDifferentialBioentityExpressionBuilder(DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder) {
+        this.differentialBioentityExpressionsBuilder = differentialBioentityExpressionsBuilder;
     }
 
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@RequestParam(required = false) Double cutoff, @PathVariable String identifier, Model model) {
 
         DifferentialBioentityExpressions differentialBioentityExpressions =
-                differentialGeneProfileService.initDifferentialBioentityExpressions(identifier, cutoff == null ?
-                        DifferentialRequestPreferences.DEFAULT_CUTOFF : cutoff);
+                differentialBioentityExpressionsBuilder.withGeneIdentifier(identifier).build();
+
         model.addAttribute("bioentities", differentialBioentityExpressions);
 
         // setting FDR as cutoff

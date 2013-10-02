@@ -61,9 +61,14 @@ public class DiffExpressionDao {
             .append(TSTAT)
             .append(" FROM VW_DIFFANALYTICS ")
             .toString();
+
     static final String COUNT_QUERY = "SELECT count(1) FROM VW_DIFFANALYTICS ";
 
     static final String ORDER_BY_PVAL = "order by PVAL";
+
+    static final String GENE_QUERY = SELECT_QUERY.concat(" WHERE IDENTIFIER = ? ").concat(ORDER_BY_PVAL);
+
+    static final String GENE_COUNT_QUERY = COUNT_QUERY.concat(" WHERE IDENTIFIER = ? ");
 
     private JdbcTemplate jdbcTemplate;
 
@@ -96,6 +101,11 @@ public class DiffExpressionDao {
         return jdbcTemplate.queryForObject(query.getQuery(), Integer.class, query.getParams());
     }
 
+    public int getResultCount(String geneIdentifier) {
+
+        return jdbcTemplate.queryForObject(GENE_COUNT_QUERY, Integer.class, geneIdentifier);
+    }
+
     AssayGroupQuery buildIndexedContrastQuery(Collection<IndexedAssayGroup> indexedContrasts, String queryBeginning) {
 
         return assayGroupQueryBuilder.withSelectPart(queryBeginning)
@@ -105,4 +115,11 @@ public class DiffExpressionDao {
 
     }
 
+    public List<DifferentialBioentityExpression> getExpressions(String geneIdentifier) {
+        List<DifferentialBioentityExpression> result = jdbcTemplate.query(GENE_QUERY,
+                rowMapper,
+                geneIdentifier);
+
+        return result;
+    }
 }

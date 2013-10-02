@@ -44,6 +44,8 @@ public class DifferentialBioentityExpressionsBuilder {
     private DiffExpressionDao diffExpressionDao;
 
     private DifferentialConditionsSearchService differentialConditionsSearchService;
+    private String condition;
+    private String geneIdentifier;
 
     @Inject
     public DifferentialBioentityExpressionsBuilder(DiffExpressionDao diffExpressionDao, DifferentialConditionsSearchService differentialConditionsSearchService) {
@@ -51,20 +53,45 @@ public class DifferentialBioentityExpressionsBuilder {
         this.differentialConditionsSearchService = differentialConditionsSearchService;
     }
 
-    public DifferentialBioentityExpressions build(String query) {
+    public DifferentialBioentityExpressionsBuilder withCondition(String condition){
 
-        checkArgument(StringUtils.isNotBlank(query));
+        this.condition = condition;
+        return this;
+    }
 
-        Collection<IndexedAssayGroup> contrasts = differentialConditionsSearchService.findContrasts(query);
+    public DifferentialBioentityExpressionsBuilder withGeneIdentifier(String geneIdentifier){
+        this.geneIdentifier = geneIdentifier;
+        return this;
+    }
 
-        if (contrasts.isEmpty()){
-            return new DifferentialBioentityExpressions();
+
+    public DifferentialBioentityExpressions build() {
+
+        if (StringUtils.isNotBlank(condition)){
+
+            Collection<IndexedAssayGroup> contrasts = differentialConditionsSearchService.findContrasts(condition);
+
+            if (contrasts.isEmpty()){
+                return new DifferentialBioentityExpressions();
+            }
+
+            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(contrasts);
+            int resultCount = diffExpressionDao.getResultCount(contrasts);
+
+            return new DifferentialBioentityExpressions(expressions, resultCount);
+
         }
 
-        List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(contrasts);
-        int resultCount = diffExpressionDao.getResultCount(contrasts);
+        if (StringUtils.isNotBlank(geneIdentifier)){
 
-        return new DifferentialBioentityExpressions(expressions, resultCount);
+            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(geneIdentifier);
+            int resultCount = diffExpressionDao.getResultCount(geneIdentifier);
+
+            return new DifferentialBioentityExpressions(expressions, resultCount);
+
+        }
+
+        throw new IllegalStateException("build method invoked with empty arguments");
 
     }
 
