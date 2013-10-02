@@ -28,33 +28,40 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
-<c:if test="${not empty baselineCounts}">
+<c:choose>
+    <c:when test="${not empty baselineCounts}">
 
-    <table id="baselineCountsTable">
-        <tbody>
-        <tr>
-            <td>
-                <div style="margin-top:10px">
-                     <c:set var="resultsCount" value="${baselineCounts.size()}"/>
-                                ${resultsCount} search results (showing ${resultsCount} of ${resultsCount})
-                </div>
-            </td>
-        </tr>
-        <tbody>
-        <c:forEach var="baselineCount" items="${baselineCounts}">
+        <table id="baselineCountsTable">
+            <tbody>
             <tr>
                 <td>
-                    <a class="bioEntityCardLink" href="${base}/experiments/${baselineCount.experimentAccession}?queryFactorType=ORGANISM_PART&queryFactorValues=${param.condition}" title="experiment">
-                        ${baselineCount.species} - ${baselineCount.experimentName}
-                    </a>
-                </td>
-                <td class="count">
-                    (${baselineCount.count})
+                    <div style="margin-top:10px">
+                        <c:set var="resultsCount" value="${baselineCounts.size()}"/>
+                            ${resultsCount} search results (showing ${resultsCount} of ${resultsCount})
+                    </div>
                 </td>
             </tr>
-        </c:forEach>
-        </tbody>
+            <tbody>
+            <c:forEach var="baselineCount" items="${baselineCounts}">
+                <tr>
+                    <td>
+                        <a class="bioEntityCardLink"
+                           href="${base}/experiments/${baselineCount.experimentAccession}?queryFactorType=ORGANISM_PART&queryFactorValues=${param.condition}"
+                           title="experiment">
+                                ${baselineCount.species} - ${baselineCount.experimentName}
+                        </a>
+                    </td>
+                    <td class="count">
+                        (${baselineCount.count})
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
 
-    </table>
+        </table>
 
-</c:if>
+    </c:when>
+    <c:otherwise>
+        <div>No baseline experiments were found.</div>
+    </c:otherwise>
+</c:choose>
