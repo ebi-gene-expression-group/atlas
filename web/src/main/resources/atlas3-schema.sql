@@ -222,4 +222,41 @@ ALTER TABLE EXPERIMENT_SPECIES
   ADD CONSTRAINT FK_EXPERIMENT_SPECIES FOREIGN KEY (EXPERIMENT) REFERENCES EXPERIMENT(ACCESSION) ON DELETE CASCADE
 ENABLE;
 
+-- Stored functions
+CREATE OR REPLACE Function getBaselineExpSpecificCount
+   ( experiment_in IN varchar2, assaygroupids_in IN varchar2 )
+   RETURN number
+IS
+   cnumber number;
+
+   cursor c1 is
+   select count(distinct rbe.identifier)
+   from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe
+   where rbe.ASSAYGROUPID in (assaygroupids_in) and rbe.EXPERIMENT = experiment_in
+   and 
+   ( select avg(expression)
+   from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) 
+   where ASSAYGROUPID in (assaygroupids_in) and EXPERIMENT = experiment_in
+   and identifier = rbe.identifier) >
+   (select NVL(max(expression),0)
+   from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) 
+   where ASSAYGROUPID not in (assaygroupids_in) and EXPERIMENT = experiment_in
+   and identifier = rbe.identifier);
+
+BEGIN
+   open c1;
+   fetch c1 into cnumber;
+
+   if c1%notfound then
+      cnumber := 0;
+   end if;
+
+   close c1;
+RETURN cnumber;
+
+EXCEPTION
+WHEN OTHERS THEN
+   raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END;
+
 exit;
