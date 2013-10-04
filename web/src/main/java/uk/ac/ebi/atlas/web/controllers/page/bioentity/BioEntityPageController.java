@@ -75,7 +75,7 @@ public abstract class BioEntityPageController {
     }
 
     private void findEnsemblIDsForMirBaseID(String mirBaseID, Model model) {
-        Set<String> ensemblIDs = solrQueryService.fetchGeneIdentifiersFromSolr(mirBaseID, "ensgene", "mirbase_id");
+        Set<String> ensemblIDs = solrQueryService.fetchGeneIdentifiersFromSolr(mirBaseID, "ensgene", true, "mirbase_id");
         if (ensemblIDs.size() > 0) {
             model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
         }

@@ -25,6 +25,8 @@ package uk.ac.ebi.atlas.dao;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
@@ -33,9 +35,10 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Named
-@Scope("singleton")
+@Scope("prototype")
 public class DiffExpressionDao {
 
     static final String CONTRASTID = "CONTRASTID";
@@ -66,11 +69,11 @@ public class DiffExpressionDao {
 
     static final String ORDER_BY_PVAL = "order by PVAL";
 
-    static final String GENE_QUERY = SELECT_QUERY.concat(" WHERE IDENTIFIER = ? ").concat(ORDER_BY_PVAL);
+    static final String GENE_QUERY = SELECT_QUERY.concat(" WHERE IDENTIFIER IN (:ids) ").concat(ORDER_BY_PVAL);
 
-    static final String GENE_COUNT_QUERY = COUNT_QUERY.concat(" WHERE IDENTIFIER = ? ");
+    static final String GENE_COUNT_QUERY = COUNT_QUERY.concat(" WHERE IDENTIFIER IN (:ids) ");
 
-    private JdbcTemplate jdbcTemplate;
+    private final DataSource dataSource;
 
     private AssayGroupQueryBuilder assayGroupQueryBuilder;
 
@@ -80,12 +83,14 @@ public class DiffExpressionDao {
     public DiffExpressionDao(@Qualifier("dataSourceOracle") DataSource dataSource, AssayGroupQueryBuilder assayGroupQueryBuilder, DifferentialBioentityExpressionRowMapper rowMapper) {
         this.assayGroupQueryBuilder = assayGroupQueryBuilder;
         this.rowMapper = rowMapper;
-        jdbcTemplate = new JdbcTemplate(dataSource);
+        this.dataSource = dataSource;
     }
 
     public List<DifferentialBioentityExpression> getExpressions(Collection<IndexedAssayGroup> indexedContrasts) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         AssayGroupQuery indexedContrastQuery = buildIndexedContrastQuery(indexedContrasts, SELECT_QUERY);
+
         jdbcTemplate.setMaxRows(RESULT_SIZE);
         List<DifferentialBioentityExpression> result = jdbcTemplate.query(indexedContrastQuery.getQuery(),
                 rowMapper,
@@ -95,6 +100,7 @@ public class DiffExpressionDao {
     }
 
     public int getResultCount(Collection<IndexedAssayGroup> indexedContrasts) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         AssayGroupQuery query = buildIndexedContrastQuery(indexedContrasts, COUNT_QUERY);
 
@@ -102,6 +108,7 @@ public class DiffExpressionDao {
     }
 
     public int getResultCount(String geneIdentifier) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         return jdbcTemplate.queryForObject(GENE_COUNT_QUERY, Integer.class, geneIdentifier);
     }
@@ -115,10 +122,14 @@ public class DiffExpressionDao {
 
     }
 
-    public List<DifferentialBioentityExpression> getExpressions(String geneIdentifier) {
-        List<DifferentialBioentityExpression> result = jdbcTemplate.query(GENE_QUERY,
-                rowMapper,
-                geneIdentifier);
+    public List<DifferentialBioentityExpression> getExpressions(Set<String> identifiers) {
+        NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("ids", identifiers);
+
+        List<DifferentialBioentityExpression> result = jdbcTemplate.query(GENE_QUERY, parameters,
+                rowMapper);
 
         return result;
     }

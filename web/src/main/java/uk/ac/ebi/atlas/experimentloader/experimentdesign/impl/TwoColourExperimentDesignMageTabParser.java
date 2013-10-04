@@ -44,8 +44,15 @@ public class TwoColourExperimentDesignMageTabParser extends MicroarrayExperiment
     protected Set<AssayNode<HybridizationNode>> getAssayNodes(SDRF sdrf) {
         Set<AssayNode<HybridizationNode>> assayNodes = Sets.newLinkedHashSet();
 
-        for (HybridizationNode node : sdrf.getNodes(HybridizationNode.class)) {
-            // Assemble assay accession for each channel separately
+        Collection<? extends HybridizationNode>  hybridizationNodes = sdrf.getNodes(HybridizationNode.class);
+
+        if (hybridizationNodes.size() == 0) {
+            //this is required because of a bug in limpopo...
+            hybridizationNodes = sdrf.getNodes(uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode.class);
+        }
+
+        for (HybridizationNode node : hybridizationNodes) {
+                    // Assemble assay accession for each channel separately
             for (int channelNo = 1; channelNo <= 2; channelNo++) {
                 assayNodes.add(new AssayNode<HybridizationNode>(buildTwoColourExperimentAssayName(node.getNodeName(), sdrf.getLabelForChannel(channelNo)), node));
             }

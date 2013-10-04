@@ -22,11 +22,13 @@
 
 package uk.ac.ebi.atlas.commands;
 
+import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.DiffExpressionDao;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
@@ -34,27 +36,28 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
 import java.util.List;
-
-import static com.google.common.base.Preconditions.checkArgument;
+import java.util.Set;
 
 @Named
-@Scope("request")
+@Scope("prototype")
 public class DifferentialBioentityExpressionsBuilder {
 
     private DiffExpressionDao diffExpressionDao;
-
     private DifferentialConditionsSearchService differentialConditionsSearchService;
+    private SolrQueryService solrQueryService;
     private String condition;
     private String geneIdentifier;
 
     @Inject
-    public DifferentialBioentityExpressionsBuilder(DiffExpressionDao diffExpressionDao, DifferentialConditionsSearchService differentialConditionsSearchService) {
+    public DifferentialBioentityExpressionsBuilder(DiffExpressionDao diffExpressionDao,
+                                                   DifferentialConditionsSearchService differentialConditionsSearchService,
+                                                   SolrQueryService solrQueryService) {
         this.diffExpressionDao = diffExpressionDao;
         this.differentialConditionsSearchService = differentialConditionsSearchService;
+        this.solrQueryService = solrQueryService;
     }
 
     public DifferentialBioentityExpressionsBuilder withCondition(String condition){
-
         this.condition = condition;
         return this;
     }
@@ -84,7 +87,9 @@ public class DifferentialBioentityExpressionsBuilder {
 
         if (StringUtils.isNotBlank(geneIdentifier)){
 
-            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(geneIdentifier);
+            Set<String> identifiers = expandIdentifiersToMatureRNAIds(geneIdentifier);
+
+            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(identifiers);
             int resultCount = diffExpressionDao.getResultCount(geneIdentifier);
 
             return new DifferentialBioentityExpressions(expressions, resultCount);
@@ -92,6 +97,19 @@ public class DifferentialBioentityExpressionsBuilder {
         }
 
         throw new IllegalStateException("build method invoked with empty arguments");
+
+    }
+
+    Set<String> expandIdentifiersToMatureRNAIds(String geneIdentifier){
+        Set<String> mirbaseIds = solrQueryService.findPropertyValuesForGeneId(geneIdentifier, "mirbase_id");
+        if (mirbaseIds.size() > 0) {
+            geneIdentifier = mirbaseIds.iterator().next();
+        }
+        Set<String> matureRNAIds = solrQueryService.fetchGeneIdentifiersFromSolr(geneIdentifier, "mirna", false, "hairpin_id");
+        if (matureRNAIds.size() > 0) {
+            return matureRNAIds;
+        }
+        return Sets.newHashSet(geneIdentifier);
 
     }
 

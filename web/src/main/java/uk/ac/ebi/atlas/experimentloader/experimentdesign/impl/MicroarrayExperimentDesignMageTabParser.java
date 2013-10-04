@@ -43,10 +43,19 @@ public class MicroarrayExperimentDesignMageTabParser extends MageTabParser<Hybri
     @Override
     protected Set<AssayNode<HybridizationNode>> getAssayNodes(SDRF sdrf) {
         Set<AssayNode<HybridizationNode>> assayNodes = Sets.newLinkedHashSet();
-        for (HybridizationNode node : sdrf.getNodes(HybridizationNode.class)) {
+
+        Collection<? extends HybridizationNode>  hybridizationNodes = sdrf.getNodes(HybridizationNode.class);
+
+        if (hybridizationNodes.size() == 0) {
+            //this is required because of a bug in limpopo...
+            hybridizationNodes = sdrf.getNodes(uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode.class);
+        }
+
+        for (HybridizationNode node : hybridizationNodes) {
             assayNodes.add(new AssayNode<>(node.getNodeName(), node));
         }
         return assayNodes;
+
     }
 
     @Override
@@ -61,7 +70,7 @@ public class MicroarrayExperimentDesignMageTabParser extends MageTabParser<Hybri
 
     @Override
     protected void addArrays(ExperimentDesign experimentDesign, Set<AssayNode<HybridizationNode>> assayNodes) {
-        for (AssayNode<HybridizationNode> assayNode : assayNodes) {
+        for (AssayNode<? extends HybridizationNode> assayNode : assayNodes) {
 
             if (assayNode.getSdrfNode().arrayDesigns.size() != 1) {
                 throw new IllegalStateException("Assays with multiple array designs are not supported.");

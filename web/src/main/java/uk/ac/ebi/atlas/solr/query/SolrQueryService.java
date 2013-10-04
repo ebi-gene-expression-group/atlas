@@ -29,8 +29,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocument;
-import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
@@ -121,14 +119,14 @@ public class SolrQueryService {
         return propertiesByName;
     }
 
-    public Set<String> fetchGeneIdentifiersFromSolr(String queryString, String bioentityType, String... propertyNames) {
+    public Set<String> fetchGeneIdentifiersFromSolr(String queryString, String bioentityType, boolean toUppercase, String... propertyNames) {
 
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
                 .forQueryString(queryString, false)
                 .withBioentityTypes(Sets.newHashSet(bioentityType))
                 .withPropertyNames(propertyNames).build();
 
-        return solrServer.query(solrQuery, BIOENTITY_IDENTIFIER_FIELD, true);
+        return solrServer.query(solrQuery, BIOENTITY_IDENTIFIER_FIELD, toUppercase);
     }
 
     public String findSpeciesForBioentityId(String identifier) {
