@@ -30,3 +30,40 @@ join BIOENTITY_NAME bn on rda.IDENTIFIER=bn.identifier
 join BIOENTITY_ORGANISM o on bn.organismid = o.organismid
 join EXPERIMENT_ORGANISM eo on o.name = eo.bioentity_organism and eo.experiment = rda.experiment;
 
+-- Stored functions that use the view need to be re-created
+CREATE OR REPLACE Function getBaselineExpSpecificCount
+   ( experiment_in IN varchar2, assaygroupids_in IN varchar2 )
+   RETURN number
+IS
+   cnumber number;
+
+   cursor c1 is
+   select count(distinct rbe.identifier)
+   from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe
+   where rbe.ASSAYGROUPID in (assaygroupids_in) and rbe.EXPERIMENT = experiment_in
+   and 
+   ( select avg(expression)
+   from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) 
+   where ASSAYGROUPID in (assaygroupids_in) and EXPERIMENT = experiment_in
+   and identifier = rbe.identifier) >
+   (select NVL(max(expression),0)
+   from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) 
+   where ASSAYGROUPID not in (assaygroupids_in) and EXPERIMENT = experiment_in
+   and identifier = rbe.identifier);
+
+BEGIN
+   open c1;
+   fetch c1 into cnumber;
+
+   if c1%notfound then
+      cnumber := 0;
+   end if;
+
+   close c1;
+RETURN cnumber;
+
+EXCEPTION
+WHEN OTHERS THEN
+   raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END;
+
