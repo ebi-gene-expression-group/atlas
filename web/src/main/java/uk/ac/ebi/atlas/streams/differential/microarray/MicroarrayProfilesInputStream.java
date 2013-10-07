@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.streams.differential.microarray;
 
 
 import au.com.bytecode.opencsv.CSVReader;
+import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
@@ -65,5 +66,14 @@ public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProf
 
     protected void addGeneColumnValueToBuilder(String designElementName) {
         microarrayProfileBuilder.withDesignElementName(designElementName).withArrayDesignAccession(arrayDesignAccession);
+    }
+
+    @Override
+    protected void addGeneInfoValueToBuilder(String[] values) {
+        microarrayProfileBuilder.withDesignElementName(values[2]).withArrayDesignAccession(arrayDesignAccession);
+    }
+
+    protected String[] removeGeneIDAndNameColumns(String[] columns) {
+        return (String[]) ArrayUtils.subarray(columns, 3, columns.length);
     }
 }

@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.streams.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
@@ -39,7 +38,7 @@ public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpre
 
         BaselineExpressions baselineExpressions = new BaselineExpressions();
         //we need to reload because the first line can only be used to extract the gene ID
-        getTsvRowBuffer().reload(ArrayUtils.remove(values, GENE_ID_COLUMN));
+        getTsvRowBuffer().reload(removeGeneIDAndNameColumns(values));
 
         BaselineExpression expression;
 
@@ -62,7 +61,7 @@ public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpre
     }
 
     @Override
-    protected void addGeneColumnValueToBuilder(String geneName) {
+    protected void addGeneInfoValueToBuilder(String[] values) {
 
     }
 }

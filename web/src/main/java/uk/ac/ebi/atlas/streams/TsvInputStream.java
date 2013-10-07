@@ -37,6 +37,8 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
 
     protected static final int GENE_ID_COLUMN = 0;
 
+    protected static final int GENE_NAME_COLUMN = 1;
+
     private CSVReader csvReader;
 
     private TsvRowBuffer<K> tsvRowBuffer;
@@ -47,7 +49,7 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
         this.csvReader = csvReader;
 
         String[] firstCsvLine = readCsvLine();
-        String[] headersWithoutGeneIdColumn = (String[]) ArrayUtils.remove(firstCsvLine, GENE_ID_COLUMN);
+        String[] headersWithoutGeneIdColumn = removeGeneIDAndNameColumns(firstCsvLine);
         tsvRowBuffer = tsvRowBufferBuilder.forExperiment(experimentAccession)
                 .withHeaders(headersWithoutGeneIdColumn).build();
     }
@@ -82,12 +84,11 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
 
 
     protected T buildObjectFromTsvValues(String[] values) {
-        String geneName = values[GENE_ID_COLUMN];
 
-        addGeneColumnValueToBuilder(geneName);
+        addGeneInfoValueToBuilder(values);
 
         //we need to reload because the first line can only be used to extract the gene ID
-        getTsvRowBuffer().reload((String[]) ArrayUtils.remove(values, GENE_ID_COLUMN));
+        getTsvRowBuffer().reload(removeGeneIDAndNameColumns(values));
 
         K expression;
 
@@ -106,8 +107,10 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
 
     protected abstract void addExpressionToBuilder(K expression);
 
-    //ToDo (B): something wrong with the name of this method, it is used to add design element, not gene name, see how the implementation is used...
-    protected abstract void addGeneColumnValueToBuilder(String geneName);
+//    //ToDo (B): something wrong with the name of this method, it is used to add design element, not gene name, see how the implementation is used...
+//    protected abstract void addGeneColumnValueToBuilder(String geneName);
+
+    protected abstract void addGeneInfoValueToBuilder(String[] values);
 
     protected TsvRowBuffer<K> getTsvRowBuffer() {
         return tsvRowBuffer;
@@ -119,4 +122,7 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
         LOGGER.debug("<close> close invoked on TsvInputStream");
     }
 
+    protected String[] removeGeneIDAndNameColumns(String[] columns) {
+        return (String[]) ArrayUtils.subarray(columns, 2, columns.length);
+    }
 }
