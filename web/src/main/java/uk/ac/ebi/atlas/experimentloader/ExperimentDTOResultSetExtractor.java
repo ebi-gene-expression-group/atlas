@@ -42,7 +42,7 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
 
         while (resultSet.next()) {
             String experimentAccession = resultSet.getString("accession");
-            String specie = resultSet.getString("species");
+            String specie = resultSet.getString("organism");
 
             ExperimentDTO experiment = experimentByAccession.get(experimentAccession);
 
