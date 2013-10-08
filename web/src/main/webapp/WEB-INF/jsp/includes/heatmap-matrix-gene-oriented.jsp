@@ -53,7 +53,7 @@
 
                         <a class="genename" id="${geneId}"
                            href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityType}/${geneId}'
-                           title="">${geneNamesProvider.getGeneName(geneId)}</a>
+                           title="">${geneProfile.getName()}</a>
                     </display:column>
 
                     <c:if test="${type.isMicroarray()}">
