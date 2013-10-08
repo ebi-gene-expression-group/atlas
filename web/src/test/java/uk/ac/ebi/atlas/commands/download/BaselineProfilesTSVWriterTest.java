@@ -98,7 +98,7 @@ public class BaselineProfilesTSVWriterTest {
         when(baselineProfileMock1.getExpressionLevel(createFactorValue("lung"))).thenReturn(9d);
 
         when(baselineProfileMock2.getId()).thenReturn("GI2");
-        when(baselineProfileMock1.getName()).thenReturn("GN2");
+        when(baselineProfileMock2.getName()).thenReturn("GN2");
         when(baselineProfileMock2.getExpressionLevel(createFactorValue("liver"))).thenReturn(21.12d);
 
         when(experimentalFactorsMock.getFactorsByType(anyString())).thenReturn(Sets.newTreeSet(organismParts));
@@ -124,9 +124,9 @@ public class BaselineProfilesTSVWriterTest {
 
         verify(printWriterMock).write("Gene ID\tGene Name\tadipose\tbrain\tbreast\tliver\tlung\n", 0, 50);
 
-        verify(printWriterMock).write("GI1\tGN1\t0\t0.11\t0\t0\t9\n", 0, 21);
+        verify(printWriterMock).write("GN1\tGI1\t0\t0.11\t0\t0\t9\n", 0, 21);
 
-        verify(printWriterMock).write("GI2\tGN2\t0\t0\t0\t21.12\t0\n", 0, 22);
+        verify(printWriterMock).write("GN2\tGI2\t0\t0\t0\t21.12\t0\n", 0, 22);
 
         assertThat(count, is(2L));
 

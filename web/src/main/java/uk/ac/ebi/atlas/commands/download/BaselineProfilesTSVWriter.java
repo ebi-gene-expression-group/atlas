@@ -84,7 +84,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
         if (requestContext.isGeneSetMatch()) {
             return new String[]{GENE_SET_COLUMN_NAME};
         }
-        return new String[]{};
+        return new String[]{"Gene ID", "Gene Name"};
     }
 
     @Override
