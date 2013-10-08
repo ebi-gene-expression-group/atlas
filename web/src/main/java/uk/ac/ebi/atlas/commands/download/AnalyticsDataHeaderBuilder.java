@@ -39,13 +39,12 @@ class AnalyticsDataHeaderBuilder {
         checkNotNull(experiment, "Experiment should be not null!");
 
         List<String> result = new ArrayList<>();
+        for (int i = 0; i < getFixedColumnNumber(); i++) {
+            result.add(header[i]);
+        }
 
-        //ToDo (B) : we need to replace contrast id with name only starting from 2nd or 3rd column ... depends on the type of experiment
-
-
-
-        for (String columnHeader : header) {
-            result.add(replaceContrastIdWithName(columnHeader));
+        for (int i = getFixedColumnNumber(); i < header.length; i++) {
+            result.add(replaceContrastIdWithName(header[i]));
         }
 
         return result.toArray(new String[result.size()]);
@@ -61,4 +60,7 @@ class AnalyticsDataHeaderBuilder {
         this.experiment = experiment;
     }
 
+    protected int getFixedColumnNumber() {
+        return 2;
+    }
 }

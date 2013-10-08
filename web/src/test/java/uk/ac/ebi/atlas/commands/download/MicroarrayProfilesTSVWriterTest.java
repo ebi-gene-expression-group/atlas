@@ -171,7 +171,7 @@ public class MicroarrayProfilesTSVWriterTest {
                 "\n# Query: Genes matching: '', up differentially expressed in any contrast given the False Discovery Rate cutoff: 0 in experiment ACCESSION" +
                         "\n# Timestamp: "));
 
-        verify(responseWriterMock).write("Gene ID\tGene Name\tDesign Element\tcond1.p-value\tcond1.log2foldchange\tcond1.t-statistic\tcond2.p-value\tcond2.log2foldchange\tcond2.t-statistic\n", 0, 131);
+        verify(responseWriterMock).write("Gene ID\tGene Name\tDesign Element\tcond1.p-value\tcond1.log2foldchange\tcond1.t-statistic\tcond2.p-value\tcond2.log2foldchange\tcond2.t-statistic\n", 0, 139);
 
         verify(responseWriterMock, times(1)).flush();
     }
