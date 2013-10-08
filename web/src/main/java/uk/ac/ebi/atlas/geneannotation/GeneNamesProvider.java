@@ -19,25 +19,25 @@
  *
  * http://gxa.github.com/gxa
  */
-
-package uk.ac.ebi.atlas.geneannotation;
-
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-@Named("geneNamesProvider")
-public class GeneNamesProvider {
-
-    private BioEntityAnnotationDao bioEntityAnnotationDao;
-
-    @Inject
-    public GeneNamesProvider(BioEntityAnnotationDao bioEntityAnnotationDao) {
-        this.bioEntityAnnotationDao = bioEntityAnnotationDao;
-    }
-
-    public String getGeneName(String ensGeneId) {
-        return bioEntityAnnotationDao.getBioentityName(ensGeneId);
-    }
-
-}
+//
+//package uk.ac.ebi.atlas.geneannotation;
+//
+//
+//import javax.inject.Inject;
+//import javax.inject.Named;
+//
+//@Named("geneNamesProvider")
+//public class GeneNamesProvider {
+//
+//    private BioEntityAnnotationDao bioEntityAnnotationDao;
+//
+//    @Inject
+//    public GeneNamesProvider(BioEntityAnnotationDao bioEntityAnnotationDao) {
+//        this.bioEntityAnnotationDao = bioEntityAnnotationDao;
+//    }
+//
+//    public String getGeneName(String ensGeneId) {
+//        return bioEntityAnnotationDao.getBioentityName(ensGeneId);
+//    }
+//
+//}

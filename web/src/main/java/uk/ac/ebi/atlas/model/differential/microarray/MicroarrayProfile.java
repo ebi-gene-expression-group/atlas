@@ -28,8 +28,8 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
 
     private final String designElementName;
 
-    public MicroarrayProfile(String geneId, String designElementName) {
-        super(geneId);
+    public MicroarrayProfile(String geneId, String geneName, String designElementName) {
+        super(geneId, geneName);
         this.designElementName = designElementName;
     }
 

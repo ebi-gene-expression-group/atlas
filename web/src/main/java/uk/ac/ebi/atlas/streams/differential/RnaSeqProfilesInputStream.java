@@ -55,6 +55,7 @@ public class RnaSeqProfilesInputStream extends TsvInputStream<RnaSeqProfile, Dif
     @Override
     protected void addGeneInfoValueToBuilder(String[] values) {
         rnaSeqProfileBuilder.forGeneId(values[0]);
+        rnaSeqProfileBuilder.withGeneName(values[1]);
     }
 
 

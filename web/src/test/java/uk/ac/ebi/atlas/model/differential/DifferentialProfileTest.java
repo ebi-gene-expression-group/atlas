@@ -39,6 +39,7 @@ import static org.mockito.Mockito.mock;
 public class DifferentialProfileTest {
 
     private static final String GENE_ID = "A_GENE_ID";
+    private static final String GENE_NAME = "A_GENE_NAME";
 
     @Mock
     private DifferentialExpression differentialExpressionMock1;
@@ -50,7 +51,7 @@ public class DifferentialProfileTest {
 
     @Before
     public void setUp() throws Exception {
-        this.subject = new DifferentialProfile(GENE_ID);
+        this.subject = new DifferentialProfile(GENE_ID, GENE_NAME);
     }
 
     @Test

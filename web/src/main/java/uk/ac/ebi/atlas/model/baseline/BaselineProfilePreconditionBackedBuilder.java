@@ -42,6 +42,8 @@ public class BaselineProfilePreconditionBackedBuilder {
 
     private BaselineRequestContext requestContext;
 
+    private String geneName;
+
     @Inject
     protected BaselineProfilePreconditionBackedBuilder(BaselineRequestContext requestContext, BaselineExpressionPrecondition baselineExpressionPrecondition,
                                                        BaselineProfilePrecondition baselineProfilePrecondition) {
@@ -65,7 +67,7 @@ public class BaselineProfilePreconditionBackedBuilder {
     }
 
     public BaselineProfilePreconditionBackedBuilder forGeneId(String geneId) {
-        baselineProfile = new BaselineProfile(geneId);
+        baselineProfile = new BaselineProfile(geneId, geneName);
         initPreconditions();
         return this;
     }
@@ -88,4 +90,7 @@ public class BaselineProfilePreconditionBackedBuilder {
     }
 
 
+    public void withGeneName(String geneName) {
+        this.geneName = geneName;
+    }
 }

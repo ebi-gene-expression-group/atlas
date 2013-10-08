@@ -40,6 +40,8 @@ public class RnaSeqProfileBuilder extends DifferentialProfileBuilder<RnaSeqProfi
 
     private String geneId;
 
+    private String geneName;
+
     @Inject
     protected RnaSeqProfileBuilder(RnaSeqRequestContext requestContext,
                                    DifferentialExpressionPrecondition differentialExpressionPrecondition,
@@ -47,15 +49,21 @@ public class RnaSeqProfileBuilder extends DifferentialProfileBuilder<RnaSeqProfi
         super(requestContext, differentialExpressionPrecondition, differentialProfilePrecondition);
     }
 
-    public DifferentialProfileBuilder forGeneId(String geneId) {
+    public RnaSeqProfileBuilder forGeneId(String geneId) {
         this.geneId = geneId;
+        return this;
+    }
+
+    public RnaSeqProfileBuilder withGeneName(String geneName) {
+        this.geneName = geneName;
         return this;
     }
 
     @Override
     protected RnaSeqProfile createProfile() {
-
         checkState(geneId != null, "Please invoke forGeneId before create");
-        return new RnaSeqProfile(geneId);
+        checkState(geneName != null, "Please invoke forGeneName before create");
+
+        return new RnaSeqProfile(geneId, geneName);
     }
 }

@@ -1,33 +1,49 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.commands.download;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import org.apache.commons.lang3.ArrayUtils;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.utils.TsvReaderUtils;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.MessageFormat;
 
-import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 class ExpressionsWriterImpl implements ExpressionsWriter {
 
 
     private TsvReaderUtils tsvReaderUtils;
-    private GeneNamesProvider geneNamesProvider;
+
     private CSVWriter csvWriter;
 
     private String fileUrlTemplate;
 
-    private HeaderBuilder headerBuilder;
-
     private String experimentAccession;
+    private AnalyticsDataHeaderBuilder headerBuilder;
 
-    public ExpressionsWriterImpl(TsvReaderUtils tsvReaderUtils, GeneNamesProvider geneNamesProvider) {
+    public ExpressionsWriterImpl(TsvReaderUtils tsvReaderUtils) {
         this.tsvReaderUtils = tsvReaderUtils;
-        this.geneNamesProvider = geneNamesProvider;
     }
 
     public void setResponseWriter(CSVWriter csvWriter) {
@@ -42,23 +58,19 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
         this.fileUrlTemplate = fileUrlTemplate;
     }
 
-    public void setHeaderBuilder(HeaderBuilder headerBuilder) {
-        this.headerBuilder = headerBuilder;
-    }
-
     @Override
     public Long write() throws IOException {
 
         long lineCount = 0;
 
         try (CSVReader csvReader = getCsvReader(experimentAccession)) {
-            //write header
-            csvWriter.writeNext(buildHeader(csvReader.readNext()));
+            String[] headers = buildHeader(csvReader.readNext());
+
+            csvWriter.writeNext(headers);
 
             String[] inputLine;
             while ((inputLine = csvReader.readNext()) != null) {
-                String[] outputLine = ArrayUtils.addAll(new String[]{getGeneName(inputLine[0])}, inputLine);
-                csvWriter.writeNext(outputLine);
+                csvWriter.writeNext(inputLine);
                 lineCount++;
             }
         } catch (IOException e) {
@@ -70,13 +82,17 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
         return lineCount;
     }
 
+    String[] buildHeader(String[] headers) {
+        //write header
+        if (headerBuilder != null) {
+            headers = headerBuilder.buildHeader(headers);
+        }
+        return headers;
+    }
+
     @Override
     public void close() throws IOException {
         csvWriter.close();
-    }
-
-    String getGeneName(String accession) {
-        return geneNamesProvider.getGeneName(accession);
     }
 
     CSVReader getCsvReader(String experimentAccession) {
@@ -88,7 +104,7 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
         return MessageFormat.format(fileUrlTemplate, experimentAccession);
     }
 
-    String[] buildHeader(String[] header) {
-        return headerBuilder.buildHeader(header);
+    public void setHeaderBuilder(AnalyticsDataHeaderBuilder headerBuilder) {
+        this.headerBuilder = headerBuilder;
     }
 }

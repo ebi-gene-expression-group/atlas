@@ -55,6 +55,7 @@ public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile,
     @Override
     protected void addGeneInfoValueToBuilder(String[] values) {
         baselineProfilePreconditionBackedBuilder.forGeneId(values[0]);
+        baselineProfilePreconditionBackedBuilder.withGeneName(values[1]);
     }
 
 }

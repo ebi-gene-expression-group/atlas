@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.commands.download;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
@@ -35,6 +36,8 @@ import java.util.List;
 @Named("microarrayProfileWriter")
 @Scope("prototype")
 public class MicroarrayProfilesTSVWriter extends DifferentialProfilesTSVWriter<MicroarrayProfile, MicroarrayExpression> {
+
+    private String DESIGN_ELEMENT = "Design Element";
 
     private MicroarrayRequestContext requestContext;
 
@@ -60,7 +63,7 @@ public class MicroarrayProfilesTSVWriter extends DifferentialProfilesTSVWriter<M
 
     @Override
     protected String[] getProfileIdColumnHeaders() {
-        return new String[]{HeaderBuilder.GENE_NAME_COLUMN_NAME, HeaderBuilder.DESIGN_ELEMENT};
+        return (String[]) ArrayUtils.addAll(super.getProfileIdColumnHeaders(), new String[]{DESIGN_ELEMENT});
     }
 
     @Override

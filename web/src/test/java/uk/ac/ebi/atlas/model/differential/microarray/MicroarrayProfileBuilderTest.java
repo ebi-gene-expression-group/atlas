@@ -29,8 +29,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
-import uk.ac.ebi.atlas.model.differential.*;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilePrecondition;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -43,10 +45,10 @@ import static org.mockito.Mockito.when;
 public class MicroarrayProfileBuilderTest {
 
     private static final String DESIGN_ELEMENT_NAME = "designElementName";
-    private static final String ARRAY_DESIGN = "arraydesign";
     private static final String CONTRAST_NAME1 = "a";
     private static final String CONTRAST_NAME2 = "b";
     private static final String GENE_ID = "geneId";
+    private static final String GENE_NAME = "aGeneName";
 
     @Mock
     Contrast contrastMock1;
@@ -59,9 +61,6 @@ public class MicroarrayProfileBuilderTest {
 
     @Mock
     MicroarrayExpression expressionMock;
-
-    @Mock
-    private DesignElementMappingProvider designElementMappingProvider;
 
     MicroarrayProfileBuilder subject;
 
@@ -80,18 +79,17 @@ public class MicroarrayProfileBuilderTest {
 
         when(expressionMock.isUnderExpressed()).thenReturn(true);
 
-        when(designElementMappingProvider.getEnsGeneId(ARRAY_DESIGN, DESIGN_ELEMENT_NAME)).thenReturn(GENE_ID);
-
-        subject = new MicroarrayProfileBuilder(contextMock, new DifferentialExpressionPrecondition(), new DifferentialProfilePrecondition(), designElementMappingProvider);
+        subject = new MicroarrayProfileBuilder(contextMock, new DifferentialExpressionPrecondition(), new DifferentialProfilePrecondition());
 
     }
 
     @Test
     public void testCreate() throws Exception {
-        MicroarrayProfileBuilder builder = subject.withDesignElementName(DESIGN_ELEMENT_NAME).withArrayDesignAccession(ARRAY_DESIGN);
+        MicroarrayProfileBuilder builder = subject.withDesignElementName(DESIGN_ELEMENT_NAME).withGeneName(GENE_NAME).withGeneId(GENE_ID);
         builder.addExpression(expressionMock);
         MicroarrayProfile profile = builder.create();
         assertThat(profile.getDesignElementName(), is(DESIGN_ELEMENT_NAME));
         assertThat(profile.getId(), is(GENE_ID));
+        assertThat(profile.getName(), is(GENE_NAME));
     }
 }

@@ -33,7 +33,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
@@ -50,6 +49,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -59,8 +59,6 @@ public class MicroarrayProfilesTSVWriterTest {
     private static final String HEADER_TEMPLATE = "# Expression Atlas version: 0.1.4-SNAPSHOT\n" +
             "# Query: Genes matching: ''{0}''{1},{2}{3} differentially expressed in {4} given the False Discovery Rate cutoff: {5} in experiment {6}\n" +
             "# Timestamp: {7}";
-    @Mock
-    private GeneNamesProvider geneNamesProviderMock;
 
     @Mock
     private MicroarrayProfile geneProfileMock;
@@ -161,7 +159,7 @@ public class MicroarrayProfilesTSVWriterTest {
     public void testWrite() throws Exception {
         subject.setResponseWriter(responseWriterMock);
         subject.write(inputStreamMock, conditions);
-        String tsvFileMashead = subject.getTsvFileMasthead();
+        subject.getTsvFileMasthead();
 
         ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
@@ -173,7 +171,7 @@ public class MicroarrayProfilesTSVWriterTest {
                 "\n# Query: Genes matching: '', up differentially expressed in any contrast given the False Discovery Rate cutoff: 0 in experiment ACCESSION" +
                         "\n# Timestamp: "));
 
-        verify(responseWriterMock).write("Gene name\tDesign Element\tcond1.p-value\tcond1.log2foldchange\tcond1.t-statistic\tcond2.p-value\tcond2.log2foldchange\tcond2.t-statistic\n", 0, 131);
+        verify(responseWriterMock).write("Gene ID\tGene Name\tDesign Element\tcond1.p-value\tcond1.log2foldchange\tcond1.t-statistic\tcond2.p-value\tcond2.log2foldchange\tcond2.t-statistic\n", 0, 131);
 
         verify(responseWriterMock, times(1)).flush();
     }
@@ -190,12 +188,12 @@ public class MicroarrayProfilesTSVWriterTest {
 
     @Test
     public void testGetProfileIdColumnHeaders() {
-        assertThat(subject.getProfileIdColumnHeaders(), arrayContaining(HeaderBuilder.GENE_NAME_COLUMN_NAME, HeaderBuilder.DESIGN_ELEMENT));
+        assertThat(subject.getProfileIdColumnHeaders(), arrayContaining("Gene ID", "Gene Name", "Design Element"));
     }
 
     @Test
     public void testGetSecondaryRowHeader() {
         when(geneProfileMock.getDesignElementName()).thenReturn("NAME");
-        assertThat(subject.getSecondaryRowHeader(geneProfileMock), Matchers.is("NAME"));
+        assertThat(subject.getSecondaryRowHeader(geneProfileMock), is("NAME"));
     }
 }

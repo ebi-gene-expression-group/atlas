@@ -36,7 +36,6 @@ import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
-import uk.ac.ebi.atlas.web.controllers.rest.experimentquery.MicroarrayQueryDownloadController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -114,7 +113,7 @@ public class MicroarrayQueryDownloadControllerTest {
     @Test
     public void testDownloadNormalizedData() throws Exception {
         when(expressionsWriterMock.write()).thenReturn(0L);
-        when(dataWriterFactoryMock.getMicroarrayRawDataWriter(experimentMock, ARRAY_DESIGN, printWriterMock)).thenReturn(expressionsWriterMock);
+        when(dataWriterFactoryMock.getMicroarrayRawDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
 
         subject.downloadNormalizedData(requestMock, preferencesMock, responseMock);
 
@@ -126,7 +125,7 @@ public class MicroarrayQueryDownloadControllerTest {
     @Test
     public void testDownloadLogFoldData() throws Exception {
         when(expressionsWriterMock.write()).thenReturn(0L);
-        when(dataWriterFactoryMock.getMicroarrayLogFoldDataWriter(experimentMock, ARRAY_DESIGN, printWriterMock)).thenReturn(expressionsWriterMock);
+        when(dataWriterFactoryMock.getMicroarrayLogFoldDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
 
         subject.downloadLogFoldData(requestMock, preferencesMock, responseMock);
 
@@ -138,7 +137,7 @@ public class MicroarrayQueryDownloadControllerTest {
     @Test
     public void testDownloadAllAnalytics() throws Exception {
         when(expressionsWriterMock.write()).thenReturn(0L);
-        when(dataWriterFactoryMock.getMicroarrayAnalyticsDataWriter(experimentMock, ARRAY_DESIGN, printWriterMock)).thenReturn(expressionsWriterMock);
+        when(dataWriterFactoryMock.getMicroarrayAnalyticsDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
 
         subject.downloadAllAnalytics(requestMock, preferencesMock, responseMock);
 

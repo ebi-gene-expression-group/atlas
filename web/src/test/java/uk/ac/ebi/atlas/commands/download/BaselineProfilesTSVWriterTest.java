@@ -31,7 +31,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
@@ -65,8 +64,7 @@ public class BaselineProfilesTSVWriterTest {
     private BaselineExperiment experimentMock;
     @Mock
     private ExperimentalFactors experimentalFactorsMock;
-    @Mock
-    private GeneNamesProvider geneNamesProviderMock;
+
     @Mock
     private Resource tsvFileMastheadTemplateResourceMock;
 
@@ -95,16 +93,16 @@ public class BaselineProfilesTSVWriterTest {
                 .thenReturn(null);
 
         when(baselineProfileMock1.getId()).thenReturn("GI1");
+        when(baselineProfileMock1.getName()).thenReturn("GN1");
         when(baselineProfileMock1.getExpressionLevel(createFactorValue("brain"))).thenReturn(0.11d);
         when(baselineProfileMock1.getExpressionLevel(createFactorValue("lung"))).thenReturn(9d);
 
         when(baselineProfileMock2.getId()).thenReturn("GI2");
+        when(baselineProfileMock1.getName()).thenReturn("GN2");
         when(baselineProfileMock2.getExpressionLevel(createFactorValue("liver"))).thenReturn(21.12d);
 
         when(experimentalFactorsMock.getFactorsByType(anyString())).thenReturn(Sets.newTreeSet(organismParts));
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
-        when(geneNamesProviderMock.getGeneName("GI1")).thenReturn("GN1");
-        when(geneNamesProviderMock.getGeneName("GI2")).thenReturn("GN2");
     }
 
     @Before
@@ -117,7 +115,6 @@ public class BaselineProfilesTSVWriterTest {
         when(tsvFileMastheadTemplateResourceMock.getInputStream()).thenReturn(inputStream);
         subject.setTsvFileMastheadTemplateResource(tsvFileMastheadTemplateResourceMock);
         subject.initTsvFileMastheadTemplate();
-        subject.setGeneNamesProvider(geneNamesProviderMock);
     }
 
     @Test
@@ -125,11 +122,11 @@ public class BaselineProfilesTSVWriterTest {
 
         long count = subject.write(inputStreamMock, organismParts);
 
-        verify(printWriterMock).write("Gene name\tGene Id\tadipose\tbrain\tbreast\tliver\tlung\n", 0, 50);
+        verify(printWriterMock).write("Gene ID\tGene Name\tadipose\tbrain\tbreast\tliver\tlung\n", 0, 50);
 
-        verify(printWriterMock).write("GN1\tGI1\t0\t0.11\t0\t0\t9\n", 0, 21);
+        verify(printWriterMock).write("GI1\tGN1\t0\t0.11\t0\t0\t9\n", 0, 21);
 
-        verify(printWriterMock).write("GN2\tGI2\t0\t0\t0\t21.12\t0\n", 0, 22);
+        verify(printWriterMock).write("GI2\tGN2\t0\t0\t0\t21.12\t0\n", 0, 22);
 
         assertThat(count, is(2L));
 
@@ -138,7 +135,7 @@ public class BaselineProfilesTSVWriterTest {
     @Test
     public void buildCsvHeadersTest() {
         String[] headers = subject.buildCsvColumnHeaders(organismParts);
-        assertThat(headers, is(new String[]{"Gene name", "Gene Id", "adipose", "brain", "breast", "liver", "lung"}));
+        assertThat(headers, is(new String[]{"Gene ID", "Gene Name", "adipose", "brain", "breast", "liver", "lung"}));
     }
 
     @Test

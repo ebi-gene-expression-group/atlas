@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.commands.download;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import javax.inject.Named;
@@ -33,20 +32,19 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
-class AnalyticsDataHeaderBuilder implements HeaderBuilder {
+class AnalyticsDataHeaderBuilder {
     private DifferentialExperiment experiment;
 
-
-    @Override
     public String[] buildHeader(String[] header) {
         checkNotNull(experiment, "Experiment should be not null!");
 
         List<String> result = new ArrayList<>();
-        result.add(GENE_NAME_COLUMN_NAME);
-        result.add(getSecondColumnName());
 
-        String[] headerWithoutFirstElement = ArrayUtils.remove(header, 0);
-        for (String columnHeader : headerWithoutFirstElement) {
+        //ToDo (B) : we need to replace contrast id with name only starting from 2nd or 3rd column ... depends on the type of experiment
+
+
+
+        for (String columnHeader : header) {
             result.add(replaceContrastIdWithName(columnHeader));
         }
 
@@ -63,7 +61,4 @@ class AnalyticsDataHeaderBuilder implements HeaderBuilder {
         this.experiment = experiment;
     }
 
-    String getSecondColumnName() {
-        return GENE_ID_COLUMN_NAME;
-    }
 }

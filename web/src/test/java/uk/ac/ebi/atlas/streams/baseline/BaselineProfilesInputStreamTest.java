@@ -59,7 +59,7 @@ public class BaselineProfilesInputStreamTest {
     @Mock
     private BaselineExpressionsBuffer expressionsBufferMock;
 
-    private String[] expressionLevels = new String[]{"GENE_ID", "2.22222", "0.11111"};
+    private String[] expressionLevels = new String[]{"A GENE ID", "A GENE NAME", "2.22222", "0.11111"};
     private String[] expressionLevelsWithoutGeneIdColumn = new String[]{"2.22222", "0.11111"};
 
     private BaselineProfilesInputStream subject;
@@ -74,7 +74,7 @@ public class BaselineProfilesInputStreamTest {
         given(experimentRuns1Mock.getAccession()).willReturn(RUN_ACCESSION_1);
         given(experimentRuns2Mock.getAccession()).willReturn(RUN_ACCESSION_2);
 
-        String[] headers = new String[]{"", RUN_ACCESSION_1, RUN_ACCESSION_2};
+        String[] headers = new String[]{"A Gene ID", "A Gene Name", RUN_ACCESSION_1, RUN_ACCESSION_2};
         String[] headersWithoutGeneIdColumn = new String[]{RUN_ACCESSION_1, RUN_ACCESSION_2};
 
         given(csvReaderMock.readNext())

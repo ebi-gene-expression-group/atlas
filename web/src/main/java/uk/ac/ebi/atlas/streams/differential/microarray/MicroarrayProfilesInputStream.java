@@ -64,13 +64,11 @@ public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProf
         microarrayProfileBuilder.addExpression(expression);
     }
 
-    protected void addGeneColumnValueToBuilder(String designElementName) {
-        microarrayProfileBuilder.withDesignElementName(designElementName).withArrayDesignAccession(arrayDesignAccession);
-    }
-
     @Override
     protected void addGeneInfoValueToBuilder(String[] values) {
-        microarrayProfileBuilder.withDesignElementName(values[2]).withArrayDesignAccession(arrayDesignAccession);
+        microarrayProfileBuilder.withGeneId(values[0]);
+        microarrayProfileBuilder.withGeneName(values[1]);
+        microarrayProfileBuilder.withDesignElementName(values[2]);
     }
 
     protected String[] removeGeneIDAndNameColumns(String[] columns) {

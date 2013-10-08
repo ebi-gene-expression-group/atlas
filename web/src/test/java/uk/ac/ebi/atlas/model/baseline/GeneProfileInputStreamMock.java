@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.ArrayList;
@@ -45,8 +44,6 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<BaselinePro
     //To make the test more complete the profiles are streamed in an order that is the reverse
     //of the final order required by the user stories, profiles with higher selectivity will be streamed last.
     public GeneProfileInputStreamMock(int streamSize) {
-
-        GeneNamesProvider geneNamesProviderMock = mock(GeneNamesProvider.class);
 
         BaselineRequestContext requestContextMock = mock(BaselineRequestContext.class);
         when(requestContextMock.getQueryFactorType()).thenReturn("ORGANISM_PART");

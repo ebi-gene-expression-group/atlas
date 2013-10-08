@@ -29,10 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.utils.TsvReaderUtils;
-
-import java.io.PrintWriter;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -50,14 +47,11 @@ public class ExpressionsWriterImplTest {
     private CSVWriter csvWriterMock;
 
     @Mock
-    private GeneNamesProvider geneNamesProviderMock;
-
-    @Mock
     private CSVReader csvReaderMock;
 
-    private String[] header = {"Gene", "SRR057596", "SRR057597", "SRR057598"};
-    private String[] line1 = {"ens1", "1", "0", "10.5"};
-    private String[] line2 = {"ens2", "1", "0", "10.\"5"};
+    private String[] header = {"GeneId", "GeneName", "SRR057596", "SRR057597", "SRR057598"};
+    private String[] line1 = {"ens1", "name1", "1", "0", "10.5"};
+    private String[] line2 = {"ens2", "name2", "1", "0", "10.\"5"};
 
     private ExpressionsWriterImpl subject;
 
@@ -69,21 +63,18 @@ public class ExpressionsWriterImplTest {
                 .thenReturn(line2)
                 .thenReturn(null);
 
-        when(geneNamesProviderMock.getGeneName("ens1")).thenReturn("name1");
-        when(geneNamesProviderMock.getGeneName("ens2")).thenReturn("name2");
+        AnalyticsDataHeaderBuilder headerBuilder = new AnalyticsDataHeaderBuilder();
 
-        RnaSeqRawDataHeaderBuilder headerBuilder = new RnaSeqRawDataHeaderBuilder();
-
-        subject = new ExpressionsWriterImpl(tsvReaderUtilsMock, geneNamesProviderMock);
+        subject = new ExpressionsWriterImpl(tsvReaderUtilsMock);
         subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
-        subject.setHeaderBuilder(headerBuilder);
+        subject.setHeaderBuilder(null);
         subject.setResponseWriter(csvWriterMock);
     }
 
     @Test
     public void testBuildHeader() throws Exception {
         String[] result = subject.buildHeader(header);
-        assertThat(result, is(new String[]{HeaderBuilder.GENE_NAME_COLUMN_NAME, HeaderBuilder.GENE_ID_COLUMN_NAME, "SRR057596", "SRR057597", "SRR057598"}));
+        assertThat(result, is(new String[]{"GeneId", "GeneName", "SRR057596", "SRR057597", "SRR057598"}));
     }
 
     @Test
@@ -91,11 +82,11 @@ public class ExpressionsWriterImplTest {
         subject.setExperimentAccession("Exp1");
         Long count = subject.write();
 
-        verify(csvWriterMock).writeNext(new String[]{"Gene name","Gene Id","SRR057596","SRR057597","SRR057598"});
+        verify(csvWriterMock).writeNext(new String[]{"GeneId","GeneName","SRR057596","SRR057597","SRR057598"});
 
-        verify(csvWriterMock).writeNext(new String[]{"name1","ens1","1","0","10.5"});
+        verify(csvWriterMock).writeNext(new String[]{"ens1","name1","1","0","10.5"});
 
-        verify(csvWriterMock).writeNext(new String[]{"name2","ens2","1","0","10.\"5"});
+        verify(csvWriterMock).writeNext(new String[]{"ens2","name2","1","0","10.\"5"});
 
         assertThat(count, is(2L));
     }
