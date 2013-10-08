@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,6 +88,9 @@ public abstract class Profile<K, T extends Expression> {
     }
 
     public String getName() {
+        if (StringUtils.isBlank(name)) {
+            return id;
+        }
         return name;
     }
 }
