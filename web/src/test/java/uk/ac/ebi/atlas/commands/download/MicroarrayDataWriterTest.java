@@ -29,11 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
 import uk.ac.ebi.atlas.utils.TsvReaderUtils;
-
-import java.io.PrintWriter;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -44,7 +40,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class MicroarrayDataWriterTest {
 
-    public static final String ARRAY_DESIGN_ACC = "arrayDesign1";
     @Mock
     private TsvReaderUtils tsvReaderUtilsMock;
 
@@ -52,18 +47,12 @@ public class MicroarrayDataWriterTest {
     private CSVWriter csvWriterMock;
 
     @Mock
-    private GeneNamesProvider geneNamesProviderMock;
-
-    @Mock
-    private DesignElementMappingProvider mappingProviderMock;
-
-    @Mock
     private CSVReader csvReaderMock;
 
-    private String[] header = {"DesignElementAccession", "C1", "C2", "C3"};
-    private String[] line = {"de123", "1", "0", "10.5"};
+    private String[] header = {"geneId","geneName", "DesignElementAccession", "C1", "C2", "C3"};
+    private String[] line = {"id1", "name1", "de123", "1", "0", "10.5"};
 
-    private MicroarrayDataWriter subject;
+    private ExpressionsWriterImpl subject;
 
     @Before
     public void initSubject() throws Exception {
@@ -72,22 +61,17 @@ public class MicroarrayDataWriterTest {
                 .thenReturn(line)
                 .thenReturn(null);
 
-        when(geneNamesProviderMock.getGeneName("ens1")).thenReturn("name1");
-        when(mappingProviderMock.getEnsGeneId(ARRAY_DESIGN_ACC, "de123")).thenReturn("ens1");
+        AnalyticsDataHeaderBuilder headerBuilder = new AnalyticsDataHeaderBuilder();
 
-        MicroarrayNormalizedDataHeaderBuilder headerBuilder = new MicroarrayNormalizedDataHeaderBuilder();
-
-        subject = new MicroarrayDataWriter(tsvReaderUtilsMock, geneNamesProviderMock, mappingProviderMock);
+        subject = new ExpressionsWriterImpl(tsvReaderUtilsMock);
         subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
-        subject.setHeaderBuilder(headerBuilder);
         subject.setResponseWriter(csvWriterMock);
-        subject.setArrayDesignAccession(ARRAY_DESIGN_ACC);
     }
 
     @Test
     public void testBuildHeader() throws Exception {
         String[] result = subject.buildHeader(header);
-        assertThat(result, is(new String[]{HeaderBuilder.GENE_NAME_COLUMN_NAME, HeaderBuilder.DESIGN_ELEMENT, "C1", "C2", "C3"}));
+        assertThat(result, is(new String[]{"geneId", "geneName", "DesignElementAccession", "C1", "C2", "C3"}));
     }
 
     @Test
@@ -95,9 +79,9 @@ public class MicroarrayDataWriterTest {
         subject.setExperimentAccession("Exp1");
         Long count = subject.write();
 
-        verify(csvWriterMock).writeNext(new String[]{"Gene name","Design Element","C1","C2","C3"});
+        verify(csvWriterMock).writeNext(new String[]{"geneId","geneName","DesignElementAccession","C1","C2","C3"});
 
-        verify(csvWriterMock).writeNext(new String[]{"name1","de123","1","0","10.5"});
+        verify(csvWriterMock).writeNext(new String[]{"id1", "name1","de123","1","0","10.5"});
 
         assertThat(count, is(1L));
     }

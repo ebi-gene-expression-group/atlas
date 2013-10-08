@@ -43,7 +43,7 @@ public class AnalyticsDataHeaderBuilderTest {
 
     private AnalyticsDataHeaderBuilder subject;
 
-    private final static String[] HEADER = {"Gene", "c1.p-value", "c1.t-stat", "c2.p-value", "c2.t-stat"};
+    private final static String[] HEADER = {"Gene ID", "Gene Name", "c1.p-value", "c1.t-stat", "c2.p-value", "c2.t-stat"};
 
     @Before
     public void initSubject() throws Exception {
@@ -64,8 +64,8 @@ public class AnalyticsDataHeaderBuilderTest {
     @Test
     public void testBuildHeader() throws Exception {
         String[] newHeader = subject.buildHeader(HEADER);
-        assertThat(newHeader, is(new String[]{HeaderBuilder.GENE_NAME_COLUMN_NAME
-                , HeaderBuilder.GENE_ID_COLUMN_NAME
+        assertThat(newHeader, is(new String[]{"Gene ID"
+                , "Gene Name"
         , "contrast1.p-value", "contrast1.t-stat", "contrast2.p-value", "contrast2.t-stat"}));
     }
 

@@ -79,7 +79,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         String[] experimentRunHeaders = experimentDataTsvReader.readLine(HEADER_LINE_INDEX);
 
-        String[] columnHeaders = ArrayUtils.remove(experimentRunHeaders, GENE_ID_COLUMN_INDEX);
+        String[] columnHeaders = ArrayUtils.subarray(experimentRunHeaders, 2, experimentRunHeaders.length);
 
         AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 

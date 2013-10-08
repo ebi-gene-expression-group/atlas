@@ -28,9 +28,7 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.HashSet;
@@ -40,14 +38,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BaselineProfileTest {
 
     private static final String QUERY_FACTOR_TYPE = "ORGANISM_PART";
-    @Mock
-    private GeneNamesProvider geneNamesProviderMock;
 
     private static String GENE_ID = "geneId_1";
     private static String GENE_NAME = "geneName_1";
@@ -68,9 +63,8 @@ public class BaselineProfileTest {
 
     @Before
     public void setUp() throws Exception {
-        when(geneNamesProviderMock.getGeneName(GENE_ID)).thenReturn(GENE_NAME);
 
-        subject = new BaselineProfile(GENE_ID);
+        subject = new BaselineProfile(GENE_ID, GENE_NAME);
 
         subject.add(QUERY_FACTOR_TYPE, expression_1).add(QUERY_FACTOR_TYPE, expression_2).add(QUERY_FACTOR_TYPE, expression_3);
 
@@ -121,7 +115,7 @@ public class BaselineProfileTest {
     @Test
     public void sumProfileShouldPreserveLevelsThatAreNotExpressedInOtherProfile(){
 
-        BaselineProfile otherProfile = new BaselineProfile("other profile").add(QUERY_FACTOR_TYPE, expression_2);
+        BaselineProfile otherProfile = new BaselineProfile("other profile", "other name").add(QUERY_FACTOR_TYPE, expression_2);
 
         subject.sumProfile(otherProfile);
         assertThat(subject.getId(), is(GENE_ID));
@@ -151,7 +145,7 @@ public class BaselineProfileTest {
         BaselineExpression expression_3 = new BaselineExpression(3D, new FactorSet().add(factor3));
         BaselineExpression expression_4 = new BaselineExpression(300D, new FactorSet().add(factor4));
 
-        BaselineProfile baselineProfile = new BaselineProfile("OTHER_ID");
+        BaselineProfile baselineProfile = new BaselineProfile("OTHER_ID", "OTHER_NAME");
 
         return baselineProfile.add(QUERY_FACTOR_TYPE, expression_1).add(QUERY_FACTOR_TYPE, expression_2)
                                 .add(QUERY_FACTOR_TYPE, expression_3).add(QUERY_FACTOR_TYPE, expression_4);

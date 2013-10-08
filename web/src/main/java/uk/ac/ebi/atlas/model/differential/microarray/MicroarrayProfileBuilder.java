@@ -22,10 +22,8 @@
 
 package uk.ac.ebi.atlas.model.differential.microarray;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfileBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilePrecondition;
@@ -33,38 +31,31 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfilePrecondition;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import static com.google.common.base.Preconditions.checkState;
-
 @Named
 @Scope("prototype")
 public class MicroarrayProfileBuilder extends DifferentialProfileBuilder<MicroarrayProfile, MicroarrayRequestContext, MicroarrayExpression> {
 
     private String designElementName;
 
-    private String arrayDesignAccession;
+    private String geneName;
 
-    private final DesignElementMappingProvider designElementMappingProvider;
+    private String geneId;
 
     @Inject
     protected MicroarrayProfileBuilder(MicroarrayRequestContext requestContext,
                                        DifferentialExpressionPrecondition differentialExpressionPrecondition,
-                                       DifferentialProfilePrecondition differentialProfilePrecondition, DesignElementMappingProvider designElementMappingProvider) {
+                                       DifferentialProfilePrecondition differentialProfilePrecondition) {
         super(requestContext, differentialExpressionPrecondition, differentialProfilePrecondition);
-        this.designElementMappingProvider = designElementMappingProvider;
     }
 
     @Override
     protected MicroarrayProfile createProfile() {
-        checkState(designElementName != null, "Please invoke withDesignElementName before create");
-        checkState(arrayDesignAccession != null, "Please invoke withArrayDesignAccession before create");
+        return new MicroarrayProfile(geneId, geneName, designElementName);
+    }
 
-        String geneId = designElementMappingProvider.getEnsGeneId(arrayDesignAccession, designElementName);
-
-        if (StringUtils.isBlank(geneId)) {
-            return null;
-        }
-
-        return new MicroarrayProfile(geneId, designElementName);
+    public MicroarrayProfileBuilder withGeneName(String geneName){
+        this.geneName = geneName;
+        return this;
     }
 
     public MicroarrayProfileBuilder withDesignElementName(String designElementName) {
@@ -72,9 +63,8 @@ public class MicroarrayProfileBuilder extends DifferentialProfileBuilder<Microar
         return this;
     }
 
-    public MicroarrayProfileBuilder withArrayDesignAccession(String arrayDesignAccession) {
-        this.arrayDesignAccession = arrayDesignAccession;
+    public MicroarrayProfileBuilder withGeneId(String geneId) {
+        this.geneId = geneId;
         return this;
     }
-
 }

@@ -1,9 +1,29 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
 package uk.ac.ebi.atlas.commands.download;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingProvider;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.utils.TsvReaderUtils;
 
@@ -33,15 +53,11 @@ public class DataWriterFactory {
 
 
     private TsvReaderUtils tsvReaderUtils;
-    private GeneNamesProvider geneNamesProvider;
-    private DesignElementMappingProvider designElementMappingProvider;
 
 
     @Inject
-    public DataWriterFactory(TsvReaderUtils tsvReaderUtils, GeneNamesProvider geneNamesProvider, DesignElementMappingProvider designElementMappingProvider) {
+    public DataWriterFactory(TsvReaderUtils tsvReaderUtils) {
         this.tsvReaderUtils = tsvReaderUtils;
-        this.geneNamesProvider = geneNamesProvider;
-        this.designElementMappingProvider = designElementMappingProvider;
     }
 
 
@@ -50,71 +66,73 @@ public class DataWriterFactory {
         final AnalyticsDataHeaderBuilder headerBuilder = new AnalyticsDataHeaderBuilder();
         headerBuilder.setExperiment(experiment);
 
-        ExpressionsWriterImpl expressionsWriter = new ExpressionsWriterImpl(tsvReaderUtils, geneNamesProvider);
+        ExpressionsWriterImpl expressionsWriter = new ExpressionsWriterImpl(tsvReaderUtils);
         expressionsWriter.setFileUrlTemplate(differentialExperimentAnalyticsFileUrlTemplate);
-        initWriter(expressionsWriter, experiment.getAccession(), responseWriter, headerBuilder);
+        initWriter(expressionsWriter, experiment.getAccession(), headerBuilder, responseWriter);
 
         return expressionsWriter;
     }
 
     public ExpressionsWriter getRnaSeqRawDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter) {
 
-        RnaSeqRawDataHeaderBuilder headerBuilder = new RnaSeqRawDataHeaderBuilder();
+        final AnalyticsDataHeaderBuilder headerBuilder = new AnalyticsDataHeaderBuilder();
+        headerBuilder.setExperiment(experiment);
 
-        ExpressionsWriterImpl expressionsWriter = new ExpressionsWriterImpl(tsvReaderUtils, geneNamesProvider);
+        ExpressionsWriterImpl expressionsWriter = new ExpressionsWriterImpl(tsvReaderUtils);
         expressionsWriter.setFileUrlTemplate(differentialExperimentRawCountsFileUrlTemplate);
 
-        initWriter(expressionsWriter, experiment.getAccession(), responseWriter, headerBuilder);
+        initWriter(expressionsWriter, experiment.getAccession(), headerBuilder, responseWriter);
 
         return expressionsWriter;
     }
 
 
-    public ExpressionsWriter getMicroarrayAnalyticsDataWriter(DifferentialExperiment experiment, String arrayDesignAccession, PrintWriter responseWriter) {
-        MicroarrayAnalyticsDataHeaderBuilder headerBuilder = new MicroarrayAnalyticsDataHeaderBuilder();
+    public ExpressionsWriter getMicroarrayAnalyticsDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter) {
+        AnalyticsDataHeaderBuilder headerBuilder = new MicroarrayDataHeaderBuilder();
         headerBuilder.setExperiment(experiment);
 
-        MicroarrayDataWriter microarrayDataWriter = new MicroarrayDataWriter(tsvReaderUtils, geneNamesProvider, designElementMappingProvider);
-        microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
+        ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl(tsvReaderUtils);
         microarrayDataWriter.setFileUrlTemplate(microarrayExperimentAnalyticsFileUrlTemplate);
 
-        initWriter(microarrayDataWriter, experiment.getAccession(), responseWriter, headerBuilder);
+
+        initWriter(microarrayDataWriter, experiment.getAccession(), headerBuilder, responseWriter);
 
         return microarrayDataWriter;
 
     }
 
-    public ExpressionsWriter getMicroarrayRawDataWriter(DifferentialExperiment experiment, String arrayDesignAccession, PrintWriter responseWriter) {
-        MicroarrayNormalizedDataHeaderBuilder headerBuilder = new MicroarrayNormalizedDataHeaderBuilder();
+    public ExpressionsWriter getMicroarrayRawDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter) {
 
-        MicroarrayDataWriter microarrayDataWriter = new MicroarrayDataWriter(tsvReaderUtils, geneNamesProvider, designElementMappingProvider);
-        microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
+        AnalyticsDataHeaderBuilder headerBuilder = new MicroarrayDataHeaderBuilder();
+        headerBuilder.setExperiment(experiment);
+
+        ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl(tsvReaderUtils);
         microarrayDataWriter.setFileUrlTemplate(microarrayExperimentNormalizedFileUrlTemplate);
 
-        initWriter(microarrayDataWriter, experiment.getAccession(), responseWriter, headerBuilder);
+        initWriter(microarrayDataWriter, experiment.getAccession(), headerBuilder, responseWriter);
 
         return microarrayDataWriter;
     }
 
-    public ExpressionsWriter getMicroarrayLogFoldDataWriter(DifferentialExperiment experiment, String arrayDesignAccession, PrintWriter responseWriter) {
-        MicroarrayNormalizedDataHeaderBuilder headerBuilder = new MicroarrayNormalizedDataHeaderBuilder();
+    public ExpressionsWriter getMicroarrayLogFoldDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter) {
+        AnalyticsDataHeaderBuilder headerBuilder = new MicroarrayDataHeaderBuilder();
+             headerBuilder.setExperiment(experiment);
 
-        MicroarrayDataWriter microarrayDataWriter = new MicroarrayDataWriter(tsvReaderUtils, geneNamesProvider, designElementMappingProvider);
-        microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
+        ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl(tsvReaderUtils);
         microarrayDataWriter.setFileUrlTemplate(microarrayExperimentLogFoldFileUrlTemplate);
 
-        initWriter(microarrayDataWriter, experiment.getAccession(), responseWriter, headerBuilder);
+        initWriter(microarrayDataWriter, experiment.getAccession(), headerBuilder, responseWriter);
 
         return microarrayDataWriter;
     }
 
 
-    private void initWriter(ExpressionsWriterImpl expressionsWriter, String experimentAccession,
-                            PrintWriter responseWriter, HeaderBuilder analyticsDataHeaderBuilder) {
+    private void initWriter(ExpressionsWriterImpl expressionsWriter, String experimentAccession, AnalyticsDataHeaderBuilder headerBuilder,
+                            PrintWriter responseWriter) {
 
-        expressionsWriter.setHeaderBuilder(analyticsDataHeaderBuilder);
         expressionsWriter.setResponseWriter(new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER));
         expressionsWriter.setExperimentAccession(experimentAccession);
+        expressionsWriter.setHeaderBuilder(headerBuilder);
     }
 
 

@@ -29,7 +29,6 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 
 import java.util.Collections;
 import java.util.TreeSet;
@@ -52,9 +51,6 @@ public class BaselineProfilePreconditionBackedBuilderTest {
     private BaselineProfilePrecondition baselineProfilePreconditionMock;
     @Mock
     private BaselineExpressionPrecondition baselineExpressionPreconditionMock;
-
-    @Mock
-    private GeneNamesProvider geneNamesProviderMock;
 
     @Mock
     private BaselineRequestContext requestContextMock;

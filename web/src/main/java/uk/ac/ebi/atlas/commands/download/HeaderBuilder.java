@@ -19,14 +19,14 @@
  *
  * http://gxa.github.com/gxa
  */
-
-package uk.ac.ebi.atlas.commands.download;
-
-interface HeaderBuilder {
-
-    String GENE_NAME_COLUMN_NAME = "Gene name";
-    String GENE_ID_COLUMN_NAME = "Gene Id";
-    String DESIGN_ELEMENT = "Design Element";
-
-    String[] buildHeader(String[] header);
-}
+//
+//package uk.ac.ebi.atlas.commands.download;
+//
+//interface HeaderBuilder {
+//
+//    String GENE_NAME_COLUMN_NAME = "Gene name";
+//    String GENE_ID_COLUMN_NAME = "Gene Id";
+//    String DESIGN_ELEMENT = "Design Element";
+//
+//    String[] buildHeader(String[] header);
+//}

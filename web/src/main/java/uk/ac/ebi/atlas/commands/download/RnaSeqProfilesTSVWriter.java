@@ -59,11 +59,6 @@ public class RnaSeqProfilesTSVWriter extends DifferentialProfilesTSVWriter<RnaSe
     }
 
     @Override
-    protected String[] getProfileIdColumnHeaders() {
-        return new String[]{HeaderBuilder.GENE_NAME_COLUMN_NAME, HeaderBuilder.GENE_ID_COLUMN_NAME};
-    }
-
-    @Override
     protected String getSecondaryRowHeader(RnaSeqProfile geneProfile) {
         return geneProfile.getId();
     }

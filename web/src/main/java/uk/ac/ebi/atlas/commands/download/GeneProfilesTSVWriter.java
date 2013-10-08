@@ -25,11 +25,9 @@ package uk.ac.ebi.atlas.commands.download;
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
@@ -41,15 +39,11 @@ import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements AutoCloseable {
 
+    private String GENE_NAME_COLUMN_NAME = "Gene Name";
+    private String GENE_ID_COLUMN_NAME = "Gene ID";
+
     private CSVWriter csvWriter;
     private PrintWriter responseWriter;
-
-    private GeneNamesProvider geneNamesProvider;
-
-    @Inject
-    public void setGeneNamesProvider(GeneNamesProvider geneNamesProvider) {
-        this.geneNamesProvider = geneNamesProvider;
-    }
 
     public Long write(GeneProfilesList<T> geneProfilesList, Set<K> conditions) throws IOException {
 
@@ -93,7 +87,9 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
 
     protected abstract String getTsvFileMasthead();
 
-    protected abstract String[] getProfileIdColumnHeaders();
+    protected String[] getProfileIdColumnHeaders(){
+        return new String[]{GENE_ID_COLUMN_NAME, GENE_NAME_COLUMN_NAME};
+    }
 
     protected String[] buildCsvColumnHeaders(Set<K> conditionValues) {
         String[] profileIdColumnHeaders = getProfileIdColumnHeaders();
@@ -109,7 +105,7 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
     }
 
     String[] getRowHeaders(T geneProfile) {
-        String primaryRowHeader = geneNamesProvider.getGeneName(geneProfile.getId());
+        String primaryRowHeader = geneProfile.getName();
         String secondaryRowHeader = getSecondaryRowHeader(geneProfile);
         if (secondaryRowHeader != null) {
             return new String[]{primaryRowHeader, secondaryRowHeader};

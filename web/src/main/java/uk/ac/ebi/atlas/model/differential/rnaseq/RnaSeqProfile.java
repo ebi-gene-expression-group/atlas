@@ -28,8 +28,8 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 public class RnaSeqProfile extends DifferentialProfile<DifferentialExpression> {
 
 
-    public RnaSeqProfile(String geneId) {
-        super(geneId);
+    public RnaSeqProfile(String geneId, String geneName) {
+        super(geneId, geneName);
     }
 
 }

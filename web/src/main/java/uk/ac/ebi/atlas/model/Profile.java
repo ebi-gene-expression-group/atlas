@@ -38,8 +38,11 @@ public abstract class Profile<K, T extends Expression> {
 
     private String id;
 
-    protected Profile(String id) {
+    private String name;
+
+    protected Profile(String id, String name) {
         this.id = id;
+        this.name = name;
     }
 
     public String getId() {
@@ -83,4 +86,7 @@ public abstract class Profile<K, T extends Expression> {
         return expressionsByCondition.get(condition);
     }
 
+    public String getName() {
+        return name;
+    }
 }

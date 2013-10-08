@@ -30,7 +30,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
-import uk.ac.ebi.atlas.geneannotation.GeneNamesProvider;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
@@ -47,9 +46,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RnaSeqProfilesTSVWriterTest {
-
-    @Mock
-    private GeneNamesProvider geneNamesProviderMock;
 
     @Mock
     private RnaSeqProfile geneProfileMock;

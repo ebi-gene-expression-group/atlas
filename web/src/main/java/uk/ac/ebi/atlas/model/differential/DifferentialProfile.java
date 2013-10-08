@@ -45,8 +45,8 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
     private int upRegulatedExpressionsCount;
 
 
-    public DifferentialProfile(String geneId) {
-        super(geneId);
+    public DifferentialProfile(String geneId, String geneName) {
+        super(geneId, geneName);
     }
 
     DifferentialProfile add(T expression) {

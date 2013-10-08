@@ -44,6 +44,7 @@ public class RnaSeqProfileBuilderTest {
     public static final String CONTRAST_NAME1 = "a";
     public static final String CONTRAST_NAME2 = "b";
     public static final String GENE_ID = "geneId";
+    private static final String GENE_NAME = "aGeneName";
 
     @Mock
     Contrast contrastMock1;
@@ -79,7 +80,7 @@ public class RnaSeqProfileBuilderTest {
 
     @Test
     public void testCreate() throws Exception {
-        DifferentialProfileBuilder builder = subject.forGeneId(GENE_ID);
+        RnaSeqProfileBuilder builder = subject.forGeneId(GENE_ID).withGeneName(GENE_NAME);
         builder.addExpression(expressionMock);
         DifferentialProfile profile = builder.create();
         assertThat(profile.getId(), is(GENE_ID));
