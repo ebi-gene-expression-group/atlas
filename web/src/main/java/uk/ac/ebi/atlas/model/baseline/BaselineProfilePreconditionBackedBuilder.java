@@ -71,6 +71,7 @@ public class BaselineProfilePreconditionBackedBuilder {
     }
 
     public BaselineProfilePreconditionBackedBuilder addExpression(BaselineExpression expression) {
+        checkState(baselineProfile != null, "Please invoke forGeneID before create");
         if (baselineExpressionPrecondition.apply(expression)) {
             baselineProfile.add(requestContext.getQueryFactorType(), expression);
         }

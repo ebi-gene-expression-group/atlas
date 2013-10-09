@@ -26,14 +26,11 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
-import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
 import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommandTrader;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexOperation;
 
@@ -51,8 +48,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ExperimentCRUD {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
-
-    private ArrayDesignDao arrayDesignDao;
     private ConfigurationTrader configurationTrader;
     private DesignElementMappingLoader designElementLoader;
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
@@ -63,8 +58,7 @@ public class ExperimentCRUD {
     private ExperimentDTOBuilder experimentDTOBuilder;
 
     @Inject
-    public ExperimentCRUD(ArrayDesignDao arrayDesignDao,
-                          ConfigurationTrader configurationTrader,
+    public ExperimentCRUD(ConfigurationTrader configurationTrader,
                           DesignElementMappingLoader designElementLoader,
                           ExperimentDAO experimentDAO,
                           ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
@@ -72,7 +66,6 @@ public class ExperimentCRUD {
                           IndexCommandTrader indexCommandTrader,
                           ExperimentDTOBuilder experimentDTOBuilder) {
 
-        this.arrayDesignDao = arrayDesignDao;
         this.configurationTrader = configurationTrader;
         this.designElementLoader = designElementLoader;
         this.experimentDAO = experimentDAO;
@@ -103,16 +96,6 @@ public class ExperimentCRUD {
             indexCommandTrader.getIndexCommand(accession, IndexOperation.ADD).execute();
         }
 
-        switch (experimentType) {
-            case MICROARRAY:
-            case TWOCOLOUR:
-                loadArrayDesign(accession, ArrayDesignType.MICRO_ARRAY);
-                break;
-            case MICRORNA:
-                loadArrayDesign(accession, ArrayDesignType.MICRO_RNA);
-                break;
-        }
-
         return uuid;
 
     }
@@ -125,19 +108,6 @@ public class ExperimentCRUD {
                         .build();
 
         return experimentDesignFileWriter.write(accession);
-
-    }
-
-    void loadArrayDesign(String accession, ArrayDesignType arrayDesignType) {
-
-        MicroarrayExperimentConfiguration microarrayExperimentConfiguration =
-                configurationTrader.getMicroarrayExperimentConfiguration(accession);
-
-        for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignNames()) {
-            if (!arrayDesignDao.isArrayDesignPresent(arrayDesign)) {
-                designElementLoader.loadMappings(arrayDesign, arrayDesignType);
-            }
-        }
 
     }
 
