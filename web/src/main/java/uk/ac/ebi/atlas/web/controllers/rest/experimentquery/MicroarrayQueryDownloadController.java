@@ -145,7 +145,7 @@ public class MicroarrayQueryDownloadController {
         if (experiment.getArrayDesignAccessions().size() == 1) {
 
             ExpressionsWriter writer = dataWriterFactory.getMicroarrayRawDataWriter(experiment,
-                    response.getWriter());
+                    response.getWriter(), experiment.getArrayDesignAccessions().first());
 
             long genesCount = writer.write();
 
@@ -166,7 +166,7 @@ public class MicroarrayQueryDownloadController {
                 zipOutputStream.putNextEntry(ze);
 
                 ExpressionsWriter writer = dataWriterFactory.getMicroarrayRawDataWriter(experiment,
-                        new PrintWriter(zipOutputStream));
+                        new PrintWriter(zipOutputStream),selectedArrayDesign);
 
                 long genesCount = writer.write();
 
@@ -191,7 +191,7 @@ public class MicroarrayQueryDownloadController {
         if (experiment.getArrayDesignAccessions().size() == 1) {
 
             ExpressionsWriter writer = dataWriterFactory.getMicroarrayLogFoldDataWriter(experiment,
-                    response.getWriter());
+                    response.getWriter(), experiment.getArrayDesignAccessions().first());
 
             long genesCount = writer.write();
 
@@ -212,7 +212,7 @@ public class MicroarrayQueryDownloadController {
                 zipOutputStream.putNextEntry(ze);
 
                 ExpressionsWriter writer = dataWriterFactory.getMicroarrayLogFoldDataWriter(experiment,
-                        new PrintWriter(zipOutputStream));
+                        new PrintWriter(zipOutputStream), selectedArrayDesign);
 
                 long genesCount = writer.write();
 
@@ -236,7 +236,8 @@ public class MicroarrayQueryDownloadController {
 
         if (experiment.getArrayDesignAccessions().size() == 1) {
 
-            ExpressionsWriter writer = dataWriterFactory.getMicroarrayAnalyticsDataWriter(experiment, response.getWriter());
+            ExpressionsWriter writer = dataWriterFactory
+                    .getMicroarrayAnalyticsDataWriter(experiment, response.getWriter(), experiment.getArrayDesignAccessions().first());
 
             long genesCount = writer.write();
 
@@ -257,7 +258,7 @@ public class MicroarrayQueryDownloadController {
                 zipOutputStream.putNextEntry(ze);
 
                 ExpressionsWriter writer = dataWriterFactory.getMicroarrayAnalyticsDataWriter(experiment,
-                        new PrintWriter(zipOutputStream));
+                        new PrintWriter(zipOutputStream),selectedArrayDesign);
 
                 long genesCount = writer.write();
 

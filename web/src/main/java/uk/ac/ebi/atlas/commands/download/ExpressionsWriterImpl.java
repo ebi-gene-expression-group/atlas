@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.commands.download;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
+import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.utils.TsvReaderUtils;
 
 import java.io.IOException;
@@ -41,6 +42,7 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
 
     private String experimentAccession;
     private AnalyticsDataHeaderBuilder headerBuilder;
+    private String arrayDesignAccession;
 
     public ExpressionsWriterImpl(TsvReaderUtils tsvReaderUtils) {
         this.tsvReaderUtils = tsvReaderUtils;
@@ -63,7 +65,7 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
 
         long lineCount = 0;
 
-        try (CSVReader csvReader = getCsvReader(experimentAccession)) {
+        try (CSVReader csvReader = getCsvReader()) {
             String[] headers = buildHeader(csvReader.readNext());
 
             csvWriter.writeNext(headers);
@@ -95,16 +97,23 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
         csvWriter.close();
     }
 
-    CSVReader getCsvReader(String experimentAccession) {
-        String tsvFileURL = formatUrl(fileUrlTemplate, experimentAccession);
+    CSVReader getCsvReader() {
+        String tsvFileURL = formatUrl(fileUrlTemplate);
         return tsvReaderUtils.build(tsvFileURL);
     }
 
-    String formatUrl(String fileUrlTemplate, String experimentAccession) {
+    String formatUrl(String fileUrlTemplate) {
+        if (StringUtils.isNotBlank(arrayDesignAccession)){
+            return MessageFormat.format(fileUrlTemplate, experimentAccession, arrayDesignAccession);
+        }
         return MessageFormat.format(fileUrlTemplate, experimentAccession);
     }
 
     public void setHeaderBuilder(AnalyticsDataHeaderBuilder headerBuilder) {
         this.headerBuilder = headerBuilder;
+    }
+
+    public void setArrayDesignAccession(String arrayDesignAccession) {
+        this.arrayDesignAccession = arrayDesignAccession;
     }
 }

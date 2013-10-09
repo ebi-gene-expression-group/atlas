@@ -113,7 +113,7 @@ public class MicroarrayQueryDownloadControllerTest {
     @Test
     public void testDownloadNormalizedData() throws Exception {
         when(expressionsWriterMock.write()).thenReturn(0L);
-        when(dataWriterFactoryMock.getMicroarrayRawDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
+        when(dataWriterFactoryMock.getMicroarrayRawDataWriter(experimentMock, printWriterMock, ARRAY_DESIGN)).thenReturn(expressionsWriterMock);
 
         subject.downloadNormalizedData(requestMock, preferencesMock, responseMock);
 
@@ -125,7 +125,7 @@ public class MicroarrayQueryDownloadControllerTest {
     @Test
     public void testDownloadLogFoldData() throws Exception {
         when(expressionsWriterMock.write()).thenReturn(0L);
-        when(dataWriterFactoryMock.getMicroarrayLogFoldDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
+        when(dataWriterFactoryMock.getMicroarrayLogFoldDataWriter(experimentMock, printWriterMock, ARRAY_DESIGN)).thenReturn(expressionsWriterMock);
 
         subject.downloadLogFoldData(requestMock, preferencesMock, responseMock);
 
@@ -137,7 +137,7 @@ public class MicroarrayQueryDownloadControllerTest {
     @Test
     public void testDownloadAllAnalytics() throws Exception {
         when(expressionsWriterMock.write()).thenReturn(0L);
-        when(dataWriterFactoryMock.getMicroarrayAnalyticsDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
+        when(dataWriterFactoryMock.getMicroarrayAnalyticsDataWriter(experimentMock, printWriterMock, ARRAY_DESIGN)).thenReturn(expressionsWriterMock);
 
         subject.downloadAllAnalytics(requestMock, preferencesMock, responseMock);
 
