@@ -32,8 +32,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -69,9 +67,6 @@ public class ExperimentCRUDTest {
 
     @Mock
     private ConfigurationTrader configurationTraderMock;
-
-    @Mock
-    private DesignElementMappingLoader designElementLoaderMock;
 
     @Mock
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
@@ -117,8 +112,7 @@ public class ExperimentCRUDTest {
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
 
 
-        subject = new ExperimentCRUD(
-                arrayDesignDaoMock, configurationTraderMock, designElementLoaderMock, experimentDAOMock,
+        subject = new ExperimentCRUD(configurationTraderMock, experimentDAOMock,
                 experimentDesignFileWriterBuilderMock, experimentTraderMock, indexCommandTraderMock, exparimentDTOBuilderMock);
     }
 
@@ -138,19 +132,6 @@ public class ExperimentCRUDTest {
         subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
     }
 
-    @Test
-    public void testLoadArrayDesignPresent() throws Exception {
-        when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(true);
-        subject.loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
-        verify(designElementLoaderMock, times(0)).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY);
-    }
-
-    @Test
-    public void testLoadArrayDesignNotPresent() throws Exception {
-        when(arrayDesignDaoMock.isArrayDesignPresent(ARRAY_DESIGN)).thenReturn(false);
-        subject.loadArrayDesign(EXPERIMENT_ACCESSION, ArrayDesignType.MICRO_ARRAY);
-        verify(designElementLoaderMock).loadMappings(ARRAY_DESIGN, ArrayDesignType.MICRO_ARRAY);
-    }
 
     @Test
     public void updateExperimentShouldDelegateToDAO() throws Exception {

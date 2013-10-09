@@ -31,8 +31,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.Regulation;
@@ -78,9 +76,6 @@ public class MicroarrayProfilesInputStreamIT {
     @Inject
     private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
 
-    @Inject
-    private DesignElementMappingLoader designElementLoader;
-
     private MicroarrayRequestContext microarrayRequestContext;
 
     private ObjectInputStream<MicroarrayProfile> subject;
@@ -91,8 +86,6 @@ public class MicroarrayProfilesInputStreamIT {
 
     @Before
     public void initSubject() throws Exception {
-
-        designElementLoader.loadMappings(ARRAY_DESIGN_ACCESSION, ArrayDesignType.MICRO_ARRAY);
 
         subject = inputStreamFactory.createMicroarrayProfileInputStream(EXPERIMENT_ACCESSION, ARRAY_DESIGN_ACCESSION);
 
