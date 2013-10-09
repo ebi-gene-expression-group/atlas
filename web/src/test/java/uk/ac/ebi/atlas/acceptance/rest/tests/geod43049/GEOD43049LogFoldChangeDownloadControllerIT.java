@@ -57,7 +57,7 @@ public class GEOD43049LogFoldChangeDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("Gene name", "Design Element", "GSM1055612", "GSM1055613", "GSM1055614", "GSM1055615", "GSM1055616", "GSM1055617")
+                contains("Gene ID", "Gene Name", "Design Element", "GSM1055612", "GSM1055613", "GSM1055614", "GSM1055615", "GSM1055616", "GSM1055617")
         );
 
     }
