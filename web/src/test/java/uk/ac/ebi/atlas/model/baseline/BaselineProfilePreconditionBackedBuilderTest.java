@@ -92,7 +92,7 @@ public class BaselineProfilePreconditionBackedBuilderTest {
     @Test
     public void createShouldReturnNullIfNoneOfTheExpressionsSatisfyPreconditionsWithoutSelectedQueryFactors() {
         //when
-        subject.forGeneId("Gene1")
+        subject.forGeneIdAndName("Gene1", "Name1")
                 .addExpression(expressionMock1)
                 .addExpression(expressionMock2);
 
@@ -111,7 +111,7 @@ public class BaselineProfilePreconditionBackedBuilderTest {
         given(expressionMock2.isGreaterThan(0d)).willReturn(true);
         given(expressionMock1.getFactor(QUERY_FACTOR_TYPE)).willReturn(mock(Factor.class));
 
-        subject.forGeneId("Gene1")
+        subject.forGeneIdAndName("Gene1", "Name1")
                 .addExpression(expressionMock1)
                 .addExpression(expressionMock2);
 
@@ -135,7 +135,7 @@ public class BaselineProfilePreconditionBackedBuilderTest {
         given(expressionMock1.getLevel()).willReturn(5d);
         given(expressionMock1.getFactor(QUERY_FACTOR_TYPE)).willReturn(selectedFactorMock);
 
-        subject.forGeneId("Gene1")
+        subject.forGeneIdAndName("Gene1", "Name1")
                 .addExpression(expressionMock1)
                 .addExpression(expressionMock2);
 
@@ -161,7 +161,7 @@ public class BaselineProfilePreconditionBackedBuilderTest {
         given(expressionMock1.getFactor(QUERY_FACTOR_TYPE)).willReturn(selectedFactorMock);
         given(expressionMock2.getFactor(QUERY_FACTOR_TYPE)).willReturn(otherFactorMock);
 
-        subject.forGeneId("Gene1")
+        subject.forGeneIdAndName("Gene1", "Name1")
                 .addExpression(expressionMock1)
                 .addExpression(expressionMock2);
 

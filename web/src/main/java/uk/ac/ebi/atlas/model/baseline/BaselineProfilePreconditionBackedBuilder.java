@@ -42,8 +42,6 @@ public class BaselineProfilePreconditionBackedBuilder {
 
     private BaselineRequestContext requestContext;
 
-    private String geneName;
-
     @Inject
     protected BaselineProfilePreconditionBackedBuilder(BaselineRequestContext requestContext, BaselineExpressionPrecondition baselineExpressionPrecondition,
                                                        BaselineProfilePrecondition baselineProfilePrecondition) {
@@ -66,14 +64,13 @@ public class BaselineProfilePreconditionBackedBuilder {
                 .setSpecific(requestContext.isSpecific());
     }
 
-    public BaselineProfilePreconditionBackedBuilder forGeneId(String geneId) {
+    public BaselineProfilePreconditionBackedBuilder forGeneIdAndName(String geneId, String geneName) {
         baselineProfile = new BaselineProfile(geneId, geneName);
         initPreconditions();
         return this;
     }
 
     public BaselineProfilePreconditionBackedBuilder addExpression(BaselineExpression expression) {
-        checkState(baselineProfile != null, "Please invoke forGeneID before create");
         if (baselineExpressionPrecondition.apply(expression)) {
             baselineProfile.add(requestContext.getQueryFactorType(), expression);
         }
@@ -87,10 +84,5 @@ public class BaselineProfilePreconditionBackedBuilder {
             return baselineProfile;
         }
         return null;
-    }
-
-
-    public void withGeneName(String geneName) {
-        this.geneName = geneName;
     }
 }
