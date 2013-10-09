@@ -26,7 +26,6 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
@@ -49,7 +48,6 @@ public class ExperimentCRUD {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
     private ConfigurationTrader configurationTrader;
-    private DesignElementMappingLoader designElementLoader;
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
     private ExperimentDAO experimentDAO;
     private ExperimentTrader experimentTrader;
@@ -59,7 +57,6 @@ public class ExperimentCRUD {
 
     @Inject
     public ExperimentCRUD(ConfigurationTrader configurationTrader,
-                          DesignElementMappingLoader designElementLoader,
                           ExperimentDAO experimentDAO,
                           ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
                           ExperimentTrader experimentTrader,
@@ -67,7 +64,6 @@ public class ExperimentCRUD {
                           ExperimentDTOBuilder experimentDTOBuilder) {
 
         this.configurationTrader = configurationTrader;
-        this.designElementLoader = designElementLoader;
         this.experimentDAO = experimentDAO;
         this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;

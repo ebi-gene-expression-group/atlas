@@ -32,7 +32,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.geneannotation.ArrayDesignDao;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -68,9 +67,6 @@ public class ExperimentCRUDTest {
 
     @Mock
     private ConfigurationTrader configurationTraderMock;
-
-    @Mock
-    private DesignElementMappingLoader designElementLoaderMock;
 
     @Mock
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
@@ -116,7 +112,7 @@ public class ExperimentCRUDTest {
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
 
 
-        subject = new ExperimentCRUD(configurationTraderMock, designElementLoaderMock, experimentDAOMock,
+        subject = new ExperimentCRUD(configurationTraderMock, experimentDAOMock,
                 experimentDesignFileWriterBuilderMock, experimentTraderMock, indexCommandTraderMock, exparimentDTOBuilderMock);
     }
 

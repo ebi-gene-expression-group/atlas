@@ -22,17 +22,12 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest.admin;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uk.ac.ebi.atlas.commands.GeneNamesImportCommand;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.ArrayDesignType;
-import uk.ac.ebi.atlas.geneannotation.arraydesign.DesignElementMappingLoader;
 
-import javax.inject.Inject;
 import java.util.Set;
 
 @Controller
@@ -40,50 +35,53 @@ import java.util.Set;
 @RequestMapping("/admin")
 public class AnnotationAdminController {
 
-    private GeneNamesImportCommand geneNamesImportCommand;
+//    private GeneNamesImportCommand geneNamesImportCommand;
 
-    private DesignElementMappingLoader designElementLoader;
+//    private DesignElementMappingLoader designElementLoader;
 
-    @Inject
-    public AnnotationAdminController(GeneNamesImportCommand geneNamesImportCommand, DesignElementMappingLoader designElementLoader) {
-        this.geneNamesImportCommand = geneNamesImportCommand;
-
-        this.designElementLoader = designElementLoader;
-    }
+//    @Inject
+//    public AnnotationAdminController(GeneNamesImportCommand geneNamesImportCommand) {
+//        this.geneNamesImportCommand = geneNamesImportCommand;
+//
+//    }
 
     @RequestMapping("/load/gene-names")
     @ResponseBody
     public String loadGeneNames(@RequestParam("species") Set<String> species) {
 
-        geneNamesImportCommand.loadGeneNames(species);
-
-        return "Updated";
+//        geneNamesImportCommand.loadGeneNames(species);
+//
+//        return "Updated";
+        return "depricated";
     }
 
     @RequestMapping("/load/mirna")
     @ResponseBody
     public String loadMiRnaAnnotations() {
 
-        int count = geneNamesImportCommand.loadMiRnaNames();
+//        int count = geneNamesImportCommand.loadMiRnaNames();
+//
+//        return "Updated " + count + " miRNA names";
 
-        return "Updated " + count + " miRNA names";
+        return "depricated";
     }
 
     @RequestMapping("/load/design-elements")
     @ResponseBody
     public String loadDesignElements(@RequestParam("arrayDesign") String arrayDesign,
                                        @RequestParam(value = "type", required = false) String type) {
-        //ToDo: maybe create Command similar to GeneNamesImportCommand
-        ArrayDesignType arrayDesignType;
-        if (StringUtils.isEmpty(type)) {
-            arrayDesignType = ArrayDesignType.MICRO_ARRAY;
-        } else {
-            arrayDesignType = ArrayDesignType.getByName(type);
-        }
-
-        designElementLoader.loadMappings(arrayDesign, arrayDesignType);
-
-        return "Updated";
+//        //ToDo: maybe create Command similar to GeneNamesImportCommand
+//        ArrayDesignType arrayDesignType;
+//        if (StringUtils.isEmpty(type)) {
+//            arrayDesignType = ArrayDesignType.MICRO_ARRAY;
+//        } else {
+//            arrayDesignType = ArrayDesignType.getByName(type);
+//        }
+//
+//        designElementLoader.loadMappings(arrayDesign, arrayDesignType);
+//
+//        return "Updated";
+        return "depricated";
     }
 
 }

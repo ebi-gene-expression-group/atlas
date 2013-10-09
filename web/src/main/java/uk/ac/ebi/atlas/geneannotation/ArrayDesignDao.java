@@ -22,22 +22,15 @@
 
 package uk.ac.ebi.atlas.geneannotation;
 
-import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 @Named
 @Scope("singleton")
@@ -48,50 +41,50 @@ public class ArrayDesignDao {
     private JdbcTemplate jdbcTemplate;
 
     @Inject
-    public ArrayDesignDao(@Qualifier("dataSource") DataSource dataSource) {
+    public ArrayDesignDao(@Qualifier("dataSourceOracle") DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void saveMappings(final Map<String, String> annotations, final String arrayDesign, final String type) {
-
-        String query = "INSERT INTO designelement_mapping(designelement, identifier, type, arraydesign) VALUES(?, ?, ?,?)";
-
-        final List<Map.Entry<String, String>> entries = Lists.newArrayList(annotations.entrySet());
-        BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setString(1, entries.get(i).getKey());
-                ps.setString(2, entries.get(i).getValue());
-                ps.setString(3, type);
-                ps.setString(4, arrayDesign);
-            }
-
-            @Override
-            public int getBatchSize() {
-                return annotations.size();
-            }
-        };
-
-        int[] rows = jdbcTemplate.batchUpdate(query, statementSetter);
-        LOGGER.info("Updated " + rows.length + " bioentities");
-    }
-
-    public void deleteMappings(String arrayDesign) {
-        String query = "delete from designelement_mapping where arraydesign=?";
-
-        jdbcTemplate.update(query, new Object[]{arrayDesign});
-    }
-
-    public String getGeneIdentifier(String arrayDesign, String designElement) {
-        try{
-            String query = "select identifier from designelement_mapping where designelement=? and arraydesign=?";
-
-            return jdbcTemplate.queryForObject(query, new String[]{designElement, arrayDesign}, String.class);
-
-        } catch(IncorrectResultSizeDataAccessException e) {
-            return StringUtils.EMPTY;
-        }
-    }
+//    public void saveMappings(final Map<String, String> annotations, final String arrayDesign, final String type) {
+//
+//        String query = "INSERT INTO designelement_mapping(designelement, identifier, type, arraydesign) VALUES(?, ?, ?,?)";
+//
+//        final List<Map.Entry<String, String>> entries = Lists.newArrayList(annotations.entrySet());
+//        BatchPreparedStatementSetter statementSetter = new BatchPreparedStatementSetter() {
+//            @Override
+//            public void setValues(PreparedStatement ps, int i) throws SQLException {
+//                ps.setString(1, entries.get(i).getKey());
+//                ps.setString(2, entries.get(i).getValue());
+//                ps.setString(3, type);
+//                ps.setString(4, arrayDesign);
+//            }
+//
+//            @Override
+//            public int getBatchSize() {
+//                return annotations.size();
+//            }
+//        };
+//
+//        int[] rows = jdbcTemplate.batchUpdate(query, statementSetter);
+//        LOGGER.info("Updated " + rows.length + " bioentities");
+//    }
+//
+//    public void deleteMappings(String arrayDesign) {
+//        String query = "delete from designelement_mapping where arraydesign=?";
+//
+//        jdbcTemplate.update(query, new Object[]{arrayDesign});
+//    }
+//
+//    public String getGeneIdentifier(String arrayDesign, String designElement) {
+//        try{
+//            String query = "select identifier from designelement_mapping where designelement=? and arraydesign=?";
+//
+//            return jdbcTemplate.queryForObject(query, new String[]{designElement, arrayDesign}, String.class);
+//
+//        } catch(IncorrectResultSizeDataAccessException e) {
+//            return StringUtils.EMPTY;
+//        }
+//    }
 
     public boolean isArrayDesignPresent(String arrayDesign) {
         String query = "select count(*) from designelement_mapping where arraydesign=?";
