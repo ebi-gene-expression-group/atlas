@@ -114,17 +114,12 @@ public class SolrSuggestionsServiceIT {
         List<String> properties = subject.findGeneIdSuggestionsInIdentifier("Hs2Affx", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties, hasItems("hs2affx.1.41.s1_3p_s_at", "hs2affx.1.43.s1_3p_x_at", "hs2affx.1.52.s1_3p_at"));
+        assertThat(properties, hasItems("hs2affx.1.106.s1_3p_at", "hs2affx.1.11.s1_3p_s_at", "hs2affx.1.137.s1_3p_at"));
 
         properties = subject.findGeneIdSuggestionsInIdentifier("Hs2Affx.1.41", HOMO_SAPIENS_SPECIES);
 
-        assertThat(properties.size(), is(6));
-        assertThat(properties, hasItems("hs2affx.1.41.s1_3p_s_at", "hs2affx.1.413.s1_3p_at", "hs2affx.1.414.s1_3p_at"));
-
-        properties = subject.findGeneIdSuggestionsInIdentifier("Hs2Affx.1.41.S1_3p_s", HOMO_SAPIENS_SPECIES);
-
-        assertThat(properties.size(), is(1));
-        assertThat(properties, contains("hs2affx.1.41.s1_3p_s_at"));
+        assertThat(properties.size(), is(5));
+        assertThat(properties, hasItems("hs2affx.1.413.s1_3p_at", "hs2affx.1.414.s1_3p_at", "hs2affx.1.415.s1_3p_at"));
 
     }
 
@@ -169,7 +164,7 @@ public class SolrSuggestionsServiceIT {
         List<String> properties = subject.findGeneIdSuggestionsInName("p", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties, hasItems("ppt2", "pbx2", "prpf31"));
+        assertThat(properties, hasItems("ptk2", "pde4dip", "pacrgl"));
     }
 
     @Test
