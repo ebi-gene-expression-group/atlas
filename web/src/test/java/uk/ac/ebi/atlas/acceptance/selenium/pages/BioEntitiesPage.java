@@ -62,7 +62,7 @@ public class BioEntitiesPage extends BioEntityPage {
         List<BaselineBioentitiesCount> baselineCounts = Lists.newArrayList();
 
         By byBaselineCountsTableId = By.id("baselineCountsTable");
-        FluentWait wait = new WebDriverWait(driver, 5L).pollingEvery(20, TimeUnit.MILLISECONDS);
+        FluentWait wait = new WebDriverWait(driver, 15L).pollingEvery(20, TimeUnit.MILLISECONDS);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byBaselineCountsTableId));
 
         List<WebElement> linkElements = driver.findElements(By.className("bioEntityCardLink"));
