@@ -91,13 +91,13 @@ public class GEOD22351GeneProfilesDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(4);
 
         assertThat(firstLine,
-                contains("Arl8b", "ENSMUSG00000030105", "0.0", "0.474360080385946")
+                contains("ENSMUSG00000030105", "Arl8b", "0.0", "0.474360080385946")
         );
 
         List<String> secondLine = subject.getRowValues(5);
 
         assertThat(secondLine,
-                contains("Ch25h", "ENSMUSG00000050370", "1.70428798138445E-6", "3.01033089730209")
+                contains("ENSMUSG00000050370", "Ch25h", "1.70428798138445E-6", "3.01033089730209")
         );
 
     }

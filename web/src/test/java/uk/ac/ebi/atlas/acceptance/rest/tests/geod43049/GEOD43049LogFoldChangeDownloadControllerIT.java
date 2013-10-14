@@ -65,21 +65,11 @@ public class GEOD43049LogFoldChangeDownloadControllerIT {
     @Test
     public void verifySecondLine() {
 
-        List<String> secondLine = subject.getRowValues(1);
+        List<String> secondLine = subject.getRowValues(2);
 
         assertThat(secondLine,
-                contains("", "", "GE_BrightCorner", "0.371292374524635", "0.334825950656852", "0.4133498535358", "0.0338093072577259", "0.595093980055508", "-0.454786287469673")
-        );
-
-    }
-
-    @Test
-    public void verifyFullLine() {
-
-        List<String> secondLine = subject.getRowValues(4);
-
-        assertThat(secondLine,
-                contains("ENSG00000160716", "CHRNB2", "A_32_P77178", "-0.226413566312215", "0.221075140635125", "-0.0803647330348537", "0.176853240756264", "0.0560392246013141", "-0.168569338799448")
+                contains("ENSG00000058063", "ATP11B", "A_23_P212522", "-0.0218584427198161", "-0.124969210041617", "-0.0973362983750423", "0.287435732652395", "0.0785632845888859", "-0.387233999843733"
+                )
         );
 
     }
@@ -89,7 +79,7 @@ public class GEOD43049LogFoldChangeDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(151));
+        assertThat(lines.length, is(98));
     }
 
 }

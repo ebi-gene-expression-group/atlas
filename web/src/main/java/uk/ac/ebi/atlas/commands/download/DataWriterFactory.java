@@ -85,11 +85,15 @@ public class DataWriterFactory {
     }
 
 
-    public ExpressionsWriter getMicroarrayAnalyticsDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter , String arrayDesignAccession) {
+    public ExpressionsWriter getMicroarrayAnalyticsDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter, String arrayDesignAccession) {
+
+        final MicroarrayDataHeaderBuilder headerBuilder = new MicroarrayDataHeaderBuilder();
+        headerBuilder.setExperiment(experiment);
 
         ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl(tsvReaderUtils);
         microarrayDataWriter.setFileUrlTemplate(microarrayExperimentAnalyticsFileUrlTemplate);
         microarrayDataWriter.setArrayDesignAccession(arrayDesignAccession);
+        microarrayDataWriter.setHeaderBuilder(headerBuilder);
 
         initWriter(microarrayDataWriter, experiment.getAccession(), responseWriter);
 
@@ -109,7 +113,7 @@ public class DataWriterFactory {
     }
 
     public ExpressionsWriter getMicroarrayLogFoldDataWriter(DifferentialExperiment experiment, PrintWriter responseWriter
-                                                            ,String arrayDesignAccession) {
+            , String arrayDesignAccession) {
 
         ExpressionsWriterImpl microarrayDataWriter = new ExpressionsWriterImpl(tsvReaderUtils);
         microarrayDataWriter.setFileUrlTemplate(microarrayExperimentLogFoldFileUrlTemplate);

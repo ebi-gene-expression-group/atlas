@@ -60,7 +60,7 @@ public class RnaSeqProfilesTSVWriter extends DifferentialProfilesTSVWriter<RnaSe
 
     @Override
     protected String getSecondaryRowHeader(RnaSeqProfile geneProfile) {
-        return geneProfile.getId();
+        return "";
     }
 
 }
