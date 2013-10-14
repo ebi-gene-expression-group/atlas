@@ -105,12 +105,13 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
     }
 
     String[] getRowHeaders(T geneProfile) {
-        String primaryRowHeader = geneProfile.getName();
+        String geneProfileId = geneProfile.getId();
+        String geneName = geneProfile.getName();
         String secondaryRowHeader = getSecondaryRowHeader(geneProfile);
         if (secondaryRowHeader != null) {
-            return new String[]{primaryRowHeader, secondaryRowHeader};
+            return new String[]{geneProfileId, geneName, secondaryRowHeader};
         }
-        return new String[]{primaryRowHeader};
+        return new String[]{geneName};
     }
 
     protected abstract String getSecondaryRowHeader(T profile);

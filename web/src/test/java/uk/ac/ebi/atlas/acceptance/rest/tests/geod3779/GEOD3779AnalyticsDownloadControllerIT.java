@@ -75,8 +75,8 @@ public class GEOD3779AnalyticsDownloadControllerIT {
         assertThat(zipEntry.getName(), is("E-GEOD-3779_A-AFFY-23-analytics.tsv"));
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(zipInputStream));
-        assertThat(reader.readLine(), is("Gene name\tDesign Element\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-23.p-value\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-23.t-statistic\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-23.log2foldchange"));
-        assertThat(reader.readLine(), is("H2-Ob\t1422201_at\t0.974206814501029\t0.44248894656976\t0.0761328916666661"));
+        assertThat(reader.readLine(), is("Gene ID\tGene name\tDesign Element\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-23.p-value\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-23.t-statistic\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-23.log2foldchange"));
+        assertThat(reader.readLine(), is("ENSMUSG00000041538\tH2-Ob\t1422201_at\t0.974206814501029\t0.44248894656976\t0.0761328916666661"));
     }
 
     @Test
@@ -89,8 +89,8 @@ public class GEOD3779AnalyticsDownloadControllerIT {
         assertThat(zipEntry.getName(), is("E-GEOD-3779_A-AFFY-24-analytics.tsv"));
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(zipInputStream));
-        assertThat(reader.readLine(), is("Gene name\tDesign Element\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-24.p-value\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-24.t-statistic\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-24.log2foldchange"));
-        assertThat(reader.readLine(), is("Snx30\t1456479_at\t0.02\t0.120394369986336\t0.00641014999999978"));
+        assertThat(reader.readLine(), is("Gene ID\tGene name\tDesign Element\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-24.p-value\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-24.t-statistic\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-24.log2foldchange"));
+        assertThat(reader.readLine(), is("ENSMUSG00000028385\tSnx30\t1456479_at\t0.02\t0.120394369986336\t0.00641014999999978"));
     }
 
 }

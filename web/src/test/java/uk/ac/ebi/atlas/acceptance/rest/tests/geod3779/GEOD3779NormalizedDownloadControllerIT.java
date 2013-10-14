@@ -75,8 +75,8 @@ public class GEOD3779NormalizedDownloadControllerIT {
         assertThat(zipEntry.getName(), is("E-GEOD-3779_A-AFFY-23-normalized-expressions.tsv"));
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(zipInputStream));
-        assertThat(reader.readLine(), is("Gene name\tDesign Element\t9859-11, chip MOE430A\t9619-3 p107 -/-, chip MOE430A\t9619-6, chip MOE430A\t9859-12 p107 -/-, chip MOE430A\t9887-4, chip MOE430A\t9447-4 -/-, chip MOE430A\t9887-6 p107 -/-, chip MOE430A"));
-        assertThat(reader.readLine(), is("Atp6v0d1\t1415671_at\t8.484999\t8.020546\t8.057817\t8.076476\t8.4062805\t7.7016144\t8.34271"));
+        assertThat(reader.readLine(), is("Gene ID\tGene Name\tDesign Element\t9859-11, chip MOE430A\t9619-3 p107 -/-, chip MOE430A\t9619-6, chip MOE430A\t9859-12 p107 -/-, chip MOE430A\t9887-4, chip MOE430A\t9447-4 -/-, chip MOE430A\t9887-6 p107 -/-, chip MOE430A"));
+        assertThat(reader.readLine(), is("ENSMUSG00000013160\tAtp6v0d1\t1415671_at\t8.484999\t8.020546\t8.057817\t8.076476\t8.4062805\t7.7016144\t8.34271"));
     }
 
     @Test
@@ -89,8 +89,8 @@ public class GEOD3779NormalizedDownloadControllerIT {
         assertThat(zipEntry.getName(), is("E-GEOD-3779_A-AFFY-24-normalized-expressions.tsv"));
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(zipInputStream));
-        assertThat(reader.readLine(), is("Gene name\tDesign Element\t9619-3 p107 -/-, chip MOE430B\t9859-11, chip MOE430B\t9887-6 p107 -/-, chip MOE430B\t9447-4 -/-, chip MOE430B\t9859-12 p107 -/-, chip MOE430B\t9887-4, chip MOE430B\t9619-6, chip MOE430B"));
-        assertThat(reader.readLine(), is("Atp6v0d1\t1415671_at\t7.6078053\t8.543172\t8.350148\t7.5729947\t7.837444\t8.3335\t7.5833025"));
+        assertThat(reader.readLine(), is("Gene ID\tGene Name\tDesign Element\t9619-3 p107 -/-, chip MOE430B\t9859-11, chip MOE430B\t9887-6 p107 -/-, chip MOE430B\t9447-4 -/-, chip MOE430B\t9859-12 p107 -/-, chip MOE430B\t9887-4, chip MOE430B\t9619-6, chip MOE430B"));
+        assertThat(reader.readLine(), is("ENSMUSG00000013160\tAtp6v0d1\t1415671_at\t7.6078053\t8.543172\t8.350148\t7.5729947\t7.837444\t8.3335\t7.5833025"));
     }
 
 }
