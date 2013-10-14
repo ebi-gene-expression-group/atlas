@@ -40,9 +40,9 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
     public void verifyResultsWithRegulationUp() {
         subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP&displayLevels=true");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 72"));
+        assertThat(subject.getGeneCount(), containsString("of 12"));
 
-        assertThat(subject.getSelectedProfiles().size(), is(50));
+        assertThat(subject.getSelectedProfiles().size(), is(12));
         assertThat(subject.getSelectedProfiles().subList(0, 3), contains("Irc", "CG8303", "Ykt6"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
@@ -58,9 +58,9 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
     public void verifyResultsWithRegulationDown() {
         subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=DOWN&displayLevels=true");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 104"));
+        assertThat(subject.getGeneCount(), containsString("of 13"));
 
-        assertThat(subject.getSelectedProfiles().size(), is(50));
+        assertThat(subject.getSelectedProfiles().size(), is(13));
         assertThat(subject.getSelectedProfiles().subList(0, 3), contains("CG13876", "CG7742", "CG31803"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
@@ -76,10 +76,10 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
     public void verifyResultsWithRegulationUpDown() {
         subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 175"));
+        assertThat(subject.getGeneCount(), containsString("of 25"));
 
-        assertThat(subject.getSelectedProfiles().size(), is(50));
-        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("CG13876", "CG7742", "CG31803"));
+        assertThat(subject.getSelectedProfiles().size(), is(25));
+        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("CG9072", "CG14269", "CG31803"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
         assertThat(subject.getGeneProfile(1).get(0), is("8.36" + " \u00D7 " + "10-6"));

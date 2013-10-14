@@ -54,7 +54,7 @@ public class MicroarrayProfilesInputStreamIT {
 
     public static final String EXPERIMENT_ACCESSION = "E-MTAB-1066";
 
-    private static final String GENE_ID_UPDOWN_1 = "FBgn0038465";
+    private static final String GENE_ID_UPDOWN_1 = "FBgn0040393";
     private static final String GENE_ID_UPDOWN_2 = "FBgn0053054";
     private static final String GENE_ID_UPDOWN_3 = "FBgn0029134";
 

@@ -172,7 +172,7 @@ public class DefaultFilterByMenuIT extends SinglePageSeleniumFixture {
 
         //then
         Assert.assertThat(selectedGenes, contains(
-                "RP11-439L8.3", "U4", "RP11-90H3.1", "RTDR1", "RGS7BP", "RP11-736N17.8", "RP11-727M10.1", "RP3-406C18.2", "SCN2A"
+                "RP11-439L8.3", "RNU4-50P", "RP11-90H3.1", "RTDR1", "RGS7BP", "RP11-736N17.8", "RP11-727M10.1", "RP3-406C18.2", "SCN2A"
         ));
     }
 
