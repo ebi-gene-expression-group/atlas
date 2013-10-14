@@ -63,22 +63,22 @@ public abstract class BioEntityPageController {
 
         initBioentityPropertyService(identifier);
 
-        findEnsemblIDsForMirBaseID(identifier, model);
-
-        model.addAttribute("entityIdentifier", identifier);
-
-        model.addAttribute("singleBioentityPage", true);
-
-        model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
-
-        return "bioEntities";
-    }
-
-    private void findEnsemblIDsForMirBaseID(String mirBaseID, Model model) {
-        Set<String> ensemblIDs = solrQueryService.fetchGeneIdentifiersFromSolr(mirBaseID, "ensgene", true, "mirbase_id");
+        //add ensambl identifiers to model in case the searched ID is a mirbase ID
+        Set<String> ensemblIDs = solrQueryService.fetchGeneIdentifiersFromSolr(identifier, "ensgene", true, "mirbase_id");
         if (ensemblIDs.size() > 0) {
             model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
         }
+
+        model.addAttribute("entityIdentifier", identifier);
+
+        //if it is false the bioentity property panel will not be shown and the
+        //differential heatmap will visualize an extra column for design element (not required when the heatmap displays a single bioentity)
+        model.addAttribute("singleBioentityPage", true);
+
+        //bioentity properties panel data
+        model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
+
+        return "bioEntities";
     }
 
     protected Map<String, String> buildPropertyNamesByTypeMap() {
