@@ -92,7 +92,7 @@ public class BioentitiesQueryController {
 
         model.addAttribute("preferences", new DifferentialRequestPreferences());
 
-        return "bioentities";
+        return "bioEntities";
     }
 
 

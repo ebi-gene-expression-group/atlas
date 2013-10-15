@@ -25,9 +25,6 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
-import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
-
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -42,7 +39,7 @@ public class BioentitiesPageGeneQueryIT extends SinglePageSeleniumFixture {
         subject.get();
     }
 
-
+/*
     @Test
     public void checkBaselineExperimentCounts() {
         //given
@@ -57,6 +54,7 @@ public class BioentitiesPageGeneQueryIT extends SinglePageSeleniumFixture {
         assertThat(baselineCounts.get(0).getCount(), is(16));
 
     }
+*/
 
     @Test
     public void checkDifferentialProfiles() {
@@ -76,20 +74,20 @@ public class BioentitiesPageGeneQueryIT extends SinglePageSeleniumFixture {
 
     @Test
     public void checkDifferentialContrastSummaryTooltipTableFirstRow() {
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 0), is("genotype"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 1), is("p107 -/-"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 2), is("wild type"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 0), is("DISEASESTATE"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 1), is("sepsis"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 2), is("control"));
     }
 
     @Test
     public void checkDifferentialContrastSummaryTooltipExperimentAndContrastDescription() {
-        assertThat(subject.getContrastSummaryTooltipExperimentDescription(0), is("Transcription profiling by array of mouse neurospheres cultured from p107-/- embryos and their wildtype littermates"));
-        assertThat(subject.getContrastSummaryTooltipContrastDescription(0), is("genotype:'p107 -/-' vs 'wild type' on A-AFFY-24"));
+        assertThat(subject.getContrastSummaryTooltipExperimentDescription(0), is("MicroRNA profiling by array of human sepsis patients after surgery identifies miR-150 as a plasma prognostic marker"));
+        assertThat(subject.getContrastSummaryTooltipContrastDescription(0), is("disease state: 'sepsis' vs 'control'"));
     }
 
     @Test
     public void checkDifferentialFirstLinkIsCorrect() {
-        assertThat(subject.getLinkInDiffTableRow(1), endsWith("E-GEOD-3779?geneQuery=ENSMUSG00000028385&queryFactorValues=g2_g1"));
+        assertThat(subject.getLinkInDiffTableRow(1), endsWith("E-TABM-713?geneQuery=hsa-miR-636&queryFactorValues=g1_g2"));
     }
 
 }
