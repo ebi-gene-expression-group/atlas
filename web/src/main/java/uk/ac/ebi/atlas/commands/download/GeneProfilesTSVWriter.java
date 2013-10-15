@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.commands.download;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
@@ -105,12 +106,19 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
     }
 
     String[] getRowHeaders(T geneProfile) {
-        String primaryRowHeader = geneProfile.getName();
+        String geneProfileId = geneProfile.getId();
+        String geneName = geneProfile.getName();
         String secondaryRowHeader = getSecondaryRowHeader(geneProfile);
-        if (secondaryRowHeader != null) {
-            return new String[]{primaryRowHeader, secondaryRowHeader};
+
+        //for Microarray experiment
+        if (!StringUtils.isBlank(secondaryRowHeader)) {
+            return new String[]{geneProfileId, geneName, secondaryRowHeader};
         }
-        return new String[]{primaryRowHeader};
+        //For geneSet gene Id is null
+        if(geneProfileId == null) {
+            return new String[]{geneName};
+        }
+        return new String[]{geneProfileId, geneName};
     }
 
     protected abstract String getSecondaryRowHeader(T profile);

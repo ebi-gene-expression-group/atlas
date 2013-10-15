@@ -20,7 +20,7 @@
 * http://gxa.github.com/gxa
 */
 
-package uk.ac.ebi.atlas.geneannotation;
+package uk.ac.ebi.atlas.dao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

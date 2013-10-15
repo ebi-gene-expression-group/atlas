@@ -30,13 +30,20 @@ public class BaselineBioentitiesCount {
 
     private String experimentAccession;
 
+    private String assayGroupOrContrast;
+
     private int count;
 
     public BaselineBioentitiesCount(String experimentName, String species, String experimentAccession, int count){
+        this(experimentName, species, experimentAccession, null);
+        this.count = count;
+    }
+
+    public BaselineBioentitiesCount(String experimentName, String species, String experimentAccession, String assayGroupOrContrast){
         this.experimentAccession = experimentAccession;
         this.experimentName = experimentName;
         this.species = species;
-        this.count = count;
+        this.assayGroupOrContrast = assayGroupOrContrast;
     }
 
     public String getExperimentAccession() {
@@ -69,5 +76,9 @@ public class BaselineBioentitiesCount {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getAssayGroupOrContrast() {
+        return assayGroupOrContrast;
     }
 }

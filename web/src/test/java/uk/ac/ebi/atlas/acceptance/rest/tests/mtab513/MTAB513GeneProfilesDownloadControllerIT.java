@@ -68,7 +68,7 @@ public class MTAB513GeneProfilesDownloadControllerIT {
         List<String> secondLine = subject.getRowValues(4);
 
         assertThat(secondLine,
-                hasItems("CU463998.3", "ENSG00000244656", "57")
+                hasItems("ENSG00000244656", "ENSG00000244656", "57")
         );
 
         assertThat(secondLine.get(2), isEmptyString());

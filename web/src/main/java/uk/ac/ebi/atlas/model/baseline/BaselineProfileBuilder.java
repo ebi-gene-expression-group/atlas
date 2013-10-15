@@ -30,14 +30,14 @@ import javax.inject.Named;
 @Scope("prototype")
 public class BaselineProfileBuilder {
 
-    private String geneId;
+    private String geneName;
 
-    public BaselineProfileBuilder withGeneId(String geneId) {
-        this.geneId = geneId;
+    public BaselineProfileBuilder withGeneName(String geneName) {
+        this.geneName = geneName;
         return this;
     }
 
     public BaselineProfile build(){
-        return new BaselineProfile(geneId, null);
+        return new BaselineProfile(null, geneName);
     }
 }

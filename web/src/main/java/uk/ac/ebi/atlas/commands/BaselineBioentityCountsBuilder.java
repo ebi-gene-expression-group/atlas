@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.BaselineExpressionDao;
@@ -33,7 +33,7 @@ import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -51,14 +51,14 @@ public class BaselineBioentityCountsBuilder {
         this.baselineConditionsSearchService = baselineConditionsSearchService;
     }
 
-    public List<BaselineBioentitiesCount> build(String query) {
+    public Set<BaselineBioentitiesCount> build(String query) {
 
         checkArgument(StringUtils.isNotBlank(query));
 
         Collection<IndexedAssayGroup> assayGroups = baselineConditionsSearchService.findAssayGroups(query);
 
         if (assayGroups.isEmpty()){
-            return Lists.newArrayList();
+            return Sets.newHashSet();
         }
 
         return baselineExpressionDao.getBioentitiesCounts(assayGroups);

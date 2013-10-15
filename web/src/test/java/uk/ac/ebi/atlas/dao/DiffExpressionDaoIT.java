@@ -44,8 +44,6 @@ import static org.hamcrest.Matchers.is;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class DiffExpressionDaoIT {
 
-    private static final String E_MTAB_1066 = "E-MTAB-1066";
-
     @Inject
     private DiffExpressionDao subject;
 
@@ -55,7 +53,7 @@ public class DiffExpressionDaoIT {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
         List<DifferentialBioentityExpression> expressions = subject.getExpressions(Lists.newArrayList(indexedContrast1));
-        assertThat(expressions.size(), is(22));
+        assertThat(expressions.size(), is(16));
         assertThat(expressions.get(0).getBioentityId(), is("FBgn0040393"));
         assertThat(expressions.get(1).getBioentityId(), is("FBgn0017561"));
 
@@ -66,7 +64,7 @@ public class DiffExpressionDaoIT {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
         int resultCount = subject.getResultCount(Lists.newArrayList(indexedContrast1));
-        assertThat(resultCount, is(22));
+        assertThat(resultCount, is(16));
     }
 
     @Test

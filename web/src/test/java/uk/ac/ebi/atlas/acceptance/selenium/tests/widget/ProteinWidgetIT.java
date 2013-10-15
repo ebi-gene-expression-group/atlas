@@ -36,13 +36,13 @@ import static org.hamcrest.core.StringContains.containsString;
 
 public class ProteinWidgetIT extends SeleniumFixture {
 
-    private static final String Q9GIL2_ACCESSION = "Q9GIL2";
+    private static final String PROTEIN_ACCESSION = "Q9Y615";
 
     private HeatmapTableWidgetPage heatmapTablePage;
 
     @Before
     public void initPage(){
-        heatmapTablePage = new HeatmapTableWidgetPage(driver, "geneQuery=" + Q9GIL2_ACCESSION);
+        heatmapTablePage = new HeatmapTableWidgetPage(driver, "geneQuery=" + PROTEIN_ACCESSION);
         heatmapTablePage.get();
     }
 
@@ -73,7 +73,7 @@ public class ProteinWidgetIT extends SeleniumFixture {
     @Test
     public void testGeneName() {
         String firstGeneName = heatmapTablePage.getSelectedProfiles().get(0);
-        assertThat(firstGeneName, is("HLA-B"));
+        assertThat(firstGeneName, is("ACTL7A"));
     }
 
 }

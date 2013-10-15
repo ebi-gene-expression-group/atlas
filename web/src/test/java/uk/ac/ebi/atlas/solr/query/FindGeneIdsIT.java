@@ -68,8 +68,7 @@ public class FindGeneIdsIT {
 
         //some genes are found
         assertThat(result.getAllGeneIds(), hasItems("ENSG00000131759", "ENSG00000084072"));
-        assertThat(result.getAllGeneIds().size(), is(greaterThan(190)));
-        assertThat(result.getAllGeneIds().size(), is(lessThan(210)));
+        assertThat(result.getAllGeneIds().size(), is(169));
 
     }
 

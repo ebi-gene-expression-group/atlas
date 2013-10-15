@@ -32,7 +32,7 @@ import uk.ac.ebi.atlas.commands.BaselineBioentityCountsBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 
 import javax.inject.Inject;
-import java.util.List;
+import java.util.Set;
 
 @Controller
 @Scope("request")
@@ -50,7 +50,7 @@ public class BaselineCountsWidgetController {
 
         if(StringUtils.isNotBlank(condition)){
 
-            List<BaselineBioentitiesCount> baselineCounts = baselineBioentityCountsBuilder.build(condition);
+            Set<BaselineBioentitiesCount> baselineCounts = baselineBioentityCountsBuilder.build(condition);
 
             model.addAttribute("baselineCounts", baselineCounts);
 

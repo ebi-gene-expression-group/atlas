@@ -38,7 +38,7 @@ public class WholeCellAndA549AndCutoffButWithoutAnyGeneQueryIT extends Geod26284
 
     @Override
     protected String[] getTop9Genes() {
-        return new String[]{"AC011293.1", "7SK", "RP11-20I23.6", "RP5-961K14.1", "TRPM2", "RPS6P20", "RP11-90H3.1", "TMSB10", "CALU"};
+        return new String[]{"AC011293.1", "RN7SKP271", "RP11-20I23.6", "RP5-961K14.1", "TRPM2", "RPS6P20", "RP11-90H3.1", "TMSB10", "CALU"};
     }
 
     @Override

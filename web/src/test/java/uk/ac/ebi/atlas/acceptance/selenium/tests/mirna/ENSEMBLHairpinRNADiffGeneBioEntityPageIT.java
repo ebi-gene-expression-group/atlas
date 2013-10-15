@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.mirna;
 
 import org.junit.Test;
+import org.junit.Ignore;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
@@ -41,11 +42,13 @@ public class ENSEMBLHairpinRNADiffGeneBioEntityPageIT extends SinglePageSelenium
         subject.get();
     }
 
+    @Ignore("TODO re-enable with different gene identifier")
     @Test
     public void checkPaneExpansion() {
         assertThat(subject.isDifferentialProfileExpanded(), is(true));
     }
 
+    @Ignore("TODO re-enable with different gene identifier")
     @Test
     public void checkMatureRNADiffProfilesArePresentForHairpinRNA() {
         subject.clickDisplayLevelsButton();

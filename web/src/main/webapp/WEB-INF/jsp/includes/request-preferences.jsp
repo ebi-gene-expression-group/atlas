@@ -64,7 +64,7 @@
                 <td style="width:100%;display:block">
                     <form:label
                             path="cutoff">${type.isBaseline() ? 'Expression level cutoff' : 'False discovery rate cutoff'}</form:label>
-                    <span data-help-loc="#cutoff"/>
+                    <span data-help-loc="${type.isBaseline() ? '#cutoff' : '#cutoff-differential'}"/>
                 </td>
                 <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
                     <div>

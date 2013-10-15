@@ -95,10 +95,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
 
     @Override
     protected String getSecondaryRowHeader(BaselineProfile geneProfile) {
-        if (requestContext.isGeneSetMatch()) {
-            return null;
-        }
-        return geneProfile.getId();
+       return null;
     }
 
     @Override

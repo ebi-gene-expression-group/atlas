@@ -46,7 +46,7 @@ public class GeneSet{
     }
 
     public BaselineProfile getAverageProfile(){
-        BaselineProfile summaryProfile = baselineProfileBuilder.withGeneId(id).build();
+        BaselineProfile summaryProfile = baselineProfileBuilder.withGeneName(id).build();
 
         for(BaselineProfile baselineProfile: baselineProfiles){
             summaryProfile.sumProfile(baselineProfile);

@@ -82,8 +82,8 @@ public class GEOD3779GeneProfilesDownloadControllerIT {
         assertThat(reader.readLine(), startsWith(EXPRESSION_ATLAS_VERSION));
         assertThat(reader.readLine(), is(QUERY_DESCRIPTION));
         assertThat(reader.readLine(), startsWith(TIMESTAMP));
-        assertThat(reader.readLine(), is("Gene name\tDesign Element\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-23.p-value\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-23.log2foldchange\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-23.t-statistic"));
-        assertThat(reader.readLine(), is("Mycl1\t1422088_at\t0.04\t0.00409480833333209\t0.0502355223125666"));
+        assertThat(reader.readLine(), is("Gene ID\tGene Name\tDesign Element\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-23.p-value\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-23.log2foldchange\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-23.t-statistic"));
+        assertThat(reader.readLine(), is("ENSMUSG00000028654\tMycl1\t1422088_at\t0.04\t0.00409480833333209\t0.0502355223125666"));
     }
 
     @Test
@@ -99,8 +99,8 @@ public class GEOD3779GeneProfilesDownloadControllerIT {
         assertThat(reader.readLine(), startsWith(EXPRESSION_ATLAS_VERSION));
         assertThat(reader.readLine(), is(QUERY_DESCRIPTION));
         assertThat(reader.readLine(), startsWith(TIMESTAMP));
-        assertThat(reader.readLine(), is("Gene name\tDesign Element\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-24.p-value\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-24.log2foldchange\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-24.t-statistic"));
-        assertThat(reader.readLine(), is("Snx30\t1456479_at\t0.02\t0.00641014999999978\t0.120394369986336"));
+        assertThat(reader.readLine(), is("Gene ID\tGene Name\tDesign Element\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-24.p-value\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-24.log2foldchange\tgenotype:'p107 -/-' vs 'wild type' on A-AFFY-24.t-statistic"));
+        assertThat(reader.readLine(), is("ENSMUSG00000028385\tSnx30\t1456479_at\t0.02\t0.00641014999999978\t0.120394369986336"));
     }
 
 }
