@@ -22,45 +22,78 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commands.DifferentialBioentityExpressionsBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @Scope("prototype")
 public class BioentitiesQueryController {
 
+    private SolrQueryService solrQueryService;
     private DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
 
     @Inject
-    public BioentitiesQueryController(DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder) {
+    public BioentitiesQueryController(SolrQueryService solrQueryService, DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder) {
+        this.solrQueryService = solrQueryService;
         this.differentialBioentityExpressionsBuilder = differentialBioentityExpressionsBuilder;
     }
 
     @RequestMapping(value = "/query")
-    public String showResultPage(@RequestParam (value="condition", required = false) String condition, Model model) {
+    public String showConditionsResultPage(@RequestParam (value="condition", required = true) String condition, Model model) {
+        model.addAttribute("entityIdentifier", condition);
 
-        if(StringUtils.isNotBlank(condition)){
+        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withCondition(condition).build();
 
-            model.addAttribute("entityIdentifier", condition);
+        model.addAttribute("bioentities", bioentityExpressions);
 
-            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withCondition(condition).build();
-
-            model.addAttribute("bioentities", bioentityExpressions);
-
-            model.addAttribute("preferences", new DifferentialRequestPreferences());
-
-        }
+        model.addAttribute("preferences", new DifferentialRequestPreferences());
 
         return "bioEntities";
     }
+
+    @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
+    public String handleException(Exception e) {
+        return "bioEntities";
+    }
+
+    @RequestMapping(value = "/query", params = {"geneQuery"})
+    public String showGeneQueryResultPage(@RequestParam(value="geneQuery", required = true) String geneQuery, Model model) {
+
+        List<String> identifiers = Lists.newArrayList(StringUtils.split(geneQuery, " "));
+
+        model.addAttribute("entityIdentifier", geneQuery);
+
+        //add ensambl identifiers to model in case the searched ID is a mirbase ID
+        String firstIdentifier = identifiers.get(0);
+        Set<String> ensemblIDs = solrQueryService.fetchGeneIdentifiersFromSolr(firstIdentifier, "ensgene", true, "mirbase_id");
+        if (ensemblIDs.size() > 0) {
+            model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
+        }
+        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withGeneIdentifiers(Sets.newHashSet(identifiers)).build();
+
+        model.addAttribute("bioentities", bioentityExpressions);
+
+        model.addAttribute("preferences", new DifferentialRequestPreferences());
+
+        return "bioentities";
+    }
+
 
 }

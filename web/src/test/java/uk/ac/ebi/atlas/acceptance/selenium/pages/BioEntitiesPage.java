@@ -37,20 +37,20 @@ import java.util.concurrent.TimeUnit;
 
 public class BioEntitiesPage extends BioEntityPage {
 
-    private String query;
+    private String queryParams;
 
     public BioEntitiesPage(WebDriver driver) {
         super(driver);
     }
 
-    public BioEntitiesPage(WebDriver driver, String query) {
+    public BioEntitiesPage(WebDriver driver, String queryParams) {
         super(driver);
-        this.query = query;
+        this.queryParams = queryParams;
     }
 
     @Override
     protected String getPageURI() {
-        return PAGE_LOCATION + "query?condition=" + query;
+        return PAGE_LOCATION + "query?" + queryParams;
     }
 
     @Override
