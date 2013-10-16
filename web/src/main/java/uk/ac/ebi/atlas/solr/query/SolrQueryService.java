@@ -91,6 +91,7 @@ public class SolrQueryService {
     public BioentityProperty findBioentityProperty(String bioentityId) {
         String query = MessageFormat.format(BIOENTITY_TYPE_QUERY, bioentityId);
         SolrQuery solrQuery = new SolrQuery(query);
+        solrQuery.setRows(PROPERTY_VALUES_LIMIT);
         QueryResponse response = solrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = response.getBeans(BioentityProperty.class);
         if(bioentityProperties.isEmpty()){
