@@ -23,16 +23,17 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests.mirna;
 
 import org.junit.Test;
-import org.junit.Ignore;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class ENSEMBLHairpinRNADiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "ENSG00000207936";
+    private static final String GENE_IDENTIFIER = "ENSG00000161547";
 
     private BioEntityPage subject;
 
@@ -42,19 +43,18 @@ public class ENSEMBLHairpinRNADiffGeneBioEntityPageIT extends SinglePageSelenium
         subject.get();
     }
 
-    @Ignore("TODO re-enable with different gene identifier")
     @Test
     public void checkPaneExpansion() {
         assertThat(subject.isDifferentialProfileExpanded(), is(true));
     }
 
-    @Ignore("TODO re-enable with different gene identifier")
     @Test
     public void checkMatureRNADiffProfilesArePresentForHairpinRNA() {
-        subject.clickDisplayLevelsButton();
-        assertThat(subject.getContrastColumn(), contains("disease state: 'sepsis' vs 'control'",
-                "disease state: 'sepsis' vs 'control'"));
-        assertThat(subject.getPValues(), hasItems("0.002", "0.005"));
+
+        List<String> contrastColumn = subject.getContrastColumn();
+        assertThat(contrastColumn, hasItem("disease state: 'sepsis' vs 'control'"));
+        subject.clickDifferentialDisplayLevelsButton();
+        assertThat(subject.getPValues(), hasItems("0.002", "0.008"));
     }
 
 }
