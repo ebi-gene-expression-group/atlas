@@ -94,6 +94,22 @@ public class BioEntitiesPage extends BioEntityPage {
     }
 
 
+    // note - page may have baseline & differential heatmap display levels button
+    public void clickDifferentialDisplayLevelsButton() {
+        WebElement displayLevelsButton = getDifferentialDisplayLevelsButton();
+        displayLevelsButton.click();
+    }
+
+    public WebElement getDifferentialDisplayLevelsButton() {
+        new FluentWait<>(driver)
+                .withTimeout(4, TimeUnit.MINUTES)
+                .pollingEvery(500, TimeUnit.MILLISECONDS)
+                .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#diffProfileBody #display-levels")));
+
+        return driver.findElement(By.cssSelector("#diffProfileBody #display-levels"));
+    }
+
+
 
 }
 

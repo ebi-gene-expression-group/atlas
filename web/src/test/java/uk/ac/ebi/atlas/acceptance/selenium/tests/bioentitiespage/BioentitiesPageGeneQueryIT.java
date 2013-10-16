@@ -25,6 +25,9 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
+import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
+
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -39,10 +42,8 @@ public class BioentitiesPageGeneQueryIT extends SinglePageSeleniumFixture {
         subject.get();
     }
 
-/*
-    @Test
+/*    @Test
     public void checkBaselineExperimentCounts() {
-        //given
         subject.clickBaselineProfile();
 
         List<BaselineBioentitiesCount> baselineCounts = subject.getBaselineCounts();
@@ -53,16 +54,15 @@ public class BioentitiesPageGeneQueryIT extends SinglePageSeleniumFixture {
         assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
         assertThat(baselineCounts.get(0).getCount(), is(16));
 
-    }
-*/
+    }*/
 
     @Test
     public void checkDifferentialProfiles() {
-        subject.clickDisplayLevelsButton();
-        assertThat(subject.getContrastColumn(), contains(
-                "genotype:'p107 -/-' vs 'wild type' on A-AFFY-24",
-                "genotype:'p107 -/-' vs 'wild type' on A-AFFY-23"));
-        assertThat(subject.getPValues(), hasItems("0.02", "0.04"));
+        subject.clickDifferentialDisplayLevelsButton();
+        assertThat(subject.getContrastColumn(), hasItem(
+                "disease state: 'sepsis' vs 'control'"));
+        assertThat(subject.getPValues(), hasItems("0.002", "0.008"));
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306"));
     }
 
     @Test

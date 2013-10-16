@@ -156,6 +156,10 @@ public class BioEntityPage extends HeatmapTablePage {
         return getColumnValues(this.diffHeatmapTable, getContrastColumnIndex() + 1);
     }
 
+    public List<String> getDiffHeatmapTableGeneColumn() {
+        return getColumnValues(this.diffHeatmapTable, getDiffHeatmapTableGeneColumnIndex());
+    }
+
     public String getContrastSummaryTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex) {
         WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, getContrastColumnIndex());
         hoverOnElement(firstContrastDescriptionCell);
@@ -253,6 +257,10 @@ public class BioEntityPage extends HeatmapTablePage {
 
     protected int getContrastColumnIndex() {
         return 3;
+    }
+
+    protected int getDiffHeatmapTableGeneColumnIndex() {
+        return 1;
     }
 
     public void clickBaselineProfile() {
