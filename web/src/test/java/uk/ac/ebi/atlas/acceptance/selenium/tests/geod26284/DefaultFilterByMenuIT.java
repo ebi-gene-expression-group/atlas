@@ -111,7 +111,7 @@ public class DefaultFilterByMenuIT extends SinglePageSeleniumFixture {
         //given that we selected the default filterFactorValues RNA Type : total RNA and cellular component : whole cell
 
         //when we extract top 9 from heatmap
-        List<String> selectedGenes = subject.getSelectedProfiles().subList(0, 9);
+        List<String> selectedGenes = subject.getGeneNames().subList(0, 9);
 
         //then
         Assert.assertThat(selectedGenes, contains(
@@ -168,7 +168,7 @@ public class DefaultFilterByMenuIT extends SinglePageSeleniumFixture {
         Assert.assertThat(subject.getFactorValueHeaders(), contains(A_549, "AG445", "BJ", "CD14-positive...", "CD20-positive B...", "GM12878", "H1-hESC", "HMEC cell line", "HSMM cell line", "HUVEC cell line", "HeLa-S3", "HepG2", "K562", "MCF-7", "NHEK cell line", "NHLF cell line", SK_N_SH_RA));
 
         //when we extract top 9 from heatmap
-        List<String> selectedGenes = subject.getSelectedProfiles().subList(0, 9);
+        List<String> selectedGenes = subject.getGeneNames().subList(0, 9);
 
         //then
         Assert.assertThat(selectedGenes, contains(
@@ -187,7 +187,7 @@ public class DefaultFilterByMenuIT extends SinglePageSeleniumFixture {
         Assert.assertThat(subject.getFactorValueHeaders(), contains("CD34-positive...", "HFDPC cell line", "HPC-PL cell line", "IMR-90", "hMSC-AT cell line"));
 
         //when we extract top 9 from heatmap
-        List<String> selectedGenes = subject.getSelectedProfiles().subList(0, 9);
+        List<String> selectedGenes = subject.getGeneNames().subList(0, 9);
 
         //then
         Assert.assertThat(selectedGenes, contains("RP11-384J4.2", "TERF2", "GFI1", "SCN2A", "SLC10A1", "TRPM2", "GEMIN8P4", "RP11-368L12.1", "RP11-20I23.6"));

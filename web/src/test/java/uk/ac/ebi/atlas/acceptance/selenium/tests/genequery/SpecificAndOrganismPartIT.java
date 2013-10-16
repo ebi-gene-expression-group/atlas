@@ -46,7 +46,7 @@ public class SpecificAndOrganismPartIT extends SinglePageSeleniumFixture {
 
     @Test
     public void verifySelectedGenes() {
-        List<String> selectedGenes = subject.getSelectedProfiles();
+        List<String> selectedGenes = subject.getGeneNames();
         assertThat(selectedGenes.size(), is(8));
         assertThat(selectedGenes, contains("Afm", "Tdo2", "Gc", "Apoh",  "Serpina1d", "Cyp2d10", "5830473C10Rik", "Ecm1"));
     }

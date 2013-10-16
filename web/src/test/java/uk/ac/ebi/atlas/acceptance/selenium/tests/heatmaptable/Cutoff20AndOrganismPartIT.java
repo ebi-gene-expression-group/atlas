@@ -46,7 +46,7 @@ public class Cutoff20AndOrganismPartIT extends SinglePageSeleniumFixture {
 
     @Test
     public void verifySelectedGenes() {
-        List<String> selectedGenes = subject.getSelectedProfiles();
+        List<String> selectedGenes = subject.getGeneNames();
         assertThat(selectedGenes.size(), is(3));
         assertThat(selectedGenes, contains("TRAJ13", "Y_RNA", "MT-ATP6"));
     }

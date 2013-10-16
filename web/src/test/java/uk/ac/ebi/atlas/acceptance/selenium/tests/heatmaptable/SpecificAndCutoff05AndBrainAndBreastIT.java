@@ -49,7 +49,7 @@ public class SpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniumFi
 
     @Test
     public void verifySelectedGenes() {
-        List<String> selectedGenes = subject.getSelectedProfiles();
+        List<String> selectedGenes = subject.getGeneNames();
         assertThat(selectedGenes.size(), is(15));
         assertThat(selectedGenes.get(0), is("MIR215"));
         assertThat(selectedGenes.get(1), is("PRMT8"));

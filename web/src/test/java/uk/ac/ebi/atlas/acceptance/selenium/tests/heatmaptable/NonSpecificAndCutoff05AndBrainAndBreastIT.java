@@ -50,7 +50,7 @@ public class NonSpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniu
 
     @Test
     public void verifySelectedGenes() {
-        List<String> selectedGenes = subject.getSelectedProfiles();
+        List<String> selectedGenes = subject.getGeneNames();
         assertThat(selectedGenes.size(), is(50));
         assertThat(selectedGenes.get(0), is("TMSB10"));
         assertThat(selectedGenes.get(1), is("RTN4"));

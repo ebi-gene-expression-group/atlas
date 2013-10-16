@@ -20,42 +20,37 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.mirna;
+package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
 
-public class BaselineGeneBioEntityPageHairpinRNAIT extends SinglePageSeleniumFixture {
+public class BioentitiesPageGeneQuery2SpeciesIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "hsa-miR-636";
-
-    private BioEntityPage subject;
+    private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
+        subject = new BioEntitiesPage(driver, "geneQuery=ENSG00000161547%20ENSMUSG00000030105");
         subject.get();
     }
 
     @Test
-    public void checkPaneExpansion() {
-        assertThat(subject.isBaselineProfileExpanded(), is(true));
-        assertThat(subject.isInfoCardExpanded(), is(false));
+    public void checkBaselineContainsFirstGene() {
+        subject.clickBaselineProfile();
+        assertThat(subject.getGeneNames(), contains("SRSF2"));
     }
+
 
     @Test
-    public void checkSelectedProfiles() {
-        assertThat(subject.isBaselineProfileExpanded(), is(true));
-        subject.clickDisplayLevelsButton();
-        assertThat(subject.getGeneNames(), contains("SRSF2"));
-        assertThat(subject.getGeneNames().size(), is(1));
-
+    public void checkDifferentialDisplaysGeneAndOrganismColumnWithValuesForEachSpecies() {
+        subject.clickDifferentialDisplayLevelsButton();
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Arl8b", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "Arl8b"));
+        assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Mus musculus", "Homo sapiens", "Homo sapiens", "Homo sapiens", "Homo sapiens", "Mus musculus"));
     }
-
 
 }

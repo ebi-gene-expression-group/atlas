@@ -60,8 +60,8 @@ public class BaselineGeneBioEntityPageExistingGeneIT extends SinglePageSeleniumF
         wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
         assertThat(subject.isBaselineProfileExpanded(), is(true));
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getSelectedProfiles(), contains("DAPL1"));
-        assertThat(subject.getSelectedProfiles().size(), is(1));
+        assertThat(subject.getGeneNames(), contains("DAPL1"));
+        assertThat(subject.getGeneNames().size(), is(1));
 
     }
 

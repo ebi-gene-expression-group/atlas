@@ -141,7 +141,7 @@ public class HeatmapTablePage extends TablePage {
         return getTableHeaders(this.getHeatmapTable());
     }
 
-    public List<String> getSelectedProfiles() {
+    public List<String> getGeneNames() {
         return getFirstColumnValues(getHeatmapTable());
     }
 
@@ -290,7 +290,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public String getGeneThatRanksAt(int rowIndex) {
-        return getSelectedProfiles().get(rowIndex - 1);
+        return getGeneNames().get(rowIndex - 1);
     }
 
 

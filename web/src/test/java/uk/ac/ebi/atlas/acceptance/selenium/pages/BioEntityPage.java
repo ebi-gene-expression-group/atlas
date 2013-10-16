@@ -160,6 +160,10 @@ public class BioEntityPage extends HeatmapTablePage {
         return getColumnValues(this.diffHeatmapTable, getDiffHeatmapTableGeneColumnIndex());
     }
 
+    public List<String> getDiffHeatmapTableOrganismColumn() {
+        return getColumnValues(this.diffHeatmapTable, 3);
+    }
+
     public String getContrastSummaryTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex) {
         WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, getContrastColumnIndex());
         hoverOnElement(firstContrastDescriptionCell);

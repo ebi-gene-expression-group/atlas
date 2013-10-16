@@ -20,42 +20,29 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.mirna;
+package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
 
-public class BaselineGeneBioEntityPageHairpinRNAIT extends SinglePageSeleniumFixture {
+public class BioentitiesPageGeneQuerySameSpeciesIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "hsa-miR-636";
-
-    private BioEntityPage subject;
+    private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
+        subject = new BioEntitiesPage(driver, "geneQuery=ENSG00000161547%20ENSG00000211855");
         subject.get();
     }
 
     @Test
-    public void checkPaneExpansion() {
-        assertThat(subject.isBaselineProfileExpanded(), is(true));
-        assertThat(subject.isInfoCardExpanded(), is(false));
+    public void checkBaselineContainsAllGenesFromSameSpecies() {
+        subject.clickBaselineProfile();
+        assertThat(subject.getGeneNames(), contains("TRAJ34", "SRSF2"));
     }
-
-    @Test
-    public void checkSelectedProfiles() {
-        assertThat(subject.isBaselineProfileExpanded(), is(true));
-        subject.clickDisplayLevelsButton();
-        assertThat(subject.getGeneNames(), contains("SRSF2"));
-        assertThat(subject.getGeneNames().size(), is(1));
-
-    }
-
 
 }

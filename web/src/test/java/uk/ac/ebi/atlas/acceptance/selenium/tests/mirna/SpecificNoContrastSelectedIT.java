@@ -42,8 +42,8 @@ public class SpecificNoContrastSelectedIT extends SeleniumFixture {
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 34"));
 
-        assertThat(subject.getSelectedProfiles().size(), is(34));
-        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("MIMAT0003220", "MIMAT0003249", "MIMAT0002869"));
+        assertThat(subject.getGeneNames().size(), is(34));
+        assertThat(subject.getGeneNames().subList(0, 3), contains("MIMAT0003220", "MIMAT0003249", "MIMAT0002869"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
         assertThat(subject.getGeneProfile(1).get(0), is("0.003"));
@@ -55,8 +55,8 @@ public class SpecificNoContrastSelectedIT extends SeleniumFixture {
         subject.get();
         assertThat(subject.getGeneCount(), containsString("of 39"));
 
-        assertThat(subject.getSelectedProfiles().size(), is(39));
-        assertThat(subject.getSelectedProfiles().subList(0, 3), contains("MIMAT0003227", "MIMAT0003304", "MIMAT0003883"));
+        assertThat(subject.getGeneNames().size(), is(39));
+        assertThat(subject.getGeneNames().subList(0, 3), contains("MIMAT0003227", "MIMAT0003304", "MIMAT0003883"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
         assertThat(subject.getGeneProfile(1).get(0), is("1.81" + " \u00D7 " + "10-4"));

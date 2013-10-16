@@ -80,12 +80,15 @@ public class BioentitiesQueryController {
 
         model.addAttribute("entityIdentifier", geneQuery);
 
-        //add ensambl identifiers to model in case the searched ID is a mirbase ID
-        String firstIdentifier = identifiers.get(0);
-        Set<String> ensemblIDs = solrQueryService.fetchGeneIdentifiersFromSolr(firstIdentifier, "ensgene", true, "mirbase_id");
+        Set<String> ensemblIDs = Sets.newHashSet();
+        for (String identifier : identifiers) {
+            ensemblIDs.addAll(solrQueryService.fetchGeneIdentifiersFromSolr(identifier, "ensgene", true, "mirbase_id"));
+        }
+
         if (ensemblIDs.size() > 0) {
             model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
         }
+
         DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withGeneIdentifiers(Sets.newHashSet(identifiers)).build();
 
         model.addAttribute("bioentities", bioentityExpressions);
