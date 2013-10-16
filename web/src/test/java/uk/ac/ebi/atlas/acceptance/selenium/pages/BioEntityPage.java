@@ -98,7 +98,7 @@ public class BioEntityPage extends HeatmapTablePage {
         this.type = type;
     }
 
-    public WebElement getDiffHeatmapTable(){
+    public WebElement getDiffHeatmapTable() {
         return diffHeatmapTable;
     }
 
@@ -189,7 +189,7 @@ public class BioEntityPage extends HeatmapTablePage {
         hoverOnElement(firstContrastDescriptionCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastExperimentDescription']");
-        FluentWait wait = new WebDriverWait(driver, 5L).pollingEvery(50,TimeUnit.MILLISECONDS);
+        FluentWait wait = new WebDriverWait(driver, 5L).pollingEvery(50, TimeUnit.MILLISECONDS);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
@@ -280,4 +280,20 @@ public class BioEntityPage extends HeatmapTablePage {
     public List<String> getDiffHeatmapRow(int oneBasedRowIndex) {
         return getRowValues(diffHeatmapTable, oneBasedRowIndex);
     }
+
+    // note - page may have baseline & differential heatmap display levels button
+    public void clickDifferentialDisplayLevelsButton() {
+        WebElement displayLevelsButton = getDifferentialDisplayLevelsButton();
+        displayLevelsButton.click();
+    }
+
+    public WebElement getDifferentialDisplayLevelsButton() {
+        new FluentWait<>(driver)
+                .withTimeout(4, TimeUnit.MINUTES)
+                .pollingEvery(500, TimeUnit.MILLISECONDS)
+                .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#diffProfileBody #display-levels")));
+
+        return driver.findElement(By.cssSelector("#diffProfileBody #display-levels"));
+    }
+
 }
