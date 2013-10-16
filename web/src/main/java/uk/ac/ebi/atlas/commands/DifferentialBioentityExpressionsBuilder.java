@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.DiffExpressionDao;
@@ -46,7 +46,7 @@ public class DifferentialBioentityExpressionsBuilder {
     private DifferentialConditionsSearchService differentialConditionsSearchService;
     private SolrQueryService solrQueryService;
     private String condition;
-    private String geneIdentifier;
+    private Set<String> geneIdentifiers;
 
     @Inject
     public DifferentialBioentityExpressionsBuilder(DiffExpressionDao diffExpressionDao,
@@ -62,8 +62,8 @@ public class DifferentialBioentityExpressionsBuilder {
         return this;
     }
 
-    public DifferentialBioentityExpressionsBuilder withGeneIdentifier(String geneIdentifier){
-        this.geneIdentifier = geneIdentifier;
+    public DifferentialBioentityExpressionsBuilder withGeneIdentifiers(Set<String> geneIdentifiers){
+        this.geneIdentifiers = geneIdentifiers;
         return this;
     }
 
@@ -85,32 +85,21 @@ public class DifferentialBioentityExpressionsBuilder {
 
         }
 
-        if (StringUtils.isNotBlank(geneIdentifier)){
+        if (CollectionUtils.isNotEmpty(geneIdentifiers)){
 
-            Set<String> identifiers = expandIdentifiersToMatureRNAIds(geneIdentifier);
+            Set<String> identifiers = solrQueryService.expandIdentifiersToMatureRNAIds(geneIdentifiers);
 
             List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(identifiers);
-            int resultCount = diffExpressionDao.getResultCount(geneIdentifier);
+            int resultCount = diffExpressionDao.getResultCount(geneIdentifiers);
 
             return new DifferentialBioentityExpressions(expressions, resultCount);
 
         }
 
-        throw new IllegalStateException("build method invoked with empty arguments");
+        throw new IllegalArgumentException("build method invoked with empty arguments");
 
     }
 
-    Set<String> expandIdentifiersToMatureRNAIds(String geneIdentifier){
-        Set<String> mirbaseIds = solrQueryService.findPropertyValuesForGeneId(geneIdentifier, "mirbase_id");
-        if (mirbaseIds.size() > 0) {
-            geneIdentifier = mirbaseIds.iterator().next();
-        }
-        Set<String> matureRNAIds = solrQueryService.fetchGeneIdentifiersFromSolr(geneIdentifier, "mirna", false, "hairpin_id");
-        if (matureRNAIds.size() > 0) {
-            return matureRNAIds;
-        }
-        return Sets.newHashSet(geneIdentifier);
 
-    }
 
 }

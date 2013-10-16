@@ -107,10 +107,13 @@ public class DiffExpressionDao {
         return jdbcTemplate.queryForObject(query.getQuery(), Integer.class, query.getParams());
     }
 
-    public int getResultCount(String geneIdentifier) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+    public int getResultCount(Set<String> identifiers) {
+        NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 
-        return jdbcTemplate.queryForObject(GENE_COUNT_QUERY, Integer.class, geneIdentifier);
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("ids", identifiers);
+
+        return jdbcTemplate.queryForObject(GENE_COUNT_QUERY, parameters, Integer.class);
     }
 
     AssayGroupQuery buildIndexedContrastQuery(Collection<IndexedAssayGroup> indexedContrasts, String queryBeginning) {

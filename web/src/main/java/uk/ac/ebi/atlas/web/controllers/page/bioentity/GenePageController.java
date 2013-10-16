@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.bioentity;
 
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -49,8 +50,6 @@ public class GenePageController extends BioEntityPageController {
         this.bioentityPropertyNames = bioentityPropertyNames;
     }
 
-
-
     @Inject
     void setDifferentialBioentityExpressionBuilder(DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder) {
         this.differentialBioentityExpressionsBuilder = differentialBioentityExpressionsBuilder;
@@ -60,7 +59,7 @@ public class GenePageController extends BioEntityPageController {
     public String showGenePage(@PathVariable String identifier, Model model) {
 
         DifferentialBioentityExpressions differentialBioentityExpressions =
-                differentialBioentityExpressionsBuilder.withGeneIdentifier(identifier).build();
+                differentialBioentityExpressionsBuilder.withGeneIdentifiers(Sets.newHashSet(identifier)).build();
 
         model.addAttribute("bioentities", differentialBioentityExpressions);
 

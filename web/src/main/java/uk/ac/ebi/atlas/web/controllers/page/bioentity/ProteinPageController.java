@@ -44,6 +44,11 @@ public class ProteinPageController extends BioEntityPageController {
 
     @RequestMapping(value = "/proteins/{identifier:.*}")
     public String showBioentityPage(@PathVariable String identifier, Model model) {
+
+
+        //when we query for proteins the bioentity page must
+        //not display Differential Expression panel so we just need to invoke parent controller (that handles baseline expressions)
+
         return super.showBioentityPage(identifier, model);
     }
 
