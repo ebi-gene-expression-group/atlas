@@ -79,7 +79,7 @@ public class DiffExpressionDaoIT {
 
     @Test
     public void testGetResultCountForGene() throws Exception {
-        assertThat(subject.getResultCount("AT1G02220"), is(2));
+        assertThat(subject.getResultCount(Sets.newHashSet("AT1G02220")), is(2));
 
     }
 }
