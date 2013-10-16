@@ -67,14 +67,15 @@ public class MTAB1066GeneProfilesDownloadControllerIT {
 
         List<String> secondLine = subject.getRowValues(4);
 
-        assertThat(secondLine.get(0), is("Irc"));
-        assertThat(secondLine.get(1), is("1633391_at"));
-        assertThat(secondLine.get(2), is("4.32183975431433E-4"));
-        assertThat(secondLine.get(3), is("0.676040000000002"));
-        assertThat(secondLine.get(4), is("8.29055586787586"));
-        assertThat(secondLine.get(5), isEmptyString());
+        assertThat(secondLine.get(0), is("FBgn0038465"));
+        assertThat(secondLine.get(1), is("Irc"));
+        assertThat(secondLine.get(2), is("1633391_at"));
+        assertThat(secondLine.get(3), is("4.32183975431433E-4"));
+        assertThat(secondLine.get(4), is("0.676040000000002"));
+        assertThat(secondLine.get(5), is("8.29055586787586"));
         assertThat(secondLine.get(6), isEmptyString());
         assertThat(secondLine.get(7), isEmptyString());
+        assertThat(secondLine.get(8), isEmptyString());
     }
 
     @Test
@@ -82,7 +83,7 @@ public class MTAB1066GeneProfilesDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(179));
+        assertThat(lines.length, is(178));
     }
 
 }
