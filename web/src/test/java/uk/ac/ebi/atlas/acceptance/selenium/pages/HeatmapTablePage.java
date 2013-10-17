@@ -48,9 +48,6 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "arrayDesignAccession")
     private WebElement arrayDesignAccession;
 
-    @FindBy(id = "heatmap-table")
-    private WebElement heatmapTable;
-
     @FindBy(id = "geneCount")
     private WebElement geneCount;
 
@@ -128,6 +125,15 @@ public class HeatmapTablePage extends TablePage {
     }
 
     protected WebElement getHeatmapTable() {
+        final String HEATMAP_TABLE_ID = "heatmap-table";
+
+        new FluentWait<>(driver)
+                .withTimeout(10, TimeUnit.SECONDS)
+                .pollingEvery(250, TimeUnit.MILLISECONDS)
+                .until(ExpectedConditions.presenceOfElementLocated(By.id(HEATMAP_TABLE_ID)));
+
+        WebElement heatmapTable = driver.findElement(By.id(HEATMAP_TABLE_ID));
+
         return heatmapTable;
     }
 
