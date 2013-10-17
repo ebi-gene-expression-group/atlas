@@ -30,8 +30,6 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static org.h2.mvstore.DataUtils.checkArgument;
-
 @Named("cutoffScale")
 @Scope("singleton")
 public class CutoffScale {
@@ -68,7 +66,9 @@ public class CutoffScale {
 
     public double getNthValue(int position) {
 
-        checkArgument(position >= 0, "position must be >= 0 ");
+        if (!(position >= 0)) {
+            throw new IllegalArgumentException("position must be >= 0 ");
+        }
 
         if (position == 0) {
             return 0;

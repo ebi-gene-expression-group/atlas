@@ -63,11 +63,6 @@
         <filter-name>encoding-filter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <!--
-        <listener>
-            <listener-class>org.h2.server.web.DbStarter</listener-class>
-        </listener>
-    -->
     <listener>
         <listener-class>uk.ac.ebi.atlas.web.JdbcDriverUnregisteringListener</listener-class>
     </listener>

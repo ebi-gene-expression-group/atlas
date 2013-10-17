@@ -50,7 +50,7 @@ public class ConditionsIndexIT {
 
 
     @Inject
-    @Qualifier("dataSource")
+    @Qualifier("dataSourceOracle")
     private DataSource dataSource;
 
 

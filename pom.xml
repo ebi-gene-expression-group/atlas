@@ -550,10 +550,6 @@
         <!-- environment profiles -->
         <profile>
             <id>dev</id>
-            <properties>
-                <h2.database.location>/srv/gxa/data/h2/atlas</h2.database.location>
-                <data.files.location>/srv/gxa/data</data.files.location>
-            </properties>
         </profile>
         <profile>
             <!--used to deploy on www-test-->
@@ -584,9 +580,6 @@
             <!-- embedded tomcat started by mvn in bamboo plan -->
             <properties>
                 <solr.host>localhost</solr.host>
-                <h2.database.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data/h2/atlas
-                </h2.database.location>
-                <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
             </properties>
         </profile>
         <profile>
@@ -607,8 +600,6 @@
             <properties>
                 <!-- change to integrate with a solr running on localhost rather than the default remote host -->
                 <solr.host>lime</solr.host>
-                <h2.database.location>${user.home}/ATLAS3.TEST/data/h2/atlas</h2.database.location>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
             </properties>

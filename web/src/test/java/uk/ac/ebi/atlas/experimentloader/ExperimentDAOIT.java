@@ -27,7 +27,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -35,7 +34,6 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
 import java.util.List;
 import java.util.Set;
 
@@ -44,54 +42,31 @@ import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:testDBContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class ExperimentDAOIT {
 
     private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_MTAB_1066 = "E-MTAB-1066";
     private static final ExperimentType TYPE_BASELINE = ExperimentType.BASELINE;
-    private static final ExperimentType TYPE_DIFFERENTIAL = ExperimentType.DIFFERENTIAL;
     private static final ExperimentType TYPE_MICROARRAY = ExperimentType.MICROARRAY;
-    private static final ExperimentType TYPE_MICRORNA = ExperimentType.MICRORNA;
-    private static final String DIFFERENTIAL_ACCESION = "DIFFERENTIAL_ACCESSION";
-    private static final String MICROARRAY_ACCESSION = "MICROARRAY_ACCESSION";
-    private static final String MICRORNA_ACCESSION = "MICRORNA_ACCESSION";
-    private static final String ACCESS_KEY = "AN_UUID";
-
-    @Inject
-    @Qualifier("dataSource")
-    private DataSource dataSource;
+    public static final String SECRET_111 = "Secret_111";
 
     @Inject
     private ExperimentDAO subject;
 
     @Before
     public void setUp() throws Exception {
-        ExperimentDTO mtab513 = new ExperimentDTO(E_MTAB_513, TYPE_BASELINE, Sets.newHashSet("human", "mouse"),
-                Sets.newHashSet("1", "2"), "Illumina", false);
-        ExperimentDTO mtab1066 = new ExperimentDTO(E_MTAB_1066, TYPE_MICROARRAY, Sets.newHashSet("bird"),
-                Sets.newHashSet("1", "2"), "diff", false);
 
-        ExperimentDTO mtabPrivate = new ExperimentDTO("Secret_111", TYPE_MICROARRAY, Sets.newHashSet("cow"),
+        ExperimentDTO mtabPrivate = new ExperimentDTO(SECRET_111, TYPE_MICROARRAY, Sets.newHashSet("cow"),
                 Sets.newHashSet("1"), "diff", true);
 
-        subject.addExperiment(mtab513);
-        subject.addExperiment(mtab1066);
         subject.addExperiment(mtabPrivate);
     }
 
     @After
     public void tearDown() throws Exception {
         try {
-            subject.deleteExperiment(E_MTAB_513);
-        } catch (Exception e) {
-        }
-        try {
-            subject.deleteExperiment(E_MTAB_1066);
-        } catch (Exception e) {
-        }
-        try {
-            subject.deleteExperiment("Secret_111");
+            subject.deleteExperiment(SECRET_111);
         } catch (Exception e) {
 
         }
@@ -100,7 +75,7 @@ public class ExperimentDAOIT {
     @Test
     public void testFindExperiments() throws Exception {
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
-        assertThat(experimentDTOs, hasSize(3));
+        assertThat(experimentDTOs, hasSize(15));
         assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_513, TYPE_BASELINE, Sets.newHashSet(""), Sets.newHashSet(""), "", false)));
     }
 
@@ -142,7 +117,7 @@ public class ExperimentDAOIT {
     public void testDeleteExperiment() throws Exception {
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
         int size = experimentDTOs.size();
-        subject.deleteExperiment(E_MTAB_513);
+        subject.deleteExperiment(SECRET_111);
         assertThat(subject.findAllExperiments().size(), is(size - 1));
     }
 
