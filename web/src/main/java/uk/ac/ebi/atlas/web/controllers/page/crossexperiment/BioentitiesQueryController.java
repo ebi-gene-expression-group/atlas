@@ -76,14 +76,11 @@ public class BioentitiesQueryController {
     @RequestMapping(value = "/query", params = {"geneQuery"})
     public String showGeneQueryResultPage(@RequestParam(value="geneQuery", required = true) String geneQuery, Model model) {
 
-        List<String> identifiers = Lists.newArrayList(StringUtils.split(geneQuery, " "));
-
         model.addAttribute("entityIdentifier", geneQuery);
 
-        Set<String> ensemblIDs = Sets.newHashSet();
-        for (String identifier : identifiers) {
-            ensemblIDs.addAll(solrQueryService.fetchGeneIdentifiersFromSolr(identifier, "ensgene", true, "mirbase_id"));
-        }
+        List<String> identifiers = Lists.newArrayList(StringUtils.split(geneQuery, " "));
+
+        Set<String> ensemblIDs = solrQueryService.findGenesFromMirBaseIDs(identifiers);
 
         if (ensemblIDs.size() > 0) {
             model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
@@ -95,8 +92,9 @@ public class BioentitiesQueryController {
 
         model.addAttribute("preferences", new DifferentialRequestPreferences());
 
+        model.addAttribute("globalSearchTerm", Joiner.on(" OR ").join(identifiers) );
+
         return "bioEntities";
     }
-
 
 }
