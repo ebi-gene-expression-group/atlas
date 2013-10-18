@@ -28,14 +28,20 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 
 public class BioentitiesPageGeneQuery2SpeciesIT extends SinglePageSeleniumFixture {
+
+    public static final String GENE_QUERY_PARAM = "ENSG00000161547%20ENSMUSG00000030105";
+    public static final String GLOBAL_SEARCH_TERM = "ENSG00000161547 OR ENSMUSG00000030105";
+
 
     private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=ENSG00000161547%20ENSMUSG00000030105");
+        subject = new BioEntitiesPage(driver, "geneQuery=" + GENE_QUERY_PARAM);
         subject.get();
     }
 
@@ -51,6 +57,18 @@ public class BioentitiesPageGeneQuery2SpeciesIT extends SinglePageSeleniumFixtur
         subject.clickDifferentialDisplayLevelsButton();
         assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Arl8b", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "Arl8b"));
         assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Mus musculus", "Homo sapiens", "Homo sapiens", "Homo sapiens", "Homo sapiens", "Mus musculus"));
+    }
+
+
+    @Test
+    public void globalSearchTermIsIdentifiersSeparatedByOR() {
+        assertThat(subject.getGlobalSearchTerm(), is(GLOBAL_SEARCH_TERM));
+    }
+
+    @Test
+    public void globalSearchWidgetShouldHaveResults(){
+        subject.clickShowMoreDataWidget();
+        assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
     }
 
 }

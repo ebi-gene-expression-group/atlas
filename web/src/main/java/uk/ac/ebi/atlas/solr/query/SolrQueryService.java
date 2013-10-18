@@ -171,6 +171,13 @@ public class SolrQueryService {
 
     }
 
+    public Set<String> findGenesFromMirBaseIDs(Collection<String> identifiers) {
+        Set<String> ensemblIDs = Sets.newHashSet();
+        for (String identifier : identifiers) {
+            ensemblIDs.addAll(fetchGeneIdentifiersFromSolr(identifier, "ensgene", true, "mirbase_id"));
+        }
+        return ensemblIDs;
+    }
 
     public Set<String> findPropertyValuesForGeneId(String identifier, String propertyName) {
 

@@ -24,7 +24,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<input type="text" value="${entityIdentifier}" style="display: none" id="searchterm">
+<input type="text" value="${globalSearchTerm != "" ? globalSearchTerm : entityIdentifier}" style="display: none" id="searchterm">
 
 <c:choose>
     <c:when test="${empty entityIdentifier}">

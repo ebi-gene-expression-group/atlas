@@ -83,9 +83,14 @@ public class GeneBioEntityPageIT extends SinglePageSeleniumFixture {
     }
 
     @Test
+    public void globalSearchTermIsGeneIdentifier() {
+        assertThat(subject.getGlobalSearchTerm(), is(GENE_IDENTIFIER));
+    }
+
+    @Test
     public void clickingOnGlobalSearchWidgetShouldDisplayGlobalSearchResults(){
         subject.clickShowMoreDataWidget();
-        assertThat(subject.getGlobalSearchAllResultsString().length(), is(greaterThan("All results ()".length())));
+        assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
     }
 
 }

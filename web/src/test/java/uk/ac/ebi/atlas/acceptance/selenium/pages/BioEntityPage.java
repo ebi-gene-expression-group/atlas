@@ -33,6 +33,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BioEntityPage extends HeatmapTablePage {
 
@@ -41,6 +43,9 @@ public class BioEntityPage extends HeatmapTablePage {
     private String bioEntityIdentifier;
 
     private String type;
+
+    @FindBy(id = "searchterm")
+    private WebElement searchTerm;
 
     @FindBy(id = "accordion")
     private WebElement accordion;
@@ -254,9 +259,22 @@ public class BioEntityPage extends HeatmapTablePage {
         return this;
     }
 
-    public String getGlobalSearchAllResultsString() {
+    public String getGlobalSearchTerm() {
+        return searchTerm.getAttribute("value");
+    }
 
+    public String getGlobalSearchAllResultsString() {
         return globalSearchPointers.get(0).getText();
+    }
+
+    private static final Pattern GLOBAL_SEARCH_ALL_RESULTS_TOTAL = Pattern.compile("All results \\((.*)\\)");
+
+    public int getGlobalSearchAllResultsTotal() {
+        Matcher matcher = GLOBAL_SEARCH_ALL_RESULTS_TOTAL.matcher(getGlobalSearchAllResultsString());
+        if (!matcher.matches()) {
+            throw new IllegalStateException("Cannot match \"" + GLOBAL_SEARCH_ALL_RESULTS_TOTAL.toString() + "\" in global search widget");
+        }
+        return Integer.parseInt(matcher.group(1));
     }
 
     protected int getContrastColumnIndex() {
