@@ -558,7 +558,6 @@
             <!--used to deploy on www-test-->
             <id>test</id>
             <properties>
-                <h2.database.location>/srv/gxa/data/h2/atlas</h2.database.location>
                 <data.files.location>/srv/gxa/data</data.files.location>
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>
