@@ -22,7 +22,9 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +36,9 @@ import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
+
+import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -118,6 +123,19 @@ public class SolrQueryServiceIT {
     public void shouldThrowResourceNotFoundException() throws SolrServerException {
 
         subject.findBioentityProperty("XYZEMC2");
+
+    }
+
+    @Test
+    public void findGenesFromMirBaseIDs()  {
+
+        List<String> identifiers = Lists.newArrayList("hsa-mir-636");
+
+        Set<String> ensemblIDs = subject.findGenesFromMirBaseIDs(identifiers);
+
+        assertThat(ensemblIDs.size(), is(3));
+        assertThat(ensemblIDs, hasItems("ENSG00000207556", "ENSG00000161547", "ENSG00000092931"));
+
 
     }
 
