@@ -68,6 +68,11 @@ public class BioentitiesPageConditionQueryIT extends SinglePageSeleniumFixture {
     }
 
     @Test
+    public void checkDifferentialProfilesCount() {
+        assertThat(subject.diffExpressionResultCount(), is("2 search result(s) found"));
+    }
+
+    @Test
     public void checkDifferentialContrastSummaryTooltipTableHeader() {
         assertThat(subject.getContrastSummaryTooltipTableHeader(0, 0), is("Property"));
         assertThat(subject.getContrastSummaryTooltipTableHeader(0, 1), is("Test value"));

@@ -87,10 +87,10 @@ public class DifferentialBioentityExpressionsBuilder {
 
         if (CollectionUtils.isNotEmpty(geneIdentifiers)){
 
-            Set<String> identifiers = solrQueryService.expandIdentifiersToMatureRNAIds(geneIdentifiers);
+            Set<String> expandedIdentifiers = solrQueryService.expandIdentifiersToMatureRNAIds(geneIdentifiers);
 
-            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(identifiers);
-            int resultCount = diffExpressionDao.getResultCount(geneIdentifiers);
+            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(expandedIdentifiers);
+            int resultCount = diffExpressionDao.getResultCount(expandedIdentifiers);
 
             return new DifferentialBioentityExpressions(expressions, resultCount);
 

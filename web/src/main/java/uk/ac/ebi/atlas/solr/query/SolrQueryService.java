@@ -153,6 +153,8 @@ public class SolrQueryService {
 
     public Set<String> expandIdentifiersToMatureRNAIds(Set<String> geneIdentifiers){
         Set<String> expandedIdentifiers = Sets.newHashSet();
+        expandedIdentifiers.addAll(geneIdentifiers);
+
         for (String geneIdentifier: geneIdentifiers){
 
             Set<String> mirbaseIds = findPropertyValuesForGeneId(geneIdentifier, "mirbase_id");

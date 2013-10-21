@@ -27,6 +27,7 @@ import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -38,6 +39,9 @@ import java.util.concurrent.TimeUnit;
 public class BioEntitiesPage extends BioEntityPage {
 
     private String queryParams;
+
+    @FindBy(xpath = "//*[@id=\"diffProfileBody\"]/div[1]/span[1]")
+    private WebElement resultCountLine;
 
     public BioEntitiesPage(WebDriver driver) {
         super(driver);
@@ -69,7 +73,7 @@ public class BioEntitiesPage extends BioEntityPage {
 
         List<WebElement> countElements = driver.findElements(By.className("count"));
 
-        for(int i = 0; i < linkElements.size(); i++){
+        for (int i = 0; i < linkElements.size(); i++) {
             baselineCounts.add(buildBaselineEntityCount(linkElements.get(i), countElements.get(i)));
         }
 
@@ -77,7 +81,7 @@ public class BioEntitiesPage extends BioEntityPage {
 
     }
 
-    private BaselineBioentitiesCount buildBaselineEntityCount(WebElement linkElement, WebElement countElement){
+    private BaselineBioentitiesCount buildBaselineEntityCount(WebElement linkElement, WebElement countElement) {
 
         String linkText = linkElement.getText();
         String linkHref = linkElement.getAttribute("href");
@@ -88,9 +92,13 @@ public class BioEntitiesPage extends BioEntityPage {
         String experimentAccession = StringUtils.substringAfterLast(linkHref, "/");
         experimentAccession = StringUtils.substringBeforeLast(experimentAccession, "?");
 
-        int baselineCount = Integer.parseInt(StringUtils.substringBetween(countElement.getText(),"(",")"));
+        int baselineCount = Integer.parseInt(StringUtils.substringBetween(countElement.getText(), "(", ")"));
 
         return new BaselineBioentitiesCount(experimentName, species, experimentAccession, baselineCount);
+    }
+
+    public String diffExpressionResultCount() {
+        return resultCountLine.getText();
     }
 }
 
