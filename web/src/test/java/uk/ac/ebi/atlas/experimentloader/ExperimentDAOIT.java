@@ -57,10 +57,10 @@ public class ExperimentDAOIT {
     @Before
     public void setUp() throws Exception {
 
-        ExperimentDTO mtabPrivate = new ExperimentDTO(SECRET_111, TYPE_MICROARRAY, Sets.newHashSet("cow"),
-                Sets.newHashSet("1"), "diff", true);
+        ExperimentDTO mtab = new ExperimentDTO(SECRET_111, TYPE_MICROARRAY, Sets.newHashSet("cow"),
+                Sets.newHashSet("1"), "diff", false);
 
-        subject.addExperiment(mtabPrivate);
+        subject.addExperiment(mtab);
     }
 
     @After
@@ -123,11 +123,11 @@ public class ExperimentDAOIT {
 
     @Test
     public void updateExperimentShouldChangePrivateState() throws Exception {
-        assertThat(subject.findPublicExperiment(E_MTAB_513), is(notNullValue()));
-        subject.updateExperiment(E_MTAB_513, true);
-        assertThat(subject.findExperiment(E_MTAB_513, true).isPrivate(), is(true));
-        subject.updateExperiment(E_MTAB_513, false);
-        assertThat(subject.findPublicExperiment(E_MTAB_513), is(notNullValue()));
+        assertThat(subject.findPublicExperiment(SECRET_111), is(notNullValue()));
+        subject.updateExperiment(SECRET_111, true);
+        assertThat(subject.findExperiment(SECRET_111, true).isPrivate(), is(true));
+        subject.updateExperiment(SECRET_111, false);
+        assertThat(subject.findPublicExperiment(SECRET_111), is(notNullValue()));
     }
 
     @Test
