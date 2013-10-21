@@ -50,7 +50,7 @@ public class BioentitiesPageConditionQueryIT extends SinglePageSeleniumFixture {
 
         List<BaselineBioentitiesCount> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(6));
+        assertThat(baselineCounts, hasSize(7));
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-513"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Illumina Body Map"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
