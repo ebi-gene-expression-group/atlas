@@ -56,7 +56,7 @@ public class BaselineExpressionDaoIT {
         SortedSet<BaselineBioentitiesCount> bioentitiesCounts = subject.getBioentitiesCounts(Lists.newArrayList(assayGroup));
         assertThat(bioentitiesCounts, hasSize(1));
         assertThat(bioentitiesCounts.first().getExperimentAccession(), is(E_MTAB_599));
-        assertThat(bioentitiesCounts.first().getCount(), is(2856));
+        assertThat(bioentitiesCounts.first().getCount(), is(2844));
         assertThat(bioentitiesCounts.first().getSpecies(), is("Mus musculus"));
 
     }
