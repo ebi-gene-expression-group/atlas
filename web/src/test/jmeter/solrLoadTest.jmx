@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.3" jmeter="2.8 r1393162">
+<jmeterTestPlan version="1.2" properties="2.3">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="atlasLoadTest" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -532,7 +532,7 @@
           </ResponseAssertion>
           <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Duration Assertion" enabled="true">
-            <stringProp name="DurationAssertion.duration">1150</stringProp>
+            <stringProp name="DurationAssertion.duration">1300</stringProp>
           </DurationAssertion>
           <hashTree/>
         </hashTree>
@@ -675,7 +675,7 @@
           </ResponseAssertion>
           <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Duration Assertion" enabled="true">
-            <stringProp name="DurationAssertion.duration">600</stringProp>
+            <stringProp name="DurationAssertion.duration">800</stringProp>
           </DurationAssertion>
           <hashTree/>
         </hashTree>
@@ -769,7 +769,7 @@
           </ResponseAssertion>
           <hashTree/>
           <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Duration Assertion" enabled="true">
-            <stringProp name="DurationAssertion.duration">500</stringProp>
+            <stringProp name="DurationAssertion.duration">800</stringProp>
           </DurationAssertion>
           <hashTree/>
         </hashTree>
