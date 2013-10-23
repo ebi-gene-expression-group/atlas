@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.model.ConfigurationTrader;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -97,19 +98,29 @@ public class ExperimentCRUDTest {
     @Mock
     private ExperimentDTOBuilder exparimentDTOBuilderMock;
 
+    @Mock
+    private ExperimentDesign experimentDesignMock;
+
     @Before
     public void setUp() throws Exception {
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
+        when(configurationTraderMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(microarrayExperimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
 
         given(experimentDesignFileWriterBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.BASELINE)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
+        given(experimentDesignFileWriterMock.write(EXPERIMENT_ACCESSION)).willReturn(experimentDesignMock);
 
         given(indexCommandTraderMock.getIndexCommand(eq(EXPERIMENT_ACCESSION), any(IndexOperation.class))).willReturn(indexCommandMock);
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
+
+        given(exparimentDTOBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(exparimentDTOBuilderMock);
+        given(exparimentDTOBuilderMock.withExperimentType(ExperimentType.BASELINE)).willReturn(exparimentDTOBuilderMock);
+        given(exparimentDTOBuilderMock.withPrivate(false)).willReturn(exparimentDTOBuilderMock);
+        given(exparimentDTOBuilderMock.withSpecies(anySet())).willReturn(exparimentDTOBuilderMock);
 
 
         subject = new ExperimentCRUD(configurationTraderMock, experimentDAOMock,
@@ -143,6 +154,12 @@ public class ExperimentCRUDTest {
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, null, null, null, false));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        verify(indexCommandMock).execute();
+    }
+
+    @Test
+    public void importExperimentShouldAddExperimentToIndex() throws Exception {
+        subject.importExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
         verify(indexCommandMock).execute();
     }
 }
