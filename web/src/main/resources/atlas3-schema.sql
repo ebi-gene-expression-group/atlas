@@ -273,4 +273,143 @@ WHEN OTHERS THEN
    raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
 END;
 
+-- Generalised stored function that can return counts of distinct gene identifiers. It takes the following 4 parameters:
+-- experiment_in - experiment accession, e.g. 'E-GEOD-30352'
+-- query_assaygroupids_in - comma-separated list of assay groups forming a specific query (i.e. expression specific to just those assay groups), e.g. 'g9,g12'
+-- subexp_assaygroupids_in - comma-separated list of assay groups describe a specific partition of a larger baseline experiment, e.g. 'Mus musculus' organism in E-GEOD-30352,
+--                           e.g. 'g9,g10,g11,g12,g13,g14'
+-- regex_in - separator of values in query_assaygroupids_in, subexp_assaygroupids_in (',' by default - does not need to be specified at function call time)
+-- This function covers the following query cases:
+-- 1. A non-specific query for genes in a whole experiment, e.g. 
+--     select getBaselineExprCount('E-MTAB-599',null,null,'ENSMUSG00000064356') from dual; 
+--     select getBaselineExprCount('E-MTAB-599',null,null,'ENSMUSG00000022097,ENSMUSG00000024653,ENSMUSG00000064356') from dual;
+-- 2. A non-specific query for genes in an experiment partition, e.g. 
+--    Sub-experiment (mus musculus):
+--    select getBaselineExprCount('E-GEOD-30352',null,'g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual; 
+-- 3. A specific query with no genes specified across the whole experiment, e.g. 
+--    select getBaselineExprCount('E-MTAB-599','g2',null,null) from dual;
+-- 4. A specific query with no genes specified across an experiment partition, e.g. 
+--    Sub-experiment (mus musculus):
+--    select getBaselineExprCount('E-GEOD-30352','g12','g9,g10,g11,g12,g13,g14',null) from dual;
+-- 5. A specific query for genes in a whole experiment, e.g. 
+--    Whole experiment, specific query (liver:g2 and lung:g5)
+--    select getBaselineExprCount('E-MTAB-599','g5',null,'ENSMUSG00000022097,ENSMUSG00000024653,ENSMUSG00000064356') from dual;
+--    select getBaselineExprCount('E-MTAB-599','g2,g5', null,'ENSMUSG00000022097,ENSMUSG00000024653,ENSMUSG00000064356') from dual;
+--    select getBaselineExprCount('E-MTAB-599','g5',null,'ENSMUSG00000022097') from dual;
+--    select getBaselineExprCount('E-MTAB-599','g2',null,'ENSMUSG00000064356') from dual;
+-- 6. A specific query for genes in an experiment partition:
+--    Sub-experiment (mus musculus), specific query (heart:g9, liver:g12) 
+--    select getBaselineExprCount('E-GEOD-30352','g9,g12','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual; --> 2 (OK)
+--    select getBaselineExprCount('E-GEOD-30352','g9','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual; --> 0 (OK)
+--    select getBaselineExprCount('E-GEOD-30352','g12','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual; --> 2 (OK)
+CREATE OR REPLACE Function getBaselineExprCount
+   ( experiment_in IN varchar2, query_assaygroupids_in IN varchar2, subexp_assaygroupids_in IN varchar2, geneids_in IN varchar2, regex_in IN varchar2 DEFAULT '[^,]+' )
+   RETURN number
+IS
+   cnumber number;
+   -- Define a weakly typed system reference cursor.
+   c   SYS_REFCURSOR;
+
+mainSelect VARCHAR2(2000) := 'select count(distinct rbe.identifier) from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe '
+                          || 'where rbe.experiment = :experiment_in '
+                          || 'and exists (select 1 from bioentity_name where identifier = rbe.identifier) ';
+                          
+specificGroupsSelect VARCHAR2(2000) := 'select regexp_substr(:query_assaygroupids_in, :regex_in, 1, level) from dual '
+                              || '      connect by level <= regexp_count(:query_assaygroupids_in , :regex_in) ';     
+                              
+subExpSelect VARCHAR2(2000) := 'and rbe.assaygroupid in ( '
+                            || 'select regexp_substr(:subexp_assaygroupids_in, :regex_in, 1, level) from dual '
+                            || 'connect by level <= regexp_count(:subexp_assaygroupids_in , :regex_in)) ';
+
+specificClauseWholeExp VARCHAR2(2000) := 'and (  select avg(expression) '
+                              || '   from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) ' 
+                              || '   where assaygroupid in ( ' || specificGroupsSelect || ')'
+                              || '   and experiment = :experiment_in '
+                              || '   and identifier = rbe.identifier) > '  
+                              || '    (  select NVL(max(expression),0) '
+                              || '   from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) ' 
+                              || '   where assaygroupid not in ( ' || specificGroupsSelect || ')'                            
+                              || '   and experiment = :experiment_in '
+                              || '   and identifier = rbe.identifier)'; 
+                              
+specificClauseSubExp VARCHAR2(2000) := 'and (  select avg(expression) '
+                              || '   from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) ' 
+                              || '   where assaygroupid in ( ' || specificGroupsSelect || ')'
+                              || '   and experiment = :experiment_in '
+                              || '   and identifier = rbe.identifier) > '  
+                              || '    (  select NVL(max(expression),0) '
+                              || '   from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) ' 
+                              || '   where assaygroupid not in ( ' || specificGroupsSelect || ')'                           
+                              || '   and experiment = :experiment_in '
+                              || subExpSelect                                 
+                              || '   and identifier = rbe.identifier)'; 
+                                    
+geneIdentifierSelect VARCHAR2(2000) := 'and rbe.identifier in ( '
+                            || 'select regexp_substr(:geneids_in, :regex_in, 1, level) from dual '
+                            || 'connect by level <= regexp_count(:geneids_in , :regex_in)) ';
+    
+    
+BEGIN
+   IF query_assaygroupids_in is NULL THEN
+      -- Non-specific query (gene ids must be specified; sub or whole experiment)
+      IF subexp_assaygroupids_in is NULL THEN
+         -- Non-specific query in the whole experiment
+         OPEN c FOR mainSelect || geneIdentifierSelect 
+         USING experiment_in, geneids_in, regex_in, geneids_in, regex_in;
+      ELSE
+        -- Non-specific query including a sub-experiment restriction
+        OPEN c FOR mainSelect || geneIdentifierSelect || subExpSelect 
+        USING experiment_in, geneids_in, regex_in, geneids_in, regex_in, subexp_assaygroupids_in, regex_in, subexp_assaygroupids_in, regex_in;
+      END IF;
+   ELSE
+      -- Specific query (gene ids may or may not be specified; sub or whole experiment)
+      IF geneids_in is NULL THEN
+         IF subexp_assaygroupids_in is NULL THEN
+            -- Specific query with no gene identifiers specified in whole experiment
+            OPEN c FOR mainSelect || specificClauseWholeExp 
+            USING experiment_in,  
+                  query_assaygroupids_in, regex_in, query_assaygroupids_in, regex_in, experiment_in,
+                  query_assaygroupids_in, regex_in, query_assaygroupids_in, regex_in, experiment_in;
+         ELSE
+            -- Specific query with no gene identifiers specified in a sub-experiment
+            OPEN c FOR mainSelect || subExpSelect || specificClauseSubExp 
+            USING experiment_in, 
+                  subexp_assaygroupids_in, regex_in, subexp_assaygroupids_in, regex_in, 
+                  query_assaygroupids_in, regex_in, query_assaygroupids_in, regex_in, experiment_in,
+                  query_assaygroupids_in, regex_in, query_assaygroupids_in, regex_in, experiment_in,
+                  subexp_assaygroupids_in, regex_in, subexp_assaygroupids_in, regex_in;
+         END IF;
+      ELSE
+        IF subexp_assaygroupids_in is NULL THEN
+            -- Specific query with gene identifiers specified in whole experiment
+            OPEN c FOR mainSelect || geneIdentifierSelect || specificClauseWholeExp 
+            USING experiment_in, geneids_in, regex_in, geneids_in, regex_in, 
+                  query_assaygroupids_in, regex_in, query_assaygroupids_in, regex_in, experiment_in,
+                  query_assaygroupids_in, regex_in, query_assaygroupids_in, regex_in, experiment_in;
+        ELSE
+           -- Specific query with gene identifiers specified in a sub-experiment
+           OPEN c FOR mainSelect || geneIdentifierSelect || subExpSelect || specificClauseSubExp 
+           USING experiment_in, 
+                 geneids_in, regex_in, geneids_in, regex_in, 
+                 subexp_assaygroupids_in, regex_in, subexp_assaygroupids_in, regex_in,
+                 query_assaygroupids_in, regex_in, query_assaygroupids_in, regex_in, experiment_in,
+                 query_assaygroupids_in, regex_in, query_assaygroupids_in, regex_in, experiment_in,
+                 subexp_assaygroupids_in, regex_in, subexp_assaygroupids_in, regex_in;
+        END IF;
+      END IF;
+   END IF;
+   
+   fetch c into cnumber;
+   if c%notfound then
+      cnumber := 0;
+   end if;
+   close c;
+
+RETURN cnumber;                              
+
+EXCEPTION
+WHEN OTHERS THEN
+   raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END;
+
 exit;
