@@ -76,6 +76,7 @@ public final class HeatmapWidgetController {
 
         String species;
         try{
+            //ToDo: (NK) when we query by gene keys, bioentity property type is not just "bioentity_identifier", rather "property_value"
             species = solrQueryService.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
         } catch(Exception e){
             model.addAttribute("errorMessage", "Species could not be determined");
