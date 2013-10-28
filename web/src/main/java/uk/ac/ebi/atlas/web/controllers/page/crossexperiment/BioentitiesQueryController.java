@@ -78,8 +78,11 @@ public class BioentitiesQueryController {
 
         model.addAttribute("entityIdentifier", geneQuery);
 
+        //ToDo: (NK) if gene query is in " ", then don't split it, just remove " " (example "zinc finger")
+        //ToDo: look for query parser, we have this logic already
         List<String> identifiers = Lists.newArrayList(StringUtils.split(geneQuery, " "));
 
+        //ToDo: we probably don't need to do this (next 3 lines of code) anymore
         Set<String> ensemblIDs = solrQueryService.findGenesFromMirBaseIDs(identifiers);
 
         if (ensemblIDs.size() > 0) {
