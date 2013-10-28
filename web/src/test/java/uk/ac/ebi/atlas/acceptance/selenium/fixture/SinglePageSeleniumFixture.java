@@ -25,12 +25,12 @@ package uk.ac.ebi.atlas.acceptance.selenium.fixture;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.internal.FirefoxDriverFactory;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.internal.PhantomJSDriverFactory;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.internal.RemoteDriverFactory;
 
 
 public abstract class SinglePageSeleniumFixture {
-
-    private static final String SELENIUM_SERVER_URL = "http://ma-selenium:4444/wd/hub";
 
     protected WebDriver driver;
 
@@ -38,6 +38,7 @@ public abstract class SinglePageSeleniumFixture {
     public void initDriver() {
         // change the factory to FirefoxDriverFactory or PhantomJSDriverFactory
         // if you want to use a local browser
+        //driver = new FirefoxDriverFactory().create();
         //driver = new PhantomJSDriverFactory().create();
         driver = new RemoteDriverFactory().create();
         getStartingPage();
