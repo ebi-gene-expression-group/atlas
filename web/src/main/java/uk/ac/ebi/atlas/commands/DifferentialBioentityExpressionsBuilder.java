@@ -87,6 +87,12 @@ public class DifferentialBioentityExpressionsBuilder {
 
         if (CollectionUtils.isNotEmpty(geneIdentifiers)){
 
+            //ToDo: when "geneIdentifiers" are not actually geneIdentifiers, but any gene key word, we should use another query
+            //GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(requestContext.getGeneQuery(),
+//                            requestContext.isExactMatch(),
+//                            requestContext.getFilteredBySpecies(),
+//                            requestContext.isGeneSetMatch());
+
             Set<String> expandedIdentifiers = solrQueryService.expandIdentifiersToMatureRNAIds(geneIdentifiers);
 
             List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(expandedIdentifiers);
