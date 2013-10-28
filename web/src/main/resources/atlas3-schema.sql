@@ -278,6 +278,7 @@ END;
 -- query_assaygroupids_in - comma-separated list of assay groups forming a specific query (i.e. expression specific to just those assay groups), e.g. 'g9,g12'
 -- subexp_assaygroupids_in - comma-separated list of assay groups describe a specific partition of a larger baseline experiment, e.g. 'Mus musculus' organism in E-GEOD-30352,
 --                           e.g. 'g9,g10,g11,g12,g13,g14'
+-- geneids_in - comma-separated list of gene identifiers to be used in the query
 -- regex_in - separator of values in query_assaygroupids_in, subexp_assaygroupids_in (',' by default - does not need to be specified at function call time)
 -- This function covers the following query cases:
 -- 1. A non-specific query for genes in a whole experiment, e.g. 
@@ -299,9 +300,9 @@ END;
 --    select getBaselineExprCount('E-MTAB-599','g2',null,'ENSMUSG00000064356') from dual;
 -- 6. A specific query for genes in an experiment partition:
 --    Sub-experiment (mus musculus), specific query (heart:g9, liver:g12) 
---    select getBaselineExprCount('E-GEOD-30352','g9,g12','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual; --> 2 (OK)
---    select getBaselineExprCount('E-GEOD-30352','g9','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual; --> 0 (OK)
---    select getBaselineExprCount('E-GEOD-30352','g12','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual; --> 2 (OK)
+--    select getBaselineExprCount('E-GEOD-30352','g9,g12','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual;
+--    select getBaselineExprCount('E-GEOD-30352','g9','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual;
+--    select getBaselineExprCount('E-GEOD-30352','g12','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual;
 CREATE OR REPLACE Function getBaselineExprCount
    ( experiment_in IN varchar2, query_assaygroupids_in IN varchar2, subexp_assaygroupids_in IN varchar2, geneids_in IN varchar2, regex_in IN varchar2 DEFAULT '[^,]+' )
    RETURN number
@@ -407,6 +408,110 @@ BEGIN
 
 RETURN cnumber;                              
 
+EXCEPTION
+WHEN OTHERS THEN
+   raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END;
+
+-------------------------------------------------------------------------------
+-- Facade stored functions to simplify the interface to getBaselineExprCount()
+-------------------------------------------------------------------------------
+
+-- A non-specific query for genes in a whole experiment, e.g. 
+--     select getWholeBslnExprCntForGenes('E-MTAB-599','ENSMUSG00000064356') from dual; 
+--     select getWholeBslnExprCntForGenes('E-MTAB-599','ENSMUSG00000022097,ENSMUSG00000024653,ENSMUSG00000064356') from dual;
+CREATE OR REPLACE Function getWholeBslnExprCntForGenes
+   ( experiment_in IN varchar2, geneids_in IN varchar2 )
+   RETURN number
+IS
+   cnumber number;
+BEGIN
+   cnumber := getBaselineExprCount(experiment_in, null, null, geneids_in);
+   RETURN cnumber;                              
+EXCEPTION
+WHEN OTHERS THEN
+   raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END;
+
+-- A non-specific query for genes in an experiment partition, e.g. 
+--    Sub-experiment (mus musculus):
+--    select getSubBslnExprCntForGenes('E-GEOD-30352','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual; 
+CREATE OR REPLACE Function getSubBslnExprCntForGenes
+   ( experiment_in IN varchar2, subexp_assaygroupids_in IN varchar2, geneids_in IN varchar2 )
+   RETURN number
+IS
+   cnumber number;
+BEGIN
+   cnumber := getBaselineExprCount(experiment_in, null, subexp_assaygroupids_in, geneids_in);
+   RETURN cnumber;                              
+EXCEPTION
+WHEN OTHERS THEN
+   raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END;
+
+-- A specific query with no genes specified across the whole experiment, e.g. 
+--    select getWholeBslnExprSpfcCnt('E-MTAB-599','g2') from dual;
+CREATE OR REPLACE Function getWholeBslnExprSpfcCnt
+   ( experiment_in IN varchar2, query_assaygroupids_in IN varchar2)
+   RETURN number
+IS
+   cnumber number;
+BEGIN
+   cnumber := getBaselineExprCount(experiment_in, query_assaygroupids_in, null, null);
+   RETURN cnumber;                              
+EXCEPTION
+WHEN OTHERS THEN
+   raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END;
+
+-- A specific query with no genes specified across an experiment partition, e.g. 
+--    Sub-experiment (mus musculus):
+--    select getSubBslnExprSpfcCnt('E-GEOD-30352','g12','g9,g10,g11,g12,g13,g14') from dual;
+CREATE OR REPLACE Function getSubBslnExprSpfcCnt
+   ( experiment_in IN varchar2, query_assaygroupids_in IN varchar2, subexp_assaygroupids_in IN varchar2)
+   RETURN number
+IS
+   cnumber number;
+BEGIN
+   cnumber := getBaselineExprCount(experiment_in, query_assaygroupids_in, subexp_assaygroupids_in, null);
+   RETURN cnumber;                              
+EXCEPTION
+WHEN OTHERS THEN
+   raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END;
+
+-- A specific query for genes in a whole experiment, e.g. 
+--    Whole experiment, specific query (liver:g2 and lung:g5)
+--    select getWholBslnExprSpfcCntForGenes('E-MTAB-599','g5','ENSMUSG00000022097,ENSMUSG00000024653,ENSMUSG00000064356') from dual;
+--    select getWholBslnExprSpfcCntForGenes('E-MTAB-599','g2,g5','ENSMUSG00000022097,ENSMUSG00000024653,ENSMUSG00000064356') from dual;
+--    select getWholBslnExprSpfcCntForGenes('E-MTAB-599','g5','ENSMUSG00000022097') from dual;
+--    select getWholBslnExprSpfcCntForGenes('E-MTAB-599','g2','ENSMUSG00000064356') from dual;
+CREATE OR REPLACE Function getWholBslnExprSpfcCntForGenes
+   ( experiment_in IN varchar2, query_assaygroupids_in IN varchar2, geneids_in IN varchar2)
+   RETURN number
+IS
+   cnumber number;
+BEGIN
+   cnumber := getBaselineExprCount(experiment_in, query_assaygroupids_in, null, geneids_in);
+   RETURN cnumber;                              
+EXCEPTION
+WHEN OTHERS THEN
+   raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
+END;
+
+-- A specific query for genes in an experiment partition:
+--    Sub-experiment (mus musculus), specific query (heart:g9, liver:g12) 
+--    select getSubBslnExprSpfcCntForGenes('E-GEOD-30352','g9,g12','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual; 
+--    select getSubBslnExprSpfcCntForGenes('E-GEOD-30352','g9','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual;
+--    select getSubBslnExprSpfcCntForGenes('E-GEOD-30352','g12','g9,g10,g11,g12,g13,g14','ENSMUSG00000054422,ENSMUSG00000066154,ENSMUSG00000018593') from dual;
+CREATE OR REPLACE Function getSubBslnExprSpfcCntForGenes
+   ( experiment_in IN varchar2, query_assaygroupids_in IN varchar2, subexp_assaygroupids_in IN varchar2, geneids_in IN varchar2)
+   RETURN number
+IS
+   cnumber number;
+BEGIN
+   cnumber := getBaselineExprCount(experiment_in, query_assaygroupids_in, subexp_assaygroupids_in, geneids_in);
+   RETURN cnumber;                              
 EXCEPTION
 WHEN OTHERS THEN
    raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
