@@ -24,6 +24,10 @@ package uk.ac.ebi.atlas.commands;
 
 public class GenesNotFoundException extends Exception {
 
+    public GenesNotFoundException() {
+        super();
+    }
+
     public GenesNotFoundException(String message){
         super(message);
     }
