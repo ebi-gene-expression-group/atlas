@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commands.DifferentialBioentityExpressionsBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
+import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -48,11 +49,13 @@ public class BioentitiesQueryController {
 
     private SolrQueryService solrQueryService;
     private DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
+    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
     @Inject
-    public BioentitiesQueryController(SolrQueryService solrQueryService, DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder) {
+    public BioentitiesQueryController(SolrQueryService solrQueryService, DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
         this.solrQueryService = solrQueryService;
         this.differentialBioentityExpressionsBuilder = differentialBioentityExpressionsBuilder;
+        this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
     }
 
     @RequestMapping(value = "/query")
@@ -78,9 +81,7 @@ public class BioentitiesQueryController {
 
         model.addAttribute("entityIdentifier", geneQuery);
 
-        //ToDo: (NK) if gene query is in " ", then don't split it, just remove " " (example "zinc finger")
-        //ToDo: look for query parser, we have this logic already
-        List<String> identifiers = Lists.newArrayList(StringUtils.split(geneQuery, " "));
+        List<String> identifiers = bioentityPropertyValueTokenizer.split(geneQuery);
 
         //ToDo: we probably don't need to do this (next 3 lines of code) anymore
         Set<String> ensemblIDs = solrQueryService.findGenesFromMirBaseIDs(identifiers);
