@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.dao;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -79,6 +80,15 @@ public class BaselineExpressionDao {
 
     }
 
+    public int getBioentitiesCountForExperiment(Collection<String> geneIds, String experimentAccession) {
+
+        String geneIdsString = Joiner.on(",").join(geneIds);
+        String query = "SELECT getWholeBslnExprCntForGenes(\'" + experimentAccession + "\',\'" + geneIdsString + "\') from dual";
+
+        return jdbcTemplate.queryForObject(query, Integer.class);
+
+    }
+
     SortedSet<BaselineBioentitiesCount> rankBioentityCounts(List<BaselineBioentitiesCount> baselineBioentitiesCounts) {
 
         SortedSet<BaselineBioentitiesCount> rankedBioentityCounts =
@@ -89,11 +99,11 @@ public class BaselineExpressionDao {
                     }
                 });
 
-        for (BaselineBioentitiesCount baselineBioentitiesCount: baselineBioentitiesCounts){
+        for (BaselineBioentitiesCount baselineBioentitiesCount : baselineBioentitiesCounts) {
             int count = jdbcTemplate.queryForObject(SELECT_BASELINE_COUNT_QUERY, Integer.class,
                     baselineBioentitiesCount.getExperimentAccession(),
                     baselineBioentitiesCount.getAssayGroupOrContrast());
-            if (count > 0){
+            if (count > 0) {
                 baselineBioentitiesCount.setCount(count);
                 rankedBioentityCounts.add(baselineBioentitiesCount);
             }

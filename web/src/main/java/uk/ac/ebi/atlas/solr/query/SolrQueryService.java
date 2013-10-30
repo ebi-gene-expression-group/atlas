@@ -152,25 +152,26 @@ public class SolrQueryService {
     }
 
     public Set<String> expandIdentifiersToMatureRNAIds(Set<String> geneIdentifiers){
-        Set<String> expandedIdentifiers = Sets.newHashSet();
-        expandedIdentifiers.addAll(geneIdentifiers);
+//        Set<String> expandedIdentifiers = Sets.newHashSet();
+//        expandedIdentifiers.addAll(geneIdentifiers);
+//
+//        for (String geneIdentifier: geneIdentifiers){
+//
+//            Set<String> mirbaseIds = findPropertyValuesForGeneId(geneIdentifier, "mirbase_id");
+//            if (mirbaseIds.size() > 0) {
+//                geneIdentifier = mirbaseIds.iterator().next();
+//            }
+//            Set<String> matureRNAIds = fetchGeneIdentifiersFromSolr(geneIdentifier, "mirna", false, "hairpin_id");
+//            if (matureRNAIds.size() > 0) {
+//                expandedIdentifiers.addAll(matureRNAIds);
+//            } else {
+//                expandedIdentifiers.add(geneIdentifier);
+//            }
+//
+//        }
+//        return expandedIdentifiers;
 
-        for (String geneIdentifier: geneIdentifiers){
-
-            Set<String> mirbaseIds = findPropertyValuesForGeneId(geneIdentifier, "mirbase_id");
-            if (mirbaseIds.size() > 0) {
-                geneIdentifier = mirbaseIds.iterator().next();
-            }
-            Set<String> matureRNAIds = fetchGeneIdentifiersFromSolr(geneIdentifier, "mirna", false, "hairpin_id");
-            if (matureRNAIds.size() > 0) {
-                expandedIdentifiers.addAll(matureRNAIds);
-            } else {
-                expandedIdentifiers.add(geneIdentifier);
-            }
-
-        }
-        return expandedIdentifiers;
-
+        return geneIdentifiers;
     }
 
     public Set<String> findGenesFromMirBaseIDs(Collection<String> identifiers) {

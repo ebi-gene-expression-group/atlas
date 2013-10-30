@@ -23,9 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,15 +32,16 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.commands.BaselineBioentityCountsBuilder;
 import uk.ac.ebi.atlas.commands.DifferentialBioentityExpressionsBuilder;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.web.SearchRequest;
+import uk.ac.ebi.atlas.web.QuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -58,54 +57,55 @@ public class BioentitiesQueryController {
     private DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
+    private BaselineBioentityCountsBuilder baselineBioentityCountsBuilder;
+
     @Inject
-    public BioentitiesQueryController(SolrQueryService solrQueryService, DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
+    public BioentitiesQueryController(SolrQueryService solrQueryService, DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer, BaselineBioentityCountsBuilder baselineBioentityCountsBuilder) {
         this.solrQueryService = solrQueryService;
         this.differentialBioentityExpressionsBuilder = differentialBioentityExpressionsBuilder;
         this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
+        this.baselineBioentityCountsBuilder = baselineBioentityCountsBuilder;
     }
 
-    @RequestMapping(value = "/query")
-    public String showConditionsResultPage(@RequestParam (value="condition", required = true) String condition, Model model) {
-        model.addAttribute("entityIdentifier", condition);
-
-        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withCondition(condition).build();
-
-        model.addAttribute("bioentities", bioentityExpressions);
-
-        model.addAttribute("preferences", new DifferentialRequestPreferences());
-
-        return "bioEntities";
-    }
+//    @RequestMapping(value = "/query")
+//    public String showConditionsResultPage(@RequestParam(value = "condition", required = true) String condition, Model model) {
+//        model.addAttribute("entityIdentifier", condition);
+//
+//        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withCondition(condition).build();
+//
+//        model.addAttribute("bioentities", bioentityExpressions);
+//
+//        model.addAttribute("preferences", new DifferentialRequestPreferences());
+//
+//        return "bioEntities";
+//    }
 
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
     public String handleException(Exception e) {
         return "bioEntities";
     }
 
-    @RequestMapping(value = "/query", params = {"geneQuery"})
-    public String showGeneQueryResultPage(@Valid SearchRequest params, Model model, BindingResult result) {
-        String geneQuery = params.getGeneQuery();
+    @RequestMapping(value = "/query", params = {"geneQuery", "condition"})
+    public String showGeneQueryResultPage(@Valid QuerySearchRequestParameters requestParameters, Model model, BindingResult result) {
+
+        String geneQuery = requestParameters.getGeneQuery();
 
         model.addAttribute("entityIdentifier", geneQuery);
 
-        List<String> identifiers = bioentityPropertyValueTokenizer.split(geneQuery);
-
-        //ToDo: we probably don't need to do this (next 3 lines of code) anymore
-        Set<String> ensemblIDs = solrQueryService.findGenesFromMirBaseIDs(identifiers);
-
-        if (ensemblIDs.size() > 0) {
-            model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
-        }
 
         try {
+
+            Set<BaselineBioentitiesCount> baselineCounts = baselineBioentityCountsBuilder.build(requestParameters);
+            model.addAttribute("baselineCounts", baselineCounts);
+
+
             String species = "";  // search across any species
 
             //resolve any gene keywords to identifiers
             GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(geneQuery,
-                                params.isExactMatch(),
-                                species,
-                                params.isGeneSetMatch());
+                    requestParameters.isExactMatch(),
+                    species,
+                    requestParameters.isGeneSetMatch());
 
             Collection<String> resolvedGeneIds = geneQueryResponse.getAllGeneIds();
 
@@ -118,7 +118,8 @@ public class BioentitiesQueryController {
 
             model.addAttribute("preferences", new DifferentialRequestPreferences());
 
-            model.addAttribute("globalSearchTerm", Joiner.on(" OR ").join(identifiers) );
+            List<String> identifiers = bioentityPropertyValueTokenizer.split(geneQuery);
+            model.addAttribute("globalSearchTerm", Joiner.on(" OR ").join(identifiers));
 
 
         } catch (GenesNotFoundException e) {

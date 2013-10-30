@@ -115,7 +115,15 @@
                         <span style="float: right">Expression Level cut-off: 0.5</span>
                     </div>
 
-                    <div id="widgetBody"></div>
+                    <c:choose>
+                        <c:when test="${singleBioentityPage}">
+                            <div id="widgetBody"></div>
+                        </c:when>
+
+                        <c:otherwise>
+                            <c:import url="baselineCounts-widget.jsp"/>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
 
                 <c:if test="${bioentities != null}">
@@ -226,20 +234,21 @@
 
                 <c:choose>
 
-                    <c:when test="${param.condition != null}">
+                    <c:when test="${singleBioentityPage}">
 
                         new Biojs.AtlasHeatmap({
-                            featuresUrl: '/gxa/widgets/baselinecounts?condition=${param.condition}',
-                            target: "widgetBody"
+                        featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}' + widgetParameters,
+                        target: "widgetBody"
                         });
 
                     </c:when>
                     <c:otherwise>
 
-                        new Biojs.AtlasHeatmap({
-                            featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}' + widgetParameters,
-                            target: "widgetBody"
-                        });
+
+                        <%--new Biojs.AtlasHeatmap({--%>
+                        <%--featuresUrl: '/gxa/widgets/baselinecounts?condition=${param.condition}&geneQuery=${param.geneQuery}',--%>
+                        <%--target: "widgetBody"--%>
+                    });
 
                     </c:otherwise>
                 </c:choose>
