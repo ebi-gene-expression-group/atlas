@@ -104,14 +104,16 @@ public class BioentitiesQueryController {
                 throw new GenesNotFoundException();
             }
 
+            List<String> geneQueryTerms = bioentityPropertyValueTokenizer.split(geneQuery);
+
             // used to populate diff-heatmap-table
-            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withGeneIdentifiers(Sets.newHashSet(resolvedGeneIds)).build();
+            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withGeneIdentifiers(Sets.newHashSet(resolvedGeneIds))
+                    .withGeneIdentifiersToExpandToMatureRNAIds(Sets.newHashSet(geneQueryTerms)).build();
 
             model.addAttribute("bioentities", bioentityExpressions);
 
             model.addAttribute("preferences", new DifferentialRequestPreferences());
 
-            List<String> geneQueryTerms = bioentityPropertyValueTokenizer.split(geneQuery);
             model.addAttribute("globalSearchTerm", Joiner.on(" OR ").join(geneQueryTerms) );
 
 

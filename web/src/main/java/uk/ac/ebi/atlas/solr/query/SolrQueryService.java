@@ -151,21 +151,18 @@ public class SolrQueryService {
         throw new ResourceNotFoundException("Species can't be determined for propertyValue: " + propertyValue + " and propertyName: " + propertyName);
     }
 
-    public Set<String> expandIdentifiersToMatureRNAIds(Set<String> geneIdentifiers){
+    public Set<String> findMatureRNAIds(Set<String> geneIdentifiers){
         Set<String> expandedIdentifiers = Sets.newHashSet();
-        expandedIdentifiers.addAll(geneIdentifiers);
 
         for (String geneIdentifier: geneIdentifiers){
 
             Set<String> mirbaseIds = findPropertyValuesForGeneId(geneIdentifier, "mirbase_id");
-            if (mirbaseIds.size() > 0) {
-                geneIdentifier = mirbaseIds.iterator().next();
-            }
-            Set<String> matureRNAIds = fetchGeneIdentifiersFromSolr(geneIdentifier, "mirna", false, "hairpin_id");
+            String mirbaseId = mirbaseIds.size() > 0 ?  mirbaseIds.iterator().next() : null;
+            Set<String> matureRNAIds = fetchGeneIdentifiersFromSolr((mirbaseId != null) ? mirbaseId : geneIdentifier, "mirna", false, "hairpin_id");
             if (matureRNAIds.size() > 0) {
                 expandedIdentifiers.addAll(matureRNAIds);
-            } else {
-                expandedIdentifiers.add(geneIdentifier);
+            } else if (mirbaseId != null) {
+                expandedIdentifiers.add(mirbaseId);
             }
 
         }
