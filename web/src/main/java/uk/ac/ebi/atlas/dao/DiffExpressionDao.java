@@ -68,11 +68,7 @@ public class DiffExpressionDao {
 
     static final String COUNT_QUERY = "SELECT count(1) FROM VW_DIFFANALYTICS ";
 
-    static final String ORDER_BY_PVAL = " order by PVAL";
-
-    static final String GENE_QUERY = SELECT_QUERY.concat(" WHERE IDENTIFIER IN (:ids1) ").concat(ORDER_BY_PVAL);
-
-    static final String GENE_COUNT_QUERY = COUNT_QUERY.concat(" WHERE IDENTIFIER IN (:ids1) ");
+    static final String ORDER_BY_PVAL = "order by PVAL";
 
     private final DataSource dataSource;
 
@@ -139,7 +135,7 @@ public class DiffExpressionDao {
 
         buildMultipleIdentifierInClauses(identifiers, parameters, sqlQuery);
 
-        sqlQuery.append(ORDER_BY_PVAL);
+        sqlQuery.append(" ").append(ORDER_BY_PVAL);
 
         List<DifferentialBioentityExpression> result = jdbcTemplate.query(sqlQuery.toString(), parameters,
                 rowMapper);
