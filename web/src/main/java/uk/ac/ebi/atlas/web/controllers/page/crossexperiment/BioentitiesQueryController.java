@@ -23,9 +23,7 @@
 package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,7 +63,7 @@ public class BioentitiesQueryController {
         this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
     }
 
-    @RequestMapping(value = "/query")
+    @RequestMapping(value = "/query", params = {"condition"})
     public String showConditionsResultPage(@RequestParam (value="condition", required = true) String condition, Model model) {
         model.addAttribute("entityIdentifier", condition);
 
@@ -89,19 +87,12 @@ public class BioentitiesQueryController {
 
         model.addAttribute("entityIdentifier", geneQuery);
 
-        List<String> identifiers = bioentityPropertyValueTokenizer.split(geneQuery);
-
-        //ToDo: we probably don't need to do this (next 3 lines of code) anymore
-        Set<String> ensemblIDs = solrQueryService.findGenesFromMirBaseIDs(identifiers);
-
-        if (ensemblIDs.size() > 0) {
-            model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
-        }
 
         try {
-            String species = "";  // search across any species
+            // search across any species
+            String species = "";
 
-            //resolve any gene keywords to identifiers
+            //resolve any gene keywords to geneQueryTerms
             GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(geneQuery,
                                 params.isExactMatch(),
                                 species,
@@ -109,7 +100,9 @@ public class BioentitiesQueryController {
 
             Collection<String> resolvedGeneIds = geneQueryResponse.getAllGeneIds();
 
-            if (resolvedGeneIds.size() == 0) throw new GenesNotFoundException();
+            if (resolvedGeneIds.size() == 0) {
+                throw new GenesNotFoundException();
+            }
 
             // used to populate diff-heatmap-table
             DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withGeneIdentifiers(Sets.newHashSet(resolvedGeneIds)).build();
@@ -118,7 +111,8 @@ public class BioentitiesQueryController {
 
             model.addAttribute("preferences", new DifferentialRequestPreferences());
 
-            model.addAttribute("globalSearchTerm", Joiner.on(" OR ").join(identifiers) );
+            List<String> geneQueryTerms = bioentityPropertyValueTokenizer.split(geneQuery);
+            model.addAttribute("globalSearchTerm", Joiner.on(" OR ").join(geneQueryTerms) );
 
 
         } catch (GenesNotFoundException e) {
