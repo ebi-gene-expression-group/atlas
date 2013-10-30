@@ -58,8 +58,11 @@ public class BaselineGeneBioEntityPageExistingGeneIT extends SinglePageSeleniumF
     public void checkSelectedProfiles() {
         FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
         wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
+
         assertThat(subject.isBaselineProfileExpanded(), is(true));
+
         subject.clickDisplayLevelsButton();
+
         assertThat(subject.getGeneNames(), contains("DAPL1"));
         assertThat(subject.getGeneNames().size(), is(1));
 

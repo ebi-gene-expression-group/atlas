@@ -601,9 +601,32 @@
                 </resources>
             </build>
             <properties>
-                <!-- change to integrate with a solr running on localhost rather than the default remote host -->
                 <solr.host>lime</solr.host>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
+                <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+            </properties>
+        </profile>
+        <profile>
+            <!-- access solr and oracle via localhost ssh tunnel -->
+            <id>local.integration.test.via.tunnel</id>
+            <!-- include dev datasource  -->
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>
+                                oracleContext.xml
+                            </include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <solr.host>localhost</solr.host>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@localhost:5205:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
             </properties>

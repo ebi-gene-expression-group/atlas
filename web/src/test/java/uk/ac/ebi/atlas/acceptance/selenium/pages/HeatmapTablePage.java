@@ -34,6 +34,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.ArrayList;
@@ -125,16 +126,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     protected WebElement getHeatmapTable() {
-        final String HEATMAP_TABLE_ID = "heatmap-table";
-
-        new FluentWait<>(driver)
-                .withTimeout(10, TimeUnit.SECONDS)
-                .pollingEvery(250, TimeUnit.MILLISECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(By.id(HEATMAP_TABLE_ID)));
-
-        WebElement heatmapTable = driver.findElement(By.id(HEATMAP_TABLE_ID));
-
-        return heatmapTable;
+        return SeleniumUtil.findElementByIdWaitingUntilAvailable(driver, "heatmap-table");
     }
 
     public List<String> getFactorValueHeaders() {
@@ -239,16 +231,16 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public WebElement getDisplayLevelsButton() {
-        new FluentWait<>(driver)
-                .withTimeout(4, TimeUnit.MINUTES)
-                .pollingEvery(500, TimeUnit.MILLISECONDS)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.id("display-levels")));
-
-        return driver.findElement(By.id("display-levels"));
+        return SeleniumUtil.findElementByIdWaitingUntilAvailable(driver, "display-levels");
     }
 
     public void clickDisplayLevelsButton() {
         WebElement displayLevelsButton = getDisplayLevelsButton();
+
+        new FluentWait<>(driver)
+                .withTimeout(10, TimeUnit.SECONDS)
+                .pollingEvery(250, TimeUnit.MILLISECONDS)
+                .until(ExpectedConditions.visibilityOf(displayLevelsButton));
 
         displayLevelsButton.click();
     }

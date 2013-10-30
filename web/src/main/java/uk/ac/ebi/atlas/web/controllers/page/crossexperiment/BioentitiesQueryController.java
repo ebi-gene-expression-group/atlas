@@ -29,16 +29,24 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commands.DifferentialBioentityExpressionsBuilder;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
+import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.SearchRequest;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -48,11 +56,13 @@ public class BioentitiesQueryController {
 
     private SolrQueryService solrQueryService;
     private DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
+    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
     @Inject
-    public BioentitiesQueryController(SolrQueryService solrQueryService, DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder) {
+    public BioentitiesQueryController(SolrQueryService solrQueryService, DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
         this.solrQueryService = solrQueryService;
         this.differentialBioentityExpressionsBuilder = differentialBioentityExpressionsBuilder;
+        this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
     }
 
     @RequestMapping(value = "/query")
@@ -74,13 +84,12 @@ public class BioentitiesQueryController {
     }
 
     @RequestMapping(value = "/query", params = {"geneQuery"})
-    public String showGeneQueryResultPage(@RequestParam(value="geneQuery", required = true) String geneQuery, Model model) {
+    public String showGeneQueryResultPage(@Valid SearchRequest params, Model model, BindingResult result) {
+        String geneQuery = params.getGeneQuery();
 
         model.addAttribute("entityIdentifier", geneQuery);
 
-        //ToDo: (NK) if gene query is in " ", then don't split it, just remove " " (example "zinc finger")
-        //ToDo: look for query parser, we have this logic already
-        List<String> identifiers = Lists.newArrayList(StringUtils.split(geneQuery, " "));
+        List<String> identifiers = bioentityPropertyValueTokenizer.split(geneQuery);
 
         //ToDo: we probably don't need to do this (next 3 lines of code) anymore
         Set<String> ensemblIDs = solrQueryService.findGenesFromMirBaseIDs(identifiers);
@@ -89,13 +98,32 @@ public class BioentitiesQueryController {
             model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
         }
 
-        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withGeneIdentifiers(Sets.newHashSet(identifiers)).build();
+        try {
+            String species = "";  // search across any species
 
-        model.addAttribute("bioentities", bioentityExpressions);
+            //resolve any gene keywords to identifiers
+            GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(geneQuery,
+                                params.isExactMatch(),
+                                species,
+                                params.isGeneSetMatch());
 
-        model.addAttribute("preferences", new DifferentialRequestPreferences());
+            Collection<String> resolvedGeneIds = geneQueryResponse.getAllGeneIds();
 
-        model.addAttribute("globalSearchTerm", Joiner.on(" OR ").join(identifiers) );
+            if (resolvedGeneIds.size() == 0) throw new GenesNotFoundException();
+
+            // used to populate diff-heatmap-table
+            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withGeneIdentifiers(Sets.newHashSet(resolvedGeneIds)).build();
+
+            model.addAttribute("bioentities", bioentityExpressions);
+
+            model.addAttribute("preferences", new DifferentialRequestPreferences());
+
+            model.addAttribute("globalSearchTerm", Joiner.on(" OR ").join(identifiers) );
+
+
+        } catch (GenesNotFoundException e) {
+            result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + geneQuery + "'"));
+        }
 
         return "bioEntities";
     }
