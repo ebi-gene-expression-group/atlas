@@ -31,12 +31,15 @@ import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.BaselineConditionsSearchService;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
-import uk.ac.ebi.atlas.web.QuerySearchRequestParameters;
+import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
+import uk.ac.ebi.atlas.web.SearchRequest;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -57,11 +60,11 @@ public class BaselineBioentityCountsBuilder {
         this.solrQueryService = solrQueryService;
     }
 
-    public Set<BaselineBioentitiesCount> build(String query) {
+    public Set<BaselineBioentitiesCount> build(String condition) {
 
-        checkArgument(StringUtils.isNotBlank(query));
+        checkArgument(StringUtils.isNotBlank(condition));
 
-        Collection<IndexedAssayGroup> assayGroups = baselineConditionsSearchService.findAssayGroups(query);
+        Collection<IndexedAssayGroup> assayGroups = baselineConditionsSearchService.findAssayGroups(condition);
 
         if (assayGroups.isEmpty()){
             return Sets.newHashSet();
@@ -71,7 +74,7 @@ public class BaselineBioentityCountsBuilder {
 
     }
 
-    public Set<BaselineBioentitiesCount> build(QuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
+    public Set<BaselineBioentitiesCount> build(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
 
         if (StringUtils.isNotBlank(requestParameters.getCondition())) {
             Collection<IndexedAssayGroup> assayGroups = baselineConditionsSearchService.findAssayGroups(requestParameters.getCondition());
@@ -85,18 +88,43 @@ public class BaselineBioentityCountsBuilder {
 
         if(StringUtils.isNotBlank(requestParameters.getGeneQuery())) {
 
-                GeneQueryResponse mouseIds = solrQueryService.findGeneIdsOrSets(requestParameters.getGeneQuery(),
-                        requestParameters.isExactMatch(), "mus musculus", requestParameters.isGeneSetMatch());
+            // sort alphabetically by experiment name
+            SortedSet<BaselineBioentitiesCount> counts =
+                Sets.newTreeSet(new Comparator<BaselineBioentitiesCount>() {
+                    @Override
+                    public int compare(BaselineBioentitiesCount count, BaselineBioentitiesCount otherCount) {
+                        return count.getExperimentName().compareTo(otherCount.getExperimentName());
+                    }
+                });
 
-                int count = baselineExpressionDao.getBioentitiesCountForExperiment(mouseIds.getAllGeneIds(), "E-MTAB-599");
-                //ToDo: use BaselineBioentitiesCount builder here
-                BaselineBioentitiesCount bioentitiesCount = new BaselineBioentitiesCount("Mouse experiment", "mus musculus",
-                        "E-MTAB-599", count);
+            // experiments checked for genes are currently hard-coded to only: E-MTAB-513, and E-MTAB-599
+            BaselineBioentitiesCount eMtab513Count = baselineCountsInExperimentForGeneQuery(requestParameters, "Homo sapiens", "E-MTAB-513", "Illumina Body Map");
+            if (eMtab513Count.getCount() > 0) {
+                counts.add(eMtab513Count);
+            }
 
-                return Sets.newHashSet(bioentitiesCount);
+            BaselineBioentitiesCount eMtab599Count = baselineCountsInExperimentForGeneQuery(requestParameters, "Mus musculus", "E-MTAB-599", "Six tissues");
+            if (eMtab599Count.getCount() > 0) {
+                counts.add(eMtab599Count);
+            }
 
+            return counts;
 
         }
         return null;
     }
+
+    private BaselineBioentitiesCount baselineCountsInExperimentForGeneQuery(SearchRequest requestParameters, String species, String experimentAccession, String experimentName) throws GenesNotFoundException {
+        GeneQueryResponse geneIds = solrQueryService.findGeneIdsOrSets(requestParameters.getGeneQuery(),
+                requestParameters.isExactMatch(), species.toLowerCase(), requestParameters.isGeneSetMatch());
+
+        // for performance reasons, don't get the count, just determine if the genes exist in the experiment
+        int count = baselineExpressionDao.atLeastOneGeneIdExistsInExperiment(geneIds.getAllGeneIds(), experimentAccession) ? 1 : 0;
+
+        BaselineBioentitiesCount bioentitiesCount = new BaselineBioentitiesCount(experimentName, species,
+                experimentAccession, count);
+
+        return bioentitiesCount;
+    }
+
 }

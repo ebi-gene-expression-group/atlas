@@ -32,6 +32,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commands.BaselineBioentityCountsBuilder;
 import uk.ac.ebi.atlas.commands.DifferentialBioentityExpressionsBuilder;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
@@ -41,7 +42,7 @@ import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.web.QuerySearchRequestParameters;
+import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -67,25 +68,32 @@ public class BioentitiesQueryController {
         this.baselineBioentityCountsBuilder = baselineBioentityCountsBuilder;
     }
 
-//    @RequestMapping(value = "/query", params = {"condition"})
-//    public String showConditionsResultPage(@RequestParam(value = "condition", required = true) String condition, Model model) {
-//        model.addAttribute("entityIdentifier", condition);
-//
-//        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withCondition(condition).build();
-//
-//        model.addAttribute("bioentities", bioentityExpressions);
-//
-//        model.addAttribute("preferences", new DifferentialRequestPreferences());
-//
-//        return "bioEntities";
-//    }
+    public String showConditionsResultPage(String condition, Model model) {
+        model.addAttribute("entityIdentifier", condition);
+
+        Set<BaselineBioentitiesCount> baselineCounts = baselineBioentityCountsBuilder.build(condition);
+        model.addAttribute("baselineCounts", baselineCounts);
+
+        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withCondition(condition).build();
+
+        model.addAttribute("bioentities", bioentityExpressions);
+
+        model.addAttribute("preferences", new DifferentialRequestPreferences());
+
+        return "bioEntities";
+    }
+
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
     public String handleException(Exception e) {
         return "bioEntities";
     }
 
-    @RequestMapping(value = "/query", params = {"geneQuery", "condition"})
-    public String showGeneQueryResultPage(@Valid QuerySearchRequestParameters requestParameters, Model model, BindingResult result) {
+    @RequestMapping(value = "/query")
+    public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model, BindingResult result) {
+
+        if (requestParameters.getCondition() != null) {
+            return showConditionsResultPage(requestParameters.getCondition(), model);
+        }
 
         String geneQuery = requestParameters.getGeneQuery();
 
@@ -96,7 +104,8 @@ public class BioentitiesQueryController {
             Set<BaselineBioentitiesCount> baselineCounts = baselineBioentityCountsBuilder.build(requestParameters);
             model.addAttribute("baselineCounts", baselineCounts);
 
-            String species = "";  // search across any species
+            // search across any species
+            String species = "";
 
             //resolve any gene keywords to identifiers
             GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(geneQuery,

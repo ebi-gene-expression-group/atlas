@@ -22,12 +22,13 @@
 
 package uk.ac.ebi.atlas.dao;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
@@ -58,7 +59,15 @@ public class BaselineExpressionDao {
 
     static final String GROUP_BY_EXPERIMENT_ASSAYGROUPID = "group by EXPERIMENT, ASSAYGROUPID";
 
+    static final String GENEIDS_IN_EXPERIMENT = "select 1 from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe\n" +
+            "    where rbe.experiment = :experimentAccession\n" +
+            "    and exists (select 1 from bioentity_name where identifier = rbe.identifier)\n" +
+            "    and rbe.identifier in (:geneIds)\n" +
+            "    and rownum < 2\n";
+
     private JdbcTemplate jdbcTemplate;
+
+    private NamedParameterJdbcTemplate namedJdbcTemplate;
 
     private AssayGroupQueryBuilder assayGroupQueryBuilder;
 
@@ -70,6 +79,7 @@ public class BaselineExpressionDao {
         this.assayGroupQueryBuilder = assayGroupQueryBuilder;
         this.rowMapper = rowMapper;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     public SortedSet<BaselineBioentitiesCount> getBioentitiesCounts(Collection<IndexedAssayGroup> indexedAssayGroups) {
@@ -80,13 +90,17 @@ public class BaselineExpressionDao {
 
     }
 
-    public int getBioentitiesCountForExperiment(Collection<String> geneIds, String experimentAccession) {
+    public boolean atLeastOneGeneIdExistsInExperiment(Collection<String> geneIds, String experimentAccession) {
+        if (geneIds.size() == 0) return false;
 
-        String geneIdsString = Joiner.on(",").join(geneIds);
-        String query = "SELECT getWholeBslnExprCntForGenes(\'" + experimentAccession + "\',\'" + geneIdsString + "\') from dual";
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("experimentAccession", experimentAccession);
+        parameters.addValue("geneIds", geneIds);
 
-        return jdbcTemplate.queryForObject(query, Integer.class);
+        List<Integer> results = namedJdbcTemplate.queryForList(GENEIDS_IN_EXPERIMENT, parameters, Integer.class);
 
+        // if a row is returned, this indicates one of the gene ids were found in the experiment
+        return (results.size() > 0);
     }
 
     SortedSet<BaselineBioentitiesCount> rankBioentityCounts(List<BaselineBioentitiesCount> baselineBioentitiesCounts) {
@@ -123,6 +137,5 @@ public class BaselineExpressionDao {
 
         return jdbcTemplate.query(query.getQuery(), rowMapper, query.getParams());
     }
-
 
 }

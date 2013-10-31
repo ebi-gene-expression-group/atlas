@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.web;
 
-public class QuerySearchRequestParameters extends SearchRequest {
+public class GeneQuerySearchRequestParameters extends SearchRequest {
     private String condition;
 
     public String getCondition() {
