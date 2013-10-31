@@ -47,6 +47,7 @@ public class DifferentialBioentityExpressionsBuilder {
     private SolrQueryService solrQueryService;
     private String condition;
     private Set<String> geneIdentifiers;
+    private Set<String> geneIdentifiersToExpandToMatureRNAIds;
 
     @Inject
     public DifferentialBioentityExpressionsBuilder(DiffExpressionDao diffExpressionDao,
@@ -64,9 +65,18 @@ public class DifferentialBioentityExpressionsBuilder {
 
     public DifferentialBioentityExpressionsBuilder withGeneIdentifiers(Set<String> geneIdentifiers){
         this.geneIdentifiers = geneIdentifiers;
+        if (geneIdentifiersToExpandToMatureRNAIds == null) {
+            this.geneIdentifiersToExpandToMatureRNAIds = geneIdentifiers;
+        }
         return this;
     }
 
+    // specify the gene identifiers to expand to mature RNA ids. By default these are the geneIdentifiers from
+    // withGeneIdentifiers, but the set can be overridden here
+    public DifferentialBioentityExpressionsBuilder withGeneIdentifiersToExpandToMatureRNAIds(Set<String> geneIdentifiersToExpandToMatureRNAIds){
+        this.geneIdentifiersToExpandToMatureRNAIds = geneIdentifiersToExpandToMatureRNAIds;
+        return this;
+    }
 
     public DifferentialBioentityExpressions build() {
 
@@ -87,7 +97,9 @@ public class DifferentialBioentityExpressionsBuilder {
 
         if (CollectionUtils.isNotEmpty(geneIdentifiers)){
 
-            Set<String> expandedIdentifiers = solrQueryService.expandIdentifiersToMatureRNAIds(geneIdentifiers);
+            Set<String> expandedIdentifiers = solrQueryService.findMatureRNAIds(geneIdentifiersToExpandToMatureRNAIds);
+
+            expandedIdentifiers.addAll(geneIdentifiers);
 
             List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(expandedIdentifiers);
             int resultCount = diffExpressionDao.getResultCount(expandedIdentifiers);

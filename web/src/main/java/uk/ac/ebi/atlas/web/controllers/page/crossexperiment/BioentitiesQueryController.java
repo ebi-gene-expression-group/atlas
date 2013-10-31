@@ -67,7 +67,7 @@ public class BioentitiesQueryController {
         this.baselineBioentityCountsBuilder = baselineBioentityCountsBuilder;
     }
 
-//    @RequestMapping(value = "/query")
+//    @RequestMapping(value = "/query", params = {"condition"})
 //    public String showConditionsResultPage(@RequestParam(value = "condition", required = true) String condition, Model model) {
 //        model.addAttribute("entityIdentifier", condition);
 //
@@ -79,7 +79,6 @@ public class BioentitiesQueryController {
 //
 //        return "bioEntities";
 //    }
-
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
     public String handleException(Exception e) {
         return "bioEntities";
@@ -92,12 +91,10 @@ public class BioentitiesQueryController {
 
         model.addAttribute("entityIdentifier", geneQuery);
 
-
         try {
 
             Set<BaselineBioentitiesCount> baselineCounts = baselineBioentityCountsBuilder.build(requestParameters);
             model.addAttribute("baselineCounts", baselineCounts);
-
 
             String species = "";  // search across any species
 
@@ -109,17 +106,21 @@ public class BioentitiesQueryController {
 
             Collection<String> resolvedGeneIds = geneQueryResponse.getAllGeneIds();
 
-            if (resolvedGeneIds.size() == 0) throw new GenesNotFoundException();
+            if (resolvedGeneIds.size() == 0) {
+                throw new GenesNotFoundException();
+            }
+
+            List<String> geneQueryTerms = bioentityPropertyValueTokenizer.split(geneQuery);
 
             // used to populate diff-heatmap-table
-            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withGeneIdentifiers(Sets.newHashSet(resolvedGeneIds)).build();
+            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withGeneIdentifiers(Sets.newHashSet(resolvedGeneIds))
+                    .withGeneIdentifiersToExpandToMatureRNAIds(Sets.newHashSet(geneQueryTerms)).build();
 
             model.addAttribute("bioentities", bioentityExpressions);
 
             model.addAttribute("preferences", new DifferentialRequestPreferences());
 
-            List<String> identifiers = bioentityPropertyValueTokenizer.split(geneQuery);
-            model.addAttribute("globalSearchTerm", Joiner.on(" OR ").join(identifiers));
+            model.addAttribute("globalSearchTerm", Joiner.on(" OR ").join(geneQueryTerms) );
 
 
         } catch (GenesNotFoundException e) {
