@@ -248,15 +248,15 @@
                         <%--new Biojs.AtlasHeatmap({--%>
                         <%--featuresUrl: '/gxa/widgets/baselinecounts?condition=${param.condition}&geneQuery=${param.geneQuery}',--%>
                         <%--target: "widgetBody"--%>
-                    });
+                        <%--});--%>
 
-                    </c:otherwise>
-                </c:choose>
+                        </c:otherwise>
+                    </c:choose>
 
-            };
-        </script>
+                };
+            </script>
 
-    </c:otherwise>
-</c:choose>
+        </c:otherwise>
+    </c:choose>
 
 

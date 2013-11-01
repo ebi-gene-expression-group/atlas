@@ -31,37 +31,37 @@
 
 <c:choose>
     <c:when test="${not empty baselineCounts}">
+    <c:set var="resultsCount" value="${baselineCounts.size()}"/>
 
         <table id="baselineCountsTable">
-            <tbody>
-            <tr>
-                <td>
-                    <div style="margin-top:10px">
-                        <c:set var="resultsCount" value="${baselineCounts.size()}"/>
-                            ${resultsCount} search results (showing ${resultsCount} of ${resultsCount})
-                    </div>
-                </td>
-            </tr>
-            <tbody>
-            <c:forEach var="baselineCount" items="${baselineCounts}">
+            <thead>
                 <tr>
-                    <td>
-                        <a class="bioEntityCardLink"
-                               href="${base}/experiments/${baselineCount.experimentAccession}?queryFactorType=ORGANISM_PART&queryFactorValues=${param.condition}&geneQuery=${util:urlParamEncode(param.geneQuery)}"
-                           title="experiment">
-                                ${baselineCount.species} - ${baselineCount.experimentName}
-                        </a>
-                    </td>
-                    <%-- geneQuery searchs don't have proper counts yet --%>
-                    <c:if test="${empty param.geneQuery}">
-                        <td class="count">
-                            (${baselineCount.count})
-                        </td>
-                    </c:if>
+                    <th>
+                        <div style="margin-top:10px">
+                            ${resultsCount} search results (showing ${resultsCount} of ${resultsCount})
+                        </div>
+                    </th>
                 </tr>
-            </c:forEach>
+            </thead>
+            <tbody>
+                <c:forEach var="baselineCount" items="${baselineCounts}">
+                    <tr>
+                        <td>
+                            <a class="bioEntityCardLink"
+                                   href="${base}/experiments/${baselineCount.experimentAccession}?queryFactorType=ORGANISM_PART&queryFactorValues=${param.condition}&geneQuery=${util:urlParamEncode(param.geneQuery)}"
+                               title="experiment">
+                                    ${baselineCount.species} - ${baselineCount.experimentName}
+                            </a>
+                        </td>
+                        <%-- geneQuery searchs don't have proper counts yet --%>
+                        <c:if test="${empty param.geneQuery}">
+                            <td class="count">
+                                (${baselineCount.count})
+                            </td>
+                        </c:if>
+                    </tr>
+                </c:forEach>
             </tbody>
-
         </table>
 
     </c:when>
