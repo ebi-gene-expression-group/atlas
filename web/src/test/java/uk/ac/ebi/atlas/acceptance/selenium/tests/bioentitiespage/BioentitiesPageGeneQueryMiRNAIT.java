@@ -22,15 +22,16 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
+import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 
 public class BioentitiesPageGeneQueryMiRNAIT extends SinglePageSeleniumFixture {
 
@@ -43,13 +44,18 @@ public class BioentitiesPageGeneQueryMiRNAIT extends SinglePageSeleniumFixture {
         subject.get();
     }
 
-    //TODO fix this failing on lime
     @Test
-    @Ignore
-    public void checkBaselineContainsFirstGene() {
+    public void checkBaselineExperimentCounts()  {
         subject.clickBaselineProfile();
-        List<String> geneNames = subject.getGeneNames();
-        assertThat(geneNames, contains("SRSF2"));
+
+        List<BaselineBioentitiesCount> baselineCounts = subject.getBaselineCounts();
+
+        assertThat(baselineCounts, hasSize(1));
+
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-513"));
+        assertThat(baselineCounts.get(0).getExperimentName(), is("Illumina Body Map"));
+        assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
+        assertThat(baselineCounts.get(0).getCount(), is(-1));
     }
 
 }

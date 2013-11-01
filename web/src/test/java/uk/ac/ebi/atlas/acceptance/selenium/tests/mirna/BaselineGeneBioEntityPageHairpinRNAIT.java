@@ -27,6 +27,8 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
+import java.net.UnknownHostException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -51,8 +53,10 @@ public class BaselineGeneBioEntityPageHairpinRNAIT extends SinglePageSeleniumFix
 
     //TODO fix this failing on lime
     @Test
-    @Ignore
-    public void checkSelectedProfiles() {
+    public void checkSelectedProfiles() throws UnknownHostException {
+        System.out.println("checkSelectedProfiles");
+        System.out.println("Hostname:" + java.net.InetAddress.getLocalHost().getHostName());
+
         assertThat(subject.isBaselineProfileExpanded(), is(true));
         subject.clickDisplayLevelsButton();
         assertThat(subject.getGeneNames(), contains("SRSF2"));

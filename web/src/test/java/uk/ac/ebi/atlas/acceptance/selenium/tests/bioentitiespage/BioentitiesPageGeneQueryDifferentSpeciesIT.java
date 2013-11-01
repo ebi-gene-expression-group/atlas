@@ -26,13 +26,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
+import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
+
+import java.net.UnknownHostException;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
-public class BioentitiesPageGeneQuery2SpeciesIT extends SinglePageSeleniumFixture {
+public class BioentitiesPageGeneQueryDifferentSpeciesIT extends SinglePageSeleniumFixture {
 
     public static final String GENE_QUERY_PARAM = "ENSG00000161547%20ENSMUSG00000030105";
     public static final String GLOBAL_SEARCH_TERM = "ENSG00000161547 OR ENSMUSG00000030105";
@@ -46,12 +48,24 @@ public class BioentitiesPageGeneQuery2SpeciesIT extends SinglePageSeleniumFixtur
         subject.get();
     }
 
-    //TODO fix this failing on lime
     @Test
-    @Ignore
-    public void checkBaselineContainsFirstGene() {
+    public void checkBaselineExperimentCounts() {
         subject.clickBaselineProfile();
-        assertThat(subject.getGeneNames(), contains("SRSF2"));
+
+        List<BaselineBioentitiesCount> baselineCounts = subject.getBaselineCounts();
+
+        assertThat(baselineCounts, hasSize(2));
+
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-513"));
+        assertThat(baselineCounts.get(0).getExperimentName(), is("Illumina Body Map"));
+        assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
+        assertThat(baselineCounts.get(0).getCount(), is(-1));
+
+        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-599"));
+        assertThat(baselineCounts.get(1).getExperimentName(), is("Six tissues"));
+        assertThat(baselineCounts.get(1).getSpecies(), is("Mus musculus"));
+        assertThat(baselineCounts.get(1).getCount(), is(-1));
+
     }
 
 

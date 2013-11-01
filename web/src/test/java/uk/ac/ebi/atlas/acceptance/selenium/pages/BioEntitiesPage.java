@@ -74,7 +74,9 @@ public class BioEntitiesPage extends BioEntityPage {
         List<WebElement> countElements = driver.findElements(By.className("count"));
 
         for (int i = 0; i < linkElements.size(); i++) {
-            baselineCounts.add(buildBaselineEntityCount(linkElements.get(i), countElements.get(i)));
+            boolean hasCountElement =  (i <= countElements.size() - 1);
+            WebElement countElement =  hasCountElement ? countElements.get(i) : null;
+            baselineCounts.add(buildBaselineEntityCount(linkElements.get(i), countElement));
         }
 
         return baselineCounts;
@@ -92,7 +94,7 @@ public class BioEntitiesPage extends BioEntityPage {
         String experimentAccession = StringUtils.substringAfterLast(linkHref, "/");
         experimentAccession = StringUtils.substringBeforeLast(experimentAccession, "?");
 
-        int baselineCount = Integer.parseInt(StringUtils.substringBetween(countElement.getText(), "(", ")"));
+        int baselineCount = (countElement == null) ? -1 : Integer.parseInt(StringUtils.substringBetween(countElement.getText(), "(", ")"));
 
         return new BaselineBioentitiesCount(experimentName, species, experimentAccession, baselineCount);
     }
