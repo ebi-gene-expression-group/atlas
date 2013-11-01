@@ -126,7 +126,6 @@
                     </c:choose>
                 </div>
 
-                <c:if test="${bioentities != null}">
                     <ul id="diffProfileHeader" class="bioEntityCardHeader">
                         <img id="differential-info-image" title="Differential Expression"
                              style="position: absolute; left: 0.5em; "
@@ -169,7 +168,6 @@
                             <div>No differential experiments were found for ${entityIdentifier} </div>
                         </c:otherwise>
                     </c:choose>
-                </c:if>
             </div>
         </section>
 

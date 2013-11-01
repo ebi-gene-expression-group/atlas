@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.dao;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,10 +36,7 @@ import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.SortedSet;
+import java.util.*;
 
 @Named
 @Scope("prototype")
@@ -60,10 +58,8 @@ public class BaselineExpressionDao {
     static final String GROUP_BY_EXPERIMENT_ASSAYGROUPID = "group by EXPERIMENT, ASSAYGROUPID";
 
     static final String GENEIDS_IN_EXPERIMENT = "select 1 from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe\n" +
-            "    where rbe.experiment = :experimentAccession\n" +
-            "    and exists (select 1 from bioentity_name where identifier = rbe.identifier)\n" +
-            "    and rbe.identifier in (:geneIds)\n" +
-            "    and rownum < 2\n";
+            "    where rownum < 2 and rbe.experiment = :experimentAccession\n" +
+            "    and exists (select 1 from bioentity_name where identifier = rbe.identifier)\n";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -97,11 +93,37 @@ public class BaselineExpressionDao {
         parameters.addValue("experimentAccession", experimentAccession);
         parameters.addValue("geneIds", geneIds);
 
-        List<Integer> results = namedJdbcTemplate.queryForList(GENEIDS_IN_EXPERIMENT, parameters, Integer.class);
+        StringBuilder sqlQuery = new StringBuilder(GENEIDS_IN_EXPERIMENT);
+
+        sqlQuery.append(" and ");
+        buildMultipleIdentifierInClauses(geneIds, parameters, sqlQuery);
+
+        List<Integer> results = namedJdbcTemplate.queryForList(sqlQuery.toString(), parameters, Integer.class);
 
         // if a row is returned, this indicates one of the gene ids were found in the experiment
         return (results.size() > 0);
     }
+
+
+    private void buildMultipleIdentifierInClauses(Collection<String> identifiers, MapSqlParameterSource parameters, StringBuilder sqlQuery) {
+        int i = 1;
+
+        sqlQuery.append("(");
+        for (List<String> sublist : Iterables.partition(identifiers, 1000)) {
+            String idsParam = "geneIds" + i;
+            parameters.addValue(idsParam, sublist);
+
+            if (i > 1) {
+                sqlQuery.append(" OR");
+            }
+
+            sqlQuery.append(" rbe.IDENTIFIER IN (:").append(idsParam).append(")");
+
+            i++;
+        }
+        sqlQuery.append(")");
+    }
+
 
     SortedSet<BaselineBioentitiesCount> rankBioentityCounts(List<BaselineBioentitiesCount> baselineBioentitiesCounts) {
 
