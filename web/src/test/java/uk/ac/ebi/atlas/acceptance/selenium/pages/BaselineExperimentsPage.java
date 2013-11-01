@@ -30,18 +30,18 @@ import org.openqa.selenium.support.FindBy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePage extends GlobalSearchPage {
+public class BaselineExperimentsPage extends GlobalSearchPage {
 
     @FindBy(id = "species-nav")
     private WebElement speciesNav;
 
     private static final String DEFAULT_PAGE_URI = "/gxa/home";
 
-    public HomePage(WebDriver driver) {
+    public BaselineExperimentsPage(WebDriver driver) {
         super(driver);
     }
 
-    public HomePage(WebDriver driver, String httpParameters) {
+    public BaselineExperimentsPage(WebDriver driver, String httpParameters) {
         super(driver, httpParameters);
     }
 

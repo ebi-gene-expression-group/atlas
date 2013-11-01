@@ -42,8 +42,8 @@ import java.util.Map;
 @Controller
 // if we make it singleton it gets initialized during deployment, that means deployment become slow
 @Scope("request")
-public class HomePageController {
-    private static final Logger LOGGER = Logger.getLogger(HomePageController.class);
+public class BaselineExperimentsController {
+    private static final Logger LOGGER = Logger.getLogger(BaselineExperimentsController.class);
 
     private ExperimentTrader experimentTrader;
 
@@ -56,8 +56,8 @@ public class HomePageController {
     private Map<String, String> experimentDisplayNames = new HashMap<>();
 
     @Inject
-    public HomePageController(ExperimentTrader experimentTrader,
-                              BaselineExperimentsCache experimentsCache) {
+    public BaselineExperimentsController(ExperimentTrader experimentTrader,
+                                         BaselineExperimentsCache experimentsCache) {
         this.experimentTrader = experimentTrader;
         this.experimentsCache = experimentsCache;
     }
