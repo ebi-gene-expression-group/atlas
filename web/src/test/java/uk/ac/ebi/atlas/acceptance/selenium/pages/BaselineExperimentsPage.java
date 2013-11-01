@@ -35,7 +35,7 @@ public class BaselineExperimentsPage extends GlobalSearchPage {
     @FindBy(id = "species-nav")
     private WebElement speciesNav;
 
-    private static final String DEFAULT_PAGE_URI = "/gxa/home";
+    private static final String DEFAULT_PAGE_URI = "/gxa/baseline/experiments";
 
     public BaselineExperimentsPage(WebDriver driver) {
         super(driver);

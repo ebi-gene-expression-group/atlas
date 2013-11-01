@@ -62,8 +62,8 @@ public class BaselineExperimentsController {
         this.experimentsCache = experimentsCache;
     }
 
-    @RequestMapping("/home")
-    public String getHomePage(Model model) {
+    @RequestMapping("/baseline/experiments")
+    public String getBaselineExperimentsPage(Model model) {
 
         loadExperimentAccessionsBySpecie();
 
@@ -71,7 +71,7 @@ public class BaselineExperimentsController {
         model.addAttribute("experimentLinks", experimentLinks);
         model.addAttribute("experimentDisplayNames", experimentDisplayNames);
 
-        return "home";
+        return "baseline-experiments";
     }
 
     @PostConstruct

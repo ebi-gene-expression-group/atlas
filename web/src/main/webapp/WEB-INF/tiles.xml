@@ -54,10 +54,10 @@
         <put-attribute name="body" value="/WEB-INF/jsp/experiments.jsp"/>
     </definition>
 
-    <definition name="home" extends="base.definition">
+    <definition name="baseline-experiments" extends="base.definition">
         <put-attribute name="title" value="Gene Expression Baseline Atlas"/>
         <put-attribute name="menu" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/home.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/baseline-experiments.jsp"/>
     </definition>
 
     <definition name="bioEntities" extends="base.definition">
