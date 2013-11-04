@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
@@ -36,7 +37,12 @@ import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.util.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.SortedSet;
 
 @Named
 @Scope("prototype")
@@ -83,6 +89,12 @@ public class BaselineExpressionDao {
         List<BaselineBioentitiesCount> baselineBioentitiesCounts = queryForBaselineBioentitiesCounts(indexedAssayGroups);
 
         return rankBioentityCounts(baselineBioentitiesCounts);
+
+    }
+
+    public List<String> getExperimentAccessions(Collection<IndexedAssayGroup> indexedAssayGroups) {
+
+        return queryForBaselineExperimentAccessions(indexedAssayGroups);
 
     }
 
@@ -160,4 +172,21 @@ public class BaselineExpressionDao {
         return jdbcTemplate.query(query.getQuery(), rowMapper, query.getParams());
     }
 
+    List<String> queryForBaselineExperimentAccessions(Collection<IndexedAssayGroup> indexedAssayGroups) {
+        AssayGroupQuery query = assayGroupQueryBuilder.withSelectPart(SELECT_QUERY)
+                .withIndexedAssayGroupsOrContrasts(indexedAssayGroups)
+                .withAssayGroupOrContrast(ASSAYGROUPID)
+                .withExtraCondition(GROUP_BY_EXPERIMENT_ASSAYGROUPID)
+                .build();
+
+        LOGGER.debug("<getBioentitiesCount> select experiments query: " + query);
+
+        RowMapper<String> accessionRowMapper = new RowMapper<String>() {
+            @Override
+            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return rs.getString(AssayGroupQueryBuilder.EXPERIMENT);
+            }
+        };
+        return jdbcTemplate.query(query.getQuery(), accessionRowMapper, query.getParams());
+    }
 }

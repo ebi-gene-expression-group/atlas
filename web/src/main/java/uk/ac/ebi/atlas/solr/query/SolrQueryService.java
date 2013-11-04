@@ -170,6 +170,10 @@ public class SolrQueryService {
 
     }
 
+    public Set<String> findMatureRNAIds(String geneQuery){
+        return findMatureRNAIds(Sets.newHashSet(bioentityPropertyValueTokenizer.split(geneQuery)));
+    }
+
     public Set<String> findGenesFromMirBaseIDs(Collection<String> identifiers) {
         Set<String> ensemblIDs = Sets.newHashSet();
         for (String identifier : identifiers) {

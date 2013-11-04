@@ -28,9 +28,12 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.DiffExpressionDao;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
+import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
+import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
+import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -52,18 +55,18 @@ public class DifferentialBioentityExpressionsBuilder {
     @Inject
     public DifferentialBioentityExpressionsBuilder(DiffExpressionDao diffExpressionDao,
                                                    DifferentialConditionsSearchService differentialConditionsSearchService,
-                                                   SolrQueryService solrQueryService) {
+                                                   SolrQueryService solrQueryService, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
         this.diffExpressionDao = diffExpressionDao;
         this.differentialConditionsSearchService = differentialConditionsSearchService;
         this.solrQueryService = solrQueryService;
     }
 
-    public DifferentialBioentityExpressionsBuilder withCondition(String condition){
+    public DifferentialBioentityExpressionsBuilder withCondition(String condition) {
         this.condition = condition;
         return this;
     }
 
-    public DifferentialBioentityExpressionsBuilder withGeneIdentifiers(Set<String> geneIdentifiers){
+    public DifferentialBioentityExpressionsBuilder withGeneIdentifiers(Set<String> geneIdentifiers) {
         this.geneIdentifiers = geneIdentifiers;
         if (geneIdentifiersToExpandToMatureRNAIds == null) {
             this.geneIdentifiersToExpandToMatureRNAIds = geneIdentifiers;
@@ -73,18 +76,18 @@ public class DifferentialBioentityExpressionsBuilder {
 
     // specify the gene identifiers to expand to mature RNA ids. By default these are the geneIdentifiers from
     // withGeneIdentifiers, but the set can be overridden here
-    public DifferentialBioentityExpressionsBuilder withGeneIdentifiersToExpandToMatureRNAIds(Set<String> geneIdentifiersToExpandToMatureRNAIds){
+    public DifferentialBioentityExpressionsBuilder withGeneIdentifiersToExpandToMatureRNAIds(Set<String> geneIdentifiersToExpandToMatureRNAIds) {
         this.geneIdentifiersToExpandToMatureRNAIds = geneIdentifiersToExpandToMatureRNAIds;
         return this;
     }
 
     public DifferentialBioentityExpressions build() {
 
-        if (StringUtils.isNotBlank(condition)){
+        if (StringUtils.isNotBlank(condition)) {
 
             Collection<IndexedAssayGroup> contrasts = differentialConditionsSearchService.findContrasts(condition);
 
-            if (contrasts.isEmpty()){
+            if (contrasts.isEmpty()) {
                 return new DifferentialBioentityExpressions();
             }
 
@@ -95,7 +98,7 @@ public class DifferentialBioentityExpressionsBuilder {
 
         }
 
-        if (CollectionUtils.isNotEmpty(geneIdentifiers)){
+        if (CollectionUtils.isNotEmpty(geneIdentifiers)) {
 
             Set<String> expandedIdentifiers = solrQueryService.findMatureRNAIds(geneIdentifiersToExpandToMatureRNAIds);
 
@@ -112,6 +115,27 @@ public class DifferentialBioentityExpressionsBuilder {
 
     }
 
+    public DifferentialBioentityExpressions build(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
+        // search across any species
+        String species = "";
+
+        //resolve any gene keywords to identifiers
+        String geneQuery = requestParameters.getGeneQuery();
+
+        GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(geneQuery,
+                requestParameters.isExactMatch(),
+                species,
+                requestParameters.isGeneSetMatch());
+
+        Collection<String> resolvedGeneIds = geneQueryResponse.getAllGeneIds();
+
+        if (resolvedGeneIds.size() == 0) {
+            throw new GenesNotFoundException();
+        }
+
+
+        return null;
+    }
 
 
 }

@@ -83,4 +83,8 @@ public class SearchRequest {
     public void setExactMatch(boolean exactMatch) {
         this.exactMatch = exactMatch;
     }
+
+    public boolean hasGeneQuery() {
+        return StringUtils.isNotBlank(getGeneQuery());
+    }
 }

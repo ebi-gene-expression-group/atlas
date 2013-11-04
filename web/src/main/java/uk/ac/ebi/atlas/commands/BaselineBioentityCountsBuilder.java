@@ -22,109 +22,100 @@
 
 package uk.ac.ebi.atlas.commands;
 
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.dao.BaselineExpressionDao;
-import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
+import uk.ac.ebi.atlas.dao.BaselineExperimentDao;
+import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.BaselineConditionsSearchService;
-import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
-import uk.ac.ebi.atlas.web.SearchRequest;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 @Named
 @Scope("request")
 public class BaselineBioentityCountsBuilder {
 
-    private BaselineExpressionDao baselineExpressionDao;
+    private BaselineExperimentDao baselineExperimentDao;
 
     private BaselineConditionsSearchService baselineConditionsSearchService;
 
     private SolrQueryService solrQueryService;
 
+    private static final Map<String, BaselineExperimentResult> LIMITED_BY_EXPERIMENTS = Maps.newHashMap();
+
+    static {
+        LIMITED_BY_EXPERIMENTS.put("E-MTAB-513", new BaselineExperimentResult("E-MTAB-513", "Illumina Body Map", "Homo sapiens"));
+        LIMITED_BY_EXPERIMENTS.put("E-MTAB-599", new BaselineExperimentResult("E-MTAB-599", "Six tissues", "Mus musculus"));
+    }
+
     @Inject
-    public BaselineBioentityCountsBuilder(BaselineExpressionDao baselineExpressionDao, BaselineConditionsSearchService baselineConditionsSearchService, SolrQueryService solrQueryService) {
-        this.baselineExpressionDao = baselineExpressionDao;
+    public BaselineBioentityCountsBuilder(BaselineExperimentDao baselineExperimentDao, BaselineConditionsSearchService baselineConditionsSearchService, SolrQueryService solrQueryService) {
+        this.baselineExperimentDao = baselineExperimentDao;
         this.baselineConditionsSearchService = baselineConditionsSearchService;
         this.solrQueryService = solrQueryService;
     }
 
-    public Set<BaselineBioentitiesCount> build(String condition) {
 
-        checkArgument(StringUtils.isNotBlank(condition));
+    public Set<BaselineExperimentResult> build(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
 
-        Collection<IndexedAssayGroup> assayGroups = baselineConditionsSearchService.findAssayGroups(condition);
-
-        if (assayGroups.isEmpty()){
-            return Sets.newHashSet();
-        }
-
-        return baselineExpressionDao.getBioentitiesCounts(assayGroups);
-
-    }
-
-    public Set<BaselineBioentitiesCount> build(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
-
-        if (StringUtils.isNotBlank(requestParameters.getCondition())) {
-            Collection<IndexedAssayGroup> assayGroups = baselineConditionsSearchService.findAssayGroups(requestParameters.getCondition());
-
-            if (assayGroups.isEmpty()){
-                return Sets.newHashSet();
-            }
-
-            return baselineExpressionDao.getBioentitiesCounts(assayGroups);
-        }
-
-        if(StringUtils.isNotBlank(requestParameters.getGeneQuery())) {
-
-            // sort alphabetically by experiment name
-            SortedSet<BaselineBioentitiesCount> counts =
-                Sets.newTreeSet(new Comparator<BaselineBioentitiesCount>() {
+        SortedSet<BaselineExperimentResult> counts =
+                Sets.newTreeSet(new Comparator<BaselineExperimentResult>() {
                     @Override
-                    public int compare(BaselineBioentitiesCount count, BaselineBioentitiesCount otherCount) {
+                    public int compare(BaselineExperimentResult count, BaselineExperimentResult otherCount) {
                         return count.getExperimentName().compareTo(otherCount.getExperimentName());
                     }
                 });
 
-            // experiments checked for genes are currently hard-coded to only: E-MTAB-513, and E-MTAB-599
-            BaselineBioentitiesCount eMtab513Count = baselineCountsInExperimentForGeneQuery(requestParameters, "Homo sapiens", "E-MTAB-513", "Illumina Body Map");
-            if (eMtab513Count.getCount() > 0) {
-                counts.add(eMtab513Count);
+
+        if (requestParameters.hasCondition()) {
+            Multimap<String, String> assayGroupsPerExperiment = baselineConditionsSearchService.findAssayGroupsPerExperiment(requestParameters.getCondition());
+
+            for (String experimentAccession : assayGroupsPerExperiment.keySet()) {
+
+                if (LIMITED_BY_EXPERIMENTS.containsKey(experimentAccession)) {
+
+                    if (requestParameters.hasGeneQuery()) {
+                        GeneQueryResponse geneIds = solrQueryService.findGeneIdsOrSets(requestParameters.getGeneQuery(),
+                                requestParameters.isExactMatch(),
+                                LIMITED_BY_EXPERIMENTS.get(experimentAccession).getSpecies().toLowerCase(),
+                                requestParameters.isGeneSetMatch());
+
+                        if (baselineExperimentDao.isExperimentWithConditionsAndGenes(experimentAccession, assayGroupsPerExperiment.get(experimentAccession), geneIds.getAllGeneIds())) {
+                            counts.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
+                        }
+                    } else {
+                        if (baselineExperimentDao.isExperimentWithCondition(experimentAccession, assayGroupsPerExperiment.get(experimentAccession))) {
+                            counts.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
+                        }
+                    }
+
+                }
             }
 
-            BaselineBioentitiesCount eMtab599Count = baselineCountsInExperimentForGeneQuery(requestParameters, "Mus musculus", "E-MTAB-599", "Six tissues");
-            if (eMtab599Count.getCount() > 0) {
-                counts.add(eMtab599Count);
+        } else if (requestParameters.hasGeneQuery()) {
+            for (String experimentAccession : LIMITED_BY_EXPERIMENTS.keySet()) {
+                GeneQueryResponse geneIds = solrQueryService.findGeneIdsOrSets(requestParameters.getGeneQuery(),
+                        requestParameters.isExactMatch(),
+                        LIMITED_BY_EXPERIMENTS.get(experimentAccession).getSpecies().toLowerCase(),
+                        requestParameters.isGeneSetMatch());
+
+                if (baselineExperimentDao.isExperimentWithGenes(experimentAccession, geneIds.getAllGeneIds())) {
+                    counts.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
+                }
             }
-
-            return counts;
-
         }
-        return null;
-    }
 
-    private BaselineBioentitiesCount baselineCountsInExperimentForGeneQuery(SearchRequest requestParameters, String species, String experimentAccession, String experimentName) throws GenesNotFoundException {
-        GeneQueryResponse geneIds = solrQueryService.findGeneIdsOrSets(requestParameters.getGeneQuery(),
-                requestParameters.isExactMatch(), species.toLowerCase(), requestParameters.isGeneSetMatch());
 
-        // for performance reasons, don't get the count, just determine if the genes exist in the experiment
-        int count = baselineExpressionDao.atLeastOneGeneIdExistsInExperiment(geneIds.getAllGeneIds(), experimentAccession) ? 1 : 0;
-
-        BaselineBioentitiesCount bioentitiesCount = new BaselineBioentitiesCount(experimentName, species,
-                experimentAccession, count);
-
-        return bioentitiesCount;
+        return counts;
     }
 
 }

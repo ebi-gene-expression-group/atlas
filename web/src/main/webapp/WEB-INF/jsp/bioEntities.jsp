@@ -30,7 +30,7 @@
     <c:when test="${empty entityIdentifier}">
         <section class="grid_17 alpha extra-padding">
             <h2 class="strapline">
-                Please specify at least one query condition
+                Please specify at least query term in the gene and/or the condition!
             </h2>
         </section>
     </c:when>
