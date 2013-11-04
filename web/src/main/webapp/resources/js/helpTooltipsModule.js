@@ -57,6 +57,8 @@ var helpTooltipsModule = (function($) {
                 tooltipClass: "help-tooltip",
                 content: function(callback) {
                     var tooltipHelpHtmlId = $(this).parent().attr('data-help-loc');
+
+                    // load help text into #help-placeholder. NB: page must contain a div with id help-placeholder
                     $("#help-placeholder").load(getHelpLocation(pageName, tooltipHelpHtmlId),
                         function (response, status, xhr) {
                             var tooltipContent;
