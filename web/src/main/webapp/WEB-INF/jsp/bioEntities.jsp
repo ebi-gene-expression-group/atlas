@@ -28,11 +28,14 @@
 
 <c:choose>
     <c:when test="${not empty exceptionMessage}">
-        <section class="grid_24 alpha extra-padding">
-            <h2 class="strapline">
+        <div id="error-content" class="block">
+            <div class="error">
                 ${exceptionMessage}
-            </h2>
-        </section>
+            </div>
+        </div>
+        <div id="content" class="block">
+            <a href="/gxa">Go to Baseline Atlas home page</a>
+        </div>
     </c:when>
     <c:otherwise>
         <section class="grid_17 alpha extra-padding">
