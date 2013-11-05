@@ -32,8 +32,11 @@ import java.util.List;
 
 public class HomePage extends GlobalSearchPage {
 
-    @FindBy(id = "species-nav")
-    private WebElement speciesNav;
+    @FindBy(id = "geneQuery")
+    private WebElement geneQuery;
+
+    @FindBy(id = "submit-button")
+    private WebElement submitButton;
 
     private static final String DEFAULT_PAGE_URI = "/gxa/home";
 
@@ -45,33 +48,19 @@ public class HomePage extends GlobalSearchPage {
         super(driver, httpParameters);
     }
 
-    public List<WebElement> getAllSpeciesItems() {
-        return speciesNav.findElements(By.className("item"));
-    }
-
-    public String getNameOfSpecies(int i) {
-        WebElement specie = getAllSpeciesItems().get(i);
-        return specie.findElement(By.xpath("h2")).getText();
-    }
-
-    public List<WebElement> getAllExperimentsOfSpecies(int i) {
-        WebElement specie = getAllSpeciesItems().get(i);
-        return specie.findElements(By.xpath("ul/li"));
-    }
-
-    public List<String> getAllExperimentLinksOfSpecies(int i){
-        List<String> result = new ArrayList<>();
-        List<WebElement> allExperimentsOfSpecies = getAllExperimentsOfSpecies(i);
-        for (WebElement link : allExperimentsOfSpecies) {
-            result.add(link.findElement(By.xpath("a")).getAttribute("href"));
-        }
-
-        return result;
-    }
-
     @Override
     protected String getPageURI() {
         return DEFAULT_PAGE_URI;
+    }
+
+    public void setGeneQuery(String value) {
+        geneQuery.clear();
+        geneQuery.sendKeys(value);
+    }
+
+    public BioEntitiesPage submitSearch(){
+        submitButton.click();
+        return new BioEntitiesPage(driver);
     }
 
 }

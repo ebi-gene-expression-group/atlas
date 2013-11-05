@@ -20,78 +20,124 @@
   ~ http://gxa.github.com/gxa
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="species-navigation" id="species-nav">
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 
-    <c:forEach items="${experimentAccessionsBySpecies.keySet()}" var="specie">
 
-        <div class="item">
-            <img src="resources/images/home/${specie}.png" width="40" height="40"
-                 class="circle"/>
-            <a href="#" class="species-icon"></a>
+<h2>Expression Atlas, Differential and Baseline Expression</h2>
 
-            <h2>${specie}</h2>
-            <ul>
-                <c:forEach items="${experimentAccessionsBySpecies.get(specie)}" var="experimentAccession">
-                    <c:set var="key" value="${experimentAccession}${specie}"/>
-                    <li>
-                        <a href="experiments/${experimentAccession}${experimentLinks.get(key)}">${experimentDisplayNames.get(experimentAccession)}</a>
-                    </li>
-                </c:forEach>
-            </ul>
-        </div>
-    </c:forEach>
+<p>Expression Atlas is a semantically enriched database of publicly available gene and protein expression data.
+    The data is re-analysed in-house to detect genes showing interesting baseline and differential expression patterns
+    under the conditions of the original experiment.</p>
 
-</div>
+<section class="grid_6 alpha">
+    <table class="form-grid" style="margin:0px 9px;">
+        <tr>
+            <td><label>Browse</label></td>
+        </tr>
+        <tr>
+            <td><a href="baseline/experiments"><img src="resources/images/experiment_page_small.png">
+                Experiments</a></td>
+        </tr>
+    </table>
+</section>
 
-<div class="wordcloud">
-    <img src="resources/images/home/centre_landing1.png"/>
-</div>
+<section class="grid_18 omega">
+    <form method="get" action="query" id="searchForm">
+        <table class="form-grid">
+            <tr>
+                <td>
+                    <label>Gene Query</label>
+                    <span data-help-loc="#geneSearch"/>
+                </td>
+                <td>
+                    <label>Experimental conditions</label>
+                    <span data-help-loc="#experimentalConditions"/>
+                </td>
+                <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
+                    <div class="actions">
+                        <div>
+                            <input id="submit-button" type="submit" value="Search" tabindex="4">
+                        </div>
+                        <div>
+                            <input id="reset-button" type="reset" value="Reset" tabindex="5">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="display:inline-block">
+                        <textarea id="geneQuery" name="geneQuery" maxlength="900" rows="2" cols="36"
+                                  placeholder="(all genes)" tabindex="1"></textarea>
 
-<!-- The JavaScript -->
+                        <div>
+                                <span style="float:left">
+                                    <input id="exactMatch" name="exactMatch" type="checkbox" value="true"
+                                           checked="checked" tabindex="2">
+                                    <label for="exactMatch">Exact match</label>
+                                </span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div style="display:inline-block">
+                        <textarea id="condition" name="condition" maxlength="900" rows="2" cols="36"
+                                  placeholder="(all conditions)" tabindex="3"></textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+</section>
 
+
+<%-- placeholder which is loaded with tooltip text --%>
+<div id="help-placeholder" style="display: none"></div>
 
 <script type="text/javascript">
 
-    /*
-     drawEllipse()
-     selector : a jQuery selector defining an element or array of elements
-     x: the left offset of all points on the ellipse
-     y: the top offset of all points on the ellipse
-     a: the height of the ellipse
-     b: the width of the ellipse
-     angle: the angle of the ellipse
-     Sample usage:
-     CSS: .box { background-color:red; height:60px; width:60px;  position:absolute; margin:5px;}
-     JS:drawEllipse(".box", 230,300, 200, 350, 360);
-     */
-    function drawEllipse(selector, x, y, a, b, angle) {
-        var steps = $(selector).length;
-        var i = 0;
-        var beta = -angle * (Math.PI / 180);
-        var sinbeta = Math.sin(beta);
-        var cosbeta = Math.cos(beta);
-        $(selector).each(function (index) {
-            i += (360 / steps);
-            var alpha = i * (Math.PI / 180);
-            var sinalpha = Math.sin(alpha);
-            var cosalpha = Math.cos(alpha);
-            var X = x + (a * cosalpha * cosbeta - b * sinalpha * sinbeta);
-            var Y = y + (a * cosalpha * sinbeta + b * sinalpha * cosbeta);
-            X = Math.floor(X);
-            Y = Math.floor(Y);
-            //again, here's where the important X and Y coordinates
-            //are being output
-            $(this).css('margin-top', X + 'px');
-            $(this).css('margin-left', Y + 'px');
+    (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+
+        $(document).ready(function () {
+            var $buttons = $('#submit-button, #reset-button'),
+                    $searchFields = $('#geneQuery, #condition');
+
+            searchFormModule.geneQuerySearchBoxInitAutocomplete();
+
+            searchFormModule.disableCarriageReturn("#geneQuery");
+
+            searchFormModule.disableCarriageReturn("#condition");
+
+            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
+
+            initButtons();
+
+            disableButtonsWhenAllSearchFieldsAreEmpty();
+
+            function initButtons() {
+                $buttons.each(function () {
+                    $(this).button({ disabled: true });
+                });
+            }
+
+            function disableButtonsWhenAllSearchFieldsAreEmpty() {
+                $searchFields.on('keyup',function () {
+                    $buttons.button("option", "disabled", allFieldsEmpty());
+                }).keyup();
+
+                function allFieldsEmpty() {
+                    var atLeastOneValue = false;
+                    $searchFields.each(function () {
+                        atLeastOneValue = atLeastOneValue || ($.trim(this.value).length > 0);
+                    });
+                    return !atLeastOneValue;
+                }
+            }
+
         });
-    }
 
-    $(document).ready(function () {
-        // x and y offset is vice versa!
-        drawEllipse('.item', 230, 310, 220, 330, 0);
-
-    });
+    })(jQuery);
 
 </script>

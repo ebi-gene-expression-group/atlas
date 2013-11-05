@@ -100,7 +100,7 @@ var searchFormModule = (function($) {
         return lastItem.split( /\s+/).pop();
     }
 
-    function initAutocomplete(){
+    function geneQuerySearchBoxInitAutocomplete(){
         $("#geneQuery")
             // don't navigate away from the field on tab when selecting an item
             .bind( "keydown", function( event ) {
@@ -143,8 +143,8 @@ var searchFormModule = (function($) {
             });
     }
 
-    function disableCarriageReturn(){
-        $("#geneQuery").keypress(function(event) {
+    function disableCarriageReturn(selector) {
+        $(selector).keypress(function(event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
             }
@@ -161,14 +161,16 @@ var searchFormModule = (function($) {
 
         initSelectBox(watermarkLabel);
 
-        initAutocomplete();
+        geneQuerySearchBoxInitAutocomplete();
 
-        disableCarriageReturn();
+        disableCarriageReturn("#geneQuery");
 
     }
 
     return {
         init: init,
+        geneQuerySearchBoxInitAutocomplete: geneQuerySearchBoxInitAutocomplete,
+        disableCarriageReturn: disableCarriageReturn,
         removeHttpParameters: removeHttpParameters
     };
 
