@@ -24,18 +24,18 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineExperimentsPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HomePage;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class GlobalSearchIT  extends SinglePageSeleniumFixture {
 
-    private HomePage subject;
+    private BaselineExperimentsPage subject;
 
     public void getStartingPage() {
-        subject = new HomePage(driver);
+        subject = new BaselineExperimentsPage(driver);
         subject.get();
     }
 

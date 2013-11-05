@@ -195,7 +195,7 @@ public class SolrQueryService {
 
     public GeneQueryResponse findGeneIdsOrSets(String geneQuery, boolean exactMatch, String species, boolean tokenizeQuery) throws GenesNotFoundException {
 
-        checkArgument(StringUtils.isNotBlank(geneQuery));
+        checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
 
         species = limitSpeciesNameToTwoWords(species);
 
