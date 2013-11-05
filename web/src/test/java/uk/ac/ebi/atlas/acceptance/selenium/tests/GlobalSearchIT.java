@@ -24,52 +24,27 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineExperimentsPage;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HomePage;
+import uk.ac.ebi.atlas.acceptance.utils.URLBuilder;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class GlobalSearchIT  extends SinglePageSeleniumFixture {
+public class GlobalSearchIT extends SinglePageSeleniumFixture {
 
-    private BaselineExperimentsPage subject;
+    private HomePage subject;
 
     public void getStartingPage() {
-        subject = new BaselineExperimentsPage(driver);
+        subject = new HomePage(driver);
         subject.get();
     }
 
     @Test
-    public void shouldRedirectToProteinPage(){
-        subject.setGlobalSearchText("ENSP00000355434");
-        BioEntityPage bioEntityPage = subject.globalSearchSubmit();
-        assertThat(bioEntityPage.getBioEntityCardTitle(), is("Q8N349 Homo sapiens olfactory receptor, family 2, subfamily L, member 13"));
-        bioEntityPage.clickInfoCard(true);
-        assertThat(bioEntityPage.getPropertiesTableRow(0).get(0), is("Ensembl Protein"));
-    }
+    public void globalSearchRedirectsToGeneQuerySearch(){
+        String searchText = "ENSG00000179218";
+        subject.setGlobalSearchText(searchText);
+        subject.globalSearchSubmit();
 
-    @Test
-    public void shouldRedirectToGenePage(){
-        subject.setGlobalSearchText("ENSG00000179218");
-        BioEntityPage bioEntityPage = subject.globalSearchSubmit();
-        assertThat(bioEntityPage.getBioEntityCardTitle(), is("CALR Homo sapiens calreticulin"));
-        bioEntityPage.clickInfoCard(true);
-        assertThat(bioEntityPage.getPropertiesTableRow(0).get(0), is("Synonyms"));
-    }
-
-    @Test
-    public void shouldRedirectToGenesetPage(){
-        subject.setGlobalSearchText("REACT_1619");
-        BioEntityPage bioEntityPage = subject.globalSearchSubmit();
-        assertThat(bioEntityPage.getBioEntityCardTitle(), is("REACT_1619 Homo sapiens Death Receptor Signalling"));
-        bioEntityPage.clickInfoCard(true);
-        assertThat(bioEntityPage.getPropertiesTableRow(0).get(0), is("Reactome"));
-    }
-
-    @Test
-    public void shouldRedirectToResourceNotFound(){
-        subject.setGlobalSearchText("XYZMC2");
-        BioEntityPage bioEntityPage = subject.globalSearchSubmit();
-        assertThat(bioEntityPage.isResourceNotFound(), is(true));
+        assertThat(driver.getCurrentUrl(), is(new URLBuilder("/gxa/query").buildURL("geneQuery=" + searchText)));
     }
 }

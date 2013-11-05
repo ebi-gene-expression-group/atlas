@@ -68,20 +68,20 @@
         <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
 
         <div class="grid_12 omega">
-            <form method="get" action="experiments/all" name="local-search" id="local-search">
+            <form method="get" action="query" name="local-search" id="local-search">
 
                 <fieldset>
 
                     <div class="left">
                         <label>
-                            <input id="local-searchbox" name="queryString" value="${param.queryString}" maxlenght="900"/>
+                            <input id="local-searchbox" name="geneQuery" value="${param.queryString}" maxlength="900"/>
                         </label>
                         <!-- Include some example searchterms - keep them short and few! -->
                         <span class="examples">Examples:
-                                        <a href="experiments/all?queryString=kinase">kinase</a>,
-                                        <a href="experiments/all?queryString=ASPM">ASPM</a>,
-                                        <a href="experiments/all?queryString=REACT_1619">REACT_1619</a>,
-                                        <a href="experiments/all?queryString=GO:0007165">GO:0007165</a>, ...</span>
+                                        <a href="query?geneQuery=ASPM">ASPM</a>,
+                                        <a href="query?geneQuery=REACT_1619">REACT_1619</a>,
+                                        <a href="query?geneQuery=ENSMUSG00000021789">ENSMUSG00000021789</a>,
+                                        <a href="query?geneQuery=%22zinc+finger%22">"zinc finger"</a></span>
                     </div>
 
                     <div class="right">

@@ -26,10 +26,10 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HomePage;
+import uk.ac.ebi.atlas.acceptance.utils.URLBuilder;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.isEmptyString;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.is;
 
 public class HomeControllerIT extends SinglePageSeleniumFixture {
 
@@ -41,16 +41,12 @@ public class HomeControllerIT extends SinglePageSeleniumFixture {
     }
 
     @Test
-    public void test() throws InterruptedException {
-        subject.setGeneQuery("ENSG00000161547");
-        BioEntitiesPage resultsPage = subject.submitSearch();
+    public void onSearchSubmissionRedirectToGeneQueryURL() throws InterruptedException {
+        String geneQuery = "ENSG00000161547";
+        subject.setGeneQuery(geneQuery);
+        subject.submitSearch();
 
-        String searchResultsHeader = resultsPage.getSearchResultsHeader();
-        System.out.println(searchResultsHeader);
-
-        //TODO: replace "not is empty string" test with the below when results page is fixed
-        //ie: assertThat(searchResultsHeader, is("Expression Atlas results for ENSG00000161547"));
-        assertThat(searchResultsHeader, not(isEmptyString()));
+        assertThat(driver.getCurrentUrl(), is(new URLBuilder("/gxa/query").buildURL("geneQuery=" + geneQuery + "&exactMatch=true&_exactMatch=on&condition=")));
     }
 
 }

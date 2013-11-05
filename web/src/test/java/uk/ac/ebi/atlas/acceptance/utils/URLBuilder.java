@@ -40,6 +40,10 @@ public class URLBuilder {
         this.pageURI = pageURI;
     }
 
+    public String buildURL() {
+        return buildURL(null);
+    }
+
     public String buildURL(String httpParameters) {
         String hostname = System.getProperty(SELENIUM_TEST_HOST_PROPERTY_KEY);
         if (StringUtils.isBlank(hostname)) {
