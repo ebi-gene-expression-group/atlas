@@ -62,6 +62,9 @@ public class BioEntityPage extends HeatmapTablePage {
     @FindBy(id = "baselineProfileHeader")
     private WebElement baselinePaneHeader;
 
+    @FindBy(css = "#baselineProfileHeader span:nth-child(3)")
+    private WebElement baselinePaneHeaderSpan;
+
     @FindBy(id = "diffProfileHeader")
     private WebElement diffProfilePaneHeader;
 
@@ -288,10 +291,12 @@ public class BioEntityPage extends HeatmapTablePage {
     public void clickBaselineProfile() {
         baselinePaneHeader.click();
 
-        By byBaselineProfileBodyId = By.id("baselineProfileBody");
-        FluentWait wait = new WebDriverWait(driver, 3L).pollingEvery(10, TimeUnit.MILLISECONDS);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(byBaselineProfileBodyId));
-
+        // wait for the accordion to expand
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
