@@ -126,12 +126,22 @@ public class DiffExpressionDao {
     }
 
     public List<DifferentialBioentityExpression> getExpressions(Set<String> identifiers) {
+
+        // limit to 5000, after which queries start to take to long
+        // up to 33,000 ids will actually work (slowly), but 34,500 will generate the error
+        // ORA-12801: error signaled in parallel query server P008
+        // ORA-01008: not all variables bound
+        if (identifiers.size() > 5000) {
+            throw new IllegalArgumentException("Expression Atlas cannot currently handle this complex query. Please choose a more selective keyword.");
+        }
+
         NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
         ((JdbcTemplate) jdbcTemplate.getJdbcOperations()).setMaxRows(RESULT_SIZE);
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
 
         StringBuilder sqlQuery = new StringBuilder(SELECT_QUERY).append(" WHERE");
+
 
         buildMultipleIdentifierInClauses(identifiers, parameters, sqlQuery);
 

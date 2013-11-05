@@ -32,7 +32,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.commands.BaselineBioentityCountsBuilder;
 import uk.ac.ebi.atlas.commands.DifferentialBioentityExpressionsBuilder;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
@@ -84,8 +84,10 @@ public class BioentitiesQueryController {
     }
 
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
-    public String handleException(Exception e) {
-        return "bioEntities";
+    public ModelAndView handleException(Exception e) {
+        ModelAndView mav = new ModelAndView("bioEntities");
+        mav.addObject("exceptionMessage", e.getMessage());
+        return mav;
     }
 
     @RequestMapping(value = "/query")

@@ -27,10 +27,10 @@
 <input type="text" value="${empty globalSearchTerm ? entityIdentifier : globalSearchTerm}" style="display: none" id="searchterm">
 
 <c:choose>
-    <c:when test="${empty entityIdentifier}">
-        <section class="grid_17 alpha extra-padding">
+    <c:when test="${not empty exceptionMessage}">
+        <section class="grid_24 alpha extra-padding">
             <h2 class="strapline">
-                Please specify at least one query condition
+                ${exceptionMessage}
             </h2>
         </section>
     </c:when>

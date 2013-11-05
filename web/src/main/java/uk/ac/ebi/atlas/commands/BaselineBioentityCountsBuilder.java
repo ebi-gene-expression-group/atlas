@@ -62,7 +62,7 @@ public class BaselineBioentityCountsBuilder {
 
     public Set<BaselineBioentitiesCount> build(String condition) {
 
-        checkArgument(StringUtils.isNotBlank(condition));
+        checkArgument(StringUtils.isNotBlank(condition), "Please specify a condition");
 
         Collection<IndexedAssayGroup> assayGroups = baselineConditionsSearchService.findAssayGroups(condition);
 
