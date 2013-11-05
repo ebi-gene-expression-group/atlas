@@ -46,6 +46,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkState;
+
 @Controller
 @Scope("prototype")
 public class BioentitiesQueryController {
@@ -62,21 +64,6 @@ public class BioentitiesQueryController {
         this.baselineBioentityCountsBuilder = baselineBioentityCountsBuilder;
     }
 
-//    public String showConditionsResultPage(String condition, Model model) {
-//        model.addAttribute("entityIdentifier", condition);
-//
-////        Set<BaselineBioentitiesCount> baselineCounts = baselineBioentityCountsBuilder.build(condition);
-////        model.addAttribute("baselineCounts", baselineCounts);
-////
-////        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withCondition(condition).build();
-////
-////        model.addAttribute("bioentities", bioentityExpressions);
-////
-////        model.addAttribute("preferences", new DifferentialRequestPreferences());
-//
-//        return "bioEntities";
-//    }
-//
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
     public ModelAndView handleException(Exception e) {
         ModelAndView mav = new ModelAndView("bioEntities");
@@ -87,14 +74,12 @@ public class BioentitiesQueryController {
     @RequestMapping(value = "/query")
     public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model, BindingResult result) {
 
-        if(!requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
-            throw new IllegalStateException("Query term in the gene and/or the condition should be given!");
-        }
+        checkState(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify gene query or condition!");
 
         String geneQuery = requestParameters.getGeneQuery();
         try {
 
-            model.addAttribute("entityIdentifier", geneQuery + " " + requestParameters.getCondition());
+            model.addAttribute("entityIdentifier", buildTitle(requestParameters));
 
             Set<BaselineExperimentResult> baselineCounts = baselineBioentityCountsBuilder.build(requestParameters);
             model.addAttribute("baselineCounts", baselineCounts);
@@ -117,4 +102,15 @@ public class BioentitiesQueryController {
         return "bioEntities";
     }
 
+    protected String buildTitle(GeneQuerySearchRequestParameters requestParameters) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("expression");
+        if (requestParameters.hasGeneQuery()) {
+            stringBuilder.append(" of ").append(requestParameters.getGeneQuery());
+        }
+        if (requestParameters.hasCondition()) {
+            stringBuilder.append(" in ").append(requestParameters.getCondition());
+        }
+        return stringBuilder.toString();
+    }
 }
