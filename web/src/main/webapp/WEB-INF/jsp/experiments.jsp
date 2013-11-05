@@ -23,7 +23,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="experimentsPageHeading">Experiments Expression Atlas</div>
+<div class="experimentsPageHeading">Experiments in Expression Atlas</div>
 
 <table cellspacing="0" cellpadding="0" border="0" id="experiments-table" class="display">
     <thead/>
