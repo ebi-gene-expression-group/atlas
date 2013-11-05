@@ -59,7 +59,7 @@ public class GenePageController extends BioEntityPageController {
     public String showGenePage(@PathVariable String identifier, Model model) {
 
         DifferentialBioentityExpressions differentialBioentityExpressions =
-                differentialBioentityExpressionsBuilder.withGeneIdentifiers(Sets.newHashSet(identifier)).build();
+                differentialBioentityExpressionsBuilder.build(Sets.newHashSet(identifier));
 
         model.addAttribute("bioentities", differentialBioentityExpressions);
 

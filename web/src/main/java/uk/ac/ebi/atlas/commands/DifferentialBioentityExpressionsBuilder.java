@@ -48,9 +48,7 @@ public class DifferentialBioentityExpressionsBuilder {
     private DiffExpressionDao diffExpressionDao;
     private DifferentialConditionsSearchService differentialConditionsSearchService;
     private SolrQueryService solrQueryService;
-    private String condition;
-    private Set<String> geneIdentifiers;
-    private Set<String> geneIdentifiersToExpandToMatureRNAIds;
+
 
     @Inject
     public DifferentialBioentityExpressionsBuilder(DiffExpressionDao diffExpressionDao,
@@ -61,80 +59,63 @@ public class DifferentialBioentityExpressionsBuilder {
         this.solrQueryService = solrQueryService;
     }
 
-    public DifferentialBioentityExpressionsBuilder withCondition(String condition) {
-        this.condition = condition;
-        return this;
-    }
 
-    public DifferentialBioentityExpressionsBuilder withGeneIdentifiers(Set<String> geneIdentifiers) {
-        this.geneIdentifiers = geneIdentifiers;
-        if (geneIdentifiersToExpandToMatureRNAIds == null) {
-            this.geneIdentifiersToExpandToMatureRNAIds = geneIdentifiers;
+    public DifferentialBioentityExpressions build(Set<String> geneIdentifiers) {
+
+        if (CollectionUtils.isNotEmpty(geneIdentifiers)) {
+
+            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(null, geneIdentifiers);
+            int resultCount = diffExpressionDao.getResultCount(null, geneIdentifiers);
+
+            return new DifferentialBioentityExpressions(expressions, resultCount);
+
         }
-        return this;
+        return new DifferentialBioentityExpressions();
     }
 
-    // specify the gene identifiers to expand to mature RNA ids. By default these are the geneIdentifiers from
-    // withGeneIdentifiers, but the set can be overridden here
-    public DifferentialBioentityExpressionsBuilder withGeneIdentifiersToExpandToMatureRNAIds(Set<String> geneIdentifiersToExpandToMatureRNAIds) {
-        this.geneIdentifiersToExpandToMatureRNAIds = geneIdentifiersToExpandToMatureRNAIds;
-        return this;
-    }
+    public DifferentialBioentityExpressions build(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
 
-    public DifferentialBioentityExpressions build() {
+        Collection<IndexedAssayGroup> contrasts = null;
+        Collection<String> geneIds = null;
 
+        String condition = requestParameters.getCondition();
         if (StringUtils.isNotBlank(condition)) {
 
-            Collection<IndexedAssayGroup> contrasts = differentialConditionsSearchService.findContrasts(condition);
+            contrasts = differentialConditionsSearchService.findContrasts(condition);
 
             if (contrasts.isEmpty()) {
                 return new DifferentialBioentityExpressions();
             }
 
-            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(contrasts);
-            int resultCount = diffExpressionDao.getResultCount(contrasts);
-
-            return new DifferentialBioentityExpressions(expressions, resultCount);
-
         }
 
-        if (CollectionUtils.isNotEmpty(geneIdentifiers)) {
-
-            Set<String> expandedIdentifiers = solrQueryService.findMatureRNAIds(geneIdentifiersToExpandToMatureRNAIds);
-
-            expandedIdentifiers.addAll(geneIdentifiers);
-
-            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(expandedIdentifiers);
-            int resultCount = diffExpressionDao.getResultCount(expandedIdentifiers);
-
-            return new DifferentialBioentityExpressions(expressions, resultCount);
-
-        }
-
-        throw new IllegalArgumentException("build method invoked with empty arguments");
-
-    }
-
-    public DifferentialBioentityExpressions build(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
-        // search across any species
-        String species = "";
-
-        //resolve any gene keywords to identifiers
         String geneQuery = requestParameters.getGeneQuery();
+        if (StringUtils.isNotBlank(geneQuery)) {
 
-        GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(geneQuery,
-                requestParameters.isExactMatch(),
-                species,
-                requestParameters.isGeneSetMatch());
+            // search across any species
+            String species = "";
 
-        Collection<String> resolvedGeneIds = geneQueryResponse.getAllGeneIds();
+            //resolve any gene keywords to identifiers
+            GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(geneQuery,
+                    requestParameters.isExactMatch(),
+                    species,
+                    requestParameters.isGeneSetMatch());
 
-        if (resolvedGeneIds.size() == 0) {
-            throw new GenesNotFoundException();
+            geneIds = geneQueryResponse.getAllGeneIds();
+
+            Set<String> matureRNAIds = solrQueryService.findMatureRNAIds(geneQuery);
+            geneIds.addAll(matureRNAIds);
+
+            if (geneIds.size() == 0) {
+                return new DifferentialBioentityExpressions();
+            }
         }
 
+        List<DifferentialBioentityExpression> expressions = diffExpressionDao.getExpressions(contrasts, geneIds);
+        int resultCount = diffExpressionDao.getResultCount(contrasts, geneIds);
 
-        return null;
+        return new DifferentialBioentityExpressions(expressions, resultCount);
+
     }
 
 

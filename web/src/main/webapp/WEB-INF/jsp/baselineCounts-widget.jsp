@@ -53,12 +53,12 @@
                                     ${baselineCount.species} - ${baselineCount.experimentName}
                             </a>
                         </td>
-                        <%-- geneQuery searchs don't have proper counts yet --%>
-                        <c:if test="${empty param.geneQuery}">
-                            <td class="count">
-                                (${baselineCount.count})
-                            </td>
-                        </c:if>
+                        <%-- We don't show counts for now --%>
+                        <%--<c:if test="${empty param.geneQuery}">--%>
+                            <%--<td class="count">--%>
+                                <%--(${baselineCount.count})--%>
+                            <%--</td>--%>
+                        <%--</c:if>--%>
                     </tr>
                 </c:forEach>
             </tbody>

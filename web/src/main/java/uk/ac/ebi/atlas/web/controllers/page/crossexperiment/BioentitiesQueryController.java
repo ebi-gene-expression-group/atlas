@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,14 +37,11 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -53,15 +49,13 @@ import java.util.Set;
 @Scope("prototype")
 public class BioentitiesQueryController {
 
-    private SolrQueryService solrQueryService;
     private DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
     private BaselineBioentityCountsBuilder baselineBioentityCountsBuilder;
 
     @Inject
-    public BioentitiesQueryController(SolrQueryService solrQueryService, DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer, BaselineBioentityCountsBuilder baselineBioentityCountsBuilder) {
-        this.solrQueryService = solrQueryService;
+    public BioentitiesQueryController(DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer, BaselineBioentityCountsBuilder baselineBioentityCountsBuilder) {
         this.differentialBioentityExpressionsBuilder = differentialBioentityExpressionsBuilder;
         this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
         this.baselineBioentityCountsBuilder = baselineBioentityCountsBuilder;
@@ -102,31 +96,14 @@ public class BioentitiesQueryController {
             Set<BaselineExperimentResult> baselineCounts = baselineBioentityCountsBuilder.build(requestParameters);
             model.addAttribute("baselineCounts", baselineCounts);
 
-            // search across any species
-            String species = "";
-
-            //resolve any gene keywords to identifiers
-            GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(geneQuery,
-                    requestParameters.isExactMatch(),
-                    species,
-                    requestParameters.isGeneSetMatch());
-
-            Collection<String> resolvedGeneIds = geneQueryResponse.getAllGeneIds();
-
-            if (resolvedGeneIds.size() == 0) {
-                throw new GenesNotFoundException();
-            }
-
-            List<String> geneQueryTerms = bioentityPropertyValueTokenizer.split(geneQuery);
-
             // used to populate diff-heatmap-table
-            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.withGeneIdentifiers(Sets.newHashSet(resolvedGeneIds))
-                    .withGeneIdentifiersToExpandToMatureRNAIds(Sets.newHashSet(geneQueryTerms)).build();
+            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(requestParameters);
 
             model.addAttribute("bioentities", bioentityExpressions);
 
             model.addAttribute("preferences", new DifferentialRequestPreferences());
 
+            List<String> geneQueryTerms = bioentityPropertyValueTokenizer.split(geneQuery);
             model.addAttribute("globalSearchTerm", Joiner.on(" OR ").join(geneQueryTerms) );
 
 

@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.dao;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +31,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -46,7 +48,7 @@ public class AssayGroupQueryBuilderTest {
     }
 
     @Test
-    public void testBuildIndexedContrastQuery() throws Exception {
+    public void testBuildIndexedContrastQueryWithEmptyGeneIds() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("exp1", "c1");
         IndexedAssayGroup indexedContrast2 = new IndexedAssayGroup("exp2", "c2");
 
@@ -63,7 +65,7 @@ public class AssayGroupQueryBuilderTest {
     }
 
     @Test
-    public void testBuildIndexedContrastCountQuery() throws Exception {
+    public void testBuildIndexedContrastCountQueryWithEmptyGeneIds() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("exp1", "c1");
         IndexedAssayGroup indexedContrast2 = new IndexedAssayGroup("exp2", "c2");
 
@@ -79,21 +81,7 @@ public class AssayGroupQueryBuilderTest {
     }
 
     @Test
-    public void testBuildIndexedContrastQueryWithEmptyList() throws Exception {
-
-        List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList();
-        AssayGroupQuery query = subject.withAssayGroupOrContrast(DiffExpressionDao.CONTRASTID)
-                .withIndexedAssayGroupsOrContrasts(indexedContrasts)
-                .withSelectPart(DiffExpressionDao.SELECT_QUERY)
-                .withExtraCondition(DiffExpressionDao.ORDER_BY_PVAL).build();
-
-        assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS order by PVAL"));
-        assertThat(query.getParams().length, is(0));
-
-    }
-
-    @Test
-    public void testBuildAssayGroupQuery() throws Exception {
+    public void testBuildAssayGroupQueryWithEmptyGeneIds() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("exp1", "g1");
         IndexedAssayGroup indexedContrast2 = new IndexedAssayGroup("exp2", "g2");
 
@@ -108,4 +96,82 @@ public class AssayGroupQueryBuilderTest {
 
     }
 
+    @Test
+    public void testBuildIndexedContrastQueryWithGeneIdsAndEmptyConditions() throws Exception {
+
+        List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList();
+        Set<String> geneIds = Sets.newHashSet("g1", "g2");
+
+        AssayGroupQuery query = subject.withAssayGroupOrContrast(DiffExpressionDao.CONTRASTID)
+                .withIndexedAssayGroupsOrContrasts(indexedContrasts)
+                .withSelectPart(DiffExpressionDao.SELECT_QUERY)
+                .withExtraCondition(DiffExpressionDao.ORDER_BY_PVAL)
+                .withGeneIds(geneIds)
+                .build();
+
+        assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
+                "FROM VW_DIFFANALYTICS WHERE (IDENTIFIER IN (?, ?)) order by PVAL"));
+        assertThat(query.getParams().length, is(2));
+
+    }
+
+    @Test
+    public void testBuildIndexedContrastQueryWithGeneIdsAndConditions() throws Exception {
+
+        Set<String> geneIds = Sets.newHashSet("id1", "id2");
+
+        IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("exp1", "g1");
+        IndexedAssayGroup indexedContrast2 = new IndexedAssayGroup("exp2", "g2");
+
+        List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
+        AssayGroupQuery query = subject.withAssayGroupOrContrast(DiffExpressionDao.CONTRASTID)
+                .withIndexedAssayGroupsOrContrasts(indexedContrasts)
+                .withSelectPart(DiffExpressionDao.SELECT_QUERY)
+                .withExtraCondition(DiffExpressionDao.ORDER_BY_PVAL)
+                .withGeneIds(geneIds)
+                .build();
+
+        assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
+                "FROM VW_DIFFANALYTICS WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) " +
+                "AND (IDENTIFIER IN (?, ?)) order by PVAL"));
+        assertThat(query.getParams().length, is(6));
+
+    }
+
+    @Test
+    public void testLongGeneIdListPartition() throws Exception {
+        Set<String> geneIds = Sets.newHashSet("id1", "id2", "id3", "id4", "id5");
+
+        AssayGroupQuery query = subject.withAssayGroupOrContrast(DiffExpressionDao.CONTRASTID)
+                .withSelectPart(DiffExpressionDao.SELECT_QUERY)
+                .withExtraCondition(DiffExpressionDao.ORDER_BY_PVAL)
+                .withGeneIds(geneIds)
+                .withGeneBatchSize(3)
+                .build();
+
+        assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
+                "FROM VW_DIFFANALYTICS " +
+                "WHERE (IDENTIFIER IN (?, ?, ?) OR IDENTIFIER IN (?, ?)) order by PVAL"));
+
+    }
+
+    @Test
+    public void testBuildIndexedContrastCountQueryWithGeneIdsAndCondition() throws Exception {
+        Set<String> geneIds = Sets.newHashSet("id1", "id2");
+
+        IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("exp1", "c1");
+        IndexedAssayGroup indexedContrast2 = new IndexedAssayGroup("exp2", "c2");
+
+        List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
+        AssayGroupQuery query = subject.withAssayGroupOrContrast(DiffExpressionDao.CONTRASTID)
+                .withIndexedAssayGroupsOrContrasts(indexedContrasts)
+                .withGeneIds(geneIds)
+                .withSelectPart(DiffExpressionDao.COUNT_QUERY)
+                .withExtraCondition(DiffExpressionDao.ORDER_BY_PVAL)
+                .build();
+
+        assertThat(query.getQuery(), is("SELECT count(1) FROM VW_DIFFANALYTICS " +
+                "WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) AND (IDENTIFIER IN (?, ?)) order by PVAL"));
+
+    }
 }

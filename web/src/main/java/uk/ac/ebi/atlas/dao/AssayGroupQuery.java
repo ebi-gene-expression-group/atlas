@@ -35,6 +35,10 @@ public class AssayGroupQuery {
         params.add(value);
     }
 
+    void addValues(List<String> values) {
+        params.addAll(values);
+    }
+
     String[] getParams() {
         return params.toArray(new String[params.size()]);
     }

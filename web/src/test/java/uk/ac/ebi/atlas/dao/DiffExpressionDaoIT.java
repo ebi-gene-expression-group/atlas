@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Inject;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -52,7 +53,7 @@ public class DiffExpressionDaoIT {
     public void testGetExpressions() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
-        List<DifferentialBioentityExpression> expressions = subject.getExpressions(Lists.newArrayList(indexedContrast1));
+        List<DifferentialBioentityExpression> expressions = subject.getExpressions(Lists.newArrayList(indexedContrast1), new HashSet<String>());
         assertThat(expressions.size(), is(16));
         assertThat(expressions.get(0).getBioentityId(), is("FBgn0040393"));
         assertThat(expressions.get(1).getBioentityId(), is("FBgn0017561"));
@@ -63,13 +64,15 @@ public class DiffExpressionDaoIT {
     public void testGetResultCount() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
-        int resultCount = subject.getResultCount(Lists.newArrayList(indexedContrast1));
+        int resultCount = subject.getResultCount(Lists.newArrayList(indexedContrast1), new HashSet<String>());
         assertThat(resultCount, is(16));
     }
 
     @Test
     public void testGetExpressionsForGene() throws Exception {
-        List<DifferentialBioentityExpression> expressions = subject.getExpressions(Sets.newHashSet("AT1G02220"));
+        IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
+
+        List<DifferentialBioentityExpression> expressions = subject.getExpressions(Sets.newHashSet(indexedContrast1), Sets.newHashSet("AT1G02220"));
         assertThat(expressions, hasSize(2));
         assertThat(expressions.get(0).getBioentityId(), is("AT1G02220"));
         assertThat(expressions.get(0).getExperimentAccession(), is("E-GEOD-38400"));
@@ -79,7 +82,7 @@ public class DiffExpressionDaoIT {
 
     @Test
     public void testGetResultCountForGene() throws Exception {
-        assertThat(subject.getResultCount(Sets.newHashSet("AT1G02220")), is(2));
+        assertThat(subject.getResultCount(new HashSet<IndexedAssayGroup>(), Sets.newHashSet("AT1G02220")), is(2));
 
     }
 }
