@@ -22,12 +22,9 @@
 
 package uk.ac.ebi.atlas.dao;
 
-import com.google.common.collect.Iterables;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
@@ -36,7 +33,6 @@ import javax.inject.Named;
 import javax.sql.DataSource;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Named
 @Scope("prototype")

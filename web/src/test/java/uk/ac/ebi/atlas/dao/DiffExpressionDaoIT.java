@@ -72,7 +72,7 @@ public class DiffExpressionDaoIT {
     public void testGetExpressionsForGene() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
-        List<DifferentialBioentityExpression> expressions = subject.getExpressions(Sets.newHashSet(indexedContrast1), Sets.newHashSet("AT1G02220"));
+        List<DifferentialBioentityExpression> expressions = subject.getExpressions(null, Sets.newHashSet("AT1G02220"));
         assertThat(expressions, hasSize(2));
         assertThat(expressions.get(0).getBioentityId(), is("AT1G02220"));
         assertThat(expressions.get(0).getExperimentAccession(), is("E-GEOD-38400"));
