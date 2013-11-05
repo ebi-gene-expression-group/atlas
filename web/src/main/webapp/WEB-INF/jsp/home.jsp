@@ -27,7 +27,7 @@
 
 <h2>Expression Atlas, Differential and Baseline Expression</h2>
 
-<p>Expression Atlas is a semantically enriched database of publicly available gene and protein expression data.
+<p>Expression Atlas is a semantically enriched database of publicly available gene and transcript expression data.
     The data is re-analysed in-house to detect genes showing interesting baseline and differential expression patterns
     under the conditions of the original experiment.</p>
 
