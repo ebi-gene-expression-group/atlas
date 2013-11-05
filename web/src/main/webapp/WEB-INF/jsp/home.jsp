@@ -37,7 +37,7 @@
             <td><label>Browse</label></td>
         </tr>
         <tr>
-            <td><a href="baseline/experiments"><img src="resources/images/experiment_page_small.png">
+            <td><a href="experiments"><img src="resources/images/experiment_page_small.png">
                 Experiments</a></td>
         </tr>
     </table>
