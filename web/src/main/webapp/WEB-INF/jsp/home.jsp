@@ -77,6 +77,7 @@
                                     <input id="exactMatch" name="exactMatch" type="checkbox" value="true"
                                            checked="checked" tabindex="2">
                                     <label for="exactMatch">Exact match</label>
+                                    <input type="hidden" name="_exactMatch" value="on">
                                 </span>
                         </div>
                     </div>
