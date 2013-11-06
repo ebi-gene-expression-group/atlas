@@ -92,7 +92,10 @@ public class BioentitiesQueryController {
             model.addAttribute("preferences", new DifferentialRequestPreferences());
 
             List<String> geneQueryTerms = bioentityPropertyValueTokenizer.split(geneQuery);
-            model.addAttribute("globalSearchTerm", Joiner.on(" OR ").join(geneQueryTerms) );
+
+            String globalSearchTerm = buildGlobalSearchTerm(geneQueryTerms, requestParameters.getCondition());
+
+            model.addAttribute("globalSearchTerm", globalSearchTerm);
 
 
         } catch (GenesNotFoundException e) {
@@ -102,14 +105,36 @@ public class BioentitiesQueryController {
         return "bioEntities";
     }
 
+    public String buildGlobalSearchTerm(List<String> geneQueryTerms, String condition) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (!geneQueryTerms.isEmpty()) {
+            stringBuilder.append("(").append(Joiner.on(" OR ").join(geneQueryTerms)).append(")");
+
+            if (condition != null) {
+                stringBuilder.append(" AND ");
+            }
+        }
+
+        if (condition != null) {
+            stringBuilder.append(condition);
+        }
+
+        return stringBuilder.toString();
+    }
+
     protected String buildTitle(GeneQuerySearchRequestParameters requestParameters) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("expression");
         if (requestParameters.hasGeneQuery()) {
-            stringBuilder.append(" of ").append(requestParameters.getGeneQuery());
+            stringBuilder.append(requestParameters.getGeneQuery());
+
+            if (requestParameters.hasCondition()) {
+                stringBuilder.append(" AND ");
+            }
         }
+
         if (requestParameters.hasCondition()) {
-            stringBuilder.append(" in ").append(requestParameters.getCondition());
+            stringBuilder.append(requestParameters.getCondition());
         }
         return stringBuilder.toString();
     }
