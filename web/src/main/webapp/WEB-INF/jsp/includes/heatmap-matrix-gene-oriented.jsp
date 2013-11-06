@@ -51,9 +51,17 @@
                         <c:set var="geneId" value="${geneProfile.id}"/>
                         <c:set var="bioEntityType" value="${preferences.geneSetMatch? \"genesets\": \"genes\"}"/>
 
-                        <a class="genename" id="${geneId}"
-                           href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityType}/${geneId}'
-                           title="">${geneProfile.getName()}</a>
+                        <c:choose>
+                            <c:when test="${isExperimentPage}">
+                                <a class="genename" id="${geneId}"
+                                   href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityType}/${geneId}'
+                                   title="">${geneProfile.getName()}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="genename" id="${geneId}">${geneProfile.getName()}</div>
+                            </c:otherwise>
+                        </c:choose>
+
                     </display:column>
 
                     <c:if test="${type.isMicroarray()}">
