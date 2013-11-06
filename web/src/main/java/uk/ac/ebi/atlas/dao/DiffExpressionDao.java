@@ -87,7 +87,7 @@ public class DiffExpressionDao {
         jdbcTemplate.setMaxRows(RESULT_SIZE);
         List<DifferentialBioentityExpression> result = jdbcTemplate.query(indexedContrastQuery.getQuery(),
                 rowMapper,
-                indexedContrastQuery.getParams());
+                indexedContrastQuery.getParameters());
 
         return result;
     }
@@ -97,7 +97,7 @@ public class DiffExpressionDao {
 
         AssayGroupQuery query = buildIndexedContrastQuery(indexedContrasts, geneIds, COUNT_QUERY);
 
-        return jdbcTemplate.queryForObject(query.getQuery(), Integer.class, query.getParams());
+        return jdbcTemplate.queryForObject(query.getQuery(), Integer.class, query.getParameters());
     }
 
     AssayGroupQuery buildIndexedContrastQuery(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, String queryBeginning) {

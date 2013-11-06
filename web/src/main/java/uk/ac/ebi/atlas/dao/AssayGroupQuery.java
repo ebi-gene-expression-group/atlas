@@ -30,25 +30,31 @@ public class AssayGroupQuery {
 
     private List<String> params = Lists.newArrayList();
     private String query;
+    private StringBuilder queryBuilder = new StringBuilder();
 
-    void addValue(String value) {
+    void addParameter(String value) {
         params.add(value);
     }
 
-    void addValues(List<String> values) {
+    void addParameters(List<String> values) {
         params.addAll(values);
     }
 
-    String[] getParams() {
+    String[] getParameters() {
         return params.toArray(new String[params.size()]);
     }
 
     String getQuery() {
-        return query;
+        return queryBuilder.toString();
     }
 
     void setQueryString(String query) {
         this.query = query;
+    }
+
+    AssayGroupQuery appendToQueryString(String text) {
+        queryBuilder.append(text);
+        return this;
     }
 
     @Override

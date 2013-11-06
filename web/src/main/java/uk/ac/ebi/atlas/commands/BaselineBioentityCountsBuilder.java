@@ -67,7 +67,7 @@ public class BaselineBioentityCountsBuilder {
 
     public Set<BaselineExperimentResult> build(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
 
-        SortedSet<BaselineExperimentResult> counts =
+        SortedSet<BaselineExperimentResult> result =
                 Sets.newTreeSet(new Comparator<BaselineExperimentResult>() {
                     @Override
                     public int compare(BaselineExperimentResult count, BaselineExperimentResult otherCount) {
@@ -89,12 +89,12 @@ public class BaselineBioentityCountsBuilder {
                                 LIMITED_BY_EXPERIMENTS.get(experimentAccession).getSpecies().toLowerCase(),
                                 requestParameters.isGeneSetMatch());
 
-                        if (baselineExperimentDao.isExperimentWithConditionsAndGenes(experimentAccession, assayGroupsPerExperiment.get(experimentAccession), geneIds.getAllGeneIds())) {
-                            counts.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
+                        if (!geneIds.isEmpty() && baselineExperimentDao.isExperimentWithConditionsAndGenes(experimentAccession, assayGroupsPerExperiment.get(experimentAccession), geneIds.getAllGeneIds())) {
+                            result.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
                         }
                     } else {
                         if (baselineExperimentDao.isExperimentWithCondition(experimentAccession, assayGroupsPerExperiment.get(experimentAccession))) {
-                            counts.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
+                            result.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
                         }
                     }
 
@@ -108,14 +108,14 @@ public class BaselineBioentityCountsBuilder {
                         LIMITED_BY_EXPERIMENTS.get(experimentAccession).getSpecies().toLowerCase(),
                         requestParameters.isGeneSetMatch());
 
-                if (baselineExperimentDao.isExperimentWithGenes(experimentAccession, geneIds.getAllGeneIds())) {
-                    counts.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
+                if (!geneIds.isEmpty() && baselineExperimentDao.isExperimentWithGenes(experimentAccession, geneIds.getAllGeneIds())) {
+                    result.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
                 }
             }
         }
 
 
-        return counts;
+        return result;
     }
 
 }

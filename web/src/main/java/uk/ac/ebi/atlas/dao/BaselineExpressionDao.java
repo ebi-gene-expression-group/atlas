@@ -169,7 +169,7 @@ public class BaselineExpressionDao {
 
         LOGGER.debug("<getBioentitiesCount> select experiments query: " + query);
 
-        return jdbcTemplate.query(query.getQuery(), rowMapper, query.getParams());
+        return jdbcTemplate.query(query.getQuery(), rowMapper, query.getParameters());
     }
 
     List<String> queryForBaselineExperimentAccessions(Collection<IndexedAssayGroup> indexedAssayGroups) {
@@ -187,6 +187,6 @@ public class BaselineExpressionDao {
                 return rs.getString(AssayGroupQueryBuilder.EXPERIMENT);
             }
         };
-        return jdbcTemplate.query(query.getQuery(), accessionRowMapper, query.getParams());
+        return jdbcTemplate.query(query.getQuery(), accessionRowMapper, query.getParameters());
     }
 }

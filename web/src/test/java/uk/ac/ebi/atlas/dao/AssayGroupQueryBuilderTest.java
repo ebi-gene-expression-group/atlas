@@ -60,7 +60,7 @@ public class AssayGroupQueryBuilderTest {
 
 
         assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
-        assertThat(query.getParams(), is(new String[]{"exp1", "c1", "exp2", "c2"}));
+        assertThat(query.getParameters(), is(new String[]{"exp1", "c1", "exp2", "c2"}));
 
     }
 
@@ -76,7 +76,7 @@ public class AssayGroupQueryBuilderTest {
                 .withExtraCondition(DiffExpressionDao.ORDER_BY_PVAL).build();
 
         assertThat(query.getQuery(), is("SELECT count(1) FROM VW_DIFFANALYTICS WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
-        assertThat(query.getParams(), is(new String[]{"exp1", "c1", "exp2", "c2"}));
+        assertThat(query.getParameters(), is(new String[]{"exp1", "c1", "exp2", "c2"}));
 
     }
 
@@ -92,7 +92,7 @@ public class AssayGroupQueryBuilderTest {
                 .withExtraCondition(BaselineExpressionDao.GROUP_BY_EXPERIMENT_ASSAYGROUPID).build();
 
         assertThat(query.getQuery(), is("SELECT EXPERIMENT, ASSAYGROUPID FROM RNASEQ_BSLN_EXPRESSIONS  subpartition( ABOVE_CUTOFF ) WHERE ((EXPERIMENT=? AND ASSAYGROUPID=? ) OR (EXPERIMENT=? AND ASSAYGROUPID=? )) group by EXPERIMENT, ASSAYGROUPID"));
-        assertThat(query.getParams(), is(new String[]{"exp1", "g1", "exp2", "g2"}));
+        assertThat(query.getParameters(), is(new String[]{"exp1", "g1", "exp2", "g2"}));
 
     }
 
@@ -111,7 +111,7 @@ public class AssayGroupQueryBuilderTest {
 
         assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
                 "FROM VW_DIFFANALYTICS WHERE (IDENTIFIER IN (?, ?)) order by PVAL"));
-        assertThat(query.getParams().length, is(2));
+        assertThat(query.getParameters().length, is(2));
 
     }
 
@@ -134,7 +134,7 @@ public class AssayGroupQueryBuilderTest {
         assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
                 "FROM VW_DIFFANALYTICS WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) " +
                 "AND (IDENTIFIER IN (?, ?)) order by PVAL"));
-        assertThat(query.getParams().length, is(6));
+        assertThat(query.getParameters().length, is(6));
 
     }
 

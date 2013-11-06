@@ -69,50 +69,52 @@ class AssayGroupQueryBuilder {
 
         String queryPart = "(" + EXPERIMENT + "=? AND " + assayGroupOrContrast + "=? )";
 
-        StringBuilder queryStringBuilder = new StringBuilder();
-        queryStringBuilder.append(selectPart);
-        queryStringBuilder.append("WHERE ");
+        query.appendToQueryString(selectPart);
+        query.appendToQueryString("WHERE ");
 
         if (CollectionUtils.isNotEmpty(indexedAssayGroups)) {
             for (IndexedAssayGroup indexedContrast : indexedAssayGroups) {
                 queryParts.add(queryPart);
-                query.addValue(indexedContrast.getExperimentAccession());
-                query.addValue(indexedContrast.getAssayGroupOrContrastId());
+                query.addParameter(indexedContrast.getExperimentAccession());
+                query.addParameter(indexedContrast.getAssayGroupOrContrastId());
             }
 
+            query.appendToQueryString("(");
             Joiner joiner = Joiner.on(" OR ");
-            queryStringBuilder.append("(");
-            joiner.appendTo(queryStringBuilder, queryParts)
-                    .append(") ");
+            String queryPartsString = joiner.join(queryParts);
+            query.appendToQueryString(queryPartsString).appendToQueryString(") ");
         }
 
+        addGeneIds(query);
+
+        query.appendToQueryString(extraCondition);
+
+        return query;
+    }
+
+    protected void addGeneIds(AssayGroupQuery query) {
         if (CollectionUtils.isNotEmpty(geneIds)) {
             if (CollectionUtils.isNotEmpty(indexedAssayGroups)) {
-                queryStringBuilder.append("AND ");
+                query.appendToQueryString("AND ");
             }
-            queryStringBuilder.append("(");
+            query.appendToQueryString("(");
 
             int i = 1;
 
             for (List<String> sublist : Iterables.partition(geneIds, geneSize)) {
 
                 if (i > 1) {
-                    queryStringBuilder.append(" OR ");
+                    query.appendToQueryString(" OR ");
                 }
                 List<String> params = Collections.nCopies(sublist.size(), "?");
 
-                queryStringBuilder.append("IDENTIFIER IN (").append(Joiner.on(", ").join(params)).append(")");
-                query.addValues(sublist);
+                query.appendToQueryString("IDENTIFIER IN (").appendToQueryString(Joiner.on(", ").join(params)).appendToQueryString(")");
+                query.addParameters(sublist);
 
                 i++;
             }
-            queryStringBuilder.append(") ");
+            query.appendToQueryString(") ");
 
         }
-
-        queryStringBuilder.append(extraCondition);
-
-        query.setQueryString(queryStringBuilder.toString());
-        return query;
     }
 }
