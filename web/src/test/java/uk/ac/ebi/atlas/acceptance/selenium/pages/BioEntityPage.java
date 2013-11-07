@@ -277,7 +277,8 @@ public class BioEntityPage extends HeatmapTablePage {
         if (!matcher.matches()) {
             throw new IllegalStateException("Cannot match \"" + GLOBAL_SEARCH_ALL_RESULTS_TOTAL.toString() + "\" in global search widget");
         }
-        return Integer.parseInt(matcher.group(1));
+        String total = matcher.group(1).replace(",","");
+        return Integer.parseInt(total);
     }
 
     protected int getContrastColumnIndex() {

@@ -31,10 +31,11 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 
 public class BioentitiesPageGeneQueryZincFingerIT extends SinglePageSeleniumFixture {
 
-    public static final String GENE_QUERY_PARAM = "%22zinc%20finger%22";
+    public static final String GENE_QUERY_PARAM = "%22zinc+finger%22";
 
     private BioEntitiesPage subject;
 
@@ -76,5 +77,17 @@ public class BioentitiesPageGeneQueryZincFingerIT extends SinglePageSeleniumFixt
         assertThat(subject.getDiffHeatmapTableGeneColumn(), hasItems("Zfp292", "Zfp503", "Zfp810", "Zfp758", "Zfp46"));
         assertThat(subject.getDiffHeatmapTableOrganismColumn(), hasItems("Mus musculus"));
     }
+
+    @Test
+    public void globalSearchTermIsCorrectlyFormed() {
+        assertThat(subject.getGlobalSearchTerm(), is(GENE_QUERY_PARAM));
+    }
+
+    @Test
+    public void globalSearchWidgetShouldHaveResults(){
+        subject.clickShowMoreDataWidget();
+        assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
+    }
+
 
 }
