@@ -44,7 +44,7 @@
     <script language="JavaScript" type="text/javascript"
             src="${base}/resources/js/jquery-migrate-1.2.0.min.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="${base}/resources/js/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js"></script>
+            src="${base}/resources/js/jquery-ui-1.10.3.fix-8740.0520a49/dist/jquery-ui.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${base}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
     <script language="JavaScript" type="text/javascript"
