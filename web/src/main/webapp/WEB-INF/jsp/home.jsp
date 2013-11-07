@@ -29,7 +29,7 @@
 
 <p>Expression Atlas is a semantically enriched database of publicly available gene and transcript expression data.
     The data is re-analysed in-house to detect genes showing interesting baseline and differential expression patterns
-    under the conditions of the original experiment.</p>
+    under the conditions of the original experiment. <a href="about.html">Read more about Expression Atlas.</a></p>
 
 <section class="grid_6 alpha">
     <table class="form-grid" style="margin:0px 9px;">
