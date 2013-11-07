@@ -109,7 +109,18 @@ public class BioentitiesQueryController {
         StringBuilder stringBuilder = new StringBuilder();
 
         if (!geneQueryTerms.isEmpty()) {
-            stringBuilder.append("(").append(Joiner.on(" OR ").join(geneQueryTerms)).append(")");
+
+            boolean moreThanOneQueryTermAndCondition = geneQueryTerms.size() > 1 && condition != null;
+
+            if (moreThanOneQueryTermAndCondition) {
+                stringBuilder.append("(");
+            }
+
+            stringBuilder.append(Joiner.on(" OR ").join(geneQueryTerms));
+
+            if (moreThanOneQueryTermAndCondition) {
+                stringBuilder.append(")");
+            }
 
             if (condition != null) {
                 stringBuilder.append(" AND ");

@@ -34,14 +34,28 @@ public class BioentitiesQueryControllerTest {
     public void buildGlobalSearchTerm2GeneQueryTerms() throws Exception {
         List<String> geneQueryLists = Lists.newArrayList("id1", "id2");
         String condition = null;
-        assertThat(subject.buildGlobalSearchTerm(geneQueryLists, condition), is("(id1 OR id2)"));
+        assertThat(subject.buildGlobalSearchTerm(geneQueryLists, condition), is("id1 OR id2"));
     }
 
     @Test
     public void buildGlobalSearchTerm1GeneQueryTerm() throws Exception {
         List<String> geneQueryLists = Lists.newArrayList("id1");
         String condition = null;
-        assertThat(subject.buildGlobalSearchTerm(geneQueryLists, condition), is("(id1)"));
+        assertThat(subject.buildGlobalSearchTerm(geneQueryLists, condition), is("id1"));
+    }
+
+    @Test
+    public void buildGlobalSearchTerm1GeneQueryTermWithQuotes() throws Exception {
+        List<String> geneQueryLists = Lists.newArrayList("\"zinc finger\"");
+        String condition = null;
+        assertThat(subject.buildGlobalSearchTerm(geneQueryLists, condition), is("\"zinc finger\""));
+    }
+
+    @Test
+    public void buildGlobalSearchTerm1GeneQueryTermWithQuotesAndCondition() throws Exception {
+        List<String> geneQueryLists = Lists.newArrayList("\"zinc finger\"");
+        String condition = "liver";
+        assertThat(subject.buildGlobalSearchTerm(geneQueryLists, condition), is("\"zinc finger\" AND liver"));
     }
 
     @Test

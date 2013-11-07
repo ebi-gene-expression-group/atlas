@@ -29,8 +29,10 @@ import org.springframework.context.annotation.Scope;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.Properties;
 import java.util.Set;
@@ -114,6 +116,10 @@ public class ApplicationProperties {
         String queryString = (String) request.getAttribute("javax.servlet.forward.query_string");
         return Joiner.on("?").skipNulls()
                 .join(new String[]{request.getAttribute("javax.servlet.forward.request_uri") + TSV_FILE_EXTENSION, queryString}).toString();
+    }
+
+    public String urlParamEncode(String value) throws UnsupportedEncodingException {
+        return URLEncoder.encode(value, "UTF-8");
     }
 
 }

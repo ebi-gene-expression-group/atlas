@@ -1,23 +1,8 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+/**
+ * Copyright (c) EMBL-EBI 2013
+ * Authors: Francis Rowland, Peter Walter, Glen van Ginkel, Nicola Buso
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
+ * 20131107 omannion modified to decodeURIComponent(query) before display
  */
 
 function renderMenu(elem, items, baseURL, query, skipEmptyResults) {
@@ -31,10 +16,12 @@ function renderMenu(elem, items, baseURL, query, skipEmptyResults) {
         }
         totalCount += item.numberOfResults;
     });
+
+    var decodedQuery = decodeURIComponent(query.replace(/\+/g, " "));
     if (totalCount <= 0 && skipEmptyResults) {
-        subtitle = $("<p>").text("No results for \"" + query + "\"");
+        subtitle = $("<p>").text("No results for \"" + decodedQuery + "\"");
     } else {
-        subtitle = $("<p>").text("Other results for \"" + query + "\"");
+        subtitle = $("<p>").text("Other results for \"" + decodedQuery + "\"");
     }
     $(elem).find("h3").after(subtitle);
 }

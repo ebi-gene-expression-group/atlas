@@ -24,7 +24,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<input type="text" value="${empty globalSearchTerm ? entityIdentifier : globalSearchTerm}" style="display: none" id="searchterm">
+<input type="text" value="${empty globalSearchTerm ? entityIdentifier : applicationProperties.urlParamEncode(globalSearchTerm)}" style="display: none" id="searchterm">
 
 <c:choose>
     <c:when test="${not empty exceptionMessage}">
@@ -202,7 +202,7 @@
 
         <script src="${pageContext.request.contextPath}/resources/js/contrastInfoTooltipModule.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/ebi-global-search-run.js"></script>
-        <script src="//www.ebi.ac.uk/web_guidelines/js/ebi-global-search.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/ebi-global-search.js"></script>
 
 
         <script language="JavaScript" type="text/javascript" src="http://www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
