@@ -128,7 +128,7 @@
                                        label="Specific"
                                        disabled="${isSingleContrast ? true : false}"/>
                     </span>
-                    <span data-help-loc="#specific${!type.isBaseline() ? '' : '-differential'}"
+                    <span data-help-loc="#specific${type.isBaseline() ? '' : '-differential'}"
                           style="display:inline-block"/>
                 </td>
                 <td>

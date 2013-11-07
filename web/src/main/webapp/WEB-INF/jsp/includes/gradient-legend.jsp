@@ -77,7 +77,7 @@
                 </table>
 
             </div>
-            <div id="gradient-help-diff" data-help-loc="#gradient-diff" style="float:left;"/>
+            <div id="gradient-help-diff" data-help-loc="#gradient-differential" style="float:left;"/>
         </c:otherwise>
     </c:choose>
 
