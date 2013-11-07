@@ -35,11 +35,9 @@
         <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
             <div>Gene</div>
         </th>
-        <c:if test="${not singleBioentityPage}">
-            <th  id="design-element-header" class="horizontal-header-cell" style="padding: 5px; text-align:center;">
-                <div>Design Element</div>
-            </th>
-        </c:if>
+        <th  id="design-element-header" class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+            <div>Design Element</div>
+        </th>
         <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
             <div>Organism</div>
         </th>
@@ -59,11 +57,9 @@
             <td class="horizontal-header-cell">
                 ${differentialBioentityExpression.bioentityName}
             </td>
-            <c:if test="${not singleBioentityPage}">
-                <td class="horizontal-header-cell">
-                     ${differentialBioentityExpression.designElement}
-                </td>
-            </c:if>
+            <td class="horizontal-header-cell">
+                 ${differentialBioentityExpression.designElement}
+            </td>
             <td class="horizontal-header-cell">
                     ${differentialBioentityExpression.species}
             </td>
