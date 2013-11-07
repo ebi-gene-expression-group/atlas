@@ -105,11 +105,24 @@
         <nav>
             <ul class="grid_24" id="local-nav">
                 <li id="local-nav-home" class="first active">
-                    <a href="${pageContext.request.contextPath}" title="Go to the Expression Atlas homepage">Home</a>
+                    <a href="${pageContext.request.contextPath}" title="Expression Atlas homepage">Home</a>
+                </li>
+                <li id="local-nav-release-notes">
+                    <a href="${pageContext.request.contextPath}/release-notes.html" title="Release notes">Release notes</a>
+                </li>
+                <li id="local-nav-FAQ">
+                    <a href="${pageContext.request.contextPath}/FAQ.html" title="FAQs">FAQs</a>
+                </li>
+                <li id="local-nav-download">
+                    <a href="${pageContext.request.contextPath}/download.html" title="Download">Download</a>
                 </li>
                 <li id="local-nav-help" class="last">
-                    <a href="${pageContext.request.contextPath}/help.html"
-                       title="Go to the Expression Atlas help page">Help</a>
+                    <a href="${pageContext.request.contextPath}/help/index.html"
+                       title="Help pages">Help</a>
+                </li>
+                <li id="local-nav-about" class="last">
+                    <a href="${pageContext.request.contextPath}/about.html"
+                       title="About Expression Atlas">About</a>
                 </li>
                 <!--
                 <li class="last"><a href="#">About [service-name]</a></li>

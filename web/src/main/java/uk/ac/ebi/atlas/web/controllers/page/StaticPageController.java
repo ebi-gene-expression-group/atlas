@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.web.controllers.page;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,17 +31,28 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @Scope("singleton")
-public class HelpController {
+public class StaticPageController {
 
     @RequestMapping("/{pageName}.html")
-    public String getHelpPage(HttpServletRequest request, @PathVariable String pageName) {
-
+    public String getStaticPage(HttpServletRequest request, @PathVariable String pageName) {
+        request.setAttribute("nav", pageName);
         request.setAttribute("pageName", pageName);
-
-        return "help";
-
+        return "static-template";
     }
 
+    @RequestMapping("/help/{pageName}.html")
+    public String getHelpPage(HttpServletRequest request, @PathVariable String pageName) {
+        request.setAttribute("path", "help");
+        request.setAttribute("nav", "help");
+        request.setAttribute("pageName", pageName);
+        return "static-template";
+    }
+
+    @RequestMapping("/help.html")
+    public String getHelpPage(HttpServletRequest request) {
+        request.setAttribute("pageName", "");
+        return "help";
+    }
 
     @RequestMapping("/{pageName}.hhhh")
     public String getHomePage(@PathVariable String pageName) {
@@ -50,4 +60,5 @@ public class HelpController {
         return "redirect:/home?pageName=" + pageName;
 
     }
+
 }

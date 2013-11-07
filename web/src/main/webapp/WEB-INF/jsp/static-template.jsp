@@ -2,11 +2,11 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<c:import url="/resources/html/${pageName}.html"/>
+<c:import url="/resources/html/${path}/${pageName}.html"/>
 
 <script type="text/javascript">
     $(function () {
         clearLocalNav();
-        $('#local-nav-help').addClass("active");
+        $('#local-nav-${nav}').addClass("active");
     });
 </script>

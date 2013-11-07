@@ -78,10 +78,10 @@
         <put-attribute name="body" value="/WEB-INF/jsp/error-page.jsp"/>
     </definition>
 
-    <!-- help pages -->
-    <definition name="help" extends="base.definition">
+    <!-- static pages, eg: about, help -->
+    <definition name="static-template" extends="base.definition">
         <put-attribute name="menu" value=""/>
-        <put-attribute name="body" value="/WEB-INF/jsp/help/help.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/static-template.jsp"/>
     </definition>
 
     <definition name="widget.base.definition" template="/WEB-INF/jsp/widget-layout.jsp">
