@@ -281,7 +281,7 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     protected int getContrastColumnIndex() {
-        return 3;
+        return 4;
     }
 
     protected int getDiffHeatmapTableGeneColumnIndex() {

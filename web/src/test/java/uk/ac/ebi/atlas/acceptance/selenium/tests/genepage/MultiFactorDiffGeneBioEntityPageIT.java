@@ -56,8 +56,8 @@ public class MultiFactorDiffGeneBioEntityPageIT extends SinglePageSeleniumFixtur
 
     @Test
     public void checkHeatmap() {
-        assertThat(subject.getDiffHeatmapHeaders(), contains("Gene", "Organism", "Contrast", "Adjusted P-value"));
-        assertThat(subject.getDiffHeatmapRow(1), contains("F11B9.23", "Arabidopsis thaliana", "treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'", ""));
+        assertThat(subject.getDiffHeatmapHeaders(), contains("Gene", "Design Element", "Organism", "Contrast", "Adjusted P-value"));
+        assertThat(subject.getDiffHeatmapRow(1), contains("F11B9.23", "256252_at", "Arabidopsis thaliana", "treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'", ""));
     }
 
 
