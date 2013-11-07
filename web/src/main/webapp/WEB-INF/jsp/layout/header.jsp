@@ -74,7 +74,7 @@
 
                     <div class="left">
                         <label>
-                            <input id="local-searchbox" name="geneQuery" value="${param.queryString}" maxlength="900"/>
+                            <input id="local-searchbox" name="geneQuery" value="${param.queryString}" maxlength="900" placeholder="(Enter gene query)"/>
                         </label>
                         <!-- Include some example searchterms - keep them short and few! -->
                         <span class="examples">Examples:
@@ -184,6 +184,19 @@
             item.removeClass("active");
         });
     }
+
+    $(function () {
+
+        $('#submit-searchbox').click(function(e) {
+            if (searchBoxIsEmpty()) {
+                e.preventDefault();
+            }
+        });
+
+        function searchBoxIsEmpty() {
+            return !$('#local-searchbox').val().trim();
+        }
+    });
 
     $(function () {
         var feedback = $("#feedback"),
