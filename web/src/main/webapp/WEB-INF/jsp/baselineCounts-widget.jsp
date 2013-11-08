@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://atlas.ebi.ac.uk/util" prefix="util" %>
 
 <%--
   ~ Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
@@ -48,7 +47,7 @@
                     <tr>
                         <td>
                             <a class="bioEntityCardLink"
-                                   href="${base}/experiments/${baselineCount.experimentAccession}?queryFactorType=ORGANISM_PART&queryFactorValues=${param.condition}&geneQuery=${util:urlParamEncode(param.geneQuery)}"
+                                   href="${base}/experiments/${baselineCount.experimentAccession}?queryFactorType=ORGANISM_PART&queryFactorValues=${param.condition}&geneQuery=${applicationProperties.urlParamEncode(param.geneQuery)}"
                                title="experiment">
                                     ${baselineCount.species} - ${baselineCount.experimentName}
                             </a>
