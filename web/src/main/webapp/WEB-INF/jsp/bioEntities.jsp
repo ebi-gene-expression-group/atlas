@@ -227,6 +227,8 @@
 
                 contrastInfoTooltipModule.init('${pageContext.request.contextPath}', '${param.accessKey}');
 
+                helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
+
 
                 var widgetParameters = "&propertyType=bioentity_identifier";
                 if (${isGeneSet == true}) {
