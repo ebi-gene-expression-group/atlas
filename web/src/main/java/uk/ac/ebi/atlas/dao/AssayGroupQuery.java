@@ -29,7 +29,6 @@ import java.util.List;
 public class AssayGroupQuery {
 
     private List<String> params = Lists.newArrayList();
-    private String query;
     private StringBuilder queryBuilder = new StringBuilder();
 
     void addParameter(String value) {
@@ -49,7 +48,7 @@ public class AssayGroupQuery {
     }
 
     void setQueryString(String query) {
-        this.query = query;
+        queryBuilder = new StringBuilder(query);
     }
 
     AssayGroupQuery appendToQueryString(String text) {

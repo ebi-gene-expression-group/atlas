@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.dao;
 
 import com.google.common.collect.Iterables;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -38,8 +37,6 @@ import java.util.List;
 @Named
 @Scope("prototype")
 public class BaselineExperimentDao {
-
-    private static final Logger LOGGER = Logger.getLogger(BaselineExperimentDao.class);
 
     //ToDo: (NK) we don't need to use bioentity_name table in this query, RNASEQ_BSLN_EXPRESSIONS should be used for identifier search
         static final String GENEIDS_IN_EXPERIMENT = "select 1 from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe\n" +

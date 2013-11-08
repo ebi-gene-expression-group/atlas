@@ -22,23 +22,17 @@
 
 package uk.ac.ebi.atlas.dao;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -63,13 +57,7 @@ public class BaselineExpressionDao {
 
     static final String GROUP_BY_EXPERIMENT_ASSAYGROUPID = "group by EXPERIMENT, ASSAYGROUPID";
 
-    static final String GENEIDS_IN_EXPERIMENT = "select 1 from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe\n" +
-            "    where rownum < 2 and rbe.experiment = :experimentAccession\n" +
-            "    and exists (select 1 from bioentity_name where identifier = rbe.identifier)\n";
-
     private JdbcTemplate jdbcTemplate;
-
-    private NamedParameterJdbcTemplate namedJdbcTemplate;
 
     private AssayGroupQueryBuilder assayGroupQueryBuilder;
 
@@ -81,7 +69,6 @@ public class BaselineExpressionDao {
         this.assayGroupQueryBuilder = assayGroupQueryBuilder;
         this.rowMapper = rowMapper;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-        this.namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     public SortedSet<BaselineBioentitiesCount> getBioentitiesCounts(Collection<IndexedAssayGroup> indexedAssayGroups) {
@@ -91,51 +78,6 @@ public class BaselineExpressionDao {
         return rankBioentityCounts(baselineBioentitiesCounts);
 
     }
-
-    public List<String> getExperimentAccessions(Collection<IndexedAssayGroup> indexedAssayGroups) {
-
-        return queryForBaselineExperimentAccessions(indexedAssayGroups);
-
-    }
-
-    public boolean atLeastOneGeneIdExistsInExperiment(Collection<String> geneIds, String experimentAccession) {
-        if (geneIds.size() == 0) return false;
-
-        MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("experimentAccession", experimentAccession);
-        parameters.addValue("geneIds", geneIds);
-
-        StringBuilder sqlQuery = new StringBuilder(GENEIDS_IN_EXPERIMENT);
-
-        sqlQuery.append(" and ");
-        buildMultipleIdentifierInClauses(geneIds, parameters, sqlQuery);
-
-        List<Integer> results = namedJdbcTemplate.queryForList(sqlQuery.toString(), parameters, Integer.class);
-
-        // if a row is returned, this indicates one of the gene ids were found in the experiment
-        return (results.size() > 0);
-    }
-
-
-    private void buildMultipleIdentifierInClauses(Collection<String> identifiers, MapSqlParameterSource parameters, StringBuilder sqlQuery) {
-        int i = 1;
-
-        sqlQuery.append("(");
-        for (List<String> sublist : Iterables.partition(identifiers, 1000)) {
-            String idsParam = "geneIds" + i;
-            parameters.addValue(idsParam, sublist);
-
-            if (i > 1) {
-                sqlQuery.append(" OR");
-            }
-
-            sqlQuery.append(" rbe.IDENTIFIER IN (:").append(idsParam).append(")");
-
-            i++;
-        }
-        sqlQuery.append(")");
-    }
-
 
     SortedSet<BaselineBioentitiesCount> rankBioentityCounts(List<BaselineBioentitiesCount> baselineBioentitiesCounts) {
 
@@ -170,23 +112,5 @@ public class BaselineExpressionDao {
         LOGGER.debug("<getBioentitiesCount> select experiments query: " + query);
 
         return jdbcTemplate.query(query.getQuery(), rowMapper, query.getParameters());
-    }
-
-    List<String> queryForBaselineExperimentAccessions(Collection<IndexedAssayGroup> indexedAssayGroups) {
-        AssayGroupQuery query = assayGroupQueryBuilder.withSelectPart(SELECT_QUERY)
-                .withIndexedAssayGroupsOrContrasts(indexedAssayGroups)
-                .withAssayGroupOrContrast(ASSAYGROUPID)
-                .withExtraCondition(GROUP_BY_EXPERIMENT_ASSAYGROUPID)
-                .build();
-
-        LOGGER.debug("<getBioentitiesCount> select experiments query: " + query);
-
-        RowMapper<String> accessionRowMapper = new RowMapper<String>() {
-            @Override
-            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return rs.getString(AssayGroupQueryBuilder.EXPERIMENT);
-            }
-        };
-        return jdbcTemplate.query(query.getQuery(), accessionRowMapper, query.getParameters());
     }
 }

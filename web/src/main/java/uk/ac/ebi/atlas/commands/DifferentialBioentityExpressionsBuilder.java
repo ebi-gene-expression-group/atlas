@@ -49,11 +49,10 @@ public class DifferentialBioentityExpressionsBuilder {
     private DifferentialConditionsSearchService differentialConditionsSearchService;
     private SolrQueryService solrQueryService;
 
-
     @Inject
     public DifferentialBioentityExpressionsBuilder(DiffExpressionDao diffExpressionDao,
                                                    DifferentialConditionsSearchService differentialConditionsSearchService,
-                                                   SolrQueryService solrQueryService, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
+                                                   SolrQueryService solrQueryService) {
         this.diffExpressionDao = diffExpressionDao;
         this.differentialConditionsSearchService = differentialConditionsSearchService;
         this.solrQueryService = solrQueryService;
