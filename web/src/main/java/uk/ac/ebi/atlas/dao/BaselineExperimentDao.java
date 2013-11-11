@@ -58,10 +58,11 @@ public class BaselineExperimentDao {
                 "and rownum < 2";
 
         static final String CONDITIONS_AND_GENES_IN_EXPERIMENT = "select 1 from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe \n" +
-                "where rbe.experiment = :experimentAccession\n" +
-                "and rbe.assaygroupid in (:assayGroups)\n" +
+                "where rbe.experiment = :experimentAccession \n" +
+                "and exists (select 1 from bioentity_name where identifier = rbe.identifier) \n" +
+                "and rbe.assaygroupid in (:assayGroups) \n" +
                 "and  \n" +
-                "( select avg(expression) from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF )\n" +
+                "( select avg(expression) from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) \n" +
                 "  where assaygroupid in (:assayGroups) and experiment = :experimentAccession and identifier = rbe.identifier\n" +
                 ") >   \n" +
                 "( select NVL(max(expression),0) from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) \n" +
