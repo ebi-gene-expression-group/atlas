@@ -37,6 +37,7 @@ import java.util.List;
 @Named
 @Scope("prototype")
 public class BaselineExperimentDao {
+    static final int DEFAULT_GENE_SIZE = 1000;
 
     //ToDo: (NK) we don't need to use bioentity_name table in this query, RNASEQ_BSLN_EXPRESSIONS should be used for identifier search
         static final String GENEIDS_IN_EXPERIMENT = "select 1 from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe\n" +
@@ -73,6 +74,7 @@ public class BaselineExperimentDao {
 
     private NamedParameterJdbcTemplate namedJdbcTemplate;
 
+    private int geneSize = DEFAULT_GENE_SIZE;
 
     @Inject
     public BaselineExperimentDao(@Qualifier("dataSourceOracle") DataSource dataSource) {
@@ -127,11 +129,11 @@ public class BaselineExperimentDao {
     }
 
 
-    private void buildMultipleIdentifierInClauses(Collection<String> identifiers, MapSqlParameterSource parameters, StringBuilder sqlQuery) {
+    protected void buildMultipleIdentifierInClauses(Collection<String> identifiers, MapSqlParameterSource parameters, StringBuilder sqlQuery) {
         int i = 1;
 
         sqlQuery.append("(");
-        for (List<String> sublist : Iterables.partition(identifiers, 1000)) {
+        for (List<String> sublist : Iterables.partition(identifiers, geneSize)) {
             String idsParam = "geneIds" + i;
             parameters.addValue(idsParam, sublist);
 
@@ -146,4 +148,7 @@ public class BaselineExperimentDao {
         sqlQuery.append(")");
     }
 
+    public void setGeneSize(int geneSize) {
+        this.geneSize = geneSize;
+    }
 }
