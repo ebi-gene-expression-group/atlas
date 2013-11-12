@@ -22,6 +22,7 @@
   ~
   ~ http://gxa.github.com/gxa
   --%>
+<%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
 
 <c:set var="base" value="${pageContext.request.contextPath}"/>
 <c:if test="${not empty preferences.rootContext}">
@@ -44,6 +45,7 @@
             </thead>
             <tbody>
                 <c:forEach var="baselineCount" items="${baselineCounts}">
+                
                     <tr>
                         <td>
                             <a class="bioEntityCardLink"

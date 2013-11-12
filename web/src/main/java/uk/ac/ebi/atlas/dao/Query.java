@@ -26,21 +26,21 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-public class AssayGroupQuery {
+public class Query<T> {
 
-    private List<String> params = Lists.newArrayList();
+    private List<T> params = Lists.newArrayList();
     private StringBuilder queryBuilder = new StringBuilder();
 
-    void addParameter(String value) {
+    void addParameter(T value) {
         params.add(value);
     }
 
-    void addParameters(List<String> values) {
+    void addParameters(List<T> values) {
         params.addAll(values);
     }
 
-    String[] getParameters() {
-        return params.toArray(new String[params.size()]);
+    List<T> getParameters() {
+        return params;
     }
 
     String getQuery() {
@@ -51,7 +51,7 @@ public class AssayGroupQuery {
         queryBuilder = new StringBuilder(query);
     }
 
-    AssayGroupQuery appendToQueryString(String text) {
+    Query appendToQueryString(String text) {
         queryBuilder.append(text);
         return this;
     }
