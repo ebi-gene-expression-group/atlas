@@ -33,12 +33,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
-import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
-import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.ContrastProperty;
-import uk.ac.ebi.atlas.model.differential.ContrastSummary;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.web.model.rest.ContrastProperty;
+import uk.ac.ebi.atlas.web.model.rest.ContrastPropertyType;
+import uk.ac.ebi.atlas.web.model.rest.ContrastSummary;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -50,19 +49,11 @@ public class ContrastSummaryController {
 
     protected static final String ARRAY_DESIGN = "array design";
 
-    private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
-
-    private MicroarrayExperimentsCache microarrayExperimentsCache;
-
     private ExperimentTrader experimentTrader;
 
     @Inject
-    public ContrastSummaryController(ExperimentTrader experimentTrader,
-                                     RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
-                                     MicroarrayExperimentsCache microarrayExperimentsCache) {
+    public ContrastSummaryController(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
-        this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
-        this.microarrayExperimentsCache = microarrayExperimentsCache;
     }
 
     @RequestMapping(value = "/rest/contrast-summary", method = RequestMethod.GET, produces = "application/json")
@@ -100,7 +91,7 @@ public class ContrastSummaryController {
         ContrastSummary contrastSummary = new ContrastSummary(differentialExperiment.getDescription(), contrast.getDisplayName());
 
         for (String factorHeader : experimentDesign.getFactorHeaders()) {
-            ContrastProperty property = composeContrastProperty(allTestFactorValues, allReferenceFactorValues, factorHeader, ContrastProperty.ContrastPropertyType.FACTOR);
+            ContrastProperty property = composeContrastProperty(allTestFactorValues, allReferenceFactorValues, factorHeader, ContrastPropertyType.FACTOR);
             contrastSummary.addContrastProperty(property);
         }
 
@@ -108,7 +99,7 @@ public class ContrastSummaryController {
         SortedSet<String> sampleHeaders = Sets.newTreeSet(experimentDesign.getSampleHeaders());
         sampleHeaders.add(ARRAY_DESIGN);
         for (String sampleHeader : sampleHeaders) {
-            ContrastProperty property = composeContrastProperty(allTestSampleValues, allReferenceSampleValues, sampleHeader, ContrastProperty.ContrastPropertyType.SAMPLE);
+            ContrastProperty property = composeContrastProperty(allTestSampleValues, allReferenceSampleValues, sampleHeader, ContrastPropertyType.SAMPLE);
             contrastSummary.addContrastProperty(property);
         }
 
@@ -116,7 +107,7 @@ public class ContrastSummaryController {
     }
 
     private ContrastProperty composeContrastProperty(Multimap<String, String> allTestValues, Multimap<String, String> allReferenceValues,
-                                                     String header, ContrastProperty.ContrastPropertyType contrastPropertyType) {
+                                                     String header, ContrastPropertyType contrastPropertyType) {
         Collection<String> testValues = allTestValues.get(header);
         Collection<String> referenceValues = allReferenceValues.get(header);
         ContrastProperty property = new ContrastProperty(header,

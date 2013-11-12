@@ -24,6 +24,9 @@ package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.collect.Sets;
 import org.junit.Test;
+import uk.ac.ebi.atlas.web.model.rest.AssayProperty;
+import uk.ac.ebi.atlas.web.model.rest.ContrastProperty;
+import uk.ac.ebi.atlas.web.model.rest.ContrastPropertyType;
 
 import java.util.SortedSet;
 
@@ -36,7 +39,7 @@ public class ContrastPropertyTest {
     private static final String PROPERTY_NAME = "propertyName";
     private static final String TEST_VALUE = "testValue";
     private static final String REFERENCE_VALUE = "referenceValue";
-    private static final ContrastProperty.ContrastPropertyType CONTRAST_PROPERTY_TYPE = ContrastProperty.ContrastPropertyType.FACTOR;
+    private static final ContrastPropertyType CONTRAST_PROPERTY_TYPE = ContrastPropertyType.FACTOR;
 
     @Test
     public void testGetters() throws Exception {
@@ -50,13 +53,13 @@ public class ContrastPropertyTest {
 
     @Test
     public void testCompareTo() throws Exception {
-        ContrastProperty property1 = new ContrastProperty("b", "z", "a", CONTRAST_PROPERTY_TYPE);
-        ContrastProperty property2 = new ContrastProperty("a", "a", "a", CONTRAST_PROPERTY_TYPE);
-        ContrastProperty property3 = new ContrastProperty("c", null, "a", CONTRAST_PROPERTY_TYPE);
-        ContrastProperty property4 = new ContrastProperty("q", "a", "z", CONTRAST_PROPERTY_TYPE);
-        ContrastProperty property5 = new ContrastProperty("d", "a", "a", CONTRAST_PROPERTY_TYPE);
+        AssayProperty property1 = new ContrastProperty("b", "z", "a", CONTRAST_PROPERTY_TYPE);
+        AssayProperty property2 = new ContrastProperty("a", "a", "a", CONTRAST_PROPERTY_TYPE);
+        AssayProperty property3 = new ContrastProperty("c", null, "a", CONTRAST_PROPERTY_TYPE);
+        AssayProperty property4 = new ContrastProperty("q", "a", "z", CONTRAST_PROPERTY_TYPE);
+        AssayProperty property5 = new ContrastProperty("d", "a", "a", CONTRAST_PROPERTY_TYPE);
 
-        SortedSet<ContrastProperty> properties = Sets.newTreeSet(Sets.newHashSet(property1, property2, property3, property4, property5));
+        SortedSet<AssayProperty> properties = Sets.newTreeSet(Sets.newHashSet(property1, property2, property3, property4, property5));
 
         assertThat(properties, contains(property2, property1, property3, property5, property4));
     }

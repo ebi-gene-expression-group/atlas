@@ -20,18 +20,18 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.web.model.rest;
 
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class ContrastSummary implements Iterable<ContrastProperty> {
+public class ContrastSummary implements Iterable<AssayProperty> {
 
     private String experimentDescription;
     private String contrastDescription;
 
-    private SortedSet<ContrastProperty> properties = new TreeSet<>();
+    private SortedSet<AssayProperty> properties = new TreeSet<>();
 
     public ContrastSummary(String experimentDescription, String contrastDescription) {
         this.experimentDescription = experimentDescription;
@@ -52,7 +52,7 @@ public class ContrastSummary implements Iterable<ContrastProperty> {
     }
 
     @Override
-    public Iterator<ContrastProperty> iterator() {
+    public Iterator<AssayProperty> iterator() {
         return properties.iterator();
     }
 }

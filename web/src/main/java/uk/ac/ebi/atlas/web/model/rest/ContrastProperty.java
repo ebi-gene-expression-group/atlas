@@ -20,54 +20,21 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.web.model.rest;
 
 import com.google.common.base.Objects;
 
-public class ContrastProperty implements Comparable<ContrastProperty> {
+public class ContrastProperty extends AssayProperty {
 
-    public static enum ContrastPropertyType {
-        FACTOR, SAMPLE
-    }
-
-    private String propertyName;
-    private String testValue;
     private String referenceValue;
-    private ContrastPropertyType contrastPropertyType;
 
     public ContrastProperty(String propertyName, String testValue, String referenceValue, ContrastPropertyType contrastPropertyType) {
-        this.propertyName = propertyName;
-        this.testValue = testValue;
+        super(testValue, contrastPropertyType, propertyName);
         this.referenceValue = referenceValue;
-        this.contrastPropertyType = contrastPropertyType;
-    }
-
-    public String getPropertyName() {
-        return propertyName;
-    }
-
-    public String getTestValue() {
-        return testValue;
     }
 
     public String getReferenceValue() {
         return referenceValue;
-    }
-
-    public ContrastPropertyType getContrastPropertyType() {
-        return contrastPropertyType;
-    }
-
-    @Override
-    public int compareTo(ContrastProperty otherProperty) {
-        if (contrastPropertyType != otherProperty.contrastPropertyType) {
-            if (contrastPropertyType == ContrastPropertyType.FACTOR) {
-                return -1;
-            } else {
-                return 1;
-            }
-        }
-        return propertyName.compareToIgnoreCase(otherProperty.propertyName);
     }
 
     @Override
