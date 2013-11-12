@@ -45,3 +45,5 @@ CREATE TABLE IF NOT EXISTS EXPERIMENT_ORGANISM(
 );
 -- enable the next statement only after successful migration
 DROP TABLE IF EXISTS experiment_configuration;
+
+create or replace type IDENTIFIERS_TABLE as table of varchar2(255 byte);
