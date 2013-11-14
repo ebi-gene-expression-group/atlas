@@ -20,29 +20,24 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.model.rest;
+package uk.ac.ebi.atlas.dto.tooltip;
 
-import com.google.common.base.Objects;
+public class ContrastSummary extends AssayGroupSummary {
 
-public class ContrastProperty extends AssayProperty {
+    private String experimentDescription;
+    private String contrastDescription;
 
-    private String referenceValue;
 
-    public ContrastProperty(String propertyName, String testValue, String referenceValue, ContrastPropertyType contrastPropertyType) {
-        super(testValue, contrastPropertyType, propertyName);
-        this.referenceValue = referenceValue;
+    public ContrastSummary(String experimentDescription, String contrastDescription) {
+        this.experimentDescription = experimentDescription;
+        this.contrastDescription = contrastDescription;
     }
 
-    public String getReferenceValue() {
-        return referenceValue;
+    public String getExperimentDescription() {
+        return experimentDescription;
     }
 
-    @Override
-    public String toString() {
-        return Objects.toStringHelper(this)
-                .add("propertyName", propertyName)
-                .add("referenceValue", referenceValue)
-                .add("testValue", testValue)
-                .toString();
+    public String getContrastDescription() {
+        return contrastDescription;
     }
 }

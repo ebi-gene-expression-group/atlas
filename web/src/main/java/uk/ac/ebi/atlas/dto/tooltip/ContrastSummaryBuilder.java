@@ -1,21 +1,23 @@
-package uk.ac.ebi.atlas.web.model.rest;
+package uk.ac.ebi.atlas.dto.tooltip;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
+import javax.inject.Named;
 import java.util.Collection;
 import java.util.Map;
 import java.util.SortedSet;
 
+@Named
+@Scope("request")
 public class ContrastSummaryBuilder {
 
     protected static final String ARRAY_DESIGN = "array design";
-
-    private AssayPropertiesBuilder assayPropertiesBuilder;
 
     private Contrast contrast;
 
@@ -23,11 +25,21 @@ public class ContrastSummaryBuilder {
 
     private String experimentDescription;
 
-    public ContrastSummaryBuilder(AssayPropertiesBuilder assayPropertiesBuilder) {
-        this.assayPropertiesBuilder = assayPropertiesBuilder;
+
+    public ContrastSummaryBuilder forContrast(Contrast contrast) {
+        this.contrast = contrast;
+        return this;
     }
 
+    public ContrastSummaryBuilder withExperimentDesign(ExperimentDesign experimentDesign) {
+        this.experimentDesign = experimentDesign;
+        return this;
+    }
 
+    public ContrastSummaryBuilder withExperimentDescription(String experimentDescription) {
+        this.experimentDescription = experimentDescription;
+        return this;
+    }
     public ContrastSummary build() {
 
         Multimap<String, String> allRefFactorValues = HashMultimap.create();
@@ -52,7 +64,7 @@ public class ContrastSummaryBuilder {
 
         for (String factorHeader : experimentDesign.getFactorHeaders()) {
             ContrastProperty property = composeContrastProperty(allTestFactorValues, allRefFactorValues, factorHeader, ContrastPropertyType.FACTOR);
-            contrastSummary.addContrastProperty(property);
+            contrastSummary.add(property);
         }
 
         // array design row should be sorted within samples category
@@ -60,7 +72,7 @@ public class ContrastSummaryBuilder {
         sampleHeaders.add(ARRAY_DESIGN);
         for (String sampleHeader : sampleHeaders) {
             ContrastProperty property = composeContrastProperty(allTestSampleValues, allRefSampleValues, sampleHeader, ContrastPropertyType.SAMPLE);
-            contrastSummary.addContrastProperty(property);
+            contrastSummary.add(property);
         }
 
 

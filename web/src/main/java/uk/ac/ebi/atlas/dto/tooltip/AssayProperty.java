@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web.model.rest;
+package uk.ac.ebi.atlas.dto.tooltip;
 
 public class AssayProperty implements Comparable<AssayProperty> {
     protected String propertyName;

@@ -22,44 +22,45 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.dto.tooltip.AssayGroupSummary;
+import uk.ac.ebi.atlas.dto.tooltip.AssayGroupSummaryBuilder;
+import uk.ac.ebi.atlas.dto.tooltip.ContrastSummary;
+import uk.ac.ebi.atlas.dto.tooltip.ContrastSummaryBuilder;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentTrader;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.web.model.rest.ContrastProperty;
-import uk.ac.ebi.atlas.web.model.rest.ContrastPropertyType;
-import uk.ac.ebi.atlas.web.model.rest.ContrastSummary;
 
 import javax.inject.Inject;
-import java.util.Collection;
-import java.util.SortedSet;
 
 @Controller
 @Scope("request")
 public class ContrastSummaryController {
 
-    protected static final String ARRAY_DESIGN = "array design";
-
     private ExperimentTrader experimentTrader;
 
+    private ContrastSummaryBuilder contrastSummaryBuilder;
+
+    private AssayGroupSummaryBuilder assayGroupSummaryBuilder;
+
     @Inject
-    public ContrastSummaryController(ExperimentTrader experimentTrader) {
+    public ContrastSummaryController(ExperimentTrader experimentTrader, ContrastSummaryBuilder contrastSummaryBuilder, AssayGroupSummaryBuilder assayGroupSummaryBuilder) {
         this.experimentTrader = experimentTrader;
+        this.contrastSummaryBuilder = contrastSummaryBuilder;
+        this.assayGroupSummaryBuilder = assayGroupSummaryBuilder;
     }
 
     @RequestMapping(value = "/rest/contrast-summary", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String getTooltipContent(@RequestParam(value = "experimentAccession") String experimentAccession,
+    public String getTooltipContrastContent(@RequestParam(value = "experimentAccession") String experimentAccession,
                                     @RequestParam(value = "accessKey", required = false) String accessKey,
                                     @RequestParam(value = "contrastId") String contrastId) {
 
@@ -72,62 +73,32 @@ public class ContrastSummaryController {
 
         ExperimentDesign experimentDesign = differentialExperiment.getExperimentDesign();
 
-        Multimap<String, String> allTestFactorValues = HashMultimap.create();
-        Multimap<String, String> allTestSampleValues = HashMultimap.create();
-        for (String testAssay : contrast.getTestAssayGroup()) {
-            extractAllFactorValues(experimentDesign, allTestFactorValues, testAssay);
-            extractAllSampleValues(experimentDesign, allTestSampleValues, testAssay);
-            allTestSampleValues.put(ARRAY_DESIGN, experimentDesign.getArrayDesign(testAssay));
-        }
-
-        Multimap<String, String> allReferenceFactorValues = HashMultimap.create();
-        Multimap<String, String> allReferenceSampleValues = HashMultimap.create();
-        for (String referenceAssay : contrast.getReferenceAssayGroup()) {
-            extractAllFactorValues(experimentDesign, allReferenceFactorValues, referenceAssay);
-            extractAllSampleValues(experimentDesign, allReferenceSampleValues, referenceAssay);
-            allReferenceSampleValues.put(ARRAY_DESIGN, experimentDesign.getArrayDesign(referenceAssay));
-        }
-
-        ContrastSummary contrastSummary = new ContrastSummary(differentialExperiment.getDescription(), contrast.getDisplayName());
-
-        for (String factorHeader : experimentDesign.getFactorHeaders()) {
-            ContrastProperty property = composeContrastProperty(allTestFactorValues, allReferenceFactorValues, factorHeader, ContrastPropertyType.FACTOR);
-            contrastSummary.addContrastProperty(property);
-        }
-
-        // array design row should be sorted within samples category
-        SortedSet<String> sampleHeaders = Sets.newTreeSet(experimentDesign.getSampleHeaders());
-        sampleHeaders.add(ARRAY_DESIGN);
-        for (String sampleHeader : sampleHeaders) {
-            ContrastProperty property = composeContrastProperty(allTestSampleValues, allReferenceSampleValues, sampleHeader, ContrastPropertyType.SAMPLE);
-            contrastSummary.addContrastProperty(property);
-        }
+        ContrastSummary contrastSummary = contrastSummaryBuilder.withExperimentDesign(experimentDesign)
+                .forContrast(contrast)
+                .withExperimentDescription(differentialExperiment.getDescription())
+                .build();
 
         return new Gson().toJson(contrastSummary);
     }
 
-    private ContrastProperty composeContrastProperty(Multimap<String, String> allTestValues, Multimap<String, String> allReferenceValues,
-                                                     String header, ContrastPropertyType contrastPropertyType) {
-        Collection<String> testValues = allTestValues.get(header);
-        Collection<String> referenceValues = allReferenceValues.get(header);
-        ContrastProperty property = new ContrastProperty(header,
-                Joiner.on(",").skipNulls().join(testValues),
-                Joiner.on(",").skipNulls().join(referenceValues),
-                contrastPropertyType);
-        return property;
+    @RequestMapping(value = "/rest/assayGroup-summary", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public String getTooltipAssayGroupContent(@RequestParam(value = "experimentAccession") String experimentAccession,
+                                    @RequestParam(value = "accessKey", required = false) String accessKey,
+                                    @RequestParam(value = "assayGroupId") String assayGroupId) {
+
+        //ToDo: check type
+        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+
+        AssayGroup assayGroup = experiment.getAssayGroups().getAssayGroup(assayGroupId);
+
+        ExperimentDesign experimentDesign = experiment.getExperimentDesign();
+
+        AssayGroupSummary assayGroupSummary = assayGroupSummaryBuilder.withExperimentDesign(experimentDesign).forAssayGroup(assayGroup).build();
+
+        return new Gson().toJson(assayGroupSummary);
     }
 
-    private void extractAllFactorValues(ExperimentDesign experimentDesign, Multimap<String, String> values, String runOrAssay) {
-        for (String factorHeader : experimentDesign.getFactorHeaders()) {
-            String factorValue = experimentDesign.getFactorValue(runOrAssay, factorHeader);
-            values.put(factorHeader, factorValue);
-        }
-    }
 
-    private void extractAllSampleValues(ExperimentDesign experimentDesign, Multimap<String, String> values, String runOrAssay) {
-        for (String sampleHeader : experimentDesign.getSampleHeaders()) {
-            String sampleValue = experimentDesign.getSampleValue(runOrAssay, sampleHeader);
-            values.put(sampleHeader, sampleValue);
-        }
-    }
 }

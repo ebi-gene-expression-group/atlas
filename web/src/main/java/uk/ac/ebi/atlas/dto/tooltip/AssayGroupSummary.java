@@ -1,11 +1,11 @@
-package uk.ac.ebi.atlas.web.model.rest;
+package uk.ac.ebi.atlas.dto.tooltip;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class AssayProperties implements Iterable<AssayProperty> {
+public class AssayGroupSummary implements Iterable<AssayProperty> {
 
     private SortedSet<AssayProperty> properties = new TreeSet<>();
 

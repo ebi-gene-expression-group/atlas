@@ -1,35 +1,39 @@
-package uk.ac.ebi.atlas.web.model.rest;
+package uk.ac.ebi.atlas.dto.tooltip;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
+import javax.inject.Named;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class AssayPropertiesBuilder {
+@Named
+@Scope("request")
+public class AssayGroupSummaryBuilder {
 
     private ExperimentDesign experimentDesign;
 
     private AssayGroup assayGroup;
 
-    public AssayPropertiesBuilder withExperimentDesign(ExperimentDesign experimentDesign) {
+    public AssayGroupSummaryBuilder withExperimentDesign(ExperimentDesign experimentDesign) {
         this.experimentDesign = experimentDesign;
         return this;
     }
 
-    public AssayPropertiesBuilder withAssayGroup(AssayGroup assayGroup) {
+    public AssayGroupSummaryBuilder forAssayGroup(AssayGroup assayGroup) {
         this.assayGroup = assayGroup;
         return this;
     }
 
-    public AssayProperties build() {
+    public AssayGroupSummary build() {
         checkState(assayGroup != null && experimentDesign != null);
 
-        AssayProperties assayProperties = new AssayProperties();
+        AssayGroupSummary assayGroupSummary = new AssayGroupSummary();
 
         Multimap<String, String> allFactorValues = HashMultimap.create();
         Multimap<String, String> allSampleValues = HashMultimap.create();
@@ -38,25 +42,25 @@ public class AssayPropertiesBuilder {
             extractAllValues(experimentDesign.getSamples(assay), allSampleValues);
         }
 
-        addAssayProperties(assayProperties, allFactorValues, ContrastPropertyType.FACTOR);
-        addAssayProperties(assayProperties, allSampleValues, ContrastPropertyType.SAMPLE);
+        addAssayProperties(assayGroupSummary, allFactorValues, ContrastPropertyType.FACTOR);
+        addAssayProperties(assayGroupSummary, allSampleValues, ContrastPropertyType.SAMPLE);
 
-        return assayProperties;
+        return assayGroupSummary;
 
     }
 
-    private void addAssayProperties(AssayProperties assayProperties, Multimap<String, String> allValues, ContrastPropertyType contrastPropertyType) {
+    protected void addAssayProperties(AssayGroupSummary assayGroupSummary, Multimap<String, String> allValues, ContrastPropertyType contrastPropertyType) {
         for (String name : allValues.keySet()) {
 
             AssayProperty property = new AssayProperty(name,
-                            Joiner.on(",").skipNulls().join(allValues.get(name)),
-                            contrastPropertyType);
+                    Joiner.on(",").skipNulls().join(allValues.get(name)),
+                    contrastPropertyType);
 
-            assayProperties.add(property);
+            assayGroupSummary.add(property);
         }
     }
 
-    private void extractAllValues(Map<String, String> samples, Multimap<String, String> allValues) {
+    protected void extractAllValues(Map<String, String> samples, Multimap<String, String> allValues) {
         for (String name : samples.keySet()) {
             allValues.put(name, samples.get(name));
         }

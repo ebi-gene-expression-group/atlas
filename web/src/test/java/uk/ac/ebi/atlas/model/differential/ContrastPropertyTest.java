@@ -24,9 +24,9 @@ package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.collect.Sets;
 import org.junit.Test;
-import uk.ac.ebi.atlas.web.model.rest.AssayProperty;
-import uk.ac.ebi.atlas.web.model.rest.ContrastProperty;
-import uk.ac.ebi.atlas.web.model.rest.ContrastPropertyType;
+import uk.ac.ebi.atlas.dto.tooltip.AssayProperty;
+import uk.ac.ebi.atlas.dto.tooltip.ContrastProperty;
+import uk.ac.ebi.atlas.dto.tooltip.ContrastPropertyType;
 
 import java.util.SortedSet;
 
