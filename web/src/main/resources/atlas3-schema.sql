@@ -522,4 +522,6 @@ WHEN OTHERS THEN
    raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
 END;
 
+create or replace type IDENTIFIERS_TABLE as table of varchar2(255 byte);
+
 exit;
