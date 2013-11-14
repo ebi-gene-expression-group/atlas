@@ -28,7 +28,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 public class DifferentialBioentityExpressionsBuilderIT {
 
     @Inject
-    DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
+    GeneQueryDifferentialService geneQueryDifferentialService;
 
     public static List<String> getBioentityNames(DifferentialBioentityExpressions bioentityExpressions) {
         List<String> names = Lists.newArrayList();
@@ -44,7 +44,7 @@ public class DifferentialBioentityExpressionsBuilderIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("ENSG00000161547 ENSMUSG00000030105");
 
-        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(requestParameters);
+        DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
 
         assertThat(bioentityExpressions, hasSize(6));
 
@@ -60,7 +60,7 @@ public class DifferentialBioentityExpressionsBuilderIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("ENSG00000161547 ENSG00000211855");
 
-        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(requestParameters);
+        DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
 
         assertThat(bioentityExpressions, hasSize(4));
         assertThat(bioentityExpressions.getTotalNumberOfResults(), is(4));
@@ -77,7 +77,7 @@ public class DifferentialBioentityExpressionsBuilderIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("hsa-mir-636");
 
-        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(requestParameters);
+        DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
 
         assertThat(bioentityExpressions, hasSize(4));
 
@@ -93,7 +93,7 @@ public class DifferentialBioentityExpressionsBuilderIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("\"zinc finger\"");
 
-        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(requestParameters);
+        DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
 
         assertThat(bioentityExpressions, hasSize(21));
 
@@ -111,7 +111,7 @@ public class DifferentialBioentityExpressionsBuilderIT {
         requestParameters.setGeneQuery("kinase");
         requestParameters.setExactMatch(false);
 
-        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(requestParameters);
+        DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
 
         assertThat(bioentityExpressions, hasSize(50));
         assertThat(bioentityExpressions.getTotalNumberOfResults(), is(697));
@@ -130,7 +130,7 @@ public class DifferentialBioentityExpressionsBuilderIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
 
-        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(requestParameters);
+        DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
 
         assertThat(bioentityExpressions, hasSize(50));
         assertThat(bioentityExpressions.getTotalNumberOfResults(), is(4347));
@@ -148,7 +148,7 @@ public class DifferentialBioentityExpressionsBuilderIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("apoptosis");
 
-        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(requestParameters);
+        DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
 
         assertThat(bioentityExpressions, hasSize(50));
 
@@ -166,7 +166,7 @@ public class DifferentialBioentityExpressionsBuilderIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("pregnant");
 
-        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(requestParameters);
+        DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
 
         assertThat(bioentityExpressions, hasSize(50));
 
@@ -182,7 +182,7 @@ public class DifferentialBioentityExpressionsBuilderIT {
         requestParameters.setGeneQuery("apoptosis");
         requestParameters.setCondition("pregnant");
 
-        DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(requestParameters);
+        DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
 
         assertThat(bioentityExpressions, hasSize(2));
 

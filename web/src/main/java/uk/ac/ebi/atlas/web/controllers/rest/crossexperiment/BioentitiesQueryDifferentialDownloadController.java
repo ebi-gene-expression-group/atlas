@@ -25,29 +25,15 @@ package uk.ac.ebi.atlas.web.controllers.rest.crossexperiment;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.atlas.commands.DifferentialBioentityExpressionsBuilder;
+import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.WriteDifferentialProfilesCommand;
-import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
-import uk.ac.ebi.atlas.commands.download.DataWriterFactory;
 import uk.ac.ebi.atlas.commands.download.DifferentialBioentityExpressionsTSVWriter;
-import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
-import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -58,12 +44,12 @@ public class BioentitiesQueryDifferentialDownloadController {
 
     private static final Logger LOGGER = Logger.getLogger(BioentitiesQueryDifferentialDownloadController.class);
 
-    private DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
+    private GeneQueryDifferentialService geneQueryDifferentialService;
     private DifferentialBioentityExpressionsTSVWriter tsvWriter;
 
     @Inject
-    public BioentitiesQueryDifferentialDownloadController(DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder, DifferentialBioentityExpressionsTSVWriter tsvWriter) {
-        this.differentialBioentityExpressionsBuilder = differentialBioentityExpressionsBuilder;
+    public BioentitiesQueryDifferentialDownloadController(GeneQueryDifferentialService geneQueryDifferentialService, DifferentialBioentityExpressionsTSVWriter tsvWriter) {
+        this.geneQueryDifferentialService = geneQueryDifferentialService;
         this.tsvWriter = tsvWriter;
     }
 
@@ -72,7 +58,7 @@ public class BioentitiesQueryDifferentialDownloadController {
         LOGGER.info("downloadGeneQueryDifferentialExpressions for " + requestParameters);
 
         try {
-            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(requestParameters);
+            DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
 
             if (bioentityExpressions.isEmpty()) {
                 noGenesFoundException(requestParameters);

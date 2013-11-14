@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.commands.BaselineBioentityCountsBuilder;
-import uk.ac.ebi.atlas.commands.DifferentialBioentityExpressionsBuilder;
+import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
@@ -52,14 +52,14 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class BioentitiesQueryController {
 
-    private DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder;
+    private GeneQueryDifferentialService geneQueryDifferentialService;
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
     private BaselineBioentityCountsBuilder baselineBioentityCountsBuilder;
 
     @Inject
-    public BioentitiesQueryController(DifferentialBioentityExpressionsBuilder differentialBioentityExpressionsBuilder, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer, BaselineBioentityCountsBuilder baselineBioentityCountsBuilder) {
-        this.differentialBioentityExpressionsBuilder = differentialBioentityExpressionsBuilder;
+    public BioentitiesQueryController(GeneQueryDifferentialService geneQueryDifferentialService, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer, BaselineBioentityCountsBuilder baselineBioentityCountsBuilder) {
+        this.geneQueryDifferentialService = geneQueryDifferentialService;
         this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
         this.baselineBioentityCountsBuilder = baselineBioentityCountsBuilder;
     }
@@ -85,7 +85,7 @@ public class BioentitiesQueryController {
             model.addAttribute("baselineCounts", baselineCounts);
 
             // used to populate diff-heatmap-table
-            DifferentialBioentityExpressions bioentityExpressions = differentialBioentityExpressionsBuilder.build(requestParameters);
+            DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
 
             model.addAttribute("bioentities", bioentityExpressions);
 

@@ -43,23 +43,23 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class DifferentialBioentityExpressionsBuilder {
+public class GeneQueryDifferentialService {
 
     private DiffExpressionDao diffExpressionDao;
     private DifferentialConditionsSearchService differentialConditionsSearchService;
     private SolrQueryService solrQueryService;
 
     @Inject
-    public DifferentialBioentityExpressionsBuilder(DiffExpressionDao diffExpressionDao,
-                                                   DifferentialConditionsSearchService differentialConditionsSearchService,
-                                                   SolrQueryService solrQueryService) {
+    public GeneQueryDifferentialService(DiffExpressionDao diffExpressionDao,
+                                        DifferentialConditionsSearchService differentialConditionsSearchService,
+                                        SolrQueryService solrQueryService) {
         this.diffExpressionDao = diffExpressionDao;
         this.differentialConditionsSearchService = differentialConditionsSearchService;
         this.solrQueryService = solrQueryService;
     }
 
 
-    public DifferentialBioentityExpressions build(Set<String> geneIdentifiers) {
+    public DifferentialBioentityExpressions query(Set<String> geneIdentifiers) {
 
         if (CollectionUtils.isNotEmpty(geneIdentifiers)) {
 
@@ -72,7 +72,7 @@ public class DifferentialBioentityExpressionsBuilder {
         return new DifferentialBioentityExpressions();
     }
 
-    public DifferentialBioentityExpressions build(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
+    public DifferentialBioentityExpressions query(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
 
         Collection<IndexedAssayGroup> contrasts = null;
         Collection<String> geneIds = null;
