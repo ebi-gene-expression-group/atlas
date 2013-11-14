@@ -20,6 +20,8 @@
   ~ http://gxa.github.com/gxa
   --%>
 
+<%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
+
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -29,7 +31,8 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
-<table id="diff-heatmap-table" class="table-grid">
+
+<table><tbody><tr><td><table id="diff-heatmap-table" class="table-grid">
     <thead>
     <tr>
         <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
@@ -122,7 +125,21 @@
     </c:forEach>
     </tbody>
 </table>
-
+</td>
+    <td style="vertical-align: top">
+        <div style="float:left;">
+            <a id="download-profiles-link"
+               title="Top 50 genes displayed on page. Download results to see the rest."
+               href="${applicationProperties.buildDownloadURL(pageContext.request)}"
+               class="button-image" target="_blank">
+                <img id="download-profiles" alt="Download query results" style="width:20px"
+                     src="${base}/resources/images/download_blue_small.png">
+            </a>
+        </div>
+    </td>
+</tr>
+</tbody>
+</table>
 <script language="JavaScript" type="text/javascript" src="${base}/resources/js/heatmapModule.js"></script>
 
 <script type="text/javascript">

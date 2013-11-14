@@ -44,7 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfile<K>, K extends DifferentialExpression> extends GeneProfilesTSVWriter<T, Contrast> {
-    private static final Logger LOGGER = Logger.getLogger(RnaSeqProfilesTSVWriter.class);
+    private static final Logger LOGGER = Logger.getLogger(DifferentialProfilesTSVWriter.class);
     private Resource tsvFileMastheadResource;
     private String tsvFileMastheadTemplate;
 
@@ -82,6 +82,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
 
     @Override
     protected String getTsvFileMasthead() {
+        //TODO: this class should be decoupled from requestContext
         DifferentialRequestContext requestContext = getRequestContext();
         String geneQuery = requestContext.getGeneQuery();
         String specific = requestContext.isSpecific() ? " specifically" : "";

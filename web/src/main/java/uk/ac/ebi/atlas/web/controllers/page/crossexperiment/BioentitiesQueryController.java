@@ -79,7 +79,7 @@ public class BioentitiesQueryController {
         String geneQuery = requestParameters.getGeneQuery();
         try {
 
-            model.addAttribute("entityIdentifier", buildTitle(requestParameters));
+            model.addAttribute("entityIdentifier", requestParameters.getDescription());
 
             Set<BaselineExperimentResult> baselineCounts = baselineBioentityCountsBuilder.build(requestParameters);
             model.addAttribute("baselineCounts", baselineCounts);
@@ -134,19 +134,5 @@ public class BioentitiesQueryController {
         return stringBuilder.toString();
     }
 
-    protected String buildTitle(GeneQuerySearchRequestParameters requestParameters) {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (requestParameters.hasGeneQuery()) {
-            stringBuilder.append(requestParameters.getGeneQuery());
 
-            if (requestParameters.hasCondition()) {
-                stringBuilder.append(" AND ");
-            }
-        }
-
-        if (requestParameters.hasCondition()) {
-            stringBuilder.append(requestParameters.getCondition());
-        }
-        return stringBuilder.toString();
-    }
 }
