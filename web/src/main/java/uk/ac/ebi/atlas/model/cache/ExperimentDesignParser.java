@@ -30,6 +30,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,11 @@ public class ExperimentDesignParser {
                                               .build();
 
         List<String[]> csvLines = new ArrayList<>(tsvReader.readAll());
+
+        if (csvLines.isEmpty()) {
+            String tsvFilePath = MessageFormat.format(pathTemplate, experimentAccession);
+            throw new IllegalStateException(String.format("%s is empty", tsvFilePath));
+        }
 
         String[] headerLine = csvLines.remove(0);
 

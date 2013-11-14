@@ -53,9 +53,9 @@ public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayEx
 
             return experiments.get(experimentAccession);
 
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Exception while loading MAGE TAB file: " + e.getMessage(), e.getCause());
+            throw new IllegalStateException(String.format("Exception while loading experiment %s: %s", experimentAccession, e.getMessage()), e.getCause());
         }
     }
 

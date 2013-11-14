@@ -29,7 +29,7 @@ class DifferentialBioentityExpressionRowMapper implements RowMapper<Differential
 
     @Override
     public DifferentialBioentityExpression mapRow(ResultSet rs, int rowNum) throws SQLException {
-        String experimentAccession = rs.getString(AssayGroupQueryBuilder.EXPERIMENT);
+        String experimentAccession = rs.getString(DifferentialGeneQueryBuilder.EXPERIMENT);
         String contrastId = rs.getString(DiffExpressionDao.CONTRASTID);
         Contrast contrast = contrastTrader.getContrast(experimentAccession, contrastId);
         DifferentialExpression expression = buildDifferentialExpression(rs.getDouble(DiffExpressionDao.PVALUE), rs.getDouble(DiffExpressionDao.LOG_2_FOLD), rs.getString(DiffExpressionDao.TSTAT), contrast);

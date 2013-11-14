@@ -105,16 +105,8 @@ public class DifferentialBioentityExpressionsBuilder {
             Set<String> matureRNAIds = solrQueryService.findMatureRNAIds(geneQuery);
             geneIds.addAll(matureRNAIds);
 
-            if (geneIds.size() == 0) {
+            if (geneIds.isEmpty()) {
                 return new DifferentialBioentityExpressions();
-            }
-
-            // limit to 5000, after which queries start to take to long
-            // up to 33,000 ids will actually work (slowly), but 34,500 will generate the error
-            // ORA-12801: error signaled in parallel query server P008
-            // ORA-01008: not all variables bound
-            if (geneIds.size() > 5000) {
-                throw new IllegalArgumentException("Expression Atlas cannot currently handle this complex query. Please choose a more selective keyword.");
             }
 
         }
