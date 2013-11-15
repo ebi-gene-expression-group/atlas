@@ -117,7 +117,7 @@ public class DiffExpressionDao {
     }
 
 
-    public void foreachExpression(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, final Visitor<DifferentialBioentityExpression> visitor) {
+    public void foreachExpression(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, final Visitor<DifferentialBioentityExpression> visitor)  {
         LOGGER.debug(String.format("foreachExpression for %s contrasts and %s genes", (indexedContrasts == null) ? 0 : indexedContrasts.size(), (geneIds == null) ? 0 : geneIds.size()));
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -129,17 +129,33 @@ public class DiffExpressionDao {
 
         jdbcTemplate.setFetchSize(10000);
 
-        jdbcTemplate.query(indexedContrastQuery.getQuery(), new RowCallbackHandler() {
+        try {
+            jdbcTemplate.query(indexedContrastQuery.getQuery(), new RowCallbackHandler() {
 
-            @Override
-            public void processRow(ResultSet resultSet) throws SQLException {
-                count.increment();
+                @Override
+                public void processRow(ResultSet resultSet) throws SQLException {
+                    count.increment();
 
-                DifferentialBioentityExpression dbe = dbeRowMapper.mapRow(resultSet, count.intValue());
-                visitor.visit(dbe);
+                    DifferentialBioentityExpression dbe = dbeRowMapper.mapRow(resultSet, count.intValue());
+
+                    try {
+                        visitor.visit(dbe);
+                    } catch (IllegalStateException e) {
+                        // throw SQLException so result set is closed
+                        throw new SQLException(e);
+                    }
+                }
+
+            }, indexedContrastQuery.getParameters().toArray());
+        } catch (DataAccessException e) {
+            LOGGER.warn(String.format("foreachExpression aborted: " + e.getCause().getMessage()));
+
+            if (e.getCause() != null && e.getCause().getCause() != null && e.getCause().getCause() instanceof IllegalStateException) {
+                throw (IllegalStateException)(e.getCause().getCause());
+            } else {
+                throw e;
             }
-
-        }, indexedContrastQuery.getParameters().toArray());
+        }
 
         stopwatch.stop();
         LOGGER.debug(String.format("foreachExpression processed %s expressions in %s seconds", count.intValue(), stopwatch.elapsed(TimeUnit.SECONDS)));

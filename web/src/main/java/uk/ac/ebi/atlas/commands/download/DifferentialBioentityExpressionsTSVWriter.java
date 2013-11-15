@@ -57,6 +57,10 @@ public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable,
     private CSVWriter csvWriter;
     private PrintWriter responseWriter;
 
+    private static final int FLUSH_INTERVAL = 100;
+
+    private int count = 0;
+
     @Value("classpath:/file-templates/download-headers-geneQuery.txt")
     public void setTsvFileMastheadTemplateResource(Resource tsvFileMastheadResource) {
         this.tsvFileMastheadTemplate = resourceContentsToString(tsvFileMastheadResource);
@@ -82,6 +86,7 @@ public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable,
         responseWriter.flush();
     }
 
+    //will throw IllegalStateException if there are errors during writing
     public int write(DifferentialBioentityExpressions expressions) throws IOException {
 
         for (DifferentialBioentityExpression expression : expressions) {
@@ -94,10 +99,23 @@ public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable,
     }
 
     private void write(DifferentialBioentityExpression expression) {
+        checkWriterNotInError();
+
         String[] csvRow = buildCsvRow(expression);
         csvWriter.writeNext(csvRow);
     }
 
+    private void checkWriterNotInError() {
+        count++;
+
+        //checkError does a flush, so only check every FLUSH_INTERVAL
+        if ((count % FLUSH_INTERVAL==0) && responseWriter.checkError()) {
+            // abort eg: when the client hangs up during download
+            throw new IllegalStateException("responseWriter error - cannot write expression #" + count);
+        }
+    }
+
+    //will throw IllegalStateException if there are errors during writing
     @Override
     public void visit(DifferentialBioentityExpression value) {
         write(value);

@@ -65,6 +65,8 @@ public class BioentitiesQueryDifferentialDownloadController {
 
             int count = geneQueryDifferentialService.forEachExpression(requestParameters, tsvWriter);
             LOGGER.info("downloadGeneQueryResults streamed " + count + " differential gene expressions");
+        } catch (IllegalStateException e) {
+            LOGGER.warn("downloadGeneQueryResults aborted, connection may have been lost with the client");
         }
     }
 
