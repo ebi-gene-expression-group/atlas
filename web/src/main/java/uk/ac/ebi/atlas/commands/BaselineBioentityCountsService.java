@@ -42,7 +42,7 @@ import java.util.SortedSet;
 
 @Named
 @Scope("request")
-public class BaselineBioentityCountsBuilder {
+public class BaselineBioentityCountsService {
 
     private BaselineExperimentDao baselineExperimentDao;
 
@@ -58,14 +58,14 @@ public class BaselineBioentityCountsBuilder {
     }
 
     @Inject
-    public BaselineBioentityCountsBuilder(BaselineExperimentDao baselineExperimentDao, BaselineConditionsSearchService baselineConditionsSearchService, SolrQueryService solrQueryService) {
+    public BaselineBioentityCountsService(BaselineExperimentDao baselineExperimentDao, BaselineConditionsSearchService baselineConditionsSearchService, SolrQueryService solrQueryService) {
         this.baselineExperimentDao = baselineExperimentDao;
         this.baselineConditionsSearchService = baselineConditionsSearchService;
         this.solrQueryService = solrQueryService;
     }
 
 
-    public Set<BaselineExperimentResult> build(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
+    public Set<BaselineExperimentResult> query(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
 
         SortedSet<BaselineExperimentResult> result =
                 Sets.newTreeSet(new Comparator<BaselineExperimentResult>() {
@@ -93,6 +93,9 @@ public class BaselineBioentityCountsBuilder {
                             result.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
                         }
                     } else {
+
+                        // check that the assay groups have ANY genes expressed
+                        // TODO: is this actually needed, or can do we already know that there will be ANY gene expressed?
                         if (baselineExperimentDao.isExperimentWithCondition(experimentAccession, assayGroupsPerExperiment.get(experimentAccession))) {
                             result.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
                         }

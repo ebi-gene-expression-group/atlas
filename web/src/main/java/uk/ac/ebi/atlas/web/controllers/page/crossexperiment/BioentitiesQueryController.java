@@ -32,7 +32,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.atlas.commands.BaselineBioentityCountsBuilder;
+import uk.ac.ebi.atlas.commands.BaselineBioentityCountsService;
 import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
@@ -55,13 +55,13 @@ public class BioentitiesQueryController {
     private GeneQueryDifferentialService geneQueryDifferentialService;
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
-    private BaselineBioentityCountsBuilder baselineBioentityCountsBuilder;
+    private BaselineBioentityCountsService baselineBioentityCountsService;
 
     @Inject
-    public BioentitiesQueryController(GeneQueryDifferentialService geneQueryDifferentialService, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer, BaselineBioentityCountsBuilder baselineBioentityCountsBuilder) {
+    public BioentitiesQueryController(GeneQueryDifferentialService geneQueryDifferentialService, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer, BaselineBioentityCountsService baselineBioentityCountsService) {
         this.geneQueryDifferentialService = geneQueryDifferentialService;
         this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
-        this.baselineBioentityCountsBuilder = baselineBioentityCountsBuilder;
+        this.baselineBioentityCountsService = baselineBioentityCountsService;
     }
 
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
@@ -81,7 +81,7 @@ public class BioentitiesQueryController {
 
             model.addAttribute("entityIdentifier", requestParameters.getDescription());
 
-            Set<BaselineExperimentResult> baselineCounts = baselineBioentityCountsBuilder.build(requestParameters);
+            Set<BaselineExperimentResult> baselineCounts = baselineBioentityCountsService.query(requestParameters);
             model.addAttribute("baselineCounts", baselineCounts);
 
             // used to populate diff-heatmap-table
