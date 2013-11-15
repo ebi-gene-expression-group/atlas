@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.utils.Visitor;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Named;
@@ -48,7 +49,7 @@ import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 @Named
 @Scope("prototype")
-public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable {
+public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable, Visitor<DifferentialBioentityExpression> {
     private static final Logger LOGGER = Logger.getLogger(DifferentialBioentityExpressionsTSVWriter.class);
     private String tsvFileMastheadTemplate;
     private static final String[] HEADERS = {"Gene", "Design Element", "Organism", "Contrast", "p-value", "log2foldchange", "t-statistic"};
@@ -84,13 +85,22 @@ public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable 
     public int write(DifferentialBioentityExpressions expressions) throws IOException {
 
         for (DifferentialBioentityExpression expression : expressions) {
-            String[] csvRow = buildCsvRow(expression);
-            csvWriter.writeNext(csvRow);
+            write(expression);
         }
 
         csvWriter.flush();
 
         return expressions.size();
+    }
+
+    private void write(DifferentialBioentityExpression expression) {
+        String[] csvRow = buildCsvRow(expression);
+        csvWriter.writeNext(csvRow);
+    }
+
+    @Override
+    public void visit(DifferentialBioentityExpression value) {
+        write(value);
     }
 
     private String[] buildCsvRow(DifferentialBioentityExpression dbExpression) {

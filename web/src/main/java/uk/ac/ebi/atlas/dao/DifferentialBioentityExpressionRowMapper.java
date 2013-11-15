@@ -31,9 +31,10 @@ class DifferentialBioentityExpressionRowMapper implements RowMapper<Differential
     public DifferentialBioentityExpression mapRow(ResultSet rs, int rowNum) throws SQLException {
         String experimentAccession = rs.getString(DifferentialGeneQueryBuilder.EXPERIMENT);
         String contrastId = rs.getString(DiffExpressionDao.CONTRASTID);
+
+        //TODO: getting contrast is slow because we go back to the database to get the experiment for each contrast
         Contrast contrast = contrastTrader.getContrast(experimentAccession, contrastId);
         DifferentialExpression expression = buildDifferentialExpression(rs.getDouble(DiffExpressionDao.PVALUE), rs.getDouble(DiffExpressionDao.LOG_2_FOLD), rs.getString(DiffExpressionDao.TSTAT), contrast);
-
 
         return new DifferentialBioentityExpression(
                 rs.getString(DiffExpressionDao.IDENTIFIER),
