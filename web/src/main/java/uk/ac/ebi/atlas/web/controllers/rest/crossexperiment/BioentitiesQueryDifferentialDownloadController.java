@@ -57,35 +57,20 @@ public class BioentitiesQueryDifferentialDownloadController {
     public void downloadGeneQueryDifferentialExpressions(@Valid GeneQuerySearchRequestParameters requestParameters, HttpServletResponse response) throws IOException {
         LOGGER.info("downloadGeneQueryDifferentialExpressions for " + requestParameters);
 
-        try {
-            DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
+        setDownloadHeaders(response, requestParameters.getDescription() + ".tsv");
 
-            if (bioentityExpressions.isEmpty()) {
-                noGenesFoundException(requestParameters);
-            }
+        try (DifferentialBioentityExpressionsTSVWriter writer = tsvWriter) {
+            writer.setResponseWriter(response.getWriter());
+            writer.writeHeader(requestParameters);
 
-            setDownloadHeaders(response, requestParameters.getDescription() + ".tsv");
-
-            tsvWriter.setResponseWriter(response.getWriter());
-            tsvWriter.writeHeader(requestParameters);
-            tsvWriter.write(bioentityExpressions);
-
-            LOGGER.info("downloadGeneQueryResults streamed " + bioentityExpressions.size() + " differential gene expressions");
-
-        } catch (GenesNotFoundException e) {
-            noGenesFoundException(requestParameters);
+            int count = geneQueryDifferentialService.forEachExpression(requestParameters, tsvWriter);
+            LOGGER.info("downloadGeneQueryResults streamed " + count + " differential gene expressions");
         }
     }
 
     private void setDownloadHeaders(HttpServletResponse response, String fileName) {
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
         response.setContentType("text/plain; charset=utf-8");
-    }
-
-    private void noGenesFoundException(GeneQuerySearchRequestParameters requestParameters) {
-        String message = "No genes found for " + requestParameters;
-        LOGGER.info(message);
-        throw new ResourceNotFoundException(message);
     }
 
 }

@@ -4,6 +4,7 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -11,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
+import uk.ac.ebi.atlas.utils.Visitor;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -25,7 +27,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class DifferentialBioentityExpressionsBuilderIT {
+public class GeneQueryDifferentialServiceIT {
 
     @Inject
     GeneQueryDifferentialService geneQueryDifferentialService;
@@ -136,6 +138,55 @@ public class DifferentialBioentityExpressionsBuilderIT {
         assertThat(bioentityExpressions.getTotalNumberOfResults(), is(4347));
 
         List<String> names = getBioentityNames(bioentityExpressions);
+
+        //System.out.println(Joiner.on("\", \"").join(names));
+
+        assertThat(names, contains("Arl8b", "Ddx3y", "Eif2s3y", "Uty", "Kdm5d", "Cldn8", "Lactbl1", "Tph1", "Ivd", "Fmo1", "Matn2", "Chgb", "Cish", "Lrrc55", "Neb", "Ogdhl", "Ehhadh", "Wipi1", "Rgs2", "Gpnmb", "Tmem255a", "Gpr26", "Gpx6", "Reg3b", "Vip", "Prlr", "Dnahc8", "Hsbp1", "Cst7", "Tnfrsf11b", "Npas4", "Dnajb1", "Enpp2", "Sftpd", "Reg3a", "Disp2", "Igfals", "Itgax", "Mpeg1", "B3galnt1", "Ikzf4", "Nr4a1", "Lgals3", "Dnase1", "Lpl", "Cspg5", "Dnaja1", "Ern1", "Ch25h", "Dhcr7"));
+
+    }
+
+
+    @Test
+    public void forEachExpressionGeneQueryMiRNA() throws GenesNotFoundException {
+        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        requestParameters.setGeneQuery("hsa-mir-636");
+
+        final List<String> names = Lists.newArrayList();
+
+        int count = geneQueryDifferentialService.forEachExpression(requestParameters, new Visitor<DifferentialBioentityExpression>() {
+
+            @Override
+            public void visit(DifferentialBioentityExpression value) {
+                names.add(value.getBioentityName());
+            }
+        });
+
+        assertThat(count, is(4));
+        assertThat(names, hasSize(4));
+        assertThat(names, contains("MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306"));
+
+    }
+
+    @Test
+    @Ignore //TODO: re-enable when performance fixed
+    public void forEachExpressionGeneQueryKeywordProteinCoding() throws GenesNotFoundException {
+        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        requestParameters.setGeneQuery("protein_coding");
+
+        final List<String> names = Lists.newArrayList();
+
+        geneQueryDifferentialService.forEachExpression(requestParameters, new Visitor<DifferentialBioentityExpression>() {
+
+            int count = 0;
+
+            @Override
+            public void visit(DifferentialBioentityExpression value) {
+                System.out.print(++count + "\t");
+                names.add(value.getBioentityName());
+            }
+        });
+
+        assertThat(names, hasSize(4347));
 
         //System.out.println(Joiner.on("\", \"").join(names));
 

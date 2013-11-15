@@ -50,10 +50,10 @@ public class DiffExpressionDaoIT {
 
 
     @Test
-    public void testGetExpressions() throws Exception {
+    public void testGetTopExpressions() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
-        List<DifferentialBioentityExpression> expressions = subject.getExpressions(Lists.newArrayList(indexedContrast1), new HashSet<String>());
+        List<DifferentialBioentityExpression> expressions = subject.getTopExpressions(Lists.newArrayList(indexedContrast1), new HashSet<String>());
         assertThat(expressions.size(), is(16));
         assertThat(expressions.get(0).getBioentityId(), is("FBgn0040393"));
         assertThat(expressions.get(1).getBioentityId(), is("FBgn0017561"));
@@ -69,10 +69,10 @@ public class DiffExpressionDaoIT {
     }
 
     @Test
-    public void testGetExpressionsForGene() throws Exception {
+    public void testGetTopExpressionsForGene() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
-        List<DifferentialBioentityExpression> expressions = subject.getExpressions(null, Sets.newHashSet("AT1G02220"));
+        List<DifferentialBioentityExpression> expressions = subject.getTopExpressions(null, Sets.newHashSet("AT1G02220"));
         assertThat(expressions, hasSize(2));
         assertThat(expressions.get(0).getBioentityId(), is("AT1G02220"));
         assertThat(expressions.get(0).getExperimentAccession(), is("E-GEOD-38400"));

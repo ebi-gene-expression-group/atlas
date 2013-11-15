@@ -26,19 +26,23 @@ import com.google.common.base.Stopwatch;
 import oracle.jdbc.OracleConnection;
 import oracle.sql.ArrayDescriptor;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
+import uk.ac.ebi.atlas.utils.Visitor;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
@@ -80,42 +84,70 @@ public class DiffExpressionDao {
 
     private final DataSource dataSource;
 
+    private final JdbcTemplate jdbcTemplate;
+
     private DifferentialGeneQueryBuilder differentialGeneQueryBuilder;
 
-    private DifferentialBioentityExpressionRowMapper rowMapper;
+    private DifferentialBioentityExpressionRowMapper dbeRowMapper;
 
     @Inject
-    public DiffExpressionDao(@Qualifier("dataSourceOracle") DataSource dataSource, DifferentialGeneQueryBuilder differentialGeneQueryBuilder, DifferentialBioentityExpressionRowMapper rowMapper) {
+    public DiffExpressionDao(@Qualifier("dataSourceOracle") DataSource dataSource, DifferentialGeneQueryBuilder differentialGeneQueryBuilder, DifferentialBioentityExpressionRowMapper dbeRowMapper) {
         this.differentialGeneQueryBuilder = differentialGeneQueryBuilder;
-        this.rowMapper = rowMapper;
+        this.dbeRowMapper = dbeRowMapper;
         this.dataSource = dataSource;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<DifferentialBioentityExpression> getExpressions(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds) {
-        LOGGER.debug(String.format("getExpressions for %s contrasts and %s genes", (indexedContrasts == null) ? 0 : indexedContrasts.size(), (geneIds == null) ? 0 : geneIds.size()));
+    public List<DifferentialBioentityExpression> getTopExpressions(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds) {
+        LOGGER.debug(String.format("getTopExpressions for %s contrasts and %s genes", (indexedContrasts == null) ? 0 : indexedContrasts.size(), (geneIds == null) ? 0 : geneIds.size()));
         Stopwatch stopwatch = Stopwatch.createStarted();
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         Query<Object> indexedContrastQuery = buildIndexedContrastQuery(indexedContrasts, geneIds, SELECT_QUERY);
 
         jdbcTemplate.setMaxRows(RESULT_SIZE);
 
         List<DifferentialBioentityExpression> results = jdbcTemplate.query(indexedContrastQuery.getQuery(),
-                rowMapper,
+                dbeRowMapper,
                 indexedContrastQuery.getParameters().toArray());
 
         stopwatch.stop();
 
-        LOGGER.debug(String.format("getExpressions returned %s expressions in %s seconds", results.size(), stopwatch.elapsed(TimeUnit.SECONDS)));
+        LOGGER.debug(String.format("getTopExpressions returned %s expressions in %s seconds", results.size(), stopwatch.elapsed(TimeUnit.SECONDS)));
         return results;
+    }
+
+
+    public void foreachExpression(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, final Visitor<DifferentialBioentityExpression> visitor) {
+        LOGGER.debug(String.format("foreachExpression for %s contrasts and %s genes", (indexedContrasts == null) ? 0 : indexedContrasts.size(), (geneIds == null) ? 0 : geneIds.size()));
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
+        Query<Object> indexedContrastQuery = buildIndexedContrastQuery(indexedContrasts, geneIds, SELECT_QUERY);
+
+        final MutableInt count = new MutableInt(0);
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+        jdbcTemplate.setFetchSize(10000);
+
+        jdbcTemplate.query(indexedContrastQuery.getQuery(), new RowCallbackHandler() {
+
+            @Override
+            public void processRow(ResultSet resultSet) throws SQLException {
+                count.increment();
+
+                DifferentialBioentityExpression dbe = dbeRowMapper.mapRow(resultSet, count.intValue());
+                visitor.visit(dbe);
+            }
+
+        }, indexedContrastQuery.getParameters().toArray());
+
+        stopwatch.stop();
+        LOGGER.debug(String.format("foreachExpression processed %s expressions in %s seconds", count.intValue(), stopwatch.elapsed(TimeUnit.SECONDS)));
     }
 
     public int getResultCount(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds) {
         LOGGER.debug(String.format("getResultCount for %s contrasts and %s genes", (indexedContrasts == null) ? 0 : indexedContrasts.size(), (geneIds == null) ? 0 : geneIds.size()));
         Stopwatch stopwatch = Stopwatch.createStarted();
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         Query query = buildIndexedContrastQuery(indexedContrasts, geneIds, COUNT_QUERY);
 
@@ -139,8 +171,6 @@ public class DiffExpressionDao {
     }
 
     private oracle.sql.ARRAY createOracleArrayForIdentifiers(Collection<String> geneIds) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-
         final String[] ids = geneIds.toArray(new String[geneIds.size()]);
 
         return jdbcTemplate.execute(new ConnectionCallback<oracle.sql.ARRAY>() {
