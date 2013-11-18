@@ -2,3 +2,156 @@
 
 <p>This page is currently under construction.</p>
 
+
+<h2>Searching</h2>
+
+
+<h3>How do I find out which genes are expressed in my favourite tissue?</h3>
+
+<p>Use the <strong>Experimental conditions</strong> search box on the <a
+	href="/gxa">home page</a> to search all of Expression Atlas for organism parts e.g. <a
+	href="/gxa/query?geneQuery=&exactMatch=true&_exactMatch=on&condition=kidney">kidney</a>.
+You will see results about baseline and differential expression of genes in the
+organism part(s) you searched for. You can narrow down the search to specific
+genes by also typing gene identifiers in the <strong>Gene query</strong> search
+box.</p>
+
+<p>Use the <strong>Organism part</strong> box on a Baseline experiment page (e.g. <a
+	href="experiments/E-MTAB-513">Illumina Body Map</a>) to search within a
+single experiment. See the <a href="help/baseline-atlas.html">Baseline Atlas
+	help</a> for more information about searching within a Baseline experiment.</p>
+
+
+<h3>How do I search for my favourite gene?</h3>
+
+<p>Use the <strong>Gene query</strong> search box on the <a href="/gxa">home
+	page</a> to search all of Expression Atlas for genes. You will see results
+about baseline and differential expression for the gene or genes you searched
+for. You can narrow down the search to specific experimental conditions by also
+typing something in the <strong>Experimental conditions</strong> search
+box.</p>
+
+<p>Use the <strong>Gene query</strong> search box on an experiment page (e.g. <a
+	href="experiments/E-MTAB-513">Illumina Body Map</a>) to search for genes
+within a single experiment.</p>
+
+
+<h3>What gene identifiers can I use to search?</h3>
+
+<p>You may use the following identifiers to search using the <strong>Gene query</strong> box:</p>
+
+<ul>
+	<li><a href="http://www.ebi.ac.uk/ena/">EMBL</a> e.g. <strong>AC000015</strong></li>
+	<li><a href="http://www.ensembl.org/index.html">Ensembl</a> Gene e.g. <strong>ENSG00000171658</strong></li>
+	<li><a href="http://www.ensembl.org/index.html">Ensembl</a> Protein e.g. <strong>ENSP00000000233</strong></li>
+	<li><a href="http://www.ensembl.org/index.html">Ensembl</a> Transcript e.g. <strong>ENST00000000233</strong></li>
+	<li><a href="http://www.geneontology.org/">Gene Ontology</a> e.g. <strong>GO:0008134</strong></li>
+	<li><a href="http://www.ebi.ac.uk/interpro/">Interpro</a> e.g. <strong>IPR017892</strong></li>
+	<li><a href="http://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a> e.g. <strong>NM_212505</strong></li>
+	<li><a href="http://www.uniprot.org/">UniProt</a> e.g. <strong>Q8IZT6</strong></li>
+	<li><a href="http://www.uniprot.org/">UniProt</a> Metabolic Enzyme e.g. <strong>O15269</strong></li>
+	<li>gene or protein name e.g. <strong>WNT1</strong> or <strong>Wnt-1</strong></li>
+	<li><a href="http://www.geneontology.org/">GO</a> term e.g. <strong>&quot;transcription factor binding&quot;</strong> (please put multi-word query terms in quotes)</li>
+	<li>keyword e.g. <strong>transcription</strong></li>
+	<li>synonym e.g. <strong>Calmbp1</strong></li>
+</ul>
+
+
+<h3>How do I find a particular experiment?</h3>
+
+<p>All experiments currently in Expression Atlas are listed on <a
+	href="experiments">this page</a>. Click on the <strong>Description</strong>
+to see the experiment in Expression Atlas. Click on the <a
+	href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> accession number
+(e.g. <strong>E-MTAB-1066</strong>) to see the experiment in ArrayExpress. If you know the
+ArrayExpress accession of the experiment you want to see, you can link to the
+experiment in Expression Atlas
+using the following format:</p>
+
+<p><code>http://www.ebi.ac.uk/gxa/experiments/<strong>&lt;ArrayExpress accession&gt;</strong></code></p>
+
+<p>E.g. <a
+	href="experiments/E-MTAB-1066">http://www.ebi.ac.uk/gxa/experiments/E-MTAB-1066</a></p>
+
+
+<h3>Can I search Expression Atlas programmatically?</h3>
+
+<p>Not right now, but we are working to implement an API. Please check back soon!<p>
+
+
+<h2>Results</h2>
+
+
+<h3>When I search all of Expression Atlas, what do the &quot;Differential Expression&quot; results show?</h3>
+
+<p>The table in the <strong>Differential Expression</strong> section of the
+results shows all genes that matched your search and were differentially
+expressed with adjusted <i>p</i>-value &lt; 0.05. There is one row for each
+gene and each contrast the gene showed differential expression in. The genes
+are ordered so that the one with the lowest adjusted <i>p</i>-value is at the
+top.</p>
+
+
+<h3>What is a &quot;design element&quot;?</h3>
+
+<p>In results from microarray experiments, you will see the <strong>design
+	element</strong> name alongside the gene name. A design element is also
+known as a probe or probe set. This is the oligonucleotide probe (or group
+thereof) on the microarray that targets that gene.</p>
+
+
+<h3>What is a &quot;contrast&quot;?</h3>
+
+<p>A <strong>contrast</strong> is a comparison between two groups of samples in
+a differential expression experiment. An example of a contrast is
+<strong>&quot;<i>dicer</i> knock-out&quot; <i>vs.</i> &quot;wild
+	type&quot;</strong>. For each gene, the mean expression level of the
+<strong>test</strong> group (e.g. <i>dicer</i> knock-out) is compared with the
+mean expression level of the <strong>reference</strong> group (e.g. wild type),
+and a statistical test is performed to decide whether the two means are
+significantly different.</p>
+
+
+<h3>Where do the <i>p</i>-values come from?</h3>
+
+<p>In a microarray experiment, each gene's mean expression level in the
+<strong>test</strong> group is compared with its mean expression level in the
+<strong>reference</strong> group using a moderated <i>t</i>-test. This is done
+using the <a
+	href="http://www.bioconductor.org/packages/2.13/bioc/html/limma.html">limma</a>
+package from <a href="http://www.bioconductor.org/">Bioconductor</a>.</p>
+
+<p>In an RNA-seq experiment, each gene's mean expression level in the
+<strong>test</strong> group is compared with its mean expression level in the
+<strong>reference</strong> group using a conditioned test based on the negative
+binomial distribution, analogous to Fisher's exact test. This is done using the
+<a
+	href="http://www.bioconductor.org/packages/2.13/bioc/html/DESeq.html">DESeq</a>
+package in <a href="http://www.bioconductor.org/">Bioconductor</a>.</p>
+
+<p>Because the same test is done on thousands of genes at once, <i>p</i>-values
+are adjusted for <strong>multiple testing</strong> using the Benjamini and Hochberg (<a
+	href="http://www.jstor.org/stable/2346101">1995</a>) false discovery rate
+(FDR) correction. This is what is meant by <strong>adjusted
+	<i>p</i>-value</strong>.</p>
+
+
+<h3>How do I see the actual <i>p</i>-values in the results table?</h3>
+
+<p>Click the <strong>Display levels</strong> button to the top left of the table.</p>
+
+
+<h3>What do the red and blue colours in the table mean?</h3>
+
+<p>The intensity of the red a blue colour of the filled boxes in the table
+represents how low the adjusted <i>p</i>-value is for each gene. The lower the
+<i>p</i>-value, the more intense the red or blue colour. A red box indicates
+that the gene was <strong>up-regulated</strong> in the test condition. A blue
+box means that the gene was <strong>down-regulated</strong> in the test
+condition.</p>
+
+
+<h3>What are the blue and red bars above the results table?</h3>
+
+<p>The two bars show the red and blue colour intensities for the <strong>top
+	50</strong> genes shown on the page.</p>
