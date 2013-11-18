@@ -42,6 +42,8 @@ public class ExperimentalFactorsBuilder {
 
     private List<FactorGroup> orderedFactorGroups;
 
+    private Map<String, FactorGroup> orderedFactorGroupsByAssayGroup;
+
     private Set<String> menuFilterFactorTypes;
 
     public ExperimentalFactorsBuilder withFactorNamesByType(Map<String, String> factorNamesByType) {
@@ -51,6 +53,11 @@ public class ExperimentalFactorsBuilder {
 
     public ExperimentalFactorsBuilder withOrderedFactorGroups(List<FactorGroup> orderedFactorGroups) {
         this.orderedFactorGroups = orderedFactorGroups;
+        return this;
+    }
+
+    public ExperimentalFactorsBuilder withOrderedFactorGroupsByAssayGroup(Map<String, FactorGroup> orderedFactorGroupsByAssayGroup) {
+        this.orderedFactorGroupsByAssayGroup = orderedFactorGroupsByAssayGroup;
         return this;
     }
 
@@ -67,7 +74,7 @@ public class ExperimentalFactorsBuilder {
         SortedSetMultimap<Factor, Factor> coOccurringFactors = buildCoOccurringFactors();
 
         return new ExperimentalFactors(factorsByType, factorNamesByType, orderedFactorGroups,
-                coOccurringFactors, menuFilterFactorTypes);
+                coOccurringFactors, menuFilterFactorTypes, orderedFactorGroupsByAssayGroup);
     }
 
     SortedSetMultimap<String, Factor> buildFactorsByType() {

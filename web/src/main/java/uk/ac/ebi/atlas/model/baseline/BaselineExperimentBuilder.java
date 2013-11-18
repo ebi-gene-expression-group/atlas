@@ -54,6 +54,7 @@ public class BaselineExperimentBuilder {
     private Map<String, String> speciesMapping;
     private String experimentAccession;
     private List<FactorGroup> orderedFactorGroups;
+    private Map<String, FactorGroup> orderedFactorGroupsByAssayGroup;
     private Set<String> pubMedIds;
     private ExperimentDesign experimentDesign;
     private Date lastUpdate;
@@ -139,6 +140,7 @@ public class BaselineExperimentBuilder {
 
         ExperimentalFactors experimentalFactors = experimentalFactorsBuilder
                 .withOrderedFactorGroups(orderedFactorGroups)
+                .withOrderedFactorGroupsByAssayGroup(orderedFactorGroupsByAssayGroup)
                 .withMenuFilterFactorTypes(menuFilterFactorTypes)
                 .withFactorNamesByType(factorNamesByType)
                 .create();
@@ -160,6 +162,11 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withOrderedFactorGroups(List<FactorGroup> orderedFactorGroups) {
         this.orderedFactorGroups = orderedFactorGroups;
+        return this;
+    }
+
+    public BaselineExperimentBuilder withOrderedFactorGroupsByAssayGroup(Map<String, FactorGroup> orderedFactorGroupsByAssayGroup) {
+        this.orderedFactorGroupsByAssayGroup = orderedFactorGroupsByAssayGroup;
         return this;
     }
 

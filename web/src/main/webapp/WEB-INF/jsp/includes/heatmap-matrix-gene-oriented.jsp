@@ -70,7 +70,16 @@
                         </display:column>
                     </c:if>
 
-                    <c:forEach var="queryFactor" items="${allQueryFactors}">
+                    <c:forEach var="factorHolder" items="${allQueryFactors}">
+
+                        <c:choose>
+                            <c:when test="${type.isBaseline()}">
+                                <c:set var="queryFactor" value="${factorHolder.factor}"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="queryFactor" value="${factorHolder}"/>
+                            </c:otherwise>
+                        </c:choose>
 
                         <c:set var="expressionLevel"
                                value="${geneProfile.getExpressionLevel(queryFactor)}"/>

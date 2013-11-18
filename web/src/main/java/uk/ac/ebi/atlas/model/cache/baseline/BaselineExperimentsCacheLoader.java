@@ -92,6 +92,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
 
         List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(columnHeaders, assayGroups, experimentDesign);
+        Map<String, FactorGroup> factorGroupMap = extractOrderedFactorGroupsByAssayGroup(columnHeaders, assayGroups, experimentDesign);
 
         Map<String, String> factorNamesByType = getFactorNamesByType(experimentDesign, requiredFactorTypes);
 
@@ -103,6 +104,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withDefaultFilterFactors(defaultFilterFactors)
                 .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
                 .withOrderedFactorGroups(orderedFactorGroups)
+                .withOrderedFactorGroupsByAssayGroup(factorGroupMap)
                 .withExtraInfo(hasExtraInfoFile)
                 .withFactorNamesByType(factorNamesByType)
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
@@ -133,6 +135,22 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
             Map<String, String> factors = experimentDesign.getFactors(firstExperimentRun);
             factorGroups.add(FactorSet.create(factors));
+
+        }
+        return factorGroups;
+
+    }
+
+    Map<String, FactorGroup> extractOrderedFactorGroupsByAssayGroup(String[] columnHeaders, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
+
+        Map<String, FactorGroup> factorGroups = Maps.newLinkedHashMap();
+
+        for (String groupId : columnHeaders) {
+            AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
+            String firstExperimentRun = assayGroup.iterator().next();
+
+            Map<String, String> factors = experimentDesign.getFactors(firstExperimentRun);
+            factorGroups.put(groupId, FactorSet.create(factors));
 
         }
         return factorGroups;

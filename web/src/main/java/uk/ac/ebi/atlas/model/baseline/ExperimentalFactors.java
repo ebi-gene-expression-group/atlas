@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
+import uk.ac.ebi.atlas.dto.tooltip.AssayGroupFactor;
 
 import java.io.Serializable;
 import java.util.*;
@@ -42,8 +43,11 @@ public class ExperimentalFactors implements Serializable {
 
     private List<FactorGroup> orderedFactorGroups;
 
-    ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType, Map<String, String> factorNamesByType, List<FactorGroup> orderedFactorGroups, SortedSetMultimap<Factor, Factor> coOccurringFactors, Set<String> menuFilterFactorTypes) {
+    private Map<String, FactorGroup> orderedFactorGroupsByAssayGroup;
+
+    ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType, Map<String, String> factorNamesByType, List<FactorGroup> orderedFactorGroups, SortedSetMultimap<Factor, Factor> coOccurringFactors, Set<String> menuFilterFactorTypes, Map<String, FactorGroup> orderedFactorGroupsByAssayGroup) {
         this.factorsByType = factorsByType;
+        this.orderedFactorGroupsByAssayGroup = orderedFactorGroupsByAssayGroup;
         this.factorNamesByType.putAll(factorNamesByType);
         this.orderedFactorGroups = orderedFactorGroups;
         this.coOccurringFactors = coOccurringFactors;
@@ -95,6 +99,30 @@ public class ExperimentalFactors implements Serializable {
 
     }
 
+    public SortedSet<AssayGroupFactor> getFilteredAssayGroupFactors(final Set<Factor> filterFactors) {
+
+        SortedSet<AssayGroupFactor> result = Sets.newTreeSet();
+
+        for (String groupId : orderedFactorGroupsByAssayGroup.keySet()) {
+            List<Factor> remainingFactors;
+
+            if (CollectionUtils.isNotEmpty(filterFactors)) {
+                remainingFactors = orderedFactorGroupsByAssayGroup.get(groupId).remove(filterFactors);
+            } else {
+                remainingFactors = Lists.newArrayList(orderedFactorGroupsByAssayGroup.get(groupId).iterator());
+            }
+            if (remainingFactors.size() == 1) {
+                result.add(new AssayGroupFactor(groupId, remainingFactors.get(0)));
+            }
+        }
+
+        return result;
+    }
+
+    public FactorGroup getFactorSetByAssayGroup(String assayGroup) {
+        return orderedFactorGroupsByAssayGroup.get(assayGroup);
+    }
+
     public SortedSet<String> getMenuFilterFactorNames() {
 
         SortedSet<String> factorNames = Sets.newTreeSet();
@@ -121,7 +149,7 @@ public class ExperimentalFactors implements Serializable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "ExperimentalFactors: orderedFactorGroups = " + orderedFactorGroups
                 + ", factorsByType = " + factorsByType;
     }

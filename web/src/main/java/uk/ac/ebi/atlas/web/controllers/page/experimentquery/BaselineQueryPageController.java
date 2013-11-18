@@ -37,6 +37,7 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankBaselineProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
+import uk.ac.ebi.atlas.dto.tooltip.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
@@ -46,7 +47,7 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.controllers.BaselineQueryController;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
-import uk.ac.ebi.atlas.web.controllers.page.validators.*;
+import uk.ac.ebi.atlas.web.controllers.page.validators.BaselineRequestPreferencesValidator;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -127,8 +128,10 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
         SortedSet<Factor> allQueryFactors = experimentalFactors.getFilteredFactors(selectedFilterFactors);
 
+        SortedSet<AssayGroupFactor> filteredAssayGroupFactors = experimentalFactors.getFilteredAssayGroupFactors(selectedFilterFactors);
+
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
-        model.addAttribute("allQueryFactors", allQueryFactors);
+        model.addAttribute("allQueryFactors", filteredAssayGroupFactors);
 
         String species = requestContext.getFilteredBySpecies();
 
