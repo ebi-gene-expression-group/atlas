@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +36,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -81,10 +83,14 @@ public class ExperimentTest {
     public void initializeSubject() {
 
         List<FactorGroup> orderedFactorGroups = Lists.newArrayList(factorGroupMock1, factorGroupMock2);
+        Map<String, FactorGroup> orderedFactorGroupsByAssayGroup = Maps.newLinkedHashMap();
+        orderedFactorGroupsByAssayGroup.put("g1", factorGroupMock1);
+        orderedFactorGroupsByAssayGroup.put("g2", factorGroupMock2);
 
         when(experimentalFactorsBuilderMock.withMenuFilterFactorTypes(anySet())).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.withFactorNamesByType(anyMap())).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.withOrderedFactorGroups(orderedFactorGroups)).thenReturn(experimentalFactorsBuilderMock);
+        when(experimentalFactorsBuilderMock.withOrderedFactorGroupsByAssayGroup(orderedFactorGroupsByAssayGroup)).thenReturn(experimentalFactorsBuilderMock);
         when(experimentalFactorsBuilderMock.create()).thenReturn(experimentalFactorsMock);
 
         when(assayGroupsMock.iterator()).thenReturn(Sets.newHashSet(new AssayGroup("g1", RUN_ACCESSION1), new AssayGroup("g2", RUN_ACCESSION2)).iterator());
@@ -96,6 +102,7 @@ public class ExperimentTest {
                 .withDescription(DESCRIPTION)
                 .withDefaultQueryType(ORGANISM_PART)
                 .withOrderedFactorGroups(orderedFactorGroups)
+                .withOrderedFactorGroupsByAssayGroup(orderedFactorGroupsByAssayGroup)
                 .withDefaultFilterFactors(Collections.EMPTY_SET)
                 .withMenuFilterFactorTypes(Collections.EMPTY_SET)
                 .withFactorNamesByType(Collections.EMPTY_MAP)
