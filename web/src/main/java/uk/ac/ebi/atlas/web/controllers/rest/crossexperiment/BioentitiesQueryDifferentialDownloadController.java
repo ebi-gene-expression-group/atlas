@@ -27,11 +27,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.download.DifferentialBioentityExpressionsTSVWriter;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
+import uk.ac.ebi.atlas.utils.VisitorException;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -65,10 +63,11 @@ public class BioentitiesQueryDifferentialDownloadController {
 
             int count = geneQueryDifferentialService.forEachExpression(requestParameters, tsvWriter);
             LOGGER.info("downloadGeneQueryResults streamed " + count + " differential gene expressions");
-        } catch (IllegalStateException e) {
-            LOGGER.warn("downloadGeneQueryResults aborted, connection may have been lost with the client");
+        } catch (VisitorException e) {
+            LOGGER.warn("downloadGeneQueryResults aborted, connection may have been lost with the client:" + e.getMessage());
         }
     }
+
 
     private void setDownloadHeaders(HttpServletResponse response, String fileName) {
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");

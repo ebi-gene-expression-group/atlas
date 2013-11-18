@@ -34,6 +34,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.utils.Visitor;
+import uk.ac.ebi.atlas.utils.VisitorException;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Named;
@@ -86,7 +87,6 @@ public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable,
         responseWriter.flush();
     }
 
-    //will throw IllegalStateException if there are errors during writing
     public int write(DifferentialBioentityExpressions expressions) throws IOException {
 
         for (DifferentialBioentityExpression expression : expressions) {
@@ -98,27 +98,31 @@ public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable,
         return expressions.size();
     }
 
-    private void write(DifferentialBioentityExpression expression) {
+    private void write(DifferentialBioentityExpression expression) throws IOException {
         checkWriterNotInError();
 
         String[] csvRow = buildCsvRow(expression);
         csvWriter.writeNext(csvRow);
     }
 
-    private void checkWriterNotInError() {
+    private void checkWriterNotInError() throws IOException {
         count++;
 
         //checkError does a flush, so only check every FLUSH_INTERVAL
         if ((count % FLUSH_INTERVAL==0) && responseWriter.checkError()) {
             // abort eg: when the client hangs up during download
-            throw new IllegalStateException("responseWriter error - cannot write expression #" + count);
+            throw new IOException("responseWriter error writing expression #" + count);
         }
     }
 
-    //will throw IllegalStateException if there are errors during writing
+    //will throw VisitorException if there are errors during writing
     @Override
     public void visit(DifferentialBioentityExpression value) {
-        write(value);
+        try {
+            write(value);
+        } catch (IOException e) {
+            throw new VisitorException(e.getMessage(), e.getCause());
+        }
     }
 
     private String[] buildCsvRow(DifferentialBioentityExpression dbExpression) {
