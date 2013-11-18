@@ -31,6 +31,7 @@ class DifferentialGeneQueryBuilder {
     }
 
     public DifferentialGeneQueryBuilder withAssayGroups(Collection<IndexedAssayGroup> indexedAssayGroups) {
+        //TODO: make a set, as sometimes we get the same assay group multiple times, eg: when running GeneQueryDifferentialSerivceIT.conditionPregnant()
         this.indexedAssayGroups = indexedAssayGroups;
         return this;
     }

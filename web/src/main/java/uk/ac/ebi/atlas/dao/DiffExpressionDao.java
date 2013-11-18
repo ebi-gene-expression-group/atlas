@@ -34,6 +34,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import uk.ac.ebi.atlas.utils.VisitorException;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import uk.ac.ebi.atlas.utils.Visitor;
@@ -140,7 +141,7 @@ public class DiffExpressionDao {
 
                     try {
                         visitor.visit(dbe);
-                    } catch (IllegalStateException e) {
+                    } catch (VisitorException e) {
                         // throw SQLException so result set is closed
                         throw new SQLException(e);
                     }
@@ -150,8 +151,8 @@ public class DiffExpressionDao {
         } catch (DataAccessException e) {
             LOGGER.warn(String.format("foreachExpression aborted: " + e.getCause().getMessage()));
 
-            if (e.getCause() != null && e.getCause().getCause() != null && e.getCause().getCause() instanceof IllegalStateException) {
-                throw (IllegalStateException)(e.getCause().getCause());
+            if (e.getCause() != null && e.getCause().getCause() != null && e.getCause().getCause() instanceof VisitorException) {
+                throw (VisitorException)(e.getCause().getCause());
             } else {
                 throw e;
             }

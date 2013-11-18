@@ -76,6 +76,7 @@ public class ExperimentsListController {
             this.aaData = list;
         }
 
+        //DataTables requires table data in the aaData property
         public List<ExperimentInfo> getAaData() {
             return aaData;
         }
