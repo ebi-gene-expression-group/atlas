@@ -1,8 +1,10 @@
 <h1>FAQs</h1>
 
-<h2>General questions</h2>
+<section class="grid_18 alpha">
 
-<h3>What is the Expression Atlas</h3>
+<h2><a name="general">General questions</a></h2>
+
+<h3><a name="whatIsAtlas">What is the Expression Atlas</a></h3>
 <p>The Expression Atlas database provides summary level information
 about gene expression patterns within different biological conditions.
 It consists of two components: the 'differential' and 'baseline'
@@ -19,7 +21,7 @@ broaden searches. E.g. a query for cancer would return experiments
 annotated with particular types of cancer such as leukemia or breast carcinoma as well as
 those annotated with cancer.</p>
 
-<h3>How are experiments chosen to be in the Expression Atlas?</h3>
+<h3><a name="exptChosen">How are experiments chosen to be in the Expression Atlas?</a></h3>
 <p>Experiments in the Expression Atlas are selected from the <a
 href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> database of
 functional genomics experiments. Different criteria are used for
@@ -33,10 +35,9 @@ available, there must be sufficent replicates for statistical analysis
 for differential experiments and the tissues must be 'normal' if the
 experiment is to go in the Baseline Atlas.<p> 
 
-<h3>How can I obtain the original data for an experiment?</h3>
+<h3><a name="getOrigData">How can I obtain the original data for an experiment?</a></h3>
 
-<h3>I doesn't look like the whole of the original experiment is in the
-Expression Atlas, why not?</h3>
+<h3><a name="wholeExpt">It doesn't look like the whole of the original experiment is in the Expression Atlas, why not?</a></h3>
 
 
 
@@ -45,7 +46,7 @@ Expression Atlas, why not?</h3>
 <h2>Searching</h2>
 
 
-<h3>How do I find out which genes are expressed in my favourite tissue?</h3>
+<h3><a name="tissueSearch">How do I find out which genes are expressed in my favourite tissue?</a></h3>
 
 <p>Use the <strong>Experimental conditions</strong> search box on the <a
 	href="/gxa">home page</a> to search all of Expression Atlas for organism parts e.g. <a
@@ -61,7 +62,7 @@ single experiment. See the <a href="help/baseline-atlas.html">Baseline Atlas
 	help</a> for more information about searching within a Baseline experiment.</p>
 
 
-<h3>How do I search for my favourite gene?</h3>
+<h3><a name="geneSearch">How do I search for my favourite gene?</a></h3>
 
 <p>Use the <strong>Gene query</strong> search box on the <a href="/gxa">home
 	page</a> to search all of Expression Atlas for genes. You will see results
@@ -75,7 +76,7 @@ box.</p>
 within a single experiment.</p>
 
 
-<h3>What gene identifiers can I use to search?</h3>
+<h3><a name="geneIDs">What gene identifiers can I use to search?</a></h3>
 
 <p>You may use the following identifiers to search using the <strong>Gene query</strong> box:</p>
 
@@ -96,7 +97,7 @@ within a single experiment.</p>
 </ul>
 
 
-<h3>How do I find a particular experiment?</h3>
+<h3><a name="exptLink">How do I find a particular experiment?</a></h3>
 
 <p>All experiments currently in Expression Atlas are listed on <a
 	href="experiments">this page</a>. Click on the <strong>Description</strong>
@@ -113,7 +114,7 @@ using the following format:</p>
 	href="experiments/E-MTAB-1066">http://www.ebi.ac.uk/gxa/experiments/E-MTAB-1066</a></p>
 
 
-<h3>Can I search Expression Atlas programmatically?</h3>
+<h3><a name="api">Can I search Expression Atlas programmatically?</a></h3>
 
 <p>Not right now, but we are working to implement an API. Please check back soon!<p>
 
@@ -121,7 +122,7 @@ using the following format:</p>
 <h2>Results</h2>
 
 
-<h3>When I search all of Expression Atlas, what do the &quot;Differential Expression&quot; results show?</h3>
+<h3><a name="deResults">When I search all of Expression Atlas, what do the &quot;Differential Expression&quot; results show?</a></h3>
 
 <p>The table in the <strong>Differential Expression</strong> section of the
 results shows all genes that matched your search and were differentially
@@ -131,7 +132,7 @@ are ordered so that the one with the lowest adjusted <i>p</i>-value is at the
 top.</p>
 
 
-<h3>What is a &quot;design element&quot;?</h3>
+<h3><a name="designElement">What is a &quot;design element&quot;?</a></h3>
 
 <p>In results from microarray experiments, you will see the <strong>design
 	element</strong> name alongside the gene name. A design element is also
@@ -139,7 +140,7 @@ known as a probe or probe set. This is the oligonucleotide probe (or group
 thereof) on the microarray that targets that gene.</p>
 
 
-<h3>What is a &quot;contrast&quot;?</h3>
+<h3><a name="contrast">What is a &quot;contrast&quot;?</a></h3>
 
 <p>A <strong>contrast</strong> is a comparison between two groups of samples in
 a differential expression experiment. An example of a contrast is
@@ -151,7 +152,7 @@ and a statistical test is performed to decide whether the two means are
 significantly different.</p>
 
 
-<h3>Where do the <i>p</i>-values come from?</h3>
+<h3><a name="pvalue">Where do the <i>p</i>-values come from?</a></h3>
 
 <p>In a microarray experiment, each gene's mean expression level in the
 <strong>test</strong> group is compared with its mean expression level in the
@@ -175,7 +176,7 @@ are adjusted for <strong>multiple testing</strong> using the Benjamini and Hochb
 	<i>p</i>-value</strong>.</p>
 
 
-<h3>What do the red and blue colours in the table mean?</h3>
+<h3><a name="deHeatmapColours">What do the red and blue colours in the table mean?</a></h3>
 
 <p>The intensity of the red a blue colour of the filled boxes in the table
 represents how low the adjusted <i>p</i>-value is for each gene. The lower the
@@ -185,15 +186,41 @@ box means that the gene was <strong>down-regulated</strong> in the test
 condition.</p>
 
 
-<h3>How do I see the actual <i>p</i>-values in the results table?</h3>
+<h3><a name="displayPvalues">How do I see the actual <i>p</i>-values in the results table?</a></h3>
 
 <p>Click the <strong>Display levels</strong> button to the top left of the table.</p>
 
 
-<h3>What are the blue and red bars above the results table?</h3>
+<h3><a name="deBars">What are the blue and red bars above the results table?</a></h3>
 
 <p>The two bars show the red and blue colour intensities for the <strong>top
 	50</strong> genes shown on the page. The colour intensities represent the
 adjusted <i>p</i>-values for the genes shown. To see the actual
 <i>p</i>-values, click the &quot;Display levels&quot; button to the top left of
 the table.</p>
+
+</section>
+
+<!-- This part is for the navigation section at the right-hand side -->
+<aside class="grid_6 omega">
+	<h3>Jump to...</h3>
+	<ul>
+		<li><a href="#whatIsAtlas">What is the Expression Atlas</a></li>
+		<li><a href="#exptChosen">How are experiments chosen to be in the Expression Atlas?</a></li>
+		<li><a href="#getOrigData">How can I obtain the original data for an experiment?</a></li>
+		<li><a href="#wholeExpt">It doesn't look like the whole of the original experiment is in the Expression Atlas, why not?</a></li>
+		<li><a href="#tissueSearch">How do I find out which genes are expressed in my favourite tissue?</a></li>
+		<li><a href="#geneSearch">How do I search for my favourite gene?</a></li>
+		<li><a href="#geneIDs">What gene identifiers can I use to search?</a></li>
+		<li><a href="#exptLink">How do I find a particular experiment?</a></li>
+		<li><a href="#api">Can I search Expression Atlas programmatically?</a></li>
+		<li><a href="#deResults">When I search all of Expression Atlas, what do the &quot;Differential Expression&quot; results show?</a></li>
+		<li><a href="#designElement">What is a &quot;design element&quot;?</a></li>
+		<li><a href="#contrast">What is a &quot;contrast&quot;?</a></li>
+		<li><a href="#pvalue">Where do the <i>p</i>-values come from?</a></li>
+		<li><a href="#deHeatmapColours">What do the red and blue colours in the table mean?</a></li>
+		<li><a href="#displayPvalues">How do I see the actual <i>p</i>-values in the results table?</a></li>
+		<li><a href="#deBars">What are the blue and red bars above the results table?</a></li>
+		<!-- <li><a href=""></a></li> -->
+	</ul>
+</aside>
