@@ -34,7 +34,7 @@ factor values, and a minimum FPKM cutoff. See below for more details on searchin
 
 <h2>Baseline Atlas at&ndash;a&ndash;glance</h2>
 
-<p><img alt="Baseline Atlas Experiment View 'At a Glance'" src="../../images/help/exptPageHelp.png" align="bottom" /></p>
+<p><img alt="Baseline Atlas Experiment View 'At a Glance'" src="resources/images/help/exptPageHelp.png" align="bottom" /></p>
 
 
 
@@ -62,18 +62,14 @@ data is available.</p>
 <h2>Searching Baseline Atlas</h2>
 
 
-
-
 <h3>Specifying the minimum expression level</h3>
 
-<p>You can specify a minimum expression level to act as a <b>cutoff</b>, and only genes expressed <b>above</b> this level are displayed. This is to aid distinction between "background noise" and "real" gene expression. Our default FPKM cutoff is 0.5. To change it, enter a new value into the "Expression level cutoff" input box, or drag the slider until the "Expression level cutoff" input box shows your desired cutoff value. A histogram showing the number of genes expressed above a range of cutoffs is also available. This lets you see how many genes you are excluding by selecting a given cutoff. If you see that you're excluding a lot of genes, you may wish to <b>decrease</b> the cutoff. Clicking on the <img alt="Histogram enable/disable button" src="../../images/help/histogram_btn.png" align="bottom" /> button toggles display of the histogram.</p>
+<p>You can specify a minimum expression level to act as a <b>cutoff</b>, and only genes expressed <b>above</b> this level are displayed. This is to aid distinction between "background noise" and "real" gene expression. Our default FPKM cutoff is 0.5. To change it, enter a new value into the "Expression level cutoff" input box, or drag the slider until the "Expression level cutoff" input box shows your desired cutoff value. A histogram showing the number of genes expressed above a range of cutoffs is also available. This lets you see how many genes you are excluding by selecting a given cutoff. If you see that you're excluding a lot of genes, you may wish to <b>decrease</b> the cutoff. Clicking on the <img alt="Histogram enable/disable button" src="resources/images/help/histogram_btn.png" align="bottom" /> button toggles display of the histogram.</p>
 
 <ul>
 	<li>If you have not selected any experimental factors, the histogram shows the number of genes expressed in <b>any</b> factor value for each of the shown cutoffs.</li>
 	<li>If you have selected <b>at least one</b> factor value, the histogram shows the number of genes expressed in <b>at least one of the selected factor values</b>, for each of the shown cutoffs.</li>
 </ul>
-
-
 
 
 <h3>Searching with genes</h3>
@@ -84,8 +80,6 @@ data is available.</p>
 
 <!-- Gene sets -->
 <!-- reactome pathways -->
-
-
 
 
 <h3>Searching with experimental factor values</h3>
@@ -99,7 +93,7 @@ data is available.</p>
 
 <p>When you click on the experiment factor value input box, a dropdown menu appears, containing the list of all factor values available for selection:</p>
 <p><img alt="Factor values dropdown" src="resources/images/help/factor_values_dropdown.png" align="bottom" /></p>
-<p>Select one or more factor values to search with, or start typing to see suggestions. To see all factor values in an experiment, click the <img alt="Experiment Design" src="../../images/help/expDes_btn.png" align="bottom" /> button.</p>
+<p>Select one or more factor values to search with, or start typing to see suggestions. To see all factor values in an experiment, click the <img alt="Experiment Design" src="resources/images/help/expDes_btn.png" align="bottom" /> button.</p>
 
 
 
@@ -136,11 +130,11 @@ data is available.</p>
 
 <h2>Heatmap results display</h2>
 
-<p>Results for your query are shown in a heatmap table. The heatmap rows and columns are labelled with gene symbols and experimental factor values, respectively. The heatmap shows expressions by <b>colour intensity</b>, according to the gradient bar,<img alt="heatmap colour gradient" src="resources/images/help/gradient.png" align="bottom" />, displayed above the heatmap. Greater colour intensity means higher relative gene expression. To see the exact FPKM for all genes, click on the <img alt="Display levels" src="../../images/help/display_levels.png" align="bottom" /> button. This also reveals minimum and maximum FPKMs on each side of the gradient bar. The gradient shows intensities corresponding to expression levels for the <b>top 50</b> genes currently displayed (rather than all FPKM values for all genes returned by the query).</p>
+<p>Results for your query are shown in a heatmap table. The heatmap rows and columns are labelled with gene symbols and experimental factor values, respectively. The heatmap shows expressions by <b>colour intensity</b>, according to the gradient bar,<img alt="heatmap colour gradient" src="resources/images/help/gradient.png" align="bottom" />, displayed above the heatmap. Greater colour intensity means higher relative gene expression. To see the exact FPKM for all genes, click on the <img alt="Display levels" src="resources/images/help/display_levels.png" align="bottom" /> button. This also reveals minimum and maximum FPKMs on each side of the gradient bar. The gradient shows intensities corresponding to expression levels for the <b>top 50</b> genes currently displayed (rather than all FPKM values for all genes returned by the query).</p>
 
 <p>The Baseline Atlas also includes information about transcript-level expression. To see this for a given gene, click the corresponding filled box in the heatmap. This brings up a pie chart detailing the proportion of expression contributed by each transcript. A maximum of three top contributing transcripts are shown, and the remaining ones are aggregated as "Others". Transcripts that are not expressed above the selected minimum expression level are not shown. White portions of the pie chart indicate that the data for that transcript is of low confidence. Please refer to the <a href="http://cufflinks.cbcb.umd.edu/manual.html#fpkm_tracking_format">Cufflinks documentation</a> for more details.</p>
 
-<p>When displayed factor values are organism parts, mousing over each heatmap column highlights the corresponding tissue in the anatomogram on the left (if available). If the selected organism part is gender&ndash;specifc, and anatomogram is available for each gender, you can switch between them by clicking the <img alt="Gender selection button" src="../../images/help/gender_sel.png" align="bottom" /> button.</p>
+<p>When displayed factor values are organism parts, mousing over each heatmap column highlights the corresponding tissue in the anatomogram on the left (if available). If the selected organism part is gender&ndash;specifc, and anatomogram is available for each gender, you can switch between them by clicking the <img alt="Gender selection button" src="resources/images/help/gender_sel.png" align="bottom" /> button.</p>
 
 <p>If you mouse-over a gene name in the heatmap, synonyms, <a href="http://www.geneontology.org/">Gene Ontology</a> terms, and <a href="http://www.ebi.ac.uk/interpro/">Interpro</a> terms are displayed:</p>
 
@@ -160,7 +154,7 @@ data is available.</p>
 
 <h2>Downloading query results</h2>
 
-<p>The <b>top 50</b> genes resulting from your search are displayed on the page. Click on the <img alt="Download button" src="../../images/help/download_button.png" align="bottom" /> button to download the <b>full results</b> of your query in tab&ndash;delimited format with no ordering.</p>
+<p>The <b>top 50</b> genes resulting from your search are displayed on the page. Click on the <img alt="Download button" src="resources/images/help/download_button.png" align="bottom" /> button to download the <b>full results</b> of your query in tab&ndash;delimited format with no ordering.</p>
 
 
 
@@ -207,7 +201,7 @@ data in <a title="FASTQ format" class="externallink"
 	href="http://nar.oxfordjournals.org/content/38/6/1767.full">FASTQ</a>
 format, to obtain the gene expression levels shown in the Baseline Atlas. You can
 access it by clicking the <img alt="Analysis Methods
-button" src="../../images/help/am_btn.png" align="bottom" /> button.</p>
+button" src="resources/images/help/am_btn.png" align="bottom" /> button.</p>
 
 
 
