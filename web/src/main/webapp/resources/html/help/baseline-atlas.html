@@ -5,9 +5,9 @@
 
 <h2>About the Baseline Atlas</h2>
 	
-<p>The Baseline Atlas aims primarily at representing information about which gene
+<p>The Baseline Atlas represents information about which gene
 products are present (and at what abundance) in which "normal" condition (e.g.,
-tissue, cell type). In the first instance, the Baseline Atlas will consist of
+tissue, cell type). The Baseline Atlas consists of
 highly curated RNA&ndash;seq experiments from <a
 	href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a>, such as: </p>
 
@@ -16,6 +16,7 @@ highly curated RNA&ndash;seq experiments from <a
   <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-599" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-599">Transcriptome of DBAxC57BL/6J mice</a></li>
   <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284">RNA&ndash;seq of long coding and long non coding RNAs from ENCODE cell lines</a></li>
   <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-30352" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-30352">RNA&ndash;seq of 6 tissues from 10 species to investigate the evolution of gene expression levels in mammalian organs</a></li>
+  <li><a href="" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-2037/">Transcription profiling by RNA-seq of seven tissues from Oryza sativa japonica Nipponbare</a></li>
 </ul>
 
 <p>The above experiments have been re&ndash;analyzed using an in&ndash;house RNA&ndash;seq
@@ -33,7 +34,7 @@ factor values, and a minimum FPKM cutoff. See below for more details on searchin
 
 <h2>Baseline Atlas at&ndash;a&ndash;glance</h2>
 
-<p><img alt="Baseline Atlas Experiment View 'At a Glance'" src="resources/images/help/exptPageHelp.png" align="bottom" /></p>
+<p><img alt="Baseline Atlas Experiment View 'At a Glance'" src="../../images/help/exptPageHelp.png" align="bottom" /></p>
 
 
 
@@ -65,7 +66,7 @@ data is available.</p>
 
 <h3>Specifying the minimum expression level</h3>
 
-<p>You can specify a minimum expression level to act as a <b>cutoff</b>, and only genes expressed <b>above</b> this level are displayed. This is to aid distinction between "background noise" and "real" gene expression. Our default FPKM cutoff is 0.5. To change it, enter a new value into the "Expression level cutoff" input box, or drag the slider until the "Expression level cutoff" input box shows your desired cutoff value. A histogram showing the number of genes expressed above a range of cutoffs is also available. This lets you see how many genes you are excluding by selecting a given cutoff. If you see that you're excluding a lot of genes, you may wish to <b>decrease</b> the cutoff. Clicking on the <img alt="Histogram enable/disable button" src="resources/images/help/histogram_btn.png" align="bottom" /> button toggles display of the histogram.</p>
+<p>You can specify a minimum expression level to act as a <b>cutoff</b>, and only genes expressed <b>above</b> this level are displayed. This is to aid distinction between "background noise" and "real" gene expression. Our default FPKM cutoff is 0.5. To change it, enter a new value into the "Expression level cutoff" input box, or drag the slider until the "Expression level cutoff" input box shows your desired cutoff value. A histogram showing the number of genes expressed above a range of cutoffs is also available. This lets you see how many genes you are excluding by selecting a given cutoff. If you see that you're excluding a lot of genes, you may wish to <b>decrease</b> the cutoff. Clicking on the <img alt="Histogram enable/disable button" src="../../images/help/histogram_btn.png" align="bottom" /> button toggles display of the histogram.</p>
 
 <ul>
 	<li>If you have not selected any experimental factors, the histogram shows the number of genes expressed in <b>any</b> factor value for each of the shown cutoffs.</li>
@@ -77,7 +78,7 @@ data is available.</p>
 
 <h3>Searching with genes</h3>
 
-<p>You can search with <a class="externallink" href="http://ensembl.org">Ensembl</a> gene symbols (e.g. SAA4), identifiers (e.g. ENSG00000148965) or <a title="Ensembl Glossary" class="externallink" href="http://www.ensembl.org/Help/Glossary">biotypes</a> (e.g. protein_coding), <a class="externallink" href="http://www.uniprot.org">UniProt</a> accessions (e.g. P35542), <a class="externallink" href="http://www.geneontology.org">GO</a> ("phosphoglycerate kinase activity") or <a href="http://www.ebi.ac.uk/interpro/">InterPro</a> terms (e.g. phosphatase). A <b>space&ndash;separated</b> list of gene attributes will bring back genes that match <b>at least one</b> of the attributes in the query.</p>
+<p>You can search with <a class="externallink" href="http://ensembl.org">Ensembl</a> gene symbols (e.g. SAA4), identifiers (e.g. ENSG00000148965) or <a title="Ensembl Glossary" class="externallink" href="http://www.ensembl.org/Help/Glossary">biotypes</a> (e.g. protein_coding), <a class="externallink" href="http://www.uniprot.org">UniProt</a> accessions (e.g. P35542), <a class="externallink" href="http://www.geneontology.org">GO</a> ("phosphoglycerate kinase activity") or <a href="http://www.ebi.ac.uk/interpro/">InterPro</a> terms (e.g. phosphatase). A <b>space&ndash;separated</b> list of gene attributes will bring back genes that match <b>at least one</b> of the attributes in the query. Put multi-word query terms in quotes e.g. "transcription factor binding".</p>
 
 <p>If the "Exact match" box is checked, only genes with annotations that fully match your query will be returned. For example, to find the expression of the <a href="http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=ENSG00000198668">calmodulin 1</a> gene, check the "Exact match" box, type "CALM1" and click "Search". If the box is not checked, genes with annotations that contain words that fully match your query will be returned. For example, to find expressions for genes with "calmodulin" in their annotations (e.g. "calmodulin binding", "calmodulin regulated", &hellip;), uncheck the "Exact match" box, type "calmodulin" and click search.</p>
 
@@ -98,7 +99,7 @@ data is available.</p>
 
 <p>When you click on the experiment factor value input box, a dropdown menu appears, containing the list of all factor values available for selection:</p>
 <p><img alt="Factor values dropdown" src="resources/images/help/factor_values_dropdown.png" align="bottom" /></p>
-<p>Select one or more factor values to search with, or start typing to see suggestions. To see all factor values in an experiment, click the <img alt="Experiment Design" src="resources/images/help/expDes_btn.png" align="bottom" /> button.</p>
+<p>Select one or more factor values to search with, or start typing to see suggestions. To see all factor values in an experiment, click the <img alt="Experiment Design" src="../../images/help/expDes_btn.png" align="bottom" /> button.</p>
 
 
 
@@ -135,11 +136,11 @@ data is available.</p>
 
 <h2>Heatmap results display</h2>
 
-<p>Results for your query are shown in a heatmap table. The heatmap rows and columns are labelled with gene symbols and experimental factor values, respectively. The heatmap shows expressions by <b>colour intensity</b>, according to the gradient bar,<img alt="heatmap colour gradient" src="resources/images/help/gradient.png" align="bottom" />, displayed above the heatmap. Greater colour intensity means higher relative gene expression. To see the exact FPKM for all genes, click on the <img alt="Display levels" src="resources/images/help/display_levels.png" align="bottom" /> button. This also reveals minimum and maximum FPKMs on each side of the gradient bar. The gradient shows intensities corresponding to expression levels for the <b>top 50</b> genes currently displayed (rather than all FPKM values for all genes returned by the query).</p>
+<p>Results for your query are shown in a heatmap table. The heatmap rows and columns are labelled with gene symbols and experimental factor values, respectively. The heatmap shows expressions by <b>colour intensity</b>, according to the gradient bar,<img alt="heatmap colour gradient" src="resources/images/help/gradient.png" align="bottom" />, displayed above the heatmap. Greater colour intensity means higher relative gene expression. To see the exact FPKM for all genes, click on the <img alt="Display levels" src="../../images/help/display_levels.png" align="bottom" /> button. This also reveals minimum and maximum FPKMs on each side of the gradient bar. The gradient shows intensities corresponding to expression levels for the <b>top 50</b> genes currently displayed (rather than all FPKM values for all genes returned by the query).</p>
 
 <p>The Baseline Atlas also includes information about transcript-level expression. To see this for a given gene, click the corresponding filled box in the heatmap. This brings up a pie chart detailing the proportion of expression contributed by each transcript. A maximum of three top contributing transcripts are shown, and the remaining ones are aggregated as "Others". Transcripts that are not expressed above the selected minimum expression level are not shown. White portions of the pie chart indicate that the data for that transcript is of low confidence. Please refer to the <a href="http://cufflinks.cbcb.umd.edu/manual.html#fpkm_tracking_format">Cufflinks documentation</a> for more details.</p>
 
-<p>When displayed factor values are organism parts, mousing over each heatmap column highlights the corresponding tissue in the anatomogram on the left (if available). If the selected organism part is gender&ndash;specifc, and anatomogram is available for each gender, you can switch between them by clicking the <img alt="Gender selection button" src="resources/images/help/gender_sel.png" align="bottom" /> button.</p>
+<p>When displayed factor values are organism parts, mousing over each heatmap column highlights the corresponding tissue in the anatomogram on the left (if available). If the selected organism part is gender&ndash;specifc, and anatomogram is available for each gender, you can switch between them by clicking the <img alt="Gender selection button" src="../../images/help/gender_sel.png" align="bottom" /> button.</p>
 
 <p>If you mouse-over a gene name in the heatmap, synonyms, <a href="http://www.geneontology.org/">Gene Ontology</a> terms, and <a href="http://www.ebi.ac.uk/interpro/">Interpro</a> terms are displayed:</p>
 
@@ -159,7 +160,7 @@ data is available.</p>
 
 <h2>Downloading query results</h2>
 
-<p>The <b>top 50</b> genes resulting from your search are displayed on the page. Click on the <img alt="Download button" src="resources/images/help/download_button.png" align="bottom" /> button to download the <b>full results</b> of your query in tab&ndash;delimited format with no ordering.</p>
+<p>The <b>top 50</b> genes resulting from your search are displayed on the page. Click on the <img alt="Download button" src="../../images/help/download_button.png" align="bottom" /> button to download the <b>full results</b> of your query in tab&ndash;delimited format with no ordering.</p>
 
 
 
@@ -206,7 +207,7 @@ data in <a title="FASTQ format" class="externallink"
 	href="http://nar.oxfordjournals.org/content/38/6/1767.full">FASTQ</a>
 format, to obtain the gene expression levels shown in the Baseline Atlas. You can
 access it by clicking the <img alt="Analysis Methods
-button" src="resources/images/help/am_btn.png" align="bottom" /> button.</p>
+button" src="../../images/help/am_btn.png" align="bottom" /> button.</p>
 
 
 
