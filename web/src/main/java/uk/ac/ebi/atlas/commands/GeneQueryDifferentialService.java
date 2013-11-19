@@ -22,12 +22,9 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
-import org.springframework.jdbc.core.RowMapper;
 import uk.ac.ebi.atlas.dao.DiffExpressionDao;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;

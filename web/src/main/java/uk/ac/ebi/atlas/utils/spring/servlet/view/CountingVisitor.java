@@ -4,7 +4,7 @@ import uk.ac.ebi.atlas.utils.Visitor;
 
 public class CountingVisitor<T> implements Visitor<T> {
 
-    int count = 0;
+    private int count = 0;
 
     private Visitor<T> visitor;
 
