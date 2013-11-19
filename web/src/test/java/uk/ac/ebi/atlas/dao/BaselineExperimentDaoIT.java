@@ -24,20 +24,20 @@ public class BaselineExperimentDaoIT {
 
     @Test
     public void testIsExperimentWithCondition() throws Exception {
-        assertThat(subject.isExperimentWithCondition(E_MTAB_599, Lists.newArrayList("g6")), is(true));
-        assertThat(subject.isExperimentWithCondition(E_MTAB_599, Lists.newArrayList("g777")), is(false));
+        assertThat(subject.isExperimentWithAnyGenesExpressedAboveCutOff(E_MTAB_599, Lists.newArrayList("g6")), is(true));
+        assertThat(subject.isExperimentWithAnyGenesExpressedAboveCutOff(E_MTAB_599, Lists.newArrayList("g777")), is(false));
     }
 
     @Test
     public void testIsExperimentWithGenes() throws Exception {
-        assertThat(subject.isExperimentWithGenes(E_MTAB_599, Lists.newArrayList("ENSMUSG00000093014")), is(true));
-        assertThat(subject.isExperimentWithCondition(E_MTAB_599, Lists.newArrayList("NOT_THERE")), is(false));
+        assertThat(subject.isExperimentWithGenesExpressedAboveCutOff(E_MTAB_599, Lists.newArrayList("ENSMUSG00000093014")), is(true));
+        assertThat(subject.isExperimentWithAnyGenesExpressedAboveCutOff(E_MTAB_599, Lists.newArrayList("NOT_THERE")), is(false));
     }
 
     @Test
     public void testIsExperimentWithConditionsAndGenes() throws Exception {
-        assertThat(subject.isExperimentWithConditionsAndGenes(E_MTAB_599, Lists.newArrayList("g6"), Lists.newArrayList("ENSMUSG00000093014")), is(true));
-        assertThat(subject.isExperimentWithConditionsAndGenes(E_MTAB_599, Lists.newArrayList("g777"), Lists.newArrayList("ENSMUSG00000093487")), is(false));
+        assertThat(subject.isExperimentWithGenesExpressedAboveCutOff(E_MTAB_599, Lists.newArrayList("g6"), Lists.newArrayList("ENSMUSG00000093014")), is(true));
+        assertThat(subject.isExperimentWithGenesExpressedAboveCutOff(E_MTAB_599, Lists.newArrayList("g777"), Lists.newArrayList("ENSMUSG00000093487")), is(false));
     }
 
 

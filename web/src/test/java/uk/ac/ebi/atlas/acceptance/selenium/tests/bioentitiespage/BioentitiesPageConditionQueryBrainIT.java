@@ -24,15 +24,15 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
-import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class BioentitiesPageConditionQueryIT extends SinglePageSeleniumFixture {
+public class BioentitiesPageConditionQueryBrainIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
@@ -48,12 +48,13 @@ public class BioentitiesPageConditionQueryIT extends SinglePageSeleniumFixture {
         //given
         subject.clickBaselineProfile();
 
-        List<BaselineBioentitiesCount> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesCountWithHref> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(1));
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-513"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Illumina Body Map"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
+
 
     }
 
