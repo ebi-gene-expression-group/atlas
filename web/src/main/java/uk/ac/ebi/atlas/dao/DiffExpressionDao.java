@@ -126,12 +126,12 @@ public class DiffExpressionDao {
 
         final MutableInt count = new MutableInt(0);
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        JdbcTemplate template = new JdbcTemplate(dataSource);
 
-        jdbcTemplate.setFetchSize(10000);
+        template.setFetchSize(5000);
 
         try {
-            jdbcTemplate.query(indexedContrastQuery.getQuery(), new RowCallbackHandler() {
+            template.query(indexedContrastQuery.getQuery(), new RowCallbackHandler() {
 
                 @Override
                 public void processRow(ResultSet resultSet) throws SQLException {

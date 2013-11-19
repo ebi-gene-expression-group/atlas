@@ -122,4 +122,9 @@ public class ApplicationProperties {
         return URLEncoder.encode(value, "UTF-8");
     }
 
+    // eg: "red,green,blue"
+    public <T> String encodeMultiValues(Iterable<T> iterable) {
+        return Joiner.on(",").join(iterable);
+    }
+
 }

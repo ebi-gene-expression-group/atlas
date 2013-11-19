@@ -26,69 +26,41 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
-import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.is;
 
-public class BioentitiesPageGeneQueryZincFingerIT extends SinglePageSeleniumFixture {
-
-    public static final String GENE_QUERY_PARAM = "%22zinc+finger%22";
+public class BioentitiesPageConditionQueryFemaleIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=" + GENE_QUERY_PARAM);
+        subject = new BioEntitiesPage(driver, "condition=female");
         subject.get();
     }
 
+
     @Test
-    public void baselineExperimentCountsAreCorrect() {
+    public void checkBaselineExperimentCounts() {
+        //given
         subject.clickBaselineProfile();
 
         List<BaselineBioEntitiesCountWithHref> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(2));
-
+        assertThat(baselineCounts, hasSize(1));
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-513"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Illumina Body Map"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(0).getCount(), is(-1));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-513?queryFactorType=ORGANISM_PART&queryFactorValues=adipose,brain,breast,colon,kidney,lymph%20node,ovary,thyroid&geneQuery="));
 
-        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(baselineCounts.get(1).getExperimentName(), is("Six tissues"));
-        assertThat(baselineCounts.get(1).getSpecies(), is("Mus musculus"));
-        assertThat(baselineCounts.get(1).getCount(), is(-1));
-
-    }
-
-
-    @Test
-    public void differentialPaneHasResults() {
-        assertThat(subject.diffExpressionResultCount(), is("21 search result(s) found"));
-    }
-
-
-    @Test
-    public void differentialPaneHasCorrectGenesAndSpecies() {
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), hasItems("Zfp292", "Zfp503", "Zfp810", "Zfp758", "Zfp46"));
-        assertThat(subject.getDiffHeatmapTableOrganismColumn(), hasItems("Mus musculus"));
     }
 
     @Test
-    public void globalSearchTermIsCorrectlyFormed() {
-        assertThat(subject.getGlobalSearchTerm(), is(GENE_QUERY_PARAM));
+    public void checkDifferentialProfilesCount() {
+        assertThat(subject.diffExpressionResultCount(), is("4329 search result(s) found"));
     }
-
-    @Test
-    public void globalSearchWidgetShouldHaveResults(){
-        subject.clickShowMoreDataWidget();
-        assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
-    }
-
 
 }

@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 
@@ -48,12 +49,13 @@ public class BioentitiesPageConditionAndGeneQueryIT extends SinglePageSeleniumFi
         //given
         subject.clickBaselineProfile();
 
-        List<BaselineBioentitiesCount> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesCountWithHref> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(1));
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("-MTAB-599?queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=%22BAR+domain%22"));
 
     }
 

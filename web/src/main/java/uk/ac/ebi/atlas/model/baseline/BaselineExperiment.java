@@ -28,10 +28,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class BaselineExperiment extends Experiment {
 
@@ -87,4 +84,10 @@ public class BaselineExperiment extends Experiment {
 
         return getFirstSpecies().toLowerCase();
     }
+
+    public SortedSet<Factor> getAssayGroupFactors(Collection<String> assayGroupIds, String factorType) {
+        return this.getExperimentalFactors().getFactorsForAssayGroupsByType(assayGroupIds, factorType);
+    }
+
+
 }

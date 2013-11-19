@@ -119,8 +119,18 @@ public class ExperimentalFactors implements Serializable {
         return result;
     }
 
-    public FactorGroup getFactorSetByAssayGroup(String assayGroup) {
-        return orderedFactorGroupsByAssayGroup.get(assayGroup);
+    public FactorGroup getFactorGroupByAssayGroup(String assayGroupId) {
+        return orderedFactorGroupsByAssayGroup.get(assayGroupId);
+    }
+
+    public SortedSet<Factor> getFactorsForAssayGroupsByType(Collection<String> assayGroupIds, String factorType) {
+        SortedSet<Factor> factors = Sets.newTreeSet();
+        for (String assayGroupId : assayGroupIds) {
+            FactorGroup factorGroupForAssay = getFactorGroupByAssayGroup(assayGroupId);
+            Factor defaultFactorForAssay = factorGroupForAssay.getFactorByType(factorType);
+            factors.add(defaultFactorForAssay);
+        }
+        return factors;
     }
 
     public SortedSet<String> getMenuFilterFactorNames() {
