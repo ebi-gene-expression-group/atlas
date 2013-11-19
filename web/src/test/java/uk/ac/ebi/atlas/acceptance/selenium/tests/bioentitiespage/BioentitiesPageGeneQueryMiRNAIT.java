@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 
@@ -48,7 +49,7 @@ public class BioentitiesPageGeneQueryMiRNAIT extends SinglePageSeleniumFixture {
     public void checkBaselineExperimentCounts()  {
         subject.clickBaselineProfile();
 
-        List<BaselineBioentitiesCount> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesCountWithHref> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(1));
 

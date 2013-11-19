@@ -82,20 +82,18 @@ public class BaselineExperimentDao {
         this.namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public boolean isExperimentWithCondition(String experimentAccession, Collection<String> assayGroups) {
+    public boolean isExperimentWithAnyGenesExpressedAboveCutOff(String experimentAccession, Collection<String> assayGroups) {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("experimentAccession", experimentAccession);
         parameters.addValue("assayGroups", assayGroups);
 
-        StringBuilder sqlQuery = new StringBuilder(CONDITIONS_IN_EXPERIMENT);
-
-        List<Integer> results = namedJdbcTemplate.queryForList(sqlQuery.toString(), parameters, Integer.class);
+        List<Integer> results = namedJdbcTemplate.queryForList(CONDITIONS_IN_EXPERIMENT, parameters, Integer.class);
 
         // if a row is returned, this indicates one of the gene ids were found in the experiment
         return (results.size() > 0);
     }
 
-    public boolean isExperimentWithGenes(String experimentAccession, Collection<String> geneIds) {
+    public boolean isExperimentWithGenesExpressedAboveCutOff(String experimentAccession, Collection<String> geneIds) {
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("experimentAccession", experimentAccession);
@@ -111,7 +109,7 @@ public class BaselineExperimentDao {
         return (results.size() > 0);
     }
 
-    public boolean isExperimentWithConditionsAndGenes(String experimentAccession, Collection<String> assayGroups, Collection<String> geneIds) {
+    public boolean isExperimentWithGenesExpressedAboveCutOff(String experimentAccession, Collection<String> assayGroups, Collection<String> geneIds) {
 
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("experimentAccession", experimentAccession);

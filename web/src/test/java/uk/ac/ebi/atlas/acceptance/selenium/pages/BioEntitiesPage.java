@@ -62,8 +62,8 @@ public class BioEntitiesPage extends BioEntityPage {
         return 4;
     }
 
-    public List<BaselineBioentitiesCount> getBaselineCounts() {
-        List<BaselineBioentitiesCount> baselineCounts = Lists.newArrayList();
+    public List<BaselineBioEntitiesCountWithHref> getBaselineCounts() {
+        List<BaselineBioEntitiesCountWithHref> baselineCounts = Lists.newArrayList();
 
         By byBaselineCountsTableId = By.id("baselineCountsTable");
         FluentWait wait = new WebDriverWait(driver, 25L).pollingEvery(20, TimeUnit.MILLISECONDS);
@@ -83,7 +83,7 @@ public class BioEntitiesPage extends BioEntityPage {
 
     }
 
-    private BaselineBioentitiesCount buildBaselineEntityCount(WebElement linkElement, WebElement countElement) {
+    private BaselineBioEntitiesCountWithHref buildBaselineEntityCount(WebElement linkElement, WebElement countElement) {
 
         String linkText = linkElement.getText();
         String linkHref = linkElement.getAttribute("href");
@@ -96,7 +96,7 @@ public class BioEntitiesPage extends BioEntityPage {
 
         int baselineCount = (countElement == null) ? -1 : Integer.parseInt(StringUtils.substringBetween(countElement.getText(), "(", ")"));
 
-        return new BaselineBioentitiesCount(experimentName, species, experimentAccession, baselineCount);
+        return new BaselineBioEntitiesCountWithHref(experimentName, species, experimentAccession, baselineCount, linkHref);
     }
 
     public String diffExpressionResultCount() {

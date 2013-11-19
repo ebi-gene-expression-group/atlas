@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -115,6 +116,16 @@ public class BaselineBioentityCountsServiceIT {
         assertThat(results, hasSize(0));
     }
 
+    List<Factor> femaleFactors = Lists.newArrayList(
+            new Factor("ORGANISM_PART", "adipose"),
+            new Factor("ORGANISM_PART", "brain"),
+            new Factor("ORGANISM_PART", "breast"),
+            new Factor("ORGANISM_PART", "colon"),
+            new Factor("ORGANISM_PART", "kidney"),
+            new Factor("ORGANISM_PART", "lymph node"),
+            new Factor("ORGANISM_PART", "ovary"),
+            new Factor("ORGANISM_PART", "thyroid"));
+
     @Test
     public void conditionFemale() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
@@ -123,7 +134,11 @@ public class BaselineBioentityCountsServiceIT {
         Set<BaselineExperimentResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
+        BaselineExperimentResult eMtab513 = results.iterator().next();
+
         assertThat(experimentAccessions, contains("E-MTAB-513"));
+
+        assertThat(eMtab513.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(femaleFactors.toArray(new Factor[femaleFactors.size()])));
     }
 
     @Test
@@ -135,6 +150,26 @@ public class BaselineBioentityCountsServiceIT {
         Set<BaselineExperimentResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
+        BaselineExperimentResult eMtab513 = results.iterator().next();
+
         assertThat(experimentAccessions, contains("E-MTAB-513"));
+
+        assertThat(eMtab513.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(femaleFactors.toArray(new Factor[femaleFactors.size()])));
     }
+
+    @Test
+    public void conditionWildType() throws GenesNotFoundException {
+        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        requestParameters.setCondition("wild type");
+
+        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        List<String> experimentAccessions = getExperimentAccessions(results);
+
+        BaselineExperimentResult eMtab513 = results.iterator().next();
+
+        assertThat(experimentAccessions, contains("E-MTAB-599"));
+
+        assertThat(eMtab513.getDefaultFactorsForSpecificAssayGroupsWithCondition(), hasSize(0));
+    }
+
 }
