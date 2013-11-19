@@ -1,4 +1,93 @@
-<h1>About</h1>
+<h1>About the Expression Atlas</h1>
 
-<p>This page is currently under construction.</p>
+
+The Expression Atlas is a semantically enriched database of publically
+available gene expression data including both microarray and RNA-seq
+data.  The data is re-analysed in-house to detect interesting
+expression patterns under the conditions of the original experiment.
+
+There are two components to the Expression Atlas, the Baseline Atlas
+and the Differential Atlas:
+
+<ul>
+<li><strong>Baseline Atlas</strong>
+  <p>The Baseline Atlas displays information about which
+  gene products are present (and at what abundance) in "normal"
+  conditions (e.g. tissue, cell type). It aims to answer questions
+  such as <ul>
+    
+  <li>which genes are specifically expressed in kidney? </li>
+  <li>what is the expression pattern for gene SAA4 in normal
+  tissues?</li>
+  </ul></p>
+
+  <p>This component of the Expression Atlas consists of highly-curated and
+  quality-checked RNA-seq experiments from <a
+  href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a>.   It has
+  data for several mammalian species aswell as opossum and rice. New
+  experiments are added as they become available.</p>
+
+  <p>See the <a href="/help/baseline_atlas.html">Baseline Atlas
+  help</a> page for information about how to search and interpret the
+  results in the Baseline Atlas.</p>
+</li>
+<li><strong>Differential Atlas</strong>
+  <p>The Differential Atlas allows users to identify genes that are
+  up- or down-regulated in a wide variety of different experimental
+  conditions such as yeast mutants, cadmium treated plants, cystic
+  fibrosis or the effect on gene expression of mind-body practice. </p>
+
+  <p>Both microarray and RNA-seq experiments are included in the
+  Differential Atlas. Experiments are selected from  <a
+  href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> and groups
+  of samples are manually identified for comparison e.g. those with wild type
+  genotype compared to those with a gene knock out. Each comparison is
+  called a contrast.  Each experiment is processed through our
+  in-house differentail expression statistical analysis pipeline to
+  identify genes with a high probability of differential expression.
+  </p>
+
+  <p>The <a href="help/differential-atlas.html">Differential Atlas
+  help</a> page has more information about how to search and interpret
+  the results in the Differential Atlas.</p> 
+</li>
+</ul>
+
+<h4>Searches enhanced by ontology-based query expansion </h4>
+
+<p>The Expression Atlas interface allows searches by gene, splice
+variant and protein attribute. Individual genes or gene sets can be
+searched for. Both the Baseline and Differential Atlas are queried by default.
+</p>
+<p>
+Sample attributes and experimental conditions can also be
+searched for. Experimental conditions e.g. cerebellum or breast carcinoma, are mapped to 
+ontology terms from the <a href="http://www.ebi.ac.uk/efo">Experimental
+Factor Ontology</a> (EFO). Mappings are made either manually by
+curators or automatically using EBI-developed software called <a
+href="http://www.ebi.ac.uk/fgpt/zooma">Zooma</a>.  The ontology
+mappings allow for query expansion e.g. searching for 'cancer' will
+return matches to the keyword and also results for different types of cancer such as 'breast
+carcinoma' and 'acute myeloid leukemia'.
+</p>
+
+<h4>References</h4>
+<ul>
+  <li>Petryszak, R. et al. (2013) Expression Atlas update - a database
+  of gene and transcript expression from microarray and
+  sequencing-based functional genomics experiments. Nucleic Acids
+  Research. Accepted.</li>
+  <li><a
+  href="http://nar.oxfordjournals.org/content/40/D1/D1077.long">Kapushesky,
+  M. et al. (2012)</a> Gene Expression Atlas update - a value-added
+  database of microarray and sequencing-based functional genomics experiments. Nucleic Acids Research
+  40:D1077-D1081.<br>
+  This paper describes the Gene Expression Atlas, from which the Expression
+  Atlas was developed.</li>
+<ul>
+
+  
+
+
+
 
