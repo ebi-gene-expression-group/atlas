@@ -1,6 +1,45 @@
 <h1>FAQs</h1>
 
-<p>This page is currently under construction.</p>
+<h2>General questions</h2>
+
+<h3>What is the Expression Atlas</h3>
+<p>The Expression Atlas database provides summary level information
+about gene expression patterns within different biological conditions.
+It consists of two components: the 'differential' and 'baseline'
+atlases. The Differential Atlas, containing both microarray and
+sequencing data, allows users to query which genes are
+up-/down-regulated in different experimental conditions, e.g. 'in
+Arabidopsis shoots, what genes are upregulated in plants treated by
+X?'  The Baseline Atlas, containing exclusively RNA-seq data, displays
+expression levels of gene products under 'normal' condition
+(e.g. normal tissues human tissues). Sample characteristcs and
+experimental variables are annotated to the <a href="http://www.ebi.ac.uk/efo">Experimental Factor
+Ontology</a> which allows us to use ontology-driven query expansion to
+broaden searches. E.g. a query for cancer would return experiments
+annotated with particular types of cancer such as leukemia or breast carcinoma as well as
+those annotated with cancer.</p>
+
+<h3>How are experiments chosen to be in the Expression Atlas?</h3>
+<p>Experiments in the Expression Atlas are selected from the <a
+href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> database of
+functional genomics experiments. Different criteria are used for
+selecting microarray and high throughput sequencing experiments. For
+microarray these criteria include the type of experiment (i.e. those
+concerning gene expression), the number of replicates to allow robust
+statistical analysis, and whether the array design used can be
+re-annotated against Ensembl.  For RNA-seq data the sequences must be
+of high quality, there must a good quality reference genome build
+available, there must be sufficent replicates for statistical analysis
+for differential experiments and the tissues must be 'normal' if the
+experiment is to go in the Baseline Atlas.<p> 
+
+<h3>How can I obtain the original data for an experiment?</h3>
+
+<h3>I doesn't look like the whole of the original experiment is in the
+Expression Atlas, why not?</h3>
+
+
+
 
 
 <h2>Searching</h2>
