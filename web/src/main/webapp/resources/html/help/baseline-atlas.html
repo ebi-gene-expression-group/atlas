@@ -5,9 +5,9 @@
 
 <h2>About the Baseline Atlas</h2>
 	
-<p>The Baseline Atlas aims primarily at representing information about which gene
+<p>The Baseline Atlas represents information about which gene
 products are present (and at what abundance) in which "normal" condition (e.g.,
-tissue, cell type). In the first instance, the Baseline Atlas will consist of
+tissue, cell type). The Baseline Atlas consists of
 highly curated RNA&ndash;seq experiments from <a
 	href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a>, such as: </p>
 
@@ -16,6 +16,7 @@ highly curated RNA&ndash;seq experiments from <a
   <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-599" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-599">Transcriptome of DBAxC57BL/6J mice</a></li>
   <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284">RNA&ndash;seq of long coding and long non coding RNAs from ENCODE cell lines</a></li>
   <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-30352" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-30352">RNA&ndash;seq of 6 tissues from 10 species to investigate the evolution of gene expression levels in mammalian organs</a></li>
+  <li><a href="" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-2037/">Transcription profiling by RNA-seq of seven tissues from Oryza sativa japonica Nipponbare</a></li>
 </ul>
 
 <p>The above experiments have been re&ndash;analyzed using an in&ndash;house RNA&ndash;seq
@@ -61,8 +62,6 @@ data is available.</p>
 <h2>Searching Baseline Atlas</h2>
 
 
-
-
 <h3>Specifying the minimum expression level</h3>
 
 <p>You can specify a minimum expression level to act as a <b>cutoff</b>, and only genes expressed <b>above</b> this level are displayed. This is to aid distinction between "background noise" and "real" gene expression. Our default FPKM cutoff is 0.5. To change it, enter a new value into the "Expression level cutoff" input box, or drag the slider until the "Expression level cutoff" input box shows your desired cutoff value. A histogram showing the number of genes expressed above a range of cutoffs is also available. This lets you see how many genes you are excluding by selecting a given cutoff. If you see that you're excluding a lot of genes, you may wish to <b>decrease</b> the cutoff. Clicking on the <img alt="Histogram enable/disable button" src="resources/images/help/histogram_btn.png" align="bottom" /> button toggles display of the histogram.</p>
@@ -73,18 +72,14 @@ data is available.</p>
 </ul>
 
 
-
-
 <h3>Searching with genes</h3>
 
-<p>You can search with <a class="externallink" href="http://ensembl.org">Ensembl</a> gene symbols (e.g. SAA4), identifiers (e.g. ENSG00000148965) or <a title="Ensembl Glossary" class="externallink" href="http://www.ensembl.org/Help/Glossary">biotypes</a> (e.g. protein_coding), <a class="externallink" href="http://www.uniprot.org">UniProt</a> accessions (e.g. P35542), <a class="externallink" href="http://www.geneontology.org">GO</a> ("phosphoglycerate kinase activity") or <a href="http://www.ebi.ac.uk/interpro/">InterPro</a> terms (e.g. phosphatase). A <b>space&ndash;separated</b> list of gene attributes will bring back genes that match <b>at least one</b> of the attributes in the query.</p>
+<p>You can search with <a class="externallink" href="http://ensembl.org">Ensembl</a> gene symbols (e.g. SAA4), identifiers (e.g. ENSG00000148965) or <a title="Ensembl Glossary" class="externallink" href="http://www.ensembl.org/Help/Glossary">biotypes</a> (e.g. protein_coding), <a class="externallink" href="http://www.uniprot.org">UniProt</a> accessions (e.g. P35542), <a class="externallink" href="http://www.geneontology.org">GO</a> ("phosphoglycerate kinase activity") or <a href="http://www.ebi.ac.uk/interpro/">InterPro</a> terms (e.g. phosphatase). A <b>space&ndash;separated</b> list of gene attributes will bring back genes that match <b>at least one</b> of the attributes in the query. Put multi-word query terms in quotes e.g. "transcription factor binding".</p>
 
 <p>If the "Exact match" box is checked, only genes with annotations that fully match your query will be returned. For example, to find the expression of the <a href="http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=ENSG00000198668">calmodulin 1</a> gene, check the "Exact match" box, type "CALM1" and click "Search". If the box is not checked, genes with annotations that contain words that fully match your query will be returned. For example, to find expressions for genes with "calmodulin" in their annotations (e.g. "calmodulin binding", "calmodulin regulated", &hellip;), uncheck the "Exact match" box, type "calmodulin" and click search.</p>
 
 <!-- Gene sets -->
 <!-- reactome pathways -->
-
-
 
 
 <h3>Searching with experimental factor values</h3>

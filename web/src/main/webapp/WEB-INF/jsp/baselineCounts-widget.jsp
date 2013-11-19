@@ -49,7 +49,7 @@
                     <tr>
                         <td>
                             <a class="bioEntityCardLink"
-                                   href="${base}/experiments/${baselineCount.experimentAccession}?queryFactorType=ORGANISM_PART&queryFactorValues=${param.condition}&geneQuery=${applicationProperties.urlParamEncode(param.geneQuery)}"
+                                   href="${base}/experiments/${baselineCount.experimentAccession}?queryFactorType=ORGANISM_PART&queryFactorValues=${applicationProperties.encodeMultiValues(baselineCount.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${applicationProperties.urlParamEncode(param.geneQuery)}"
                                title="experiment">
                                     ${baselineCount.species} - ${baselineCount.experimentName}
                             </a>

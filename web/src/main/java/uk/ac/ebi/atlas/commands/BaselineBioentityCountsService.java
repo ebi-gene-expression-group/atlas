@@ -23,11 +23,14 @@
 package uk.ac.ebi.atlas.commands;
 
 import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.BaselineExperimentDao;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.BaselineConditionsSearchService;
@@ -35,14 +38,13 @@ import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 @Named
 @Scope("request")
 public class BaselineBioentityCountsService {
+
+    private final BaselineExperimentsCache baselineExperimentsCache;
 
     private BaselineExperimentDao baselineExperimentDao;
 
@@ -57,8 +59,10 @@ public class BaselineBioentityCountsService {
         LIMITED_BY_EXPERIMENTS.put("E-MTAB-599", new BaselineExperimentResult("E-MTAB-599", "Six tissues", "Mus musculus"));
     }
 
+
     @Inject
-    public BaselineBioentityCountsService(BaselineExperimentDao baselineExperimentDao, BaselineConditionsSearchService baselineConditionsSearchService, SolrQueryService solrQueryService) {
+    public BaselineBioentityCountsService(BaselineExperimentDao baselineExperimentDao, BaselineConditionsSearchService baselineConditionsSearchService, SolrQueryService solrQueryService, BaselineExperimentsCache baselineExperimentsCache) {
+        this.baselineExperimentsCache = baselineExperimentsCache;
         this.baselineExperimentDao = baselineExperimentDao;
         this.baselineConditionsSearchService = baselineConditionsSearchService;
         this.solrQueryService = solrQueryService;
@@ -67,7 +71,7 @@ public class BaselineBioentityCountsService {
 
     public Set<BaselineExperimentResult> query(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
 
-        SortedSet<BaselineExperimentResult> result =
+        SortedSet<BaselineExperimentResult> results =
                 Sets.newTreeSet(new Comparator<BaselineExperimentResult>() {
                     @Override
                     public int compare(BaselineExperimentResult count, BaselineExperimentResult otherCount) {
@@ -77,48 +81,69 @@ public class BaselineBioentityCountsService {
 
 
         if (requestParameters.hasCondition()) {
-            Multimap<String, String> assayGroupsPerExperiment = baselineConditionsSearchService.findAssayGroupsPerExperiment(requestParameters.getCondition());
+
+            SetMultimap<String, String> assayGroupsPerExperiment = baselineConditionsSearchService.findAssayGroupsPerExperiment(requestParameters.getCondition());
 
             for (String experimentAccession : assayGroupsPerExperiment.keySet()) {
 
                 if (LIMITED_BY_EXPERIMENTS.containsKey(experimentAccession)) {
 
-                    if (requestParameters.hasGeneQuery()) {
-                        GeneQueryResponse geneIds = solrQueryService.findGeneIdsOrSets(requestParameters.getGeneQuery(),
-                                requestParameters.isExactMatch(),
-                                LIMITED_BY_EXPERIMENTS.get(experimentAccession).getSpecies().toLowerCase(),
-                                requestParameters.isGeneSetMatch());
+                    Set<String> assayGroupIds = assayGroupsPerExperiment.get(experimentAccession);
 
-                        if (!geneIds.isEmpty() && baselineExperimentDao.isExperimentWithConditionsAndGenes(experimentAccession, assayGroupsPerExperiment.get(experimentAccession), geneIds.getAllGeneIds())) {
-                            result.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
-                        }
-                    } else {
+                    String species = LIMITED_BY_EXPERIMENTS.get(experimentAccession).getSpecies();
 
-                        // check that the assay groups have ANY genes expressed
-                        // TODO: is this actually needed, or can do we already know that there will be ANY gene expressed?
-                        if (baselineExperimentDao.isExperimentWithCondition(experimentAccession, assayGroupsPerExperiment.get(experimentAccession))) {
-                            result.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
-                        }
+                    if (isExperimentWithGenesExpressedAboveCutOff(requestParameters, experimentAccession, species, assayGroupIds)) {
+                        BaselineExperimentResult result = LIMITED_BY_EXPERIMENTS.get(experimentAccession);
+
+                        BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
+
+                        result.setExperiment(experiment);
+
+                        result.setAssayGroupsWithCondition(assayGroupIds);
+
+                        results.add(result);
                     }
 
                 }
             }
 
         } else if (requestParameters.hasGeneQuery()) {
+
             for (String experimentAccession : LIMITED_BY_EXPERIMENTS.keySet()) {
+
                 GeneQueryResponse geneIds = solrQueryService.findGeneIdsOrSets(requestParameters.getGeneQuery(),
                         requestParameters.isExactMatch(),
                         LIMITED_BY_EXPERIMENTS.get(experimentAccession).getSpecies().toLowerCase(),
                         requestParameters.isGeneSetMatch());
 
-                if (!geneIds.isEmpty() && baselineExperimentDao.isExperimentWithGenes(experimentAccession, geneIds.getAllGeneIds())) {
-                    result.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
+                if (!geneIds.isEmpty() && baselineExperimentDao.isExperimentWithGenesExpressedAboveCutOff(experimentAccession, geneIds.getAllGeneIds())) {
+                    results.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
                 }
+
             }
         }
 
 
-        return result;
+        return results;
+    }
+
+    private boolean isExperimentWithGenesExpressedAboveCutOff(GeneQuerySearchRequestParameters requestParameters, String experimentAccession, String species, Collection<String> assayGroups) {
+        if (requestParameters.hasGeneQuery()) {
+            GeneQueryResponse geneIds = solrQueryService.findGeneIdsOrSets(requestParameters.getGeneQuery(),
+                    requestParameters.isExactMatch(),
+                    species.toLowerCase(),
+                    requestParameters.isGeneSetMatch());
+
+            if (!geneIds.isEmpty() && baselineExperimentDao.isExperimentWithGenesExpressedAboveCutOff(experimentAccession, assayGroups, geneIds.getAllGeneIds())) {
+                return true;
+            }
+        } else {
+
+            if (baselineExperimentDao.isExperimentWithAnyGenesExpressedAboveCutOff(experimentAccession, assayGroups)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
