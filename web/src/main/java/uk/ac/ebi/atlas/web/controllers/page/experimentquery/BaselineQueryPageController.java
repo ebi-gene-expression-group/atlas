@@ -126,8 +126,6 @@ public class BaselineQueryPageController extends BaselineQueryController {
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
-        SortedSet<Factor> allQueryFactors = experimentalFactors.getFilteredFactors(selectedFilterFactors);
-
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = experimentalFactors.getFilteredAssayGroupFactors(selectedFilterFactors);
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box

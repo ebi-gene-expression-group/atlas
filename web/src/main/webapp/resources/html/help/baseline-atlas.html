@@ -12,11 +12,11 @@ highly curated RNA&ndash;seq experiments from <a
 	href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a>, such as: </p>
 
 <ul>
-  <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-513" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-513">Illumina Body Map</a></li>
-  <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-599" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-599">Transcriptome of DBAxC57BL/6J mice</a></li>
-  <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284">RNA&ndash;seq of long coding and long non coding RNAs from ENCODE cell lines</a></li>
-  <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-30352" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-30352">RNA&ndash;seq of 6 tissues from 10 species to investigate the evolution of gene expression levels in mammalian organs</a></li>
-  <li><a href="" rel="nofollow" title="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-2037/">Transcription profiling by RNA-seq of seven tissues from Oryza sativa japonica Nipponbare</a></li>
+  <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-513">Illumina Body Map</a></li>
+  <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-599">Transcriptome of DBAxC57BL/6J mice</a></li>
+  <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284">RNA&ndash;seq of long coding and long non coding RNAs from ENCODE cell lines</a></li>
+  <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-30352">RNA&ndash;seq of 6 tissues from 10 species to investigate the evolution of gene expression levels in mammalian organs</a></li>
+  <li><a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-2037/">Transcription profiling by RNA-seq of seven tissues from Oryza sativa japonica Nipponbare</a></li>
 </ul>
 
 <p>The above experiments have been re&ndash;analyzed using an in&ndash;house RNA&ndash;seq
@@ -43,9 +43,7 @@ factor values, and a minimum FPKM cutoff. See below for more details on searchin
 
 <p><img alt="filtering" src="resources/images/help/filtering.png" align="bottom" /></p>
 <p>Some experiments have <b>more than one</b> experimental variable (factor). For example, in experiment
-<a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284"
-	rel="nofollow"
-	title="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284">E-GEOD-26284</a>,
+<a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284">E-GEOD-26284</a>,
 three different <b>types of RNA</b> were extracted from <b>six cellular components</b> from <b>23
 human cell lines</b>. Results for these experiments are limited to a certain
 combination of variables, e.g. showing expression of <b>total RNA</b> in the
@@ -74,12 +72,28 @@ data is available.</p>
 
 <h3>Searching with genes</h3>
 
-<p>You can search with <a class="externallink" href="http://ensembl.org">Ensembl</a> gene symbols (e.g. SAA4), identifiers (e.g. ENSG00000148965) or <a title="Ensembl Glossary" class="externallink" href="http://www.ensembl.org/Help/Glossary">biotypes</a> (e.g. protein_coding), <a class="externallink" href="http://www.uniprot.org">UniProt</a> accessions (e.g. P35542), <a class="externallink" href="http://www.geneontology.org">GO</a> ("phosphoglycerate kinase activity") or <a href="http://www.ebi.ac.uk/interpro/">InterPro</a> terms (e.g. phosphatase). A <b>space&ndash;separated</b> list of gene attributes will bring back genes that match <b>at least one</b> of the attributes in the query. Put multi-word query terms in quotes e.g. "transcription factor binding".</p>
+<p>You can search with <a class="externallink" href="http://ensembl.org">Ensembl</a> gene symbols (e.g. SAA4), identifiers (e.g. ENSG00000148965) or <a href="http://www.ensembl.org/Help/Glossary">biotypes</a> (e.g. protein_coding), <a href="http://www.uniprot.org">UniProt</a> accessions (e.g. P35542), <a href="http://www.geneontology.org">GO</a> ("phosphoglycerate kinase activity") or <a href="http://www.ebi.ac.uk/interpro/">InterPro</a> terms (e.g. phosphatase). A <b>space&ndash;separated</b> list of gene attributes will bring back genes that match <b>at least one</b> of the attributes in the query. Put multi-word query terms in quotes e.g. "transcription factor binding".</p>
 
 <p>If the "Exact match" box is checked, only genes with annotations that fully match your query will be returned. For example, to find the expression of the <a href="http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=ENSG00000198668">calmodulin 1</a> gene, check the "Exact match" box, type "CALM1" and click "Search". If the box is not checked, genes with annotations that contain words that fully match your query will be returned. For example, to find expressions for genes with "calmodulin" in their annotations (e.g. "calmodulin binding", "calmodulin regulated", &hellip;), uncheck the "Exact match" box, type "calmodulin" and click search.</p>
 
-<!-- Gene sets -->
-<!-- reactome pathways -->
+<p>If the "Gene set" box is checked, each term in the query is interpreted as a
+set of genes. For example, to see the average expression of all genes matching
+the <a href="http://www.geneontology.org/">GO</a> term <a
+	href="http://amigo.geneontology.org/cgi-bin/amigo/term_details?term=GO:0004618"?>"phosphoglycerate
+	kinase activity"</a> or <a
+	href="http://www.ebi.ac.uk/interpro/">Interpro</a> term <a
+	href="http://www.ebi.ac.uk/interpro/entry/IPR020405">IPR020405</a>, type
+those terms in the "Gene query" box (with double quotes around multi-word
+terms), check the "Gene set" box, and click "Search". All genes that match each
+query term are grouped
+together in the resulting heatmap. The mean expression level of all genes in
+each group is displayed in each column of the heatmap.</p>
+
+<img alt="Gene set query" src="resources/images/help/geneSet.png" align="bottom" />
+
+<p>To see which genes were included in your gene set search, uncheck "Gene set"
+and click "Search" again.</p>
+
 
 
 <h3>Searching with experimental factor values</h3>
@@ -208,7 +222,7 @@ button" src="resources/images/help/am_btn.png" align="bottom" /> button.</p>
 
 <h2>Providing feedback</h2>
 
-<p>The Baseline Atlas is still a prototype and thus we value your feedback on what we are doing right, what does not work or what could be achieved more intuitively. We would also be grateful for any feedback on the analysis methods we have adopted &mdash; we are passionate about not only about intuitive data presentation, the highest level of experimental metadata curation, but also about the quality and biological validity of the expression data presented in Baseline Atlas.</p>
+<p>We value your feedback on what Expression Atlas is doing right, what does not work or what could be achieved more intuitively. We would also be grateful for any feedback on the analysis methods we have adopted &mdash; we are passionate about not only about intuitive data presentation, the highest level of experimental metadata curation, but also about the quality and biological validity of the expression data presented in Baseline Atlas.</p>
 
 <p>To send us your feedback, please fill in form accessed by clicking on the <i>Feedback</i> link on the top right of the page:</p>
 <p><img alt="Feedback Pop-up" src="resources/images/help/feedback.png" align="bottom" /></p>
