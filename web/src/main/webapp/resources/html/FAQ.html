@@ -26,19 +26,37 @@ those annotated with cancer.</p>
 <p>Experiments in the Expression Atlas are selected from the <a
 href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> database of
 functional genomics experiments. Different criteria are used for
-selecting microarray and high throughput sequencing experiments. For
-microarray these criteria include the type of experiment (i.e. those
-concerning gene expression), the number of replicates to allow robust
-statistical analysis, and whether the array design used can be
-re-annotated against Ensembl.  For RNA-seq data the sequences must be
-of high quality, there must a good quality reference genome build
+selecting microarray and high throughput sequencing experiments. 
+Microarray data must be gene expression data (rather than ChiP-chip or
+CGH for example), it must have a sufficent number of replicates to allow robust
+statistical analysis, and it should be possible to re-annotated the array design against Ensembl.  For RNA-seq data the sequences must be
+of high quality, there should a good quality reference genome build
 available, there must be sufficent replicates for statistical analysis
 for differential experiments and the tissues must be 'normal' if the
 experiment is to go in the Baseline Atlas.<p> 
 
-<h3><a name="getOrigData">How can I obtain the original data for an experiment?</a></h3>
+<h3><a name="getOrigData">How can I obtain the original data for an
+experiment?</a></h3>
+<p>The original raw and processed data files for experiments in
+the Expression Atlas can be found in the <a
+href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a>
+database. To link to the data in ArrayExpress click on the experiment accession number
+e.g. E-GEOD-15325 or E-MTAB-599, on any experiment page in the
+Expression Atlas.  In ArrayExpress the original submitted data files can be downloaded as zip
+archives and sample annotation is available in MAGE-TAB format text
+files. See the <a
+href="https://www.ebi.ac.uk/arrayexpress/help/quick_start.html">ArrayExpress
+Quick Start </a> guide for further information.
 
-<h3><a name="wholeExpt">It doesn't look like the whole of the original experiment is in the Expression Atlas, why not?</a></h3>
+<h3><a name="wholeExpt">It doesn't look like the whole of the original
+experiment is in the Expression Atlas, why not?</a></h3>
+We sometimes only include part of an experiment
+in the Expression Atlas because (1) there are not sufficient replicates of all the sample groups
+within an experiment, or (2) the hybridization or sequencing was not of
+high enough quality.  If there are still enough assays after the removal of those with too
+few replicates or low quality then we continue
+processing the experiment for the Expression Atlas.
+
 
 <h3><a name="microarrayAnalysis">How is microarray data analysed?</a></h3>
 
@@ -276,6 +294,65 @@ raw RNA-seq counts" align="bottom" /> button. For more details about the differe
 please see the <a href="help/differential-atlas.html">Differential Atlas help
 	page</a>.</p>
 
+<h3><a name="blResults">When I search all of Expression Atlas, what do the &quot;Baseline Expression&quot; results show?</a></h3>
+
+<p>The table in the <strong>Baseline Expression</strong> section of the
+results shows all experiments that matched your search.  </p>
+
+<p>If your search was for an Experimental condition then it includes all experiments with a
+sample property or experimental factor (variable) that matched that
+condition. For example you might be interested in experiments that are
+from 'liver' samples and so you could search for this term.</p>
+
+<p>If you searched for a particular gene then the experiments returned
+are ones in which that gene was expressed above the default minimum
+expression level (FPKM - Fragments Per Kilobase of transcript per
+Million mapped reads) which is 0.5.  You can click on the name of the
+experiment to view which tissues or cell lines that gene was expressed
+in. </p>
+
+
+<h3><a name="BLexptPage">What does the baseline expression
+experiment page show?</a></h3>
+<p>Each experiment in Expression Atlas has its own experiment page, e.g. <a
+	href="experiments/E-MTAB-599">RNA-seq of mouse DBA/2J x
+C57BL/6J heart, hippocampus, liver, lung, spleen and thymus</a>. Here
+you can see a heat map showing the 50 most specifically expressed
+genes across all conditions studied.  You can further refine the query
+by narrowing the search to specific genes, or gene sets, or by
+limiting which organism parts are searched over. Please see the <a href="help/baseline-atlas.html">Baseline Atlas help page</a> for
+more details.</p>
+
+<h3><a name="blHeatmapColours">What do the different shades of blue
+in the heat map mean?</a></h3>
+
+<p> The heatmap shows expressions by colour intensity, according to
+the gradient bar displayed above the heatmap. The intensities corresponding to expression levels for the top 50 genes
+currently displayed (rather than all FPKM values for all genes returned by the query).</p>
+
+<h3><a name="blActualValues">How do I see the actual expression levels
+in the heat map?</a></h3>
+
+<p>Click on the 'Display levels' button in the top left corner of the
+heat map to show the actual FPKM values.</p>
+
+
+<h3><a name="blTranscripts">How can I see information about
+transcript-level expression?</a></h3>
+
+<p>To see transcript-level expression for a given gene, click the
+corresponding filled box in the heatmap. This brings up a pie chart
+detailing the proportion of expression contributed by each
+transcript. A maximum of three top contributing transcripts are shown,
+and the remaining ones are aggregated as "Others". Transcripts that
+are not expressed above the selected minimum expression level are not
+shown. White portions of the pie chart indicate that the data for that
+transcript is of low confidence.</p>
+
+<h3><a name="BLdownloadAnalytics">Can I download the baseline
+expression results?</a></h3>
+
+<p>The top 50 genes resulting from your search are displayed on the page. Click on the button to download the full results of your query in tab–delimited format with no ordering.<p>
 
 </section>
 <!-- End of main text section -->
@@ -312,7 +389,24 @@ please see the <a href="help/differential-atlas.html">Differential Atlas help
 		<li><a href="FAQ.html#displayPvalues">How do I see the actual <i>p</i>-values in the results table?</a></li>
 		<li><a href="FAQ.html#deBars">What are the blue and red bars above the results table?</a></li>
 		<li><a href="FAQ.html#downloadAnalytics">Can I download the differential expression results?</a></li>
-		<li><a href="FAQ.html#downloadDEdata">Can I download the data used for differential expression analysis?</a></li>
+		<li><a href="FAQ.html#downloadDEdata">Can I download
+		the data used for differential expression
+		analysis?</a></li>
+		<li><a href="FAQ.html#blResults">When I search all of
+		Expression Atlas, what do the &quot;Baseline
+		Expression&quot; results show?</a></li>
+                <li><a href="FAQ.html#BLexptPage">What does the
+		baseline expression experiment page show?</a></li>
+		<li><a href="FAQ.html#"blHeatmapColours">What do the
+		different shades of blue in the heat map mean?</a></li>
+		<li><a href="FAQ.html#"blActualValues">How do I see
+		the actual expression levels in the heat map?</a></li>
+		<li><a href="FAQ.html#blTranscripts">How can I see
+		information about transcript-level expression?</a></li>
+                <li><a href="FAQ.html#BLdownloadAnalytics">Can I
+		download the baseline expression results?</a></li>
+
+		
 		<!-- <li><a href="FAQ.html#"></a></li> -->
 	</ul>
 </aside>
