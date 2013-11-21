@@ -97,9 +97,7 @@ public class BaselineBioentityCountsService {
 
                         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
-                        result.setExperiment(experiment);
-
-                        result.setAssayGroupsWithCondition(assayGroupIds);
+                        result.setAssayGroupsWithCondition(assayGroupIds, experiment);
 
                         results.add(result);
                     }
