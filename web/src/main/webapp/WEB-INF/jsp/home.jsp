@@ -27,9 +27,14 @@
 
 <h2>Expression Atlas, Differential and Baseline Expression</h2>
 
-<p>Expression Atlas is a semantically enriched database of publicly available gene and transcript expression data.
+<%-- <p>Expression Atlas is a semantically enriched database of publicly available gene and transcript expression data.
     The data is re-analysed in-house to detect genes showing interesting baseline and differential expression patterns
-    under the conditions of the original experiment. <a href="about.html">Read more about Expression Atlas.</a></p>
+	under the conditions of the original experiment. <a href="about.html">Read more about Expression Atlas.</a></p> --%>
+
+<p>The Expression Atlas provides information on gene expression patterns under
+different biological conditions. Gene expression data is re-analysed in-house
+to detect genes showing interesting baseline and differential expression
+patterns. <a href="about.html">Read more about Expression Atlas.</a></p>
 
 <section class="grid_6 alpha">
     <table class="form-grid" style="margin:0px 9px;">
@@ -65,7 +70,29 @@
                         </div>
                     </div>
                 </td>
-            </tr>
+			</tr>
+			
+			<%-- row for examples --%>
+			<tr>
+				<td>
+					<span class="examples">E.g. 
+						<a href="query?geneQuery=ASPM">ASPM</a>,
+						<a href="query?geneQuery=REACT_1619">REACT_1619</a>,
+						<a href="query?geneQuery=ENSMUSG00000021789">ENSMUSG00000021789</a>,
+						<a href="query?geneQuery=%22zinc+finger%22">"zinc finger"</a>
+					</span>
+				</td>
+				<td>
+					<span class="examples">E.g.
+						<a href="query?condition=leaf">leaf</a>,
+						<a href="query?condition=Mus+musculus">"Mus musculus"</a>,
+						<a href="query?condition=cancer">cancer</a>,
+						<a href="query?condition=salicylic+acid">"salicylic acid"</a>
+					</span>
+				</td>
+			</tr>
+			<%-- --%>
+
             <tr>
                 <td>
                     <div style="display:inline-block">
