@@ -84,10 +84,10 @@ public class ExperimentDesignFileWriter<T extends AbstractSDRFNode> {
 
     protected List<String> getCommonColumnHeaders(ExperimentType experimentType){
         switch(experimentType.getParent()){
-            case MICROARRAY:
+            case MICROARRAY_ANY:
                 return Lists.newArrayList("Assay", "Array");
-            case BASELINE:
-            case DIFFERENTIAL:
+            case RNASEQ_MRNA_BASELINE:
+            case RNASEQ_MRNA_DIFFERENTIAL:
                 return Lists.newArrayList("Run");
             default:
                 throw new IllegalStateException("Invalid parent type: " + experimentType.getParent());

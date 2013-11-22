@@ -83,7 +83,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
         subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, "{0}{1}", experimentDAOMock);
 
         when(experimentDTOMock.getExperimentAccession()).thenReturn(ACCESSION);
-        when(experimentDTOMock.getExperimentType()).thenReturn(ExperimentType.MICROARRAY);
+        when(experimentDTOMock.getExperimentType()).thenReturn(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
         when(experimentDTOMock.getAccessKey()).thenReturn(ACCESS_KEY);
         when(experimentDTOMock.getPubmedIds()).thenReturn(Sets.newHashSet("pubmed1"));
         when(experimentDTOMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIES));

@@ -43,7 +43,7 @@ public class BaselineDesignDownloadController extends ExperimentDesignDownloadCo
         super(tsvReaderBuilder);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=BASELINE"})
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=RNASEQ_MRNA_BASELINE"})
     public void downloadExperimentDesign(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         extractExperimentDesign(request, response);

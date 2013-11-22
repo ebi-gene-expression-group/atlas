@@ -84,13 +84,13 @@ public class ExperimentDesignFileWriterBuilder {
         //ToDo (B) maybe it is silly that we need to inject different type of parsers.
         //ToDo (B) maybe we should have one only MageTabParser class and the MageTabParser should use different specialized ExperimentDesignBuilder to build the ExperimentDesign
         switch(experimentType){
-            case MICRORNA:
-            case MICROARRAY:
+            case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
+            case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:
                 return new ExperimentDesignFileWriter(csvWriter, microarrayMageTabParser, experimentType);
-            case TWOCOLOUR:
+            case MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL:
                 return new ExperimentDesignFileWriter(csvWriter, twoColourMageTabParser, experimentType);
-            case BASELINE:
-            case DIFFERENTIAL:
+            case RNASEQ_MRNA_BASELINE:
+            case RNASEQ_MRNA_DIFFERENTIAL:
                 return new ExperimentDesignFileWriter(csvWriter, rnaSeqMageTabParser, experimentType);
             default:
                 throw new IllegalStateException("Unknown experimentType: " + experimentType);

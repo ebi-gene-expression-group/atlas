@@ -60,17 +60,17 @@ public class ExperimentChecker {
         checkFilePermission("experiment.analysis-method.path.template", experimentAccession);
 
         switch (experimentType) {
-            case BASELINE:
+            case RNASEQ_MRNA_BASELINE:
                 checkBaselineFiles(experimentAccession);
                 break;
-            case DIFFERENTIAL:
+            case RNASEQ_MRNA_DIFFERENTIAL:
                 checkDifferentialFiles(experimentAccession);
                 break;
-            case MICROARRAY:
-            case MICRORNA:
+            case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:
+            case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
                 checkMicroarrayFiles(experimentAccession);
                 break;
-            case TWOCOLOUR:
+            case MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL:
                 checkTwoColourFiles(experimentAccession);
                 break;
             default:
