@@ -49,7 +49,7 @@ public class ExperimentConfigurationTest {
     private static final String TEST_ASSAY_GROUP = "test_assay_group";
     private static final String NAME = "name";
     private static final String XML_CONTENT =
-            "<configuration experimentType=\"BASELINE\">" +
+            "<configuration experimentType=\"rnaseq_mrna_baseline\">" +
                     "    <analytics>" +
                     "        <assay_groups>" +
                     "            <assay_group id=\"" + REFERENCE_ASSAY_GROUP + "\">" +

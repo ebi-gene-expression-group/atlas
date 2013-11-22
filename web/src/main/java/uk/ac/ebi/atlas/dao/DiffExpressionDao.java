@@ -107,14 +107,24 @@ public class DiffExpressionDao {
 
         jdbcTemplate.setMaxRows(RESULT_SIZE);
 
-        List<DifferentialBioentityExpression> results = jdbcTemplate.query(indexedContrastQuery.getQuery(),
-                dbeRowMapper,
-                indexedContrastQuery.getParameters().toArray());
+        List<DifferentialBioentityExpression> results = null;
 
-        stopwatch.stop();
+        try {
+            results = jdbcTemplate.query(indexedContrastQuery.getQuery(),
+                    dbeRowMapper,
+                    indexedContrastQuery.getParameters().toArray());
 
-        LOGGER.debug(String.format("getTopExpressions returned %s expressions in %s seconds", results.size(), stopwatch.elapsed(TimeUnit.SECONDS)));
+            stopwatch.stop();
+
+            LOGGER.debug(String.format("getTopExpressions returned %s expressions in %s seconds", results.size(), stopwatch.elapsed(TimeUnit.SECONDS)));
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            throw e;
+        }
+
         return results;
+
     }
 
 
