@@ -20,7 +20,7 @@
   ~ http://gxa.github.com/gxa
   -->
 
-<configuration>
+<configuration experimentType="1color_microarray_mrna_differential">
     <analytics>
         <array_design>
             A-AFFY-2

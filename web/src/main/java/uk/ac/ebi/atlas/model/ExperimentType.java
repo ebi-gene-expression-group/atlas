@@ -29,15 +29,21 @@ import java.util.Map;
 
 public enum ExperimentType {
 
-    BASELINE(), DIFFERENTIAL(), MICROARRAY()
-    , TWOCOLOUR(MICROARRAY), MICRORNA(MICROARRAY);
+    BASELINE("rnaseq_mrna_baseline")
+    ,DIFFERENTIAL("rnaseq_mrna_differential")
+    ,MICROARRAY("1color_microarray_mrna_differential")
+    ,TWOCOLOUR(MICROARRAY, "2color_microarray_mrna_differential")
+    ,MICRORNA(MICROARRAY, "1color_microarray_microrna_differential");
 
     private ExperimentType parent;
+    private String key;
 
-    private ExperimentType() {
+    private ExperimentType(String key) {
+        this.key = key;
     }
 
-    private ExperimentType(ExperimentType parent) {
+    private ExperimentType(ExperimentType parent, String key) {
+        this(key);
         this.parent = parent;
     }
 
@@ -65,6 +71,15 @@ public enum ExperimentType {
         return parent == null ? this : parent;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public String toString() {
+        return key;
+    }
+
     private static final Map<String,ExperimentType> lookup = new HashMap<>();
 
     static {
@@ -73,7 +88,7 @@ public enum ExperimentType {
     }
 
     public static ExperimentType get(String experimentType) {
-        return lookup.get(experimentType.toUpperCase());
+        return lookup.get(experimentType.toLowerCase());
     }
 
 }
