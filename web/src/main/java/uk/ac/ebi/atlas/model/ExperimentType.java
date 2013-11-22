@@ -23,6 +23,10 @@
 package uk.ac.ebi.atlas.model;
 
 
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
+
 public enum ExperimentType {
 
     BASELINE(), DIFFERENTIAL(), MICROARRAY()
@@ -59,6 +63,17 @@ public enum ExperimentType {
 
     public ExperimentType getParent() {
         return parent == null ? this : parent;
+    }
+
+    private static final Map<String,ExperimentType> lookup = new HashMap<>();
+
+    static {
+        for(ExperimentType experimentType : EnumSet.allOf(ExperimentType.class))
+            lookup.put(experimentType.toString(), experimentType);
+    }
+
+    public static ExperimentType get(String experimentType) {
+        return lookup.get(experimentType.toUpperCase());
     }
 
 }

@@ -72,7 +72,7 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + EXPERIMENT_ACCESSION);
 
         expect().body(startsWith("Experiment " + EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
-                .get("loadExperiment?accession=" + EXPERIMENT_ACCESSION + "&type=BASELINE&private=false");
+                .get("loadExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=false");
 
         expect().body("experimentAccession", hasItem(EXPERIMENT_ACCESSION))
                 .and().body("isPrivate", contains(false))
@@ -89,7 +89,7 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + EXPERIMENT_ACCESSION);
 
         expect().body(startsWith("Experiment " + EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
-                .get("loadExperiment?accession=" + EXPERIMENT_ACCESSION + "&type=BASELINE&private=true");
+                .get("loadExperiment?accession=" + EXPERIMENT_ACCESSION + "&private=true");
 
         expect().body("experimentAccession", hasItem(EXPERIMENT_ACCESSION))
                 .and().body("isPrivate", contains(true))
@@ -108,7 +108,7 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
     @Test
     public void loadShouldFailWhenExperimentHasAlreadyBeenImported() {
         expect().body(is("IllegalStateException: Experiment with experimentAccession " + EXPERIMENT_ACCESSION + " has been already imported."))
-                .when().get("loadExperiment?accession=" + EXPERIMENT_ACCESSION + "&type=BASELINE");
+                .when().get("loadExperiment?accession=" + EXPERIMENT_ACCESSION);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
         String blablaExperimentAccession = "E-MTAB-BLA-BLA-BLA";
 
         expect().body(startsWith("IllegalStateException: Required file can not be read"))
-                .when().get("loadExperiment?accession=" + blablaExperimentAccession + "&type=BASELINE");
+                .when().get("loadExperiment?accession=" + blablaExperimentAccession);
 
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + blablaExperimentAccession);
 
@@ -145,7 +145,7 @@ public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(0));
 
         expect().body(startsWith("Experiment " + DIFFERENTIAL_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
-                .get("loadExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&type=DIFFERENTIAL&private=false");
+                .get("loadExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=false");
 
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(4));
 

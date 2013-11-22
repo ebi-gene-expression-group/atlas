@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -86,6 +87,10 @@ public class ExperimentConfigurationIT {
         assertThat(assayAccessions, hasItems("SRR057596","SRR057598","SRR057600"));
     }
 
-
+    @Test
+    public void testGetExperimentType() {
+        subject = configurationTrader.getExperimentConfiguration("E-GEOD-22351");
+        assertThat(subject.getExperimentType(), is(ExperimentType.DIFFERENTIAL));
+    }
 
 }

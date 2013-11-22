@@ -88,13 +88,12 @@ public class ExperimentChecker {
 
     void checkDifferentialFiles(String experimentAccession) {
         Set<String> differentialExperimentPathTemplates =
-                Sets.newHashSet("experiment.configuration.path.template", "diff.experiment.data.path.template", "diff.experiment.raw-counts.path.template");
+                Sets.newHashSet("diff.experiment.data.path.template", "diff.experiment.raw-counts.path.template");
 
         checkFilesPermissions(differentialExperimentPathTemplates, experimentAccession);
     }
 
     void checkMicroarrayFiles(String experimentAccession) {
-        checkFilePermission("experiment.configuration.path.template", experimentAccession);
         MicroarrayExperimentConfiguration microarrayConfiguration =
                         configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
         for (String arrayDesign : microarrayConfiguration.getArrayDesignNames()) {
@@ -104,7 +103,6 @@ public class ExperimentChecker {
     }
 
     void checkTwoColourFiles(String experimentAccession) {
-        checkFilePermission("experiment.configuration.path.template", experimentAccession);
         MicroarrayExperimentConfiguration microarrayExperimentConfiguration =
                 configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
 
@@ -124,6 +122,10 @@ public class ExperimentChecker {
         String pathTemplate = configurationProperties.getProperty(pathTemplatePropertyKey);
         Path path = Paths.get(MessageFormat.format(pathTemplate, (Object[])pathArguments));
         checkState(Files.isReadable(path), "Required file can not be read: " + path.toAbsolutePath().toString());
+    }
+
+    public void checkConfigurationFilePermissions(String accession) {
+        checkFilePermission("experiment.configuration.path.template", accession);
     }
 
 }

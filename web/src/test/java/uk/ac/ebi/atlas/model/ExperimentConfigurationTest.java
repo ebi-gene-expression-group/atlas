@@ -49,7 +49,7 @@ public class ExperimentConfigurationTest {
     private static final String TEST_ASSAY_GROUP = "test_assay_group";
     private static final String NAME = "name";
     private static final String XML_CONTENT =
-            "<configuration>" +
+            "<configuration experimentType=\"BASELINE\">" +
                     "    <analytics>" +
                     "        <assay_groups>" +
                     "            <assay_group id=\"" + REFERENCE_ASSAY_GROUP + "\">" +
@@ -110,5 +110,10 @@ public class ExperimentConfigurationTest {
     public void testGetAssayGroups() throws Exception {
         AssayGroups assayGroups = subject.getAssayGroups();
         assertThat(assayGroups.getAssayGroupIds(), hasSize(2));
+    }
+
+    @Test
+    public void testGetExperimentType() {
+        assertThat(subject.getExperimentType(), is(ExperimentType.BASELINE));
     }
 }
