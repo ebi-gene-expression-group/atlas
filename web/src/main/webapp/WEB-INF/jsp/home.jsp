@@ -76,35 +76,19 @@ patterns. <a href="about.html">Read more about Expression Atlas.</a></p>
                 </td>
 			</tr>
 			
-			<%-- row for examples --%>
-			<tr>
-				<td>
-					<span class="examples">E.g. 
-						<a href="query?geneQuery=ASPM">ASPM</a>,
-						<a href="query?geneQuery=REACT_1619">REACT_1619</a>,
-						<a href="query?geneQuery=ENSMUSG00000021789">ENSMUSG00000021789</a>,
-						<a href="query?geneQuery=%22zinc+finger%22">"zinc finger"</a>
-					</span>
-				</td>
-				<td>
-					<span class="examples">E.g.
-						<a href="query?condition=leaf">leaf</a>,
-						<a href="query?condition=Mus+musculus">"Mus musculus"</a>,
-						<a href="query?condition=cancer">cancer</a>,
-						<a href="query?condition=salicylic+acid">"salicylic acid"</a>
-					</span>
-				</td>
-			</tr>
-			<%-- --%>
-
             <tr>
                 <td>
                     <div style="display:inline-block">
                         <textarea id="geneQuery" name="geneQuery" maxlength="900" rows="2" cols="36"
                                   placeholder="(all genes)" tabindex="1"></textarea>
-
-                        <div>
-                                <span style="float:left">
+						<div>
+								<span>E.g. 
+									<a href="query?geneQuery=ASPM">ASPM</a>,
+									<a href="query?geneQuery=REACT_1619">REACT_1619</a>,
+									<a href="query?geneQuery=%22zinc+finger%22">"zinc finger"</a>
+								</span>
+								
+								<span style="float:left">
                                     <input id="exactMatch" name="exactMatch" type="checkbox" value="true"
                                            checked="checked" tabindex="2">
                                     <label for="exactMatch">Exact match</label>
@@ -116,7 +100,14 @@ patterns. <a href="about.html">Read more about Expression Atlas.</a></p>
                 <td>
                     <div style="display:inline-block">
                         <textarea id="condition" name="condition" maxlength="900" rows="2" cols="36"
-                                  placeholder="(all conditions)" tabindex="3"></textarea>
+							placeholder="(all conditions)" tabindex="3"></textarea>
+						<div>
+							<span class="examples">E.g.
+								<a href="query?condition=leaf">leaf</a>,
+								<a href="query?condition=Mus+musculus">"Mus musculus"</a>,
+								<a href="query?condition=cancer">cancer</a>
+							</span>
+						</div>
                     </div>
                 </td>
             </tr>
