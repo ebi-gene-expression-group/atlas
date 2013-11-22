@@ -36,14 +36,14 @@ public enum ExperimentType {
     ,MICRORNA(MICROARRAY, "1color_microarray_microrna_differential");
 
     private ExperimentType parent;
-    private String key;
+    private String description;
 
-    private ExperimentType(String key) {
-        this.key = key;
+    private ExperimentType(String description) {
+        this.description = description;
     }
 
-    private ExperimentType(ExperimentType parent, String key) {
-        this(key);
+    private ExperimentType(ExperimentType parent, String description) {
+        this(description);
         this.parent = parent;
     }
 
@@ -71,24 +71,19 @@ public enum ExperimentType {
         return parent == null ? this : parent;
     }
 
-    public String getKey() {
-        return key;
+    public String getDescription() {
+        return description;
     }
 
-    @Override
-    public String toString() {
-        return key;
-    }
-
-    private static final Map<String,ExperimentType> lookup = new HashMap<>();
+    private static final Map<String,ExperimentType> typeByDescription = new HashMap<>();
 
     static {
         for(ExperimentType experimentType : EnumSet.allOf(ExperimentType.class))
-            lookup.put(experimentType.toString(), experimentType);
+            typeByDescription.put(experimentType.getDescription(), experimentType);
     }
 
-    public static ExperimentType get(String experimentType) {
-        return lookup.get(experimentType.toLowerCase());
+    public static ExperimentType get(String experimentTypeDescription) {
+        return typeByDescription.get(experimentTypeDescription.toLowerCase());
     }
 
 }
