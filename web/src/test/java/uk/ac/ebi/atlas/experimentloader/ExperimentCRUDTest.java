@@ -32,10 +32,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
-import uk.ac.ebi.atlas.model.ConfigurationTrader;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentTrader;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommand;
@@ -101,12 +98,16 @@ public class ExperimentCRUDTest {
     @Mock
     private ExperimentDesign experimentDesignMock;
 
+    @Mock
+    private ExperimentConfiguration experimentConfiguration;
+
     @Before
     public void setUp() throws Exception {
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(configurationTraderMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(microarrayExperimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
+        when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.BASELINE);
 
         given(experimentDesignFileWriterBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.BASELINE)).willReturn(experimentDesignFileWriterBuilderMock);
@@ -159,7 +160,7 @@ public class ExperimentCRUDTest {
 
     @Test
     public void importExperimentShouldAddExperimentToIndex() throws Exception {
-        subject.importExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
+        subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
         verify(indexCommandMock).execute();
     }
 }

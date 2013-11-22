@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
+import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
 
@@ -45,6 +46,7 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentAdminControllerTest {
@@ -63,6 +65,9 @@ public class ExperimentAdminControllerTest {
     private ExperimentChecker experimentCheckerMock;
 
     @Mock
+    private ExperimentConfiguration experimentConfiguration;
+
+    @Mock
     private ExperimentCRUD experimentCRUDMock;
 
     private ExperimentAdminController subject;
@@ -71,6 +76,9 @@ public class ExperimentAdminControllerTest {
     public void setUp() throws Exception {
 
         subject = new ExperimentAdminController(experimentCheckerMock, experimentCRUDMock);
+
+        when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.BASELINE);
+        when(experimentCRUDMock.loadExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(experimentConfiguration);
 
         given(experimentDAOMock.findPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(null);
         given(experimentDAOMock.findAllExperiments()).willReturn(
@@ -82,18 +90,18 @@ public class ExperimentAdminControllerTest {
 
     @Test
     public void loadExperimentShouldSucceed() throws Exception {
-        String responseText = subject.loadExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
+        String responseText = subject.loadExperiment(EXPERIMENT_ACCESSION, false);
         assertThat(responseText, startsWith("Experiment " + EXPERIMENT_ACCESSION + " loaded, accessKey:"));
         verify(experimentCheckerMock).checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
-        verify(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
+        verify(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
     }
 
     @Test(expected = IllegalStateException.class)
     public void loadExperimentShouldFail() throws Exception {
         willThrow(new IllegalStateException(EXCEPTION_MESSAGE))
-                .given(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, ExperimentType.TWOCOLOUR, false);
+                .given(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
 
-        subject.loadExperiment(EXPERIMENT_ACCESSION, ExperimentType.TWOCOLOUR, false);
+        subject.loadExperiment(EXPERIMENT_ACCESSION, false);
     }
 
     @Test

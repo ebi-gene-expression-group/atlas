@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
+import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
@@ -67,12 +68,16 @@ public class ExperimentAdminController {
     @RequestMapping("/loadExperiment")
     @ResponseBody
     public String loadExperiment(@RequestParam("accession") String experimentAccession,
-                                 @RequestParam("type") ExperimentType experimentType,
                                  @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
 
-        experimentChecker.checkAllFiles(experimentAccession, experimentType);
 
-        UUID accessKeyUUID = experimentCRUD.importExperiment(experimentAccession, experimentType, isPrivate);
+        experimentChecker.checkConfigurationFilePermissions(experimentAccession);
+
+        ExperimentConfiguration configuration = experimentCRUD.loadExperimentConfiguration(experimentAccession);
+
+        experimentChecker.checkAllFiles(experimentAccession, configuration.getExperimentType());
+
+        UUID accessKeyUUID = experimentCRUD.importExperiment(experimentAccession, configuration, isPrivate);
 
         return "Experiment " + experimentAccession + " loaded, accessKey: " + accessKeyUUID;
     }

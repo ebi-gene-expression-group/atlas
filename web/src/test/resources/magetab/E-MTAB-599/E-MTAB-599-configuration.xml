@@ -1,4 +1,4 @@
-<configuration>
+<configuration experimentType="baseline">
     <analytics>
         <assay_groups>
           <assay_group id="g1">

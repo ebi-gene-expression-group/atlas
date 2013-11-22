@@ -1,4 +1,4 @@
-<configuration>
+<configuration experimentType="differential">
     <analytics>
         <assay_groups>
             <assay_group id="g1">
