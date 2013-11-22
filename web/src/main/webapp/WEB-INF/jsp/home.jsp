@@ -43,7 +43,11 @@ patterns. <a href="about.html">Read more about Expression Atlas.</a></p>
         </tr>
         <tr>
             <td><a href="experiments"><img src="resources/images/experiment_page_small.png">
-                Experiments</a></td>
+                All Experiments</a></td>
+        </tr>
+	<tr>
+            <td><a href="baseline/experiments"><img src="resources/images/allup2_transparent_bkg.png">
+	    	   Baseline Experiments</a></td>
         </tr>
     </table>
 </section>
