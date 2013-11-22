@@ -49,7 +49,7 @@ public enum ExperimentType {
     }
 
     public boolean isMicroarray() {
-        return getParent().equals(MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
+        return getParent().equals(MICROARRAY_ANY);
     }
 
     public boolean isBaseline() {
