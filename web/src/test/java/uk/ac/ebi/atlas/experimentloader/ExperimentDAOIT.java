@@ -47,8 +47,8 @@ public class ExperimentDAOIT {
 
     private static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_MTAB_1066 = "E-MTAB-1066";
-    private static final ExperimentType TYPE_BASELINE = ExperimentType.BASELINE;
-    private static final ExperimentType TYPE_MICROARRAY = ExperimentType.MICROARRAY;
+    private static final ExperimentType TYPE_BASELINE = ExperimentType.RNASEQ_MRNA_BASELINE;
+    private static final ExperimentType TYPE_MICROARRAY = ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL;
     public static final String SECRET_111 = "Secret_111";
 
     @Inject

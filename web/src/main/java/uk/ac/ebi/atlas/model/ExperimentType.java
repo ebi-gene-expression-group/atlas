@@ -23,42 +23,68 @@
 package uk.ac.ebi.atlas.model;
 
 
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
+
 public enum ExperimentType {
 
-    BASELINE(), DIFFERENTIAL(), MICROARRAY()
-    , TWOCOLOUR(MICROARRAY), MICRORNA(MICROARRAY);
+    RNASEQ_MRNA_BASELINE("rnaseq_mrna_baseline")
+    ,RNASEQ_MRNA_DIFFERENTIAL("rnaseq_mrna_differential")
+    ,MICROARRAY_ANY("microarray parent type")
+    ,MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_mrna_differential")
+    ,MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_2colour_mrna_differential")
+    ,MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_microrna_differential");
 
     private ExperimentType parent;
+    private String description;
 
-    private ExperimentType() {
+    private ExperimentType(String description) {
+        this.description = description;
     }
 
-    private ExperimentType(ExperimentType parent) {
+    private ExperimentType(ExperimentType parent, String description) {
+        this(description);
         this.parent = parent;
     }
 
     public boolean isMicroarray() {
-        return getParent().equals(MICROARRAY);
+        return getParent().equals(MICROARRAY_ANY);
     }
 
     public boolean isBaseline() {
-        return equals(BASELINE);
+        return equals(RNASEQ_MRNA_BASELINE);
     }
 
     public boolean isMicroRna() {
-        return equals(MICRORNA);
+        return equals(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
     }
 
     public boolean isDifferential() {
-        return equals(DIFFERENTIAL);
+        return equals(RNASEQ_MRNA_DIFFERENTIAL);
     }
 
     public boolean isTwoColour() {
-        return equals(TWOCOLOUR);
+        return equals(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL);
     }
 
     public ExperimentType getParent() {
         return parent == null ? this : parent;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    private static final Map<String,ExperimentType> typeByDescription = new HashMap<>();
+
+    static {
+        for(ExperimentType experimentType : EnumSet.allOf(ExperimentType.class))
+            typeByDescription.put(experimentType.getDescription(), experimentType);
+    }
+
+    public static ExperimentType get(String experimentTypeDescription) {
+        return typeByDescription.get(experimentTypeDescription.toLowerCase());
     }
 
 }

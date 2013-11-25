@@ -55,7 +55,7 @@ public class MicroarrayExperimentTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperiment(ExperimentType.MICROARRAY, "accession", new Date(), Sets.newHashSet(contrastMock),
+        subject = new MicroarrayExperiment(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL, "accession", new Date(), Sets.newHashSet(contrastMock),
                 "description", false, Sets.newHashSet("species"), Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN_ACCESSIONS)),
                 false, Sets.newHashSet(PUBMEDID), experimentDesignMock);
     }

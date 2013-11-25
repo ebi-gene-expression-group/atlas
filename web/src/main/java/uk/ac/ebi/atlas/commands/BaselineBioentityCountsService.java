@@ -29,7 +29,6 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.BaselineExperimentDao;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -57,6 +56,8 @@ public class BaselineBioentityCountsService {
     static {
         LIMITED_BY_EXPERIMENTS.put("E-MTAB-513", new BaselineExperimentResult("E-MTAB-513", "Illumina Body Map", "Homo sapiens"));
         LIMITED_BY_EXPERIMENTS.put("E-MTAB-599", new BaselineExperimentResult("E-MTAB-599", "Six tissues", "Mus musculus"));
+        LIMITED_BY_EXPERIMENTS.put("E-MTAB-2037", new BaselineExperimentResult("E-MTAB-2037", "Seven tissues", "Oryza sativa Japonica Group"));
+        LIMITED_BY_EXPERIMENTS.put("E-MTAB-2039", new BaselineExperimentResult("E-MTAB-2039", "Nine tissues", "Oryza sativa Japonica Group"));
     }
 
 

@@ -59,8 +59,8 @@ public class ExperimentInfoListBuilderTest {
     private static final String ASSAY_1 = "ASSAY1";
     private static final String ASSAY_2 = "ASSAY2";
     private static final String ARRAY = "ARRAY";
-    private static final String MICROARRAY = "MICROARRAY";
-    private static final String DIFFERENTIAL = "DIFFERENTIAL";
+    private static final String MICROARRAY = "MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL";
+    private static final String DIFFERENTIAL = "RNASEQ_MRNA_DIFFERENTIAL";
 
     @Mock
     private ExperimentTrader experimentTraderMock;
@@ -97,13 +97,13 @@ public class ExperimentInfoListBuilderTest {
         when(baselineExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
         when(differentialExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
         when(microarrayExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
-        when(microarrayExperimentMock.getType()).thenReturn(ExperimentType.MICROARRAY);
+        when(microarrayExperimentMock.getType()).thenReturn(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
 
         when(baselineExperimentMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIES));
         when(baselineExperimentMock.getAccession()).thenReturn(ACCESSION);
         when(baselineExperimentMock.getLastUpdate()).thenReturn(lastUpdateStub);
         when(baselineExperimentMock.getDescription()).thenReturn(DESCRIPTION);
-        when(baselineExperimentMock.getType()).thenReturn(ExperimentType.BASELINE);
+        when(baselineExperimentMock.getType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
 
         when(experimentTraderMock.getBaselineExperimentAccessions()).thenReturn(Sets.newHashSet(ACCESSION));
         when(experimentTraderMock.getDifferentialExperimentAccessions()).thenReturn(Sets.newHashSet(DIFFERENTIAL));
@@ -118,13 +118,13 @@ public class ExperimentInfoListBuilderTest {
         when(microarrayExperimentMock.getAssayAccessions()).thenReturn(Sets.newHashSet(ASSAY_1, ASSAY_2));
         when(microarrayExperimentMock.getContrastIds()).thenReturn(Sets.newTreeSet(Sets.newHashSet(CONTRAST)));
         when(microarrayExperimentMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY)));
-        when(microarrayExperimentMock.getType()).thenReturn(ExperimentType.MICROARRAY);
+        when(microarrayExperimentMock.getType()).thenReturn(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
 
         when(differentialExperimentMock.getAccession()).thenReturn(DIFFERENTIAL);
         when(differentialExperimentMock.getLastUpdate()).thenReturn(lastUpdateStub);
         when(differentialExperimentMock.getAssayAccessions()).thenReturn(Sets.newHashSet(ASSAY_1, ASSAY_2));
         when(differentialExperimentMock.getContrastIds()).thenReturn(Sets.newTreeSet(Sets.newHashSet(CONTRAST)));
-        when(differentialExperimentMock.getType()).thenReturn(ExperimentType.DIFFERENTIAL);
+        when(differentialExperimentMock.getType()).thenReturn(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
 
         when(baselineExperimentMock.getExperimentRunAccessions()).thenReturn(Sets.newHashSet("RUN"));
 
@@ -178,7 +178,7 @@ public class ExperimentInfoListBuilderTest {
         assertThat(experimentInfo.getLastUpdate(), is("12-01-1940"));
         assertThat(experimentInfo.getExperimentDescription(), is(DESCRIPTION));
         assertThat(experimentInfo.getSpecies(), contains(SPECIES));
-        assertThat(experimentInfo.getExperimentType(), is(ExperimentType.BASELINE));
+        assertThat(experimentInfo.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
     }
 
 }

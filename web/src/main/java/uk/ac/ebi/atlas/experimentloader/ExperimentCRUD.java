@@ -26,10 +26,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
-import uk.ac.ebi.atlas.model.ConfigurationTrader;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentTrader;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommandTrader;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexOperation;
 
@@ -71,9 +68,15 @@ public class ExperimentCRUD {
         this.experimentDTOBuilder = experimentDTOBuilder;
     }
 
-    public UUID importExperiment(String accession, ExperimentType experimentType, boolean isPrivate) throws IOException {
+    public ExperimentConfiguration loadExperimentConfiguration(String accession) {
+        return configurationTrader.getExperimentConfiguration(accession);
+    }
+
+    public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate) throws IOException {
         checkNotNull(accession);
-        checkNotNull(experimentType);
+        checkNotNull(experimentConfiguration);
+
+        ExperimentType experimentType = experimentConfiguration.getExperimentType();
 
         ExperimentDesign experimentDesign = generateExperimentDesignFile(accession, experimentType);
 
@@ -146,8 +149,9 @@ public class ExperimentCRUD {
     public int updateAllExperiments() throws IOException {
         List<ExperimentDTO> experiments = experimentDAO.findAllExperiments();
         for (ExperimentDTO experiment : experiments) {
-            deleteExperiment(experiment.getExperimentAccession());
-            importExperiment(experiment.getExperimentAccession(), experiment.getExperimentType(), experiment.isPrivate());
+            String accession = experiment.getExperimentAccession();
+            deleteExperiment(accession);
+            importExperiment(accession, loadExperimentConfiguration(accession), experiment.isPrivate());
         }
         return experiments.size();
     }

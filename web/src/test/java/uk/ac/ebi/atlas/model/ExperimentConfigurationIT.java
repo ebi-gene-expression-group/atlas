@@ -86,6 +86,10 @@ public class ExperimentConfigurationIT {
         assertThat(assayAccessions, hasItems("SRR057596","SRR057598","SRR057600"));
     }
 
-
+    @Test
+    public void testGetExperimentType() {
+        subject = configurationTrader.getExperimentConfiguration("E-GEOD-22351");
+        assertThat(subject.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL));
+    }
 
 }

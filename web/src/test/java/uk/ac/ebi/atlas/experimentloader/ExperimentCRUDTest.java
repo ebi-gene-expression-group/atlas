@@ -32,10 +32,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
-import uk.ac.ebi.atlas.model.ConfigurationTrader;
-import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentTrader;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommand;
@@ -101,16 +98,20 @@ public class ExperimentCRUDTest {
     @Mock
     private ExperimentDesign experimentDesignMock;
 
+    @Mock
+    private ExperimentConfiguration experimentConfiguration;
+
     @Before
     public void setUp() throws Exception {
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(configurationTraderMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(microarrayExperimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
+        when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
 
         given(experimentDesignFileWriterBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDesignFileWriterBuilderMock);
-        given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.BASELINE)).willReturn(experimentDesignFileWriterBuilderMock);
-        given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
+        given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE)).willReturn(experimentDesignFileWriterBuilderMock);
+        given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
         given(experimentDesignFileWriterMock.write(EXPERIMENT_ACCESSION)).willReturn(experimentDesignMock);
 
@@ -118,7 +119,7 @@ public class ExperimentCRUDTest {
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
 
         given(exparimentDTOBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(exparimentDTOBuilderMock);
-        given(exparimentDTOBuilderMock.withExperimentType(ExperimentType.BASELINE)).willReturn(exparimentDTOBuilderMock);
+        given(exparimentDTOBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE)).willReturn(exparimentDTOBuilderMock);
         given(exparimentDTOBuilderMock.withPrivate(false)).willReturn(exparimentDTOBuilderMock);
         given(exparimentDTOBuilderMock.withSpecies(anySet())).willReturn(exparimentDTOBuilderMock);
 
@@ -130,9 +131,9 @@ public class ExperimentCRUDTest {
     @Test
     public void generateExperimentDesignShouldUseTheExperimentDesignWriter() throws Exception {
 
-        subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
         verify(experimentDesignFileWriterBuilderMock).forExperimentAccession(EXPERIMENT_ACCESSION);
-        verify(experimentDesignFileWriterBuilderMock).withExperimentType(ExperimentType.BASELINE);
+        verify(experimentDesignFileWriterBuilderMock).withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE);
         verify(experimentDesignFileWriterBuilderMock).build();
         verify(experimentDesignFileWriterMock).write(EXPERIMENT_ACCESSION);
     }
@@ -140,7 +141,7 @@ public class ExperimentCRUDTest {
     @Test(expected = IOException.class)
     public void shouldThrowIllegalStateExceptionWhenWritingExperimentDesignFails() throws Exception {
         willThrow(new IOException()).given(experimentDesignFileWriterMock).write(EXPERIMENT_ACCESSION);
-        subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
     }
 
 
@@ -152,14 +153,14 @@ public class ExperimentCRUDTest {
 
     @Test
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
-        subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, null, null, null, false));
-        verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
+        verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
         verify(indexCommandMock).execute();
     }
 
     @Test
     public void importExperimentShouldAddExperimentToIndex() throws Exception {
-        subject.importExperiment(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, false);
+        subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
         verify(indexCommandMock).execute();
     }
 }

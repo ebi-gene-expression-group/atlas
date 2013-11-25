@@ -42,7 +42,7 @@
 //public class ExperimentDTORowMapperTest {
 //
 //    private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
-//    private static final String BASELINE = "BASELINE";
+//    private static final String RNASEQ_MRNA_BASELINE = "RNASEQ_MRNA_BASELINE";
 //
 //    @Mock
 //    private ResultSet resultSetMock;
@@ -56,7 +56,7 @@
 //    public void setUp() throws Exception {
 //        subject = new ExperimentDTORowMapper();
 //        when(resultSetMock.getString("accession")).thenReturn(EXPERIMENT_ACCESSION);
-//        when(resultSetMock.getString("type")).thenReturn(BASELINE);
+//        when(resultSetMock.getString("type")).thenReturn(RNASEQ_MRNA_BASELINE);
 //        when(resultSetMock.getObject("access_key")).thenReturn(UUID.randomUUID());
 //    }
 //
@@ -65,6 +65,6 @@
 //        given(resultSetMock.getMetaData()).willReturn(metadataMock);
 //        ExperimentDTO experimentDTO = subject.buildExperimentDTO(resultSetMock);
 //        assertThat(experimentDTO.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
-//        assertThat(experimentDTO.getExperimentType(), is(ExperimentType.valueOf(BASELINE)));
+//        assertThat(experimentDTO.getExperimentType(), is(ExperimentType.valueOf(RNASEQ_MRNA_BASELINE)));
 //    }
 //}

@@ -22,19 +22,21 @@
 
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.*;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.xml.xpath.*;
+import java.util.EnumSet;
 import java.util.Set;
 
 public class ExperimentConfiguration {
 
+    public static final String EXPERIMENT_TYPE = "experimentType";
     private XMLConfiguration xmlConfiguration;
 
     private Document document;
@@ -132,4 +134,21 @@ public class ExperimentConfiguration {
         return new AssayGroups(assayGroups);
     }
 
+    public ExperimentType getExperimentType() {
+        Element configuration = document.getDocumentElement();
+
+        String type = configuration.getAttribute(EXPERIMENT_TYPE);
+
+        if (StringUtils.isEmpty(type)) {
+            throw new IllegalStateException(String.format("Missing %s attribute on root element of %s", EXPERIMENT_TYPE, xmlConfiguration.getFileName()));
+        }
+
+        ExperimentType experimentType = ExperimentType.get(type);
+
+        if (experimentType == null) {
+            throw new IllegalStateException(String.format("Unknown %s attribute: \"%s\". Must be one of: [%s]", EXPERIMENT_TYPE, type, Joiner.on(", ").join(EnumSet.allOf(ExperimentType.class))));
+        }
+
+        return experimentType;
+    }
 }

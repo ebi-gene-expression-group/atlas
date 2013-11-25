@@ -1,4 +1,4 @@
-<configuration>
+<configuration experimentType="2color_microarray_mrna_differential">
 	<analytics>
 		<array_design>
 			A-AGIL-28

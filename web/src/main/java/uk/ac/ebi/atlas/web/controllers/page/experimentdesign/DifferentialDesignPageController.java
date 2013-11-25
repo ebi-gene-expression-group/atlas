@@ -47,7 +47,7 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
     private String contrastId;
 
 
-    @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=DIFFERENTIAL"})
+    @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
     public String showRnaSeqExperimentDesign(@ModelAttribute("preferences") @Valid DifferentialDesignRequestPreferences preferences
             , Model model, HttpServletRequest request) throws IOException {
 
@@ -55,7 +55,7 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
         return handleRequest(model, request);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=MICROARRAY"})
+    @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=MICROARRAY_ANY"})
     public String showMicroarrayExperimentDesign(@ModelAttribute("preferences") @Valid DifferentialDesignRequestPreferences preferences
             , Model model, HttpServletRequest request) throws IOException {
 

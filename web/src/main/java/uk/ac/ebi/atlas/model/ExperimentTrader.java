@@ -30,7 +30,6 @@ import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -79,15 +78,15 @@ public class ExperimentTrader {
     public void removeExperimentFromCache(String experimentAccession, ExperimentType type) {
 
         switch (type) {
-            case BASELINE:
+            case RNASEQ_MRNA_BASELINE:
                 baselineExperimentsCache.evictExperiment(experimentAccession);
                 break;
-            case DIFFERENTIAL:
+            case RNASEQ_MRNA_DIFFERENTIAL:
                 rnaSeqDiffExperimentsCache.evictExperiment(experimentAccession);
                 break;
-            case MICROARRAY:
-            case TWOCOLOUR:
-            case MICRORNA:
+            case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:
+            case MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL:
+            case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
                 microarrayExperimentsCache.evictExperiment(experimentAccession);
                 break;
             default:
@@ -99,13 +98,13 @@ public class ExperimentTrader {
     private Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
 
         switch (experimentType) {
-            case BASELINE:
+            case RNASEQ_MRNA_BASELINE:
                 return baselineExperimentsCache.getExperiment(experimentAccession);
-            case DIFFERENTIAL:
+            case RNASEQ_MRNA_DIFFERENTIAL:
                 return rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
-            case MICROARRAY:
-            case TWOCOLOUR:
-            case MICRORNA:
+            case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:
+            case MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL:
+            case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
                 return microarrayExperimentsCache.getExperiment(experimentAccession);
             default:
                 throw new IllegalStateException("invalid enum value: " + experimentType);
@@ -116,19 +115,19 @@ public class ExperimentTrader {
     //ToDo (NK): to get Experiment accession we go 4 times to the DB (for each experiment type)
 
     public Set<String> getBaselineExperimentAccessions() {
-        return getPublicExperimentAccessions(ExperimentType.BASELINE);
+        return getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE);
     }
 
     public Set<String> getDifferentialExperimentAccessions() {
-        return getPublicExperimentAccessions(ExperimentType.DIFFERENTIAL);
+        return getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
     }
 
     public Set<String> getMicroarrayExperimentAccessions() {
         Set<String> identifiers = Sets.newHashSet();
-        identifiers.addAll(getPublicExperimentAccessions(ExperimentType.MICROARRAY));
+        identifiers.addAll(getPublicExperimentAccessions(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL));
         // as two colour is a subtype of micro array, they need to be added here
-        identifiers.addAll((getPublicExperimentAccessions(ExperimentType.TWOCOLOUR)));
-        identifiers.addAll((getPublicExperimentAccessions(ExperimentType.MICRORNA)));
+        identifiers.addAll((getPublicExperimentAccessions(ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL)));
+        identifiers.addAll((getPublicExperimentAccessions(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL)));
         return identifiers;
     }
 

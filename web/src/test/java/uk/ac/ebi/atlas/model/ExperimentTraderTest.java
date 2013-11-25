@@ -70,15 +70,15 @@ public class ExperimentTraderTest {
 
     @Before
     public void initSubject(){
-        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.BASELINE)).thenReturn(Sets.newHashSet(E_MTAB_513, E_MTAB_599));
+        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE)).thenReturn(Sets.newHashSet(E_MTAB_513, E_MTAB_599));
 
-        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
+        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
 
-        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.MICROARRAY)).thenReturn(Sets.newHashSet(E_MTAB_1066));
+        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_MTAB_1066));
 
-        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.TWOCOLOUR)).thenReturn(Sets.newHashSet(E_GEOD_43049));
+        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_GEOD_43049));
 
-        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.MICRORNA)).thenReturn(Sets.newHashSet(E_TABM_713));
+        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_TABM_713));
 
         subject = new ExperimentTrader(experimentDAOMock,
                                         baselineExperimentsCacheMock,
@@ -103,7 +103,7 @@ public class ExperimentTraderTest {
 
     @Test
     public void getExperimentShouldUseTheCache(){
-        given(experimentDTOMock.getExperimentType()).willReturn(ExperimentType.MICROARRAY);
+        given(experimentDTOMock.getExperimentType()).willReturn(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
         given(experimentDAOMock.findPublicExperiment(E_GEOD_21860)).willReturn(experimentDTOMock);
         subject.getPublicExperiment(E_GEOD_21860);
         verify(baselineExperimentsCacheMock,times(0)).getExperiment(E_GEOD_21860);

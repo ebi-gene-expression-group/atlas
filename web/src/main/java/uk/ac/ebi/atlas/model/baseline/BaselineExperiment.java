@@ -46,7 +46,7 @@ public class BaselineExperiment extends Experiment {
                        String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile,
                        Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups) {
 
-        super(ExperimentType.BASELINE, accession, lastUpdate, displayName, description,
+        super(ExperimentType.RNASEQ_MRNA_BASELINE, accession, lastUpdate, displayName, description,
                 hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
         this.experimentalFactors = experimentalFactors;
         this.defaultQueryFactorType = defaultQueryFactorType;
