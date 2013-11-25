@@ -115,12 +115,14 @@
 
                         <display:column
                                 title="<div data-organism-part=\"${columnHeader}\"
-                                    ${type.isBaseline() ? 'title=\"'.concat(columnHeader).concat('\"') : ''}
+                                    ${type.isBaseline() ? 'title=\"'.concat(columnHeader).concat(factorHolder.assayGroupId).concat('\"') : ''}
                                     ${type.isMicroarray() ? 'data-array-design=\"'.concat(queryFactor.arrayDesignAccession).concat('\"') : ''}
+                                    ${type.isBaseline() ? 'assay-group-id=\"'.concat(factorHolder.assayGroupId).concat('\"') : ''}
+                                    ${type.isBaseline() ? 'factor-name=\"'.concat(columnHeader).concat('\"') : ''}
                                     ${!type.isBaseline() ? 'data-contrast-id=\"'.concat(queryFactor.id).concat('\"') : ''}
                                     ${!type.isBaseline() ? 'data-experiment-accession=\"'.concat(experimentAccession).concat('\"') : ''}
                                     class=\"factor-header rotate_text\"></div>"
-                                headerClass="rotated_cell vertical-header-cell ${!type.isBaseline() ? 'contrastNameCell' : ''}"
+                                headerClass="rotated_cell vertical-header-cell ${!type.isBaseline() ? 'contrastNameCell' : 'factorNameCell'}"
                                 style="${style}">
 
                             <c:if test="${not empty expressionLevel}">
@@ -204,6 +206,23 @@
             </th>
             <th class='header-cell'>
                 Reference value
+            </th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
+
+<section id="factorInfo" style="display:none">
+    <div id="factorDescription" style="text-align: center"></div>
+    <table class='table-grid' style="padding: 0px; margin: 0px;">
+        <thead>
+        <tr>
+            <th class='header-cell'>
+                Property
+            </th>
+            <th class='header-cell'>
+                Value
             </th>
         </tr>
         </thead>
