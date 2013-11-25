@@ -52,17 +52,15 @@ public class DifferentialConditionsSearchService {
     public Collection<IndexedAssayGroup> findContrasts(String queryString) {
 
         try {
-            QueryResponse queryResponse = differentialConditionsSolrServer.query(queryBuilder.buildFullTestSearchQuery(queryString));
+            QueryResponse queryResponse = differentialConditionsSolrServer.query(queryBuilder.build(queryString));
             List<DifferentialCondition> beans = queryResponse.getBeans(DifferentialCondition.class);
 
-            Collection<IndexedAssayGroup> result = Collections2.transform(beans, new Function<DifferentialCondition, IndexedAssayGroup>() {
+            return Collections2.transform(beans, new Function<DifferentialCondition, IndexedAssayGroup>() {
                 @Override
                 public IndexedAssayGroup apply(DifferentialCondition conditionProperty) {
                     return new IndexedAssayGroup(conditionProperty.getExperimentAccession(), conditionProperty.getContrastId());
                 }
             });
-
-            return result;
         } catch (SolrServerException e) {
             throw new IllegalStateException("Conditions index query failed!", e);
         }
