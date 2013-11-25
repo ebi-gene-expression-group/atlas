@@ -115,12 +115,11 @@
 
                         <display:column
                                 title="<div data-organism-part=\"${columnHeader}\"
-                                    ${type.isBaseline() ? 'title=\"'.concat(columnHeader).concat(factorHolder.assayGroupId).concat('\"') : ''}
                                     ${type.isMicroarray() ? 'data-array-design=\"'.concat(queryFactor.arrayDesignAccession).concat('\"') : ''}
                                     ${type.isBaseline() ? 'assay-group-id=\"'.concat(factorHolder.assayGroupId).concat('\"') : ''}
                                     ${type.isBaseline() ? 'factor-name=\"'.concat(columnHeader).concat('\"') : ''}
                                     ${!type.isBaseline() ? 'data-contrast-id=\"'.concat(queryFactor.id).concat('\"') : ''}
-                                    ${!type.isBaseline() ? 'data-experiment-accession=\"'.concat(experimentAccession).concat('\"') : ''}
+                                    ${'data-experiment-accession=\"'.concat(experimentAccession).concat('\"')}
                                     class=\"factor-header rotate_text\"></div>"
                                 headerClass="rotated_cell vertical-header-cell ${!type.isBaseline() ? 'contrastNameCell' : 'factorNameCell'}"
                                 style="${style}">
@@ -238,6 +237,8 @@
         src="${base}/resources/js/heatmapModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/contrastInfoTooltipModule.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${base}/resources/js/factorInfoTooltipModule.js"></script>
 
 <script type="text/javascript">
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
@@ -265,6 +266,8 @@
 
             if (!${type.isBaseline()}) {
                 contrastInfoTooltipModule.init('${base}', '${param.accessKey}');
+            } else {
+                factorInfoTooltipModule.init('${base}', '${param.accessKey}');
             }
 
         });

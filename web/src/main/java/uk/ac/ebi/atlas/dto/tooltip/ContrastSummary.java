@@ -22,13 +22,16 @@
 
 package uk.ac.ebi.atlas.dto.tooltip;
 
+import java.util.SortedSet;
+
 public class ContrastSummary extends AssayGroupSummary {
 
     private String experimentDescription;
     private String contrastDescription;
 
 
-    public ContrastSummary(String experimentDescription, String contrastDescription) {
+    public ContrastSummary(String experimentDescription, String contrastDescription, SortedSet<AssayProperty> properties) {
+        super(properties);
         this.experimentDescription = experimentDescription;
         this.contrastDescription = contrastDescription;
     }

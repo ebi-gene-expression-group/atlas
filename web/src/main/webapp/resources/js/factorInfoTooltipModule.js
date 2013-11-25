@@ -41,40 +41,40 @@ var factorInfoTooltipModule = (function ($) {
                 if (experimentAccession === undefined) {
                     experimentAccession = $(this).find(":nth-child(1)").attr("data-experiment-accession");
                     assayGroupId = $(this).find(":nth-child(1)").attr("assay-group-id");
+                    factorName = $(this).find(":nth-child(1)").attr("factor-name");
                 }
                 //callback($("#contrastInfo").html());
 
                 $.ajax({
-                    url:contextRoot + "/rest/contrast-summary",
+                    url:contextRoot + "/rest/assayGroup-summary",
                     data:{
                         experimentAccession:experimentAccession,
-                        contrastId: contrastId,
+                        assayGroupId: assayGroupId,
                         accessKey: accessKey
                     },
                     type:"GET",
                     success:function (data) {
-                        var contrastDescription = data.contrastDescription;
+//                        var contrastDescription = data.contrastDescription;
 
-                        $('#factorDescription').text(contrastDescription);
+//                        $('#factorDescription').text(contrastDescription);
 
-                        $("#contrastInfo tbody").html("");
+                        $("#factorInfo tbody").html("");
 
                         for (var i = 0; i < data.properties.length; i++) {
                             var property = data.properties[i];
                             var propertyName = property.propertyName;
                             var testValue = property.testValue !== undefined ? property.testValue : "";
-                            var referenceValue = property.referenceValue !== undefined ? property.referenceValue : "";
-                            if (testValue === "" && referenceValue === "") {
+                            if (testValue === "") {
                                 continue;
                             }
-                            var tableRow = $("<tr><td>" + propertyName + "</td><td>" + testValue + "</td><td>" + referenceValue + "</td></tr>");
+                            var tableRow = $("<tr><td>" + propertyName + "</td><td>" + testValue + "</td></tr>");
                             if (property.contrastPropertyType === 'FACTOR') {
                                 tableRow.find("td").css("font-weight", "bold");
                             } else {
                                 tableRow.find("td").css("color", "gray");
                             }
                             tableRow.find("td").css("white-space", "normal");
-                            $("#contrastInfo tbody").append(tableRow);
+                            $("#factorInfo tbody").append(tableRow);
                         }
                         callback($("#factorInfo").html());
 
