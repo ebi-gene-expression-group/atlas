@@ -32,32 +32,16 @@
 	under the conditions of the original experiment. <a href="about.html">Read more about Expression Atlas.</a></p> --%>
 
 <p>The Expression Atlas provides information on gene expression patterns under
-different biological conditions. Gene expression data is re-analysed in-house
-to detect genes showing interesting baseline and differential expression
-patterns. <a href="about.html">Read more about Expression Atlas.</a></p>
+    different biological conditions. Gene expression data is re-analysed in-house
+    to detect genes showing interesting baseline and differential expression
+    patterns. <a href="about.html">Read more about Expression Atlas.</a></p>
 
-<section class="grid_6 alpha">
-    <table class="form-grid" style="margin:0px 9px;">
-        <tr>
-            <td><label>Browse</label></td>
-        </tr>
-        <tr>
-            <td><a href="experiments"><img src="resources/images/experiment_page_small.png">
-                All Experiments</a></td>
-        </tr>
-	<tr>
-            <td><a href="baseline/experiments"><img src="resources/images/allup2_transparent_bkg.png">
-	    	   Baseline Experiments</a></td>
-        </tr>
-    </table>
-</section>
-
-<section class="grid_18 omega">
+<section class="grid_18 alpha">
     <form method="get" action="query" id="searchForm">
         <table class="form-grid">
             <tr>
                 <td>
-                    <label>Gene Query</label>
+                    <label>Gene query</label>
                     <span data-help-loc="#geneSearch"/>
                 </td>
                 <td>
@@ -74,14 +58,15 @@ patterns. <a href="about.html">Read more about Expression Atlas.</a></p>
                         </div>
                     </div>
                 </td>
-			</tr>
-			
+            </tr>
+
             <tr>
                 <td>
                     <div style="display:inline-block">
                         <textarea id="geneQuery" name="geneQuery" maxlength="900" rows="2" cols="36"
                                   placeholder="(all genes)" tabindex="1"></textarea>
-						<div>
+
+                        <div>
 								<span>E.g. 
 									<a href="query?geneQuery=ASPM">ASPM</a>,
 									<a href="query?geneQuery=REACT_1619">REACT_1619</a>,
@@ -100,19 +85,46 @@ patterns. <a href="about.html">Read more about Expression Atlas.</a></p>
                 <td>
                     <div style="display:inline-block">
                         <textarea id="condition" name="condition" maxlength="900" rows="2" cols="36"
-							placeholder="(all conditions)" tabindex="3"></textarea>
-						<div>
+                                  placeholder="(all conditions)" tabindex="3"></textarea>
+
+                        <div>
 							<span class="examples">E.g.
 								<a href="query?condition=leaf">leaf</a>,
 								<a href="query?condition=Mus+musculus">"Mus musculus"</a>,
 								<a href="query?condition=cancer">cancer</a>
 							</span>
-						</div>
+                        </div>
                     </div>
                 </td>
             </tr>
         </table>
     </form>
+</section>
+
+<section class="grid_5 omega">
+    <table class="form-grid" style="margin:0px 9px;">
+        <tr>
+            <td><label>Browse</label></td>
+        </tr>
+        <tr>
+            <td><a href="experiments"><img src="resources/images/experiment_page_small.png">
+                All Experiments</a></td>
+        </tr>
+        <tr>
+            <td><a href="baseline/experiments"><img src="resources/images/allup2_transparent_bkg.png">
+                Baseline Experiments</a></td>
+        </tr>
+    </table>
+    <br/>
+        <table class="form-grid" style="margin:0px 9px;">
+            <tr>
+                <td><label>Still need the old Expression Atlas?</label></td>
+            </tr>
+            <tr>
+                <td><a href="http://www.ebi.ac.uk/gxa"><img src="resources/images/old_gxa.png">
+                    Click here</a></td>
+            </tr>
+        </table>
 </section>
 
 
