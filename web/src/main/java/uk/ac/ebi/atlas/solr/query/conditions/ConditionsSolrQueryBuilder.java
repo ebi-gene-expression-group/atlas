@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.solr.query.conditions;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
-import com.sun.istack.internal.Nullable;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
@@ -59,7 +58,7 @@ public class ConditionsSolrQueryBuilder {
         Iterable<String> searchTerms = Iterables.transform(terms, new Function<String, String>() {
 
             @Override
-            public String apply(@Nullable java.lang.String s) {
+            public String apply(java.lang.String s) {
                 return CONDITIONS_SEARCH_FIELD + ":" + s;
             }
         });
