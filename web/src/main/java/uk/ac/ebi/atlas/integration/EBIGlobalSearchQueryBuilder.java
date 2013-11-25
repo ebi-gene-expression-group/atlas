@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -45,11 +46,23 @@ public class EBIGlobalSearchQueryBuilder {
 
             boolean moreThanOneConditionAndQueryTerm = condition.size() > 1 && !geneQueryTerms.isEmpty();
 
+            List<String> conditionTermsWithoutAnd = new ArrayList<>();
+
+            String joinOn = " OR ";
+
+            for (String term: condition) {
+                if (term.toUpperCase().equals("AND")) {
+                    joinOn = " AND ";
+                } else {
+                    conditionTermsWithoutAnd.add(term);
+                }
+            }
+
             if (moreThanOneConditionAndQueryTerm) {
                 stringBuilder.append("(");
             }
 
-            stringBuilder.append(Joiner.on(" OR ").join(condition));
+            stringBuilder.append(Joiner.on(joinOn).join(conditionTermsWithoutAnd));
 
             if (moreThanOneConditionAndQueryTerm) {
                 stringBuilder.append(")");

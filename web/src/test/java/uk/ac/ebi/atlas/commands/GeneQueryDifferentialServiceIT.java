@@ -231,6 +231,16 @@ public class GeneQueryDifferentialServiceIT {
     }
 
     @Test
+    public void conditionAND() throws GenesNotFoundException {
+        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        requestParameters.setCondition("\"Mus musculus\" AND \"wild type\"");
+
+        DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
+
+        assertThat(bioentityExpressions, hasSize(50));
+    }
+
+    @Test
     public void geneQueryApoptosisAndConditionPregnant() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("apoptosis");

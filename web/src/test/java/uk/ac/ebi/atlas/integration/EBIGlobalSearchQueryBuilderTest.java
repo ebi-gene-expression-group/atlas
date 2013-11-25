@@ -64,6 +64,13 @@ public class EBIGlobalSearchQueryBuilderTest {
         assertThat(subject.buildGlobalSearchTerm(null, condition), is("liver OR heart"));
     }
 
+
+    @Test
+    public void buildGlobalSearchTerm2ConditionsWithAnd() throws Exception {
+        String condition = "liver and heart";
+        assertThat(subject.buildGlobalSearchTerm(null, condition), is("liver AND heart"));
+    }
+
     @Test
     public void buildGlobalSearchTerm2ConditionsQuoted() throws Exception {
         String condition = "\"wild type\" heart";
@@ -75,6 +82,13 @@ public class EBIGlobalSearchQueryBuilderTest {
         String geneQuery = "id1";
         String condition = "liver heart";
         assertThat(subject.buildGlobalSearchTerm(geneQuery, condition), is("id1 AND (liver OR heart)"));
+    }
+
+    @Test
+    public void buildGlobalSearchTerm1GeneQueryTermAnd2ConditionsWithAnd() throws Exception {
+        String geneQuery = "id1";
+        String condition = "liver and heart";
+        assertThat(subject.buildGlobalSearchTerm(geneQuery, condition), is("id1 AND (liver AND heart)"));
     }
 
 
@@ -90,6 +104,13 @@ public class EBIGlobalSearchQueryBuilderTest {
         String geneQuery = "id1 id2";
         String condition = "liver heart";
         assertThat(subject.buildGlobalSearchTerm(geneQuery, condition), is("(id1 OR id2) AND (liver OR heart)"));
+    }
+
+    @Test
+    public void buildGlobalSearchTerm2GeneQueryTermsAnd2ConditionsWithAnd() throws Exception {
+        String geneQuery = "id1 id2";
+        String condition = "liver and heart";
+        assertThat(subject.buildGlobalSearchTerm(geneQuery, condition), is("(id1 OR id2) AND (liver AND heart)"));
     }
 
 }

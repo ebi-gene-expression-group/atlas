@@ -62,4 +62,15 @@ public class ConditionsSolrQueryBuilderTest {
         assertThat(query, is("conditions_search:\"wild type\" OR conditions_search:adipose"));
     }
 
+    @Test
+    public void multipleANDTerms() {
+        String query = subject.buildQueryString("liver AND heart");
+        assertThat(query, is("conditions_search:liver AND conditions_search:heart"));
+    }
+
+    @Test
+    public void multipleANDTermsWithQuotes() {
+        String query = subject.buildQueryString("\"Homo sapiens\" AND heart");
+        assertThat(query, is("conditions_search:\"Homo sapiens\" AND conditions_search:heart"));
+    }
 }
