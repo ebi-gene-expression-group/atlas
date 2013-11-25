@@ -22,25 +22,48 @@
 
 package uk.ac.ebi.atlas.solr.query.conditions;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Iterables;
+import com.sun.istack.internal.Nullable;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
+import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 @Named
-@Scope("prototype")
+@Scope("singleton")
 public class ConditionsSolrQueryBuilder {
 
     public static final String CONDITIONS_SEARCH_FIELD = "conditions_search";
 
-    public SolrQuery buildFullTestSearchQuery(String queryString) {
+    BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
+    @Inject
+    public ConditionsSolrQueryBuilder(BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
+        this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
+    }
+
+    public SolrQuery build(String queryString) {
         SolrQuery solrQuery = new SolrQuery(buildQueryString(queryString));
         solrQuery.setRows(1000);
         return solrQuery;
     }
 
     String buildQueryString(String queryString){
-        return CONDITIONS_SEARCH_FIELD + ":" + queryString.trim();
+        List<String> terms = bioentityPropertyValueTokenizer.split(queryString);
+
+        Iterable<String> searchTerms = Iterables.transform(terms, new Function<String, String>() {
+
+            @Override
+            public String apply(@Nullable java.lang.String s) {
+                return CONDITIONS_SEARCH_FIELD + ":" + s;
+            }
+        });
+
+        return Joiner.on(" OR ").join(searchTerms);
     }
 }
