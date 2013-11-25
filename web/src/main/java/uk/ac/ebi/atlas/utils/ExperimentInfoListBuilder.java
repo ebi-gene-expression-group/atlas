@@ -133,7 +133,7 @@ public class ExperimentInfoListBuilder {
         experimentInfo.setLastUpdate(dateFormat.format(experiment.getLastUpdate()));
         experimentInfo.setExperimentDescription(experiment.getDescription());
         experimentInfo.setSpecies(experiment.getSpecies());
-        //ToDo: there are only types (BASELINE, DIFFERENTIAL, MICROARRAY)
+        //ToDo: there are only types (RNASEQ_MRNA_BASELINE, RNASEQ_MRNA_DIFFERENTIAL, MICROARRAY_ANY)
         experimentInfo.setExperimentType(experiment.getType().getParent());
         experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
 

@@ -36,7 +36,7 @@ import java.util.Set;
 @Scope("request")
 public class BaselineDesignPageController extends ExperimentDesignPageRequestHandler<BaselineExperiment> {
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=BASELINE"})
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=RNASEQ_MRNA_BASELINE"})
     public String showExperimentDesign(Model model, HttpServletRequest request) throws IOException {
 
         return handleRequest(model, request);

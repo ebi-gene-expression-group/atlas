@@ -56,7 +56,7 @@ public class RnaSeqQueryPageController extends DifferentialQueryPageController<D
         //No extra initalizations required
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=DIFFERENTIAL"})
+    @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 

@@ -29,11 +29,12 @@ import java.util.Map;
 
 public enum ExperimentType {
 
-    BASELINE("rnaseq_mrna_baseline")
-    ,DIFFERENTIAL("rnaseq_mrna_differential")
-    ,MICROARRAY("1color_microarray_mrna_differential")
-    ,TWOCOLOUR(MICROARRAY, "2color_microarray_mrna_differential")
-    ,MICRORNA(MICROARRAY, "1color_microarray_microrna_differential");
+    RNASEQ_MRNA_BASELINE("rnaseq_mrna_baseline")
+    ,RNASEQ_MRNA_DIFFERENTIAL("rnaseq_mrna_differential")
+    ,MICROARRAY_ANY("microarray parent type")
+    ,MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_mrna_differential")
+    ,MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_2colour_mrna_differential")
+    ,MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_microrna_differential");
 
     private ExperimentType parent;
     private String description;
@@ -48,23 +49,23 @@ public enum ExperimentType {
     }
 
     public boolean isMicroarray() {
-        return getParent().equals(MICROARRAY);
+        return getParent().equals(MICROARRAY_ANY);
     }
 
     public boolean isBaseline() {
-        return equals(BASELINE);
+        return equals(RNASEQ_MRNA_BASELINE);
     }
 
     public boolean isMicroRna() {
-        return equals(MICRORNA);
+        return equals(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
     }
 
     public boolean isDifferential() {
-        return equals(DIFFERENTIAL);
+        return equals(RNASEQ_MRNA_DIFFERENTIAL);
     }
 
     public boolean isTwoColour() {
-        return equals(TWOCOLOUR);
+        return equals(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL);
     }
 
     public ExperimentType getParent() {

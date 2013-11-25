@@ -62,6 +62,7 @@ public abstract class DifferentialQueryPageController<T extends DifferentialExpe
         binder.addValidators(new DifferentialRequestPreferencesValidator());
     }
 
+    // called from sub classes
     public String showGeneProfiles(K requestPreferences, BindingResult result, Model model, HttpServletRequest request) {
 
         T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);

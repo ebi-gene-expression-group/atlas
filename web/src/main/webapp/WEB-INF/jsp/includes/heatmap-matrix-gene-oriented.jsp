@@ -142,7 +142,7 @@
                                                                   value="${geneProfile.getExpression(queryFactor).foldChange}"
                                                                   groupingUsed="false"
                                                                   var="foldChange"/>
-                                                <c:if test="${type == 'MICROARRAY'}">
+                                                <c:if test="${type.isMicroarray()}">
                                                     <fmt:formatNumber type="number"
                                                                       maxFractionDigits="2"
                                                                       value="${geneProfile.getExpression(queryFactor).tstatistic}"

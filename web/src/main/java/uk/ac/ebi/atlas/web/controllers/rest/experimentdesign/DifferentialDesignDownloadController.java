@@ -43,14 +43,14 @@ public class DifferentialDesignDownloadController extends ExperimentDesignDownlo
         super(tsvReaderBuilder);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=DIFFERENTIAL"})
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
     public void downloadRnaSeqExperimentDesign(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         extractExperimentDesign(request, response);
 
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=MICROARRAY"})
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=MICROARRAY_ANY"})
     public void downloadMicroarrayExperimentDesign(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         extractExperimentDesign(request, response);

@@ -35,7 +35,7 @@
 //public class ExperimentDTOTest {
 //
 //    private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
-//    private static final ExperimentType EXPERIMENT_TYPE = ExperimentType.BASELINE;
+//    private static final ExperimentType EXPERIMENT_TYPE = ExperimentType.RNASEQ_MRNA_BASELINE;
 //    private static final String ACCESS_KEY = "AN_UUID";
 //
 //    private ExperimentDTO subject;

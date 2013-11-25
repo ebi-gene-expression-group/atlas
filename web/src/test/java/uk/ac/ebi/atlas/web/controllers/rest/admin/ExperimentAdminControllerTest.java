@@ -77,13 +77,13 @@ public class ExperimentAdminControllerTest {
 
         subject = new ExperimentAdminController(experimentCheckerMock, experimentCRUDMock);
 
-        when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.BASELINE);
+        when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
         when(experimentCRUDMock.loadExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(experimentConfiguration);
 
         given(experimentDAOMock.findPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(null);
         given(experimentDAOMock.findAllExperiments()).willReturn(
-                Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, null, null, null, false)));
-        ExperimentDTO experimentDTO = new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, Sets.newHashSet("human", "mouse"),
+                Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false)));
+        ExperimentDTO experimentDTO = new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, Sets.newHashSet("human", "mouse"),
                         Sets.newHashSet("1", "2"), "Illumina", false);
         given(experimentDAOMock.addExperiment(experimentDTO)).willReturn(UUID.randomUUID());
     }
@@ -92,7 +92,7 @@ public class ExperimentAdminControllerTest {
     public void loadExperimentShouldSucceed() throws Exception {
         String responseText = subject.loadExperiment(EXPERIMENT_ACCESSION, false);
         assertThat(responseText, startsWith("Experiment " + EXPERIMENT_ACCESSION + " loaded, accessKey:"));
-        verify(experimentCheckerMock).checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.BASELINE);
+        verify(experimentCheckerMock).checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
         verify(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
     }
 
@@ -113,11 +113,11 @@ public class ExperimentAdminControllerTest {
     @Test
     public void testListExperiments() throws Exception {
         given(experimentCRUDMock.findAllExperiments())
-            .willReturn(Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.BASELINE, Sets.newHashSet("mouse"), Sets.newHashSet("1"), "title",
+            .willReturn(Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, Sets.newHashSet("mouse"), Sets.newHashSet("1"), "title",
                     new GregorianCalendar(39 + 1900, 12, 12).getTime(), false, ACCESS_KEY)));
 
         assertThat(subject.listExperiments(null), is(
-                "[{\"accessKey\":\"AN_UUID\",\"experimentAccession\":\"EXPERIMENT_ACCESSION\",\"experimentType\":\"BASELINE\",\"lastUpdate\":\"Jan 12, 1940 12:00:00 AM\",\"isPrivate\":false,\"species\":[\"mouse\"],\"pubmedIds\":[\"1\"],\"title\":\"title\"}]"));
+                "[{\"accessKey\":\"AN_UUID\",\"experimentAccession\":\"EXPERIMENT_ACCESSION\",\"experimentType\":\"RNASEQ_MRNA_BASELINE\",\"lastUpdate\":\"Jan 12, 1940 12:00:00 AM\",\"isPrivate\":false,\"species\":[\"mouse\"],\"pubmedIds\":[\"1\"],\"title\":\"title\"}]"));
     }
 
 }

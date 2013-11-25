@@ -85,7 +85,7 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
             Gson gson = new Gson();
             experimentInfoWrapper = gson.fromJson(json, ExperimentsListController.ExperimentInfoWrapper.class);
             for (ExperimentInfo experimentInfo : experimentInfoWrapper.getAaData()) {
-                if (experimentInfo.getExperimentType() == ExperimentType.BASELINE) {
+                if (experimentInfo.getExperimentType() == ExperimentType.RNASEQ_MRNA_BASELINE) {
                     baselineInfos.add(experimentInfo);
                 } else {
                     differentialInfos.add(experimentInfo);

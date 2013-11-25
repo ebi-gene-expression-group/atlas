@@ -133,7 +133,7 @@ public class BaselineExperimentBuilderTest {
         assertThat(experiment.getSpecies(), hasItem(SPECIES));
         assertThat(experiment.getFirstSpecies(), is(SPECIES));
         assertThat(experiment.getSpeciesMapping(), is(speciesMap));
-        assertThat(experiment.getType(), is(ExperimentType.BASELINE));
+        assertThat(experiment.getType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(experiment.getPubMedIds(), contains(PUBMEDID));
         assertThat(experiment.getExperimentDesign(), is(experimentDesignMock));
     }

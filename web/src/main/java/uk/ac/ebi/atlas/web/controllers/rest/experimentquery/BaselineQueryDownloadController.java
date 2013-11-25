@@ -59,7 +59,7 @@ public class BaselineQueryDownloadController extends BaselineQueryController {
         this.writeBaselineProfilesCommand = writeBaselineProfilesCommand;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=BASELINE")
+    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=RNASEQ_MRNA_BASELINE")
     public void downloadGeneProfiles(HttpServletRequest request
             , @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , HttpServletResponse response) throws IOException {

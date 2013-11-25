@@ -40,7 +40,7 @@ public class DifferentialExperiment extends Experiment {
     private LinkedHashMap<String, Contrast> contrastsById = Maps.newLinkedHashMap();
 
     public DifferentialExperiment(String accession, Date lastUpdate, Set<Contrast> contrasts, String description, boolean hasExtraInfoFile, Set<String> species, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
-        this(ExperimentType.DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasExtraInfoFile, species, pubMedIds, experimentDesign);
+        this(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL, accession, lastUpdate, contrasts, description, hasExtraInfoFile, species, pubMedIds, experimentDesign);
     }
 
     protected DifferentialExperiment(ExperimentType experimentType, String accession, Date lastUpdate, Set<Contrast> contrasts,

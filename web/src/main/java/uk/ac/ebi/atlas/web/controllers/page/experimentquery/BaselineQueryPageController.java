@@ -89,7 +89,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
         binder.addValidators(new BaselineRequestPreferencesValidator());
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=BASELINE"})
+    @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_BASELINE"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
@@ -102,7 +102,7 @@ public class BaselineQueryPageController extends BaselineQueryController {
         return "experiment";
     }
 
-    @RequestMapping(value = "/widgets/heatmap/protein", params = {"type=BASELINE"})
+    @RequestMapping(value = "/widgets/heatmap/protein", params = {"type=RNASEQ_MRNA_BASELINE"})
     public String showGeneProfilesWidget(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 

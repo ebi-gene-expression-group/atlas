@@ -43,10 +43,10 @@ var experimentsPageModule = (function ($) {
     }
 
     function formatExperimentType(data, type, full) {
-        if (data === 'BASELINE') {
+        if (data === 'RNASEQ_MRNA_BASELINE') {
             return '<img src="resources/images/allup2_transparent_bkg.png" title="baseline"/>';
         }
-        if (data === 'DIFFERENTIAL' || data === 'MICROARRAY') {
+        if (data === 'RNASEQ_MRNA_DIFFERENTIAL' || data === 'MICROARRAY_ANY') {
             return '<img src="resources/images/updown_transparent_bkg.png" title="differential"/>';
         }
         return data;
