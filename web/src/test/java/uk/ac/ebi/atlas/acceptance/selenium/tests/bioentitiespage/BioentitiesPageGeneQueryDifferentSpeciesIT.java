@@ -22,14 +22,11 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
-import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 
-import java.net.UnknownHostException;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;

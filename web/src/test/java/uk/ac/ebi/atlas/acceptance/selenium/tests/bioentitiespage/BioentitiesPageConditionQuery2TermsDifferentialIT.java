@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.is;
 
 public class BioentitiesPageConditionQuery2TermsDifferentialIT extends SinglePageSeleniumFixture {
 
-    private static final String GLOBAL_SEARCH_TERM = "nrpe1 OR cdk8";
+    private static final String GLOBAL_SEARCH_TERM = "nrpe1+OR+cdk8";
     private BioEntitiesPage subject;
 
     @Override
