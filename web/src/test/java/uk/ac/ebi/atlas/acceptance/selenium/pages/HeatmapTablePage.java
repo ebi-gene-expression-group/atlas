@@ -135,7 +135,7 @@ public class HeatmapTablePage extends TablePage {
         return queryFactorValues.subList(getGeneExpressionStartingRowIndex(), queryFactorValues.size());
     }
 
-    public List<String> getHeatmapHeaders(){
+    public List<String> getHeatmapHeaders() {
         return getTableHeaders(this.getHeatmapTable());
     }
 
@@ -166,7 +166,7 @@ public class HeatmapTablePage extends TablePage {
     public List<String> getDiffGradientColors() {
         WebElement element = diffHeatmapTableLegend.findElement(By.className("color-gradient"));
         String style = element.getCssValue("background-image");
-        return Lists.newArrayList(StringUtils.substringsBetween(style,"rgb(",")"));
+        return Lists.newArrayList(StringUtils.substringsBetween(style, "rgb(", ")"));
     }
 
     public String getDisplayExperimentLink() {
@@ -216,7 +216,7 @@ public class HeatmapTablePage extends TablePage {
         return rowValues.subList(getGeneExpressionStartingRowIndex(), rowValues.size());
     }
 
-    public List<String> getHeatmapRow(int oneBasedRowIndex){
+    public List<String> getHeatmapRow(int oneBasedRowIndex) {
         return getRowValues(getHeatmapTable(), oneBasedRowIndex);
     }
 
@@ -332,6 +332,18 @@ public class HeatmapTablePage extends TablePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
+
+//    public String getFactorTooltipContent(int zeroBasedProfileIndex) {
+//
+//        List<WebElement> tableHeaders = getHeatmapTable().findElements(By.xpath(TABLE_HEADERS_XPATH));
+//        WebElement headerCell = tableHeaders.get(zeroBasedProfileIndex);
+//        hoverOnElement(headerCell);
+//
+//        By byTooltipClass = By.className("genename-tooltip");
+//        WebDriverWait wait = new WebDriverWait(driver, 2L);
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
+//        return driver.findElement(byTooltipClass).getText();
+//    }
 
     public List<String> getGenePropertyTooltipHighlightedTerms(int zeroBasedProfileIndex) {
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//span[@class='highlight']");
