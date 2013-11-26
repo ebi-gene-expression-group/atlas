@@ -142,6 +142,40 @@ public class BaselineBioentityCountsServiceIT {
     }
 
     @Test
+    public void conditionsOR() throws GenesNotFoundException {
+        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        requestParameters.setCondition("adipose thymus");
+
+        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        List<String> experimentAccessions = getExperimentAccessions(results);
+
+        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-599"));
+
+        BaselineExperimentResult[] resultsArray = results.toArray(new BaselineExperimentResult[results.size()]);
+
+        BaselineExperimentResult eMtab513 = resultsArray[0];
+        assertThat(eMtab513.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "adipose")));
+
+        BaselineExperimentResult eMtab599 = resultsArray[1];
+        assertThat(eMtab599.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "thymus")));
+    }
+
+    @Test
+    public void conditionsAND() throws GenesNotFoundException {
+        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        requestParameters.setCondition("liver AND Caucasian");
+
+        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        List<String> experimentAccessions = getExperimentAccessions(results);
+
+        BaselineExperimentResult eMtab513 = results.iterator().next();
+
+        assertThat(experimentAccessions, contains("E-MTAB-513"));
+
+        assertThat(eMtab513.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "liver")));
+    }
+
+    @Test
     public void geneQueryGeneIDAndConditionFemale() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("ENSG00000268458");                   //expressed in ovary
