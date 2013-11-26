@@ -8,7 +8,6 @@ IFS="
 
 if [ $# -ne 5 ]; then
         echo "Usage: $0 ATLAS_URL AE2_URL ATLAS_ADMIN_UID ATLAS_ADMIN_PASS ERROR_NOTIFICATION_EMAILADDRESS"
-        echo "e.g. $0 www-test.ebi.ac.uk/gxa peach:8480 rpetry@ebi.ac.uk"
         exit 1;
 fi
 
