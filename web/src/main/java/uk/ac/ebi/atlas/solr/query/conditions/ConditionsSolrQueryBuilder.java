@@ -38,7 +38,7 @@ public class ConditionsSolrQueryBuilder {
 
     public static final String CONDITIONS_SEARCH_FIELD = "conditions_search";
 
-    BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
+    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
     @Inject
     public ConditionsSolrQueryBuilder(BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
@@ -59,7 +59,7 @@ public class ConditionsSolrQueryBuilder {
         String joinOn = " OR ";
 
         for (String term: terms) {
-            if (term.toUpperCase().equals("AND")) {
+            if (term.equalsIgnoreCase("AND")) {
                 joinOn = " AND ";
             } else {
                 solrTerms.add(CONDITIONS_SEARCH_FIELD + ":" + term);

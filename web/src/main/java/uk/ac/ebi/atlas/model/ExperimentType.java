@@ -76,15 +76,16 @@ public enum ExperimentType {
         return description;
     }
 
-    private static final Map<String,ExperimentType> typeByDescription = new HashMap<>();
+    private static final Map<String,ExperimentType> TYPE_BY_DESCRIPTION = new HashMap<>();
 
     static {
-        for(ExperimentType experimentType : EnumSet.allOf(ExperimentType.class))
-            typeByDescription.put(experimentType.getDescription(), experimentType);
+        for(ExperimentType experimentType : EnumSet.allOf(ExperimentType.class)) {
+            TYPE_BY_DESCRIPTION.put(experimentType.getDescription(), experimentType);
+        }
     }
 
     public static ExperimentType get(String experimentTypeDescription) {
-        return typeByDescription.get(experimentTypeDescription.toLowerCase());
+        return TYPE_BY_DESCRIPTION.get(experimentTypeDescription.toLowerCase());
     }
 
 }
