@@ -35,4 +35,23 @@ public class AssayProperty implements Comparable<AssayProperty> {
         return propertyName.compareToIgnoreCase(otherProperty.propertyName);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AssayProperty that = (AssayProperty) o;
+
+        if (propertyName != null ? !propertyName.equalsIgnoreCase(that.propertyName) : that.propertyName != null) return false;
+        if (testValue != null ? !testValue.equalsIgnoreCase(that.testValue) : that.testValue != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = propertyName != null ? propertyName.toLowerCase().hashCode() : 0;
+        result = 31 * result + (testValue != null ? testValue.toLowerCase().hashCode() : 0);
+        return result;
+    }
 }

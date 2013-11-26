@@ -48,6 +48,18 @@ public class HeatmapCustomHeadersIT extends SinglePageSeleniumFixture {
 
     }
 
+    @Test
+    public void shouldHaveTooltip() {
+
+        assertThat(subject.getFactorTooltipContent(1, 0, 0), is("organism part"));
+        assertThat(subject.getFactorTooltipContent(1, 0, 1), is("adipose"));
+        assertThat(subject.getFactorTooltipContent(1, 1, 0), is("age"));
+        assertThat(subject.getFactorTooltipContent(1, 1, 1), is("73 years"));
+        assertThat(subject.getFactorTooltipContent(1, 4, 0), is("sex"));
+        assertThat(subject.getFactorTooltipContent(1, 4, 1), is("female"));
+
+    }
+
     @Test(expected = NoSuchElementException.class)
     public void shouldNotHaveADesignElement() {
 

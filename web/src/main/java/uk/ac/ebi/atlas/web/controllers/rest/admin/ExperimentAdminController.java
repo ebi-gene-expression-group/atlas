@@ -32,7 +32,6 @@ import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
-import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import java.io.IOException;

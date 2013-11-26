@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -44,7 +43,7 @@ abstract class TablePage extends GlobalSearchPage {
     private static final String GENE_ANCHOR_XPATH_TEMPLATE = "tbody/tr[%d]/td[1]/a";
     private static final String SECOND_COLUMN_CELLS_XPATH = "tbody//td[2]";
     private static final String COLUMN_CELLS_XPATH = "tbody//td[%d]";
-    private static final String TABLE_HEADERS_XPATH = "thead/tr/th";
+    protected static final String TABLE_HEADERS_XPATH = "thead/tr/th";
 
     @FindBy(id = "experimentDescription")
     private WebElement experimentDescription;
