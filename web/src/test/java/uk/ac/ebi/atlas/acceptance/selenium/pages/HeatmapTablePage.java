@@ -333,17 +333,22 @@ public class HeatmapTablePage extends TablePage {
         return driver.findElement(byTooltipClass).getText();
     }
 
-//    public String getFactorTooltipContent(int zeroBasedProfileIndex) {
-//
-//        List<WebElement> tableHeaders = getHeatmapTable().findElements(By.xpath(TABLE_HEADERS_XPATH));
-//        WebElement headerCell = tableHeaders.get(zeroBasedProfileIndex);
-//        hoverOnElement(headerCell);
-//
-//        By byTooltipClass = By.className("genename-tooltip");
-//        WebDriverWait wait = new WebDriverWait(driver, 2L);
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
-//        return driver.findElement(byTooltipClass).getText();
-//    }
+    public String getFactorTooltipContent(int zeroBasedHeaderIndex,  int zeroBasedTooltipTableRowIndex,
+                                                         int zeroBasedTooltipTableColumnIndex) {
+
+        List<WebElement> tableHeaders = getHeatmapTable().findElements(By.xpath(TABLE_HEADERS_XPATH));
+        WebElement headerCell = tableHeaders.get(zeroBasedHeaderIndex);
+        hoverOnElement(headerCell);
+
+
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//tr[" + (zeroBasedTooltipTableRowIndex + 1)
+                + "]//td[" + (zeroBasedTooltipTableColumnIndex + 1) + "]");
+        FluentWait wait = new WebDriverWait(driver, 6L)
+                .pollingEvery(50, TimeUnit.MILLISECONDS);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
+        return driver.findElement(byTooltipClass).getText();
+
+    }
 
     public List<String> getGenePropertyTooltipHighlightedTerms(int zeroBasedProfileIndex) {
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//span[@class='highlight']");
