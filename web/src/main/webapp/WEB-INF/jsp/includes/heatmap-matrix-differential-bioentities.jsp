@@ -63,7 +63,7 @@
                            var="differentialBioentityExpression">
                     <tr>
                         <td class="horizontal-header-cell">
-                                ${differentialBioentityExpression.bioentityName}
+                                <a href="genes/${differentialBioentityExpression.bioentityId}">${differentialBioentityExpression.bioentityName}</a>
                         </td>
                         <td class="horizontal-header-cell">
                                 ${differentialBioentityExpression.designElement}

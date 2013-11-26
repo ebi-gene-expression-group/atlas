@@ -22,15 +22,14 @@
 
 package uk.ac.ebi.atlas.solr.query.conditions;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
-import com.google.common.collect.Iterables;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -55,14 +54,18 @@ public class ConditionsSolrQueryBuilder {
     String buildQueryString(String queryString){
         List<String> terms = bioentityPropertyValueTokenizer.split(queryString);
 
-        Iterable<String> searchTerms = Iterables.transform(terms, new Function<String, String>() {
+        List<String> solrTerms = new ArrayList<>();
 
-            @Override
-            public String apply(java.lang.String s) {
-                return CONDITIONS_SEARCH_FIELD + ":" + s;
+        String joinOn = " OR ";
+
+        for (String term: terms) {
+            if (term.toUpperCase().equals("AND")) {
+                joinOn = " AND ";
+            } else {
+                solrTerms.add(CONDITIONS_SEARCH_FIELD + ":" + term);
             }
-        });
+        }
 
-        return Joiner.on(" OR ").join(searchTerms);
+        return Joiner.on(joinOn).join(solrTerms);
     }
 }
