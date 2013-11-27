@@ -139,8 +139,7 @@ within a single experiment.</p>
 	<li><a href="http://www.ensembl.org/index.html">Ensembl</a> Gene e.g. <strong>ENSG00000171658</strong></li>
 	<li><a href="http://www.ensembl.org/index.html">Ensembl</a> Protein e.g. <strong>ENSP00000000233</strong></li>
 	<li><a href="http://www.ensembl.org/index.html">Ensembl</a> Transcript e.g. <strong>ENST00000000233</strong></li>
-	<li><a href="http://www.geneontology.org/">Gene Ontology
-	ID</a> e.g. <strong>GO:0008134</strong></li>
+	<li><a href="http://www.geneontology.org/">Gene Ontology</a> ID e.g. <strong>GO:0008134</strong></li>
 	<li><a href="http://www.geneontology.org/">Gene Ontology</a> term e.g. <strong>&quot;transcription factor binding&quot;</strong> (please put multi-word query terms in quotes)</li>
 	<li><a href="http://www.ebi.ac.uk/interpro/">Interpro</a> e.g. <strong>IPR017892</strong></li>
 	<li><a href="http://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a> e.g. <strong>NM_212505</strong></li>
@@ -180,11 +179,23 @@ using the following format:</p>
 <h3><a name="deResults">When I search all of Expression Atlas, what do the &quot;Differential Expression&quot; results show?</a></h3>
 
 <p>The table in the <strong>Differential Expression</strong> section of the
-results shows all genes f that matched your search and were differentially
-expressed with adjusted <i>p</i>-value &lt; 0.05. There is one row for each
-gene and each contrast the gene showed differential expression in. The genes
-are ordered so that the one with the lowest adjusted <i>p</i>-value is at the
-top.</p>
+results shows all contrasts that matched your search and has a gene
+differentially expressed with an adjusted <i>p</i>-value &lt; 0.05.</p>
+
+<p>If your search was for an experimental condition then
+the table includes all experiments with a sample property or
+experimental factor (variable) that matched that condition. For
+example, you might be interested in experiments that are from 'liver'
+samples so you could search for this term. There is one row for each gene and contrast that showed differential
+expression. The genes are ordered so that the one with the lowest adjusted <i>p</i>-value is at the
+top.  Click on the contrast name to find out more information about a particular
+gene/contrast combination.  </p>
+
+<p>If your search was for a particular gene the table lists the
+contrasts in which that gene was differentially expressed with an
+adjusted <i>p</i>-value &lt; 0.05.  Again, click on the contrast name to find out more information about a particular
+gene/contrast combination. The contrasts are ordered so that the one
+with the lowest  adjusted <i>p</i>-value is at the top. </p> 
 
 
 <h3><a name="designElement">What is a &quot;design element&quot;?</a></h3>
