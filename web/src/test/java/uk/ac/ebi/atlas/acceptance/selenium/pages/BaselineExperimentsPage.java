@@ -51,12 +51,12 @@ public class BaselineExperimentsPage extends GlobalSearchPage {
 
     public String getNameOfSpecies(int i) {
         WebElement specie = getAllSpeciesItems().get(i);
-        return specie.findElement(By.xpath("h2")).getText();
+        return specie.findElement(By.xpath("div/h2")).getText();
     }
 
     public List<WebElement> getAllExperimentsOfSpecies(int i) {
         WebElement specie = getAllSpeciesItems().get(i);
-        return specie.findElements(By.xpath("ul/li"));
+        return specie.findElements(By.xpath("div/ul/li"));
     }
 
     public List<String> getAllExperimentLinksOfSpecies(int i){
