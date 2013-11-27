@@ -26,20 +26,22 @@
 
     <c:forEach items="${experimentAccessionsBySpecies.keySet()}" var="specie">
 
-        <div class="item">
+        <div class="item" style="width: 200px;">
             <img src="resources/images/home/${specie}.png" width="40" height="40"
                  class="circle"/>
             <a href="#" class="species-icon"></a>
 
-            <h2>${specie}</h2>
-            <ul>
-                <c:forEach items="${experimentAccessionsBySpecies.get(specie)}" var="experimentAccession">
-                    <c:set var="key" value="${experimentAccession}${specie}"/>
-                    <li>
-                        <a href="experiments/${experimentAccession}${experimentLinks.get(key)}">${experimentDisplayNames.get(experimentAccession)}</a>
-                    </li>
-                </c:forEach>
-            </ul>
+            <div class="specie_experiment">
+                <h2>${specie}</h2>
+                <ul>
+                    <c:forEach items="${experimentAccessionsBySpecies.get(specie)}" var="experimentAccession">
+                        <c:set var="key" value="${experimentAccession}${specie}"/>
+                        <li>
+                            <a href="experiments/${experimentAccession}${experimentLinks.get(key)}">${experimentDisplayNames.get(experimentAccession)}</a>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </div>
         </div>
     </c:forEach>
 
@@ -90,7 +92,7 @@
 
     $(document).ready(function () {
         // x and y offset is vice versa!
-        drawEllipse('.item', 230, 310, 220, 330, 0);
+        drawEllipse('.item', 230, 310, 250, 340, 0);
 
     });
 
