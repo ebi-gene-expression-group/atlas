@@ -6,4 +6,12 @@
         <from>/experiments/(.*)/$</from>
         <to>/experiments/$1</to>
     </rule>
+    <rule>
+        <from>/das/s4(/)?$</from>
+        <to>/resources/das/s4.xml</to>
+    </rule>
+    <rule>
+        <from>/das/s4/types(/)?$</from>
+        <to>/resources/das/types.xml</to>
+    </rule>
 </urlrewrite>

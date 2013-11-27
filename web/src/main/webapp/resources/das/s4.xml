@@ -1,0 +1,11 @@
+<SOURCES>
+    <SOURCE uri="s4" doc_href="http://www.ebi.ac.uk/gxa" title="Expression Atlas S4 Annotation Data Source" description="Expression Atlas S4 Annotation Data Source">
+        <MAINTAINER email="ugis@ebi.ac.uk"/>
+        <VERSION uri="s4" created="2010-08-13">
+            <COORDINATES uri="http://www.dasregistry.org/coordsys/CS_DS15" source="Gene_ID" authority="Ensembl" taxid="-" test_range="ENSG00000162552">Gene_ID</COORDINATES>
+            <CAPABILITY type="das1:sources" query_uri="http://www.ebi.ac.uk/gxa/das/s4"/>
+            <CAPABILITY type="das1:types" query_uri="http://www.ebi.ac.uk/gxa/das/s4/types"/>
+            <CAPABILITY type="das1:features" query_uri="http://www.ebi.ac.uk/gxa/das/s4/features?segment=ENSG00000162552"/>
+        </VERSION>
+    </SOURCE>
+</SOURCES>

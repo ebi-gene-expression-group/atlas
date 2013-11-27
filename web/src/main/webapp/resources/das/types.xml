@@ -1,0 +1,10 @@
+<DASTYPES>
+    <GFF version="1.0" href="http://www.ebi.ac.uk/gxa/das/s4/types">
+        <SEGMENT label="Complete datasource summary">
+            <TYPE id="atlas-provenance" cvId="description" category="description"/>
+            <TYPE id="summary" cvId="summary" category="summary"/>
+            <TYPE id="image" cvId="image" category="image"/>
+            <TYPE id="description" cvId="description" category="description"/>
+        </SEGMENT>
+    </GFF>
+</DASTYPES>
