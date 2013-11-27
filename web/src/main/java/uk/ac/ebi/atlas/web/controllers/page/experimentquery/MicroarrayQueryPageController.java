@@ -52,7 +52,7 @@ public class MicroarrayQueryPageController extends DifferentialQueryPageControll
         super(requestContextBuilder, rankMicroarrayProfilesCommand, downloadURLBuilder);
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY"})
+    @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 

@@ -22,25 +22,50 @@
 
 package uk.ac.ebi.atlas.solr.query.conditions;
 
+import com.google.common.base.Joiner;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
+import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named
-@Scope("prototype")
+@Scope("singleton")
 public class ConditionsSolrQueryBuilder {
 
     public static final String CONDITIONS_SEARCH_FIELD = "conditions_search";
 
-    public SolrQuery buildFullTestSearchQuery(String queryString) {
+    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
+    @Inject
+    public ConditionsSolrQueryBuilder(BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
+        this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
+    }
+
+    public SolrQuery build(String queryString) {
         SolrQuery solrQuery = new SolrQuery(buildQueryString(queryString));
         solrQuery.setRows(1000);
         return solrQuery;
     }
 
     String buildQueryString(String queryString){
-        return CONDITIONS_SEARCH_FIELD + ":" + queryString.trim();
+        List<String> terms = bioentityPropertyValueTokenizer.split(queryString);
+
+        List<String> solrTerms = new ArrayList<>();
+
+        String joinOn = " OR ";
+
+        for (String term: terms) {
+            if (term.equalsIgnoreCase("AND")) {
+                joinOn = " AND ";
+            } else {
+                solrTerms.add(CONDITIONS_SEARCH_FIELD + ":" + term);
+            }
+        }
+
+        return Joiner.on(joinOn).join(solrTerms);
     }
 }

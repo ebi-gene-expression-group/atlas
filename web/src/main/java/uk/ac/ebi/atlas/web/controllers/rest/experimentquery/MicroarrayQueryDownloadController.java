@@ -54,7 +54,7 @@ public class MicroarrayQueryDownloadController {
     private static final String NORMALIZED_EXPRESSIONS_TSV = "-normalized-expressions.tsv";
     private static final String LOG_FOLD_CHANGES_TSV = "-log-fold-changes.tsv";
     private static final String ANALYTICS_TSV = "-analytics.tsv";
-    private static final String PARAMS_TYPE_MICROARRAY = "type=MICROARRAY";
+    private static final String PARAMS_TYPE_MICROARRAY = "type=MICROARRAY_ANY";
     private static final String MODEL_ATTRIBUTE_PREFERENCES = "preferences";
     private static final String QUERY_RESULTS_TSV = "-query-results.tsv";
 

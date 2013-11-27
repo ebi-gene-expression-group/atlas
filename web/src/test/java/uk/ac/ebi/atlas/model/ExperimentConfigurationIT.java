@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.collect.Sets;
-import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -90,7 +89,7 @@ public class ExperimentConfigurationIT {
     @Test
     public void testGetExperimentType() {
         subject = configurationTrader.getExperimentConfiguration("E-GEOD-22351");
-        assertThat(subject.getExperimentType(), is(ExperimentType.DIFFERENTIAL));
+        assertThat(subject.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL));
     }
 
 }

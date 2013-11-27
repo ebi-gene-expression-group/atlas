@@ -49,7 +49,7 @@ public class DifferentialQueryDownloadController {
     private static final Logger LOGGER = Logger.getLogger(DifferentialQueryDownloadController.class);
     private static final String ALL_ANALYTICS_TSV = "-analytics.tsv";
     private static final String RAW_COUNTS_TSV = "-raw-counts.tsv";
-    private static final String PARAMS_TYPE_DIFFERENTIAL = "type=DIFFERENTIAL";
+    private static final String PARAMS_TYPE_DIFFERENTIAL = "type=RNASEQ_MRNA_DIFFERENTIAL";
     private static final String MODEL_ATTRIBUTE_PREFERENCES = "preferences";
 
     private final RnaSeqRequestContextBuilder requestContextBuilder;

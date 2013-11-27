@@ -49,7 +49,7 @@ public class ExperimentConfigurationTest {
     private static final String TEST_ASSAY_GROUP = "test_assay_group";
     private static final String NAME = "name";
     private static final String XML_CONTENT =
-            "<configuration experimentType=\"rnaseq_mrna_baseline\">" +
+            "<configuration experimentType=\"RNASEQ_MRNA_BASELINE\">" +
                     "    <analytics>" +
                     "        <assay_groups>" +
                     "            <assay_group id=\"" + REFERENCE_ASSAY_GROUP + "\">" +
@@ -114,6 +114,6 @@ public class ExperimentConfigurationTest {
 
     @Test
     public void testGetExperimentType() {
-        assertThat(subject.getExperimentType(), is(ExperimentType.BASELINE));
+        assertThat(subject.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
     }
 }

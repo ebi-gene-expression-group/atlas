@@ -73,9 +73,9 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
     //This is not working with PhantomJS browser :((
     @Test
     public void checkContrastSummaryTooltipTableLastRow() {
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 5, 0), is("Organism"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 5, 1), is("Arabidopsis thaliana"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 5, 2), is("Arabidopsis thaliana"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 4, 0), is("Organism"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 4, 1), is("Arabidopsis thaliana"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 4, 2), is("Arabidopsis thaliana"));
     }
 
     //This is not working with PhantomJS browser :((

@@ -49,12 +49,12 @@
                             class="horizontal-header-cell">
 
                         <c:set var="geneId" value="${geneProfile.id}"/>
-                        <c:set var="bioEntityType" value="${preferences.geneSetMatch? \"genesets\": \"genes\"}"/>
+                        <c:set var="bioEntityURL" value="${preferences.geneSetMatch? \"query?geneQuery=\".concat(geneProfile.getName()).concat(\"&exactMatch=\").concat(preferences.isExactMatch()) : \"genes/\".concat(geneProfile.id)}"/>
 
                         <c:choose>
                             <c:when test="${isExperimentPage}">
                                 <a class="genename" id="${geneId}"
-                                   href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityType}/${geneId}'
+                                   href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityURL}'
                                    title="">${geneProfile.getName()}</a>
                             </c:when>
                             <c:otherwise>
@@ -115,12 +115,13 @@
 
                         <display:column
                                 title="<div data-organism-part=\"${columnHeader}\"
-                                    ${type.isBaseline() ? 'title=\"'.concat(columnHeader).concat('\"') : ''}
                                     ${type.isMicroarray() ? 'data-array-design=\"'.concat(queryFactor.arrayDesignAccession).concat('\"') : ''}
+                                    ${type.isBaseline() ? 'assay-group-id=\"'.concat(factorHolder.assayGroupId).concat('\"') : ''}
+                                    ${type.isBaseline() ? 'factor-name=\"'.concat(columnHeader).concat('\"') : ''}
                                     ${!type.isBaseline() ? 'data-contrast-id=\"'.concat(queryFactor.id).concat('\"') : ''}
-                                    ${!type.isBaseline() ? 'data-experiment-accession=\"'.concat(experimentAccession).concat('\"') : ''}
+                                    ${'data-experiment-accession=\"'.concat(experimentAccession).concat('\"')}
                                     class=\"factor-header rotate_text\"></div>"
-                                headerClass="rotated_cell vertical-header-cell ${!type.isBaseline() ? 'contrastNameCell' : ''}"
+                                headerClass="rotated_cell vertical-header-cell ${!type.isBaseline() ? 'contrastNameCell' : 'factorNameCell'}"
                                 style="${style}">
 
                             <c:if test="${not empty expressionLevel}">
@@ -142,7 +143,7 @@
                                                                   value="${geneProfile.getExpression(queryFactor).foldChange}"
                                                                   groupingUsed="false"
                                                                   var="foldChange"/>
-                                                <c:if test="${type == 'MICROARRAY'}">
+                                                <c:if test="${type.isMicroarray()}">
                                                     <fmt:formatNumber type="number"
                                                                       maxFractionDigits="2"
                                                                       value="${geneProfile.getExpression(queryFactor).tstatistic}"
@@ -211,6 +212,23 @@
     </table>
 </section>
 
+<section id="factorInfo" style="display:none">
+    <div id="factorDescription" style="text-align: center"></div>
+    <table class='table-grid' style="padding: 0px; margin: 0px;">
+        <thead>
+        <tr>
+            <th class='header-cell'>
+                Property
+            </th>
+            <th class='header-cell'>
+                Value
+            </th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
+
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/highlight.js"></script>
 <script language="JavaScript" type="text/javascript"
@@ -219,6 +237,8 @@
         src="${base}/resources/js/heatmapModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/contrastInfoTooltipModule.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${base}/resources/js/factorInfoTooltipModule.js"></script>
 
 <script type="text/javascript">
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
@@ -246,6 +266,8 @@
 
             if (!${type.isBaseline()}) {
                 contrastInfoTooltipModule.init('${base}', '${param.accessKey}');
+            } else {
+                factorInfoTooltipModule.init('${base}', '${param.accessKey}');
             }
 
         });

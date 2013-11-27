@@ -9,9 +9,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.inject.Named;
-import java.util.Collection;
-import java.util.Map;
-import java.util.SortedSet;
+import java.util.*;
 
 @Named
 @Scope("request")
@@ -24,6 +22,8 @@ public class ContrastSummaryBuilder {
     private ExperimentDesign experimentDesign;
 
     private String experimentDescription;
+
+    private Set<AssayProperty> properties = new HashSet<>();
 
 
     public ContrastSummaryBuilder forContrast(Contrast contrast) {
@@ -60,11 +60,10 @@ public class ContrastSummaryBuilder {
 
         }
 
-        ContrastSummary contrastSummary = new ContrastSummary(experimentDescription, contrast.getDisplayName());
 
         for (String factorHeader : experimentDesign.getFactorHeaders()) {
             ContrastProperty property = composeContrastProperty(allTestFactorValues, allRefFactorValues, factorHeader, ContrastPropertyType.FACTOR);
-            contrastSummary.add(property);
+            properties.add(property);
         }
 
         // array design row should be sorted within samples category
@@ -72,9 +71,10 @@ public class ContrastSummaryBuilder {
         sampleHeaders.add(ARRAY_DESIGN);
         for (String sampleHeader : sampleHeaders) {
             ContrastProperty property = composeContrastProperty(allTestSampleValues, allRefSampleValues, sampleHeader, ContrastPropertyType.SAMPLE);
-            contrastSummary.add(property);
+            properties.add(property);
         }
 
+        ContrastSummary contrastSummary = new ContrastSummary(experimentDescription, contrast.getDisplayName(), Sets.newTreeSet(properties));
 
         return contrastSummary;
     }

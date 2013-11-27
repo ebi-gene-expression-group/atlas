@@ -42,7 +42,7 @@
         <table class="form-grid">
             <tr>
                 <td>
-                    <form:label path="geneQuery">Gene Query</form:label>
+                    <form:label path="geneQuery">Gene query</form:label>
                     <span data-help-loc="#geneSearch"/>
                 </td>
 

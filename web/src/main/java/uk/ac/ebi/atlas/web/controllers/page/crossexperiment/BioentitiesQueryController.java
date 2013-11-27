@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
 
-import com.google.common.base.Joiner;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,14 +35,13 @@ import uk.ac.ebi.atlas.commands.BaselineBioentityCountsService;
 import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
+import uk.ac.ebi.atlas.integration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
-import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -53,15 +51,15 @@ import static com.google.common.base.Preconditions.checkState;
 public class BioentitiesQueryController {
 
     private GeneQueryDifferentialService geneQueryDifferentialService;
-    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
-
     private BaselineBioentityCountsService baselineBioentityCountsService;
 
+    private EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder;
+
     @Inject
-    public BioentitiesQueryController(GeneQueryDifferentialService geneQueryDifferentialService, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer, BaselineBioentityCountsService baselineBioentityCountsService) {
+    public BioentitiesQueryController(GeneQueryDifferentialService geneQueryDifferentialService, BaselineBioentityCountsService baselineBioentityCountsService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder) {
         this.geneQueryDifferentialService = geneQueryDifferentialService;
-        this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
         this.baselineBioentityCountsService = baselineBioentityCountsService;
+        this.ebiGlobalSearchQueryBuilder = ebiGlobalSearchQueryBuilder;
     }
 
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
@@ -91,9 +89,7 @@ public class BioentitiesQueryController {
 
             model.addAttribute("preferences", new DifferentialRequestPreferences());
 
-            List<String> geneQueryTerms = bioentityPropertyValueTokenizer.split(geneQuery);
-
-            String globalSearchTerm = buildGlobalSearchTerm(geneQueryTerms, requestParameters.getCondition());
+            String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery, requestParameters.getCondition());
 
             model.addAttribute("globalSearchTerm", globalSearchTerm);
 
@@ -105,34 +101,6 @@ public class BioentitiesQueryController {
         return "bioEntities";
     }
 
-    public String buildGlobalSearchTerm(List<String> geneQueryTerms, String condition) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        if (!geneQueryTerms.isEmpty()) {
-
-            boolean moreThanOneQueryTermAndCondition = geneQueryTerms.size() > 1 && condition != null;
-
-            if (moreThanOneQueryTermAndCondition) {
-                stringBuilder.append("(");
-            }
-
-            stringBuilder.append(Joiner.on(" OR ").join(geneQueryTerms));
-
-            if (moreThanOneQueryTermAndCondition) {
-                stringBuilder.append(")");
-            }
-
-            if (condition != null) {
-                stringBuilder.append(" AND ");
-            }
-        }
-
-        if (condition != null) {
-            stringBuilder.append(condition);
-        }
-
-        return stringBuilder.toString();
-    }
 
 
 }

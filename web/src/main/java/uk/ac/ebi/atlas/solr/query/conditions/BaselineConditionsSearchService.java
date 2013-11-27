@@ -53,7 +53,7 @@ public class BaselineConditionsSearchService {
     public Collection<IndexedAssayGroup> findAssayGroups(String queryString) {
 
         try {
-            QueryResponse queryResponse = baselineConditionsSolrServer.query(queryBuilder.buildFullTestSearchQuery(queryString));
+            QueryResponse queryResponse = baselineConditionsSolrServer.query(queryBuilder.build(queryString));
             List<Condition> beans = queryResponse.getBeans(Condition.class);
 
             Collection<IndexedAssayGroup> result = Collections2.transform(beans, new Function<Condition, IndexedAssayGroup>() {
@@ -72,7 +72,7 @@ public class BaselineConditionsSearchService {
     public SetMultimap<String, String> findAssayGroupsPerExperiment(String queryString) {
 
            try {
-               QueryResponse queryResponse = baselineConditionsSolrServer.query(queryBuilder.buildFullTestSearchQuery(queryString));
+               QueryResponse queryResponse = baselineConditionsSolrServer.query(queryBuilder.build(queryString));
                List<Condition> beans = queryResponse.getBeans(Condition.class);
 
                SetMultimap<String, String> result = HashMultimap.create();
