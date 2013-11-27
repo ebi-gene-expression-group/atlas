@@ -28,11 +28,13 @@ import java.util.Set;
 
 public enum BioentityType {
 
-    GENE("ensgene", "mirna"),
-    PROTEIN("ensprotein"),
-    TRANSCRIPT("enstranscript");
+    GENE("genes", "ensgene", "mirna"),
+    PROTEIN("proteins", "ensprotein"),
+    TRANSCRIPT("genes", "enstranscript");
 
     private static Set<String> allSolrAliases = Sets.newHashSet();
+    private final String bioentityPageName;
+
 
     static {
         for (BioentityType bioentityType:BioentityType.values()) {
@@ -42,7 +44,8 @@ public enum BioentityType {
 
     private Set<String> solrAliases;
 
-    private BioentityType(String... solrAliases){
+    private BioentityType(String bioentityPageName, String... solrAliases){
+        this.bioentityPageName = bioentityPageName;
         this.solrAliases = Sets.newHashSet(solrAliases);
     }
 
@@ -63,4 +66,7 @@ public enum BioentityType {
         return solrAliases;
     }
 
+    public String getBioentityPageName() {
+        return bioentityPageName;
+    }
 }

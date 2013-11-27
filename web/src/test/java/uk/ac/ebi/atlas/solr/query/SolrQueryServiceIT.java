@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,10 +32,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
-
 import java.util.List;
 import java.util.Set;
 
@@ -73,24 +70,24 @@ public class SolrQueryServiceIT {
     @Test
     public void shouldReturnTheRightBioentityType() throws SolrServerException {
 
-        assertThat(subject.findBioentityProperty("ENSG00000179218").getBioentityType(), is("ensgene"));
-        assertThat(subject.findBioentityProperty("ENSP00000355434").getBioentityType(), is("ensprotein"));
-        assertThat(subject.findBioentityProperty("ENST00000559981").getBioentityType(), is("enstranscript"));
+        assertThat(subject.findBioentityIdentifierProperty("ENSG00000179218").getBioentityType(), is("ensgene"));
+        assertThat(subject.findBioentityIdentifierProperty("ENSP00000355434").getBioentityType(), is("ensprotein"));
+        assertThat(subject.findBioentityIdentifierProperty("ENST00000559981").getBioentityType(), is("enstranscript"));
 
     }
 
     @Test
     public void shouldFindCaseInsentiveIdButReturnABioentityPropertyWithRightCase() throws SolrServerException {
 
-        BioentityProperty bioentityProperty = subject.findBioentityProperty("enSG00000179218");
+        BioentityProperty bioentityProperty = subject.findBioentityIdentifierProperty("enSG00000179218");
         assertThat(bioentityProperty.getBioentityType(), is("ensgene"));
         assertThat(bioentityProperty.getBioentityIdentifier(), is("ENSG00000179218"));
 
-        bioentityProperty = subject.findBioentityProperty("enSP00000355434");
+        bioentityProperty = subject.findBioentityIdentifierProperty("enSP00000355434");
         assertThat(bioentityProperty.getBioentityType(), is("ensprotein"));
         assertThat(bioentityProperty.getBioentityIdentifier(), is("ENSP00000355434"));
 
-        bioentityProperty = subject.findBioentityProperty("enST00000559981");
+        bioentityProperty = subject.findBioentityIdentifierProperty("enST00000559981");
         assertThat(bioentityProperty.getBioentityType(), is("enstranscript"));
         assertThat(bioentityProperty.getBioentityIdentifier(), is("ENST00000559981"));
 
@@ -119,10 +116,11 @@ public class SolrQueryServiceIT {
 
     }
 
-    @Test(expected = ResourceNotFoundException.class)
-    public void shouldThrowResourceNotFoundException() throws SolrServerException {
+    @Test
+    public void shouldReturnNullForNonExistingId() throws SolrServerException {
 
-        subject.findBioentityProperty("XYZEMC2");
+        assertThat(subject.findBioentityIdentifierProperty("XYZEMC2"), is(nullValue()));
+        assertThat(subject.findBioentityIdentifierProperty("Map2k7"), is(nullValue()));
 
     }
 

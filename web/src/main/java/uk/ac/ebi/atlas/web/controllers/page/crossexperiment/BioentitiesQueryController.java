@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +38,9 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
 import uk.ac.ebi.atlas.integration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
+import uk.ac.ebi.atlas.solr.BioentityProperty;
+import uk.ac.ebi.atlas.solr.BioentityType;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
@@ -55,11 +59,14 @@ public class BioentitiesQueryController {
 
     private EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder;
 
+    private SolrQueryService solrQueryService;
+
     @Inject
-    public BioentitiesQueryController(GeneQueryDifferentialService geneQueryDifferentialService, BaselineBioentityCountsService baselineBioentityCountsService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder) {
+    public BioentitiesQueryController(GeneQueryDifferentialService geneQueryDifferentialService, BaselineBioentityCountsService baselineBioentityCountsService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService) {
         this.geneQueryDifferentialService = geneQueryDifferentialService;
         this.baselineBioentityCountsService = baselineBioentityCountsService;
         this.ebiGlobalSearchQueryBuilder = ebiGlobalSearchQueryBuilder;
+        this.solrQueryService = solrQueryService;
     }
 
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
@@ -75,6 +82,15 @@ public class BioentitiesQueryController {
         checkState(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify gene query or condition!");
 
         String geneQuery = requestParameters.getGeneQuery();
+
+        if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
+            //If Query just for a single bioentityID
+            String geneIdRedirectString = getGeneIdRedirectString(requestParameters.getGeneQuery());
+            if (StringUtils.isNotBlank(geneIdRedirectString)) {
+                return geneIdRedirectString;
+            }
+        }
+
         try {
 
             model.addAttribute("entityIdentifier", requestParameters.getDescription());
@@ -102,5 +118,23 @@ public class BioentitiesQueryController {
     }
 
 
+    private String getGeneIdRedirectString(String geneId) {
+
+        if (geneId.toUpperCase().startsWith("REACT_")) {
+            return "redirect:/genesets/" + geneId;
+        }
+
+        BioentityProperty bioentityProperty = solrQueryService.findBioentityIdentifierProperty(geneId);
+
+        if (bioentityProperty == null) {
+            return null;
+        }
+
+        String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
+
+        return "redirect:/" + bioentityPageName + "/" + geneId;
+
+
+    }
 
 }

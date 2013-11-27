@@ -31,7 +31,6 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -47,7 +46,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static uk.ac.ebi.atlas.solr.BioentityType.GENE;
 
 @Named
-@Scope("singleton") //can be singleton because HttpSolrServer is documented to be thread safe, please be careful not to add any other non thread safe state!
+@Scope("singleton")
+//can be singleton because HttpSolrServer is documented to be thread safe, please be careful not to add any other non thread safe state!
 public class SolrQueryService {
     private static final Logger LOGGER = Logger.getLogger(SolrQueryService.class);
 
@@ -79,32 +79,32 @@ public class SolrQueryService {
 
     @Inject
     public SolrQueryService(@Value("#{configuration['index.property_names.tooltip']}") String[] tooltipPropertyTypes,
-                                BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer,
-                                GxaSolrServer solrServer,
-                                SolrQueryBuilderFactory solrQueryBuilderFactory){
+                            BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer,
+                            GxaSolrServer solrServer,
+                            SolrQueryBuilderFactory solrQueryBuilderFactory) {
         this.tooltipPropertyTypes = tooltipPropertyTypes;
         this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
         this.solrServer = solrServer;
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
     }
 
-    public BioentityProperty findBioentityProperty(String bioentityId) {
+    public BioentityProperty findBioentityIdentifierProperty(String bioentityId) {
         String query = MessageFormat.format(BIOENTITY_TYPE_QUERY, bioentityId);
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.setRows(PROPERTY_VALUES_LIMIT);
         QueryResponse response = solrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = response.getBeans(BioentityProperty.class);
-        if(bioentityProperties.isEmpty()){
-            throw new ResourceNotFoundException("bioentity not found for bioentityIdentifier: " + bioentityId);
-        }
-        for (BioentityProperty bioentityProperty: bioentityProperties){
-            String bioentityIdentifier = bioentityProperty.getBioentityIdentifier();
-            String propertyValue = bioentityProperty.getValue();
-            if (bioentityIdentifier.equals(propertyValue)){
-                return bioentityProperty;
+        if (!bioentityProperties.isEmpty()) {
+
+            for (BioentityProperty bioentityProperty : bioentityProperties) {
+                String bioentityIdentifier = bioentityProperty.getBioentityIdentifier();
+                String propertyValue = bioentityProperty.getValue();
+                if (bioentityIdentifier.equals(propertyValue)) {
+                    return bioentityProperty;
+                }
             }
         }
-        throw new IllegalStateException("Solr index is missing document with property_name set to species and property_value set to bioentityIdentifier for bioentity with id: " + bioentityId);
+        return null;
     }
 
     public SortedSetMultimap<String, String> fetchTooltipProperties(String identifier) {
@@ -144,20 +144,20 @@ public class SolrQueryService {
         List<String> propertyValueTokens = bioentityPropertyValueTokenizer.split(propertyValue);
         for (String propertyValueToken : propertyValueTokens) {
             Collection<String> species = executeSpeciesQuery(propertyValueToken, propertyName);
-            if (!species.isEmpty()){
+            if (!species.isEmpty()) {
                 return species.iterator().next();
             }
         }
         throw new ResourceNotFoundException("Species can't be determined for propertyValue: " + propertyValue + " and propertyName: " + propertyName);
     }
 
-    public Set<String> findMatureRNAIds(Set<String> geneIdentifiers){
+    public Set<String> findMatureRNAIds(Set<String> geneIdentifiers) {
         Set<String> expandedIdentifiers = Sets.newHashSet();
 
-        for (String geneIdentifier: geneIdentifiers){
+        for (String geneIdentifier : geneIdentifiers) {
 
             Set<String> mirbaseIds = findPropertyValuesForGeneId(geneIdentifier, "mirbase_id");
-            String mirbaseId = mirbaseIds.size() > 0 ?  mirbaseIds.iterator().next() : null;
+            String mirbaseId = mirbaseIds.size() > 0 ? mirbaseIds.iterator().next() : null;
             Set<String> matureRNAIds = fetchGeneIdentifiersFromSolr((mirbaseId != null) ? mirbaseId : geneIdentifier, "mirna", false, "hairpin_id");
             if (matureRNAIds.size() > 0) {
                 expandedIdentifiers.addAll(matureRNAIds);
@@ -170,7 +170,7 @@ public class SolrQueryService {
 
     }
 
-    public Set<String> findMatureRNAIds(String geneQuery){
+    public Set<String> findMatureRNAIds(String geneQuery) {
         return findMatureRNAIds(Sets.newHashSet(bioentityPropertyValueTokenizer.split(geneQuery)));
     }
 
@@ -227,7 +227,7 @@ public class SolrQueryService {
     String limitSpeciesNameToTwoWords(String species) {
 
         String[] words = StringUtils.split(species);
-        if (ArrayUtils.getLength(words) > 2){
+        if (ArrayUtils.getLength(words) > 2) {
             return words[0].concat(" ").concat(words[1]);
         }
         return species;
@@ -236,7 +236,7 @@ public class SolrQueryService {
     SortedSetMultimap<String, String> fetchProperties(String bioentityIdentifier, String[] propertyNames) {
 
         SolrQuery solrQuery = solrQueryBuilderFactory.createPropertyValueQueryBuilder()
-                            .withPropertyNames(propertyNames).buildBioentityQuery(bioentityIdentifier);
+                .withPropertyNames(propertyNames).buildBioentityQuery(bioentityIdentifier);
 
         solrQuery.setRows(PROPERTY_VALUES_LIMIT);
         solrQuery.setFields(PROPERTY_VALUE_FIELD, PROPERTY_NAME_FIELD);
