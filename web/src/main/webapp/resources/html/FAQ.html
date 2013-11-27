@@ -6,21 +6,16 @@
 <h2><a name="general">General questions</a></h2>
 
 <h3><a name="whatIsAtlas">What is the Expression Atlas</a></h3>
-<p>The Expression Atlas database provides summary level information
-about gene expression patterns within different biological conditions.
+<p>The Expression Atlas database provides information
+on gene expression patterns under different biological conditions.
 It consists of two components: the 'differential' and 'baseline'
 atlases. The Differential Atlas, containing both microarray and
 sequencing data, allows users to query which genes are
 up-/down-regulated in different experimental conditions, e.g. 'in
 Arabidopsis shoots, what genes are upregulated in plants treated by
 X?'  The Baseline Atlas, containing exclusively RNA-seq data, displays
-expression levels of gene products under 'normal' condition
-(e.g. normal tissues human tissues). Sample characteristcs and
-experimental variables are annotated to the <a href="http://www.ebi.ac.uk/efo">Experimental Factor
-Ontology</a> which allows us to use ontology-driven query expansion to
-broaden searches. E.g. a query for cancer would return experiments
-annotated with particular types of cancer such as leukemia or breast carcinoma as well as
-those annotated with cancer.</p>
+expression levels of gene products under 'normal' conditions
+(e.g. normal human tissues).</p>
 
 <h3><a name="exptChosen">How are experiments chosen to be in the Expression Atlas?</a></h3>
 <p>Experiments in the Expression Atlas are selected from the <a
@@ -29,11 +24,11 @@ functional genomics experiments. Different criteria are used for
 selecting microarray and high throughput sequencing experiments. 
 Microarray data must be gene expression data (rather than ChiP-chip or
 CGH for example), it must have a sufficent number of replicates to allow robust
-statistical analysis, and it should be possible to re-annotated the array design against Ensembl.  For RNA-seq data the sequences must be
+statistical analysis, and it should be possible to re-annotate the array design against Ensembl.  For RNA-seq data the sequences must be
 of high quality, there should a good quality reference genome build
 available, there must be sufficent replicates for statistical analysis
 for differential experiments and the tissues must be 'normal' if the
-experiment is to go in the Baseline Atlas.<p> 
+experiment is be used in the Baseline Atlas.<p> 
 
 <h3><a name="getOrigData">How can I obtain the original data for an
 experiment?</a></h3>
@@ -43,18 +38,17 @@ href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a>
 database. To link to the data in ArrayExpress click on the experiment accession number
 e.g. E-GEOD-15325 or E-MTAB-599, on any experiment page in the
 Expression Atlas.  In ArrayExpress the original submitted data files can be downloaded as zip
-archives and sample annotation is available in MAGE-TAB format text
+archives, and sample annotation is available in MAGE-TAB format text
 files. See the <a
 href="https://www.ebi.ac.uk/arrayexpress/help/quick_start.html">ArrayExpress
-Quick Start </a> guide for further information.
+Quick Start</a> guide for further information.
 
 <h3><a name="wholeExpt">It doesn't look like the whole of the original
 experiment is in the Expression Atlas, why not?</a></h3>
-
 <p>We sometimes only include part of an experiment
 in the Expression Atlas because (1) there are not sufficient replicates of all the sample groups
 within an experiment, or (2) the hybridization or sequencing was not of
-high enough quality.  If there are still enough assays after the removal of those with too
+high enough quality.  If there are still enough assays in the experiment after the removal of those with too
 few replicates or low quality then we continue
 processing the experiment for the Expression Atlas.</p>
 
@@ -89,7 +83,7 @@ conditioned test based on the negative binomial distribution, using <a
 
 <h3><a name="analysisMethods">How do I see how an individual experiment was analysed?</a></h3>
 
-<p>On any experiment page, you can see a breakdown of the steps from raw data
+<p>On any experiment page, you can see a breakdown of the analysis steps from raw data
 to the results you see in Expression Atlas by clicking the <img alt="analysis
 methods button" src="resources/images/help/am_btn.png" align="bottom" /> button
 to the top right of the page.</p>
@@ -145,22 +139,23 @@ within a single experiment.</p>
 	<li><a href="http://www.ensembl.org/index.html">Ensembl</a> Gene e.g. <strong>ENSG00000171658</strong></li>
 	<li><a href="http://www.ensembl.org/index.html">Ensembl</a> Protein e.g. <strong>ENSP00000000233</strong></li>
 	<li><a href="http://www.ensembl.org/index.html">Ensembl</a> Transcript e.g. <strong>ENST00000000233</strong></li>
-	<li><a href="http://www.geneontology.org/">Gene Ontology</a> e.g. <strong>GO:0008134</strong></li>
+	<li><a href="http://www.geneontology.org/">Gene Ontology
+	ID</a> e.g. <strong>GO:0008134</strong></li>
+	<li><a href="http://www.geneontology.org/">Gene Ontology</a> term e.g. <strong>&quot;transcription factor binding&quot;</strong> (please put multi-word query terms in quotes)</li>
 	<li><a href="http://www.ebi.ac.uk/interpro/">Interpro</a> e.g. <strong>IPR017892</strong></li>
 	<li><a href="http://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a> e.g. <strong>NM_212505</strong></li>
 	<li><a href="http://www.uniprot.org/">UniProt</a> e.g. <strong>Q8IZT6</strong></li>
 	<li><a href="http://www.uniprot.org/">UniProt</a> Metabolic Enzyme e.g. <strong>O15269</strong></li>
 	<li>gene or protein name e.g. <strong>WNT1</strong> or <strong>Wnt-1</strong></li>
-	<li><a href="http://www.geneontology.org/">GO</a> term e.g. <strong>&quot;transcription factor binding&quot;</strong> (please put multi-word query terms in quotes)</li>
 	<li>keyword e.g. <strong>transcription</strong></li>
-	<li>synonym e.g. <strong>Calmbp1</strong></li>
+	<li>gene name synonym e.g. <strong>Calmbp1</strong></li>
 </ul>
 
 
 <h3><a name="exptLink">How do I find a particular experiment?</a></h3>
 
 <p>All experiments currently in Expression Atlas are listed on <a
-	href="experiments">this page</a>. Click on the <strong>Description</strong>
+	href="experiments">the Experiments page</a>. Click on the <strong>Description</strong>
 to see the experiment in Expression Atlas. Click on the <a
 	href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> accession number
 (e.g. <strong>E-MTAB-1066</strong>) to see the experiment in ArrayExpress. If you know the
@@ -185,7 +180,7 @@ using the following format:</p>
 <h3><a name="deResults">When I search all of Expression Atlas, what do the &quot;Differential Expression&quot; results show?</a></h3>
 
 <p>The table in the <strong>Differential Expression</strong> section of the
-results shows all genes that matched your search and were differentially
+results shows all genes f that matched your search and were differentially
 expressed with adjusted <i>p</i>-value &lt; 0.05. There is one row for each
 gene and each contrast the gene showed differential expression in. The genes
 are ordered so that the one with the lowest adjusted <i>p</i>-value is at the
@@ -236,14 +231,17 @@ are adjusted for <strong>multiple testing</strong> using the Benjamini and Hochb
 	<i>p</i>-value</strong>.</p>
 
 
-<h3><a name="deHeatmapColours">What do the red and blue colours in the table mean?</a></h3>
+<h3><a name="deHeatmapColours">In Differential Atlas, what do the red and blue colours in the table mean?</a></h3>
 
-<p>The intensity of the red a blue colour of the filled boxes in the table
-represents how low the adjusted <i>p</i>-value is for each gene. The lower the
-<i>p</i>-value, the more intense the red or blue colour. A red box indicates
+<p>A red box indicates
 that the gene was <strong>up-regulated</strong> in the test condition. A blue
 box means that the gene was <strong>down-regulated</strong> in the test
 condition.</p>
+
+<p>The colour intensity of filled boxes in the table
+represents how low the adjusted <i>p</i>-value is for each gene. The lower the
+<i>p</i>-value, the more intense the red or blue colour.</p>
+
 
 
 <h3><a name="displayPvalues">How do I see the actual <i>p</i>-values in the results table?</a></h3>
@@ -308,7 +306,9 @@ from 'liver' samples and so you could search for this term.</p>
 <p>If you searched for a particular gene then the experiments returned
 are ones in which that gene was expressed above the default minimum
 expression level (FPKM - Fragments Per Kilobase of transcript per
-Million mapped reads) which is 0.5.  You can click on the name of the
+Million mapped reads) which is 0.5.</p>
+
+<p>You can click on the name of the
 experiment to view which tissues or cell lines that gene was expressed
 in. </p>
 
@@ -320,19 +320,19 @@ experiment page show?</a></h3>
 C57BL/6J heart, hippocampus, liver, lung, spleen and thymus</a>. Here
 you can see a heat map showing the 50 most specifically expressed
 genes across all conditions studied.  You can further refine the query
-by narrowing the search to specific genes, or gene sets, or by
+by narrowing the search to particular genes, or gene sets, or by
 limiting which organism parts are searched over. Please see the <a href="help/baseline-atlas.html">Baseline Atlas help page</a> for
 more details.</p>
 
-<h3><a name="blHeatmapColours">What do the different shades of blue
+<h3><a name="blHeatmapColours">In Baseline Atlas, what do the different shades of blue
 in the heat map mean?</a></h3>
 
-<p> The heatmap shows expressions by colour intensity, according to
-the gradient bar displayed above the heatmap. The intensities corresponding to expression levels for the top 50 genes
+<p> The heatmap shows expression levels by colour intensity, according to
+the gradient bar displayed above the heatmap. The intensities correspond to expression levels for the top 50 genes
 currently displayed (rather than all FPKM values for all genes returned by the query).</p>
 
 <h3><a name="blActualValues">How do I see the actual expression levels
-in the heat map?</a></h3>
+in the Baseline Atlas heat map?</a></h3>
 
 <p>Click on the 'Display levels' button in the top left corner of the
 heat map to show the actual FPKM values.</p>
@@ -353,8 +353,7 @@ transcript is of low confidence.</p>
 <h3><a name="BLdownloadAnalytics">Can I download the baseline
 expression results?</a></h3>
 
-<p>The top 50 genes resulting from your search are displayed on the
-page. Click on the <img alt="Download button"
+<p>Yes, click on the <img alt="Download button"
 src="resources/images/help/download_button.png" align="bottom" />
 button  to download the full results of your query in tab&ndash;delimited format with no ordering.<p>
 
@@ -389,7 +388,7 @@ button  to download the full results of your query in tab&ndash;delimited format
 		<li><a href="FAQ.html#designElement">What is a &quot;design element&quot;?</a></li>
 		<li><a href="FAQ.html#contrast">What is a &quot;contrast&quot;?</a></li>
 		<li><a href="FAQ.html#pvalue">Where do the <i>p</i>-values come from?</a></li>
-		<li><a href="FAQ.html#deHeatmapColours">What do the red and blue colours in the table mean?</a></li>
+		<li><a href="FAQ.html#deHeatmapColours">In Differential Atlas, what do the red and blue colours in the table mean?</a></li>
 		<li><a href="FAQ.html#displayPvalues">How do I see the actual <i>p</i>-values in the results table?</a></li>
 		<li><a href="FAQ.html#deBars">What are the blue and red bars above the results table?</a></li>
 		<li><a href="FAQ.html#downloadAnalytics">Can I download the differential expression results?</a></li>
@@ -401,10 +400,11 @@ button  to download the full results of your query in tab&ndash;delimited format
 		Expression&quot; results show?</a></li>
                 <li><a href="FAQ.html#BLexptPage">What does the
 		baseline expression experiment page show?</a></li>
-		<li><a href="FAQ.html#blHeatmapColours">What do the
+		<li><a href="FAQ.html#blHeatmapColours">In Baseline
+		Atlas, what do the
 		different shades of blue in the heat map mean?</a></li>
 		<li><a href="FAQ.html#blActualValues">How do I see
-		the actual expression levels in the heat map?</a></li>
+		the actual expression levels in the Baseline Atlas heat map?</a></li>
 		<li><a href="FAQ.html#blTranscripts">How can I see
 		information about transcript-level expression?</a></li>
                 <li><a href="FAQ.html#BLdownloadAnalytics">Can I

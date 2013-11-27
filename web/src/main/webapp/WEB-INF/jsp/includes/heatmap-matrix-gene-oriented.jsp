@@ -49,12 +49,12 @@
                             class="horizontal-header-cell">
 
                         <c:set var="geneId" value="${geneProfile.id}"/>
-                        <c:set var="bioEntityType" value="${preferences.geneSetMatch? \"genesets\": \"genes\"}"/>
+                        <c:set var="bioEntityURL" value="${preferences.geneSetMatch? \"query?geneQuery=\".concat(geneProfile.getName()).concat(\"&exactMatch=\").concat(preferences.isExactMatch()) : \"genes/\".concat(geneProfile.id)}"/>
 
                         <c:choose>
                             <c:when test="${isExperimentPage}">
                                 <a class="genename" id="${geneId}"
-                                   href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityType}/${geneId}'
+                                   href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityURL}'
                                    title="">${geneProfile.getName()}</a>
                             </c:when>
                             <c:otherwise>

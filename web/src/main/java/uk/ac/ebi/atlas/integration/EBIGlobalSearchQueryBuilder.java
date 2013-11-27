@@ -51,7 +51,7 @@ public class EBIGlobalSearchQueryBuilder {
             String joinOn = " OR ";
 
             for (String term: condition) {
-                if (term.toUpperCase().equals("AND")) {
+                if (term.equalsIgnoreCase("AND")) {
                     joinOn = " AND ";
                 } else {
                     conditionTermsWithoutAnd.add(term);
