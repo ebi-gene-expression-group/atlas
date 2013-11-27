@@ -42,19 +42,24 @@
     position: absolute;
 }
 
-.item h2 {
-    position: absolute;
+.item .specie_experiment h2 {
+    position: relative;
     color: #222;
     font-size: 16px;
-    top: -10px;
+    top: 0px;
     left: 45px;
 }
 
-.item ul {
+.item .specie_experiment ul {
     list-style: none;
-    position: absolute;
-    top: 30px;
+    position: relative;
+    top: -10px;
     left: 25px;
+}
+
+.item .specie_experiment {
+    position: absolute;
+    top: -10px;
 }
 
 .item ul li a {
