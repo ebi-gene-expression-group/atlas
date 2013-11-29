@@ -45,6 +45,6 @@ public class GlobalSearchIT extends SinglePageSeleniumFixture {
         subject.setGlobalSearchText(searchText);
         subject.globalSearchSubmit();
 
-        assertThat(driver.getCurrentUrl(), is(new URLBuilder("/gxa/query").buildURL("geneQuery=" + searchText)));
+        assertThat(driver.getCurrentUrl(), is(new URLBuilder("/gxa/genes/" + searchText).buildURL()));
     }
 }
