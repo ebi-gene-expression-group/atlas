@@ -39,6 +39,7 @@ import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -60,19 +61,6 @@ public class GeneQueryDifferentialService {
     }
 
 
-    public DifferentialBioentityExpressions query(Set<String> geneIdentifiers) {
-
-        if (CollectionUtils.isNotEmpty(geneIdentifiers)) {
-
-            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getTopExpressions(null, geneIdentifiers);
-            int resultCount = diffExpressionDao.getResultCount(null, geneIdentifiers);
-
-            return new DifferentialBioentityExpressions(expressions, resultCount);
-
-        }
-        return new DifferentialBioentityExpressions();
-    }
-
     public int forEachExpression(GeneQuerySearchRequestParameters requestParameters, Visitor<DifferentialBioentityExpression> visitor) {
         try {
             Collection<IndexedAssayGroup> contrasts = findContrasts(requestParameters);
@@ -90,6 +78,24 @@ public class GeneQueryDifferentialService {
             return 0;
         }
     }
+
+    public List<DifferentialBioentityExpression> queryWithoutCount(String geneId) {
+        return diffExpressionDao.getTopExpressions(null, Collections.singleton(geneId));
+    }
+
+    public DifferentialBioentityExpressions query(Set<String> geneIdentifiers) {
+
+        if (CollectionUtils.isNotEmpty(geneIdentifiers)) {
+
+            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getTopExpressions(null, geneIdentifiers);
+            int resultCount = diffExpressionDao.getResultCount(null, geneIdentifiers);
+
+            return new DifferentialBioentityExpressions(expressions, resultCount);
+
+        }
+        return new DifferentialBioentityExpressions();
+    }
+
 
     public DifferentialBioentityExpressions query(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
         try {

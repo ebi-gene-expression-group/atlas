@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model.differential;
 
 import org.apache.commons.lang.StringUtils;
+import uk.ac.ebi.atlas.model.AssayGroup;
 
 public class DifferentialBioentityExpression {
 
@@ -58,6 +59,10 @@ public class DifferentialBioentityExpression {
 
     public String getContrastId() {
         return expression.getContrast().getId();
+    }
+
+    public AssayGroup getContrastTestAssayGroup() {
+        return expression.getContrast().getTestAssayGroup();
     }
 
     public String getExperimentAccession() {
