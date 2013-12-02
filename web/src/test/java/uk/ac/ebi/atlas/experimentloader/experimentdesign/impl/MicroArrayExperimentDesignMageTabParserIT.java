@@ -51,7 +51,7 @@ public class MicroArrayExperimentDesignMageTabParserIT {
 
     @Test
     public void asTableDataShouldReturnTheRightStuff() throws IOException {
-        ExperimentDesign experimentDesign = subject.parse(MICROARRAY_EXPERIMENT_ACCESSION);
+        ExperimentDesign experimentDesign = subject.parse(MICROARRAY_EXPERIMENT_ACCESSION).getExperimentDesign();
 
         assertThat(experimentDesign.asTableData().size(), is(6));
         assertThat(experimentDesign.asTableData().get(0), arrayContaining("G-DBZ1","A-AFFY-36","8 to 12 weeks","fresh_sample","adult","normal","wild type","birth","Mus musculus","pancreas","female","C57BL/6","dibenzazepine 10 micromoles per kilogram"));
@@ -61,7 +61,7 @@ public class MicroArrayExperimentDesignMageTabParserIT {
 
     @Test
     public void testGetSpeciesForAssays() throws IOException {
-        ExperimentDesign experimentDesign = subject.parse(MICROARRAY_EXPERIMENT_ACCESSION);
+        ExperimentDesign experimentDesign = subject.parse(MICROARRAY_EXPERIMENT_ACCESSION).getExperimentDesign();
         Set<String> species = experimentDesign.getSpeciesForAssays(Sets.newHashSet("G-DBZ2", "G-Vehicle2"));
         assertThat(species, containsInAnyOrder("Mus musculus"));
 

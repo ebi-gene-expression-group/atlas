@@ -112,7 +112,8 @@ public class ExperimentCRUD {
                         .build();
 
         MageTabParser mageTabParser = mageTabParserFactory.create(experimentType);
-        ExperimentDesign experimentDesign = mageTabParser.parse(accession);
+        MageTabParser.Output mageTabOutput = mageTabParser.parse(accession);
+        ExperimentDesign experimentDesign = mageTabOutput.getExperimentDesign();
 
         experimentDesignFileWriter.write(experimentDesign);
 

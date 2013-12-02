@@ -50,7 +50,7 @@ public class RnaSeqExperimentDesignMageTabParserIT {
 
     @Test
     public void asTableDataShouldReturnTheRightStuff() throws IOException {
-        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION).getExperimentDesign();
 
         assertThat(experimentDesign.asTableData().size(), is(48));
         assertThat(experimentDesign.asTableData().get(0), arrayContaining("ERR030856","Homo sapiens",null,null,"16 tissues mixture",null,"16 tissues mixture"));
@@ -60,7 +60,7 @@ public class RnaSeqExperimentDesignMageTabParserIT {
 
     @Test
     public void asTableDataForMultifactorShouldReturnTheRightStuff() throws IOException {
-        ExperimentDesign experimentDesign = subject.parse(MULTIFACTOR_EXPERIMENT_ACESSION);
+        ExperimentDesign experimentDesign = subject.parse(MULTIFACTOR_EXPERIMENT_ACESSION).getExperimentDesign();
 
         assertThat(experimentDesign.asTableData().size(), is(171));
         assertThat(experimentDesign.asTableData().get(0), arrayContaining("SRR089332", "Homo sapiens", "Coriell Cell Repositories http://ccr.coriell.org/Sections/Search/Search.aspx?PgId=165&q=GM12878", "GM12878", "B cell", "whole cell", null, "relatively normal", null, "female", "total RNA", "GM12878", "whole cell"));

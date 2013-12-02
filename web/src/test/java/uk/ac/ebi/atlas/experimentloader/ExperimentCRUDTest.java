@@ -102,6 +102,9 @@ public class ExperimentCRUDTest {
     private ExperimentDesign experimentDesignMock;
 
     @Mock
+    private MageTabParser.Output mageTabParserOutput;
+
+    @Mock
     private ExperimentConfiguration experimentConfiguration;
 
     @Mock
@@ -124,7 +127,8 @@ public class ExperimentCRUDTest {
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
 
         given(mageTabParserFactory.create(Mockito.any(ExperimentType.class))).willReturn(mageTabParser);
-        given(mageTabParser.parse(EXPERIMENT_ACCESSION)).willReturn(experimentDesignMock);
+        given(mageTabParser.parse(EXPERIMENT_ACCESSION)).willReturn(mageTabParserOutput);
+        given(mageTabParserOutput.getExperimentDesign()).willReturn(experimentDesignMock);
 
         given(indexCommandTraderMock.getIndexCommand(eq(EXPERIMENT_ACCESSION), any(IndexOperation.class))).willReturn(indexCommandMock);
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);

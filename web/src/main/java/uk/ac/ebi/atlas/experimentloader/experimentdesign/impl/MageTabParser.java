@@ -69,7 +69,20 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         this.mageTabLimpopoUtils = mageTabLimpopoUtils;
     }
 
-    public ExperimentDesign parse(String experimentAccession)  throws IOException{
+    public final class Output {
+
+        private ExperimentDesign experimentDesign;
+
+        private Output(ExperimentDesign experimentDesign) {
+            this.experimentDesign = experimentDesign;
+        }
+
+        public ExperimentDesign getExperimentDesign() {
+            return experimentDesign;
+        }
+    }
+
+    public Output parse(String experimentAccession)  throws IOException{
 
         try {
             MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
@@ -85,7 +98,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
         addArrays(experimentDesign, assayNodes);
 
-        return experimentDesign;
+        return new Output(experimentDesign);
     }
 
     protected void addCharacteristics() {

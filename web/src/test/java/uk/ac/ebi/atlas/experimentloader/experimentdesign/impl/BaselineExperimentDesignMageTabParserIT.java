@@ -65,19 +65,19 @@ public class BaselineExperimentDesignMageTabParserIT {
 
     @Test
     public void testExtractCharacteristics513() throws Exception {
-        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513);
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513).getExperimentDesign();
         assertThat(experimentDesign.getSampleHeaders(), containsInAnyOrder("sex", "age", "organism part", "Organism", "ethnic group"));
     }
 
     @Test
     public void testExtractCharacteristics26284() throws Exception {
-        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_GEOD_26284);
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_GEOD_26284).getExperimentDesign();
         assertThat(experimentDesign.getSampleHeaders(), containsInAnyOrder("sex", "biosource provider", "cell line", "cellular component", "organism part", "karyotype", "disease state", "cell type", "Organism"));
     }
 
     @Test
     public void testGetSpeciesForAssays() throws IOException {
-        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513);
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513).getExperimentDesign();
         Set<String> species = experimentDesign.getSpeciesForAssays(Sets.newHashSet("ERR030886", "ERR030883"));
         assertThat(species, containsInAnyOrder("Homo sapiens"));
 
@@ -85,7 +85,7 @@ public class BaselineExperimentDesignMageTabParserIT {
 
     @Test
     public void testGetSpeciesForAssaysOnMultispeciesExperiment() throws IOException {
-        ExperimentDesign experimentDesign = subject.parse("E-GEOD-30352");
+        ExperimentDesign experimentDesign = subject.parse("E-GEOD-30352").getExperimentDesign();
         Set<String> species = experimentDesign.getSpeciesForAssays(Sets.newHashSet("SRR306848", "SRR306747"));
         assertThat(species, containsInAnyOrder("Homo sapiens", "Monodelphis domestica"));
 
