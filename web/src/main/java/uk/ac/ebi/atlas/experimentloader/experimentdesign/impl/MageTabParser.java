@@ -69,7 +69,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         this.mageTabLimpopoUtils = mageTabLimpopoUtils;
     }
 
-    public final class Output {
+    public class Output {
 
         private ExperimentDesign experimentDesign;
 
