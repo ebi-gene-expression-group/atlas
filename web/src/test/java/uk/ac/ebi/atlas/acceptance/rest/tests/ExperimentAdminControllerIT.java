@@ -34,7 +34,7 @@ import static com.jayway.restassured.RestAssured.expect;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-public class ExperimentLoaderIT extends RestAssuredAuthenticatedFixture {
+public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-599";
     private static final String DIFFERENTIAL_EXPERIMENT_ACCESSION = "E-GEOD-21860";

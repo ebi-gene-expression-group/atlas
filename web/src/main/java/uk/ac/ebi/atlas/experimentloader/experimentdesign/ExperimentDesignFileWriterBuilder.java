@@ -24,12 +24,8 @@ package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MicroarrayExperimentDesignMageTabParser;
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.RnaSeqExperimentDesignMageTabParser;
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.TwoColourExperimentDesignMageTabParser;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -45,21 +41,8 @@ public class ExperimentDesignFileWriterBuilder {
     @Value("#{configuration['experiment.experiment-design.path.template']}")
     private String targetFilePathTemplate;
 
-    private MicroarrayExperimentDesignMageTabParser microarrayMageTabParser;
-    private RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser;
-    private TwoColourExperimentDesignMageTabParser twoColourMageTabParser;
-
     private String experimentAccession;
     private ExperimentType experimentType;
-
-    @Inject
-    public ExperimentDesignFileWriterBuilder(@Named("microarrayExperimentDesignMageTabParser") MicroarrayExperimentDesignMageTabParser microarrayMageTabParser,
-                                             RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser,
-                                             @Named("twoColourExperimentDesignMageTabParser") TwoColourExperimentDesignMageTabParser twoColourMageTabParser) {
-        this.microarrayMageTabParser = microarrayMageTabParser;
-        this.rnaSeqMageTabParser = rnaSeqMageTabParser;
-        this.twoColourMageTabParser = twoColourMageTabParser;
-    }
 
     public ExperimentDesignFileWriterBuilder forExperimentAccession(String experimentAccession){
         this.experimentAccession = experimentAccession;
@@ -81,19 +64,6 @@ public class ExperimentDesignFileWriterBuilder {
 
         CSVWriter csvWriter = new CSVWriter(writer, '\t');
 
-        //ToDo (B) maybe it is silly that we need to inject different type of parsers.
-        //ToDo (B) maybe we should have one only MageTabParser class and the MageTabParser should use different specialized ExperimentDesignBuilder to build the ExperimentDesign
-        switch(experimentType){
-            case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
-            case MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL:
-                return new ExperimentDesignFileWriter(csvWriter, microarrayMageTabParser, experimentType);
-            case MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL:
-                return new ExperimentDesignFileWriter(csvWriter, twoColourMageTabParser, experimentType);
-            case RNASEQ_MRNA_BASELINE:
-            case RNASEQ_MRNA_DIFFERENTIAL:
-                return new ExperimentDesignFileWriter(csvWriter, rnaSeqMageTabParser, experimentType);
-            default:
-                throw new IllegalStateException("Unknown experimentType: " + experimentType);
-        }
+        return new ExperimentDesignFileWriter(csvWriter, experimentType);
     }
 }

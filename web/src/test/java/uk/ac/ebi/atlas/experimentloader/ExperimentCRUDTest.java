@@ -28,10 +28,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParser;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParserFactory;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
@@ -101,6 +104,12 @@ public class ExperimentCRUDTest {
     @Mock
     private ExperimentConfiguration experimentConfiguration;
 
+    @Mock
+    private MageTabParserFactory mageTabParserFactory;
+
+    @Mock
+    private MageTabParser mageTabParser;
+
     @Before
     public void setUp() throws Exception {
 
@@ -113,7 +122,9 @@ public class ExperimentCRUDTest {
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
-        given(experimentDesignFileWriterMock.write(EXPERIMENT_ACCESSION)).willReturn(experimentDesignMock);
+
+        given(mageTabParserFactory.create(Mockito.any(ExperimentType.class))).willReturn(mageTabParser);
+        given(mageTabParser.parse(EXPERIMENT_ACCESSION)).willReturn(experimentDesignMock);
 
         given(indexCommandTraderMock.getIndexCommand(eq(EXPERIMENT_ACCESSION), any(IndexOperation.class))).willReturn(indexCommandMock);
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
@@ -125,7 +136,7 @@ public class ExperimentCRUDTest {
 
 
         subject = new ExperimentCRUD(configurationTraderMock, experimentDAOMock,
-                experimentDesignFileWriterBuilderMock, experimentTraderMock, indexCommandTraderMock, exparimentDTOBuilderMock);
+                experimentDesignFileWriterBuilderMock, experimentTraderMock, indexCommandTraderMock, exparimentDTOBuilderMock, mageTabParserFactory);
     }
 
     @Test
@@ -135,12 +146,12 @@ public class ExperimentCRUDTest {
         verify(experimentDesignFileWriterBuilderMock).forExperimentAccession(EXPERIMENT_ACCESSION);
         verify(experimentDesignFileWriterBuilderMock).withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE);
         verify(experimentDesignFileWriterBuilderMock).build();
-        verify(experimentDesignFileWriterMock).write(EXPERIMENT_ACCESSION);
+        verify(experimentDesignFileWriterMock).write(experimentDesignMock);
     }
 
     @Test(expected = IOException.class)
     public void shouldThrowIllegalStateExceptionWhenWritingExperimentDesignFails() throws Exception {
-        willThrow(new IOException()).given(experimentDesignFileWriterMock).write(EXPERIMENT_ACCESSION);
+        willThrow(new IOException()).given(experimentDesignFileWriterMock).write(experimentDesignMock);
         subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
     }
 

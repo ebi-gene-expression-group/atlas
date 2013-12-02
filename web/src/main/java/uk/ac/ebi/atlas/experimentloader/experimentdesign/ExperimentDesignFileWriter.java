@@ -24,8 +24,6 @@ package uk.ac.ebi.atlas.experimentloader.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.Lists;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AbstractSDRFNode;
-import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParser;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
@@ -35,30 +33,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 
-public class ExperimentDesignFileWriter<T extends AbstractSDRFNode> {
+public class ExperimentDesignFileWriter {
 
     private static final String SAMPLE_NAME_HEADER_TEMPLATE = "Sample Characteristics[{0}]";
     private static final String FACTOR_NAME_HEADER_TEMPLATE = "Factor Values[{0}]";
 
     private CSVWriter csvWriter;
-    private MageTabParser<T> mageTabParser;
     private ExperimentType experimentType;
 
-    ExperimentDesignFileWriter(CSVWriter csvWriter, MageTabParser<T> mageTabParser, ExperimentType experimentType){
+    ExperimentDesignFileWriter(CSVWriter csvWriter, ExperimentType experimentType){
         this.csvWriter = csvWriter;
-        this.mageTabParser = mageTabParser;
         this.experimentType = experimentType;
     }
 
-    public ExperimentDesign write(String experimentAccession) throws IOException {
+    public void write(ExperimentDesign experimentDesign) throws IOException {
         try {
 
-            ExperimentDesign experimentDesign = mageTabParser.parse(experimentAccession);
             String[] columnHeaders = buildColumnHeaders(experimentType, experimentDesign);
             csvWriter.writeNext(columnHeaders);
             csvWriter.writeAll(experimentDesign.asTableData());
             csvWriter.flush();
-            return experimentDesign;
         }finally {
             csvWriter.close();
         }

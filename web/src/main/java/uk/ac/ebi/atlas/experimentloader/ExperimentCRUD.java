@@ -26,6 +26,8 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParser;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParserFactory;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommandTrader;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexOperation;
@@ -44,6 +46,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ExperimentCRUD {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
+    private final MageTabParserFactory mageTabParserFactory;
     private ConfigurationTrader configurationTrader;
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
     private ExperimentDAO experimentDAO;
@@ -58,7 +61,8 @@ public class ExperimentCRUD {
                           ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
                           ExperimentTrader experimentTrader,
                           IndexCommandTrader indexCommandTrader,
-                          ExperimentDTOBuilder experimentDTOBuilder) {
+                          ExperimentDTOBuilder experimentDTOBuilder,
+                          MageTabParserFactory mageTabParserFactory) {
 
         this.configurationTrader = configurationTrader;
         this.experimentDAO = experimentDAO;
@@ -66,6 +70,7 @@ public class ExperimentCRUD {
         this.experimentTrader = experimentTrader;
         this.indexCommandTrader = indexCommandTrader;
         this.experimentDTOBuilder = experimentDTOBuilder;
+        this.mageTabParserFactory = mageTabParserFactory;
     }
 
     public ExperimentConfiguration loadExperimentConfiguration(String accession) {
@@ -106,8 +111,12 @@ public class ExperimentCRUD {
                         .withExperimentType(experimentType)
                         .build();
 
-        return experimentDesignFileWriter.write(accession);
+        MageTabParser mageTabParser = mageTabParserFactory.create(experimentType);
+        ExperimentDesign experimentDesign = mageTabParser.parse(accession);
 
+        experimentDesignFileWriter.write(experimentDesign);
+
+        return experimentDesign;
     }
 
     public void deleteExperiment(String experimentAccession) {
