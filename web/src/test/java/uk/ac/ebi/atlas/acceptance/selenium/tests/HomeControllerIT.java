@@ -46,7 +46,7 @@ public class HomeControllerIT extends SinglePageSeleniumFixture {
         subject.setGeneQuery(geneQuery);
         subject.submitSearch();
 
-        assertThat(driver.getCurrentUrl(), is(new URLBuilder("/gxa/query/genes/" + geneQuery).buildURL()));
+        assertThat(driver.getCurrentUrl(), is(new URLBuilder("/gxa/genes/" + geneQuery).buildURL()));
     }
 
 }
