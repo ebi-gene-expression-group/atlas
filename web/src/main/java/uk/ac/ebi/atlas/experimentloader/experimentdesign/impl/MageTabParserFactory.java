@@ -29,7 +29,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@Scope("singleton")
+@Scope("prototype")
 public class MageTabParserFactory {
 
 
