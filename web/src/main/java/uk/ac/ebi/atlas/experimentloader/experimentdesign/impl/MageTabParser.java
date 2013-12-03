@@ -23,6 +23,9 @@
 package uk.ac.ebi.atlas.experimentloader.experimentdesign.impl;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
@@ -39,9 +42,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 //ToDo (B): maybe this should not be a hierarchy but should rather "use" an ExperimentDesignBuilder (family) to build ExperimentDesign differently depending on the ExperimentType.
 //ToDo (B): Single Responsibility Principle...
@@ -55,8 +56,6 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
     private ValueAndUnitJoiner valueAndUnitJoiner;
 
-    private Set<AssayNode<T>> assayNodes;
-
     private ExperimentDesign experimentDesign;
 
     @Inject
@@ -69,20 +68,9 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         this.mageTabLimpopoUtils = mageTabLimpopoUtils;
     }
 
-    public class Output {
+    public MageTabParserOutput parse(String experimentAccession)  throws IOException{
 
-        private ExperimentDesign experimentDesign;
-
-        private Output(ExperimentDesign experimentDesign) {
-            this.experimentDesign = experimentDesign;
-        }
-
-        public ExperimentDesign getExperimentDesign() {
-            return experimentDesign;
-        }
-    }
-
-    public Output parse(String experimentAccession)  throws IOException{
+        Set<AssayNode<T>> assayNodes;
 
         try {
             MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
@@ -93,72 +81,74 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
         experimentDesign = new ExperimentDesign();
 
-        addCharacteristics();
-        addFactorValues();
+        SetMultimap<String, String> ontologyTerms = HashMultimap.create();
+
+        for (AssayNode<T> assayNode : assayNodes) {
+            SourceNode sourceNode = findFirstUpstreamSourceNode(assayNode);
+
+            for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
+                addCharacteristicToExperimentDesign(assayNode.getName(), characteristicsAttribute);
+                if (!Strings.isNullOrEmpty(characteristicsAttribute.termAccessionNumber)) {
+                    ontologyTerms.put(assayNode.getName(), characteristicsAttribute.termAccessionNumber);
+                }
+            }
+
+            addFactorValues(assayNode);
+        }
 
         addArrays(experimentDesign, assayNodes);
 
-        return new Output(experimentDesign);
+        return new MageTabParserOutput(experimentDesign, ontologyTerms);
     }
 
-    protected void addCharacteristics() {
+    private void addCharacteristicToExperimentDesign(String name, CharacteristicsAttribute characteristicsAttribute) {
+        String value = cleanValueAndUnitIfNeeded(characteristicsAttribute.getNodeName(), characteristicsAttribute.unit);
+        experimentDesign.putSample(name, characteristicsAttribute.type, value);
+    }
 
-        for (AssayNode<T> assayNode : assayNodes) {
+    private SourceNode findFirstUpstreamSourceNode(AssayNode<T> assayNode) {
+        Collection<SourceNode> sourceNodes = findUpstreamSourceNodes(assayNode);
 
-            Collection<SourceNode> sourceNodes = findUpstreamSourceNodes(assayNode);
-
-            if (sourceNodes.size() != 1) {
-                throw new IllegalStateException("There is no one to one mapping between sdrfNode and sourceNode for sdrfNode: " + assayNode);
-            }
-
-            SourceNode sourceNode = sourceNodes.iterator().next();
-            for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
-
-
-                String value = cleanValueAndUnitIfNeeded(characteristicsAttribute.getNodeName(), characteristicsAttribute.unit);
-                experimentDesign.putSample(assayNode.getName(), characteristicsAttribute.type, value);
-            }
+        if (sourceNodes.size() != 1) {
+            throw new IllegalStateException("There is no one to one mapping between sdrfNode and sourceNode for sdrfNode: " + assayNode);
         }
 
+        return sourceNodes.iterator().next();
     }
 
-    protected void addFactorValues() {
+    protected void addFactorValues(AssayNode<T> assayNode) {
 
         String compoundFactorValue = null;
         String compoundFactorType = null;
 
-        for (AssayNode<T> assayNode : assayNodes) {
+        for (FactorValueAttribute factorValueAttribute : getFactorAttributes(assayNode.getSdrfNode())) {
 
-            for (FactorValueAttribute factorValueAttribute : getFactorAttributes(assayNode.getSdrfNode())) {
+            String factorType = factorValueAttribute.type; //(B) isn't that factorName
+            String factorValue = cleanValueAndUnitIfNeeded(factorValueAttribute.getNodeName(), factorValueAttribute.unit);
 
-                String factorType = factorValueAttribute.type; //(B) isn't that factorName
-                String factorValue = cleanValueAndUnitIfNeeded(factorValueAttribute.getNodeName(), factorValueAttribute.unit);
+            if (FACTORS_NEEDING_DOSE.contains(factorValueAttribute.type.toLowerCase())) {
+                compoundFactorType = factorType;
+                compoundFactorValue = factorValue;
 
-                if (FACTORS_NEEDING_DOSE.contains(factorValueAttribute.type.toLowerCase())) {
-                    compoundFactorType = factorType;
-                    compoundFactorValue = factorValue;
+            } else if (DOSE.equals(factorValueAttribute.type.toLowerCase())) {
+                if (StringUtils.isNotEmpty(compoundFactorValue)) {
 
-                } else if (DOSE.equals(factorValueAttribute.type.toLowerCase())) {
-                    if (StringUtils.isNotEmpty(compoundFactorValue)) {
+                    factorValue = Joiner.on(" ").join(compoundFactorValue, factorValue);
+                    factorType = compoundFactorType;
 
-                        factorValue = Joiner.on(" ").join(compoundFactorValue, factorValue);
-                        factorType = compoundFactorType;
-
-                        compoundFactorType = null;
-                        compoundFactorValue = null;
-                    } else {
-                        throw new IllegalStateException(DOSE + " : " + factorValue + " has no corresponding value for any of the following factors: " + FACTORS_NEEDING_DOSE);
-                    }
-
+                    compoundFactorType = null;
+                    compoundFactorValue = null;
+                } else {
+                    throw new IllegalStateException(DOSE + " : " + factorValue + " has no corresponding value for any of the following factors: " + FACTORS_NEEDING_DOSE);
                 }
-                experimentDesign.putFactor(assayNode.getName(), factorType, factorValue);
-            }
 
-            //Add compound factor in a case there was no dose corresponding to it
-            if (StringUtils.isNotEmpty(compoundFactorType) && StringUtils.isNotEmpty(compoundFactorValue)) {
-                experimentDesign.putFactor(assayNode.getName(), compoundFactorType, compoundFactorValue);
             }
+            experimentDesign.putFactor(assayNode.getName(), factorType, factorValue);
+        }
 
+        //Add compound factor in a case there was no dose corresponding to it
+        if (StringUtils.isNotEmpty(compoundFactorType) && StringUtils.isNotEmpty(compoundFactorValue)) {
+            experimentDesign.putFactor(assayNode.getName(), compoundFactorType, compoundFactorValue);
         }
     }
 

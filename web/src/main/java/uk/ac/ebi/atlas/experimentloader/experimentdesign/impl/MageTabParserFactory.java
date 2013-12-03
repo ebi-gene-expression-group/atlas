@@ -37,9 +37,10 @@ public class MageTabParserFactory {
     private RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser;
     private TwoColourExperimentDesignMageTabParser twoColourMageTabParser;
 
-    // This is a little bit inefficient because each time we instantiate we end up creating every type of parser,
-    // even though we will only use one. We need the spring context to create the parser, but
-    // not sure of a better way to do this. (OM)
+    // TODO: (OM) This is a little bit inefficient because each time we instantiate we end up creating every type of parser,
+    // even though we will only use one. Probably better to have the experiment-type specific behaviour in a
+    // strategy class that has no dependencies, then they can be easily created with new (), OR change this factory
+    // to a singleton which requires making MageTabParser stateless.
     @Inject
     public MageTabParserFactory(@Named("microarrayExperimentDesignMageTabParser") MicroarrayExperimentDesignMageTabParser microarrayMageTabParser,
                                              RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser,

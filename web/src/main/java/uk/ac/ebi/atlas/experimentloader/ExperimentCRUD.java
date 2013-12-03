@@ -28,6 +28,7 @@ import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWri
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParser;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParserFactory;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParserOutput;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommandTrader;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexOperation;
@@ -112,7 +113,7 @@ public class ExperimentCRUD {
                         .build();
 
         MageTabParser mageTabParser = mageTabParserFactory.create(experimentType);
-        MageTabParser.Output mageTabOutput = mageTabParser.parse(accession);
+        MageTabParserOutput mageTabOutput = mageTabParser.parse(accession);
         ExperimentDesign experimentDesign = mageTabOutput.getExperimentDesign();
 
         experimentDesignFileWriter.write(experimentDesign);

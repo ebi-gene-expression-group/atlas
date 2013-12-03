@@ -35,6 +35,7 @@ import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWri
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParser;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParserFactory;
+import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParserOutput;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
@@ -102,7 +103,7 @@ public class ExperimentCRUDTest {
     private ExperimentDesign experimentDesignMock;
 
     @Mock
-    private MageTabParser.Output mageTabParserOutput;
+    private MageTabParserOutput mageTabParserOutput;
 
     @Mock
     private ExperimentConfiguration experimentConfiguration;

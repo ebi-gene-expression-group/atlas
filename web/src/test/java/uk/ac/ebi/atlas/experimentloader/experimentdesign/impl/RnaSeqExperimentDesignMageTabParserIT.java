@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentloader.experimentdesign.impl;
 
+import com.google.common.collect.SetMultimap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -33,8 +34,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -50,11 +50,18 @@ public class RnaSeqExperimentDesignMageTabParserIT {
 
     @Test
     public void asTableDataShouldReturnTheRightStuff() throws IOException {
-        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION).getExperimentDesign();
+        MageTabParserOutput mageTabParserOutput = subject.parse(EXPERIMENT_ACCESSION);
+        ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
+        SetMultimap<String, String> ontologyTerms = mageTabParserOutput.getOntologyTerms();
 
         assertThat(experimentDesign.asTableData().size(), is(48));
         assertThat(experimentDesign.asTableData().get(0), arrayContaining("ERR030856","Homo sapiens",null,null,"16 tissues mixture",null,"16 tissues mixture"));
         assertThat(experimentDesign.asTableData().get(47), arrayContaining("ERR030903","Homo sapiens","60 years","Caucasian","thyroid","female","thyroid"));
+
+        assertThat(ontologyTerms.entries().size(), is(144));
+        assertThat(ontologyTerms.keySet().size(), is(48));
+        assertThat(ontologyTerms.get("ERR030856"), containsInAnyOrder("NCBITaxon_9606"));
+        assertThat(ontologyTerms.get("ERR030887"), containsInAnyOrder("NCBITaxon_9606", "UBERON:0002107", "EFO:0001266", "EFO:0003156"));
 
     }
 
