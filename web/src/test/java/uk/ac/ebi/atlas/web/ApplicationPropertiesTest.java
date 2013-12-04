@@ -61,7 +61,7 @@ public class ApplicationPropertiesTest {
     private static final String EXPERIMENT_ARRAYEXPRESS_ARRAYS_URL_TEMPLATE = "experiment.arrayexpress.arrays.url.template";
     private static final String ARRAYEXPRESS_ARRAYS_URL = "http://www.ebi.ac.uk/arrayexpress/arrays/";
     private static final String EXPERIMENT_PUBMED_URL_TEMPLATE = "experiment.pubmed.url.template";
-    private static final String PUBMED_URL = "http://www.ncbi.nlm.nih.gov/pubmed/";
+    private static final String PUBMED_URL = "http://europepmc.org/abstract/MED/";
     private static final String EXPERIMENT_ATLAS_URL_TEMPLATE = "experiment.atlas.url.template";
     private static final String ATLAS_URL = "http://www-test.ebi.ac.uk/gxa/experiments/";
     private static final String PUB_MED_ID = "123456";
