@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
@@ -77,7 +78,7 @@ public class ConditionsIndexTest {
 
     @Test
     public void updateConditionsShouldReindexDiffExperiment() throws Exception {
-        given(conditionsPropertiesBuilderMock.buildProperties(differentialExperimentMock)).willReturn(CollectionUtils.EMPTY_COLLECTION);
+        given(conditionsPropertiesBuilderMock.buildProperties(Mockito.eq(differentialExperimentMock), Mockito.any(SetMultimap.class))).willReturn(CollectionUtils.EMPTY_COLLECTION);
         DifferentialConditionsIndex subject = new DifferentialConditionsIndex(solrServerMock, conditionsPropertiesBuilderMock);
 
         subject.updateConditions(differentialExperimentMock, null);
@@ -87,13 +88,13 @@ public class ConditionsIndexTest {
         verify(solrServerMock).deleteByQuery(deleteQueryCaptor.capture());
         assertThat(deleteQueryCaptor.getValue(), endsWith(EXPERIMENT_ACCESSION));
 
-        verify(conditionsPropertiesBuilderMock).buildProperties(differentialExperimentMock);
+        verify(conditionsPropertiesBuilderMock).buildProperties(Mockito.eq(differentialExperimentMock), Mockito.any(SetMultimap.class));
 
         verify(solrServerMock).addBeans(CollectionUtils.EMPTY_COLLECTION);
     }
 
     @Test
-    public void updateConditionsExtractsFactorAndSampleValues() throws Exception {
+    public void addConditionsBaselineExtractsFactorAndSampleValues() throws Exception {
         given(baselineExperimentMock.getAssayGroups()).willReturn(new AssayGroups(Collections.singleton(new AssayGroup("g1","a1"))));
         given(baselineExperimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
         given(experimentDesignMock.getFactors("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
@@ -101,7 +102,8 @@ public class ConditionsIndexTest {
 
         BaselineConditionsIndex subject = new BaselineConditionsIndex(solrServerMock, new BaselineConditionsBuilder());
 
-        subject.updateConditions(baselineExperimentMock, null);
+        SetMultimap<String, String> emptyOntologyTerms = ImmutableSetMultimap.of();
+        subject.addConditions(baselineExperimentMock, emptyOntologyTerms);
 
         ArgumentCaptor<Collection> addBeansQueryCaptor = ArgumentCaptor.forClass(Collection.class);
 
@@ -110,6 +112,36 @@ public class ConditionsIndexTest {
         Collection<Condition> beans = addBeansQueryCaptor.getValue();
 
         assertThat(beans, containsInAnyOrder(new Condition(EXPERIMENT_ACCESSION, "g1", ImmutableList.of("female", "brain"))));
+
+    }
+
+    @Test
+    public void addConditionsBaselineIncludesOntologyTerms() throws Exception {
+        given(baselineExperimentMock.getAssayGroups()).willReturn(new AssayGroups(Collections.singleton(new AssayGroup("g1","a1"))));
+        given(baselineExperimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
+        given(experimentDesignMock.getFactors("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
+        given(experimentDesignMock.getSamples("a1")).willReturn(ImmutableMap.of("sex", "female"));
+
+        SetMultimap<String, String> ontologyTerms =
+                new ImmutableSetMultimap.Builder<String, String>()
+                        .putAll("a1", "obo", "efo")
+                        .build();
+
+        BaselineConditionsIndex subject = new BaselineConditionsIndex(solrServerMock, new BaselineConditionsBuilder());
+
+        subject.addConditions(baselineExperimentMock, ontologyTerms);
+
+        ArgumentCaptor<Collection> addBeansQueryCaptor = ArgumentCaptor.forClass(Collection.class);
+
+        verify(solrServerMock).addBeans(addBeansQueryCaptor.capture());
+
+        Collection<Condition> beans = addBeansQueryCaptor.getValue();
+        Condition condition = beans.iterator().next();
+
+        assertThat(beans, hasSize(1));
+        assertThat(condition.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
+        assertThat(condition.getAssayGroupId(), is("g1"));
+        assertThat(condition.getValues(), containsInAnyOrder("brain", "female", "obo", "efo"));
 
     }
 

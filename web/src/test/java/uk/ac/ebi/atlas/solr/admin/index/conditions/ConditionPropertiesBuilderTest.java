@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
+import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Maps;
+import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,11 +69,32 @@ public class ConditionPropertiesBuilderTest {
     }
 
     @Test
-    public void testBuildProperties() throws Exception {
+    public void buildDifferentialConditionProperties() throws Exception {
 
-        Collection<DifferentialCondition> result = subject.buildProperties(experimentMock);
+        SetMultimap<String, String> emptyOntologyTerms = ImmutableSetMultimap.of();
+
+        Collection<DifferentialCondition> result = subject.buildProperties(experimentMock, emptyOntologyTerms);
 
         assertThat(result.size(), is(2));
         assertThat(result.contains(new DifferentialCondition("EXP-1", "g1", "g1_g2", Sets.newHashSet("fv1", "sv1"))), is(true));
+        assertThat(result.contains(new DifferentialCondition("EXP-1", "g2", "g1_g2", Sets.newHashSet("fv2", "sv2"))), is(true));
+    }
+
+
+    @Test
+    public void buildDifferentialConditionPropertiesIncludingOntologyTerms() throws Exception {
+
+        SetMultimap<String, String> ontologyTerms =
+                new ImmutableSetMultimap.Builder<String, String>()
+                        .putAll("Assay1", "obo", "efo")
+                        .build();
+
+        Collection<DifferentialCondition> result = subject.buildProperties(experimentMock, ontologyTerms);
+
+        assertThat(result.size(), is(3));
+        assertThat(result.contains(new DifferentialCondition("EXP-1", "g1", "g1_g2", Sets.newHashSet("fv1", "sv1", "obo", "efo"))), is(true));  //Assay1
+        assertThat(result.contains(new DifferentialCondition("EXP-1", "g1", "g1_g2", Sets.newHashSet("fv1", "sv1"))), is(true));   //Assay2
+        assertThat(result.contains(new DifferentialCondition("EXP-1", "g2", "g1_g2", Sets.newHashSet("fv2", "sv2"))), is(true));
+
     }
 }

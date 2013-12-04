@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions.baseline;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -18,25 +19,25 @@ import java.util.Set;
 @Scope("singleton")
 public class BaselineConditionsBuilder extends ConditionsBuilder<BaselineExperiment> {
     @Override
-    public Collection<Condition> buildProperties(BaselineExperiment experiment) {
+    public Collection<Condition> buildProperties(BaselineExperiment experiment, SetMultimap<String, String> ontologyTerms) {
         Collection<Condition> conditions = Lists.newLinkedList();
 
         AssayGroups assayGroups = experiment.getAssayGroups();
         for (AssayGroup assayGroup : assayGroups) {
-            conditions.addAll(buildPropertiesForAssayGroup(experiment, assayGroup));
+            conditions.addAll(buildPropertiesForAssayGroup(experiment, assayGroup, ontologyTerms));
         }
 
         return conditions;
 
     }
 
-    protected Collection<Condition> buildPropertiesForAssayGroup(Experiment experiment, AssayGroup assayGroup) {
+    protected Collection<Condition> buildPropertiesForAssayGroup(Experiment experiment, AssayGroup assayGroup, SetMultimap<String, String> ontologyTerms) {
 
         Collection<Condition> conditions = Sets.newHashSet();
 
         for (String assayAccession : assayGroup) {
 
-            Set<String> values = collectAssayProperties(experiment.getExperimentDesign(), assayAccession);
+            Set<String> values = collectAssayProperties(experiment.getExperimentDesign(), assayAccession, ontologyTerms);
             Condition condition = new Condition(experiment.getAccession(),
                     assayGroup.getId(), values);
             conditions.add(condition);
