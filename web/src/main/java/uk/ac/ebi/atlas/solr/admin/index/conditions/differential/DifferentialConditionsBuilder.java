@@ -36,7 +36,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Named
-@Scope("prototype")
+@Scope("singleton")
 public class DifferentialConditionsBuilder extends ConditionsBuilder<DifferentialExperiment> {
 
     public Collection<DifferentialCondition> buildProperties(DifferentialExperiment experiment) {

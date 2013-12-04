@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Named
-@Scope("prototype")
+@Scope("singleton")
 public class BaselineConditionsBuilder extends ConditionsBuilder<BaselineExperiment> {
     @Override
     public Collection<Condition> buildProperties(BaselineExperiment experiment) {

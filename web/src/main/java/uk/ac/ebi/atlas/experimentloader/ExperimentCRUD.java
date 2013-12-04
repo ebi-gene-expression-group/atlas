@@ -30,8 +30,7 @@ import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParser;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParserFactory;
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParserOutput;
 import uk.ac.ebi.atlas.model.*;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommandTrader;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexOperation;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -48,12 +47,12 @@ public class ExperimentCRUD {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
     private final MageTabParserFactory mageTabParserFactory;
+    private final ConditionsIndexTrader conditionsIndexTrader;
     private ConfigurationTrader configurationTrader;
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
     private ExperimentDAO experimentDAO;
     private ExperimentTrader experimentTrader;
 
-    private IndexCommandTrader indexCommandTrader;
     private ExperimentDTOBuilder experimentDTOBuilder;
 
     @Inject
@@ -61,17 +60,17 @@ public class ExperimentCRUD {
                           ExperimentDAO experimentDAO,
                           ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
                           ExperimentTrader experimentTrader,
-                          IndexCommandTrader indexCommandTrader,
                           ExperimentDTOBuilder experimentDTOBuilder,
-                          MageTabParserFactory mageTabParserFactory) {
+                          MageTabParserFactory mageTabParserFactory,
+                          ConditionsIndexTrader conditionsIndexTrader) {
 
         this.configurationTrader = configurationTrader;
         this.experimentDAO = experimentDAO;
         this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;
-        this.indexCommandTrader = indexCommandTrader;
         this.experimentDTOBuilder = experimentDTOBuilder;
         this.mageTabParserFactory = mageTabParserFactory;
+        this.conditionsIndexTrader = conditionsIndexTrader;
     }
 
     public ExperimentConfiguration loadExperimentConfiguration(String accession) {
@@ -98,7 +97,8 @@ public class ExperimentCRUD {
         //experiment can be indexed only after it's been added to the DB, since fetching experiment
         //from cache gets this experiment from the DB first
         if (!isPrivate) {
-            indexCommandTrader.getIndexCommand(accession, IndexOperation.ADD).execute();
+            Experiment experiment = experimentTrader.getPublicExperiment(accession);
+            conditionsIndexTrader.getIndex(experiment).addConditions(experiment);
         }
 
         return uuid;
@@ -124,14 +124,15 @@ public class ExperimentCRUD {
     public void deleteExperiment(String experimentAccession) {
         checkNotNull(experimentAccession);
 
-        ExperimentDTO experiment = experimentDAO.findExperiment(experimentAccession, true);
+        ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
 
-        if (!experiment.isPrivate()) {
-
-            indexCommandTrader.getIndexCommand(experimentAccession, IndexOperation.REMOVE).execute();
+        if (!experimentDTO.isPrivate()) {
+            //TODO: shouldn't have to get the experiment here
+            Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+            conditionsIndexTrader.getIndex(experiment).removeConditions(experimentAccession);
         }
 
-        experimentTrader.removeExperimentFromCache(experiment.getExperimentAccession(), experiment.getExperimentType());
+        experimentTrader.removeExperimentFromCache(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType());
 
         experimentDAO.deleteExperiment(experimentAccession);
 
@@ -145,8 +146,8 @@ public class ExperimentCRUD {
         experimentDAO.updateExperiment(experimentAccession, isPrivate);
 
         if (!isPrivate) {
-            indexCommandTrader.getIndexCommand(experimentAccession, IndexOperation.UPDATE).execute();
-
+            Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+            conditionsIndexTrader.getIndex(experiment).updateConditions(experiment);
         }
     }
 
@@ -169,12 +170,13 @@ public class ExperimentCRUD {
     }
 
 
-    void updateExperimentDesign(ExperimentDTO experiment) {
-        String accession = experiment.getExperimentAccession();
-        ExperimentType type = experiment.getExperimentType();
+    void updateExperimentDesign(ExperimentDTO experimentDTO) {
+        String accession = experimentDTO.getExperimentAccession();
+        ExperimentType type = experimentDTO.getExperimentType();
         try {
-            if (!experiment.isPrivate()) {
-                indexCommandTrader.getIndexCommand(accession, IndexOperation.UPDATE).execute();
+            if (!experimentDTO.isPrivate()) {
+                Experiment experiment = experimentTrader.getPublicExperiment(accession);
+                conditionsIndexTrader.getIndex(experiment).updateConditions(experiment);
             }
             experimentTrader.removeExperimentFromCache(accession, type);
             generateExperimentDesignFile(accession, type);

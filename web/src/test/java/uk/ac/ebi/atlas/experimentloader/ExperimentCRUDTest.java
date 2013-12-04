@@ -39,9 +39,8 @@ import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParserOutpu
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommand;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexCommandTrader;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.IndexOperation;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
 
 import java.io.IOException;
@@ -91,10 +90,10 @@ public class ExperimentCRUDTest {
     DifferentialExperiment differentialExperimentMock;
 
     @Mock
-    private IndexCommandTrader indexCommandTraderMock;
+    private ConditionsIndexTrader conditionsIndexTrader;
 
     @Mock
-    private IndexCommand indexCommandMock;
+    private ConditionsIndex conditionsIndex;
 
     @Mock
     private ExperimentDTOBuilder exparimentDTOBuilderMock;
@@ -131,7 +130,7 @@ public class ExperimentCRUDTest {
         given(mageTabParser.parse(EXPERIMENT_ACCESSION)).willReturn(mageTabParserOutput);
         given(mageTabParserOutput.getExperimentDesign()).willReturn(experimentDesignMock);
 
-        given(indexCommandTraderMock.getIndexCommand(eq(EXPERIMENT_ACCESSION), any(IndexOperation.class))).willReturn(indexCommandMock);
+        given(conditionsIndexTrader.getIndex(any(Experiment.class))).willReturn(conditionsIndex);
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
 
         given(exparimentDTOBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(exparimentDTOBuilderMock);
@@ -141,7 +140,7 @@ public class ExperimentCRUDTest {
 
 
         subject = new ExperimentCRUD(configurationTraderMock, experimentDAOMock,
-                experimentDesignFileWriterBuilderMock, experimentTraderMock, indexCommandTraderMock, exparimentDTOBuilderMock, mageTabParserFactory);
+                experimentDesignFileWriterBuilderMock, experimentTraderMock, exparimentDTOBuilderMock, mageTabParserFactory, conditionsIndexTrader);
     }
 
     @Test
@@ -171,12 +170,12 @@ public class ExperimentCRUDTest {
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(indexCommandMock).execute();
+        verify(conditionsIndex).updateConditions(any(Experiment.class));
     }
 
     @Test
     public void importExperimentShouldAddExperimentToIndex() throws Exception {
         subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
-        verify(indexCommandMock).execute();
+        verify(conditionsIndex).addConditions(any(Experiment.class));
     }
 }
