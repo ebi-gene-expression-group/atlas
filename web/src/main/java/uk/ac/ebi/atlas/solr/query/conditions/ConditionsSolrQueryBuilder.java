@@ -62,7 +62,8 @@ public class ConditionsSolrQueryBuilder {
             if (term.equalsIgnoreCase("AND")) {
                 joinOn = " AND ";
             } else {
-                solrTerms.add(CONDITIONS_SEARCH_FIELD + ":" + term);
+                String escapedTerm = term.replace(":", "\\:");
+                solrTerms.add(CONDITIONS_SEARCH_FIELD + ":" + escapedTerm);
             }
         }
 

@@ -23,8 +23,16 @@ public class BaselineConditionsSearchServiceIT {
     private BaselineConditionsSearchService subject;
 
     @Test
-    public void testFindContrasts() throws Exception {
+    public void findContrasts() throws Exception {
         Collection<IndexedAssayGroup> contrasts = subject.findAssayGroups("liver");
         assertThat(contrasts, hasItem(new IndexedAssayGroup("E-GEOD-30352", "g6")));
+    }
+
+
+    @Test
+    public void findContrastsByEFOTerm() throws Exception {
+        Collection<IndexedAssayGroup> contrasts = subject.findAssayGroups("EFO:0001265");
+        assertThat(contrasts, hasItem(new IndexedAssayGroup("E-GEOD-30352", "g37")));
+        assertThat(contrasts, hasItem(new IndexedAssayGroup("E-MTAB-513", "g10")));
     }
 }

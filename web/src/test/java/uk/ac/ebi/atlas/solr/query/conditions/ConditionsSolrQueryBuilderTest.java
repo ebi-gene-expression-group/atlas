@@ -73,4 +73,10 @@ public class ConditionsSolrQueryBuilderTest {
         String query = subject.buildQueryString("\"Homo sapiens\" AND heart");
         assertThat(query, is("conditions_search:\"Homo sapiens\" AND conditions_search:heart"));
     }
+
+    @Test
+    public void termWithColonIsEscaped() {
+        String query = subject.buildQueryString("EFO:0001265");
+        assertThat(query, is("conditions_search:EFO\\:0001265"));
+    }
 }
