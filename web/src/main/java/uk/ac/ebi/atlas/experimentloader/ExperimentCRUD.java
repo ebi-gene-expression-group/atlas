@@ -127,6 +127,7 @@ public class ExperimentCRUD {
         ExperimentDTO experiment = experimentDAO.findExperiment(experimentAccession, true);
 
         if (!experiment.isPrivate()) {
+
             indexCommandTrader.getIndexCommand(experimentAccession, IndexOperation.REMOVE).execute();
         }
 

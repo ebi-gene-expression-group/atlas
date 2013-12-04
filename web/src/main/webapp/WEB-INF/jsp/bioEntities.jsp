@@ -149,9 +149,10 @@
                                     <table style="margin-left:auto;margin-right:auto;">
                                         <tr>
                                             <td>
-                                                <button id='display-levels' style="margin-top: 5px; margin-bottom: 5px">
-                                                    <label for='display-levels'>Display levels</label>
+                                                <button id='display-levels' data-pressedtext="hide" data-unpressedText='show' style="margin-top: 5px; margin-bottom: 5px">
+                                                    <%--<label for='display-levels'>Display <i>p</i>-values</label>--%>
                                                 </button>
+                                                <span id=buttonText pressedtext="hide" unpressedText='show'/>
                                             </td>
                                             <td>
                                                 <c:set var="geneProfiles" scope="request" value="${bioentities}"/>
