@@ -147,6 +147,7 @@ var searchFormModule = (function($) {
         $(selector).keypress(function(event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
+                $("#submit-button").click();
             }
         });
     }
