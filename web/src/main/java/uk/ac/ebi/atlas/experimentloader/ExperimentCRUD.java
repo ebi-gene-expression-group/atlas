@@ -83,7 +83,11 @@ public class ExperimentCRUD {
 
         ExperimentType experimentType = experimentConfiguration.getExperimentType();
 
-        ExperimentDesign experimentDesign = generateExperimentDesignFile(accession, experimentType);
+        MageTabParserOutput mageTabParserOutput = readMageTab(accession, experimentType);
+
+        ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
+
+        generateExperimentDesignFile(accession, experimentType, experimentDesign);
 
         Set<String> assayAccessions = configurationTrader.getExperimentConfiguration(accession).getAssayAccessions();
 
@@ -98,27 +102,25 @@ public class ExperimentCRUD {
         //from cache gets this experiment from the DB first
         if (!isPrivate) {
             Experiment experiment = experimentTrader.getPublicExperiment(accession);
-            conditionsIndexTrader.getIndex(experiment).addConditions(experiment);
+            conditionsIndexTrader.getIndex(experiment).addConditions(experiment, mageTabParserOutput.getOntologyTerms());
         }
 
         return uuid;
 
     }
 
-    ExperimentDesign generateExperimentDesignFile(String accession, ExperimentType experimentType) throws IOException {
+    MageTabParserOutput readMageTab(String accession, ExperimentType experimentType) throws IOException {
+        MageTabParser mageTabParser = mageTabParserFactory.create(experimentType);
+        return mageTabParser.parse(accession);
+    }
 
+    void generateExperimentDesignFile(String accession, ExperimentType experimentType, ExperimentDesign experimentDesign) throws IOException {
         ExperimentDesignFileWriter experimentDesignFileWriter =
                 experimentDesignFileWriterBuilder.forExperimentAccession(accession)
                         .withExperimentType(experimentType)
                         .build();
 
-        MageTabParser mageTabParser = mageTabParserFactory.create(experimentType);
-        MageTabParserOutput mageTabOutput = mageTabParser.parse(accession);
-        ExperimentDesign experimentDesign = mageTabOutput.getExperimentDesign();
-
         experimentDesignFileWriter.write(experimentDesign);
-
-        return experimentDesign;
     }
 
     public void deleteExperiment(String experimentAccession) {
@@ -142,12 +144,13 @@ public class ExperimentCRUD {
         return experimentDAO.findAllExperiments();
     }
 
-    public void updateExperiment(String experimentAccession, boolean isPrivate) {
+    public void updateExperiment(String experimentAccession, boolean isPrivate) throws IOException {
         experimentDAO.updateExperiment(experimentAccession, isPrivate);
 
         if (!isPrivate) {
-            Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-            conditionsIndexTrader.getIndex(experiment).updateConditions(experiment);
+            ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
+
+            updateExperimentDesign(experimentDTO);
         }
     }
 
@@ -174,13 +177,19 @@ public class ExperimentCRUD {
         String accession = experimentDTO.getExperimentAccession();
         ExperimentType type = experimentDTO.getExperimentType();
         try {
+            experimentTrader.removeExperimentFromCache(accession, type);
+
+            MageTabParserOutput mageTabParserOutput = readMageTab(accession, type);
+            ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
+
+            generateExperimentDesignFile(accession, type, experimentDesign);
+
+            LOGGER.info("updated design for experiment " + accession);
+
             if (!experimentDTO.isPrivate()) {
                 Experiment experiment = experimentTrader.getPublicExperiment(accession);
-                conditionsIndexTrader.getIndex(experiment).updateConditions(experiment);
+                conditionsIndexTrader.getIndex(experiment).updateConditions(experiment, mageTabParserOutput.getOntologyTerms());
             }
-            experimentTrader.removeExperimentFromCache(accession, type);
-            generateExperimentDesignFile(accession, type);
-            LOGGER.info("updated design for experiment " + accession);
 
         } catch (IOException e) {
             throw new IllegalStateException("<updateExperimentDesign> error generateExperimentDesignFile : ", e);

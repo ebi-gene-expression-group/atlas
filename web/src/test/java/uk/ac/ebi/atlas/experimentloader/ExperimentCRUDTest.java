@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentloader;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -146,7 +147,7 @@ public class ExperimentCRUDTest {
     @Test
     public void generateExperimentDesignShouldUseTheExperimentDesignWriter() throws Exception {
 
-        subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
+        subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, experimentDesignMock);
         verify(experimentDesignFileWriterBuilderMock).forExperimentAccession(EXPERIMENT_ACCESSION);
         verify(experimentDesignFileWriterBuilderMock).withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE);
         verify(experimentDesignFileWriterBuilderMock).build();
@@ -156,7 +157,7 @@ public class ExperimentCRUDTest {
     @Test(expected = IOException.class)
     public void shouldThrowIllegalStateExceptionWhenWritingExperimentDesignFails() throws Exception {
         willThrow(new IOException()).given(experimentDesignFileWriterMock).write(experimentDesignMock);
-        subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
+        subject.generateExperimentDesignFile(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, experimentDesignMock);
     }
 
 
@@ -170,12 +171,12 @@ public class ExperimentCRUDTest {
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(conditionsIndex).updateConditions(any(Experiment.class));
+        verify(conditionsIndex).updateConditions(any(Experiment.class), mageTabParserOutput.getOntologyTerms());
     }
 
     @Test
     public void importExperimentShouldAddExperimentToIndex() throws Exception {
         subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
-        verify(conditionsIndex).addConditions(any(Experiment.class));
+        verify(conditionsIndex).addConditions(any(Experiment.class), any(SetMultimap.class));
     }
 }

@@ -92,7 +92,7 @@ public class ExperimentAdminController {
     @RequestMapping("/updateStatus")
     @ResponseBody
     public String updateExperiment(@RequestParam("accession") String experimentAccession,
-                                   @RequestParam("private") boolean isPrivate) {
+                                   @RequestParam("private") boolean isPrivate) throws IOException {
 
         experimentCRUD.updateExperiment(experimentAccession, isPrivate);
         return "Experiment " + experimentAccession + " successfully updated.";

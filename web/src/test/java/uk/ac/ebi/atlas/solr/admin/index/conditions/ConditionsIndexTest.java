@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
+import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.solr.client.solrj.SolrServer;
 import org.junit.Before;
@@ -30,11 +31,20 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.AssayGroups;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsIndex;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsIndex;
 
-import static org.hamcrest.Matchers.endsWith;
+import java.util.Collection;
+import java.util.Collections;
+
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -44,26 +54,33 @@ public class ConditionsIndexTest {
 
     private static final String EXPERIMENT_ACCESSION = "AN_ACCESSION";
 
-    private ConditionsIndex subject;
-
     @Mock
     private SolrServer solrServerMock;
+
     @Mock
     private DifferentialConditionsBuilder conditionsPropertiesBuilderMock;
 
     @Mock
     private DifferentialExperiment differentialExperimentMock;
 
+    @Mock
+    private BaselineExperiment baselineExperimentMock;
+
+    @Mock
+    private ExperimentDesign experimentDesignMock;
+
     @Before
     public void setUp() throws Exception {
         given(differentialExperimentMock.getAccession()).willReturn(EXPERIMENT_ACCESSION);
-        given(conditionsPropertiesBuilderMock.buildProperties(differentialExperimentMock)).willReturn(CollectionUtils.EMPTY_COLLECTION);
-        subject = new DifferentialConditionsIndex(solrServerMock, conditionsPropertiesBuilderMock);
+        given(baselineExperimentMock.getAccession()).willReturn(EXPERIMENT_ACCESSION);
     }
 
     @Test
     public void updateConditionsShouldReindexDiffExperiment() throws Exception {
-        subject.updateConditions(differentialExperimentMock);
+        given(conditionsPropertiesBuilderMock.buildProperties(differentialExperimentMock)).willReturn(CollectionUtils.EMPTY_COLLECTION);
+        DifferentialConditionsIndex subject = new DifferentialConditionsIndex(solrServerMock, conditionsPropertiesBuilderMock);
+
+        subject.updateConditions(differentialExperimentMock, null);
 
         ArgumentCaptor<String> deleteQueryCaptor = ArgumentCaptor.forClass(String.class);
 
@@ -73,6 +90,27 @@ public class ConditionsIndexTest {
         verify(conditionsPropertiesBuilderMock).buildProperties(differentialExperimentMock);
 
         verify(solrServerMock).addBeans(CollectionUtils.EMPTY_COLLECTION);
+    }
+
+    @Test
+    public void updateConditionsExtractsFactorAndSampleValues() throws Exception {
+        given(baselineExperimentMock.getAssayGroups()).willReturn(new AssayGroups(Collections.singleton(new AssayGroup("g1","a1"))));
+        given(baselineExperimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
+        given(experimentDesignMock.getFactors("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
+        given(experimentDesignMock.getSamples("a1")).willReturn(ImmutableMap.of("sex", "female"));
+
+        BaselineConditionsIndex subject = new BaselineConditionsIndex(solrServerMock, new BaselineConditionsBuilder());
+
+        subject.updateConditions(baselineExperimentMock, null);
+
+        ArgumentCaptor<Collection> addBeansQueryCaptor = ArgumentCaptor.forClass(Collection.class);
+
+        verify(solrServerMock).addBeans(addBeansQueryCaptor.capture());
+
+        Collection<Condition> beans = addBeansQueryCaptor.getValue();
+
+        assertThat(beans, containsInAnyOrder(new Condition(EXPERIMENT_ACCESSION, "g1", ImmutableList.of("female", "brain"))));
+
     }
 
 }

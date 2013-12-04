@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
+import com.google.common.collect.SetMultimap;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -23,20 +24,20 @@ public abstract class ConditionsIndex<T extends Experiment> {
     }
 
 
-    public void updateConditions(T experiment) {
+    public void updateConditions(T experiment, SetMultimap<String, String> ontologyTerms) {
 
         LOGGER.info("<updateConditions> " + experiment.getAccession());
 
         removeConditions(experiment.getAccession());
 
-        addConditions(experiment);
+        addConditions(experiment, ontologyTerms);
 
         //ToDO: (NK) Do we need to optimise after every experiment?
         optimize();
 
     }
 
-    public void addConditions(T experiment) {
+    public void addConditions(T experiment, SetMultimap<String, String> ontologyTerms) {
         try {
 
             Collection propertiesBeans = propertiesBuilder.buildProperties(experiment);

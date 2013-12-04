@@ -4,10 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public abstract class ConditionsBuilder<T extends Experiment> {
 
@@ -15,7 +12,9 @@ public abstract class ConditionsBuilder<T extends Experiment> {
 
     protected Set<String> collectAssayProperties(ExperimentDesign experimentDesign, String assayAccession) {
 
-        Map<String, String> properties = experimentDesign.getFactors(assayAccession);
+        Map<String, String> factors = experimentDesign.getFactors(assayAccession);
+
+        Map<String, String> properties = new HashMap<>(factors);
 
         properties.putAll(experimentDesign.getSamples(assayAccession));
 
