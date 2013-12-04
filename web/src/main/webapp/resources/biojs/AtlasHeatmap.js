@@ -71,7 +71,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
             data:{rootContext:options.rootContext},
             methid:"GET",
             beforeSend:function () {
-                containerDiv.html("<img src='http://www-test.ebi.ac.uk/gxa/resources/images/loading.gif' />");
+                containerDiv.html("<img src='http://www.ebi.ac.uk/gxa/resources/images/loading.gif' />");
             },
             success:function (htmlResponse) {
                 Biojs.console.log("SUCCESS: data received");
