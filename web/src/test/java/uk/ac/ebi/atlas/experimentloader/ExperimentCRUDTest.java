@@ -171,7 +171,7 @@ public class ExperimentCRUDTest {
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(conditionsIndex).updateConditions(any(Experiment.class), mageTabParserOutput.getOntologyTerms());
+        verify(conditionsIndex).updateConditions(any(Experiment.class), any(SetMultimap.class));
     }
 
     @Test

@@ -73,7 +73,7 @@
                     <METHOD id="html">html</METHOD>
                     <SCORE>0.0</SCORE>
                     <NOTE>anatomogram</NOTE>
-                    <LINK href="http://www-test.ebi.ac.uk/gxa/widgets/heatmap/protein?geneQuery=%20ENSG00000124233&amp;propertyType=bioentity_identifier&amp;rootContext=">Expression in healthy or untreated tissues</LINK>
+                    <LINK href="http://www.ebi.ac.uk/gxa/widgets/heatmap/protein?geneQuery=%20ENSG00000124233&amp;propertyType=bioentity_identifier&amp;rootContext=">Expression in healthy or untreated tissues</LINK>
                   </FEATURE>
             --%>
             <FEATURE id="Provenance" label="Provenance">

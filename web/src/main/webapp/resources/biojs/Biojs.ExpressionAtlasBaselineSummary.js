@@ -87,7 +87,7 @@ Biojs.ExpressionAtlasBaselineSummary = Biojs.extend(
                 data:{rootContext:options.rootContext},
                 methid:"GET",
                 beforeSend:function () {
-                    containerDiv.html("<img src='http://www-test.ebi.ac.uk/gxa/resources/images/loading.gif' />");
+                    containerDiv.html("<img src='http://www.ebi.ac.uk/gxa/resources/images/loading.gif' />");
                 },
                 success:function (htmlResponse) {
                     Biojs.console.log("SUCCESS: data received");
@@ -123,7 +123,7 @@ Biojs.ExpressionAtlasBaselineSummary = Biojs.extend(
              For multiple identifiers of the same species please use:
              geneQuery=ENSG00000187003+ENSG00000185264&propertyType=identifier
              */
-            featuresUrl:'http://www-test.ebi.ac.uk/gxa/widgets/heatmap/protein?geneQuery=P00846',
+            featuresUrl:'http://www.ebi.ac.uk/gxa/widgets/heatmap/protein?geneQuery=P00846',
             /* Target DIV
              This mandatory parameter is the identifier of the DIV tag where the
              component should be displayed. Use this value to draw your
@@ -134,7 +134,7 @@ Biojs.ExpressionAtlasBaselineSummary = Biojs.extend(
              be used by the widget content, i.e. this is pointing to the
              content proxy where required.
              */
-            rootContext:'../biojs/dependencies/proxy/proxy.php?url=http://www-test.ebi.ac.uk/gxa',
+            rootContext:'../biojs/dependencies/proxy/proxy.php?url=http://www.ebi.ac.uk/gxa',
             /* Proxy URL
              To bypass the same origin policy this component needs a proxy, which
              can be set here.
