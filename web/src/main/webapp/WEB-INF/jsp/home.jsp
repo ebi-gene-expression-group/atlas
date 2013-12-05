@@ -121,7 +121,7 @@
                 <td><label>Still need the old Expression Atlas?</label></td>
             </tr>
             <tr>
-                <td><a href="http://www.ebi.ac.uk/gxa"><img src="resources/images/old_gxa.png">
+                <td><a href="http://www-test.ebi.ac.uk/gxa"><img src="resources/images/old_gxa.png">
                     Click here</a></td>
             </tr>
         </table>
