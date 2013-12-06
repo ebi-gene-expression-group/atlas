@@ -14,4 +14,10 @@
         <from>/das/s4/types(/)?$</from>
         <to>/resources/das/types.xml</to>
     </rule>
+    <rule>
+        <note>To catch people browsing to the old GXA gene URL from stale google cache - can be removed in Jan 2014</note>
+        <from>/gene/(.*)</from>
+        <to type="redirect">/gxa/genes/$1</to>
+    </rule>
+
 </urlrewrite>
