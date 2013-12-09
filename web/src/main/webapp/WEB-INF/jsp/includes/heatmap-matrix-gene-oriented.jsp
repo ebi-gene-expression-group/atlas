@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -186,6 +185,15 @@
         </tr>
         </tbody>
     </table>
+
+    <c:choose>
+        <c:when test="${type.isBaseline()}">
+            <span id='buttonText' pressedtext='Hide levels' unpressedText='Display levels'/>
+        </c:when>
+        <c:otherwise>
+            <span id='buttonText' pressedtext='Hide <i>p</i>-values' unpressedText='Display <i>p</i>-values'/>
+        </c:otherwise>
+    </c:choose>
 
 </div>
 

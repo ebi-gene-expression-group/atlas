@@ -152,7 +152,7 @@
                                                 <button id='display-levels' data-pressedtext="hide" data-unpressedText='show' style="margin-top: 5px; margin-bottom: 5px">
                                                     <%--<label for='display-levels'>Display <i>p</i>-values</label>--%>
                                                 </button>
-                                                <span id=buttonText pressedtext="hide" unpressedText='show'/>
+                                                <span id='buttonText' pressedtext='Hide <i>p</i>-values' unpressedText='Display <i>p</i>-values'/>
                                             </td>
                                             <td>
                                                 <c:set var="geneProfiles" scope="request" value="${bioentities}"/>

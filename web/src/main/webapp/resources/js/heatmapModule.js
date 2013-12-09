@@ -72,18 +72,18 @@ var heatmapModule = (function ($) {
         $("#display-levels").button()
             .toggle(
             function () {
-                $(this).button('option', 'label', 'Hide levels');
+                $(this).button('option', 'label', $("#buttonText").attr('pressedtext'));
                 showExpressionLevels(this);
                 $("#prefForm #displayLevels").val("true");
             },
             function () {
-                $(this).button('option', 'label', 'Display levels');
+                $(this).button('option', 'label', $("#buttonText").attr('unpressedtext'));
                 hideExpressionLevels(this);
                 $("#prefForm #displayLevels").val("false");
             }
         );
 
-        $("#display-levels").button({ label:'Display levels' });
+        $("#display-levels").button({ label:$("#buttonText").attr('unpressedtext') });
 
         if ($("#prefForm #displayLevels").val() === "true") {
             $("#display-levels").click();
