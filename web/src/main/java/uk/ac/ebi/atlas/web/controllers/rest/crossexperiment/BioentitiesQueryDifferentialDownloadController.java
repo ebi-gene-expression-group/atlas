@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.web.controllers.rest.crossexperiment;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
 import uk.ac.ebi.atlas.commands.download.DifferentialBioentityExpressionsTSVWriter;
@@ -54,6 +55,23 @@ public class BioentitiesQueryDifferentialDownloadController {
     @RequestMapping(value = "/query.tsv")
     public void downloadGeneQueryDifferentialExpressions(@Valid GeneQuerySearchRequestParameters requestParameters, HttpServletResponse response) throws IOException {
         LOGGER.info("downloadGeneQueryDifferentialExpressions for " + requestParameters);
+
+        downloadExpressions(response, requestParameters);
+    }
+
+
+    @RequestMapping(value = "/genes/{identifier:.*}.tsv")
+    public void downloadGeneDifferentialExpressions(@PathVariable String identifier, HttpServletResponse response) throws IOException {
+
+        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        requestParameters.setGeneQuery(identifier);
+
+        LOGGER.info("downloadGeneDifferentialExpressions for " + requestParameters);
+
+        downloadExpressions(response, requestParameters);
+    }
+
+    private void downloadExpressions(HttpServletResponse response, GeneQuerySearchRequestParameters requestParameters) throws IOException {
 
         setDownloadHeaders(response, requestParameters.getDescription() + ".tsv");
 
