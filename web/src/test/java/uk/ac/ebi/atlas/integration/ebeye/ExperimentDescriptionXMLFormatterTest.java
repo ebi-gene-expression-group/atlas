@@ -1,8 +1,8 @@
-package uk.ac.ebi.atlas.web.controllers.rest.ebisearch;
+package uk.ac.ebi.atlas.integration.ebeye;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.integration.ebisearch.ExperimentDescriptionXMLFormatter;
-import uk.ac.ebi.atlas.integration.ebisearch.ExperimentDescription;
+import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescriptionXMLFormatter;
+import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescription;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

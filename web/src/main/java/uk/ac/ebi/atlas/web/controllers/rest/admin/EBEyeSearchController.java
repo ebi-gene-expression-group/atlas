@@ -4,9 +4,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import uk.ac.ebi.atlas.integration.ebisearch.ExperimentDescription;
-import uk.ac.ebi.atlas.integration.ebisearch.ExperimentDescriptionDAO;
-import uk.ac.ebi.atlas.integration.ebisearch.ExperimentDescriptionXMLFormatter;
+import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescription;
+import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescriptionDAO;
+import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescriptionXMLFormatter;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -30,11 +30,11 @@ public class EBEyeSearchController {
         this.experimentDescriptionXMLFormatter = experimentDescriptionXMLFormatter;
     }
 
-    @RequestMapping(value = "/eb-eye/experiments", method = RequestMethod.GET, produces = "application/xml")
+    @RequestMapping(value = "/eb-eye/experiments")
     public void listExperimentDescriptions(HttpServletResponse response) throws IOException {
         PrintWriter writer = response.getWriter();
 
-        setDownloadHeaders(response, "experiments.xml");
+        response.setContentType("application/xml");
 
         List<ExperimentDescription> experimentDescriptions = experimentDescriptionDAO.selectAllPublicExperimentDescriptions();
 
@@ -47,11 +47,5 @@ public class EBEyeSearchController {
         writer.write(experimentDescriptionXMLFormatter.formatFooter());
 
     }
-
-    private void setDownloadHeaders(HttpServletResponse response, String fileName) {
-        //response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        response.setContentType("application/xml");
-    }
-
 
 }

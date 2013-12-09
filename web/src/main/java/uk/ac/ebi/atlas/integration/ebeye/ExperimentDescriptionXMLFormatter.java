@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.integration.ebisearch;
+package uk.ac.ebi.atlas.integration.ebeye;
 
 import javax.inject.Named;
 import java.text.DateFormat;

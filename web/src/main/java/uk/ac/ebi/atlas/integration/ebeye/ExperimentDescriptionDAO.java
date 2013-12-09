@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.integration.ebisearch;
+package uk.ac.ebi.atlas.integration.ebeye;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
