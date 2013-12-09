@@ -1,13 +1,13 @@
-package uk.ac.ebi.atlas.web.controllers.rest.ebisearch;
+package uk.ac.ebi.atlas.integration.ebisearch;
 
-import uk.ac.ebi.atlas.web.controllers.rest.dto.ExperimentDescription;
-
+import javax.inject.Named;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ExperimentDescriptionFormatter {
+@Named
+public class ExperimentDescriptionXMLFormatter {
 
     private static final String HEADER = "<database>\n" +
             "<name>Expression Atlas</name>\n" +

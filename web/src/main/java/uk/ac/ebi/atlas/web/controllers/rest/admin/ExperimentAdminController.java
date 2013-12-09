@@ -103,7 +103,7 @@ public class ExperimentAdminController {
     public String listExperiments(@RequestParam(value = "accession", required = false) Set<String> experimentAccessions) {
         List<ExperimentDTO> experiments;
         if (CollectionUtils.isEmpty(experimentAccessions)) {
-            experiments = experimentCRUD.   findAllExperiments();
+            experiments = experimentCRUD.findAllExperiments();
         } else {
             experiments = experimentCRUD.findExperiments(experimentAccessions);
         }

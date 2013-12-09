@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.rest.tests;
+package uk.ac.ebi.atlas.acceptance.rest.tests.admin;
 
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;

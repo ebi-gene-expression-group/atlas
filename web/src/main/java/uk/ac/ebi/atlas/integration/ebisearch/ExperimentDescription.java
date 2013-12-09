@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web.controllers.rest.dto;
+package uk.ac.ebi.atlas.integration.ebisearch;
 
 import com.google.common.base.Objects;
 

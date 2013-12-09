@@ -1,7 +1,8 @@
 package uk.ac.ebi.atlas.web.controllers.rest.ebisearch;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.web.controllers.rest.dto.ExperimentDescription;
+import uk.ac.ebi.atlas.integration.ebisearch.ExperimentDescriptionXMLFormatter;
+import uk.ac.ebi.atlas.integration.ebisearch.ExperimentDescription;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,9 +11,9 @@ import java.util.Date;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class ExperimentDescriptionFormatterTest {
+public class ExperimentDescriptionXMLFormatterTest {
 
-    private ExperimentDescriptionFormatter subject = new ExperimentDescriptionFormatter();
+    private ExperimentDescriptionXMLFormatter subject = new ExperimentDescriptionXMLFormatter();
 
     @Test
     public void dateFormat() throws ParseException {
