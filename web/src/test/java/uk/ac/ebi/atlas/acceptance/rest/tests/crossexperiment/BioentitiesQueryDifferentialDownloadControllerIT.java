@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.acceptance.rest.tests.crossexperiment;
 
+import com.jayway.restassured.http.ContentType;
+import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
@@ -13,7 +15,6 @@ import static org.hamcrest.Matchers.is;
 public class BioentitiesQueryDifferentialDownloadControllerIT {
 
     private EndPoint subject = new EndPoint("/gxa/query.tsv?geneQuery=AT1G02220");
-
 
     @Test
     public void verifyLengthOfDocument() {
@@ -47,6 +48,18 @@ public class BioentitiesQueryDifferentialDownloadControllerIT {
 
         assertThat(firstGene,
                 contains("ANAC003", "264148_at", "Arabidopsis thaliana","treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'",	"0.0476008286349805", "0.982933333333333", "4.81369176288206"));
+    }
+
+
+
+    @Test
+    public void downloadGeneDifferentialExpressions() {
+        Response response = new EndPoint("/gxa/genes/ENSMUSG00000050520.tsv").getResponse();
+
+        response.then().assertThat().contentType(ContentType.TEXT);
+
+        String[] lines = response.body().asString().split("\n");
+        assertThat(lines.length, is(5));
     }
 
 }
