@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web.controllers.rest.admin;
+package uk.ac.ebi.atlas.web.controllers.rest;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,6 @@ import java.util.List;
 
 @Controller
 @Scope("request")
-@RequestMapping("/admin")
 public class EBEyeSearchController {
 
     private ExperimentDescriptionXMLFormatter experimentDescriptionXMLFormatter;
@@ -30,7 +29,7 @@ public class EBEyeSearchController {
         this.experimentDescriptionXMLFormatter = experimentDescriptionXMLFormatter;
     }
 
-    @RequestMapping(value = "/eb-eye/experiments")
+    @RequestMapping(value = "/experiments.xml")
     public void listExperimentDescriptions(HttpServletResponse response) throws IOException {
         PrintWriter writer = response.getWriter();
 

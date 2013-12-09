@@ -20,23 +20,21 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.rest.tests.admin;
+package uk.ac.ebi.atlas.acceptance.rest.tests;
 
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
+import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 
 import static com.jayway.restassured.RestAssured.get;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasXPath;
+import static org.hamcrest.Matchers.*;
 
-public class EBEyeSearchControllerIT extends RestAssuredAuthenticatedFixture {
+public class EBEyeSearchControllerIT extends RestAssuredFixture {
 
     @Test
     public void experiments() {
-        Response response = get("/eb-eye/experiments");
+        Response response = get("/experiments.xml");
 
         response.then().assertThat().contentType(ContentType.XML);
         response.then().assertThat().body("database.entry_count", equalTo("14"));
