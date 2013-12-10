@@ -92,7 +92,7 @@ public class BioEntityPropertyService {
         return species;
     }
 
-    //used in bioEntity.jsp
+    //used in bioEntities.jsp
     public List<PropertyLink> getPropertyLinks(String propertyType) {
         if ("reactome".equals(propertyType) && !propertyValuesByType.containsKey(propertyType)) {
             addReactomePropertyValues();

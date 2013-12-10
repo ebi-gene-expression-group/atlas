@@ -47,8 +47,6 @@ public class RestAssuredAuthenticatedFixture {
         if (StringUtils.isNotBlank(hostname)) {
             RestAssured.baseURI = "http://"+hostname;
         }
-        System.out.println("<initRestAssured> RestAssured.baseURI = " + RestAssured.baseURI);
-
 
         RestAssured.basePath = "/gxa/admin";
 
@@ -60,6 +58,8 @@ public class RestAssuredAuthenticatedFixture {
         RestAssured.port = new Integer(portNumber);
 
         RestAssured.requestSpecification = new RequestSpecBuilder().setAuth(authScheme).build();
+
+        System.out.println(String.format("<initRestAssured> base = %s:%s%s", RestAssured.baseURI, RestAssured.port, RestAssured.basePath));
 
     }
 
