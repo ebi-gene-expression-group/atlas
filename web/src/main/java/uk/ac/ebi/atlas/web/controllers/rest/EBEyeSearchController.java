@@ -29,7 +29,7 @@ public class EBEyeSearchController {
         this.experimentDescriptionXMLFormatter = experimentDescriptionXMLFormatter;
     }
 
-    @RequestMapping(value = "/experiments.xml")
+    @RequestMapping(value = "/api/experiments.xml")
     public void listExperimentDescriptions(HttpServletResponse response) throws IOException {
         PrintWriter writer = response.getWriter();
 

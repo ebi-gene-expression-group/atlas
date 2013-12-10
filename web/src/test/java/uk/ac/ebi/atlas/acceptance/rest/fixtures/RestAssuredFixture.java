@@ -40,7 +40,6 @@ public class RestAssuredFixture {
         if (StringUtils.isNotBlank(hostname)) {
             RestAssured.baseURI = "http://"+hostname;
         }
-        System.out.println("<initRestAssured> RestAssured.baseURI = " + RestAssured.baseURI);
 
         RestAssured.basePath = "/gxa";
 
@@ -50,6 +49,8 @@ public class RestAssuredFixture {
         }
 
         RestAssured.port = new Integer(portNumber);
+
+        System.out.println(String.format("<initRestAssured> base = %s:%s%s", RestAssured.baseURI, RestAssured.port, RestAssured.basePath));
 
     }
 
