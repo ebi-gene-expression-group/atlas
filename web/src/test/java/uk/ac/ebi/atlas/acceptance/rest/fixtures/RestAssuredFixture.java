@@ -50,6 +50,8 @@ public class RestAssuredFixture {
 
         RestAssured.port = new Integer(portNumber);
 
+        RestAssured.requestSpecification = new RequestSpecBuilder().build();
+
         System.out.println(String.format("<initRestAssured> base = %s:%s%s", RestAssured.baseURI, RestAssured.port, RestAssured.basePath));
 
     }
