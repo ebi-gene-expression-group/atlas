@@ -221,9 +221,9 @@ CREATE OR REPLACE VIEW PUBLIC_EXPERIMENT AS
 SELECT ACCESSION, type, LAST_UPDATE
 FROM EXPERIMENT WHERE PRIVATE='F';
 
--- Experiment loading process flag
-DROP TABLE EXPERIMENT_LOADING;
-CREATE TABLE EXPERIMENT_LOADING(
+-- Data processing in-progress flag table - used by data production team - no dependency on it exists in the Web services code
+DROP TABLE DATAPROCESSING_JOB_LOCK;
+CREATE TABLE DATAPROCESSING_JOB_LOCK(
     INPROGRESS DATE DEFAULT sysdate
 );
 
