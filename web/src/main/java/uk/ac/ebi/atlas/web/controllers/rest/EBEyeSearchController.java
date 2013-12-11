@@ -3,7 +3,6 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescription;
 import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescriptionDAO;
 import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescriptionXMLFormatter;
