@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>uk.ac.ebi.atlas.model</OriginalElement>
+  <nodes>
+    <node x="683.3197278911566" y="551.3605442176871">uk.ac.ebi.atlas.model.baseline.TranscriptProfile</node>
+    <node x="1513.0" y="876.0">uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile</node>
+    <node x="1617.0" y="1895.0">uk.ac.ebi.atlas.model.baseline.BaselineExpressions</node>
+    <node x="1442.0" y="2449.0">uk.ac.ebi.atlas.model.baseline.BaselineProfilePrecondition</node>
+    <node x="713.0" y="2131.0">uk.ac.ebi.atlas.model.AssayGroups</node>
+    <node x="1408.0" y="2366.0">uk.ac.ebi.atlas.model.baseline.BaselineProfileComparator</node>
+    <node x="370.0" y="1485.0">uk.ac.ebi.atlas.model.differential.DifferentialProfilePrecondition</node>
+    <node x="962.0" y="1775.0">uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression</node>
+    <node x="1219.0" y="2385.0">uk.ac.ebi.atlas.model.baseline.Factor</node>
+    <node x="1174.0" y="1657.0">uk.ac.ebi.atlas.model.Expression</node>
+    <node x="1073.904761904762" y="507.7482993197279">uk.ac.ebi.atlas.model.GeneProfilesList</node>
+    <node x="1346.0" y="1830.0">uk.ac.ebi.atlas.model.baseline.BaselineExpression</node>
+    <node x="1025.0" y="843.0">uk.ac.ebi.atlas.model.differential.DifferentialExpressionLimits</node>
+    <node x="794.0" y="1933.0">uk.ac.ebi.atlas.model.AssayGroup</node>
+    <node x="584.0" y="1414.0">uk.ac.ebi.atlas.model.differential.DifferentialProfileComparator</node>
+    <node x="860.0" y="1478.0">uk.ac.ebi.atlas.model.differential.DifferentialExpression</node>
+    <node x="143.2125850340135" y="1791.1309523809523">uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration</node>
+    <node x="447.0" y="1619.0">uk.ac.ebi.atlas.model.differential.Contrast</node>
+    <node x="1027.0" y="2132.0">uk.ac.ebi.atlas.model.baseline.ExperimentalFactors</node>
+    <node x="256.0" y="1161.0">uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition</node>
+    <node x="1359.0" y="1616.0">uk.ac.ebi.atlas.model.baseline.BaselineProfile</node>
+    <node x="566.0" y="1149.0">uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions.FindTopLevelByRegulation</node>
+    <node x="1474.0" y="2147.0">uk.ac.ebi.atlas.model.baseline.ExperimentRun</node>
+    <node x="1006.0" y="1305.0">uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression</node>
+    <node x="1375.0" y="2589.0">uk.ac.ebi.atlas.model.baseline.BaselineExperimentConfiguration</node>
+    <node x="1035.891156462585" y="355.96598639455783">uk.ac.ebi.atlas.model.baseline.BaselineProfilesList</node>
+    <node x="1085.0" y="2617.0">uk.ac.ebi.atlas.model.baseline.BaselineExpressionPrecondition</node>
+    <node x="993.9591836734694" y="649.4625850340136">uk.ac.ebi.atlas.model.differential.DifferentialProfilesList</node>
+    <node x="453.0" y="1965.0">uk.ac.ebi.atlas.model.ExperimentConfiguration</node>
+    <node x="132.0" y="1960.0">uk.ac.ebi.atlas.model.differential.DifferentialExperiment</node>
+    <node x="1417.0" y="1328.0">uk.ac.ebi.atlas.model.Profile</node>
+    <node x="1309.0" y="1036.0">uk.ac.ebi.atlas.model.differential.DifferentialProfile</node>
+    <node x="1356.0" y="2269.0">uk.ac.ebi.atlas.model.baseline.impl.FactorSet</node>
+    <node x="0.0" y="2550.0">uk.ac.ebi.atlas.model.ExperimentDesign</node>
+    <node x="1646.0" y="1617.0">uk.ac.ebi.atlas.model.baseline.GeneSet</node>
+    <node x="496.0" y="1287.0">uk.ac.ebi.atlas.model.differential.Regulation</node>
+    <node x="1404.0" y="2051.0">uk.ac.ebi.atlas.model.baseline.FactorGroup</node>
+    <node x="81.0" y="2097.0">uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment</node>
+    <node x="290.0" y="2259.0">uk.ac.ebi.atlas.model.Experiment</node>
+    <node x="619.1904761904761" y="706.8095238095239">uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount</node>
+    <node x="385.0" y="2744.0">uk.ac.ebi.atlas.model.ExperimentType</node>
+    <node x="689.0" y="926.0">uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions</node>
+    <node x="798.0" y="2389.0">uk.ac.ebi.atlas.model.baseline.BaselineExperiment</node>
+    <node x="1656.0" y="1070.0">uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression" target="uk.ac.ebi.atlas.model.differential.DifferentialExpression">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.ExperimentRun" target="uk.ac.ebi.atlas.model.baseline.impl.FactorSet">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions" target="uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions.FindTopLevelByRegulation">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.impl.FactorSet" target="uk.ac.ebi.atlas.model.baseline.Factor">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition" target="uk.ac.ebi.atlas.model.differential.Regulation">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.ExperimentalFactors" target="uk.ac.ebi.atlas.model.baseline.Factor">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineExperiment" target="uk.ac.ebi.atlas.model.Experiment">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration" target="uk.ac.ebi.atlas.model.ExperimentConfiguration">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.ExperimentConfiguration" target="uk.ac.ebi.atlas.model.AssayGroup">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialExpression" target="uk.ac.ebi.atlas.model.Expression">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.GeneSet" target="uk.ac.ebi.atlas.model.baseline.BaselineProfile">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineExperiment" target="uk.ac.ebi.atlas.model.baseline.ExperimentalFactors">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineExpression" target="uk.ac.ebi.atlas.model.baseline.FactorGroup">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineProfile" target="uk.ac.ebi.atlas.model.baseline.BaselineExpression">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialProfile" target="uk.ac.ebi.atlas.model.differential.DifferentialExpressionLimits">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineExpressions" target="uk.ac.ebi.atlas.model.baseline.BaselineExpression">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineProfilesList" target="uk.ac.ebi.atlas.model.GeneProfilesList">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineExperimentConfiguration" target="uk.ac.ebi.atlas.model.baseline.Factor">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialExpression" target="uk.ac.ebi.atlas.model.differential.Contrast">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialProfileComparator" target="uk.ac.ebi.atlas.model.differential.Regulation">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile" target="uk.ac.ebi.atlas.model.differential.DifferentialProfile">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.ExperimentalFactors" target="uk.ac.ebi.atlas.model.baseline.FactorGroup">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression" target="uk.ac.ebi.atlas.model.differential.DifferentialExpression">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineProfileComparator" target="uk.ac.ebi.atlas.model.baseline.Factor">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions" target="uk.ac.ebi.atlas.model.differential.DifferentialExpressionLimits">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.impl.FactorSet" target="uk.ac.ebi.atlas.model.baseline.FactorGroup">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialExperiment" target="uk.ac.ebi.atlas.model.differential.Contrast">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineProfilePrecondition" target="uk.ac.ebi.atlas.model.baseline.Factor">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineExpression" target="uk.ac.ebi.atlas.model.Expression">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.Experiment" target="uk.ac.ebi.atlas.model.ExperimentType">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialProfileComparator" target="uk.ac.ebi.atlas.model.differential.Contrast">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialProfile" target="uk.ac.ebi.atlas.model.Profile">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineProfile" target="uk.ac.ebi.atlas.model.Profile">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialProfilesList" target="uk.ac.ebi.atlas.model.differential.DifferentialExpressionLimits">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialProfilesList" target="uk.ac.ebi.atlas.model.GeneProfilesList">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile" target="uk.ac.ebi.atlas.model.differential.DifferentialProfile">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment" target="uk.ac.ebi.atlas.model.differential.DifferentialExperiment">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialProfilePrecondition" target="uk.ac.ebi.atlas.model.differential.Regulation">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialProfilePrecondition" target="uk.ac.ebi.atlas.model.differential.Contrast">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineExpressionPrecondition" target="uk.ac.ebi.atlas.model.baseline.Factor">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions.FindTopLevelByRegulation" target="uk.ac.ebi.atlas.model.differential.Regulation">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.Contrast" target="uk.ac.ebi.atlas.model.AssayGroup">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.ExperimentConfiguration" target="uk.ac.ebi.atlas.model.differential.Contrast">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.ExperimentConfiguration" target="uk.ac.ebi.atlas.model.AssayGroups">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.AssayGroups" target="uk.ac.ebi.atlas.model.AssayGroup">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.differential.DifferentialExperiment" target="uk.ac.ebi.atlas.model.Experiment">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineExperiment" target="uk.ac.ebi.atlas.model.AssayGroups">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.Experiment" target="uk.ac.ebi.atlas.model.ExperimentDesign">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="uk.ac.ebi.atlas.model.baseline.BaselineExperiment" target="uk.ac.ebi.atlas.model.baseline.Factor">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.2267643655996915" x="942.0" y="1642.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
