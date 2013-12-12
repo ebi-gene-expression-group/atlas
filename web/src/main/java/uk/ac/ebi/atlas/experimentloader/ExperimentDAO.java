@@ -99,32 +99,37 @@ public class ExperimentDAO {
         return Sets.newHashSet(experimentAccessions);
     }
 
-    private static final String INSERT_NEW_EXPERIMENT = "INSERT INTO experiment " +
-            "(accession, type, private, access_key, pubmed_ids, title) VALUES (?, ?, ?, ?, ?, ?)";
-
-    private static final String INSERT_EXPERIMENT_SPECIE = "INSERT INTO EXPERIMENT_ORGANISM (EXPERIMENT, ORGANISM) values (?, ?)";
-
     public UUID addExperiment(ExperimentDTO experimentDTO) {
-        String experimentAccession = experimentDTO.getExperimentAccession();
-
         try {
 
-            UUID accessKeyUUID = UUID.randomUUID();
-
-            String pubmedIds = Joiner.on(", ").join(experimentDTO.getPubmedIds());
-
-            jdbcTemplate.update(INSERT_NEW_EXPERIMENT, experimentAccession,
-                    experimentDTO.getExperimentType().name(), toString(experimentDTO.isPrivate()),
-                    accessKeyUUID.toString(), pubmedIds, experimentDTO.getTitle());
-
-            for (String species : experimentDTO.getSpecies()) {
-                jdbcTemplate.update(INSERT_EXPERIMENT_SPECIE, experimentAccession, species);
-            }
-
+            UUID accessKeyUUID = addExperimentRow(experimentDTO);
+            addExperimentSpeciesRows(experimentDTO);
             return accessKeyUUID;
 
         } catch (DuplicateKeyException e) {
-            throw new IllegalStateException("Experiment with experimentAccession " + experimentAccession + " has been already imported.");
+            throw new IllegalStateException("Experiment with experimentAccession " + experimentDTO.getExperimentAccession() + " has been already imported.");
+        }
+    }
+
+    private static final String INSERT_NEW_EXPERIMENT = "INSERT INTO experiment " +
+            "(accession, type, private, access_key, pubmed_ids, title) VALUES (?, ?, ?, ?, ?, ?)";
+
+    private UUID addExperimentRow(ExperimentDTO experimentDTO) {
+        UUID accessKeyUUID = UUID.randomUUID();
+
+        String pubmedIds = Joiner.on(", ").join(experimentDTO.getPubmedIds());
+
+        jdbcTemplate.update(INSERT_NEW_EXPERIMENT, experimentDTO.getExperimentAccession(),
+                experimentDTO.getExperimentType().name(), toString(experimentDTO.isPrivate()),
+                accessKeyUUID.toString(), pubmedIds, experimentDTO.getTitle());
+        return accessKeyUUID;
+    }
+
+    private static final String INSERT_EXPERIMENT_SPECIE = "INSERT INTO EXPERIMENT_ORGANISM (EXPERIMENT, ORGANISM) values (?, ?)";
+
+    private void addExperimentSpeciesRows(ExperimentDTO experimentDTO) {
+        for (String species : experimentDTO.getSpecies()) {
+            jdbcTemplate.update(INSERT_EXPERIMENT_SPECIE,  experimentDTO.getExperimentAccession(), species);
         }
     }
 
