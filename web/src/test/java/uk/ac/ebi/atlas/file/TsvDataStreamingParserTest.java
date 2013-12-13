@@ -1,7 +1,10 @@
 package uk.ac.ebi.atlas.file;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Iterator;
@@ -9,7 +12,10 @@ import java.util.Iterator;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class TsvDataStreamingParserTest {
 
     @Test
@@ -21,7 +27,7 @@ public class TsvDataStreamingParserTest {
 
         Reader tsvReader = new StringReader(tsvContents.toString());
 
-        Iterable<TsvData> tsvDataStreamingParser = TsvDataStreamingParser.create(new TsvStreamingParser(tsvReader));
+        Iterable<TsvData> tsvDataStreamingParser = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader));
 
         Iterator<TsvData> iterator = tsvDataStreamingParser.iterator();
 
@@ -39,6 +45,26 @@ public class TsvDataStreamingParserTest {
 
         assertThat(line2.getEverythingElse().keySet(), contains("g1","g2","g3","g4","g5"));
         assertThat(line2.getEverythingElse().values(), contains(0d,0d,0d,0d,1d));
+
+    }
+
+    @Test
+    public void autoClosesUnderlyingReader() throws IOException {
+        StringBuilder tsvContents = new StringBuilder();
+        tsvContents.append("Gene ID\tGene Name\tg1\tg2\tg3\tg4\tg5\n");
+        tsvContents.append("ENSMUSG00000030105\tArl8b\t1\t2\t3\t4\t-0.00248510654802851\n");
+        tsvContents.append("ENSG00000127720\tMETTL25\t0\t0\t0\t0\t1\n");
+
+        Reader tsvReader = spy(new StringReader(tsvContents.toString()));
+
+        try (TsvDataStreamingParser tsvDataStreamingParser = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader))) {
+
+            throw new RuntimeException("foobar");
+        } catch (RuntimeException e) {
+            // ignore
+        }
+
+        verify(tsvReader).close();
 
     }
 

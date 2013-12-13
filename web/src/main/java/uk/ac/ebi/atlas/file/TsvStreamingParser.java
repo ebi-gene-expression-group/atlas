@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.xlson.groovycsv.CsvIterator;
 import com.xlson.groovycsv.CsvParser;
 import com.xlson.groovycsv.PropertyMapper;
+import uk.ac.ebi.atlas.utils.AutoCloseableIterator;
 
 import java.io.Reader;
 import java.util.Iterator;
@@ -23,7 +24,7 @@ public class TsvStreamingParser implements Iterable<ImmutableMap<String, String>
     }
 
     @Override
-    public Iterator<ImmutableMap<String, String>> iterator() {
+    public CsvIteratorAsMap iterator() {
         return new CsvIteratorAsMap(new CsvParser().parse(args, reader));
     }
 
@@ -31,7 +32,7 @@ public class TsvStreamingParser implements Iterable<ImmutableMap<String, String>
      * Takes a CsvIterator (which returns PropertyMapper) and returns a ImmutableMap instead.
      * Map keys are the header, and values the line values.
     */
-    private class CsvIteratorAsMap implements Iterator<ImmutableMap<String, String>> {
+    private class CsvIteratorAsMap implements AutoCloseableIterator<ImmutableMap<String, String>> {
 
         private final CsvIterator csvIterator;
 
@@ -69,6 +70,11 @@ public class TsvStreamingParser implements Iterable<ImmutableMap<String, String>
         @Override
         public void remove() {
             csvIterator.remove();
+        }
+
+        @Override
+        public void close() {
+            csvIterator.close();
         }
     }
 }
