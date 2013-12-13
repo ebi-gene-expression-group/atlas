@@ -22,7 +22,7 @@ public class TsvDataTest {
         assertThat(tsvData.getGeneName(), is(GENE_NAME));
 
         assertThat(tsvData.getEverythingElse().keySet(), contains("g1_g2.p-value", "g1_g2.log2foldchange"));
-        assertThat(tsvData.getEverythingElse().values(), contains(1d, -0.00248510654802851));
+        assertThat(tsvData.getEverythingElse().values(), contains("1", "-0.00248510654802851"));
     }
 
 
@@ -30,7 +30,6 @@ public class TsvDataTest {
     public void orderOfLargerDatasetIsCorrect() {
         String[] headers = {"g1","g2","g3","g4","g5","g6","g7","g8","g9","g10","a1","a2","a3","a4","a5"};
         String[] values =  {"1","2","3","4","5","6","7","8","9","10","11","12","13","14.0","15.1"};
-        Double[] valuesAsDoubles =  new Double[] {1d,2d,3d,4d,5d,6d,7d,8d,9d,10d,11d,12d,13d,14.0,15.1};
 
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
         builder.put("Gene ID", GENE_ID);
@@ -46,7 +45,7 @@ public class TsvDataTest {
         assertThat(tsvData.getGeneName(), is(GENE_NAME));
 
         assertThat(tsvData.getEverythingElse().keySet(), contains(headers));
-        assertThat(tsvData.getEverythingElse().values(), contains(valuesAsDoubles));
+        assertThat(tsvData.getEverythingElse().values(), contains(values));
     }
 
 }

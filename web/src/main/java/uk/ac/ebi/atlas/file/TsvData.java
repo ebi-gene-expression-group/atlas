@@ -16,19 +16,18 @@ public class TsvData {
 
     private String geneId;
     private String geneName;
-    private ImmutableMap<String, Double> everythingElse;
+    private ImmutableMap<String, String> everythingElse;
 
     public TsvData(Map<String, String> line) {
         this.geneId = line.get(GENE_ID);
         this.geneName = line.get(GENE_NAME);
 
-        ImmutableMap.Builder<String, Double> mapBuilder = ImmutableMap.builder();
+        ImmutableMap.Builder<String, String> mapBuilder = ImmutableMap.builder();
 
         for (Map.Entry<String,String> entry: line.entrySet()) {
             String key = entry.getKey();
             if (!(key.equalsIgnoreCase(GENE_ID) || key.equalsIgnoreCase(GENE_NAME))) {
-                Double value = Double.parseDouble(entry.getValue());
-                mapBuilder.put(key, value);
+                mapBuilder.put(key, entry.getValue());
             }
         }
 
@@ -43,7 +42,7 @@ public class TsvData {
         return geneName;
     }
 
-    public ImmutableMap<String, Double> getEverythingElse() {
+    public ImmutableMap<String, String> getEverythingElse() {
         return everythingElse;
     }
 

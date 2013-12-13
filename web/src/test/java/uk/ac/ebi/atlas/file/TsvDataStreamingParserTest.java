@@ -34,9 +34,9 @@ public class TsvDataStreamingParserTest {
     public void readTwoTsvLines() throws IOException {
         Reader tsvReader = spy(new StringReader(tsvContents));
 
-        Iterable<TsvData> tsvDataStreamingParser = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader));
+        Iterable<TsvData> subject = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader));
 
-        Iterator<TsvData> iterator = tsvDataStreamingParser.iterator();
+        Iterator<TsvData> iterator = subject.iterator();
 
         TsvData line1 = iterator.next();
         TsvData line2 = iterator.next();
@@ -45,13 +45,13 @@ public class TsvDataStreamingParserTest {
         assertThat(line1.getGeneName(), is("Arl8b"));
 
         assertThat(line1.getEverythingElse().keySet(), contains("g1","g2","g3","g4","g5"));
-        assertThat(line1.getEverythingElse().values(), contains(1d,2d,3d,4d,-0.00248510654802851));
+        assertThat(line1.getEverythingElse().values(), contains("1","2","3","4","-0.00248510654802851"));
 
         assertThat(line2.getGeneId(), is("ENSG00000127720"));
         assertThat(line2.getGeneName(), is("METTL25"));
 
         assertThat(line2.getEverythingElse().keySet(), contains("g1","g2","g3","g4","g5"));
-        assertThat(line2.getEverythingElse().values(), contains(0d, 0d, 0d, 0d, 1d));
+        assertThat(line2.getEverythingElse().values(), contains("0", "0", "0", "0", "1"));
 
     }
 
@@ -59,7 +59,7 @@ public class TsvDataStreamingParserTest {
     public void tryRresourcesAutoClosesUnderlyingReaderOnException() throws IOException {
         Reader tsvReader = spy(new StringReader(tsvContents));
 
-        try (TsvDataStreamingParser tsvDataStreamingParser = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader))) {
+        try (TsvDataStreamingParser subject = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader))) {
             throw new RuntimeException("foobar");
         } catch (RuntimeException e) {
             // ignore
@@ -73,9 +73,9 @@ public class TsvDataStreamingParserTest {
     public void closesUnderlyingReaderWhenFinished() throws IOException {
         Reader tsvReader = spy(new StringReader(tsvContents));
 
-        TsvDataStreamingParser tsvDataStreamingParser = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader));
+        TsvDataStreamingParser subject = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader));
 
-        for (TsvData tsvData : tsvDataStreamingParser) {
+        for (TsvData tsvData : subject) {
             System.out.println(tsvData);
         }
 
@@ -86,8 +86,8 @@ public class TsvDataStreamingParserTest {
     public void tryResourcesClosesUnderlyingReaderWhenFinished() throws IOException {
         Reader tsvReader = spy(new StringReader(tsvContents));
 
-        try (TsvDataStreamingParser tsvDataStreamingParser = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader))) {
-            for (TsvData tsvData : tsvDataStreamingParser) {
+        try (TsvDataStreamingParser subject = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader))) {
+            for (TsvData tsvData : subject) {
                 System.out.println(tsvData);
             }
         }
