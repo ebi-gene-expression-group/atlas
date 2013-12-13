@@ -74,7 +74,9 @@ public class TsvStreamingParser implements Iterable<ImmutableMap<String, String>
 
         @Override
         public void close() {
-            csvIterator.close();
+            if (!csvIterator.isClosed()) {
+                csvIterator.close();
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.file;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -18,14 +19,20 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class TsvDataStreamingParserTest {
 
-    @Test
-    public void twoTsvLines() {
-        StringBuilder tsvContents = new StringBuilder();
-        tsvContents.append("Gene ID\tGene Name\tg1\tg2\tg3\tg4\tg5\n");
-        tsvContents.append("ENSMUSG00000030105\tArl8b\t1\t2\t3\t4\t-0.00248510654802851\n");
-        tsvContents.append("ENSG00000127720\tMETTL25\t0\t0\t0\t0\t1\n");
+    private static String tsvContents;
 
-        Reader tsvReader = new StringReader(tsvContents.toString());
+    @BeforeClass
+    public static void init() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Gene ID\tGene Name\tg1\tg2\tg3\tg4\tg5\n");
+        sb.append("ENSMUSG00000030105\tArl8b\t1\t2\t3\t4\t-0.00248510654802851\n");
+        sb.append("ENSG00000127720\tMETTL25\t0\t0\t0\t0\t1\n");
+        tsvContents = sb.toString();
+    }
+
+    @Test
+    public void readTwoTsvLines() throws IOException {
+        Reader tsvReader = spy(new StringReader(tsvContents));
 
         Iterable<TsvData> tsvDataStreamingParser = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader));
 
@@ -44,21 +51,15 @@ public class TsvDataStreamingParserTest {
         assertThat(line2.getGeneName(), is("METTL25"));
 
         assertThat(line2.getEverythingElse().keySet(), contains("g1","g2","g3","g4","g5"));
-        assertThat(line2.getEverythingElse().values(), contains(0d,0d,0d,0d,1d));
+        assertThat(line2.getEverythingElse().values(), contains(0d, 0d, 0d, 0d, 1d));
 
     }
 
     @Test
-    public void autoClosesUnderlyingReader() throws IOException {
-        StringBuilder tsvContents = new StringBuilder();
-        tsvContents.append("Gene ID\tGene Name\tg1\tg2\tg3\tg4\tg5\n");
-        tsvContents.append("ENSMUSG00000030105\tArl8b\t1\t2\t3\t4\t-0.00248510654802851\n");
-        tsvContents.append("ENSG00000127720\tMETTL25\t0\t0\t0\t0\t1\n");
-
-        Reader tsvReader = spy(new StringReader(tsvContents.toString()));
+    public void tryRresourcesAutoClosesUnderlyingReaderOnException() throws IOException {
+        Reader tsvReader = spy(new StringReader(tsvContents));
 
         try (TsvDataStreamingParser tsvDataStreamingParser = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader))) {
-
             throw new RuntimeException("foobar");
         } catch (RuntimeException e) {
             // ignore
@@ -67,5 +68,32 @@ public class TsvDataStreamingParserTest {
         verify(tsvReader).close();
 
     }
+
+    @Test
+    public void closesUnderlyingReaderWhenFinished() throws IOException {
+        Reader tsvReader = spy(new StringReader(tsvContents));
+
+        TsvDataStreamingParser tsvDataStreamingParser = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader));
+
+        for (TsvData tsvData : tsvDataStreamingParser) {
+            System.out.println(tsvData);
+        }
+
+        verify(tsvReader).close();
+    }
+
+    @Test
+    public void tryResourcesClosesUnderlyingReaderWhenFinished() throws IOException {
+        Reader tsvReader = spy(new StringReader(tsvContents));
+
+        try (TsvDataStreamingParser tsvDataStreamingParser = new TsvDataStreamingParser(new TsvStreamingParser(tsvReader))) {
+            for (TsvData tsvData : tsvDataStreamingParser) {
+                System.out.println(tsvData);
+            }
+        }
+
+        verify(tsvReader).close();
+    }
+
 
 }
