@@ -28,7 +28,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.streams.TsvRowBufferBuilder;
+import uk.ac.ebi.atlas.streams.TsvRowQueueBuilder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,21 +38,21 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class BaselineExpressionsBufferBuilder implements TsvRowBufferBuilder<BaselineExpression> {
+public class BaselineExpressionsQueueBuilder implements TsvRowQueueBuilder<BaselineExpression> {
 
     private String experimentAccession;
 
     private BaselineExperimentsCache experimentsCache;
 
     @Inject
-    public BaselineExpressionsBufferBuilder(BaselineExperimentsCache experimentsCache) {
+    public BaselineExpressionsQueueBuilder(BaselineExperimentsCache experimentsCache) {
 
         this.experimentsCache = experimentsCache;
 
     }
 
     @Override
-    public BaselineExpressionsBufferBuilder forExperiment(String experimentAccession) {
+    public BaselineExpressionsQueueBuilder forExperiment(String experimentAccession) {
 
         this.experimentAccession = experimentAccession;
 
@@ -61,19 +61,19 @@ public class BaselineExpressionsBufferBuilder implements TsvRowBufferBuilder<Bas
     }
 
     @Override
-    public BaselineExpressionsBufferBuilder withHeaders(String... tsvFileHeaders) {
+    public BaselineExpressionsQueueBuilder withHeaders(String... tsvFileHeaders) {
         //We don't need to process the headers for Baseline
         //because orderedFactorGroups is already available from BaselineExperiment
         return this;
     }
 
     @Override
-    public BaselineExpressionsBuffer build() {
+    public BaselineExpressionsQueue build() {
         checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
 
         BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
-        return new BaselineExpressionsBuffer(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups());
+        return new BaselineExpressionsQueue(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups());
 
     }
 

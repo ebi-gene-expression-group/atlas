@@ -25,17 +25,17 @@ package uk.ac.ebi.atlas.streams.baseline;
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.streams.TsvRowBuffer;
+import uk.ac.ebi.atlas.streams.TsvRowQueue;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
 
-public class BaselineExpressionsBuffer extends TsvRowBuffer<BaselineExpression> {
+public class BaselineExpressionsQueue extends TsvRowQueue<BaselineExpression> {
 
     private Iterator<FactorGroup> expectedFactorGroups;
 
-    protected BaselineExpressionsBuffer(List<FactorGroup> orderedFactorGroups) {
+    protected BaselineExpressionsQueue(List<FactorGroup> orderedFactorGroups) {
         expectedFactorGroups = Iterables.cycle(orderedFactorGroups).iterator();
     }
 

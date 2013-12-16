@@ -54,10 +54,10 @@ public class BaselineProfilesInputStreamTest {
     private CSVReader csvReaderMock;
 
     @Mock
-    private BaselineExpressionsBufferBuilder expressionsBufferBuilderMock;
+    private BaselineExpressionsQueueBuilder expressionsBufferBuilderMock;
 
     @Mock
-    private BaselineExpressionsBuffer expressionsBufferMock;
+    private BaselineExpressionsQueue expressionsBufferMock;
 
     private String[] expressionLevels = new String[]{"A GENE ID", "A GENE NAME", "2.22222", "0.11111"};
     private String[] expressionLevelsWithoutGeneIdColumn = new String[]{"2.22222", "0.11111"};

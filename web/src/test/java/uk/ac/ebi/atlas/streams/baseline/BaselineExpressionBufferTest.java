@@ -45,7 +45,7 @@ public class BaselineExpressionBufferTest {
     public static final String EXPRESSION_LEVEL_3 = "0.0001";
     private static final String[] THREE_EXPRESSION_LEVELS = new String[]{EXPRESSION_LEVEL_1, EXPRESSION_LEVEL_2, EXPRESSION_LEVEL_3};
 
-    private BaselineExpressionsBuffer subject;
+    private BaselineExpressionsQueue subject;
 
 
     @Before
@@ -61,7 +61,7 @@ public class BaselineExpressionBufferTest {
         orderedAllFactorValues.add(new FactorSet().add(factor2));
         orderedAllFactorValues.add(new FactorSet().add(factor3));
 
-        subject = new BaselineExpressionsBuffer(orderedAllFactorValues);
+        subject = new BaselineExpressionsQueue(orderedAllFactorValues);
 
     }
 

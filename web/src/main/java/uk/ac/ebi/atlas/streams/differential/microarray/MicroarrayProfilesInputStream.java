@@ -43,7 +43,7 @@ public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProf
     public MicroarrayProfilesInputStream(CSVReader csvReader,
                                          String experimentAccession,
                                          String arrayDesignAccession,
-                                         MicroarrayExpressionsBufferBuilder expressionsBufferBuilder,
+                                         MicroarrayExpressionsQueueBuilder expressionsBufferBuilder,
                                          MicroarrayProfileBuilder microarrayProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
@@ -52,7 +52,7 @@ public class MicroarrayProfilesInputStream extends TsvInputStream<MicroarrayProf
     }
 
     public List<Contrast> getOrderedContrasts() {
-        MicroarrayExpressionsBuffer tsvRowBuffer = (MicroarrayExpressionsBuffer) this.getTsvRowBuffer();
+        MicroarrayExpressionsQueue tsvRowBuffer = (MicroarrayExpressionsQueue) this.getTsvRowQueue();
         return tsvRowBuffer.getOrderedContrasts();
     }
 

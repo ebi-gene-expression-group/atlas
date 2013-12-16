@@ -30,13 +30,30 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public abstract class TsvRowBuffer<T extends Expression> {
+/*
+ * Converts a single row of expressions, eg:
+ *
+ * Gene ID, Gene Name, g1, g2, g3, g4, g5
+ * mus1, musName, 1, 2, 3, 4, 5
+ *
+ * into Expressions objects, eg:
+ *
+ * 1
+ * 2
+ * 3
+ * 4
+ * 5
+ *
+ * Implemented as a queue, from which the next expression in the row can be pulled off
+ * (ie: polled)
+ */
+public abstract class TsvRowQueue<T extends Expression> {
 
 
     private Queue<String> tsvRow = new LinkedList<>();
 
 
-    public TsvRowBuffer reload(String... values) {
+    public TsvRowQueue reload(String... values) {
         checkState(this.tsvRow.isEmpty(), "Reload must be invoked only when readNext returns null");
 
         Collections.addAll(this.tsvRow, values);

@@ -48,7 +48,7 @@ public class RnaSeqDiffExpressionsBufferTest {
 
     private static final String[] TWO_CONTRASTS = new String[]{P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2};
 
-    private RnaSeqDiffExpressionsBuffer subject;
+    private RnaSeqDiffExpressionsQueue subject;
 
     @Mock
     private Contrast contrast1Mock;
@@ -57,7 +57,7 @@ public class RnaSeqDiffExpressionsBufferTest {
 
     @Before
     public void initializeSubject() {
-        subject = new RnaSeqDiffExpressionsBuffer(Lists.newArrayList(contrast1Mock, contrast2Mock));
+        subject = new RnaSeqDiffExpressionsQueue(Lists.newArrayList(contrast1Mock, contrast2Mock));
 
     }
 

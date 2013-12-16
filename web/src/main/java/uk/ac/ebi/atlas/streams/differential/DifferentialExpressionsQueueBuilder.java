@@ -29,8 +29,8 @@ import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.cache.ExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.streams.TsvRowBuffer;
-import uk.ac.ebi.atlas.streams.TsvRowBufferBuilder;
+import uk.ac.ebi.atlas.streams.TsvRowQueue;
+import uk.ac.ebi.atlas.streams.TsvRowQueueBuilder;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -38,19 +38,19 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public abstract class DifferentialExpressionsBufferBuilder<T extends Expression, K extends DifferentialExperiment> implements TsvRowBufferBuilder<T> {
+public abstract class DifferentialExpressionsQueueBuilder<T extends Expression, K extends DifferentialExperiment> implements TsvRowQueueBuilder<T> {
 
-    private static final Logger LOGGER = Logger.getLogger(DifferentialExpressionsBufferBuilder.class);
+    private static final Logger LOGGER = Logger.getLogger(DifferentialExpressionsQueueBuilder.class);
     private ExperimentsCache<K> experimentsCache;
     private String experimentAccession;
     private List<Contrast> orderedContrasts;
 
-    public DifferentialExpressionsBufferBuilder(ExperimentsCache<K> experimentsCache) {
+    public DifferentialExpressionsQueueBuilder(ExperimentsCache<K> experimentsCache) {
         this.experimentsCache = experimentsCache;
     }
 
     @Override
-    public DifferentialExpressionsBufferBuilder forExperiment(String experimentAccession) {
+    public DifferentialExpressionsQueueBuilder forExperiment(String experimentAccession) {
 
         this.experimentAccession = experimentAccession;
 
@@ -59,7 +59,7 @@ public abstract class DifferentialExpressionsBufferBuilder<T extends Expression,
     }
 
     @Override
-    public DifferentialExpressionsBufferBuilder withHeaders(String... tsvFileHeaders) {
+    public DifferentialExpressionsQueueBuilder withHeaders(String... tsvFileHeaders) {
 
         LOGGER.debug("<withHeaders> data file headers: " + Arrays.toString(tsvFileHeaders));
 
@@ -81,7 +81,7 @@ public abstract class DifferentialExpressionsBufferBuilder<T extends Expression,
     }
 
     @Override
-    public TsvRowBuffer<T> build() {
+    public TsvRowQueue<T> build() {
 
         checkState(!CollectionUtils.isEmpty(orderedContrasts), "Builder state not ready for creating the ExpressionBuffer");
 
@@ -89,5 +89,5 @@ public abstract class DifferentialExpressionsBufferBuilder<T extends Expression,
 
     }
 
-    protected abstract TsvRowBuffer<T> getBufferInstance(List<Contrast> orderedContrasts);
+    protected abstract TsvRowQueue<T> getBufferInstance(List<Contrast> orderedContrasts);
 }

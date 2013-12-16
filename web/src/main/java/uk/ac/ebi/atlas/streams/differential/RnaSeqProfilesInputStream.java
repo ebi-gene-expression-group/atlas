@@ -35,7 +35,7 @@ public class RnaSeqProfilesInputStream extends TsvInputStream<RnaSeqProfile, Dif
     private RnaSeqProfileBuilder rnaSeqProfileBuilder;
 
     public RnaSeqProfilesInputStream(CSVReader csvReader, String experimentAccession
-            , RnaSeqExpressionsBufferBuilder expressionsBufferBuilder
+            , RnaSeqExpressionsQueueBuilder expressionsBufferBuilder
             , RnaSeqProfileBuilder rnaSeqProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);

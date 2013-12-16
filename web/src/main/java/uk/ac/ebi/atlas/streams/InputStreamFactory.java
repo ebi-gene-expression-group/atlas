@@ -33,12 +33,12 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfileBuilder;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfileBuilder;
-import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsBufferBuilder;
+import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsQueueBuilder;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsInputStream;
 import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesInputStream;
-import uk.ac.ebi.atlas.streams.differential.RnaSeqExpressionsBufferBuilder;
+import uk.ac.ebi.atlas.streams.differential.RnaSeqExpressionsQueueBuilder;
 import uk.ac.ebi.atlas.streams.differential.RnaSeqProfilesInputStream;
-import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayExpressionsBufferBuilder;
+import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayExpressionsQueueBuilder;
 import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayProfilesInputStream;
 import uk.ac.ebi.atlas.utils.TsvReaderUtils;
 
@@ -59,9 +59,9 @@ public class InputStreamFactory {
     @Value("#{configuration['microarray.experiment.data.path.template']}")
     private String microarrayExperimentDataFileUrlTemplate;
 
-    private BaselineExpressionsBufferBuilder baselineExpressionsBufferBuilder;
-    private RnaSeqExpressionsBufferBuilder rnaSeqExpressionsBufferBuilder;
-    private MicroarrayExpressionsBufferBuilder microarrayExpressionsBufferBuilder;
+    private BaselineExpressionsQueueBuilder baselineExpressionsBufferBuilder;
+    private RnaSeqExpressionsQueueBuilder rnaSeqExpressionsBufferBuilder;
+    private MicroarrayExpressionsQueueBuilder microarrayExpressionsBufferBuilder;
     private BaselineProfilePreconditionBackedBuilder baselineProfilePreconditionBackedBuilder;
     private MicroarrayProfileBuilder microarrayProfileBuilder;
     private RnaSeqProfileBuilder rnaSeqProfileBuilder;
@@ -69,9 +69,9 @@ public class InputStreamFactory {
     private TsvReaderUtils tsvReaderUtils;
 
     @Inject
-    public InputStreamFactory(BaselineExpressionsBufferBuilder baselineExpressionsBufferBuilder,
-                              RnaSeqExpressionsBufferBuilder rnaSeqExpressionsBufferBuilder,
-                              MicroarrayExpressionsBufferBuilder microarrayExpressionsBufferBuilder,
+    public InputStreamFactory(BaselineExpressionsQueueBuilder baselineExpressionsBufferBuilder,
+                              RnaSeqExpressionsQueueBuilder rnaSeqExpressionsBufferBuilder,
+                              MicroarrayExpressionsQueueBuilder microarrayExpressionsBufferBuilder,
                               BaselineProfilePreconditionBackedBuilder baselineProfilePreconditionBackedBuilder,
                               MicroarrayProfileBuilder microarrayProfileBuilder,
                               RnaSeqProfileBuilder rnaSeqProfileBuilder,

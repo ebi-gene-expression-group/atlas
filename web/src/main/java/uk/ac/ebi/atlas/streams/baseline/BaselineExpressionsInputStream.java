@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpressions, BaselineExpression> {
 
-    public BaselineExpressionsInputStream(CSVReader csvReader, String experimentAccession, BaselineExpressionsBufferBuilder expressionsBufferBuilder) {
+    public BaselineExpressionsInputStream(CSVReader csvReader, String experimentAccession, BaselineExpressionsQueueBuilder expressionsBufferBuilder) {
         super(csvReader, experimentAccession, expressionsBufferBuilder);
     }
 
@@ -38,11 +38,11 @@ public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpre
 
         BaselineExpressions baselineExpressions = new BaselineExpressions();
         //we need to reload because the first line can only be used to extract the gene ID
-        getTsvRowBuffer().reload(removeGeneIDAndNameColumns(values));
+        getTsvRowQueue().reload(removeGeneIDAndNameColumns(values));
 
         BaselineExpression expression;
 
-        while ((expression = getTsvRowBuffer().poll()) != null) {
+        while ((expression = getTsvRowQueue().poll()) != null) {
 
             baselineExpressions.addExpression(expression);
         }

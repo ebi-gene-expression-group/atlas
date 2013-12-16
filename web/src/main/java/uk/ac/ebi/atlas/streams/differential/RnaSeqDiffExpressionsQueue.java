@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.streams.differential;
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.streams.TsvRowBuffer;
+import uk.ac.ebi.atlas.streams.TsvRowQueue;
 
 import java.util.Iterator;
 import java.util.List;
@@ -33,11 +33,11 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class RnaSeqDiffExpressionsBuffer extends TsvRowBuffer<DifferentialExpression> {
+public class RnaSeqDiffExpressionsQueue extends TsvRowQueue<DifferentialExpression> {
 
     private Iterator<Contrast> expectedContrasts;
 
-    RnaSeqDiffExpressionsBuffer(List<Contrast> orderedContrasts) {
+    RnaSeqDiffExpressionsQueue(List<Contrast> orderedContrasts) {
         this.expectedContrasts = Iterables.cycle(orderedContrasts).iterator();
     }
 
