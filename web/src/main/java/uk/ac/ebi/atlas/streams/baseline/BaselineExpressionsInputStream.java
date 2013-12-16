@@ -29,8 +29,8 @@ import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpressions, BaselineExpression> {
 
-    public BaselineExpressionsInputStream(CSVReader csvReader, String experimentAccession, BaselineExpressionsQueueBuilder expressionsBufferBuilder) {
-        super(csvReader, experimentAccession, expressionsBufferBuilder);
+    public BaselineExpressionsInputStream(CSVReader csvReader, String experimentAccession, BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder) {
+        super(csvReader, experimentAccession, baselineExpressionsQueueBuilder);
     }
 
     @Override
