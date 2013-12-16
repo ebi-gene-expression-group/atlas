@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.dao;
 
+import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.AbstractInterruptibleBatchPreparedStatementSetter;
 import uk.ac.ebi.atlas.dao.dto.BaselineExpressionDto;
@@ -14,9 +15,10 @@ import java.sql.SQLException;
 @Named
 public class BaselineExpressionDao {
 
+    private static final Logger LOGGER = Logger.getLogger(BaselineExpressionDao.class);
 
-    private static final String TRANSCRIPT_PROFILE_INSERT = "INSERT INTO RNASEQ_BSLN_EXPRESSION " +
-            "(identifier, experiment, assaygroupid, isactive, expression) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String TRANSCRIPT_PROFILE_INSERT = "INSERT INTO RNASEQ_BSLN_EXPRESSIONS " +
+            "(identifier, experiment, assaygroupid, isactive, expression) VALUES (?, ?, ?, ?, ?)";
     private static final int IDENTIFIER = 1;
     private static final int EXPERIMENT = 2;
     private static final int ASSAY_GROUP_ID = 3;
@@ -31,7 +33,8 @@ public class BaselineExpressionDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void addBaselineExpressions(final String experimentAccession, BaselineExpressionDtoInputStream baselineExpressionDtos) throws IOException {
+    public void insertBaselineExpressions(final String experimentAccession, BaselineExpressionDtoInputStream baselineExpressionDtos)  {
+        LOGGER.info("insertBaselineExpressions for experiment " + experimentAccession);
 
         // will autoclose if DataAccessException thrown by jdbcTemplate
         try (BaselineExpressionDtoInputStream source = baselineExpressionDtos) {
@@ -60,8 +63,16 @@ public class BaselineExpressionDao {
                     return BATCH_SIZE;
                 }
             });
+        } catch (IOException e) {
+            LOGGER.warn(String.format("Cannot close BaselineExpressionDtoInputStream: %s", e.getMessage()));
         }
 
+        LOGGER.info(String.format("insertBaselineExpressions for experiment %s completed.", experimentAccession));
+    }
+
+    public void deleteBaselineExpressions(String experimentAccession) {
+        jdbcTemplate.update("UPDATE RNASEQ_BSLN_EXPRESSION SET ACTIVE='F' WHERE experiment = ?",
+                experimentAccession);
     }
 
 }

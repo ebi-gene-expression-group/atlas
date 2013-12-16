@@ -36,7 +36,7 @@
     <!-- enables annotation-based dependency injection -->
     <context:annotation-config/>
 
-    <!-- enables scanning for annotation-based injection -->
+    <!-- Scans within the base package of the application for @Components to configure as beans -->
     <context:component-scan base-package="uk.ac.ebi.atlas"/>
 
     <util:properties id="configuration" location="classpath:configuration.properties"/>
@@ -75,12 +75,5 @@
         <!--</list>-->
         <!--</property>-->
     </bean>
-
-    <!-- Scans within the base package of the application for @Components to configure as beans -->
-    <context:component-scan base-package="uk.ac.ebi.atlas"/>
-
-    <context:property-placeholder location="classpath:jdbc.properties"/>
-
-    <bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler"/>
 
 </beans>
