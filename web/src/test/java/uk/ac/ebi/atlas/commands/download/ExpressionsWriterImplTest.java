@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.utils.TsvReaderUtils;
+import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,7 +41,7 @@ import static org.mockito.Mockito.when;
 public class ExpressionsWriterImplTest {
 
     @Mock
-    private TsvReaderUtils tsvReaderUtilsMock;
+    private CsvReaderFactory csvReaderFactoryMock;
 
     @Mock
     private CSVWriter csvWriterMock;
@@ -57,7 +57,7 @@ public class ExpressionsWriterImplTest {
 
     @Before
     public void initSubject() throws Exception {
-        when(tsvReaderUtilsMock.build(anyString())).thenReturn(csvReaderMock);
+        when(csvReaderFactoryMock.createTsvReader(anyString())).thenReturn(csvReaderMock);
         when(csvReaderMock.readNext()).thenReturn(header)
                 .thenReturn(line1)
                 .thenReturn(line2)
@@ -65,7 +65,7 @@ public class ExpressionsWriterImplTest {
 
         AnalyticsDataHeaderBuilder headerBuilder = new AnalyticsDataHeaderBuilder();
 
-        subject = new ExpressionsWriterImpl(tsvReaderUtilsMock);
+        subject = new ExpressionsWriterImpl(csvReaderFactoryMock);
         subject.setFileUrlTemplate("magetab/{0}/{0}-row-counts.tsv");
         subject.setHeaderBuilder(null);
         subject.setResponseWriter(csvWriterMock);
