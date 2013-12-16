@@ -31,6 +31,7 @@ import java.io.Closeable;
  */
 public interface ObjectInputStream<T> extends Closeable {
 
+    // returns null when stream is empty
     T readNext();
 
 }

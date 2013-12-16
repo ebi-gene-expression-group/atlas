@@ -2,6 +2,9 @@ package uk.ac.ebi.atlas.dao.dto;
 
 import com.google.common.base.Objects;
 
+/*
+ * Used for loading baseline expressions from the TSV file into the database
+ */
 public class BaselineExpressionDto {
 
     private String geneId;
@@ -56,4 +59,5 @@ public class BaselineExpressionDto {
                 .add("expressionLevel", expressionLevel)
                 .toString();
     }
+
 }

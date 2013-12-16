@@ -3,14 +3,13 @@ package uk.ac.ebi.atlas.dao;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.AbstractInterruptibleBatchPreparedStatementSetter;
 import uk.ac.ebi.atlas.dao.dto.BaselineExpressionDto;
-import uk.ac.ebi.atlas.utils.AutoCloseableIterable;
+import uk.ac.ebi.atlas.dao.dto.BaselineExpressionDtoInputStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Iterator;
 
 @Named
 public class BaselineExpressionDao {
@@ -23,6 +22,7 @@ public class BaselineExpressionDao {
     private static final int ASSAY_GROUP_ID = 3;
     private static final int IS_ACTIVE = 4;
     private static final int EXPRESSION = 5;
+    public static final int BATCH_SIZE = 20000;
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -31,22 +31,20 @@ public class BaselineExpressionDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void addBaselineExpressions(final String experimentAccession, AutoCloseableIterable<BaselineExpressionDto> baselineExpressionDTOs) throws IOException {
+    public void addBaselineExpressions(final String experimentAccession, BaselineExpressionDtoInputStream baselineExpressionDtos) throws IOException {
 
-        // will autoclose iterable if DataAccessException thrown by jdbcTemplate
-        try (AutoCloseableIterable<BaselineExpressionDto> source = baselineExpressionDTOs) {
-
-            final Iterator<BaselineExpressionDto> iterator = source.iterator();
+        // will autoclose if DataAccessException thrown by jdbcTemplate
+        try (BaselineExpressionDtoInputStream source = baselineExpressionDtos) {
 
             jdbcTemplate.batchUpdate(TRANSCRIPT_PROFILE_INSERT, new AbstractInterruptibleBatchPreparedStatementSetter() {
 
                 @Override
                 protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
-                    if (!iterator.hasNext()) {
+                    BaselineExpressionDto baselineExpressionDto = source.readNext();
+
+                    if (baselineExpressionDto == null) {
                         return false;
                     }
-
-                    BaselineExpressionDto baselineExpressionDto = iterator.next();
 
                     ps.setString(IDENTIFIER, baselineExpressionDto.getGeneId());
                     ps.setString(EXPERIMENT, experimentAccession);
@@ -55,6 +53,11 @@ public class BaselineExpressionDao {
                     ps.setDouble(EXPRESSION, baselineExpressionDto.getExpressionLevel());
 
                     return true;
+                }
+
+                @Override
+                public int getBatchSize() {
+                    return BATCH_SIZE;
                 }
             });
         }
