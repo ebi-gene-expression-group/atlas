@@ -24,12 +24,12 @@ package uk.ac.ebi.atlas.streams;
 
 import uk.ac.ebi.atlas.model.Expression;
 
-public interface TsvRowBufferBuilder<T extends Expression> {
+public interface TsvRowQueueBuilder<T extends Expression> {
 
-    TsvRowBufferBuilder forExperiment(String experimentAccession);
+    TsvRowQueueBuilder forExperiment(String experimentAccession);
 
-    TsvRowBufferBuilder withHeaders(String... tsvFileHeaders);
+    TsvRowQueueBuilder withHeaders(String... tsvFileHeaders);
 
-    TsvRowBuffer<T> build();
+    TsvRowQueue<T> build();
 
 }

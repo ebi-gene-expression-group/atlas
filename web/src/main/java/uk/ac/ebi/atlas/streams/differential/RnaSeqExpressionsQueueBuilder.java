@@ -20,15 +20,14 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams.differential.microarray;
+package uk.ac.ebi.atlas.streams.differential;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
-import uk.ac.ebi.atlas.streams.TsvRowBuffer;
-import uk.ac.ebi.atlas.streams.differential.DifferentialExpressionsBufferBuilder;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.streams.TsvRowQueue;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,17 +35,17 @@ import java.util.List;
 
 @Named
 @Scope("prototype")
-public class MicroarrayExpressionsBufferBuilder  extends DifferentialExpressionsBufferBuilder<MicroarrayExpression, MicroarrayExperiment> {
-
+public class RnaSeqExpressionsQueueBuilder extends DifferentialExpressionsQueueBuilder<DifferentialExpression, DifferentialExperiment> {
 
     @Inject
-    public MicroarrayExpressionsBufferBuilder(MicroarrayExperimentsCache experimentsCache) {
+    public RnaSeqExpressionsQueueBuilder(RnaSeqDiffExperimentsCache experimentsCache) {
         super(experimentsCache);
+
     }
 
     @Override
-    protected TsvRowBuffer<MicroarrayExpression> getBufferInstance(List<Contrast> orderedContrasts) {
-        return new MicroarrayExpressionsBuffer(orderedContrasts);
+    protected TsvRowQueue<DifferentialExpression> getBufferInstance(List<Contrast> orderedContrasts) {
+        return new RnaSeqDiffExpressionsQueue(orderedContrasts);
     }
 
 }

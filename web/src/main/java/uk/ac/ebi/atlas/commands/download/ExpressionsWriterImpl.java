@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.commands.download;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.lang.StringUtils;
-import uk.ac.ebi.atlas.utils.TsvReaderUtils;
+import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -34,7 +34,7 @@ import java.text.MessageFormat;
 class ExpressionsWriterImpl implements ExpressionsWriter {
 
 
-    private TsvReaderUtils tsvReaderUtils;
+    private CsvReaderFactory csvReaderFactory;
 
     private CSVWriter csvWriter;
 
@@ -44,8 +44,8 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
     private AnalyticsDataHeaderBuilder headerBuilder;
     private String arrayDesignAccession;
 
-    public ExpressionsWriterImpl(TsvReaderUtils tsvReaderUtils) {
-        this.tsvReaderUtils = tsvReaderUtils;
+    public ExpressionsWriterImpl(CsvReaderFactory csvReaderFactory) {
+        this.csvReaderFactory = csvReaderFactory;
     }
 
     public void setResponseWriter(CSVWriter csvWriter) {
@@ -99,7 +99,7 @@ class ExpressionsWriterImpl implements ExpressionsWriter {
 
     CSVReader getCsvReader() {
         String tsvFileURL = formatUrl(fileUrlTemplate);
-        return tsvReaderUtils.build(tsvFileURL);
+        return csvReaderFactory.createTsvReader(tsvFileURL);
     }
 
     String formatUrl(String fileUrlTemplate) {

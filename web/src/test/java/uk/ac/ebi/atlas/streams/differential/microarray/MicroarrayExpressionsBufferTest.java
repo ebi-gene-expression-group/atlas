@@ -50,7 +50,7 @@ public class MicroarrayExpressionsBufferTest {
 
     private static final String[] TWO_CONTRASTS = new String[]{P_VAL_1, T_VAL_1, FOLD_CHANGE_1, P_VAL_2, T_VAL_2, FOLD_CHANGE_2};
 
-    private MicroarrayExpressionsBuffer subject;
+    private MicroarrayExpressionsQueue subject;
 
     @Mock
     private Contrast contrast1Mock;
@@ -59,7 +59,7 @@ public class MicroarrayExpressionsBufferTest {
 
     @Before
     public void initializeSubject() {
-        subject = new MicroarrayExpressionsBuffer(Lists.newArrayList(contrast1Mock, contrast2Mock));
+        subject = new MicroarrayExpressionsQueue(Lists.newArrayList(contrast1Mock, contrast2Mock));
 
     }
 

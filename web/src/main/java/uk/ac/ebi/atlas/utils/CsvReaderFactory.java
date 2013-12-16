@@ -14,18 +14,22 @@ import java.nio.file.Path;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
-public class TsvReaderUtils {
+public class CsvReaderFactory {
 
-    private static final Logger LOGGER = Logger.getLogger(TsvReaderUtils.class);
+    private static final Logger LOGGER = Logger.getLogger(CsvReaderFactory.class);
 
-    public CSVReader build(String tsvFileURL) {
+    public CSVReader createTsvReader(String tsvFilePath) {
         try {
-            Path filePath = FileSystems.getDefault().getPath(checkNotNull(tsvFileURL));
+            Path filePath = FileSystems.getDefault().getPath(checkNotNull(tsvFilePath));
             Reader dataFileReader = new InputStreamReader(Files.newInputStream(filePath));
-            return new CSVReader(dataFileReader, '\t');
+            return createTsvReader(dataFileReader);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalArgumentException("Error while building GeneProfileInputStream.", e);
         }
+    }
+
+    public CSVReader createTsvReader(Reader source) {
+        return new CSVReader(source, '\t');
     }
 }

@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.streams.differential.microarray;
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
-import uk.ac.ebi.atlas.streams.TsvRowBuffer;
+import uk.ac.ebi.atlas.streams.TsvRowQueue;
 
 import java.util.Iterator;
 import java.util.List;
@@ -33,15 +33,15 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkState;
 
-//ToDo: duplicate code with RnaSeqDiffExpressionsBuffer
-public class MicroarrayExpressionsBuffer extends TsvRowBuffer<MicroarrayExpression> {
+//ToDo: duplicate code with RnaSeqDiffExpressionsQueue
+public class MicroarrayExpressionsQueue extends TsvRowQueue<MicroarrayExpression> {
 
 
     private Iterator<Contrast> expectedContrasts;
 
     private List<Contrast> orderedContrasts;
 
-    MicroarrayExpressionsBuffer(List<Contrast> orderedContrasts) {
+    MicroarrayExpressionsQueue(List<Contrast> orderedContrasts) {
         this.expectedContrasts = Iterables.cycle(orderedContrasts).iterator();
         this.orderedContrasts = orderedContrasts;
     }

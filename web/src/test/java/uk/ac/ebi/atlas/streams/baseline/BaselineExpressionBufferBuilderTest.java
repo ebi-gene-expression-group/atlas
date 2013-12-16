@@ -71,7 +71,7 @@ public class BaselineExpressionBufferBuilderTest {
     ExperimentalFactors experimentalFactorsMock;
 
 
-    private BaselineExpressionsBufferBuilder subject;
+    private BaselineExpressionsQueueBuilder subject;
 
 
 
@@ -93,7 +93,7 @@ public class BaselineExpressionBufferBuilderTest {
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
 
-        subject = new BaselineExpressionsBufferBuilder(experimentsCacheMock);
+        subject = new BaselineExpressionsQueueBuilder(experimentsCacheMock);
     }
 
     @Test(expected = IllegalStateException.class)
