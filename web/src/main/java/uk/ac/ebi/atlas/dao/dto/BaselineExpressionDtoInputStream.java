@@ -12,7 +12,21 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-
+/*
+ * Reads tsv input of:
+ *
+ * Gene ID Gene Name g1 g2 g3 g4 g5
+ * mus1    musName    1  2  3  0  5
+ *
+ * and returns BaselineExpressionDTOs of:
+ *
+ * mus1, g1, 1
+ * mus1, g2, 2
+ * mus1, g3, 3
+ * mus1, g5, 5
+ *
+ * NB: expression levels of 0 are skipped
+ */
 public class BaselineExpressionDtoInputStream implements ObjectInputStream<BaselineExpressionDto> {
 
     private static final Logger LOGGER = Logger.getLogger(BaselineExpressionDtoInputStream.class);
@@ -63,20 +77,6 @@ public class BaselineExpressionDtoInputStream implements ObjectInputStream<Basel
         return queue.remove();
     }
 
-    /*
-     * turns tsv header and line of:
-     *
-     * Gene ID, Gene Name, g1, g2, g3, g4, g5
-     * mus1, musName, 1, 2, 3, 4, 5
-     *
-     * into BaselineExpressionDTOs of:
-     *
-     * mus1, g1, 1
-     * mus1, g2, 2
-     * mus1, g3, 3
-     * mus1, g4, 4
-     * mus1, g5, 5
-     */
     private ImmutableList<? extends BaselineExpressionDto> createList(String geneId, String[] assayGroupIds, String[] expressionLevels) {
         checkArgument(assayGroupIds.length == expressionLevels.length);
 
@@ -85,7 +85,9 @@ public class BaselineExpressionDtoInputStream implements ObjectInputStream<Basel
         for (int i = 0; i < expressionLevels.length; i++) {
             String assayGroupId = assayGroupIds[i];
             Double expressionLevel = Double.parseDouble(expressionLevels[i]);
-            builder.add(new BaselineExpressionDto(geneId, assayGroupId, expressionLevel));
+            if (expressionLevel != 0.0) {
+                builder.add(new BaselineExpressionDto(geneId, assayGroupId, expressionLevel));
+            }
         }
 
         return builder.build();

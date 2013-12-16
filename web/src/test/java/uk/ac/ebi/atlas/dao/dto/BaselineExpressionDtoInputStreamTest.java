@@ -40,10 +40,7 @@ public class BaselineExpressionDtoInputStreamTest {
         BaselineExpressionDto line1g4 = new BaselineExpressionDto("ENSMUSG00000030105", "g4", 4.0);
         BaselineExpressionDto line1g5 = new BaselineExpressionDto("ENSMUSG00000030105", "g5", -0.00248510654802851);
 
-        BaselineExpressionDto line2g1 = new BaselineExpressionDto("ENSG00000127720", "g1", 0.0);
-        BaselineExpressionDto line2g2 = new BaselineExpressionDto("ENSG00000127720", "g2", 0.0);
         BaselineExpressionDto line2g3 = new BaselineExpressionDto("ENSG00000127720", "g3", 1.0);
-        BaselineExpressionDto line2g4 = new BaselineExpressionDto("ENSG00000127720", "g4", 0.0);
         BaselineExpressionDto line2g5 = new BaselineExpressionDto("ENSG00000127720", "g5", 1.0);
 
         assertThat(subject.readNext(), is(line1g1));
@@ -52,10 +49,7 @@ public class BaselineExpressionDtoInputStreamTest {
         assertThat(subject.readNext(), is(line1g4));
         assertThat(subject.readNext(), is(line1g5));
 
-        assertThat(subject.readNext(), is(line2g1));
-        assertThat(subject.readNext(), is(line2g2));
         assertThat(subject.readNext(), is(line2g3));
-        assertThat(subject.readNext(), is(line2g4));
         assertThat(subject.readNext(), is(line2g5));
     }
 
