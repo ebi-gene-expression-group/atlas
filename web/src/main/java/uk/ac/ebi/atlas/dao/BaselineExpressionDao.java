@@ -34,7 +34,7 @@ public class BaselineExpressionDao {
     }
 
     public void insertBaselineExpressions(final String experimentAccession, BaselineExpressionDtoInputStream baselineExpressionDtos)  {
-        LOGGER.info("insertBaselineExpressions for experiment " + experimentAccession);
+        LOGGER.info(String.format("insertBaselineExpressions for experiment %s begin", experimentAccession));
 
         // will autoclose if DataAccessException thrown by jdbcTemplate
         try (BaselineExpressionDtoInputStream source = baselineExpressionDtos) {
@@ -67,11 +67,12 @@ public class BaselineExpressionDao {
             LOGGER.warn(String.format("Cannot close BaselineExpressionDtoInputStream: %s", e.getMessage()));
         }
 
-        LOGGER.info(String.format("insertBaselineExpressions for experiment %s completed.", experimentAccession));
+        LOGGER.info(String.format("insertBaselineExpressions for experiment %s complete", experimentAccession));
     }
 
     public void deleteBaselineExpressions(String experimentAccession) {
-        jdbcTemplate.update("UPDATE RNASEQ_BSLN_EXPRESSION SET ACTIVE='F' WHERE experiment = ?",
+        LOGGER.info("deleteBaselineExpressions for experiment " + experimentAccession);
+        jdbcTemplate.update("UPDATE RNASEQ_BSLN_EXPRESSIONS SET ISACTIVE='F' WHERE experiment = ?",
                 experimentAccession);
     }
 

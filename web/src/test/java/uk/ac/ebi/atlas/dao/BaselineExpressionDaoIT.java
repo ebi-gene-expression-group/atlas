@@ -15,18 +15,21 @@ import uk.ac.ebi.atlas.dao.dto.BaselineExpressionDtoInputStream;
 
 import javax.inject.Inject;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import java.io.IOException;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-@Transactional  // enable transaction manager, so that changes to the database a rolled back automatically
+@Transactional  // enable transaction manager, so that changes to the database are rolled back after each test method
 public class BaselineExpressionDaoIT {
 
     public static final String EXPERIMENT_ACCESSION = "delme";
+
     @Inject
     private BaselineExpressionDao baselineExpressionDao;
 
@@ -43,12 +46,18 @@ public class BaselineExpressionDaoIT {
     }
 
     @Test
-    public void insertBaselineExpressions() {
+    public void insertAndDeleteBaselineExpressions() throws IOException {
         assertThat(getCount(), is(0));
 
         baselineExpressionDao.insertBaselineExpressions(EXPERIMENT_ACCESSION, baselineExpressionDtoInputStream);
 
         assertThat(getCount(), is(2));
+
+        baselineExpressionDao.deleteBaselineExpressions(EXPERIMENT_ACCESSION);
+
+        assertThat(getCount(), is(0));
+
+        verify(baselineExpressionDtoInputStream).close();
     }
 
     private int getCount() {
