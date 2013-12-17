@@ -28,7 +28,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
+import uk.ac.ebi.atlas.experimentloader.ExperimentMetadataCRUD;
 import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
@@ -47,14 +47,14 @@ public class ExperimentAdminController {
     private static final Logger LOGGER = Logger.getLogger(ExperimentAdminController.class);
 
     private ExperimentChecker experimentChecker;
-    private ExperimentCRUD experimentCRUD;
+    private ExperimentMetadataCRUD experimentMetadataCRUD;
 
 
     @Inject
     public ExperimentAdminController(ExperimentChecker experimentChecker,
-                                     ExperimentCRUD experimentCRUD) {
+                                     ExperimentMetadataCRUD experimentMetadataCRUD) {
         this.experimentChecker = experimentChecker;
-        this.experimentCRUD = experimentCRUD;
+        this.experimentMetadataCRUD = experimentMetadataCRUD;
     }
 
     @ExceptionHandler(Exception.class)
@@ -72,11 +72,11 @@ public class ExperimentAdminController {
 
         experimentChecker.checkConfigurationFilePermissions(experimentAccession);
 
-        ExperimentConfiguration configuration = experimentCRUD.loadExperimentConfiguration(experimentAccession);
+        ExperimentConfiguration configuration = experimentMetadataCRUD.loadExperimentConfiguration(experimentAccession);
 
         experimentChecker.checkAllFiles(experimentAccession, configuration.getExperimentType());
 
-        UUID accessKeyUUID = experimentCRUD.importExperiment(experimentAccession, configuration, isPrivate);
+        UUID accessKeyUUID = experimentMetadataCRUD.importExperiment(experimentAccession, configuration, isPrivate);
 
         return "Experiment " + experimentAccession + " loaded, accessKey: " + accessKeyUUID;
     }
@@ -85,7 +85,7 @@ public class ExperimentAdminController {
     @ResponseBody
     public String deleteExperiment(@RequestParam("accession") String experimentAccession) {
 
-        experimentCRUD.deleteExperiment(experimentAccession);
+        experimentMetadataCRUD.deleteExperiment(experimentAccession);
         return "Experiment " + experimentAccession + " successfully deleted.";
     }
 
@@ -94,7 +94,7 @@ public class ExperimentAdminController {
     public String updateExperiment(@RequestParam("accession") String experimentAccession,
                                    @RequestParam("private") boolean isPrivate) throws IOException {
 
-        experimentCRUD.updateExperiment(experimentAccession, isPrivate);
+        experimentMetadataCRUD.updateExperiment(experimentAccession, isPrivate);
         return "Experiment " + experimentAccession + " successfully updated.";
     }
 
@@ -103,9 +103,9 @@ public class ExperimentAdminController {
     public String listExperiments(@RequestParam(value = "accession", required = false) Set<String> experimentAccessions) {
         List<ExperimentDTO> experiments;
         if (CollectionUtils.isEmpty(experimentAccessions)) {
-            experiments = experimentCRUD.findAllExperiments();
+            experiments = experimentMetadataCRUD.findAllExperiments();
         } else {
-            experiments = experimentCRUD.findExperiments(experimentAccessions);
+            experiments = experimentMetadataCRUD.findExperiments(experimentAccessions);
         }
         return new Gson().toJson(experiments);
 
@@ -114,14 +114,14 @@ public class ExperimentAdminController {
     @RequestMapping("/updateAllExperimentDesigns")
     @ResponseBody
     public String updateAllExperimentDesigns() {
-        int updatedExperimentsCount = experimentCRUD.updateAllExperimentDesigns();
+        int updatedExperimentsCount = experimentMetadataCRUD.updateAllExperimentDesigns();
         return "Experiment design was updated for " + updatedExperimentsCount + " experiments";
     }
 
     @RequestMapping("/updateAllExperiments")
     @ResponseBody
     public String updateAllExperiments() throws IOException {
-        int updatedExperimentsCount = experimentCRUD.updateAllExperiments();
+        int updatedExperimentsCount = experimentMetadataCRUD.updateAllExperiments();
         return "Experiment design was updated for " + updatedExperimentsCount + " experiments";
     }
 

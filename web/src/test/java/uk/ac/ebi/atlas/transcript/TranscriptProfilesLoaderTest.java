@@ -70,7 +70,7 @@ public class TranscriptProfilesLoaderTest {
 
 
     @Mock
-    private TranscriptProfileDAO transcriptProfileDAOMock;
+    private TranscriptProfileDao transcriptProfileDaoMock;
 
     private TranscriptProfilesLoader subject;
 
@@ -79,16 +79,16 @@ public class TranscriptProfilesLoaderTest {
         CSVReader csvReader = new CSVReader(new InputStreamReader(new ByteArrayInputStream(("\n" + Joiner.on(",").join(TSV_LINE_1) + "\n" + Joiner.on(",").join(TSV_LINE_2)).getBytes())));
         when(csvReaderFactory.createTsvReader(contains(EXPERIMENT_ACCESSION))).thenReturn(csvReader);
 
-        subject = new TranscriptProfilesLoader(csvReaderFactory, transcriptProfileDAOMock, A_URL_TEMPLATE_MOCK + "{0}");
+        subject = new TranscriptProfilesLoader(csvReaderFactory, transcriptProfileDaoMock, A_URL_TEMPLATE_MOCK + "{0}");
     }
 
     @Test
     public void testLoad() throws IOException {
         subject.load(EXPERIMENT_ACCESSION);
-        verify(transcriptProfileDAOMock).deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
+        verify(transcriptProfileDaoMock).deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
         verify(csvReaderFactory).createTsvReader(A_URL_TEMPLATE_MOCK + EXPERIMENT_ACCESSION);
 
-        verify(transcriptProfileDAOMock).addTranscriptProfiles(eq(EXPERIMENT_ACCESSION), captor.capture());
+        verify(transcriptProfileDaoMock).loadTranscriptProfiles(eq(EXPERIMENT_ACCESSION), captor.capture());
         assertThat(captor.getValue(), containsInAnyOrder(transcriptProfile1, transcriptProfile2));
     }
 

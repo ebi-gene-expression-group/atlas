@@ -49,7 +49,7 @@ public class BaselineExpressionDaoIT {
     public void insertAndDeleteBaselineExpressions() throws IOException {
         assertThat(getCount(), is(0));
 
-        baselineExpressionDao.insertBaselineExpressions(EXPERIMENT_ACCESSION, baselineExpressionDtoInputStream);
+        baselineExpressionDao.loadBaselineExpressions(EXPERIMENT_ACCESSION, baselineExpressionDtoInputStream);
 
         assertThat(getCount(), is(2));
 

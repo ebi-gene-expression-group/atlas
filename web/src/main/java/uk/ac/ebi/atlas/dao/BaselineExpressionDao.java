@@ -33,8 +33,8 @@ public class BaselineExpressionDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void insertBaselineExpressions(final String experimentAccession, BaselineExpressionDtoInputStream baselineExpressionDtos)  {
-        LOGGER.info(String.format("insertBaselineExpressions for experiment %s begin", experimentAccession));
+    public void loadBaselineExpressions(final String experimentAccession, BaselineExpressionDtoInputStream baselineExpressionDtos)  {
+        LOGGER.info(String.format("loadBaselineExpressions for experiment %s begin", experimentAccession));
 
         // will autoclose if DataAccessException thrown by jdbcTemplate
         try (BaselineExpressionDtoInputStream source = baselineExpressionDtos) {
@@ -67,7 +67,7 @@ public class BaselineExpressionDao {
             LOGGER.warn(String.format("Cannot close BaselineExpressionDtoInputStream: %s", e.getMessage()));
         }
 
-        LOGGER.info(String.format("insertBaselineExpressions for experiment %s complete", experimentAccession));
+        LOGGER.info(String.format("loadBaselineExpressions for experiment %s complete", experimentAccession));
     }
 
     public void deleteBaselineExpressions(String experimentAccession) {

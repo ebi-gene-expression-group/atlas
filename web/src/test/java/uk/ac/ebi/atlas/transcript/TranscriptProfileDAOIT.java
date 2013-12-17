@@ -48,7 +48,7 @@ import static org.junit.Assert.assertThat;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 @Transactional  // enable transaction manager, so that changes to the database are rolled back after each test method
-public class TranscriptProfileDAOIT {
+public class TranscriptProfileDaoIT {
 
     private static final String TEST_EXPERIMENT_ACCESSION = "delme";
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-599";
@@ -69,7 +69,7 @@ public class TranscriptProfileDAOIT {
             transcriptProfile4, transcriptProfile5, transcriptProfile6);
 
     @Inject
-    private TranscriptProfileDAO subject;
+    private TranscriptProfileDao subject;
 
     @Inject
     private JdbcTemplate jdbcTemplate;
@@ -103,7 +103,7 @@ public class TranscriptProfileDAOIT {
     public void insertAndDeleteTranscriptProfiles() throws IOException {
         assertThat(getCount(), is(0));
 
-        subject.addTranscriptProfiles(TEST_EXPERIMENT_ACCESSION, transcriptProfiles);
+        subject.loadTranscriptProfiles(TEST_EXPERIMENT_ACCESSION, transcriptProfiles);
 
         assertThat(getCount(), is(transcriptProfiles.size()));
 

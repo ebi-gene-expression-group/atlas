@@ -27,7 +27,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
+import uk.ac.ebi.atlas.experimentloader.ExperimentMetadataCRUD;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 
 import javax.inject.Inject;
@@ -40,7 +40,7 @@ import java.util.List;
 @Named
 @Scope("prototype")
 public class TranscriptProfileDAO {
-    private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
+    private static final Logger LOGGER = Logger.getLogger(TranscriptProfileDAO.class);
 
     private static final String TRANSCRIPT_PROFILE_QUERY = "SELECT GENE_IDENTIFIER, TRANSCRIPT_IDENTIFIER, TRANSCRIPT_EXPRESSIONS " +
             "FROM RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ? AND GENE_IDENTIFIER = ?";

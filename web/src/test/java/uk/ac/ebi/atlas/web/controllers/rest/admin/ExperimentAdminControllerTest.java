@@ -29,13 +29,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
+import uk.ac.ebi.atlas.experimentloader.ExperimentMetadataCRUD;
 import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
+import uk.ac.ebi.atlas.transcript.TranscriptProfileDao;
 
 import java.util.GregorianCalendar;
 import java.util.UUID;
@@ -59,7 +59,7 @@ public class ExperimentAdminControllerTest {
     private ExperimentDAO experimentDAOMock;
 
     @Mock
-    private TranscriptProfileDAO transcriptProfileDAOMock;
+    private TranscriptProfileDao transcriptProfileDaoMock;
 
     @Mock
     private ExperimentChecker experimentCheckerMock;
@@ -68,17 +68,17 @@ public class ExperimentAdminControllerTest {
     private ExperimentConfiguration experimentConfiguration;
 
     @Mock
-    private ExperimentCRUD experimentCRUDMock;
+    private ExperimentMetadataCRUD experimentMetadataCRUDMock;
 
     private ExperimentAdminController subject;
 
     @Before
     public void setUp() throws Exception {
 
-        subject = new ExperimentAdminController(experimentCheckerMock, experimentCRUDMock);
+        subject = new ExperimentAdminController(experimentCheckerMock, experimentMetadataCRUDMock);
 
         when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
-        when(experimentCRUDMock.loadExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(experimentConfiguration);
+        when(experimentMetadataCRUDMock.loadExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(experimentConfiguration);
 
         given(experimentDAOMock.findPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(null);
         given(experimentDAOMock.findAllExperiments()).willReturn(
@@ -93,13 +93,13 @@ public class ExperimentAdminControllerTest {
         String responseText = subject.loadExperiment(EXPERIMENT_ACCESSION, false);
         assertThat(responseText, startsWith("Experiment " + EXPERIMENT_ACCESSION + " loaded, accessKey:"));
         verify(experimentCheckerMock).checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
+        verify(experimentMetadataCRUDMock).importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
     }
 
     @Test(expected = IllegalStateException.class)
     public void loadExperimentShouldFail() throws Exception {
         willThrow(new IllegalStateException(EXCEPTION_MESSAGE))
-                .given(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
+                .given(experimentMetadataCRUDMock).importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
 
         subject.loadExperiment(EXPERIMENT_ACCESSION, false);
     }
@@ -112,7 +112,7 @@ public class ExperimentAdminControllerTest {
 
     @Test
     public void testListExperiments() throws Exception {
-        given(experimentCRUDMock.findAllExperiments())
+        given(experimentMetadataCRUDMock.findAllExperiments())
             .willReturn(Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, Sets.newHashSet("mouse"), Sets.newHashSet("1"), "title",
                     new GregorianCalendar(39 + 1900, 12, 12).getTime(), false, ACCESS_KEY)));
 

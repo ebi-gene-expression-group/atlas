@@ -42,7 +42,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
-import uk.ac.ebi.atlas.transcript.TranscriptProfileDAO;
+import uk.ac.ebi.atlas.transcript.TranscriptProfileDao;
 
 import java.io.IOException;
 
@@ -51,7 +51,7 @@ import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExperimentCRUDTest {
+public class ExperimentMetadataCRUDTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
     private static final String TEST_EXCEPTION = "TEST_EXCEPTION";
@@ -73,7 +73,7 @@ public class ExperimentCRUDTest {
     @Mock
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
 
-    private ExperimentCRUD subject;
+    private ExperimentMetadataCRUD subject;
 
     @Mock
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilderMock;
@@ -82,7 +82,7 @@ public class ExperimentCRUDTest {
     private ExperimentDAO experimentDAOMock;
 
     @Mock
-    private TranscriptProfileDAO transcriptProfileDAOMock;
+    private TranscriptProfileDao transcriptProfileDaoMock;
 
     @Mock
     private ExperimentTrader experimentTraderMock;
@@ -140,7 +140,7 @@ public class ExperimentCRUDTest {
         given(exparimentDTOBuilderMock.withSpecies(anySet())).willReturn(exparimentDTOBuilderMock);
 
 
-        subject = new ExperimentCRUD(configurationTraderMock, experimentDAOMock,
+        subject = new ExperimentMetadataCRUD(configurationTraderMock, experimentDAOMock,
                 experimentDesignFileWriterBuilderMock, experimentTraderMock, exparimentDTOBuilderMock, mageTabParserFactory, conditionsIndexTrader);
     }
 

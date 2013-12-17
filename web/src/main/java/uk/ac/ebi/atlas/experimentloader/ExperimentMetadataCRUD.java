@@ -43,9 +43,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
 @Scope("prototype")
-public class ExperimentCRUD {
+public class ExperimentMetadataCRUD {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
+    private static final Logger LOGGER = Logger.getLogger(ExperimentMetadataCRUD.class);
     private final MageTabParserFactory mageTabParserFactory;
     private final ConditionsIndexTrader conditionsIndexTrader;
     private ConfigurationTrader configurationTrader;
@@ -55,14 +55,15 @@ public class ExperimentCRUD {
 
     private ExperimentDTOBuilder experimentDTOBuilder;
 
+    //TODO: refactor this class - it has too many collaborators
     @Inject
-    public ExperimentCRUD(ConfigurationTrader configurationTrader,
-                          ExperimentDAO experimentDAO,
-                          ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
-                          ExperimentTrader experimentTrader,
-                          ExperimentDTOBuilder experimentDTOBuilder,
-                          MageTabParserFactory mageTabParserFactory,
-                          ConditionsIndexTrader conditionsIndexTrader) {
+    public ExperimentMetadataCRUD(ConfigurationTrader configurationTrader,
+                                  ExperimentDAO experimentDAO,
+                                  ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
+                                  ExperimentTrader experimentTrader,
+                                  ExperimentDTOBuilder experimentDTOBuilder,
+                                  MageTabParserFactory mageTabParserFactory,
+                                  ConditionsIndexTrader conditionsIndexTrader) {
 
         this.configurationTrader = configurationTrader;
         this.experimentDAO = experimentDAO;

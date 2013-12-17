@@ -47,18 +47,18 @@ public class TranscriptProfilesLoader {
 
     private CsvReaderFactory tsvReaderUtils;
 
-    private TranscriptProfileDAO transcriptProfileDAO;
+    private TranscriptProfileDao transcriptProfileDao;
 
     @Inject
-    public TranscriptProfilesLoader(CsvReaderFactory tsvReaderUtils, TranscriptProfileDAO transcriptProfileDAO,
+    public TranscriptProfilesLoader(CsvReaderFactory tsvReaderUtils, TranscriptProfileDao transcriptProfileDao,
                                     @Value("#{configuration['experiment.transcripts.path.template']}") String transcriptFileUrlTemplate) {
         this.tsvReaderUtils = tsvReaderUtils;
-        this.transcriptProfileDAO = transcriptProfileDAO;
+        this.transcriptProfileDao = transcriptProfileDao;
         this.transcriptFileUrlTemplate = transcriptFileUrlTemplate;
     }
 
     public int load(String experimentAccession) throws IOException {
-        transcriptProfileDAO.deleteTranscriptProfilesForExperiment(experimentAccession);
+        transcriptProfileDao.deleteTranscriptProfilesForExperiment(experimentAccession);
 
         String fileURL = MessageFormat.format(transcriptFileUrlTemplate, experimentAccession);
         try (CSVReader csvReader = tsvReaderUtils.createTsvReader(fileURL)) {
@@ -75,7 +75,7 @@ public class TranscriptProfilesLoader {
                 builder.add(transcriptProfile);
                 if (count % BATCH_SIZE == 0) {
                     ImmutableList<TranscriptProfile> batch = builder.build();
-                    transcriptProfileDAO.addTranscriptProfiles(experimentAccession, batch);
+                    transcriptProfileDao.loadTranscriptProfiles(experimentAccession, batch);
                     builder = ImmutableList.builder();
                 }
                 count++;
@@ -84,7 +84,7 @@ public class TranscriptProfilesLoader {
             ImmutableList<TranscriptProfile> batch = builder.build();
 
             if (batch.size() > 0) {
-                transcriptProfileDAO.addTranscriptProfiles(experimentAccession, batch);
+                transcriptProfileDao.loadTranscriptProfiles(experimentAccession, batch);
             }
 
             return count;

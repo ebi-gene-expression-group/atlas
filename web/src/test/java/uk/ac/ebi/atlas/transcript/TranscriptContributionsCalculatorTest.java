@@ -43,7 +43,7 @@ public class TranscriptContributionsCalculatorTest {
     public static final String GENE_ID = "geneId";
 
     @Mock
-    private TranscriptProfileDAO transcriptProfileDAOMock;
+    private TranscriptProfileDao transcriptProfileDaoMock;
 
     @Mock
     private BaselineExperimentsCache experimentsCacheMock;
@@ -60,7 +60,7 @@ public class TranscriptContributionsCalculatorTest {
     @Before
     public void initSubject() throws Exception {
 
-        subject = new TranscriptContributionsCalculator(transcriptProfileDAOMock, experimentsCacheMock);
+        subject = new TranscriptContributionsCalculator(transcriptProfileDaoMock, experimentsCacheMock);
     }
 
     @Test
