@@ -22,8 +22,9 @@
 
 package uk.ac.ebi.atlas.commands;
 
+import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.DiffExpressionDao;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
@@ -39,7 +40,6 @@ import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -62,33 +62,39 @@ public class GeneQueryDifferentialService {
 
 
     public int forEachExpression(GeneQuerySearchRequestParameters requestParameters, Visitor<DifferentialBioentityExpression> visitor) {
-        try {
-            Collection<IndexedAssayGroup> contrasts = findContrasts(requestParameters);
-            Collection<String> geneIds = findGeneIdsOrSets(requestParameters);
 
-            CountingVisitor<DifferentialBioentityExpression> counter = new CountingVisitor<>(visitor);
+        Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
+        Optional<Collection<String>> geneIdsResult = findGeneIdsOrSets(requestParameters);
 
-            diffExpressionDao.foreachExpression(contrasts, geneIds, counter);
+        if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
+                 || contrastsResult.isPresent() && contrastsResult.get().isEmpty()) {
+             // no contrasts when condition specified, or no genes when gene ids specified,
+             // so return empty results
+             return 0;
+         }
 
-            return counter.getCount();
+        CountingVisitor<DifferentialBioentityExpression> counter = new CountingVisitor<>(visitor);
 
-        } catch (NoResultsException e) {
-            // no contrasts when condition specified, or no genes when gene ids specified,
-            // so do nothing
-            return 0;
-        }
+        diffExpressionDao.foreachExpression(contrastsResult, geneIdsResult, counter);
+
+        return counter.getCount();
+
     }
 
     public List<DifferentialBioentityExpression> queryWithoutCount(String geneId) {
-        return diffExpressionDao.getTopExpressions(null, Collections.singleton(geneId));
+        Collection<String> geneIds = Lists.newArrayList(geneId);
+        return diffExpressionDao.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
     }
 
-    public DifferentialBioentityExpressions query(Set<String> geneIdentifiers) {
+    public DifferentialBioentityExpressions query(Collection<String> geneIdentifiers) {
 
         if (CollectionUtils.isNotEmpty(geneIdentifiers)) {
 
-            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getTopExpressions(null, geneIdentifiers);
-            int resultCount = diffExpressionDao.getResultCount(null, geneIdentifiers);
+            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(),
+                    Optional.of(geneIdentifiers));
+
+            int resultCount = diffExpressionDao.getResultCount(Optional.<Collection<IndexedAssayGroup>>absent(),
+                                Optional.of(geneIdentifiers));
 
             return new DifferentialBioentityExpressions(expressions, resultCount);
 
@@ -98,63 +104,62 @@ public class GeneQueryDifferentialService {
 
 
     public DifferentialBioentityExpressions query(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
-        try {
 
-            Collection<IndexedAssayGroup> contrasts = findContrasts(requestParameters);
-            Collection<String> geneIds = findGeneIdsOrSets(requestParameters);
 
-            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getTopExpressions(contrasts, geneIds);
-            int resultCount = diffExpressionDao.getResultCount(contrasts, geneIds);
+        Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
+        Optional<Collection<String>> geneIdsResult = findGeneIdsOrSets(requestParameters);
 
-            return new DifferentialBioentityExpressions(expressions, resultCount);
 
-        } catch (NoResultsException e) {
+        if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
+                || contrastsResult.isPresent() && contrastsResult.get().isEmpty()) {
             // no contrasts when condition specified, or no genes when gene ids specified,
             // so return empty results
             return new DifferentialBioentityExpressions();
         }
+
+        List<DifferentialBioentityExpression> expressions = diffExpressionDao.getTopExpressions(contrastsResult, geneIdsResult);
+        int resultCount = diffExpressionDao.getResultCount(contrastsResult, geneIdsResult);
+
+        return new DifferentialBioentityExpressions(expressions, resultCount);
+
+
     }
 
-    public Collection<IndexedAssayGroup> findContrasts(GeneQuerySearchRequestParameters requestParameters) throws NoResultsException {
-        Collection<IndexedAssayGroup> contrasts = null;
+    public Optional<Collection<IndexedAssayGroup>> findContrasts(GeneQuerySearchRequestParameters requestParameters) {
+        if (!requestParameters.hasCondition()) {
+            return Optional.absent();
+        }
+
         String condition = requestParameters.getCondition();
-        if (StringUtils.isNotBlank(condition)) {
 
-            contrasts = differentialConditionsSearchService.findContrasts(condition);
+        Collection<IndexedAssayGroup> contrasts = differentialConditionsSearchService.findContrasts(condition);
 
-            if (contrasts.isEmpty()) {
-                throw new NoResultsException();
-            }
-
-        }
-        return contrasts;
+        return Optional.of(contrasts);
     }
 
-    public Collection<String> findGeneIdsOrSets(GeneQuerySearchRequestParameters requestParameters) throws NoResultsException {
-        Collection<String> geneIds = null;
-        String geneQuery = requestParameters.getGeneQuery();
-        if (StringUtils.isNotBlank(geneQuery)) {
-
-            // search across any species
-            String species = "";
-
-            //resolve any gene keywords to identifiers
-            GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(geneQuery,
-                    requestParameters.isExactMatch(),
-                    species,
-                    requestParameters.isGeneSetMatch());
-
-            geneIds = geneQueryResponse.getAllGeneIds();
-
-            Set<String> matureRNAIds = solrQueryService.findMatureRNAIds(geneQuery);
-            geneIds.addAll(matureRNAIds);
-
-            if (geneIds.isEmpty()) {
-                throw new NoResultsException();
-            }
-
+    public Optional<Collection<String>> findGeneIdsOrSets(GeneQuerySearchRequestParameters requestParameters) {
+        if (!requestParameters.hasGeneQuery()) {
+            return Optional.absent();
         }
-        return geneIds;
+
+        String geneQuery = requestParameters.getGeneQuery();
+
+        // search across any species
+        String species = "";
+
+        //resolve any gene keywords to identifiers
+        GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(geneQuery,
+                requestParameters.isExactMatch(),
+                species,
+                requestParameters.isGeneSetMatch());
+
+        Collection<String> geneIds = geneQueryResponse.getAllGeneIds();
+
+        Set<String> matureRNAIds = solrQueryService.findMatureRNAIds(geneQuery);
+        geneIds.addAll(matureRNAIds);
+
+
+        return Optional.of(geneIds);
     }
 
 }

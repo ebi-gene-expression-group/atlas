@@ -22,10 +22,10 @@
 
 package uk.ac.ebi.atlas.dao;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import oracle.jdbc.OracleConnection;
 import oracle.sql.ArrayDescriptor;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,10 +34,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
-import uk.ac.ebi.atlas.utils.VisitorException;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import uk.ac.ebi.atlas.utils.Visitor;
+import uk.ac.ebi.atlas.utils.VisitorException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -99,8 +99,10 @@ public class DiffExpressionDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<DifferentialBioentityExpression> getTopExpressions(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds) {
-        LOGGER.debug(String.format("getTopExpressions for %s contrasts and %s genes", (indexedContrasts == null) ? 0 : indexedContrasts.size(), (geneIds == null) ? 0 : geneIds.size()));
+    public List<DifferentialBioentityExpression> getTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+
+        log(indexedContrasts, geneIds);
+
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         Query<Object> indexedContrastQuery = buildIndexedContrastQuery(indexedContrasts, geneIds, SELECT_QUERY);
@@ -127,9 +129,9 @@ public class DiffExpressionDao {
 
     }
 
+    public void foreachExpression(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds, final Visitor<DifferentialBioentityExpression> visitor)  {
+        log(indexedContrasts, geneIds);
 
-    public void foreachExpression(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, final Visitor<DifferentialBioentityExpression> visitor)  {
-        LOGGER.debug(String.format("foreachExpression for %s contrasts and %s genes", (indexedContrasts == null) ? 0 : indexedContrasts.size(), (geneIds == null) ? 0 : geneIds.size()));
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         Query<Object> indexedContrastQuery = buildIndexedContrastQuery(indexedContrasts, geneIds, SELECT_QUERY);
@@ -172,8 +174,10 @@ public class DiffExpressionDao {
         LOGGER.debug(String.format("foreachExpression processed %s expressions in %s seconds", count.intValue(), stopwatch.elapsed(TimeUnit.SECONDS)));
     }
 
-    public int getResultCount(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds) {
-        LOGGER.debug(String.format("getResultCount for %s contrasts and %s genes", (indexedContrasts == null) ? 0 : indexedContrasts.size(), (geneIds == null) ? 0 : geneIds.size()));
+
+    public int getResultCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+        log(indexedContrasts, geneIds);
+
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         Query query = buildIndexedContrastQuery(indexedContrasts, geneIds, COUNT_QUERY);
@@ -184,13 +188,16 @@ public class DiffExpressionDao {
         return count;
     }
 
-    Query<Object> buildIndexedContrastQuery(Collection<IndexedAssayGroup> indexedContrasts, Collection<String> geneIds, String queryBeginning) {
+    Query<Object> buildIndexedContrastQuery(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds, String queryBeginning) {
 
-        DifferentialGeneQueryBuilder builder = differentialGeneQueryBuilder.withSelectPart(queryBeginning).
-                withAssayGroups(indexedContrasts).withSuffix(ORDER_BY_PVAL);
+        DifferentialGeneQueryBuilder builder = differentialGeneQueryBuilder.withSelectPart(queryBeginning).withSuffix(ORDER_BY_PVAL);
 
-        if (CollectionUtils.isNotEmpty(geneIds)) {
-            builder.withGeneIds(createOracleArrayForIdentifiers(geneIds));
+        if (indexedContrasts.isPresent()) {
+            builder.withAssayGroups(indexedContrasts.get());
+        }
+
+        if (geneIds.isPresent()) {
+            builder.withGeneIds(createOracleArrayForIdentifiers(geneIds.get()));
         }
 
         return builder.build();
@@ -207,6 +214,11 @@ public class DiffExpressionDao {
                 return new oracle.sql.ARRAY(descriptor, oracleConnection, ids);
             }
         });
+    }
+
+    private void log(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+        LOGGER.debug(String.format("getTopExpressions for %s contrasts and %s genes", (indexedContrasts.isPresent()) ? indexedContrasts.get().size() : 0,
+                (geneIds.isPresent()) ? geneIds.get().size() : 0));
     }
 
 }

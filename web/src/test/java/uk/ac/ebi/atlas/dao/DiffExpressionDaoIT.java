@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.dao;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Test;
@@ -33,6 +34,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Inject;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
@@ -53,7 +55,10 @@ public class DiffExpressionDaoIT {
     public void testGetTopExpressions() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
-        List<DifferentialBioentityExpression> expressions = subject.getTopExpressions(Lists.newArrayList(indexedContrast1), new HashSet<String>());
+        Collection<IndexedAssayGroup> contrasts = Lists.newArrayList(indexedContrast1);
+        Collection<String> geneIds = new HashSet<>();
+
+        List<DifferentialBioentityExpression> expressions = subject.getTopExpressions(Optional.of(contrasts), Optional.of(geneIds));
         assertThat(expressions.size(), is(16));
         assertThat(expressions.get(0).getBioentityId(), is("FBgn0040393"));
         assertThat(expressions.get(1).getBioentityId(), is("FBgn0017561"));
@@ -64,7 +69,9 @@ public class DiffExpressionDaoIT {
     public void testGetResultCount() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
-        int resultCount = subject.getResultCount(Lists.newArrayList(indexedContrast1), new HashSet<String>());
+        Collection<IndexedAssayGroup> indexedAssayGroups = Lists.newArrayList(indexedContrast1);
+        Collection<String> strings = new HashSet<>();
+        int resultCount = subject.getResultCount(Optional.of(indexedAssayGroups), Optional.of(strings));
         assertThat(resultCount, is(16));
     }
 
@@ -72,7 +79,8 @@ public class DiffExpressionDaoIT {
     public void testGetTopExpressionsForGene() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
-        List<DifferentialBioentityExpression> expressions = subject.getTopExpressions(null, Sets.newHashSet("AT1G02220"));
+        Collection<String> geneIds = Sets.newHashSet("AT1G02220");
+        List<DifferentialBioentityExpression> expressions = subject.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
         assertThat(expressions, hasSize(2));
         assertThat(expressions.get(0).getBioentityId(), is("AT1G02220"));
         assertThat(expressions.get(0).getExperimentAccession(), is("E-GEOD-38400"));
@@ -82,7 +90,9 @@ public class DiffExpressionDaoIT {
 
     @Test
     public void testGetResultCountForGene() throws Exception {
-        assertThat(subject.getResultCount(new HashSet<IndexedAssayGroup>(), Sets.newHashSet("AT1G02220")), is(2));
+        Collection<IndexedAssayGroup> assayGroups = new HashSet<>();
+        Collection<String> geneIds = Sets.newHashSet("AT1G02220");
+        assertThat(subject.getResultCount(Optional.of(assayGroups), Optional.of(geneIds)), is(2));
 
     }
 }

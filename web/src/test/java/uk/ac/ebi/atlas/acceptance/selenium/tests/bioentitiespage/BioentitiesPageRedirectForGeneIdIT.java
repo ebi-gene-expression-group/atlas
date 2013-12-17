@@ -86,6 +86,18 @@ public class BioentitiesPageRedirectForGeneIdIT extends SinglePageSeleniumFixtur
 
     }
 
+    @Test
+    public void uniprotAccShouldRedirect() {
+        PageFactory.initElements(driver, this);
+
+        String uri = "/gxa/query?geneQuery=Q01130";
+
+        loadPage(uri);
+
+        assertThat(driver.getCurrentUrl(), containsString("genes/ENSG00000161547"));
+
+    }
+
     private void loadPage(String uri) {
         URLBuilder urlBuilder = new URLBuilder(uri);
         String pageURL = urlBuilder.buildURL();

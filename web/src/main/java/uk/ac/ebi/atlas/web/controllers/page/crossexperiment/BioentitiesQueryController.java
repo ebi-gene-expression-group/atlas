@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
 
-import org.apache.commons.lang.StringUtils;
+import com.google.common.base.Optional;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,6 +46,7 @@ import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -85,9 +86,9 @@ public class BioentitiesQueryController {
 
         if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
             //If Query just for a single bioentityID
-            String geneIdRedirectString = getGeneIdRedirectString(requestParameters.getGeneQuery());
-            if (StringUtils.isNotBlank(geneIdRedirectString)) {
-                return geneIdRedirectString;
+            Optional<String> geneIdRedirectString = getGeneIdRedirectString(requestParameters);
+            if (geneIdRedirectString.isPresent()) {
+                return geneIdRedirectString.get();
             }
         }
 
@@ -118,21 +119,28 @@ public class BioentitiesQueryController {
     }
 
 
-    private String getGeneIdRedirectString(String geneId) {
+    private Optional<String> getGeneIdRedirectString(GeneQuerySearchRequestParameters requestParameters) {
+
+        String geneId = requestParameters.getGeneQuery();
 
         if (geneId.toUpperCase().startsWith("REACT_")) {
-            return "redirect:/genesets/" + geneId;
+            return Optional.of("redirect:/genesets/" + geneId);
         }
 
         BioentityProperty bioentityProperty = solrQueryService.findBioentityIdentifierProperty(geneId);
 
-        if (bioentityProperty == null) {
-            return null;
+        if (bioentityProperty != null) {
+            String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
+            return Optional.of("redirect:/" + bioentityPageName + "/" + geneId);
         }
 
-        String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
+        Optional<Collection<String>> geneIdsOrSets = geneQueryDifferentialService.findGeneIdsOrSets(requestParameters);
 
-        return "redirect:/" + bioentityPageName + "/" + geneId;
+        if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
+            return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());
+        }
+
+        return Optional.absent();
 
 
     }
