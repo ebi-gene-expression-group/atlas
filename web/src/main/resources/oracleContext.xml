@@ -23,13 +23,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
            http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-3.2.xsd
-           http://www.springframework.org/schema/tx
-           http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+           http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <!-- do not place bean definitions here, as this file is substituted for local variations
+         in different environments -->
 
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
@@ -38,21 +38,6 @@
         <property name="URL" value="${oracle.jdbc.url}"/>
         <property name="user" value="${oracle.jdbc.username}"/>
         <property name="password" value="${oracle.jdbc.password}"/>
-    </bean>
-
-    <bean id="jdbcTemplateOracle" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSourceOracle"/>
-    </bean>
-
-    <bean id="namedJdbcTemplateOracle" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg ref="dataSourceOracle"/>
-    </bean>
-
-    <!-- enables transactions where @Transaction annotations encounted -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSourceOracle"/>
     </bean>
 
 </beans>
