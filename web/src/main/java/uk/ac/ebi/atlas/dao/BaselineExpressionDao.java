@@ -76,4 +76,9 @@ public class BaselineExpressionDao {
                 experimentAccession);
     }
 
+    public void deleteInactiveExpressions() {
+        int count = jdbcTemplate.update("delete from RNASEQ_BSLN_EXPRESSIONS WHERE ISACTIVE = 'F'");
+        LOGGER.info(String.format("deleteInactiveBaselineExpressions %s rows deleted",count));
+    }
+
 }

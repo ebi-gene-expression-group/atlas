@@ -94,6 +94,7 @@ public class ExperimentMetadataCRUD {
 
         Set<String> species = experimentDesign.getSpeciesForAssays(assayAccessions);
 
+        //TODO: inefficient - this re-reads the magetab, but we've already done this above
         ExperimentDTO experimentDTO = experimentDTOBuilder.forExperimentAccession(accession)
                 .withExperimentType(experimentType).withPrivate(isPrivate).withSpecies(species).build();
 

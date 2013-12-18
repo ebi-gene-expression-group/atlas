@@ -58,7 +58,6 @@ public class TranscriptProfilesLoader {
     }
 
     public int load(String experimentAccession) throws IOException {
-        transcriptProfileDao.deleteTranscriptProfilesForExperiment(experimentAccession);
 
         String fileURL = MessageFormat.format(transcriptFileUrlTemplate, experimentAccession);
         try (CSVReader csvReader = tsvReaderUtils.createTsvReader(fileURL)) {

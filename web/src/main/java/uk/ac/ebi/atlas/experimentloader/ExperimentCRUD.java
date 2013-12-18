@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentloader;
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -45,9 +46,21 @@ public class ExperimentCRUD {
         ExperimentConfiguration configuration = loadExperimentConfiguration(experimentAccession);
         experimentChecker.checkAllFiles(experimentAccession, configuration.getExperimentType());
 
-        experimentAnalyticsCRUD.loadAnalytics(experimentAccession, configuration.getExperimentType());
+        if (experimentAccessionExists(experimentAccession)) {
+            deleteExperiment(experimentAccession);
+        }
 
+        experimentAnalyticsCRUD.loadAnalytics(experimentAccession, configuration.getExperimentType());
         return experimentMetadataCRUD.loadExperiment(experimentAccession, configuration, isPrivate);
+    }
+
+    private boolean experimentAccessionExists(String experimentAccession) {
+        try {
+            experimentMetadataCRUD.findExperiment(experimentAccession);
+            return true;
+        } catch (ResourceNotFoundException e) {
+            return false;
+        }
     }
 
     @Transactional
@@ -62,4 +75,7 @@ public class ExperimentCRUD {
         return experimentMetadataCRUD.loadExperimentConfiguration(experimentAccession);
     }
 
+    public void deleteInactiveExpressions() {
+        experimentAnalyticsCRUD.deleteInactiveExpressions();
+    }
 }

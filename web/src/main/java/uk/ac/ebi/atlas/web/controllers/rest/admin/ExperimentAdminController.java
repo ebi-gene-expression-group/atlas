@@ -29,12 +29,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
-import uk.ac.ebi.atlas.experimentloader.ExperimentMetadataCRUD;
-import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
-import uk.ac.ebi.atlas.model.ExperimentConfiguration;
+import uk.ac.ebi.atlas.experimentloader.ExperimentMetadataCRUD;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -46,6 +45,7 @@ import java.util.UUID;
 public class ExperimentAdminController {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentAdminController.class);
+    public static final int INTERNAL_SERVER_ERROR = 500;
 
     private ExperimentCRUD experimentCRUD;
     private ExperimentMetadataCRUD experimentMetadataCRUD;
@@ -60,8 +60,9 @@ public class ExperimentAdminController {
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public String handleException(Exception e) {
+    public String handleException(Exception e, HttpServletResponse response) throws IOException {
         LOGGER.error(e.getMessage(), e);
+        response.setStatus(INTERNAL_SERVER_ERROR);
         return e.getClass().getSimpleName() + ": " + e.getMessage();
     }
 
@@ -69,7 +70,6 @@ public class ExperimentAdminController {
     @ResponseBody
     public String loadExperiment(@RequestParam("accession") String experimentAccession,
                                  @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
-
         UUID accessKeyUUID = experimentCRUD.loadExperiment(experimentAccession, isPrivate);
         return "Experiment " + experimentAccession + " loaded, accessKey: " + accessKeyUUID;
     }
@@ -77,9 +77,15 @@ public class ExperimentAdminController {
     @RequestMapping("/deleteExperiment")
     @ResponseBody
     public String deleteExperiment(@RequestParam("accession") String experimentAccession) {
-
         experimentCRUD.deleteExperiment(experimentAccession);
         return "Experiment " + experimentAccession + " successfully deleted.";
+    }
+
+    @RequestMapping("/deleteInactiveExpressions")
+    @ResponseBody
+    public String deleteInactiveExpressions() {
+        experimentCRUD.deleteInactiveExpressions();
+        return "Deleted all inactive expressions";
     }
 
     @RequestMapping("/updateStatus")

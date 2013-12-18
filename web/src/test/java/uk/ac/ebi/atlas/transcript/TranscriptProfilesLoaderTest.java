@@ -86,7 +86,6 @@ public class TranscriptProfilesLoaderTest {
     @Test
     public void testLoad() throws IOException {
         subject.load(EXPERIMENT_ACCESSION);
-        verify(transcriptProfileDaoMock).deleteTranscriptProfilesForExperiment(EXPERIMENT_ACCESSION);
         verify(csvReaderFactory).createTsvReader(A_URL_TEMPLATE_MOCK + EXPERIMENT_ACCESSION);
 
         verify(transcriptProfileDaoMock).loadTranscriptProfiles(eq(EXPERIMENT_ACCESSION), captor.capture());

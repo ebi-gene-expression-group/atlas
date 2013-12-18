@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentloader;
 
 import org.apache.log4j.Logger;
-import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,7 +24,8 @@ public class ExperimentCRUDIT {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentCRUDIT.class);
 
-    public static final String EXPERIMENT_ACCESSION = "TEST-CRUD";
+    public static final String NEW_EXPERIMENT_ACCESSION = "TEST-CRUD";
+    public static final String EXISTING_EXPERIMENT_ACCESSION = "E-MTAB-599";
 
     @Inject
     private ExperimentCRUD subject;
@@ -32,30 +33,42 @@ public class ExperimentCRUDIT {
     @Inject
     private JdbcTemplate jdbcTemplate;
 
-    @Before
-    public void cleanUpFromPreviousRuns() {
-        deleteInactiveBaselineExpressions(EXPERIMENT_ACCESSION);
+    @After
+    public void cleanUp() {
+        deleteInactiveBaselineExpressions();
     }
 
     @Test
-    public void testLoadAndDeleteExperiment() throws IOException {
-        assertThat("experiment already exists in db", experimentCount(EXPERIMENT_ACCESSION), is(0));
-        assertThat("baseline transcripts already exist in db", baselinesTranscriptsCount(EXPERIMENT_ACCESSION), is(0));
-        assertThat("baseline expressions already exist in db", baselineExpressionsCount(EXPERIMENT_ACCESSION), is(0));
+    public void loadAndDeleteNewExperiment() throws IOException {
+        assertThat("experiment already exists in db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
+        assertThat("baseline transcripts already exist in db", baselinesTranscriptsCount(NEW_EXPERIMENT_ACCESSION), is(0));
+        assertThat("baseline expressions already exist in db", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
 
-        subject.loadExperiment(EXPERIMENT_ACCESSION, false);
+        subject.loadExperiment(NEW_EXPERIMENT_ACCESSION, false);
 
-        assertThat("experiment row not loaded into db", experimentCount(EXPERIMENT_ACCESSION), is(1));
-        assertThat("transcripts not loaded into db", baselinesTranscriptsCount(EXPERIMENT_ACCESSION), is(5));
-        assertThat("baseline expressions not loaded into db", baselineExpressionsCount(EXPERIMENT_ACCESSION), is(3332));
+        assertThat("experiment row not loaded into db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(1));
+        assertThat("transcripts not loaded into db", baselinesTranscriptsCount(NEW_EXPERIMENT_ACCESSION), is(5));
+        assertThat("baseline expressions not loaded into db", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(3332));
 
-        subject.deleteExperiment(EXPERIMENT_ACCESSION);
+        subject.deleteExperiment(NEW_EXPERIMENT_ACCESSION);
 
-        assertThat("experiment row was not deleted from db", experimentCount(EXPERIMENT_ACCESSION), is(0));
-        assertThat("baseline transcripts were not deleted from db", baselinesTranscriptsCount(EXPERIMENT_ACCESSION), is(0));
-        assertThat("baseline expressions were not deleted from db", baselineExpressionsCount(EXPERIMENT_ACCESSION), is(0));
+        assertThat("experiment row was not deleted from db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
+        assertThat("baseline transcripts were not deleted from db", baselinesTranscriptsCount(NEW_EXPERIMENT_ACCESSION), is(0));
+        assertThat("baseline expressions were not deleted from db", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
     }
 
+    @Test
+    public void reloadExistingExperiment() throws IOException {
+        assertThat("experiment does not already exist in db", experimentCount(EXISTING_EXPERIMENT_ACCESSION), is(1));
+        assertThat("baseline transcripts do not already exist in db", baselinesTranscriptsCount(EXISTING_EXPERIMENT_ACCESSION), is(3));
+        assertThat("baseline expressions do not already exist in db", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(20000));
+
+        subject.loadExperiment(EXISTING_EXPERIMENT_ACCESSION, false);
+
+        assertThat("count of experiment rows has changed", experimentCount(EXISTING_EXPERIMENT_ACCESSION), is(1));
+        assertThat("count of transcripts has changed", baselinesTranscriptsCount(EXISTING_EXPERIMENT_ACCESSION), is(3));
+        assertThat("count of baseline expressions has changed", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(20000));
+    }
 
     @Test(expected = ResourceNotFoundException.class)
     public void deleteNonexistantExperimentThrowsResourceNotFoundException() throws Exception {
@@ -74,8 +87,8 @@ public class ExperimentCRUDIT {
         return jdbcTemplate.queryForObject("select COUNT(*) from RNASEQ_BSLN_EXPRESSIONS WHERE EXPERIMENT = ? AND ISACTIVE = 'T'", Integer.class, accession);
     }
 
-    private void deleteInactiveBaselineExpressions(String accession) {
-        int count = jdbcTemplate.update("delete from RNASEQ_BSLN_EXPRESSIONS WHERE EXPERIMENT = ? AND ISACTIVE = 'F'", accession);
+    private void deleteInactiveBaselineExpressions() {
+        int count = jdbcTemplate.update("delete from RNASEQ_BSLN_EXPRESSIONS WHERE ISACTIVE = 'F'");
         LOGGER.info(String.format("deleteInactiveBaselineExpressions %s rows deleted",count));
     }
 

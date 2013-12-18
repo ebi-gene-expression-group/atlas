@@ -53,8 +53,6 @@ public class ExperimentAnalyticsCRUD {
         LOGGER.info(String.format("loadAnalytics for %s type %s", accession, experimentType));
         if (experimentType.isBaseline()) {
             loadBaselineAnalytics(accession);
-        } else {
-            throw new UnsupportedOperationException("Unknown experiment type" + experimentType);
         }
     }
 
@@ -64,7 +62,6 @@ public class ExperimentAnalyticsCRUD {
     }
 
     private void loadBaselineExpressions(String accession) {
-        baselineExpressionDao.deleteBaselineExpressions(accession);
         BaselineExpressionDtoInputStream baselineExpressionDtoInputStream =
                 baselineExpressionDtoInputStreamFactory.createBaselineExpressionDtoInputStream(accession);
         baselineExpressionDao.loadBaselineExpressions(accession, baselineExpressionDtoInputStream);
@@ -75,14 +72,15 @@ public class ExperimentAnalyticsCRUD {
         LOGGER.info(String.format("loadAnalytics for %s type %s", accession, experimentType));
         if (experimentType.isBaseline()) {
             deleteBaselineAnalytics(accession);
-        } else {
-            throw new UnsupportedOperationException("Unknown experiment type" + experimentType);
         }
-
     }
 
     private void deleteBaselineAnalytics(String accession) {
         baselineExpressionDao.deleteBaselineExpressions(accession);
         transcriptProfileDao.deleteTranscriptProfilesForExperiment(accession);
+    }
+
+    public void deleteInactiveExpressions() {
+        baselineExpressionDao.deleteInactiveExpressions();
     }
 }

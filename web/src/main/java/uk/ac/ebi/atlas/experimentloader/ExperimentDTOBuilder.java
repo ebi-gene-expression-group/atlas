@@ -77,11 +77,13 @@ public class ExperimentDTOBuilder {
 
         try {
 
+            LOGGER.debug(String.format("parsing %s: begin",experimentAccession));
+
             MAGETABInvestigation magetabInvestigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
             String title = mageTabLimpopoUtils.extractInvestigationTitle(magetabInvestigation);
-
             Set<String> pubmedIds = Sets.newHashSet(mageTabLimpopoUtils.extractPubMedIdsFromIDF(magetabInvestigation));
 
+            LOGGER.debug(String.format("parsing %s: done",experimentAccession));
 
             return new ExperimentDTO(experimentAccession, experimentType, species, pubmedIds, title, isPrivate);
 
