@@ -196,7 +196,7 @@ public class DiffExpressionDao {
             builder.withAssayGroups(indexedContrasts.get());
         }
 
-        if (geneIds.isPresent()) {
+        if (geneIds.isPresent() && !geneIds.get().isEmpty()) {
             builder.withGeneIds(createOracleArrayForIdentifiers(geneIds.get()));
         }
 
