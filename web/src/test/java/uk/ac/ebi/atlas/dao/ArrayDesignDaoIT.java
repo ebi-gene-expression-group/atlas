@@ -59,4 +59,9 @@ public class ArrayDesignDaoIT {
 
     }
 
+    @Test
+    public void testGetArrayDesignAccessions() throws Exception {
+        List<String> arrayDesignAccessions = subject.getArrayDesignAccessions();
+        assertThat(arrayDesignAccessions, hasItem("A-AFFY-44"));
+    }
 }

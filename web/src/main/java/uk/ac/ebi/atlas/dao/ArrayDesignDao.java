@@ -57,4 +57,10 @@ public class ArrayDesignDao {
         String query = "select designelement from designelement_mapping where identifier=?";
         return jdbcTemplate.queryForList(query, new String[]{geneIdentifier}, String.class);
     }
+
+    public List<String> getArrayDesignAccessions() {
+        String query = "select distinct arraydesign from designelement_mapping";
+        return jdbcTemplate.queryForList(query, String.class);
+    }
+
 }
