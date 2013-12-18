@@ -61,6 +61,26 @@ public class BaselineExpressionDtoInputStream implements ObjectInputStream<Basel
     @Override
     public BaselineExpressionDto readNext() {
         if (queue.isEmpty()) {
+            ImmutableList<? extends BaselineExpressionDto> baselineExpressionDtos = readNextLineOfExpressionLevels();
+
+            if (baselineExpressionDtos == null) {
+                //EOF
+                return null;
+            }
+
+            queue.addAll(baselineExpressionDtos);
+        }
+
+        return queue.remove();
+    }
+
+
+    private ImmutableList<? extends BaselineExpressionDto> readNextLineOfExpressionLevels() {
+
+        ImmutableList<? extends BaselineExpressionDto> baselineExpressionDtos;
+
+        // loop until we have a line of expression levels, or return null if EOF
+        do {
             String[] line = readCsvLine();
             if (line == null) {
                 // EOF
@@ -69,12 +89,11 @@ public class BaselineExpressionDtoInputStream implements ObjectInputStream<Basel
 
             String geneId = line[GENE_ID_COLUMN_INDEX];
             String[] expressionLevels = (String[]) ArrayUtils.subarray(line, FIRST_EXPRESSION_LEVEL_INDEX, line.length);
-            ImmutableList<? extends BaselineExpressionDto> baselineExpressionDtos = createList(geneId, assayGroupIds, expressionLevels);
+            baselineExpressionDtos = createList(geneId, assayGroupIds, expressionLevels);
+        } while (baselineExpressionDtos.isEmpty());
 
-            queue.addAll(baselineExpressionDtos);
-        }
+        return baselineExpressionDtos;
 
-        return queue.remove();
     }
 
     private ImmutableList<? extends BaselineExpressionDto> createList(String geneId, String[] assayGroupIds, String[] expressionLevels) {

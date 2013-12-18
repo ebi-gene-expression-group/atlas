@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentloader.ExperimentMetadataCRUD;
 import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
 import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
@@ -46,14 +47,14 @@ public class ExperimentAdminController {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentAdminController.class);
 
-    private ExperimentChecker experimentChecker;
+    private ExperimentCRUD experimentCRUD;
     private ExperimentMetadataCRUD experimentMetadataCRUD;
 
 
     @Inject
-    public ExperimentAdminController(ExperimentChecker experimentChecker,
+    public ExperimentAdminController(ExperimentCRUD experimentCRUD,
                                      ExperimentMetadataCRUD experimentMetadataCRUD) {
-        this.experimentChecker = experimentChecker;
+        this.experimentCRUD = experimentCRUD;
         this.experimentMetadataCRUD = experimentMetadataCRUD;
     }
 
@@ -69,15 +70,7 @@ public class ExperimentAdminController {
     public String loadExperiment(@RequestParam("accession") String experimentAccession,
                                  @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
 
-
-        experimentChecker.checkConfigurationFilePermissions(experimentAccession);
-
-        ExperimentConfiguration configuration = experimentMetadataCRUD.loadExperimentConfiguration(experimentAccession);
-
-        experimentChecker.checkAllFiles(experimentAccession, configuration.getExperimentType());
-
-        UUID accessKeyUUID = experimentMetadataCRUD.importExperiment(experimentAccession, configuration, isPrivate);
-
+        UUID accessKeyUUID = experimentCRUD.loadExperiment(experimentAccession, isPrivate);
         return "Experiment " + experimentAccession + " loaded, accessKey: " + accessKeyUUID;
     }
 
@@ -85,7 +78,7 @@ public class ExperimentAdminController {
     @ResponseBody
     public String deleteExperiment(@RequestParam("accession") String experimentAccession) {
 
-        experimentMetadataCRUD.deleteExperiment(experimentAccession);
+        experimentCRUD.deleteExperiment(experimentAccession);
         return "Experiment " + experimentAccession + " successfully deleted.";
     }
 

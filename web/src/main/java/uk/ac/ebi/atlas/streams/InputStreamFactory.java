@@ -26,6 +26,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.dao.dto.BaselineExpressionDtoInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilePreconditionBackedBuilder;
@@ -84,7 +85,6 @@ public class InputStreamFactory {
         this.rnaSeqProfileBuilder = rnaSeqProfileBuilder;
         this.csvReaderFactory = csvReaderFactory;
     }
-
 
     public ObjectInputStream<BaselineProfile> createBaselineProfileInputStream(String experimentAccession) {
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);

@@ -29,10 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentloader.ExperimentMetadataCRUD;
-import uk.ac.ebi.atlas.experimentloader.ExperimentChecker;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDAO;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentloader.*;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDao;
@@ -59,23 +56,21 @@ public class ExperimentAdminControllerTest {
     private ExperimentDAO experimentDAOMock;
 
     @Mock
-    private TranscriptProfileDao transcriptProfileDaoMock;
-
-    @Mock
-    private ExperimentChecker experimentCheckerMock;
-
-    @Mock
     private ExperimentConfiguration experimentConfiguration;
 
     @Mock
     private ExperimentMetadataCRUD experimentMetadataCRUDMock;
+
+    @Mock
+    private ExperimentCRUD experimentCRUDMock;
 
     private ExperimentAdminController subject;
 
     @Before
     public void setUp() throws Exception {
 
-        subject = new ExperimentAdminController(experimentCheckerMock, experimentMetadataCRUDMock);
+        subject = new ExperimentAdminController(experimentCRUDMock, experimentMetadataCRUDMock);
+
 
         when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
         when(experimentMetadataCRUDMock.loadExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(experimentConfiguration);
@@ -92,14 +87,13 @@ public class ExperimentAdminControllerTest {
     public void loadExperimentShouldSucceed() throws Exception {
         String responseText = subject.loadExperiment(EXPERIMENT_ACCESSION, false);
         assertThat(responseText, startsWith("Experiment " + EXPERIMENT_ACCESSION + " loaded, accessKey:"));
-        verify(experimentCheckerMock).checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(experimentMetadataCRUDMock).importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
+        verify(experimentCRUDMock).loadExperiment(EXPERIMENT_ACCESSION, false);
     }
 
     @Test(expected = IllegalStateException.class)
     public void loadExperimentShouldFail() throws Exception {
         willThrow(new IllegalStateException(EXCEPTION_MESSAGE))
-                .given(experimentMetadataCRUDMock).importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
+                .given(experimentCRUDMock).loadExperiment(EXPERIMENT_ACCESSION, false);
 
         subject.loadExperiment(EXPERIMENT_ACCESSION, false);
     }

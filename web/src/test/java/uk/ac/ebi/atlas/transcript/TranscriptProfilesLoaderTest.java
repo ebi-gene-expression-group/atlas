@@ -56,10 +56,11 @@ public class TranscriptProfilesLoaderTest {
     private static final String TRANSCRIPT_ID_1 = "TRANSCRIPT_ID_1";
     private static final String TRANSCRIPT_ID_2 = "TRANSCRIPT_ID_2";
     private static final String A_GENE_ID = "A_GENE_ID";
+    private static final String A_GENE_NAME = "A_GENE_NAME";
     private static final TranscriptProfile transcriptProfile1 = new TranscriptProfile(A_GENE_ID, TRANSCRIPT_ID_1, Lists.newArrayList("0.11", "1.3242", "0", "0.0003"));
     private static final TranscriptProfile transcriptProfile2 = new TranscriptProfile(A_GENE_ID, TRANSCRIPT_ID_2, Lists.newArrayList("0.00", "2", "0", "0.0002"));
-    private static final String[] TSV_LINE_1 = new String[]{A_GENE_ID, TRANSCRIPT_ID_1, "0.11", "1.3242", "0", "0.0003"};
-    private static final String[] TSV_LINE_2 = new String[]{A_GENE_ID, TRANSCRIPT_ID_2, "0.00", "2", "0", "0.0002"};
+    private static final String[] TSV_LINE_1 = new String[]{A_GENE_ID, A_GENE_NAME, TRANSCRIPT_ID_1, "0.11", "1.3242", "0", "0.0003"};
+    private static final String[] TSV_LINE_2 = new String[]{A_GENE_ID, A_GENE_NAME, TRANSCRIPT_ID_2, "0.00", "2", "0", "0.0002"};
 
     @Mock
     private CsvReaderFactory csvReaderFactory;

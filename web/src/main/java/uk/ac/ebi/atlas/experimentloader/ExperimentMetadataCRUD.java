@@ -78,7 +78,7 @@ public class ExperimentMetadataCRUD {
         return configurationTrader.getExperimentConfiguration(accession);
     }
 
-    public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate) throws IOException {
+    public UUID loadExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate) throws IOException {
         checkNotNull(accession);
         checkNotNull(experimentConfiguration);
 
@@ -124,13 +124,13 @@ public class ExperimentMetadataCRUD {
         experimentDesignFileWriter.write(experimentDesign);
     }
 
-    public void deleteExperiment(String experimentAccession) {
-        checkNotNull(experimentAccession);
+    public void deleteExperiment(ExperimentDTO experimentDTO) {
+        checkNotNull(experimentDTO);
 
-        ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
+        String experimentAccession = experimentDTO.getExperimentAccession();
 
         if (!experimentDTO.isPrivate()) {
-            //TODO: shouldn't have to get the experiment here
+            //TODO: shouldn't have to get the experiment here but conditionsIndexTrader needs Experiment obj
             Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
             conditionsIndexTrader.getIndex(experiment).removeConditions(experimentAccession);
         }
@@ -139,6 +139,10 @@ public class ExperimentMetadataCRUD {
 
         experimentDAO.deleteExperiment(experimentAccession);
 
+    }
+
+    public ExperimentDTO findExperiment(String experimentAccession) {
+        return experimentDAO.findExperiment(experimentAccession, true);
     }
 
     public List<ExperimentDTO> findAllExperiments() {
@@ -167,8 +171,8 @@ public class ExperimentMetadataCRUD {
         List<ExperimentDTO> experiments = experimentDAO.findAllExperiments();
         for (ExperimentDTO experiment : experiments) {
             String accession = experiment.getExperimentAccession();
-            deleteExperiment(accession);
-            importExperiment(accession, loadExperimentConfiguration(accession), experiment.isPrivate());
+            deleteExperiment(experiment);
+            loadExperiment(accession, loadExperimentConfiguration(accession), experiment.isPrivate());
         }
         return experiments.size();
     }

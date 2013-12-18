@@ -40,7 +40,7 @@ import java.text.MessageFormat;
 public class TranscriptProfilesLoader {
 
     private static final int GENE_ID_COLUMN_INDEX = 0;
-    private static final int TRANSCRIPT_ID_COLUMN_INDEX = 1;
+    private static final int TRANSCRIPT_ID_COLUMN_INDEX = 2;
     private static final int BATCH_SIZE = 1000;
 
     private String transcriptFileUrlTemplate;
@@ -95,7 +95,7 @@ public class TranscriptProfilesLoader {
     TranscriptProfile createTranscriptProfile(String[] line) {
         String geneId = line[GENE_ID_COLUMN_INDEX];
         String transcriptId = line[TRANSCRIPT_ID_COLUMN_INDEX];
-        String[] expressionStrings = (String[]) ArrayUtils.subarray(line, 2, line.length);
+        String[] expressionStrings = (String[]) ArrayUtils.subarray(line, 3, line.length);
         return new TranscriptProfile(geneId, transcriptId, ImmutableList.<String>builder().add(expressionStrings).build());
     }
 }

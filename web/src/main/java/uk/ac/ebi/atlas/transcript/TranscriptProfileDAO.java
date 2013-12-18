@@ -27,7 +27,6 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import uk.ac.ebi.atlas.experimentloader.ExperimentMetadataCRUD;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
 
 import javax.inject.Inject;
@@ -39,8 +38,8 @@ import java.util.List;
 
 @Named
 @Scope("prototype")
-public class TranscriptProfileDAO {
-    private static final Logger LOGGER = Logger.getLogger(TranscriptProfileDAO.class);
+public class TranscriptProfileDao {
+    private static final Logger LOGGER = Logger.getLogger(TranscriptProfileDao.class);
 
     private static final String TRANSCRIPT_PROFILE_QUERY = "SELECT GENE_IDENTIFIER, TRANSCRIPT_IDENTIFIER, TRANSCRIPT_EXPRESSIONS " +
             "FROM RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ? AND GENE_IDENTIFIER = ?";
@@ -55,7 +54,7 @@ public class TranscriptProfileDAO {
     private JdbcTemplate jdbcTemplate;
 
     @Inject
-    public TranscriptProfileDAO(JdbcTemplate jdbcTemplate) {
+    public TranscriptProfileDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -67,7 +66,8 @@ public class TranscriptProfileDAO {
                 new TranscriptProfileRowMapper());
     }
 
-    public void addTranscriptProfiles(final String experimentAccession, final List<TranscriptProfile> profiles) {
+    public void loadTranscriptProfiles(final String experimentAccession, final List<TranscriptProfile> profiles) {
+        LOGGER.debug("<loadTranscriptProfiles> experimentAccession = " + experimentAccession + ", profiles.size() = " + profiles.size());
 
         jdbcTemplate.batchUpdate(TRANSCRIPT_PROFILE_INSERT, new BatchPreparedStatementSetter() {
 
@@ -90,6 +90,8 @@ public class TranscriptProfileDAO {
     }
 
     public void deleteTranscriptProfilesForExperiment(String experimentAccession) {
+        LOGGER.debug("<deleteTranscriptProfilesForExperiment> experimentAccession = " + experimentAccession);
+
         jdbcTemplate.update("DELETE FROM RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ?",
                 experimentAccession);
 
