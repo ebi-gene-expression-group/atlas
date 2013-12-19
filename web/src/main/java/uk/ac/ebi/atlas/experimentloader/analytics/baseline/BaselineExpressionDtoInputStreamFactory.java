@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentloader.analytics.dto;
+package uk.ac.ebi.atlas.experimentloader.analytics.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;

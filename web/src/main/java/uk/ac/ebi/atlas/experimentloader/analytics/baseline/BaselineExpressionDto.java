@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentloader.analytics.dto;
+package uk.ac.ebi.atlas.experimentloader.analytics.baseline;
 
 import com.google.common.base.Objects;
 

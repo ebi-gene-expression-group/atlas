@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.experimentloader;
 
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.atlas.experimentloader.analytics.dao.AnalyticsDao;
+import uk.ac.ebi.atlas.experimentloader.analytics.AnalyticsDao;
 import uk.ac.ebi.atlas.experimentloader.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentloader.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;

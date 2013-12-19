@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.dao;
+package uk.ac.ebi.atlas.experimentloader.analytics.baseline;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,9 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.atlas.experimentloader.analytics.dao.BaselineExpressionDao;
-import uk.ac.ebi.atlas.experimentloader.analytics.dto.BaselineExpressionDto;
-import uk.ac.ebi.atlas.experimentloader.analytics.dto.BaselineExpressionDtoInputStream;
+import uk.ac.ebi.atlas.experimentloader.analytics.baseline.BaselineExpressionDao;
+import uk.ac.ebi.atlas.experimentloader.analytics.baseline.BaselineExpressionDto;
+import uk.ac.ebi.atlas.experimentloader.analytics.baseline.BaselineExpressionDtoInputStream;
 
 import javax.inject.Inject;
 

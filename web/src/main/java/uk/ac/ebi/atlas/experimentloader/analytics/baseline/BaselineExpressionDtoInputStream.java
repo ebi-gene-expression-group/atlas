@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentloader.analytics.dto;
+package uk.ac.ebi.atlas.experimentloader.analytics.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableList;
