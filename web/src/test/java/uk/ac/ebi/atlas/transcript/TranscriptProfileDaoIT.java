@@ -69,7 +69,7 @@ public class TranscriptProfileDaoIT {
             transcriptProfile4, transcriptProfile5, transcriptProfile6);
 
     @Inject
-    private TranscriptProfileDao subject;
+    private TranscriptProfileDao2 subject;
 
     @Inject
     private JdbcTemplate jdbcTemplate;

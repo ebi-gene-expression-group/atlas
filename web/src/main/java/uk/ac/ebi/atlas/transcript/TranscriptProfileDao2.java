@@ -38,8 +38,8 @@ import java.util.List;
 
 @Named
 @Scope("prototype")
-public class TranscriptProfileDao {
-    private static final Logger LOGGER = Logger.getLogger(TranscriptProfileDao.class);
+public class TranscriptProfileDao2 {
+    private static final Logger LOGGER = Logger.getLogger(TranscriptProfileDao2.class);
 
     private static final String TRANSCRIPT_PROFILE_QUERY = "SELECT GENE_IDENTIFIER, TRANSCRIPT_IDENTIFIER, TRANSCRIPT_EXPRESSIONS " +
             "FROM RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ? AND GENE_IDENTIFIER = ?";
@@ -54,7 +54,7 @@ public class TranscriptProfileDao {
     private JdbcTemplate jdbcTemplate;
 
     @Inject
-    public TranscriptProfileDao(JdbcTemplate jdbcTemplate) {
+    public TranscriptProfileDao2(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

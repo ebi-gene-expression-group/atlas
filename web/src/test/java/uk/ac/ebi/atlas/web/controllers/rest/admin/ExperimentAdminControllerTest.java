@@ -32,7 +32,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentloader.*;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.transcript.TranscriptProfileDao;
 
 import java.util.GregorianCalendar;
 import java.util.UUID;

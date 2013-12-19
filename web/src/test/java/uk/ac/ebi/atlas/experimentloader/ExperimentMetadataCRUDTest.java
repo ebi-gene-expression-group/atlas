@@ -42,7 +42,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
-import uk.ac.ebi.atlas.transcript.TranscriptProfileDao;
+import uk.ac.ebi.atlas.transcript.TranscriptProfileDao2;
 
 import java.io.IOException;
 
@@ -82,7 +82,7 @@ public class ExperimentMetadataCRUDTest {
     private ExperimentDAO experimentDAOMock;
 
     @Mock
-    private TranscriptProfileDao transcriptProfileDaoMock;
+    private TranscriptProfileDao2 transcriptProfileDaoMock;
 
     @Mock
     private ExperimentTrader experimentTraderMock;
