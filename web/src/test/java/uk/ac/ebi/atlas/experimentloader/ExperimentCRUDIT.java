@@ -61,13 +61,13 @@ public class ExperimentCRUDIT {
     public void reloadExistingExperiment() throws IOException {
         assertThat("experiment does not already exist in db", experimentCount(EXISTING_EXPERIMENT_ACCESSION), is(1));
         assertThat("baseline transcripts do not already exist in db", baselinesTranscriptsCount(EXISTING_EXPERIMENT_ACCESSION), is(3));
-        assertThat("baseline expressions do not already exist in db", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(20000));
+        assertThat("baseline expressions do not already exist in db", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(124394));
 
         subject.loadExperiment(EXISTING_EXPERIMENT_ACCESSION, false);
 
         assertThat("count of experiment rows has changed", experimentCount(EXISTING_EXPERIMENT_ACCESSION), is(1));
         assertThat("count of transcripts has changed", baselinesTranscriptsCount(EXISTING_EXPERIMENT_ACCESSION), is(3));
-        assertThat("count of baseline expressions has changed", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(20000));
+        assertThat("count of baseline expressions has changed", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(124394));
     }
 
     @Test(expected = ResourceNotFoundException.class)

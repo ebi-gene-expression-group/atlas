@@ -24,7 +24,6 @@ public class BaselineExpressionDao {
     private static final int ASSAY_GROUP_ID = 3;
     private static final int IS_ACTIVE = 4;
     private static final int EXPRESSION = 5;
-    public static final int BATCH_SIZE = 20000;
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -56,11 +55,6 @@ public class BaselineExpressionDao {
                     ps.setDouble(EXPRESSION, baselineExpressionDto.getExpressionLevel());
 
                     return true;
-                }
-
-                @Override
-                public int getBatchSize() {
-                    return BATCH_SIZE;
                 }
             });
         } catch (IOException e) {
