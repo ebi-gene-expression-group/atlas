@@ -48,7 +48,7 @@ import static org.junit.Assert.assertThat;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 @Transactional  // enable transaction manager, so that changes to the database are rolled back after each test method
-public class TranscriptProfileDaoIT2 {
+public class TranscriptProfileDaoIT {
 
     private static final String TEST_EXPERIMENT_ACCESSION = "delme";
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-599";
