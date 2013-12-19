@@ -47,10 +47,10 @@ public class TranscriptProfilesLoader {
 
     private CsvReaderFactory tsvReaderUtils;
 
-    private TranscriptProfileDao2 transcriptProfileDao;
+    private TranscriptProfileDao transcriptProfileDao;
 
     @Inject
-    public TranscriptProfilesLoader(CsvReaderFactory tsvReaderUtils, TranscriptProfileDao2 transcriptProfileDao,
+    public TranscriptProfilesLoader(CsvReaderFactory tsvReaderUtils, TranscriptProfileDao transcriptProfileDao,
                                     @Value("#{configuration['experiment.transcripts.path.template']}") String transcriptFileUrlTemplate) {
         this.tsvReaderUtils = tsvReaderUtils;
         this.transcriptProfileDao = transcriptProfileDao;

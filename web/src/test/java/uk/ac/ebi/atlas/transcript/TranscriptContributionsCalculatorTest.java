@@ -43,7 +43,7 @@ public class TranscriptContributionsCalculatorTest {
     public static final String GENE_ID = "geneId";
 
     @Mock
-    private TranscriptProfileDao2 transcriptProfileDaoMock;
+    private TranscriptProfileDao transcriptProfileDaoMock;
 
     @Mock
     private BaselineExperimentsCache experimentsCacheMock;

@@ -42,12 +42,12 @@ public class TranscriptContributionsCalculator {
 
     protected static final int TOP_TRANSCRIPTS_NUMBER = 3;
 
-    private TranscriptProfileDao2 transcriptProfileDao;
+    private TranscriptProfileDao transcriptProfileDao;
 
     private BaselineExperimentsCache experimentsCache;
 
     @Inject
-    public TranscriptContributionsCalculator(TranscriptProfileDao2 transcriptProfileDao, BaselineExperimentsCache experimentsCache) {
+    public TranscriptContributionsCalculator(TranscriptProfileDao transcriptProfileDao, BaselineExperimentsCache experimentsCache) {
         this.transcriptProfileDao = transcriptProfileDao;
         this.experimentsCache = experimentsCache;
     }

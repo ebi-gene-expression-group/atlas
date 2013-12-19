@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.dao.BaselineExpressionDao;
 import uk.ac.ebi.atlas.dao.dto.BaselineExpressionDtoInputStream;
 import uk.ac.ebi.atlas.dao.dto.BaselineExpressionDtoInputStreamFactory;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.transcript.TranscriptProfileDao2;
+import uk.ac.ebi.atlas.transcript.TranscriptProfileDao;
 import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
 import javax.inject.Inject;
@@ -21,7 +21,7 @@ public class ExperimentAnalyticsCRUD {
     private TranscriptProfilesLoader transcriptProfileLoader;
     private BaselineExpressionDao baselineExpressionDao;
     private BaselineExpressionDtoInputStreamFactory baselineExpressionDtoInputStreamFactory;
-    private TranscriptProfileDao2 transcriptProfileDao;
+    private TranscriptProfileDao transcriptProfileDao;
 
     // requires no-arg constructor for @Transactional proxying, hence setter injection
     // of dependencies
@@ -29,7 +29,7 @@ public class ExperimentAnalyticsCRUD {
     }
 
     @Inject
-    public void setTranscriptProfileDao(TranscriptProfileDao2 transcriptProfileDao) {
+    public void setTranscriptProfileDao(TranscriptProfileDao transcriptProfileDao) {
         this.transcriptProfileDao = transcriptProfileDao;
     }
 

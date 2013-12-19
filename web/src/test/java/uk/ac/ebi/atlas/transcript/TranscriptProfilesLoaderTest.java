@@ -71,7 +71,7 @@ public class TranscriptProfilesLoaderTest {
 
 
     @Mock
-    private TranscriptProfileDao2 transcriptProfileDaoMock;
+    private TranscriptProfileDao transcriptProfileDaoMock;
 
     private TranscriptProfilesLoader subject;
 
