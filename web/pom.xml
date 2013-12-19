@@ -185,6 +185,14 @@
 
     <!-- Project dependencies -->
     <dependencies>
+
+        <dependency>
+            <groupId>com.googlecode.catch-exception</groupId>
+            <artifactId>catch-exception</artifactId>
+            <version>1.2.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <!--limpopo MAGET-Tab investigation-->
         <dependency>
             <groupId>uk.ac.ebi.arrayexpress2</groupId>
