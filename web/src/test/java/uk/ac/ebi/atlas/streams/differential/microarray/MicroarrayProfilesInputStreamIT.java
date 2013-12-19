@@ -76,8 +76,6 @@ public class MicroarrayProfilesInputStreamIT {
     @Inject
     private MicroarrayRequestContextBuilder microarrayRequestContextBuilder;
 
-    private MicroarrayRequestContext microarrayRequestContext;
-
     private ObjectInputStream<MicroarrayProfile> subject;
 
     private Contrast contrast;
@@ -94,7 +92,7 @@ public class MicroarrayProfilesInputStreamIT {
         contrast = microarrayExperiment.getContrasts().toArray(new Contrast[0])[1];
 
         microarrayRequestPreferences.setArrayDesignAccession(ARRAY_DESIGN_ACCESSION);
-        microarrayRequestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
+        microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
                 .withPreferences(microarrayRequestPreferences).build();
 
     }

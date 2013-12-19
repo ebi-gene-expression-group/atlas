@@ -11,9 +11,9 @@ public class BaselineExpressionDto {
 
     private String assayGroupId;
 
-    private Double expressionLevel;
+    private double expressionLevel;
 
-    public BaselineExpressionDto(String geneId, String assayGroupId, Double expressionLevel) {
+    public BaselineExpressionDto(String geneId, String assayGroupId, double expressionLevel) {
         this.geneId = geneId;
         this.assayGroupId = assayGroupId;
         this.expressionLevel = expressionLevel;
@@ -42,7 +42,7 @@ public class BaselineExpressionDto {
 
         BaselineExpressionDto that = (BaselineExpressionDto) o;
 
-        return assayGroupId.equals(that.assayGroupId) && expressionLevel.equals(that.expressionLevel) && geneId.equals(that.geneId);
+        return Double.compare(that.expressionLevel, expressionLevel) == 0 && assayGroupId.equals(that.assayGroupId) && geneId.equals(that.geneId);
 
     }
 

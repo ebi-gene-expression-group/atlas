@@ -26,7 +26,10 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 /**
- * This code was adapted from JAVAs SequenceInputStream class
+ * Concatenates multiple ObjectInputStreams. When one stream ends, continues
+ * from the next stream.
+ *
+ * (This code was adapted from JAVA's SequenceInputStream class).
  *
  * @param <T>
  */
