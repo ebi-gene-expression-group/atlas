@@ -1,8 +1,7 @@
-package uk.ac.ebi.atlas.dao.dto;
+package uk.ac.ebi.atlas.experimentloader.analytics.dto;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Joiner;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 

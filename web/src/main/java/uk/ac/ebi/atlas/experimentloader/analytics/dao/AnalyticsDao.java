@@ -1,6 +1,6 @@
-package uk.ac.ebi.atlas.experimentloader.analytics;
+package uk.ac.ebi.atlas.experimentloader.analytics.dao;
 
-import uk.ac.ebi.atlas.dao.BaselineExpressionDao;
+import uk.ac.ebi.atlas.experimentloader.analytics.dao.BaselineExpressionDao;
 
 import javax.inject.Inject;
 import javax.inject.Named;

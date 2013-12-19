@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.dao.dto;
+package uk.ac.ebi.atlas.experimentloader.analytics.dto;
 
 import com.google.common.base.Objects;
 

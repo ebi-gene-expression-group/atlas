@@ -1,10 +1,10 @@
-package uk.ac.ebi.atlas.dao;
+package uk.ac.ebi.atlas.experimentloader.analytics.dao;
 
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.AbstractInterruptibleBatchPreparedStatementSetter;
-import uk.ac.ebi.atlas.dao.dto.BaselineExpressionDto;
-import uk.ac.ebi.atlas.dao.dto.BaselineExpressionDtoInputStream;
+import uk.ac.ebi.atlas.experimentloader.analytics.dto.BaselineExpressionDto;
+import uk.ac.ebi.atlas.experimentloader.analytics.dto.BaselineExpressionDtoInputStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;

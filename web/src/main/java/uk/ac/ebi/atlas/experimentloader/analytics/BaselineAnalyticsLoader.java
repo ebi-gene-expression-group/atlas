@@ -2,10 +2,9 @@ package uk.ac.ebi.atlas.experimentloader.analytics;
 
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.atlas.dao.BaselineExpressionDao;
-import uk.ac.ebi.atlas.dao.dto.BaselineExpressionDtoInputStream;
-import uk.ac.ebi.atlas.dao.dto.BaselineExpressionDtoInputStreamFactory;
-import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.experimentloader.analytics.dao.BaselineExpressionDao;
+import uk.ac.ebi.atlas.experimentloader.analytics.dto.BaselineExpressionDtoInputStream;
+import uk.ac.ebi.atlas.experimentloader.analytics.dto.BaselineExpressionDtoInputStreamFactory;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDao;
 import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
 
