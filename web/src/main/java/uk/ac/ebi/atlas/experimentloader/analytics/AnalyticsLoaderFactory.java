@@ -9,16 +9,26 @@ import javax.inject.Named;
 public class AnalyticsLoaderFactory {
 
     private AnalyticsLoader baselineAnalyticsLoader;
+    private AnalyticsLoader rnaSeqDifferentialAnalyticsLoader;
+    private AnalyticsLoader microarrayDifferentialAnalyticsLoader;
 
     @Inject
-    public AnalyticsLoaderFactory(AnalyticsLoader baselineAnalyticsLoader) {
+    public AnalyticsLoaderFactory(AnalyticsLoader baselineAnalyticsLoader,
+                                  AnalyticsLoader rnaSeqDifferentialAnalyticsLoader,
+                                  AnalyticsLoader microarrayDifferentialAnalyticsLoader) {
         this.baselineAnalyticsLoader = baselineAnalyticsLoader;
+        this.rnaSeqDifferentialAnalyticsLoader = rnaSeqDifferentialAnalyticsLoader;
+        this.microarrayDifferentialAnalyticsLoader = microarrayDifferentialAnalyticsLoader;
     }
 
     public AnalyticsLoader getLoader(ExperimentType experimentType) {
         if (experimentType.isBaseline()) {
             return baselineAnalyticsLoader;
+        } else if (experimentType == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
+            return rnaSeqDifferentialAnalyticsLoader;
+        } else if (experimentType.isMicroarray()) {
+            return microarrayDifferentialAnalyticsLoader;
         }
-        return null;
+        throw new UnsupportedOperationException("No analytics loader for experiment type " + experimentType);
     }
 }

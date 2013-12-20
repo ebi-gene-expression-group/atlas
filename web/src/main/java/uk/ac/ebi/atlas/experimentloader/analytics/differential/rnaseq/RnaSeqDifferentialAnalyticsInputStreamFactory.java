@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentloader.analytics.baseline;
+package uk.ac.ebi.atlas.experimentloader.analytics.differential.rnaseq;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,22 +9,22 @@ import javax.inject.Named;
 import java.text.MessageFormat;
 
 @Named
-public class BaselineAnalyticsInputStreamFactory {
+public class RnaSeqDifferentialAnalyticsInputStreamFactory {
 
     private final CsvReaderFactory csvReaderFactory;
     private final String fileTemplate;
 
     @Inject
-    public BaselineAnalyticsInputStreamFactory(@Value("#{configuration['experiment.magetab.path.template']}")
-                                               String fileTemplate,
-                                               CsvReaderFactory csvReaderFactory) {
+    public RnaSeqDifferentialAnalyticsInputStreamFactory(@Value("#{configuration['diff.experiment.data.path.template']}")
+                                                         String fileTemplate,
+                                                         CsvReaderFactory csvReaderFactory) {
         this.fileTemplate = fileTemplate;
         this.csvReaderFactory = csvReaderFactory;
     }
 
-    public BaselineAnalyticsInputStream create(String experimentAccession) {
+    public RnaSeqDifferentialAnalyticsInputStream create(String experimentAccession) {
         String tsvFilePath = MessageFormat.format(fileTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFilePath);
-        return new BaselineAnalyticsInputStream(csvReader, tsvFilePath);
+        return new RnaSeqDifferentialAnalyticsInputStream(csvReader, tsvFilePath);
     }
 }

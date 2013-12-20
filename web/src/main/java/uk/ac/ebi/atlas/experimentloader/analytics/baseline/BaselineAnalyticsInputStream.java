@@ -37,8 +37,11 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
     private final CSVReader csvReader;
     private final Queue<BaselineAnalytics> queue = new LinkedList<>();
     private final String[] assayGroupIds;
+    private final String name;
+    private int lineNumber = 0;
 
-    public BaselineAnalyticsInputStream(CSVReader csvReader) {
+    public BaselineAnalyticsInputStream(CSVReader csvReader, String name) {
+        this.name = name;
         this.csvReader = csvReader;
         String[] headers = readCsvLine();
         this.assayGroupIds = (String[]) ArrayUtils.subarray(headers, FIRST_EXPRESSION_LEVEL_INDEX, headers.length);
@@ -50,25 +53,26 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
     }
 
     private String[] readCsvLine() {
+        lineNumber++;
         try {
             return csvReader.readNext();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Exception thrown while reading next csv line.", e);
+            throw new IllegalStateException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
         }
     }
 
     @Override
     public BaselineAnalytics readNext() {
         if (queue.isEmpty()) {
-            ImmutableList<BaselineAnalytics> baselineAnalyticses = readNextNonZeroLine();
+            ImmutableList<BaselineAnalytics> baselineAnalytics = readNextNonZeroLine();
 
-            if (baselineAnalyticses == null) {
+            if (baselineAnalytics == null) {
                 //EOF
                 return null;
             }
 
-            queue.addAll(baselineAnalyticses);
+            queue.addAll(baselineAnalytics);
         }
 
         return queue.remove();
@@ -84,13 +88,13 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
 
         String geneId = line[GENE_ID_COLUMN_INDEX];
         String[] expressionLevels = (String[]) ArrayUtils.subarray(line, FIRST_EXPRESSION_LEVEL_INDEX, line.length);
-        ImmutableList<BaselineAnalytics> baselineAnalyticses = createList(geneId, assayGroupIds, expressionLevels);
+        ImmutableList<BaselineAnalytics> baselineAnalytics = createList(geneId, assayGroupIds, expressionLevels);
 
-        if (baselineAnalyticses.isEmpty()) {
+        if (baselineAnalytics.isEmpty()) {
             return readNextNonZeroLine();
         }
 
-        return baselineAnalyticses;
+        return baselineAnalytics;
     }
 
     private ImmutableList<BaselineAnalytics> createList(String geneId, String[] assayGroupIds, String[] expressionLevels) {

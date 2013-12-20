@@ -39,8 +39,11 @@ public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream
     private final CSVReader csvReader;
     private final Queue<RnaSeqDifferentialAnalytics> queue = new LinkedList<>();
     private final ImmutableList<String> contrastIds;
+    private final String name;
+    private int lineNumber = 0;
 
-    public RnaSeqDifferentialAnalyticsInputStream(CSVReader csvReader) {
+    public RnaSeqDifferentialAnalyticsInputStream(CSVReader csvReader, String name) {
+        this.name = name;
         this.csvReader = csvReader;
         String[] headers = readCsvLine();
         String[] contrastHeaders = (String[]) ArrayUtils.subarray(headers, FIRST_CONTRAST_INDEX, headers.length);
@@ -53,11 +56,12 @@ public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream
     }
 
     private String[] readCsvLine() {
+        lineNumber++;
         try {
             return csvReader.readNext();
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Exception thrown while reading next csv line.", e);
+            throw new IllegalStateException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
         }
     }
 
@@ -93,10 +97,10 @@ public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream
 
         for (String contrastId : contrastIds) {
 
-            checkState(contrastAnalytics.hasNext(), String.format("missing p-value for gene %s, contrast %s", geneId,contrastId));
+            checkState(contrastAnalytics.hasNext(), String.format("%s line %s: missing p-value for gene %s, contrast %s", name, lineNumber, geneId, contrastId));
             String pValueString = contrastAnalytics.next();
 
-            checkState(contrastAnalytics.hasNext(), String.format("missing log2foldchange for gene %s, contrast %s", geneId,contrastId));
+            checkState(contrastAnalytics.hasNext(), String.format("%s line %s: missing log2foldchange for gene %s, contrast %s", name, lineNumber,  geneId, contrastId));
             String foldChangeString = contrastAnalytics.next();
 
             if (!("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(foldChangeString))) {

@@ -52,7 +52,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     }
 
     public void deleteInactiveExpressions() {
-        get("/deleteInactiveExpressions").then().assertThat().statusCode(200);
+        get("/deleteInactiveAnalytics").then().assertThat().statusCode(200);
     }
 
     @Test

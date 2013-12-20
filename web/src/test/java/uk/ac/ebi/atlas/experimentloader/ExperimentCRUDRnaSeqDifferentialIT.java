@@ -40,17 +40,17 @@ public class ExperimentCRUDRnaSeqDifferentialIT {
     @Test
     public void loadAndDeleteNewExperiment() throws IOException {
         assertThat("experiment already exists in db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
-        assertThat("baseline expressions already exist in db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(0));
+        assertThat("analytics already exist in db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(0));
 
         subject.loadExperiment(NEW_EXPERIMENT_ACCESSION, false);
 
         assertThat("experiment row not loaded into db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(1));
-        assertThat("baseline expressions not loaded into db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(18));
+        assertThat("analytics not loaded into db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(18));
 
         subject.deleteExperiment(NEW_EXPERIMENT_ACCESSION);
 
         assertThat("experiment row was not deleted from db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
-        assertThat("baseline expressions were not deleted from db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(0));
+        assertThat("analytics were not deleted from db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(0));
     }
 
     private int experimentCount(String accession) {

@@ -66,7 +66,7 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
     public void readOneContrastTsv() throws IOException {
         Reader tsvSource = new StringReader(tsvContents1Contrast);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader);
+        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test");
 
         RnaSeqDifferentialAnalytics dto1 = new RnaSeqDifferentialAnalytics(GENE_ID_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1);
         RnaSeqDifferentialAnalytics dto2 = new RnaSeqDifferentialAnalytics(GENE_ID_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2);
@@ -80,7 +80,7 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
     public void readTwoContrastTsv() throws IOException {
         Reader tsvSource = new StringReader(tsvContents2Contrasts);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader);
+        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test");
 
         RnaSeqDifferentialAnalytics dto1 = new RnaSeqDifferentialAnalytics(GENE_ID_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1);
         RnaSeqDifferentialAnalytics dto2 = new RnaSeqDifferentialAnalytics(GENE_ID_1, CONTRAST_ID_2, P_VALUE_2, FOLD_CHANGE_2);
@@ -94,7 +94,7 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
     public void readContrastContainingNA() throws IOException {
         Reader tsvSource = new StringReader(tsvContents1ContrastNA);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader);
+        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test");
 
         RnaSeqDifferentialAnalytics dto2 = new RnaSeqDifferentialAnalytics(GENE_ID_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2);
 
@@ -106,7 +106,7 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
     public void readContrastWithInf() throws IOException {
         Reader tsvSource = new StringReader(tsvContents1ContrastINF);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader);
+        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test");
 
         RnaSeqDifferentialAnalytics dto1 = new RnaSeqDifferentialAnalytics(GENE_ID_1, CONTRAST_ID_1, Double.POSITIVE_INFINITY, FOLD_CHANGE_1);
         RnaSeqDifferentialAnalytics dto2 = new RnaSeqDifferentialAnalytics(GENE_ID_2, CONTRAST_ID_1, Double.NEGATIVE_INFINITY, FOLD_CHANGE_2);
@@ -121,7 +121,7 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
         Reader tsvSource = spy(new StringReader(tsvContents1Contrast));
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
 
-        try (RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader)) {
+        try (RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test")) {
             subject.readNext();
         }
 
@@ -133,7 +133,7 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
         Reader tsvSource = spy(new StringReader(tsvContents1Contrast));
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
 
-        try (RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader)) {
+        try (RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test")) {
             subject.readNext();
             throw new RuntimeException("foobar");
         } catch (RuntimeException e) {

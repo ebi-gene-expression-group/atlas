@@ -38,7 +38,7 @@ public class BaselineAnalyticsInputStreamTest {
     public void readTwoTsvLines() throws IOException {
         Reader tsvSource = new StringReader(tsvContents);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader);
+        BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader, "Test");
 
         BaselineAnalytics line1g1 = new BaselineAnalytics(GENE_ID_1, "g1", 1.0);
         BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 2.0);
@@ -64,7 +64,7 @@ public class BaselineAnalyticsInputStreamTest {
     public void readTsvLineWithNoExpression() throws IOException {
         Reader tsvSource = new StringReader(tsvContentsNoExpression);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader);
+        BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader, "Test");
 
         assertThat(subject.readNext(), is(nullValue()));
     }
@@ -74,7 +74,7 @@ public class BaselineAnalyticsInputStreamTest {
         Reader tsvSource = spy(new StringReader(tsvContents));
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
 
-        try (BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader)) {
+        try (BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader, "Test")) {
             subject.readNext();
         }
 
@@ -86,7 +86,7 @@ public class BaselineAnalyticsInputStreamTest {
         Reader tsvSource = spy(new StringReader(tsvContents));
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
 
-        try (BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader)) {
+        try (BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader, "Test")) {
             subject.readNext();
             throw new RuntimeException("foobar");
         } catch (RuntimeException e) {

@@ -81,11 +81,11 @@ public class ExperimentAdminController {
         return "Experiment " + experimentAccession + " successfully deleted.";
     }
 
-    @RequestMapping("/deleteInactiveExpressions")
+    @RequestMapping("/deleteInactiveAnalytics")
     @ResponseBody
     public String deleteInactiveExpressions() {
-        experimentCRUD.deleteInactiveExpressions();
-        return "Deleted all inactive expressions";
+        experimentCRUD.deleteInactiveAnalytics();
+        return "Deleted all inactive analytics";
     }
 
     @RequestMapping("/updateStatus")

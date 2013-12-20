@@ -16,8 +16,6 @@ import java.util.UUID;
 @Named
 public class ExperimentCRUD {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
-
     private ExperimentChecker experimentChecker;
     private ExperimentMetadataCRUD experimentMetadataCRUD;
     private AnalyticsLoaderFactory analyticsLoaderFactory;
@@ -96,7 +94,7 @@ public class ExperimentCRUD {
         return experimentMetadataCRUD.loadExperimentConfiguration(experimentAccession);
     }
 
-    public void deleteInactiveExpressions() {
-        analyticsDao.deleteInactiveExpressions();
+    public void deleteInactiveAnalytics() {
+        analyticsDao.deleteInactiveAnalytics();
     }
 }

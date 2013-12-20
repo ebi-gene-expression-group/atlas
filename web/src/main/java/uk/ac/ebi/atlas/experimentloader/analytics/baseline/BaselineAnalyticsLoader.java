@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentloader.analytics.baseline;
 
-import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.experimentloader.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDao;
@@ -12,8 +11,6 @@ import java.io.IOException;
 
 @Named
 public class BaselineAnalyticsLoader implements AnalyticsLoader {
-
-    private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsLoader.class);
 
     private final TranscriptProfilesLoader transcriptProfileLoader;
     private final BaselineAnalyticsDao baselineAnalyticsDao;
@@ -39,14 +36,14 @@ public class BaselineAnalyticsLoader implements AnalyticsLoader {
 
     private void loadBaselineExpressions(String accession) {
         BaselineAnalyticsInputStream baselineAnalyticsInputStream =
-                baselineAnalyticsInputStreamFactory.createBaselineExpressionDtoInputStream(accession);
-        baselineAnalyticsDao.loadBaselineAnalytics(accession, baselineAnalyticsInputStream);
+                baselineAnalyticsInputStreamFactory.create(accession);
+        baselineAnalyticsDao.loadAnalytics(accession, baselineAnalyticsInputStream);
     }
 
     @Override
     @Transactional
     public void deleteAnalytics(String accession) {
-        baselineAnalyticsDao.deleteBaselineExpressions(accession);
+        baselineAnalyticsDao.deleteAnalytics(accession);
         transcriptProfileDao.deleteTranscriptProfilesForExperiment(accession);
     }
 

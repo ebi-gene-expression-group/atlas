@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentloader.analytics.baseline;
+package uk.ac.ebi.atlas.experimentloader.analytics.differential.rnaseq;
 
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,52 +11,54 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Named
-public class BaselineAnalyticsDao {
+public class RnaSeqDifferentialAnalyticsDao {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsDao.class);
+    private static final Logger LOGGER = Logger.getLogger(RnaSeqDifferentialAnalyticsDao.class);
 
-    private static final String ANALYTICS_INSERT = "INSERT INTO RNASEQ_BSLN_EXPRESSIONS " +
-            "(identifier, experiment, assaygroupid, isactive, expression) VALUES (?, ?, ?, ?, ?)";
+    private static final String ANALYTICS_INSERT = "INSERT INTO RNASEQ_DIFF_ANALYTICS " +
+            "(identifier, experiment, contrastid, isactive, pval, log2fold) VALUES (?, ?, ?, ?, ?, ?)";
     private static final int IDENTIFIER = 1;
     private static final int EXPERIMENT = 2;
-    private static final int ASSAY_GROUP_ID = 3;
+    private static final int CONTRAST_ID = 3;
     private static final int IS_ACTIVE = 4;
-    private static final int EXPRESSION = 5;
+    private static final int PVAL = 5;
+    private static final int LOG2FOLD = 6;
 
     private final JdbcTemplate jdbcTemplate;
 
     @Inject
-    public BaselineAnalyticsDao(JdbcTemplate jdbcTemplate) {
+    public RnaSeqDifferentialAnalyticsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void loadAnalytics(final String experimentAccession, BaselineAnalyticsInputStream analyticsInputStream)  {
+    public void loadAnalytics(final String experimentAccession, RnaSeqDifferentialAnalyticsInputStream analyticsInputStream)  {
         LOGGER.info(String.format("loadAnalytics for experiment %s begin", experimentAccession));
 
         // will autoclose if DataAccessException thrown by jdbcTemplate
-        try (BaselineAnalyticsInputStream source = analyticsInputStream) {
+        try (RnaSeqDifferentialAnalyticsInputStream source = analyticsInputStream) {
 
             jdbcTemplate.batchUpdate(ANALYTICS_INSERT, new AbstractInterruptibleBatchPreparedStatementSetter() {
 
                 @Override
                 protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
-                    BaselineAnalytics baselineAnalytics = source.readNext();
+                    RnaSeqDifferentialAnalytics analytics = source.readNext();
 
-                    if (baselineAnalytics == null) {
+                    if (analytics == null) {
                         return false;
                     }
 
-                    ps.setString(IDENTIFIER, baselineAnalytics.getGeneId());
+                    ps.setString(IDENTIFIER, analytics.getGeneId());
                     ps.setString(EXPERIMENT, experimentAccession);
-                    ps.setString(ASSAY_GROUP_ID, baselineAnalytics.getAssayGroupId());
+                    ps.setString(CONTRAST_ID, analytics.getContrastId());
                     ps.setString(IS_ACTIVE, "T");
-                    ps.setDouble(EXPRESSION, baselineAnalytics.getExpressionLevel());
+                    ps.setDouble(PVAL, analytics.getpValue());
+                    ps.setDouble(LOG2FOLD, analytics.getFoldChange());
 
                     return true;
                 }
             });
         } catch (IOException e) {
-            LOGGER.warn(String.format("Cannot close BaselineAnalyticsInputStream: %s", e.getMessage()));
+            LOGGER.warn(String.format("Cannot close RnaSeqDifferentialAnalyticsInputStream: %s", e.getMessage()));
         }
 
         LOGGER.info(String.format("loadAnalytics for experiment %s complete", experimentAccession));
@@ -64,13 +66,13 @@ public class BaselineAnalyticsDao {
 
     public void deleteAnalytics(String experimentAccession) {
         LOGGER.info("deleteAnalytics for experiment " + experimentAccession);
-        jdbcTemplate.update("UPDATE RNASEQ_BSLN_EXPRESSIONS SET ISACTIVE='F' WHERE experiment = ?",
+        jdbcTemplate.update("UPDATE RNASEQ_DIFF_ANALYTICS SET ISACTIVE='F' WHERE experiment = ?",
                 experimentAccession);
     }
 
     public void deleteInactiveAnalytics() {
-        int count = jdbcTemplate.update("delete from RNASEQ_BSLN_EXPRESSIONS WHERE ISACTIVE = 'F'");
-        LOGGER.info(String.format("deleteInactiveBaselineExpressions %s rows deleted",count));
+        int count = jdbcTemplate.update("delete from RNASEQ_DIFF_ANALYTICS WHERE ISACTIVE = 'F'");
+        LOGGER.info(String.format("deleteInactiveAnalytics %s rows deleted",count));
     }
 
 }

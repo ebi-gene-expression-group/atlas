@@ -47,11 +47,11 @@ public class BaselineAnalyticsDaoIT {
     public void insertAndDeleteBaselineExpressions() throws IOException {
         assertThat(getCount(), is(0));
 
-        baselineAnalyticsDao.loadBaselineAnalytics(EXPERIMENT_ACCESSION, baselineAnalyticsInputStream);
+        baselineAnalyticsDao.loadAnalytics(EXPERIMENT_ACCESSION, baselineAnalyticsInputStream);
 
         assertThat(getCount(), is(2));
 
-        baselineAnalyticsDao.deleteBaselineExpressions(EXPERIMENT_ACCESSION);
+        baselineAnalyticsDao.deleteAnalytics(EXPERIMENT_ACCESSION);
 
         assertThat(getCount(), is(0));
 
