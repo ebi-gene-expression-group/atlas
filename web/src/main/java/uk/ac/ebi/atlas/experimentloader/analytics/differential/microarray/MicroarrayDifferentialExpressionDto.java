@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentloader.analytics.microarray;
+package uk.ac.ebi.atlas.experimentloader.analytics.differential.microarray;
 
 import com.google.common.base.Objects;
 

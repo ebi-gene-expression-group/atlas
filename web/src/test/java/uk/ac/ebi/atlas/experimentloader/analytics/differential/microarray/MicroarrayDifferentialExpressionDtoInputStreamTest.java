@@ -1,9 +1,8 @@
-package uk.ac.ebi.atlas.experimentloader.analytics.microarray;
+package uk.ac.ebi.atlas.experimentloader.analytics.differential.microarray;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Joiner;
 import org.junit.Test;
-import uk.ac.ebi.atlas.experimentloader.analytics.baseline.BaselineExpressionDtoInputStream;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import java.io.IOException;

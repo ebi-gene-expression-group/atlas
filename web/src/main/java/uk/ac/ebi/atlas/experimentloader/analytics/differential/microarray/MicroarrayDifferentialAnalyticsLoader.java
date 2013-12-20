@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentloader.analytics.microarray;
+package uk.ac.ebi.atlas.experimentloader.analytics.differential.microarray;
 
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;

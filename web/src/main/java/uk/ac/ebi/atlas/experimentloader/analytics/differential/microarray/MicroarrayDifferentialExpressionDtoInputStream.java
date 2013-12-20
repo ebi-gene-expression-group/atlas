@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentloader.analytics.microarray;
+package uk.ac.ebi.atlas.experimentloader.analytics.differential.microarray;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableList;
@@ -6,7 +6,7 @@ import com.google.common.collect.UnmodifiableIterator;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.experimentloader.analytics.differential.TsvFileParsingUtil;
+import uk.ac.ebi.atlas.experimentloader.analytics.differential.DifferentialTsvFileParsingUtil;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -45,7 +45,7 @@ public class MicroarrayDifferentialExpressionDtoInputStream implements ObjectInp
         this.csvReader = csvReader;
         String[] headers = readCsvLine();
         String[] contrastHeaders = (String[]) ArrayUtils.subarray(headers, FIRST_CONTRAST_INDEX, headers.length);
-        this.contrastIds = TsvFileParsingUtil.parseHeaderIntoContrastIds(contrastHeaders);
+        this.contrastIds = DifferentialTsvFileParsingUtil.parseHeaderIntoContrastIds(contrastHeaders);
     }
 
     @Override
@@ -104,9 +104,9 @@ public class MicroarrayDifferentialExpressionDtoInputStream implements ObjectInp
             String foldChangeString = contrastAnalytics.next();
 
             if (!("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(tStatisticString) || "NA".equalsIgnoreCase(foldChangeString))) {
-                double pValue = TsvFileParsingUtil.parseDouble(pValueString);
-                double tStatistic = TsvFileParsingUtil.parseDouble(tStatisticString);
-                double foldChange = TsvFileParsingUtil.parseDouble(foldChangeString);
+                double pValue = DifferentialTsvFileParsingUtil.parseDouble(pValueString);
+                double tStatistic = DifferentialTsvFileParsingUtil.parseDouble(tStatisticString);
+                double foldChange = DifferentialTsvFileParsingUtil.parseDouble(foldChangeString);
                 MicroarrayDifferentialExpressionDto dto = new MicroarrayDifferentialExpressionDto(designElement, contrastId, pValue, foldChange, tStatistic);
                 builder.add(dto);
             }
