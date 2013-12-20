@@ -61,7 +61,7 @@ public class BaselineExpressionDtoInputStream implements ObjectInputStream<Basel
     @Override
     public BaselineExpressionDto readNext() {
         if (queue.isEmpty()) {
-            ImmutableList<? extends BaselineExpressionDto> baselineExpressionDtos = readNextNonZeroLine();
+            ImmutableList<BaselineExpressionDto> baselineExpressionDtos = readNextNonZeroLine();
 
             if (baselineExpressionDtos == null) {
                 //EOF
@@ -74,7 +74,7 @@ public class BaselineExpressionDtoInputStream implements ObjectInputStream<Basel
         return queue.remove();
     }
 
-    private ImmutableList<? extends BaselineExpressionDto> readNextNonZeroLine() {
+    private ImmutableList<BaselineExpressionDto> readNextNonZeroLine() {
 
         String[] line = readCsvLine();
         if (line == null) {
@@ -84,14 +84,16 @@ public class BaselineExpressionDtoInputStream implements ObjectInputStream<Basel
 
         String geneId = line[GENE_ID_COLUMN_INDEX];
         String[] expressionLevels = (String[]) ArrayUtils.subarray(line, FIRST_EXPRESSION_LEVEL_INDEX, line.length);
-        ImmutableList<? extends BaselineExpressionDto> baselineExpressionDtos = createList(geneId, assayGroupIds, expressionLevels);
+        ImmutableList<BaselineExpressionDto> baselineExpressionDtos = createList(geneId, assayGroupIds, expressionLevels);
 
-        if (baselineExpressionDtos.isEmpty()) return readNextNonZeroLine();
+        if (baselineExpressionDtos.isEmpty()) {
+            return readNextNonZeroLine();
+        }
 
         return baselineExpressionDtos;
     }
 
-    private ImmutableList<? extends BaselineExpressionDto> createList(String geneId, String[] assayGroupIds, String[] expressionLevels) {
+    private ImmutableList<BaselineExpressionDto> createList(String geneId, String[] assayGroupIds, String[] expressionLevels) {
         checkArgument(assayGroupIds.length == expressionLevels.length);
 
         ImmutableList.Builder<BaselineExpressionDto> builder = ImmutableList.builder();

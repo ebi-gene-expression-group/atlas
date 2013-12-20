@@ -3,8 +3,6 @@ package uk.ac.ebi.atlas.experimentloader.analytics.baseline;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Joiner;
 import org.junit.Test;
-import uk.ac.ebi.atlas.experimentloader.analytics.baseline.BaselineExpressionDto;
-import uk.ac.ebi.atlas.experimentloader.analytics.baseline.BaselineExpressionDtoInputStream;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import java.io.IOException;
@@ -14,7 +12,6 @@ import java.io.StringReader;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
@@ -60,6 +57,7 @@ public class BaselineExpressionDtoInputStreamTest {
 
         assertThat(subject.readNext(), is(line2g3));
         assertThat(subject.readNext(), is(line2g5));
+        assertThat(subject.readNext(), is(nullValue()));
     }
 
     @Test
