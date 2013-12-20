@@ -53,12 +53,7 @@ public class ExperimentCRUDMicroArrayDifferentialIT {
         assertThat("baseline expressions were not deleted from db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(0));
     }
 
-    @Test(expected = ResourceNotFoundException.class)
-    public void deleteNonExistantExperimentThrowsResourceNotFoundException() throws Exception {
-        subject.deleteExperiment("FOOBAR");
-    }
-
-    private int experimentCount(String accession) {
+     private int experimentCount(String accession) {
         return jdbcTemplate.queryForObject("select COUNT(*) from EXPERIMENT WHERE accession = ?", Integer.class, accession);
     }
 
