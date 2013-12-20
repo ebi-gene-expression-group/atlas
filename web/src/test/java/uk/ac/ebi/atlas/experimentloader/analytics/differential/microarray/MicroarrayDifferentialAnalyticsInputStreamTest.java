@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-public class MicroarrayDifferentialExpressionDtoInputStreamTest {
+public class MicroarrayDifferentialAnalyticsInputStreamTest {
 
     private static CsvReaderFactory csvReaderFactory = new CsvReaderFactory();
 
@@ -70,10 +70,10 @@ public class MicroarrayDifferentialExpressionDtoInputStreamTest {
     public void readOneContrastTsv() throws IOException {
         Reader tsvSource = new StringReader(tsvContents1Contrast);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        MicroarrayDifferentialExpressionDtoInputStream subject = new MicroarrayDifferentialExpressionDtoInputStream(csvReader);
+        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader);
 
-        MicroarrayDifferentialExpressionDto dto1 = new MicroarrayDifferentialExpressionDto(DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, TSTAT_1);
-        MicroarrayDifferentialExpressionDto dto2 = new MicroarrayDifferentialExpressionDto(DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
+        MicroarrayDifferentialAnalytics dto1 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, TSTAT_1);
+        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
 
         assertThat(subject.readNext(), is(dto1));
         assertThat(subject.readNext(), is(dto2));
@@ -84,10 +84,10 @@ public class MicroarrayDifferentialExpressionDtoInputStreamTest {
     public void readTwoContrastTsv() throws IOException {
         Reader tsvSource = new StringReader(tsvContents2Contrasts);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        MicroarrayDifferentialExpressionDtoInputStream subject = new MicroarrayDifferentialExpressionDtoInputStream(csvReader);
+        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader);
 
-        MicroarrayDifferentialExpressionDto dto1 = new MicroarrayDifferentialExpressionDto(DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, TSTAT_1);
-        MicroarrayDifferentialExpressionDto dto2 = new MicroarrayDifferentialExpressionDto(DESIGN_ELEMENT_1, CONTRAST_ID_2, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
+        MicroarrayDifferentialAnalytics dto1 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, TSTAT_1);
+        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_1, CONTRAST_ID_2, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
 
         assertThat(subject.readNext(), is(dto1));
         assertThat(subject.readNext(), is(dto2));
@@ -98,9 +98,9 @@ public class MicroarrayDifferentialExpressionDtoInputStreamTest {
     public void readContrastContainingNA() throws IOException {
         Reader tsvSource = new StringReader(tsvContents1ContrastNA);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        MicroarrayDifferentialExpressionDtoInputStream subject = new MicroarrayDifferentialExpressionDtoInputStream(csvReader);
+        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader);
 
-        MicroarrayDifferentialExpressionDto dto2 = new MicroarrayDifferentialExpressionDto(DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
+        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
 
         assertThat(subject.readNext(), is(dto2));
         assertThat(subject.readNext(), is(nullValue()));
@@ -110,10 +110,10 @@ public class MicroarrayDifferentialExpressionDtoInputStreamTest {
     public void readContrastWithInf() throws IOException {
         Reader tsvSource = new StringReader(tsvContents1ContrastINF);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        MicroarrayDifferentialExpressionDtoInputStream subject = new MicroarrayDifferentialExpressionDtoInputStream(csvReader);
+        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader);
 
-        MicroarrayDifferentialExpressionDto dto1 = new MicroarrayDifferentialExpressionDto(DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, Double.POSITIVE_INFINITY);
-        MicroarrayDifferentialExpressionDto dto2 = new MicroarrayDifferentialExpressionDto(DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, Double.NEGATIVE_INFINITY);
+        MicroarrayDifferentialAnalytics dto1 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, Double.POSITIVE_INFINITY);
+        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, Double.NEGATIVE_INFINITY);
 
         assertThat(subject.readNext(), is(dto1));
         assertThat(subject.readNext(), is(dto2));
@@ -125,7 +125,7 @@ public class MicroarrayDifferentialExpressionDtoInputStreamTest {
         Reader tsvSource = spy(new StringReader(tsvContents1Contrast));
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
 
-        try (MicroarrayDifferentialExpressionDtoInputStream subject = new MicroarrayDifferentialExpressionDtoInputStream(csvReader)) {
+        try (MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader)) {
             subject.readNext();
         }
 
@@ -137,7 +137,7 @@ public class MicroarrayDifferentialExpressionDtoInputStreamTest {
         Reader tsvSource = spy(new StringReader(tsvContents1Contrast));
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
 
-        try (MicroarrayDifferentialExpressionDtoInputStream subject = new MicroarrayDifferentialExpressionDtoInputStream(csvReader)) {
+        try (MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader)) {
             subject.readNext();
             throw new RuntimeException("foobar");
         } catch (RuntimeException e) {

@@ -5,7 +5,7 @@ import com.google.common.base.Objects;
 /*
  * Used for loading baseline expressions from the TSV file into the database
  */
-public class BaselineExpressionDto {
+public class BaselineAnalytics {
 
     private String geneId;
 
@@ -13,7 +13,7 @@ public class BaselineExpressionDto {
 
     private double expressionLevel;
 
-    public BaselineExpressionDto(String geneId, String assayGroupId, double expressionLevel) {
+    public BaselineAnalytics(String geneId, String assayGroupId, double expressionLevel) {
         this.geneId = geneId;
         this.assayGroupId = assayGroupId;
         this.expressionLevel = expressionLevel;
@@ -40,7 +40,7 @@ public class BaselineExpressionDto {
             return false;
         }
 
-        BaselineExpressionDto that = (BaselineExpressionDto) o;
+        BaselineAnalytics that = (BaselineAnalytics) o;
 
         return Double.compare(that.expressionLevel, expressionLevel) == 0 && assayGroupId.equals(that.assayGroupId) && geneId.equals(that.geneId);
 

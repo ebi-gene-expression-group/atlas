@@ -11,9 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Named
-public class BaselineExpressionDao {
+public class BaselineAnalyticsDao {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineExpressionDao.class);
+    private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsDao.class);
 
     private static final String TRANSCRIPT_PROFILE_INSERT = "INSERT INTO RNASEQ_BSLN_EXPRESSIONS " +
             "(identifier, experiment, assaygroupid, isactive, expression) VALUES (?, ?, ?, ?, ?)";
@@ -26,40 +26,40 @@ public class BaselineExpressionDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Inject
-    public BaselineExpressionDao(JdbcTemplate jdbcTemplate) {
+    public BaselineAnalyticsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void loadBaselineExpressions(final String experimentAccession, BaselineExpressionDtoInputStream baselineExpressionDtos)  {
-        LOGGER.info(String.format("loadBaselineExpressions for experiment %s begin", experimentAccession));
+    public void loadBaselineAnalytics(final String experimentAccession, BaselineAnalyticsInputStream baselineExpressionDtos)  {
+        LOGGER.info(String.format("loadBaselineAnalytics for experiment %s begin", experimentAccession));
 
         // will autoclose if DataAccessException thrown by jdbcTemplate
-        try (BaselineExpressionDtoInputStream source = baselineExpressionDtos) {
+        try (BaselineAnalyticsInputStream source = baselineExpressionDtos) {
 
             jdbcTemplate.batchUpdate(TRANSCRIPT_PROFILE_INSERT, new AbstractInterruptibleBatchPreparedStatementSetter() {
 
                 @Override
                 protected boolean setValuesIfAvailable(PreparedStatement ps, int i) throws SQLException {
-                    BaselineExpressionDto baselineExpressionDto = source.readNext();
+                    BaselineAnalytics baselineAnalytics = source.readNext();
 
-                    if (baselineExpressionDto == null) {
+                    if (baselineAnalytics == null) {
                         return false;
                     }
 
-                    ps.setString(IDENTIFIER, baselineExpressionDto.getGeneId());
+                    ps.setString(IDENTIFIER, baselineAnalytics.getGeneId());
                     ps.setString(EXPERIMENT, experimentAccession);
-                    ps.setString(ASSAY_GROUP_ID, baselineExpressionDto.getAssayGroupId());
+                    ps.setString(ASSAY_GROUP_ID, baselineAnalytics.getAssayGroupId());
                     ps.setString(IS_ACTIVE, "T");
-                    ps.setDouble(EXPRESSION, baselineExpressionDto.getExpressionLevel());
+                    ps.setDouble(EXPRESSION, baselineAnalytics.getExpressionLevel());
 
                     return true;
                 }
             });
         } catch (IOException e) {
-            LOGGER.warn(String.format("Cannot close BaselineExpressionDtoInputStream: %s", e.getMessage()));
+            LOGGER.warn(String.format("Cannot close BaselineAnalyticsInputStream: %s", e.getMessage()));
         }
 
-        LOGGER.info(String.format("loadBaselineExpressions for experiment %s complete", experimentAccession));
+        LOGGER.info(String.format("loadBaselineAnalytics for experiment %s complete", experimentAccession));
     }
 
     public void deleteBaselineExpressions(String experimentAccession) {

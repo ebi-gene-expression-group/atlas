@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-public class BaselineExpressionDtoInputStreamTest {
+public class BaselineAnalyticsInputStreamTest {
 
     private static CsvReaderFactory csvReaderFactory = new CsvReaderFactory();
 
@@ -38,16 +38,16 @@ public class BaselineExpressionDtoInputStreamTest {
     public void readTwoTsvLines() throws IOException {
         Reader tsvSource = new StringReader(tsvContents);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        BaselineExpressionDtoInputStream subject = new BaselineExpressionDtoInputStream(csvReader);
+        BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader);
 
-        BaselineExpressionDto line1g1 = new BaselineExpressionDto(GENE_ID_1, "g1", 1.0);
-        BaselineExpressionDto line1g2 = new BaselineExpressionDto(GENE_ID_1, "g2", 2.0);
-        BaselineExpressionDto line1g3 = new BaselineExpressionDto(GENE_ID_1, "g3", 3.0);
-        BaselineExpressionDto line1g4 = new BaselineExpressionDto(GENE_ID_1, "g4", 4.0);
-        BaselineExpressionDto line1g5 = new BaselineExpressionDto(GENE_ID_1, "g5", -0.00248510654802851);
+        BaselineAnalytics line1g1 = new BaselineAnalytics(GENE_ID_1, "g1", 1.0);
+        BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 2.0);
+        BaselineAnalytics line1g3 = new BaselineAnalytics(GENE_ID_1, "g3", 3.0);
+        BaselineAnalytics line1g4 = new BaselineAnalytics(GENE_ID_1, "g4", 4.0);
+        BaselineAnalytics line1g5 = new BaselineAnalytics(GENE_ID_1, "g5", -0.00248510654802851);
 
-        BaselineExpressionDto line2g3 = new BaselineExpressionDto(GENE_ID_2, "g3", 1.0);
-        BaselineExpressionDto line2g5 = new BaselineExpressionDto(GENE_ID_2, "g5", 1.0);
+        BaselineAnalytics line2g3 = new BaselineAnalytics(GENE_ID_2, "g3", 1.0);
+        BaselineAnalytics line2g5 = new BaselineAnalytics(GENE_ID_2, "g5", 1.0);
 
         assertThat(subject.readNext(), is(line1g1));
         assertThat(subject.readNext(), is(line1g2));
@@ -64,7 +64,7 @@ public class BaselineExpressionDtoInputStreamTest {
     public void readTsvLineWithNoExpression() throws IOException {
         Reader tsvSource = new StringReader(tsvContentsNoExpression);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        BaselineExpressionDtoInputStream subject = new BaselineExpressionDtoInputStream(csvReader);
+        BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader);
 
         assertThat(subject.readNext(), is(nullValue()));
     }
@@ -74,7 +74,7 @@ public class BaselineExpressionDtoInputStreamTest {
         Reader tsvSource = spy(new StringReader(tsvContents));
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
 
-        try (BaselineExpressionDtoInputStream subject = new BaselineExpressionDtoInputStream(csvReader)) {
+        try (BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader)) {
             subject.readNext();
         }
 
@@ -86,7 +86,7 @@ public class BaselineExpressionDtoInputStreamTest {
         Reader tsvSource = spy(new StringReader(tsvContents));
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
 
-        try (BaselineExpressionDtoInputStream subject = new BaselineExpressionDtoInputStream(csvReader)) {
+        try (BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader)) {
             subject.readNext();
             throw new RuntimeException("foobar");
         } catch (RuntimeException e) {

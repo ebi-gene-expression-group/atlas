@@ -10,9 +10,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.atlas.experimentloader.analytics.baseline.BaselineExpressionDao;
-import uk.ac.ebi.atlas.experimentloader.analytics.baseline.BaselineExpressionDto;
-import uk.ac.ebi.atlas.experimentloader.analytics.baseline.BaselineExpressionDtoInputStream;
 
 import javax.inject.Inject;
 
@@ -27,38 +24,38 @@ import static org.mockito.Mockito.when;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 @Transactional  // enable transaction manager, so that changes to the database are rolled back after each test method
-public class BaselineExpressionDaoIT {
+public class BaselineAnalyticsDaoIT {
 
     public static final String EXPERIMENT_ACCESSION = "delme";
 
     @Inject
-    private BaselineExpressionDao baselineExpressionDao;
+    private BaselineAnalyticsDao baselineAnalyticsDao;
 
     @Inject
     private JdbcTemplate jdbcTemplate;
 
     @Mock
-    private BaselineExpressionDtoInputStream baselineExpressionDtoInputStream;
+    private BaselineAnalyticsInputStream baselineAnalyticsInputStream;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        when(baselineExpressionDtoInputStream.readNext()).thenReturn(new BaselineExpressionDto("gene1", "g1", 1.0), new BaselineExpressionDto("gene2", "g1", 1.0), null);
+        when(baselineAnalyticsInputStream.readNext()).thenReturn(new BaselineAnalytics("gene1", "g1", 1.0), new BaselineAnalytics("gene2", "g1", 1.0), null);
     }
 
     @Test
     public void insertAndDeleteBaselineExpressions() throws IOException {
         assertThat(getCount(), is(0));
 
-        baselineExpressionDao.loadBaselineExpressions(EXPERIMENT_ACCESSION, baselineExpressionDtoInputStream);
+        baselineAnalyticsDao.loadBaselineAnalytics(EXPERIMENT_ACCESSION, baselineAnalyticsInputStream);
 
         assertThat(getCount(), is(2));
 
-        baselineExpressionDao.deleteBaselineExpressions(EXPERIMENT_ACCESSION);
+        baselineAnalyticsDao.deleteBaselineExpressions(EXPERIMENT_ACCESSION);
 
         assertThat(getCount(), is(0));
 
-        verify(baselineExpressionDtoInputStream).close();
+        verify(baselineAnalyticsInputStream).close();
     }
 
     private int getCount() {

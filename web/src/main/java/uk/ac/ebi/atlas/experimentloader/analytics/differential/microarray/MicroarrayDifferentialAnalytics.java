@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.experimentloader.analytics.differential.microarray;
 
 import com.google.common.base.Objects;
 
-public class MicroarrayDifferentialExpressionDto {
+public class MicroarrayDifferentialAnalytics {
 
     private String designElement;
 
@@ -14,8 +14,8 @@ public class MicroarrayDifferentialExpressionDto {
 
     private double tstatistic;
 
-    public MicroarrayDifferentialExpressionDto(String designElement, String contrastId,
-                                               double pValue, double foldChange, double tstatistic) {
+    public MicroarrayDifferentialAnalytics(String designElement, String contrastId,
+                                           double pValue, double foldChange, double tstatistic) {
         this.designElement = designElement;
         this.contrastId = contrastId;
         this.pValue = pValue;
@@ -52,7 +52,7 @@ public class MicroarrayDifferentialExpressionDto {
             return false;
         }
 
-        MicroarrayDifferentialExpressionDto that = (MicroarrayDifferentialExpressionDto) o;
+        MicroarrayDifferentialAnalytics that = (MicroarrayDifferentialAnalytics) o;
 
         return Double.compare(that.foldChange, foldChange) == 0 &&
                 Double.compare(that.pValue, pValue) == 0 &&

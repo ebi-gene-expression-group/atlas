@@ -9,22 +9,22 @@ import javax.inject.Named;
 import java.text.MessageFormat;
 
 @Named
-public class BaselineExpressionDtoInputStreamFactory {
+public class BaselineAnalyticsInputStreamFactory {
 
     private final CsvReaderFactory csvReaderFactory;
     private final String baselineExperimentDataFileTemplate;
 
     @Inject
-    public BaselineExpressionDtoInputStreamFactory(@Value("#{configuration['experiment.magetab.path.template']}")
-                                                   String baselineExperimentDataFileTemplate,
-                                                   CsvReaderFactory csvReaderFactory) {
+    public BaselineAnalyticsInputStreamFactory(@Value("#{configuration['experiment.magetab.path.template']}")
+                                               String baselineExperimentDataFileTemplate,
+                                               CsvReaderFactory csvReaderFactory) {
         this.baselineExperimentDataFileTemplate = baselineExperimentDataFileTemplate;
         this.csvReaderFactory = csvReaderFactory;
     }
 
-    public BaselineExpressionDtoInputStream createBaselineExpressionDtoInputStream(String experimentAccession) {
+    public BaselineAnalyticsInputStream createBaselineExpressionDtoInputStream(String experimentAccession) {
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
-        return new BaselineExpressionDtoInputStream(csvReader);
+        return new BaselineAnalyticsInputStream(csvReader);
     }
 }

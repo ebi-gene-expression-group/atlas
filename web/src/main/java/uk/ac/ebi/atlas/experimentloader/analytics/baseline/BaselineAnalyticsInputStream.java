@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * Gene ID Gene Name g1 g2 g3 g4 g5
  * mus1    musName    1  2  3  0  5
  *
- * and returns BaselineExpressionDTOs of:
+ * and returns BaselineAnalytics of:
  *
  * mus1, g1, 1
  * mus1, g2, 2
@@ -27,18 +27,18 @@ import static com.google.common.base.Preconditions.checkArgument;
  *
  * NB: expression levels of 0 are skipped
  */
-public class BaselineExpressionDtoInputStream implements ObjectInputStream<BaselineExpressionDto> {
+public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineAnalytics> {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineExpressionDtoInputStream.class);
+    private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsInputStream.class);
 
     private static final int GENE_ID_COLUMN_INDEX = 0;
     private static final int FIRST_EXPRESSION_LEVEL_INDEX = 2;
 
     private final CSVReader csvReader;
-    private final Queue<BaselineExpressionDto> queue = new LinkedList<>();
+    private final Queue<BaselineAnalytics> queue = new LinkedList<>();
     private final String[] assayGroupIds;
 
-    public BaselineExpressionDtoInputStream(CSVReader csvReader) {
+    public BaselineAnalyticsInputStream(CSVReader csvReader) {
         this.csvReader = csvReader;
         String[] headers = readCsvLine();
         this.assayGroupIds = (String[]) ArrayUtils.subarray(headers, FIRST_EXPRESSION_LEVEL_INDEX, headers.length);
@@ -59,22 +59,22 @@ public class BaselineExpressionDtoInputStream implements ObjectInputStream<Basel
     }
 
     @Override
-    public BaselineExpressionDto readNext() {
+    public BaselineAnalytics readNext() {
         if (queue.isEmpty()) {
-            ImmutableList<BaselineExpressionDto> baselineExpressionDtos = readNextNonZeroLine();
+            ImmutableList<BaselineAnalytics> baselineAnalyticses = readNextNonZeroLine();
 
-            if (baselineExpressionDtos == null) {
+            if (baselineAnalyticses == null) {
                 //EOF
                 return null;
             }
 
-            queue.addAll(baselineExpressionDtos);
+            queue.addAll(baselineAnalyticses);
         }
 
         return queue.remove();
     }
 
-    private ImmutableList<BaselineExpressionDto> readNextNonZeroLine() {
+    private ImmutableList<BaselineAnalytics> readNextNonZeroLine() {
 
         String[] line = readCsvLine();
         if (line == null) {
@@ -84,25 +84,25 @@ public class BaselineExpressionDtoInputStream implements ObjectInputStream<Basel
 
         String geneId = line[GENE_ID_COLUMN_INDEX];
         String[] expressionLevels = (String[]) ArrayUtils.subarray(line, FIRST_EXPRESSION_LEVEL_INDEX, line.length);
-        ImmutableList<BaselineExpressionDto> baselineExpressionDtos = createList(geneId, assayGroupIds, expressionLevels);
+        ImmutableList<BaselineAnalytics> baselineAnalyticses = createList(geneId, assayGroupIds, expressionLevels);
 
-        if (baselineExpressionDtos.isEmpty()) {
+        if (baselineAnalyticses.isEmpty()) {
             return readNextNonZeroLine();
         }
 
-        return baselineExpressionDtos;
+        return baselineAnalyticses;
     }
 
-    private ImmutableList<BaselineExpressionDto> createList(String geneId, String[] assayGroupIds, String[] expressionLevels) {
+    private ImmutableList<BaselineAnalytics> createList(String geneId, String[] assayGroupIds, String[] expressionLevels) {
         checkArgument(assayGroupIds.length == expressionLevels.length);
 
-        ImmutableList.Builder<BaselineExpressionDto> builder = ImmutableList.builder();
+        ImmutableList.Builder<BaselineAnalytics> builder = ImmutableList.builder();
 
         for (int i = 0; i < expressionLevels.length; i++) {
             String assayGroupId = assayGroupIds[i];
             Double expressionLevel = Double.parseDouble(expressionLevels[i]);
             if (expressionLevel != 0.0) {
-                builder.add(new BaselineExpressionDto(geneId, assayGroupId, expressionLevel));
+                builder.add(new BaselineAnalytics(geneId, assayGroupId, expressionLevel));
             }
         }
 

@@ -16,12 +16,12 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
 /*
- * Reads tsv input of:
+ * Reads tsv input of (NB: there may be multiple contrasts defined by the header):
  *
  * Gene ID	            Gene Name   Design Element  g2_g1.p-value   g2_g1.t-statistic   g2_g1.log2foldchange    g2_g3.p-value   g2_g3.t-statistic   g2_g3.log2foldchange
  * ENSMUSG00000041538   H2-Ob       1422201_at      0.1             0.2                 0.3                     0.7             0.8                 0.9
  *
- * and returns MicroarrayDifferentialExpressionDtos of:
+ * and returns MicroarrayDifferentialAnalytics of:
  *
  * 1422201_at, g2_g1, 0.1, 0.2, 0.3
  * 1422201_at, g2_g4, 0.7, 0.8, 0.9
@@ -30,18 +30,18 @@ import static com.google.common.base.Preconditions.checkState;
  * "inf" in any value is interpreted as Double.POSITIVE_INFINITY
  * "-inf" in any value is interpreted as Double.NEAGTIVE_INFINITY
  */
-public class MicroarrayDifferentialExpressionDtoInputStream implements ObjectInputStream<MicroarrayDifferentialExpressionDto> {
+public class MicroarrayDifferentialAnalyticsInputStream implements ObjectInputStream<MicroarrayDifferentialAnalytics> {
 
-    private static final Logger LOGGER = Logger.getLogger(MicroarrayDifferentialExpressionDtoInputStream.class);
+    private static final Logger LOGGER = Logger.getLogger(MicroarrayDifferentialAnalyticsInputStream.class);
 
     private static final int DESIGN_ELEMENT_INDEX = 2;
     private static final int FIRST_CONTRAST_INDEX = 3;
 
     private final CSVReader csvReader;
-    private final Queue<MicroarrayDifferentialExpressionDto> queue = new LinkedList<>();
+    private final Queue<MicroarrayDifferentialAnalytics> queue = new LinkedList<>();
     private final ImmutableList<String> contrastIds;
 
-    public MicroarrayDifferentialExpressionDtoInputStream(CSVReader csvReader) {
+    public MicroarrayDifferentialAnalyticsInputStream(CSVReader csvReader) {
         this.csvReader = csvReader;
         String[] headers = readCsvLine();
         String[] contrastHeaders = (String[]) ArrayUtils.subarray(headers, FIRST_CONTRAST_INDEX, headers.length);
@@ -63,9 +63,9 @@ public class MicroarrayDifferentialExpressionDtoInputStream implements ObjectInp
     }
 
     @Override
-    public MicroarrayDifferentialExpressionDto readNext() {
+    public MicroarrayDifferentialAnalytics readNext() {
         if (queue.isEmpty()) {
-            ImmutableList<MicroarrayDifferentialExpressionDto> dtos = readNextContrasts();
+            ImmutableList<MicroarrayDifferentialAnalytics> dtos = readNextContrasts();
 
             if (dtos == null) {
                 //EOF
@@ -78,7 +78,7 @@ public class MicroarrayDifferentialExpressionDtoInputStream implements ObjectInp
         return queue.remove();
     }
 
-    private ImmutableList<MicroarrayDifferentialExpressionDto> readNextContrasts() {
+    private ImmutableList<MicroarrayDifferentialAnalytics> readNextContrasts() {
         String[] line = readCsvLine();
         if (line == null) {
             // EOF
@@ -90,7 +90,7 @@ public class MicroarrayDifferentialExpressionDtoInputStream implements ObjectInp
         ImmutableList<String> contrastAnalyticsList = ImmutableList.<String>builder().add(contrastAnalyticsArray).build();
         UnmodifiableIterator<String> contrastAnalytics = contrastAnalyticsList.iterator();
 
-        ImmutableList.Builder<MicroarrayDifferentialExpressionDto> builder = ImmutableList.builder();
+        ImmutableList.Builder<MicroarrayDifferentialAnalytics> builder = ImmutableList.builder();
 
         for (String contrastId : contrastIds) {
 
@@ -107,13 +107,13 @@ public class MicroarrayDifferentialExpressionDtoInputStream implements ObjectInp
                 double pValue = DifferentialTsvFileParsingUtil.parseDouble(pValueString);
                 double tStatistic = DifferentialTsvFileParsingUtil.parseDouble(tStatisticString);
                 double foldChange = DifferentialTsvFileParsingUtil.parseDouble(foldChangeString);
-                MicroarrayDifferentialExpressionDto dto = new MicroarrayDifferentialExpressionDto(designElement, contrastId, pValue, foldChange, tStatistic);
+                MicroarrayDifferentialAnalytics dto = new MicroarrayDifferentialAnalytics(designElement, contrastId, pValue, foldChange, tStatistic);
                 builder.add(dto);
             }
 
         }
 
-        ImmutableList<MicroarrayDifferentialExpressionDto> dtos = builder.build();
+        ImmutableList<MicroarrayDifferentialAnalytics> dtos = builder.build();
 
         if (dtos.isEmpty()) {
             // read next line if no dtos extracted from this line

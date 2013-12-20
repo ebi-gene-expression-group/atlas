@@ -16,17 +16,17 @@ public class BaselineAnalyticsLoader implements AnalyticsLoader {
     private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsLoader.class);
 
     private final TranscriptProfilesLoader transcriptProfileLoader;
-    private final BaselineExpressionDao baselineExpressionDao;
-    private final BaselineExpressionDtoInputStreamFactory baselineExpressionDtoInputStreamFactory;
+    private final BaselineAnalyticsDao baselineAnalyticsDao;
+    private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
     private final TranscriptProfileDao transcriptProfileDao;
 
     @Inject
-    public BaselineAnalyticsLoader(TranscriptProfilesLoader transcriptProfileLoader, BaselineExpressionDao baselineExpressionDao,
-                                   BaselineExpressionDtoInputStreamFactory baselineExpressionDtoInputStreamFactory,
+    public BaselineAnalyticsLoader(TranscriptProfilesLoader transcriptProfileLoader, BaselineAnalyticsDao baselineAnalyticsDao,
+                                   BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory,
                                    TranscriptProfileDao transcriptProfileDao) {
         this.transcriptProfileLoader = transcriptProfileLoader;
-        this.baselineExpressionDao = baselineExpressionDao;
-        this.baselineExpressionDtoInputStreamFactory = baselineExpressionDtoInputStreamFactory;
+        this.baselineAnalyticsDao = baselineAnalyticsDao;
+        this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
         this.transcriptProfileDao = transcriptProfileDao;
     }
 
@@ -38,15 +38,15 @@ public class BaselineAnalyticsLoader implements AnalyticsLoader {
     }
 
     private void loadBaselineExpressions(String accession) {
-        BaselineExpressionDtoInputStream baselineExpressionDtoInputStream =
-                baselineExpressionDtoInputStreamFactory.createBaselineExpressionDtoInputStream(accession);
-        baselineExpressionDao.loadBaselineExpressions(accession, baselineExpressionDtoInputStream);
+        BaselineAnalyticsInputStream baselineAnalyticsInputStream =
+                baselineAnalyticsInputStreamFactory.createBaselineExpressionDtoInputStream(accession);
+        baselineAnalyticsDao.loadBaselineAnalytics(accession, baselineAnalyticsInputStream);
     }
 
     @Override
     @Transactional
     public void deleteAnalytics(String accession) {
-        baselineExpressionDao.deleteBaselineExpressions(accession);
+        baselineAnalyticsDao.deleteBaselineExpressions(accession);
         transcriptProfileDao.deleteTranscriptProfilesForExperiment(accession);
     }
 

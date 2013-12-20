@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentloader.analytics;
 
-import uk.ac.ebi.atlas.experimentloader.analytics.baseline.BaselineExpressionDao;
+import uk.ac.ebi.atlas.experimentloader.analytics.baseline.BaselineAnalyticsDao;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -8,14 +8,14 @@ import javax.inject.Named;
 @Named
 public class AnalyticsDao {
 
-    private final BaselineExpressionDao baselineExpressionDao;
+    private final BaselineAnalyticsDao baselineAnalyticsDao;
 
     @Inject
-    public AnalyticsDao(BaselineExpressionDao baselineExpressionDao) {
-        this.baselineExpressionDao = baselineExpressionDao;
+    public AnalyticsDao(BaselineAnalyticsDao baselineAnalyticsDao) {
+        this.baselineAnalyticsDao = baselineAnalyticsDao;
     }
 
     public void deleteInactiveExpressions() {
-        baselineExpressionDao.deleteInactiveExpressions();
+        baselineAnalyticsDao.deleteInactiveExpressions();
     }
 }
