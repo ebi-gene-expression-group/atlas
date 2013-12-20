@@ -32,7 +32,7 @@ public class ExperimentCRUDRollbackIT {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentCRUDRollbackIT.class);
 
-    public static final String NEW_EXPERIMENT_ACCESSION = "TEST-CRUD";
+    public static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";
 
     @Inject
     private ExperimentCRUD subject;

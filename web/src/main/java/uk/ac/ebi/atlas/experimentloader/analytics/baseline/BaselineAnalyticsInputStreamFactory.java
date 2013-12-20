@@ -23,8 +23,8 @@ public class BaselineAnalyticsInputStreamFactory {
     }
 
     public BaselineAnalyticsInputStream createBaselineExpressionDtoInputStream(String experimentAccession) {
-        String tsvFileURL = MessageFormat.format(baselineExperimentDataFileTemplate, experimentAccession);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
+        String tsvFilePath = MessageFormat.format(baselineExperimentDataFileTemplate, experimentAccession);
+        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFilePath);
         return new BaselineAnalyticsInputStream(csvReader);
     }
 }

@@ -19,12 +19,12 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class ExperimentCRUDIT {
+public class ExperimentCRUDBaselineIT {
 
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentCRUDIT.class);
+    private static final Logger LOGGER = Logger.getLogger(ExperimentCRUDBaselineIT.class);
 
-    public static final String NEW_EXPERIMENT_ACCESSION = "TEST-CRUD";
+    public static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";
     public static final String EXISTING_EXPERIMENT_ACCESSION = "E-MTAB-599";
 
     @Inject
@@ -71,7 +71,7 @@ public class ExperimentCRUDIT {
     }
 
     @Test(expected = ResourceNotFoundException.class)
-    public void deleteNonexistantExperimentThrowsResourceNotFoundException() throws Exception {
+    public void deleteNonExistantExperimentThrowsResourceNotFoundException() throws Exception {
         subject.deleteExperiment("FOOBAR");
     }
 
