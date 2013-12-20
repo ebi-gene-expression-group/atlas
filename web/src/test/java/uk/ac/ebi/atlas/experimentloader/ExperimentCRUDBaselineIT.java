@@ -35,7 +35,7 @@ public class ExperimentCRUDBaselineIT {
 
     @After
     public void cleanUp() {
-        deleteInactiveBaselineExpressions();
+        deleteInactiveAnalytics();
     }
 
     @Test
@@ -80,16 +80,19 @@ public class ExperimentCRUDBaselineIT {
     }
 
     private int baselinesTranscriptsCount(String accession) {
-        return jdbcTemplate.queryForObject("select COUNT(*) from RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ?", Integer.class, accession);
+        return jdbcTemplate.queryForObject("select COUNT(*) from RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ? AND ISACTIVE = 'T'", Integer.class, accession);
     }
 
     private int baselineExpressionsCount(String accession) {
         return jdbcTemplate.queryForObject("select COUNT(*) from RNASEQ_BSLN_EXPRESSIONS WHERE EXPERIMENT = ? AND ISACTIVE = 'T'", Integer.class, accession);
     }
 
-    private void deleteInactiveBaselineExpressions() {
+    private void deleteInactiveAnalytics() {
         int count = jdbcTemplate.update("delete from RNASEQ_BSLN_EXPRESSIONS WHERE ISACTIVE = 'F'");
-        LOGGER.info(String.format("deleteInactiveBaselineExpressions %s rows deleted",count));
+        LOGGER.info(String.format("RNASEQ_BSLN_EXPRESSIONS %s rows deleted",count));
+
+        int countTranscripts = jdbcTemplate.update("delete from RNASEQ_BSLN_TRANSCRIPTS WHERE ISACTIVE = 'F'");
+        LOGGER.info(String.format("RNASEQ_BSLN_TRANSCRIPTS %s rows deleted",countTranscripts));
     }
 
 }

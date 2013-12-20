@@ -91,9 +91,14 @@ public class TranscriptProfileDao {
 
     public void deleteTranscriptProfilesForExperiment(String experimentAccession) {
         LOGGER.debug("<deleteTranscriptProfilesForExperiment> experimentAccession = " + experimentAccession);
-
-        jdbcTemplate.update("DELETE FROM RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ?",
+        jdbcTemplate.update("UPDATE RNASEQ_BSLN_TRANSCRIPTS SET ISACTIVE = 'F' WHERE EXPERIMENT = ?",
                 experimentAccession);
-
     }
+
+
+    public void deleteInactiveTranscriptProfiles() {
+        LOGGER.debug("<deleteInactiveTranscriptProfiles>");
+        jdbcTemplate.update("DELETE FROM RNASEQ_BSLN_TRANSCRIPTS WHERE ISACTIVE = 'F'");
+    }
+
 }
