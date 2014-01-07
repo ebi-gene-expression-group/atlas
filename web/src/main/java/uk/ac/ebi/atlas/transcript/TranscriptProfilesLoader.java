@@ -45,14 +45,14 @@ public class TranscriptProfilesLoader {
 
     private String transcriptFileUrlTemplate;
 
-    private CsvReaderFactory tsvReaderUtils;
+    private CsvReaderFactory csvReaderFactory;
 
     private TranscriptProfileDao transcriptProfileDao;
 
     @Inject
-    public TranscriptProfilesLoader(CsvReaderFactory tsvReaderUtils, TranscriptProfileDao transcriptProfileDao,
+    public TranscriptProfilesLoader(CsvReaderFactory csvReaderFactory, TranscriptProfileDao transcriptProfileDao,
                                     @Value("#{configuration['experiment.transcripts.path.template']}") String transcriptFileUrlTemplate) {
-        this.tsvReaderUtils = tsvReaderUtils;
+        this.csvReaderFactory = csvReaderFactory;
         this.transcriptProfileDao = transcriptProfileDao;
         this.transcriptFileUrlTemplate = transcriptFileUrlTemplate;
     }
@@ -60,7 +60,7 @@ public class TranscriptProfilesLoader {
     public int load(String experimentAccession) throws IOException {
 
         String fileURL = MessageFormat.format(transcriptFileUrlTemplate, experimentAccession);
-        try (CSVReader csvReader = tsvReaderUtils.createTsvReader(fileURL)) {
+        try (CSVReader csvReader = csvReaderFactory.createTsvReader(fileURL)) {
 
             //skip header line
             csvReader.readNext();
