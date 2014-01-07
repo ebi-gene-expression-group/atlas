@@ -57,9 +57,7 @@ public class DifferentialGeneQueryBuilderTest {
         IndexedAssayGroup indexedContrast2 = new IndexedAssayGroup("exp2", "c2");
 
         List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
-        Query<Object> query = subject.withAssayGroups(indexedContrasts)
-                .withSelectPart(DiffExpressionDao.SELECT_QUERY)
-                .withSuffix(DiffExpressionDao.ORDER_BY_PVAL).build();
+        Query<Object> query = subject.withAssayGroups(indexedContrasts).buildSelect();
 
         assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
         assertThat(query.getParameters(), contains(new Object[]{"exp1", "c1", "exp2", "c2"}));
@@ -72,9 +70,7 @@ public class DifferentialGeneQueryBuilderTest {
         IndexedAssayGroup indexedContrast2 = new IndexedAssayGroup("exp2", "c2");
 
         List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
-        Query<Object> query = subject.withAssayGroups(indexedContrasts)
-                .withSelectPart(DiffExpressionDao.COUNT_QUERY)
-                .withSuffix(DiffExpressionDao.ORDER_BY_PVAL).build();
+        Query<Object> query = subject.withAssayGroups(indexedContrasts).buildCount();
 
         assertThat(query.getQuery(), is("SELECT count(1) FROM VW_DIFFANALYTICS WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
         assertThat(query.getParameters(), contains(new Object[]{"exp1", "c1", "exp2", "c2"}));
@@ -89,11 +85,8 @@ public class DifferentialGeneQueryBuilderTest {
         ARRAY geneIds = mock(ARRAY.class);
 
         Query<Object> query = subject.withAssayGroups(indexedContrasts)
-                .withSelectPart(DiffExpressionDao.SELECT_QUERY)
-                .withSuffix(DiffExpressionDao.ORDER_BY_PVAL)
                 .withGeneIds(geneIds)
-                .build();
-
+                .buildSelect();
 
         assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
                 "FROM VW_DIFFANALYTICS JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value order by PVAL"));
@@ -110,10 +103,8 @@ public class DifferentialGeneQueryBuilderTest {
 
         List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
         Query<Object> query = subject.withAssayGroups(indexedContrasts)
-                .withSelectPart(DiffExpressionDao.SELECT_QUERY)
-                .withSuffix(DiffExpressionDao.ORDER_BY_PVAL)
                 .withGeneIds(geneIds)
-                .build();
+                .buildSelect();
 
         assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
                 "FROM VW_DIFFANALYTICS JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) " +
@@ -133,9 +124,7 @@ public class DifferentialGeneQueryBuilderTest {
         List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
         Query<Object> query = subject.withAssayGroups(indexedContrasts)
                 .withGeneIds(geneIds)
-                .withSelectPart(DiffExpressionDao.COUNT_QUERY)
-                .withSuffix(DiffExpressionDao.ORDER_BY_PVAL)
-                .build();
+                .buildCount();
 
         assertThat(query.getQuery(), is("SELECT count(1) FROM VW_DIFFANALYTICS JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value " +
                 "WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));

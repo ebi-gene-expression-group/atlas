@@ -38,13 +38,13 @@ public class DifferentialBioentityExpressionRowMapperTest {
         when(contrastTraderMock.getContrast("e1", "c1")).thenReturn(contrast);
 
         when(resultSetMock.getString(DifferentialGeneQueryBuilder.EXPERIMENT)).thenReturn("e1");
-        when(resultSetMock.getString(DiffExpressionDao.CONTRASTID)).thenReturn("c1");
-        when(resultSetMock.getString(DiffExpressionDao.IDENTIFIER)).thenReturn("id1");
-        when(resultSetMock.getString(DiffExpressionDao.ORGANISM)).thenReturn("org1");
-        when(resultSetMock.getString(DiffExpressionDao.DESIGNELEMENT)).thenReturn("de1");
-        when(resultSetMock.getDouble(DiffExpressionDao.PVALUE)).thenReturn(0.0001);
-        when(resultSetMock.getDouble(DiffExpressionDao.LOG_2_FOLD)).thenReturn(-1.1);
-        when(resultSetMock.getString(DiffExpressionDao.TSTAT)).thenReturn("1.1");
+        when(resultSetMock.getString(DifferentialGeneQueryBuilder.CONTRASTID)).thenReturn("c1");
+        when(resultSetMock.getString(DifferentialGeneQueryBuilder.IDENTIFIER)).thenReturn("id1");
+        when(resultSetMock.getString(DifferentialGeneQueryBuilder.ORGANISM)).thenReturn("org1");
+        when(resultSetMock.getString(DifferentialGeneQueryBuilder.DESIGNELEMENT)).thenReturn("de1");
+        when(resultSetMock.getDouble(DifferentialGeneQueryBuilder.PVALUE)).thenReturn(0.0001);
+        when(resultSetMock.getDouble(DifferentialGeneQueryBuilder.LOG_2_FOLD)).thenReturn(-1.1);
+        when(resultSetMock.getString(DifferentialGeneQueryBuilder.TSTAT)).thenReturn("1.1");
 
         subject = new DifferentialBioentityExpressionRowMapper(contrastTraderMock);
     }

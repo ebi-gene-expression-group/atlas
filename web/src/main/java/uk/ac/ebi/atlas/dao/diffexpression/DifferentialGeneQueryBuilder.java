@@ -17,12 +17,37 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class DifferentialGeneQueryBuilder {
 
-    static final String EXPERIMENT = "EXPERIMENT";
+
     static final String CONTRASTID = "CONTRASTID";
+    static final String PVALUE = "PVAL";
+    static final String LOG_2_FOLD = "LOG2FOLD";
+    static final String TSTAT = "TSTAT";
+    static final String IDENTIFIER = "IDENTIFIER";
+    static final String NAME = "NAME";
+    static final String ORGANISM = "ORGANISM";
+    static final String DESIGNELEMENT = "DESIGNELEMENT";
+    static final String EXPERIMENT = "EXPERIMENT";
+
+    static final String SELECT_QUERY = new StringBuilder()
+            .append("SELECT ").append(IDENTIFIER).append(", ")
+            .append(NAME).append(", ")
+            .append(DESIGNELEMENT).append(", ")
+            .append(ORGANISM).append(", ")
+            .append(EXPERIMENT).append(", ")
+            .append(CONTRASTID).append(", ")
+            .append(PVALUE).append(", ")
+            .append(LOG_2_FOLD).append(", ")
+            .append(TSTAT)
+            .append(" FROM VW_DIFFANALYTICS ")
+            .toString();
+
+    static final String COUNT_QUERY = "SELECT count(1) FROM VW_DIFFANALYTICS ";
+
+    static final String JOIN_PUBLIC_EXPERIMENTS_ONLY = "JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F'";
+    static final String ORDER_BY_PVAL = "order by PVAL";
 
     private String selectPart;
     private Collection<IndexedAssayGroup> indexedAssayGroups;
-    private String suffix;
     private ARRAY geneIds;
 
     public DifferentialGeneQueryBuilder withSelectPart(String selectPart) {
@@ -36,18 +61,20 @@ public class DifferentialGeneQueryBuilder {
         return this;
     }
 
-    // eg: "order by PVAL"
-    public DifferentialGeneQueryBuilder withSuffix(String suffix) {
-        this.suffix = suffix;
-        return this;
-    }
-
     public DifferentialGeneQueryBuilder withGeneIds(ARRAY geneIds) {
         this.geneIds = geneIds;
         return this;
     }
 
-    public Query<Object> build() {
+    public Query<Object> buildSelect() {
+        return build(SELECT_QUERY);
+    }
+
+    public Query<Object> buildCount() {
+        return build(COUNT_QUERY);
+    }
+
+    private Query<Object> build(String selectPart) {
 
         checkState(geneIds != null || CollectionUtils.isNotEmpty(indexedAssayGroups), "Condition or/and geneIds must be specified!");
 
@@ -59,7 +86,7 @@ public class DifferentialGeneQueryBuilder {
 
         addContrasts(query);
 
-        query.appendToQueryString(suffix);
+        query.appendToQueryString(ORDER_BY_PVAL);
 
         return query;
     }

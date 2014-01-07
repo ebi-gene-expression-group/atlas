@@ -55,46 +55,16 @@ public class DiffExpressionDao {
 
     private static final Logger LOGGER = Logger.getLogger(DiffExpressionDao.class);
 
-    static final String CONTRASTID = "CONTRASTID";
-    static final String PVALUE = "PVAL";
-    static final String LOG_2_FOLD = "LOG2FOLD";
-    static final String TSTAT = "TSTAT";
-    static final String IDENTIFIER = "IDENTIFIER";
-    static final String NAME = "NAME";
-    static final String ORGANISM = "ORGANISM";
-    static final String DESIGNELEMENT = "DESIGNELEMENT";
-
     static final int RESULT_SIZE = 50;
-
-    static final String SELECT_QUERY = new StringBuilder()
-            .append("SELECT ").append(IDENTIFIER).append(", ")
-            .append(NAME).append(", ")
-            .append(DESIGNELEMENT).append(", ")
-            .append(ORGANISM).append(", ")
-            .append(DifferentialGeneQueryBuilder.EXPERIMENT).append(", ")
-            .append(CONTRASTID).append(", ")
-            .append(PVALUE).append(", ")
-            .append(LOG_2_FOLD).append(", ")
-            .append(TSTAT)
-            .append(" FROM VW_DIFFANALYTICS ")
-            .toString();
-
-    static final String COUNT_QUERY = "SELECT count(1) FROM VW_DIFFANALYTICS ";
-
-    static final String JOIN_PUBLIC_EXPERIMENTS_ONLY = "JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F'";
-    static final String ORDER_BY_PVAL = "order by PVAL";
 
     private final DataSource dataSource;
 
     private final JdbcTemplate jdbcTemplate;
 
-    private DifferentialGeneQueryBuilder differentialGeneQueryBuilder;
-
     private DifferentialBioentityExpressionRowMapper dbeRowMapper;
 
     @Inject
-    public DiffExpressionDao(@Qualifier("dataSourceOracle") DataSource dataSource, DifferentialGeneQueryBuilder differentialGeneQueryBuilder, DifferentialBioentityExpressionRowMapper dbeRowMapper) {
-        this.differentialGeneQueryBuilder = differentialGeneQueryBuilder;
+    public DiffExpressionDao(@Qualifier("dataSourceOracle") DataSource dataSource, DifferentialBioentityExpressionRowMapper dbeRowMapper) {
         this.dbeRowMapper = dbeRowMapper;
         this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -106,7 +76,7 @@ public class DiffExpressionDao {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        Query<Object> indexedContrastQuery = buildIndexedContrastQuery(indexedContrasts, geneIds, SELECT_QUERY);
+        Query<Object> indexedContrastQuery = buildSelect(indexedContrasts, geneIds);
 
         jdbcTemplate.setMaxRows(RESULT_SIZE);
 
@@ -135,7 +105,7 @@ public class DiffExpressionDao {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        Query<Object> indexedContrastQuery = buildIndexedContrastQuery(indexedContrasts, geneIds, SELECT_QUERY);
+        Query<Object> indexedContrastQuery = buildSelect(indexedContrasts, geneIds);
 
         final MutableInt count = new MutableInt(0);
 
@@ -181,7 +151,7 @@ public class DiffExpressionDao {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        Query query = buildIndexedContrastQuery(indexedContrasts, geneIds, COUNT_QUERY);
+        Query query = buildCount(indexedContrasts, geneIds);
 
         int count = jdbcTemplate.queryForObject(query.getQuery(), Integer.class, query.getParameters().toArray());
 
@@ -189,9 +159,19 @@ public class DiffExpressionDao {
         return count;
     }
 
-    Query<Object> buildIndexedContrastQuery(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds, String queryBeginning) {
+    Query<Object> buildCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+        DifferentialGeneQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
+        return builder.buildCount();
+    }
 
-        DifferentialGeneQueryBuilder builder = differentialGeneQueryBuilder.withSelectPart(queryBeginning).withSuffix(ORDER_BY_PVAL);
+    Query<Object> buildSelect(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+        DifferentialGeneQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
+        return builder.buildSelect();
+    }
+
+    DifferentialGeneQueryBuilder createDifferentialGeneQueryBuilder(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+
+        DifferentialGeneQueryBuilder builder = new DifferentialGeneQueryBuilder();
 
         if (indexedContrasts.isPresent()) {
             builder.withAssayGroups(indexedContrasts.get());
@@ -201,7 +181,7 @@ public class DiffExpressionDao {
             builder.withGeneIds(createOracleArrayForIdentifiers(geneIds.get()));
         }
 
-        return builder.build();
+        return builder;
 
     }
 

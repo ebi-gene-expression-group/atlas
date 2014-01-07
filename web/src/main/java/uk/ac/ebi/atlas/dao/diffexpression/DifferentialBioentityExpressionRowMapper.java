@@ -30,19 +30,19 @@ class DifferentialBioentityExpressionRowMapper implements RowMapper<Differential
     @Override
     public DifferentialBioentityExpression mapRow(ResultSet rs, int rowNum) throws SQLException {
         String experimentAccession = rs.getString(DifferentialGeneQueryBuilder.EXPERIMENT);
-        String contrastId = rs.getString(DiffExpressionDao.CONTRASTID);
+        String contrastId = rs.getString(DifferentialGeneQueryBuilder.CONTRASTID);
 
         //TODO: getting contrast is slow because we go back to the database to get the experiment for each contrast
         Contrast contrast = contrastTrader.getContrast(experimentAccession, contrastId);
-        DifferentialExpression expression = buildDifferentialExpression(rs.getDouble(DiffExpressionDao.PVALUE), rs.getDouble(DiffExpressionDao.LOG_2_FOLD), rs.getString(DiffExpressionDao.TSTAT), contrast);
+        DifferentialExpression expression = buildDifferentialExpression(rs.getDouble(DifferentialGeneQueryBuilder.PVALUE), rs.getDouble(DifferentialGeneQueryBuilder.LOG_2_FOLD), rs.getString(DifferentialGeneQueryBuilder.TSTAT), contrast);
 
         return new DifferentialBioentityExpression(
-                rs.getString(DiffExpressionDao.IDENTIFIER),
-                rs.getString(DiffExpressionDao.NAME),
+                rs.getString(DifferentialGeneQueryBuilder.IDENTIFIER),
+                rs.getString(DifferentialGeneQueryBuilder.NAME),
                 experimentAccession,
                 expression,
-                rs.getString(DiffExpressionDao.ORGANISM),
-                rs.getString(DiffExpressionDao.DESIGNELEMENT));
+                rs.getString(DifferentialGeneQueryBuilder.ORGANISM),
+                rs.getString(DifferentialGeneQueryBuilder.DESIGNELEMENT));
     }
 
     DifferentialExpression buildDifferentialExpression(double pValue, double foldChange, String tstatistic, Contrast contrast) {
