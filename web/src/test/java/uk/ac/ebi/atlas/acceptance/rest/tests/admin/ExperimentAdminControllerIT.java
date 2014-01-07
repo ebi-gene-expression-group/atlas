@@ -37,7 +37,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
 
 
     private static final String EXISTING_EXPERIMENT_ACCESSION = "E-MTAB-599";
-    private static final String NEW_EXPERIMENT_ACCESSION = "TEST-CRUD";
+    private static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";
     private static final String DIFFERENTIAL_EXPERIMENT_ACCESSION = "E-GEOD-21860";
 
     @Test
@@ -52,7 +52,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     }
 
     public void deleteInactiveExpressions() {
-        get("/deleteInactiveExpressions").then().assertThat().statusCode(200);
+        get("/deleteInactiveAnalytics").then().assertThat().statusCode(200);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 .and().body("isPrivate", contains(false))
                 .when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);
 
-        expect().body(is("Experiment TEST-CRUD successfully deleted.")).when()
+        expect().body(is("Experiment TEST-BASELINE successfully deleted.")).when()
                 .get("deleteExperiment?accession=" + NEW_EXPERIMENT_ACCESSION);
 
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);
@@ -84,7 +84,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 .and().body("isPrivate", contains(true))
                 .when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);
 
-        expect().body(is("Experiment TEST-CRUD successfully deleted.")).when()
+        expect().body(is("Experiment TEST-BASELINE successfully deleted.")).when()
                 .get("deleteExperiment?accession=" + NEW_EXPERIMENT_ACCESSION);
 
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);

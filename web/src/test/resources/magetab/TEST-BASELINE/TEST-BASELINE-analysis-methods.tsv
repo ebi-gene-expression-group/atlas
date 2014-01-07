@@ -1,0 +1,10 @@
+# Pipeline version	0.1.6
+Analyzed Libraries	<a href="experiments/E-MTAB-513/experiment-design">Paired-end only</a>
+Filtering Step 1	Discard reads below minimum quality threshold
+Filtering Step 2	Check of bacterial contamination; discard offending reads
+Filtering Step 3	Discard reads with common uncalled characters (e.g. N)
+Filtering Step 4	Remove reads from pair-end libraries that were orphaned by filtering steps 1-3
+Insert size and standard deviation	Calculated for each library from BAM files obtained by mapping a random sample (one million reads) of each FASTQ file against transcriptome reference (Ensembl release: 70)
+Read Mapping 	Against genome reference (Ensembl release: 70) tophat1 version: 1.4.1
+Quantification	cufflinks1 version: 1.3.0 (no novel transcript discovery)
+Normalized Counts per Gene	Obtained from the <a href="http://cufflinks.cbcb.umd.edu/manual.html#fpkm_tracking_format">genes.fpkm_tracking files</a>, then averaged for all biological replicates (if any)

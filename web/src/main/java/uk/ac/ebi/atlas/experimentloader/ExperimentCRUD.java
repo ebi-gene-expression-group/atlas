@@ -2,6 +2,9 @@ package uk.ac.ebi.atlas.experimentloader;
 
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.atlas.experimentloader.analytics.AnalyticsDao;
+import uk.ac.ebi.atlas.experimentloader.analytics.AnalyticsLoader;
+import uk.ac.ebi.atlas.experimentloader.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -13,12 +16,10 @@ import java.util.UUID;
 @Named
 public class ExperimentCRUD {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentCRUD.class);
-
     private ExperimentChecker experimentChecker;
     private ExperimentMetadataCRUD experimentMetadataCRUD;
-    private ExperimentAnalyticsCRUD experimentAnalyticsCRUD;
-
+    private AnalyticsLoaderFactory analyticsLoaderFactory;
+    private AnalyticsDao analyticsDao;
 
     // requires no-arg constructor for @Transactional proxying, hence setter injection
     // of dependencies
@@ -36,8 +37,13 @@ public class ExperimentCRUD {
     }
 
     @Inject
-    public void setExperimentAnalyticsCRUD(ExperimentAnalyticsCRUD experimentAnalyticsCRUD) {
-        this.experimentAnalyticsCRUD = experimentAnalyticsCRUD;
+    public void setAnalyticsLoaderFactory(AnalyticsLoaderFactory analyticsLoaderFactory) {
+        this.analyticsLoaderFactory = analyticsLoaderFactory;
+    }
+
+    @Inject
+    public void setAnalyticsDao(AnalyticsDao analyticsDao) {
+        this.analyticsDao = analyticsDao;
     }
 
     @Transactional
@@ -50,7 +56,13 @@ public class ExperimentCRUD {
             deleteExperiment(experimentAccession);
         }
 
-        experimentAnalyticsCRUD.loadAnalytics(experimentAccession, configuration.getExperimentType());
+        AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(configuration.getExperimentType());
+
+        //TODO: remove
+        if (analyticsLoader != null) {
+            analyticsLoader.loadAnalytics(experimentAccession);
+        }
+
         return experimentMetadataCRUD.loadExperiment(experimentAccession, configuration, isPrivate);
     }
 
@@ -66,7 +78,14 @@ public class ExperimentCRUD {
     @Transactional
     public void deleteExperiment(String experimentAccession) {
         ExperimentDTO experimentDTO = experimentMetadataCRUD.findExperiment(experimentAccession);
-        experimentAnalyticsCRUD.deleteAnalytics(experimentAccession, experimentDTO.getExperimentType());
+
+        AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(experimentDTO.getExperimentType());
+
+        //TODO: remove
+        if (analyticsLoader != null) {
+            analyticsLoader.deleteAnalytics(experimentAccession);
+        }
+
         experimentMetadataCRUD.deleteExperiment(experimentDTO);
     }
 
@@ -75,7 +94,7 @@ public class ExperimentCRUD {
         return experimentMetadataCRUD.loadExperimentConfiguration(experimentAccession);
     }
 
-    public void deleteInactiveExpressions() {
-        experimentAnalyticsCRUD.deleteInactiveExpressions();
+    public void deleteInactiveAnalytics() {
+        analyticsDao.deleteInactiveAnalytics();
     }
 }

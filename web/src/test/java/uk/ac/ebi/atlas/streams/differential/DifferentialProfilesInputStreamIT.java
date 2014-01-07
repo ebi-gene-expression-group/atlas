@@ -78,8 +78,6 @@ public class DifferentialProfilesInputStreamIT {
     @Inject
     private RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder;
 
-    private RnaSeqRequestContext rnaSeqRequestContext;
-
     private ObjectInputStream<RnaSeqProfile> subject;
 
     private Contrast contrast;
@@ -102,7 +100,7 @@ public class DifferentialProfilesInputStreamIT {
         rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
                 .withPreferences(differentialRequestPreferences);
 
-        rnaSeqRequestContext = rnaSeqRequestContextBuilder.build();
+        rnaSeqRequestContextBuilder.build();
 
     }
 

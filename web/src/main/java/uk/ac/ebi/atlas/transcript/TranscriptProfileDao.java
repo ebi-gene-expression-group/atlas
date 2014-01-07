@@ -42,7 +42,7 @@ public class TranscriptProfileDao {
     private static final Logger LOGGER = Logger.getLogger(TranscriptProfileDao.class);
 
     private static final String TRANSCRIPT_PROFILE_QUERY = "SELECT GENE_IDENTIFIER, TRANSCRIPT_IDENTIFIER, TRANSCRIPT_EXPRESSIONS " +
-            "FROM RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ? AND GENE_IDENTIFIER = ?";
+            "FROM RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ? AND GENE_IDENTIFIER = ? AND ISACTIVE='T'";
 
     private static final String TRANSCRIPT_PROFILE_INSERT = "INSERT INTO RNASEQ_BSLN_TRANSCRIPTS " +
             "(EXPERIMENT, GENE_IDENTIFIER, TRANSCRIPT_IDENTIFIER, TRANSCRIPT_EXPRESSIONS) VALUES (?, ?, ?, ?)";
@@ -91,9 +91,14 @@ public class TranscriptProfileDao {
 
     public void deleteTranscriptProfilesForExperiment(String experimentAccession) {
         LOGGER.debug("<deleteTranscriptProfilesForExperiment> experimentAccession = " + experimentAccession);
-
-        jdbcTemplate.update("DELETE FROM RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ?",
+        jdbcTemplate.update("UPDATE RNASEQ_BSLN_TRANSCRIPTS SET ISACTIVE = 'F' WHERE EXPERIMENT = ?",
                 experimentAccession);
-
     }
+
+
+    public void deleteInactiveTranscriptProfiles() {
+        LOGGER.debug("<deleteInactiveTranscriptProfiles>");
+        jdbcTemplate.update("DELETE FROM RNASEQ_BSLN_TRANSCRIPTS WHERE ISACTIVE = 'F'");
+    }
+
 }

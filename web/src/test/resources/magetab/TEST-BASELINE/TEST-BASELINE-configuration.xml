@@ -1,0 +1,54 @@
+<configuration experimentType="rnaseq_mrna_baseline">
+    <analytics>
+        <assay_groups>
+          <assay_group id="g1">
+                <assay>ERR030876</assay>
+          </assay_group>
+          <assay_group id="g2">
+                <assay>ERR030875</assay>
+          </assay_group>
+          <assay_group id="g3">
+                <assay>ERR030886</assay>
+          </assay_group>
+          <assay_group id="g4">
+                <assay>ERR030874</assay>
+          </assay_group>
+          <assay_group id="g5">
+                <assay>ERR030878</assay>
+          </assay_group>
+          <assay_group id="g6">
+                <assay>ERR030883</assay>
+          </assay_group>
+          <assay_group id="g7">
+                <assay>ERR030882</assay>
+          </assay_group>
+          <assay_group id="g8">
+                <assay>ERR030877</assay>
+          </assay_group>
+          <assay_group id="g9">
+                <assay>ERR030879</assay>
+          </assay_group>
+          <assay_group id="g10">
+                <assay>ERR030872</assay>
+          </assay_group>
+          <assay_group id="g11">
+                <assay>ERR030885</assay>
+          </assay_group>
+          <assay_group id="g12">
+                <assay>ERR030884</assay>
+          </assay_group>
+          <assay_group id="g13">
+                <assay>ERR030873</assay>
+          </assay_group>
+          <assay_group id="g14">
+                <assay>ERR030887</assay>
+          </assay_group>
+          <assay_group id="g15">
+                <assay>ERR030880</assay>
+          </assay_group>
+          <assay_group id="g16">
+                <assay>ERR030881</assay>
+          </assay_group>
+        </assay_groups>
+    </analytics>
+</configuration>

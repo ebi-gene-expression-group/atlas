@@ -121,7 +121,7 @@ public class TranscriptProfileDaoIT {
 
     private int getCount() {
         return jdbcTemplate.queryForObject("SELECT COUNT(*) " +
-                "FROM RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ?", Integer.class, TEST_EXPERIMENT_ACCESSION);
+                "FROM RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ? AND ISACTIVE ='T'", Integer.class, TEST_EXPERIMENT_ACCESSION);
     }
 
 }

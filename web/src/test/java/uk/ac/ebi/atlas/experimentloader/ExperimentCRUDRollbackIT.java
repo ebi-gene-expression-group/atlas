@@ -1,7 +1,9 @@
 package uk.ac.ebi.atlas.experimentloader;
 
 import org.apache.log4j.Logger;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -32,7 +34,7 @@ public class ExperimentCRUDRollbackIT {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentCRUDRollbackIT.class);
 
-    public static final String NEW_EXPERIMENT_ACCESSION = "TEST-CRUD";
+    public static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";
 
     @Inject
     private ExperimentCRUD subject;
@@ -52,6 +54,10 @@ public class ExperimentCRUDRollbackIT {
     ExperimentDTOBuilder experimentDTOBuilder;
     @Inject
     MageTabParserFactory mageTabParserFactory;
+    @Inject
+    ExperimentMetadataCRUD experimentMetadataCRUD;
+
+
     @Mock
     ConditionsIndexTrader conditionsIndexTrader;
 
@@ -61,9 +67,15 @@ public class ExperimentCRUDRollbackIT {
         MockitoAnnotations.initMocks(this);
 
         when(conditionsIndexTrader.getIndex(any(Experiment.class))).thenThrow(new IllegalStateException("die!"));
-        ExperimentMetadataCRUD experimentMetadataCRUD = new ExperimentMetadataCRUD(configurationTrader, experimentDAO,
+        ExperimentMetadataCRUD experimentMetadataCRUDmock = new ExperimentMetadataCRUD(configurationTrader, experimentDAO,
                 experimentDesignFileWriterBuilder, experimentTrader, experimentDTOBuilder,
                 mageTabParserFactory, conditionsIndexTrader);
+        subject.setExperimentMetadataCRUD(experimentMetadataCRUDmock);
+    }
+
+    @After
+    public void cleanup() {
+        // needed otherwise other tests run by maven/bamboo will die!
         subject.setExperimentMetadataCRUD(experimentMetadataCRUD);
     }
 
