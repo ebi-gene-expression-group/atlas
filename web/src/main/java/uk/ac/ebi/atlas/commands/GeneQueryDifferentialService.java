@@ -26,7 +26,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.dao.DiffExpressionDao;
+import uk.ac.ebi.atlas.dao.diffexpression.DiffExpressionDao;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;

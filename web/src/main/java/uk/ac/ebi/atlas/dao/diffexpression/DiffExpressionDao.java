@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.dao;
+package uk.ac.ebi.atlas.dao.diffexpression;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
@@ -81,6 +81,7 @@ public class DiffExpressionDao {
 
     static final String COUNT_QUERY = "SELECT count(1) FROM VW_DIFFANALYTICS ";
 
+    static final String JOIN_PUBLIC_EXPERIMENTS_ONLY = "JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F'";
     static final String ORDER_BY_PVAL = "order by PVAL";
 
     private final DataSource dataSource;

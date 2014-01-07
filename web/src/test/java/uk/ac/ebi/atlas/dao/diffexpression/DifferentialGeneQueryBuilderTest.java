@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.dao;
+package uk.ac.ebi.atlas.dao.diffexpression;
 
 import com.google.common.collect.Lists;
 import oracle.sql.ARRAY;
@@ -28,6 +28,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.dao.diffexpression.DiffExpressionDao;
+import uk.ac.ebi.atlas.dao.diffexpression.DifferentialGeneQueryBuilder;
+import uk.ac.ebi.atlas.dao.diffexpression.Query;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import java.util.List;

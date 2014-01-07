@@ -1,10 +1,13 @@
-package uk.ac.ebi.atlas.dao;
+package uk.ac.ebi.atlas.dao.diffexpression;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.dao.diffexpression.DiffExpressionDao;
+import uk.ac.ebi.atlas.dao.diffexpression.DifferentialBioentityExpressionRowMapper;
+import uk.ac.ebi.atlas.dao.diffexpression.DifferentialGeneQueryBuilder;
 import uk.ac.ebi.atlas.model.ContrastTrader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;

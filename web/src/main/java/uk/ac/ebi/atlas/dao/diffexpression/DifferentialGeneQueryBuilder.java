@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.dao;
+package uk.ac.ebi.atlas.dao.diffexpression;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-class DifferentialGeneQueryBuilder {
+public class DifferentialGeneQueryBuilder {
 
     static final String EXPERIMENT = "EXPERIMENT";
     static final String CONTRASTID = "CONTRASTID";

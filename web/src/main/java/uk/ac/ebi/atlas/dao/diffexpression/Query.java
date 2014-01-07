@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.dao;
+package uk.ac.ebi.atlas.dao.diffexpression;
 
 import com.google.common.collect.Lists;
 

@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.dao;
+package uk.ac.ebi.atlas.dao.diffexpression;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
@@ -30,6 +30,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.dao.diffexpression.DiffExpressionDao;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
@@ -52,7 +53,7 @@ public class DiffExpressionDaoIT {
 
 
     @Test
-    public void testGetTopExpressions() throws Exception {
+    public void getTopExpressionsForContrast() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
         Collection<IndexedAssayGroup> contrasts = Lists.newArrayList(indexedContrast1);
@@ -66,7 +67,7 @@ public class DiffExpressionDaoIT {
     }
 
     @Test
-    public void testGetResultCount() throws Exception {
+    public void getResultCountForContrast() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
         Collection<IndexedAssayGroup> indexedAssayGroups = Lists.newArrayList(indexedContrast1);
@@ -76,7 +77,7 @@ public class DiffExpressionDaoIT {
     }
 
     @Test
-    public void testGetTopExpressionsForGene() throws Exception {
+    public void getTopExpressionsForGene() throws Exception {
         IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("E-MTAB-1066", "g2_g3");
 
         Collection<String> geneIds = Sets.newHashSet("AT1G02220");
@@ -89,10 +90,9 @@ public class DiffExpressionDaoIT {
     }
 
     @Test
-    public void testGetResultCountForGene() throws Exception {
+    public void getResultCountForGene() throws Exception {
         Collection<IndexedAssayGroup> assayGroups = new HashSet<>();
         Collection<String> geneIds = Sets.newHashSet("AT1G02220");
         assertThat(subject.getResultCount(Optional.of(assayGroups), Optional.of(geneIds)), is(2));
-
     }
 }

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.dao;
+package uk.ac.ebi.atlas.dao.diffexpression;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.RowMapper;
