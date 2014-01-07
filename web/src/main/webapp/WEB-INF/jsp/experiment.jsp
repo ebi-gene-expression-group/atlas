@@ -161,7 +161,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
 
             searchFormModule.init("(any ${queryFactorName}s)", '${species}', '${preferences.defaultCutoff}');
 
-            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
+            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
             $('#stickem-container').stickem();
         });

@@ -98,7 +98,7 @@
         $(document).ready(function () {
             experimentDesignTableModule.init(${assayHeaders}, ${tableData}, ${runAccessions}, ${sampleHeaders}, ${factorHeaders});
 
-            helpTooltipsModule.init('experiment-design', '${pageContext.request.contextPath}');
+            helpTooltipsModule.init('experiment-design', '${pageContext.request.contextPath}', '');
 
             <c:if test="${!type.isBaseline()}">
             $('#selectedContrast').change(function () {

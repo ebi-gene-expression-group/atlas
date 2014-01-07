@@ -129,49 +129,49 @@
                     </c:choose>
                 </div>
 
-                    <ul id="diffProfileHeader" class="bioEntityCardHeader">
-                        <img id="differential-info-image" title="Differential Expression"
-                             style="position: absolute; left: 0.5em; "
-                             src="resources/images/updown_transparent_bkg.png"/>
-                        <span class="bioEntityCardBioentityName">Differential Expression</span>
-                    </ul>
+                <ul id="diffProfileHeader" class="bioEntityCardHeader">
+                    <img id="differential-info-image" title="Differential Expression"
+                         style="position: absolute; left: 0.5em; "
+                         src="resources/images/updown_transparent_bkg.png"/>
+                    <span class="bioEntityCardBioentityName">Differential Expression</span>
+                </ul>
 
-                    <c:choose>
-                        <c:when test="${not empty bioentities}">
+                <c:choose>
+                    <c:when test="${not empty bioentities}">
 
-                            <div id="diffProfileBody" class="bioEntityCard">
-                                <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                                    <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
-                                    <span style="float: right">False Discovery Rate cutoff: ${preferences.defaultCutoff}</span>
-                                </div>
-
-                                <div id="heatmap-div" style="display:none;">
-                                    <table style="margin-left:auto;margin-right:auto;">
-                                        <tr>
-                                            <td>
-                                                <button id='display-levels' data-pressedtext="hide" data-unpressedText='show' style="margin-top: 5px; margin-bottom: 5px">
-                                                    <%--<label for='display-levels'>Display <i>p</i>-values</label>--%>
-                                                </button>
-                                                <span id='buttonText' pressedtext='Hide <i>p</i>-values' unpressedText='Display <i>p</i>-values'/>
-                                            </td>
-                                            <td>
-                                                <c:set var="geneProfiles" scope="request" value="${bioentities}"/>
-                                                <c:import url="includes/gradient-legend.jsp"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <c:import url="includes/heatmap-matrix-differential-bioentities.jsp"/>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
+                        <div id="diffProfileBody" class="bioEntityCard">
+                            <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                                <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
+                                <span style="float: right">False Discovery Rate cutoff: ${preferences.defaultCutoff}</span>
                             </div>
-                        </c:when>
-                        <c:otherwise>
-                            <div>No differential experiments were found for ${entityIdentifier} </div>
-                        </c:otherwise>
-                    </c:choose>
+
+                            <div id="heatmap-div" style="display:none;">
+                                <table style="margin-left:auto;margin-right:auto;">
+                                    <tr>
+                                        <td>
+                                            <button id='display-levels' data-pressedtext="hide" data-unpressedText='show' style="margin-top: 5px; margin-bottom: 5px">
+                                                <%--<label for='display-levels'>Display <i>p</i>-values</label>--%>
+                                            </button>
+                                            <span id='buttonText' pressedtext='Hide <i>p</i>-values' unpressedText='Display <i>p</i>-values'/>
+                                        </td>
+                                        <td>
+                                            <c:set var="geneProfiles" scope="request" value="${bioentities}"/>
+                                            <c:import url="includes/gradient-legend.jsp"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <c:import url="includes/heatmap-matrix-differential-bioentities.jsp"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div>No differential experiments were found for ${entityIdentifier} </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </section>
 
@@ -228,7 +228,7 @@
 
                 contrastInfoTooltipModule.init('${pageContext.request.contextPath}', '${param.accessKey}');
 
-                helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
+                helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
 
                 var widgetParameters = "&propertyType=bioentity_identifier";

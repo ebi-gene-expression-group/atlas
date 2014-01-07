@@ -40,7 +40,7 @@
                 anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${base}');
             }
 
-            helpTooltipsModule.init('experiment', '${base}');
+            helpTooltipsModule.init('experiment', '${base}', 'heatmap');
 
             $("#goto-ae").tooltip();
             $("#goto-experiment").tooltip();

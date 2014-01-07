@@ -145,7 +145,7 @@
 
             searchFormModule.disableCarriageReturn("#condition");
 
-            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}');
+            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
             initButtons();
 
