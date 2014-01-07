@@ -59,7 +59,7 @@ public class DifferentialGeneQueryBuilderTest {
         List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
         Query<Object> query = subject.withAssayGroups(indexedContrasts).buildSelect();
 
-        assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
+        assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
         assertThat(query.getParameters(), contains(new Object[]{"exp1", "c1", "exp2", "c2"}));
 
     }
@@ -72,7 +72,7 @@ public class DifferentialGeneQueryBuilderTest {
         List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
         Query<Object> query = subject.withAssayGroups(indexedContrasts).buildCount();
 
-        assertThat(query.getQuery(), is("SELECT count(1) FROM VW_DIFFANALYTICS WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
+        assertThat(query.getQuery(), is("SELECT count(1) FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
         assertThat(query.getParameters(), contains(new Object[]{"exp1", "c1", "exp2", "c2"}));
 
     }
@@ -89,7 +89,7 @@ public class DifferentialGeneQueryBuilderTest {
                 .buildSelect();
 
         assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
-                "FROM VW_DIFFANALYTICS JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value order by PVAL"));
+                "FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value order by PVAL"));
         assertThat(query.getParameters(), contains((Object) geneIds));
 
     }
@@ -107,7 +107,7 @@ public class DifferentialGeneQueryBuilderTest {
                 .buildSelect();
 
         assertThat(query.getQuery(), is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
-                "FROM VW_DIFFANALYTICS JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) " +
+                "FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) " +
                 "order by PVAL"));
         assertThat(query.getParameters().size(), is(5));
 
@@ -126,7 +126,7 @@ public class DifferentialGeneQueryBuilderTest {
                 .withGeneIds(geneIds)
                 .buildCount();
 
-        assertThat(query.getQuery(), is("SELECT count(1) FROM VW_DIFFANALYTICS JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value " +
+        assertThat(query.getQuery(), is("SELECT count(1) FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value " +
                 "WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by PVAL"));
 
     }

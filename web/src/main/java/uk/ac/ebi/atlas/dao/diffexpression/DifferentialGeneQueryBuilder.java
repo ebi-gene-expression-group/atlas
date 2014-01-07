@@ -17,7 +17,6 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class DifferentialGeneQueryBuilder {
 
-
     static final String CONTRASTID = "CONTRASTID";
     static final String PVALUE = "PVAL";
     static final String LOG_2_FOLD = "LOG2FOLD";
@@ -28,32 +27,25 @@ public class DifferentialGeneQueryBuilder {
     static final String DESIGNELEMENT = "DESIGNELEMENT";
     static final String EXPERIMENT = "EXPERIMENT";
 
-    static final String SELECT_QUERY = new StringBuilder()
-            .append("SELECT ").append(IDENTIFIER).append(", ")
-            .append(NAME).append(", ")
-            .append(DESIGNELEMENT).append(", ")
-            .append(ORGANISM).append(", ")
-            .append(EXPERIMENT).append(", ")
-            .append(CONTRASTID).append(", ")
-            .append(PVALUE).append(", ")
-            .append(LOG_2_FOLD).append(", ")
-            .append(TSTAT)
-            .append(" FROM VW_DIFFANALYTICS ")
-            .toString();
+    static final String SELECT_QUERY = "SELECT " +
+            IDENTIFIER + ", " +
+            NAME  + ", " +
+            DESIGNELEMENT  + ", " +
+            ORGANISM + ", " +
+            EXPERIMENT + ", " +
+            CONTRASTID + ", " +
+            PVALUE + ", " +
+            LOG_2_FOLD + ", " +
+            TSTAT +
+            " FROM VW_DIFFANALYTICS ";
 
     static final String COUNT_QUERY = "SELECT count(1) FROM VW_DIFFANALYTICS ";
 
-    static final String JOIN_PUBLIC_EXPERIMENTS_ONLY = "JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F'";
+    static final String JOIN_PUBLIC_EXPERIMENTS_ONLY = "JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' ";
     static final String ORDER_BY_PVAL = "order by PVAL";
 
-    private String selectPart;
     private Collection<IndexedAssayGroup> indexedAssayGroups;
     private ARRAY geneIds;
-
-    public DifferentialGeneQueryBuilder withSelectPart(String selectPart) {
-        this.selectPart = selectPart;
-        return this;
-    }
 
     public DifferentialGeneQueryBuilder withAssayGroups(Collection<IndexedAssayGroup> indexedAssayGroups) {
         //TODO: make a set, as sometimes we get the same assay group multiple times, eg: when running GeneQueryDifferentialSerivceIT.conditionPregnant()
@@ -67,11 +59,11 @@ public class DifferentialGeneQueryBuilder {
     }
 
     public Query<Object> buildSelect() {
-        return build(SELECT_QUERY);
+        return build(SELECT_QUERY + JOIN_PUBLIC_EXPERIMENTS_ONLY);
     }
 
     public Query<Object> buildCount() {
-        return build(COUNT_QUERY);
+        return build(COUNT_QUERY + JOIN_PUBLIC_EXPERIMENTS_ONLY);
     }
 
     private Query<Object> build(String selectPart) {
