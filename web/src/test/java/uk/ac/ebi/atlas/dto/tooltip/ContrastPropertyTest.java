@@ -20,13 +20,10 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.dto.tooltip;
 
 import com.google.common.collect.Sets;
 import org.junit.Test;
-import uk.ac.ebi.atlas.dto.tooltip.AssayProperty;
-import uk.ac.ebi.atlas.dto.tooltip.ContrastProperty;
-import uk.ac.ebi.atlas.dto.tooltip.ContrastPropertyType;
 
 import java.util.SortedSet;
 
