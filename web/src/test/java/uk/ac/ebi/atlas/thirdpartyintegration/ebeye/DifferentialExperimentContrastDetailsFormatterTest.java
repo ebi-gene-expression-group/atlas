@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
-import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -37,7 +36,7 @@ public class DifferentialExperimentContrastDetailsFormatterTest {
 
 
     @Test
-    public void contrastDetailLine() {
+    public void contrastDetailLines() {
         AssayGroup referenceAssayGroup = new AssayGroup("g1", ASSAY1, ASSAY2);
         AssayGroup testAssayGroup = new AssayGroup("g2", ASSAY3, ASSAY4);
         Contrast contrast1 = new Contrast(CONTRAST_ID, "array design accession", referenceAssayGroup, testAssayGroup, "display name");
@@ -69,22 +68,4 @@ public class DifferentialExperimentContrastDetailsFormatterTest {
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, FACTOR, FACTOR_HEADER, FACTOR_VALUE2}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3}));
     }
-
-    @Test
-    public void testArrayEquality() {
-        String[] array1 = new String[] {"A", "B"};
-        String[] array2 = new String[] {"A", "B"};
-
-        List<String> contents1 = ImmutableList.of("A", "B");
-        List<String> contents2 = ImmutableList.of("A", "B");
-
-        Set<String[]> set = new HashSet<>();
-        set.add(array1);
-        set.add(array2);
-
-        assertThat(contents1.equals(contents2), is(true));
-
-    }
-
-
 }
