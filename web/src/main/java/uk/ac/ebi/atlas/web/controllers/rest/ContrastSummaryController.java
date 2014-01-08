@@ -33,7 +33,7 @@ import uk.ac.ebi.atlas.dto.tooltip.ContrastSummary;
 import uk.ac.ebi.atlas.dto.tooltip.ContrastSummaryBuilder;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;

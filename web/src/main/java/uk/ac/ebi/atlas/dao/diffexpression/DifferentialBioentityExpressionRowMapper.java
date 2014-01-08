@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.dao.diffexpression;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.RowMapper;
-import uk.ac.ebi.atlas.model.ContrastTrader;
+import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;

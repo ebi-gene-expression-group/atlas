@@ -26,7 +26,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.cache.ExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.streams.TsvRowQueue;

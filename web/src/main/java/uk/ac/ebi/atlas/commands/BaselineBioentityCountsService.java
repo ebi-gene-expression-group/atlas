@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.BaselineExperimentDao;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.baseline.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.BaselineConditionsSearchService;

@@ -29,9 +29,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.model.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.baseline.BaselineExperimentsCache;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;

@@ -29,7 +29,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTrader;
-import uk.ac.ebi.atlas.model.cache.baseline.BarChartTradersCache;
+import uk.ac.ebi.atlas.trader.cache.baseline.BarChartTradersCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Inject;

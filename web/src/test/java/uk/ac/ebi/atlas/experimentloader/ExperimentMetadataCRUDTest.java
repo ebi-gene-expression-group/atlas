@@ -42,6 +42,8 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
+import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDao;
 
 import java.io.IOException;

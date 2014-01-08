@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.baseline.BaselineExperimentsCache;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Properties;

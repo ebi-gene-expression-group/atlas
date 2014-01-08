@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.experimentloader;
 
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.ConfigurationTrader;
+import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 

@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;

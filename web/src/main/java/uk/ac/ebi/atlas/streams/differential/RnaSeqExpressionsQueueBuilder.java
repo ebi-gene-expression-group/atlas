@@ -23,7 +23,7 @@
 package uk.ac.ebi.atlas.streams.differential;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.differential.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;

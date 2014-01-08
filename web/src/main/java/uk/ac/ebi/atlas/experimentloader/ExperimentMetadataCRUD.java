@@ -31,6 +31,8 @@ import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParserFacto
 import uk.ac.ebi.atlas.experimentloader.experimentdesign.impl.MageTabParserOutput;
 import uk.ac.ebi.atlas.model.*;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
+import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;

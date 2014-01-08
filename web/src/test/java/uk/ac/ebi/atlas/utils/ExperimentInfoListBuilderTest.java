@@ -29,12 +29,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.model.cache.differential.RnaSeqDiffExperimentsCache;
-import uk.ac.ebi.atlas.model.cache.microarray.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.baseline.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.differential.RnaSeqDiffExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.microarray.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 

@@ -31,7 +31,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpressionPrecondition;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.cache.baseline.BarChartTradersCache;
+import uk.ac.ebi.atlas.trader.cache.baseline.BarChartTradersCache;
 
 import javax.inject.Inject;
 import java.util.SortedMap;
