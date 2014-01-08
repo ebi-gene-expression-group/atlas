@@ -1,8 +1,6 @@
-package uk.ac.ebi.atlas.integration.ebeye;
+package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescriptionXMLFormatter;
-import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescription;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

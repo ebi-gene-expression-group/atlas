@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.integration;
+package uk.ac.ebi.atlas.thirdpartyintegration;
 
 import com.google.common.base.Joiner;
 import org.springframework.context.annotation.Scope;

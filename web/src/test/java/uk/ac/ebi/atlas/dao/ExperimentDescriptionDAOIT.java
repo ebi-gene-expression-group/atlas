@@ -5,8 +5,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescription;
-import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescriptionDAO;
+import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.ExperimentDescription;
+import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.ExperimentDescriptionDAO;
 
 import javax.inject.Inject;
 import java.util.List;

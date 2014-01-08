@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.integration;
+package uk.ac.ebi.atlas.thirdpartyintegration;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;

@@ -3,9 +3,9 @@ package uk.ac.ebi.atlas.web.controllers.rest;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescription;
-import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescriptionDAO;
-import uk.ac.ebi.atlas.integration.ebeye.ExperimentDescriptionXMLFormatter;
+import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.ExperimentDescription;
+import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.ExperimentDescriptionDAO;
+import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.ExperimentDescriptionXMLFormatter;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;

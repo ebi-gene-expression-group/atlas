@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.integration.ebeye;
+package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import org.springframework.jdbc.core.RowMapper;
 

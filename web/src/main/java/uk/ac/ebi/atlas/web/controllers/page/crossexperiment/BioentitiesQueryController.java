@@ -36,7 +36,7 @@ import uk.ac.ebi.atlas.commands.BaselineBioentityCountsService;
 import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
-import uk.ac.ebi.atlas.integration.EBIGlobalSearchQueryBuilder;
+import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.BioentityType;
