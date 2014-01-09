@@ -6,12 +6,12 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import java.util.*;
 
-public class DifferentialExperimentContrastDetailsFormatter implements Iterable<String[]> {
+public class DifferentialExperimentContrastLines implements Iterable<String[]> {
 
     private final LinkedHashSet<ImmutableList<String>> contrastDetails;
     private final LinkedHashSet<ImmutableList<String>> result = new LinkedHashSet<>();
 
-    public DifferentialExperimentContrastDetailsFormatter(DifferentialExperiment experiment) {
+    public DifferentialExperimentContrastLines(DifferentialExperiment experiment) {
         this.contrastDetails = buildContrastDetails(experiment);
     }
 

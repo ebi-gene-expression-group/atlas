@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web.controllers.rest;
+package uk.ac.ebi.atlas.web.controllers.rest.api;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
