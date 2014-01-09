@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 
@@ -58,6 +59,9 @@ public class GenePageController extends BioEntityPageController {
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
 
+        // throw ResourceNotFoundException, so we don't get a Solr SyntaxException later on
+        checkIdentifierDoesNotContainColon(identifier);
+
         DifferentialBioentityExpressions differentialBioentityExpressions =
                 geneQueryDifferentialService.query(Sets.newHashSet(identifier));
 
@@ -69,6 +73,12 @@ public class GenePageController extends BioEntityPageController {
         model.addAttribute("preferences", requestPreferences);
 
         return showBioentityPage(identifier, model);
+    }
+
+    private void checkIdentifierDoesNotContainColon(String identifier) {
+        if (identifier.contains(":")) {
+            throw new ResourceNotFoundException("No genes with identifier "+ identifier);
+        }
     }
 
     @Override
