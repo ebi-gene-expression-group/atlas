@@ -30,7 +30,7 @@ import java.util.Set;
 
 public class Contrast implements Comparable<Contrast> {
     private String id;
-    private String arrayDesignAccession;
+    private String arrayDesignAccession; //used only for micro-array experiments
     private AssayGroup referenceAssayGroup;
     private AssayGroup testAssayGroup;
     private String displayName;

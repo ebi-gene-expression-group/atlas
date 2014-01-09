@@ -106,7 +106,7 @@ public class ExperimentInfoListBuilderTest {
         when(baselineExperimentMock.getType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
 
         when(experimentTraderMock.getBaselineExperimentAccessions()).thenReturn(Sets.newHashSet(ACCESSION));
-        when(experimentTraderMock.getDifferentialExperimentAccessions()).thenReturn(Sets.newHashSet(DIFFERENTIAL));
+        when(experimentTraderMock.getRnaSeqDifferentialExperimentAccessions()).thenReturn(Sets.newHashSet(DIFFERENTIAL));
         when(experimentTraderMock.getMicroarrayExperimentAccessions()).thenReturn(Sets.newHashSet(MICROARRAY));
 
         when(baselineExperimentsCacheMock.getExperiment(ACCESSION)).thenReturn(baselineExperimentMock);

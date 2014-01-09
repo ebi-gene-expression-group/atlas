@@ -95,7 +95,7 @@ public class ExperimentInfoListBuilder {
 
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
-        for (String experimentAccession : experimentTrader.getDifferentialExperimentAccessions()) {
+        for (String experimentAccession : experimentTrader.getRnaSeqDifferentialExperimentAccessions()) {
             DifferentialExperiment experiment = rnaSeqDiffExperimentsCache.getExperiment(experimentAccession);
 
             ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);

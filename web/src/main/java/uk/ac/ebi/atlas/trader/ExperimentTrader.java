@@ -120,7 +120,7 @@ public class ExperimentTrader {
         return getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE);
     }
 
-    public Set<String> getDifferentialExperimentAccessions() {
+    public Set<String> getRnaSeqDifferentialExperimentAccessions() {
         return getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
     }
 

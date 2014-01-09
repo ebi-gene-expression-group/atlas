@@ -94,7 +94,7 @@ public class ExperimentTraderTest {
 
     @Test
     public void testGetDifferentialExperimentsIdentifiers() throws Exception {
-        assertThat(subject.getDifferentialExperimentAccessions(), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
+        assertThat(subject.getRnaSeqDifferentialExperimentAccessions(), containsInAnyOrder(E_GEOD_22351, E_GEOD_38400, E_GEOD_21860));
     }
 
     @Test
