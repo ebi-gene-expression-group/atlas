@@ -47,10 +47,10 @@ public class ExperimentTrader {
     private ExperimentDAO experimentDAO;
 
     @Inject
-    ExperimentTrader(ExperimentDAO experimentDAO,
-                     BaselineExperimentsCache baselineExperimentsCache,
-                     RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
-                     MicroarrayExperimentsCache microarrayExperimentsCache) {
+    public ExperimentTrader(ExperimentDAO experimentDAO,
+                            BaselineExperimentsCache baselineExperimentsCache,
+                            RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
+                            MicroarrayExperimentsCache microarrayExperimentsCache) {
 
         this.experimentDAO = experimentDAO;
         this.baselineExperimentsCache = baselineExperimentsCache;
