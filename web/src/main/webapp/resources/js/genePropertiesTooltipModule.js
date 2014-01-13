@@ -26,22 +26,6 @@
 var genePropertiesTooltipModule = (function($) {
     "use strict";
 
-    function initHacksThatMinimizeJQueryTooltipBug(){
-        //bug: http://bugs.jqueryui.com/ticket/8740
-        //these events handling seem to only minimize the bug occurrency, they don't solve it completely
-        $(".genename").mouseout(
-            function(){
-                $(this).tooltip("close");
-            }
-        );
-
-        $(".genename").mouseleave(
-            function(){
-                $(this).tooltip("close");
-            }
-        );
-    }
-
     function getWords(geneQuery){
         var words = [];
         geneQuery.replace(/"([^"]*)"|(\S+)/g,
@@ -97,7 +81,6 @@ var genePropertiesTooltipModule = (function($) {
     return {
         init:  function(queryString, contextRoot) {
 
-            initHacksThatMinimizeJQueryTooltipBug();
             initTooltip(queryString, contextRoot);
 
         }
