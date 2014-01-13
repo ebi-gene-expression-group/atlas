@@ -132,7 +132,6 @@ public class DiffExpressionDao {
 
             }, indexedContrastQuery.getParameters().toArray());
         } catch (DataAccessException e) {
-            LOGGER.warn(String.format("foreachExpression aborted: " + e.getCause().getMessage()));
 
             if (e.getCause() != null && e.getCause().getCause() != null && e.getCause().getCause() instanceof VisitorException) {
                 throw (VisitorException)(e.getCause().getCause());
