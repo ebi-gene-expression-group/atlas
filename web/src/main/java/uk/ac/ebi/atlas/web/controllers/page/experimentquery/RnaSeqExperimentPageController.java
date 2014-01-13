@@ -42,12 +42,12 @@ import javax.validation.Valid;
 
 @Controller
 @Scope("request")
-public class RnaSeqQueryPageController extends DifferentialQueryPageController<DifferentialExperiment, DifferentialRequestPreferences, DifferentialProfilesList, RnaSeqProfile> {
+public class RnaSeqExperimentPageController extends DifferentialExperimentPageController<DifferentialExperiment, DifferentialRequestPreferences, DifferentialProfilesList, RnaSeqProfile> {
 
     @Inject
-    public RnaSeqQueryPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
-                                     RankRnaSeqProfilesCommand rnaSeqRankProfilesCommand,
-                                     DownloadURLBuilder downloadURLBuilder) {
+    public RnaSeqExperimentPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
+                                          RankRnaSeqProfilesCommand rnaSeqRankProfilesCommand,
+                                          DownloadURLBuilder downloadURLBuilder) {
         super(rnaSeqRequestContextBuilder, rnaSeqRankProfilesCommand, downloadURLBuilder);
     }
 

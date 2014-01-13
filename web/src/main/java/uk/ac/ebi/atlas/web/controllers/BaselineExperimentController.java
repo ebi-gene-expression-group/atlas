@@ -29,13 +29,13 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
-public abstract class BaselineQueryController {
+public abstract class BaselineExperimentController {
 
     private BaselineRequestContextBuilder baselineRequestContextBuilder;
     private FilterFactorsConverter filterFactorsConverter;
 
-    protected BaselineQueryController(BaselineRequestContextBuilder baselineRequestContextBuilder,
-                                   FilterFactorsConverter filterFactorsConverter) {
+    protected BaselineExperimentController(BaselineRequestContextBuilder baselineRequestContextBuilder,
+                                           FilterFactorsConverter filterFactorsConverter) {
         this.baselineRequestContextBuilder = baselineRequestContextBuilder;
         this.filterFactorsConverter = filterFactorsConverter;
     }

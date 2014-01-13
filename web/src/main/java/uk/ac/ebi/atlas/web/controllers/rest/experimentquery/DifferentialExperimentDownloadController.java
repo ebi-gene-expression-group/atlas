@@ -44,9 +44,9 @@ import java.io.IOException;
 
 @Controller
 @Scope("request")
-public class DifferentialQueryDownloadController {
+public class DifferentialExperimentDownloadController {
 
-    private static final Logger LOGGER = Logger.getLogger(DifferentialQueryDownloadController.class);
+    private static final Logger LOGGER = Logger.getLogger(DifferentialExperimentDownloadController.class);
     private static final String ALL_ANALYTICS_TSV = "-analytics.tsv";
     private static final String RAW_COUNTS_TSV = "-raw-counts.tsv";
     private static final String PARAMS_TYPE_DIFFERENTIAL = "type=RNASEQ_MRNA_DIFFERENTIAL";
@@ -59,7 +59,7 @@ public class DifferentialQueryDownloadController {
     private DataWriterFactory dataWriterFactory;
 
     @Inject
-    public DifferentialQueryDownloadController(
+    public DifferentialExperimentDownloadController(
             RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand
             , DataWriterFactory dataWriterFactory) {
 

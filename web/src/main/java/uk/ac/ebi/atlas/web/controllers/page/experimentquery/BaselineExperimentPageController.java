@@ -45,7 +45,7 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.controllers.BaselineQueryController;
+import uk.ac.ebi.atlas.web.controllers.BaselineExperimentController;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 import uk.ac.ebi.atlas.web.controllers.page.validators.BaselineRequestPreferencesValidator;
 
@@ -59,7 +59,7 @@ import java.util.SortedSet;
 
 @Controller
 @Scope("request")
-public class BaselineQueryPageController extends BaselineQueryController {
+public class BaselineExperimentPageController extends BaselineExperimentController {
 
     private RankBaselineProfilesCommand rankCommand;
 
@@ -72,11 +72,11 @@ public class BaselineQueryPageController extends BaselineQueryController {
     private BaselineExperiment experiment;
 
     @Inject
-    public BaselineQueryPageController(RankBaselineProfilesCommand rankCommand,
-                                       ApplicationProperties applicationProperties,
-                                       BaselineRequestContextBuilder requestContextBuilder,
-                                       FilterFactorsConverter filterFactorsConverter,
-                                       FilterFactorMenuBuilder filterFactorMenuBuilder) {
+    public BaselineExperimentPageController(RankBaselineProfilesCommand rankCommand,
+                                            ApplicationProperties applicationProperties,
+                                            BaselineRequestContextBuilder requestContextBuilder,
+                                            FilterFactorsConverter filterFactorsConverter,
+                                            FilterFactorMenuBuilder filterFactorMenuBuilder) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;

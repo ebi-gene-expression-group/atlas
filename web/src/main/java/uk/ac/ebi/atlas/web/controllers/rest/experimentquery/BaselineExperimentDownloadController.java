@@ -33,7 +33,7 @@ import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.controllers.BaselineQueryController;
+import uk.ac.ebi.atlas.web.controllers.BaselineExperimentController;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
@@ -44,16 +44,16 @@ import java.io.IOException;
 
 @Controller
 @Scope("request")
-public class BaselineQueryDownloadController extends BaselineQueryController {
-    private static final Logger LOGGER = Logger.getLogger(BaselineQueryDownloadController.class);
+public class BaselineExperimentDownloadController extends BaselineExperimentController {
+    private static final Logger LOGGER = Logger.getLogger(BaselineExperimentDownloadController.class);
 
     private WriteBaselineProfilesCommand writeBaselineProfilesCommand;
 
 
     @Inject
-    public BaselineQueryDownloadController(BaselineRequestContextBuilder requestContextBuilder,
-                                           FilterFactorsConverter filterFactorsConverter,
-                                           WriteBaselineProfilesCommand writeBaselineProfilesCommand) {
+    public BaselineExperimentDownloadController(BaselineRequestContextBuilder requestContextBuilder,
+                                                FilterFactorsConverter filterFactorsConverter,
+                                                WriteBaselineProfilesCommand writeBaselineProfilesCommand) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.writeBaselineProfilesCommand = writeBaselineProfilesCommand;

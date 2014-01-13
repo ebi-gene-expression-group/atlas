@@ -17,6 +17,7 @@ public class MageTabParserOutput {
         return experimentDesign;
     }
 
+    // ontology terms by assay group ID
     public SetMultimap<String, String> getOntologyTerms() {
         return ontologyTerms;
     }

@@ -48,9 +48,9 @@ import java.util.zip.ZipOutputStream;
 
 @Controller
 @Scope("request")
-public class MicroarrayQueryDownloadController {
+public class MicroarrayExperimentDownloadController {
 
-    private static final Logger LOGGER = Logger.getLogger(MicroarrayQueryDownloadController.class);
+    private static final Logger LOGGER = Logger.getLogger(MicroarrayExperimentDownloadController.class);
     private static final String NORMALIZED_EXPRESSIONS_TSV = "-normalized-expressions.tsv";
     private static final String LOG_FOLD_CHANGES_TSV = "-log-fold-changes.tsv";
     private static final String ANALYTICS_TSV = "-analytics.tsv";
@@ -65,7 +65,7 @@ public class MicroarrayQueryDownloadController {
     private DataWriterFactory dataWriterFactory;
 
     @Inject
-    public MicroarrayQueryDownloadController(
+    public MicroarrayExperimentDownloadController(
             MicroarrayRequestContextBuilder requestContextBuilder, WriteMicroarrayProfilesCommand writeGeneProfilesCommand, DataWriterFactory dataWriterFactory) {
 
         this.requestContextBuilder = requestContextBuilder;

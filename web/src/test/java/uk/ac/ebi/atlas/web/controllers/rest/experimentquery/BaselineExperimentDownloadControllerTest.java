@@ -34,7 +34,6 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
-import uk.ac.ebi.atlas.web.controllers.rest.experimentquery.BaselineQueryDownloadController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,7 +43,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineQueryDownloadControllerTest {
+public class BaselineExperimentDownloadControllerTest {
 
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
 
@@ -75,11 +74,11 @@ public class BaselineQueryDownloadControllerTest {
     @Mock
     private PrintWriter printWriterMock;
 
-    private BaselineQueryDownloadController subject;
+    private BaselineExperimentDownloadController subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineQueryDownloadController(requestContextBuilderMock, filterFactorsConverterMock, writeBaselineProfilesCommandMock);
+        subject = new BaselineExperimentDownloadController(requestContextBuilderMock, filterFactorsConverterMock, writeBaselineProfilesCommandMock);
     }
 
     @Test

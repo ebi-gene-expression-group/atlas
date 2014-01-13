@@ -42,13 +42,13 @@ import javax.validation.Valid;
 
 @Controller
 @Scope("request")
-public class MicroarrayQueryPageController extends DifferentialQueryPageController<MicroarrayExperiment, MicroarrayRequestPreferences, DifferentialProfilesList, MicroarrayProfile> {
+public class MicroarrayExperimentPageController extends DifferentialExperimentPageController<MicroarrayExperiment, MicroarrayRequestPreferences, DifferentialProfilesList, MicroarrayProfile> {
     private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
 
     @Inject
-    public MicroarrayQueryPageController(MicroarrayRequestContextBuilder requestContextBuilder,
-                                         RankMicroarrayProfilesCommand rankMicroarrayProfilesCommand,
-                                         DownloadURLBuilder downloadURLBuilder) {
+    public MicroarrayExperimentPageController(MicroarrayRequestContextBuilder requestContextBuilder,
+                                              RankMicroarrayProfilesCommand rankMicroarrayProfilesCommand,
+                                              DownloadURLBuilder downloadURLBuilder) {
         super(requestContextBuilder, rankMicroarrayProfilesCommand, downloadURLBuilder);
     }
 

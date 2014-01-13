@@ -42,16 +42,16 @@ import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
-public abstract class DifferentialQueryPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences, V extends DifferentialProfilesList, Z extends Profile> {
+public abstract class DifferentialExperimentPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences, V extends DifferentialProfilesList, Z extends Profile> {
 
     private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
     private RankProfilesCommand<V, Z> rankProfilesCommand;
 
 
-    protected DifferentialQueryPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
-                                              RankProfilesCommand<V, Z> rankProfilesCommand,
-                                              DownloadURLBuilder downloadURLBuilder) {
+    protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
+                                                   RankProfilesCommand<V, Z> rankProfilesCommand,
+                                                   DownloadURLBuilder downloadURLBuilder) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.rankProfilesCommand = rankProfilesCommand;
         this.downloadURLBuilder = downloadURLBuilder;

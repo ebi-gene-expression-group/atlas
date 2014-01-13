@@ -22,19 +22,18 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest.experimentquery;
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.WriteMicroarrayProfilesCommand;
-import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
+import uk.ac.ebi.atlas.commands.WriteDifferentialProfilesCommand;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.download.DataWriterFactory;
 import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,16 +44,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MicroarrayQueryDownloadControllerTest {
+public class DifferentialExperimentDownloadControllerTest {
 
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
-    public static final String ARRAY_DESIGN = "arrayDesign";
 
     @Mock
-    private MicroarrayRequestContextBuilder requestContextBuilderMock;
+    private RnaSeqRequestContextBuilder requestContextBuilderMock;
 
     @Mock
-    private WriteMicroarrayProfilesCommand writeGeneProfilesCommandMock;
+    private WriteDifferentialProfilesCommand writeGeneProfilesCommandMock;
 
     @Mock
     private DataWriterFactory dataWriterFactoryMock;
@@ -63,16 +61,16 @@ public class MicroarrayQueryDownloadControllerTest {
     private HttpServletRequest requestMock;
 
     @Mock
-    private MicroarrayExperiment experimentMock;
-
-    @Mock
-    private MicroarrayRequestPreferences preferencesMock;
-
-    @Mock
-    private MicroarrayRequestContext requestContextMock;
+    private DifferentialRequestPreferences preferencesMock;
 
     @Mock
     private HttpServletResponse responseMock;
+
+    @Mock
+    private DifferentialExperiment experimentMock;
+
+    @Mock
+    private RnaSeqRequestContext requestContextMock;
 
     @Mock
     private PrintWriter printWriterMock;
@@ -80,29 +78,26 @@ public class MicroarrayQueryDownloadControllerTest {
     @Mock
     private ExpressionsWriter expressionsWriterMock;
 
-    private MicroarrayQueryDownloadController subject;
+    private DifferentialExperimentDownloadController subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayQueryDownloadController(requestContextBuilderMock, writeGeneProfilesCommandMock, dataWriterFactoryMock);
+        subject = new DifferentialExperimentDownloadController(requestContextBuilderMock, writeGeneProfilesCommandMock, dataWriterFactoryMock);
 
         when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
-        when(experimentMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
         when(requestContextBuilderMock.forExperiment(experimentMock)).thenReturn(requestContextBuilderMock);
         when(requestContextBuilderMock.withPreferences(preferencesMock)).thenReturn(requestContextBuilderMock);
         when(requestContextBuilderMock.build()).thenReturn(requestContextMock);
         when(responseMock.getWriter()).thenReturn(printWriterMock);
         when(writeGeneProfilesCommandMock.execute(EXPERIMENT_ACCESSION)).thenReturn(0L);
-        when(preferencesMock.getArrayDesignAccession()).thenReturn(ARRAY_DESIGN);
-
     }
 
     @Test
     public void testDownloadGeneProfiles() throws Exception {
         subject.downloadGeneProfiles(requestMock, preferencesMock, responseMock);
 
-        verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-query-results.tsv\"");
+        verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
         verify(writeGeneProfilesCommandMock).setResponseWriter(printWriterMock);
@@ -111,38 +106,27 @@ public class MicroarrayQueryDownloadControllerTest {
     }
 
     @Test
-    public void testDownloadNormalizedData() throws Exception {
+    public void testDownloadRawCounts() throws Exception {
+        when(dataWriterFactoryMock.getRnaSeqRawDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
         when(expressionsWriterMock.write()).thenReturn(0L);
-        when(dataWriterFactoryMock.getMicroarrayRawDataWriter(experimentMock, printWriterMock, ARRAY_DESIGN)).thenReturn(expressionsWriterMock);
 
-        subject.downloadNormalizedData(requestMock, preferencesMock, responseMock);
+        subject.downloadRawCounts(requestMock, responseMock);
 
         verify(expressionsWriterMock).write();
-        verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-normalized-expressions.tsv\"");
-        verify(responseMock).setContentType("text/plain; charset=utf-8");
-    }
-
-    @Test
-    public void testDownloadLogFoldData() throws Exception {
-        when(expressionsWriterMock.write()).thenReturn(0L);
-        when(dataWriterFactoryMock.getMicroarrayLogFoldDataWriter(experimentMock, printWriterMock, ARRAY_DESIGN)).thenReturn(expressionsWriterMock);
-
-        subject.downloadLogFoldData(requestMock, preferencesMock, responseMock);
-
-        verify(expressionsWriterMock).write();
-        verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-log-fold-changes.tsv\"");
+        verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-raw-counts.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
     }
 
     @Test
     public void testDownloadAllAnalytics() throws Exception {
-        when(expressionsWriterMock.write()).thenReturn(0L);
-        when(dataWriterFactoryMock.getMicroarrayAnalyticsDataWriter(experimentMock, printWriterMock, ARRAY_DESIGN)).thenReturn(expressionsWriterMock);
 
-        subject.downloadAllAnalytics(requestMock, preferencesMock, responseMock);
+        when(dataWriterFactoryMock.getRnaSeqAnalyticsDataWriter(experimentMock, printWriterMock)).thenReturn(expressionsWriterMock);
+        when(expressionsWriterMock.write()).thenReturn(0L);
+
+        subject.downloadAllAnalytics(requestMock, responseMock);
 
         verify(expressionsWriterMock).write();
-        verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-analytics.tsv\"");
+        verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-analytics.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
     }
 }
