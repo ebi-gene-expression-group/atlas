@@ -106,7 +106,7 @@ public class ExperimentMetadataCRUD {
         //from cache gets this experiment from the DB first
         if (!isPrivate) {
             Experiment experiment = experimentTrader.getPublicExperiment(accession);
-            conditionsIndexTrader.getIndex(experiment).addConditions(experiment, mageTabParserOutput.getOntologyTerms());
+            conditionsIndexTrader.getIndex(experiment).addConditions(experiment, mageTabParserOutput.getCharacteristicsOntologyTerms());
         }
 
         return uuid;
@@ -196,7 +196,7 @@ public class ExperimentMetadataCRUD {
 
             if (!experimentDTO.isPrivate()) {
                 Experiment experiment = experimentTrader.getPublicExperiment(accession);
-                conditionsIndexTrader.getIndex(experiment).updateConditions(experiment, mageTabParserOutput.getOntologyTerms());
+                conditionsIndexTrader.getIndex(experiment).updateConditions(experiment, mageTabParserOutput.getCharacteristicsOntologyTerms());
             }
 
         } catch (IOException e) {

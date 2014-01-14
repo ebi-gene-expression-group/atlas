@@ -5,12 +5,12 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 public class MageTabParserOutput {
 
-    private final SetMultimap<String, String> ontologyTerms;
+    private final SetMultimap<String, String> characteristicsOntologyTerms;
     private ExperimentDesign experimentDesign;
 
-    MageTabParserOutput(ExperimentDesign experimentDesign, SetMultimap<String, String> ontologyTerms) {
+    MageTabParserOutput(ExperimentDesign experimentDesign, SetMultimap<String, String> characteristicsOntologyTerms) {
         this.experimentDesign = experimentDesign;
-        this.ontologyTerms = ontologyTerms;
+        this.characteristicsOntologyTerms = characteristicsOntologyTerms;
     }
 
     public ExperimentDesign getExperimentDesign() {
@@ -18,8 +18,8 @@ public class MageTabParserOutput {
     }
 
     // ontology terms by assay group ID
-    public SetMultimap<String, String> getOntologyTerms() {
-        return ontologyTerms;
+    public SetMultimap<String, String> getCharacteristicsOntologyTerms() {
+        return characteristicsOntologyTerms;
     }
 
 }

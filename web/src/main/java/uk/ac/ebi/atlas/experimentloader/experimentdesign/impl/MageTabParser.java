@@ -81,7 +81,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
         experimentDesign = new ExperimentDesign();
 
-        SetMultimap<String, String> ontologyTerms = HashMultimap.create();
+        SetMultimap<String, String> characteristicsOntologyTerms = HashMultimap.create();
 
         for (AssayNode<T> assayNode : assayNodes) {
             SourceNode sourceNode = findFirstUpstreamSourceNode(assayNode);
@@ -89,7 +89,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
             for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
                 addCharacteristicToExperimentDesign(assayNode.getName(), characteristicsAttribute);
                 if (!Strings.isNullOrEmpty(characteristicsAttribute.termAccessionNumber)) {
-                    ontologyTerms.put(assayNode.getName(), characteristicsAttribute.termAccessionNumber);
+                    characteristicsOntologyTerms.put(assayNode.getName(), characteristicsAttribute.termAccessionNumber);
                 }
             }
 
@@ -98,7 +98,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
         addArrays(experimentDesign, assayNodes);
 
-        return new MageTabParserOutput(experimentDesign, ontologyTerms);
+        return new MageTabParserOutput(experimentDesign, characteristicsOntologyTerms);
     }
 
     private void addCharacteristicToExperimentDesign(String name, CharacteristicsAttribute characteristicsAttribute) {
