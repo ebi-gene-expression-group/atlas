@@ -20,58 +20,41 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.dao.diffexpression;
+package uk.ac.ebi.atlas.experimentimport.experimentdesign.impl;
 
-import com.google.common.base.Optional;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
-import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.arrayContaining;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class DiffExpressionDaoPrivateExperimentsIT {
+public class TwoColourExperimentDesignMageTabParserIT {
 
-    private static final String EXPERIMENT_ACCESSION = "E-GEOD-21860";
+    private static final String TWO_COLOUR_EXPERIMENT_ACCESSION = "E-GEOD-43049";
 
+    @Named("twoColourExperimentDesignMageTabParser")
     @Inject
-    private DiffExpressionDao subject;
-
-    @Inject
-    private ExperimentMetadataCRUD experimentMetadataCRUD;
-
-    @Before
-    public void setPrivate() throws IOException {
-        experimentMetadataCRUD.updateExperiment(EXPERIMENT_ACCESSION, true);
-    }
+    private TwoColourExperimentDesignMageTabParser subject;
 
     @Test
-    public void getTopExpressionsDoesNotReturnResultsInPrivateExperiments() {
-        Collection<String> geneIds = Collections.singleton("ENSMUSG00000050520");
-        List<DifferentialBioentityExpression> expressions = subject.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
-        assertThat(expressions, hasSize(0));
-    }
+    public void asTableDataShouldReturnTheRightStuff() throws IOException {
+        ExperimentDesign experimentDesign = subject.parse(TWO_COLOUR_EXPERIMENT_ACCESSION).getExperimentDesign();
 
-    @After
-    public void setPublic() throws IOException {
-        experimentMetadataCRUD.updateExperiment(EXPERIMENT_ACCESSION, false);
-    }
+        assertThat(experimentDesign.asTableData().size(), is(12));
+        assertThat(experimentDesign.asTableData().get(0), arrayContaining("GSM1055612.Cy3", "A-AGIL-28", "Homo sapiens", "Caco-2", "Conventional", "Conventional"));
+        assertThat(experimentDesign.asTableData().get(11), arrayContaining("GSM1055617.Cy5","A-AGIL-28","Homo sapiens","Caco-2","Apical anaerobic","Conventional"));
 
+    }
 }

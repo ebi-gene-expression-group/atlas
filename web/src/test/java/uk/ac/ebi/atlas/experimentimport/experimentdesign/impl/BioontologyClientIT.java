@@ -20,58 +20,48 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.dao.diffexpression;
+package uk.ac.ebi.atlas.experimentimport.experimentdesign.impl;
 
-import com.google.common.base.Optional;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
-import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Inject;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class DiffExpressionDaoPrivateExperimentsIT {
-
-    private static final String EXPERIMENT_ACCESSION = "E-GEOD-21860";
+public class BioontologyClientIT {
 
     @Inject
-    private DiffExpressionDao subject;
-
-    @Inject
-    private ExperimentMetadataCRUD experimentMetadataCRUD;
+    private BioontologyClient subject;
 
     @Before
-    public void setPrivate() throws IOException {
-        experimentMetadataCRUD.updateExperiment(EXPERIMENT_ACCESSION, true);
+    public void setUp() throws Exception {
     }
 
     @Test
-    public void getTopExpressionsDoesNotReturnResultsInPrivateExperiments() {
-        Collection<String> geneIds = Collections.singleton("ENSMUSG00000050520");
-        List<DifferentialBioentityExpression> expressions = subject.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
-        assertThat(expressions, hasSize(0));
+    public void isValidShouldSucceed() throws Exception {
+        boolean valid = subject.isValid("micromole per kilogram");
+        assertThat(valid, is(true));
     }
 
-    @After
-    public void setPublic() throws IOException {
-        experimentMetadataCRUD.updateExperiment(EXPERIMENT_ACCESSION, false);
+    @Test
+    public void isValidShouldReturnFalse() throws Exception {
+        boolean valid = subject.isValid("icecream per pizza");
+        assertThat(valid, is(false));
+
+        valid = subject.isValid("");
+        assertThat(valid, is(false));
+
+        valid = subject.isValid(null);
+        assertThat(valid, is(false));
     }
 
 }

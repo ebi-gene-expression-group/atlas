@@ -28,9 +28,9 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.experimentloader.ExperimentCRUD;
-import uk.ac.ebi.atlas.experimentloader.ExperimentDTO;
-import uk.ac.ebi.atlas.experimentloader.ExperimentMetadataCRUD;
+import uk.ac.ebi.atlas.experimentimport.ExperimentCRUD;
+import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
