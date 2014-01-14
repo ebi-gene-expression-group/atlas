@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,42 +20,46 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.trader.cache.baseline;
+package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTrader;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.concurrent.ExecutionException;
 
-@Named("barChartTraders")
+@Named
 @Scope("singleton")
-public class BarChartTradersCache {
+public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayExperiment> {
 
-    private static final Logger LOGGER = Logger.getLogger(BarChartTradersCache.class);
+    private static final Logger LOGGER = Logger.getLogger(MicroarrayExperimentsCache.class);
 
-    private LoadingCache<String, BarChartTrader> barchartTraders;
+    private LoadingCache<String, MicroarrayExperiment> experiments;
 
     @Inject
-    @Named("barChartTradersLoadingCache")
+    @Named("microarrayExperimentsLoadingCache")
     //this is the name of the implementation being injected, required because LoadingCache is an interface
-    public BarChartTradersCache(LoadingCache<String, BarChartTrader> barchartTraders) {
-        this.barchartTraders = barchartTraders;
+    public MicroarrayExperimentsCache(LoadingCache<String, MicroarrayExperiment> experiments) {
+        this.experiments = experiments;
     }
 
-    public BarChartTrader getBarchartTrader(String experimentAccession) {
+    @Override
+    public MicroarrayExperiment getExperiment(String experimentAccession) {
         try {
 
-            return barchartTraders.get(experimentAccession);
+            return experiments.get(experimentAccession);
 
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Exception while loading histogram data from file: " + e.getMessage(),
-                    e.getCause());
+            throw new IllegalStateException(String.format("Exception while loading experiment %s: %s", experimentAccession, e.getMessage()), e.getCause());
         }
+    }
+
+    @Override
+    public void evictExperiment(String experimentAccession) {
+        experiments.invalidate(experimentAccession);
     }
 
 }

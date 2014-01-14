@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,48 +20,42 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.trader.cache.differential;
+package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.concurrent.ExecutionException;
 
-@Named
+@Named("barChartTraders")
 @Scope("singleton")
-public class RnaSeqDiffExperimentsCache implements ExperimentsCache<DifferentialExperiment> {
+public class BarChartTradersCache {
 
-    private static final Logger LOGGER = Logger.getLogger(RnaSeqDiffExperimentsCache.class);
+    private static final Logger LOGGER = Logger.getLogger(BarChartTradersCache.class);
 
-    private LoadingCache<String, DifferentialExperiment> experiments;
+    private LoadingCache<String, BarChartTrader> barchartTraders;
 
     @Inject
-    @Named("differentialExperimentsLoadingCache")
+    @Named("barChartTradersLoadingCache")
     //this is the name of the implementation being injected, required because LoadingCache is an interface
-    public RnaSeqDiffExperimentsCache(LoadingCache<String, DifferentialExperiment> experiments) {
-        this.experiments = experiments;
+    public BarChartTradersCache(LoadingCache<String, BarChartTrader> barchartTraders) {
+        this.barchartTraders = barchartTraders;
     }
 
-    @Override
-    public DifferentialExperiment getExperiment(String experimentAccession) {
+    public BarChartTrader getBarchartTrader(String experimentAccession) {
         try {
 
-            return experiments.get(experimentAccession);
+            return barchartTraders.get(experimentAccession);
 
         } catch (ExecutionException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Exception while loading MAGE TAB file: " + e.getMessage(), e.getCause());
+            throw new IllegalStateException("Exception while loading histogram data from file: " + e.getMessage(),
+                    e.getCause());
         }
-    }
-
-    @Override
-    public void evictExperiment(String experimentAccession) {
-        experiments.invalidate(experimentAccession);
     }
 
 }

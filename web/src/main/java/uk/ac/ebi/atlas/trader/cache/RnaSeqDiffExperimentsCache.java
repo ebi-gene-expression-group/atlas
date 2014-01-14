@@ -20,13 +20,12 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.trader.cache.baseline;
+package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,21 +33,21 @@ import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("singleton")
-public class BaselineExperimentsCache implements ExperimentsCache<BaselineExperiment> {
+public class RnaSeqDiffExperimentsCache implements ExperimentsCache<DifferentialExperiment> {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineExperimentsCache.class);
+    private static final Logger LOGGER = Logger.getLogger(RnaSeqDiffExperimentsCache.class);
 
-    private LoadingCache<String, BaselineExperiment> experiments;
+    private LoadingCache<String, DifferentialExperiment> experiments;
 
     @Inject
-    @Named("baselineExperimentsLoadingCache")
+    @Named("differentialExperimentsLoadingCache")
     //this is the name of the implementation being injected, required because LoadingCache is an interface
-    public BaselineExperimentsCache(LoadingCache<String, BaselineExperiment> experiments) {
+    public RnaSeqDiffExperimentsCache(LoadingCache<String, DifferentialExperiment> experiments) {
         this.experiments = experiments;
     }
 
     @Override
-    public BaselineExperiment getExperiment(String experimentAccession) {
+    public DifferentialExperiment getExperiment(String experimentAccession) {
         try {
 
             return experiments.get(experimentAccession);

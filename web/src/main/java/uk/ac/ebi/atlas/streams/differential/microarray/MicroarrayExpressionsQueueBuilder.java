@@ -23,7 +23,7 @@
 package uk.ac.ebi.atlas.streams.differential.microarray;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.trader.cache.microarray.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;

@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.TranscriptProfile;
-import uk.ac.ebi.atlas.trader.cache.baseline.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import java.util.Comparator;
 import java.util.List;

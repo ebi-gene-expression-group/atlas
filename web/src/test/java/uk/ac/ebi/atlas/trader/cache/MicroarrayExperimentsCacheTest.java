@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.trader.cache.baseline;
+package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
 import org.junit.Before;
@@ -28,7 +28,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 
 import java.net.MalformedURLException;
 import java.util.concurrent.ExecutionException;
@@ -39,30 +40,29 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyString;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineExperimentsCacheTest {
+public class MicroarrayExperimentsCacheTest {
 
     @Mock
-    private LoadingCache<String, BaselineExperiment> loadingCacheMock;
+    private LoadingCache<String, MicroarrayExperiment> loadingCacheMock;
 
     @Mock
-    private BaselineExperiment baselineExperimentMock;
+    private MicroarrayExperiment microarrayExperimentMock;
 
-    private BaselineExperimentsCache subject;
-
+    private MicroarrayExperimentsCache subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineExperimentsCache(loadingCacheMock);
+        subject = new MicroarrayExperimentsCache(loadingCacheMock);
     }
 
     @Test
     public void testGetExperiment() throws Exception {
 
         // given
-        given(loadingCacheMock.get(anyString())).willReturn(baselineExperimentMock);
+        given(loadingCacheMock.get(anyString())).willReturn(microarrayExperimentMock);
 
         // then
-        assertThat(subject.getExperiment("bla"), is(baselineExperimentMock));
+        assertThat(subject.getExperiment("bla"), is(microarrayExperimentMock));
     }
 
     @Test(expected = IllegalStateException.class)

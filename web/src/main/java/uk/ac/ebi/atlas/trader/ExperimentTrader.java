@@ -29,9 +29,9 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.trader.cache.baseline.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.differential.RnaSeqDiffExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.microarray.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;

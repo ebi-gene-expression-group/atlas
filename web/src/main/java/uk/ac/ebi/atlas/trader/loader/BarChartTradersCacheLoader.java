@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.trader.cache.baseline;
+package uk.ac.ebi.atlas.trader.loader;
 
 import com.google.common.cache.CacheLoader;
 import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTrader;

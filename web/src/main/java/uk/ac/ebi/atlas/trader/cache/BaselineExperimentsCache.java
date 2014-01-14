@@ -20,41 +20,41 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.trader.cache.microarray;
+package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("singleton")
-public class MicroarrayExperimentsCache implements ExperimentsCache<MicroarrayExperiment> {
+public class BaselineExperimentsCache implements ExperimentsCache<BaselineExperiment> {
 
-    private static final Logger LOGGER = Logger.getLogger(MicroarrayExperimentsCache.class);
+    private static final Logger LOGGER = Logger.getLogger(BaselineExperimentsCache.class);
 
-    private LoadingCache<String, MicroarrayExperiment> experiments;
+    private LoadingCache<String, BaselineExperiment> experiments;
 
     @Inject
-    @Named("microarrayExperimentsLoadingCache")
+    @Named("baselineExperimentsLoadingCache")
     //this is the name of the implementation being injected, required because LoadingCache is an interface
-    public MicroarrayExperimentsCache(LoadingCache<String, MicroarrayExperiment> experiments) {
+    public BaselineExperimentsCache(LoadingCache<String, BaselineExperiment> experiments) {
         this.experiments = experiments;
     }
 
     @Override
-    public MicroarrayExperiment getExperiment(String experimentAccession) {
+    public BaselineExperiment getExperiment(String experimentAccession) {
         try {
 
             return experiments.get(experimentAccession);
 
-        } catch (Exception e) {
+        } catch (ExecutionException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(String.format("Exception while loading experiment %s: %s", experimentAccession, e.getMessage()), e.getCause());
+            throw new IllegalStateException("Exception while loading MAGE TAB file: " + e.getMessage(), e.getCause());
         }
     }
 

@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.trader.cache.baseline;
+package uk.ac.ebi.atlas.trader.loader;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +35,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperimentBuilder;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.trader.loader.BaselineExperimentsCacheLoader;
 
 import java.util.HashSet;
 import java.util.Set;

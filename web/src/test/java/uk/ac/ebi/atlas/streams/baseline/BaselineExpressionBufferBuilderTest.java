@@ -32,7 +32,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.trader.cache.baseline.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import java.util.List;
 

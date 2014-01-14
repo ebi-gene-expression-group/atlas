@@ -28,10 +28,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTrader;
-import uk.ac.ebi.atlas.trader.cache.baseline.BarChartTradersCacheLoader;
-import uk.ac.ebi.atlas.trader.cache.baseline.BaselineExperimentsCacheLoader;
-import uk.ac.ebi.atlas.trader.cache.differential.DifferentialExperimentsCacheLoader;
-import uk.ac.ebi.atlas.trader.cache.microarray.MicroarrayExperimentsCacheLoader;
+import uk.ac.ebi.atlas.trader.loader.BarChartTradersCacheLoader;
+import uk.ac.ebi.atlas.trader.loader.BaselineExperimentsCacheLoader;
+import uk.ac.ebi.atlas.trader.loader.DifferentialExperimentsCacheLoader;
+import uk.ac.ebi.atlas.trader.loader.MicroarrayExperimentsCacheLoader;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 

@@ -23,7 +23,7 @@
 //ToDo ... this is impossible to test without bootstrapping spring, as most other IT tests
 
 
-package uk.ac.ebi.atlas.trader.cache.baseline;
+package uk.ac.ebi.atlas.trader.loader;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +32,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.trader.loader.BaselineExperimentsCacheLoader;
 
 import javax.inject.Inject;
 import java.io.IOException;

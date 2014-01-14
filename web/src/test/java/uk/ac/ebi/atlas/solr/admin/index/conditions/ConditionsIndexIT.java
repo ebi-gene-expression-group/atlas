@@ -29,7 +29,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.trader.cache.differential.DifferentialExperimentsCacheLoader;
+import uk.ac.ebi.atlas.trader.loader.DifferentialExperimentsCacheLoader;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsIndex;
 
 import javax.inject.Inject;

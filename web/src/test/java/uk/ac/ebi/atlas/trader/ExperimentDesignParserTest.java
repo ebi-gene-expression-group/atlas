@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.trader.cache;
+package uk.ac.ebi.atlas.trader;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -34,6 +34,7 @@ import org.springframework.test.util.MatcherAssertionErrors;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 
 import java.util.List;
 import java.util.Set;
@@ -44,8 +45,8 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
-import static uk.ac.ebi.atlas.trader.cache.ExperimentDesignParser.SAMPLE_COLUMN_HEADER_PATTERN;
-import static uk.ac.ebi.atlas.trader.cache.ExperimentDesignParser.extractMatchingContent;
+import static uk.ac.ebi.atlas.trader.ExperimentDesignParser.SAMPLE_COLUMN_HEADER_PATTERN;
+import static uk.ac.ebi.atlas.trader.ExperimentDesignParser.extractMatchingContent;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentDesignParserTest {

@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.trader.cache.microarray;
+package uk.ac.ebi.atlas.trader.cache;
 
 import com.google.common.cache.LoadingCache;
 import org.junit.Before;
@@ -28,49 +28,44 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTrader;
+import uk.ac.ebi.atlas.trader.cache.BarChartTradersCache;
 
-import java.net.MalformedURLException;
 import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MicroarrayExperimentsCacheTest {
+public class BarChartTradersCacheTest {
+
+    public static final String EXPERIMENT_ACCESSION = "experimentAccession";
+
+    private BarChartTradersCache subject;
 
     @Mock
-    private LoadingCache<String, MicroarrayExperiment> loadingCacheMock;
+    private LoadingCache<String, BarChartTrader> barChartTradersMock;
 
     @Mock
-    private MicroarrayExperiment microarrayExperimentMock;
-
-    private MicroarrayExperimentsCache subject;
+    private BarChartTrader barChartTraderMock;
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentsCache(loadingCacheMock);
+        subject = new BarChartTradersCache(barChartTradersMock);
     }
 
     @Test
-    public void testGetExperiment() throws Exception {
+    public void testGetBarchartTrader() throws Exception {
+        when(barChartTradersMock.get(EXPERIMENT_ACCESSION)).thenReturn(barChartTraderMock);
 
-        // given
-        given(loadingCacheMock.get(anyString())).willReturn(microarrayExperimentMock);
-
-        // then
-        assertThat(subject.getExperiment("bla"), is(microarrayExperimentMock));
+        assertThat(subject.getBarchartTrader(EXPERIMENT_ACCESSION), is(barChartTraderMock));
     }
 
     @Test(expected = IllegalStateException.class)
-    public void whenGetFromCacheFailsCacheShallThrowIllegalStateException() throws ExecutionException {
-        //given
-        given(loadingCacheMock.get("")).willThrow(new ExecutionException(new MalformedURLException()));
-        //when
-        subject.getExperiment("");
-        //then should throw IllegalStateException
+    public void throwException() throws Exception {
+        when(barChartTradersMock.get(EXPERIMENT_ACCESSION)).thenThrow(new ExecutionException(new Throwable("Testing error handling")));
 
+        subject.getBarchartTrader(EXPERIMENT_ACCESSION);
     }
 }
