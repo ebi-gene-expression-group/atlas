@@ -80,18 +80,11 @@ public final class ExperimentDispatcher {
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
     private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
 
-    private ApplicationProperties applicationProperties;
-
-    private SolrQueryService solrQueryService;
-
     private ExperimentTrader experimentTrader;
 
     @Inject
-    private ExperimentDispatcher(ExperimentTrader experimentTrader,
-                                 ApplicationProperties applicationProperties, SolrQueryService solrQueryService) {
+    private ExperimentDispatcher(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
-        this.applicationProperties = applicationProperties;
-        this.solrQueryService = solrQueryService;
     }
 
     @RequestMapping(value = {"/experiments/{experimentAccession}",

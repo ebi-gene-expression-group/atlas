@@ -79,7 +79,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         String[] experimentRunHeaders = experimentDataTsvReader.readLine(HEADER_LINE_INDEX);
 
-        String[] columnHeaders = ArrayUtils.subarray(experimentRunHeaders, 2, experimentRunHeaders.length);
+        String[] assayGroupIds = ArrayUtils.subarray(experimentRunHeaders, 2, experimentRunHeaders.length);
 
         AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 
@@ -91,8 +91,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
 
-        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(columnHeaders, assayGroups, experimentDesign);
-        Map<String, FactorGroup> factorGroupMap = extractOrderedFactorGroupsByAssayGroup(columnHeaders, assayGroups, experimentDesign);
+        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(assayGroupIds, assayGroups, experimentDesign);
+        Map<String, FactorGroup> factorGroupMap = extractOrderedFactorGroupsByAssayGroup(assayGroupIds, assayGroups, experimentDesign);
 
         Map<String, String> factorNamesByType = getFactorNamesByType(experimentDesign, requiredFactorTypes);
 
@@ -125,11 +125,11 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         return requiredFactorTypes;
     }
 
-    List<FactorGroup> extractOrderedFactorGroups(String[] columnHeaders, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
+    List<FactorGroup> extractOrderedFactorGroups(String[] assayGroupIds, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
 
         List<FactorGroup> factorGroups = Lists.newArrayList();
 
-        for (String groupId : columnHeaders) {
+        for (String groupId : assayGroupIds) {
             AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
             String firstExperimentRun = assayGroup.iterator().next();
 
@@ -141,11 +141,11 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
     }
 
-    Map<String, FactorGroup> extractOrderedFactorGroupsByAssayGroup(String[] columnHeaders, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
+    Map<String, FactorGroup> extractOrderedFactorGroupsByAssayGroup(String[] assayGroupIds, final AssayGroups assayGroups, ExperimentDesign experimentDesign) {
 
         Map<String, FactorGroup> factorGroups = Maps.newLinkedHashMap();
 
-        for (String groupId : columnHeaders) {
+        for (String groupId : assayGroupIds) {
             AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
             String firstExperimentRun = assayGroup.iterator().next();
 

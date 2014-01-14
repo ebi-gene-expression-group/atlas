@@ -29,7 +29,7 @@ import java.util.Set;
 
 
 /*
-    Overview: is a group of factors that combine together in an ExperimentRun
+    A group of factors. Will be associated with an assay group
  */
 public interface FactorGroup extends Iterable<Factor>, Serializable {
 
