@@ -31,6 +31,15 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
 
+/*
+ *  ExperimentalFactors has factor information per _assay group_.
+ *  ExperimentalFactors is used to render the experiment page.
+ *  At experiment load time it is built from a ExperimentDesign and list of assay group ids.
+ *
+ *  ExperimentDesign also stores factors but per _assay_. It is used to render the
+ *  experiment design page.
+ *
+ */
 public class ExperimentalFactors implements Serializable {
 
     private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();

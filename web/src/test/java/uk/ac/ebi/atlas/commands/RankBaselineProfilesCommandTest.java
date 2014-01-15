@@ -47,9 +47,6 @@ public class RankBaselineProfilesCommandTest {
     private static final String SPECIES = "Species 1";
 
     @Mock
-    private ExperimentalFactors experimentalFactors;
-
-    @Mock
     private BaselineRequestContext requestContextMock;
 
     @Mock

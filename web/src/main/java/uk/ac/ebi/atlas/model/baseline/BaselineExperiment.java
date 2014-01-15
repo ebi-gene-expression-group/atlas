@@ -74,17 +74,6 @@ public class BaselineExperiment extends Experiment {
         return assayGroups;
     }
 
-    public String getSpeciesByAssayGroup(String assayGroupId) {
-        FactorSet factors = getExperimentDesign().getFactorsForAssayGroup(assayGroups.getAssayGroup(assayGroupId));
-        for (Factor factor : factors) {
-            if (factor.getType().equalsIgnoreCase("organism")) {
-                return factor.getValue().toLowerCase();
-            }
-        }
-
-        return getFirstSpecies().toLowerCase();
-    }
-
     public SortedSet<Factor> getAssayGroupFactors(Collection<String> assayGroupIds, String factorType) {
         return this.getExperimentalFactors().getFactorsForAssayGroupsByType(assayGroupIds, factorType);
     }
