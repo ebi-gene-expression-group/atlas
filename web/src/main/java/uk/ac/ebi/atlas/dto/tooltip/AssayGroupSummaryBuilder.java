@@ -42,7 +42,7 @@ public class AssayGroupSummaryBuilder {
         Multimap<String, String> allFactorValues = HashMultimap.create();
         Multimap<String, String> allSampleValues = HashMultimap.create();
         for (String assay : assayGroup) {
-            extractAllValues(experimentDesign.getFactors(assay), allFactorValues);
+            extractAllValues(experimentDesign.getFactorValuesByHeader(assay), allFactorValues);
             extractAllValues(experimentDesign.getSamples(assay), allSampleValues);
         }
 

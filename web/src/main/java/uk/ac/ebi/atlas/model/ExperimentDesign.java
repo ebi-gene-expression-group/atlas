@@ -69,6 +69,15 @@ public class ExperimentDesign implements Serializable {
         factorHeaders.add(factorHeader);
     }
 
+    public void putFactor(String runOrAssay, String factorHeader, String factorValue, String factorOntologyTerm) {
+        if (!factors.containsKey(runOrAssay)) {
+            factors.put(runOrAssay, new ExperimentDesignValues());
+        }
+        factors.get(runOrAssay).put(factorHeader, factorValue);
+        factorHeaders.add(factorHeader);
+    }
+
+
     public void putArrayDesign(String runOrAssay, String arrayDesign) {
         arrayDesigns.put(runOrAssay, arrayDesign);
     }
@@ -109,7 +118,7 @@ public class ExperimentDesign implements Serializable {
         return null;
     }
 
-    public Map<String, String> getFactors(String runOrAssay) {
+    public Map<String, String> getFactorValuesByHeader(String runOrAssay) {
         return factors.get(runOrAssay);
     }
 

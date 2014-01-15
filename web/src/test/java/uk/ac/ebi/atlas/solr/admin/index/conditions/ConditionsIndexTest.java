@@ -97,7 +97,7 @@ public class ConditionsIndexTest {
     public void addConditionsBaselineExtractsFactorAndSampleValues() throws Exception {
         given(baselineExperimentMock.getAssayGroups()).willReturn(new AssayGroups(Collections.singleton(new AssayGroup("g1","a1"))));
         given(baselineExperimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
-        given(experimentDesignMock.getFactors("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
+        given(experimentDesignMock.getFactorValuesByHeader("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
         given(experimentDesignMock.getSamples("a1")).willReturn(ImmutableMap.of("sex", "female"));
 
         BaselineConditionsIndex subject = new BaselineConditionsIndex(solrServerMock, new BaselineConditionsBuilder());
@@ -119,7 +119,7 @@ public class ConditionsIndexTest {
     public void addConditionsBaselineIncludesOntologyTerms() throws Exception {
         given(baselineExperimentMock.getAssayGroups()).willReturn(new AssayGroups(Collections.singleton(new AssayGroup("g1","a1"))));
         given(baselineExperimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
-        given(experimentDesignMock.getFactors("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
+        given(experimentDesignMock.getFactorValuesByHeader("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
         given(experimentDesignMock.getSamples("a1")).willReturn(ImmutableMap.of("sex", "female"));
 
         SetMultimap<String, String> ontologyTerms =
