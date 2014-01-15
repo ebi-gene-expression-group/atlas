@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
@@ -38,6 +39,10 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class ExperimentalFactorsBuilder {
 
+    private String defaultQueryType;
+
+    private Set<Factor> defaultFilterFactors;
+
     private Map<String, String> factorNamesByType = new HashMap<>();
 
     private List<FactorGroup> orderedFactorGroups;
@@ -45,6 +50,16 @@ public class ExperimentalFactorsBuilder {
     private Map<String, FactorGroup> orderedFactorGroupsByAssayGroup;
 
     private Set<String> menuFilterFactorTypes;
+
+    public ExperimentalFactorsBuilder withDefaultQueryType(String defaultQueryType) {
+        this.defaultQueryType = defaultQueryType;
+        return this;
+    }
+
+    public ExperimentalFactorsBuilder withDefaultFilterFactors(Set<Factor> defaultFilterFactors) {
+        this.defaultFilterFactors = defaultFilterFactors;
+        return this;
+    }
 
     public ExperimentalFactorsBuilder withFactorNamesByType(Map<String, String> factorNamesByType) {
         this.factorNamesByType = factorNamesByType;
@@ -69,12 +84,15 @@ public class ExperimentalFactorsBuilder {
 
     public ExperimentalFactors create() {
         checkState(menuFilterFactorTypes != null, "Please provide a set of menu filter factor types");
+        checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
+        checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
+
 
         SortedSetMultimap<String, Factor> factorsByType = buildFactorsByType();
         SortedSetMultimap<Factor, Factor> coOccurringFactors = buildCoOccurringFactors();
 
         return new ExperimentalFactors(factorsByType, factorNamesByType, orderedFactorGroups,
-                coOccurringFactors, menuFilterFactorTypes, orderedFactorGroupsByAssayGroup);
+                coOccurringFactors, menuFilterFactorTypes, orderedFactorGroupsByAssayGroup, defaultQueryType, defaultFilterFactors);
     }
 
     SortedSetMultimap<String, Factor> buildFactorsByType() {

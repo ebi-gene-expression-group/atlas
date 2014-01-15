@@ -43,9 +43,7 @@ public class BaselineExperimentBuilder {
     private Set<String> species;
     private String description;
     private String displayName;
-    private String defaultQueryType;
     private boolean hasExtraInfoFile;
-    private Set<Factor> defaultFilterFactors;
     private Map<String, String> speciesMapping;
     private String experimentAccession;
     private Set<String> pubMedIds;
@@ -61,16 +59,6 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withDescription(String description) {
         this.description = description;
-        return this;
-    }
-
-    public BaselineExperimentBuilder withDefaultQueryType(String defaultQueryType) {
-        this.defaultQueryType = defaultQueryType;
-        return this;
-    }
-
-    public BaselineExperimentBuilder withDefaultFilterFactors(Set<Factor> defaultFilterFactors) {
-        this.defaultFilterFactors = defaultFilterFactors;
         return this;
     }
 
@@ -110,10 +98,8 @@ public class BaselineExperimentBuilder {
     }
 
     public BaselineExperiment create() {
-        checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
         checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
         checkState(CollectionUtils.isNotEmpty(assayGroups.getAssayGroupIds()), "Please provide a non empty set of AssayGroup objects");
-        checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
         checkState(speciesMapping != null, "Please provide a map of species mappings");
         checkState(experimentalFactors != null, "Please provide a ExperimentFactors object");
         checkState(experimentDesign != null, "Please provide a ExperimentDesign object");
@@ -123,7 +109,7 @@ public class BaselineExperimentBuilder {
         }
 
         return new BaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
-                displayName, species, speciesMapping, defaultQueryType, defaultFilterFactors, hasExtraInfoFile,
+                displayName, species, speciesMapping, hasExtraInfoFile,
                 pubMedIds, experimentDesign, assayGroups);
     }
 

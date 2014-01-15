@@ -45,7 +45,6 @@ public class BaselineExperimentTest {
 
     private static final String RUN_ACCESSION1 = "run1";
     private static final String RUN_ACCESSION2 = "run2";
-    private static final String DEFAULT_QUERY_FACTOR_TYPE = "defaultQueryFactorType";
     private static final String PUBMEDID = "PUBMEDID";
 
     @Mock
@@ -90,7 +89,7 @@ public class BaselineExperimentTest {
 
         subject = new BaselineExperiment("accession", new Date(), experimentalFactorsMock,
                 "description", "displayName", Sets.newHashSet("species"), speciesMapping,
-                DEFAULT_QUERY_FACTOR_TYPE, Sets.newHashSet(factorMock), true, Sets.newHashSet(PUBMEDID)
+                true, Sets.newHashSet(PUBMEDID)
                 , experimentDesignMock, assayGroupsMock);
 
 
@@ -100,16 +99,6 @@ public class BaselineExperimentTest {
     @Test
     public void testGetExperimentRunAccessions() throws Exception {
         assertThat(subject.getExperimentRunAccessions(), hasItems(RUN_ACCESSION1, RUN_ACCESSION2));
-    }
-
-    @Test
-    public void testGetDefaultQueryFactorType() throws Exception {
-        assertThat(subject.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));
-    }
-
-    @Test
-    public void testGetDefaultFilterFactors() throws Exception {
-        assertThat(subject.getDefaultFilterFactors(), hasItem(factorMock));
     }
 
     @Test

@@ -42,6 +42,10 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public class ExperimentalFactors implements Serializable {
 
+    private String defaultQueryFactorType;
+
+    private Set<Factor> defaultFilterFactors;
+
     private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
 
     private BiMap<String, String> factorNamesByType = HashBiMap.create();
@@ -54,13 +58,30 @@ public class ExperimentalFactors implements Serializable {
 
     private Map<String, FactorGroup> orderedFactorGroupsByAssayGroup;
 
-    ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType, Map<String, String> factorNamesByType, List<FactorGroup> orderedFactorGroups, SortedSetMultimap<Factor, Factor> coOccurringFactors, Set<String> menuFilterFactorTypes, Map<String, FactorGroup> orderedFactorGroupsByAssayGroup) {
+    ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType,
+                        Map<String, String> factorNamesByType,
+                        List<FactorGroup> orderedFactorGroups,
+                        SortedSetMultimap<Factor, Factor> coOccurringFactors,
+                        Set<String> menuFilterFactorTypes,
+                        Map<String, FactorGroup> orderedFactorGroupsByAssayGroup,
+                        String defaultQueryFactorType,
+                        Set<Factor> defaultFilterFactors) {
         this.factorsByType = factorsByType;
         this.orderedFactorGroupsByAssayGroup = orderedFactorGroupsByAssayGroup;
         this.factorNamesByType.putAll(factorNamesByType);
         this.orderedFactorGroups = orderedFactorGroups;
         this.coOccurringFactors = coOccurringFactors;
         this.menuFilterFactorTypes = menuFilterFactorTypes;
+        this.defaultQueryFactorType = defaultQueryFactorType;
+        this.defaultFilterFactors = defaultFilterFactors;
+    }
+
+    public String getDefaultQueryFactorType() {
+        return defaultQueryFactorType;
+    }
+
+    public Set<Factor> getDefaultFilterFactors() {
+        return Collections.unmodifiableSet(defaultFilterFactors);
     }
 
     public String getFactorName(String type) {
@@ -163,6 +184,7 @@ public class ExperimentalFactors implements Serializable {
         return orderedFactorGroups.indexOf(factorGroup);
     }
 
+    // ordered the same as the assay group ids in the expression levels .tsv
     public List<FactorGroup> getOrderedFactorGroups() {
         return ImmutableList.copyOf(orderedFactorGroups);
     }

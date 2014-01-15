@@ -51,7 +51,6 @@ public class BaselineExperimentBuilderTest2 {
     private static final String RUN_ACCESSION1 = "ENS0";
     private static final String RUN_ACCESSION2 = "ENS1";
     private static final String DESCRIPTION = "aDescription";
-    private static final String ORGANISM_PART = "ORGANISM_PART";
 
     @Mock
     private ExperimentalFactors experimentalFactorsMock;
@@ -91,8 +90,6 @@ public class BaselineExperimentBuilderTest2 {
         subject = new BaselineExperimentBuilder()
                 .forSpecies(Sets.newHashSet(SPECIE))
                 .withDescription(DESCRIPTION)
-                .withDefaultQueryType(ORGANISM_PART)
-                .withDefaultFilterFactors(Collections.EMPTY_SET)
                 .withSpeciesMapping(Collections.EMPTY_MAP)
                 .withDisplayName(DISPLAY_NAME)
                 .withPubMedIds(Sets.newHashSet(PUBMEDID))
@@ -131,14 +128,6 @@ public class BaselineExperimentBuilderTest2 {
     @Test
     public void testSpeciesMapping() {
         assertThat(subject.getSpeciesMapping(), is(Collections.EMPTY_MAP));
-    }
-
-    @Test
-    public void getDefaultFactorTypeShouldDelegateToExperimentalFactors() {
-        //when
-        subject.getDefaultQueryFactorType();
-
-        assertThat(subject.getDefaultFilterFactors(), is(Collections.EMPTY_SET));
     }
 
     @Test

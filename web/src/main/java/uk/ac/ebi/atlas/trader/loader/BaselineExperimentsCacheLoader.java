@@ -51,6 +51,7 @@ import java.util.SortedSet;
 public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
 
     private static final int HEADER_LINE_INDEX = 0;
+    public static final int ASSAY_GROUP_HEADER_START_INDEX = 2;
     private final TsvReaderBuilder tsvReaderBuilder;
 
     private ConfigurationTrader configurationTrader;
@@ -75,32 +76,14 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 
-        String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
-        Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
-        Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
-        Map<String, String> factorNamesByType = getFactorNamesByType(experimentDesign, requiredFactorTypes);
-
         String[] orderedAssayGroupIds = readOrderedAssayGroupIdsFromExpressionLevelsFile(experimentAccession);
-        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(orderedAssayGroupIds, assayGroups, experimentDesign);
-        Map<String, FactorGroup> orderedFactorGroupsByAssayGroup = extractOrderedFactorGroupsByAssayGroup(orderedAssayGroupIds, assayGroups, experimentDesign);
 
-        ExperimentalFactorsBuilder experimentalFactorsBuilder = createExperimentalFactorsBuilder();
+        ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
 
-        ExperimentalFactors experimentalFactors = experimentalFactorsBuilder
-                .withOrderedFactorGroups(orderedFactorGroups)
-                .withOrderedFactorGroupsByAssayGroup(orderedFactorGroupsByAssayGroup)
-                .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
-                .withFactorNamesByType(factorNamesByType)
-                .create();
-
-
-        BaselineExperimentBuilder baselineExperimentBuilder = createExperimentBuilder();
-        return baselineExperimentBuilder.forSpecies(experimentDTO.getSpecies())
+        return createExperimentBuilder().forSpecies(experimentDTO.getSpecies())
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)
-                .withDefaultQueryType(factorsConfig.getDefaultQueryFactorType())
-                .withDefaultFilterFactors(defaultFilterFactors)
                 .withExtraInfo(hasExtraInfoFile)
                 .withDisplayName(factorsConfig.getExperimentDisplayName())
                 .withSpeciesMapping(factorsConfig.getSpeciesMapping())
@@ -112,12 +95,33 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
     }
 
+    private ExperimentalFactors createExperimentalFactors(ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig, AssayGroups assayGroups, String[] orderedAssayGroupIds) {
+        String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
+        Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
+        Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
+        Map<String, String> factorNamesByType = getFactorNamesByType(experimentDesign, requiredFactorTypes);
+
+        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(orderedAssayGroupIds, assayGroups, experimentDesign);
+        Map<String, FactorGroup> orderedFactorGroupsByAssayGroup = extractOrderedFactorGroupsByAssayGroup(orderedAssayGroupIds, assayGroups, experimentDesign);
+
+        ExperimentalFactorsBuilder experimentalFactorsBuilder = createExperimentalFactorsBuilder();
+
+        return experimentalFactorsBuilder
+                .withOrderedFactorGroups(orderedFactorGroups)
+                .withOrderedFactorGroupsByAssayGroup(orderedFactorGroupsByAssayGroup)
+                .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
+                .withFactorNamesByType(factorNamesByType)
+                .withDefaultQueryType(factorsConfig.getDefaultQueryFactorType())
+                .withDefaultFilterFactors(defaultFilterFactors)
+                .create();
+    }
+
     private String[] readOrderedAssayGroupIdsFromExpressionLevelsFile(String experimentAccession) {
         TsvReader experimentDataTsvReader = tsvReaderBuilder.withExperimentAccession(experimentAccession).build();
 
         String[] experimentRunHeaders = experimentDataTsvReader.readLine(HEADER_LINE_INDEX);
 
-        return ArrayUtils.subarray(experimentRunHeaders, 2, experimentRunHeaders.length);
+        return ArrayUtils.subarray(experimentRunHeaders, ASSAY_GROUP_HEADER_START_INDEX, experimentRunHeaders.length);
     }
 
     Set<String> getRequiredFactorTypes(String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
@@ -135,9 +139,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         for (String groupId : orderedAssayGroupIds) {
             AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
-            String firstExperimentRun = assayGroup.iterator().next();
 
-            Map<String, String> factors = experimentDesign.getFactorValuesByHeader(firstExperimentRun);
+            Map<String, String> factors = experimentDesign.getFactorValuesByHeader(assayGroup.getFirstAssayAccession());
             factorGroups.add(FactorSet.create(factors));
 
         }
