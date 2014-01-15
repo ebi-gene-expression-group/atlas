@@ -51,6 +51,7 @@
 
     <bean id="baselineExperimentLoader" class="uk.ac.ebi.atlas.trader.loader.BaselineExperimentsCacheLoader">
         <lookup-method name="createExperimentBuilder" bean="baselineExperimentBuilder"/>
+        <lookup-method name="createExperimentalFactorsBuilder" bean="experimentalFactorsBuilder"/>
     </bean>
 
     <bean id="rankProfilesCommandFactory" class="uk.ac.ebi.atlas.commands.RankProfilesCommandFactory">

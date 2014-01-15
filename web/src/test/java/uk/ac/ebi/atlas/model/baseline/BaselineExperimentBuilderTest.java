@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -35,7 +34,6 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
-import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -71,6 +69,9 @@ public class BaselineExperimentBuilderTest {
     @Mock
     private ExperimentDesign experimentDesignMock;
 
+    @Mock
+    private ExperimentalFactors experimentalFactors;
+
     private Factor factor;
 
     private Map<String, String> nameMap = Maps.newHashMap();
@@ -82,7 +83,7 @@ public class BaselineExperimentBuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineExperimentBuilder(new ExperimentalFactorsBuilder());
+        subject = new BaselineExperimentBuilder();
 
         factor = new Factor(FACTOR_TYPE, FACTOR_VALUE);
 
@@ -105,21 +106,17 @@ public class BaselineExperimentBuilderTest {
     @Test
     public void testCreate() throws Exception {
 
-        List<FactorGroup> orderedFactorGroupsMock = Lists.newArrayList();
-
         BaselineExperiment experiment = subject.forSpecies(Sets.newHashSet(SPECIES))
                 .withAccession(EXPERIMENT_ACCESSION)
                 .withDefaultFilterFactors(Sets.newHashSet(factor))
                 .withDefaultQueryType(FACTOR_TYPE)
                 .withDescription(DESCRIPTION)
                 .withDisplayName(DISPLAY_NAME)
-                .withOrderedFactorGroups(orderedFactorGroupsMock)
                 .withExtraInfo(false)
-                .withMenuFilterFactorTypes(Sets.newHashSet(FACTOR_TYPE))
-                .withFactorNamesByType(nameMap)
                 .withSpeciesMapping(speciesMap)
                 .withPubMedIds(Sets.newHashSet(PUBMEDID))
                 .withExperimentDesign(experimentDesignMock)
+                .withExperimentalFactors(experimentalFactors)
                 .withAssayGroups(assayGroupsMock)
                 .create();
 
@@ -136,5 +133,6 @@ public class BaselineExperimentBuilderTest {
         assertThat(experiment.getType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(experiment.getPubMedIds(), contains(PUBMEDID));
         assertThat(experiment.getExperimentDesign(), is(experimentDesignMock));
+        assertThat(experiment.getExperimentalFactors(), is(experimentalFactors));
     }
 }
