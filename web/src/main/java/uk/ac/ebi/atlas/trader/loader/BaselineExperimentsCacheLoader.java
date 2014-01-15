@@ -146,9 +146,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         for (String groupId : assayGroupIds) {
             AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
-            String firstExperimentRun = assayGroup.iterator().next();
 
-            Map<String, String> factors = experimentDesign.getFactors(firstExperimentRun);
+            Map<String, String> factors = experimentDesign.getFactors(assayGroup.getFirstAssayAccession());
             factorGroups.put(groupId, FactorSet.create(factors));
 
         }
