@@ -31,15 +31,19 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentalFactorsBuilderTest {
+    private static final Factor FACTOR1 = new Factor("TYPE", "VALUE");
+    private static final String DEFAULT_QUERY_TYPE = "DEFAULT_QUERY_TYPE";
     ExperimentalFactorsBuilder subject;
 
     private Factor factorWithType1 = new Factor("TYPE1", "VALUE1");
@@ -67,7 +71,9 @@ public class ExperimentalFactorsBuilderTest {
         subject = new ExperimentalFactorsBuilder();
         subject.withMenuFilterFactorTypes(Sets.newHashSet("TYPE1"))
                 .withOrderedFactorGroups(factorGroups)
-                .withFactorNamesByType(factorNameByType);
+                .withFactorNamesByType(factorNameByType)
+                .withDefaultQueryType(DEFAULT_QUERY_TYPE)
+                .withDefaultFilterFactors(Collections.singleton(FACTOR1));
     }
 
     @Test
@@ -86,6 +92,16 @@ public class ExperimentalFactorsBuilderTest {
         SortedSetMultimap<Factor, Factor> coOccurringFactors = subject.buildCoOccurringFactors();
 
         assertThat(coOccurringFactors.get(factorWithType1), contains(factorWithType2DifferentValue, factorWithType2, factorWithType3));
+    }
+
+    @Test
+    public void testDefaultQueryType() {
+        assertThat(subject.create().getDefaultQueryFactorType(), is(DEFAULT_QUERY_TYPE));
+    }
+
+    @Test
+    public void testDefaultFilterFactors() {
+        assertThat(subject.create().getDefaultFilterFactors(), contains(FACTOR1));
     }
 
     @Test(expected = IllegalStateException.class)

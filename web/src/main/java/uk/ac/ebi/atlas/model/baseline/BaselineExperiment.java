@@ -26,15 +26,10 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.*;
 
 public class BaselineExperiment extends Experiment {
-
-    private String defaultQueryFactorType;
-
-    private Set<Factor> defaultFilterFactors;
 
     private ExperimentalFactors experimentalFactors;
 
@@ -43,27 +38,17 @@ public class BaselineExperiment extends Experiment {
     BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description,
                        String displayName, Set<String> species, Map<String, String> speciesMapping,
-                       String defaultQueryFactorType, Set<Factor> defaultFilterFactors, boolean hasExtraInfoFile,
+                       boolean hasExtraInfoFile,
                        Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups) {
 
         super(ExperimentType.RNASEQ_MRNA_BASELINE, accession, lastUpdate, displayName, description,
                 hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
         this.experimentalFactors = experimentalFactors;
-        this.defaultQueryFactorType = defaultQueryFactorType;
-        this.defaultFilterFactors = defaultFilterFactors;
         this.assayGroups = assayGroups;
     }
 
     public Set<String> getExperimentRunAccessions() {
         return assayGroups.getAssayAccessions();
-    }
-
-    public String getDefaultQueryFactorType() {
-        return defaultQueryFactorType;
-    }
-
-    public Set<Factor> getDefaultFilterFactors() {
-        return Collections.unmodifiableSet(defaultFilterFactors);
     }
 
     public ExperimentalFactors getExperimentalFactors() {
@@ -75,7 +60,7 @@ public class BaselineExperiment extends Experiment {
     }
 
     public SortedSet<Factor> getAssayGroupFactors(Collection<String> assayGroupIds, String factorType) {
-        return this.getExperimentalFactors().getFactorsForAssayGroupsByType(assayGroupIds, factorType);
+        return getExperimentalFactors().getFactorsForAssayGroupsByType(assayGroupIds, factorType);
     }
 
 

@@ -82,7 +82,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
         ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
 
-        String experimentDescription = fetchExperimentDescription(experimentAccession, experimentDTO);
+        String experimentDescription = fetchExperimentDescriptionFromArrayExpress(experimentAccession, experimentDTO);
 
         return load(experimentDTO, experimentDescription, hasExtraInfoFile, experimentDesign);
 
@@ -91,7 +91,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
     protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription,
                               boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
 
-    final String fetchExperimentDescription(String experimentAccession, ExperimentDTO experimentDTO) {
+    final String fetchExperimentDescriptionFromArrayExpress(String experimentAccession, ExperimentDTO experimentDTO) {
         try {
             return arrayExpressClient.fetchExperimentName(experimentAccession);
         } catch (Exception e) {

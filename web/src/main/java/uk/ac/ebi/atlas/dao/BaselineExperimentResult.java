@@ -36,10 +36,6 @@ public class BaselineExperimentResult {
         return experimentName;
     }
 
-    public void setExperimentName(String experimentName) {
-        this.experimentName = experimentName;
-    }
-
     public String getSpecies() {
         return species;
     }
@@ -63,7 +59,7 @@ public class BaselineExperimentResult {
 
     // this is the default factor type across all specific assay groups with the condition
     private SortedSet<Factor> extractDefaultFactorsForSpecificAssayGroupsWithCondition(Set<String> assayGroupsWithCondition, BaselineExperiment experiment) {
-        return experiment.getAssayGroupFactors(getSpecificAssayGroupsWithCondition(assayGroupsWithCondition, experiment), experiment.getDefaultQueryFactorType());
+        return experiment.getAssayGroupFactors(getSpecificAssayGroupsWithCondition(assayGroupsWithCondition, experiment), experiment.getExperimentalFactors().getDefaultQueryFactorType());
     }
 
     // if all assay groups have the condition, returns the empty set, otherwise returns

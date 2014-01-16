@@ -33,7 +33,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class DifferentialExperiment extends Experiment {
 
@@ -57,7 +57,7 @@ public class DifferentialExperiment extends Experiment {
 
     public Contrast getContrast(String contrastId) {
         Contrast contrast = contrastsById.get(contrastId);
-        checkState(contrast != null, "Cannot find a contrast with contrastId: " + contrastId);
+        checkArgument(contrast != null, "Cannot find a contrast with contrastId: " + contrastId);
         return contrast;
     }
 

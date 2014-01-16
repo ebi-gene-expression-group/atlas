@@ -16,4 +16,4 @@ ATLAS_ROOT_URL="http://${HOSTNAME}:${PORT}/gxa"
 EXPERIMENTS=${ATLAS_ROOT_URL}/json/experiments
 
 echo ${EXPERIMENTS}
-curl -s -o /dev/null -w "HTTP status code: %{http_code} Time: %{time_total} Size: %{size_download}\n" ${EXPERIMENTS}
+curl -s -o /dev/null -w "HTTP status code: %{http_code} Size: %{size_download} Time: %{time_total}\n" ${EXPERIMENTS}

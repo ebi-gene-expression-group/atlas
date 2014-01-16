@@ -42,6 +42,9 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentalFactorsTest {
 
+    private static final Factor FACTOR1 = new Factor("TYPE", "VALUE");
+    private static final String DEFAULT_QUERY_TYPE = "DEFAULT_QUERY_TYPE";
+
     private static final String DEFAULT_FILTER_FACTOR_TYPE = "A filter factor type";
 
     @Mock
@@ -51,8 +54,6 @@ public class ExperimentalFactorsTest {
     private ExperimentRun experimentRun1Mock;
     @Mock
     private ExperimentRun experimentRun2Mock;
-
-    private Collection<ExperimentRun> experimentRunMocks;
 
     private ExperimentalFactors subject;
 
@@ -77,8 +78,6 @@ public class ExperimentalFactorsTest {
         when(experimentRun1Mock.getFactorGroup()).thenReturn(factorGroup1);
         when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroup2);
 
-        experimentRunMocks = Lists.newArrayList(experimentRun1Mock, experimentRun2Mock);
-
         Map<String, String> factorNameByType = new HashMap<>();
         factorNameByType.put("TYPE1", "NAME1");
         factorNameByType.put("TYPE2", "NAME2");
@@ -90,6 +89,8 @@ public class ExperimentalFactorsTest {
                 .withMenuFilterFactorTypes(Sets.newHashSet("TYPE1", "TYPE2"))
                 .withOrderedFactorGroups(factorGroups)
                 .withFactorNamesByType(factorNameByType)
+                .withDefaultQueryType(DEFAULT_QUERY_TYPE)
+                .withDefaultFilterFactors(Collections.singleton(FACTOR1))
                 .create();
     }
 

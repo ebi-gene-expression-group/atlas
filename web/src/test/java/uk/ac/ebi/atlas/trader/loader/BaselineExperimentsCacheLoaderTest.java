@@ -30,12 +30,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.AssayGroups;
+import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperimentBuilder;
-import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.trader.loader.BaselineExperimentsCacheLoader;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -81,7 +77,7 @@ public class BaselineExperimentsCacheLoaderTest {
 
     private BaselineExperimentsCacheLoader subject;
 
-    private static String PATH_TEMPLATE_FAKE = "FAKE_PATH_TEMPLATE";
+    private final static String PATH_TEMPLATE_FAKE = "FAKE_PATH_TEMPLATE";
 
     @Before
     public void initSubject(){
@@ -94,6 +90,11 @@ public class BaselineExperimentsCacheLoaderTest {
 
                     @Override
                     protected BaselineExperimentBuilder createExperimentBuilder() {
+                        throw new UnsupportedOperationException();
+                    }
+
+                    @Override
+                    protected ExperimentalFactorsBuilder createExperimentalFactorsBuilder() {
                         throw new UnsupportedOperationException();
                     }
                 };

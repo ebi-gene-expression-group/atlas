@@ -28,6 +28,7 @@ import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import java.util.Set;
 import java.util.SortedSet;
@@ -75,7 +76,14 @@ public class DifferentialRequestContextBuilder<T extends DifferentialRequestCont
 
         SortedSet<Contrast> selectedQueryContrasts = Sets.newTreeSet();
         for (String queryContrastId : getRequestPreferences().getQueryFactorValues()) {
-            selectedQueryContrasts.add(experiment.getContrast(queryContrastId));
+
+            try {
+                Contrast contrast = experiment.getContrast(queryContrastId);
+                selectedQueryContrasts.add(contrast);
+            } catch (IllegalArgumentException e) {
+                throw new ResourceNotFoundException(e);
+            }
+
         }
         return selectedQueryContrasts;
     }

@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -35,7 +34,6 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
-import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,7 +44,6 @@ import static org.mockito.Mockito.when;
 public class BaselineExperimentBuilderTest {
 
     private static final String FACTOR_TYPE = "type";
-    private static final String FACTOR_VALUE = "value";
     private static final String SPECIES = "homo sapiens";
     private static final String SPECIES_NAME = "Homo sapiens";
     private static final String FACTOR_NAME = "name";
@@ -71,7 +68,8 @@ public class BaselineExperimentBuilderTest {
     @Mock
     private ExperimentDesign experimentDesignMock;
 
-    private Factor factor;
+    @Mock
+    private ExperimentalFactors experimentalFactors;
 
     private Map<String, String> nameMap = Maps.newHashMap();
 
@@ -82,9 +80,7 @@ public class BaselineExperimentBuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineExperimentBuilder(new ExperimentalFactorsBuilder());
-
-        factor = new Factor(FACTOR_TYPE, FACTOR_VALUE);
+        subject = new BaselineExperimentBuilder();
 
         nameMap.put(FACTOR_TYPE, FACTOR_NAME);
 
@@ -94,8 +90,6 @@ public class BaselineExperimentBuilderTest {
         when(runMock1.getAccession()).thenReturn(RUN_ACCESSION1);
         when(runMock2.getFactorGroup()).thenReturn(factorGroupMock);
         when(runMock2.getAccession()).thenReturn(RUN_ACCESSION2);
-        when(factorGroupMock.getFactorByType(FACTOR_TYPE)).thenReturn(factor);
-        when(factorGroupMock.iterator()).thenReturn(Sets.newHashSet(factor).iterator());
 
         when(assayGroupsMock.iterator()).thenReturn(Sets.newHashSet(new AssayGroup("g1", RUN_ACCESSION1), new AssayGroup("g2", RUN_ACCESSION2)).iterator());
         when(assayGroupsMock.getAssayAccessions()).thenReturn(Sets.newHashSet(RUN_ACCESSION1, RUN_ACCESSION2));
@@ -105,28 +99,20 @@ public class BaselineExperimentBuilderTest {
     @Test
     public void testCreate() throws Exception {
 
-        List<FactorGroup> orderedFactorGroupsMock = Lists.newArrayList();
-
         BaselineExperiment experiment = subject.forSpecies(Sets.newHashSet(SPECIES))
                 .withAccession(EXPERIMENT_ACCESSION)
-                .withDefaultFilterFactors(Sets.newHashSet(factor))
-                .withDefaultQueryType(FACTOR_TYPE)
                 .withDescription(DESCRIPTION)
                 .withDisplayName(DISPLAY_NAME)
-                .withOrderedFactorGroups(orderedFactorGroupsMock)
                 .withExtraInfo(false)
-                .withMenuFilterFactorTypes(Sets.newHashSet(FACTOR_TYPE))
-                .withFactorNamesByType(nameMap)
                 .withSpeciesMapping(speciesMap)
                 .withPubMedIds(Sets.newHashSet(PUBMEDID))
                 .withExperimentDesign(experimentDesignMock)
+                .withExperimentalFactors(experimentalFactors)
                 .withAssayGroups(assayGroupsMock)
                 .create();
 
         assertThat(experiment.getAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(experiment.getExperimentRunAccessions(), hasItems(RUN_ACCESSION1, RUN_ACCESSION2));
-        assertThat(experiment.getDefaultFilterFactors(), hasItem(factor));
-        assertThat(experiment.getDefaultQueryFactorType(), is(FACTOR_TYPE));
         assertThat(experiment.getDescription(), is(DESCRIPTION));
         assertThat(experiment.getDisplayName(), is(DISPLAY_NAME));
         assertThat(experiment.hasExtraInfoFile(), is(false));
@@ -136,5 +122,6 @@ public class BaselineExperimentBuilderTest {
         assertThat(experiment.getType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(experiment.getPubMedIds(), contains(PUBMEDID));
         assertThat(experiment.getExperimentDesign(), is(experimentDesignMock));
+        assertThat(experiment.getExperimentalFactors(), is(experimentalFactors));
     }
 }

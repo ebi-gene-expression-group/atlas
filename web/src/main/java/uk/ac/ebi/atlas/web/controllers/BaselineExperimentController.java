@@ -43,10 +43,10 @@ public abstract class BaselineExperimentController {
     protected void initPreferences(BaselineRequestPreferences preferences, BaselineExperiment baselineExperiment) {
 
         if (StringUtils.isBlank(preferences.getQueryFactorType())) {
-            preferences.setQueryFactorType(baselineExperiment.getDefaultQueryFactorType());
+            preferences.setQueryFactorType(baselineExperiment.getExperimentalFactors().getDefaultQueryFactorType());
         }
         if (StringUtils.isBlank(preferences.getSerializedFilterFactors())) {
-            preferences.setSerializedFilterFactors(filterFactorsConverter.serialize(baselineExperiment.getDefaultFilterFactors()));
+            preferences.setSerializedFilterFactors(filterFactorsConverter.serialize(baselineExperiment.getExperimentalFactors().getDefaultFilterFactors()));
         }
     }
 

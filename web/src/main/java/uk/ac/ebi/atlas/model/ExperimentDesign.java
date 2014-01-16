@@ -34,7 +34,7 @@ import java.util.*;
 /**
  *  ExperimentDesign stores factors and characteristics per _assay_ and other information
  *  needed to render the experiment design page. On experiment import, it is created from
- *  the magetab sdrf and persisted into ExpDesign files. It acts as a cache of
+ *  the magetab sdrf and persisted into ExpDesign files. The ExpDesign files act as a cache of
  *  relevant information in the sdrf, because parsing the sdrf is an expensive operation.
  *
  *  ExperimentalFactors also has factor information, but per _assay group_.
