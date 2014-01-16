@@ -30,7 +30,7 @@ import uk.ac.ebi.atlas.web.interceptors.ExperimentInterceptor;
 import javax.inject.Inject;
 
 
-@EnableWebMvc
+@EnableWebMvc //equivalent to mvc:annotation-driven
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
@@ -39,18 +39,21 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Inject
     private AdminInterceptor adminInterceptor;
 
+    // equivalent to mvc:resources
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/json/gene-by-cutoff/**").addResourceLocations("classpath:/cutoff-histograms/");
     }
 
+    // equivalent to mvc:view-controller
     @Override
     public void addViewControllers(ViewControllerRegistry viewControllerRegistry) {
         viewControllerRegistry.addViewController("/experiments").setViewName("experiments");
         viewControllerRegistry.addViewController("/experiments/").setViewName("experiments");
     }
 
+    // equivalent to mvc:interceptors
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(experimentInterceptor).addPathPatterns("/experiments/**");

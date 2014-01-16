@@ -8,6 +8,10 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
+
+    <!-- NB: see also the WebConfig class for further configuration options -->
+
+
     <!--
     mvc: annotation-driven will set some sensible defaults, like instantiating default formatter and converter that can
     be used with @NumberFormat, @DataFormat (requires Joda Time in the classpath), @Valid (to validate @Controller inputs),
