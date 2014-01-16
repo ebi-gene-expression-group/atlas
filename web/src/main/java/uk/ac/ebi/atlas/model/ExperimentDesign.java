@@ -25,6 +25,8 @@ package uk.ac.ebi.atlas.model;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.io.Serializable;
 import java.util.*;
@@ -49,6 +51,8 @@ public class ExperimentDesign implements Serializable {
 
     private Map<String, ExperimentDesignValues> factors = Maps.newHashMap();
 
+    private Map<String, FactorSet> factorSetMap = Maps.newHashMap();
+
     private Map<String, String> arrayDesigns = Maps.newHashMap();
 
     private List<String> assayHeaders = Lists.newArrayList();
@@ -69,14 +73,15 @@ public class ExperimentDesign implements Serializable {
         factorHeaders.add(factorHeader);
     }
 
+    //Add factor to Assay containing Header, Value and ValueOntologyTerm
     public void putFactor(String runOrAssay, String factorHeader, String factorValue, String factorOntologyTerm) {
-        if (!factors.containsKey(runOrAssay)) {
-            factors.put(runOrAssay, new ExperimentDesignValues());
+        Factor factor = new Factor(factorHeader, factorValue, factorOntologyTerm);
+        if(!factorSetMap.containsKey(runOrAssay)){
+            factorSetMap.put(runOrAssay, new FactorSet());
         }
-        factors.get(runOrAssay).put(factorHeader, factorValue);
+        factorSetMap.get(runOrAssay).add(factor);
         factorHeaders.add(factorHeader);
     }
-
 
     public void putArrayDesign(String runOrAssay, String arrayDesign) {
         arrayDesigns.put(runOrAssay, arrayDesign);
@@ -110,7 +115,8 @@ public class ExperimentDesign implements Serializable {
         return null;
     }
 
-    public String getFactorValue(String runOrAssay, String factorHeader) {
+    //OLD method: Returns factor value given specific assay and factor header
+    public String getFactorValueByHeader(String runOrAssay, String factorHeader) {
         ExperimentDesignValues experimentDesignValues = factors.get(runOrAssay);
         if (experimentDesignValues != null) {
             return experimentDesignValues.get(factorHeader);
@@ -118,8 +124,25 @@ public class ExperimentDesign implements Serializable {
         return null;
     }
 
+    //OLD method: Returns all the factors given an assay
     public Map<String, String> getFactorValuesByHeader(String runOrAssay) {
         return factors.get(runOrAssay);
+    }
+
+    //New: Returns all factorGroup given an assay group
+    public FactorSet getFactors(String runOrAssay){
+        if(factorSetMap.containsKey(runOrAssay)){
+            return factorSetMap.get(runOrAssay);
+        }
+        return null;
+    }
+
+    //New: Return factor Value given assay group and the factor header
+    public String getFactorValue(String runOrAssay, String factorHeader){
+        FactorSet factorSet = factorSetMap.get(runOrAssay);
+        Factor factor = factorSet.getFactorByType(factorHeader);
+
+        return factor.getValue();
     }
 
     public Map<String, String> getSamples(String runOrAssay) {
@@ -151,7 +174,7 @@ public class ExperimentDesign implements Serializable {
         }
 
         for (String factorHeader : getFactorHeaders()) {
-            row.add(getFactorValue(runOrAssay, factorHeader));
+            row.add(getFactorValueByHeader(runOrAssay, factorHeader));
         }
 
         return row.toArray(new String[row.size()]);

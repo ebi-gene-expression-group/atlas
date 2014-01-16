@@ -34,7 +34,6 @@ import org.springframework.test.util.MatcherAssertionErrors;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
 
 import java.util.List;
 import java.util.Set;
@@ -102,9 +101,9 @@ public class ExperimentDesignParserTest {
     @Test
     public void testParseFactors() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, GENOTYPE), is(CYC_C_MUTANT));
-        assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
-        assertThat(experimentDesign.getFactorValue(DUMMY, GENOTYPE), is(nullValue()));
+        assertThat(experimentDesign.getFactorValueByHeader(ASSAY_ACCESSION_1, GENOTYPE), is(CYC_C_MUTANT));
+        assertThat(experimentDesign.getFactorValueByHeader(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
+        assertThat(experimentDesign.getFactorValueByHeader(DUMMY, GENOTYPE), is(nullValue()));
     }
 
     @Test

@@ -37,9 +37,16 @@ public class Factor implements Comparable<Factor>, Serializable {
 
     private String value;
 
+    private String valueOntologyTerm;
+
     public Factor(String type, String value) {
+        this(type, value, null);
+    }
+
+    public Factor(String type, String value, String valueOntologyTerm) {
         this.type = normalize(checkNotNull(type));
         this.value = checkNotNull(value);
+        this.valueOntologyTerm = valueOntologyTerm;
     }
 
 
@@ -55,16 +62,21 @@ public class Factor implements Comparable<Factor>, Serializable {
         return type;
     }
 
-    @Override
+    public String getValueOntologyTerm() {
+        return valueOntologyTerm;
+    }
+
+        @Override
     public int hashCode() {
-        return Objects.hashCode(type, value);
+        return Objects.hashCode(type, value, valueOntologyTerm);
     }
 
     @Override
     public boolean equals(Object other) {
         return Objects.equal(this.getClass(), other.getClass())
                 && Objects.equal(this.type, ((Factor) other).type)
-                && Objects.equal(this.value, ((Factor) other).value);
+                && Objects.equal(this.value, ((Factor) other).value)
+                && Objects.equal(this.valueOntologyTerm, ((Factor) other).valueOntologyTerm);
     }
 
     @Override
@@ -72,6 +84,7 @@ public class Factor implements Comparable<Factor>, Serializable {
         return Objects.toStringHelper(this)
                 .add("type", type)
                 .add("value", value)
+                .add("valueOntologyTerm", valueOntologyTerm)
                 .toString();
     }
 
