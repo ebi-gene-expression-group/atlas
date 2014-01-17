@@ -22,29 +22,48 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
+import com.google.common.io.Files;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.support.ServletContextResourceLoader;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
+import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 
 @Controller
 @Scope("singleton")
 public class StaticPageController {
 
+    private final ServletContextResourceLoader servletContextResourceLoader;
+
+    @Inject
+    public StaticPageController(ServletContext servletContext) {
+        servletContextResourceLoader = new ServletContextResourceLoader(servletContext);
+    }
+
     @RequestMapping("/{pageName}.html")
-    public String getStaticPage(HttpServletRequest request, @PathVariable String pageName) {
+    public String getStaticPage(HttpServletRequest request, @PathVariable String pageName) throws IOException {
+        String filePath = String.format("/resources/html/%s.html", pageName);
+
+        request.setAttribute("content", fetchFileContents(filePath));
         request.setAttribute("nav", pageName);
-        request.setAttribute("pageName", pageName);
         return "static-template";
     }
 
     @RequestMapping("/help/{pageName}.html")
-    public String getHelpPage(HttpServletRequest request, @PathVariable String pageName) {
-        request.setAttribute("path", "help");
+    public String getHelpPage(HttpServletRequest request, @PathVariable String pageName) throws IOException {
+        String filePath = String.format("/resources/html/help/%s.html", pageName);
+
+        request.setAttribute("content", fetchFileContents(filePath));
         request.setAttribute("nav", "help");
-        request.setAttribute("pageName", pageName);
         return "static-template";
     }
 
@@ -56,8 +75,29 @@ public class StaticPageController {
 
     @RequestMapping("/{pageName}.hhhh")
     public String getHomePage(@PathVariable String pageName) {
-
         return "redirect:/home?pageName=" + pageName;
+    }
+
+    // manually load file contents instead of using c:import to avoid javax.servlet.jsp.JspTagException: 304 errors
+    // see http://stackoverflow.com/questions/17218609/jsp-exception-when-i-try-to-import-static-file
+    private String fetchFileContents(String filePath) throws IOException {
+        return Files.toString(fetchFile(filePath), Charset.forName("UTF-8"));
+    }
+
+    private File fetchFile(String filePath) {
+        Resource resource = servletContextResourceLoader.getResource(filePath);
+
+        try {
+            File file = resource.getFile();
+
+            if (!file.exists()) {
+                throw new ResourceNotFoundException("File " + filePath + " does not exist");
+            }
+
+            return file;
+        } catch (IOException e) {
+            throw new ResourceNotFoundException(e);
+        }
 
     }
 
