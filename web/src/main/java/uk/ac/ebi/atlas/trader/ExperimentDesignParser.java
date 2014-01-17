@@ -44,6 +44,7 @@ import java.util.regex.Pattern;
 public class ExperimentDesignParser {
 
     static final Pattern SAMPLE_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristics\\[(.*?)\\]\\s*");
+    static final Pattern FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value Ontology Terms\\[(.*?)\\]\\s*");
     static final Pattern FACTOR_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Values\\[(.*?)\\]\\s*");
 
     @Value("#{configuration['experiment.experiment-design.path.template']}")
@@ -73,7 +74,8 @@ public class ExperimentDesignParser {
 
         Map<String, Integer> sampleHeaderIndexes = extractHeaderIndexes(headerLine, SAMPLE_COLUMN_HEADER_PATTERN);
         Map<String, Integer> factorHeaderIndexes = extractHeaderIndexes(headerLine, FACTOR_COLUMN_HEADER_PATTERN);
-        int headersStartIndex = headerLine.length - (sampleHeaderIndexes.size() + factorHeaderIndexes.size());
+        Map<String, Integer> factorValueOntologyTermHeaderIndexes = extractHeaderIndexes(headerLine, FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN);
+        int headersStartIndex = headerLine.length - (sampleHeaderIndexes.size() + factorHeaderIndexes.size() + factorValueOntologyTermHeaderIndexes.size());
 
         ExperimentDesign experimentDesign = new ExperimentDesign();
         for (int i = 0; i < headersStartIndex; i++) {
@@ -93,7 +95,11 @@ public class ExperimentDesignParser {
 
             for (String factorHeader : factorHeaderIndexes.keySet()) {
                 String factorValue = line[factorHeaderIndexes.get(factorHeader)];
-                experimentDesign.putFactor(runOrAssay, factorHeader, factorValue);
+
+                Integer factorValueOntologyTermIndex = factorValueOntologyTermHeaderIndexes.get(factorHeader);
+                String factorValueOntologyTerm =  factorValueOntologyTermIndex == null ? null : line[factorValueOntologyTermIndex];
+
+                experimentDesign.putFactor(runOrAssay, factorHeader, factorValue, factorValueOntologyTerm);
             }
         }
 
