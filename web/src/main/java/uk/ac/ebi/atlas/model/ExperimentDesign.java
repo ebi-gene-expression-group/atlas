@@ -40,6 +40,9 @@ import java.util.*;
  *  ExperimentalFactors also has factor information, but per _assay group_.
  *  ExperimentalFactors is used to render the experiment page.
  *
+ *  An important distinction note: factor headers are NOT the same as factor types.
+ *  Factor headers are not normalized (see Factor.normalize), where as factor types (ie: Factor.getType()) are.
+ *
  */
 public class ExperimentDesign implements Serializable {
 
@@ -97,6 +100,7 @@ public class ExperimentDesign implements Serializable {
         return Collections.unmodifiableSortedSet(sampleHeaders);
     }
 
+    //NB: factor headers are not normalized (see Factor.normalize), unlike factor type !
     public SortedSet<String> getFactorHeaders() {
         return Collections.unmodifiableSortedSet(factorHeaders);
     }
@@ -109,7 +113,7 @@ public class ExperimentDesign implements Serializable {
         return null;
     }
 
-    //OLD method: Returns factor value given specific assay and factor header
+    //Returns factor value given specific assay and factor header
     public String getFactorValueByHeader(String runOrAssay, String factorHeader) {
         FactorSet factorSet = factorSetMap.get(runOrAssay);
         if (factorSet != null) {
@@ -120,7 +124,7 @@ public class ExperimentDesign implements Serializable {
         return null;
     }
 
-    //OLD method: Returns all the factors given an assay
+    //Returns map of <factorHeader, factorValue> given an assay
     public Map<String, String> getFactorValuesByHeader(String runOrAssay) {
         Map<String, String> valueByHeader = Maps.newHashMap();
         FactorSet factorSet = factorSetMap.get(runOrAssay);
@@ -129,13 +133,13 @@ public class ExperimentDesign implements Serializable {
             return null;
         }
         for (Factor factor : factorSet){
-            valueByHeader.put(Factor.normalize(factor.getType()), factor.getValue());
+            valueByHeader.put(factor.getType(), factor.getValue());
         }
 
         return valueByHeader;
     }
 
-    //New: Returns all factorGroup given an assay group
+    //Returns factorGroup given an assay group
     public FactorSet getFactors(String runOrAssay){
         if(factorSetMap.containsKey(runOrAssay)){
             return factorSetMap.get(runOrAssay);
@@ -143,10 +147,10 @@ public class ExperimentDesign implements Serializable {
         return null;
     }
 
-    public String getFactorValueOntologyTerm(String runOrAssay, String factorHeader){
+    private String getFactorValueOntologyTerm(String runOrAssay, String factorHeader){
         FactorSet factorSet = factorSetMap.get(runOrAssay);
         if(factorSet != null){
-            Factor factor = factorSet.getFactorByType(factorHeader);
+            Factor factor = factorSet.getFactorByType(Factor.normalize(factorHeader));
             return factor == null ? null : factor.getValueOntologyTerm();
         }
         return null;
