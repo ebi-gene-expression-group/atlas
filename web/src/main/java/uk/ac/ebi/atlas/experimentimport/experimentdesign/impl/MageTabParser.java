@@ -120,35 +120,42 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
         String compoundFactorValue = null;
         String compoundFactorType = null;
+        String compoundFactorValueOntologyTerm = null;
 
         for (FactorValueAttribute factorValueAttribute : getFactorAttributes(assayNode.getSdrfNode())) {
 
             String factorType = factorValueAttribute.type; //(B) isn't that factorName
             String factorValue = cleanValueAndUnitIfNeeded(factorValueAttribute.getNodeName(), factorValueAttribute.unit);
+            String factorValueOntologyTerm = factorValueAttribute.termAccessionNumber;
 
             if (FACTORS_NEEDING_DOSE.contains(factorValueAttribute.type.toLowerCase())) {
                 compoundFactorType = factorType;
                 compoundFactorValue = factorValue;
+                compoundFactorValueOntologyTerm = factorValueOntologyTerm;
 
             } else if (DOSE.equals(factorValueAttribute.type.toLowerCase())) {
                 if (StringUtils.isNotEmpty(compoundFactorValue)) {
 
                     factorValue = Joiner.on(" ").join(compoundFactorValue, factorValue);
                     factorType = compoundFactorType;
+                    factorValueOntologyTerm = compoundFactorValueOntologyTerm;
 
                     compoundFactorType = null;
                     compoundFactorValue = null;
+                    compoundFactorValueOntologyTerm = null;
                 } else {
                     throw new IllegalStateException(DOSE + " : " + factorValue + " has no corresponding value for any of the following factors: " + FACTORS_NEEDING_DOSE);
                 }
 
             }
-            experimentDesign.putFactor(assayNode.getName(), factorType, factorValue);
+
+            experimentDesign.putFactor(assayNode.getName(), factorType, factorValue, factorValueOntologyTerm);
         }
 
         //Add compound factor in a case there was no dose corresponding to it
-        if (StringUtils.isNotEmpty(compoundFactorType) && StringUtils.isNotEmpty(compoundFactorValue)) {
-            experimentDesign.putFactor(assayNode.getName(), compoundFactorType, compoundFactorValue);
+        if (StringUtils.isNotEmpty(compoundFactorType) && StringUtils.isNotEmpty(compoundFactorValue) &&
+                StringUtils.isNotEmpty(compoundFactorValueOntologyTerm)) {
+            experimentDesign.putFactor(assayNode.getName(), compoundFactorType, compoundFactorValue, compoundFactorValueOntologyTerm);
         }
     }
 
