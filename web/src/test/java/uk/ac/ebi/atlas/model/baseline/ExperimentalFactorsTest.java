@@ -73,7 +73,7 @@ public class ExperimentalFactorsTest {
 
     @Before
     public void initSubject() {
-        when(defaultFilterFactorMock.getNormalizedType()).thenReturn(DEFAULT_FILTER_FACTOR_TYPE);
+        when(defaultFilterFactorMock.getType()).thenReturn(DEFAULT_FILTER_FACTOR_TYPE);
 
         when(experimentRun1Mock.getFactorGroup()).thenReturn(factorGroup1);
         when(experimentRun2Mock.getFactorGroup()).thenReturn(factorGroup2);

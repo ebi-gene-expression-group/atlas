@@ -44,7 +44,7 @@ public class Factor implements Comparable<Factor>, Serializable {
     }
 
     public Factor(String type, String value, String valueOntologyTerm) {
-        this.type = checkNotNull(type);
+        this.type = normalize(checkNotNull(type));
         this.value = checkNotNull(value);
         this.valueOntologyTerm = valueOntologyTerm;
     }
@@ -60,10 +60,6 @@ public class Factor implements Comparable<Factor>, Serializable {
 
     public String getType() {
         return type;
-    }
-
-    public String getNormalizedType(){
-        return normalize(type);
     }
 
     public String getValueOntologyTerm() {

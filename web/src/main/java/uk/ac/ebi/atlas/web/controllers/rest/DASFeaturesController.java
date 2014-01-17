@@ -71,7 +71,7 @@ public class DASFeaturesController {
 
             FactorSet factorsForAssayGroup = FactorSet.create(experiment.getExperimentDesign().getFactorValuesByHeader(testAssayGroup.getFirstAssayAccession()));
             for (Factor factor : factorsForAssayGroup) {
-                factorValuesByType.put(factor.getNormalizedType(), factor.getValue());
+                factorValuesByType.put(factor.getType(), factor.getValue());
             }
         }
 

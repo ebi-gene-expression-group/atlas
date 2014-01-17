@@ -58,7 +58,7 @@ public class FilterFactorsConverter {
         for (String serializedFactor : serializedFactors) {
             String[] split = serializedFactor.split(SEPARATOR);
 
-            checkState(split.length == 2, "serialized Factor string should be like type:value");
+            checkState(split.length == 2, "serialized Factor string should be like TYPE:value");
 
             factors.add(new Factor(split[0], split[1]));
         }

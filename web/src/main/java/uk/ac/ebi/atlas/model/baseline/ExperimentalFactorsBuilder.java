@@ -103,7 +103,7 @@ public class ExperimentalFactorsBuilder {
 
             for (Factor factor : factorGroup) {
 
-                factorsByType.put(factor.getNormalizedType(), factor);
+                factorsByType.put(factor.getType(), factor);
 
             }
         }

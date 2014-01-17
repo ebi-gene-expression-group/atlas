@@ -189,7 +189,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         //ToDo: looks bad, a custom EL function or jsp tag function to resolve names would be much better
         Map<String, String> selectedFilterFactorNamesAndValues = new HashMap<>();
         for (Factor selectedFilterFactor : requestContext.getSelectedFilterFactors()) {
-            selectedFilterFactorNamesAndValues.put(experimentalFactors.getFactorName(selectedFilterFactor.getNormalizedType()), selectedFilterFactor.getValue());
+            selectedFilterFactorNamesAndValues.put(experimentalFactors.getFactorName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());
         }
         model.addAttribute("selectedFilterFactorNamesAndValues", selectedFilterFactorNamesAndValues);
 

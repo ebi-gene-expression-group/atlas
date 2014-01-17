@@ -109,7 +109,7 @@ public class BaselineExperimentsCacheLoaderTest {
         Set<String> requiredFactorTypes = subject.getRequiredFactorTypes(DEFAULT_QUERY_FACTOR_TYPE, defaultFilterFactors);
         assertThat(requiredFactorTypes, contains(DEFAULT_QUERY_FACTOR_TYPE));
 
-        when(factorMock.getNormalizedType()).thenReturn(FACTOR_TYPE);
+        when(factorMock.getType()).thenReturn(FACTOR_TYPE);
         defaultFilterFactors.add(factorMock);
         requiredFactorTypes = subject.getRequiredFactorTypes(DEFAULT_QUERY_FACTOR_TYPE, defaultFilterFactors);
         assertThat(requiredFactorTypes, containsInAnyOrder(DEFAULT_QUERY_FACTOR_TYPE, FACTOR_TYPE));
