@@ -143,19 +143,13 @@ public class ExperimentDesign implements Serializable {
         return null;
     }
 
-    //New: Return factor Value given assay group and the factor header
-//    public String getFactorValue(String runOrAssay, String factorHeader){
-//        FactorSet factorSet = factorSetMap.get(runOrAssay);
-//        Factor factor = factorSet.getFactorByType(factorHeader);
-//
-//        return factor.getValue();
-//    }
-
     public String getFactorValueOntologyTerm(String runOrAssay, String factorHeader){
         FactorSet factorSet = factorSetMap.get(runOrAssay);
-        Factor factor = factorSet.getFactorByType(factorHeader);
-
-        return factor.getValueOntologyTerm();
+        if(factorSet != null){
+            Factor factor = factorSet.getFactorByType(factorHeader);
+            return factor == null ? null : factor.getValueOntologyTerm();
+        }
+        return null;
     }
 
     public Map<String, String> getSamples(String runOrAssay) {
@@ -188,6 +182,34 @@ public class ExperimentDesign implements Serializable {
 
         for (String factorHeader : getFactorHeaders()) {
             row.add(getFactorValueByHeader(runOrAssay, factorHeader));
+        }
+
+        return row.toArray(new String[row.size()]);
+    }
+
+    public List<String[]> asTableOntologyTermsData() {
+        List<String[]> tableData = Lists.newArrayList();
+        for (String runOrAssay : getAllRunOrAssay()) {
+            tableData.add(composeTableRowWithOntologyTerms(runOrAssay));
+        }
+        return tableData;
+    }
+
+    protected String[] composeTableRowWithOntologyTerms(String runOrAssay) {
+        List<String> row = Lists.newArrayList(runOrAssay);
+
+        String arrayDesign = getArrayDesign(runOrAssay);
+        if (arrayDesign != null) {
+            row.add(arrayDesign);
+        }
+
+        for (String sampleHeader : getSampleHeaders()) {
+            row.add(getSampleValue(runOrAssay, sampleHeader));
+        }
+
+        for (String factorHeader : getFactorHeaders()) {
+            row.add(getFactorValueByHeader(runOrAssay, factorHeader));
+            row.add(getFactorValueOntologyTerm(runOrAssay, factorHeader));
         }
 
         return row.toArray(new String[row.size()]);
