@@ -97,7 +97,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
                 FactorGroup factorGroup = otherProfile.getExpression(factor).getFactorGroup();
                 BaselineExpression totalExpression =
                         new BaselineExpression(totalExpressionLevel, factorGroup);
-                add(factor.getType(), totalExpression);
+                add(factor.getNormalizedType(), totalExpression);
             }
         }
         return this;
@@ -110,7 +110,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
             double foldLevel = fold(expression.getLevel(), foldFactor);
             BaselineExpression foldedExpression =
                     new BaselineExpression(foldLevel, expression.getFactorGroup());
-            add(factor.getType(), foldedExpression);
+            add(factor.getNormalizedType(), foldedExpression);
         }
         return this;
     }

@@ -37,8 +37,8 @@ import static org.mockito.Mockito.mock;
 
 public class FilterFactorsConverterTest {
 
-    private static final String SERIALIZED_FACTOR1 = "TYPE1:value1";
-    private static final String SERIALIZED_FACTOR2 = "TYPE2:value2";
+    private static final String SERIALIZED_FACTOR1 = "type1:value1";
+    private static final String SERIALIZED_FACTOR2 = "type2:value2";
     private static final String SERIALIZED_FACTORS = SERIALIZED_FACTOR1 + "," + SERIALIZED_FACTOR2;
     private FilterFactorsConverter subject;
 

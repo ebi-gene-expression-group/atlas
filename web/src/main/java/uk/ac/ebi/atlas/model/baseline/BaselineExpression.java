@@ -52,7 +52,7 @@ public class BaselineExpression implements Expression {
 
     public Factor getFactor(String type) {
         for (Factor factor : factorGroup) {
-            if (factor.getType().equals(type)) {
+            if (factor.getNormalizedType().equals(type)) {
                 return factor;
             }
         }

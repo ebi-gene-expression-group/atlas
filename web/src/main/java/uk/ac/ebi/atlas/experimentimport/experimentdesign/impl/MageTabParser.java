@@ -153,8 +153,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         }
 
         //Add compound factor in a case there was no dose corresponding to it
-        if (StringUtils.isNotEmpty(compoundFactorType) && StringUtils.isNotEmpty(compoundFactorValue) &&
-                StringUtils.isNotEmpty(compoundFactorValueOntologyTerm)) {
+        if (StringUtils.isNotEmpty(compoundFactorType) && StringUtils.isNotEmpty(compoundFactorValue)) {
             experimentDesign.putFactor(assayNode.getName(), compoundFactorType, compoundFactorValue, compoundFactorValueOntologyTerm);
         }
     }

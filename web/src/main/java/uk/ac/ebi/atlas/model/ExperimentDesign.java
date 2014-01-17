@@ -49,8 +49,6 @@ public class ExperimentDesign implements Serializable {
 
     private Map<String, ExperimentDesignValues> samples = Maps.newHashMap();
 
-    private Map<String, ExperimentDesignValues> factors = Maps.newHashMap();
-
     private Map<String, FactorSet> factorSetMap = Maps.newHashMap();
 
     private Map<String, String> arrayDesigns = Maps.newHashMap();
@@ -66,11 +64,7 @@ public class ExperimentDesign implements Serializable {
     }
 
     public void putFactor(String runOrAssay, String factorHeader, String factorValue) {
-        if (!factors.containsKey(runOrAssay)) {
-            factors.put(runOrAssay, new ExperimentDesignValues());
-        }
-        factors.get(runOrAssay).put(factorHeader, factorValue);
-        factorHeaders.add(factorHeader);
+        putFactor(runOrAssay, factorHeader, factorValue, null);
     }
 
     //Add factor to Assay containing Header, Value and ValueOntologyTerm
@@ -117,16 +111,26 @@ public class ExperimentDesign implements Serializable {
 
     //OLD method: Returns factor value given specific assay and factor header
     public String getFactorValueByHeader(String runOrAssay, String factorHeader) {
-        ExperimentDesignValues experimentDesignValues = factors.get(runOrAssay);
-        if (experimentDesignValues != null) {
-            return experimentDesignValues.get(factorHeader);
+        FactorSet factorSet = factorSetMap.get(runOrAssay);
+        if (factorSet != null) {
+            return factorSet.getFactorByType(factorHeader).getValue();
         }
         return null;
     }
 
     //OLD method: Returns all the factors given an assay
     public Map<String, String> getFactorValuesByHeader(String runOrAssay) {
-        return factors.get(runOrAssay);
+        Map<String, String> valueByHeader = Maps.newHashMap();
+        FactorSet factorSet = factorSetMap.get(runOrAssay);
+
+        if (factorSet == null){
+            return null;
+        }
+        for (Factor factor : factorSet){
+            valueByHeader.put(factor.getType(), factor.getValue());
+        }
+
+        return valueByHeader;
     }
 
     //New: Returns all factorGroup given an assay group
@@ -138,11 +142,18 @@ public class ExperimentDesign implements Serializable {
     }
 
     //New: Return factor Value given assay group and the factor header
-    public String getFactorValue(String runOrAssay, String factorHeader){
+//    public String getFactorValue(String runOrAssay, String factorHeader){
+//        FactorSet factorSet = factorSetMap.get(runOrAssay);
+//        Factor factor = factorSet.getFactorByType(factorHeader);
+//
+//        return factor.getValue();
+//    }
+
+    public String getFactorValueOntologyTerm(String runOrAssay, String factorHeader){
         FactorSet factorSet = factorSetMap.get(runOrAssay);
         Factor factor = factorSet.getFactorByType(factorHeader);
 
-        return factor.getValue();
+        return factor.getValueOntologyTerm();
     }
 
     public Map<String, String> getSamples(String runOrAssay) {

@@ -128,7 +128,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         Set<String> requiredFactorTypes = Sets.newHashSet(defaultQueryFactorType);
 
         for (Factor defaultFilterFactor : defaultFilterFactors) {
-            requiredFactorTypes.add(defaultFilterFactor.getType());
+            requiredFactorTypes.add(defaultFilterFactor.getNormalizedType());
         }
         return requiredFactorTypes;
     }

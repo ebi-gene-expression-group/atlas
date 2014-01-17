@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.model;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.*;
 
@@ -43,12 +44,10 @@ public class ExperimentDesignTest {
         subject.putFactor(ASSAY2, FACTOR_HEADER2, FACTOR_VALUE2, FACTOR_ONTOLOGYTERM2);
         subject.putFactor(ASSAY2, FACTOR_HEADER3, FACTOR_VALUE3, FACTOR_ONTOLOGYTERM3);
 
-//        System.out.println(subject.getFactors(ASSAY1));
-//        System.out.println(subject.getFactors(ASSAY2));
-
         assertThat(subject.getFactors(ASSAY1), contains(factor2, factor1));
         assertThat(subject.getFactors(ASSAY2), contains(factor3, factor2, factor1));
 
+        assertThat(subject.getFactorValueByHeader(ASSAY1, FACTOR_HEADER), is(FACTOR_VALUE));
     }
 
     @Test
@@ -60,7 +59,7 @@ public class ExperimentDesignTest {
         subject.putFactor(ASSAY2, FACTOR_HEADER, FACTOR_VALUE, FACTOR_ONTOLOGYTERM);
         subject.putFactor(ASSAY2, FACTOR_HEADER2, FACTOR_VALUE2, FACTOR_ONTOLOGYTERM2);
 
-        assertEquals(subject.getFactorValue(ASSAY1, FACTOR_HEADER), FACTOR_VALUE);
+        assertEquals(subject.getFactorValueByHeader(ASSAY1, FACTOR_HEADER), FACTOR_VALUE);
 
     }
 
