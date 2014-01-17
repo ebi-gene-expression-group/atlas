@@ -133,7 +133,7 @@ public class ExperimentDesign implements Serializable {
             return null;
         }
         for (Factor factor : factorSet){
-            valueByHeader.put(factor.getType(), factor.getValue());
+            valueByHeader.put(factor.getHeader(), factor.getValue());
         }
 
         return valueByHeader;

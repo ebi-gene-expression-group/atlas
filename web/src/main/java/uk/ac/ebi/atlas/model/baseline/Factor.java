@@ -33,18 +33,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Factor implements Comparable<Factor>, Serializable {
 
-    private String type;
+    private final String header;
 
-    private String value;
+    private final String type;
 
-    private String valueOntologyTerm;
+    private final String value;
+
+    private final String valueOntologyTerm;
 
     public Factor(String type, String value) {
         this(type, value, null);
     }
 
-    public Factor(String type, String value, String valueOntologyTerm) {
-        this.type = normalize(checkNotNull(type));
+    public Factor(String header, String value, String valueOntologyTerm) {
+        this.header = header;
+        this.type = normalize(checkNotNull(header));
         this.value = checkNotNull(value);
         this.valueOntologyTerm = valueOntologyTerm;
     }
@@ -54,10 +57,16 @@ public class Factor implements Comparable<Factor>, Serializable {
         return type.replaceAll(" ", "_").toUpperCase();
     }
 
+    //same as type but un-normalized
+    public String getHeader() {
+        return header;
+    }
+
     public String getValue() {
         return value;
     }
 
+    //normalized version of header
     public String getType() {
         return type;
     }
