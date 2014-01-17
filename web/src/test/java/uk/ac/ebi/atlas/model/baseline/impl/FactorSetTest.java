@@ -50,12 +50,11 @@ public class FactorSetTest {
 
     @Test
     public void factorByTypeShouldSucceed() throws Exception {
-        assertThat(subject.getFactorByType("TYPE2"), is(factorTwo));
+        assertThat(subject.getFactorByType("type2"), is(factorTwo));
     }
 
     @Test
-         public void factorByTypeShouldFail() throws Exception {
-        assertThat(subject.getFactorByType("type2"), is(nullValue()));
+    public void factorByTypeShouldFail() throws Exception {
         assertThat(subject.getFactorByType("typeX"), is(nullValue()));
     }
 
