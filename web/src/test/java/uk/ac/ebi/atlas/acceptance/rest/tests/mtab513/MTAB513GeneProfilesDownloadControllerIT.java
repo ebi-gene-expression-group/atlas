@@ -57,7 +57,7 @@ public class MTAB513GeneProfilesDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(3);
 
         assertThat(firstLine,
-                contains("Gene ID", "Gene Name", "adipose", "adrenal", "brain", "breast", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid")
+                contains("Gene ID", "Gene Name", "adipose", "adrenal gland", "brain", "breast", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid")
         );
 
     }

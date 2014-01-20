@@ -36,11 +36,11 @@ public class Cutoff20AndOrganismPartIT extends SinglePageSeleniumFixture {
 
     private HeatmapTablePage subject;
 
-    private final String EXPERIMENT_ACCESSION = "E-MTAB-513";
+    private final static String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
     public void getStartingPage() {
         subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION,
-                "specific=true&heatmapMatrixSize=5&geneQuery=&queryFactorValues=adrenal&_queryFactorValues=1&cutoff=20");
+                "specific=true&heatmapMatrixSize=5&geneQuery=&queryFactorValues=adrenal+gland&_queryFactorValues=1&cutoff=20");
         subject.get();
     }
 
