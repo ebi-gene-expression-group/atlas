@@ -127,6 +127,8 @@ public class GeneQueryDifferentialServiceIT {
 
     }
 
+
+    // NB: this will fail on Atlas3Dev (but not Atlas3It) because order of "Tph1 and "Lactbl1" is reversed
     @Test
     public void geneQueryKeywordProteinCoding() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
@@ -141,6 +143,7 @@ public class GeneQueryDifferentialServiceIT {
 
         //System.out.println(Joiner.on("\", \"").join(names));
 
+        // NB: this will fail on Atlas3Dev (but not Atlas3It) because order of "Tph1 and "Lactbl1" is reversed
         assertThat(names, contains("Arl8b", "Ddx3y", "Eif2s3y", "Uty", "Kdm5d", "Cldn8", "Lactbl1", "Tph1", "Ivd", "Fmo1", "Matn2", "Chgb", "Cish", "Lrrc55", "Neb", "Ogdhl", "Ehhadh", "Wipi1", "Rgs2", "Gpnmb", "Tmem255a", "Gpr26", "Gpx6", "Reg3b", "Vip", "Prlr", "Dnahc8", "Hsbp1", "Cst7", "Tnfrsf11b", "Npas4", "Dnajb1", "Enpp2", "Sftpd", "Reg3a", "Disp2", "Igfals", "Itgax", "Mpeg1", "B3galnt1", "Ikzf4", "Nr4a1", "Lgals3", "Dnase1", "Lpl", "Cspg5", "Dnaja1", "Ern1", "Ch25h", "Dhcr7"));
 
     }
@@ -212,6 +215,7 @@ public class GeneQueryDifferentialServiceIT {
     }
 
 
+    // NB: this will fail on Atlas3Dev (but not Atlas3It) because order of "Tph1 and "Lactbl1" is reversed
     @Test
     public void conditionPregnant() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
@@ -226,8 +230,8 @@ public class GeneQueryDifferentialServiceIT {
         System.out.println(Joiner.on("\", \"").join(names));
 
         // match the first 46 only, because they are the only ones the same in both ATLAS3DEV and ATLAS3IT
-        // NB: this will fail on Dev because order of "Tph1 and "Lactbl1" is reversed
-        assertThat(Iterables.limit(names, 46), contains("Cldn8", "Tph1", "Lactbl1", "Ivd", "Fmo1", "Matn2", "Chgb", "Cish", "Lrrc55", "Neb", "Ogdhl", "Ehhadh", "Wipi1", "Rgs2", "Tmem255a", "Gpr26", "Reg3b", "Vip", "Prlr", "Dnahc8", "Hsbp1", "Tnfrsf11b", "Npas4", "Dnajb1", "Enpp2", "Sftpd", "Reg3a", "Disp2", "Igfals", "B3galnt1", "Ikzf4", "Nr4a1", "Cspg5", "Dnaja1", "Ern1", "Gm13716", "Dhcr7", "Junb", "Gm16211", "Aqp4", "Ovol2", "Hspa1a", "Igfbp5", "Lonrf3", "Nupr1", "Dusp1"));
+        // NB: this will fail on Atlas3Dev (but not Atlas3It) because order of "Tph1 and "Lactbl1" is reversed
+        assertThat(Iterables.limit(names, 46), contains("Cldn8", "Lactbl1", "Tph1", "Ivd", "Fmo1", "Matn2", "Chgb", "Cish", "Lrrc55", "Neb", "Ogdhl", "Ehhadh", "Wipi1", "Rgs2", "Tmem255a", "Gpr26", "Reg3b", "Vip", "Prlr", "Dnahc8", "Hsbp1", "Tnfrsf11b", "Npas4", "Dnajb1", "Enpp2", "Sftpd", "Reg3a", "Disp2", "Igfals", "B3galnt1", "Ikzf4", "Nr4a1", "Cspg5", "Dnaja1", "Ern1", "Gm13716", "Dhcr7", "Junb", "Gm16211", "Aqp4", "Ovol2", "Hspa1a", "Igfbp5", "Lonrf3", "Nupr1", "Dusp1"));
     }
 
     @Test
