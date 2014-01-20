@@ -43,4 +43,5 @@ public class ContrastSummary extends AssayGroupSummary {
     public String getContrastDescription() {
         return contrastDescription;
     }
+
 }

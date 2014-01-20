@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.dto.tooltip;
 
+import com.google.common.base.Objects;
+
 public class AssayProperty implements Comparable<AssayProperty> {
     protected String propertyName;
     protected String testValue;
@@ -53,5 +55,14 @@ public class AssayProperty implements Comparable<AssayProperty> {
         int result = propertyName != null ? propertyName.toLowerCase().hashCode() : 0;
         result = 31 * result + (testValue != null ? testValue.toLowerCase().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("propertyName", propertyName)
+                .add("testValue", testValue)
+                .add("contrastPropertyType", contrastPropertyType)
+                .toString();
     }
 }
