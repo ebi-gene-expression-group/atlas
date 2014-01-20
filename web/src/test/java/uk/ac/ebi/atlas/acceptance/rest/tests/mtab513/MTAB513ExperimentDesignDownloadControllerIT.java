@@ -58,7 +58,7 @@ public class MTAB513ExperimentDesignDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("Run", "Sample Characteristics[Organism]", "Sample Characteristics[age]", "Sample Characteristics[ethnic group]", "Sample Characteristics[organism part]", "Sample Characteristics[sex]", "Factor Values[organism part]", "Analysed")
+                contains("Run", "Sample Characteristics[Organism]", "Sample Characteristics[age]", "Sample Characteristics[ethnic group]", "Sample Characteristics[organism part]", "Sample Characteristics[sex]", "Factor Values[organism part]", "Factor Value Ontology Terms[organism part]", "Analysed")
         );
 
     }
@@ -70,7 +70,7 @@ public class MTAB513ExperimentDesignDownloadControllerIT {
         List<String> secondLine = subject.getRowValues(1);
 
         assertThat(secondLine,
-                contains("ERR030856", "Homo sapiens", "", "", "16 tissues mixture", "", "16 tissues mixture", "No")
+                contains("ERR030856", "Homo sapiens", "", "", "16 tissues mixture", "", "16 tissues mixture", "", "No")
         );
 
     }
@@ -83,7 +83,7 @@ public class MTAB513ExperimentDesignDownloadControllerIT {
         List<String> line = subject.getRowValues(17);
 
         assertThat(line,
-                contains("ERR030872", "Homo sapiens", "60 years", "Caucasian", "thyroid", "female", "thyroid", "Yes")
+                contains("ERR030872", "Homo sapiens", "60 years", "Caucasian", "thyroid", "female", "thyroid", "UBERON:0002046", "Yes")
         );
 
     }
