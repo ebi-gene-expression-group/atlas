@@ -32,7 +32,6 @@ import java.io.Serializable;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  *  ExperimentDesign stores factors and characteristics per _assay_ and other information
@@ -229,13 +228,13 @@ public class ExperimentDesign implements Serializable {
     public Set<String> getSpeciesForAssays(Set<String> assayAccessions) {
         Set<String> species = Sets.newHashSet();
         for (String assayAccession: assayAccessions){
-            Map<String, String> samples = getSamples(assayAccession);
+            Map<String, String> assaySamples = getSamples(assayAccession);
 
-            checkNotNull(samples, assayAccession + " does not exist or has no samples");
+            checkNotNull(assaySamples, String.format("Assay accession %s does not exist or has no samples", assayAccession));
 
-            for (String sampleName : samples.keySet()){
+            for (String sampleName : assaySamples.keySet()){
                 if ("organism".equalsIgnoreCase(sampleName)){
-                    species.add(samples.get(sampleName));
+                    species.add(assaySamples.get(sampleName));
                 }
             }
         }

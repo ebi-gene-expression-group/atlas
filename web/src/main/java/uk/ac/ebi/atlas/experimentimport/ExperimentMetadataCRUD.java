@@ -133,9 +133,7 @@ public class ExperimentMetadataCRUD {
         String experimentAccession = experimentDTO.getExperimentAccession();
 
         if (!experimentDTO.isPrivate()) {
-            //TODO: shouldn't have to get the experiment here but conditionsIndexTrader needs Experiment obj
-            Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-            conditionsIndexTrader.getIndex(experiment).removeConditions(experimentAccession);
+            conditionsIndexTrader.getIndex(experimentDTO.getExperimentType()).removeConditions(experimentAccession);
         }
 
         experimentTrader.removeExperimentFromCache(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType());
