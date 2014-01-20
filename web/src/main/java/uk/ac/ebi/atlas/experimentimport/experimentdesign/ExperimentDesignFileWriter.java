@@ -37,6 +37,7 @@ public class ExperimentDesignFileWriter {
 
     private static final String SAMPLE_NAME_HEADER_TEMPLATE = "Sample Characteristics[{0}]";
     private static final String FACTOR_NAME_HEADER_TEMPLATE = "Factor Values[{0}]";
+    private static final String FACTOR_VALUE_ONTOLOGY_TERM_TEMPLATE = "Factor Value Ontology Terms[{0}]";
 
     private CSVWriter csvWriter;
     private ExperimentType experimentType;
@@ -51,7 +52,7 @@ public class ExperimentDesignFileWriter {
 
             String[] columnHeaders = buildColumnHeaders(experimentType, experimentDesign);
             csvWriter.writeNext(columnHeaders);
-            csvWriter.writeAll(experimentDesign.asTableData());
+            csvWriter.writeAll(experimentDesign.asTableOntologyTermsData());
             csvWriter.flush();
         }finally {
             csvWriter.close();
@@ -64,6 +65,7 @@ public class ExperimentDesignFileWriter {
         List<String> headers = Lists.newArrayList(getCommonColumnHeaders(experimentType));
         headers.addAll(toHeaders(experimentDesign.getSampleHeaders(), SAMPLE_NAME_HEADER_TEMPLATE));
         headers.addAll(toHeaders(experimentDesign.getFactorHeaders(), FACTOR_NAME_HEADER_TEMPLATE));
+        headers.addAll(toHeaders(experimentDesign.getFactorOntologyHeaders(), FACTOR_VALUE_ONTOLOGY_TERM_TEMPLATE));
 
         return headers.toArray(new String[headers.size()]);
     }
