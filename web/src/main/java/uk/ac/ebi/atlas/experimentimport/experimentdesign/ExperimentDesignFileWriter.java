@@ -65,7 +65,7 @@ public class ExperimentDesignFileWriter {
         List<String> headers = Lists.newArrayList(getCommonColumnHeaders(experimentType));
         headers.addAll(toHeaders(experimentDesign.getSampleHeaders(), SAMPLE_NAME_HEADER_TEMPLATE));
         headers.addAll(toHeaders(experimentDesign.getFactorHeaders(), FACTOR_NAME_HEADER_TEMPLATE));
-        headers.addAll(toHeaders(experimentDesign.getFactorOntologyHeaders(), FACTOR_VALUE_ONTOLOGY_TERM_TEMPLATE));
+        headers.addAll(toHeaders(experimentDesign.getFactorHeaders(), FACTOR_VALUE_ONTOLOGY_TERM_TEMPLATE));
 
         return headers.toArray(new String[headers.size()]);
     }

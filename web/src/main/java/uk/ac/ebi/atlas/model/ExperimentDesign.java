@@ -50,8 +50,6 @@ public class ExperimentDesign implements Serializable {
 
     private SortedSet<String> factorHeaders = Sets.newTreeSet();
 
-    private SortedSet<String> factorOntologyHeaders = Sets.newTreeSet();
-
     private Map<String, ExperimentDesignValues> samples = Maps.newHashMap();
 
     private Map<String, FactorSet> factorSetMap = Maps.newHashMap();
@@ -80,7 +78,6 @@ public class ExperimentDesign implements Serializable {
         }
         factorSetMap.get(runOrAssay).add(factor);
         factorHeaders.add(factorHeader);
-        factorOntologyHeaders.add(factorOntologyTerm);
     }
 
     public void putArrayDesign(String runOrAssay, String arrayDesign) {
@@ -108,9 +105,6 @@ public class ExperimentDesign implements Serializable {
         return Collections.unmodifiableSortedSet(factorHeaders);
     }
 
-    public SortedSet<String> getFactorOntologyHeaders(){
-        return Collections.unmodifiableSortedSet(factorOntologyHeaders);
-    }
 
     public String getSampleValue(String runOrAssay, String sampleHeader) {
         ExperimentDesignValues experimentDesignValues = samples.get(runOrAssay);
