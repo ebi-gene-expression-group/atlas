@@ -58,10 +58,10 @@ public class RnaSeqExperimentDesignMageTabParserIT {
         assertThat(experimentDesign.asTableData().get(0), arrayContaining("ERR030856","Homo sapiens",null,null,"16 tissues mixture",null,"16 tissues mixture"));
         assertThat(experimentDesign.asTableData().get(47), arrayContaining("ERR030903","Homo sapiens","60 years","Caucasian","thyroid","female","thyroid"));
 
-        assertThat(ontologyTerms.entries().size(), is(144));
+        assertThat(ontologyTerms.entries().size(), is(142));
         assertThat(ontologyTerms.keySet().size(), is(48));
-        assertThat(ontologyTerms.get("ERR030856"), containsInAnyOrder("NCBITaxon_9606"));
-        assertThat(ontologyTerms.get("ERR030887"), containsInAnyOrder("NCBITaxon_9606", "UBERON:0002107", "EFO:0001266", "EFO:0003156"));
+        assertThat(ontologyTerms.get("ERR030856"), containsInAnyOrder("NCBITaxon:9606"));
+        assertThat(ontologyTerms.get("ERR030887"), containsInAnyOrder("NCBITaxon:9606", "UBERON:0002107", "EFO:0001266", "EFO:0003156"));
 
     }
 
