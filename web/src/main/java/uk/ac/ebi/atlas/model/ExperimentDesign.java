@@ -31,6 +31,9 @@ import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import java.io.Serializable;
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+
 /**
  *  ExperimentDesign stores factors and characteristics per _assay_ and other information
  *  needed to render the experiment design page. On experiment import, it is created from
@@ -227,6 +230,9 @@ public class ExperimentDesign implements Serializable {
         Set<String> species = Sets.newHashSet();
         for (String assayAccession: assayAccessions){
             Map<String, String> samples = getSamples(assayAccession);
+
+            checkNotNull(samples, assayAccession + " does not exist or has no samples");
+
             for (String sampleName : samples.keySet()){
                 if ("organism".equalsIgnoreCase(sampleName)){
                     species.add(samples.get(sampleName));
