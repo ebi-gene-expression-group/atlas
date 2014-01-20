@@ -149,7 +149,7 @@ public class BaselineProfilesTSVWriterIT {
         String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, specifically expressed " +
-                "in Cell Lines: 'Mickey Mouse, HPC-PL cell line' above the expression level cutoff: 0.5 " +
+                "in Cell Lines: 'HPC-PL cell line, Mickey Mouse' above the expression level cutoff: 0.5 " +
                 "in experiment E-GEOD-26284, filtered by RNA: total RNA and Cellular Component: whole cell"));
 
     }
