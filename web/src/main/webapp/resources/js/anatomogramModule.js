@@ -105,34 +105,34 @@ var anatomogramModule = (function ($) {
     }
 
 
-    function initAnatomogramBindings(svg, factorValues) {
-        $.each(factorValues, function () {
+    function initAnatomogramBindings(svg, allSvgPathIds) {
+        $.each(allSvgPathIds, function () {
             initBindingsForAnatomogramPaths(svg, this);
         });
     }
 
-    function highlightAllOrganismParts(svg, factorValues) {
-        $.each(factorValues, function () {
+    function highlightAllOrganismParts(svg, allSvgPathIds) {
+        $.each(allSvgPathIds, function () {
             toggleOrganismPartColor(svg, this);
         });
     }
 
     //load anatomogram from given location and display given organism parts
-    function loadAnatomogram(location, factorValues) {
+    function loadAnatomogram(location, allSvgPathIds) {
         var svg = $('#anatomogramBody').svg('get');
 
         svg.load(location, {
             onLoad:function(){
                 scaleAnatomogram(svg);
-                highlightAllOrganismParts(svg, factorValues);
-                initAnatomogramBindings(svg, factorValues);
+                highlightAllOrganismParts(svg, allSvgPathIds);
+                initAnatomogramBindings(svg, allSvgPathIds);
 
             }
         });
         return svg;
     }
 
-    function init(factorValues, fileNameMale, fileNameFemale, contextRoot) {
+    function init(allSvgPathIds, fileNameMale, fileNameFemale, contextRoot) {
 
         if ($('#anatomogramBody').length === 0) {
             return;
@@ -141,7 +141,7 @@ var anatomogramModule = (function ($) {
         //init svg
         $('#anatomogramBody').svg();
 
-        var svg = loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, factorValues);
+        var svg = loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds);
 
         //hover on gene name, to highlight all organism parts involved on a single gene profile
         $("#heatmap-table td:first-child").on("hover", function (evt) { //hover on cells of the first table column
@@ -170,11 +170,11 @@ var anatomogramModule = (function ($) {
             $("#sex-toggle-image").button().toggle(
                 function () {
                     $(this).attr("src", contextRoot + "/resources/images/female_selected.png");
-                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameFemale, factorValues);
+                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameFemale, allSvgPathIds);
                 },
                 function () {
                     $(this).attr("src", contextRoot + "/resources/images/male_selected.png");
-                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, factorValues);
+                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds);
                 }
             ).tooltip();
         } else {

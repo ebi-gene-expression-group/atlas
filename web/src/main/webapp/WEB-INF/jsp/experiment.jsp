@@ -118,9 +118,8 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
                 $("#slider-range-max").hide();//hide the cutoff slider
                 $("#slider-help").hide();//hide the slider help
             }
-            ;
 
-            var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}"
+            var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}";
 
             if (${!type.isBaseline()}) {
 
