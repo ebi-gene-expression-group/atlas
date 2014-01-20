@@ -140,8 +140,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         for (String groupId : orderedAssayGroupIds) {
             AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
 
-            Map<String, String> factors = experimentDesign.getFactorValuesByHeader(assayGroup.getFirstAssayAccession());
-            factorGroups.add(FactorSet.create(factors));
+            FactorGroup factorGroup = experimentDesign.getFactors(assayGroup.getFirstAssayAccession());
+            factorGroups.add(factorGroup);
 
         }
         return factorGroups;
@@ -155,8 +155,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         for (String groupId : orderedAssayGroupIds) {
             AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
 
-            Map<String, String> factors = experimentDesign.getFactorValuesByHeader(assayGroup.getFirstAssayAccession());
-            factorGroups.put(groupId, FactorSet.create(factors));
+            FactorGroup factorGroup = experimentDesign.getFactors(assayGroup.getFirstAssayAccession());
+            factorGroups.put(groupId, factorGroup);
 
         }
         return factorGroups;

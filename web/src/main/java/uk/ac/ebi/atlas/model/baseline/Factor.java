@@ -80,6 +80,7 @@ public class Factor implements Comparable<Factor>, Serializable {
         return Objects.hashCode(type, value, valueOntologyTerm);
     }
 
+    // header is not part of identity, it is only for display purposes
     @Override
     public boolean equals(Object other) {
         return Objects.equal(this.getClass(), other.getClass())

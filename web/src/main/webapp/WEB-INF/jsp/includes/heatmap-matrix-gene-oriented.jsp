@@ -114,6 +114,7 @@
 
                         <display:column
                                 title="<div data-organism-part=\"${columnHeader}\"
+                                    ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTerm).concat('\"') : ''}
                                     ${type.isMicroarray() ? 'data-array-design=\"'.concat(queryFactor.arrayDesignAccession).concat('\"') : ''}
                                     ${type.isBaseline() ? 'assay-group-id=\"'.concat(factorHolder.assayGroupId).concat('\"') : ''}
                                     ${type.isBaseline() ? 'factor-name=\"'.concat(columnHeader).concat('\"') : ''}
@@ -156,7 +157,8 @@
 
                                 <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
                                     ${!type.isBaseline() ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
-                                     data-organism-part="${columnHeader}" data-color="${cellColour}">
+                                     data-organism-part="${columnHeader}" data-color="${cellColour}"
+                                     ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTerm).concat('\"') : ''}>
                                         ${!type.isBaseline() ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
                                 </div>
 
