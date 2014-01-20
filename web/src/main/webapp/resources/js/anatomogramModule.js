@@ -44,11 +44,11 @@ var anatomogramModule = (function ($) {
         }
     }
 
-    function toggleOrganismPartColor(svg, factorValue, evt) {
+    function toggleOrganismPartColor(svg, svgPathId, evt) {
 
         "use strict";
 
-        var element = svg.getElementById(factorValue);
+        var element = svg.getElementById(svgPathId);
         var evtType = (typeof evt === 'undefined') ? evt : evt.type;
 
         if (element !== null) {
@@ -65,9 +65,9 @@ var anatomogramModule = (function ($) {
     }
 
 
-    function initMouseOverBindingForSvgPath(svgPath, organismPart) {
+    function initMouseOverBindingForSvgPath(svgPath, svgPathId) {
 
-        var headerDiv = $('#heatmap-table th').has("div[data-organism-part='" + organismPart + "']");
+        var headerDiv = $('#heatmap-table th').has("div[data-svg-path-id='" + svgPathId + "']");
 
         svgPath.addEventListener("mouseover", function () {
             headerDiv.addClass("headerHover");
@@ -81,17 +81,17 @@ var anatomogramModule = (function ($) {
     }
 
 
-    function initBindingsForAnatomogramPaths(svg, organismPart) {
+    function initBindingsForAnatomogramPaths(svg, svgPathId) {
 
-        var svgElement = svg.getElementById(organismPart);
+        var svgElement = svg.getElementById(svgPathId);
 
         if (svgElement !== null) {
             if (svgElement.nodeName === 'g') {
                 $.each(svgElement.getElementsByTagName('path'), function () {
-                    initMouseOverBindingForSvgPath(this, organismPart);
+                    initMouseOverBindingForSvgPath(this, svgPathId);
                 });
             } else {
-                initMouseOverBindingForSvgPath(svgElement, organismPart);
+                initMouseOverBindingForSvgPath(svgElement, svgPathId);
             }
         }
     }
@@ -145,10 +145,10 @@ var anatomogramModule = (function ($) {
 
         //hover on gene name, to highlight all organism parts involved on a single gene profile
         $("#heatmap-table td:first-child").on("hover", function (evt) { //hover on cells of the first table column
-            var geneExpressions = $(this).parent("tr").find("div[data-organism-part!='']");
+            var geneExpressions = $(this).parent("tr").find("div[data-svg-path-id!='']");
 
             var factorValues = geneExpressions.map(function () {
-                return $(this).attr('data-organism-part');
+                return $(this).attr('data-svg-path-id');
             }).get();
 
             $.each(factorValues, function () {
@@ -157,9 +157,9 @@ var anatomogramModule = (function ($) {
 
         });
 
-        //hover on a cell to highlight related organism part
+        //hover on a header or expression level cell to highlight related SVG organism part
         $("#heatmap-table td,th").on("hover", function (evt) {
-            var organismPart = $(this).find('div').attr("data-organism-part");
+            var organismPart = $(this).find('div').attr("data-svg-path-id");
             if (organismPart !== undefined) {
                 toggleOrganismPartColor(svg, organismPart, evt);
             }
