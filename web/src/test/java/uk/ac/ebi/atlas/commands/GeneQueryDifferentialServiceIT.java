@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
@@ -228,8 +229,17 @@ public class GeneQueryDifferentialServiceIT {
 
         System.out.println(Joiner.on("\", \"").join(names));
 
-        // match the first 46 only, because they are the only ones the same in both ATLAS3DEV and ATLAS3IT
-        assertThat(Iterables.limit(names, 46), contains("Cldn8", "Tph1", "Lactbl1", "Ivd", "Fmo1", "Matn2", "Chgb", "Cish", "Lrrc55", "Neb", "Ogdhl", "Ehhadh", "Wipi1", "Rgs2", "Tmem255a", "Gpr26", "Reg3b", "Vip", "Prlr", "Dnahc8", "Hsbp1", "Tnfrsf11b", "Npas4", "Dnajb1", "Enpp2", "Sftpd", "Reg3a", "Disp2", "Igfals", "B3galnt1", "Ikzf4", "Nr4a1", "Cspg5", "Dnaja1", "Ern1", "Gm13716", "Dhcr7", "Junb", "Gm16211", "Aqp4", "Ovol2", "Hspa1a", "Igfbp5", "Lonrf3", "Nupr1", "Dusp1"));
+        assertThat(names.get(0), is("Cldn8"));
+
+        Iterable<String> tail1 = Iterables.skip(names, 1);
+
+        // match in any order because order is unpredictable in Oracle when rows are the same
+        assertThat(Iterables.limit(tail1, 2), containsInAnyOrder("Tph1", "Lactbl1"));
+
+        Iterable<String> tail2 = Iterables.skip(tail1, 2);
+
+        // match the remaining 43 only, because they are the only ones the same in both ATLAS3DEV and ATLAS3IT
+        assertThat(Iterables.limit(tail2, 43), contains("Ivd", "Fmo1", "Matn2", "Chgb", "Cish", "Lrrc55", "Neb", "Ogdhl", "Ehhadh", "Wipi1", "Rgs2", "Tmem255a", "Gpr26", "Reg3b", "Vip", "Prlr", "Dnahc8", "Hsbp1", "Tnfrsf11b", "Npas4", "Dnajb1", "Enpp2", "Sftpd", "Reg3a", "Disp2", "Igfals", "B3galnt1", "Ikzf4", "Nr4a1", "Cspg5", "Dnaja1", "Ern1", "Gm13716", "Dhcr7", "Junb", "Gm16211", "Aqp4", "Ovol2", "Hspa1a", "Igfbp5", "Lonrf3", "Nupr1", "Dusp1"));
     }
 
     @Test
