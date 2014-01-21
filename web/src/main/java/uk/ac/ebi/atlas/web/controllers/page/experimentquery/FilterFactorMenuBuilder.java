@@ -130,7 +130,7 @@ public class FilterFactorMenuBuilder {
 
         for (Factor factor : setOfFactor) {
             String type = factor.getType();
-            String factorName = experimentalFactors.getFactorName(type);
+            String factorName = experimentalFactors.getFactorDisplayName(type);
             result.get(factorName).add(factor);
         }
 

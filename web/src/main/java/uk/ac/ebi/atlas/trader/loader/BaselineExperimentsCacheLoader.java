@@ -37,7 +37,6 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.baseline.*;
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -99,7 +98,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
         Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
         Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
-        Map<String, String> factorNamesByType = getFactorNamesByType(experimentDesign, requiredFactorTypes);
+        Map<String, String> factorNamesByType = getFactorDisplayNameByType(experimentDesign.getFactorHeaders(), requiredFactorTypes);
 
         List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(orderedAssayGroupIds, assayGroups, experimentDesign);
         Map<String, FactorGroup> orderedFactorGroupsByAssayGroup = extractOrderedFactorGroupsByAssayGroup(orderedAssayGroupIds, assayGroups, experimentDesign);
@@ -163,17 +162,16 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
     }
 
-    protected Map<String, String> getFactorNamesByType(ExperimentDesign experimentDesign, Set<String> requiredFactorTypes) {
-        Map<String, String> factorNamesByType = Maps.newHashMap();
+    protected Map<String, String> getFactorDisplayNameByType(SortedSet<String> factorHeaders, Set<String> requiredFactorTypes) {
+        Map<String, String> factorDisplayNameByType = Maps.newHashMap();
 
-        SortedSet<String> factorTypes = experimentDesign.getFactorHeaders();
-        for (String factorType : factorTypes) {
+        for (String factorType : factorHeaders) {
             String normalizedFactorType = Factor.normalize(factorType);
             if (requiredFactorTypes.contains(normalizedFactorType)) {
-                factorNamesByType.put(normalizedFactorType, prettifyFactorType(factorType));
+                factorDisplayNameByType.put(normalizedFactorType, prettifyFactorType(factorType));
             }
         }
-        return factorNamesByType;
+        return factorDisplayNameByType;
     }
 
     protected String prettifyFactorType(String factorType) {

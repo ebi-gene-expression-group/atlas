@@ -97,7 +97,7 @@ public class ExperimentalFactorsTest {
     @Test
     public void getFactorNameShouldSucceedForValidType() {
         //when
-        String factorName = subject.getFactorName("TYPE2");
+        String factorName = subject.getFactorDisplayName("TYPE2");
         //then
         assertThat(factorName, is("NAME2"));
     }

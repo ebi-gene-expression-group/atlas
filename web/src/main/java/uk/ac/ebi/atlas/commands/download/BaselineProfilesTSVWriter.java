@@ -122,7 +122,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
         Collection<String> transformedSelectedFilterFactors = Collections2.transform(selectedFilterFactors, new Function<Factor, String>() {
             @Override
             public String apply(Factor factor) {
-                String factorName = requestContext.getExperiment().getExperimentalFactors().getFactorName(factor.getType());
+                String factorName = requestContext.getExperiment().getExperimentalFactors().getFactorDisplayName(factor.getType());
                 return factorName + ": " + factor.getValue();
             }
         });
@@ -130,7 +130,7 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     }
 
     protected String formatSelectedQueryFactors() {
-        String queryFactorName = requestContext.getExperiment().getExperimentalFactors().getFactorName(requestContext.getQueryFactorType());
+        String queryFactorName = requestContext.getExperiment().getExperimentalFactors().getFactorDisplayName(requestContext.getQueryFactorType());
         Set<Factor> selectedQueryFactors = requestContext.getSelectedQueryFactors();
         if (CollectionUtils.isEmpty(selectedQueryFactors)) {
             return "any " + queryFactorName;

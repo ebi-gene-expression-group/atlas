@@ -31,8 +31,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.controllers.page.experimentquery.FilterFactorMenuBuilder;
-import uk.ac.ebi.atlas.web.controllers.page.experimentquery.FilterFactorMenuVoice;
 
 import java.util.Map;
 import java.util.Set;
@@ -101,9 +99,9 @@ public class FilterFactorMenuBuilderTest {
         // whole cell with, heart, brain, long poly a rna, total rna
         when(experimentalFactorsMock.getCoOccurringFactors(sevenFactor)).thenReturn(putIntoSortedSet(secondFactor, thirdFactor, forthFactor, fifthFactor));
 
-        when(experimentalFactorsMock.getFactorName(ORGANISM_PART)).thenReturn(ORGANISM_PART_NAME);
-        when(experimentalFactorsMock.getFactorName(RNA)).thenReturn(RNA_NAME);
-        when(experimentalFactorsMock.getFactorName(CELLULAR_COMPONENT)).thenReturn(CELLULAR_COMPONENT_NAME);
+        when(experimentalFactorsMock.getFactorDisplayName(ORGANISM_PART)).thenReturn(ORGANISM_PART_NAME);
+        when(experimentalFactorsMock.getFactorDisplayName(RNA)).thenReturn(RNA_NAME);
+        when(experimentalFactorsMock.getFactorDisplayName(CELLULAR_COMPONENT)).thenReturn(CELLULAR_COMPONENT_NAME);
 
         when(experimentalFactorsMock.getFactorType(ORGANISM_PART_NAME)).thenReturn(ORGANISM_PART);
         when(experimentalFactorsMock.getFactorType(RNA_NAME)).thenReturn(RNA);
