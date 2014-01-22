@@ -28,12 +28,28 @@ import uk.ac.ebi.atlas.model.Expression;
 import java.util.Set;
 
 public class BaselineExpression implements Expression {
-    private double level;
-
+    private final double level;
+    private final String levelString;
     private FactorGroup factorGroup;
+    private final boolean known;
 
     public BaselineExpression(double level, FactorGroup factorGroup) {
         this.level = level;
+        this.factorGroup = factorGroup;
+        this.levelString = Double.toString(level);
+        this.known = true;
+    }
+
+    public BaselineExpression(String expressionLevelString, FactorGroup factorGroup) {
+        this.levelString = expressionLevelString;
+
+        if(expressionLevelString.equals("FAIL") || expressionLevelString.equals("LOWDATA")){
+            level = 0;
+            known = false;
+        } else {
+            level = Double.parseDouble(expressionLevelString);
+            known = true;
+        }
         this.factorGroup = factorGroup;
     }
 
@@ -43,7 +59,18 @@ public class BaselineExpression implements Expression {
     }
 
     public double getLevel() {
+        if (!isKnown()) {
+            throw new UnsupportedOperationException("BaselineExpression level is " + getLevelString() + ". Call isKnown() first to check.");
+        }
         return level;
+    }
+
+    public boolean isKnown() {
+        return known;
+    }
+
+    public String getLevelString() {
+        return levelString;
     }
 
     public boolean isGreaterThan(double level) {
@@ -71,7 +98,7 @@ public class BaselineExpression implements Expression {
         BaselineExpression other = (BaselineExpression) object;
 
         return Objects.equal(level, other.level) &&
-               Objects.equal(factorGroup, other.factorGroup);
+                Objects.equal(factorGroup, other.factorGroup);
     }
 
     @Override

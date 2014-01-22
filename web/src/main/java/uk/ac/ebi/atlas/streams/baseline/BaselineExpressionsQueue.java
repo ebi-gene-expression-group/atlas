@@ -47,9 +47,8 @@ public class BaselineExpressionsQueue extends TsvRowQueue<BaselineExpression> {
         if (expressionLevelString == null) {
             return null;
         }
-        double expressionLevel = Double.parseDouble(expressionLevelString);
 
-        return new BaselineExpression(expressionLevel, expectedFactorGroups.next());
+        return new BaselineExpression(expressionLevelString, expectedFactorGroups.next());
     }
 
 
