@@ -37,7 +37,6 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.baseline.*;
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -45,6 +44,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 //Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder every time the load method is invoked
 //The reason to do so is that Guava CacheBuilder, that is the one only client of this class, is not spring managed.
@@ -99,7 +100,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
         Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
         Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
-        Map<String, String> factorNamesByType = getFactorNamesByType(experimentDesign, requiredFactorTypes);
+        Map<String, String> factorNamesByType = getFactorDisplayNameByType(experimentDesign.getFactorHeaders(), requiredFactorTypes);
 
         List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(orderedAssayGroupIds, assayGroups, experimentDesign);
         Map<String, FactorGroup> orderedFactorGroupsByAssayGroup = extractOrderedFactorGroupsByAssayGroup(orderedAssayGroupIds, assayGroups, experimentDesign);
@@ -140,6 +141,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         for (String groupId : orderedAssayGroupIds) {
             AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
 
+            checkNotNull(assayGroup, String.format("No assay group \"%s\"", groupId));
+
             FactorGroup factorGroup = experimentDesign.getFactors(assayGroup.getFirstAssayAccession());
             factorGroups.add(factorGroup);
 
@@ -163,29 +166,34 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
     }
 
-    protected Map<String, String> getFactorNamesByType(ExperimentDesign experimentDesign, Set<String> requiredFactorTypes) {
-        Map<String, String> factorNamesByType = Maps.newHashMap();
+    protected Map<String, String> getFactorDisplayNameByType(SortedSet<String> factorHeaders, Set<String> requiredFactorTypes) {
+        Map<String, String> factorDisplayNameByType = Maps.newHashMap();
 
-        SortedSet<String> factorTypes = experimentDesign.getFactorHeaders();
-        for (String factorType : factorTypes) {
+        for (String factorType : factorHeaders) {
             String normalizedFactorType = Factor.normalize(factorType);
             if (requiredFactorTypes.contains(normalizedFactorType)) {
-                factorNamesByType.put(normalizedFactorType, prettifyFactorType(factorType));
+                factorDisplayNameByType.put(normalizedFactorType, prettifyFactorType(factorType));
             }
         }
-        return factorNamesByType;
+        return factorDisplayNameByType;
     }
 
+    //TODO: move this into ExperimentFactorsLoader
     protected String prettifyFactorType(String factorType) {
         StringBuilder result = new StringBuilder();
         String[] split = factorType.replaceAll("_", " ").split(" ");
+        boolean firstTokenCapitalized = false;
         for (String token : split) {
             int nbUpperCase = countUpperCaseLetters(token);
             if (nbUpperCase > 1) {
                 result.append(token);
             } else {
                 token = token.toLowerCase();
-                token = StringUtils.capitalizeFirstLetter(token);
+
+                if (!firstTokenCapitalized) {
+                    token = StringUtils.capitalizeFirstLetter(token);
+                    firstTokenCapitalized = true;
+                }
                 result.append(token);
             }
             result.append(" ");

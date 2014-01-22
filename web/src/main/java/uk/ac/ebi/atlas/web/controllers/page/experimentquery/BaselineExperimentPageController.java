@@ -122,7 +122,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
-        model.addAttribute("queryFactorName", StringUtils.capitalize(experimentalFactors.getFactorName(preferences.getQueryFactorType())));
+        model.addAttribute("queryFactorName", experimentalFactors.getFactorDisplayName(preferences.getQueryFactorType()));
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
@@ -189,7 +189,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         //ToDo: looks bad, a custom EL function or jsp tag function to resolve names would be much better
         Map<String, String> selectedFilterFactorNamesAndValues = new HashMap<>();
         for (Factor selectedFilterFactor : requestContext.getSelectedFilterFactors()) {
-            selectedFilterFactorNamesAndValues.put(experimentalFactors.getFactorName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());
+            selectedFilterFactorNamesAndValues.put(experimentalFactors.getFactorDisplayName(selectedFilterFactor.getType()), selectedFilterFactor.getValue());
         }
         model.addAttribute("selectedFilterFactorNamesAndValues", selectedFilterFactorNamesAndValues);
 

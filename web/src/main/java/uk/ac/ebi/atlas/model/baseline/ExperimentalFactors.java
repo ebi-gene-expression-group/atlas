@@ -48,7 +48,7 @@ public class ExperimentalFactors implements Serializable {
 
     private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
 
-    private BiMap<String, String> factorNamesByType = HashBiMap.create();
+    private BiMap<String, String> factorDisplayNamesByType = HashBiMap.create();
 
     private SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
 
@@ -59,7 +59,7 @@ public class ExperimentalFactors implements Serializable {
     private Map<String, FactorGroup> orderedFactorGroupsByAssayGroup;
 
     ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType,
-                        Map<String, String> factorNamesByType,
+                        Map<String, String> factorDisplayNamesByType,
                         List<FactorGroup> orderedFactorGroups,
                         SortedSetMultimap<Factor, Factor> coOccurringFactors,
                         Set<String> menuFilterFactorTypes,
@@ -68,7 +68,7 @@ public class ExperimentalFactors implements Serializable {
                         Set<Factor> defaultFilterFactors) {
         this.factorsByType = factorsByType;
         this.orderedFactorGroupsByAssayGroup = orderedFactorGroupsByAssayGroup;
-        this.factorNamesByType.putAll(factorNamesByType);
+        this.factorDisplayNamesByType.putAll(factorDisplayNamesByType);
         this.orderedFactorGroups = orderedFactorGroups;
         this.coOccurringFactors = coOccurringFactors;
         this.menuFilterFactorTypes = menuFilterFactorTypes;
@@ -84,18 +84,18 @@ public class ExperimentalFactors implements Serializable {
         return Collections.unmodifiableSet(defaultFilterFactors);
     }
 
-    public String getFactorName(String type) {
+    public String getFactorDisplayName(String type) {
 
-        checkState(factorNamesByType.containsKey(type), "Cannot find a factor with the given factor type: " + type);
+        checkState(factorDisplayNamesByType.containsKey(type), "Cannot find a factor with the given factor type: " + type);
 
-        return factorNamesByType.get(type);
+        return factorDisplayNamesByType.get(type);
     }
 
-    public String getFactorType(String name) {
+    public String getFactorType(String displayName) {
 
-        checkState(factorNamesByType.inverse().containsKey(name), "Cannot find a factor with the given factor name: " + name);
+        checkState(factorDisplayNamesByType.inverse().containsKey(displayName), "Cannot find a factor with the given factor display name: " + displayName);
 
-        return factorNamesByType.inverse().get(name);
+        return factorDisplayNamesByType.inverse().get(displayName);
     }
 
     //ToDo: this is only used to build factor filter menu, maybe should be encapsulated in a menu builder and the menu builder could be used by a menu cache loader
@@ -169,7 +169,7 @@ public class ExperimentalFactors implements Serializable {
 
         for (String type : menuFilterFactorTypes) {
 
-            String factorName = getFactorName(type);
+            String factorName = getFactorDisplayName(type);
             factorNames.add(factorName);
         }
 

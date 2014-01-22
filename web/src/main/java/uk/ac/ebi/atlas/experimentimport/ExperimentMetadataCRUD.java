@@ -178,6 +178,11 @@ public class ExperimentMetadataCRUD {
         return experiments.size();
     }
 
+    public void updateExperimentDesign(String experimentAccession) {
+        ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
+        updateExperimentDesign(experimentDTO);
+    }
+
 
     void updateExperimentDesign(ExperimentDTO experimentDTO) {
         String accession = experimentDTO.getExperimentAccession();
@@ -205,4 +210,5 @@ public class ExperimentMetadataCRUD {
     public List<ExperimentDTO> findExperiments(Set<String> experimentAccessions) {
         return experimentDAO.findExperiments(experimentAccessions, true);
     }
+
 }

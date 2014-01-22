@@ -117,6 +117,14 @@ public class ExperimentAdminController {
         return "Experiment design was updated for " + updatedExperimentsCount + " experiments";
     }
 
+    @RequestMapping("/updateExperimentDesign")
+    @ResponseBody
+    public String updateAllExperimentDesigns(@RequestParam("accession") String experimentAccession) {
+        experimentMetadataCRUD.updateExperimentDesign(experimentAccession);
+        return "Experiment design was updated for " + experimentAccession;
+    }
+
+
     @RequestMapping("/updateAllExperiments")
     @ResponseBody
     public String updateAllExperiments() throws IOException {
