@@ -116,7 +116,7 @@ public class BaselineProfilesTSVWriterIT {
 
         String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
-        assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding', specifically expressed in any Organism Part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
+        assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding', specifically expressed in any Organism part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
 
     }
 
@@ -129,7 +129,7 @@ public class BaselineProfilesTSVWriterIT {
 
         String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
-        assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, expressed in any Organism Part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
+        assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, expressed in any Organism part above the expression level cutoff: 0.5 in experiment " + EXPERIMENT_ACCESSION));
         assertThat(headerRows[2], startsWith("# Timestamp: "));
 
     }
@@ -149,8 +149,8 @@ public class BaselineProfilesTSVWriterIT {
         String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, specifically expressed " +
-                "in Cell Lines: 'HPC-PL cell line, Mickey Mouse' above the expression level cutoff: 0.5 " +
-                "in experiment E-GEOD-26284, filtered by RNA: total RNA and Cellular Component: whole cell"));
+                "in Cell lines: 'HPC-PL cell line, Mickey Mouse' above the expression level cutoff: 0.5 " +
+                "in experiment E-GEOD-26284, filtered by RNA: total RNA and Cellular component: whole cell"));
 
     }
 
@@ -170,7 +170,7 @@ public class BaselineProfilesTSVWriterIT {
 
         assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, specifically expressed " +
                 "in RNA: 'Mickey Mouse' above the expression level cutoff: 0.5 " +
-                "in experiment E-GEOD-26284, filtered by Cell Line: HPC-PL cell line"));
+                "in experiment E-GEOD-26284, filtered by Cell line: HPC-PL cell line"));
 
     }
 }

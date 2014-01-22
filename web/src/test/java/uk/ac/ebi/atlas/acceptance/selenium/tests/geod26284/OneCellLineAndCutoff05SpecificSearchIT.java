@@ -35,7 +35,7 @@ public class OneCellLineAndCutoff05SpecificSearchIT extends Geod26284HeatmapTabl
 
     @Override
     protected String getQueryFactorLabel() {
-        return "Cell Line";
+        return "Cell line";
     }
 
     @Override

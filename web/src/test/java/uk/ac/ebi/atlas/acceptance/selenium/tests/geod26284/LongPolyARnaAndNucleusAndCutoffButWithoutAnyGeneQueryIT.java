@@ -33,7 +33,7 @@ public class LongPolyARnaAndNucleusAndCutoffButWithoutAnyGeneQueryIT extends Geo
 
     @Override
     protected String getQueryFactorLabel() {
-        return "Cell Line";
+        return "Cell line";
     }
 
     @Override

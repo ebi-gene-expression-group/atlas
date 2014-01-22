@@ -38,8 +38,8 @@ public class DefaultFilterByMenuIT extends SinglePageSeleniumFixture {
     public static final String TOTAL_RNA = "total RNA";
     public static final String RNA_TYPE = "RNA";
     public static final String WHOLE_CELL = "whole cell";
-    public static final String CELLULAR_COMPONENT = "Cellular Component";
-    public static final String CELL_LINE = "Cell Line";
+    public static final String CELLULAR_COMPONENT = "Cellular component";
+    public static final String CELL_LINE = "Cell line";
     public static final String LONG_NON_POLYA_RNA = "long non-polyA RNA";
     public static final String LONG_POLYA_RNA = "long polyA RNA";
     public static final String SK_N_SH_RA = "SK-N-SH_RA";
