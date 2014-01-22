@@ -45,6 +45,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 //Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder every time the load method is invoked
 //The reason to do so is that Guava CacheBuilder, that is the one only client of this class, is not spring managed.
 public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
@@ -138,6 +140,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         for (String groupId : orderedAssayGroupIds) {
             AssayGroup assayGroup = assayGroups.getAssayGroup(groupId);
+
+            checkNotNull(assayGroup, String.format("No assay group \"%s\"", groupId));
 
             FactorGroup factorGroup = experimentDesign.getFactors(assayGroup.getFirstAssayAccession());
             factorGroups.add(factorGroup);
