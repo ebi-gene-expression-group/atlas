@@ -19,7 +19,6 @@ public class BaselineAnalyticsInputStreamTest {
 
     private static CsvReaderFactory csvReaderFactory = new CsvReaderFactory();
 
-
     public static final String GENE_ID_1 = "ENSMUSG00000030105";
     public static final String GENE_ID_2 = "ENSG00000127720";
     private static final String GENE_NAME_1 = "Arl8b";
@@ -29,14 +28,15 @@ public class BaselineAnalyticsInputStreamTest {
     private static final String TSV_LINE_1 = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "1", "2", "3", "4", "-0.00248510654802851"});
     private static final String TSV_LINE_2 = Joiner.on("\t").join(new String[]{GENE_ID_2, GENE_NAME_2, "0.00", "0", "1", "0", "1"});
     private static final String TSV_LINE_NO_EXPRESSION = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "0", "0", "0"});
+    private static final String TSV_LINE_LOWDATA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "1", "LOWDATA", "0", "0"});
+    private static final String TSV_LINE_FAIL = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "1", "FAIL", "0", "0"});
 
-    private static String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_1, TSV_LINE_2});
-    private static String tsvContentsNoExpression = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_NO_EXPRESSION});
+    private static String TSV_CONTENTS = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_1, TSV_LINE_2});
 
 
     @Test
     public void readTwoTsvLines() throws IOException {
-        Reader tsvSource = new StringReader(tsvContents);
+        Reader tsvSource = new StringReader(TSV_CONTENTS);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
         BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader, "Test");
 
@@ -62,7 +62,9 @@ public class BaselineAnalyticsInputStreamTest {
 
     @Test
     public void readTsvLineWithNoExpression() throws IOException {
-        Reader tsvSource = new StringReader(tsvContentsNoExpression);
+        String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_NO_EXPRESSION});
+
+        Reader tsvSource = new StringReader(tsvContents);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
         BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader, "Test");
 
@@ -70,8 +72,34 @@ public class BaselineAnalyticsInputStreamTest {
     }
 
     @Test
+    public void readTsvLineWithLowData() throws IOException {
+        String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_LOWDATA});
+
+        Reader tsvSource = new StringReader(tsvContents);
+        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
+        BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader, "Test");
+
+        BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 1.0);
+        assertThat(subject.readNext(), is(line1g2));
+        assertThat(subject.readNext(), is(nullValue()));
+    }
+
+    @Test
+    public void readTsvLineWithFail() throws IOException {
+        String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_FAIL});
+
+        Reader tsvSource = new StringReader(tsvContents);
+        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
+        BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader, "Test");
+
+        BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 1.0);
+        assertThat(subject.readNext(), is(line1g2));
+        assertThat(subject.readNext(), is(nullValue()));
+    }
+
+    @Test
     public void tryResourcesClosesUnderlyingReaderWhenFinished() throws IOException {
-        Reader tsvSource = spy(new StringReader(tsvContents));
+        Reader tsvSource = spy(new StringReader(TSV_CONTENTS));
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
 
         try (BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader, "Test")) {
@@ -83,7 +111,7 @@ public class BaselineAnalyticsInputStreamTest {
 
     @Test
     public void tryResourcesAutoClosesUnderlyingReaderOnException() throws IOException {
-        Reader tsvSource = spy(new StringReader(tsvContents));
+        Reader tsvSource = spy(new StringReader(TSV_CONTENTS));
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
 
         try (BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader, "Test")) {

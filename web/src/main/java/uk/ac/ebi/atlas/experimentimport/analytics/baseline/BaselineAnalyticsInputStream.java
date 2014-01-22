@@ -25,7 +25,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * mus1, g3, 3
  * mus1, g5, 5
  *
- * NB: expression levels of 0 are skipped
+ * NB: the following expression levels are skipped: 0, LOWDATA, FAIL
  */
 public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineAnalytics> {
 
@@ -104,9 +104,14 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
 
         for (int i = 0; i < expressionLevels.length; i++) {
             String assayGroupId = assayGroupIds[i];
-            Double expressionLevel = Double.parseDouble(expressionLevels[i]);
-            if (expressionLevel != 0.0) {
-                builder.add(new BaselineAnalytics(geneId, assayGroupId, expressionLevel));
+
+            String expressionLevelString = expressionLevels[i];
+
+            if (!("FAIL".equalsIgnoreCase(expressionLevelString) || "LOWDATA".equalsIgnoreCase(expressionLevelString))) {
+                Double expressionLevel = Double.parseDouble(expressionLevels[i]);
+                if (expressionLevel != 0.0) {
+                    builder.add(new BaselineAnalytics(geneId, assayGroupId, expressionLevel));
+                }
             }
         }
 
