@@ -74,7 +74,7 @@ public class BaselineExpression implements Expression {
     }
 
     public boolean isGreaterThan(double level) {
-        return Double.compare(this.level, level) > 0;
+        return Double.compare(getLevel(), level) > 0;
     }
 
     public Factor getFactor(String type) {

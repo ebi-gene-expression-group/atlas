@@ -54,6 +54,7 @@ public class BaselineExpressionPrecondition implements Predicate<BaselineExpress
 
     @Override
     public boolean apply(BaselineExpression expression) {
+        if(!expression.isKnown()) return true;
 
         return expression.isGreaterThan(cutoff)
                 && checkFilterFactors(expression);
