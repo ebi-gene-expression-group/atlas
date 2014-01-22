@@ -174,16 +174,22 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         return factorDisplayNameByType;
     }
 
+    //TODO: move this into ExperimentFactorsLoader
     protected String prettifyFactorType(String factorType) {
         StringBuilder result = new StringBuilder();
         String[] split = factorType.replaceAll("_", " ").split(" ");
+        boolean firstTokenCapitalized = false;
         for (String token : split) {
             int nbUpperCase = countUpperCaseLetters(token);
             if (nbUpperCase > 1) {
                 result.append(token);
             } else {
                 token = token.toLowerCase();
-                token = StringUtils.capitalizeFirstLetter(token);
+
+                if (!firstTokenCapitalized) {
+                    token = StringUtils.capitalizeFirstLetter(token);
+                    firstTokenCapitalized = true;
+                }
                 result.append(token);
             }
             result.append(" ");

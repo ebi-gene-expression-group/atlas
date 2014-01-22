@@ -158,7 +158,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
                 $("#heatmap-div").removeClass();
             }
 
-            searchFormModule.init("(any ${queryFactorName}s)", '${species}', '${preferences.defaultCutoff}');
+            searchFormModule.init($('#queryFactorValues').attr('data-placeholder'), '${species}', '${preferences.defaultCutoff}');
 
             helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 

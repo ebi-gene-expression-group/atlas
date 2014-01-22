@@ -116,7 +116,8 @@
                         <c:set var="isSingleContrast" value="${(!type.isBaseline()) && allQueryFactors.size() == 1}"/>
                         <c:set var="itemLabel" value="${type.isBaseline() ? 'value' : 'displayName'}"/>
                         <c:set var="itemValue" value="${type.isBaseline() ? 'value' : 'id'}"/>
-                        <form:select path="queryFactorValues" data-placeholder="(Any ${queryFactorName})"
+                        <%--@elvariable id="stringUtil" type="uk.ac.ebi.atlas.utils.StringUtil"--%>
+                        <form:select path="queryFactorValues" data-placeholder="(any ${stringUtil.lowerCaseIfNotAllUpperCase(queryFactorName)}s)"
                                      tabindex="-1"
                                      items="${allQueryFactors}" itemValue="${itemValue}" itemLabel="${itemLabel}"
                                      cssStyle="width:340px;"

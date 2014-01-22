@@ -122,7 +122,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
 
-        model.addAttribute("queryFactorName", StringUtils.capitalize(experimentalFactors.getFactorDisplayName(preferences.getQueryFactorType())));
+        model.addAttribute("queryFactorName", experimentalFactors.getFactorDisplayName(preferences.getQueryFactorType()));
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 

@@ -74,7 +74,7 @@
 
                     <div class="left">
                         <label>
-                            <input id="local-searchbox" name="geneQuery" value="${param.queryString}" maxlength="900" placeholder="(Enter gene query)"/>
+                            <input id="local-searchbox" name="geneQuery" value="${param.queryString}" maxlength="900" placeholder="(enter gene query)"/>
                         </label>
                         <!-- Include some example searchterms - keep them short and few! -->
                         <span class="examples">Examples:
