@@ -80,8 +80,8 @@ public class BaselineProfilePreconditionTest {
         //given
         subject = new BaselineExpressionPrecondition();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
+        given(expressionMock.isKnown()).willReturn(true);
         given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(false);
-
         //then
         assertThat(subject.apply(expressionMock), is(false));
     }
