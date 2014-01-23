@@ -27,10 +27,12 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -42,6 +44,8 @@ import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 @Controller
 @Scope("request")
@@ -56,8 +60,18 @@ public class DASFeaturesController {
         this.experimentTrader = experimentTrader;
     }
 
+
+    @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseBody
+    public String handleException(Exception e) {
+        return e.getMessage();
+    }
+
     @RequestMapping(value = "/das/s4/features")
     public String dasFeatures(@RequestParam(value = "segment") String geneId, Model model) {
+
+        checkArgument(geneId.length() <= 255, "Segment parameter is too long");
 
         List<DifferentialBioentityExpression> differentialBioentityExpressions = geneQueryDifferentialService.queryWithoutCount(geneId);
 
