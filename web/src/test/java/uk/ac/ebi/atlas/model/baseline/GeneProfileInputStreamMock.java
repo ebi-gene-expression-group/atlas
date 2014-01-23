@@ -72,6 +72,7 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<BaselinePro
                 BaselineExpression expressionMock = mock(BaselineExpression.class);
                 when(expressionMock.isGreaterThan(anyDouble())).thenReturn(true);
                 when(expressionMock.getLevel()).thenReturn(j + 1D);
+                when(expressionMock.isKnown()).thenReturn(true);
                 Factor factor = new Factor("ORGANISM_PART", "factor_value" + (j + 1));
                 when(expressionMock.getFactorGroup()).thenReturn(new FactorSet().add(factor));
                 when(expressionMock.getFactor("ORGANISM_PART")).thenReturn(factor);
