@@ -17,7 +17,7 @@
     <rule>
         <note>To catch people browsing to the old GXA gene URL from stale google cache - can be removed in Jan 2014</note>
         <from>/gene/(.*)</from>
-        <to type="redirect">/gxa/genes/$1</to>
+        <to type="permanent-redirect">/gxa/genes/$1</to>
     </rule>
 
 </urlrewrite>
