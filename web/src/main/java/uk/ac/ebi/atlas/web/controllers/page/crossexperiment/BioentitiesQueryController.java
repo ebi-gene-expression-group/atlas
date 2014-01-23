@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
 
 import com.google.common.base.Optional;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,16 +32,17 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.commands.BaselineBioentityCountsService;
 import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
-import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
@@ -49,7 +51,7 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkArgument;
 
 @Controller
 @Scope("prototype")
@@ -71,6 +73,7 @@ public class BioentitiesQueryController {
     }
 
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     public ModelAndView handleException(Exception e) {
         ModelAndView mav = new ModelAndView("bioEntities");
         mav.addObject("exceptionMessage", e.getMessage());
@@ -80,7 +83,7 @@ public class BioentitiesQueryController {
     @RequestMapping(value = "/query")
     public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model, BindingResult result) {
 
-        checkState(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify gene query or condition!");
+        checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
 
         String geneQuery = requestParameters.getGeneQuery();
 
