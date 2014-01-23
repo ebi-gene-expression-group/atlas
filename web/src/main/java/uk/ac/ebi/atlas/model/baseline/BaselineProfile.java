@@ -125,8 +125,10 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     }
     @Override
     protected void updateProfileExpression(BaselineExpression geneExpression) {
-        maxExpressionLevel = max(maxExpressionLevel, geneExpression.getLevel());
-        minExpressionLevel = min(minExpressionLevel, geneExpression.getLevel());
+        if (geneExpression.isKnown()) {
+            maxExpressionLevel = max(maxExpressionLevel, geneExpression.getLevel());
+            minExpressionLevel = min(minExpressionLevel, geneExpression.getLevel());
+        }
     }
 
 }
