@@ -32,6 +32,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
@@ -96,6 +97,21 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     @Override
     protected String getSecondaryRowHeader(BaselineProfile geneProfile) {
        return null;
+    }
+
+    @Override
+    protected String[] extractConditionLevels(BaselineProfile geneProfile, Set<Factor> conditions) {
+        String[] expressionLevels = new String[conditions.size()];
+        int i = 0;
+        for (Factor condition: conditions) {
+            BaselineExpression expression = geneProfile.getExpression(condition);
+
+            if (expression != null){
+                expressionLevels[i] = expression.getLevelAsString();
+            }
+            i++;
+        }
+        return expressionLevels;
     }
 
     @Override

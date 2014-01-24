@@ -30,10 +30,7 @@ import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Set;
 
 import static au.com.bytecode.opencsv.CSVWriter.NO_ESCAPE_CHARACTER;
@@ -124,18 +121,7 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
 
     protected abstract String getSecondaryRowHeader(T profile);
 
-    protected String[] extractConditionLevels(T geneProfile, Set<K> conditions) {
-        String[] expressionLevels = new String[conditions.size()];
-        int i = 0;
-        for (K condition: conditions) {
-            Double expressionLevel = geneProfile.getExpressionLevel(condition);
-            if (expressionLevel != null){
-                expressionLevels[i] = removeTrailingZero(expressionLevel);
-            }
-            i++;
-        }
-        return expressionLevels;
-    }
+    protected abstract String[] extractConditionLevels(T geneProfile, Set<K> conditions);
 
     protected String[] buildCsvRow(String[] rowHeaders, String[] values) {
         return ArrayUtils.addAll(rowHeaders, values);
@@ -144,11 +130,6 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
     public void setResponseWriter(Writer responseWriter) {
         this.responseWriter = responseWriter;
         csvWriter = new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER, NO_ESCAPE_CHARACTER);
-    }
-
-    String removeTrailingZero(double value) {
-        NumberFormat format = new DecimalFormat("0.####");
-        return format.format(value);
     }
 
 }

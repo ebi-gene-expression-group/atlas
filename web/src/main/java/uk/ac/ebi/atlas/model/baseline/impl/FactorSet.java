@@ -108,7 +108,7 @@ public class FactorSet implements FactorGroup {
         return factorsByType.containsValue(factor);
     }
 
-
+    // Map <type, value>
     public static FactorSet create(Map<String, String> factorValueByType) {
         FactorSet factorSet = new FactorSet();
         for (String factorType : factorValueByType.keySet()) {

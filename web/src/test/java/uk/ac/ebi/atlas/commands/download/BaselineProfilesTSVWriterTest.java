@@ -165,5 +165,66 @@ public class BaselineProfilesTSVWriterTest {
     }
 
 
+    private static final String FACTOR_TYPE = "FACTOR_TYPE";
+    private static final String GENE_ID = "GENE ID";
+    private static final String GENE_NAME = "GENE NAME";
+    private static final String FACTOR_VALUE = "FACTOR_VALUE";
+    private static final String FAIL = "FAIL";
+    private static final String LOWDATA = "LOWDATA";
+
+    private static final FactorGroup factorGroup = FactorSet.create(ImmutableMap.of(FACTOR_TYPE, FACTOR_VALUE));
+    private static final Factor factor = new Factor(FACTOR_TYPE, FACTOR_VALUE);
+
+    @Test
+    public void failExpression() throws IOException {
+        StringWriter output = new StringWriter();
+        subject.setResponseWriter(output);
+
+        BaselineProfile profile1 = new BaselineProfile(GENE_ID, GENE_NAME);
+        BaselineExpression expression = new BaselineExpression(FAIL, factorGroup);
+        profile1.add(FACTOR_TYPE, expression);
+
+        BaselineProfilesList profilesList = new BaselineProfilesList(Collections.singleton(profile1));
+
+        subject.write(profilesList, Collections.singleton(factor));
+
+        String[] lines = output.toString().split("\n");
+        String[] columnHeaders = lines[1].split("\t");
+        String[] profileLine1 = lines[2].split("\t");
+
+        assertThat(columnHeaders[0], is("Gene ID"));
+        assertThat(columnHeaders[1], is("Gene Name"));
+        assertThat(columnHeaders[2], is(FACTOR_VALUE));
+
+        assertThat(profileLine1[0], is(GENE_ID));
+        assertThat(profileLine1[1], is(GENE_NAME));
+        assertThat(profileLine1[2], is(FAIL));
+    }
+
+    @Test
+    public void lowDataExpression() throws IOException {
+        StringWriter output = new StringWriter();
+        subject.setResponseWriter(output);
+
+        BaselineProfile profile1 = new BaselineProfile(GENE_ID, GENE_NAME);
+        BaselineExpression expression = new BaselineExpression(LOWDATA, factorGroup);
+        profile1.add(FACTOR_TYPE, expression);
+
+        BaselineProfilesList profilesList = new BaselineProfilesList(Collections.singleton(profile1));
+
+        subject.write(profilesList, Collections.singleton(factor));
+
+        String[] lines = output.toString().split("\n");
+        String[] columnHeaders = lines[1].split("\t");
+        String[] profileLine1 = lines[2].split("\t");
+
+        assertThat(columnHeaders[0], is("Gene ID"));
+        assertThat(columnHeaders[1], is("Gene Name"));
+        assertThat(columnHeaders[2], is(FACTOR_VALUE));
+
+        assertThat(profileLine1[0], is(GENE_ID));
+        assertThat(profileLine1[1], is(GENE_NAME));
+        assertThat(profileLine1[2], is(LOWDATA));
+    }
 
 }

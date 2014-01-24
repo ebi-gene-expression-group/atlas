@@ -30,7 +30,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
@@ -60,8 +59,6 @@ public class BaselineProfilesTSVWriterIT {
     @Inject
     private BaselineRequestContextBuilder baselineRequestContextBuilder;
 
-    private BaselineRequestContext baselineRequestContext;
-
     private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
 
 
@@ -70,7 +67,7 @@ public class BaselineProfilesTSVWriterIT {
 
         requestPreferences.setQueryFactorType("ORGANISM_PART");
         BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
-        baselineRequestContext = baselineRequestContextBuilder.forExperiment(baselineExperiment)
+        baselineRequestContextBuilder.forExperiment(baselineExperiment)
                 .withPreferences(requestPreferences).build();
 
     }
@@ -143,7 +140,7 @@ public class BaselineProfilesTSVWriterIT {
         requestPreferences.setQueryFactorType("CELL_LINE");
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("HPC-PL cell line", "Mickey Mouse")));
 
-        baselineRequestContext = baselineRequestContextBuilder.forExperiment(multidimensionalExperiment)
+        baselineRequestContextBuilder.forExperiment(multidimensionalExperiment)
                                                               .withPreferences(requestPreferences).build();
 
         String[] headerRows = subject.getTsvFileMasthead().split("\n");
@@ -163,7 +160,7 @@ public class BaselineProfilesTSVWriterIT {
         requestPreferences.setQueryFactorType("RNA");
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("Mickey Mouse")));
 
-        baselineRequestContext = baselineRequestContextBuilder.forExperiment(multidimensionalExperiment)
+        baselineRequestContextBuilder.forExperiment(multidimensionalExperiment)
                                                               .withPreferences(requestPreferences).build();
 
         String[] headerRows = subject.getTsvFileMasthead().split("\n");

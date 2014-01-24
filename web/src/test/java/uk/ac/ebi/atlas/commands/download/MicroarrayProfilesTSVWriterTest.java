@@ -148,14 +148,6 @@ public class MicroarrayProfilesTSVWriterTest {
     }
 
     @Test
-    public void testRemoveTrailingZero() {
-        assertThat(subject.removeTrailingZero(1.111111), is("1.1111"));
-        assertThat(subject.removeTrailingZero(1.100111), is("1.1001"));
-        assertThat(subject.removeTrailingZero(1.111100), is("1.1111"));
-        assertThat(subject.removeTrailingZero(1.110000), is("1.11"));
-    }
-
-    @Test
     public void testWrite() throws Exception {
         subject.setResponseWriter(responseWriterMock);
         subject.write(inputStreamMock, conditions);

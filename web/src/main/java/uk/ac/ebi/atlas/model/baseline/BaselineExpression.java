@@ -25,6 +25,8 @@ package uk.ac.ebi.atlas.model.baseline;
 import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.model.Expression;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Set;
 
 public class BaselineExpression implements Expression {
@@ -36,7 +38,7 @@ public class BaselineExpression implements Expression {
     public BaselineExpression(double level, FactorGroup factorGroup) {
         this.level = level;
         this.factorGroup = factorGroup;
-        this.levelString = Double.toString(level);
+        this.levelString = removeTrailingZero(level);
         this.known = true;
     }
 
@@ -60,7 +62,7 @@ public class BaselineExpression implements Expression {
 
     public double getLevel() {
         if (!isKnown()) {
-            throw new UnsupportedOperationException("BaselineExpression level is " + getLevelString() + ". Call isKnown() first to check.");
+            throw new UnsupportedOperationException("BaselineExpression level is " + levelString + ". Call isKnown() first to check.");
         }
         return level;
     }
@@ -69,7 +71,7 @@ public class BaselineExpression implements Expression {
         return known;
     }
 
-    public String getLevelString() {
+    public String getLevelAsString() {
         return levelString;
     }
 
@@ -109,4 +111,11 @@ public class BaselineExpression implements Expression {
     public boolean containsAll(Set<Factor> factors) {
         return factorGroup.containsAll(factors);
     }
+
+    static String removeTrailingZero(double value) {
+        NumberFormat format = new DecimalFormat("0.####");
+        return format.format(value);
+    }
+
+
 }
