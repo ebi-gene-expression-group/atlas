@@ -46,30 +46,25 @@ public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends 
 
         Comparator<K> profilesComparator = createGeneProfileComparator(requestContext);
 
+        if (requestContext.isGeneSetMatch()) {
+            return buildAverageGeneSetProfiles(requestContext.getGeneQueryResponse(), inputStream, profilesComparator);
+        }
+
         MinMaxPriorityQueue<K> rankingQueue = buildRankingQueue(requestContext.getHeatmapMatrixSize(), profilesComparator);
 
         int geneCount = 0;
+        K geneProfile;
 
-        T list = null;
-
-        if (!requestContext.isGeneSetMatch()) {
-
-            K geneProfile;
-
-            while ((geneProfile = inputStream.readNext()) != null) {
-                rankingQueue.add(geneProfile);
-                geneCount++;
-            }
-            list = createGeneProfilesList(rankingQueue);
-            list.setTotalResultCount(geneCount);
-
-            Collections.sort(list, profilesComparator);
-
-            return list;
+        while ((geneProfile = inputStream.readNext()) != null) {
+            rankingQueue.add(geneProfile);
+            geneCount++;
         }
+        T list = createGeneProfilesList(rankingQueue);
+        list.setTotalResultCount(geneCount);
 
-        return buildAverageGeneSetProfiles(requestContext.getGeneQueryResponse(), inputStream, profilesComparator);
+        Collections.sort(list, profilesComparator);
 
+        return list;
     }
 
     protected abstract T buildAverageGeneSetProfiles(GeneQueryResponse geneQueryResponse, ObjectInputStream<K> objectInputStream, Comparator<K> geneProfilesComparator);

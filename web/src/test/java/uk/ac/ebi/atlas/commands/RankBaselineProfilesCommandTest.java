@@ -64,7 +64,6 @@ public class RankBaselineProfilesCommandTest {
     public RankBaselineProfilesCommandTest() {
     }
 
-    //ToDo: better to do verifications on real values that on anyX(), using anyX() could hide bugs
     @Before
     public void initializeSubject() throws Exception {
 
@@ -116,7 +115,7 @@ public class RankBaselineProfilesCommandTest {
         //given
         when(requestContextMock.isSpecific()).thenReturn(false);
         //when
-        List<BaselineProfile> top3Objects = subject.execute(largeInputStream, requestContextMock);
+        subject.execute(largeInputStream, requestContextMock);
     }
 
         @Test
