@@ -31,6 +31,7 @@ import uk.ac.ebi.atlas.model.Profile;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Set;
@@ -40,11 +41,11 @@ import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements AutoCloseable {
 
-    private String GENE_NAME_COLUMN_NAME = "Gene Name";
-    private String GENE_ID_COLUMN_NAME = "Gene ID";
+    private static final String GENE_NAME_COLUMN_NAME = "Gene Name";
+    private static final String GENE_ID_COLUMN_NAME = "Gene ID";
 
     private CSVWriter csvWriter;
-    private PrintWriter responseWriter;
+    private Writer responseWriter;
 
     public Long write(GeneProfilesList<T> geneProfilesList, Set<K> conditions) throws IOException {
 
@@ -140,7 +141,7 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
         return ArrayUtils.addAll(rowHeaders, values);
     }
 
-    public void setResponseWriter(PrintWriter responseWriter) {
+    public void setResponseWriter(Writer responseWriter) {
         this.responseWriter = responseWriter;
         csvWriter = new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER, NO_ESCAPE_CHARACTER);
     }

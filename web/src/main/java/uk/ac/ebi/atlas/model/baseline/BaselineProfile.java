@@ -38,7 +38,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     private double maxExpressionLevel = 0;
     private double minExpressionLevel = Double.MAX_VALUE;
 
-    BaselineProfile(String geneId, String geneName) {
+    public BaselineProfile(String geneId, String geneName) {
         super(geneId, geneName);
     }
 

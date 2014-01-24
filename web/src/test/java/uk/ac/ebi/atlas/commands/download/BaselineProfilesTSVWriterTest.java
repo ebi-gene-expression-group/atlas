@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.commands.download;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,14 +32,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.Resource;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.Collections;
 import java.util.SortedSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -56,10 +54,7 @@ public class BaselineProfilesTSVWriterTest {
     private BaselineRequestContext requestContextMock;
     @Mock
     private PrintWriter printWriterMock;
-    @Mock
-    private BaselineProfile baselineProfileMock1;
-    @Mock
-    private BaselineProfile baselineProfileMock2;
+
     @Mock
     private BaselineExperiment experimentMock;
     @Mock
@@ -88,18 +83,39 @@ public class BaselineProfilesTSVWriterTest {
                 Sets.newHashSet(new Factor("type1", "value1"), new Factor("type2", "value2")));
         when(requestContextMock.getCutoff()).thenReturn(0.5D);
 
-        when(inputStreamMock.readNext()).thenReturn(baselineProfileMock1)
-                .thenReturn(baselineProfileMock2)
+        FactorGroup fgAdipose = FactorSet.create(ImmutableMap.of("ORG", "adipose"));
+        FactorGroup fgBrain = FactorSet.create(ImmutableMap.of("ORG", "brain"));
+        FactorGroup fgBreast = FactorSet.create(ImmutableMap.of("ORG", "breast"));
+        FactorGroup fgLiver = FactorSet.create(ImmutableMap.of("ORG", "liver"));
+        FactorGroup fgLung = FactorSet.create(ImmutableMap.of("ORG", "lung"));
+
+        BaselineExpression expressionAdipose0 = new BaselineExpression(0d, fgAdipose);
+        BaselineExpression expressionBrain0 = new BaselineExpression(0d, fgBrain);
+        BaselineExpression expressionBreast0 = new BaselineExpression(0d, fgBreast);
+        BaselineExpression expressionLiver0 = new BaselineExpression(0d, fgLiver);
+        BaselineExpression expressionLung0 = new BaselineExpression(0d, fgLung);
+
+        BaselineExpression expressionBrain = new BaselineExpression(0.11d, fgBrain);
+        BaselineExpression expressionLung = new BaselineExpression(9d, fgLung);
+        BaselineExpression expressionLiver = new BaselineExpression(21.12d, fgLiver);
+
+        BaselineProfile baselineProfile1 = new BaselineProfile("GI1", "GN1");
+        baselineProfile1.add("ORG", expressionAdipose0);
+        baselineProfile1.add("ORG", expressionBrain);
+        baselineProfile1.add("ORG", expressionBreast0);
+        baselineProfile1.add("ORG", expressionLiver0);
+        baselineProfile1.add("ORG", expressionLung);
+
+        BaselineProfile baselineProfile2 = new BaselineProfile("GI2", "GN2");
+        baselineProfile2.add("ORG", expressionAdipose0);
+        baselineProfile2.add("ORG", expressionBrain0);
+        baselineProfile2.add("ORG", expressionBreast0);
+        baselineProfile2.add("ORG", expressionLiver);
+        baselineProfile2.add("ORG", expressionLung0);
+
+        when(inputStreamMock.readNext()).thenReturn(baselineProfile1)
+                .thenReturn(baselineProfile2)
                 .thenReturn(null);
-
-        when(baselineProfileMock1.getId()).thenReturn("GI1");
-        when(baselineProfileMock1.getName()).thenReturn("GN1");
-        when(baselineProfileMock1.getExpressionLevel(createFactorValue("brain"))).thenReturn(0.11d);
-        when(baselineProfileMock1.getExpressionLevel(createFactorValue("lung"))).thenReturn(9d);
-
-        when(baselineProfileMock2.getId()).thenReturn("GI2");
-        when(baselineProfileMock2.getName()).thenReturn("GN2");
-        when(baselineProfileMock2.getExpressionLevel(createFactorValue("liver"))).thenReturn(21.12d);
 
         when(experimentalFactorsMock.getFactorsByType(anyString())).thenReturn(Sets.newTreeSet(organismParts));
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
@@ -118,7 +134,7 @@ public class BaselineProfilesTSVWriterTest {
     }
 
     @Test
-    public void applyShouldUseCsvWriter() throws Exception {
+    public void expressionLevels() throws Exception {
 
         long count = subject.write(inputStreamMock, organismParts);
 
@@ -147,6 +163,7 @@ public class BaselineProfilesTSVWriterTest {
     private Factor createFactorValue(String value) {
         return new Factor("ORG", value);
     }
+
 
 
 }
