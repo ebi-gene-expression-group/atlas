@@ -40,7 +40,7 @@
         <selenium.version>2.33.0</selenium.version>
         <tiles.version>2.2.2</tiles.version>
         <jasmine.js.src.location>src/main/webapp/resources/js</jasmine.js.src.location>
-        <solr.version>4.4.0</solr.version>
+        <solr.version>4.5.0</solr.version>
     </properties>
 
 
@@ -261,6 +261,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -380,12 +381,14 @@
             <version>1.4.5</version>
         </dependency>
 
+<!--
         <dependency>
             <groupId>com.github.detro.ghostdriver</groupId>
             <artifactId>phantomjsdriver</artifactId>
             <version>1.0.3</version>
             <scope>test</scope>
         </dependency>
+-->
         <!--
             For testing rest services
         -->
