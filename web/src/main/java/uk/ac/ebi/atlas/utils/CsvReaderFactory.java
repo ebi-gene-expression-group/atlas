@@ -29,7 +29,7 @@ public class CsvReaderFactory {
         }
     }
 
-    public CSVReader createTsvReader(Reader source) {
+    public static CSVReader createTsvReader(Reader source) {
         return new CSVReader(source, '\t');
     }
 }

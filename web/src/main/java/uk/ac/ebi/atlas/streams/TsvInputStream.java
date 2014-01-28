@@ -35,10 +35,6 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
 
     private static final Logger LOGGER = Logger.getLogger(TsvInputStream.class);
 
-    protected static final int GENE_ID_COLUMN = 0;
-
-    protected static final int GENE_NAME_COLUMN = 1;
-
     private CSVReader csvReader;
 
     private TsvRowQueue<K> tsvRowQueue;

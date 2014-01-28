@@ -86,6 +86,8 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         return expressionLevel;
     }
 
+
+    // add the expression levels of another profile to this one
     public BaselineProfile sumProfile(BaselineProfile otherProfile) {
         for (Factor factor : otherProfile.getConditions()) {
             Double otherExpressionLevel = otherProfile.getExpressionLevel(factor);
@@ -105,6 +107,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         return this;
     }
 
+    // divide all expression levels by foldFactor
     public BaselineProfile foldProfile(int foldFactor) {
         resetMaxMin();
         for (Factor factor : getConditions()) {
@@ -117,7 +120,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         return this;
     }
 
-    private double fold(double value, int foldFactor) {
+    private static double fold(double value, int foldFactor) {
         return new NumberUtils().round(value / foldFactor);
     }
 

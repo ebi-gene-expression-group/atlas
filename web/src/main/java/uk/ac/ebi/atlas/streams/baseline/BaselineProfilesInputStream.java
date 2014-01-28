@@ -35,10 +35,10 @@ public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile,
 
 
     public BaselineProfilesInputStream(CSVReader csvReader, String experimentAccession
-            , BaselineExpressionsQueueBuilder expressionsBufferBuilder
+            , BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder
             , BaselineProfilePreconditionBackedBuilder baselineProfilePreconditionBackedBuilder) {
 
-        super(csvReader, experimentAccession, expressionsBufferBuilder);
+        super(csvReader, experimentAccession, baselineExpressionsQueueBuilder);
         this.baselineProfilePreconditionBackedBuilder = baselineProfilePreconditionBackedBuilder;
     }
 
