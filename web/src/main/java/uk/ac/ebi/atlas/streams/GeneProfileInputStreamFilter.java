@@ -34,33 +34,34 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class GeneProfileInputStreamFilter<K, T extends Profile> extends ObjectInputStreamFilter {
+// Filter an ObjectInputStream of Profiles by geneID and/or query conditions (ie: factors/contrasts)
+public class GeneProfileInputStreamFilter<K, T extends Profile> extends ObjectInputStreamFilter<T> {
 
-    private Predicate<Profile> geneProfileAcceptanceCriteria;
+    private Predicate<T> geneProfileAcceptanceCriteria;
 
     public GeneProfileInputStreamFilter(ObjectInputStream<T> geneProfileInputStream
                                         , Collection<String> uppercaseGeneIDs, Set<K> queryConditions) {
         super(geneProfileInputStream);
 
-        geneProfileAcceptanceCriteria = Predicates.and(new GeneIdsPredicate(uppercaseGeneIDs),
-                                                       new GeneProfilePredicate(queryConditions));
+        geneProfileAcceptanceCriteria = Predicates.and(new GeneIdMatchesPredicate(uppercaseGeneIDs),
+                                                       new ExpressedForQueryConditionPredicate(queryConditions));
     }
 
     public GeneProfileInputStreamFilter(ObjectInputStream<T> geneProfileInputStream, Set<K> queryConditions) {
         super(geneProfileInputStream);
 
-        geneProfileAcceptanceCriteria = new GeneProfilePredicate(queryConditions);
+        geneProfileAcceptanceCriteria = new ExpressedForQueryConditionPredicate(queryConditions);
     }
 
     @Override
-    protected Predicate<Profile> getAcceptanceCriteria() {
+    protected Predicate<T> getAcceptanceCriteria() {
         return geneProfileAcceptanceCriteria;
     }
 
-    class GeneIdsPredicate implements Predicate<Profile> {
+    class GeneIdMatchesPredicate implements Predicate<Profile> {
         private Collection<String> uppercaseGeneIDs;
 
-        GeneIdsPredicate(Collection<String> uppercaseGeneIDs){
+        GeneIdMatchesPredicate(Collection<String> uppercaseGeneIDs){
             checkArgument(CollectionUtils.isNotEmpty(uppercaseGeneIDs));
             this.uppercaseGeneIDs = uppercaseGeneIDs;
         }
@@ -70,12 +71,12 @@ public class GeneProfileInputStreamFilter<K, T extends Profile> extends ObjectIn
             return uppercaseGeneIDs.contains(geneProfile.getId().toUpperCase());
         }
 
-    };
+    }
 
-    class GeneProfilePredicate<K> implements Predicate<Profile> {
+    class ExpressedForQueryConditionPredicate<K> implements Predicate<Profile> {
         private Set<K> queryConditions;
 
-        GeneProfilePredicate(Set<K> queryConditions){
+        ExpressedForQueryConditionPredicate(Set<K> queryConditions){
             this.queryConditions = queryConditions;
         }
 
@@ -84,7 +85,7 @@ public class GeneProfileInputStreamFilter<K, T extends Profile> extends ObjectIn
             return CollectionUtils.isEmpty(queryConditions) || profile.isExpressedOnAnyOf(queryConditions);
         }
 
-    };
+    }
 
 
 }

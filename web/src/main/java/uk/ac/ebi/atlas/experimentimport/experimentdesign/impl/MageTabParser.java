@@ -128,14 +128,15 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
             String factorValue = cleanValueAndUnitIfNeeded(factorValueAttribute.getNodeName(), factorValueAttribute.unit);
             String factorValueOntologyTerm = factorValueAttribute.termAccessionNumber;
 
-            if (FACTORS_NEEDING_DOSE.contains(factorValueAttribute.type.toLowerCase())) {
+            if (isFactorThatHasADose(factorValueAttribute)) {
+
                 compoundFactorType = factorType;
                 compoundFactorValue = factorValue;
                 compoundFactorValueOntologyTerm = factorValueOntologyTerm;
 
-            } else if (DOSE.equals(factorValueAttribute.type.toLowerCase())) {
-                if (StringUtils.isNotEmpty(compoundFactorValue)) {
+            } else if (isDoseFactor(factorValueAttribute)) {
 
+                if (StringUtils.isNotEmpty(compoundFactorValue)) {
                     factorValue = Joiner.on(" ").join(compoundFactorValue, factorValue);
                     factorType = compoundFactorType;
                     factorValueOntologyTerm = compoundFactorValueOntologyTerm;
@@ -156,6 +157,14 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         if (StringUtils.isNotEmpty(compoundFactorType) && StringUtils.isNotEmpty(compoundFactorValue)) {
             experimentDesign.putFactor(assayNode.getName(), compoundFactorType, compoundFactorValue, compoundFactorValueOntologyTerm);
         }
+    }
+
+    private boolean isFactorThatHasADose(FactorValueAttribute factorValueAttribute) {
+        return FACTORS_NEEDING_DOSE.contains(factorValueAttribute.type.toLowerCase());
+    }
+
+    private boolean isDoseFactor(FactorValueAttribute factorValueAttribute) {
+        return DOSE.equals(factorValueAttribute.type.toLowerCase());
     }
 
     protected String cleanValueAndUnitIfNeeded(String value, UnitAttribute unit) {

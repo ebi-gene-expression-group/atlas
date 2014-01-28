@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.streams.baseline;
 
-import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,23 +33,15 @@ import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineExpressionBufferBuilderTest {
+public class BaselineExpressionsQueueBuilderTest {
 
     private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
-
-    private static final String RUN_ACCESSION_1 = "ENS0";
-    private static final String RUN_ACCESSION_2 = "ENS1";
-    private static final String RUN_ACCESSION_3 = "ENS2";
-
-    private ExperimentRun experimentRun1;
-    private ExperimentRun experimentRun2;
 
     @Mock
     private BaselineExperimentsCache experimentsCacheMock;
@@ -87,9 +78,6 @@ public class BaselineExpressionBufferBuilderTest {
         when(factorMock3.getType()).thenReturn("ORGANISM_PART");
         when(factorMock3.getValue()).thenReturn("lung");
 
-        experimentRun1 = new ExperimentRun(RUN_ACCESSION_1).addFactor(factorMock1);
-        experimentRun2 = new ExperimentRun(RUN_ACCESSION_2).addFactor(factorMock2);
-
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
 
@@ -114,26 +102,6 @@ public class BaselineExpressionBufferBuilderTest {
         subject.forExperiment(MOCK_EXPERIMENT_ACCESSION);
         //then
         assertThat(subject.build(), is(notNullValue()));
-    }
-
-    @Test
-    public void experimentRunIsRequiredWhenItsAccessionIsIncludedInTheProvidedOrderedRunAccessions() {
-        //given
-        List<String> orderSpecification = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
-        //when
-        boolean isRequired = subject.isExperimentRunRequired(orderSpecification).apply(experimentRun2);
-        //then
-        assertThat(isRequired, is(true));
-    }
-
-    @Test
-    public void experimentRunIsNotRequiredWhenItsAccessionIsNotIncludedInTheProvidedOrderedRunAccessions() {
-        //given
-        List<String> orderSpecification = Lists.newArrayList(RUN_ACCESSION_2, RUN_ACCESSION_3);
-        //when
-        boolean isRequired = subject.isExperimentRunRequired(orderSpecification).apply(experimentRun1);
-        //then
-        assertThat(isRequired, is(false));
     }
 
 }

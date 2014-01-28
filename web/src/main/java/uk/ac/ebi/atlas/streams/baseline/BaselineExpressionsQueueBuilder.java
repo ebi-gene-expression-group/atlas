@@ -22,17 +22,14 @@
 
 package uk.ac.ebi.atlas.streams.baseline;
 
-import com.google.common.base.Predicate;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.streams.TsvRowQueueBuilder;
+import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.List;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -75,15 +72,6 @@ public class BaselineExpressionsQueueBuilder implements TsvRowQueueBuilder<Basel
 
         return new BaselineExpressionsQueue(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups());
 
-    }
-
-    Predicate<ExperimentRun> isExperimentRunRequired(final List<String> orderedRunAccessions) {
-        return new Predicate<ExperimentRun>() {
-            @Override
-            public boolean apply(ExperimentRun experimentRun) {
-                return orderedRunAccessions.contains(experimentRun.getAccession());
-            }
-        };
     }
 
 }
