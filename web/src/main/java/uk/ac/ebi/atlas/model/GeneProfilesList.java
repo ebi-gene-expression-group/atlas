@@ -23,6 +23,8 @@
 package uk.ac.ebi.atlas.model;
 
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -58,4 +60,13 @@ public class GeneProfilesList<T extends Profile> extends ArrayList<T> {
     public void setTotalResultCount(int totalResultCount) {
         this.totalResultCount = totalResultCount;
     }
+
+    public ImmutableList<String> extractGeneNames() {
+        ImmutableList.Builder<String> builder = ImmutableList.builder();
+        for (T profile : this) {
+            builder.add(profile.getName());
+        }
+        return builder.build();
+    }
+
 }

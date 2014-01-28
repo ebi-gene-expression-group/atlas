@@ -28,14 +28,13 @@ import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.streams.TsvRowQueue;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Queue;
 
 public class BaselineExpressionsQueue extends TsvRowQueue<BaselineExpression> {
 
     private Iterator<FactorGroup> expectedFactorGroups;
 
-    protected BaselineExpressionsQueue(List<FactorGroup> orderedFactorGroups) {
+    public BaselineExpressionsQueue(Iterable<FactorGroup> orderedFactorGroups) {
         expectedFactorGroups = Iterables.cycle(orderedFactorGroups).iterator();
     }
 

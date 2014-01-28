@@ -43,8 +43,8 @@ public class BaselineProfilePreconditionBackedBuilder {
     private BaselineRequestContext requestContext;
 
     @Inject
-    protected BaselineProfilePreconditionBackedBuilder(BaselineRequestContext requestContext, BaselineExpressionPrecondition baselineExpressionPrecondition,
-                                                       BaselineProfilePrecondition baselineProfilePrecondition) {
+    public BaselineProfilePreconditionBackedBuilder(BaselineRequestContext requestContext, BaselineExpressionPrecondition baselineExpressionPrecondition,
+                                                    BaselineProfilePrecondition baselineProfilePrecondition) {
         this.requestContext = requestContext;
         this.baselineExpressionPrecondition = baselineExpressionPrecondition;
         this.baselineProfilePrecondition = baselineProfilePrecondition;
