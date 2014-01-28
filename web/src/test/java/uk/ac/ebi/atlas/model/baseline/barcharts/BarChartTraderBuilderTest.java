@@ -170,6 +170,18 @@ public class BarChartTraderBuilderTest {
     @Test
     public void testAddGeneToIndexes() {
         //given
+        BaselineExpression expression1 = mock(BaselineExpression.class);
+        when(expression1.isKnown()).thenReturn(true);
+        when(expression1.getFactorGroup()).thenReturn(factorHashSet1);
+        when(expression1.getLevel()).thenReturn(1.0);
+
+        BaselineExpression expression2 = mock(BaselineExpression.class);
+        when(expression2.isKnown()).thenReturn(true);
+        when(expression2.getFactorGroup()).thenReturn(factorHashSet2);
+        when(expression2.getLevel()).thenReturn(2.0);
+
+        Iterator<BaselineExpression> iterator = Iterators.forArray(expression1, expression2);
+        when(GENE_PROFILE_1.iterator()).thenReturn(iterator);
 
         //when
         subject.addGeneToIndexes(GENE_PROFILE_1, 0);
@@ -190,6 +202,28 @@ public class BarChartTraderBuilderTest {
 
     @Test
     public void testAddTwoGenesToIndexes() {
+        //given
+        BaselineExpression expression1 = mock(BaselineExpression.class);
+        when(expression1.isKnown()).thenReturn(true);
+        when(expression1.getFactorGroup()).thenReturn(factorHashSet1);
+        when(expression1.getLevel()).thenReturn(1d);
+
+        BaselineExpression expression2 = mock(BaselineExpression.class);
+        when(expression2.isKnown()).thenReturn(true);
+        when(expression2.getFactorGroup()).thenReturn(factorHashSet2);
+        when(expression2.getLevel()).thenReturn(2d);
+
+        Iterator<BaselineExpression> iterator = Iterators.forArray(expression1, expression2);
+        when(GENE_PROFILE_1.iterator()).thenReturn(iterator);
+
+        //given
+        BaselineExpression expression21 = mock(BaselineExpression.class);
+        when(expression21.isKnown()).thenReturn(true);
+        when(expression21.getFactorGroup()).thenReturn(factorHashSet1);
+        when(expression21.getLevel()).thenReturn(3d);
+
+        Iterator<BaselineExpression> iterator2 = Iterators.forArray(expression21);
+        when(GENE_PROFILE_2.iterator()).thenReturn(iterator2);
 
         //when
         subject.addGeneToIndexes(GENE_PROFILE_1, 0);
@@ -205,7 +239,7 @@ public class BarChartTraderBuilderTest {
 
 
         assertThat(geneExpressionIndexes.get(1d).get(factorHashSet1).cardinality(), is(1));
-        assertThat(geneExpressionIndexes.get(1d).get(factorHashSet2).cardinality(), is(2));
+        assertThat(geneExpressionIndexes.get(1d).get(factorHashSet2).cardinality(), is(1));
         assertThat(geneExpressionIndexes.get(2d).get(factorHashSet1).cardinality(), is(1));
     }
 

@@ -62,9 +62,11 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         double expressionLevel = 0D;
 
         for (Factor condition : factors) {
-            Double level = getExpressionLevel(condition);
-            if (level != null) {
-                expressionLevel += level;
+            if(isKnownLevel(condition)){
+                Double level = getExpressionLevel(condition);
+                if (level != null) {
+                    expressionLevel += level;
+                }
             }
         }
         return expressionLevel / factors.size();

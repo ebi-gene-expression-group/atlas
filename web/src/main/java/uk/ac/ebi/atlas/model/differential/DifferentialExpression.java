@@ -96,6 +96,11 @@ public class DifferentialExpression implements Expression {
         return getPValue();
     }
 
+    @Override
+    public boolean isKnown() {
+        return true;
+    }
+
     public boolean isOverExpressed() {
         return foldChange > 0;
     }

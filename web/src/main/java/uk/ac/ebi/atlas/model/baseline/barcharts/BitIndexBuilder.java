@@ -86,27 +86,29 @@ public class BitIndexBuilder {
 
         for (BaselineExpression expression : baselineExpressions) {
 
-            SortedSet<Double> cutoffsSmallerThanExpression = cutoffScale.getValuesSmallerThan(expression.getLevel());
+            if(expression.isKnown()) {
+                SortedSet<Double> cutoffsSmallerThanExpression = cutoffScale.getValuesSmallerThan(expression.getLevel());
 
-            for (Double cutoff : cutoffsSmallerThanExpression) {
+                for (Double cutoff : cutoffsSmallerThanExpression) {
 
-                Map<FactorGroup, BitSet> geneBitSets = factorGroupGeneExpressionIndexes.get(cutoff);
+                    Map<FactorGroup, BitSet> geneBitSets = factorGroupGeneExpressionIndexes.get(cutoff);
 
-                if (geneBitSets == null) {
-                    geneBitSets = new HashMap<>();
-                    factorGroupGeneExpressionIndexes.put(cutoff, geneBitSets);
+                    if (geneBitSets == null) {
+                        geneBitSets = new HashMap<>();
+                        factorGroupGeneExpressionIndexes.put(cutoff, geneBitSets);
+
+                    }
+
+                    FactorGroup factorGroup = expression.getFactorGroup();
+                    BitSet bitSet = geneBitSets.get(factorGroup);
+                    if (bitSet == null) {
+                        bitSet = new BitSet(BarChartTrader.AVERAGE_GENES_IN_EXPERIMENT);
+                        geneBitSets.put(factorGroup, bitSet);
+                    }
+
+                    bitSet.set(geneIndexPosition);
 
                 }
-
-                FactorGroup factorGroup = expression.getFactorGroup();
-                BitSet bitSet = geneBitSets.get(factorGroup);
-                if (bitSet == null) {
-                    bitSet = new BitSet(BarChartTrader.AVERAGE_GENES_IN_EXPERIMENT);
-                    geneBitSets.put(factorGroup, bitSet);
-                }
-
-                bitSet.set(geneIndexPosition);
-
             }
         }
 
