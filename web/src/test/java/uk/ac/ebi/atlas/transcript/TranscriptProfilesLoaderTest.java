@@ -55,12 +55,18 @@ public class TranscriptProfilesLoaderTest {
     private static final String A_URL_TEMPLATE_MOCK = "A_URL_TEMPLATE_MOCK ";
     private static final String TRANSCRIPT_ID_1 = "TRANSCRIPT_ID_1";
     private static final String TRANSCRIPT_ID_2 = "TRANSCRIPT_ID_2";
+    private static final String TRANSCRIPT_ID_3 = "TRANSCRIPT_ID_3";
+    private static final String TRANSCRIPT_ID_4 = "TRANSCRIPT_ID_4";
     private static final String A_GENE_ID = "A_GENE_ID";
     private static final String A_GENE_NAME = "A_GENE_NAME";
     private static final TranscriptProfile transcriptProfile1 = new TranscriptProfile(A_GENE_ID, TRANSCRIPT_ID_1, Lists.newArrayList("0.11", "1.3242", "0", "0.0003"));
     private static final TranscriptProfile transcriptProfile2 = new TranscriptProfile(A_GENE_ID, TRANSCRIPT_ID_2, Lists.newArrayList("0.00", "2", "0", "0.0002"));
+    private static final TranscriptProfile transcriptProfile3 = new TranscriptProfile(A_GENE_ID, TRANSCRIPT_ID_3, Lists.newArrayList("0.00", "0", "0", "1"));
+    private static final TranscriptProfile transcriptProfile4 = new TranscriptProfile(A_GENE_ID, TRANSCRIPT_ID_4, Lists.newArrayList("0", "0", "0", "0"));
     private static final String[] TSV_LINE_1 = new String[]{A_GENE_ID, A_GENE_NAME, TRANSCRIPT_ID_1, "0.11", "1.3242", "0", "0.0003"};
     private static final String[] TSV_LINE_2 = new String[]{A_GENE_ID, A_GENE_NAME, TRANSCRIPT_ID_2, "0.00", "2", "0", "0.0002"};
+    private static final String[] TSV_LINE_3 = new String[]{A_GENE_ID, A_GENE_NAME, TRANSCRIPT_ID_3, "0.00", "FAIL", "0", "1"};
+    private static final String[] TSV_LINE_4 = new String[]{A_GENE_ID, A_GENE_NAME, TRANSCRIPT_ID_4, "FAIL", "FAIL", "FAIL", "FAIL"};
 
     @Mock
     private CsvReaderFactory csvReaderFactory;
@@ -77,7 +83,8 @@ public class TranscriptProfilesLoaderTest {
 
     @Before
     public void setUp() throws Exception {
-        CSVReader csvReader = new CSVReader(new InputStreamReader(new ByteArrayInputStream(("\n" + Joiner.on(",").join(TSV_LINE_1) + "\n" + Joiner.on(",").join(TSV_LINE_2)).getBytes())));
+        String source = "\n" + Joiner.on(",").join(TSV_LINE_1) + "\n" + Joiner.on(",").join(TSV_LINE_2) + "\n" + Joiner.on(",").join(TSV_LINE_3) + "\n" + Joiner.on(",").join(TSV_LINE_4);
+        CSVReader csvReader = new CSVReader(new InputStreamReader(new ByteArrayInputStream(source.getBytes())));
         when(csvReaderFactory.createTsvReader(contains(EXPERIMENT_ACCESSION))).thenReturn(csvReader);
 
         subject = new TranscriptProfilesLoader(csvReaderFactory, transcriptProfileDaoMock, A_URL_TEMPLATE_MOCK + "{0}");
@@ -89,7 +96,7 @@ public class TranscriptProfilesLoaderTest {
         verify(csvReaderFactory).createTsvReader(A_URL_TEMPLATE_MOCK + EXPERIMENT_ACCESSION);
 
         verify(transcriptProfileDaoMock).loadTranscriptProfiles(eq(EXPERIMENT_ACCESSION), captor.capture());
-        assertThat(captor.getValue(), containsInAnyOrder(transcriptProfile1, transcriptProfile2));
+        assertThat(captor.getValue(), containsInAnyOrder(transcriptProfile1, transcriptProfile2, transcriptProfile3, transcriptProfile4));
     }
 
     @Test

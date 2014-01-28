@@ -41,8 +41,12 @@ public class TranscriptProfile implements Serializable {
         this.geneId = geneId;
         this.transcriptId = transcriptId;
         for (String expression: expressions) {
-            this.expressions.add(Double.parseDouble(expression));
+            this.expressions.add(parseExpressionString(expression));
         }
+    }
+
+    private double parseExpressionString(String expression) {
+        return "FAIL".equals(expression) ? 0 : Double.parseDouble(expression);
     }
 
     public String getGeneId() {
