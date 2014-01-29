@@ -62,6 +62,7 @@ public abstract class RankProfilesCommand<T extends GeneProfilesList, K extends 
         T list = createGeneProfilesList(rankingQueue);
         list.setTotalResultCount(geneCount);
 
+        //TODO: this sort is not necessary if we pull items off the queue in order into geneProfilesList
         Collections.sort(list, profilesComparator);
 
         return list;
