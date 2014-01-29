@@ -66,8 +66,7 @@ public class ProteinWidgetIT extends SeleniumFixture {
     @Test
     public void testTitle() {
         String experimentDescription = heatmapTablePage.getExperimentDescription();
-        assertThat(experimentDescription, startsWith("RNA-Seq of human individual tissues and mixture of 16 " +
-                "tissues (Illumina Body Map)"));
+        assertThat(experimentDescription, startsWith("RNA-seq of coding RNA from tissue samples of 95 human individuals representing 27 different tissues in order to determine tissue-specificity of all protein-coding genes"));
     }
 
     @Test
