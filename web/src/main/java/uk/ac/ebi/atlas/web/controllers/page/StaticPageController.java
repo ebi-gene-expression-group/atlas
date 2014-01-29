@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.page;
 
-import com.google.common.io.Files;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
@@ -34,9 +33,7 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 @Controller
 @Scope("singleton")
@@ -51,26 +48,20 @@ public class StaticPageController {
 
     @RequestMapping("/{pageName}.html")
     public String getStaticPage(HttpServletRequest request, @PathVariable String pageName) throws IOException {
-        String filePath = String.format("/resources/html/%s.html", pageName);
+        String path = String.format("/resources/html/%s.html", pageName);
 
-        request.setAttribute("content", fetchFileContents(filePath));
+        request.setAttribute("contentResource", fetchResource(path));
         request.setAttribute("nav", pageName);
         return "static-template";
     }
 
     @RequestMapping("/help/{pageName}.html")
     public String getHelpPage(HttpServletRequest request, @PathVariable String pageName) throws IOException {
-        String filePath = String.format("/resources/html/help/%s.html", pageName);
+        String path = String.format("/resources/html/help/%s.html", pageName);
 
-        request.setAttribute("content", fetchFileContents(filePath));
+        request.setAttribute("contentResource", fetchResource(path));
         request.setAttribute("nav", "help");
         return "static-template";
-    }
-
-    @RequestMapping("/help.html")
-    public String getHelpPage(HttpServletRequest request) {
-        request.setAttribute("pageName", "");
-        return "help";
     }
 
     @RequestMapping("/{pageName}.hhhh")
@@ -78,27 +69,12 @@ public class StaticPageController {
         return "redirect:/home?pageName=" + pageName;
     }
 
-    // manually load file contents instead of using c:import to avoid javax.servlet.jsp.JspTagException: 304 errors
-    // see http://stackoverflow.com/questions/17218609/jsp-exception-when-i-try-to-import-static-file
-    private String fetchFileContents(String filePath) throws IOException {
-        return Files.toString(fetchFile(filePath), Charset.forName("UTF-8"));
-    }
-
-    private File fetchFile(String filePath) {
-        Resource resource = servletContextResourceLoader.getResource(filePath);
-
-        try {
-            File file = resource.getFile();
-
-            if (!file.exists()) {
-                throw new ResourceNotFoundException("File " + filePath + " does not exist");
-            }
-
-            return file;
-        } catch (IOException e) {
-            throw new ResourceNotFoundException(e);
+    private Resource fetchResource(String path) {
+        Resource resource = servletContextResourceLoader.getResource(path);
+        if (!resource.exists() || !resource.isReadable()) {
+            throw new ResourceNotFoundException("Resource " + path + " does not exist");
         }
-
+        return resource;
     }
 
 }
