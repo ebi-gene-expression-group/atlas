@@ -33,7 +33,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class MTAB513GeneProfilesDownloadControllerIT {
+public class BaselineExperimentDownloadControllerIT {
 
     private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-513.tsv?geneQuery=&exactMatch=false");
 
