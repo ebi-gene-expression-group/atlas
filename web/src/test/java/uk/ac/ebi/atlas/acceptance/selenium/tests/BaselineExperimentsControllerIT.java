@@ -58,7 +58,7 @@ public class BaselineExperimentsControllerIT extends SinglePageSeleniumFixture {
 
     @Test
     public void checkNumberOfExperimentsOfFirstSpecies() {
-        assertThat(subject.getAllExperimentsOfSpecies(2).size(), is(3));
+        assertThat(subject.getAllExperimentsOfSpecies(2).size(), is(4));
     }
 
     @Test
