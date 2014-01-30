@@ -36,9 +36,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
-import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsQueue;
-import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsQueueBuilder;
-import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesInputStream;
+import uk.ac.ebi.atlas.streams.baseline.*;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import java.io.StringReader;

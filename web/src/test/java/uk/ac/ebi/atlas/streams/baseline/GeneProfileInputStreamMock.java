@@ -20,11 +20,17 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.streams.baseline;
 
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionIsAboveCutoffAndForFilterFactors;
+import uk.ac.ebi.atlas.streams.baseline.BaselineProfileConditionalBuilder;
+import uk.ac.ebi.atlas.streams.baseline.BaselineProfileIsSpecific;
 
 import java.util.ArrayList;
 import java.util.Iterator;

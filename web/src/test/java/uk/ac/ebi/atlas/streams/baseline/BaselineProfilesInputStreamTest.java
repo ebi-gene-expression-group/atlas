@@ -31,7 +31,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfileConditionalBuilder;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 
 import java.io.IOException;

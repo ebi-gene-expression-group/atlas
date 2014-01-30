@@ -20,10 +20,12 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.streams.baseline;
 
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.OrderedFactorGroups;
 import uk.ac.ebi.atlas.streams.baseline.BaselineProfileDeserializer;
 
 import java.util.Iterator;

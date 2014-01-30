@@ -26,7 +26,6 @@ package uk.ac.ebi.atlas.streams.baseline;
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfileConditionalBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile, BaselineExpression> {
