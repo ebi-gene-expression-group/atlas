@@ -32,22 +32,22 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class BaselineProfilePreconditionBackedBuilder {
+public class BaselineProfileConditionalBuilder {
 
     private BaselineProfile baselineProfile;
 
-    private BaselineExpressionPrecondition baselineExpressionPrecondition;
+    private BaselineExpressionIsAboveCutoffAndForFilterFactors baselineExpressionIsAboveCutoffAndForFilterFactors;
 
-    private BaselineProfilePrecondition baselineProfilePrecondition;
+    private BaselineProfileIsSpecific baselineProfileIsSpecific;
 
     private BaselineRequestContext requestContext;
 
     @Inject
-    public BaselineProfilePreconditionBackedBuilder(BaselineRequestContext requestContext, BaselineExpressionPrecondition baselineExpressionPrecondition,
-                                                    BaselineProfilePrecondition baselineProfilePrecondition) {
+    public BaselineProfileConditionalBuilder(BaselineRequestContext requestContext, BaselineExpressionIsAboveCutoffAndForFilterFactors baselineExpressionIsAboveCutoffAndForFilterFactors,
+                                             BaselineProfileIsSpecific baselineProfileIsSpecific) {
         this.requestContext = requestContext;
-        this.baselineExpressionPrecondition = baselineExpressionPrecondition;
-        this.baselineProfilePrecondition = baselineProfilePrecondition;
+        this.baselineExpressionIsAboveCutoffAndForFilterFactors = baselineExpressionIsAboveCutoffAndForFilterFactors;
+        this.baselineProfileIsSpecific = baselineProfileIsSpecific;
     }
 
     //We can't do this @PostConstruct because RequestContext bean gets instantiated in the construction phase of the Controller
@@ -57,22 +57,22 @@ public class BaselineProfilePreconditionBackedBuilder {
     //ToDo: It introduces circular dependency between model and request preferences.
     //ToDo: We should move preconditions in the nearest point where the condition to be checked can be evaluated (i.e. ExpressionBuffer)
     void initPreconditions() {
-        baselineExpressionPrecondition.setCutoff(requestContext.getCutoff())
+        baselineExpressionIsAboveCutoffAndForFilterFactors.setCutoff(requestContext.getCutoff())
                 .setFilterFactors(requestContext.getSelectedFilterFactors());
-        baselineProfilePrecondition.setAllQueryFactors(requestContext.getAllQueryFactors())
+        baselineProfileIsSpecific.setAllQueryFactors(requestContext.getAllQueryFactors())
                 .setSelectedQueryFactors(requestContext.getSelectedQueryFactors())
                 .setSpecific(requestContext.isSpecific());
     }
 
-    public BaselineProfilePreconditionBackedBuilder forGeneIdAndName(String geneId, String geneName) {
+    public BaselineProfileConditionalBuilder forGeneIdAndName(String geneId, String geneName) {
         baselineProfile = new BaselineProfile(geneId, geneName);
         initPreconditions();
         return this;
     }
 
-    public BaselineProfilePreconditionBackedBuilder addExpression(BaselineExpression expression) {
+    public BaselineProfileConditionalBuilder addExpression(BaselineExpression expression) {
         checkState(baselineProfile != null, "Please invoke forGeneID before create");
-        if (baselineExpressionPrecondition.apply(expression)) {
+        if (baselineExpressionIsAboveCutoffAndForFilterFactors.apply(expression)) {
             baselineProfile.add(requestContext.getQueryFactorType(), expression);
         }
         return this;
@@ -81,7 +81,7 @@ public class BaselineProfilePreconditionBackedBuilder {
     public BaselineProfile create() {
         checkState(baselineProfile != null, "Please invoke forGeneID before create");
 
-        if (baselineProfilePrecondition.apply(baselineProfile)){
+        if (baselineProfileIsSpecific.apply(baselineProfile)){
             return baselineProfile;
         }
         return null;

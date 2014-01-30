@@ -32,7 +32,7 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class BaselineProfilePrecondition implements Predicate<BaselineProfile>, Serializable {
+public class BaselineProfileIsSpecific implements Predicate<BaselineProfile>, Serializable {
 
     private boolean specific;
 
@@ -40,7 +40,7 @@ public class BaselineProfilePrecondition implements Predicate<BaselineProfile>, 
 
     private Set<Factor> allQueryFactors;
 
-    public BaselineProfilePrecondition() {
+    public BaselineProfileIsSpecific() {
     }
 
     @Override
@@ -70,17 +70,17 @@ public class BaselineProfilePrecondition implements Predicate<BaselineProfile>, 
 
     }
 
-    BaselineProfilePrecondition setSpecific(boolean specific) {
+    BaselineProfileIsSpecific setSpecific(boolean specific) {
         this.specific = specific;
         return this;
     }
 
-    BaselineProfilePrecondition setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
+    BaselineProfileIsSpecific setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
         this.selectedQueryFactors = selectedQueryFactors;
         return this;
     }
 
-    BaselineProfilePrecondition setAllQueryFactors(Set<Factor> allQueryFactors) {
+    BaselineProfileIsSpecific setAllQueryFactors(Set<Factor> allQueryFactors) {
         this.allQueryFactors = allQueryFactors;
         return this;
     }

@@ -34,9 +34,9 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineProfilePreconditionTest {
+public class BaselineProfileIsSpecificTest {
 
-    private BaselineExpressionPrecondition subject;
+    private BaselineExpressionIsAboveCutoffAndForFilterFactors subject;
 
     private Factor factor1 = new Factor("type1", "value1");
     private Factor factor2 = new Factor("type2", "value2");
@@ -57,7 +57,7 @@ public class BaselineProfilePreconditionTest {
         given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(true);
 
         //when
-        subject = new BaselineExpressionPrecondition();
+        subject = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
 
         //then
@@ -68,7 +68,7 @@ public class BaselineProfilePreconditionTest {
     public void checkLimitingFactorsShouldSucceedWhenNoLimitingFactorSetIsProvided() throws Exception {
 
         //given
-        subject = new BaselineExpressionPrecondition();
+        subject = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
 
         //then
         assertThat(subject.checkFilterFactors(expressionMock), is(true));
@@ -78,7 +78,7 @@ public class BaselineProfilePreconditionTest {
     public void applyShouldFailExpressionDoesntContainAllLimitingFactors() throws Exception {
 
         //given
-        subject = new BaselineExpressionPrecondition();
+        subject = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
         given(expressionMock.isKnown()).willReturn(true);
         given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(false);
@@ -90,7 +90,7 @@ public class BaselineProfilePreconditionTest {
     public void applyShouldSucceedIfLevelIsGreaterThanCutoff() throws Exception {
 
         //given
-        subject = new BaselineExpressionPrecondition();
+        subject = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
         subject.setCutoff(1d);
 

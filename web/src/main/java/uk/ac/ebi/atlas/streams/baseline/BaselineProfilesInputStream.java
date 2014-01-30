@@ -26,35 +26,35 @@ package uk.ac.ebi.atlas.streams.baseline;
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfilePreconditionBackedBuilder;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfileConditionalBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile, BaselineExpression> {
 
-    private BaselineProfilePreconditionBackedBuilder baselineProfilePreconditionBackedBuilder;
+    private BaselineProfileConditionalBuilder baselineProfileConditionalBuilder;
 
 
     public BaselineProfilesInputStream(CSVReader csvReader, String experimentAccession
             , BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder
-            , BaselineProfilePreconditionBackedBuilder baselineProfilePreconditionBackedBuilder) {
+            , BaselineProfileConditionalBuilder baselineProfileConditionalBuilder) {
 
         super(csvReader, experimentAccession, baselineExpressionsQueueBuilder);
-        this.baselineProfilePreconditionBackedBuilder = baselineProfilePreconditionBackedBuilder;
+        this.baselineProfileConditionalBuilder = baselineProfileConditionalBuilder;
     }
 
     @Override
     protected BaselineProfile createProfile() {
-        return baselineProfilePreconditionBackedBuilder.create();
+        return baselineProfileConditionalBuilder.create();
     }
 
     @Override
     protected void addExpressionToBuilder(BaselineExpression expression) {
-        baselineProfilePreconditionBackedBuilder.addExpression(expression);
+        baselineProfileConditionalBuilder.addExpression(expression);
     }
 
     @Override
     protected void addGeneInfoValueToBuilder(String[] values) {
-        baselineProfilePreconditionBackedBuilder.forGeneIdAndName(values[0], values[1]);
+        baselineProfileConditionalBuilder.forGeneIdAndName(values[0], values[1]);
     }
 
 }

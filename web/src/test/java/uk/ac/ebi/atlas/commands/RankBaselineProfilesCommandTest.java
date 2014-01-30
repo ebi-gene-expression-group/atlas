@@ -46,7 +46,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
@@ -377,12 +376,12 @@ public class RankBaselineProfilesCommandTest {
         // TODO: refactor production code, way too much to setup here.
         StringReader source = new StringReader(sourceString);
         CSVReader csvReader = CsvReaderFactory.createTsvReader(source);
-        BaselineProfilePreconditionBackedBuilder baselineProfilePreconditionBackedBuilder = new BaselineProfilePreconditionBackedBuilder(requestContextMockEMTab513, new BaselineExpressionPrecondition(), new BaselineProfilePrecondition());
+        BaselineProfileConditionalBuilder baselineProfileConditionalBuilder = new BaselineProfileConditionalBuilder(requestContextMockEMTab513, new BaselineExpressionIsAboveCutoffAndForFilterFactors(), new BaselineProfileIsSpecific());
         when(baselineExpressionsQueueBuilder.forExperiment(E_MTAB_513)).thenReturn(baselineExpressionsQueueBuilder);
         when(baselineExpressionsQueueBuilder.withHeaders((String)anyVararg())).thenReturn(baselineExpressionsQueueBuilder);
 
         when(baselineExpressionsQueueBuilder.build()).thenReturn(new BaselineExpressionsQueue(eMTab513react71InputStream.getOrderedFactorGroups()));
-        return new BaselineProfilesInputStream(csvReader, E_MTAB_513, baselineExpressionsQueueBuilder, baselineProfilePreconditionBackedBuilder);
+        return new BaselineProfilesInputStream(csvReader, E_MTAB_513, baselineExpressionsQueueBuilder, baselineProfileConditionalBuilder);
     }
 
     private void checkAllPolr2bExpressionLevels(BaselineProfile polr2b) {
