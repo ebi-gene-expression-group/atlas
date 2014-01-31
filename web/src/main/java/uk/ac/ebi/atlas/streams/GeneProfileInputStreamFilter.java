@@ -58,10 +58,10 @@ public class GeneProfileInputStreamFilter<K, T extends Profile> extends ObjectIn
         return geneProfileAcceptanceCriteria;
     }
 
-    class GeneIdMatchesPredicate implements Predicate<Profile> {
+    public static class GeneIdMatchesPredicate implements Predicate<Profile> {
         private Collection<String> uppercaseGeneIDs;
 
-        GeneIdMatchesPredicate(Collection<String> uppercaseGeneIDs){
+        public GeneIdMatchesPredicate(Collection<String> uppercaseGeneIDs){
             checkArgument(CollectionUtils.isNotEmpty(uppercaseGeneIDs));
             this.uppercaseGeneIDs = uppercaseGeneIDs;
         }
@@ -73,10 +73,10 @@ public class GeneProfileInputStreamFilter<K, T extends Profile> extends ObjectIn
 
     }
 
-    class ExpressedForQueryConditionPredicate<K> implements Predicate<Profile> {
+    public static class ExpressedForQueryConditionPredicate<K> implements Predicate<Profile> {
         private Set<K> queryConditions;
 
-        ExpressedForQueryConditionPredicate(Set<K> queryConditions){
+        public ExpressedForQueryConditionPredicate(Set<K> queryConditions){
             this.queryConditions = queryConditions;
         }
 

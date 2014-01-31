@@ -44,6 +44,10 @@ public class BaselineProfileConditionalBuilder {
 
     private BaselineRequestContext requestContext;
 
+    public BaselineProfileConditionalBuilder() {
+        // for use by subclasses
+    }
+
     @Inject
     public BaselineProfileConditionalBuilder(BaselineRequestContext requestContext, BaselineExpressionIsAboveCutoffAndForFilterFactors baselineExpressionIsAboveCutoffAndForFilterFactors,
                                              BaselineProfileIsSpecific baselineProfileIsSpecific) {
