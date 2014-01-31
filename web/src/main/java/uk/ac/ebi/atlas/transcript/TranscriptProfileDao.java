@@ -45,7 +45,7 @@ public class TranscriptProfileDao {
             "FROM RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ? AND GENE_IDENTIFIER = ? AND ISACTIVE='T'";
 
     private static final String TRANSCRIPT_PROFILE_INSERT = "INSERT INTO RNASEQ_BSLN_TRANSCRIPTS " +
-            "(EXPERIMENT, GENE_IDENTIFIER, TRANSCRIPT_IDENTIFIER, TRANSCRIPT_EXPRESSIONS) VALUES (?, ?, ?, ?, ?)";
+            "(EXPERIMENT, GENE_IDENTIFIER, TRANSCRIPT_IDENTIFIER, TRANSCRIPT_EXPRESSIONS) VALUES (?, ?, ?, ?)";
     private static final int FIRST_INDEX = 1;
     private static final int SECOND_INDEX = 2;
     private static final int THIRD_INDEX = 3;
