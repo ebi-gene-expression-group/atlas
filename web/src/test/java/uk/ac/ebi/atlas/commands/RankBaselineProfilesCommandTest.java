@@ -36,9 +36,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
-import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsQueue;
-import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsQueueBuilder;
-import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesInputStream;
+import uk.ac.ebi.atlas.streams.baseline.*;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import java.io.StringReader;
@@ -61,13 +59,13 @@ public class RankBaselineProfilesCommandTest {
     private static final String SPECIES = "Species 1";
     public static final String E_MTAB_513 = "E-MTAB-513";
 
-    GeneProfileInputStreamEMTab513React71 eMTab513react71 = new GeneProfileInputStreamEMTab513React71(0.5);
+    GeneProfileInputStreamEMTab513React71 eMTab513react71InputStream = new GeneProfileInputStreamEMTab513React71(0.5);
 
     @Mock
     private BaselineRequestContext requestContextMockSpecificNoGeneQuery;
 
     @Mock
-    private BaselineRequestContext requestContextMockSpecificEMTAB513Factors;
+    private BaselineRequestContext requestContextMockEMTab513;
 
     @Mock
     private InputStreamFactory inputStreamFactoryMock;
@@ -91,13 +89,12 @@ public class RankBaselineProfilesCommandTest {
     @Before
     public void initializeSubject() throws Exception {
 
-        ImmutableSet<Factor> eMtab513AllFactors = eMTab513react71.getOrderedFactorGroups().extractFactors();
+        ImmutableSet<Factor> eMtab513AllFactors = eMTab513react71InputStream.getOrderedFactorGroups().extractFactors();
 
-        when(requestContextMockSpecificEMTAB513Factors.getHeatmapMatrixSize()).thenReturn(50);
-        when(requestContextMockSpecificEMTAB513Factors.isSpecific()).thenReturn(true);
-        when(requestContextMockSpecificEMTAB513Factors.getSelectedFilterFactors()).thenReturn(Collections.EMPTY_SET);
-        when(requestContextMockSpecificEMTAB513Factors.getAllQueryFactors()).thenReturn(eMtab513AllFactors);
-        when(requestContextMockSpecificEMTAB513Factors.getCutoff()).thenReturn(0.5D);
+        when(requestContextMockEMTab513.getHeatmapMatrixSize()).thenReturn(50);
+        when(requestContextMockEMTab513.getSelectedFilterFactors()).thenReturn(Collections.EMPTY_SET);
+        when(requestContextMockEMTab513.getAllQueryFactors()).thenReturn(eMtab513AllFactors);
+        when(requestContextMockEMTab513.getCutoff()).thenReturn(0.5D);
 
         when(requestContextMockSpecificNoGeneQuery.getGeneQuery()).thenReturn("");
         when(requestContextMockSpecificNoGeneQuery.getFilteredBySpecies()).thenReturn(SPECIES);
@@ -206,8 +203,9 @@ public class RankBaselineProfilesCommandTest {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true
     @Test
-    public void eMTab513react71_Specific_CheckExpressionLevelsForLeukocyte() {
-        BaselineProfilesList profiles = subject.execute(eMTab513react71, requestContextMockSpecificEMTAB513Factors);
+    public void eMTab513react71_Specific() {
+        mockSpecific();
+        BaselineProfilesList profiles = subject.execute(eMTab513react71InputStream, requestContextMockEMTab513);
 
         assertThat(profiles.extractGeneNames(), contains("SRSF2", "ZNF713", "ZFP2", "POLR2B", "SNRPA", "CCNT2", "ZKSCAN5"));
 
@@ -234,73 +232,157 @@ public class RankBaselineProfilesCommandTest {
         assertThat(ccnt2.getExpressionLevel(FACTOR_LEUKOCYTE), is(CCNT2_LEUKOCYTE));
         assertThat(zkscan5.getExpressionLevel(FACTOR_LEUKOCYTE), is(ZKSCAN5_LEUKOCYTE));
 
+        checkAllPolr2bExpressionLevels(polr2b);
     }
 
-    // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true
+    //http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&_specific=on
     @Test
-    public void eMTab513react71_Specific_CheckExpressionLevelsForPolr2b() {
-        BaselineProfilesList profiles = subject.execute(eMTab513react71, requestContextMockSpecificEMTAB513Factors);
+    public void eMTab513react71_NotSpecific() {
+        BaselineProfilesList profiles = subject.execute(eMTab513react71InputStream, requestContextMockEMTab513);
 
-        assertThat(profiles.extractGeneNames(), contains("SRSF2", "ZNF713", "ZFP2", "POLR2B", "SNRPA", "CCNT2", "ZKSCAN5"));
+        assertThat(profiles.extractGeneNames(), contains("POLR2B", "SNRPA", "CCNT2", "ZKSCAN5", "ZFP2", "ZNF713", "SRSF2"));
 
-        BaselineProfile polr2b = profiles.get(3);
-        checkPolr2bExpressionLevels(polr2b);
+        BaselineProfile srsf2 = profiles.get(6);
+        BaselineProfile znf713 = profiles.get(5);
+        BaselineProfile zfp2 = profiles.get(4);
+        BaselineProfile polr2b = profiles.get(0);
+        BaselineProfile snrpa = profiles.get(1);
+        BaselineProfile ccnt2 = profiles.get(2);
+        BaselineProfile zkscan5 = profiles.get(3);
+        assertThat(srsf2.getName(), is("SRSF2"));
+        assertThat(znf713.getName(), is("ZNF713"));
+        assertThat(zfp2.getName(), is("ZFP2"));
+        assertThat(polr2b.getName(), is("POLR2B"));
+        assertThat(snrpa.getName(), is("SNRPA"));
+        assertThat(ccnt2.getName(), is("CCNT2"));
+        assertThat(zkscan5.getName(), is("ZKSCAN5"));
+
+        assertThat(srsf2.getExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
+        assertThat(znf713.getExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
+        assertThat(zfp2.getExpressionLevel(FACTOR_LEUKOCYTE), is(nullValue()));
+        assertThat(polr2b.getExpressionLevel(FACTOR_LEUKOCYTE), is(POLR2B_LEUKOCYTE));
+        assertThat(snrpa.getExpressionLevel(FACTOR_LEUKOCYTE), is(SNRPA_LEUKOCYTE));
+        assertThat(ccnt2.getExpressionLevel(FACTOR_LEUKOCYTE), is(CCNT2_LEUKOCYTE));
+        assertThat(zkscan5.getExpressionLevel(FACTOR_LEUKOCYTE), is(ZKSCAN5_LEUKOCYTE));
+
+        checkAllPolr2bExpressionLevels(polr2b);
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true&geneSetMatch=true
     @Test
-    public void eMTab513react71_SpecificGeneSet_CheckExpressionLevelsForLeukocyte() {
-        when(requestContextMockSpecificEMTAB513Factors.isGeneSetMatch()).thenReturn(true);
-        when(geneQueryResponseMock.getRelatedQueryTerms(anyString())).thenReturn(Collections.singleton("react_71"));
-        when(geneQueryResponseMock.getQueryTerms()).thenReturn(Collections.singleton("react_71"));
-        when(requestContextMockSpecificEMTAB513Factors.getGeneQueryResponse()).thenReturn(geneQueryResponseMock);
+    public void eMTab513react71_Specific_GeneSet() {
+        mockSpecific();
+        mockGeneSetMatchTrue();
 
-        BaselineProfilesList profiles = subject.execute(eMTab513react71, requestContextMockSpecificEMTAB513Factors);
+        BaselineProfilesList profiles = subject.execute(eMTab513react71InputStream, requestContextMockEMTab513);
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
         BaselineProfile react71 = profiles.get(0);
 
-        assertThat(react71.getExpressionLevel(FACTOR_LEUKOCYTE), is(MathUtils.round((POLR2B_LEUKOCYTE + SNRPA_LEUKOCYTE + CCNT2_LEUKOCYTE + ZKSCAN5_LEUKOCYTE) / NUMBER_OF_GENES_IN_GENE_SET, NUMBER_OF_FRACTIONAL_DIGITS)));
+        checkAllReact71ExpressionLevels(react71);
+
     }
 
-    @Mock
-    private BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder;
+    //http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&_specific=on&geneSetMatch=true
+    @Test
+    public void eMTab513react71_NotSpecific_GeneSet() {
+        mockGeneSetMatchTrue();
 
+        BaselineProfilesList profiles = subject.execute(eMTab513react71InputStream, requestContextMockEMTab513);
+
+        assertThat(profiles.extractGeneNames(), contains("react_71"));
+
+        BaselineProfile react71 = profiles.get(0);
+
+        checkAllReact71ExpressionLevels(react71);
+    }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true&queryFactorValues=leukocyte
     @Test
-    public void eMTab513react71_SpecificQueryFactorLeukocyte_CheckExpressionLevelsForPolr2B() throws GenesNotFoundException {
+    public void eMTab513react71_Specific_QueryFactorLeukocyte() throws GenesNotFoundException {
+        mockSpecific();
+        mockSelectOrganismPart(FACTOR_LEUKOCYTE);
 
-        // TODO: refactor production code, way too much to setup here.
-        // This is because specificity filtering happens inside the TsvInputStream reading (by BaselineProfilePrecondition),
-        // so we need to set one up
-        StringReader source = new StringReader(eMTab513react71.getSourceString());
-        CSVReader csvReader = CsvReaderFactory.createTsvReader(source);
-        BaselineProfilePreconditionBackedBuilder baselineProfilePreconditionBackedBuilder = new BaselineProfilePreconditionBackedBuilder(requestContextMockSpecificEMTAB513Factors, new BaselineExpressionPrecondition(), new BaselineProfilePrecondition());
-        when(baselineExpressionsQueueBuilder.forExperiment(E_MTAB_513)).thenReturn(baselineExpressionsQueueBuilder);
-        when(baselineExpressionsQueueBuilder.withHeaders((String)anyVararg())).thenReturn(baselineExpressionsQueueBuilder);
-
-        when(baselineExpressionsQueueBuilder.build()).thenReturn(new BaselineExpressionsQueue(eMTab513react71.getOrderedFactorGroups()));
-        BaselineProfilesInputStream inputStream = new BaselineProfilesInputStream(csvReader, E_MTAB_513, baselineExpressionsQueueBuilder, baselineProfilePreconditionBackedBuilder);
-
-        when(requestContextMockSpecificEMTAB513Factors.getQueryFactorType()).thenReturn("ORGANISM_PART");
-        when(requestContextMockSpecificEMTAB513Factors.getSelectedQueryFactors()).thenReturn(Collections.singleton(FACTOR_LEUKOCYTE));
-        when(inputStreamFactoryMock.createBaselineProfileInputStream(E_MTAB_513)).thenReturn(inputStream);
-
-        subject = new RankBaselineProfilesCommand(requestContextMockSpecificEMTAB513Factors, inputStreamFactoryMock, geneSetProfilesBuilder);
-
+        mockInputStreamFromEMTab513SourceString();
         BaselineProfilesList profiles = subject.execute(E_MTAB_513);
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B"));
 
         BaselineProfile polr2b = profiles.get(0);
 
-        checkPolr2bExpressionLevels(polr2b);
-
+        checkAllPolr2bExpressionLevels(polr2b);
     }
 
-    private void checkPolr2bExpressionLevels(BaselineProfile polr2b) {
+    // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&_specific=on&queryFactorValues=leukocyte
+    @Test
+    public void eMTab513react71_NotSpecific_QueryFactorLeukocyte() throws GenesNotFoundException {
+        mockSelectOrganismPart(FACTOR_LEUKOCYTE);
+
+        mockInputStreamFromEMTab513SourceString();
+        BaselineProfilesList profiles = subject.execute(E_MTAB_513);
+
+        assertThat(profiles.extractGeneNames(), contains("POLR2B", "SNRPA", "CCNT2", "ZKSCAN5"));
+
+        BaselineProfile polr2b = profiles.get(0);
+        BaselineProfile snrpa = profiles.get(1);
+        BaselineProfile ccnt2 = profiles.get(2);
+        BaselineProfile zkscan5 = profiles.get(3);
+        assertThat(polr2b.getName(), is("POLR2B"));
+        assertThat(snrpa.getName(), is("SNRPA"));
+        assertThat(ccnt2.getName(), is("CCNT2"));
+        assertThat(zkscan5.getName(), is("ZKSCAN5"));
+
+        assertThat(polr2b.getExpressionLevel(FACTOR_LEUKOCYTE), is(POLR2B_LEUKOCYTE));
+        assertThat(snrpa.getExpressionLevel(FACTOR_LEUKOCYTE), is(SNRPA_LEUKOCYTE));
+        assertThat(ccnt2.getExpressionLevel(FACTOR_LEUKOCYTE), is(CCNT2_LEUKOCYTE));
+        assertThat(zkscan5.getExpressionLevel(FACTOR_LEUKOCYTE), is(ZKSCAN5_LEUKOCYTE));
+
+        checkAllPolr2bExpressionLevels(polr2b);
+    }
+
+
+    private void mockSpecific() {
+        when(requestContextMockEMTab513.isSpecific()).thenReturn(true);
+    }
+
+    private void mockInputStreamFromEMTab513SourceString() {
+        BaselineProfilesInputStream inputStream = inputStreamFromSourceString(eMTab513react71InputStream.getSourceString());
+        when(inputStreamFactoryMock.createBaselineProfileInputStream(E_MTAB_513)).thenReturn(inputStream);
+        subject = new RankBaselineProfilesCommand(requestContextMockEMTab513, inputStreamFactoryMock, geneSetProfilesBuilder);
+    }
+
+    private void mockSelectOrganismPart(Factor factor) {
+        when(requestContextMockEMTab513.getQueryFactorType()).thenReturn("ORGANISM_PART");
+        when(requestContextMockEMTab513.getSelectedQueryFactors()).thenReturn(Collections.singleton(factor));
+    }
+
+    private void mockGeneSetMatchTrue() {
+        when(requestContextMockEMTab513.isGeneSetMatch()).thenReturn(true);
+        when(geneQueryResponseMock.getRelatedQueryTerms(anyString())).thenReturn(Collections.singleton("react_71"));
+        when(geneQueryResponseMock.getQueryTerms()).thenReturn(Collections.singleton("react_71"));
+        when(requestContextMockEMTab513.getGeneQueryResponse()).thenReturn(geneQueryResponseMock);
+    }
+
+    @Mock
+    private BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder;
+
+    private BaselineProfilesInputStream inputStreamFromSourceString(String sourceString) {
+        // Create input stream from source string. This is needed when you need to exercise the
+        // specificity filtering in the BaselineProfilePrecondition, which is called from inside the TsvInputStream
+        // So you need to setup a real TsvInputStream, but from a mocked source string
+        // TODO: refactor production code, way too much to setup here.
+        StringReader source = new StringReader(sourceString);
+        CSVReader csvReader = CsvReaderFactory.createTsvReader(source);
+        BaselineProfileConditionalBuilder baselineProfileConditionalBuilder = new BaselineProfileConditionalBuilder(requestContextMockEMTab513, new BaselineExpressionIsAboveCutoffAndForFilterFactors(), new BaselineProfileIsSpecific());
+        when(baselineExpressionsQueueBuilder.forExperiment(E_MTAB_513)).thenReturn(baselineExpressionsQueueBuilder);
+        when(baselineExpressionsQueueBuilder.withHeaders((String)anyVararg())).thenReturn(baselineExpressionsQueueBuilder);
+
+        when(baselineExpressionsQueueBuilder.build()).thenReturn(new BaselineExpressionsQueue(eMTab513react71InputStream.getOrderedFactorGroups()));
+        return new BaselineProfilesInputStream(csvReader, E_MTAB_513, baselineExpressionsQueueBuilder, baselineProfileConditionalBuilder);
+    }
+
+    private void checkAllPolr2bExpressionLevels(BaselineProfile polr2b) {
         assertThat(polr2b.getExpressionLevel(factor("adipose")), is(16D));
         assertThat(polr2b.getExpressionLevel(factor("adrenal gland")), is(30D));
         assertThat(polr2b.getExpressionLevel(factor("brain")), is(24D));
@@ -317,6 +399,26 @@ public class RankBaselineProfilesCommandTest {
         assertThat(polr2b.getExpressionLevel(factor("skeletal muscle")), is(28D));
         assertThat(polr2b.getExpressionLevel(factor("testis")), is(33D));
         assertThat(polr2b.getExpressionLevel(factor("thyroid")), is(38D));
+    }
+
+
+    private void checkAllReact71ExpressionLevels(BaselineProfile react71) {
+        assertThat(react71.getExpressionLevel(factor("adipose")), is(7D));
+        assertThat(react71.getExpressionLevel(factor("adrenal gland")), is(10D));
+        assertThat(react71.getExpressionLevel(factor("brain")), is(6D));
+        assertThat(react71.getExpressionLevel(factor("breast")), is(6D));
+        assertThat(react71.getExpressionLevel(factor("colon")), is(8D));
+        assertThat(react71.getExpressionLevel(factor("heart")), is(6D));
+        assertThat(react71.getExpressionLevel(factor("kidney")), is(4D));
+        assertThat(react71.getExpressionLevel(FACTOR_LEUKOCYTE), is(MathUtils.round((POLR2B_LEUKOCYTE + SNRPA_LEUKOCYTE + CCNT2_LEUKOCYTE + ZKSCAN5_LEUKOCYTE) / NUMBER_OF_GENES_IN_GENE_SET, NUMBER_OF_FRACTIONAL_DIGITS)));
+        assertThat(react71.getExpressionLevel(factor("liver")), is(4D));
+        assertThat(react71.getExpressionLevel(factor("lung")), is(6D));
+        assertThat(react71.getExpressionLevel(factor("lymph node")), is(9D));
+        assertThat(react71.getExpressionLevel(factor("ovary")), is(9D));
+        assertThat(react71.getExpressionLevel(factor("prostate")), is(17D));
+        assertThat(react71.getExpressionLevel(factor("skeletal muscle")), is(11D));
+        assertThat(react71.getExpressionLevel(factor("testis")), is(11D));
+        assertThat(react71.getExpressionLevel(factor("thyroid")), is(8D));
     }
 
     private Factor factor(String factorValue) {

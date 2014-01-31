@@ -20,11 +20,13 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.streams.baseline;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Named;
 import java.io.Serializable;
@@ -32,7 +34,7 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class BaselineProfilePrecondition implements Predicate<BaselineProfile>, Serializable {
+public class BaselineProfileIsSpecific implements Predicate<BaselineProfile>, Serializable {
 
     private boolean specific;
 
@@ -40,7 +42,7 @@ public class BaselineProfilePrecondition implements Predicate<BaselineProfile>, 
 
     private Set<Factor> allQueryFactors;
 
-    public BaselineProfilePrecondition() {
+    public BaselineProfileIsSpecific() {
     }
 
     @Override
@@ -70,17 +72,17 @@ public class BaselineProfilePrecondition implements Predicate<BaselineProfile>, 
 
     }
 
-    BaselineProfilePrecondition setSpecific(boolean specific) {
+    BaselineProfileIsSpecific setSpecific(boolean specific) {
         this.specific = specific;
         return this;
     }
 
-    BaselineProfilePrecondition setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
+    BaselineProfileIsSpecific setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
         this.selectedQueryFactors = selectedQueryFactors;
         return this;
     }
 
-    BaselineProfilePrecondition setAllQueryFactors(Set<Factor> allQueryFactors) {
+    BaselineProfileIsSpecific setAllQueryFactors(Set<Factor> allQueryFactors) {
         this.allQueryFactors = allQueryFactors;
         return this;
     }

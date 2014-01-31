@@ -20,11 +20,13 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.streams.baseline;
 
 import com.google.common.base.Predicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Named;
 import java.io.Serializable;
@@ -33,31 +35,28 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class BaselineExpressionPrecondition implements Predicate<BaselineExpression>, Serializable {
+public class BaselineExpressionIsAboveCutoffAndForFilterFactors implements Predicate<BaselineExpression>, Serializable {
 
     private double cutoff;
 
     private Set<Factor> filterFactors = new HashSet<>();
 
-    public BaselineExpressionPrecondition() {
+    public BaselineExpressionIsAboveCutoffAndForFilterFactors() {
     }
 
-    public BaselineExpressionPrecondition setFilterFactors(Set<Factor> filterFactors) {
+    public BaselineExpressionIsAboveCutoffAndForFilterFactors setFilterFactors(Set<Factor> filterFactors) {
         this.filterFactors = filterFactors;
         return this;
     }
 
-    public BaselineExpressionPrecondition setCutoff(double cutoff) {
+    public BaselineExpressionIsAboveCutoffAndForFilterFactors setCutoff(double cutoff) {
         this.cutoff = cutoff;
         return this;
     }
 
     @Override
     public boolean apply(BaselineExpression expression) {
-        if(!expression.isKnown()) return true;
-
-        return expression.isGreaterThan(cutoff)
-                && checkFilterFactors(expression);
+        return !expression.isKnown() || (expression.isGreaterThan(cutoff) && checkFilterFactors(expression));
     }
 
     protected boolean checkFilterFactors(BaselineExpression expression) {

@@ -20,11 +20,17 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.streams.baseline;
 
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionIsAboveCutoffAndForFilterFactors;
+import uk.ac.ebi.atlas.streams.baseline.BaselineProfileConditionalBuilder;
+import uk.ac.ebi.atlas.streams.baseline.BaselineProfileIsSpecific;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -48,23 +54,23 @@ public class GeneProfileInputStreamMock implements ObjectInputStream<BaselinePro
         BaselineRequestContext requestContextMock = mock(BaselineRequestContext.class);
         when(requestContextMock.getQueryFactorType()).thenReturn("ORGANISM_PART");
 
-        BaselineExpressionPrecondition baselineExpressionPreconditionMock = mock(BaselineExpressionPrecondition.class);
-        when(baselineExpressionPreconditionMock.setCutoff(anyDouble())).thenReturn(baselineExpressionPreconditionMock);
-        when(baselineExpressionPreconditionMock.setFilterFactors(anySet())).thenReturn(baselineExpressionPreconditionMock);
-        when(baselineExpressionPreconditionMock.apply(any(BaselineExpression.class))).thenReturn(true);
+        BaselineExpressionIsAboveCutoffAndForFilterFactors baselineExpressionIsAboveCutoffAndForFilterFactorsMock = mock(BaselineExpressionIsAboveCutoffAndForFilterFactors.class);
+        when(baselineExpressionIsAboveCutoffAndForFilterFactorsMock.setCutoff(anyDouble())).thenReturn(baselineExpressionIsAboveCutoffAndForFilterFactorsMock);
+        when(baselineExpressionIsAboveCutoffAndForFilterFactorsMock.setFilterFactors(anySet())).thenReturn(baselineExpressionIsAboveCutoffAndForFilterFactorsMock);
+        when(baselineExpressionIsAboveCutoffAndForFilterFactorsMock.apply(any(BaselineExpression.class))).thenReturn(true);
 
-        BaselineProfilePrecondition baselineProfilePreconditionMock = mock(BaselineProfilePrecondition.class);
-        when(baselineProfilePreconditionMock.setSelectedQueryFactors(anySet())).thenReturn(baselineProfilePreconditionMock);
-        when(baselineProfilePreconditionMock.setSpecific(anyBoolean())).thenReturn(baselineProfilePreconditionMock);
-        when(baselineProfilePreconditionMock.setAllQueryFactors(anySet())).thenReturn(baselineProfilePreconditionMock);
-        when(baselineProfilePreconditionMock.apply(any(BaselineProfile.class))).thenReturn(true);
+        BaselineProfileIsSpecific baselineProfileIsSpecificMock = mock(BaselineProfileIsSpecific.class);
+        when(baselineProfileIsSpecificMock.setSelectedQueryFactors(anySet())).thenReturn(baselineProfileIsSpecificMock);
+        when(baselineProfileIsSpecificMock.setSpecific(anyBoolean())).thenReturn(baselineProfileIsSpecificMock);
+        when(baselineProfileIsSpecificMock.setAllQueryFactors(anySet())).thenReturn(baselineProfileIsSpecificMock);
+        when(baselineProfileIsSpecificMock.apply(any(BaselineProfile.class))).thenReturn(true);
 
         List<BaselineProfile> baselineProfiles = new ArrayList<BaselineProfile>();
 
         for (int i = streamSize; i > 0; i--) {
 
-            BaselineProfilePreconditionBackedBuilder geneProfileBuilder = new BaselineProfilePreconditionBackedBuilder(requestContextMock,
-                    baselineExpressionPreconditionMock, baselineProfilePreconditionMock);
+            BaselineProfileConditionalBuilder geneProfileBuilder = new BaselineProfileConditionalBuilder(requestContextMock,
+                    baselineExpressionIsAboveCutoffAndForFilterFactorsMock, baselineProfileIsSpecificMock);
             geneProfileBuilder.forGeneIdAndName("" + i, "name" +i);
 
             for (int j = 0; j < i; j++) {

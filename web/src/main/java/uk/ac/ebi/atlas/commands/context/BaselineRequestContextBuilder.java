@@ -46,6 +46,10 @@ public class BaselineRequestContextBuilder {
 
     private BaselineRequestPreferences preferences;
 
+    // NB: although we are building a BaselineRequest object here, we get an empty one injected from
+    // the spring container (and populate it) because we want it to come from the request scope.
+    // This allows other request scoped beans (eg: BaselineProfilePreconditionBackedBuilder)
+    // to inject the same instance that we are populating here
     @Inject
     public BaselineRequestContextBuilder(BaselineRequestContext requestContext, FilterFactorsConverter filterFactorsConverter) {
         this.requestContext = requestContext;

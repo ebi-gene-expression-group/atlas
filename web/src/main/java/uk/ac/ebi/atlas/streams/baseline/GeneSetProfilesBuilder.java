@@ -20,10 +20,14 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.streams.baseline;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
+import uk.ac.ebi.atlas.model.baseline.GeneSet;
+import uk.ac.ebi.atlas.model.baseline.GeneSetFactory;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 
 import javax.inject.Inject;

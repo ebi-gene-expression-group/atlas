@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfileComparator;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.model.baseline.GeneSetProfilesBuilder;
+import uk.ac.ebi.atlas.streams.baseline.GeneSetProfilesBuilder;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 

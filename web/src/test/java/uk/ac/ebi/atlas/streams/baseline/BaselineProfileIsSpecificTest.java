@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.streams.baseline;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -28,15 +28,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionIsAboveCutoffAndForFilterFactors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineProfilePreconditionTest {
+public class BaselineProfileIsSpecificTest {
 
-    private BaselineExpressionPrecondition subject;
+    private BaselineExpressionIsAboveCutoffAndForFilterFactors subject;
 
     private Factor factor1 = new Factor("type1", "value1");
     private Factor factor2 = new Factor("type2", "value2");
@@ -57,7 +60,7 @@ public class BaselineProfilePreconditionTest {
         given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(true);
 
         //when
-        subject = new BaselineExpressionPrecondition();
+        subject = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
 
         //then
@@ -68,7 +71,7 @@ public class BaselineProfilePreconditionTest {
     public void checkLimitingFactorsShouldSucceedWhenNoLimitingFactorSetIsProvided() throws Exception {
 
         //given
-        subject = new BaselineExpressionPrecondition();
+        subject = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
 
         //then
         assertThat(subject.checkFilterFactors(expressionMock), is(true));
@@ -78,7 +81,7 @@ public class BaselineProfilePreconditionTest {
     public void applyShouldFailExpressionDoesntContainAllLimitingFactors() throws Exception {
 
         //given
-        subject = new BaselineExpressionPrecondition();
+        subject = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
         given(expressionMock.isKnown()).willReturn(true);
         given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(false);
@@ -90,7 +93,7 @@ public class BaselineProfilePreconditionTest {
     public void applyShouldSucceedIfLevelIsGreaterThanCutoff() throws Exception {
 
         //given
-        subject = new BaselineExpressionPrecondition();
+        subject = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
         subject.setCutoff(1d);
 

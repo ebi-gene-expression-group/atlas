@@ -31,7 +31,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfilePreconditionBackedBuilder;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 
 import java.io.IOException;
@@ -86,7 +85,7 @@ public class BaselineProfilesInputStreamTest {
         given(expressionsBufferBuilderMock.withHeaders(headersWithoutGeneIdColumn)).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.build()).willReturn(expressionsBufferMock);
 
-        BaselineProfilePreconditionBackedBuilder geneProfileBuilderMock = mock(BaselineProfilePreconditionBackedBuilder.class);
+        BaselineProfileConditionalBuilder geneProfileBuilderMock = mock(BaselineProfileConditionalBuilder.class);
         when(geneProfileBuilderMock.addExpression(any(BaselineExpression.class))).thenReturn(geneProfileBuilderMock);
 
         subject = new BaselineProfilesInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, geneProfileBuilderMock);
