@@ -54,7 +54,7 @@ public class BaselineBioentityCountsService {
     private static final Map<String, BaselineExperimentResult> LIMITED_BY_EXPERIMENTS = Maps.newHashMap();
 
     static {
-        LIMITED_BY_EXPERIMENTS.put("E-MTAB-513", new BaselineExperimentResult("E-MTAB-513", "Illumina Body Map", "Homo sapiens"));
+        LIMITED_BY_EXPERIMENTS.put("E-MTAB-1733", new BaselineExperimentResult("E-MTAB-1733", "Twenty seven tissues", "Homo sapiens"));
         LIMITED_BY_EXPERIMENTS.put("E-MTAB-599", new BaselineExperimentResult("E-MTAB-599", "Six tissues", "Mus musculus"));
         LIMITED_BY_EXPERIMENTS.put("E-MTAB-2037", new BaselineExperimentResult("E-MTAB-2037", "Seven tissues", "Oryza sativa Japonica Group"));
         LIMITED_BY_EXPERIMENTS.put("E-MTAB-2039", new BaselineExperimentResult("E-MTAB-2039", "Nine tissues", "Oryza sativa Japonica Group"));

@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.commands;
 
 import com.google.common.collect.Lists;
+import org.hamcrest.Matcher;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +18,7 @@ import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -45,7 +47,7 @@ public class BaselineBioentityCountsServiceIT {
         Set<BaselineExperimentResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-599"));
+        assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
     }
 
     @Test
@@ -56,7 +58,7 @@ public class BaselineBioentityCountsServiceIT {
         Set<BaselineExperimentResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, contains("E-MTAB-513"));
+        assertThat(experimentAccessions, contains("E-MTAB-1733"));
     }
 
     @Test
@@ -67,7 +69,7 @@ public class BaselineBioentityCountsServiceIT {
         Set<BaselineExperimentResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, contains("E-MTAB-513"));
+        assertThat(experimentAccessions, contains("E-MTAB-1733"));
     }
 
     @Test
@@ -78,7 +80,7 @@ public class BaselineBioentityCountsServiceIT {
         Set<BaselineExperimentResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-599"));
+        assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
     }
 
     @Test
@@ -90,7 +92,7 @@ public class BaselineBioentityCountsServiceIT {
         Set<BaselineExperimentResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-599"));
+        assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
     }
 
     @Test
@@ -102,7 +104,7 @@ public class BaselineBioentityCountsServiceIT {
         Set<BaselineExperimentResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-599"));
+        assertThat(experimentAccessions, contains("E-MTAB-1733", "E-MTAB-599"));
 
     }
 
@@ -116,29 +118,18 @@ public class BaselineBioentityCountsServiceIT {
         assertThat(results, hasSize(0));
     }
 
-    List<Factor> femaleFactors = Lists.newArrayList(
-            new Factor("ORGANISM_PART", "adipose"),
-            new Factor("ORGANISM_PART", "brain"),
-            new Factor("ORGANISM_PART", "breast"),
-            new Factor("ORGANISM_PART", "colon"),
-            new Factor("ORGANISM_PART", "kidney"),
-            new Factor("ORGANISM_PART", "lymph node"),
-            new Factor("ORGANISM_PART", "ovary"),
-            new Factor("ORGANISM_PART", "thyroid"));
-
     @Test
-    public void conditionFemale() throws GenesNotFoundException {
+    public void conditionSpecimen() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setCondition("female");
+        requestParameters.setCondition("frozen specimen");
 
         Set<BaselineExperimentResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        BaselineExperimentResult eMtab513 = results.iterator().next();
+        BaselineExperimentResult eMtab1733 = results.iterator().next();
 
-        assertThat(experimentAccessions, contains("E-MTAB-513"));
-
-        assertThat(eMtab513.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(femaleFactors.toArray(new Factor[femaleFactors.size()])));
+        assertThat(experimentAccessions, contains("E-MTAB-1733"));
+        assertThat(eMtab1733.getSpecies(), is("Homo sapiens"));
     }
 
     @Test
@@ -149,46 +140,51 @@ public class BaselineBioentityCountsServiceIT {
         Set<BaselineExperimentResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-599"));
+        assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
 
         BaselineExperimentResult[] resultsArray = results.toArray(new BaselineExperimentResult[results.size()]);
 
-        BaselineExperimentResult eMtab513 = resultsArray[0];
-        assertThat(eMtab513.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "adipose")));
+        BaselineExperimentResult eMtab599 = resultsArray[0];
+        assertThat(eMtab599.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "thymus", "UBERON:0002370")));
 
-        BaselineExperimentResult eMtab599 = resultsArray[1];
-        assertThat(eMtab599.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "thymus")));
+        BaselineExperimentResult eMtab1733 = resultsArray[1];
+        assertThat(eMtab1733.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "adipose tissue", "UBERON:0001013")));
+
     }
 
     @Test
     public void conditionsAND() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setCondition("liver AND Caucasian");
+        requestParameters.setCondition("heart AND frozen specimen");
 
         Set<BaselineExperimentResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        BaselineExperimentResult eMtab513 = results.iterator().next();
+        BaselineExperimentResult eMtab1733 = results.iterator().next();
 
-        assertThat(experimentAccessions, contains("E-MTAB-513"));
+        assertThat(experimentAccessions, contains("E-MTAB-1733"));
 
-        assertThat(eMtab513.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "liver")));
+        assertThat(eMtab1733.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "heart", "UBERON:0000948")));
     }
 
     @Test
-    public void geneQueryGeneIDAndConditionFemale() throws GenesNotFoundException {
+    public void geneQueryGeneIDAndConditionHeart() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("ENSG00000268458");                   //expressed in ovary
-        requestParameters.setCondition("female");
+        requestParameters.setGeneQuery("ENSG00000129170");                   //expressed in ovary
+        requestParameters.setCondition("heart");
 
         Set<BaselineExperimentResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        BaselineExperimentResult eMtab513 = results.iterator().next();
+        assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
 
-        assertThat(experimentAccessions, contains("E-MTAB-513"));
+        BaselineExperimentResult[] resultsArray = results.toArray(new BaselineExperimentResult[results.size()]);
 
-        assertThat(eMtab513.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(femaleFactors.toArray(new Factor[femaleFactors.size()])));
+        BaselineExperimentResult eMtab599 = resultsArray[0];
+        assertThat(eMtab599.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "heart", "UBERON:0000948")));
+
+        BaselineExperimentResult eMtab1733 = resultsArray[1];
+        assertThat(eMtab1733.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "heart", "UBERON:0000948")));
     }
 
     @Test
