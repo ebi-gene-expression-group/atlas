@@ -18,3 +18,5 @@ join BIOENTITY_NAME bn on rda.IDENTIFIER=bn.identifier
 join BIOENTITY_ORGANISM o on bn.organismid = o.organismid
 join EXPERIMENT_ORGANISM eo on o.name = eo.bioentity_organism and eo.experiment = rda.experiment
 where rda.ISACTIVE='T';
+
+exec dbms_mview.refresh( 'VW_DIFFANALYTICS', 'C' );
