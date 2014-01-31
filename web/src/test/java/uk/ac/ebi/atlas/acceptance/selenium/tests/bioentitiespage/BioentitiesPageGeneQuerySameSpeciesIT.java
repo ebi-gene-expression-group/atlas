@@ -55,8 +55,8 @@ public class BioentitiesPageGeneQuerySameSpeciesIT extends SinglePageSeleniumFix
 
         assertThat(baselineCounts, hasSize(1));
 
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-513"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Illumina Body Map"));
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-1733"));
+        assertThat(baselineCounts.get(0).getExperimentName(), is("Twenty seven tissues"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
         assertThat(baselineCounts.get(0).getCount(), is(-1));
     }
