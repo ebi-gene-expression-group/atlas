@@ -45,12 +45,11 @@ public class TranscriptProfileDao {
             "FROM RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ? AND GENE_IDENTIFIER = ? AND ISACTIVE='T'";
 
     private static final String TRANSCRIPT_PROFILE_INSERT = "INSERT INTO RNASEQ_BSLN_TRANSCRIPTS " +
-            "(EXPERIMENT, GENE_IDENTIFIER, TRANSCRIPT_IDENTIFIER, TRANSCRIPT_EXPRESSIONS, TRANSCRIPT_ISACTIVE) VALUES (?, ?, ?, ?, ?)";
+            "(EXPERIMENT, GENE_IDENTIFIER, TRANSCRIPT_IDENTIFIER, TRANSCRIPT_EXPRESSIONS) VALUES (?, ?, ?, ?, ?)";
     private static final int FIRST_INDEX = 1;
     private static final int SECOND_INDEX = 2;
     private static final int THIRD_INDEX = 3;
     private static final int FOURTH_INDEX = 4;
-    private static final int IS_ACTIVE = 5;
 
     private JdbcTemplate jdbcTemplate;
 
@@ -81,7 +80,6 @@ public class TranscriptProfileDao {
                 List<Double> expressions = profile.getExpressions();
                 String expressionsSerialized = Joiner.on(",").join(expressions);
                 ps.setString(FOURTH_INDEX, expressionsSerialized);
-                ps.setString(IS_ACTIVE, "T");
             }
 
             @Override
