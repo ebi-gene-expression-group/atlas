@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.web.controllers.page.experimentquery;
 
 import com.google.gson.Gson;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +33,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.RankBaselineProfilesCommand;
+import uk.ac.ebi.atlas.commands.HeatMapBaselineProfiles;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.dto.tooltip.AssayGroupFactor;
@@ -61,7 +60,7 @@ import java.util.SortedSet;
 @Scope("request")
 public class BaselineExperimentPageController extends BaselineExperimentController {
 
-    private RankBaselineProfilesCommand rankCommand;
+    private HeatMapBaselineProfiles heatMapBaselineProfiles;
 
     private ApplicationProperties applicationProperties;
 
@@ -72,7 +71,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
     private BaselineExperiment experiment;
 
     @Inject
-    public BaselineExperimentPageController(RankBaselineProfilesCommand rankCommand,
+    public BaselineExperimentPageController(HeatMapBaselineProfiles heatMapBaselineProfiles,
                                             ApplicationProperties applicationProperties,
                                             BaselineRequestContextBuilder requestContextBuilder,
                                             FilterFactorsConverter filterFactorsConverter,
@@ -80,7 +79,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
-        this.rankCommand = rankCommand;
+        this.heatMapBaselineProfiles = heatMapBaselineProfiles;
         this.filterFactorMenuBuilder = filterFactorMenuBuilder;
     }
 
@@ -140,7 +139,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
             try {
 
-                BaselineProfilesList baselineProfiles = rankCommand.execute(experiment.getAccession());
+                BaselineProfilesList baselineProfiles = heatMapBaselineProfiles.fetch(requestContext);
 
                 model.addAttribute("geneProfiles", baselineProfiles);
 
@@ -197,19 +196,3 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -35,7 +35,7 @@
             </div>
         </c:if>
     </c:when>
-    <c:otherwise>
+    <c:otherwise><%--@elvariable id="geneProfiles" type="uk.ac.ebi.atlas.model.GeneProfilesList"--%>
 
         <div id="heatmap" class="row stickem-container">
 
@@ -71,7 +71,7 @@
                     <tr>
                         <td>
                         <span id="geneCount">Showing ${geneProfiles.size()}
-                            of ${preferences.geneSetMatch?geneProfiles.size():geneProfiles.getTotalResultCount()} ${preferences.geneSetMatch?'gene sets':'genes'} found:
+                            of ${geneProfiles.getTotalResultCount()} ${preferences.geneSetMatch?'gene sets':'genes'} found:
                         </span>
                         </td>
                         <td>
