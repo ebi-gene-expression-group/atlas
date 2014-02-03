@@ -65,7 +65,7 @@ public class SpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniumFi
     @Test
     public void verifyLastGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getLastGeneProfile(), contains("", "", "", "0.6", "", "", "", "", ""
+        assertThat(subject.getLastGeneProfile(), contains("", "", "0.6", "", "", "", "", "", ""
                 , "", "", "", "", "", "", ""));
     }
 
