@@ -28,6 +28,7 @@ import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -67,6 +68,14 @@ public class GeneProfilesList<T extends Profile> extends ArrayList<T> {
             builder.add(profile.getName());
         }
         return builder.build();
+    }
+
+    // add all from queue, in order they come off the queue
+    public void addAll(Queue<T> queue) {
+        T profile;
+        while ((profile = queue.poll()) != null) {
+            this.add(profile);
+        }
     }
 
 }

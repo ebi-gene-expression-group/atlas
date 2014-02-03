@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
@@ -47,7 +48,11 @@ public class GeneQueryResponse {
         return this;
     }
 
-    public Collection<String> getAllGeneIds(){
+    public ImmutableSetMultimap<String, String> getQueryTermsToIds() {
+        return ImmutableSetMultimap.copyOf(geneIdsByQueryTerm);
+    }
+
+    public Set<String> getAllGeneIds(){
         return Sets.newHashSet(geneIdsByQueryTerm.values());
     }
 
