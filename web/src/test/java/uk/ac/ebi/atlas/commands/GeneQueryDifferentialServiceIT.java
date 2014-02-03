@@ -144,8 +144,20 @@ public class GeneQueryDifferentialServiceIT {
 
         //System.out.println(Joiner.on("\", \"").join(names));
 
+        assertThat(names.get(0), is("Arl8b"));
+
+        Iterable<String> tail1 = Iterables.skip(names, 1);
+
+        assertThat(Iterables.limit(tail1, 5), contains("Ddx3y", "Eif2s3y", "Uty", "Kdm5d", "Cldn8"));
+
+        Iterable<String> tail2 = Iterables.skip(tail1, 5);
+
+        //match is unpredictable
+        assertThat(Iterables.limit(tail2, 2), containsInAnyOrder("Tph1", "Lactbl1"));
+        Iterable<String> tail3 = Iterables.skip(tail2, 2);
+
         // NB: this will fail on Atlas3Dev (but not Atlas3It) because order of "Tph1 and "Lactbl1" is reversed
-        assertThat(names, contains("Arl8b", "Ddx3y", "Eif2s3y", "Uty", "Kdm5d", "Cldn8", "Lactbl1", "Tph1", "Ivd", "Fmo1", "Matn2", "Chgb", "Cish", "Lrrc55", "Neb", "Ogdhl", "Ehhadh", "Wipi1", "Rgs2", "Gpnmb", "Tmem255a", "Gpr26", "Gpx6", "Reg3b", "Vip", "Prlr", "Dnahc8", "Hsbp1", "Cst7", "Tnfrsf11b", "Npas4", "Dnajb1", "Enpp2", "Sftpd", "Reg3a", "Disp2", "Igfals", "Itgax", "Mpeg1", "B3galnt1", "Ikzf4", "Nr4a1", "Lgals3", "Dnase1", "Lpl", "Cspg5", "Dnaja1", "Ern1", "Ch25h", "Dhcr7"));
+        assertThat(Iterables.limit(tail3, 42), contains("Ivd", "Fmo1", "Matn2", "Chgb", "Cish", "Lrrc55", "Neb", "Ogdhl", "Ehhadh", "Wipi1", "Rgs2", "Gpnmb", "Tmem255a", "Gpr26", "Gpx6", "Reg3b", "Vip", "Prlr", "Dnahc8", "Hsbp1", "Cst7", "Tnfrsf11b", "Npas4", "Dnajb1", "Enpp2", "Sftpd", "Reg3a", "Disp2", "Igfals", "Itgax", "Mpeg1", "B3galnt1", "Ikzf4", "Nr4a1", "Lgals3", "Dnase1", "Lpl", "Cspg5", "Dnaja1", "Ern1", "Ch25h", "Dhcr7"));
 
     }
 
