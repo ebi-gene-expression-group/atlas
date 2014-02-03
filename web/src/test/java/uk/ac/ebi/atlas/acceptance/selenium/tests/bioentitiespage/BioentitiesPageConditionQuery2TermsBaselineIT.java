@@ -51,11 +51,11 @@ public class BioentitiesPageConditionQuery2TermsBaselineIT extends SinglePageSel
 
         List<BaselineBioEntitiesCountWithHref> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(1));
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-1733"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Twenty seven tissues"));
-        assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-1733?queryFactorType=ORGANISM_PART&queryFactorValues=adipose%20tissue&geneQuery="));
+        assertThat(baselineCounts, hasSize(2));
+        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-1733"));
+        assertThat(baselineCounts.get(1).getExperimentName(), is("Twenty seven tissues"));
+        assertThat(baselineCounts.get(1).getSpecies(), is("Homo sapiens"));
+        assertThat(baselineCounts.get(1).getHref(), endsWith("E-MTAB-1733?queryFactorType=ORGANISM_PART&queryFactorValues=adipose%20tissue&geneQuery="));
     }
 
 }

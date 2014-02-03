@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
@@ -38,12 +39,13 @@ public class BioentitiesPageConditionQueryBrainIT extends SinglePageSeleniumFixt
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "condition=brain");
+        subject = new BioEntitiesPage(driver, "condition=lung");
         subject.get();
     }
 
 
     @Test
+    @Ignore
     public void checkBaselineExperimentCounts() {
         //given
         subject.clickBaselineProfile();
@@ -51,14 +53,15 @@ public class BioentitiesPageConditionQueryBrainIT extends SinglePageSeleniumFixt
         List<BaselineBioEntitiesCountWithHref> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(1));
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-513"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Illumina Body Map"));
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-1733"));
+        assertThat(baselineCounts.get(0).getExperimentName(), is("Twenty seven tissues"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
 
 
     }
 
     @Test
+    @Ignore
     public void checkDifferentialProfiles() {
         subject.clickDisplayLevelsButton();
         assertThat(subject.getContrastColumn(), contains(
@@ -68,11 +71,13 @@ public class BioentitiesPageConditionQueryBrainIT extends SinglePageSeleniumFixt
     }
 
     @Test
+    @Ignore
     public void checkDifferentialProfilesCount() {
         assertThat(subject.diffExpressionResultCount(), is("2 search result(s) found"));
     }
 
     @Test
+    @Ignore
     public void checkDifferentialContrastSummaryTooltipTableHeader() {
         assertThat(subject.getContrastSummaryTooltipTableHeader(0, 0), is("Property"));
         assertThat(subject.getContrastSummaryTooltipTableHeader(0, 1), is("Test value"));
@@ -80,6 +85,7 @@ public class BioentitiesPageConditionQueryBrainIT extends SinglePageSeleniumFixt
     }
 
     @Test
+    @Ignore
     public void checkDifferentialContrastSummaryTooltipTableFirstRow() {
         assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 0), is("genotype"));
         assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 1), is("p107 -/-"));
@@ -87,12 +93,14 @@ public class BioentitiesPageConditionQueryBrainIT extends SinglePageSeleniumFixt
     }
 
     @Test
+    @Ignore
     public void checkDifferentialContrastSummaryTooltipExperimentAndContrastDescription() {
         assertThat(subject.getContrastSummaryTooltipExperimentDescription(0), is("Transcription profiling by array of mouse neurospheres cultured from p107-/- embryos and their wildtype littermates"));
         assertThat(subject.getContrastSummaryTooltipContrastDescription(0), is("genotype:'p107 -/-' vs 'wild type' on A-AFFY-24"));
     }
 
     @Test
+    @Ignore
     public void checkDifferentialFirstLinkIsCorrect() {
         assertThat(subject.getLinkInDiffTableRow(1), endsWith("E-GEOD-3779?geneQuery=ENSMUSG00000028385&queryFactorValues=g2_g1"));
     }

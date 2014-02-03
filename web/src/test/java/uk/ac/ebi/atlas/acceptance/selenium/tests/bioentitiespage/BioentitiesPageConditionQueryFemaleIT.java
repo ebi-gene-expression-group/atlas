@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
@@ -44,6 +45,7 @@ public class BioentitiesPageConditionQueryFemaleIT extends SinglePageSeleniumFix
 
 
     @Test
+    @Ignore
     public void checkBaselineExperimentCounts() {
         //given
         subject.clickBaselineProfile();
@@ -59,6 +61,7 @@ public class BioentitiesPageConditionQueryFemaleIT extends SinglePageSeleniumFix
     }
 
     @Test
+    @Ignore
     public void checkDifferentialProfilesCount() {
         assertThat(subject.diffExpressionResultCount(), is("4329 search result(s) found"));
     }
