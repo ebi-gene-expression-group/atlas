@@ -42,6 +42,11 @@ public class MicroarrayProfilesTSVWriter extends DifferentialProfilesTSVWriter<M
     private MicroarrayRequestContext requestContext;
 
     @Inject
+    public MicroarrayProfilesTSVWriter(CsvWriterFactory csvWriterFactory) {
+        super(csvWriterFactory);
+    }
+
+    @Inject
     public void setRequestContext(MicroarrayRequestContext requestContext) {
         this.requestContext = requestContext;
     }

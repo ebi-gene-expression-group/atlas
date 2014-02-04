@@ -123,7 +123,7 @@ public class BaselineProfilesTSVWriterTest {
 
     @Before
     public void initSubject() throws Exception {
-        subject = new BaselineProfilesTSVWriter();
+        subject = new BaselineProfilesTSVWriter(new CsvWriterFactory());
         subject.setResponseWriter(printWriterMock);
         subject.setRequestContext(requestContextMock);
 

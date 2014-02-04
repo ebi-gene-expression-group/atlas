@@ -97,7 +97,7 @@ public class MicroarrayProfilesTSVWriterTest {
 
         when(resourceMock.getInputStream()).thenReturn(new ByteArrayInputStream(HEADER_TEMPLATE.getBytes()));
 
-        subject = new MicroarrayProfilesTSVWriter();
+        subject = new MicroarrayProfilesTSVWriter(new CsvWriterFactory());
         subject.setRequestContext(microarrayRequestContextMock);
         subject.setTsvFileMastheadTemplateResource(resourceMock);
         subject.initTsvFileMastheadTemplate();

@@ -63,7 +63,7 @@ public class RnaSeqProfilesTSVWriterTest {
     public void initMocks() {
         when(geneProfileMock.getExpression(any(Contrast.class))).thenReturn(expressionMock);
 
-        subject = new RnaSeqProfilesTSVWriter();
+        subject = new RnaSeqProfilesTSVWriter(new CsvWriterFactory());
     }
 
     @Test

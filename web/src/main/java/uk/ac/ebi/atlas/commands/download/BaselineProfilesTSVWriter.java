@@ -60,9 +60,15 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
 
     private String tsvFileMastheadTemplate;
 
+    @Inject
+    public BaselineProfilesTSVWriter(CsvWriterFactory csvWriterFactory) {
+        super(csvWriterFactory);
+    }
+
     @Value("classpath:/file-templates/download-headers-baseline.txt")
     public void setTsvFileMastheadTemplateResource(Resource tsvFileMastheadTemplateResource) {
         this.tsvFileMastheadTemplateResource = tsvFileMastheadTemplateResource;
+        initTsvFileMastheadTemplate();
     }
 
     @Inject
@@ -70,7 +76,6 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
         this.requestContext = requestContext;
     }
 
-    @PostConstruct
     void initTsvFileMastheadTemplate() {
         try (InputStream inputStream = tsvFileMastheadTemplateResource.getInputStream()) {
             tsvFileMastheadTemplate = IOUtils.toString(inputStream);

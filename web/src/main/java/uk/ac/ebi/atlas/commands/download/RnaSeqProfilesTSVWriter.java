@@ -39,6 +39,11 @@ public class RnaSeqProfilesTSVWriter extends DifferentialProfilesTSVWriter<RnaSe
     private RnaSeqRequestContext requestContext;
 
     @Inject
+    public RnaSeqProfilesTSVWriter(CsvWriterFactory csvWriterFactory) {
+        super(csvWriterFactory);
+    }
+
+    @Inject
     public void setRequestContext(RnaSeqRequestContext requestContext) {
         this.requestContext = requestContext;
     }

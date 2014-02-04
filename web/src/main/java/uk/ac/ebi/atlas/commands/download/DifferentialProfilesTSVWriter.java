@@ -37,6 +37,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
@@ -47,6 +48,11 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     private static final Logger LOGGER = Logger.getLogger(DifferentialProfilesTSVWriter.class);
     private Resource tsvFileMastheadResource;
     private String tsvFileMastheadTemplate;
+
+    @Inject
+    public DifferentialProfilesTSVWriter(CsvWriterFactory csvWriterFactory) {
+        super(csvWriterFactory);
+    }
 
     @Value("classpath:/file-templates/download-headers-differential.txt")
     public void setTsvFileMastheadTemplateResource(Resource tsvFileMastheadResource) {

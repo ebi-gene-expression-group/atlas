@@ -29,20 +29,24 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Set;
-
-import static au.com.bytecode.opencsv.CSVWriter.NO_ESCAPE_CHARACTER;
-import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements AutoCloseable {
 
     private static final String GENE_NAME_COLUMN_NAME = "Gene Name";
     private static final String GENE_ID_COLUMN_NAME = "Gene ID";
+    private final CsvWriterFactory csvWriterFactory;
 
     private CSVWriter csvWriter;
     private Writer responseWriter;
+
+    @Inject
+    public GeneProfilesTSVWriter(CsvWriterFactory csvWriterFactory) {
+        this.csvWriterFactory = csvWriterFactory;
+    }
 
     public Long write(GeneProfilesList<T> geneProfilesList, Set<K> conditions) throws IOException {
 
@@ -129,7 +133,7 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
 
     public void setResponseWriter(Writer responseWriter) {
         this.responseWriter = responseWriter;
-        csvWriter = new CSVWriter(responseWriter, '\t', NO_QUOTE_CHARACTER, NO_ESCAPE_CHARACTER);
+        csvWriter = csvWriterFactory.createTsvWriter(responseWriter);
     }
 
 }
