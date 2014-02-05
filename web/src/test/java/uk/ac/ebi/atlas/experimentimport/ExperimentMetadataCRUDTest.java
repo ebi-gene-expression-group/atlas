@@ -178,7 +178,7 @@ public class ExperimentMetadataCRUDTest {
 
     @Test
     public void importExperimentShouldAddExperimentToIndex() throws Exception {
-        subject.loadExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
+        subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
         verify(conditionsIndex).addConditions(any(Experiment.class), any(SetMultimap.class));
     }
 }

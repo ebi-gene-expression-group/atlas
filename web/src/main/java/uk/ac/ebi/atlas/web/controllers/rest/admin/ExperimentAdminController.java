@@ -70,7 +70,7 @@ public class ExperimentAdminController {
     @ResponseBody
     public String loadExperiment(@RequestParam("accession") String experimentAccession,
                                  @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
-        UUID accessKeyUUID = experimentCRUD.loadExperiment(experimentAccession, isPrivate);
+        UUID accessKeyUUID = experimentCRUD.importExperiment(experimentAccession, isPrivate);
         return "Experiment " + experimentAccession + " loaded, accessKey: " + accessKeyUUID;
     }
 

@@ -44,7 +44,7 @@ public class ExperimentCRUDBaselineIT {
         assertThat("baseline transcripts already exist in db", baselinesTranscriptsCount(NEW_EXPERIMENT_ACCESSION), is(0));
         assertThat("baseline expressions already exist in db", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
 
-        subject.loadExperiment(NEW_EXPERIMENT_ACCESSION, false);
+        subject.importExperiment(NEW_EXPERIMENT_ACCESSION, false);
 
         assertThat("experiment row not loaded into db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(1));
         assertThat("transcripts not loaded into db", baselinesTranscriptsCount(NEW_EXPERIMENT_ACCESSION), is(5));
@@ -63,7 +63,7 @@ public class ExperimentCRUDBaselineIT {
         assertThat("baseline transcripts do not already exist in db", baselinesTranscriptsCount(EXISTING_EXPERIMENT_ACCESSION), is(3));
         assertThat("baseline expressions do not already exist in db", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(124394));
 
-        subject.loadExperiment(EXISTING_EXPERIMENT_ACCESSION, false);
+        subject.importExperiment(EXISTING_EXPERIMENT_ACCESSION, false);
 
         assertThat("count of experiment rows has changed", experimentCount(EXISTING_EXPERIMENT_ACCESSION), is(1));
         assertThat("count of transcripts has changed", baselinesTranscriptsCount(EXISTING_EXPERIMENT_ACCESSION), is(3));

@@ -46,7 +46,7 @@ public class ExperimentCRUD {
     }
 
     @Transactional
-    public UUID loadExperiment(String experimentAccession, boolean isPrivate) throws IOException {
+    public UUID importExperiment(String experimentAccession, boolean isPrivate) throws IOException {
 
         ExperimentConfiguration configuration = loadExperimentConfiguration(experimentAccession);
         experimentChecker.checkAllFiles(experimentAccession, configuration.getExperimentType());
@@ -56,13 +56,9 @@ public class ExperimentCRUD {
         }
 
         AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(configuration.getExperimentType());
+        analyticsLoader.loadAnalytics(experimentAccession);
 
-        //TODO: remove
-        if (analyticsLoader != null) {
-            analyticsLoader.loadAnalytics(experimentAccession);
-        }
-
-        return experimentMetadataCRUD.loadExperiment(experimentAccession, configuration, isPrivate);
+        return experimentMetadataCRUD.importExperiment(experimentAccession, configuration, isPrivate);
     }
 
     private boolean experimentAccessionExists(String experimentAccession) {

@@ -41,7 +41,7 @@ public class ExperimentCRUDMicroArrayDifferentialIT {
         assertThat("experiment already exists in db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
         assertThat("analytics already exist in db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(0));
 
-        subject.loadExperiment(NEW_EXPERIMENT_ACCESSION, false);
+        subject.importExperiment(NEW_EXPERIMENT_ACCESSION, false);
 
         assertThat("experiment row not loaded into db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(1));
         assertThat("analytics not loaded into db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(60));

@@ -86,13 +86,13 @@ public class ExperimentAdminControllerTest {
     public void loadExperimentShouldSucceed() throws Exception {
         String responseText = subject.loadExperiment(EXPERIMENT_ACCESSION, false);
         assertThat(responseText, startsWith("Experiment " + EXPERIMENT_ACCESSION + " loaded, accessKey:"));
-        verify(experimentCRUDMock).loadExperiment(EXPERIMENT_ACCESSION, false);
+        verify(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, false);
     }
 
     @Test(expected = IllegalStateException.class)
     public void loadExperimentShouldFail() throws Exception {
         willThrow(new IllegalStateException(EXCEPTION_MESSAGE))
-                .given(experimentCRUDMock).loadExperiment(EXPERIMENT_ACCESSION, false);
+                .given(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, false);
 
         subject.loadExperiment(EXPERIMENT_ACCESSION, false);
     }
