@@ -25,12 +25,8 @@ package uk.ac.ebi.atlas.trader.loader;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.velocity.util.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
@@ -51,20 +47,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
 //The reason to do so is that Guava CacheBuilder, that is the one only client of this class, is not spring managed.
 public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
 
-    private static final int HEADER_LINE_INDEX = 0;
     public static final int ASSAY_GROUP_HEADER_START_INDEX = 2;
-    private final TsvReaderBuilder tsvReaderBuilder;
+    private final BaselineExperimentExpressionLevelFile baselineExperimentExpressionLevelFile;
 
     private ConfigurationTrader configurationTrader;
 
     @Inject
-    protected BaselineExperimentsCacheLoader(TsvReaderBuilder tsvReaderBuilder,
-                                             ConfigurationTrader configurationTrader,
-                                             @Value("#{configuration['experiment.magetab.path.template']}")
-                                             String experimentDataFilePathTemplate) {
+    protected BaselineExperimentsCacheLoader(BaselineExperimentExpressionLevelFile baselineExperimentExpressionLevelFile,
+                                             ConfigurationTrader configurationTrader) {
 
         this.configurationTrader = configurationTrader;
-        this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(experimentDataFilePathTemplate);
+        this.baselineExperimentExpressionLevelFile = baselineExperimentExpressionLevelFile;
     }
 
     @Override
@@ -77,7 +70,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 
-        String[] orderedAssayGroupIds = readOrderedAssayGroupIdsFromExpressionLevelsFile(experimentAccession);
+        String[] orderedAssayGroupIds = baselineExperimentExpressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
 
         ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
 
@@ -115,14 +108,6 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withDefaultQueryType(factorsConfig.getDefaultQueryFactorType())
                 .withDefaultFilterFactors(defaultFilterFactors)
                 .create();
-    }
-
-    private String[] readOrderedAssayGroupIdsFromExpressionLevelsFile(String experimentAccession) {
-        TsvReader experimentDataTsvReader = tsvReaderBuilder.withExperimentAccession(experimentAccession).build();
-
-        String[] experimentRunHeaders = experimentDataTsvReader.readLine(HEADER_LINE_INDEX);
-
-        return ArrayUtils.subarray(experimentRunHeaders, ASSAY_GROUP_HEADER_START_INDEX, experimentRunHeaders.length);
     }
 
     Set<String> getRequiredFactorTypes(String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
