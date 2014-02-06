@@ -66,7 +66,7 @@ public class ExperimentAdminController {
         return e.getClass().getSimpleName() + ": " + e.getMessage();
     }
 
-    @RequestMapping("/loadExperiment")
+    @RequestMapping(value={"/loadExperiment", "importExperiment"})
     @ResponseBody
     public String loadExperiment(@RequestParam("accession") String experimentAccession,
                                  @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
