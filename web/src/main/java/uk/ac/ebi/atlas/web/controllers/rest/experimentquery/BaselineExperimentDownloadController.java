@@ -28,7 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.WriteBaselineProfilesCommand;
+import uk.ac.ebi.atlas.commands.WriteHeatMapBaselineProfilesCommand;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -47,16 +48,17 @@ import java.io.IOException;
 public class BaselineExperimentDownloadController extends BaselineExperimentController {
     private static final Logger LOGGER = Logger.getLogger(BaselineExperimentDownloadController.class);
 
-    private WriteBaselineProfilesCommand writeBaselineProfilesCommand;
+    private WriteHeatMapBaselineProfilesCommand writeHeatMapBaselineProfilesCommand;
 
+    private BaselineRequestContext requestContext;
 
     @Inject
     public BaselineExperimentDownloadController(BaselineRequestContextBuilder requestContextBuilder,
                                                 FilterFactorsConverter filterFactorsConverter,
-                                                WriteBaselineProfilesCommand writeBaselineProfilesCommand) {
+                                                WriteHeatMapBaselineProfilesCommand writeHeatMapBaselineProfilesCommand) {
 
         super(requestContextBuilder, filterFactorsConverter);
-        this.writeBaselineProfilesCommand = writeBaselineProfilesCommand;
+        this.writeHeatMapBaselineProfilesCommand = writeHeatMapBaselineProfilesCommand;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=RNASEQ_MRNA_BASELINE")
@@ -74,13 +76,12 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
         response.setContentType("text/plain; charset=utf-8");
 
-        initRequestContext(experiment, preferences);
+        requestContext = initRequestContext(experiment, preferences);
 
-        writeBaselineProfilesCommand.setResponseWriter(response.getWriter());
+        writeHeatMapBaselineProfilesCommand.setResponseWriter(response.getWriter());
 
         try {
-
-            long genesCount = writeBaselineProfilesCommand.execute(experiment.getAccession());
+            long genesCount = writeHeatMapBaselineProfilesCommand.execute(requestContext);
 
             LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
 

@@ -81,6 +81,23 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
         return count;
     }
 
+    public Long write(Iterable<T> inputStream, Set<K> conditions) throws IOException {
+
+        responseWriter.write(getTsvFileMasthead() + "\n");
+        csvWriter.writeNext(buildCsvColumnHeaders(conditions));
+
+        long count = 0;
+        for (T geneProfile : inputStream) {
+            ++count;
+            String[] csvRow = buildCsvRow(geneProfile, conditions);
+            csvWriter.writeNext(csvRow);
+        }
+
+        csvWriter.flush();
+
+        return count;
+    }
+
     @Override
     public void close() throws IOException {
         csvWriter.close();
