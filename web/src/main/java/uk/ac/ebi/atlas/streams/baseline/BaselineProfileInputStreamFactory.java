@@ -1,11 +1,9 @@
 package uk.ac.ebi.atlas.streams.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
-import com.google.common.base.Predicate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;

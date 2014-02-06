@@ -87,7 +87,7 @@ public class ExperimentCRUDRollbackIT {
         String exceptionMessage = null;
 
         try {
-            subject.loadExperiment(NEW_EXPERIMENT_ACCESSION, false);
+            subject.importExperiment(NEW_EXPERIMENT_ACCESSION, false);
         } catch (IllegalStateException e) {
             exceptionMessage = e.getMessage();
         }

@@ -80,7 +80,7 @@ public class ExperimentMetadataCRUD {
         return configurationTrader.getExperimentConfiguration(accession);
     }
 
-    public UUID loadExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate) throws IOException {
+    public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate) throws IOException {
         checkNotNull(accession);
         checkNotNull(experimentConfiguration);
 
@@ -173,7 +173,7 @@ public class ExperimentMetadataCRUD {
         for (ExperimentDTO experiment : experiments) {
             String accession = experiment.getExperimentAccession();
             deleteExperiment(experiment);
-            loadExperiment(accession, loadExperimentConfiguration(accession), experiment.isPrivate());
+            importExperiment(accession, loadExperimentConfiguration(accession), experiment.isPrivate());
         }
         return experiments.size();
     }

@@ -2,8 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
-import uk.ac.ebi.atlas.transcript.TranscriptProfileDao;
-import uk.ac.ebi.atlas.transcript.TranscriptProfilesLoader;
+import uk.ac.ebi.atlas.experimentimport.analytics.baseline.transcript.RnaSeqBaselineTranscriptImporter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,25 +11,23 @@ import java.io.IOException;
 @Named
 public class BaselineAnalyticsLoader implements AnalyticsLoader {
 
-    private final TranscriptProfilesLoader transcriptProfileLoader;
     private final BaselineAnalyticsDao baselineAnalyticsDao;
     private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
-    private final TranscriptProfileDao transcriptProfileDao;
+    private final RnaSeqBaselineTranscriptImporter rnaSeqBaselineTranscriptImporter;
 
     @Inject
-    public BaselineAnalyticsLoader(TranscriptProfilesLoader transcriptProfileLoader, BaselineAnalyticsDao baselineAnalyticsDao,
+    public BaselineAnalyticsLoader(BaselineAnalyticsDao baselineAnalyticsDao,
                                    BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory,
-                                   TranscriptProfileDao transcriptProfileDao) {
-        this.transcriptProfileLoader = transcriptProfileLoader;
+                                   RnaSeqBaselineTranscriptImporter rnaSeqBaselineTranscriptImporter) {
         this.baselineAnalyticsDao = baselineAnalyticsDao;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
-        this.transcriptProfileDao = transcriptProfileDao;
+        this.rnaSeqBaselineTranscriptImporter = rnaSeqBaselineTranscriptImporter;
     }
 
     @Override
     @Transactional
     public void loadAnalytics(String accession) throws IOException {
-        transcriptProfileLoader.load(accession);
+        rnaSeqBaselineTranscriptImporter.importTranscripts(accession);
         loadBaselineExpressions(accession);
     }
 
@@ -44,7 +41,7 @@ public class BaselineAnalyticsLoader implements AnalyticsLoader {
     @Transactional
     public void deleteAnalytics(String accession) {
         baselineAnalyticsDao.deleteAnalytics(accession);
-        transcriptProfileDao.deleteTranscriptProfilesForExperiment(accession);
+        rnaSeqBaselineTranscriptImporter.deleteTranscripts(accession);
     }
 
 }

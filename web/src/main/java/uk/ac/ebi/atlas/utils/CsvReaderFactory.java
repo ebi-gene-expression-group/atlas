@@ -25,7 +25,7 @@ public class CsvReaderFactory {
             return createTsvReader(dataFileReader);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalArgumentException("Error while building GeneProfileInputStream.", e);
+            throw new IllegalArgumentException("Error trying to open " + tsvFilePath, e);
         }
     }
 

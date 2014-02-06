@@ -85,8 +85,10 @@ public class BaselineExperimentsCacheLoaderTest {
         when(tsvReaderBuilderMock.forTsvFilePathTemplate(PATH_TEMPLATE_FAKE)).thenReturn(tsvReaderBuilderMock);
         when(tsvReaderBuilderMock.build()).thenReturn(experimentDataTsvReaderMock);
 
+        BaselineExperimentExpressionLevelFile baselineExperimentExpressionLevelFile = new BaselineExperimentExpressionLevelFile(tsvReaderBuilderMock, PATH_TEMPLATE_FAKE);
+
         subject =
-                new BaselineExperimentsCacheLoader(tsvReaderBuilderMock, configurationTraderMock, PATH_TEMPLATE_FAKE){
+                new BaselineExperimentsCacheLoader(baselineExperimentExpressionLevelFile, configurationTraderMock){
 
                     @Override
                     protected BaselineExperimentBuilder createExperimentBuilder() {

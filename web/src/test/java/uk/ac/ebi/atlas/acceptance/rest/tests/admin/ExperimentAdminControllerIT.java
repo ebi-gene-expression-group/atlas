@@ -51,7 +51,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 .get("listExperiments?accession=" + EXISTING_EXPERIMENT_ACCESSION + ",E-MTAB-513");
     }
 
-    public void deleteInactiveExpressions() {
+    public void deleteInactiveAnalytics() {
         get("/deleteInactiveAnalytics").then().assertThat().statusCode(200);
     }
 
@@ -70,7 +70,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
 
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);
 
-        deleteInactiveExpressions();
+        deleteInactiveAnalytics();
 
     }
 
@@ -89,7 +89,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
 
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + NEW_EXPERIMENT_ACCESSION);
 
-        deleteInactiveExpressions();
+        deleteInactiveAnalytics();
 
     }
 
