@@ -32,14 +32,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import java.util.List;
