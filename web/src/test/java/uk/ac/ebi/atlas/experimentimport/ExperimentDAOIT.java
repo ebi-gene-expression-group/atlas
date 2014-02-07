@@ -75,7 +75,7 @@ public class ExperimentDAOIT {
     @Test
     public void testFindExperiments() throws Exception {
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
-        assertThat(experimentDTOs, hasSize(16));
+        assertThat(experimentDTOs, hasSize(17));
         assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_513, TYPE_BASELINE, Sets.newHashSet(""), Sets.newHashSet(""), "", false)));
     }
 

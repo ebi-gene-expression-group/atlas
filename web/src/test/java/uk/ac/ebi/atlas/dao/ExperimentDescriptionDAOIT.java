@@ -28,7 +28,7 @@ public class ExperimentDescriptionDAOIT {
     @Test
     public void selectAllPublicExperimentDescriptions() {
         List<ExperimentDescription> experimentDescriptions = subject.selectAllPublicExperimentDescriptions();
-        assertThat(experimentDescriptions.size(), is(15));
+        assertThat(experimentDescriptions.size(), is(16));
         assertThat(experimentDescriptions, hasItem(E_MTAB_513));
     }
 
