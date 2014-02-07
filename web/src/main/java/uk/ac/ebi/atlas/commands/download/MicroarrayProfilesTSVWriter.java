@@ -37,7 +37,7 @@ import java.util.List;
 @Scope("prototype")
 public class MicroarrayProfilesTSVWriter extends DifferentialProfilesTSVWriter<MicroarrayProfile, MicroarrayExpression> {
 
-    private String DESIGN_ELEMENT = "Design Element";
+    private static final String DESIGN_ELEMENT = "Design Element";
 
     private MicroarrayRequestContext requestContext;
 
