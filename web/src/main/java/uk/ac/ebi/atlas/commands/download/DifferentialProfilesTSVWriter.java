@@ -57,9 +57,9 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     @Value("classpath:/file-templates/download-headers-differential.txt")
     public void setTsvFileMastheadTemplateResource(Resource tsvFileMastheadResource) {
         this.tsvFileMastheadResource = tsvFileMastheadResource;
+        initTsvFileMastheadTemplate();
     }
 
-    @PostConstruct
     void initTsvFileMastheadTemplate() {
         try (InputStream inputStream = tsvFileMastheadResource.getInputStream()) {
             tsvFileMastheadTemplate = IOUtils.toString(inputStream);

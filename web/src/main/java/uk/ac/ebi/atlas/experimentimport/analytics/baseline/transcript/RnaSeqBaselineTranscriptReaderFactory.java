@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentimport.analytics.baseline.transcript;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStream;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;

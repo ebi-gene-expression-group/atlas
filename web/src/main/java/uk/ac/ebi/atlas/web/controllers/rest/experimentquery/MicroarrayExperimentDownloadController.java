@@ -120,7 +120,6 @@ public class MicroarrayExperimentDownloadController {
 
     void writeMicroarrayGeneProfiles(PrintWriter writer, MicroarrayExperiment experiment){
         writeGeneProfilesCommand.setResponseWriter(writer);
-        writeGeneProfilesCommand.setExperiment(experiment);
 
         try {
 

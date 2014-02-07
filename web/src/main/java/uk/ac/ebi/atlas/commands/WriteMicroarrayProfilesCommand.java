@@ -51,7 +51,6 @@ public class WriteMicroarrayProfilesCommand extends GeneProfilesQueryCommand<Lon
     private MicroarrayProfilesTSVWriter geneProfileTsvWriter;
     private MicroarrayRequestContext requestContext;
 
-    private MicroarrayExperiment experiment;
     private InputStreamFactory inputStreamFactory;
 
     @Inject
@@ -82,13 +81,13 @@ public class WriteMicroarrayProfilesCommand extends GeneProfilesQueryCommand<Lon
         }
     }
 
+    @Override
+    ObjectInputStream<MicroarrayProfile> filterInputStream(ObjectInputStream<MicroarrayProfile> inputStream) throws GenesNotFoundException {
+        return geneProfilesFilter.filterInputStreamAnySpecies(inputStream, requestContext);
+    }
 
     public void setResponseWriter(PrintWriter responseWriter) {
         geneProfileTsvWriter.setResponseWriter(responseWriter);
-    }
-
-    public void setExperiment(MicroarrayExperiment experiment) {
-        this.experiment = experiment;
     }
 
 }
