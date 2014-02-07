@@ -108,10 +108,6 @@ public class WriteBaselineProfilesCommandIT {
 
         subject = new WriteHeatMapBaselineProfilesCommand(solrQueryService, baselineProfilesTSVWriter, baselineProfileInputStreamFactory, baselineProfilesPipeline);
 
-//        subject = new WriteBaselineProfilesCommand(baselineProfilesTSVWriter, baselineRequestContext, geneSetProfilesBuilder);
-//        subject.setSolrQueryService(solrQueryService);
-
-//        subject.setInputStreamFactory(inputStreamFactory);
         subject.setResponseWriter(printWriterMock);
 
     }

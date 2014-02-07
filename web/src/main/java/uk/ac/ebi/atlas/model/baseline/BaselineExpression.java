@@ -45,7 +45,7 @@ public class BaselineExpression implements Expression {
     public BaselineExpression(String expressionLevelString, FactorGroup factorGroup) {
         this.levelString = expressionLevelString;
 
-        if(expressionLevelString.equals("FAIL") || expressionLevelString.equals("LOWDATA")){
+        if(expressionLevelString.equals("FAIL") || expressionLevelString.equals("LOWDATA") || expressionLevelString.equals("NA")){
             level = 0;
             known = false;
         } else {

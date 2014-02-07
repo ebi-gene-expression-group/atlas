@@ -1,12 +1,91 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import org.junit.Test;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class BaselineExpressionTest {
 
+    public static final String EXPRESSION_LEVEL_1 = "0";
+    public static final String EXPRESSION_LEVEL_2 = "NA";
+    public static final String EXPRESSION_LEVEL_3 = "LOWDATA";
+    public static final String EXPRESSION_LEVEL_4 = "FAIL";
+
+    private BaselineExpression subject;
+
+    @Test
+    public void expressionLevel0 () {
+        Factor factor1 = new Factor("ORGANISM_PART", "lung");
+        Factor factor2 = new Factor("ORGANISM_PART", "liver");
+        Factor factor3 = new Factor("ORGANISM_PART", "longue");
+
+        FactorSet factorGroup = new FactorSet();
+        factorGroup.add(factor1);
+        factorGroup.add(factor2);
+        factorGroup.add(factor3);
+
+        subject = new BaselineExpression(EXPRESSION_LEVEL_1, factorGroup);
+
+        assertThat(subject.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_1)));
+        assertThat(subject.isKnown(), is(true));
+
+    }
+
+    @Test
+    public void expressionLevelNA () {
+        Factor factor1 = new Factor("ORGANISM_PART", "lung");
+        Factor factor2 = new Factor("ORGANISM_PART", "liver");
+        Factor factor3 = new Factor("ORGANISM_PART", "longue");
+
+        FactorSet factorGroup = new FactorSet();
+        factorGroup.add(factor1);
+        factorGroup.add(factor2);
+        factorGroup.add(factor3);
+
+        subject = new BaselineExpression(EXPRESSION_LEVEL_2, factorGroup);
+
+        assertThat(subject.isKnown(), is(false));
+        assertThat(subject.getLevelAsString(), is(EXPRESSION_LEVEL_2));
+
+    }
+
+    @Test
+    public void expressionLevelLOWDATA () {
+        Factor factor1 = new Factor("ORGANISM_PART", "lung");
+        Factor factor2 = new Factor("ORGANISM_PART", "liver");
+        Factor factor3 = new Factor("ORGANISM_PART", "longue");
+
+        FactorSet factorGroup = new FactorSet();
+        factorGroup.add(factor1);
+        factorGroup.add(factor2);
+        factorGroup.add(factor3);
+
+        subject = new BaselineExpression(EXPRESSION_LEVEL_3, factorGroup);
+
+        assertThat(subject.isKnown(), is(false));
+        assertThat(subject.getLevelAsString(), is(EXPRESSION_LEVEL_3));
+
+    }
+
+    @Test
+    public void expressionLevelFAIL () {
+        Factor factor1 = new Factor("ORGANISM_PART", "lung");
+        Factor factor2 = new Factor("ORGANISM_PART", "liver");
+        Factor factor3 = new Factor("ORGANISM_PART", "longue");
+
+        FactorSet factorGroup = new FactorSet();
+        factorGroup.add(factor1);
+        factorGroup.add(factor2);
+        factorGroup.add(factor3);
+
+        subject = new BaselineExpression(EXPRESSION_LEVEL_4, factorGroup);
+
+        assertThat(subject.isKnown(), is(false));
+        assertThat(subject.getLevelAsString(), is(EXPRESSION_LEVEL_4));
+
+    }
 
     @Test
     public void testRemoveTrailingZero() {

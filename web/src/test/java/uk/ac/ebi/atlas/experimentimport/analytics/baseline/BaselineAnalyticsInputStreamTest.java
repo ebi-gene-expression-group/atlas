@@ -31,6 +31,8 @@ public class BaselineAnalyticsInputStreamTest {
     private static final String TSV_LINE_LOWDATA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "1", "LOWDATA", "0", "0"});
     private static final String TSV_LINE_FAIL = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "1", "FAIL", "0", "0"});
 
+    private static final String TSV_LINE_NA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "NA", "1", "0"});
+
     private static String TSV_CONTENTS = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_1, TSV_LINE_2});
 
 
@@ -82,6 +84,20 @@ public class BaselineAnalyticsInputStreamTest {
         BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 1.0);
         assertThat(subject.readNext(), is(line1g2));
         assertThat(subject.readNext(), is(nullValue()));
+    }
+
+    @Test
+    public void readTsvLineWithNA() throws IOException {
+        String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_NA});
+
+        Reader tsvSource = new StringReader(tsvContents);
+        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
+        BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader, "Test");
+
+        BaselineAnalytics line1g4 = new BaselineAnalytics(GENE_ID_1, "g4", 1.0);
+        assertThat(subject.readNext(), is(line1g4));
+        assertThat(subject.readNext(), is(nullValue()));
+
     }
 
     @Test
