@@ -81,6 +81,11 @@ public class RankMicroarrayProfilesCommand extends RankProfilesCommand<Different
     }
 
     @Override
+    ObjectInputStream<MicroarrayProfile> filterInputStream(ObjectInputStream<MicroarrayProfile> inputStream) throws GenesNotFoundException {
+        return geneProfilesFilter.filterInputStreamAnySpecies(inputStream, requestContext);
+    }
+
+    @Override
     protected DifferentialProfilesList buildAverageGeneSetProfiles(GeneQueryResponse geneQueryResponse,
                                                                    ObjectInputStream<MicroarrayProfile> objectInputStream,
                                                                    Comparator<MicroarrayProfile> comparator) {

@@ -22,14 +22,10 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -38,7 +34,7 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
 
     private static final Logger LOGGER = Logger.getLogger(GeneProfilesQueryCommand.class);
 
-    private SolrQueryService solrQueryService;
+    protected GeneProfilesFilter geneProfilesFilter;
 
     private RequestContext requestContext;
 
@@ -47,44 +43,24 @@ public abstract class GeneProfilesQueryCommand<T, K extends Profile> implements 
     }
 
     @Inject
-    public void setSolrQueryService(SolrQueryService solrQueryService) {
-        this.solrQueryService = solrQueryService;
+    public void setGeneProfilesFilter(GeneProfilesFilter geneProfilesFilter) {
+        this.geneProfilesFilter = geneProfilesFilter;
     }
 
     public T execute(String experimentAccession) throws GenesNotFoundException {
 
-        try (ObjectInputStream<K> filteredInputStream = buildFilterInputStream(experimentAccession)) {
+        try (ObjectInputStream<K> filteredInputStream = filterInputStream(createInputStream(experimentAccession))) {
 
             return execute(filteredInputStream, requestContext);
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("IOException when invoking ObjectInputStream.close()");
+            throw new IllegalStateException("IOException when invoking ObjectInputStream.close()", e);
         }
     }
 
-    //ToDo: this should become an injectable builder
-    ObjectInputStream<K> buildFilterInputStream(String experimentAccession) throws GenesNotFoundException {
-        ObjectInputStream<K> inputStream = createInputStream(experimentAccession);
-
-        if (StringUtils.isBlank(requestContext.getGeneQuery())) {
-            return new GeneProfileInputStreamFilter(inputStream, requestContext.getSelectedQueryFactors());
-        }
-
-        //TODO: move this outside - doesn't seem like it should be here
-        GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(requestContext.getGeneQuery(),
-                requestContext.isExactMatch(),
-                requestContext.getFilteredBySpecies(),
-                requestContext.isGeneSetMatch());
-
-        if (geneQueryResponse.isEmpty()) {
-            throw new GenesNotFoundException("No genes found for searchText = " + requestContext.getGeneQuery() + ", species = " + requestContext.getFilteredBySpecies());
-        }
-
-        //ToDo: this initialization is unrelated to this method, but I haven't find yet a better place for it
-        requestContext.setGeneQueryResponse(geneQueryResponse);
-
-        return new GeneProfileInputStreamFilter(inputStream, geneQueryResponse.getAllGeneIds(), requestContext.getSelectedQueryFactors());
+    ObjectInputStream<K> filterInputStream(ObjectInputStream<K> inputStream) throws GenesNotFoundException {
+        return geneProfilesFilter.filterInputStream(inputStream, requestContext);
     }
 
     public abstract ObjectInputStream<K> createInputStream(String experimentAccession);

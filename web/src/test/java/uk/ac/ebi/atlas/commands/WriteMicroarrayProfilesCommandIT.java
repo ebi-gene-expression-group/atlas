@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.commands;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.ImmutableMap;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -18,7 +17,6 @@ import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.download.CsvWriterFactory;
 import uk.ac.ebi.atlas.commands.download.MicroarrayProfilesTSVWriter;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
@@ -31,7 +29,6 @@ import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
@@ -71,7 +68,7 @@ public class WriteMicroarrayProfilesCommandIT {
     private InputStreamFactory inputStreamFactory;
 
     @Inject
-    private SolrQueryService solrQueryService;
+    private GeneProfilesFilter geneProfilesFilter;
 
     private void populateRequestContext(String experimentAccession) {
         MockitoAnnotations.initMocks(this);
@@ -90,13 +87,13 @@ public class WriteMicroarrayProfilesCommandIT {
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
         subject = new WriteMicroarrayProfilesCommand(geneProfileTsvWriter, requestContext, inputStreamFactory);
-        subject.setSolrQueryService(solrQueryService);
+        subject.setGeneProfilesFilter(geneProfilesFilter);
 
         subject.setResponseWriter(printWriterMock);
 
     }
 
-    // http://localhost:8080/gxa/experiments/E-GEOD-43049
+    // http://localhost:8080/gxa/experiments/E-GEOD-43049.tsv
     @Test
     public void eGeod43049() throws GenesNotFoundException {
         populateRequestContext(E_GEOD_43049);
@@ -126,7 +123,7 @@ public class WriteMicroarrayProfilesCommandIT {
         assertThat(sc5d, is("ENSG00000109929\tSC5D\tA_23_P372888\t1.08617530258573E-4\t1.44526451950158\t10.8203265434862".split("\t")));
     }
 
-    // http://localhost:8080/gxa/experiments/E-GEOD-8122
+    // http://localhost:8080/gxa/experiments/E-GEOD-8122.tsv
     @Test
     public void eGeod8122() throws GenesNotFoundException {
         populateRequestContext(E_GEOD_8122);
@@ -151,6 +148,14 @@ public class WriteMicroarrayProfilesCommandIT {
 
         assertThat(geneNames, containsInAnyOrder("VMA16"));
         assertThat(vma16, is("YHR026W\tVMA16\t1779820_at\t0.0415772172547035\t-0.540554090488339\t-6.70529872966727".split("\t")));
+    }
+
+
+    // http://localhost:8080/gxa/experiments/E-GEOD-8122.tsv?geneQuery=YHR026W
+    @Test
+    public void eGeod8122_GeneQuery_For_Gene_Not_In_Experiment_Species() throws GenesNotFoundException {
+        setGeneQuery("YHR026W");
+        eGeod8122();
     }
 
     private ImmutableMap<String, String[]> indexByGeneName(List<String[]> lines) {
