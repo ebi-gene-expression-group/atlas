@@ -13,7 +13,10 @@ public final class ArraySortByIndices {
     }
 
     public static String[] sort(String[] values, int[] indicesOrder) {
-        checkArgument(values.length == indicesOrder.length, "Arguments must have same length");
+        checkArgument(values.length == indicesOrder.length, "Arguments must have same length. Expecting a total of " + indicesOrder.length +
+                                                            " but only got " + values.length +
+                                                            ". Current values are => " + Joiner.on(", ").join(values));
+
 
         String[] sorted = new String[values.length];
 

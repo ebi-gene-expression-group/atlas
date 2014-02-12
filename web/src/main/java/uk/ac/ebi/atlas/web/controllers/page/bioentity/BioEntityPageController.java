@@ -75,6 +75,9 @@ public abstract class BioEntityPageController {
         //differential heatmap will visualize an extra column for design element (not required when the heatmap displays a single bioentity)
         model.addAttribute("singleBioentityPage", true);
 
+        //if all geneIds and geneNames in the BioentityPage are the same we don't want to display in the heatmap the columns Genes and Organism
+        model.addAttribute("bioentitySameIdentifier", true);
+
         //bioentity properties panel data
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
 

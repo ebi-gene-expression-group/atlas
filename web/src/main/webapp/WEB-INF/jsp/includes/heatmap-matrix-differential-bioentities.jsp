@@ -31,6 +31,7 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
+<c:set var="isSameGeneId" value="${bioentitySameIdentifier}" />
 
 <table>
     <tbody>
@@ -38,17 +39,23 @@
         <td>
             <table id="diff-heatmap-table" class="table-grid">
                 <thead>
+
                 <tr>
+                <c:if test="${!isSameGeneId}">
                     <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
                         <div>Gene</div>
                     </th>
+                </c:if>
+
                     <th id="design-element-header" class="horizontal-header-cell"
                         style="padding: 5px; text-align:center;">
                         <div>Design Element</div>
                     </th>
+                <c:if test="${!isSameGeneId}">
                     <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
                         <div>Organism</div>
                     </th>
+                </c:if>
                     <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
                         <div>Contrast</div>
                     </th>
@@ -56,21 +63,29 @@
                         <div class='factor-header' data-organism-part=''>Adjusted P-value</div>
                     </th>
                 </tr>
+
                 </thead>
+
                 <tbody>
 
                 <c:forEach items="${bioentities}"
                            var="differentialBioentityExpression">
                     <tr>
+                     <c:if test="${!isSameGeneId}">
                         <td class="horizontal-header-cell">
                                 <a href="genes/${differentialBioentityExpression.bioentityId}">${differentialBioentityExpression.bioentityName}</a>
                         </td>
+                     </c:if>
                         <td class="horizontal-header-cell">
                                 ${differentialBioentityExpression.designElement}
                         </td>
+
+                      <c:if test="${!isSameGeneId}">
                         <td class="horizontal-header-cell">
                                 ${differentialBioentityExpression.species}
                         </td>
+                      </c:if>
+
                         <td class="horizontal-header-cell contrastNameCell"
                             data-experiment-accession="${differentialBioentityExpression.experimentAccession}"
                             data-contrast-id="${differentialBioentityExpression.contrastId}">
