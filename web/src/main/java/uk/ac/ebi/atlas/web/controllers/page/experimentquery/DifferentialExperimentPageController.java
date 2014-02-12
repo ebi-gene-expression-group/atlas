@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.experimentquery;
 
-import uk.ac.ebi.atlas.web.controllers.page.validators.*;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -32,25 +31,28 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.RankProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
-import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.model.differential.*;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
+import uk.ac.ebi.atlas.web.controllers.page.validators.DifferentialRequestPreferencesValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
-public abstract class DifferentialExperimentPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences, V extends DifferentialProfilesList, Z extends Profile> {
+public abstract class DifferentialExperimentPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences, Z extends Profile> {
 
     private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
-    private RankProfilesCommand<V, Z> rankProfilesCommand;
+    private RankProfilesCommand<DifferentialProfilesList, Z> rankProfilesCommand;
 
 
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
-                                                   RankProfilesCommand<V, Z> rankProfilesCommand,
+                                                   RankProfilesCommand<DifferentialProfilesList, Z> rankProfilesCommand,
                                                    DownloadURLBuilder downloadURLBuilder) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         this.rankProfilesCommand = rankProfilesCommand;
@@ -87,7 +89,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         if (!result.hasErrors()) {
 
             try {
-                GeneProfilesList<DifferentialProfile> differentialProfiles = rankProfilesCommand.execute(experiment.getAccession());
+                DifferentialProfilesList differentialProfiles = rankProfilesCommand.execute(experiment.getAccession());
 
                 model.addAttribute("geneProfiles", differentialProfiles);
 

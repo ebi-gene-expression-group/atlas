@@ -37,11 +37,11 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
     }
 
     public double getMaxUpRegulatedExpressionLevel(){
-        double maxUpRegulatedExpressionLevel = 0;
+        double maxUpRegulatedExpressionLevel = -Double.MAX_VALUE;
         for (DifferentialProfile differentialProfile : this) {
             maxUpRegulatedExpressionLevel = max(maxUpRegulatedExpressionLevel, differentialProfile.getMaxUpRegulatedExpressionLevel());
         }
-        return maxUpRegulatedExpressionLevel == 0 ? Double.NaN : maxUpRegulatedExpressionLevel;
+        return maxUpRegulatedExpressionLevel == -Double.MAX_VALUE ? Double.NaN : maxUpRegulatedExpressionLevel;
     }
 
     public double getMinUpRegulatedExpressionLevel(){

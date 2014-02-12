@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
@@ -42,7 +41,7 @@ import javax.validation.Valid;
 
 @Controller
 @Scope("request")
-public class MicroarrayExperimentPageController extends DifferentialExperimentPageController<MicroarrayExperiment, MicroarrayRequestPreferences, DifferentialProfilesList, MicroarrayProfile> {
+public class MicroarrayExperimentPageController extends DifferentialExperimentPageController<MicroarrayExperiment, MicroarrayRequestPreferences, MicroarrayProfile> {
     private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
 
     @Inject

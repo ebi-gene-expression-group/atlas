@@ -25,6 +25,10 @@
   ~ http://gxa.github.com/gxa
   --%>
 
+<%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
+<%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
+
+
 <div style="float:right; padding-left: 100px">
     <%--<div style="float:left">--%>
     <c:choose>

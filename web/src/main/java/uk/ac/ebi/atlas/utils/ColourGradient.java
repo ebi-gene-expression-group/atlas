@@ -38,8 +38,6 @@ public class ColourGradient {
 
     protected static final double SCALE_LINEAR = 1.0;
 
-    protected static final double SCALE_EXPONENTIAL = 3;
-
     // Heat map colour settings.
     private Color defaultHighValueColour;
     private Color defaultLowValueColour;

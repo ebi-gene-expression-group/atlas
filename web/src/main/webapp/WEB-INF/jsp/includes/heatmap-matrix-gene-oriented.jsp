@@ -91,6 +91,7 @@
                         <c:set var="style" value=""/>
                         <!-- then we check if expressionLevel is not null we set the style value to the right shade of gradient -->
                         <c:if test="${not empty expressionLevel}">
+                            <%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
                             <c:choose>
                                 <c:when test="${type.isBaseline()}">
                                     <c:set var="cellColour"
@@ -132,7 +133,7 @@
                                 style="${style}">
                             <c:choose>
                             <c:when test="${knownLevel}">
-                                <c:if test="${not empty expressionLevel}">
+                                <c:if test="${not empty expressionLevel}"><%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
                                     <c:choose>
                                         <c:when test="${type.isBaseline()}">
                                             <fmt:formatNumber type="number"

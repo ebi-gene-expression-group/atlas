@@ -100,6 +100,7 @@
                         <c:if test="${! empty expressionLevel}">
 
                             <c:choose>
+                                <%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
                                 <c:when test="${expression.overExpressed}">
                                     <c:set var="cellColour"
                                            value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - bioentities.getMaxUpRegulatedExpressionLevel(), 1 - bioentities.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
@@ -117,6 +118,7 @@
                         <td style="${style}">
 
                             <c:if test="${not empty expressionLevel}">
+                                <%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
 
                                 <c:choose>
                                     <c:when test="${expression.notApplicable}">
