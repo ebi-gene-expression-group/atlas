@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
