@@ -79,7 +79,7 @@ public class GeneSetPageController extends BioEntityPageController {
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
         propertyValuesByType.put("reactome", trimmedIdentifier.toUpperCase());
-        propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayName(trimmedIdentifier));
+        propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayNameFailSafe(trimmedIdentifier));
         SortedSet<String> names = Sets.newTreeSet();
         names.add(trimmedIdentifier);
         bioEntityPropertyService.init(species, propertyValuesByType, names, trimmedIdentifier);

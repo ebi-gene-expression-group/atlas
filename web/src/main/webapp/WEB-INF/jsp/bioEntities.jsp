@@ -19,6 +19,7 @@
   ~
   ~ http://gxa.github.com/gxa
   --%>
+<%--@elvariable id="bioEntityPropertyService" type="uk.ac.ebi.atlas.web.controllers.page.bioentity.BioEntityPropertyService"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -68,7 +69,7 @@
                     <div id="infoBody" class="bioEntityCard">
                         <table id="bioEntityCardTable">
                             <c:forEach var="propertyType" items="${propertyNames.keySet()}">
-                                <c:set var="propertyLinks" value="${bioEntityPropertyService.getPropertyLinks(propertyType)}"/>
+                                <c:set var="propertyLinks" value="${bioEntityPropertyService.fetchPropertyLinks(propertyType)}"/>
                                 <c:if test="${propertyLinks.size() > 0}">
                                     <tr>
                                         <td class="bioEntityCardPropertyType">${propertyNames.get(propertyType)}</td>
