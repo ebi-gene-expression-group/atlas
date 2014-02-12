@@ -23,8 +23,10 @@
 package uk.ac.ebi.atlas.utils;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
@@ -34,6 +36,8 @@ import java.text.MessageFormat;
 @Named
 @Scope("prototype")
 public class ReactomeBiomartClient {
+
+    private static final Logger LOGGER = Logger.getLogger(ReactomeBiomartClient.class);
 
     private static final String REACTOME_BIOMART_QUERY =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
@@ -57,13 +61,19 @@ public class ReactomeBiomartClient {
     }
 
     /**
-     * @return pathway name if non empty, otherwise null
+     * @return pathway name, or if there is an error then log it but continue by returning the reactomeId
      */
-    public String fetchPathwayName(String reactomeId) {
+    public String fetchPathwayNameFailSafe(String reactomeId) {
         String reactomeQuery = MessageFormat.format(REACTOME_BIOMART_QUERY, reactomeId);
-        String result = restTemplate.getForObject(reactomeURL, String.class, reactomeQuery);
 
-        return StringUtils.trimToEmpty(StringUtils.substringAfterLast(result, "\t"));
+        try {
+            String result = restTemplate.getForObject(reactomeURL, String.class, reactomeQuery);
+            return StringUtils.trimToEmpty(StringUtils.substringAfterLast(result, "\t"));
+        } catch (RestClientException e) {
+            LOGGER.error(e);
+            return reactomeId;
+        }
+
     }
 
 }

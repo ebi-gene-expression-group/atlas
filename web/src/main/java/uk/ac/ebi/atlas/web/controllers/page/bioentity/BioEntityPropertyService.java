@@ -92,8 +92,7 @@ public class BioEntityPropertyService {
         return species;
     }
 
-    //used in bioEntities.jsp
-    public List<PropertyLink> getPropertyLinks(String propertyType) {
+    public List<PropertyLink> fetchPropertyLinks(String propertyType) {
         if ("reactome".equals(propertyType) && !propertyValuesByType.containsKey(propertyType)) {
             addReactomePropertyValues();
         } else if ("design_element".equals(propertyType) && !propertyValuesByType.containsKey(propertyType)) {
@@ -164,7 +163,7 @@ public class BioEntityPropertyService {
     PropertyLink createLink(String propertyType, String propertyValue, String species) {
         final String linkSpecies = species.replaceAll(" ", "_");
 
-        String linkText = getLinkText(propertyType, propertyValue);
+        String linkText = fetchLinkText(propertyType, propertyValue);
 
         String link = bioEntityCardProperties.getLinkTemplate(propertyType);
         if (link != null) {
@@ -176,12 +175,12 @@ public class BioEntityPropertyService {
         return new PropertyLink(linkText);
     }
 
-    String getLinkText(String propertyType, String propertyValue) {
+    String fetchLinkText(String propertyType, String propertyValue) {
         String displayName = propertyValue;
         if (propertyType.equals("ortholog")) {
             displayName = transformOrthologToSymbol(displayName);
         } else if (propertyType.equals("reactome")) {
-            displayName = reactomeBiomartClient.fetchPathwayName(propertyValue);
+            displayName = reactomeBiomartClient.fetchPathwayNameFailSafe(propertyValue);
         }
         return displayName;
     }
