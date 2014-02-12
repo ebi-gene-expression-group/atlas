@@ -557,14 +557,15 @@
     <profiles>
         <!-- environment profiles -->
         <profile>
-            <id>dev</id>
+            <!-- used for build that is deployed to ves-hx-77 -->
+            <id>acceptance</id>
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
             </properties>
         </profile>
         <profile>
-            <!--used to deploy on www-test-->
-            <id>test</id>
+            <!--build used for staging and production -->
+            <id>production</id>
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
@@ -574,7 +575,6 @@
         </profile>
         <profile>
             <id>integration.test</id>
-            <!-- include dev datasource  -->
             <build>
                 <resources>
                     <resource>
@@ -594,8 +594,8 @@
             </properties>
         </profile>
         <profile>
-            <id>local.integration.test</id>
-            <!-- include dev datasource  -->
+            <!-- for development -->
+            <id>dev</id>
             <build>
                 <resources>
                     <resource>
@@ -617,8 +617,7 @@
         </profile>
         <profile>
             <!-- access solr and oracle via localhost ssh tunnel -->
-            <id>local.integration.test.via.tunnel</id>
-            <!-- include dev datasource  -->
+            <id>dev.via.tunnel</id>
             <build>
                 <resources>
                     <resource>
