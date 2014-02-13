@@ -42,32 +42,15 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
 
         while (resultSet.next()) {
             String experimentAccession = resultSet.getString("accession");
-            String specie = resultSet.getString("organism");
 
             ExperimentDTO experiment = experimentByAccession.get(experimentAccession);
 
             if (experiment == null) {
-
-                ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("type"));
-                Date lastUpdate = resultSet.getTimestamp("last_update");
-                boolean isPrivate = "T".equals(resultSet.getString("private"));
-                String accessKeyUUID = resultSet.getString("access_key");
-                String title = resultSet.getString("title");
-
-                String pubmed_ids = resultSet.getString("pubmed_Ids");
-                Set<String> pumedIds = StringUtils.isBlank(pubmed_ids)? new HashSet<String>() : Sets.newHashSet(Splitter.on(", ").split(pubmed_ids));
-
-                experiment = new ExperimentDTO(experimentAccession
-                        , experimentType
-                        , pumedIds
-                        , title
-                        , lastUpdate
-                        , isPrivate
-                        , accessKeyUUID);
-
+                experiment = createExperimentDTO(resultSet, experimentAccession);
                 experimentByAccession.put(experimentAccession, experiment);
             }
 
+            String specie = resultSet.getString("organism");
             if (!StringUtils.isBlank(specie)) {
                 experiment.addSpecie(specie);
             }
@@ -77,5 +60,25 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
         return Lists.newArrayList(experimentByAccession.values());
 
 
+    }
+
+    private ExperimentDTO createExperimentDTO(ResultSet resultSet, String experimentAccession) throws SQLException {
+        ExperimentDTO experiment;ExperimentType experimentType = ExperimentType.valueOf(resultSet.getString("type"));
+        Date lastUpdate = resultSet.getTimestamp("last_update");
+        boolean isPrivate = "T".equals(resultSet.getString("private"));
+        String accessKeyUUID = resultSet.getString("access_key");
+        String title = resultSet.getString("title");
+
+        String pubMedIdsString = resultSet.getString("pubmed_Ids");
+        Set<String> pubMedIds = StringUtils.isBlank(pubMedIdsString)? new HashSet<String>() : Sets.newHashSet(Splitter.on(", ").split(pubMedIdsString));
+
+        experiment = new ExperimentDTO(experimentAccession
+                , experimentType
+                , pubMedIds
+                , title
+                , lastUpdate
+                , isPrivate
+                , accessKeyUUID);
+        return experiment;
     }
 }

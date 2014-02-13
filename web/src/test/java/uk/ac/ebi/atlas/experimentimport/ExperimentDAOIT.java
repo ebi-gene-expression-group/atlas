@@ -54,8 +54,7 @@ public class ExperimentDAOIT {
     @Inject
     private ExperimentDAO subject;
 
-    @Before
-    public void setUp() throws Exception {
+    public void createSecret111() throws Exception {
 
         ExperimentDTO mtab = new ExperimentDTO(SECRET_111, TYPE_MICROARRAY, Sets.newHashSet("cow"),
                 Sets.newHashSet("1"), "diff", false);
@@ -63,19 +62,14 @@ public class ExperimentDAOIT {
         subject.addExperiment(mtab);
     }
 
-    @After
-    public void tearDown() throws Exception {
-        try {
-            subject.deleteExperiment(SECRET_111);
-        } catch (Exception e) {
-
-        }
+    public void deleteSecret111() throws Exception {
+        subject.deleteExperiment(SECRET_111);
     }
 
     @Test
     public void testFindExperiments() throws Exception {
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
-        assertThat(experimentDTOs, hasSize(17));
+        assertThat(experimentDTOs, hasSize(16));
         assertThat(experimentDTOs, hasItem(new ExperimentDTO(E_MTAB_513, TYPE_BASELINE, Sets.newHashSet(""), Sets.newHashSet(""), "", false)));
     }
 
@@ -115,19 +109,22 @@ public class ExperimentDAOIT {
 
     @Test
     public void testDeleteExperiment() throws Exception {
+        createSecret111();
         List<ExperimentDTO> experimentDTOs = subject.findAllExperiments();
         int size = experimentDTOs.size();
-        subject.deleteExperiment(SECRET_111);
+        deleteSecret111();
         assertThat(subject.findAllExperiments().size(), is(size - 1));
     }
 
     @Test
     public void updateExperimentShouldChangePrivateState() throws Exception {
+        createSecret111();
         assertThat(subject.findPublicExperiment(SECRET_111), is(notNullValue()));
         subject.updateExperiment(SECRET_111, true);
         assertThat(subject.findExperiment(SECRET_111, true).isPrivate(), is(true));
         subject.updateExperiment(SECRET_111, false);
         assertThat(subject.findPublicExperiment(SECRET_111), is(notNullValue()));
+        deleteSecret111();
     }
 
     @Test
