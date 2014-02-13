@@ -101,9 +101,9 @@ public class ExperimentDesignParserTest {
     @Test
     public void testParseFactors() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getFactorValueByHeader(ASSAY_ACCESSION_1, GENOTYPE), is(CYC_C_MUTANT));
-        assertThat(experimentDesign.getFactorValueByHeader(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
-        assertThat(experimentDesign.getFactorValueByHeader(DUMMY, GENOTYPE), is(nullValue()));
+        assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, GENOTYPE), is(CYC_C_MUTANT));
+        assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
+        assertThat(experimentDesign.getFactorValue(DUMMY, GENOTYPE), is(nullValue()));
     }
 
     @Test

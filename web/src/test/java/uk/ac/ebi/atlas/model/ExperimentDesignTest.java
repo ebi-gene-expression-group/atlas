@@ -47,7 +47,7 @@ public class ExperimentDesignTest {
         assertThat(subject.getFactors(ASSAY1), contains(factor2, factor1));
         assertThat(subject.getFactors(ASSAY2), contains(factor3, factor2, factor1));
 
-        assertThat(subject.getFactorValueByHeader(ASSAY1, FACTOR_HEADER), is(FACTOR_VALUE));
+        assertThat(subject.getFactorValue(ASSAY1, FACTOR_HEADER), is(FACTOR_VALUE));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ExperimentDesignTest {
         subject.putFactor(ASSAY2, FACTOR_HEADER, FACTOR_VALUE, FACTOR_ONTOLOGYTERM);
         subject.putFactor(ASSAY2, FACTOR_HEADER2, FACTOR_VALUE2, FACTOR_ONTOLOGYTERM2);
 
-        assertEquals(subject.getFactorValueByHeader(ASSAY1, FACTOR_HEADER), FACTOR_VALUE);
+        assertEquals(subject.getFactorValue(ASSAY1, FACTOR_HEADER), FACTOR_VALUE);
 
     }
 

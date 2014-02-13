@@ -14,7 +14,7 @@ public abstract class ConditionsBuilder<T extends Experiment> {
 
     protected Set<String> collectAssayProperties(ExperimentDesign experimentDesign, String assayAccession, SetMultimap<String, String> ontologyTerms) {
 
-        Map<String, String> factors = experimentDesign.getFactorValuesByHeader(assayAccession);
+        Map<String, String> factors = experimentDesign.getFactorValues(assayAccession);
         Map<String, String> samples = experimentDesign.getSamples(assayAccession);
         Set<String> terms = ontologyTerms.get(assayAccession);
 
