@@ -45,12 +45,21 @@ public class BaselineExpression implements Expression {
     public BaselineExpression(String expressionLevelString, FactorGroup factorGroup) {
         this.levelString = expressionLevelString;
 
-        if(expressionLevelString.equals("FAIL") || expressionLevelString.equals("LOWDATA") || expressionLevelString.equals("NA")){
-            level = 0;
-            known = false;
-        } else {
-            level = Double.parseDouble(expressionLevelString);
-            known = true;
+        switch (expressionLevelString) {
+            case "FAIL":
+            case "LOWDATA":
+                level = 0;
+                known = false;
+                break;
+            case "NA":
+                // treat as if zero
+                level = 0;
+                known = true;
+                break;
+            default:
+                level = Double.parseDouble(expressionLevelString);
+                known = true;
+                break;
         }
         this.factorGroup = factorGroup;
     }

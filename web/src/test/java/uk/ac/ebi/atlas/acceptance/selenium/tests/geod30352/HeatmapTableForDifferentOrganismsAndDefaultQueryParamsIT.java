@@ -26,8 +26,7 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class HeatmapTableForDifferentOrganismsAndDefaultQueryParamsIT extends SeleniumFixture {
@@ -100,6 +99,19 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParamsIT extends Se
 
         assertThat(subject.getFactorValueHeaders().size(), is(8));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("cerebellum"));
+    }
+
+    @Test
+    public void verifyGeneWithExpressionLevelOfNAIsNotShown() {
+        subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Homo%20sapiens");
+        subject.get();
+
+        assertThat(subject.getQueryFactorLabel(), is(ORGANISM_PART));
+
+        assertThat(subject.getFactorValueHeaders().size(), is(8));
+        assertThat(subject.getFactorValueHeaders().get(0), startsWith("cerebellum"));
+
+        assertThat(subject.getGeneNames(), not(hasItem("ORM2")));
     }
 
     @Test
