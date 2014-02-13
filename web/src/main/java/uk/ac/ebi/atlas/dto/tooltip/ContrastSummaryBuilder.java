@@ -91,8 +91,8 @@ public class ContrastSummaryBuilder {
         Collection<String> testValues = allTestValues.get(header);
         Collection<String> referenceValues = allReferenceValues.get(header);
         ContrastProperty property = new ContrastProperty(header,
-                Joiner.on(",").skipNulls().join(testValues),
-                Joiner.on(",").skipNulls().join(referenceValues),
+                Joiner.on(", ").skipNulls().join(testValues),
+                Joiner.on(", ").skipNulls().join(referenceValues),
                 contrastPropertyType);
         return property;
     }
