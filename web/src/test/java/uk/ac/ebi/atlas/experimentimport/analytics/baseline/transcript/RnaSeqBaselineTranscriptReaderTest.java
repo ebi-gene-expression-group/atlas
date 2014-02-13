@@ -31,9 +31,11 @@ public class RnaSeqBaselineTranscriptReaderTest {
     private static final RnaSeqBaselineTranscript TRANSCRIPT_2 = RnaSeqBaselineTranscript.create(A_GENE_ID, TRANSCRIPT_ID_2, new Double[] {0.00, 2D, 0D, 0.0002});
     private static final RnaSeqBaselineTranscript TRANSCRIPT_FAIL_1 = RnaSeqBaselineTranscript.create(A_GENE_ID, TRANSCRIPT_ID_3, new Double[] {0.00, 0D, 0D, 1D});
     private static final RnaSeqBaselineTranscript TRANSCRIPT_FAIL_2 = RnaSeqBaselineTranscript.create(A_GENE_ID, TRANSCRIPT_ID_4, new Double[] {0D, 0D, 0D, 0D});
-    private static final String TSV_HEADER = Joiner.on("\t").join( new String[]{"Gene ID", "Gene Name", "Transcript ID", "g1", "g2", "g3", "g4"} );
+    private static final RnaSeqBaselineTranscript TRANSCRIPT_NA = RnaSeqBaselineTranscript.create(A_GENE_ID, TRANSCRIPT_ID_4, new Double[] {1D, 0D, 3D, 4D});
+    private static final String TSV_HEADER = Joiner.on("\t").join(new String[]{"Gene ID", "Gene Name", "Transcript ID", "g1", "g2", "g3", "g4"});
     private static final String TSV_LINE_1 = Joiner.on("\t").join( new String[]{A_GENE_ID, A_GENE_NAME, TRANSCRIPT_ID_1, "0.11", "1.3242", "0", "0.0003"} );
     private static final String TSV_LINE_2 = Joiner.on("\t").join( new String[]{A_GENE_ID, A_GENE_NAME, TRANSCRIPT_ID_2, "0.00", "2", "0", "0.0002"} );
+    private static final String TSV_LINE_NA = Joiner.on("\t").join( new String[]{A_GENE_ID, A_GENE_NAME, TRANSCRIPT_ID_4, "1", "NA", "3", "4"} );
     private static final String TSV_LINE_FAIL_1 = Joiner.on("\t").join( new String[]{A_GENE_ID, A_GENE_NAME, TRANSCRIPT_ID_3, "0.00", "FAIL", "0", "1"} );
     private static final String TSV_LINE_FAIL_2 = Joiner.on("\t").join( new String[]{A_GENE_ID, A_GENE_NAME, TRANSCRIPT_ID_4, "FAIL", "FAIL", "FAIL", "FAIL"} );
     private static final String[] ORDERED_ASSAY_GROUP_IDS = new String[]{"g1", "g2", "g3", "g4"};
@@ -61,6 +63,19 @@ public class RnaSeqBaselineTranscriptReaderTest {
 
         assertThat(subject.next(), is(TRANSCRIPT_FAIL_1));
         assertThat(subject.next(), is(TRANSCRIPT_FAIL_2));
+        assertThat(subject.hasNext(), is(false));
+    }
+
+
+    @Test
+    public void readTsvLineWithNA() throws IOException {
+        String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_NA});
+
+        Reader tsvSource = new StringReader(tsvContents);
+        CSVReader csvReader = CsvReaderFactory.createTsvReader(tsvSource);
+        RnaSeqBaselineTranscriptReader subject = new RnaSeqBaselineTranscriptReader(csvReader, "Test", ORDERED_ASSAY_GROUP_IDS);
+
+        assertThat(subject.next(), is(TRANSCRIPT_NA));
         assertThat(subject.hasNext(), is(false));
     }
 

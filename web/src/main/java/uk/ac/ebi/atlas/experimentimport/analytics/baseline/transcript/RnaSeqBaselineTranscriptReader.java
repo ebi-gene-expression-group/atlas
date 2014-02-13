@@ -103,7 +103,7 @@ public class RnaSeqBaselineTranscriptReader implements Iterable<RnaSeqBaselineTr
     }
 
     private static Double parseLevel(String levelString) {
-        return "FAIL".equals(levelString) ? 0 : Double.parseDouble(levelString);
+        return ("FAIL".equals(levelString) || "NA".equals(levelString)) ? 0 : Double.parseDouble(levelString);
     }
 
 }
