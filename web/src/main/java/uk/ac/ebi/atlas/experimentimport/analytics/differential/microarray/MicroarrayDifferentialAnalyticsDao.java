@@ -26,6 +26,7 @@ public class MicroarrayDifferentialAnalyticsDao {
     private static final int LOG2FOLD = 7;
     private static final int TSTAT = 8;
 
+    //The database can't handle a small value than 1E-125, so we need to treat it as 0D.
     private static final double SMALL_PVALUE_ALLOWED = 1E-125;
 
     private final JdbcTemplate jdbcTemplate;
