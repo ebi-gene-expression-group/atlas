@@ -61,7 +61,7 @@ public class SolrSuggestionsServiceIT {
         properties = subject.findGeneIdSuggestionsInIdentifier("mt-at", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(0));
 
-        properties = subject.findGenePropertySuggestions("mt-at", HOMO_SAPIENS_SPECIES);
+        properties = subject.findGenePropertySpellingSuggestions("mt-at", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(0));
     }
 
@@ -132,7 +132,7 @@ public class SolrSuggestionsServiceIT {
         properties = subject.findGeneIdSuggestionsInName("mt-at$", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(0));
 
-        properties = subject.findGenePropertySuggestions("prot%", HOMO_SAPIENS_SPECIES);
+        properties = subject.findGenePropertySpellingSuggestions("prot%", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(0));
     }
 
@@ -140,7 +140,7 @@ public class SolrSuggestionsServiceIT {
     public void findGenePropertySuggestionsForPartialQuery() {
 
         //"mitochondrial enco
-        List<String> properties = subject.findGenePropertySuggestions("mitochondrial enco", HOMO_SAPIENS_SPECIES);
+        List<String> properties = subject.findGenePropertySpellingSuggestions("mitochondrial enco", HOMO_SAPIENS_SPECIES);
         assertThat(properties, hasItems("mitochondrially encoded"));
 
     }
@@ -186,7 +186,7 @@ public class SolrSuggestionsServiceIT {
     @Test
     public void findGenePropertySuggestionsShouldSupportMultiTermQueries() {
 
-        List<String> properties = subject.findGenePropertySuggestions("p b", HOMO_SAPIENS_SPECIES);
+        List<String> properties = subject.findGenePropertySpellingSuggestions("p b", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
         assertThat(properties, hasItems("protein b", "p binding", "protein binding"));

@@ -56,9 +56,9 @@ public class SolrSuggestionsService {
 
     private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w ]|_");
 
-    private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE = "suggest_properties?q=\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
+    private static final String SOLR_SPELLING_SUGGESTER_TEMPLATE = "suggest_properties?q=\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
-    private static final String SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE_NO_SPECIES = "suggest_properties?q=\"{0}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
+    private static final String SOLR_SPELLING_SUGGESTER_TEMPLATE_NO_SPECIES = "suggest_properties?q=\"{0}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
     @Value("#{configuration['index.property_names.bioentity_name']}")
     private String[] bioentityNamePropertyNames;
@@ -116,7 +116,9 @@ public class SolrSuggestionsService {
 
     }
 
-    public List<String> findGenePropertySuggestions(String multiTermToken, String species) {
+    // uses Spelling suggester, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Solr+server#Solrserver-Suggestcomponent
+    // eg: http://lime:8983/solr/gxa/suggest_properties?q="prote"&wt=json&omitHeader=true&rows=0&json.nl=arrarr
+    public List<String> findGenePropertySpellingSuggestions(String multiTermToken, String species) {
 
         species = limitSpeciesNameToTwoWords(species);
 
@@ -128,23 +130,26 @@ public class SolrSuggestionsService {
 
         String jsonString;
         if (StringUtils.isNotBlank(species)){
-            jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE, multiTermToken, species);
+            jsonString = getJsonResponse(SOLR_SPELLING_SUGGESTER_TEMPLATE, multiTermToken, species);
         } else {
-            jsonString = getJsonResponse(SOLR_AUTOCOMPLETE_PROPERTIES_TEMPLATE_NO_SPECIES, multiTermToken);
+            jsonString = getJsonResponse(SOLR_SPELLING_SUGGESTER_TEMPLATE_NO_SPECIES, multiTermToken);
         }
         return extractCollations(jsonString);
     }
 
+    // ie: property_value_edgengram:"prote" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"symbol")
     List<String> getGeneIdSuggestionsInName(String queryString, String species) {
 
         return getSuggestions(queryString, species, bioentityNamePropertyNames);
     }
 
+    // ie: property_value_edgengram:"prote" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"synonym")
     List<String> getGeneIdSuggestionsInSynonym(String queryString, String species) {
 
         return getSuggestions(queryString, species, synonymPropertyNames);
     }
 
+    // ie: property_value_edgengram:"prote" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"gene_biotype" OR property_name:"ensfamily" OR property_name:"refseq" OR property_name:"rgd" OR property_name:"design_element" OR property_name:"mirbase_accession" OR property_name:"mirbase_name" OR property_name:"flybase_transcript_id" OR property_name:"unigene" OR property_name:"embl" OR property_name:"interpro" OR property_name:"ensgene" OR property_name:"flybase_gene_id" OR property_name:"pathwayid" OR property_name:"mgi_id" OR property_name:"ensprotein" OR property_name:"mirbase_id" OR property_name:"enstranscript" OR property_name:"entrezgene" OR property_name:"uniprot" OR property_name:"go")
     List<String> getGeneIdSuggestionsInIdentifier(String queryString, String species) {
 
         return getSuggestions(queryString, species, identifierPropertyNames);
@@ -168,9 +173,10 @@ public class SolrSuggestionsService {
         QueryResponse solrResponse = solrServer.query(solrQuery);
 
         List<String> geneNames = Lists.newArrayList();
-        if (solrResponse.getFacetFields().get(0).getValues() != null) {
-            for (FacetField.Count facetField : solrResponse.getFacetFields().get(0).getValues()) {
-                geneNames.add(facetField.getName());
+        List<FacetField.Count> firstFacetFieldCounts = solrResponse.getFacetFields().get(0).getValues();
+        if (firstFacetFieldCounts != null) {
+            for (FacetField.Count facetFieldCount : firstFacetFieldCounts) {
+                geneNames.add(facetFieldCount.getName());
             }
         }
         return geneNames;
@@ -211,7 +217,6 @@ public class SolrSuggestionsService {
     String getJsonResponse(String restQueryTemplate, Object... arguments) {
         checkArgument(arguments != null && arguments.length > 0);
         try {
-
             return restTemplate.getForObject(serverURL + restQueryTemplate, String.class, arguments);
 
         } catch (RestClientException e) {

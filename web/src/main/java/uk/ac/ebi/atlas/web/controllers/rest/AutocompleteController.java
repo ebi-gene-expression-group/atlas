@@ -75,7 +75,7 @@ public class AutocompleteController {
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(solrSuggestionsService.findGenePropertySuggestions(query, species));
+            suggestions.addAll(solrSuggestionsService.findGenePropertySpellingSuggestions(query, species));
         }
 
         List<String> topSuggestions = Lists.newArrayList(suggestions);
