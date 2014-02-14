@@ -117,7 +117,7 @@ public class SolrSuggestionsService {
     }
 
     // uses Spelling suggester, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Solr+server#Solrserver-Suggestcomponent
-    // eg: http://lime:8983/solr/gxa/suggest_properties?q="prote"&wt=json&omitHeader=true&rows=0&json.nl=arrarr
+    // ie: http://lime:8983/solr/gxa/suggest_properties?q="<queryString>"&wt=json&omitHeader=true&rows=0&json.nl=arrarr
     public List<String> findGenePropertySpellingSuggestions(String multiTermToken, String species) {
 
         species = limitSpeciesNameToTwoWords(species);
@@ -137,19 +137,19 @@ public class SolrSuggestionsService {
         return extractCollations(jsonString);
     }
 
-    // ie: property_value_edgengram:"prote" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"symbol")
+    // ie: property_value_edgengram:"<queryString>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"symbol")
     List<String> getGeneIdSuggestionsInName(String queryString, String species) {
 
         return getSuggestions(queryString, species, bioentityNamePropertyNames);
     }
 
-    // ie: property_value_edgengram:"prote" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"synonym")
+    // eg: property_value_edgengram:"<queryString>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"synonym")
     List<String> getGeneIdSuggestionsInSynonym(String queryString, String species) {
 
         return getSuggestions(queryString, species, synonymPropertyNames);
     }
 
-    // ie: property_value_edgengram:"prote" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"gene_biotype" OR property_name:"ensfamily" OR property_name:"refseq" OR property_name:"rgd" OR property_name:"design_element" OR property_name:"mirbase_accession" OR property_name:"mirbase_name" OR property_name:"flybase_transcript_id" OR property_name:"unigene" OR property_name:"embl" OR property_name:"interpro" OR property_name:"ensgene" OR property_name:"flybase_gene_id" OR property_name:"pathwayid" OR property_name:"mgi_id" OR property_name:"ensprotein" OR property_name:"mirbase_id" OR property_name:"enstranscript" OR property_name:"entrezgene" OR property_name:"uniprot" OR property_name:"go")
+    // eg: property_value_edgengram:"<queryString>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"gene_biotype" OR property_name:"ensfamily" OR property_name:"refseq" OR property_name:"rgd" OR property_name:"design_element" OR property_name:"mirbase_accession" OR property_name:"mirbase_name" OR property_name:"flybase_transcript_id" OR property_name:"unigene" OR property_name:"embl" OR property_name:"interpro" OR property_name:"ensgene" OR property_name:"flybase_gene_id" OR property_name:"pathwayid" OR property_name:"mgi_id" OR property_name:"ensprotein" OR property_name:"mirbase_id" OR property_name:"enstranscript" OR property_name:"entrezgene" OR property_name:"uniprot" OR property_name:"go")
     List<String> getGeneIdSuggestionsInIdentifier(String queryString, String species) {
 
         return getSuggestions(queryString, species, identifierPropertyNames);
