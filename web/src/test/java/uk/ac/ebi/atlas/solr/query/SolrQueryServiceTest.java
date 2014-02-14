@@ -33,7 +33,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.solr.query.builders.PropertyValueQueryBuilder;
+import uk.ac.ebi.atlas.solr.query.builders.FacetedPropertyValueQueryBuilder;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -64,7 +64,7 @@ public class SolrQueryServiceTest {
     private SolrQueryBuilderFactory solrQueryBuilderFactoryMock;
 
     @Mock
-    private PropertyValueQueryBuilder propertyValueQueryBuilderMock;
+    private FacetedPropertyValueQueryBuilder facetedPropertyValueQueryBuilderMock;
 
     @Mock
     private GxaSolrServer gxaSolrServerMock;
@@ -79,10 +79,10 @@ public class SolrQueryServiceTest {
     public void initSubject() throws Exception {
 
         given(gxaSolrServerMock.query(solrQueryMock, PROPERTY_VALUE_FIELD, false)).willReturn(Sets.newHashSet("symbol"));
-        given(propertyValueQueryBuilderMock.withPropertyNames(SYMBOL)).willReturn(propertyValueQueryBuilderMock);
-        given(propertyValueQueryBuilderMock.withPropertyNames(GENE_PAGE_PROPERTY_NAMES)).willReturn(propertyValueQueryBuilderMock);
-        given(propertyValueQueryBuilderMock.buildBioentityQuery(BIOENTITY_IDENTIFIER)).willReturn(solrQueryMock);
-        given(solrQueryBuilderFactoryMock.createPropertyValueQueryBuilder()).willReturn(propertyValueQueryBuilderMock);
+        given(facetedPropertyValueQueryBuilderMock.withPropertyNames(SYMBOL)).willReturn(facetedPropertyValueQueryBuilderMock);
+        given(facetedPropertyValueQueryBuilderMock.withPropertyNames(GENE_PAGE_PROPERTY_NAMES)).willReturn(facetedPropertyValueQueryBuilderMock);
+        given(facetedPropertyValueQueryBuilderMock.buildBioentityQuery(BIOENTITY_IDENTIFIER)).willReturn(solrQueryMock);
+        given(solrQueryBuilderFactoryMock.createFacetedPropertyValueQueryBuilder()).willReturn(facetedPropertyValueQueryBuilderMock);
         given(bioentityPropertyValueTokenizerMock.split(BIOENTITY_IDENTIFIER)).willReturn(Lists.newArrayList(BIOENTITY_IDENTIFIER));
 
         subject = new SolrQueryService(TOOLTIP_PROPERTY_TYPES, bioentityPropertyValueTokenizerMock, gxaSolrServerMock, solrQueryBuilderFactoryMock);

@@ -184,7 +184,7 @@ public class SolrQueryService {
 
     public Set<String> findPropertyValuesForGeneId(String identifier, String propertyName) {
 
-        SolrQuery query = solrQueryBuilderFactory.createPropertyValueQueryBuilder()
+        SolrQuery query = solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder()
                 .withPropertyNames(propertyName).buildBioentityQuery(identifier);
         query.setFields(PROPERTY_VALUE_FIELD);
         query.setRows(PROPERTY_VALUES_LIMIT);
@@ -235,7 +235,7 @@ public class SolrQueryService {
 
     SortedSetMultimap<String, String> fetchProperties(String bioentityIdentifier, String[] propertyNames) {
 
-        SolrQuery solrQuery = solrQueryBuilderFactory.createPropertyValueQueryBuilder()
+        SolrQuery solrQuery = solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder()
                 .withPropertyNames(propertyNames).buildBioentityQuery(bioentityIdentifier);
 
         solrQuery.setRows(PROPERTY_VALUES_LIMIT);

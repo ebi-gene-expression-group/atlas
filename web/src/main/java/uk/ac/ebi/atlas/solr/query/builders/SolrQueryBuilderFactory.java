@@ -31,8 +31,8 @@ import javax.inject.Named;
 @Scope("singleton")
 public class SolrQueryBuilderFactory {
 
-    public PropertyValueQueryBuilder createPropertyValueQueryBuilder(){
-        return new PropertyValueQueryBuilder();
+    public FacetedPropertyValueQueryBuilder createFacetedPropertyValueQueryBuilder(){
+        return new FacetedPropertyValueQueryBuilder();
     }
 
     public BioentityIdentifierQueryBuilder createGeneBioentityIdentifierQueryBuilder(){

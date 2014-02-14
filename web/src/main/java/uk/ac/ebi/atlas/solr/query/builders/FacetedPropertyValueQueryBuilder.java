@@ -29,7 +29,7 @@ import org.apache.solr.client.solrj.SolrQuery;
  * If you need to build different query strings within the same client process
  * you must use a new instance of builder for each query.
  */
-public class PropertyValueQueryBuilder extends SolrQueryBuilder<PropertyValueQueryBuilder>{
+public class FacetedPropertyValueQueryBuilder extends SolrQueryBuilder<FacetedPropertyValueQueryBuilder>{
 
     private static final int DEFAULT_LIMIT = 15;
     public static final String PROPERTY_LOWER_FIELD = "property_value_lower";
@@ -59,7 +59,7 @@ public class PropertyValueQueryBuilder extends SolrQueryBuilder<PropertyValueQue
     }
 
     @Override
-    protected PropertyValueQueryBuilder getThis() {
+    protected FacetedPropertyValueQueryBuilder getThis() {
         return this;
     }
 }

@@ -26,18 +26,18 @@ import com.google.common.collect.Sets;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.ebi.atlas.solr.query.builders.PropertyValueQueryBuilder;
+import uk.ac.ebi.atlas.solr.query.builders.FacetedPropertyValueQueryBuilder;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class PropertyValueQueryBuilderTest {
 
-    private PropertyValueQueryBuilder subject;
+    private FacetedPropertyValueQueryBuilder subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new PropertyValueQueryBuilder();
+        subject = new FacetedPropertyValueQueryBuilder();
     }
 
     @Test

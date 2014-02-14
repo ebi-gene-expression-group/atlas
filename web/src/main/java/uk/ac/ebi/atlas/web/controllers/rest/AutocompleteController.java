@@ -63,19 +63,19 @@ public class AutocompleteController {
         species = StringUtils.lowerCase(species);
 
         if (!StringUtils.containsWhitespace(query)) {
-            suggestions.addAll(solrSuggestionsService.findGeneIdSuggestionsInName(query, species));
+            suggestions.addAll(solrSuggestionsService.fetchGeneIdSuggestionsInName(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(solrSuggestionsService.findGeneIdSuggestionsInSynonym(query, species));
+            suggestions.addAll(solrSuggestionsService.fetchGeneIdSuggestionsInSynonym(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(solrSuggestionsService.findGeneIdSuggestionsInIdentifier(query, species));
+            suggestions.addAll(solrSuggestionsService.fetchGeneIdSuggestionsInIdentifier(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(solrSuggestionsService.findGenePropertySpellingSuggestions(query, species));
+            suggestions.addAll(solrSuggestionsService.fetchGenePropertySpellingSuggestions(query, species));
         }
 
         List<String> topSuggestions = Lists.newArrayList(suggestions);
