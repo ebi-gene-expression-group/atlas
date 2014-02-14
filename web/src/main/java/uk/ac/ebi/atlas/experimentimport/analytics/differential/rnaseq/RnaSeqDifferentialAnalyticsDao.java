@@ -24,6 +24,8 @@ public class RnaSeqDifferentialAnalyticsDao {
     private static final int PVAL = 5;
     private static final int LOG2FOLD = 6;
 
+    private static final double SMALL_PVALUE_ALLOWED = 1E-125;
+
     private final JdbcTemplate jdbcTemplate;
 
     @Inject
@@ -51,7 +53,10 @@ public class RnaSeqDifferentialAnalyticsDao {
                     ps.setString(EXPERIMENT, experimentAccession);
                     ps.setString(CONTRAST_ID, analytics.getContrastId());
                     ps.setString(IS_ACTIVE, "T");
-                    ps.setDouble(PVAL, analytics.getpValue());
+
+                    Double pValue = (analytics.getpValue() <  SMALL_PVALUE_ALLOWED) ? 0D : analytics.getpValue();
+
+                    ps.setDouble(PVAL, pValue);
                     ps.setDouble(LOG2FOLD, analytics.getFoldChange());
 
                     return true;

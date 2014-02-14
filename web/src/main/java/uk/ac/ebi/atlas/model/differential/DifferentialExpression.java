@@ -27,14 +27,20 @@ import uk.ac.ebi.atlas.model.Expression;
 
 public class DifferentialExpression implements Expression {
 
+    private static final double SMALL_PVALUE_ALLOWED = 1E-125;
+
     private double pValue;
 
     private double foldChange;
 
     private Contrast contrast;
 
+    /**
+     *  If pValue is smaller than minim allowed value, treat it as 0D. This checks this condition when reading
+     *  from the tsv file */
+
     public DifferentialExpression(double pValue, double foldChange, Contrast contrast) {
-        this.pValue = pValue;
+        this.pValue = (pValue <  SMALL_PVALUE_ALLOWED) ? 0D : pValue;
         this.foldChange = foldChange;
         this.contrast = contrast;
     }

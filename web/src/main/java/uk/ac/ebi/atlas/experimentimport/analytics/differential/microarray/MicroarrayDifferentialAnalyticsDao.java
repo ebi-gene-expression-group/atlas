@@ -26,6 +26,8 @@ public class MicroarrayDifferentialAnalyticsDao {
     private static final int LOG2FOLD = 7;
     private static final int TSTAT = 8;
 
+    private static final double SMALL_PVALUE_ALLOWED = 1E-125;
+
     private final JdbcTemplate jdbcTemplate;
 
     @Inject
@@ -54,7 +56,10 @@ public class MicroarrayDifferentialAnalyticsDao {
                     ps.setString(ARRAYDESIGN, arrayDesign);
                     ps.setString(CONTRAST_ID, analytics.getContrastId());
                     ps.setString(IS_ACTIVE, "T");
-                    ps.setDouble(PVAL, analytics.getpValue());
+
+                    Double pValue = (analytics.getpValue() <  SMALL_PVALUE_ALLOWED) ? 0D : analytics.getpValue();
+
+                    ps.setDouble(PVAL, pValue);
                     ps.setDouble(LOG2FOLD, analytics.getFoldChange());
                     ps.setDouble(TSTAT, analytics.getTstatistic());
 

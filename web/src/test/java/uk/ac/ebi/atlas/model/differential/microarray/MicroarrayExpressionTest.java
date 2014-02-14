@@ -38,6 +38,9 @@ public class MicroarrayExpressionTest {
     public static final double P_VALUE = 0.05;
     public static final int FOLD_CHANGE = 14;
     public static final double TSTATISTIC = 0.6;
+
+    public static final double SMALLPVALUE = 1.17501162847487E-242;
+
     @Mock
     Contrast contrastMock;
 
@@ -51,5 +54,14 @@ public class MicroarrayExpressionTest {
     @Test
     public void testGetTstatistic() throws Exception {
         assertThat(subject.getTstatistic(), is(TSTATISTIC));
+    }
+
+    @Test
+    public void testSmallPValue() {
+        //when
+        MicroarrayExpression expression = new MicroarrayExpression(SMALLPVALUE, -1.0, TSTATISTIC, contrastMock);
+
+        //then
+        assertThat(expression.getLevel(), is(0D));
     }
 }

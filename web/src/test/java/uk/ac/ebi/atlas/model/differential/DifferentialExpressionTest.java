@@ -14,6 +14,9 @@ public class DifferentialExpressionTest {
 
     public static final double PVALUE = 0.0005;
     public static final double FOLD_CHANGE = 42.0;
+
+    public static final double SMALLPVALUE = 1.17501162847487E-242;
+
     @Mock
     Contrast contrastMock;
 
@@ -79,6 +82,15 @@ public class DifferentialExpressionTest {
         assertThat(expression.isRegulatedLike(Regulation.UP_DOWN), is(true));
         assertThat(expression.isRegulatedLike(Regulation.UP), is(true));
         assertThat(expression.isRegulatedLike(Regulation.DOWN), is(false));
+    }
+
+    @Test
+    public void testSmallPValue() {
+        //when
+        DifferentialExpression expression = new DifferentialExpression(SMALLPVALUE, -1.0, null);
+
+        //then
+        assertThat(expression.getLevel(), is(0D));
     }
 
 }
