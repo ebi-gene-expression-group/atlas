@@ -46,7 +46,7 @@ public class BaselineExpressionTest {
 
         subject = new BaselineExpression(EXPRESSION_LEVEL_2, factorGroup);
 
-        assertThat(subject.isKnown(), is(false));
+        assertThat(subject.isKnown(), is(true));
         assertThat(subject.getLevelAsString(), is(EXPRESSION_LEVEL_2));
 
     }

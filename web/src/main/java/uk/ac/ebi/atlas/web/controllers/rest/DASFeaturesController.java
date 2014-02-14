@@ -82,7 +82,7 @@ public class DASFeaturesController {
             AssayGroup testAssayGroup = dbe.getContrastTestAssayGroup();
             Experiment experiment = experimentTrader.getPublicExperiment(dbe.getExperimentAccession());
 
-            FactorSet factorsForAssayGroup = FactorSet.create(experiment.getExperimentDesign().getFactorValuesByHeader(testAssayGroup.getFirstAssayAccession()));
+            FactorSet factorsForAssayGroup = FactorSet.create(experiment.getExperimentDesign().getFactorValues(testAssayGroup.getFirstAssayAccession()));
             for (Factor factor : factorsForAssayGroup) {
                 factorValuesByType.put(factor.getType(), factor.getValue());
             }

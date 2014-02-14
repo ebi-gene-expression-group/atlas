@@ -100,14 +100,14 @@ public class DifferentialProfilesListTest {
     }
 
     @Test
-    public void maxDownRegulatedExpressionLevelShouldBeNaNWhenAllProfilesHaveNoDownRegulatedExpressionLevel() throws Exception {
+    public void maxDownRegulatedExpressionLevelShouldBeZeroWhenAllProfilesHaveNoDownRegulatedExpressionLevel() throws Exception {
         //given
         given(differentialProfileMock1.getMaxDownRegulatedExpressionLevel()).willReturn(0D);
         given(differentialProfileMock2.getMaxDownRegulatedExpressionLevel()).willReturn(0D);
         given(differentialProfileMock3.getMaxDownRegulatedExpressionLevel()).willReturn(0D);
 
         //
-        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NaN));
+        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(0D));
     }
 
     @Test

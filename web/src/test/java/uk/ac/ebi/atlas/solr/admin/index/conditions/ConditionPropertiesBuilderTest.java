@@ -54,9 +54,9 @@ public class ConditionPropertiesBuilderTest {
         samples2.put("sn2", "sv2");
 
 
-        given(experimentDesignMock.getFactorValuesByHeader("Assay1")).willReturn(factors1);
-        given(experimentDesignMock.getFactorValuesByHeader("Assay2")).willReturn(factors1);
-        given(experimentDesignMock.getFactorValuesByHeader("Assay3")).willReturn(factors2);
+        given(experimentDesignMock.getFactorValues("Assay1")).willReturn(factors1);
+        given(experimentDesignMock.getFactorValues("Assay2")).willReturn(factors1);
+        given(experimentDesignMock.getFactorValues("Assay3")).willReturn(factors2);
 
         given(experimentDesignMock.getSamples("Assay1")).willReturn(samples1);
         given(experimentDesignMock.getSamples("Assay2")).willReturn(samples1);

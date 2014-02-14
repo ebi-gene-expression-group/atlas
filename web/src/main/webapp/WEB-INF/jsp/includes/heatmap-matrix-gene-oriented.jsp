@@ -80,9 +80,9 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <c:set var="knownLevel" value="${geneProfile.isKnownLevel(queryFactor)}" />
+                        <c:set var="isKnownLevel" value="${geneProfile.isKnownLevel(queryFactor)}" />
 
-                        <c:set var="existExpression" value="${geneProfile.getExpression(queryFactor)}" />
+                        <c:set var="hasExpression" value="${not empty geneProfile.getExpression(queryFactor)}" />
 
                         <c:set var="expressionLevel" value="${geneProfile.getExpressionLevel(queryFactor)}"/>
 
@@ -111,7 +111,7 @@
                                 </c:otherwise>
                             </c:choose>
 
-                            <c:if test="${knownLevel}">
+                            <c:if test="${isKnownLevel}">
                                 <c:set var="style" value="background-color:${cellColour}"/>
                             </c:if>
                         </c:if>
@@ -132,57 +132,54 @@
                                 headerClass="rotated_cell vertical-header-cell ${!type.isBaseline() ? 'contrastNameCell' : 'factorNameCell'}"
                                 style="${style}">
                             <c:choose>
-                            <c:when test="${knownLevel}">
-                                <c:if test="${not empty expressionLevel}"><%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
-                                    <c:choose>
-                                        <c:when test="${type.isBaseline()}">
-                                            <fmt:formatNumber type="number"
-                                                              maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
-                                                              value="${expressionLevel}" groupingUsed="false"
-                                                              var="expressionLevel"/>
-                                        </c:when>
-                                        <c:when test="${!type.isBaseline()}">
-                                            <c:choose>
-                                                <c:when test="${geneProfile.getExpression(queryFactor).notApplicable}">
-                                                    <c:set var="foldChange" value="N/A"/>
-                                                </c:when>
-                                                <c:otherwise>
+                            <c:when test="${isKnownLevel}"><%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
+                                <c:choose>
+                                    <c:when test="${type.isBaseline()}">
+                                        <fmt:formatNumber type="number"
+                                                          maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
+                                                          value="${expressionLevel}" groupingUsed="false"
+                                                          var="expressionLevel"/>
+                                    </c:when>
+                                    <c:when test="${!type.isBaseline()}">
+                                        <c:choose>
+                                            <c:when test="${geneProfile.getExpression(queryFactor).notApplicable}">
+                                                <c:set var="foldChange" value="N/A"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <fmt:formatNumber type="number"
+                                                                  maxFractionDigits="2"
+                                                                  value="${geneProfile.getExpression(queryFactor).foldChange}"
+                                                                  groupingUsed="false"
+                                                                  var="foldChange"/>
+                                                <c:if test="${type.isMicroarray()}">
                                                     <fmt:formatNumber type="number"
                                                                       maxFractionDigits="2"
-                                                                      value="${geneProfile.getExpression(queryFactor).foldChange}"
+                                                                      value="${geneProfile.getExpression(queryFactor).tstatistic}"
                                                                       groupingUsed="false"
-                                                                      var="foldChange"/>
-                                                    <c:if test="${type.isMicroarray()}">
-                                                        <fmt:formatNumber type="number"
-                                                                          maxFractionDigits="2"
-                                                                          value="${geneProfile.getExpression(queryFactor).tstatistic}"
-                                                                          groupingUsed="false"
-                                                                          var="tstatistic"/>
-                                                    </c:if>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </c:when>
-                                    </c:choose>
+                                                                      var="tstatistic"/>
+                                                </c:if>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>
+                                </c:choose>
 
-                                    <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
-                                        ${!type.isBaseline() ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
-                                         data-organism-part="${columnHeader}" data-color="${cellColour}"
-                                         ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTerm).concat('\"') : ''}>
-                                            ${!type.isBaseline() ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
-                                    </div>
-
-                                </c:if>
-                            </c:when>
-                            <%--Otherwise show question marks tooltip--%>
-                            <c:otherwise> <%--test="${knownLevel == false}"--%>
-                                <c:if test="${existExpression != null}">
-                                <div style="text-align: center" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
+                                <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
                                     ${!type.isBaseline() ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
-                                        data-organism-part="${columnHeader}"
-                                    ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTerm).concat('\"') : ''}>
-
-                                    <span id='unknownCell' data-help-loc='#heatMapTableUnknownCell'></span>
+                                     data-organism-part="${columnHeader}" data-color="${cellColour}"
+                                     ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTerm).concat('\"') : ''}>
+                                        ${!type.isBaseline() ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
                                 </div>
+                            </c:when>
+                            <c:otherwise>
+                                <c:if test="${hasExpression}">
+                                    <%--Otherwise show question marks tooltip--%>
+                                    <div style="text-align: center" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
+                                        ${!type.isBaseline() ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
+                                            data-organism-part="${columnHeader}"
+                                        ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTerm).concat('\"') : ''}>
+
+                                        <span id='unknownCell' data-help-loc='#heatMapTableUnknownCell'></span>
+                                    </div>
                                 </c:if>
                             </c:otherwise>
                             </c:choose>

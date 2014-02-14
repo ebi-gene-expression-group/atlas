@@ -40,7 +40,7 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
     }
 
     private void populateFactors(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value){
-        for (Map.Entry<String, String> factor : experiment.getExperimentDesign().getFactorValuesByHeader(assayAccession).entrySet()) {
+        for (Map.Entry<String, String> factor : experiment.getExperimentDesign().getFactorValues(assayAccession).entrySet()) {
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "factor",
                     factor.getKey(), factor.getValue());
             result.add(line);
