@@ -26,6 +26,8 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -102,8 +104,8 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParamsIT extends Se
     }
 
     @Test
-    public void verifyGeneWithExpressionLevelOfNAIsNotShown() {
-        subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Homo%20sapiens");
+    public void verifyGeneExpressionLevelOfNAIsNotShown() {
+        subject = new HeatmapTablePage(driver, E_GEOD_30352_ACCESSION, "serializedFilterFactors=ORGANISM:Homo%20sapiens&displayLevels=true");
         subject.get();
 
         assertThat(subject.getQueryFactorLabel(), is(ORGANISM_PART));
@@ -111,7 +113,13 @@ public class HeatmapTableForDifferentOrganismsAndDefaultQueryParamsIT extends Se
         assertThat(subject.getFactorValueHeaders().size(), is(8));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("cerebellum"));
 
-        assertThat(subject.getGeneNames(), not(hasItem("ORM2")));
+        List<String> geneNames = subject.getGeneNames();
+        assertThat(geneNames, hasItem("TGDS"));
+
+        int tgdsPosition = geneNames.indexOf("TGDS");
+        List<String> tgds = subject.getGeneProfile(tgdsPosition + 1);
+
+        assertThat(tgds, contains("1", "1", "1", "2", "", "2", "1", "3"));
     }
 
     @Test
