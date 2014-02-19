@@ -70,6 +70,7 @@ public class BaselineExpressionsQueueBuilder implements TsvRowQueueBuilder<Basel
 
         BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
+        //TODO: maybe we should use what we get from withHeaders - then we can remove dependency on experimentsCache
         return new BaselineExpressionsQueue(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups());
 
     }

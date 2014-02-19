@@ -22,15 +22,13 @@
 
 package uk.ac.ebi.atlas.streams.baseline;
 
+import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -61,6 +59,8 @@ public class BaselineExpressionsQueueBuilderTest {
     @Mock
     ExperimentalFactors experimentalFactorsMock;
 
+    @Mock
+    FactorGroup factorGroup;
 
     private BaselineExpressionsQueueBuilder subject;
 
@@ -80,6 +80,7 @@ public class BaselineExpressionsQueueBuilderTest {
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
+        when(experimentalFactorsMock.getOrderedFactorGroups()).thenReturn(ImmutableList.of(factorGroup));
 
         subject = new BaselineExpressionsQueueBuilder(experimentsCacheMock);
     }

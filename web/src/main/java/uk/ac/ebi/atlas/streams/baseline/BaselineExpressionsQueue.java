@@ -22,22 +22,33 @@
 
 package uk.ac.ebi.atlas.streams.baseline;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.streams.TsvRowQueue;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Queue;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class BaselineExpressionsQueue extends TsvRowQueue<BaselineExpression> {
 
-    private Iterator<FactorGroup> expectedFactorGroups;
+    private final int expectedNumberOfValues;
+    private Iterator<FactorGroup> factorGroups;
 
-    public BaselineExpressionsQueue(Iterable<FactorGroup> orderedFactorGroups) {
-        expectedFactorGroups = Iterables.cycle(orderedFactorGroups).iterator();
+    public BaselineExpressionsQueue(List<FactorGroup> orderedFactorGroups) {
+        expectedNumberOfValues = orderedFactorGroups.size();
+        factorGroups = Iterables.cycle(orderedFactorGroups).iterator();
     }
 
+    @Override
+    public TsvRowQueue reload(String... values) {
+        checkArgument(values.length == expectedNumberOfValues, String.format("Expected %s values but got [%s]", expectedNumberOfValues, Joiner.on(",").join(values)));
+        return super.reload(values);
+    }
 
     @Override
     public BaselineExpression pollExpression(Queue<String> tsvRow) {
@@ -47,7 +58,7 @@ public class BaselineExpressionsQueue extends TsvRowQueue<BaselineExpression> {
             return null;
         }
 
-        return new BaselineExpression(expressionLevelString, expectedFactorGroups.next());
+        return new BaselineExpression(expressionLevelString, factorGroups.next());
     }
 
 

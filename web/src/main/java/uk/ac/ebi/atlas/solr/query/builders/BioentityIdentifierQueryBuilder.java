@@ -58,6 +58,7 @@ public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityI
         StringBuilder queryConditionBuilder = new StringBuilder(propertyName).append(":");
 
         if (applyOrOnQueryStringContent){
+            // use default "lucene" parser and set default operator to OR and default field to propertyName
             queryConditionBuilder.insert(0, "{!lucene q.op=OR df=" + propertyName + "}(").append(queryString).append(")");
         } else {
             queryConditionBuilder.append("\"").append(queryString).append("\"");

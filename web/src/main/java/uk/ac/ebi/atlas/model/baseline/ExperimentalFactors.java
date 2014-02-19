@@ -185,7 +185,7 @@ public class ExperimentalFactors implements Serializable {
     }
 
     // ordered the same as the assay group ids in the expression levels .tsv
-    public List<FactorGroup> getOrderedFactorGroups() {
+    public ImmutableList<FactorGroup> getOrderedFactorGroups() {
         return ImmutableList.copyOf(orderedFactorGroups);
     }
 
