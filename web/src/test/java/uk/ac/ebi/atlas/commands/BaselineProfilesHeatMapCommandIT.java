@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.streams.baseline;
+package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Joiner;
 import org.junit.Before;
@@ -7,8 +7,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.commands.HeatMapBaselineProfiles;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -27,13 +25,13 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class HeatMapBaselineProfilesIT {
+public class BaselineProfilesHeatMapCommandIT {
 
     public static final String E_MTAB_513 = "E-MTAB-513";
     private static final Factor FACTOR_LEUKOCYTE = new Factor("ORGANISM_PART", "leukocyte");
 
     @Inject
-    private HeatMapBaselineProfiles subject;
+    private BaselineProfilesHeatMapCommand subject;
 
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;

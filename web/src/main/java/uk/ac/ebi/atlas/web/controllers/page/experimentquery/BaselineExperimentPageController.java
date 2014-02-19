@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.HeatMapBaselineProfiles;
+import uk.ac.ebi.atlas.commands.BaselineProfilesHeatMapCommand;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.dto.tooltip.AssayGroupFactor;
@@ -60,7 +60,7 @@ import java.util.SortedSet;
 @Scope("request")
 public class BaselineExperimentPageController extends BaselineExperimentController {
 
-    private HeatMapBaselineProfiles heatMapBaselineProfiles;
+    private BaselineProfilesHeatMapCommand baselineProfilesHeatMapCommand;
 
     private ApplicationProperties applicationProperties;
 
@@ -71,7 +71,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
     private BaselineExperiment experiment;
 
     @Inject
-    public BaselineExperimentPageController(HeatMapBaselineProfiles heatMapBaselineProfiles,
+    public BaselineExperimentPageController(BaselineProfilesHeatMapCommand baselineProfilesHeatMapCommand,
                                             ApplicationProperties applicationProperties,
                                             BaselineRequestContextBuilder requestContextBuilder,
                                             FilterFactorsConverter filterFactorsConverter,
@@ -79,7 +79,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
-        this.heatMapBaselineProfiles = heatMapBaselineProfiles;
+        this.baselineProfilesHeatMapCommand = baselineProfilesHeatMapCommand;
         this.filterFactorMenuBuilder = filterFactorMenuBuilder;
     }
 
@@ -139,7 +139,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
             try {
 
-                BaselineProfilesList baselineProfiles = heatMapBaselineProfiles.fetch(requestContext);
+                BaselineProfilesList baselineProfiles = baselineProfilesHeatMapCommand.fetch(requestContext);
 
                 model.addAttribute("geneProfiles", baselineProfiles);
 
