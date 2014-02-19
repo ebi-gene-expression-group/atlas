@@ -1815,59 +1815,34 @@ current implementation relies on the updateLog feature being enabled. -->
     </admin>
 
     <searchComponent class="solr.SpellCheckComponent" name="suggest_properties">
-
-        <str name="queryAnalyzerFieldType">text_standard</str>
-
         <lst name="spellchecker">
-
             <str name="suggestAnalyzerFieldType">text_standard</str> <!-- filters we want to use -->
-
             <str name="name">suggest_properties</str>
-
             <str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
-
+            <!-- Use AnalyzerSuggester instead of WFSTCompletionLookup because it returns the original field value, rather than the indexed (ie: lowercase) value -->
             <str name="lookupImpl">org.apache.solr.spelling.suggest.fst.AnalyzingLookupFactory</str>
-
             <str name="field">property_value</str> <!-- the field we want to search on -->
-
             <float name="threshold">0</float>
-
             <str name="buildOnCommit">true</str>
-
         </lst>
-
     </searchComponent>
 
+    <!-- eg: http://lime:8983/solr/gxa/suggest_properties?q="<multiTermToken>"&wt=json&omitHeader=true&rows=0&json.nl=arrarr -->
     <requestHandler class="org.apache.solr.handler.component.SearchHandler" name="/suggest_properties">
-
         <lst name="defaults">
-
             <str name="spellcheck">true</str>
-
             <str name="spellcheck.dictionary">suggest_properties</str>
-
             <str name="spellcheck.onlyMorePopular">true</str>
-
             <str name="spellcheck.count">30</str>
-
             <str name="spellcheck.collate">true</str>
-
             <str name="spellcheck.maxCollations">15</str>
-
             <str name="spellcheck.maxCollationTries">1000</str>
-
             <str name="spellcheck.collateExtendedResults">false</str>
-
         </lst>
-
         <arr name="components">
-
             <str>suggest_properties</str>
-
             <str>query</str>
-
         </arr>
-
     </requestHandler>
 
 </config>
