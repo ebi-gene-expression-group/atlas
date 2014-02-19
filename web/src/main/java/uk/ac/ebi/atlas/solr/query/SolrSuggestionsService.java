@@ -130,17 +130,6 @@ public class SolrSuggestionsService {
         return extractCollations(jsonString);
     }
 
-    List<String> fetchSuggestions(String queryString, String species, String[] propertyNames) {
-
-        SolrQuery solrQuery = solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder()
-                .withSpecies(species)
-                .withBioentityTypes(BioentityType.getAllSolrAliases())
-                .withPropertyNames(propertyNames)
-                .buildPropertyValueAutocompleteQuery(queryString);
-
-        return fetchFacetedResults(solrQuery);
-    }
-
     List<String> fetchAutocompleteSuggestions(String queryString, String species, String[] propertyNames) {
 
         SolrQuery solrQuery = solrQueryBuilderFactory.createAutocompleFacetedPropertyValueQueryBuilder()
