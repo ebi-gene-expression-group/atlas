@@ -35,6 +35,10 @@ public class SolrQueryBuilderFactory {
         return new FacetedPropertyValueQueryBuilder();
     }
 
+    public AutocompleteFacetedPropertyValueQueryBuilder createAutocompleFacetedPropertyValueQueryBuilder(){
+        return new AutocompleteFacetedPropertyValueQueryBuilder();
+    }
+
     public BioentityIdentifierQueryBuilder createGeneBioentityIdentifierQueryBuilder(){
         return new BioentityIdentifierQueryBuilder();
     }

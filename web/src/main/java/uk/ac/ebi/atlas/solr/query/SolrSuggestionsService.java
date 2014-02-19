@@ -96,17 +96,17 @@ public class SolrSuggestionsService {
 
     public List<String> fetchGeneIdSuggestionsInName(String geneName, String species) {
         // ie: property_value_edgengram:"<geneName>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"symbol")
-        return fetchSuggestions(geneName, limitSpeciesNameToTwoWords(species), bioentityNamePropertyNames);
+        return fetchAutocompleteSuggestions(geneName, limitSpeciesNameToTwoWords(species), bioentityNamePropertyNames);
     }
 
     public List<String> fetchGeneIdSuggestionsInSynonym(String geneName, String species) {
         // ie: property_value_edgengram:"<geneName>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"synonym")
-        return fetchSuggestions(geneName, limitSpeciesNameToTwoWords(species), synonymPropertyNames);
+        return fetchAutocompleteSuggestions(geneName, limitSpeciesNameToTwoWords(species), synonymPropertyNames);
     }
 
     public List<String> fetchGeneIdSuggestionsInIdentifier(String geneName, String species) {
         // ie: property_value_edgengram:"<geneName>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"gene_biotype" OR property_name:"ensfamily" OR property_name:"refseq" OR property_name:"rgd" OR property_name:"design_element" OR property_name:"mirbase_accession" OR property_name:"mirbase_name" OR property_name:"flybase_transcript_id" OR property_name:"unigene" OR property_name:"embl" OR property_name:"interpro" OR property_name:"ensgene" OR property_name:"flybase_gene_id" OR property_name:"pathwayid" OR property_name:"mgi_id" OR property_name:"ensprotein" OR property_name:"mirbase_id" OR property_name:"enstranscript" OR property_name:"entrezgene" OR property_name:"uniprot" OR property_name:"go")
-        return fetchSuggestions(geneName, limitSpeciesNameToTwoWords(species), identifierPropertyNames);
+        return fetchAutocompleteSuggestions(geneName, limitSpeciesNameToTwoWords(species), identifierPropertyNames);
     }
 
     public List<String> fetchGenePropertySpellingSuggestions(String multiTermToken, String species) {
@@ -133,6 +133,17 @@ public class SolrSuggestionsService {
     List<String> fetchSuggestions(String queryString, String species, String[] propertyNames) {
 
         SolrQuery solrQuery = solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder()
+                .withSpecies(species)
+                .withBioentityTypes(BioentityType.getAllSolrAliases())
+                .withPropertyNames(propertyNames)
+                .buildPropertyValueAutocompleteQuery(queryString);
+
+        return fetchFacetedResults(solrQuery);
+    }
+
+    List<String> fetchAutocompleteSuggestions(String queryString, String species, String[] propertyNames) {
+
+        SolrQuery solrQuery = solrQueryBuilderFactory.createAutocompleFacetedPropertyValueQueryBuilder()
                 .withSpecies(species)
                 .withBioentityTypes(BioentityType.getAllSolrAliases())
                 .withPropertyNames(propertyNames)

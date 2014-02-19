@@ -1820,14 +1820,15 @@ current implementation relies on the updateLog feature being enabled. -->
 
         <lst name="spellchecker">
 
+            <str name="suggestAnalyzerFieldType">text_standard</str> <!-- filters we want to use -->
+
             <str name="name">suggest_properties</str>
 
             <str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
 
-            <str name="lookupImpl">org.apache.solr.spelling.suggest.fst.WFSTLookupFactory</str>
+            <str name="lookupImpl">org.apache.solr.spelling.suggest.fst.AnalyzingLookupFactory</str>
 
-            <str name="field">property_value_autocomplete</str>
-            <!-- the indexed field to derive suggestions from -->
+            <str name="field">property_value</str> <!-- the field we want to search on -->
 
             <float name="threshold">0</float>
 
