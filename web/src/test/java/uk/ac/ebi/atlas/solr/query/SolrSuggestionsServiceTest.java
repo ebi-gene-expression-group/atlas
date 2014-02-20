@@ -100,12 +100,12 @@ public class SolrSuggestionsServiceTest {
 
     @Test
     public void findGenePropertiesShouldReturnEmptyListWhenTermContainsNonSpellCheckableCharacters() {
-        assertThat(subject.fetchGenePropertySpellingSuggestions("hello > boy", "mus mus"), Matchers.is(empty()));
+        assertThat(subject.fetchMultiTermSuggestions("hello > boy", "mus mus"), Matchers.is(empty()));
     }
 
     @Test
     public void findGenePropertiesShouldNotReturnEmptyList() {
-        assertThat(subject.fetchGenePropertySpellingSuggestions("p53", "mus mus"), Matchers.is(not(empty())));
+        assertThat(subject.fetchMultiTermSuggestions("p53", "mus mus"), Matchers.is(not(empty())));
     }
 
 }

@@ -109,7 +109,7 @@ public class SolrSuggestionsService {
         return fetchAutocompleteSuggestions(geneName, limitSpeciesNameToTwoWords(species), identifierPropertyNames);
     }
 
-    public List<String> fetchGenePropertySpellingSuggestions(String multiTermToken, String species) {
+    public List<String> fetchMultiTermSuggestions(String multiTermToken, String species) {
         // uses Spelling suggester, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Solr+server#Solrserver-Suggestcomponent
         // ie: http://lime:8983/solr/gxa/suggest_properties?q="<multiTermToken>"&wt=json&omitHeader=true&rows=0&json.nl=arrarr
 
