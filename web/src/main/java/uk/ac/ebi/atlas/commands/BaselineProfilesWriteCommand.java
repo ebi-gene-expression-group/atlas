@@ -14,7 +14,7 @@ import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.streams.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesPipelineBuilder;
-import uk.ac.ebi.atlas.streams.baseline.IterableObjectInputStream;
+import uk.ac.ebi.atlas.streams.IterableObjectInputStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;

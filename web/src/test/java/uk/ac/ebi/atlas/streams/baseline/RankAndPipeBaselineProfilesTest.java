@@ -28,8 +28,8 @@ public class RankAndPipeBaselineProfilesTest {
     private static final int NUMBER_OF_FRACTIONAL_DIGITS = 0;
     private static final Factor FACTOR_LEUKOCYTE = new Factor("ORGANISM_PART", "leukocyte");
 
-    private GeneSetBaselineProfilesFactory geneSetBaselineProfilesFactory = new GeneSetBaselineProfilesFactory(new GeneSetFactory(new GeneSetBaselineProfileBuilder()));
-    private RankAndPipeBaselineProfiles subject = new RankAndPipeBaselineProfiles(new BaselineProfilesPipelineBuilder(geneSetBaselineProfilesFactory), new RankBaselineProfiles());
+    private GeneSetBaselineProfilesBuilder geneSetBaselineProfilesBuilder = new GeneSetBaselineProfilesBuilder(new GeneSetFactory(new GeneSetBaselineProfileBuilder()));
+    private RankAndPipeBaselineProfiles subject = new RankAndPipeBaselineProfiles(new BaselineProfilesPipelineBuilder(geneSetBaselineProfilesBuilder), new RankBaselineProfiles());
 
     private GeneProfileInputStreamEMTab513React71 eMTab513react71InputStream = new GeneProfileInputStreamEMTab513React71(0.5);
 

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.streams.baseline;
+package uk.ac.ebi.atlas.streams;
 
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 

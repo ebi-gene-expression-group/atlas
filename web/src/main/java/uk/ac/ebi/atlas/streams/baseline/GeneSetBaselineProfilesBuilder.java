@@ -14,12 +14,12 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class GeneSetBaselineProfilesFactory {
+public class GeneSetBaselineProfilesBuilder {
 
     private final GeneSetFactory geneSetFactory;
 
     @Inject
-    public GeneSetBaselineProfilesFactory(GeneSetFactory geneSetFactory){
+    public GeneSetBaselineProfilesBuilder(GeneSetFactory geneSetFactory){
         this.geneSetFactory = geneSetFactory;
     }
 

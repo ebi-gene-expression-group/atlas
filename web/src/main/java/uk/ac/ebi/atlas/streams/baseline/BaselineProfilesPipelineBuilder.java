@@ -1,11 +1,8 @@
 package uk.ac.ebi.atlas.streams.baseline;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Iterables;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
@@ -19,7 +16,7 @@ import java.util.Set;
 @Scope("prototype")
 public class BaselineProfilesPipelineBuilder {
 
-    private final GeneSetBaselineProfilesFactory geneSetBaselineProfilesFactory;
+    private final GeneSetBaselineProfilesBuilder geneSetBaselineProfilesBuilder;
     private boolean isSpecific;
     private Set<Factor> queryFactors = Collections.emptySet();
     private Set<String> uppercaseGeneIDs = Collections.emptySet();
@@ -28,8 +25,8 @@ public class BaselineProfilesPipelineBuilder {
     private Set<Factor> allQueryFactors;
 
     @Inject
-    public BaselineProfilesPipelineBuilder(GeneSetBaselineProfilesFactory geneSetBaselineProfilesFactory) {
-        this.geneSetBaselineProfilesFactory = geneSetBaselineProfilesFactory;
+    public BaselineProfilesPipelineBuilder(GeneSetBaselineProfilesBuilder geneSetBaselineProfilesBuilder) {
+        this.geneSetBaselineProfilesBuilder = geneSetBaselineProfilesBuilder;
     }
 
     public BaselineProfilesPipelineBuilder profiles(Iterable<BaselineProfile> profiles) {
@@ -74,7 +71,7 @@ public class BaselineProfilesPipelineBuilder {
             }
 
             if (!geneSetIdsToGeneIds.isEmpty()) {
-                profiles = geneSetBaselineProfilesFactory.averageIntoGeneSets(profiles, geneSetIdsToGeneIds);
+                profiles = geneSetBaselineProfilesBuilder.averageIntoGeneSets(profiles, geneSetIdsToGeneIds);
             }
 
             if (!queryFactors.isEmpty()) {
