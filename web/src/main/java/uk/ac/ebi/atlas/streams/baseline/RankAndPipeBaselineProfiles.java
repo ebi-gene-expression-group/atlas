@@ -18,11 +18,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
 @Scope("prototype")
-public class RankBaselineProfilesPipeline {
+public class RankAndPipeBaselineProfiles {
 
-    private static final Logger LOGGER = Logger.getLogger(RankBaselineProfilesPipeline.class);
+    private static final Logger LOGGER = Logger.getLogger(RankAndPipeBaselineProfiles.class);
     private final RankBaselineProfiles rankBaselineProfiles;
-    private final BaselineProfilesPipeline baselineProfilesPipeline;
+    private final BaselineProfilesPipelineBuilder baselineProfilesPipelineBuilder;
     private double cutOff = 0.5d;
     private boolean isSpecific;
     private Set<Factor> queryFactors = Collections.emptySet();
@@ -33,53 +33,53 @@ public class RankBaselineProfilesPipeline {
     private ObjectInputStream<BaselineProfile> inputStream;
 
     @Inject
-    public RankBaselineProfilesPipeline(BaselineProfilesPipeline baselineProfilesPipeline, RankBaselineProfiles rankBaselineProfiles) {
-        this.baselineProfilesPipeline = baselineProfilesPipeline;
+    public RankAndPipeBaselineProfiles(BaselineProfilesPipelineBuilder baselineProfilesPipelineBuilder, RankBaselineProfiles rankBaselineProfiles) {
+        this.baselineProfilesPipelineBuilder = baselineProfilesPipelineBuilder;
         this.rankBaselineProfiles = rankBaselineProfiles;
     }
 
-    public RankBaselineProfilesPipeline inputStream(ObjectInputStream<BaselineProfile> inputStream) {
+    public RankAndPipeBaselineProfiles inputStream(ObjectInputStream<BaselineProfile> inputStream) {
         this.inputStream = inputStream;
         return this;
     }
 
-    public RankBaselineProfilesPipeline cutOff(double cutOff) {
+    public RankAndPipeBaselineProfiles cutOff(double cutOff) {
         this.cutOff = cutOff;
         return this;
     }
 
-    public RankBaselineProfilesPipeline isSpecific(boolean isSpecific) {
+    public RankAndPipeBaselineProfiles isSpecific(boolean isSpecific) {
         this.isSpecific = isSpecific;
         return this;
     }
 
-    public RankBaselineProfilesPipeline isSpecific() {
+    public RankAndPipeBaselineProfiles isSpecific() {
         this.isSpecific = true;
         return this;
     }
 
-    public RankBaselineProfilesPipeline queryFactors(Set<Factor> queryFactors) {
+    public RankAndPipeBaselineProfiles queryFactors(Set<Factor> queryFactors) {
         this.queryFactors = queryFactors;
         return this;
     }
 
-    public RankBaselineProfilesPipeline allQueryFactors(Set<Factor> allQueryFactors) {
+    public RankAndPipeBaselineProfiles allQueryFactors(Set<Factor> allQueryFactors) {
         this.allQueryFactors = allQueryFactors;
         return this;
     }
 
 
-    public RankBaselineProfilesPipeline selectGeneIDs(Set<String> uppercaseGeneIDs) {
+    public RankAndPipeBaselineProfiles selectGeneIDs(Set<String> uppercaseGeneIDs) {
         this.uppercaseGeneIDs = uppercaseGeneIDs;
         return this;
     }
 
-    public RankBaselineProfilesPipeline averageIntoGeneSets(ImmutableSetMultimap<String, String> geneSetIdsToGeneIds) {
+    public RankAndPipeBaselineProfiles averageIntoGeneSets(ImmutableSetMultimap<String, String> geneSetIdsToGeneIds) {
         this.geneSetIdsToGeneIds = geneSetIdsToGeneIds;
         return this;
     }
 
-    public RankBaselineProfilesPipeline top(int size) {
+    public RankAndPipeBaselineProfiles top(int size) {
         this.size = size;
         return this;
     }
@@ -92,15 +92,15 @@ public class RankBaselineProfilesPipeline {
 
             Iterable<BaselineProfile> profiles = new IterableObjectInputStream<>(source);
 
-            Iterable<BaselineProfile> mapProfiles = baselineProfilesPipeline.profiles(profiles).
+            Iterable<BaselineProfile> profilesPipeline = baselineProfilesPipelineBuilder.profiles(profiles).
                     isSpecific(isSpecific).
                     selectGeneIDs(uppercaseGeneIDs).
                     queryFactors(queryFactors).
                     allQueryFactors(allQueryFactors).
                     averageIntoGeneSets(geneSetIdsToGeneIds).
-                    lazyMap();
+                    build();
 
-            return rankBaselineProfiles.profiles(mapProfiles).
+            return rankBaselineProfiles.profiles(profilesPipeline).
                     queryFactors(queryFactors).
                     allQueryFactors(allQueryFactors).
                     cutOff(cutOff).

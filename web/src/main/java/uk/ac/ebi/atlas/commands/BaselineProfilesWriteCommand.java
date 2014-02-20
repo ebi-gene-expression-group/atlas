@@ -13,7 +13,7 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.streams.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesPipeline;
+import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesPipelineBuilder;
 import uk.ac.ebi.atlas.streams.baseline.IterableObjectInputStream;
 
 import javax.inject.Inject;
@@ -33,16 +33,16 @@ public class BaselineProfilesWriteCommand {
     private SolrQueryService solrQueryService;
     private BaselineProfilesTSVWriter baselineProfilesTSVWriter;
     private BaselineProfileInputStreamFactory baselineProfileInputStreamFactory;
-    private BaselineProfilesPipeline baselineProfilesPipeline;
+    private BaselineProfilesPipelineBuilder baselineProfilesPipelineBuilder;
 
     @Inject
     public BaselineProfilesWriteCommand(SolrQueryService solrQueryService, BaselineProfilesTSVWriter baselineProfilesTSVWriter,
                                         BaselineProfileInputStreamFactory baselineProfileInputStreamFactory,
-                                        BaselineProfilesPipeline baselineProfilesPipeline) {
+                                        BaselineProfilesPipelineBuilder baselineProfilesPipelineBuilder) {
         this.solrQueryService = solrQueryService;
         this.baselineProfilesTSVWriter = baselineProfilesTSVWriter;
         this.baselineProfileInputStreamFactory = baselineProfileInputStreamFactory;
-        this.baselineProfilesPipeline = baselineProfilesPipeline;
+        this.baselineProfilesPipelineBuilder = baselineProfilesPipelineBuilder;
 
     }
 
@@ -76,12 +76,12 @@ public class BaselineProfilesWriteCommand {
 
             uppercaseGeneIDs = geneQueryResponse.getAllGeneIds();
 
-            baselineProfilesPipeline.selectGeneIDs(uppercaseGeneIDs);
+            baselineProfilesPipelineBuilder.selectGeneIDs(uppercaseGeneIDs);
 
 
             if (requestContext.isGeneSetMatch()) {
                 geneSetIdsToGeneIds = geneQueryResponse.getQueryTermsToIds();
-                baselineProfilesPipeline.averageIntoGeneSets(geneSetIdsToGeneIds);
+                baselineProfilesPipelineBuilder.averageIntoGeneSets(geneSetIdsToGeneIds);
             }
 
         }
@@ -91,13 +91,13 @@ public class BaselineProfilesWriteCommand {
 
             Iterable<BaselineProfile> profiles = new IterableObjectInputStream<>(inputStream);
 
-            Iterable<BaselineProfile> mapProfiles = baselineProfilesPipeline.profiles(profiles).
+            Iterable<BaselineProfile> mapProfiles = baselineProfilesPipelineBuilder.profiles(profiles).
                     isSpecific(isSpecific).
                     selectGeneIDs(uppercaseGeneIDs).
                     queryFactors(queryFactors).
                     allQueryFactors(allQueryFactors).
                     averageIntoGeneSets(geneSetIdsToGeneIds).
-                    lazyMap();
+                    build();
 
 
             return baselineProfilesTSVWriter.write(mapProfiles, allQueryFactors);

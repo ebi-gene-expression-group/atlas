@@ -21,7 +21,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.streams.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesPipeline;
+import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesPipelineBuilder;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
@@ -75,7 +75,7 @@ public class BaselineProfilesWriteCommandIT {
     @Inject
     private BaselineProfileInputStreamFactory baselineProfileInputStreamFactory;
     @Inject
-    private BaselineProfilesPipeline baselineProfilesPipeline;
+    private BaselineProfilesPipelineBuilder baselineProfilesPipelineBuilder;
 
     @Value("classpath:/file-templates/download-headers-baseline.txt")
     public Resource tsvFileMastheadTemplateResource;
@@ -100,7 +100,7 @@ public class BaselineProfilesWriteCommandIT {
 
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
-        subject = new BaselineProfilesWriteCommand(solrQueryService, baselineProfilesTSVWriter, baselineProfileInputStreamFactory, baselineProfilesPipeline);
+        subject = new BaselineProfilesWriteCommand(solrQueryService, baselineProfilesTSVWriter, baselineProfileInputStreamFactory, baselineProfilesPipelineBuilder);
 
         subject.setResponseWriter(printWriterMock);
 

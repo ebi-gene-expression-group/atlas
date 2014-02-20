@@ -12,7 +12,7 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.streams.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.streams.baseline.RankBaselineProfilesPipeline;
+import uk.ac.ebi.atlas.streams.baseline.RankAndPipeBaselineProfiles;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,15 +27,15 @@ public class BaselineProfilesHeatMapCommand {
 
     private SolrQueryService solrQueryService;
     private BaselineProfileInputStreamFactory baselineProfileInputStreamFactory;
-    private RankBaselineProfilesPipeline rankBaselineProfilesPipeline;
+    private RankAndPipeBaselineProfiles rankAndPipeBaselineProfiles;
 
     @Inject
     public BaselineProfilesHeatMapCommand(SolrQueryService solrQueryService,
                                           BaselineProfileInputStreamFactory baselineProfileInputStreamFactory,
-                                          RankBaselineProfilesPipeline rankBaselineProfilesPipeline) {
+                                          RankAndPipeBaselineProfiles rankAndPipeBaselineProfiles) {
         this.solrQueryService = solrQueryService;
         this.baselineProfileInputStreamFactory = baselineProfileInputStreamFactory;
-        this.rankBaselineProfilesPipeline = rankBaselineProfilesPipeline;
+        this.rankAndPipeBaselineProfiles = rankAndPipeBaselineProfiles;
     }
 
     public BaselineProfilesList fetch(BaselineRequestContext requestContext) throws GenesNotFoundException {
@@ -63,10 +63,10 @@ public class BaselineProfilesHeatMapCommand {
                 throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + filteredBySpecies);
             }
 
-            rankBaselineProfilesPipeline.selectGeneIDs(geneQueryResponse.getAllGeneIds());
+            rankAndPipeBaselineProfiles.selectGeneIDs(geneQueryResponse.getAllGeneIds());
 
             if (requestContext.isGeneSetMatch()) {
-                rankBaselineProfilesPipeline.averageIntoGeneSets(geneQueryResponse.getQueryTermsToIds());
+                rankAndPipeBaselineProfiles.averageIntoGeneSets(geneQueryResponse.getQueryTermsToIds());
             }
 
         }
@@ -74,7 +74,7 @@ public class BaselineProfilesHeatMapCommand {
         try (ObjectInputStream<BaselineProfile> baselineProfileInputStream =
                      baselineProfileInputStreamFactory.createBaselineProfileInputStream(experimentAccession, queryFactorType, cutOff, filterFactors)) {
 
-            return rankBaselineProfilesPipeline.inputStream(baselineProfileInputStream)
+            return rankAndPipeBaselineProfiles.inputStream(baselineProfileInputStream)
                     .cutOff(cutOff)
                     .isSpecific(isSpecific)
                     .queryFactors(queryFactors)

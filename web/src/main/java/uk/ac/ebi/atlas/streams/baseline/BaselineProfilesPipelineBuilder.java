@@ -17,7 +17,7 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class BaselineProfilesPipeline {
+public class BaselineProfilesPipelineBuilder {
 
     private final GeneSetBaselineProfilesFactory geneSetBaselineProfilesFactory;
     private boolean isSpecific;
@@ -28,49 +28,49 @@ public class BaselineProfilesPipeline {
     private Set<Factor> allQueryFactors;
 
     @Inject
-    public BaselineProfilesPipeline(GeneSetBaselineProfilesFactory geneSetBaselineProfilesFactory) {
+    public BaselineProfilesPipelineBuilder(GeneSetBaselineProfilesFactory geneSetBaselineProfilesFactory) {
         this.geneSetBaselineProfilesFactory = geneSetBaselineProfilesFactory;
     }
 
-    public BaselineProfilesPipeline profiles(Iterable<BaselineProfile> profiles) {
+    public BaselineProfilesPipelineBuilder profiles(Iterable<BaselineProfile> profiles) {
         this.profiles = profiles;
         return this;
     }
 
-    public BaselineProfilesPipeline isSpecific(boolean isSpecific) {
+    public BaselineProfilesPipelineBuilder isSpecific(boolean isSpecific) {
         this.isSpecific = isSpecific;
         return this;
     }
 
-    public BaselineProfilesPipeline isSpecific() {
+    public BaselineProfilesPipelineBuilder isSpecific() {
         this.isSpecific = true;
         return this;
     }
 
-    public BaselineProfilesPipeline queryFactors(Set<Factor> queryFactors) {
+    public BaselineProfilesPipelineBuilder queryFactors(Set<Factor> queryFactors) {
         this.queryFactors = queryFactors;
         return this;
     }
 
-    public BaselineProfilesPipeline allQueryFactors(Set<Factor> allQueryFactors) {
+    public BaselineProfilesPipelineBuilder allQueryFactors(Set<Factor> allQueryFactors) {
         this.allQueryFactors = allQueryFactors;
         return this;
     }
 
-    public BaselineProfilesPipeline selectGeneIDs(Set<String> uppercaseGeneIDs) {
+    public BaselineProfilesPipelineBuilder selectGeneIDs(Set<String> uppercaseGeneIDs) {
         this.uppercaseGeneIDs = uppercaseGeneIDs;
         return this;
     }
 
-    public BaselineProfilesPipeline averageIntoGeneSets(ImmutableSetMultimap<String, String> geneSetIdsToGeneIds) {
+    public BaselineProfilesPipelineBuilder averageIntoGeneSets(ImmutableSetMultimap<String, String> geneSetIdsToGeneIds) {
         this.geneSetIdsToGeneIds = geneSetIdsToGeneIds;
         return this;
     }
 
-    public Iterable<BaselineProfile> lazyMap() {
+    public Iterable<BaselineProfile> build() {
 
             if (!uppercaseGeneIDs.isEmpty()) {
-                profiles = BaselineProfilesPipeline.filterByGeneIds(profiles, uppercaseGeneIDs);
+                profiles = BaselineProfilesPipelineBuilder.filterByGeneIds(profiles, uppercaseGeneIDs);
             }
 
             if (!geneSetIdsToGeneIds.isEmpty()) {
@@ -79,8 +79,8 @@ public class BaselineProfilesPipeline {
 
             if (!queryFactors.isEmpty()) {
                 profiles = isSpecific ?
-                        BaselineProfilesPipeline.filterByQueryFactorSpecificity(profiles, queryFactors, allQueryFactors) :
-                        BaselineProfilesPipeline.filterByQueryFactors(profiles, queryFactors);
+                        BaselineProfilesPipelineBuilder.filterByQueryFactorSpecificity(profiles, queryFactors, allQueryFactors) :
+                        BaselineProfilesPipelineBuilder.filterByQueryFactors(profiles, queryFactors);
             }
 
             return profiles;
@@ -101,21 +101,6 @@ public class BaselineProfilesPipeline {
         baselineProfileIsSpecific.setSelectedQueryFactors(queryFactors);
         baselineProfileIsSpecific.setAllQueryFactors(allQueryFactors);
         return Iterables.filter(profiles, baselineProfileIsSpecific);
-    }
-
-
-    public static class SpecificallyExpressedForQueryConditionPredicate<K> implements Predicate<Profile> {
-        private Set<K> queryConditions;
-
-        public SpecificallyExpressedForQueryConditionPredicate(Set<K> queryConditions){
-            this.queryConditions = queryConditions;
-        }
-
-        @Override
-        public boolean apply(Profile profile) {
-            return CollectionUtils.isEmpty(queryConditions) || profile.isExpressedOnAnyOf(queryConditions);
-        }
-
     }
 
 }

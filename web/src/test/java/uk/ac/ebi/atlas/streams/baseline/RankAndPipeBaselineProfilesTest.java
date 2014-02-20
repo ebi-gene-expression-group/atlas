@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RankBaselineProfilesPipelineTest {
+public class RankAndPipeBaselineProfilesTest {
 
     public static final double POLR2B_LEUKOCYTE = 47D;
     public static final double SNRPA_LEUKOCYTE = 19D;
@@ -29,7 +29,7 @@ public class RankBaselineProfilesPipelineTest {
     private static final Factor FACTOR_LEUKOCYTE = new Factor("ORGANISM_PART", "leukocyte");
 
     private GeneSetBaselineProfilesFactory geneSetBaselineProfilesFactory = new GeneSetBaselineProfilesFactory(new GeneSetFactory(new BaselineProfileBuilder()));
-    private RankBaselineProfilesPipeline subject = new RankBaselineProfilesPipeline(new BaselineProfilesPipeline(geneSetBaselineProfilesFactory), new RankBaselineProfiles());
+    private RankAndPipeBaselineProfiles subject = new RankAndPipeBaselineProfiles(new BaselineProfilesPipelineBuilder(geneSetBaselineProfilesFactory), new RankBaselineProfiles());
 
     private GeneProfileInputStreamEMTab513React71 eMTab513react71InputStream = new GeneProfileInputStreamEMTab513React71(0.5);
 
