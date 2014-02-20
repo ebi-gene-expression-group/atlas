@@ -39,9 +39,9 @@ import java.io.PrintWriter;
 
 @Named
 @Scope("prototype")
-public class WriteDifferentialProfilesCommand extends GeneProfilesQueryCommand<Long, RnaSeqProfile> implements Command<Long> {
+public class WriteRnaSeqProfilesCommand extends GeneProfilesQueryCommand<Long, RnaSeqProfile> implements Command<Long> {
 
-    private static final Logger LOGGER = Logger.getLogger(WriteDifferentialProfilesCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(WriteRnaSeqProfilesCommand.class);
 
     private RnaSeqProfilesTSVWriter geneProfileTsvWriter;
 
@@ -49,9 +49,9 @@ public class WriteDifferentialProfilesCommand extends GeneProfilesQueryCommand<L
     private InputStreamFactory inputStreamFactory;
 
     @Inject
-    public WriteDifferentialProfilesCommand(RnaSeqProfilesTSVWriter geneProfileTsvWriter,
-                                            RnaSeqRequestContext requestContext,
-                                            InputStreamFactory inputStreamFactory) {
+    public WriteRnaSeqProfilesCommand(RnaSeqProfilesTSVWriter geneProfileTsvWriter,
+                                      RnaSeqRequestContext requestContext,
+                                      InputStreamFactory inputStreamFactory) {
         super(requestContext);
         this.geneProfileTsvWriter = geneProfileTsvWriter;
         this.inputStreamFactory = inputStreamFactory;

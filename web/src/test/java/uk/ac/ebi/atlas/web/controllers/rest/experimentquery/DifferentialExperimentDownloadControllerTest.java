@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.WriteDifferentialProfilesCommand;
+import uk.ac.ebi.atlas.commands.WriteRnaSeqProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.download.DataWriterFactory;
@@ -52,7 +52,7 @@ public class DifferentialExperimentDownloadControllerTest {
     private RnaSeqRequestContextBuilder requestContextBuilderMock;
 
     @Mock
-    private WriteDifferentialProfilesCommand writeGeneProfilesCommandMock;
+    private WriteRnaSeqProfilesCommand writeGeneProfilesCommandMock;
 
     @Mock
     private DataWriterFactory dataWriterFactoryMock;

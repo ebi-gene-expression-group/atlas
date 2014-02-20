@@ -28,7 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.WriteDifferentialProfilesCommand;
+import uk.ac.ebi.atlas.commands.WriteRnaSeqProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.download.DataWriterFactory;
 import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
@@ -54,13 +54,13 @@ public class DifferentialExperimentDownloadController {
 
     private final RnaSeqRequestContextBuilder requestContextBuilder;
 
-    private WriteDifferentialProfilesCommand writeGeneProfilesCommand;
+    private WriteRnaSeqProfilesCommand writeGeneProfilesCommand;
 
     private DataWriterFactory dataWriterFactory;
 
     @Inject
     public DifferentialExperimentDownloadController(
-            RnaSeqRequestContextBuilder requestContextBuilder, WriteDifferentialProfilesCommand writeGeneProfilesCommand
+            RnaSeqRequestContextBuilder requestContextBuilder, WriteRnaSeqProfilesCommand writeGeneProfilesCommand
             , DataWriterFactory dataWriterFactory) {
 
         this.requestContextBuilder = requestContextBuilder;
