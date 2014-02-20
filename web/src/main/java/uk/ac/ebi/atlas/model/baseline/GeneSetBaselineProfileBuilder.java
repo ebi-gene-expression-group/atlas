@@ -28,11 +28,11 @@ import javax.inject.Named;
 
 @Named
 @Scope("prototype")
-public class BaselineProfileBuilder {
+public class GeneSetBaselineProfileBuilder {
 
     private String geneName;
 
-    public BaselineProfileBuilder withGeneName(String geneName) {
+    public GeneSetBaselineProfileBuilder withGeneName(String geneName) {
         this.geneName = geneName;
         return this;
     }

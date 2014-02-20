@@ -56,7 +56,6 @@ public class BaselineProfileBuilder  {
 
     public BaselineProfile create() {
         checkState(baselineProfile != null, "Please invoke forGeneID before create");
-
-        return baselineProfile.isEmpty() ? null : baselineProfile;
+        return baselineProfile;
     }
 }

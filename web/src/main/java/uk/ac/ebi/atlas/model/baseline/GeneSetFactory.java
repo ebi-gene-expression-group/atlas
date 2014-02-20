@@ -31,15 +31,15 @@ import javax.inject.Named;
 @Scope("prototype")
 public class GeneSetFactory {
 
-    private BaselineProfileBuilder baselineProfileBuilder;
+    private GeneSetBaselineProfileBuilder geneSetBaselineProfileBuilder;
 
     @Inject
-    public GeneSetFactory(BaselineProfileBuilder baselineProfileBuilder){
-        this.baselineProfileBuilder = baselineProfileBuilder;
+    public GeneSetFactory(GeneSetBaselineProfileBuilder geneSetBaselineProfileBuilder){
+        this.geneSetBaselineProfileBuilder = geneSetBaselineProfileBuilder;
     }
 
     public GeneSet createGeneSet(String geneSetId){
-        return new GeneSet(geneSetId, baselineProfileBuilder);
+        return new GeneSet(geneSetId, geneSetBaselineProfileBuilder);
     }
 
 }

@@ -43,7 +43,8 @@ public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile,
 
     @Override
     protected BaselineProfile createProfile() {
-        return baselineProfileBuilder.create();
+        BaselineProfile baselineProfile = baselineProfileBuilder.create();
+        return baselineProfile.isEmpty() ? null : baselineProfile;
     }
 
     @Override

@@ -31,6 +31,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.ExperimentRun;
 
 import java.io.IOException;
@@ -48,6 +49,7 @@ public class BaselineProfilesInputStreamTest {
 
     public static final String RUN_ACCESSION_1 = "RUN_ACCESSION_1";
     public static final String RUN_ACCESSION_2 = "RUN_ACCESSION_2";
+    private static final BaselineProfile EMPTY_BASELINE_PROFILE = new BaselineProfile("gene_id", "gene_name");
 
     @Mock
     private CSVReader csvReaderMock;
@@ -85,11 +87,17 @@ public class BaselineProfilesInputStreamTest {
         given(expressionsBufferBuilderMock.withHeaders(headersWithoutGeneIdColumn)).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.build()).willReturn(expressionsBufferMock);
 
-        BaselineProfileBuilder geneProfileBuilderMock = mock(BaselineProfileBuilder.class);
-        when(geneProfileBuilderMock.addExpression(any(BaselineExpression.class))).thenReturn(geneProfileBuilderMock);
+        BaselineProfileBuilder baselineProfileBuilder = mock(BaselineProfileBuilder.class);
+        when(baselineProfileBuilder.addExpression(any(BaselineExpression.class))).thenReturn(baselineProfileBuilder);
+        when(baselineProfileBuilder.create()).thenReturn(EMPTY_BASELINE_PROFILE);
 
-        subject = new BaselineProfilesInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, geneProfileBuilderMock);
+        subject = new BaselineProfilesInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, baselineProfileBuilder);
 
+    }
+
+    @Test
+    public void emptyBaselineProfileReturnsNull() {
+        assertThat(subject.createProfile(), is(nullValue()));
     }
 
     @Test

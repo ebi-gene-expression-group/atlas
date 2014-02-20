@@ -32,12 +32,12 @@ public class BaselineProfileBuilderTest {
     private FactorGroup factorGroup;
 
     @Test
-    public void returnsNullIfNoExpressionsMatchPredicate() {
+    public void addedExpressionsAreFiltered() {
         BaselineProfileBuilder subject = new BaselineProfileBuilder(ALWAYS_FALSE, QUERY_FACTOR_TYPE);
         subject.forGeneIdAndName(GENE_ID, GENE_NAME);
 
         subject.addExpression(new BaselineExpression(0.5, factorGroup));
 
-        assertThat(subject.create(), is(nullValue()));
+        assertThat(subject.create().isEmpty(), is(true));
     }
 }
