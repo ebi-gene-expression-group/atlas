@@ -27,15 +27,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.streams.baseline.BaselineProfileConditionalBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfileBuilder;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfileBuilder;
-import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsQueueBuilder;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsInputStream;
-import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesInputStream;
+import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsQueueBuilder;
 import uk.ac.ebi.atlas.streams.differential.RnaSeqExpressionsQueueBuilder;
 import uk.ac.ebi.atlas.streams.differential.RnaSeqProfilesInputStream;
 import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayExpressionsQueueBuilder;
@@ -62,7 +59,6 @@ public class InputStreamFactory {
     private BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder;
     private RnaSeqExpressionsQueueBuilder rnaSeqExpressionsQueueBuilder;
     private MicroarrayExpressionsQueueBuilder microarrayExpressionsQueueBuilder;
-    private BaselineProfileConditionalBuilder baselineProfileConditionalBuilder;
     private MicroarrayProfileBuilder microarrayProfileBuilder;
     private RnaSeqProfileBuilder rnaSeqProfileBuilder;
 
@@ -72,23 +68,15 @@ public class InputStreamFactory {
     public InputStreamFactory(BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder,
                               RnaSeqExpressionsQueueBuilder rnaSeqExpressionsQueueBuilder,
                               MicroarrayExpressionsQueueBuilder microarrayExpressionsQueueBuilder,
-                              BaselineProfileConditionalBuilder baselineProfileConditionalBuilder,
                               MicroarrayProfileBuilder microarrayProfileBuilder,
                               RnaSeqProfileBuilder rnaSeqProfileBuilder,
                               CsvReaderFactory csvReaderFactory) {
         this.baselineExpressionsQueueBuilder = baselineExpressionsQueueBuilder;
         this.rnaSeqExpressionsQueueBuilder = rnaSeqExpressionsQueueBuilder;
         this.microarrayExpressionsQueueBuilder = microarrayExpressionsQueueBuilder;
-        this.baselineProfileConditionalBuilder = baselineProfileConditionalBuilder;
         this.microarrayProfileBuilder = microarrayProfileBuilder;
         this.rnaSeqProfileBuilder = rnaSeqProfileBuilder;
         this.csvReaderFactory = csvReaderFactory;
-    }
-
-    public ObjectInputStream<BaselineProfile> createBaselineProfileInputStream(String experimentAccession) {
-        String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
-        return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsQueueBuilder, baselineProfileConditionalBuilder);
     }
 
     public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(String experimentAccession) {

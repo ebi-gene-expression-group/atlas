@@ -28,17 +28,14 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -56,31 +53,17 @@ public class BaselineProfilesInputStreamIT {
     private static final String GENE_ID_6 = "ENSG00000266468";
 
     @Inject
-    private InputStreamFactory inputStreamFactory;
-
-    @Inject
-    private BaselineRequestContextBuilder baselineRequestContextBuilder;
-
-    private BaselineRequestContext baselineRequestContext;
-
-    @Inject
-    private BaselineExperimentsCache baselineExperimentsCache;
+    private BaselineProfileInputStreamFactory inputStreamFactory;
 
     private ObjectInputStream<BaselineProfile> subject;
 
-    private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
+    String queryFactorType = "ORGANISM_PART";
+    double defaultCutoff = 0.5;
+    Set<Factor> noFilterFactors = Collections.emptySet();
 
     @Before
     public void setUp() throws Exception {
-
-        requestPreferences.setCutoff(0.5d);
-        requestPreferences.setQueryFactorType("ORGANISM_PART");
-
-        BaselineExperiment experiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
-
-        baselineRequestContext = baselineRequestContextBuilder.forExperiment(experiment).withPreferences(requestPreferences).build();
-
-        subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION);
+        subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION, queryFactorType, defaultCutoff, noFilterFactors);
     }
 
     @Test
@@ -116,8 +99,7 @@ public class BaselineProfilesInputStreamIT {
 
     @Test
     public void setCutoffChangesSpecificity() throws IOException {
-
-        requestPreferences.setCutoff(4D);
+        subject = inputStreamFactory.createBaselineProfileInputStream(EXPERIMENT_ACCESSION, queryFactorType, 4, noFilterFactors);
 
         //when
         BaselineProfile baselineProfile = subject.readNext();

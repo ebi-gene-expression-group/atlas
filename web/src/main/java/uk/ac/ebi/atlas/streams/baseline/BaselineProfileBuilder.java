@@ -28,27 +28,25 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class BaselineProfileFilteredExpressionBuilder extends BaselineProfileConditionalBuilder {
+public class BaselineProfileBuilder  {
 
     private final String queryFactorType;
     private BaselineProfile baselineProfile;
 
     private Predicate<BaselineExpression> baselineExpressionFilter;
 
-    public BaselineProfileFilteredExpressionBuilder(Predicate<BaselineExpression> baselineExpressionFilter,
-                                                    String queryFactorType) {
+    public BaselineProfileBuilder(Predicate<BaselineExpression> baselineExpressionFilter,
+                                  String queryFactorType) {
         this.baselineExpressionFilter = baselineExpressionFilter;
         this.queryFactorType = queryFactorType;
     }
 
-    @Override
-    public BaselineProfileFilteredExpressionBuilder forGeneIdAndName(String geneId, String geneName) {
+    public BaselineProfileBuilder forGeneIdAndName(String geneId, String geneName) {
         baselineProfile = new BaselineProfile(geneId, geneName);
         return this;
     }
 
-    @Override
-    public BaselineProfileFilteredExpressionBuilder addExpression(BaselineExpression expression) {
+    public BaselineProfileBuilder addExpression(BaselineExpression expression) {
         checkState(baselineProfile != null, "Please invoke forGeneID before create");
         if (baselineExpressionFilter.apply(expression)) {
             baselineProfile.add(queryFactorType, expression);
@@ -56,7 +54,6 @@ public class BaselineProfileFilteredExpressionBuilder extends BaselineProfileCon
         return this;
     }
 
-    @Override
     public BaselineProfile create() {
         checkState(baselineProfile != null, "Please invoke forGeneID before create");
 

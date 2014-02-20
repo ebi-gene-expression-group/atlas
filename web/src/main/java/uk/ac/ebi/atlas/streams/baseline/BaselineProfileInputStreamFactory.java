@@ -39,9 +39,9 @@ public class BaselineProfileInputStreamFactory {
         baselineExpressionFilter.setCutoff(cutOff);
         baselineExpressionFilter.setFilterFactors(filterFactors);
 
-        BaselineProfileFilteredExpressionBuilder baselineProfileFilteredExpressionBuilder = new BaselineProfileFilteredExpressionBuilder(baselineExpressionFilter, queryFactorType);
+        BaselineProfileBuilder baselineProfileBuilder = new BaselineProfileBuilder(baselineExpressionFilter, queryFactorType);
 
-        return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsQueueBuilder, baselineProfileFilteredExpressionBuilder);
+        return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsQueueBuilder, baselineProfileBuilder);
     }
 
 }

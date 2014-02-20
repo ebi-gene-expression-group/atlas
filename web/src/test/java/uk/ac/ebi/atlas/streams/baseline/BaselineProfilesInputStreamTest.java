@@ -85,7 +85,7 @@ public class BaselineProfilesInputStreamTest {
         given(expressionsBufferBuilderMock.withHeaders(headersWithoutGeneIdColumn)).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.build()).willReturn(expressionsBufferMock);
 
-        BaselineProfileConditionalBuilder geneProfileBuilderMock = mock(BaselineProfileConditionalBuilder.class);
+        BaselineProfileBuilder geneProfileBuilderMock = mock(BaselineProfileBuilder.class);
         when(geneProfileBuilderMock.addExpression(any(BaselineExpression.class))).thenReturn(geneProfileBuilderMock);
 
         subject = new BaselineProfilesInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, geneProfileBuilderMock);
