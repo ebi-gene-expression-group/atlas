@@ -20,40 +20,42 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams.differential;
+package uk.ac.ebi.atlas.streams.differential.rnaseq;
 
 
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfileBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
-public class RnaSeqProfilesInputStream2 extends TsvInputStream<RnaSeqProfile, DifferentialExpression> {
+public class RnaSeqProfilesInputStream extends TsvInputStream<RnaSeqProfile, DifferentialExpression> {
 
-    private RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder;
 
-    public RnaSeqProfilesInputStream2(CSVReader csvReader, String experimentAccession
+    private RnaSeqProfileBuilder rnaSeqProfileBuilder;
+
+    public RnaSeqProfilesInputStream(CSVReader csvReader, String experimentAccession
             , RnaSeqExpressionsQueueBuilder expressionsBufferBuilder
-            , RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder) {
+            , RnaSeqProfileBuilder rnaSeqProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
-        this.rnaSeqProfileReusableBuilder = rnaSeqProfileReusableBuilder;
+        this.rnaSeqProfileBuilder = rnaSeqProfileBuilder;
     }
 
     @Override
     protected RnaSeqProfile createProfile() {
-        RnaSeqProfile profile = rnaSeqProfileReusableBuilder.create();
-        return profile.isEmpty() ? null : profile;
+        return rnaSeqProfileBuilder.create();
     }
 
     @Override
     protected void addExpressionToBuilder(DifferentialExpression expression) {
-        rnaSeqProfileReusableBuilder.addExpression(expression);
+        rnaSeqProfileBuilder.addExpression(expression);
     }
 
     @Override
     protected void addGeneInfoValueToBuilder(String[] values) {
-        rnaSeqProfileReusableBuilder.beginNewInstanceForGeneIdAndName(values[0], values[1]);
+        rnaSeqProfileBuilder.forGeneId(values[0]);
+        rnaSeqProfileBuilder.withGeneName(values[1]);
     }
 
 

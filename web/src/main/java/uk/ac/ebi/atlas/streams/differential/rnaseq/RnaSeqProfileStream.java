@@ -20,42 +20,40 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams.differential;
+package uk.ac.ebi.atlas.streams.differential.rnaseq;
 
 
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfileBuilder;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
-public class RnaSeqProfilesInputStream extends TsvInputStream<RnaSeqProfile, DifferentialExpression> {
+public class RnaSeqProfileStream extends TsvInputStream<RnaSeqProfile, DifferentialExpression> {
 
+    private RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder;
 
-    private RnaSeqProfileBuilder rnaSeqProfileBuilder;
-
-    public RnaSeqProfilesInputStream(CSVReader csvReader, String experimentAccession
+    public RnaSeqProfileStream(CSVReader csvReader, String experimentAccession
             , RnaSeqExpressionsQueueBuilder expressionsBufferBuilder
-            , RnaSeqProfileBuilder rnaSeqProfileBuilder) {
+            , RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder) {
 
         super(csvReader, experimentAccession, expressionsBufferBuilder);
-        this.rnaSeqProfileBuilder = rnaSeqProfileBuilder;
+        this.rnaSeqProfileReusableBuilder = rnaSeqProfileReusableBuilder;
     }
 
     @Override
     protected RnaSeqProfile createProfile() {
-        return rnaSeqProfileBuilder.create();
+        RnaSeqProfile profile = rnaSeqProfileReusableBuilder.create();
+        return profile.isEmpty() ? null : profile;
     }
 
     @Override
     protected void addExpressionToBuilder(DifferentialExpression expression) {
-        rnaSeqProfileBuilder.addExpression(expression);
+        rnaSeqProfileReusableBuilder.addExpression(expression);
     }
 
     @Override
     protected void addGeneInfoValueToBuilder(String[] values) {
-        rnaSeqProfileBuilder.forGeneId(values[0]);
-        rnaSeqProfileBuilder.withGeneName(values[1]);
+        rnaSeqProfileReusableBuilder.beginNewInstance(values[0], values[1]);
     }
 
 

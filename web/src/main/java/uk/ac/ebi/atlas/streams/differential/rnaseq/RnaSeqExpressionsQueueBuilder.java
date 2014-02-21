@@ -20,9 +20,10 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams.differential;
+package uk.ac.ebi.atlas.streams.differential.rnaseq;
 
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.streams.differential.DifferentialExpressionsQueueBuilder;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;

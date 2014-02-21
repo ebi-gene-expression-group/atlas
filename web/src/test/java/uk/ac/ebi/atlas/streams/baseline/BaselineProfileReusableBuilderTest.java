@@ -33,7 +33,7 @@ public class BaselineProfileReusableBuilderTest {
     @Test
     public void addedExpressionsAreFiltered() {
         BaselineProfileReusableBuilder subject = new BaselineProfileReusableBuilder(ALWAYS_FALSE, QUERY_FACTOR_TYPE);
-        subject.beginNewInstanceForGeneIdAndName(GENE_ID, GENE_NAME);
+        subject.beginNewInstance(GENE_ID, GENE_NAME);
 
         subject.addExpression(new BaselineExpression(0.5, factorGroup));
 

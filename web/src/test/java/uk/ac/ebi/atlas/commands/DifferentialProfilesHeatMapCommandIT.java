@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.streams.differential.DifferentialProfilesHeatMap;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -36,7 +37,7 @@ public class DifferentialProfilesHeatMapCommandIT {
     private RnaSeqDiffExperimentsCache experimentsCache;
 
     @Inject
-    private DifferentialProfilesHeatMapCommand subject;
+    private DifferentialProfilesHeatMap subject;
 
     @Inject
     RnaSeqRequestContextBuilder requestContextBuilder;

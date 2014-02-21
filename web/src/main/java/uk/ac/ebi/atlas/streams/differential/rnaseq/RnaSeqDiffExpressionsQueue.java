@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.streams.differential;
+package uk.ac.ebi.atlas.streams.differential.rnaseq;
 
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.differential.Contrast;

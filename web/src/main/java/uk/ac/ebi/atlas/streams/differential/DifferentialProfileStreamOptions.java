@@ -5,7 +5,7 @@ import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import java.util.Set;
 
-public interface DifferentialProfilesCommandOptions {
+public interface DifferentialProfileStreamOptions {
 
     Set<String> getSelectedGeneIDs();
 

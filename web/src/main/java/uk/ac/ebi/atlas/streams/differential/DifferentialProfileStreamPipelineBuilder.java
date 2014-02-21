@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.streams.differential;
 
 import com.google.common.collect.Iterables;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
@@ -13,9 +12,9 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class DifferentialProfilePipelineBuilder<T extends DifferentialProfile> {
+public class DifferentialProfileStreamPipelineBuilder<T extends DifferentialProfile> {
 
-    public Iterable<T> build(Iterable<T> profiles, DifferentialProfilesCommandOptions options) {
+    public Iterable<T> build(Iterable<T> profiles, DifferentialProfileStreamOptions options) {
         boolean isSpecific = options.isSpecific();
         Set<Contrast> queryFactors = options.getSelectedQueryFactors();
         Set<String> uppercaseGeneIDs = options.getSelectedGeneIDs();
@@ -25,13 +24,13 @@ public class DifferentialProfilePipelineBuilder<T extends DifferentialProfile> {
         Iterable<T> profilesPipeline = profiles;
 
         if (!uppercaseGeneIDs.isEmpty()) {
-            profilesPipeline = DifferentialProfilePipelineBuilder.filterByGeneIds(profilesPipeline, uppercaseGeneIDs);
+            profilesPipeline = DifferentialProfileStreamPipelineBuilder.filterByGeneIds(profilesPipeline, uppercaseGeneIDs);
         }
 
         if (!queryFactors.isEmpty()) {
             profilesPipeline = isSpecific ?
-                    DifferentialProfilePipelineBuilder.filterByQueryFactorSpecificity(profilesPipeline, queryFactors, allQueryFactors, regulation) :
-                    DifferentialProfilePipelineBuilder.filterByQueryFactors(profilesPipeline, queryFactors);
+                    DifferentialProfileStreamPipelineBuilder.filterByQueryFactorSpecificity(profilesPipeline, queryFactors, allQueryFactors, regulation) :
+                    DifferentialProfileStreamPipelineBuilder.filterByQueryFactors(profilesPipeline, queryFactors);
         }
 
         return profilesPipeline;

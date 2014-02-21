@@ -54,7 +54,7 @@ public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile,
 
     @Override
     protected void addGeneInfoValueToBuilder(String[] values) {
-        baselineProfileReusableBuilder.beginNewInstanceForGeneIdAndName(values[0], values[1]);
+        baselineProfileReusableBuilder.beginNewInstance(values[0], values[1]);
     }
 
 }
