@@ -31,6 +31,9 @@ import static java.lang.Math.min;
 
 public class DifferentialProfilesList<T extends DifferentialProfile> extends GeneProfilesList<T> implements DifferentialExpressionLimits {
 
+    public DifferentialProfilesList() {
+        // default, with no starting collection
+    }
 
     public DifferentialProfilesList(Collection<T> collection) {
         super(collection);

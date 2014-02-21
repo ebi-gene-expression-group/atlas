@@ -65,7 +65,7 @@ public class RankMicroarrayProfilesCommand extends RankProfilesCommand<Different
     protected Comparator<MicroarrayProfile> createGeneProfileComparator(RequestContext requestContext) {
         Regulation regulation = ((DifferentialRequestContext) requestContext).getRegulation();
         return new DifferentialProfileComparator(requestContext.isSpecific(), requestContext.getSelectedQueryFactors(),
-                requestContext.getAllQueryFactors(), regulation, requestContext.getCutoff());
+                requestContext.getAllQueryFactors(), regulation);
     }
 
     @Override

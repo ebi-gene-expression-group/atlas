@@ -26,9 +26,10 @@ import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.streams.differential.DifferentialProfilesCommandOptions;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
-public class DifferentialRequestContext<T extends DifferentialExperiment> extends RequestContext<Contrast, DifferentialRequestPreferences> {
+public class DifferentialRequestContext<T extends DifferentialExperiment> extends RequestContext<Contrast, DifferentialRequestPreferences> implements DifferentialProfilesCommandOptions {
 
     private T experiment;
 
@@ -42,6 +43,11 @@ public class DifferentialRequestContext<T extends DifferentialExperiment> extend
 
     public Regulation getRegulation() {
         return getRequestPreferences().getRegulation();
+    }
+
+    @Override
+    public String getExperimentAccession() {
+        return experiment.getAccession();
     }
 
     @Override

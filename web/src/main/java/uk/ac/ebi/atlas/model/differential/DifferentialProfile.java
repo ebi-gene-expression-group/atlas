@@ -49,7 +49,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         super(geneId, geneName);
     }
 
-    DifferentialProfile add(T expression) {
+    public DifferentialProfile add(T expression) {
         addExpression(expression.getContrast(), expression);
         return this;
     }

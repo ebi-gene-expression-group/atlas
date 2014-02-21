@@ -35,21 +35,18 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
     private Set<Contrast> selectedQueryContrasts;
     private Set<Contrast> allQueryContrasts;
     private Regulation regulation;
-    private double cutoff;
-
 
     public DifferentialProfileComparator(boolean isSpecific, Set<Contrast> selectedQueryContrasts,
-                                         Set<Contrast> allQueryContrasts, Regulation regulation, double cutoff) {
+                                         Set<Contrast> allQueryContrasts, Regulation regulation) {
         this.isSpecific = isSpecific;
         this.selectedQueryContrasts = selectedQueryContrasts;
         this.allQueryContrasts = allQueryContrasts;
         //This is needed to bring up genes which are expressed only in selected tissues when cutoff is 0.
         this.regulation = regulation;
-        this.cutoff = cutoff;
     }
 
     @Override
-    public int compare(DifferentialProfile firstProfile, DifferentialProfile otherProfile) {
+    public int compare(T firstProfile, T otherProfile) {
 
         // A1:
         if (isSpecific && CollectionUtils.isEmpty(selectedQueryContrasts)) {

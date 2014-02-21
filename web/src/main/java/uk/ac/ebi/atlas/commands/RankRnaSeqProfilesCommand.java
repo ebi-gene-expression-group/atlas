@@ -67,7 +67,7 @@ public class RankRnaSeqProfilesCommand extends RankProfilesCommand<DifferentialP
     protected Comparator<RnaSeqProfile> createGeneProfileComparator(RequestContext requestContext) {
         Regulation regulation = ((DifferentialRequestContext) requestContext).getRegulation();
         return new DifferentialProfileComparator(requestContext.isSpecific(), requestContext.getSelectedQueryFactors(),
-                requestContext.getAllQueryFactors(), regulation, requestContext.getCutoff());
+                requestContext.getAllQueryFactors(), regulation);
     }
 
     @Override
