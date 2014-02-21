@@ -93,11 +93,8 @@ public class BaselineProfilesPipelineBuilder {
     }
 
     public static Iterable<BaselineProfile> filterByQueryFactorSpecificity(Iterable<BaselineProfile> profiles, Set<Factor> queryFactors, Set<Factor> allQueryFactors) {
-        BaselineProfileIsSpecific baselineProfileIsSpecific = new BaselineProfileIsSpecific();
-        baselineProfileIsSpecific.setSpecific(true);
-        baselineProfileIsSpecific.setSelectedQueryFactors(queryFactors);
-        baselineProfileIsSpecific.setAllQueryFactors(allQueryFactors);
-        return Iterables.filter(profiles, baselineProfileIsSpecific);
+        IsBaselineProfileSpecific isBaselineProfileSpecific = new IsBaselineProfileSpecific(queryFactors, allQueryFactors);
+        return Iterables.filter(profiles, isBaselineProfileSpecific);
     }
 
 }

@@ -32,32 +32,26 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Set;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 @Named
 @Scope("prototype")
-public class BaselineProfileIsSpecific implements Predicate<BaselineProfile>, Serializable {
-
-    private boolean specific;
+public class IsBaselineProfileSpecific implements Predicate<BaselineProfile>, Serializable {
 
     private Set<Factor> selectedQueryFactors;
 
     private Set<Factor> allQueryFactors;
 
-    public BaselineProfileIsSpecific() {
+    public IsBaselineProfileSpecific(Set<Factor> selectedQueryFactors, Set<Factor> allQueryFactors) {
+        checkArgument(!selectedQueryFactors.isEmpty(), "selectedQueryFactors is empty");
+        checkArgument(!allQueryFactors.isEmpty(), "allQueryFactors is empty");
+        this.selectedQueryFactors = selectedQueryFactors;
+        this.allQueryFactors = allQueryFactors;
     }
 
     @Override
     public boolean apply(BaselineProfile baselineProfile) {
-
-        if (baselineProfile.isEmpty()){
-            return false;
-        }
-
-        if (!specific || selectedQueryFactors.isEmpty()) {
-            return true;
-        }
-
-        return isOverExpressedInSelectedQueryFactors(baselineProfile);
-
+        return !baselineProfile.isEmpty() && isOverExpressedInSelectedQueryFactors(baselineProfile);
     }
 
     boolean isOverExpressedInSelectedQueryFactors(BaselineProfile baselineProfile) {
@@ -72,18 +66,4 @@ public class BaselineProfileIsSpecific implements Predicate<BaselineProfile>, Se
 
     }
 
-    BaselineProfileIsSpecific setSpecific(boolean specific) {
-        this.specific = specific;
-        return this;
-    }
-
-    BaselineProfileIsSpecific setSelectedQueryFactors(Set<Factor> selectedQueryFactors) {
-        this.selectedQueryFactors = selectedQueryFactors;
-        return this;
-    }
-
-    BaselineProfileIsSpecific setAllQueryFactors(Set<Factor> allQueryFactors) {
-        this.allQueryFactors = allQueryFactors;
-        return this;
-    }
 }

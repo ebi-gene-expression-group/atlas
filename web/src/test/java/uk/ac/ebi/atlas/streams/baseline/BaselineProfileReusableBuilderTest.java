@@ -11,11 +11,10 @@ import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import javax.annotation.Nullable;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineProfileBuilderTest {
+public class BaselineProfileReusableBuilderTest {
 
 
     private static final String QUERY_FACTOR_TYPE = "QUERY_FACTOR_TYPE";
@@ -33,8 +32,8 @@ public class BaselineProfileBuilderTest {
 
     @Test
     public void addedExpressionsAreFiltered() {
-        BaselineProfileBuilder subject = new BaselineProfileBuilder(ALWAYS_FALSE, QUERY_FACTOR_TYPE);
-        subject.forGeneIdAndName(GENE_ID, GENE_NAME);
+        BaselineProfileReusableBuilder subject = new BaselineProfileReusableBuilder(ALWAYS_FALSE, QUERY_FACTOR_TYPE);
+        subject.beginNewInstanceForGeneIdAndName(GENE_ID, GENE_NAME);
 
         subject.addExpression(new BaselineExpression(0.5, factorGroup));
 

@@ -21,7 +21,7 @@ public class IterableObjectInputStream<T> implements Iterable<T> {
 
     // buffers next object input stream result so we can
     // provide a hasNext method
-    private class ObjectInputStreamIterator implements Iterator<T> {
+    private final class ObjectInputStreamIterator implements Iterator<T> {
 
         private T next;
 

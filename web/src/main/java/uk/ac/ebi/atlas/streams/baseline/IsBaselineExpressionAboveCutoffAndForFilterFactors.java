@@ -35,21 +35,21 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class BaselineExpressionIsAboveCutoffAndForFilterFactors implements Predicate<BaselineExpression>, Serializable {
+public class IsBaselineExpressionAboveCutoffAndForFilterFactors implements Predicate<BaselineExpression>, Serializable {
 
     private double cutoff;
 
     private Set<Factor> filterFactors = new HashSet<>();
 
-    public BaselineExpressionIsAboveCutoffAndForFilterFactors() {
+    public IsBaselineExpressionAboveCutoffAndForFilterFactors() {
     }
 
-    public BaselineExpressionIsAboveCutoffAndForFilterFactors setFilterFactors(Set<Factor> filterFactors) {
+    public IsBaselineExpressionAboveCutoffAndForFilterFactors setFilterFactors(Set<Factor> filterFactors) {
         this.filterFactors = filterFactors;
         return this;
     }
 
-    public BaselineExpressionIsAboveCutoffAndForFilterFactors setCutoff(double cutoff) {
+    public IsBaselineExpressionAboveCutoffAndForFilterFactors setCutoff(double cutoff) {
         this.cutoff = cutoff;
         return this;
     }

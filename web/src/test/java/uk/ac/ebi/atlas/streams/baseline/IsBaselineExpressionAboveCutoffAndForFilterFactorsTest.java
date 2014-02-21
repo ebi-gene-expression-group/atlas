@@ -30,21 +30,18 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionIsAboveCutoffAndForFilterFactors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineProfileIsSpecificTest {
+public class IsBaselineExpressionAboveCutoffAndForFilterFactorsTest {
 
-    private BaselineExpressionIsAboveCutoffAndForFilterFactors subject;
+    private IsBaselineExpressionAboveCutoffAndForFilterFactors subject;
 
     private Factor factor1 = new Factor("type1", "value1");
     private Factor factor2 = new Factor("type2", "value2");
-
-    private Factor factor3 = new Factor("type3", "value3");
 
     @Mock
     private BaselineExpression expressionMock;
@@ -60,7 +57,7 @@ public class BaselineProfileIsSpecificTest {
         given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(true);
 
         //when
-        subject = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
+        subject = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
 
         //then
@@ -71,7 +68,7 @@ public class BaselineProfileIsSpecificTest {
     public void checkLimitingFactorsShouldSucceedWhenNoLimitingFactorSetIsProvided() throws Exception {
 
         //given
-        subject = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
+        subject = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
 
         //then
         assertThat(subject.checkFilterFactors(expressionMock), is(true));
@@ -81,7 +78,7 @@ public class BaselineProfileIsSpecificTest {
     public void applyShouldFailExpressionDoesntContainAllLimitingFactors() throws Exception {
 
         //given
-        subject = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
+        subject = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
         given(expressionMock.isKnown()).willReturn(true);
         given(expressionMock.containsAll(Sets.newHashSet(factor1,factor2))).willReturn(false);
@@ -93,7 +90,7 @@ public class BaselineProfileIsSpecificTest {
     public void applyShouldSucceedIfLevelIsGreaterThanCutoff() throws Exception {
 
         //given
-        subject = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
+        subject = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         subject.setFilterFactors(Sets.newHashSet(factor1, factor2));
         subject.setCutoff(1d);
 

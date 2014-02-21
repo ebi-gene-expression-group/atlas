@@ -28,25 +28,27 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class BaselineProfileBuilder  {
+// This is a reusable builder that can be called multiple times in a read loop.
+// To start creating another instance call beginNewInstanceForGeneIdAndName
+public class BaselineProfileReusableBuilder {
 
     private final String queryFactorType;
     private BaselineProfile baselineProfile;
 
     private Predicate<BaselineExpression> baselineExpressionFilter;
 
-    public BaselineProfileBuilder(Predicate<BaselineExpression> baselineExpressionFilter,
-                                  String queryFactorType) {
+    public BaselineProfileReusableBuilder(Predicate<BaselineExpression> baselineExpressionFilter,
+                                          String queryFactorType) {
         this.baselineExpressionFilter = baselineExpressionFilter;
         this.queryFactorType = queryFactorType;
     }
 
-    public BaselineProfileBuilder forGeneIdAndName(String geneId, String geneName) {
+    public BaselineProfileReusableBuilder beginNewInstanceForGeneIdAndName(String geneId, String geneName) {
         baselineProfile = new BaselineProfile(geneId, geneName);
         return this;
     }
 
-    public BaselineProfileBuilder addExpression(BaselineExpression expression) {
+    public BaselineProfileReusableBuilder addExpression(BaselineExpression expression) {
         checkState(baselineProfile != null, "Please invoke forGeneID before create");
         if (baselineExpressionFilter.apply(expression)) {
             baselineProfile.add(queryFactorType, expression);

@@ -30,31 +30,31 @@ import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile, BaselineExpression> {
 
-    private BaselineProfileBuilder baselineProfileBuilder;
+    private BaselineProfileReusableBuilder baselineProfileReusableBuilder;
 
 
     public BaselineProfilesInputStream(CSVReader csvReader, String experimentAccession
             , BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder
-            , BaselineProfileBuilder baselineProfileBuilder) {
+            , BaselineProfileReusableBuilder baselineProfileReusableBuilder) {
 
         super(csvReader, experimentAccession, baselineExpressionsQueueBuilder);
-        this.baselineProfileBuilder = baselineProfileBuilder;
+        this.baselineProfileReusableBuilder = baselineProfileReusableBuilder;
     }
 
     @Override
     protected BaselineProfile createProfile() {
-        BaselineProfile baselineProfile = baselineProfileBuilder.create();
+        BaselineProfile baselineProfile = baselineProfileReusableBuilder.create();
         return baselineProfile.isEmpty() ? null : baselineProfile;
     }
 
     @Override
     protected void addExpressionToBuilder(BaselineExpression expression) {
-        baselineProfileBuilder.addExpression(expression);
+        baselineProfileReusableBuilder.addExpression(expression);
     }
 
     @Override
     protected void addGeneInfoValueToBuilder(String[] values) {
-        baselineProfileBuilder.forGeneIdAndName(values[0], values[1]);
+        baselineProfileReusableBuilder.beginNewInstanceForGeneIdAndName(values[0], values[1]);
     }
 
 }

@@ -26,12 +26,8 @@ import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.OrderedFactorGroups;
-import uk.ac.ebi.atlas.streams.baseline.BaselineProfileDeserializer;
 
 import java.util.Iterator;
-
-import static com.google.common.base.Preconditions.checkState;
-import static org.mockito.Mockito.mock;
 
 /* Returns the following gene profiles in the REACT_71 pathway (taken from E-MTAB-513)
  *
@@ -47,7 +43,7 @@ import static org.mockito.Mockito.mock;
  * Factor values: skeletal muscle, leukocyte, heart, ovary, lymph node, breast, brain, prostate, lung, thyroid, kidney, colon, testis, liver, adipose, adrenal gland
  *
  */
-public class GeneProfileInputStreamEMTab513React71 implements ObjectInputStream<BaselineProfile> {
+public class BaselineProfilesEMTab513React71 implements ObjectInputStream<BaselineProfile> {
 
     private final OrderedFactorGroups orderedFactorGroups;
     private Iterator<BaselineProfile> geneProfilesIterator;
@@ -63,7 +59,7 @@ public class GeneProfileInputStreamEMTab513React71 implements ObjectInputStream<
             "ENSG00000178665\tZNF713\t0\t0\t0\t2\t0\t0\t2\t0\t0\t0\t0\t0\t3\t0\t0\t0\n" +
             "ENSG00000161547\tSRSF2\t0\t0\t0\t0\t0\t0\t0\t0.6\t0\t0\t0\t0\t0\t0\t0\t0";
 
-    public GeneProfileInputStreamEMTab513React71(double cutOff) {
+    public BaselineProfilesEMTab513React71(double cutOff) {
         orderedFactorGroups = BaselineProfileDeserializer.orderedFactorGroupsOfSameFactorType(FACTOR_TYPE, FACTOR_VALUES);
         ImmutableList<BaselineProfile> profiles = BaselineProfileDeserializer.buildProfiles(FACTOR_TYPE, orderedFactorGroups, EXPRESSIONS, cutOff);
         geneProfilesIterator = profiles.iterator();

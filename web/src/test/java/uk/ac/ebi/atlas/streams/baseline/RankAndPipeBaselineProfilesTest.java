@@ -31,7 +31,7 @@ public class RankAndPipeBaselineProfilesTest {
     private GeneSetBaselineProfilesBuilder geneSetBaselineProfilesBuilder = new GeneSetBaselineProfilesBuilder(new GeneSetFactory(new GeneSetBaselineProfileBuilder()));
     private RankAndPipeBaselineProfiles subject = new RankAndPipeBaselineProfiles(new BaselineProfilesPipelineBuilder(geneSetBaselineProfilesBuilder), new RankBaselineProfiles());
 
-    private GeneProfileInputStreamEMTab513React71 eMTab513react71InputStream = new GeneProfileInputStreamEMTab513React71(0.5);
+    private BaselineProfilesEMTab513React71 eMTab513react71InputStream = new BaselineProfilesEMTab513React71(0.5);
 
     private ImmutableSetMultimap<String, String> react71GeneIds = ImmutableSetMultimap.<String, String>builder().putAll("react_71", "ENSG00000196652", "ENSG00000082258", "ENSG00000047315", "ENSG00000077312", "ENSG00000198939", "ENSG00000178665", "ENSG00000161547").build();
 

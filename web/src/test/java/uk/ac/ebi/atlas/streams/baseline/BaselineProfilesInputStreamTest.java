@@ -87,11 +87,11 @@ public class BaselineProfilesInputStreamTest {
         given(expressionsBufferBuilderMock.withHeaders(headersWithoutGeneIdColumn)).willReturn(expressionsBufferBuilderMock);
         given(expressionsBufferBuilderMock.build()).willReturn(expressionsBufferMock);
 
-        BaselineProfileBuilder baselineProfileBuilder = mock(BaselineProfileBuilder.class);
-        when(baselineProfileBuilder.addExpression(any(BaselineExpression.class))).thenReturn(baselineProfileBuilder);
-        when(baselineProfileBuilder.create()).thenReturn(EMPTY_BASELINE_PROFILE);
+        BaselineProfileReusableBuilder baselineProfileReusableBuilder = mock(BaselineProfileReusableBuilder.class);
+        when(baselineProfileReusableBuilder.addExpression(any(BaselineExpression.class))).thenReturn(baselineProfileReusableBuilder);
+        when(baselineProfileReusableBuilder.create()).thenReturn(EMPTY_BASELINE_PROFILE);
 
-        subject = new BaselineProfilesInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, baselineProfileBuilder);
+        subject = new BaselineProfilesInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, baselineProfileReusableBuilder);
 
     }
 

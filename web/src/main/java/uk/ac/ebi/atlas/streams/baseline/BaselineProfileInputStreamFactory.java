@@ -35,13 +35,13 @@ public class BaselineProfileInputStreamFactory {
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
 
-        BaselineExpressionIsAboveCutoffAndForFilterFactors baselineExpressionFilter = new BaselineExpressionIsAboveCutoffAndForFilterFactors();
+        IsBaselineExpressionAboveCutoffAndForFilterFactors baselineExpressionFilter = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         baselineExpressionFilter.setCutoff(cutOff);
         baselineExpressionFilter.setFilterFactors(filterFactors);
 
-        BaselineProfileBuilder baselineProfileBuilder = new BaselineProfileBuilder(baselineExpressionFilter, queryFactorType);
+        BaselineProfileReusableBuilder baselineProfileReusableBuilder = new BaselineProfileReusableBuilder(baselineExpressionFilter, queryFactorType);
 
-        return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsQueueBuilder, baselineProfileBuilder);
+        return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsQueueBuilder, baselineProfileReusableBuilder);
     }
 
 }
