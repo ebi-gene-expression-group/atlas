@@ -39,15 +39,15 @@ public class DifferentialExpressionPrecondition implements Predicate<Differentia
     public boolean apply(DifferentialExpression differentialExpression) {
 
         if (Regulation.UP == regulation){
-            return isOverexpressed(differentialExpression);
+            return isOverExpressed(differentialExpression);
         }
         if (Regulation.DOWN == regulation){
             return isUnderExpressed(differentialExpression);
         }
-        return isUnderExpressed(differentialExpression) || isOverexpressed(differentialExpression);
+        return isUnderExpressed(differentialExpression) || isOverExpressed(differentialExpression);
     }
 
-    private boolean isOverexpressed(DifferentialExpression differentialExpression) {
+    private boolean isOverExpressed(DifferentialExpression differentialExpression) {
         return differentialExpression.getLevel() <= cutoff && differentialExpression.isOverExpressed();
     }
 

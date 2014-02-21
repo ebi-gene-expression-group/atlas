@@ -49,7 +49,7 @@ public class BaselineProfileReusableBuilder {
     }
 
     public BaselineProfileReusableBuilder addExpression(BaselineExpression expression) {
-        checkState(baselineProfile != null, "Please invoke forGeneID before create");
+        checkState(baselineProfile != null, "Please invoke beginNewInstanceForGeneIdAndName before create");
         if (baselineExpressionFilter.apply(expression)) {
             baselineProfile.add(queryFactorType, expression);
         }
@@ -57,7 +57,7 @@ public class BaselineProfileReusableBuilder {
     }
 
     public BaselineProfile create() {
-        checkState(baselineProfile != null, "Please invoke forGeneID before create");
+        checkState(baselineProfile != null, "Please invoke beginNewInstanceForGeneIdAndName before create");
         return baselineProfile;
     }
 }

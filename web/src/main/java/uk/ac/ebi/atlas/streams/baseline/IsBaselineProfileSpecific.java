@@ -24,18 +24,14 @@ package uk.ac.ebi.atlas.streams.baseline;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
-import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
-import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-@Named
-@Scope("prototype")
 public class IsBaselineProfileSpecific implements Predicate<BaselineProfile>, Serializable {
 
     private Set<Factor> selectedQueryFactors;
@@ -51,7 +47,7 @@ public class IsBaselineProfileSpecific implements Predicate<BaselineProfile>, Se
 
     @Override
     public boolean apply(BaselineProfile baselineProfile) {
-        return !baselineProfile.isEmpty() && isOverExpressedInSelectedQueryFactors(baselineProfile);
+        return isOverExpressedInSelectedQueryFactors(baselineProfile);
     }
 
     boolean isOverExpressedInSelectedQueryFactors(BaselineProfile baselineProfile) {
