@@ -8,7 +8,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.LoadGeneIdsIntoRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -16,7 +15,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.streams.differential.rnaseq.RnaSeqProfilesHeatMap;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -42,9 +40,6 @@ public class RnaSeqProfilesHeatMapIT {
     private RnaSeqProfilesHeatMap subject;
 
     @Inject
-    LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
-
-    @Inject
     RnaSeqRequestContextBuilder requestContextBuilder;
 
     private DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
@@ -52,13 +47,9 @@ public class RnaSeqProfilesHeatMapIT {
     private RnaSeqRequestContext populateRequestContext(String experimentAccession) throws GenesNotFoundException {
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        RnaSeqRequestContext requestContext = requestContextBuilder.forExperiment(experiment)
+        return requestContextBuilder.forExperiment(experiment)
                 .withPreferences(requestPreferences)
                 .build();
-
-        loadGeneIdsIntoRequestContext.load(requestContext, requestContext.getFilteredBySpecies());
-
-        return requestContext;
     }
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400

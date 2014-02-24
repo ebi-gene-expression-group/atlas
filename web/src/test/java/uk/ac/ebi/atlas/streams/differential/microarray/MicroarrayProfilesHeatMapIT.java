@@ -2,18 +2,14 @@ package uk.ac.ebi.atlas.streams.differential.microarray;
 
 import com.google.common.base.Joiner;
 import org.hamcrest.Matcher;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.LoadGeneIdsIntoRequestContext;
-import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.Regulation;
@@ -46,9 +42,6 @@ public class MicroarrayProfilesHeatMapIT {
     private MicroarrayProfilesHeatMap subject;
 
     @Inject
-    LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
-
-    @Inject
     MicroarrayRequestContextBuilder requestContextBuilder;
 
     private MicroarrayRequestPreferences requestPreferences = new MicroarrayRequestPreferences();
@@ -56,13 +49,9 @@ public class MicroarrayProfilesHeatMapIT {
     private MicroarrayRequestContext populateRequestContext(String experimentAccession) throws GenesNotFoundException {
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-        MicroarrayRequestContext requestContext = requestContextBuilder.forExperiment(experiment)
+        return requestContextBuilder.forExperiment(experiment)
                 .withPreferences(requestPreferences)
                 .build();
-
-        loadGeneIdsIntoRequestContext.loadFromAnySpecies(requestContext);
-
-        return requestContext;
     }
 
 
