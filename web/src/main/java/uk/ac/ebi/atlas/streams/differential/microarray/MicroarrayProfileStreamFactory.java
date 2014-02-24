@@ -34,7 +34,7 @@ public class MicroarrayProfileStreamFactory {
     }
 
 
-    public ObjectInputStream<MicroarrayProfile> create(MicroarrayProfileStreamOptions options) {
+    public ObjectInputStream<MicroarrayProfile> createForAllArrayDesigns(MicroarrayProfileStreamOptions options) {
         String experimentAccession = options.getExperimentAccession();
         double cutOff = options.getCutoff();
         Regulation regulation = options.getRegulation();
@@ -43,21 +43,31 @@ public class MicroarrayProfileStreamFactory {
         return create(experimentAccession, cutOff, regulation, arrayDesignAccessions);
     }
 
+    public MicroarrayProfileStream create(MicroarrayProfileStreamOptions options, String arrayDesign) {
+        String experimentAccession = options.getExperimentAccession();
+        double cutOff = options.getCutoff();
+        Regulation regulation = options.getRegulation();
+
+        return create(experimentAccession, cutOff, regulation, arrayDesign);
+    }
+
     public ObjectInputStream<MicroarrayProfile> create(String experimentAccession, double cutOff, Regulation regulation, Iterable<String> arrayDesignAccessions) {
-
-        MicroarrayProfileReusableBuilder profileBuilder = createProfileBuilder(cutOff, regulation);
-
         Vector<ObjectInputStream<MicroarrayProfile>> inputStreams = new Vector<>();
         for (String arrayDesignAccession : arrayDesignAccessions) {
-            CSVReader csvReader = createCsvReader(experimentAccession, arrayDesignAccession);
-
-            MicroarrayProfileStream stream = new MicroarrayProfileStream(csvReader, experimentAccession, expressionsQueueBuilder, profileBuilder);
-
+            ObjectInputStream<MicroarrayProfile> stream = create(experimentAccession, cutOff, regulation, arrayDesignAccession);
             inputStreams.add(stream);
         }
 
         return new SequenceObjectInputStream<>(inputStreams.elements());
     }
+
+    public MicroarrayProfileStream create(String experimentAccession, double cutOff, Regulation regulation, String arrayDesignAccession) {
+        MicroarrayProfileReusableBuilder profileBuilder = createProfileBuilder(cutOff, regulation);
+        CSVReader csvReader = createCsvReader(experimentAccession, arrayDesignAccession);
+
+        return new MicroarrayProfileStream(csvReader, experimentAccession, expressionsQueueBuilder, profileBuilder);
+    }
+
 
     private CSVReader createCsvReader(String experimentAccession, String arrayDesignAccession) {
         String tsvFileURL = MessageFormat.format(experimentDataFileUrlTemplate, experimentAccession, arrayDesignAccession);

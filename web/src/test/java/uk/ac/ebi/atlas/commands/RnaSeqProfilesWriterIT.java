@@ -20,7 +20,9 @@ import uk.ac.ebi.atlas.commands.download.CsvWriterFactory;
 import uk.ac.ebi.atlas.commands.download.RnaSeqProfilesTSVWriter;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
+import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamPipelineBuilder;
+import uk.ac.ebi.atlas.streams.differential.rnaseq.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -39,7 +41,7 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class WriteRnaSeqProfilesCommandIT {
+public class RnaSeqProfilesWriterIT {
 
     public static final int GENE_NAME_INDEX = 1;
 
@@ -47,7 +49,7 @@ public class WriteRnaSeqProfilesCommandIT {
     private static final String E_GEOD_21860 = "E-GEOD-21860";
 
 
-    private WriteRnaSeqProfilesCommand subject;
+    private RnaSeqProfilesWriter subject;
 
     @Inject
     private RnaSeqDiffExperimentsCache experimentsCache;
@@ -70,12 +72,15 @@ public class WriteRnaSeqProfilesCommandIT {
     public Resource tsvFileMastheadTemplateResource;
 
     @Inject
-    private InputStreamFactory inputStreamFactory;
+    private RnaSeqProfileStreamFactory inputStreamFactory;
 
     @Inject
-    private GeneProfilesFilter geneProfilesFilter;
+    private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
 
-    private void populateRequestContext(String experimentAccession) {
+    @Inject
+    private DifferentialProfileStreamPipelineBuilder<RnaSeqProfile> pipelineBuilder;
+
+    private RnaSeqRequestContext populateRequestContext(String experimentAccession) {
         MockitoAnnotations.initMocks(this);
         DifferentialExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
@@ -89,19 +94,18 @@ public class WriteRnaSeqProfilesCommandIT {
 
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
-        subject = new WriteRnaSeqProfilesCommand(geneProfileTsvWriter, requestContext, inputStreamFactory);
-        subject.setGeneProfilesFilter(geneProfilesFilter);
-        subject.setExperiment(experiment);
 
-        subject.setResponseWriter(printWriterMock);
+        subject = new RnaSeqProfilesWriter(pipelineBuilder, geneProfileTsvWriter, inputStreamFactory, loadGeneIdsIntoRequestContext);
 
+        return requestContext;
     }
+
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv
     @Test
     public void defaultParameters_Header() throws GenesNotFoundException {
-        populateRequestContext(E_GEOD_38400);
-        subject.execute(E_GEOD_38400);
+        RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
+        subject.write(printWriterMock, requestContext);
 
         String[] lines = headerLines();
         String queryLine = lines[1];
@@ -113,11 +117,12 @@ public class WriteRnaSeqProfilesCommandIT {
         assertThat(columnHeaders, is(new String[] {"Gene ID", "Gene Name", "nrpe1 mutant vs wild type.p-value", "nrpe1 mutant vs wild type.log2foldchange", "swi3b mutant vs wild type.p-value", "swi3b mutant vs wild type.log2foldchange", "idn2 mutant vs wild type.p-value", "idn2 mutant vs wild type.log2foldchange"}));
     }
 
+
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv
     @Test
     public void defaultParameters() throws GenesNotFoundException {
-        populateRequestContext(E_GEOD_38400);
-        long genesCount = subject.execute(E_GEOD_38400);
+        RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
+        long genesCount = subject.write(printWriterMock, requestContext);
 
         ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
@@ -147,8 +152,8 @@ public class WriteRnaSeqProfilesCommandIT {
     @Test
     public void geneQuery_ProteinCoding() throws GenesNotFoundException {
         setGeneQuery("protein_coding");
-        populateRequestContext(E_GEOD_21860);
-        long genesCount = subject.execute(E_GEOD_21860);
+        RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_21860);
+        long genesCount = subject.write(printWriterMock, requestContext);
 
         List<String> geneNames = geneNames(csvLines());
 
@@ -166,8 +171,8 @@ public class WriteRnaSeqProfilesCommandIT {
     public void upRegulatedOnly() throws GenesNotFoundException {
         requestPreferences.setRegulation(Regulation.UP);
 
-        populateRequestContext(E_GEOD_38400);
-        long genesCount = subject.execute(E_GEOD_38400);
+        RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
+        long genesCount = subject.write(printWriterMock, requestContext);
 
         List<String> geneNames = geneNames(csvLines());
 
@@ -182,8 +187,8 @@ public class WriteRnaSeqProfilesCommandIT {
     @Test
     public void downRegulatedOnly() throws GenesNotFoundException {
         requestPreferences.setRegulation(Regulation.DOWN);
-        populateRequestContext(E_GEOD_38400);
-        long genesCount = subject.execute(E_GEOD_38400);
+        RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
+        long genesCount = subject.write(printWriterMock, requestContext);
 
         List<String> geneNames = geneNames(csvLines());
 
@@ -198,8 +203,8 @@ public class WriteRnaSeqProfilesCommandIT {
     @Test
     public void withCutoff() throws GenesNotFoundException {
         requestPreferences.setCutoff(0.002);
-        populateRequestContext(E_GEOD_38400);
-        long genesCount = subject.execute(E_GEOD_38400);
+        RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
+        long genesCount = subject.write(printWriterMock, requestContext);
 
         List<String> geneNames = geneNames(csvLines());
 
@@ -214,15 +219,9 @@ public class WriteRnaSeqProfilesCommandIT {
     @Test
     public void withContrastQueryFactor() throws GenesNotFoundException {
         setNotSpecific();
-        withContrastQueryFactor_Specific();
-    }
-
-    //  http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?queryFactorValues=g1_g2
-    @Test
-    public void withContrastQueryFactor_Specific() throws GenesNotFoundException {
         requestPreferences.setQueryFactorValues(Collections.singleton("g1_g2"));
-        populateRequestContext(E_GEOD_38400);
-        long genesCount = subject.execute(E_GEOD_38400);
+        RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
+        long genesCount = subject.write(printWriterMock, requestContext);
 
         ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
@@ -233,7 +232,26 @@ public class WriteRnaSeqProfilesCommandIT {
         assertThat(genesCount, is((long) expectedCount));
         assertThat(geneNames, hasSize(expectedCount));
 
-        assertThat(geneNames, containsInAnyOrder("AT1G33840", "F14M2.2", "AT5G35207", "RSU1", "NRPD1B", "AT3G48131", "AT2G05200", "AT5G35205", "AT5G52070", "AT5G24240", "ANAC003", "AT4G04293", "AT2G16310", "AT5G27850", "F21F23.9", "AT5G27845", "AT1G12730", "DML1", "AT3G29644"));
+        assertThat(geneNames, containsInAnyOrder("AT1G33840", "F14M2.2", "AT5G35207", "RSU1", "NRPD1B", "AT3G48131", "AT2G05200", "DML1", "AT5G35205", "AT5G52070", "AT5G24240", "ANAC003", "AT2G16310", "AT4G04293", "AT5G27850", "F21F23.9", "AT3G29644", "AT5G27845", "AT1G12730"));
+    }
+
+    //  http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?queryFactorValues=g1_g2
+    @Test
+    public void withContrastQueryFactor_Specific() throws GenesNotFoundException {
+        requestPreferences.setQueryFactorValues(Collections.singleton("g1_g2"));
+        RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
+        long genesCount = subject.write(printWriterMock, requestContext);
+
+        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
+        Set<String> geneNames = geneNameToLine.keySet();
+
+        System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
+
+        int expectedCount = 17;
+        assertThat(genesCount, is((long) expectedCount));
+        assertThat(geneNames, hasSize(expectedCount));
+
+        assertThat(geneNames, containsInAnyOrder("AT1G33840", "F14M2.2", "AT5G35207", "RSU1", "NRPD1B", "AT3G48131", "AT2G05200", "AT5G35205", "AT5G52070", "AT5G24240", "ANAC003", "AT2G16310", "AT4G04293", "AT5G27850", "F21F23.9", "AT5G27845", "AT1G12730"));
     }
 
     private String[] headerLines() {

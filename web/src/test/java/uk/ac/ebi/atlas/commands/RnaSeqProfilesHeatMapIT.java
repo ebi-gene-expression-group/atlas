@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.streams.differential.rnaseq;
+package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Joiner;
 import org.hamcrest.Matcher;
@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;

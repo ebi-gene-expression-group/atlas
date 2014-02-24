@@ -1,14 +1,14 @@
-package uk.ac.ebi.atlas.streams.differential.rnaseq;
+package uk.ac.ebi.atlas.commands;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.LoadGeneIdsIntoRequestContext;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.streams.differential.DifferentialProfilesHeatMap;
+import uk.ac.ebi.atlas.streams.differential.rnaseq.RankRnaSeqProfilesFactory;
+import uk.ac.ebi.atlas.streams.differential.rnaseq.RnaSeqProfileStreamFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;

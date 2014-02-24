@@ -28,7 +28,6 @@ import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.streams.TsvInputStream;
 
 import java.util.List;
@@ -47,7 +46,7 @@ public class MicroarrayProfileStream extends TsvInputStream<MicroarrayProfile, M
         this.microarrayProfileBuilder = microarrayProfileBuilder;
     }
 
-    public List<Contrast> getOrderedContrasts() {
+    public List<Contrast> getOrderedContrastsPresentInStream() {
         MicroarrayExpressionsQueue tsvRowBuffer = (MicroarrayExpressionsQueue) this.getTsvRowQueue();
         return tsvRowBuffer.getOrderedContrasts();
     }

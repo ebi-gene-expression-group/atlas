@@ -103,7 +103,7 @@ public class MicroarrayExperimentDownloadController {
 
                 zipOutputStream.putNextEntry(ze);
 
-                //(B) this is very broken. It's overriding the same parameter for every array design
+                //TODO: (B) this is very broken. It's overriding the same parameter for every array design
                 preferences.setArrayDesignAccession(selectedArrayDesign);
                 requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
                 //

@@ -20,7 +20,9 @@ import uk.ac.ebi.atlas.commands.download.CsvWriterFactory;
 import uk.ac.ebi.atlas.commands.download.MicroarrayProfilesTSVWriter;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamPipelineBuilder;
+import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
@@ -28,6 +30,7 @@ import javax.inject.Inject;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -39,7 +42,7 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class WriteMicroarrayProfilesCommandIT {
+public class MicroarrayProfilesWriterIT {
 
     public static final int GENE_NAME_INDEX = 1;
     public static final String E_GEOD_8122 = "E-GEOD-8122";
@@ -47,7 +50,7 @@ public class WriteMicroarrayProfilesCommandIT {
     private static final String E_MTAB_1066 = "E-MTAB-1066";
     private static final String E_GEOD_3779 = "E-GEOD-3779";
 
-    private WriteMicroarrayProfilesCommand subject;
+    private MicroarrayProfilesWriter subject;
 
     @Inject
     private MicroarrayExperimentsCache microarrayExperimentsCache;
@@ -70,16 +73,17 @@ public class WriteMicroarrayProfilesCommandIT {
     public Resource tsvFileMastheadTemplateResource;
 
     @Inject
-    private InputStreamFactory inputStreamFactory;
+    private MicroarrayProfileStreamFactory inputStreamFactory;
 
     @Inject
-    private GeneProfilesFilter geneProfilesFilter;
+    private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
+
+    @Inject
+    private DifferentialProfileStreamPipelineBuilder<MicroarrayProfile> pipelineBuilder;
 
     private MicroarrayRequestContext populateRequestContext(String experimentAccession) {
         MockitoAnnotations.initMocks(this);
         MicroarrayExperiment experiment = microarrayExperimentsCache.getExperiment(experimentAccession);
-
-        requestPreferences.setArrayDesignAccession(experiment.getArrayDesignAccessions().first());
 
         MicroarrayRequestContext requestContext = contextBuilder.forExperiment(experiment)
                 .withPreferences(requestPreferences)
@@ -91,20 +95,18 @@ public class WriteMicroarrayProfilesCommandIT {
 
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
-        subject = new WriteMicroarrayProfilesCommand(geneProfileTsvWriter, requestContext, inputStreamFactory);
-        subject.setGeneProfilesFilter(geneProfilesFilter);
-
-        subject.setResponseWriter(printWriterMock);
+        subject = new MicroarrayProfilesWriter(pipelineBuilder, geneProfileTsvWriter, inputStreamFactory, loadGeneIdsIntoRequestContext);
 
         return requestContext;
 
     }
 
+
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv
     @Test
     public void defaultParameters_Header() throws GenesNotFoundException {
-        populateRequestContext(E_MTAB_1066);
-        subject.execute(E_MTAB_1066);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
+        subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
         String[] lines = headerLines();
         String queryLine = lines[1];
@@ -118,8 +120,8 @@ public class WriteMicroarrayProfilesCommandIT {
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv
     @Test
     public void defaultParameters() throws GenesNotFoundException {
-        populateRequestContext(E_MTAB_1066);
-        long genesCount = subject.execute(E_MTAB_1066);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
+        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
         List<String> geneNames = geneNames(csvLines());
 
@@ -143,8 +145,8 @@ public class WriteMicroarrayProfilesCommandIT {
     // http://localhost:8080/gxa/experiments/E-GEOD-43049.tsv
     @Test
     public void eGeod43049() throws GenesNotFoundException {
-        populateRequestContext(E_GEOD_43049);
-        long genesCount = subject.execute(E_GEOD_43049);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
+        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
         ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
@@ -165,8 +167,8 @@ public class WriteMicroarrayProfilesCommandIT {
     @Test
     public void geneQuery_ProteinCoding() throws GenesNotFoundException {
         setGeneQuery("protein_coding");
-        populateRequestContext(E_GEOD_43049);
-        long genesCount = subject.execute(E_GEOD_43049);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
+        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
         ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
@@ -182,8 +184,8 @@ public class WriteMicroarrayProfilesCommandIT {
     @Test
     public void upRegulatedOnly() throws GenesNotFoundException {
         requestPreferences.setRegulation(Regulation.UP);
-        populateRequestContext(E_GEOD_43049);
-        long genesCount = subject.execute(E_GEOD_43049);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
+        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
         ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
@@ -199,8 +201,8 @@ public class WriteMicroarrayProfilesCommandIT {
     @Test
     public void downRegulatedOnly() throws GenesNotFoundException {
         requestPreferences.setRegulation(Regulation.DOWN);
-        populateRequestContext(E_GEOD_43049);
-        long genesCount = subject.execute(E_GEOD_43049);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
+        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
         ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
@@ -216,8 +218,8 @@ public class WriteMicroarrayProfilesCommandIT {
     @Test
     public void withCutoff() throws GenesNotFoundException {
         requestPreferences.setCutoff(0.002);
-        populateRequestContext(E_GEOD_43049);
-        long genesCount = subject.execute(E_GEOD_43049);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
+        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
         ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
@@ -233,35 +235,50 @@ public class WriteMicroarrayProfilesCommandIT {
     @Test
     public void withContrastQueryFactor() throws GenesNotFoundException {
         setNotSpecific();
-        withContrastQueryFactor_Specific();
+        requestPreferences.setQueryFactorValues(Collections.singleton("g2_g3"));
+        MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
+        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
+
+        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
+        Set<String> geneNames = geneNameToLine.keySet();
+
+
+        System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
+
+        int expectedCount = 112;
+        assertThat(genesCount, is((long) expectedCount));
+        assertThat(geneNames, hasSize(expectedCount));
+
+        assertThat(geneNames, containsInAnyOrder("CG33054", "Prosbeta5", "CG14265", "CG5043", "CG9782", "CG1103", "CG18472", "CG17974", "Mst84Db", "skpB", "CG32444", "CG1443", "CG13398", "CG4669", "dj", "CG33459", "Mbs", "CG15286", "Peritrophin-15b", "PSR", "CG8929", "sls", "CG9254", "rtGEF", "lin19", "CG9586", "CG42813", "CG14872", "Dh44-R2", "CG12689", "CG15213", "CG9981", "ftz", "CG14605", "Jupiter", "bru-3", "PGRP-LA", "CG3332", "CG30272", "Ykt6", "Bgb", "Ten-a", "CG11703", "CG5213", "CG15628", "ACXD", "PMCA", "CG3107", "Cpr92F", "CG1368", "CG31606", "CG31463", "CG42788", "Got1", "cher", "Pros35", "Ady43A", "Atg8b", "CG3558", "CG10435", "CG14540", "olf186-M", "mthl2", "CG10663", "pUf68", "RfC3", "CG32686", "m2", "Paip2", "CG9589", "CG42329", "CG8003", "CG31624", "CG6870", "Ubp64E", "heph", "Ork1", "Karybeta3", "CG15043", "Kr", "pgant8", "Cda5", "CG2150", "Cpr12A", "CG31954", "Marf", "Tequila", "Dic3", "svp", "sba", "CG3376", "CG3704", "CG14694", "dock", "NC2alpha", "CG15615", "CG33523", "jhamt", "CG9040", "yip7", "CG7006", "CG6361", "CG8184", "Rm62", "CG10165", "Hsp60B", "CG6403", "CG11147", "CG2064", "mRpL21", "Muc68Ca", "Tdc2"));
+
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv?queryFactorValues=g2_g3
     @Test
     public void withContrastQueryFactor_Specific() throws GenesNotFoundException {
         requestPreferences.setQueryFactorValues(Collections.singleton("g2_g3"));
-        populateRequestContext(E_MTAB_1066);
-        long genesCount = subject.execute(E_MTAB_1066);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
+        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
         ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
 
+
         System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
 
-        //TODO: fix me! this should be showing specific ONLY
-        int expectedCount = 112;
+        int expectedCount = 40;
         assertThat(genesCount, is((long) expectedCount));
         assertThat(geneNames, hasSize(expectedCount));
 
-        assertThat(geneNames, containsInAnyOrder("CG33054", "Prosbeta5", "CG14265", "CG5043", "CG9782", "CG1103", "CG18472", "CG17974", "Mst84Db", "skpB", "CG32444", "CG1443", "CG13398", "CG4669", "dj", "CG33459", "Mbs", "CG15286", "Peritrophin-15b", "PSR", "CG8929", "sls", "CG9254", "rtGEF", "lin19", "CG9586", "CG42813", "CG14872", "Dh44-R2", "CG12689", "CG15213", "CG9981", "ftz", "CG14605", "Jupiter", "bru-3", "PGRP-LA", "CG3332", "CG30272", "Ykt6", "Bgb", "Ten-a", "CG11703", "CG5213", "CG15628", "ACXD", "PMCA", "CG3107", "Cpr92F", "CG1368", "CG31606", "CG31463", "CG42788", "Got1", "cher", "Pros35", "Ady43A", "Atg8b", "CG3558", "CG10435", "CG14540", "olf186-M", "mthl2", "CG10663", "pUf68", "RfC3", "CG32686", "m2", "Paip2", "CG9589", "CG42329", "CG8003", "CG31624", "CG6870", "Ubp64E", "heph", "Ork1", "Karybeta3", "CG15043", "Kr", "pgant8", "Cda5", "CG2150", "Cpr12A", "CG31954", "Marf", "Tequila", "Dic3", "svp", "sba", "CG3376", "CG3704", "CG14694", "dock", "NC2alpha", "CG15615", "CG33523", "jhamt", "CG9040", "yip7", "CG7006", "CG6361", "CG8184", "Rm62", "CG10165", "Hsp60B", "CG6403", "CG11147", "CG2064", "mRpL21", "Muc68Ca", "Tdc2"));
+        assertThat(geneNames, containsInAnyOrder("Ykt6", "Mbs", "CG3332", "CG9586", "Ady43A", "CG8003", "CG42788", "sls", "Tdc2", "Muc68Ca", "bru-3", "CG13398", "CG6361", "Cpr92F", "CG9782", "Kr", "svp", "CG33523", "ACXD", "mRpL21", "pUf68", "CG15628", "CG33459", "CG32444", "Mst84Db", "Paip2", "CG2150", "CG17974", "CG10663", "Tequila", "CG42813", "CG8184", "CG9981", "Got1", "heph", "CG10435", "RfC3", "ftz", "CG42329", "PMCA"));
     }
 
 
     // http://localhost:8080/gxa/experiments/E-GEOD-8122.tsv
     @Test
     public void eGeod8122() throws GenesNotFoundException {
-        populateRequestContext(E_GEOD_8122);
-        long genesCount = subject.execute(E_GEOD_8122);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_8122);
+        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
         ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
@@ -284,12 +301,11 @@ public class WriteMicroarrayProfilesCommandIT {
         eGeod8122();
     }
 
-
     // http://localhost:8080/gxa/experiments/E-GEOD-3779.tsv
     @Test
     public void experimentWithMultipleArrayDesigns_ArrayDesignAccession1() throws GenesNotFoundException {
-        populateRequestContext(E_GEOD_3779);
-        long genesCount = subject.execute(E_GEOD_3779);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_3779);
+        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
         String[] columnHeaders = csvLines().get(0);
         System.out.println("\"" + Joiner.on("\", \"").join(columnHeaders) + "\"");
@@ -314,7 +330,7 @@ public class WriteMicroarrayProfilesCommandIT {
     public void experimentWithMultipleArrayDesigns_ArrayDesignAccession2() throws GenesNotFoundException {
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_3779);
         requestContext.setArrayDesignAccession(requestContext.getExperiment().getArrayDesignAccessions().last());
-        long genesCount = subject.execute(E_GEOD_3779);
+        long genesCount = subject.write(printWriterMock, requestContext, requestContext.getExperiment().getArrayDesignAccessions().last());
 
         String[] columnHeaders = csvLines().get(0);
         assertThat(columnHeaders, is(new String[] {"Gene ID", "Gene Name", "Design Element", "genotype:'p107 -/-' vs 'wild type' on A-AFFY-24.p-value", "genotype:'p107 -/-' vs 'wild type' on A-AFFY-24.log2foldchange", "genotype:'p107 -/-' vs 'wild type' on A-AFFY-24.t-statistic"}));
@@ -332,6 +348,7 @@ public class WriteMicroarrayProfilesCommandIT {
         assertThat(geneLine, is(new String[] {"ENSMUSG00000028385", "Snx30", "1456479_at", "0.02", "0.00641014999999978", "0.120394369986336"}));
     }
 
+
     private String[] headerLines() {
         ArgumentCaptor<String> lineCaptor = ArgumentCaptor.forClass(String.class);
         verify(printWriterMock, times(1)).write(lineCaptor.capture());
@@ -343,7 +360,7 @@ public class WriteMicroarrayProfilesCommandIT {
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
         verify(csvWriterMock, atLeast(0)).writeNext(lineCaptor.capture());
 
-       return lineCaptor.getAllValues();
+        return lineCaptor.getAllValues();
     }
 
     private ImmutableMap<String, String[]> indexByGeneName(List<String[]> lines) {
@@ -377,6 +394,5 @@ public class WriteMicroarrayProfilesCommandIT {
     private void setNotSpecific() {
         requestPreferences.setSpecific(false);
     }
-
 
 }

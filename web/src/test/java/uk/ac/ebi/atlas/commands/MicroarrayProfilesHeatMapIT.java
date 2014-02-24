@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.streams.differential.microarray;
+package uk.ac.ebi.atlas.commands;
 
 import com.google.common.base.Joiner;
 import org.hamcrest.Matcher;
@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.commands.MicroarrayProfilesHeatMap;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -152,7 +153,7 @@ public class MicroarrayProfilesHeatMapIT {
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066?queryFactorValues=g2_g3
     @Test
-    public void withContrastQueryFactor_Specific_g2_g3() throws GenesNotFoundException {
+    public void withContrastQueryFactor_Specific() throws GenesNotFoundException {
         requestPreferences.setQueryFactorValues(Collections.singleton("g2_g3"));
         MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
         DifferentialProfilesList profiles = subject.fetch(requestContext);

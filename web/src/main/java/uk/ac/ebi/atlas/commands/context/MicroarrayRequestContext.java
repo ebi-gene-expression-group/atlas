@@ -35,7 +35,7 @@ public class MicroarrayRequestContext extends DifferentialRequestContext<Microar
 
     private String arrayDesignAccession;
 
-    void setArrayDesignAccession(String arrayDesignAccession) {
+    public void setArrayDesignAccession(String arrayDesignAccession) {
         this.arrayDesignAccession = arrayDesignAccession;
     }
 
