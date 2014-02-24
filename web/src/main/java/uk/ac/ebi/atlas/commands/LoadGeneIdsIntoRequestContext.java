@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.commands;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -39,5 +38,10 @@ public class LoadGeneIdsIntoRequestContext {
 
         requestContext.setGeneQueryResponse(geneQueryResponse);
     }
+
+    public void loadFromAnySpecies(RequestContext requestContext) throws GenesNotFoundException {
+        load(requestContext, "");
+    }
+
 
 }

@@ -15,13 +15,13 @@ import java.util.Comparator;
 
 @Named
 @Scope("singleton")
-public class RankRnaSeqDifferentialProfilesFactory implements RankDifferentialProfilesFactory<RnaSeqProfile> {
+public class RankRnaSeqProfilesFactory implements RankDifferentialProfilesFactory<RnaSeqProfile> {
 
     private DifferentialProfileComparatorFactory<RnaSeqProfile> differentialProfileComparatorFactory;
     private GeneProfilesListBuilder<DifferentialProfilesList<RnaSeqProfile>> geneProfilesListBuilder;
 
     @Inject
-    public RankRnaSeqDifferentialProfilesFactory(DifferentialProfileComparatorFactory<RnaSeqProfile> differentialProfileComparatorFactory, GeneProfilesListBuilder<DifferentialProfilesList<RnaSeqProfile>> geneProfilesListBuilder) {
+    public RankRnaSeqProfilesFactory(DifferentialProfileComparatorFactory<RnaSeqProfile> differentialProfileComparatorFactory, GeneProfilesListBuilder<DifferentialProfilesList<RnaSeqProfile>> geneProfilesListBuilder) {
         this.differentialProfileComparatorFactory = differentialProfileComparatorFactory;
         this.geneProfilesListBuilder = geneProfilesListBuilder;
     }

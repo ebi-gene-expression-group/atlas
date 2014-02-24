@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamFactory;
+import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
@@ -30,6 +31,14 @@ public class RnaSeqProfileStreamFactory implements DifferentialProfileStreamFact
                                       CsvReaderFactory csvReaderFactory) {
         this.expressionsQueueBuilder = expressionsQueueBuilder;
         this.csvReaderFactory = csvReaderFactory;
+    }
+
+    public ObjectInputStream<RnaSeqProfile> create(DifferentialProfileStreamOptions options) {
+        String experimentAccession = options.getExperimentAccession();
+        double cutOff = options.getCutoff();
+        Regulation regulation = options.getRegulation();
+
+        return create(experimentAccession, cutOff, regulation);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.commands;
+package uk.ac.ebi.atlas.streams.differential.rnaseq;
 
 import com.google.common.base.Joiner;
 import org.hamcrest.Matcher;
@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.commands.LoadGeneIdsIntoRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -14,7 +16,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfilesHeatMap;
+import uk.ac.ebi.atlas.streams.differential.rnaseq.RnaSeqProfilesHeatMap;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
@@ -28,7 +30,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class DifferentialProfilesHeatMapCommandIT {
+public class RnaSeqProfilesHeatMapIT {
 
     private static final String E_GEOD_38400 = "E-GEOD-38400";
     private static final String E_GEOD_21860 = "E-GEOD-21860";
@@ -37,13 +39,13 @@ public class DifferentialProfilesHeatMapCommandIT {
     private RnaSeqDiffExperimentsCache experimentsCache;
 
     @Inject
-    private DifferentialProfilesHeatMap subject;
-
-    @Inject
-    RnaSeqRequestContextBuilder requestContextBuilder;
+    private RnaSeqProfilesHeatMap subject;
 
     @Inject
     LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
+
+    @Inject
+    RnaSeqRequestContextBuilder requestContextBuilder;
 
     private DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
 
