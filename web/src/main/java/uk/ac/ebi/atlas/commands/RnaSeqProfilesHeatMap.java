@@ -15,7 +15,7 @@ import javax.inject.Named;
 
 @Named
 @Scope("prototype")
-public class RnaSeqProfilesHeatMap extends DifferentialProfilesHeatMap<RnaSeqProfile> {
+public class RnaSeqProfilesHeatMap extends DifferentialProfilesHeatMap<RnaSeqProfile, DifferentialRequestContext> {
 
     private RnaSeqProfileStreamFactory inputStreamFactory;
     private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;

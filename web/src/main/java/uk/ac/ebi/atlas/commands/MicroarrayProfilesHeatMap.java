@@ -15,7 +15,7 @@ import javax.inject.Named;
 
 @Named
 @Scope("prototype")
-public class MicroarrayProfilesHeatMap extends DifferentialProfilesHeatMap<MicroarrayProfile> {
+public class MicroarrayProfilesHeatMap extends DifferentialProfilesHeatMap<MicroarrayProfile, MicroarrayRequestContext> {
 
     private MicroarrayProfileStreamFactory inputStreamFactory;
     private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
@@ -30,6 +30,7 @@ public class MicroarrayProfilesHeatMap extends DifferentialProfilesHeatMap<Micro
         this.loadGeneIdsIntoRequestContext = loadGeneIdsIntoRequestContext;
     }
 
+    @Override
     public DifferentialProfilesList fetch(MicroarrayRequestContext requestContext) throws GenesNotFoundException {
         loadGeneIdsIntoRequestContext.loadFromAnySpecies(requestContext);
         ObjectInputStream<MicroarrayProfile> inputStream = inputStreamFactory.createForAllArrayDesigns(requestContext);

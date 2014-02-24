@@ -28,7 +28,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.RankMicroarrayProfilesCommand;
+import uk.ac.ebi.atlas.commands.MicroarrayProfilesHeatMap;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
@@ -46,9 +46,9 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
 
     @Inject
     public MicroarrayExperimentPageController(MicroarrayRequestContextBuilder requestContextBuilder,
-                                              RankMicroarrayProfilesCommand rankMicroarrayProfilesCommand,
+                                              MicroarrayProfilesHeatMap profilesHeatMap,
                                               DownloadURLBuilder downloadURLBuilder) {
-        super(requestContextBuilder, rankMicroarrayProfilesCommand, downloadURLBuilder);
+        super(requestContextBuilder, profilesHeatMap, downloadURLBuilder);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
@@ -61,10 +61,7 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
 
     @Override
     protected void initExtraPageConfigurations(Model model, MicroarrayRequestPreferences requestPreferences, MicroarrayExperiment experiment) {
-        model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, ((MicroarrayExperiment) experiment).getArrayDesignAccessions());
-
-        // preselect first array design accession
-        requestPreferences.setArrayDesignAccession(experiment.getArrayDesignAccessions().first());
+        model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
     }
 
 }
