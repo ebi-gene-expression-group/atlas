@@ -33,7 +33,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GEOD22351GeneProfilesDownloadControllerIT {
+public class GEOD22351RnaSeqExperimentDownloadControllerIT {
 
     private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-22351.tsv");
 

@@ -33,7 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class GeneProfilesDownloadWithGeneSetMatchIT {
+public class GeneSetMatchBaselineExperimentDownloadControllerIT {
 
     private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-30352.tsv?serializedFilterFactors=ORGANISM:Homo sapiens" +
             "&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=true&displayGeneDistribution=true" +

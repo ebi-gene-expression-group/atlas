@@ -37,7 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 
-public class GEOD3779GeneProfilesDownloadControllerIT {
+public class GEOD3779MicroarrayExperimentDownloadControllerIT {
 
     private static final String EXPRESSION_ATLAS_VERSION = "# Expression Atlas version:";
     private static final String QUERY_DESCRIPTION = "# Query: Genes matching: '', specifically up/down differentially expressed in any contrast given the False Discovery Rate cutoff: 0.05 in experiment E-GEOD-3779";

@@ -44,7 +44,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DifferentialExperimentDownloadControllerTest {
+public class RnaSeqExperimentDownloadControllerTest {
 
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
 
@@ -78,11 +78,11 @@ public class DifferentialExperimentDownloadControllerTest {
     @Mock
     private ExpressionsWriter expressionsWriterMock;
 
-    private DifferentialExperimentDownloadController subject;
+    private RnaSeqExperimentDownloadController subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new DifferentialExperimentDownloadController(requestContextBuilderMock, profilesWriter, dataWriterFactoryMock);
+        subject = new RnaSeqExperimentDownloadController(requestContextBuilderMock, profilesWriter, dataWriterFactoryMock);
 
         when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
