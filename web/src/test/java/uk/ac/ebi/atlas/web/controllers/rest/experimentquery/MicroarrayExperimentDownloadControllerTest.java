@@ -28,12 +28,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.WriteMicroarrayProfilesCommand;
+import uk.ac.ebi.atlas.commands.MicroarrayProfilesWriter;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.download.DataWriterFactory;
 import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -41,6 +43,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anySet;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -54,7 +58,7 @@ public class MicroarrayExperimentDownloadControllerTest {
     private MicroarrayRequestContextBuilder requestContextBuilderMock;
 
     @Mock
-    private WriteMicroarrayProfilesCommand writeGeneProfilesCommandMock;
+    private MicroarrayProfilesWriter profilesWriter;
 
     @Mock
     private DataWriterFactory dataWriterFactoryMock;
@@ -84,7 +88,7 @@ public class MicroarrayExperimentDownloadControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentDownloadController(requestContextBuilderMock, writeGeneProfilesCommandMock, dataWriterFactoryMock);
+        subject = new MicroarrayExperimentDownloadController(requestContextBuilderMock, profilesWriter, dataWriterFactoryMock);
 
         when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
@@ -93,7 +97,7 @@ public class MicroarrayExperimentDownloadControllerTest {
         when(requestContextBuilderMock.withPreferences(preferencesMock)).thenReturn(requestContextBuilderMock);
         when(requestContextBuilderMock.build()).thenReturn(requestContextMock);
         when(responseMock.getWriter()).thenReturn(printWriterMock);
-        when(writeGeneProfilesCommandMock.execute(EXPERIMENT_ACCESSION)).thenReturn(0L);
+        when(profilesWriter.write(any(PrintWriter.class), any(ObjectInputStream.class), any(DifferentialProfileStreamOptions.class), anySet())).thenReturn(0L);
         when(preferencesMock.getArrayDesignAccession()).thenReturn(ARRAY_DESIGN);
 
     }
@@ -105,8 +109,7 @@ public class MicroarrayExperimentDownloadControllerTest {
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "_" + ARRAY_DESIGN + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
-        verify(writeGeneProfilesCommandMock).setResponseWriter(printWriterMock);
-        verify(writeGeneProfilesCommandMock).execute(EXPERIMENT_ACCESSION);
+        verify(profilesWriter).write(printWriterMock, requestContextMock, ARRAY_DESIGN);
     }
 
     @Test

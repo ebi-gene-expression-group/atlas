@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.WriteRnaSeqProfilesCommand;
+import uk.ac.ebi.atlas.commands.RnaSeqProfilesWriter;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.download.DataWriterFactory;
@@ -52,7 +52,7 @@ public class DifferentialExperimentDownloadControllerTest {
     private RnaSeqRequestContextBuilder requestContextBuilderMock;
 
     @Mock
-    private WriteRnaSeqProfilesCommand writeGeneProfilesCommandMock;
+    private RnaSeqProfilesWriter profilesWriter;
 
     @Mock
     private DataWriterFactory dataWriterFactoryMock;
@@ -82,7 +82,7 @@ public class DifferentialExperimentDownloadControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new DifferentialExperimentDownloadController(requestContextBuilderMock, writeGeneProfilesCommandMock, dataWriterFactoryMock);
+        subject = new DifferentialExperimentDownloadController(requestContextBuilderMock, profilesWriter, dataWriterFactoryMock);
 
         when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(experimentMock);
         when(experimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
@@ -90,7 +90,7 @@ public class DifferentialExperimentDownloadControllerTest {
         when(requestContextBuilderMock.withPreferences(preferencesMock)).thenReturn(requestContextBuilderMock);
         when(requestContextBuilderMock.build()).thenReturn(requestContextMock);
         when(responseMock.getWriter()).thenReturn(printWriterMock);
-        when(writeGeneProfilesCommandMock.execute(EXPERIMENT_ACCESSION)).thenReturn(0L);
+        when(profilesWriter.write(printWriterMock, requestContextMock)).thenReturn(0L);
     }
 
     @Test
@@ -100,9 +100,7 @@ public class DifferentialExperimentDownloadControllerTest {
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
-        verify(writeGeneProfilesCommandMock).setResponseWriter(printWriterMock);
-        verify(writeGeneProfilesCommandMock).setExperiment(experimentMock);
-        verify(writeGeneProfilesCommandMock).execute(EXPERIMENT_ACCESSION);
+        verify(profilesWriter).write(printWriterMock, requestContextMock);
     }
 
     @Test

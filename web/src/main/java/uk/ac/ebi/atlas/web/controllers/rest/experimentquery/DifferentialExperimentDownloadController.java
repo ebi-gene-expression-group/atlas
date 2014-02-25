@@ -28,7 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.WriteRnaSeqProfilesCommand;
+import uk.ac.ebi.atlas.commands.RnaSeqProfilesWriter;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.download.DataWriterFactory;
 import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
@@ -54,17 +55,17 @@ public class DifferentialExperimentDownloadController {
 
     private final RnaSeqRequestContextBuilder requestContextBuilder;
 
-    private WriteRnaSeqProfilesCommand writeGeneProfilesCommand;
+    private RnaSeqProfilesWriter profilesWriter;
 
     private DataWriterFactory dataWriterFactory;
 
     @Inject
     public DifferentialExperimentDownloadController(
-            RnaSeqRequestContextBuilder requestContextBuilder, WriteRnaSeqProfilesCommand writeGeneProfilesCommand
+            RnaSeqRequestContextBuilder requestContextBuilder, RnaSeqProfilesWriter profilesWriter
             , DataWriterFactory dataWriterFactory) {
 
         this.requestContextBuilder = requestContextBuilder;
-        this.writeGeneProfilesCommand = writeGeneProfilesCommand;
+        this.profilesWriter = profilesWriter;
         this.dataWriterFactory = dataWriterFactory;
     }
 
@@ -83,14 +84,11 @@ public class DifferentialExperimentDownloadController {
         response.setContentType("text/plain; charset=utf-8");
 
 
-        requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
-
-        writeGeneProfilesCommand.setResponseWriter(response.getWriter());
-        writeGeneProfilesCommand.setExperiment(experiment);
+        RnaSeqRequestContext requestContext = requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
 
         try {
 
-            long genesCount = writeGeneProfilesCommand.execute(experiment.getAccession());
+            long genesCount = profilesWriter.write(response.getWriter(), requestContext);
             LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + " gene expression profiles");
 
         } catch (GenesNotFoundException e) {
