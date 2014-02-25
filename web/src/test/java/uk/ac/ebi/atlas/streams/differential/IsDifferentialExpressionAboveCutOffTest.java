@@ -49,7 +49,7 @@ public class IsDifferentialExpressionAboveCutOffTest {
     @Before
     public void setUp() throws Exception {
         subject = new IsDifferentialExpressionAboveCutOff();
-        subject.setCutoff(0.1);
+        subject.setPValueCutoff(0.1);
         subject.setRegulation(Regulation.UP_DOWN);
     }
 
@@ -60,11 +60,19 @@ public class IsDifferentialExpressionAboveCutOffTest {
     }
 
     @Test
-    public void testSetCutoff() throws Exception {
-        subject.setCutoff(0.0001);
+    public void setPValueCutoff() throws Exception {
+        subject.setPValueCutoff(0.0001);
 
         assertThat(subject.apply(expression1), is(false));
         assertThat(subject.apply(expression2), is(true));
+    }
+
+    @Test
+    public void setFoldChangeCutoff() throws Exception {
+        subject.setFoldChangeCutOff(50);
+
+        assertThat(subject.apply(expression1), is(false));
+        assertThat(subject.apply(expression2), is(false));
     }
 
     @Test

@@ -51,6 +51,16 @@ public class DifferentialRequestContext<T extends DifferentialExperiment> extend
     }
 
     @Override
+    public double getPValueCutOff() {
+        return getRequestPreferences().getCutoff();
+    }
+
+    @Override
+    public double getFoldChangeCutOff() {
+        return getRequestPreferences().getFoldChangeCutOff();
+    }
+
+    @Override
     protected void setRequestPreferences(DifferentialRequestPreferences requestPreferences) {
         super.setRequestPreferences(requestPreferences);
     }

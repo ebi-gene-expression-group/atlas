@@ -25,11 +25,18 @@ package uk.ac.ebi.atlas.web;
 
 import uk.ac.ebi.atlas.model.differential.Regulation;
 
+import javax.validation.constraints.Min;
+
 public class DifferentialRequestPreferences extends ExperimentPageRequestPreferences {
 
     public static final double DEFAULT_CUTOFF = 0.05d;
 
+    public static final double DEFAULT_FOLD_CHANGE_CUTOFF = 0d;
+
     private Regulation regulation = Regulation.UP_DOWN;
+
+    @Min(value = 0, message = "Fold change cut off is an absolute amount, and so must be positive")
+    private double foldChangeCutOff = DEFAULT_FOLD_CHANGE_CUTOFF;
 
     @Override
     public Double getDefaultCutoff() {
@@ -44,4 +51,11 @@ public class DifferentialRequestPreferences extends ExperimentPageRequestPrefere
         this.regulation = regulation;
     }
 
+    public double getFoldChangeCutOff() {
+        return foldChangeCutOff;
+    }
+
+    public void setFoldChangeCutOff(double foldChangeCutOff) {
+        this.foldChangeCutOff = foldChangeCutOff;
+    }
 }

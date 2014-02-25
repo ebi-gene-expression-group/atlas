@@ -40,14 +40,11 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
     private Set<T> allQueryFactors;
     private GeneQueryResponse geneQueryResponse;
 
-    public GeneQueryResponse getGeneQueryResponse() {
-        return geneQueryResponse;
-    }
-
     public void setGeneQueryResponse(GeneQueryResponse geneQueryResponse) {
         this.geneQueryResponse = geneQueryResponse;
     }
 
+    // called by DifferentialProfileStreamPipelineBuilder
     public Set<String> getSelectedGeneIDs() {
         if (StringUtils.isBlank(getGeneQuery())) {
             return Collections.emptySet();

@@ -32,18 +32,20 @@ public class RnaSeqProfileStreamFactory {
 
     public RnaSeqProfileStream create(DifferentialProfileStreamOptions options) {
         String experimentAccession = options.getExperimentAccession();
-        double cutOff = options.getCutoff();
+        double pValueCutOff = options.getPValueCutOff();
+        double foldChangeCutOff = options.getFoldChangeCutOff();
         Regulation regulation = options.getRegulation();
 
-        return create(experimentAccession, cutOff, regulation);
+        return create(experimentAccession, pValueCutOff, foldChangeCutOff, regulation);
     }
 
-    public RnaSeqProfileStream create(String experimentAccession, double cutOff, Regulation regulation) {
+    public RnaSeqProfileStream create(String experimentAccession, double pValueCutOff, double foldChangeCutOff, Regulation regulation) {
         String tsvFileURL = MessageFormat.format(experimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
 
         IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
-        expressionFilter.setCutoff(cutOff);
+        expressionFilter.setPValueCutoff(pValueCutOff);
+        expressionFilter.setFoldChangeCutOff(foldChangeCutOff);
         expressionFilter.setRegulation(regulation);
 
         RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder = new RnaSeqProfileReusableBuilder(expressionFilter);

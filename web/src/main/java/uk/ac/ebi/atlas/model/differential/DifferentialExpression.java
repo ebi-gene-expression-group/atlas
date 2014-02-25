@@ -114,4 +114,8 @@ public class DifferentialExpression implements Expression {
     public boolean isUnderExpressed() {
         return foldChange < 0;
     }
+
+    public double getAbsoluteFoldChange() {
+        return Math.abs(foldChange);
+    }
 }

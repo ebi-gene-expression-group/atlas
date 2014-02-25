@@ -35,7 +35,8 @@ import javax.inject.Named;
 public class IsDifferentialExpressionAboveCutOff implements Predicate<DifferentialExpression> {
 
     private Regulation regulation;
-    private double cutoff;
+    private double pValueCutOff;
+    private double foldChangeCutOff;
 
     @Override
     public boolean apply(DifferentialExpression differentialExpression) {
@@ -50,16 +51,23 @@ public class IsDifferentialExpressionAboveCutOff implements Predicate<Differenti
     }
 
     private boolean isOverExpressed(DifferentialExpression differentialExpression) {
-        return differentialExpression.getLevel() <= cutoff && differentialExpression.isOverExpressed();
+        return differentialExpression.getLevel() <= pValueCutOff && differentialExpression.isOverExpressed()
+                && differentialExpression.getAbsoluteFoldChange() >= foldChangeCutOff;
     }
 
     private boolean isUnderExpressed(DifferentialExpression differentialExpression){
-        return differentialExpression.getLevel() <= cutoff && differentialExpression.isUnderExpressed();
+        return differentialExpression.getLevel() <= pValueCutOff && differentialExpression.isUnderExpressed()
+                && differentialExpression.getAbsoluteFoldChange() >= foldChangeCutOff;
     }
 
 
-    public IsDifferentialExpressionAboveCutOff setCutoff(double cutoff){
-        this.cutoff = cutoff;
+    public IsDifferentialExpressionAboveCutOff setPValueCutoff(double pValueCutOff){
+        this.pValueCutOff = pValueCutOff;
+        return this;
+    }
+
+    public IsDifferentialExpressionAboveCutOff setFoldChangeCutOff(double foldChangeCutOff) {
+        this.foldChangeCutOff = foldChangeCutOff;
         return this;
     }
 

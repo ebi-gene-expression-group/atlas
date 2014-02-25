@@ -75,7 +75,7 @@ public class MicroarrayProfileBuilderTest {
         when(expressionMock.isUnderExpressed()).thenReturn(true);
 
         IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
-        expressionFilter.setCutoff(0.05);
+        expressionFilter.setPValueCutoff(0.05);
         expressionFilter.setRegulation(Regulation.UP_DOWN);
 
         subject = new MicroarrayProfileReusableBuilder(expressionFilter);

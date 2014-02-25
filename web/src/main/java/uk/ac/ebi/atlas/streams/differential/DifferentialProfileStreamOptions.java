@@ -21,6 +21,7 @@ public interface DifferentialProfileStreamOptions {
 
     String getExperimentAccession();
 
-    double getCutoff();
+    double getPValueCutOff();
 
+    double getFoldChangeCutOff();
 }
