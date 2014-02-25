@@ -20,17 +20,19 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.streams.differential;
 
 
 import com.google.common.base.Predicate;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import javax.inject.Named;
 
 @Named
 @Scope("prototype")
-public class DifferentialExpressionPrecondition implements Predicate<DifferentialExpression> {
+public class IsDifferentialExpressionAboveCutOff implements Predicate<DifferentialExpression> {
 
     private Regulation regulation;
     private double cutoff;
@@ -56,12 +58,12 @@ public class DifferentialExpressionPrecondition implements Predicate<Differentia
     }
 
 
-    public DifferentialExpressionPrecondition setCutoff(double cutoff){
+    public IsDifferentialExpressionAboveCutOff setCutoff(double cutoff){
         this.cutoff = cutoff;
         return this;
     }
 
-    public DifferentialExpressionPrecondition setRegulation(Regulation regulation){
+    public IsDifferentialExpressionAboveCutOff setRegulation(Regulation regulation){
         this.regulation = regulation;
         return this;
     }

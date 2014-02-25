@@ -22,12 +22,12 @@
 
 package uk.ac.ebi.atlas.streams.differential.microarray;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
@@ -36,7 +36,6 @@ import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
@@ -49,7 +48,7 @@ import static org.hamcrest.Matchers.nullValue;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class MicroarrayProfilesInputStreamIT {
+public class MicroarrayProfileStreamFactoryIT {
 
     public static final String EXPERIMENT_ACCESSION = "E-MTAB-1066";
 
@@ -67,7 +66,7 @@ public class MicroarrayProfilesInputStreamIT {
     private static final String ARRAY_DESIGN_ACCESSION = "A-AFFY-35";
 
     @Inject
-    private InputStreamFactory inputStreamFactory;
+    private MicroarrayProfileStreamFactory inputStreamFactory;
 
     @Inject
     private MicroarrayExperimentsCache microarrayExperimentsCache;
@@ -81,24 +80,23 @@ public class MicroarrayProfilesInputStreamIT {
 
     private MicroarrayRequestPreferences microarrayRequestPreferences = new MicroarrayRequestPreferences();
 
-    @Before
-    public void initSubject() throws Exception {
-
-        subject = inputStreamFactory.createMicroarrayProfileInputStream(EXPERIMENT_ACCESSION, ARRAY_DESIGN_ACCESSION);
+    public void initSubject() {
 
         MicroarrayExperiment microarrayExperiment = microarrayExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
 
         contrast = microarrayExperiment.getContrasts().toArray(new Contrast[0])[1];
 
-        microarrayRequestPreferences.setArrayDesignAccession(ARRAY_DESIGN_ACCESSION);
-        microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
+        MicroarrayRequestContext requestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
                 .withPreferences(microarrayRequestPreferences).build();
+
+        subject = inputStreamFactory.create(requestContext, ARRAY_DESIGN_ACCESSION);
 
     }
 
     @Test
     public void readNextWithUpDownRegulation() throws IOException {
         microarrayRequestPreferences.setRegulation(Regulation.UP_DOWN);
+        initSubject();
 
         //given
         MicroarrayProfile microarrayProfile = subject.readNext();
@@ -138,6 +136,7 @@ public class MicroarrayProfilesInputStreamIT {
     @Test
     public void readNextWithUpRegulation() throws IOException {
         microarrayRequestPreferences.setRegulation(Regulation.UP);
+        initSubject();
 
         //given
         MicroarrayProfile microarrayProfile = subject.readNext();
@@ -178,6 +177,7 @@ public class MicroarrayProfilesInputStreamIT {
     @Test
     public void readNextWithDownRegulation() throws IOException {
         microarrayRequestPreferences.setRegulation(Regulation.DOWN);
+        initSubject();
 
         //given
         MicroarrayProfile microarrayProfile = subject.readNext();
@@ -216,7 +216,7 @@ public class MicroarrayProfilesInputStreamIT {
     @Test
     public void readNextShouldReturnNullGivenAllExpressionLevelsHaveBeenRead() throws Exception {
         microarrayRequestPreferences.setRegulation(Regulation.UP_DOWN);
-
+        initSubject();
 
         long countProfiles = 0;
         while (subject.readNext() != null) {

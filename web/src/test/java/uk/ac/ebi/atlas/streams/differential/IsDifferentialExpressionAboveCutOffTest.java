@@ -20,21 +20,24 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.streams.differential;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DifferentialExpressionPreconditionTest {
+public class IsDifferentialExpressionAboveCutOffTest {
 
-    DifferentialExpressionPrecondition subject;
+    IsDifferentialExpressionAboveCutOff subject;
 
     @Mock
     Contrast contrastMock;
@@ -45,7 +48,7 @@ public class DifferentialExpressionPreconditionTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new DifferentialExpressionPrecondition();
+        subject = new IsDifferentialExpressionAboveCutOff();
         subject.setCutoff(0.1);
         subject.setRegulation(Regulation.UP_DOWN);
     }

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.SequenceObjectInputStream;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition;
+import uk.ac.ebi.atlas.streams.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
@@ -75,7 +75,7 @@ public class MicroarrayProfileStreamFactory {
     }
 
     private MicroarrayProfileReusableBuilder createProfileBuilder(double cutOff, Regulation regulation) {
-        DifferentialExpressionPrecondition expressionFilter = new DifferentialExpressionPrecondition();
+        IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
         expressionFilter.setCutoff(cutOff);
         expressionFilter.setRegulation(regulation);
 

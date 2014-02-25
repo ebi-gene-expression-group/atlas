@@ -47,6 +47,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     private DifferentialProfilesHeatMap<Z, DifferentialRequestContext> profilesHeatMap;
 
 
+    @SuppressWarnings("unchecked")
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
                                                    DifferentialProfilesHeatMap<Z, ? extends DifferentialRequestContext> profilesHeatMap,
                                                    DownloadURLBuilder downloadURLBuilder) {

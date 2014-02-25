@@ -23,13 +23,15 @@
 package uk.ac.ebi.atlas.model.differential;
 
 import com.google.common.collect.Sets;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -134,6 +136,38 @@ public class DifferentialProfileComparatorTest {
         when(profileMock1.getAverageExpressionLevelOn(selectedContrasts, Regulation.UP)).thenReturn(0.025);
         //then
         assertThat(subject.getExpressionLevelFoldChange(profileMock1), is(2D));
+    }
+
+    @Test
+    public void test() {
+
+        DifferentialProfile differentialProfileMock1 = Mockito.mock(DifferentialProfile.class);
+        DifferentialProfile differentialProfileMock2 = Mockito.mock(DifferentialProfile.class);
+        DifferentialProfile differentialProfileMock3 = Mockito.mock(DifferentialProfile.class);
+
+        //given
+        when(differentialProfileMock1.getAverageExpressionLevelOn(new HashSet<Contrast>(), Regulation.UP_DOWN)).thenReturn(3D);
+        when(differentialProfileMock1.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
+        when(differentialProfileMock2.getAverageExpressionLevelOn(new HashSet<Contrast>(), Regulation.UP_DOWN)).thenReturn(5D);
+        when(differentialProfileMock2.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
+        when(differentialProfileMock3.getAverageExpressionLevelOn(new HashSet<Contrast>(), Regulation.UP_DOWN)).thenReturn(2D);
+        when(differentialProfileMock3.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
+
+        subject = new DifferentialProfileComparator(false, Collections.emptySet(), Collections.emptySet(), Regulation.UP_DOWN);
+
+        //when
+        SortedSet<DifferentialProfile> profiles = new TreeSet<DifferentialProfile>(subject);
+        profiles.add(differentialProfileMock1);
+        profiles.add(differentialProfileMock2);
+        profiles.add(differentialProfileMock3);
+
+        //then
+        Iterator<DifferentialProfile> profilesIterator = profiles.iterator();
+
+        assertThat(profilesIterator.next(), Matchers.is(differentialProfileMock3));
+        assertThat(profilesIterator.next(), Matchers.is(differentialProfileMock1));
+        assertThat(profilesIterator.next(), Matchers.is(differentialProfileMock2));
+
     }
 
 }

@@ -22,27 +22,25 @@
 
 package uk.ac.ebi.atlas.streams.differential;
 
-import com.google.common.collect.Sets;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.streams.differential.rnaseq.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.TreeSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -50,7 +48,7 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class DifferentialProfilesInputStreamIT {
+public class RnaSeqProfileStreamFactoryIT {
 
     public static final String EXPERIMENT_ACCESSION = "E-GEOD-22351";
 
@@ -69,7 +67,7 @@ public class DifferentialProfilesInputStreamIT {
     private static final String GENE_ID_DOWN_3 = "ENSMUSG00000052468";
 
     @Inject
-    private InputStreamFactory inputStreamFactory;
+    private RnaSeqProfileStreamFactory inputStreamFactory;
 
     @Inject
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
@@ -84,22 +82,17 @@ public class DifferentialProfilesInputStreamIT {
     private DifferentialRequestPreferences differentialRequestPreferences = new DifferentialRequestPreferences();
 
 
-    @Before
-    public void setUp() throws Exception {
-
-        subject = inputStreamFactory.createDifferentialProfileInputStream(EXPERIMENT_ACCESSION);
+    public void setUp()  {
 
         DifferentialExperiment differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
 
+        RnaSeqRequestContext requestContext = rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
+                .withPreferences(differentialRequestPreferences).build();
+
+
         contrast = differentialExperiment.getContrasts().iterator().next();
 
-        TreeSet<Contrast> allQueryFactors = Sets.newTreeSet();
-        allQueryFactors.add(contrast);
-
-        rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
-                .withPreferences(differentialRequestPreferences);
-
-        rnaSeqRequestContextBuilder.build();
+        subject = inputStreamFactory.create(requestContext);
 
     }
 
@@ -107,6 +100,7 @@ public class DifferentialProfilesInputStreamIT {
     @Test
     public void readNextWithUpDownRegulation() throws IOException {
         differentialRequestPreferences.setRegulation(Regulation.UP_DOWN);
+        setUp();
 
         //given
         RnaSeqProfile differentialProfile = subject.readNext();
@@ -154,6 +148,7 @@ public class DifferentialProfilesInputStreamIT {
     @Test
     public void readNextWithUpRegulation() throws IOException {
         differentialRequestPreferences.setRegulation(Regulation.UP);
+        setUp();
 
         //given
         RnaSeqProfile differentialProfile = subject.readNext();
@@ -202,7 +197,7 @@ public class DifferentialProfilesInputStreamIT {
     @Test
     public void readNextWithDownRegulation() throws IOException {
         differentialRequestPreferences.setRegulation(Regulation.DOWN);
-
+        setUp();
 
         //given
         RnaSeqProfile differentialProfile = subject.readNext();
@@ -240,7 +235,7 @@ public class DifferentialProfilesInputStreamIT {
     @Test
     public void readNextShouldReturnNullGivenAllExpressionLevelsHaveBeenRead() throws Exception {
         differentialRequestPreferences.setRegulation(Regulation.UP_DOWN);
-
+        setUp();
 
         long countProfiles = 0;
         while (subject.readNext() != null) {

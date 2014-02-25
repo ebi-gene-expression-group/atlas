@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.streams.differential.rnaseq;
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition;
+import uk.ac.ebi.atlas.streams.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
@@ -42,7 +42,7 @@ public class RnaSeqProfileStreamFactory {
         String tsvFileURL = MessageFormat.format(experimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
 
-        DifferentialExpressionPrecondition expressionFilter = new DifferentialExpressionPrecondition();
+        IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
         expressionFilter.setCutoff(cutOff);
         expressionFilter.setRegulation(regulation);
 

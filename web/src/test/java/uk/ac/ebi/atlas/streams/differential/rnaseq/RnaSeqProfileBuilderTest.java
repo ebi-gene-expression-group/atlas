@@ -20,34 +20,29 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential.microarray;
+package uk.ac.ebi.atlas.streams.differential.rnaseq;
 
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
-import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpressionPrecondition;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfilePrecondition;
-import uk.ac.ebi.atlas.model.differential.Regulation;
+import uk.ac.ebi.atlas.model.differential.*;
+import uk.ac.ebi.atlas.streams.differential.IsDifferentialExpressionAboveCutOff;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MicroarrayProfileBuilderTest {
+public class RnaSeqProfileBuilderTest {
 
-    private static final String DESIGN_ELEMENT_NAME = "designElementName";
-    private static final String CONTRAST_NAME1 = "a";
-    private static final String CONTRAST_NAME2 = "b";
-    private static final String GENE_ID = "geneId";
+    public static final String CONTRAST_NAME1 = "a";
+    public static final String CONTRAST_NAME2 = "b";
+    public static final String GENE_ID = "geneId";
     private static final String GENE_NAME = "aGeneName";
 
     @Mock
@@ -57,12 +52,9 @@ public class MicroarrayProfileBuilderTest {
     Contrast contrastMock2;
 
     @Mock
-    MicroarrayRequestContext contextMock;
+    DifferentialExpression expressionMock;
 
-    @Mock
-    MicroarrayExpression expressionMock;
-
-    MicroarrayProfileBuilder subject;
+    RnaSeqProfileReusableBuilder subject;
 
     @Before
     public void setUp() throws Exception {
@@ -72,24 +64,20 @@ public class MicroarrayProfileBuilderTest {
         sortedSet.add(contrastMock1);
         sortedSet.add(contrastMock2);
 
-        when(contextMock.getCutoff()).thenReturn(0.05);
-        when(contextMock.getRegulation()).thenReturn(Regulation.UP_DOWN);
-        when(contextMock.getAllQueryFactors()).thenReturn(sortedSet);
-        when(contextMock.getSelectedQueryFactors()).thenReturn(Sets.newHashSet(contrastMock1));
-
         when(expressionMock.isUnderExpressed()).thenReturn(true);
 
-        subject = new MicroarrayProfileBuilder(contextMock, new DifferentialExpressionPrecondition(), new DifferentialProfilePrecondition());
+        IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
+        expressionFilter.setCutoff(0.05);
+        expressionFilter.setRegulation(Regulation.UP_DOWN);
 
+        subject = new RnaSeqProfileReusableBuilder(expressionFilter);
     }
 
     @Test
     public void testCreate() throws Exception {
-        MicroarrayProfileBuilder builder = subject.withDesignElementName(DESIGN_ELEMENT_NAME).withGeneName(GENE_NAME).withGeneId(GENE_ID);
+        RnaSeqProfileReusableBuilder builder = subject.beginNewInstance(GENE_ID, GENE_NAME);
         builder.addExpression(expressionMock);
-        MicroarrayProfile profile = builder.create();
-        assertThat(profile.getDesignElementName(), is(DESIGN_ELEMENT_NAME));
+        DifferentialProfile profile = builder.create();
         assertThat(profile.getId(), is(GENE_ID));
-        assertThat(profile.getName(), is(GENE_NAME));
     }
 }

@@ -2,10 +2,12 @@ package uk.ac.ebi.atlas.streams.differential;
 
 import com.google.common.collect.Iterables;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
+import uk.ac.ebi.atlas.streams.IsExpressedForQueryCondition;
+import uk.ac.ebi.atlas.streams.IsGeneIdMatch;
 
 import javax.inject.Named;
 import java.util.Set;
@@ -37,11 +39,11 @@ public class DifferentialProfileStreamPipelineBuilder<T extends DifferentialProf
     }
 
     public static <T extends DifferentialProfile> Iterable<T> filterByGeneIds(Iterable<T> profiles, Set<String> uppercaseGeneIDs) {
-        return Iterables.filter(profiles, new GeneProfileInputStreamFilter.GeneIdMatchesPredicate(uppercaseGeneIDs));
+        return Iterables.filter(profiles, new IsGeneIdMatch(uppercaseGeneIDs));
     }
 
-    public static <T extends DifferentialProfile>Iterable<T> filterByQueryFactors(Iterable<T> profiles, Set<Contrast> queryFactors) {
-        return Iterables.filter(profiles, new GeneProfileInputStreamFilter.ExpressedForQueryConditionPredicate<>(queryFactors));
+    public static <K, T extends Profile<K, ?>>Iterable<T> filterByQueryFactors(Iterable<T> profiles, Set<K> queryFactors) {
+        return Iterables.filter(profiles, new IsExpressedForQueryCondition<K, T>(queryFactors));
     }
 
     public static <T extends DifferentialProfile> Iterable<T> filterByQueryFactorSpecificity(Iterable<T> profiles, Set<Contrast> queryFactors, Set<Contrast> allQueryFactors, Regulation regulation) {

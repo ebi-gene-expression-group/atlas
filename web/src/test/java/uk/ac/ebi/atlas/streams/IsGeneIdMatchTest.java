@@ -42,7 +42,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GeneProfileInputStreamFilterTest {
+public class IsGeneIdMatchTest {
 
     public static final String GENE_2 = "Gene2";
 
@@ -63,14 +63,10 @@ public class GeneProfileInputStreamFilterTest {
 
     private Set<Factor> factors = Sets.newHashSet(factor1, factor2);
 
-    private Set<String> EMPTY_GENE_IDS = Sets.newHashSet();
-
-    private Set<Factor> EMPTY_FILTER_FACTOR_VALUES = Sets.newHashSet();
+    private final Set<Factor> EMPTY_FILTER_FACTOR_VALUES = Sets.newHashSet();
 
     @Mock
     private BaselineRequestContext requestContextMock;
-
-    private GeneProfileInputStreamFilter subject;
 
     @Before
     public void initMocks() {
@@ -84,24 +80,14 @@ public class GeneProfileInputStreamFilterTest {
     }
 
     @Test
-    public void acceptanceCriteriaTestShouldBeBasedOnGeneIDsSet() {
+    public void GeneIdMatchesPredicate() {
         //given
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, geneIDs, factors);
-        Predicate<Profile> acceptancePredicate = subject.getAcceptanceCriteria();
+        Predicate<Profile> acceptancePredicate = new IsGeneIdMatch(geneIDs);
 
         //then
         assertThat(acceptancePredicate.apply(gene1ProfileMock), is(true));
         //and
         assertThat(acceptancePredicate.apply(gene3ProfileMock), is(false));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void acceptanceCriteriaTestAlwaysSucceedsWhenTheGeneIDsSetIsEmpty() {
-        //given
-        subject = new GeneProfileInputStreamFilter(inputStreamMock, EMPTY_GENE_IDS, factors);
-        //and
-        subject.getAcceptanceCriteria();
-
     }
 
 }

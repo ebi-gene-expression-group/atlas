@@ -5,7 +5,8 @@ import com.google.common.collect.Iterables;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.streams.GeneProfileInputStreamFilter;
+import uk.ac.ebi.atlas.streams.IsExpressedForQueryCondition;
+import uk.ac.ebi.atlas.streams.IsGeneIdMatch;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -85,11 +86,11 @@ public class BaselineProfilesPipelineBuilder {
 
 
     public static Iterable<BaselineProfile> filterByGeneIds(Iterable<BaselineProfile> profiles, Set<String> uppercaseGeneIDs) {
-        return Iterables.filter(profiles, new GeneProfileInputStreamFilter.GeneIdMatchesPredicate(uppercaseGeneIDs));
+        return Iterables.filter(profiles, new IsGeneIdMatch(uppercaseGeneIDs));
     }
 
     public static Iterable<BaselineProfile> filterByQueryFactors(Iterable<BaselineProfile> profiles, Set<Factor> queryFactors) {
-        return Iterables.filter(profiles, new GeneProfileInputStreamFilter.ExpressedForQueryConditionPredicate<>(queryFactors));
+        return Iterables.filter(profiles, new IsExpressedForQueryCondition<>(queryFactors));
     }
 
     public static Iterable<BaselineProfile> filterByQueryFactorSpecificity(Iterable<BaselineProfile> profiles, Set<Factor> queryFactors, Set<Factor> allQueryFactors) {

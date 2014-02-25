@@ -35,24 +35,23 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class IsDifferentialProfileSpecific implements Predicate<DifferentialProfile> {
 
-    private Set<Contrast> selectedQueryContrasts;
-    private Regulation regulation;
-    private Set<Contrast> allQueryFactors;
+    private final Set<Contrast> selectedQueryContrasts;
+    private final Sets.SetView<Contrast> nonSelectedQueryContrasts;
+    private final Regulation regulation;
 
     public IsDifferentialProfileSpecific(Set<Contrast> selectedQueryContrasts, Set<Contrast> allQueryFactors, Regulation regulation) {
         checkArgument(!selectedQueryContrasts.isEmpty(),"selectedQueryContrasts is empty");
-        checkArgument(!selectedQueryContrasts.isEmpty(),"allQueryFactors is empty");
+        checkArgument(!allQueryFactors.isEmpty(),"allQueryFactors is empty");
         checkNotNull(regulation, "regulation is null");
 
         this.selectedQueryContrasts = selectedQueryContrasts;
+        this.nonSelectedQueryContrasts = Sets.difference(allQueryFactors, selectedQueryContrasts);
         this.regulation = regulation;
-        this.allQueryFactors = allQueryFactors;
     }
 
     @Override
     public boolean apply(DifferentialProfile differentialProfile) {
         double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts, regulation);
-        Set<Contrast> nonSelectedQueryContrasts = Sets.difference(allQueryFactors, selectedQueryContrasts);
         double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts, regulation);
 
         return averageExpressionLevelOnSelectedQueryContrasts < minExpressionLevelOnNonSelectedQueryContrasts;
