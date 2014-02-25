@@ -31,11 +31,11 @@ public class DifferentialRequestPreferences extends ExperimentPageRequestPrefere
 
     public static final double DEFAULT_CUTOFF = 0.05d;
 
-    public static final double DEFAULT_FOLD_CHANGE_CUTOFF = 0d;
+    public static final double DEFAULT_FOLD_CHANGE_CUTOFF = 1d;
 
     private Regulation regulation = Regulation.UP_DOWN;
 
-    @Min(value = 0, message = "Fold change cut off is an absolute amount, and so must be positive")
+    @Min(value = 0, message = "Log2-fold change cut off is an absolute amount, and so must be greater than zero")
     private double foldChangeCutOff = DEFAULT_FOLD_CHANGE_CUTOFF;
 
     @Override

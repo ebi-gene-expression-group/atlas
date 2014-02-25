@@ -25,6 +25,7 @@
   ~ http://gxa.github.com/gxa
   --%>
 
+<%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
 <div id="preferencesFormBlock" class="block-max-width">
     <form:form method="get" commandName="preferences" id="prefForm">
         <input type="hidden" name="accessKey" value="${param.accessKey}"></hidden>
@@ -61,11 +62,24 @@
                     <form:label path="queryFactorValues">${queryFactorName}</form:label>
                     <span data-help-loc="#factorSearch${type.isBaseline() ? '' : '-differential'}"/>
                 </td>
-                <td style="width:100%;display:block">
-                    <form:label
-                            path="cutoff">${type.isBaseline() ? 'Expression level cutoff' : 'False discovery rate cutoff'}</form:label>
-                    <span data-help-loc="${type.isBaseline() ? '#cutoff' : '#cutoff-differential'}"/>
-                </td>
+                <c:choose>
+                    <c:when test="${type.isBaseline()}">
+                        <td style="width:100%;display:block">
+                            <form:label path="cutoff">Expression level cutoff</form:label>
+                            <span data-help-loc="#cutoff"/>
+                        </td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>
+                            <form:label path="cutoff"><i>p</i>-value cutoff</form:label>
+                            <span data-help-loc="#cutoff-differential"/>
+                        </td>
+                        <td>
+                            <form:label path="foldChangeCutOff">Log<sub>2</sub>-fold change cutoff</form:label>
+                            <span data-help-loc="#foldChangeCutOff"/>
+                        </td>
+                    </c:otherwise>
+                </c:choose>
                 <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
                     <div>
                         <div>
@@ -148,6 +162,9 @@
                         </c:choose>
                     </div>
                 </td>
+                <c:if test="${!type.isBaseline()}">
+                    <td><form:input size="10" path="foldChangeCutOff" id="foldChangeCutOff"/></td>
+                </c:if>
             </tr>
         </table>
         <br/>

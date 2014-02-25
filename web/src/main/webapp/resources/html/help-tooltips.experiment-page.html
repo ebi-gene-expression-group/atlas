@@ -56,8 +56,12 @@
 	above this are displayed. Set to 0 to retrieve all genes.
 </div>
 
-<div id="cutoff-differential">Enter value from 0 to 1 to use as the maximum false discovery rate (FDR) cutoff.
-    Only genes that show differential expression with an adjusted p-value at or below this cutoff will be returned.
+<div id="cutoff-differential">Enter value from 0 to 1 to use as the maximum p-value cutoff.
+    Only genes that show differential expression with an adjusted p-value at or below this cutoff will be shown.
+</div>
+
+<div id="foldChangeCutOff">Enter value equal or greater than 0 to use as the minimum absolute log2-fold change.
+    Only genes that show absolute log2-fold change at or greater than this cutoff will be shown.
 </div>
 
 <div id="gene-distribution">The histogram shows number of genes (y-axis)
