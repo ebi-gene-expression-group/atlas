@@ -112,7 +112,7 @@ public class MicroarrayProfilesTSVWriterTest {
 
         //given
         when(expressionMock.getFoldChange()).thenReturn(-0.978932452151424);
-        when(expressionMock.getLevel()).thenReturn(0.134707651014487);
+        when(expressionMock.getPValue()).thenReturn(0.134707651014487);
         when(expressionMock.getTstatistic()).thenReturn(0.0099999999);
     }
 

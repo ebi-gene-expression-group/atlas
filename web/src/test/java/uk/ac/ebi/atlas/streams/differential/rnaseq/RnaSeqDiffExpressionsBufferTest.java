@@ -69,13 +69,13 @@ public class RnaSeqDiffExpressionsBufferTest {
         //when
         DifferentialExpression expression = subject.poll();
         //then we expect first expression
-        assertThat(expression.getLevel(), is(Double.valueOf(P_VAL_1)));
+        assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_1)));
         assertThat(expression.getFoldChange(), is(Double.valueOf(FOLD_CHANGE_1)));
         assertThat(expression.getContrast(), is(contrast1Mock));
 
         //given we poll again
         expression = subject.poll();
-        assertThat(expression.getLevel(), is(Double.valueOf(P_VAL_2)));
+        assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_2)));
         assertThat(expression.getFoldChange(), is(Double.NEGATIVE_INFINITY));
         assertThat(expression.getContrast(), is(contrast2Mock));
 
@@ -111,7 +111,7 @@ public class RnaSeqDiffExpressionsBufferTest {
         //and we poll
         DifferentialExpression expression = subject.poll();
         //then we expect to find the new values
-        assertThat(expression.getLevel(), is(1d));
+        assertThat(expression.getPValue(), is(1d));
     }
 
     @Test(expected = IllegalStateException.class)
@@ -156,7 +156,7 @@ public class RnaSeqDiffExpressionsBufferTest {
 
         DifferentialExpression expression = subject.poll();
 
-        assertThat(expression.getLevel(), is(Double.valueOf(P_VAL_2)));
+        assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_2)));
         assertThat(expression.getFoldChange(), is(Double.NEGATIVE_INFINITY));
         assertThat(expression.getContrast(), is(contrast2Mock));
     }

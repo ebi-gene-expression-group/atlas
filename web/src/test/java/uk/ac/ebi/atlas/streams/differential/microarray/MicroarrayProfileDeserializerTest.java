@@ -67,7 +67,7 @@ public class MicroarrayProfileDeserializerTest {
         assertThat(df.getDesignElementName(), is(DESIGN_ELEMENT));
 
         MicroarrayExpression expression = df.getExpression(contrastMock1);
-        assertThat(expression.getLevel(), is(Double.parseDouble(P_VALUE)));
+        assertThat(expression.getPValue(), is(Double.parseDouble(P_VALUE)));
         assertThat(expression.getFoldChange(), is(Double.parseDouble(FOLD_CHANGE)));
         assertThat(expression.getTstatistic(), is(Double.parseDouble(T_STAT)));
 
@@ -84,12 +84,12 @@ public class MicroarrayProfileDeserializerTest {
         assertThat(df.getDesignElementName(), is(DESIGN_ELEMENT));
 
         MicroarrayExpression expression = df.getExpression(contrastMock1);
-        assertThat(expression.getLevel(), is(Double.parseDouble(P_VALUE)));
+        assertThat(expression.getPValue(), is(Double.parseDouble(P_VALUE)));
         assertThat(expression.getFoldChange(), is(Double.parseDouble(FOLD_CHANGE)));
         assertThat(expression.getTstatistic(), is(Double.parseDouble(T_STAT)));
 
         MicroarrayExpression expression2 = df.getExpression(contrastMock2);
-        assertThat(expression2.getLevel(), is(Double.parseDouble(P_VALUE_2)));
+        assertThat(expression2.getPValue(), is(Double.parseDouble(P_VALUE_2)));
         assertThat(expression2.getFoldChange(), is(Double.parseDouble(FOLD_CHANGE_2)));
         assertThat(expression2.getTstatistic(), is(Double.parseDouble(T_STAT_2)));
 

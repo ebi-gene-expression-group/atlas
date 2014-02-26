@@ -45,7 +45,7 @@ public class DifferentialExpression implements Expression {
         this.contrast = contrast;
     }
 
-    private double getPValue() {
+    public double getPValue() {
         return pValue;
     }
 

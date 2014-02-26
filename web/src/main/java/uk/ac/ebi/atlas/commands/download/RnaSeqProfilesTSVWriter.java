@@ -60,7 +60,7 @@ public class RnaSeqProfilesTSVWriter extends DifferentialProfilesTSVWriter<RnaSe
 
     @Override
     protected List<Double> getExpressionLevelData(DifferentialExpression expression) {
-        return Lists.newArrayList(expression.getLevel(), expression.getFoldChange());
+        return Lists.newArrayList(expression.getPValue(), expression.getFoldChange());
     }
 
     @Override

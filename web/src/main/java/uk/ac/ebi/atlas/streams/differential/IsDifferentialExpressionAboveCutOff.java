@@ -51,12 +51,12 @@ public class IsDifferentialExpressionAboveCutOff implements Predicate<Differenti
     }
 
     private boolean isOverExpressed(DifferentialExpression differentialExpression) {
-        return differentialExpression.getLevel() <= pValueCutOff && differentialExpression.isOverExpressed()
+        return differentialExpression.getPValue() <= pValueCutOff && differentialExpression.isOverExpressed()
                 && differentialExpression.getAbsoluteFoldChange() >= foldChangeCutOff;
     }
 
     private boolean isUnderExpressed(DifferentialExpression differentialExpression){
-        return differentialExpression.getLevel() <= pValueCutOff && differentialExpression.isUnderExpressed()
+        return differentialExpression.getPValue() <= pValueCutOff && differentialExpression.isUnderExpressed()
                 && differentialExpression.getAbsoluteFoldChange() >= foldChangeCutOff;
     }
 

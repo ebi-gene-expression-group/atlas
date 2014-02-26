@@ -38,6 +38,11 @@ public class DifferentialExpressionTest {
     }
 
     @Test
+    public void testGetPValue() {
+        assertThat(subject.getPValue(), is(PVALUE));
+    }
+
+    @Test
     public void testGetContrast() {
         assertThat(subject.getContrast(), is(contrastMock));
     }
@@ -90,7 +95,7 @@ public class DifferentialExpressionTest {
         DifferentialExpression expression = new DifferentialExpression(SMALLPVALUE, -1.0, null);
 
         //then
-        assertThat(expression.getLevel(), is(0D));
+        assertThat(expression.getPValue(), is(0D));
     }
 
 }

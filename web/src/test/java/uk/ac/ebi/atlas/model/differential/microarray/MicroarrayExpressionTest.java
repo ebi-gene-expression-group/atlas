@@ -62,6 +62,6 @@ public class MicroarrayExpressionTest {
         MicroarrayExpression expression = new MicroarrayExpression(SMALLPVALUE, -1.0, TSTATISTIC, contrastMock);
 
         //then
-        assertThat(expression.getLevel(), is(0D));
+        assertThat(expression.getPValue(), is(0D));
     }
 }

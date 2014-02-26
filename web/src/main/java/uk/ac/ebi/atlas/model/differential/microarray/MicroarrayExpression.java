@@ -44,7 +44,7 @@ public class MicroarrayExpression extends DifferentialExpression {
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
-                .add("p-value", getLevel())
+                .add("p-value", getPValue())
                 .add("foldChange", getFoldChange())
                 .toString();
     }
