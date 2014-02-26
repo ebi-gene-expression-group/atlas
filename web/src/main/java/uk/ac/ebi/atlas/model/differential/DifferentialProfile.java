@@ -80,7 +80,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         return getSpecificity();
     }
 
-    public double getAverageExpressionLevelOn(Set<Contrast> conditions, Regulation regulation) {
+    public double getAverageExpressionLevelOn(Set<Contrast> conditions) {
         checkArgument(!CollectionUtils.isEmpty(conditions),
                 "This method must be invoked with all conditions when the set of selected conditions is empty");
 
@@ -124,7 +124,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         return min(minUpRegulatedExpressionLevel, minDownRegulatedExpressionLevel);
     }
 
-    public double getMinExpressionLevelOn(Set<Contrast> queryContrasts, Regulation regulation) {
+    public double getMinExpressionLevelOn(Set<Contrast> queryContrasts) {
         //checkArgument(CollectionUtils.isNotEmpty(queryContrasts));
         if(queryContrasts.isEmpty()){
             return MAX_PVALUE;

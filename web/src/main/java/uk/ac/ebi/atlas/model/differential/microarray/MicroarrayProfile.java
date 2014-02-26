@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.differential.microarray;
 
+import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 
 public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression> {
@@ -40,4 +41,12 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
         return designElementName;
     }
 
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("geneName", getName())
+                .add("designElementName", designElementName)
+                .add("expressions", expressionsByCondition)
+                .toString();
+    }
 }

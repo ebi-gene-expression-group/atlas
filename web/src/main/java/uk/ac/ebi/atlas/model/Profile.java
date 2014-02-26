@@ -35,7 +35,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 //K is the Condition type (i.e. Factor or Contrast),
 //T is the Expression type (Baseline Expression or DifferentialExpression)
 public abstract class Profile<K, T extends Expression> {
-    private Map<K, T> expressionsByCondition = new HashMap<>();
+    protected Map<K, T> expressionsByCondition = new HashMap<>();
 
     private String id;
 

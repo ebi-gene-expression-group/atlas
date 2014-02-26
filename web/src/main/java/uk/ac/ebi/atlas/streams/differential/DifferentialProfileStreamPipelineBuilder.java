@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.streams.IsExpressedForQueryCondition;
 import uk.ac.ebi.atlas.streams.IsGeneIdMatch;
 
@@ -21,7 +20,6 @@ public class DifferentialProfileStreamPipelineBuilder<T extends DifferentialProf
         Set<Contrast> queryFactors = options.getSelectedQueryFactors();
         Set<String> uppercaseGeneIDs = options.getSelectedGeneIDs();
         Set<Contrast> allQueryFactors = options.getAllQueryFactors();
-        Regulation regulation = options.getRegulation();
 
         Iterable<T> profilesPipeline = profiles;
 
@@ -31,7 +29,7 @@ public class DifferentialProfileStreamPipelineBuilder<T extends DifferentialProf
 
         if (!queryFactors.isEmpty()) {
             profilesPipeline = isSpecific ?
-                    DifferentialProfileStreamPipelineBuilder.filterByQueryFactorSpecificity(profilesPipeline, queryFactors, allQueryFactors, regulation) :
+                    DifferentialProfileStreamPipelineBuilder.filterByQueryFactorSpecificity(profilesPipeline, queryFactors, allQueryFactors) :
                     DifferentialProfileStreamPipelineBuilder.filterByQueryFactors(profilesPipeline, queryFactors);
         }
 
@@ -46,8 +44,8 @@ public class DifferentialProfileStreamPipelineBuilder<T extends DifferentialProf
         return Iterables.filter(profiles, new IsExpressedForQueryCondition<K, T>(queryFactors));
     }
 
-    public static <T extends DifferentialProfile> Iterable<T> filterByQueryFactorSpecificity(Iterable<T> profiles, Set<Contrast> queryFactors, Set<Contrast> allQueryFactors, Regulation regulation) {
-        IsDifferentialProfileSpecific isDifferentialProfileSpecific = new IsDifferentialProfileSpecific(queryFactors, allQueryFactors, regulation);
+    public static <T extends DifferentialProfile> Iterable<T> filterByQueryFactorSpecificity(Iterable<T> profiles, Set<Contrast> queryFactors, Set<Contrast> allQueryFactors) {
+        IsDifferentialProfileSpecific isDifferentialProfileSpecific = new IsDifferentialProfileSpecific(queryFactors, allQueryFactors);
         return Iterables.filter(profiles, isDifferentialProfileSpecific);
     }
 

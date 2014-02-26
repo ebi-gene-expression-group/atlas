@@ -26,33 +26,28 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 public class IsDifferentialProfileSpecific implements Predicate<DifferentialProfile> {
 
     private final Set<Contrast> selectedQueryContrasts;
     private final Sets.SetView<Contrast> nonSelectedQueryContrasts;
-    private final Regulation regulation;
 
-    public IsDifferentialProfileSpecific(Set<Contrast> selectedQueryContrasts, Set<Contrast> allQueryFactors, Regulation regulation) {
+    public IsDifferentialProfileSpecific(Set<Contrast> selectedQueryContrasts, Set<Contrast> allQueryFactors) {
         checkArgument(!selectedQueryContrasts.isEmpty(),"selectedQueryContrasts is empty");
-        checkArgument(!allQueryFactors.isEmpty(),"allQueryFactors is empty");
-        checkNotNull(regulation, "regulation is null");
+        checkArgument(!allQueryFactors.isEmpty(), "allQueryFactors is empty");
 
         this.selectedQueryContrasts = selectedQueryContrasts;
         this.nonSelectedQueryContrasts = Sets.difference(allQueryFactors, selectedQueryContrasts);
-        this.regulation = regulation;
     }
 
     @Override
     public boolean apply(DifferentialProfile differentialProfile) {
-        double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts, regulation);
-        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts, regulation);
+        double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts);
+        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts);
 
         return averageExpressionLevelOnSelectedQueryContrasts < minExpressionLevelOnNonSelectedQueryContrasts;
     }

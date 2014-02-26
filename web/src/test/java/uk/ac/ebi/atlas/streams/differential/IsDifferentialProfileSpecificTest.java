@@ -31,8 +31,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.streams.differential.IsDifferentialProfileSpecific;
 
 import java.util.Set;
 
@@ -66,19 +64,19 @@ public class IsDifferentialProfileSpecificTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new IsDifferentialProfileSpecific(selectedQueryFactors, allQueryFactors, Regulation.UP_DOWN);
+        subject = new IsDifferentialProfileSpecific(selectedQueryFactors, allQueryFactors);
     }
 
     @Test
     public void testApply() throws Exception {
         assertThat(subject.apply(profileMock), is(false));
 
-        when(profileMock.getAverageExpressionLevelOn(selectedQueryFactors, Regulation.UP_DOWN)).thenReturn(0.01);
-        when(profileMock.getMinExpressionLevelOn(nonSelectedQueryContrasts, Regulation.UP_DOWN)).thenReturn(0.5);
+        when(profileMock.getAverageExpressionLevelOn(selectedQueryFactors)).thenReturn(0.01);
+        when(profileMock.getMinExpressionLevelOn(nonSelectedQueryContrasts)).thenReturn(0.5);
         assertThat(subject.apply(profileMock), is(true));
 
-        when(profileMock.getAverageExpressionLevelOn(selectedQueryFactors, Regulation.UP_DOWN)).thenReturn(0.5);
-        when(profileMock.getMinExpressionLevelOn(nonSelectedQueryContrasts, Regulation.UP_DOWN)).thenReturn(0.01);
+        when(profileMock.getAverageExpressionLevelOn(selectedQueryFactors)).thenReturn(0.5);
+        when(profileMock.getMinExpressionLevelOn(nonSelectedQueryContrasts)).thenReturn(0.01);
         assertThat(subject.apply(profileMock), is(false));
     }
 }

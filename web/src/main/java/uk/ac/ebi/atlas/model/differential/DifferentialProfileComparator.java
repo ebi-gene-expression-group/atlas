@@ -82,8 +82,8 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
     protected int compareOnAverage(DifferentialProfile firstProfile, DifferentialProfile otherProfile,
                                    Set<Contrast> contrasts) {
 
-        double firstProfileAverageExpressionLevel = firstProfile.getAverageExpressionLevelOn(contrasts, regulation);
-        double otherProfileAverageExpressionLevel = otherProfile.getAverageExpressionLevelOn(contrasts, regulation);
+        double firstProfileAverageExpressionLevel = firstProfile.getAverageExpressionLevelOn(contrasts);
+        double otherProfileAverageExpressionLevel = otherProfile.getAverageExpressionLevelOn(contrasts);
         return Double.compare(firstProfileAverageExpressionLevel, otherProfileAverageExpressionLevel);
 
     }
@@ -92,9 +92,9 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
         Set<Contrast> nonSelectedQueryContrasts = Sets.difference(allQueryContrasts, selectedQueryContrasts);
 
-        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts, regulation);
+        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts);
 
-        double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts, regulation);
+        double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts);
 
         if (averageExpressionLevelOnSelectedQueryContrasts == 0) {
             return minExpressionLevelOnNonSelectedQueryContrasts / Double.MIN_VALUE;
