@@ -26,6 +26,7 @@ import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -58,7 +59,8 @@ public abstract class Profile<K, T extends Expression> {
         return expressionsByCondition.size();
     }
 
-    public Double getExpressionLevel(K condition) {
+    @Nullable
+    public Double getKnownExpressionLevel(K condition) {
         Expression expression = expressionsByCondition.get(condition);
         if (expression != null && expression.isKnown()) {
             return expression.getLevel();

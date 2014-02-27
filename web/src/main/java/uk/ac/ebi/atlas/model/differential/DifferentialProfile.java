@@ -87,7 +87,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         double expressionLevel = 0D;
 
         for (Contrast condition : conditions) {
-            Double level = getExpressionLevel(condition);
+            Double level = getKnownExpressionLevel(condition);
             if (level != null) {
                 expressionLevel += level;
             } else {
@@ -133,7 +133,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         double expressionLevel = MAX_PVALUE;
 
         for (Contrast condition : queryContrasts) {
-            Double level = getExpressionLevel(condition);
+            Double level = getKnownExpressionLevel(condition);
             if (level != null) {
                 expressionLevel = min(expressionLevel, level);
             }

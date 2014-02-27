@@ -54,10 +54,10 @@ public class BaselineProfilesListTest {
     public void setUp() throws Exception {
 
         when(profileMock1.getMaxExpressionLevel()).thenReturn(10.0);
-        when(profileMock1.getExpressionLevel(factorMock1)).thenReturn(5.0);
+        when(profileMock1.getKnownExpressionLevel(factorMock1)).thenReturn(5.0);
 
         when(profileMock2.getMinExpressionLevel()).thenReturn(-10.0);
-        when(profileMock2.getExpressionLevel(factorMock2)).thenReturn(2.0);
+        when(profileMock2.getKnownExpressionLevel(factorMock2)).thenReturn(2.0);
 
         subject = new BaselineProfilesList(Lists.newArrayList(profileMock1, profileMock2));
         subject.setTotalResultCount(2);

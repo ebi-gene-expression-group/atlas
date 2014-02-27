@@ -84,7 +84,7 @@
 
                         <c:set var="hasExpression" value="${not empty geneProfile.getExpression(queryFactor)}" />
 
-                        <c:set var="expressionLevel" value="${geneProfile.getExpressionLevel(queryFactor)}"/>
+                        <c:set var="expressionLevel" value="${geneProfile.getKnownExpressionLevel(queryFactor)}"/>
 
                         <!-- first we preset the style to empty value because this code is being executed within a loop,
                         if we didn't do this the style value would be depending on the results of the previous loop iteration -->

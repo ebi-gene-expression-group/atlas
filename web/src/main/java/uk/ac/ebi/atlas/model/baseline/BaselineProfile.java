@@ -63,7 +63,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
 
         for (Factor condition : factors) {
             if(isKnownLevel(condition)){
-                Double level = getExpressionLevel(condition);
+                Double level = getKnownExpressionLevel(condition);
                 if (level != null) {
                     expressionLevel += level;
                 }
@@ -78,7 +78,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         double expressionLevel = MIN_LEVEL;
 
         for (Factor condition : factors) {
-            Double level = getExpressionLevel(condition);
+            Double level = getKnownExpressionLevel(condition);
             if (level != null) {
                 expressionLevel = max(expressionLevel, level);
             }
@@ -90,11 +90,11 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     // add the expression levels of another profile to this one
     public BaselineProfile sumProfile(BaselineProfile otherProfile) {
         for (Factor factor : otherProfile.getConditions()) {
-            Double otherExpressionLevel = otherProfile.getExpressionLevel(factor);
+            Double otherExpressionLevel = otherProfile.getKnownExpressionLevel(factor);
 
             if (otherExpressionLevel != null) {
                 double totalExpressionLevel = otherExpressionLevel;
-                Double thisExpressionLevel = getExpressionLevel(factor);
+                Double thisExpressionLevel = getKnownExpressionLevel(factor);
                 if (thisExpressionLevel != null) {
                     totalExpressionLevel += thisExpressionLevel;
                 }

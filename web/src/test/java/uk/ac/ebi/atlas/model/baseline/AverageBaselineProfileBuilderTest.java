@@ -72,8 +72,8 @@ public class AverageBaselineProfileBuilderTest {
         SortedSet<Factor> allQueryFactorsMock = Sets.newTreeSet(Sets.newHashSet(factorMock1, factorMock2));
 
         when(baselineRequestContextMock.getAllQueryFactors()).thenReturn(allQueryFactorsMock);
-        when(profileMock1.getExpressionLevel(factorMock1)).thenReturn(5.0);
-        when(profileMock2.getExpressionLevel(factorMock2)).thenReturn(2.0);
+        when(profileMock1.getKnownExpressionLevel(factorMock1)).thenReturn(5.0);
+        when(profileMock2.getKnownExpressionLevel(factorMock2)).thenReturn(2.0);
 
         baselineProfilesListMock = new BaselineProfilesList(Lists.newArrayList(profileMock1, profileMock2));
 
@@ -88,8 +88,8 @@ public class AverageBaselineProfileBuilderTest {
 
         assertThat(profile.getId(), is("anId"));
 
-        assertThat(profile.getExpressionLevel(factorMock1), is(3.0));
-        assertThat(profile.getExpressionLevel(factorMock2), is(1.0));
+        assertThat(profile.getKnownExpressionLevel(factorMock1), is(3.0));
+        assertThat(profile.getKnownExpressionLevel(factorMock2), is(1.0));
     }
 
 }
