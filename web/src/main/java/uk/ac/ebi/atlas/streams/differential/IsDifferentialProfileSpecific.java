@@ -47,7 +47,7 @@ public class IsDifferentialProfileSpecific implements Predicate<DifferentialProf
     @Override
     public boolean apply(DifferentialProfile differentialProfile) {
         double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts);
-        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts);
+        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getStrongestExpressionLevelOn(nonSelectedQueryContrasts);
 
         return averageExpressionLevelOnSelectedQueryContrasts < minExpressionLevelOnNonSelectedQueryContrasts;
     }

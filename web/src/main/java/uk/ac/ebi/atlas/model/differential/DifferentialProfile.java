@@ -124,7 +124,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         return min(minUpRegulatedExpressionLevel, minDownRegulatedExpressionLevel);
     }
 
-    public double getMinExpressionLevelOn(Set<Contrast> queryContrasts) {
+    public double getStrongestExpressionLevelOn(Set<Contrast> queryContrasts) {
         //checkArgument(CollectionUtils.isNotEmpty(queryContrasts));
         if(queryContrasts.isEmpty()){
             return MAX_PVALUE;

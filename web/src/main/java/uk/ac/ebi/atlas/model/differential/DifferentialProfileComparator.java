@@ -92,7 +92,7 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
 
         Set<Contrast> nonSelectedQueryContrasts = Sets.difference(allQueryContrasts, selectedQueryContrasts);
 
-        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getMinExpressionLevelOn(nonSelectedQueryContrasts);
+        double minExpressionLevelOnNonSelectedQueryContrasts = differentialProfile.getStrongestExpressionLevelOn(nonSelectedQueryContrasts);
 
         double averageExpressionLevelOnSelectedQueryContrasts = differentialProfile.getAverageExpressionLevelOn(selectedQueryContrasts);
 
