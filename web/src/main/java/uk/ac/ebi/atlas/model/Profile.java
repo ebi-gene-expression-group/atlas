@@ -73,7 +73,7 @@ public abstract class Profile<K, T extends Expression> {
         return expression != null && expression.isKnown();
     }
 
-    protected abstract void updateProfileExpression(T expression);
+    protected abstract void addExpression(T expression);
 
     public boolean isExpressedOnAnyOf(Set<K> conditions) {
         checkArgument(CollectionUtils.isNotEmpty(conditions));
@@ -85,7 +85,7 @@ public abstract class Profile<K, T extends Expression> {
     }
 
     protected Profile addExpression(K condition, T expression) {
-        updateProfileExpression(expression);
+        addExpression(expression);
         expressionsByCondition.put(condition, expression);
         return this;
     }

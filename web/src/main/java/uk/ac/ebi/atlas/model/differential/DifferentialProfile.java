@@ -100,24 +100,24 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
     }
 
     @Override
-    protected void updateProfileExpression(DifferentialExpression differentialExpression) {
+    protected void addExpression(DifferentialExpression differentialExpression) {
         if (differentialExpression.isOverExpressed()) {
-            updateUpRegulatedProfileExpression(differentialExpression.getLevel());
-            upRegulatedExpressionsCount++;
+            addUpRegulatedExpression(differentialExpression.getLevel());
         } else if (differentialExpression.isUnderExpressed()) {
-            updateDownRegulatedProfileExpression(differentialExpression.getLevel());
-            downRegulatedExpressionsCount++;
+            addDownRegulatedExpression(differentialExpression.getLevel());
         }
     }
 
-    void updateUpRegulatedProfileExpression(double expressionLevel) {
+    void addUpRegulatedExpression(double expressionLevel) {
         maxUpRegulatedExpressionLevel = max(maxUpRegulatedExpressionLevel, expressionLevel);
         minUpRegulatedExpressionLevel = min(minUpRegulatedExpressionLevel, expressionLevel);
+        upRegulatedExpressionsCount++;
     }
 
-    void updateDownRegulatedProfileExpression(double expressionLevel) {
+    void addDownRegulatedExpression(double expressionLevel) {
         maxDownRegulatedExpressionLevel = max(maxDownRegulatedExpressionLevel, expressionLevel);
         minDownRegulatedExpressionLevel = min(minDownRegulatedExpressionLevel, expressionLevel);
+        downRegulatedExpressionsCount++;
     }
 
     public double getMinExpressionLevel() {

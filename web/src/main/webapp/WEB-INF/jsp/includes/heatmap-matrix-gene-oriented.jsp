@@ -80,11 +80,14 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <c:set var="isKnownLevel" value="${geneProfile.isKnownLevel(queryFactor)}" />
+                        <%--@elvariable id="expression" type="uk.ac.ebi.atlas.model.Expression"--%>
+                        <c:set var="expression" value="${geneProfile.getExpression(queryFactor)}" />
 
-                        <c:set var="hasExpression" value="${not empty geneProfile.getExpression(queryFactor)}" />
+                        <c:set var="hasExpression" value="${not empty expression}" />
 
-                        <c:set var="expressionLevel" value="${geneProfile.getKnownExpressionLevel(queryFactor)}"/>
+                        <c:set var="isKnownLevel" value="${hasExpression && expression.isKnown()}" />
+
+                        <c:set var="expressionLevel" value="${isKnownLevel ? expression.getLevel() : null}"/>
 
                         <!-- first we preset the style to empty value because this code is being executed within a loop,
                         if we didn't do this the style value would be depending on the results of the previous loop iteration -->
