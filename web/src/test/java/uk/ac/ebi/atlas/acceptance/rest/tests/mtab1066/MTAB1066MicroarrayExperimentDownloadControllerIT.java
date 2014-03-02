@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.*;
 
 public class MTAB1066MicroarrayExperimentDownloadControllerIT {
 
-    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-1066.tsv");
+    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-1066.tsv?foldChangeCutOff=0");
 
     @Test
     public void verifyHeader() {

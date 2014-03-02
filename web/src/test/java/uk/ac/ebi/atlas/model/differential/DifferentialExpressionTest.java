@@ -34,7 +34,7 @@ public class DifferentialExpressionTest {
 
     @Test
     public void testGetLevel() {
-        assertThat(subject.getLevel(), is(PVALUE));
+        assertThat(subject.getLevel(), is(FOLD_CHANGE));
     }
 
     @Test

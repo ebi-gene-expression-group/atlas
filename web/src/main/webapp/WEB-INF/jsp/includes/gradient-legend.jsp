@@ -65,8 +65,8 @@
 
                         <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
                                               highValueColour="${colourGradient.getHexByColourName('blue')}"
-                                              highValueColorExpressionLevel="${numberUtils.htmlFormatDouble(geneProfiles.getMinDownRegulatedExpressionLevel())}"
-                                              lowValueColorExpressionLevel="${numberUtils.htmlFormatDouble(geneProfiles.getMaxDownRegulatedExpressionLevel())}"/>
+                                              highValueColorExpressionLevel="${numberUtils.round(geneProfiles.getMinDownRegulatedExpressionLevel(), 2)}"
+                                              lowValueColorExpressionLevel="${numberUtils.round(geneProfiles.getMaxDownRegulatedExpressionLevel(), 2)}"/>
 
                     </c:if>
                     <c:if test="${((preferences.regulation eq 'UP') or (preferences.regulation eq 'UP_DOWN'))
@@ -74,8 +74,8 @@
 
                         <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('pink')}"
                                               highValueColour="${colourGradient.getHexByColourName('red')}"
-                                              highValueColorExpressionLevel="${numberUtils.htmlFormatDouble(geneProfiles.getMinUpRegulatedExpressionLevel())}"
-                                              lowValueColorExpressionLevel="${numberUtils.htmlFormatDouble(geneProfiles.getMaxUpRegulatedExpressionLevel())}"/>
+                                              highValueColorExpressionLevel="${numberUtils.round(geneProfiles.getMaxUpRegulatedExpressionLevel(), 2)}"
+                                              lowValueColorExpressionLevel="${numberUtils.round(geneProfiles.getMinUpRegulatedExpressionLevel(), 2)}"/>
 
                     </c:if>
                 </table>

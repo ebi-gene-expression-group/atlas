@@ -28,6 +28,7 @@ import uk.ac.ebi.atlas.model.Expression;
 public class DifferentialExpression implements Expression {
 
     private static final double SMALL_PVALUE_ALLOWED = 1E-125;
+    public static final double WEAKEST_LEVEL = 0;
 
     private double pValue;
 
@@ -99,7 +100,7 @@ public class DifferentialExpression implements Expression {
 
     @Override
     public double getLevel() {
-        return getPValue();
+        return getFoldChange();
     }
 
     @Override

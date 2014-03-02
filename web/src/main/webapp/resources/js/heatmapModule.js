@@ -191,18 +191,18 @@ var heatmapModule = (function ($) {
     }
 
     //there must be a cleaner way to do this, but I don't know it yet!
-    function buildHeatmapCellTooltip(expressionLevel, tstatistic, foldChange) {
+    function buildHeatmapCellTooltip(pValue, tstatistic, foldChange) {
         return "<table class='table-grid' style='margin: 0px; padding: 0px;'><thead><th class='header-cell'>Adjusted <i>p</i>-value</th>" +
             (tstatistic !== undefined ? "<th class='header-cell'><i>t</i>-statistic</th>" : "") +
             "<th class='header-cell'>Log<sub>2</sub>-fold change</th></thead>" +
-            "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + expressionLevel + "</span></td>" +
+            "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + pValue + "</span></td>" +
             (tstatistic !== undefined ? "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
             "<td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
             "</table>";
     }
 
     function initHeatmapCellsTooltip() {
-        $("#heatmap-table td:has(div[data-fold-change])").attr('title', '').tooltip(
+        $("#heatmap-table td:has(div[data-pValue])").attr('title', '').tooltip(
             {
                 open:function (event, ui) {
                     var colour = $(this).find("div").attr("data-color");
@@ -211,11 +211,11 @@ var heatmapModule = (function ($) {
                 tooltipClass:"help-tooltip pvalue-tooltip-styling",
 
                 content:function (callback) {
-                    var expressionLevel = $(this).find("div").html(),
-                        foldChange = $(this).find("div").attr("data-fold-change"),
+                    var foldChange = $(this).find("div").html(),
+                        pValue = $(this).find("div").attr("data-pValue"),
                         tstatistic = $(this).find("div").attr("data-tstatistic");
 
-                    return buildHeatmapCellTooltip(expressionLevel, tstatistic, foldChange);
+                    return buildHeatmapCellTooltip(pValue, tstatistic, foldChange);
                 }
 
             });

@@ -34,8 +34,7 @@ import static java.lang.Math.min;
 
 public class DifferentialProfile<T extends DifferentialExpression> extends Profile<Contrast, T> implements DifferentialExpressionLimits {
 
-    private static final double MIN_EXPRESSION_LEVEL = 1D;
-    private static final int MAX_PVALUE = 1;
+    private static final double MIN_P_VALUE = 1;
     private double maxUpRegulatedExpressionLevel = 0D;
     private double minUpRegulatedExpressionLevel = Double.MAX_VALUE;
     private double maxDownRegulatedExpressionLevel = 0D;
@@ -80,23 +79,50 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         return getSpecificity();
     }
 
-    public double getAverageExpressionLevelOn(Set<Contrast> conditions) {
-        checkArgument(!CollectionUtils.isEmpty(conditions),
+    public double getStrongestExpressionLevelOn(Set<Contrast> queryContrasts) {
+        double expressionLevel = DifferentialExpression.WEAKEST_LEVEL;
+
+        for (Contrast condition : queryContrasts) {
+            Double level = getKnownExpressionLevel(condition);
+            if (level != null) {
+                expressionLevel = max(expressionLevel, Math.abs(level));
+            }
+        }
+        return expressionLevel;
+    }
+
+    public double getAverageExpressionLevelOn(Set<Contrast> contrasts) {
+        checkArgument(!CollectionUtils.isEmpty(contrasts),
                 "This method must be invoked with all conditions when the set of selected conditions is empty");
 
         double expressionLevel = 0D;
 
-        for (Contrast condition : conditions) {
-            Double level = getKnownExpressionLevel(condition);
+        for (Contrast contrast : contrasts) {
+            Double level = getKnownExpressionLevel(contrast);
             if (level != null) {
-                expressionLevel += level;
-            } else {
-                expressionLevel += MIN_EXPRESSION_LEVEL;
+                expressionLevel += Math.abs(level);
             }
-
         }
 
-        return expressionLevel / conditions.size();
+        return expressionLevel / contrasts.size();
+    }
+
+    public double getAveragePValueOn(Set<Contrast> contrasts) {
+        checkArgument(!CollectionUtils.isEmpty(contrasts),
+                "This method must be invoked with all conditions when the set of selected conditions is empty");
+
+        double pValueTotal = 0D;
+
+        for (Contrast contrast : contrasts) {
+            T expression = getExpression(contrast);
+            if (expression != null && expression.isKnown()) {
+                pValueTotal += expression.getPValue();
+            } else {
+                pValueTotal += MIN_P_VALUE;
+            }
+        }
+
+        return pValueTotal / contrasts.size();
     }
 
     @Override
@@ -124,20 +150,4 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         return min(minUpRegulatedExpressionLevel, minDownRegulatedExpressionLevel);
     }
 
-    public double getStrongestExpressionLevelOn(Set<Contrast> queryContrasts) {
-        //checkArgument(CollectionUtils.isNotEmpty(queryContrasts));
-        if(queryContrasts.isEmpty()){
-            return MAX_PVALUE;
-        }
-
-        double expressionLevel = MAX_PVALUE;
-
-        for (Contrast condition : queryContrasts) {
-            Double level = getKnownExpressionLevel(condition);
-            if (level != null) {
-                expressionLevel = min(expressionLevel, level);
-            }
-        }
-        return expressionLevel;
-    }
 }

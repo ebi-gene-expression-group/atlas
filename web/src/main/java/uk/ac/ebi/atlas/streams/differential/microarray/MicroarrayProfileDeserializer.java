@@ -11,6 +11,8 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 
+import java.util.List;
+
 import static com.google.common.base.Preconditions.checkState;
 
 public class MicroarrayProfileDeserializer {
@@ -19,10 +21,10 @@ public class MicroarrayProfileDeserializer {
     private static final int GENE_NAME_INDEX = 1;
     private static final int DESIGN_ELEMENT_INDEX = 2;
     private static final int FIRST_CONTRAST_INDEX = 3;
-    private final ImmutableList<Contrast> contrasts;
+    private final List<Contrast> contrasts;
     private final MicroarrayProfileReusableBuilder profileBuilder;
 
-    public MicroarrayProfileDeserializer(ImmutableList<Contrast> contrasts, Predicate<DifferentialExpression> expressionFilter) {
+    public MicroarrayProfileDeserializer(List<Contrast> contrasts, Predicate<DifferentialExpression> expressionFilter) {
         this.contrasts = contrasts;
         this.profileBuilder = new MicroarrayProfileReusableBuilder(expressionFilter);
     }

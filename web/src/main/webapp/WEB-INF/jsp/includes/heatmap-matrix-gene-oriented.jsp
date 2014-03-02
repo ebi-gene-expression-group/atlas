@@ -80,7 +80,7 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <%--@elvariable id="expression" type="uk.ac.ebi.atlas.model.Expression"--%>
+                        <%--@elvariable id="expression" type="uk.ac.ebi.atlas.model.DifferentialExpression"--%>
                         <c:set var="expression" value="${geneProfile.getExpression(queryFactor)}" />
 
                         <c:set var="hasExpression" value="${not empty expression}" />
@@ -104,7 +104,7 @@
                                     <c:choose>
                                         <c:when test="${geneProfile.getExpression(queryFactor).overExpressed}">
                                             <c:set var="cellColour"
-                                                   value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - geneProfiles.getMaxUpRegulatedExpressionLevel(), 1 - geneProfiles.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
+                                                   value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - geneProfiles.getMinUpRegulatedExpressionLevel(), 1 - geneProfiles.getMaxUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
                                         </c:when>
                                         <c:otherwise>
                                             <c:set var="cellColour"
@@ -141,23 +141,24 @@
                                         <fmt:formatNumber type="number"
                                                           maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
                                                           value="${expressionLevel}" groupingUsed="false"
-                                                          var="expressionLevel"/>
+                                                          var="roundedExpressionLevel"/>
                                     </c:when>
                                     <c:when test="${!type.isBaseline()}">
                                         <c:choose>
-                                            <c:when test="${geneProfile.getExpression(queryFactor).notApplicable}">
+                                            <c:when test="${expression.notApplicable}">
                                                 <c:set var="foldChange" value="N/A"/>
                                             </c:when>
                                             <c:otherwise>
+                                                <c:set var="pValue" value="${numberUtils.htmlFormatDoubleEncoded(expression.getPValue())}"/>
                                                 <fmt:formatNumber type="number"
                                                                   maxFractionDigits="2"
-                                                                  value="${geneProfile.getExpression(queryFactor).foldChange}"
+                                                                  value="${expression.foldChange}"
                                                                   groupingUsed="false"
                                                                   var="foldChange"/>
                                                 <c:if test="${type.isMicroarray()}">
                                                     <fmt:formatNumber type="number"
                                                                       maxFractionDigits="2"
-                                                                      value="${geneProfile.getExpression(queryFactor).tstatistic}"
+                                                                      value="${expression.tstatistic}"
                                                                       groupingUsed="false"
                                                                       var="tstatistic"/>
                                                 </c:if>
@@ -167,10 +168,10 @@
                                 </c:choose>
 
                                 <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
-                                    ${!type.isBaseline() ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
+                                    ${!type.isBaseline() ? 'data-pValue="'.concat(pValue).concat('"'):""}
                                      data-organism-part="${columnHeader}" data-color="${cellColour}"
                                      ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTerm).concat('\"') : ''}>
-                                        ${!type.isBaseline() ? numberUtils.htmlFormatDouble(expressionLevel) : expressionLevel}
+                                        ${!type.isBaseline() ? foldChange : roundedExpressionLevel}
                                 </div>
                             </c:when>
                             <c:otherwise>
@@ -215,7 +216,7 @@
             <span id='buttonText' pressedtext='Hide levels' unpressedText='Display levels'/>
         </c:when>
         <c:otherwise>
-            <span id='buttonText' pressedtext='Hide <i>p</i>-values' unpressedText='Display <i>p</i>-values'/>
+            <span id='buttonText' pressedtext='Hide log<sub>2</sub>-fold change' unpressedText='Display log<sub>2</sub>-fold change'/>
         </c:otherwise>
     </c:choose>
 

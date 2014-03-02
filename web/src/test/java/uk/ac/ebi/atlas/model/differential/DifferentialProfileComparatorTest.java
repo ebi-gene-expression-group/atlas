@@ -99,24 +99,6 @@ public class DifferentialProfileComparatorTest {
     }
 
     @Test
-    public void lowerAverageAcrossSelectedContrasts() {
-
-         //when
-        when(profileMock1.getAverageExpressionLevelOn(selectedContrasts)).thenReturn(0.01);
-        when(profileMock1.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock2, contrastMock3))).thenReturn(0.02);
-        //and
-         //when
-        when(profileMock2.getAverageExpressionLevelOn(selectedContrasts)).thenReturn(0.01);
-        when(profileMock2.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock2, contrastMock3))).thenReturn(0.04);
-
-
-        int comparison = subject.compare(profileMock1, profileMock2);
-        // then
-        assertThat(comparison, is(greaterThanOrEqualTo(0)));
-
-    }
-
-    @Test
     public void testGetExpressionLevelFoldChangeOn() throws Exception {
         //when
         when(profileMock1.getStrongestExpressionLevelOn(nonSelectedContrasts)).thenReturn(0.04);
@@ -155,17 +137,22 @@ public class DifferentialProfileComparatorTest {
 
 
     @Test
-    public void sequence1() {
+    public void mocksequence_NonSpecific_AllContrasts() {
 
         DifferentialProfile differentialProfileMock1 = Mockito.mock(DifferentialProfile.class);
         DifferentialProfile differentialProfileMock2 = Mockito.mock(DifferentialProfile.class);
         DifferentialProfile differentialProfileMock3 = Mockito.mock(DifferentialProfile.class);
 
         //given
+        when(differentialProfileMock1.getName()).thenReturn("1");
         when(differentialProfileMock1.getAverageExpressionLevelOn(new HashSet<Contrast>())).thenReturn(3D);
         when(differentialProfileMock1.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
+
+        when(differentialProfileMock1.getName()).thenReturn("2");
         when(differentialProfileMock2.getAverageExpressionLevelOn(new HashSet<Contrast>())).thenReturn(5D);
         when(differentialProfileMock2.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
+
+        when(differentialProfileMock1.getName()).thenReturn("3");
         when(differentialProfileMock3.getAverageExpressionLevelOn(new HashSet<Contrast>())).thenReturn(2D);
         when(differentialProfileMock3.getSpecificity(Regulation.UP_DOWN)).thenReturn(1);
 
@@ -180,64 +167,101 @@ public class DifferentialProfileComparatorTest {
         //then
         Iterator<DifferentialProfile> profilesIterator = profiles.iterator();
 
-        assertThat(profilesIterator.next(), Matchers.is(differentialProfileMock3));
-        assertThat(profilesIterator.next(), Matchers.is(differentialProfileMock1));
         assertThat(profilesIterator.next(), Matchers.is(differentialProfileMock2));
+        assertThat(profilesIterator.next(), Matchers.is(differentialProfileMock1));
+        assertThat(profilesIterator.next(), Matchers.is(differentialProfileMock3));
 
     }
 
-    String sequenceLines =  "FBgn0019828\tdj\t1627959_a_at\t0.0004000391565989\t-9.36995510274818\t-0.788061466666666\t6.4460598240872e-06\t-20.5528971215852\t-1.68509426666667\n" +
-                    "FBgn0035109\tCG13876\t1638975_at\t0.77649464534638\t0.443665367338669\t0.0357508666666666\t8.35994190521307e-06\t-19.1558475545564\t-1.55682156666667\n" +
-                    "FBgn0031690\tCG7742\t1623604_at\t0.596675085988318\t-0.796460861127057\t-0.120377\t1.25718990358721e-05\t-17.7045026278553\t-1.9175005\n" +
-                    "FBgn0032636\tCG5043\t1637522_at\t0.00844182480286779\t-4.82652565702941\t-0.6649263\t1.78059980397776e-05\t-16.493967343194\t-2.1014968\n" +
-                    "FBgn0051803\tCG31803\t1631644_at\t0.120354422845427\t-2.36172902724942\t-0.382887633333332\t1.93385121266592e-05\t-16.2525901824726\t-1.45677683333333\n";
+
+    private static final String T_STAT_IGNORED = "0";
+    private static final String P_VALUE_IGNORED = "999";
+    private static final String FOLD_CHANGE_IGNORED = "0";
+
+    public static final String FOLD_CHANGE_20 = "20";
+    public static final String FOLD_CHANGE_10 = "10";
+    public static final String FOLD_CHANGE_5 = "5";
+    public static final String FOLD_CHANGE_1 = "0.1";
+
+    private static final String P_VALUE_0_DOT_1 = "0.1";
+    private static final String P_VALUE_0_DOT_2 = "0.2";
+    private static final String GENE_1 = "1";
+    private static final String GENE_2 = "2";
+    private static final String GENE_3 = "3";
+    private static final String GENE_4 = "4";
+    private static final String GENE_5 = "5";
+    private static final String GENE_6 = "6";
+
+    private static final String DESIGN_ELEMENT = "design_element";
+
+    String specificOneContrast                    = Joiner.on("\t").join(new String[] {GENE_1, GENE_1, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_1,    P_VALUE_IGNORED, T_STAT_IGNORED, FOLD_CHANGE_IGNORED});
+    String twoContrastHighFoldChange              = Joiner.on("\t").join(new String[] {GENE_2, GENE_2, DESIGN_ELEMENT, P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_20,   P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_10});
+    String twoContrastHighFoldChangeOtherContrast = Joiner.on("\t").join(new String[] {GENE_6, GENE_6, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_10,   P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_20});
+    String twoContrastLowFoldChange               = Joiner.on("\t").join(new String[] {GENE_3, GENE_3, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_10,   P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_10});
+    String twoContrastSameFoldChangeLowPValue     = Joiner.on("\t").join(new String[] {GENE_4, GENE_4, DESIGN_ELEMENT, P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_5,    P_VALUE_0_DOT_1, T_STAT_IGNORED, FOLD_CHANGE_5});
+    String twoContrastSameFoldChangeHighPValue    = Joiner.on("\t").join(new String[] {GENE_5, GENE_5, DESIGN_ELEMENT, P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_5,    P_VALUE_0_DOT_2, T_STAT_IGNORED, FOLD_CHANGE_5});
+
+    String sequenceLines = Joiner.on("\n").join(new String[] {specificOneContrast, twoContrastHighFoldChangeOtherContrast, twoContrastSameFoldChangeHighPValue, twoContrastSameFoldChangeLowPValue, twoContrastLowFoldChange, twoContrastHighFoldChange});
+    ImmutableList<MicroarrayProfile> sequenceProfiles;
+
+    IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff().setPValueCutoff(1).setRegulation(Regulation.UP_DOWN).setFoldChangeCutOff(0);
+
+    @Before
+    public void loadProfiles() {
+        MicroarrayProfileDeserializer deserializer = new MicroarrayProfileDeserializer(ImmutableList.of(contrastMock1, contrastMock2), expressionFilter);
+        sequenceProfiles = deserializer.create(sequenceLines.split("\n"));
+    }
 
     @Test
-    public void sequence_foldChangeCutOff_0() {
-        IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
-        expressionFilter.setPValueCutoff(0.05);
-        expressionFilter.setRegulation(Regulation.UP_DOWN);
-        expressionFilter.setFoldChangeCutOff(0);
-
-        MicroarrayProfileDeserializer builder = new MicroarrayProfileDeserializer(ImmutableList.of(contrastMock1, contrastMock2), expressionFilter);
+    public void sequence_Specific_AllContrasts() {
         subject = new DifferentialProfileComparator(true, Collections.emptySet(), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
 
-        //when
-        SortedSet<MicroarrayProfile> sortedProfiles = new TreeSet<MicroarrayProfile>(subject);
-        ImmutableList<MicroarrayProfile> profiles = builder.create(sequenceLines.split("\n"));
-        sortedProfiles.addAll(profiles);
-
-        //then
-        DifferentialProfile[] sortedProfilesArray = sortedProfiles.toArray(new MicroarrayProfile[profiles.size()]);
+        DifferentialProfile[] sortedProfilesArray = sortProfiles(sequenceProfiles, subject);
         System.out.println(Joiner.on("\n").join(sortedProfilesArray));
 
         String[] sortedGeneNames = extractGeneNames(sortedProfilesArray);
-        assertThat(Arrays.asList(sortedGeneNames), contains("CG13876", "CG7742", "CG31803", "dj", "CG5043"));
+        assertThat(Arrays.asList(sortedGeneNames), contains(GENE_1, GENE_6, GENE_2, GENE_3, GENE_4, GENE_5));
     }
 
-
     @Test
-    public void sequence_foldChangeCutOff_1() {
-        IsDifferentialExpressionAboveCutOff expressionFilter = new IsDifferentialExpressionAboveCutOff();
-        expressionFilter.setPValueCutoff(0.05);
-        expressionFilter.setRegulation(Regulation.UP_DOWN);
-        expressionFilter.setFoldChangeCutOff(1);
+    public void sequence_Specific_SelectedContrast() {
+        subject = new DifferentialProfileComparator(true, Sets.newHashSet(contrastMock1), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
 
-        MicroarrayProfileDeserializer builder = new MicroarrayProfileDeserializer(ImmutableList.of(contrastMock1, contrastMock2), expressionFilter);
-        subject = new DifferentialProfileComparator(true, Collections.emptySet(), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
-
-        //when
-        SortedSet<MicroarrayProfile> sortedProfiles = new TreeSet<MicroarrayProfile>(subject);
-        ImmutableList<MicroarrayProfile> profiles = builder.create(sequenceLines.split("\n"));
-        sortedProfiles.addAll(profiles);
-
-        //then
-        DifferentialProfile[] sortedProfilesArray = sortedProfiles.toArray(new MicroarrayProfile[profiles.size()]);
+        DifferentialProfile[] sortedProfilesArray = sortProfiles(sequenceProfiles, subject);
         System.out.println(Joiner.on("\n").join(sortedProfilesArray));
 
         String[] sortedGeneNames = extractGeneNames(sortedProfilesArray);
-        assertThat(Arrays.asList(sortedGeneNames), contains("dj", "CG13876", "CG7742", "CG5043", "CG31803"));
+        assertThat(Arrays.asList(sortedGeneNames), contains(GENE_1, GENE_2, GENE_3, GENE_4, GENE_5, GENE_6));
     }
+
+    @Test
+    public void sequence_NonSpecific_AllContrasts() {
+        subject = new DifferentialProfileComparator(false, Collections.emptySet(), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
+
+        DifferentialProfile[] sortedProfilesArray = sortProfiles(sequenceProfiles, subject);
+        System.out.println(Joiner.on("\n").join(sortedProfilesArray));
+
+        String[] sortedGeneNames = extractGeneNames(sortedProfilesArray);
+        assertThat(Arrays.asList(sortedGeneNames), contains(GENE_6, GENE_2, GENE_3, GENE_4, GENE_5, GENE_1));
+    }
+
+    @Test
+    public void sequence_NonSpecific_SelectedContrast() {
+        subject = new DifferentialProfileComparator(false, Sets.newHashSet(contrastMock1), Sets.newHashSet(contrastMock1, contrastMock2), Regulation.UP_DOWN);
+
+        DifferentialProfile[] sortedProfilesArray = sortProfiles(sequenceProfiles, subject);
+        System.out.println(Joiner.on("\n").join(sortedProfilesArray));
+
+        String[] sortedGeneNames = extractGeneNames(sortedProfilesArray);
+        assertThat(Arrays.asList(sortedGeneNames), contains(GENE_2, GENE_3, GENE_6, GENE_4, GENE_5, GENE_1));
+    }
+
+    private DifferentialProfile[] sortProfiles(ImmutableList<MicroarrayProfile> sequenceProfiles, DifferentialProfileComparator comparator) {
+        SortedSet<MicroarrayProfile> sortedProfiles = new TreeSet<MicroarrayProfile>(comparator);
+        sortedProfiles.addAll(sequenceProfiles);
+        return sortedProfiles.toArray(new MicroarrayProfile[sequenceProfiles.size()]);
+    }
+
 
     private String[] extractGeneNames(DifferentialProfile[] profiles) {
         String[] geneNames = new String[profiles.length];

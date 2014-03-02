@@ -52,40 +52,70 @@ public class DifferentialProfileComparator<T extends DifferentialProfile> implem
         if (isSpecific && CollectionUtils.isEmpty(selectedQueryContrasts)) {
             int order = Integer.compare(firstProfile.getSpecificity(regulation), otherProfile.getSpecificity(regulation));
             if (0 == order) {
-                order = compareOnAverage(firstProfile, otherProfile, allQueryContrasts);
+                order = compareOnAverageExpressionLevel(firstProfile, otherProfile, allQueryContrasts);
+            }
+            if (0 == order) {
+                order = compareOnAveragePValue(firstProfile, otherProfile, allQueryContrasts);
+            }
+            if (0 == order) {
+                order = firstProfile.getName().compareTo(otherProfile.getName());
             }
             return order;
         }
 
         // B1:
         if (isSpecific && !CollectionUtils.isEmpty(selectedQueryContrasts)) {
-            int order = Ordering.natural().reverse().compare(
+            int order = Ordering.natural().compare(
                     getExpressionLevelFoldChange(firstProfile),
                     getExpressionLevelFoldChange(otherProfile));
-            if (0 != order) {
-                return order;
+            if (0 == order) {
+                order = compareOnAverageExpressionLevel(firstProfile, otherProfile, selectedQueryContrasts);
             }
-            return compareOnAverage(firstProfile, otherProfile, selectedQueryContrasts);
+            if (0 == order) {
+                order = compareOnAveragePValue(firstProfile, otherProfile, selectedQueryContrasts);
+            }
+            if (0 == order) {
+                order = firstProfile.getName().compareTo(otherProfile.getName());
+            }
+            return order;
 
         }
 
         // A2
         if (!isSpecific && CollectionUtils.isEmpty(selectedQueryContrasts)) {
-            return compareOnAverage(firstProfile, otherProfile, allQueryContrasts);
+            int order = compareOnAverageExpressionLevel(firstProfile, otherProfile, allQueryContrasts);
+            if (0 == order) {
+                order = compareOnAveragePValue(firstProfile, otherProfile, allQueryContrasts);
+            }
+            if (0 == order) {
+                order = firstProfile.getName().compareTo(otherProfile.getName());
+            }
+            return order;
         }
 
         // B2 - !specific && !CollectionUtils.isEmpty
-        return compareOnAverage(firstProfile, otherProfile, selectedQueryContrasts);
+        int order = compareOnAverageExpressionLevel(firstProfile, otherProfile, selectedQueryContrasts);
+        if (0 == order) {
+            order = compareOnAveragePValue(firstProfile, otherProfile, selectedQueryContrasts);
+        }
+        if (0 == order) {
+            order = firstProfile.getName().compareTo(otherProfile.getName());
+        }
+        return order;
 
     }
 
-    protected int compareOnAverage(DifferentialProfile firstProfile, DifferentialProfile otherProfile,
-                                   Set<Contrast> contrasts) {
+    private int compareOnAveragePValue(DifferentialProfile firstProfile, DifferentialProfile otherProfile, Set<Contrast> contrasts) {
+        double firstProfileAverageExpressionLevel = firstProfile.getAveragePValueOn(contrasts);
+        double otherProfileAverageExpressionLevel = otherProfile.getAveragePValueOn(contrasts);
+        return Double.compare(firstProfileAverageExpressionLevel, otherProfileAverageExpressionLevel);
+    }
 
+    protected int compareOnAverageExpressionLevel(DifferentialProfile firstProfile, DifferentialProfile otherProfile,
+                                                  Set<Contrast> contrasts) {
         double firstProfileAverageExpressionLevel = firstProfile.getAverageExpressionLevelOn(contrasts);
         double otherProfileAverageExpressionLevel = otherProfile.getAverageExpressionLevelOn(contrasts);
-        return Double.compare(firstProfileAverageExpressionLevel, otherProfileAverageExpressionLevel);
-
+        return Double.compare(otherProfileAverageExpressionLevel, firstProfileAverageExpressionLevel);
     }
 
     public double getExpressionLevelFoldChange(DifferentialProfile differentialProfile) {

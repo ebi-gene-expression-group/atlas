@@ -73,10 +73,10 @@ public class IsDifferentialProfileSpecificTest {
 
         when(profileMock.getAverageExpressionLevelOn(selectedQueryFactors)).thenReturn(0.01);
         when(profileMock.getStrongestExpressionLevelOn(nonSelectedQueryContrasts)).thenReturn(0.5);
-        assertThat(subject.apply(profileMock), is(true));
+        assertThat(subject.apply(profileMock), is(false));
 
         when(profileMock.getAverageExpressionLevelOn(selectedQueryFactors)).thenReturn(0.5);
         when(profileMock.getStrongestExpressionLevelOn(nonSelectedQueryContrasts)).thenReturn(0.01);
-        assertThat(subject.apply(profileMock), is(false));
+        assertThat(subject.apply(profileMock), is(true));
     }
 }

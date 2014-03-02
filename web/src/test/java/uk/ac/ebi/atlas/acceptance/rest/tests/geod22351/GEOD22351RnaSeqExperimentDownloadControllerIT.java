@@ -91,13 +91,13 @@ public class GEOD22351RnaSeqExperimentDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(4);
 
         assertThat(firstLine,
-                contains("ENSMUSG00000030105", "Arl8b", "0.0", "0.474360080385946")
+                contains("ENSMUSG00000050370", "Ch25h", "1.70428798138445E-6", "3.01033089730209")
         );
 
         List<String> secondLine = subject.getRowValues(5);
 
         assertThat(secondLine,
-                contains("ENSMUSG00000050370", "Ch25h", "1.70428798138445E-6", "3.01033089730209")
+                contains("ENSMUSG00000024799", "Tm7sf2", "0.0137444998099392", "-1.15843751459071")
         );
 
     }
@@ -107,7 +107,7 @@ public class GEOD22351RnaSeqExperimentDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(54));
+        assertThat(lines.length, is(53));
     }
 
 }

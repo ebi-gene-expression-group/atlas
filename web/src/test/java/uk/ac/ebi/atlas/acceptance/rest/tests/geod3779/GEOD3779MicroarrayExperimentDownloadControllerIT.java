@@ -42,7 +42,7 @@ public class GEOD3779MicroarrayExperimentDownloadControllerIT {
     private static final String EXPRESSION_ATLAS_VERSION = "# Expression Atlas version:";
     private static final String QUERY_DESCRIPTION = "# Query: Genes matching: '', specifically up/down differentially expressed in any contrast given the False Discovery Rate cutoff: 0.05 in experiment E-GEOD-3779";
     private static final String TIMESTAMP = "# Timestamp:";
-    private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-3779.tsv?geneQuery=&exactMatch=false");
+    private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-3779.tsv?geneQuery=&exactMatch=false&foldChangeCutOff=0");
 
     @Test
     public void verifyHeader() {
