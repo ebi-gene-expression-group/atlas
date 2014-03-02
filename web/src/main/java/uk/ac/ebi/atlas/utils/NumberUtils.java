@@ -51,7 +51,7 @@ public class NumberUtils {
     public double round(double value) {
         int numberOfFractionalDigits = value >= 1 ? FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE
                 : FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE;
-        return round(numberOfFractionalDigits, numberOfFractionalDigits);
+        return round(value, numberOfFractionalDigits);
     }
 
     public String htmlFormatDoubleEncoded(double number) {

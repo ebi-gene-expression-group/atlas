@@ -44,8 +44,8 @@ public class BaselineProfileTest {
 
     private static final String QUERY_FACTOR_TYPE = "ORGANISM_PART";
 
-    private static String GENE_ID = "geneId_1";
-    private static String GENE_NAME = "geneName_1";
+    private static final String GENE_ID = "geneId_1";
+    private static final String GENE_NAME = "geneName_1";
 
     private Factor factor1 = new Factor(QUERY_FACTOR_TYPE, "nose");
     private Factor factor2 = new Factor(QUERY_FACTOR_TYPE, "trunk");
@@ -57,9 +57,6 @@ public class BaselineProfileTest {
     private BaselineExpression expression_3 = new BaselineExpression(3.001D, new FactorSet().add(factor3));
 
     private BaselineProfile subject;
-
-    private double cutoff  = 0.5;
-    //private GeneProfile.Builder geneProfileBuilder;
 
     @Before
     public void setUp() throws Exception {
