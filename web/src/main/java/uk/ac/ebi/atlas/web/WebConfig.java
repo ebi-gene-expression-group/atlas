@@ -44,6 +44,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/json/gene-by-cutoff/**").addResourceLocations("classpath:/cutoff-histograms/");
+        registry.addResourceHandler("/qc/**").addResourceLocations("/resources/html/qc/");
     }
 
     // equivalent to mvc:view-controller

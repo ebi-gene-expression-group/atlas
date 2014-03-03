@@ -23,6 +23,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng"
       class=" js flexbox canvas canvastext no-touch rgba hsla multiplebgs backgroundsize borderimage
@@ -30,7 +31,13 @@
               csstransforms csstransforms3d csstransitions fontface generatedcontent applicationcache">
 
 <head>
-    <base href="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/"/>
+    <c:set var="baseUri" value="${requestScope['javax.servlet.forward.request_uri']}" />
+    <c:set var="experimentAccession" value="${experimentAccession}"/>
+    <c:set var="arrayDesign" value="${arrayDesign}"/>
+
+    <c:if test="${!baseUri.equals('/gxa/experiments/'.concat(experimentAccession).concat('/qc/').concat(arrayDesign).concat('/index.html'))}">
+        <base href="http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/"/>
+    </c:if>
 
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta content="en-GB" http-equiv="Content-Language">
@@ -97,6 +104,9 @@
           rel="stylesheet">
     <link media="screen" type="text/css" href="${pageContext.request.contextPath}/resources/css/jqcloud.css"
           rel="stylesheet">
+    <link media="screen" type="text/css" href="${pageContext.request.contextPath}/resources/css/arrayQualityMetrics.css"
+          rel="stylesheet">
+
 
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/json2.js"></script>
@@ -112,6 +122,8 @@
             src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/autocompleteModule.js"></script>
+    <script language="JavaScript"type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/arrayQualityMetrics.js"></script>
 
     <!-- fancybox start -->
     <link rel="stylesheet"

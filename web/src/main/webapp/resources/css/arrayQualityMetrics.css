@@ -1,0 +1,59 @@
+
+/*.aqm1 { }*/
+/*.aqm2 { }*/
+/*.aqm3 { }*/
+/*.aqm4 { }*/
+/*.aqm5 { }*/
+/*.aqm6 { }*/
+/*.aqm7 { }*/
+/*.aqm8 { }*/
+/*.aqm9 { }*/
+
+#qc-content {
+    padding-top: 11px;
+    padding-left: 2%;
+    padding-right: 2%;
+    font-family: helvetica, arial, sans-serif;
+    font-size: 10pt;
+    background-color: #ffffff;
+    text-align: justify;
+}
+
+#qc-content table {
+    text-align: center !important;
+    border-collapse: collapse;
+    margin-left: 0px;
+    margin-right: auto;
+    background-color: #ffffff;
+    border-width:1px !important;
+    border-style: solid;
+    border-color: #000000;
+    font-family: helvetica, arial, sans-serif;
+    font-size: small;
+}
+
+#qc-content table td {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+#qc-content h1 {
+   text-align: center !important;
+   font-family: helvetica, arial, sans-serif !important;
+}
+
+#qc-content h2, #qc-content h3 {
+   font-family:helvetica, arial, sans-serif;
+}
+
+#qc-content li.tocsection {
+   font-weight:bold;
+   font-family:helvetica, arial, sans-serif;
+   font-size:12pt
+}
+#qc-content li.tocmodule {
+   font-family:helvetica, arial, sans-serif;
+   font-size:11pt
+}

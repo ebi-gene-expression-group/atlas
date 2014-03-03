@@ -76,12 +76,13 @@
                         <label>
                             <input id="local-searchbox" name="geneQuery" value="${param.queryString}" maxlength="900" placeholder="(enter gene query)"/>
                         </label>
+
                         <!-- Include some example searchterms - keep them short and few! -->
                         <span class="examples">Examples:
-                                        <a href="query?geneQuery=ASPM">ASPM</a>,
-                                        <a href="query?geneQuery=REACT_1619">REACT_1619</a>,
-                                        <a href="query?geneQuery=ENSMUSG00000021789">ENSMUSG00000021789</a>,
-                                        <a href="query?geneQuery=%22zinc+finger%22">"zinc finger"</a></span>
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=ASPM">ASPM</a>,
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=REACT_1619">REACT_1619</a>,
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=ENSMUSG00000021789">ENSMUSG00000021789</a>,
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=%22zinc+finger%22">"zinc finger"</a></span>
                     </div>
 
                     <div class="right">

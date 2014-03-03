@@ -55,6 +55,36 @@ public class StaticPageController {
         return "static-template";
     }
 
+    @RequestMapping("/experiments/{experimentAccession}/qc/{arrayDesign}/{resource:.*}")
+    public String getQCPage(HttpServletRequest request, @PathVariable String experimentAccession,
+                                                             @PathVariable String arrayDesign,
+                                                             @PathVariable String resource) throws IOException {
+        if(!resource.equals("index.html")) {
+            return getQCResources(experimentAccession, arrayDesign, resource);
+        }
+
+        String path = String.format("/resources/html/qc/%s_%s_QM/index.html", experimentAccession, arrayDesign);
+
+        request.setAttribute("contentResource", fetchResource(path));
+        request.setAttribute("experimentAccession", experimentAccession);
+
+        return "qc-template";
+    }
+
+    /**
+     *
+     * @param experimentAccession String
+     * @param arrayDesign String
+     * @param resource String
+     * @return  String Path for mapping the resources under qc/experimentAcession_arrayDesign_QM/
+     * @throws IOException
+     */
+    public String getQCResources(String experimentAccession, String arrayDesign, String resource) throws IOException {
+        String path = String.format("/qc/%s_%s_QM/%s", experimentAccession, arrayDesign, resource);
+
+        return "forward:" + path;
+    }
+
     @RequestMapping("/help/{pageName}.html")
     public String getHelpPage(HttpServletRequest request, @PathVariable String pageName) throws IOException {
         String path = String.format("/resources/html/help/%s.html", pageName);

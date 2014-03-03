@@ -50,7 +50,7 @@ var autocompleteModule = (function($) {
                     var lastItem = extractLast( request.term );
 
                     $.ajax({
-                        url:'json/suggestions',
+                        url:'/gxa/json/suggestions',
                         data:{
                             'query': lastItem,
                             'species': species
