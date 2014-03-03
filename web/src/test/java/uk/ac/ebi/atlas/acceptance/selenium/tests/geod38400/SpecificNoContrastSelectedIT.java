@@ -53,10 +53,10 @@ public class SpecificNoContrastSelectedIT extends SeleniumFixture {
         assertThat(subject.getGeneCount(), containsString("of 36"));
 
         assertThat(subject.getGeneNames().size(), is(36));
-        assertThat(subject.getGeneNames().subList(0, 3), contains("AT1G33840", "F14M2.2", "T5N23_130"));
+        assertThat(subject.getGeneNames().subList(0, 3), contains("AT3G48131", "F14M2.2", "AT1G33840"));
 
         assertThat(subject.getGeneProfile(1).size(), is(3));
-        assertThat(subject.getGeneProfile(1).get(0), is("<10-10"));
+        assertThat(subject.getGeneProfile(1).get(0), is("6.9"));
     }
 
     @Test
@@ -66,14 +66,14 @@ public class SpecificNoContrastSelectedIT extends SeleniumFixture {
         assertThat(subject.getGeneCount(), containsString("of 15"));
 
         assertThat(subject.getGeneNames().size(), is(15));
-        assertThat(subject.getGeneNames().subList(0, 3), contains("NRPD1B", "AT2G07733", "AT5G40450"));
+        assertThat(subject.getGeneNames().subList(0, 3), contains("NRPD1B", "ATMG00510", "PSBE"));
 
         assertThat(subject.getGeneProfile(1).size(), is(3));
-        assertThat(subject.getGeneProfile(1).get(0), is("4.25" + " \u00D7 " + "10-5"));
+        assertThat(subject.getGeneProfile(1).get(0), is("-2.26"));
 
         assertThat(subject.getLastGeneProfile().size(), is(3));
-        assertThat(subject.getLastGeneProfile().get(0), is("3.22" + " \u00D7 " + "10-4"));
-        assertThat(subject.getLastGeneProfile().get(2), is("7.29" + " \u00D7 " + "10-6"));
+        assertThat(subject.getLastGeneProfile().get(0), is("-3.05"));
+        assertThat(subject.getLastGeneProfile().get(2), is("-3.68"));
     }
 
     @Test
@@ -83,14 +83,14 @@ public class SpecificNoContrastSelectedIT extends SeleniumFixture {
         assertThat(subject.getGeneCount(), containsString("of 51"));
 
         assertThat(subject.getGeneNames().size(), is(50));
-        assertThat(subject.getGeneNames().subList(0, 3), contains("AT1G33840", "F14M2.2", "T5N23_130"));
+        assertThat(subject.getGeneNames().subList(0, 3), contains("AT3G48131", "F14M2.2", "AT1G33840"));
 
         assertThat(subject.getGeneProfile(1).size(), is(3));
-        assertThat(subject.getGeneProfile(1).get(0), is("<10-10"));
+        assertThat(subject.getGeneProfile(1).get(0), is("6.9"));
 
         assertThat(subject.getLastGeneProfile().size(), is(3));
-        assertThat(subject.getLastGeneProfile().get(0), is("3.22" + " \u00D7 " + "10-4"));
-        assertThat(subject.getLastGeneProfile().get(2), is("7.29" + " \u00D7 " + "10-6"));
+        assertThat(subject.getLastGeneProfile().get(0), is("-3.05"));
+        assertThat(subject.getLastGeneProfile().get(2), is("-3.68"));
     }
 
 }

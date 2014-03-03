@@ -36,6 +36,7 @@
             <div style="float:left">
                 <table style="font-size:10px;" id="baseline-heatmap-legend">
 
+                    <%--@elvariable id="geneProfiles" type="uk.ac.ebi.atlas.model.baseline.BaselineProfilesList"--%>
                     <c:set var="minExpressionLevel" value="${geneProfiles.getMinExpressionLevel()}"/>
                     <c:set var="maxExpressionLevel" value="${geneProfiles.getMaxExpressionLevel()}"/>
                     <fmt:formatNumber type="number"
@@ -60,13 +61,14 @@
         <c:otherwise>
             <div style="float:left">
                 <table style="font-size:10px;" id="diff-heatmap-legend">
+                    <%--@elvariable id="geneProfiles" type="uk.ac.ebi.atlas.model.differential.DifferentialProfilesList"--%>
                     <c:if test="${((preferences.regulation eq 'DOWN') or (preferences.regulation eq 'UP_DOWN'))
                                     and geneProfiles.getMinDownRegulatedExpressionLevel() != 'NaN'}">
 
                         <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
                                               highValueColour="${colourGradient.getHexByColourName('blue')}"
-                                              highValueColorExpressionLevel="${numberUtils.round(geneProfiles.getMinDownRegulatedExpressionLevel(), 2)}"
-                                              lowValueColorExpressionLevel="${numberUtils.round(geneProfiles.getMaxDownRegulatedExpressionLevel(), 2)}"/>
+                                              highValueColorExpressionLevel="${numberUtils.round(geneProfiles.getMaxDownRegulatedExpressionLevel(), 2)}"
+                                              lowValueColorExpressionLevel="${numberUtils.round(geneProfiles.getMinDownRegulatedExpressionLevel(), 2)}"/>
 
                     </c:if>
                     <c:if test="${((preferences.regulation eq 'UP') or (preferences.regulation eq 'UP_DOWN'))

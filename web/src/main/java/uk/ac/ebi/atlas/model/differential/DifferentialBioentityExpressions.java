@@ -47,28 +47,28 @@ public class DifferentialBioentityExpressions extends ArrayList<DifferentialBioe
 
     public double getMaxUpRegulatedExpressionLevel() {
         if (maxUpRegulated == null) {
-            maxUpRegulated = new FindTopLevelByRegulation(Regulation.UP).apply(Lists.reverse(this));
+            maxUpRegulated = new FindTopLevelByRegulation(Regulation.UP).apply(this);
         }
         return maxUpRegulated;
     }
 
     public double getMinUpRegulatedExpressionLevel() {
         if(minUpRegulated == null) {
-            minUpRegulated = new FindTopLevelByRegulation(Regulation.UP).apply(this);
+            minUpRegulated = new FindTopLevelByRegulation(Regulation.UP).apply(Lists.reverse(this));
         }
         return minUpRegulated;
     }
 
     public double getMaxDownRegulatedExpressionLevel() {
         if(maxDownRegulated ==null) {
-            maxDownRegulated = new FindTopLevelByRegulation(Regulation.DOWN).apply(Lists.reverse(this));
+            maxDownRegulated = new FindTopLevelByRegulation(Regulation.DOWN).apply(this);
         }
         return maxDownRegulated;
     }
 
     public double getMinDownRegulatedExpressionLevel() {
         if (minDownRegulated == null) {
-            minDownRegulated = new FindTopLevelByRegulation(Regulation.DOWN).apply(this);
+            minDownRegulated = new FindTopLevelByRegulation(Regulation.DOWN).apply(Lists.reverse(this));
         }
         return minDownRegulated;
     }

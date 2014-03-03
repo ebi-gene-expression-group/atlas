@@ -160,7 +160,7 @@ public class BioEntityPage extends HeatmapTablePage {
         return getColumnValues(this.diffHeatmapTable, getContrastColumnIndex());
     }
 
-    public List<String> getPValues() {
+    public List<String> getFoldChange() {
         return getColumnValues(this.diffHeatmapTable, getContrastColumnIndex() + 1);
     }
 

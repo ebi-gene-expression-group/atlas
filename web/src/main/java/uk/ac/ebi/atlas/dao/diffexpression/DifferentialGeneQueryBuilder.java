@@ -42,7 +42,7 @@ public class DifferentialGeneQueryBuilder {
     static final String COUNT_QUERY = "SELECT count(1) FROM VW_DIFFANALYTICS ";
 
     static final String JOIN_PUBLIC_EXPERIMENTS_ONLY = "JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' ";
-    static final String ORDER_BY_PVAL = "order by PVAL";
+    static final String ORDER_BY_LOG2FOLD = "order by abs(LOG2FOLD) desc";
 
     private Collection<IndexedAssayGroup> indexedAssayGroups;
     private ARRAY geneIds;
@@ -78,7 +78,7 @@ public class DifferentialGeneQueryBuilder {
 
         addContrasts(query);
 
-        query.appendToQueryString(ORDER_BY_PVAL);
+        query.appendToQueryString(ORDER_BY_LOG2FOLD);
 
         return query;
     }

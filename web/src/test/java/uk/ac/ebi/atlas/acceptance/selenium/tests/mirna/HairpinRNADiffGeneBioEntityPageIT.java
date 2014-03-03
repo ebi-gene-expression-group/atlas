@@ -55,7 +55,7 @@ public class HairpinRNADiffGeneBioEntityPageIT extends SinglePageSeleniumFixture
         assertThat(subject.getContrastColumn(), contains("disease state: 'sepsis' vs 'control'",
                 "disease state: 'sepsis' vs 'control'",
                 "disease state: 'sepsis' vs 'control'"));
-        assertThat(subject.getPValues(), hasItems("0.001", "0.002", "0.031"));
+        assertThat(subject.getFoldChange(), hasItems("0.001", "0.002", "0.031"));
     }
 
 }

@@ -48,8 +48,8 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
         List<String> gradientMinLabels = subject.getDiffGradientMinLabels();
         List<String> gradientMaxLabels = subject.getDiffGradientMaxLabels();
 
-        assertThat(gradientMinLabels, contains("0.041"));
-        assertThat(gradientMaxLabels, contains("0"));
+        assertThat(gradientMinLabels, contains("1.2"));
+        assertThat(gradientMaxLabels, contains("4.08"));
     }
 
     @Test
@@ -73,8 +73,8 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
         List<String> gradientMinLabels = subject.getDiffGradientMinLabels();
         List<String> gradientMaxLabels = subject.getDiffGradientMaxLabels();
 
-        assertThat(gradientMinLabels, contains("0.041"));
-        assertThat(gradientMaxLabels, contains("6.61 × 10-5"));
+        assertThat(gradientMinLabels, contains("-1.01"));
+        assertThat(gradientMaxLabels, contains("-2.7"));
     }
 
     @Test
@@ -98,8 +98,8 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
         List<String> gradientMinLabels = subject.getDiffGradientMinLabels();
         List<String> gradientMaxLabels = subject.getDiffGradientMaxLabels();
 
-        assertThat(gradientMinLabels, contains("0.041", "0.041"));
-        assertThat(gradientMaxLabels, contains("6.61 × 10-5", "0"));
+        assertThat(gradientMinLabels, contains("-1.01", "1.2"));
+        assertThat(gradientMaxLabels, contains("-2.7", "4.08"));
     }
 
     @Test
@@ -121,8 +121,8 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
         List<String> gradientMinLabels = subject.getDiffGradientMinLabels();
         List<String> gradientMaxLabels = subject.getDiffGradientMaxLabels();
 
-        assertThat(gradientMinLabels, contains("7.19 × 10-6"));
-        assertThat(gradientMaxLabels, contains("0"));
+        assertThat(gradientMinLabels, contains("1.56"));
+        assertThat(gradientMaxLabels, contains("3.76"));
 
         List<String> gradientColors = subject.getDiffGradientColors();
 

@@ -62,7 +62,7 @@ public class DiffExpressionDaoIT {
         List<DifferentialBioentityExpression> expressions = subject.getTopExpressions(Optional.of(contrasts), Optional.of(geneIds));
         assertThat(expressions.size(), is(16));
         assertThat(expressions.get(0).getBioentityId(), is("FBgn0040393"));
-        assertThat(expressions.get(1).getBioentityId(), is("FBgn0017561"));
+        assertThat(expressions.get(1).getBioentityId(), is("FBgn0030746"));
 
     }
 

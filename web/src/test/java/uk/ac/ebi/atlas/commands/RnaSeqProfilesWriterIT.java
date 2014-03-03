@@ -110,7 +110,7 @@ public class RnaSeqProfilesWriterIT {
         String[] lines = headerLines();
         String queryLine = lines[1];
 
-        assertThat(queryLine, is("# Query: Genes matching: '' exactly, specifically up/down differentially expressed in any contrast given the False Discovery Rate cutoff: 0.05 in experiment E-GEOD-38400"));
+        assertThat(queryLine, is("# Query: Genes matching: '' exactly, specifically up/down differentially expressed in any contrast given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment E-GEOD-38400"));
 
         String[] columnHeaders = csvLines().get(0);
         //System.out.println("\"" + Joiner.on("\", \"").join(columnHeaders) + "\"");
@@ -157,13 +157,13 @@ public class RnaSeqProfilesWriterIT {
 
         List<String> geneNames = geneNames(csvLines());
 
-        int expectedCount = 148;
+        int expectedCount = 108;
         assertThat(genesCount, is((long) expectedCount));
         assertThat(geneNames, hasSize(expectedCount));
 
         System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
 
-        assertThat(geneNames, containsInAnyOrder("Npas4", "Gm16314", "B3galnt1", "Hsph1", "Gabbr2", "Slc6a8", "Sptbn2", "Hspa1a", "Ppp1r15a", "Ier2", "Lgals12", "Reg3b", "Dnahc8", "Gpr26", "Gcsh", "Fam155a", "Cntn3", "Bsn", "P4hb", "Prnp", "D10Bwg1379e", "Bhlha15", "Hspa1b", "Grem2", "Esyt1", "Junb", "Map6", "Ogdhl", "Hsbp1", "Gatm", "Dnaja1", "Gbp8", "Fmo1", "Aldh9a1", "Crispld2", "Nr4a1", "Car8", "Cux2", "Hist1h1c", "Mctp1", "Ikzf4", "Gpr119", "Apoe", "D630039A03Rik", "Prok1", "Nucb2", "Hopx", "Aldh1l2", "Matn2", "Fkbp5", "Ggact", "Prkd1", "Prkar2b", "Nupr1", "Tmed3", "Emilin1", "Cldn8", "Hspa8", "Serinc5", "Ntrk2", "Tmem255a", "Cish", "Reg3a", "Grp", "Jund", "Cmtm6", "Igfals", "Enpp2", "Csrnp1", "Pycr1", "Wipi1", "Rnf150", "Rab3d", "Cttnbp2", "Prlr", "Sftpd", "Neb", "Mdm1", "Glp1r", "Chst11", "Synpr", "Bmp1", "Ngfr", "Rims3", "Lrrc55", "Rnf182", "Dnmt3b", "Ppapdc1b", "Txnrd2", "D5Ertd579e", "Akt1", "Trabd", "Apobec1", "Pcsk1", "Uso1", "Cspg5", "Chmp7", "Dnajb1", "Slc38a10", "Lactbl1", "Nfasc", "Cartpt", "Grhl1", "Itga6", "Egr1", "Dusp1", "Fmo4", "Hapln4", "Socs2", "Syce2", "Entpd3", "Tnfrsf11b", "Sdf2l1", "Znrf2", "Gas2", "Rgs2", "Ssr2", "Ern1", "Gyltl1b", "Tph1", "Dhcr7", "Tsc22d3", "Ivd", "Rhob", "Chgb", "Arfgap3", "Edem1", "Disp2", "AU040320", "Tph2", "Ovol2", "Ehhadh", "Derl3", "Dap", "Enox1", "Reg3d", "Fosb", "Slc40a1", "Vip", "Fkbp11", "Tbc1d9b", "Aqp4", "Slc2a13", "Arc", "Lrp8", "Lonrf3", "Acvr1c", "Igfbp5"));
+        assertThat(geneNames, containsInAnyOrder("Npas4", "Gm16314", "B3galnt1", "Hsph1", "Gabbr2", "Slc6a8", "Sptbn2", "Hspa1a", "Lgals12", "Reg3b", "Dnahc8", "Gpr26", "Gcsh", "Fam155a", "Cntn3", "Bsn", "Hspa1b", "Grem2", "Junb", "Map6", "Ogdhl", "Hsbp1", "Gatm", "Dnaja1", "Gbp8", "Fmo1", "Aldh9a1", "Nr4a1", "Car8", "Cux2", "Mctp1", "Ikzf4", "Gpr119", "D630039A03Rik", "Prok1", "Hopx", "Aldh1l2", "Matn2", "Ggact", "Prkd1", "Prkar2b", "Nupr1", "Cldn8", "Tmem255a", "Cish", "Reg3a", "Grp", "Igfals", "Enpp2", "Csrnp1", "Pycr1", "Wipi1", "Rnf150", "Rab3d", "Cttnbp2", "Prlr", "Sftpd", "Neb", "Mdm1", "Glp1r", "Chst11", "Synpr", "Bmp1", "Ngfr", "Lrrc55", "Rnf182", "Dnmt3b", "Txnrd2", "Apobec1", "Cspg5", "Dnajb1", "Lactbl1", "Cartpt", "Grhl1", "Itga6", "Dusp1", "Fmo4", "Socs2", "Syce2", "Tnfrsf11b", "Znrf2", "Gas2", "Rgs2", "Ern1", "Gyltl1b", "Tph1", "Dhcr7", "Tsc22d3", "Ivd", "Chgb", "Disp2", "Tph2", "Ovol2", "Ehhadh", "Derl3", "Enox1", "Reg3d", "Fosb", "Slc40a1", "Vip", "Fkbp11", "Aqp4", "Slc2a13", "Arc", "Lrp8", "Lonrf3", "Acvr1c", "Igfbp5"));
     }
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?regulation=UP
@@ -180,7 +180,7 @@ public class RnaSeqProfilesWriterIT {
         assertThat(genesCount, is((long) expectedCount));
         assertThat(geneNames, hasSize(expectedCount));
 
-        assertThat(geneNames, containsInAnyOrder("AT1G33840", "F14M2.2", "T5N23_130", "AT5G35207", "GRXS4", "RSU1", "AT5G62920", "AT4G04223", "AT3G48131", "AT2G05200", "GRXS5", "AT5G35935", "T5N23_90", "AT3G59765", "AT5G11090", "F13F21.6", "AT5G35205", "AT5G52070", "AT5G24240", "ANAC003", "GRXS10", "AT4G04293", "AT2G16310", "AT1G11785", "AT5G27850", "AT5G24150", "F21F23.9", "AT5G27845", "ATMRU1", "AT2G35382", "GRXS13", "AT5G26220", "GRXS3", "GRXS8", "ATMSRB6", "AT3G29644"));
+        assertThat(geneNames, containsInAnyOrder("AT3G48131", "F14M2.2", "AT1G33840", "AT5G35207", "RSU1", "AT5G27845", "T5N23_130", "AT5G35205", "T5N23_90", "AT2G16310", "AT4G04293", "AT2G05200", "AT5G24240", "AT1G11785", "AT4G04223", "ANAC003", "AT5G62920", "GRXS4", "AT5G35935", "AT5G52070", "GRXS5", "GRXS10", "F21F23.9", "AT3G59765", "AT5G27850", "AT5G11090", "F13F21.6", "GRXS8", "GRXS3", "GRXS13", "AT5G24150", "AT5G26220", "AT2G35382", "ATMRU1", "ATMSRB6", "AT3G29644"));
     }
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?regulation=DOWN
@@ -196,7 +196,7 @@ public class RnaSeqProfilesWriterIT {
         assertThat(genesCount, is((long) expectedCount));
         assertThat(geneNames, hasSize(expectedCount));
 
-        assertThat(geneNames, containsInAnyOrder("NRPD1B", "AT2G07733", "AT5G40450", "ATPF", "AT5G28300", "ATMG00410", "ATMG00510", "ATCG00490", "AT1G62310", "MYR1", "SEN1", "PSBE", "AT1G12730", "AT5G61190", "DML1"));
+        assertThat(geneNames, containsInAnyOrder("NRPD1B", "ATMG00510", "PSBE", "ATMG00410", "AT1G12730", "ATPF", "AT2G07733", "AT5G28300", "AT5G40450", "AT1G62310", "ATCG00490", "MYR1", "SEN1", "AT5G61190", "DML1"));
     }
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?cutoff=0.002
@@ -212,8 +212,26 @@ public class RnaSeqProfilesWriterIT {
         assertThat(genesCount, is((long) expectedCount));
         assertThat(geneNames, hasSize(expectedCount));
 
-        assertThat(geneNames, containsInAnyOrder("AT1G33840", "F14M2.2", "T5N23_130", "AT3G29644", "AT5G35207", "GRXS4", "RSU1", "AT5G62920", "AT4G04223", "NRPD1B", "AT3G48131", "AT2G05200", "GRXS5", "AT5G35935", "T5N23_90", "AT5G40450", "AT2G07733", "AT3G59765", "ATPF", "AT5G11090", "AT5G28300", "F13F21.6", "AT5G35205", "AT5G52070", "AT5G24240", "ATMG00410", "DML1"));
+        assertThat(geneNames, containsInAnyOrder("AT3G48131", "F14M2.2", "AT1G33840", "AT5G35207", "RSU1", "T5N23_130", "AT3G29644", "AT5G35205", "T5N23_90", "AT2G05200", "AT5G24240", "AT4G04223", "NRPD1B", "AT5G62920", "GRXS4", "AT5G35935", "AT5G52070", "GRXS5", "ATMG00410", "AT3G59765", "ATPF", "AT5G11090", "AT2G07733", "AT5G28300", "F13F21.6", "AT5G40450", "DML1"));
     }
+
+    // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?foldChangeCutOff=5
+    @Test
+    public void withFoldChangeCutoff() throws GenesNotFoundException {
+        requestPreferences.setFoldChangeCutOff(5);
+        RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
+        long genesCount = subject.write(printWriterMock, requestContext);
+
+        List<String> geneNames = geneNames(csvLines());
+
+        int expectedCount = 5;
+        assertThat(genesCount, is((long) expectedCount));
+        assertThat(geneNames, hasSize(expectedCount));
+
+        assertThat(geneNames, containsInAnyOrder("AT3G48131", "F14M2.2", "AT1G33840", "AT5G35207", "RSU1"));
+    }
+
+
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?queryFactorValues=g1_g2&_specific=on
     @Test
@@ -232,7 +250,7 @@ public class RnaSeqProfilesWriterIT {
         assertThat(genesCount, is((long) expectedCount));
         assertThat(geneNames, hasSize(expectedCount));
 
-        assertThat(geneNames, containsInAnyOrder("AT1G33840", "F14M2.2", "AT5G35207", "RSU1", "NRPD1B", "AT3G48131", "AT2G05200", "DML1", "AT5G35205", "AT5G52070", "AT5G24240", "ANAC003", "AT2G16310", "AT4G04293", "AT5G27850", "F21F23.9", "AT3G29644", "AT5G27845", "AT1G12730"));
+        assertThat(geneNames, containsInAnyOrder("AT3G48131", "F14M2.2", "AT1G33840", "AT5G35207", "RSU1", "AT5G27845", "AT5G35205", "DML1", "AT2G16310", "AT4G04293", "AT3G29644", "AT2G05200", "AT5G24240", "NRPD1B", "ANAC003", "AT5G52070", "F21F23.9", "AT1G12730", "AT5G27850"));
     }
 
     //  http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?queryFactorValues=g1_g2
@@ -251,7 +269,7 @@ public class RnaSeqProfilesWriterIT {
         assertThat(genesCount, is((long) expectedCount));
         assertThat(geneNames, hasSize(expectedCount));
 
-        assertThat(geneNames, containsInAnyOrder("AT1G33840", "F14M2.2", "AT5G35207", "RSU1", "NRPD1B", "AT3G48131", "AT2G05200", "AT5G35205", "AT5G52070", "AT5G24240", "ANAC003", "AT2G16310", "AT4G04293", "AT5G27850", "F21F23.9", "AT5G27845", "AT1G12730"));
+        assertThat(geneNames, containsInAnyOrder("AT3G48131", "F14M2.2", "AT1G33840", "AT5G35207", "RSU1", "AT5G27845", "AT5G35205", "AT2G16310", "AT4G04293", "AT2G05200", "AT5G24240", "NRPD1B", "ANAC003", "AT5G52070", "F21F23.9", "AT1G12730", "AT5G27850"));
     }
 
     private String[] headerLines() {

@@ -61,9 +61,9 @@ public class BaselineGeneBioEntityPageHairpinRNAIT extends SinglePageSeleniumFix
         if (!hostName.equals("coconut.ebi.ac.uk")) {
 
             assertThat(subject.isBaselineProfileExpanded(), is(true));
+            subject.clickDifferentialProfile();
             subject.clickDisplayLevelsButton();
-            assertThat(subject.getGeneNames(), contains("SRSF2"));
-            assertThat(subject.getGeneNames().size(), is(1));
+            assertThat(subject.getDesignElementNames(), contains("A_25_P00010664","A_25_P00010662","A_25_P00010661","A_25_P00010663"));
         }
 
     }

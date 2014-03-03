@@ -247,7 +247,9 @@ FROM EXPERIMENT WHERE PRIVATE='F';
 -- Data processing in-progress flag table - used by data production team - no dependency on it exists in the Web services code
 DROP TABLE DATAPROCESSING_JOB_LOCK;
 CREATE TABLE DATAPROCESSING_JOB_LOCK(
-    INPROGRESS DATE DEFAULT sysdate
+    INPROGRESS DATE DEFAULT sysdate,
+    JOBTYPE VARCHAR(255) NOT NULL,
+    EXPERIMENT VARCHAR(255) NULL
 );
 
 -- Species table

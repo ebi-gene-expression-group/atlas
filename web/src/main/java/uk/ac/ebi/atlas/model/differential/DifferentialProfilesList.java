@@ -59,16 +59,20 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
     public double getMaxDownRegulatedExpressionLevel(){
         double maxDownRegulatedExpressionLevel = -Double.MAX_VALUE;
         for (DifferentialProfile differentialProfile : this) {
-            maxDownRegulatedExpressionLevel = max(maxDownRegulatedExpressionLevel, differentialProfile.getMaxDownRegulatedExpressionLevel());
+            maxDownRegulatedExpressionLevel = max(maxDownRegulatedExpressionLevel, Math.abs(differentialProfile.getMaxDownRegulatedExpressionLevel()));
         }
-        return maxDownRegulatedExpressionLevel == -Double.MAX_VALUE ? Double.NaN : maxDownRegulatedExpressionLevel;
+        return maxDownRegulatedExpressionLevel == -Double.MAX_VALUE ? Double.NaN : negate(maxDownRegulatedExpressionLevel);
     }
 
     public double getMinDownRegulatedExpressionLevel(){
         double minDownRegulatedExpressionLevel = Double.MAX_VALUE;
         for (DifferentialProfile differentialProfile : this) {
-            minDownRegulatedExpressionLevel = min(minDownRegulatedExpressionLevel, differentialProfile.getMinDownRegulatedExpressionLevel());
+            minDownRegulatedExpressionLevel = min(minDownRegulatedExpressionLevel, Math.abs(differentialProfile.getMinDownRegulatedExpressionLevel()));
         }
-        return minDownRegulatedExpressionLevel == Double.MAX_VALUE ? Double.NaN : minDownRegulatedExpressionLevel;
+        return minDownRegulatedExpressionLevel == Double.MAX_VALUE ? Double.NaN : negate(minDownRegulatedExpressionLevel);
+    }
+
+    public static double negate(double value) {
+        return value == 0 ? 0 : -value;
     }
 }

@@ -26,7 +26,6 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
-import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class BioentitiesPageConditionAndGeneQueryIT extends SinglePageSeleniumFi
         assertThat(subject.getContrastColumn(), contains(
                 "compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36",
                 "genotype:'p107 -/-' vs 'wild type' on A-AFFY-24"));
-        assertThat(subject.getPValues(), hasItems("0.003", "0.02"));
+        assertThat(subject.getFoldChange(), hasItems("0.54", "0.006"));
     }
 
     @Test

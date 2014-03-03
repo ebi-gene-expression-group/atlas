@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 import uk.ac.ebi.atlas.web.interceptors.AdminInterceptor;
@@ -39,12 +40,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Inject
     private AdminInterceptor adminInterceptor;
 
+    @Value("#{configuration['microarray.experiment.root.path.template']}")
+    private String qcRootPath;
+
     // equivalent to mvc:resources
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/json/gene-by-cutoff/**").addResourceLocations("classpath:/cutoff-histograms/");
-        registry.addResourceHandler("/qc/**").addResourceLocations("/resources/html/qc/");
+        registry.addResourceHandler("/qc/**").addResourceLocations("file:" + qcRootPath);
+        registry.addResourceHandler("/foo/**").addResourceLocations("file:/Users/omannion/ATLAS3.TEST/integration-test-data/magetab/E-MTAB-1066/qc/E-MTAB-1066_A-AFFY-35_QM/");
     }
 
     // equivalent to mvc:view-controller

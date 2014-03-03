@@ -66,7 +66,8 @@
                    href="${applicationProperties.getArrayExpressArrayURL(arrayDesign)}"
                    target='_blank'>${arrayDesign}</a>
 
-                <c:set var="hasQcReport" value="${arrayDesignQCReport.hasQCReport(experimentAccession, arrayDesign)}"/>
+                <%--@elvariable id="qcReportUtil" type="uk.ac.ebi.atlas.utils.QCReportUtil"--%>
+                <c:set var="hasQcReport" value="${qcReportUtil.hasQCReport(experimentAccession, arrayDesign)}"/>
 
                 <c:if test="${hasQcReport}">
                     <a class="array-design" id="Qc" title="View QC report" href="${pageContext.request.contextPath}/experiments/${experimentAccession}/qc/${arrayDesign}/index.html">QC</a>

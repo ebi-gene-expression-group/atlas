@@ -35,10 +35,15 @@ import static java.lang.Math.min;
 public class DifferentialProfile<T extends DifferentialExpression> extends Profile<Contrast, T> implements DifferentialExpressionLimits {
 
     private static final double MIN_P_VALUE = 1;
-    private double maxUpRegulatedExpressionLevel = 0D;
-    private double minUpRegulatedExpressionLevel = Double.MAX_VALUE;
-    private double maxDownRegulatedExpressionLevel = 0D;
-    private double minDownRegulatedExpressionLevel = Double.MAX_VALUE;
+    private static final double MAX_UP_REGULATED_EXPRESSION_LEVEL = Double.MAX_VALUE;
+    private static final double MAX_DOWN_REGULATED_EXPRESSION_LEVEL = -Double.MAX_VALUE;
+    private static final double MIN_UP_REGULATED_EXPRESSION_LEVEL = 0;
+    private static final double MIN_DOWN_REGULATED_EXPRESSION_LEVEL = 0;
+
+    private double maxUpRegulatedExpressionLevel = MIN_UP_REGULATED_EXPRESSION_LEVEL;
+    private double minUpRegulatedExpressionLevel = MAX_UP_REGULATED_EXPRESSION_LEVEL;
+    private double maxDownRegulatedExpressionLevel = MIN_DOWN_REGULATED_EXPRESSION_LEVEL;
+    private double minDownRegulatedExpressionLevel = MAX_DOWN_REGULATED_EXPRESSION_LEVEL;
 
     private int downRegulatedExpressionsCount;
     private int upRegulatedExpressionsCount;
@@ -70,6 +75,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
     }
 
     public int getSpecificity(Regulation regulation) {
+        //TODO: these counts will be incorrect if adding more than 1 expression for the same contrast
         if(Regulation.UP == regulation){
             return upRegulatedExpressionsCount;
         }
@@ -141,13 +147,9 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
     }
 
     void addDownRegulatedExpression(double expressionLevel) {
-        maxDownRegulatedExpressionLevel = max(maxDownRegulatedExpressionLevel, expressionLevel);
-        minDownRegulatedExpressionLevel = min(minDownRegulatedExpressionLevel, expressionLevel);
+        maxDownRegulatedExpressionLevel = -max(Math.abs(maxDownRegulatedExpressionLevel), Math.abs(expressionLevel));
+        minDownRegulatedExpressionLevel = -min(Math.abs(minDownRegulatedExpressionLevel), Math.abs(expressionLevel));
         downRegulatedExpressionsCount++;
-    }
-
-    public double getMinExpressionLevel() {
-        return min(minUpRegulatedExpressionLevel, minDownRegulatedExpressionLevel);
     }
 
 }
