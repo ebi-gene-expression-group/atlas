@@ -12,7 +12,7 @@ public class ArrayDesignQCReportPageIT extends RestAssuredFixture {
 
     @Test
     public void arrayDesignReportMTAB1066(){
-        Response response = get("/resources/html/qc/E-MTAB-1066_A-AFFY-35_QM/index.html");
+        Response response = get("/experiments/E-MTAB-1066/qc/A-AFFY-35/index.html");
 
         response.then().assertThat().statusCode(200);
         response.then().assertThat().contentType("text/html");
