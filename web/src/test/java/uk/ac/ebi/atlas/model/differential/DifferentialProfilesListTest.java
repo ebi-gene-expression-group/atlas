@@ -125,22 +125,22 @@ public class DifferentialProfilesListTest {
     public void maxDownRegulatedExpressionLevelShouldReturnTheMaxDownRegulatedExpressionLevelAcrossAllProfiiles() throws Exception {
         //given
         given(differentialProfileMock1.getMaxDownRegulatedExpressionLevel()).willReturn(0D);
-        given(differentialProfileMock2.getMaxDownRegulatedExpressionLevel()).willReturn(23.3D);
-        given(differentialProfileMock3.getMaxDownRegulatedExpressionLevel()).willReturn(0.22D);
+        given(differentialProfileMock2.getMaxDownRegulatedExpressionLevel()).willReturn(-23.3D);
+        given(differentialProfileMock3.getMaxDownRegulatedExpressionLevel()).willReturn(-0.22D);
 
         //
-        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(23.3D));
+        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(-23.3D));
     }
 
     @Test
     public void minDownRegulatedExpressionLevelShouldReturnTheMinDownRegulatedExpressionLevelAcrossAllProfiiles() throws Exception {
         //given
-        given(differentialProfileMock1.getMinDownRegulatedExpressionLevel()).willReturn(23D);
-        given(differentialProfileMock2.getMinDownRegulatedExpressionLevel()).willReturn(0.001D);
-        given(differentialProfileMock3.getMinDownRegulatedExpressionLevel()).willReturn(3D);
+        given(differentialProfileMock1.getMinDownRegulatedExpressionLevel()).willReturn(-23D);
+        given(differentialProfileMock2.getMinDownRegulatedExpressionLevel()).willReturn(-0.001D);
+        given(differentialProfileMock3.getMinDownRegulatedExpressionLevel()).willReturn(-3D);
 
         //
-        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(0.001D));
+        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-0.001D));
     }
 
 }

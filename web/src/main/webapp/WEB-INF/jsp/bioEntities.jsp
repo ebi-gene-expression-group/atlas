@@ -138,12 +138,13 @@
                 </ul>
 
                 <c:choose>
+                    <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions"--%>
                     <c:when test="${not empty bioentities}">
 
                         <div id="diffProfileBody" class="bioEntityCard">
                             <div class="ui-corner-all bioEntityCardDifferentialSummary">
                                 <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
-                                <span style="float: right">False Discovery Rate cutoff: ${preferences.defaultCutoff}</span>
+                                <span style="float: right"><i>p</i>-value cutoff: ${preferences.defaultCutoff} log<sub>2</sub>-fold change cutoff: 0</sub></span>
                             </div>
 
                             <div id="heatmap-div" style="display:none;">
@@ -153,7 +154,7 @@
                                             <button id='display-levels' data-pressedtext="hide" data-unpressedText='show' style="margin-top: 5px; margin-bottom: 5px">
                                                 <%--<label for='display-levels'>Display <i>p</i>-values</label>--%>
                                             </button>
-                                            <span id='buttonText' pressedtext='Hide <i>p</i>-values' unpressedText='Display <i>p</i>-values'/>
+                                            <span id='buttonText' pressedtext='Hide log<sub>2</sub>-fold change' unpressedText='Display log<sub>2</sub>-fold change'/>
                                         </td>
                                         <td>
                                             <c:set var="geneProfiles" scope="request" value="${bioentities}"/>

@@ -56,8 +56,6 @@ public class RnaSeqProfilesTSVWriterIT {
     @Inject
     private RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder;
 
-    private RnaSeqRequestContext rnaSeqRequestContext;
-
     private DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
 
     private DifferentialExperiment differentialExperiment;
@@ -66,7 +64,7 @@ public class RnaSeqProfilesTSVWriterIT {
     public void setUp() throws Exception {
 
         differentialExperiment = rnaSeqDiffExperimentsCache.getExperiment(RNA_SEQ_EXPERIMENT_ACCESSION);
-        rnaSeqRequestContext = rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
+        rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
                 .withPreferences(requestPreferences).build();
 
     }
@@ -107,7 +105,7 @@ public class RnaSeqProfilesTSVWriterIT {
 
         String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
-        assertThat(headerRows[1], is("# Query: Genes matching: '', specifically up/down differentially expressed in any contrast given the False Discovery Rate cutoff: 0.05 in experiment E-GEOD-38400"));
+        assertThat(headerRows[1], is("# Query: Genes matching: '', specifically up/down differentially expressed in any contrast given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment E-GEOD-38400"));
 
     }
 
@@ -119,7 +117,7 @@ public class RnaSeqProfilesTSVWriterIT {
 
         String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
-        assertThat(headerRows[1], is("# Query: Genes matching: '' exactly, up/down differentially expressed in any contrast given the False Discovery Rate cutoff: 0.05 in experiment E-GEOD-38400"));
+        assertThat(headerRows[1], is("# Query: Genes matching: '' exactly, up/down differentially expressed in any contrast given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment E-GEOD-38400"));
         assertThat(headerRows[2], startsWith("# Timestamp: "));
 
     }
@@ -129,12 +127,12 @@ public class RnaSeqProfilesTSVWriterIT {
 
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("g1_g4", "g1_g3")));
 
-        rnaSeqRequestContext = rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
+        rnaSeqRequestContextBuilder.forExperiment(differentialExperiment)
                 .withPreferences(requestPreferences).build();
 
         String[] headerRows = subject.getTsvFileMasthead().split("\n");
 
-        assertThat(headerRows[1], is("# Query: Genes matching: '' exactly, specifically up/down differentially expressed in contrasts: idn2 mutant vs wild type, swi3b mutant vs wild type given the False Discovery Rate cutoff: 0.05 in experiment E-GEOD-38400"));
+        assertThat(headerRows[1], is("# Query: Genes matching: '' exactly, specifically up/down differentially expressed in contrasts: idn2 mutant vs wild type, swi3b mutant vs wild type given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment E-GEOD-38400"));
         assertThat(headerRows[2], startsWith("# Timestamp: "));
     }
 }

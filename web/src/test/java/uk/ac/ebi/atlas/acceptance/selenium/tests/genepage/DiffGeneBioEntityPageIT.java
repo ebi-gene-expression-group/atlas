@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
@@ -52,7 +51,7 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
         subject.clickDisplayLevelsButton();
         assertThat(subject.getContrastColumn(), contains("idn2 mutant vs wild type",
                 "nrpe1 mutant vs wild type"));
-        assertThat(subject.getPValues(), hasItems("6.64 × 10-9", "0.014"));
+        assertThat(subject.getFoldChange(), hasItems("3.284", "2.573"));
     }
 
     //This is not working with PhantomJS browser :((

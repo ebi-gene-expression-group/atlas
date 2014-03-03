@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
-public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends SeleniumFixture {
+public class MicroArray1ArrayDesignHeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends SeleniumFixture {
 
     private static final String E_MTAB_1066_ACCESSION = "E-MTAB-1066";
     protected HeatmapTablePage subject;
@@ -40,54 +40,54 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
     public void verifyResultsWithRegulationUp() {
         subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP&displayLevels=true");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 71"));
+        assertThat(subject.getGeneCount(), containsString("of 21"));
 
-        assertThat(subject.getGeneNames().size(), is(50));
-        assertThat(subject.getGeneNames().subList(0, 3), contains("Irc", "CG8303", "Ykt6"));
+        assertThat(subject.getGeneNames().size(), is(21));
+        assertThat(subject.getGeneNames().subList(0, 3), contains("Cda5", "CG33459", "CG11147"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is("4.32 × 10-4"));
+        assertThat(subject.getGeneProfile(1).get(0), is("1.43"));
         assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is("3.73 × 10-5"));
-        assertThat(subject.getLastGeneProfile().get(1), is("0.005"));
+        assertThat(subject.getLastGeneProfile().get(0), is("1.33"));
+        assertThat(subject.getLastGeneProfile().get(1), is("1.06"));
     }
 
     @Test
     public void verifyResultsWithRegulationDown() {
         subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=DOWN&displayLevels=true");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 104"));
+        assertThat(subject.getGeneCount(), containsString("of 33"));
 
-        assertThat(subject.getGeneNames().size(), is(50));
-        assertThat(subject.getGeneNames().subList(0, 3), contains("CG13876", "CG7742", "CG31803"));
+        assertThat(subject.getGeneNames().size(), is(33));
+        assertThat(subject.getGeneNames().subList(0, 3), contains("CG31624", "CG4669", "Mst84Db"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is("8.36" + " \u00D7 " + "10-6"));
+        assertThat(subject.getGeneProfile(1).get(0), is("-3.37"));
         assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is(""));
-        assertThat(subject.getLastGeneProfile().get(1), is("0.043"));
+        assertThat(subject.getLastGeneProfile().get(0), is("-1.15"));
+        assertThat(subject.getLastGeneProfile().get(1), is("-1.1"));
     }
 
     @Test
     public void verifyResultsWithRegulationUpDown() {
         subject = new HeatmapTablePage(driver, E_MTAB_1066_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
         subject.get();
-        assertThat(subject.getGeneCount(), containsString("of 174"));
+        assertThat(subject.getGeneCount(), containsString("of 54"));
 
         assertThat(subject.getGeneNames().size(), is(50));
-        assertThat(subject.getGeneNames().subList(0, 3), contains("CG13876", "CG7742", "CG31803"));
+        assertThat(subject.getGeneNames().subList(0, 3), contains("CG31624", "CG4669", "Mst84Db"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is("8.36" + " \u00D7 " + "10-6"));
+        assertThat(subject.getGeneProfile(1).get(0), is("-3.37"));
         assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is("0.022"));
-        assertThat(subject.getLastGeneProfile().get(1), is(""));
+        assertThat(subject.getLastGeneProfile().get(0), is("1.51"));
+        assertThat(subject.getLastGeneProfile().get(1), is("1.44"));
     }
 
     //This will fail with PhantomJS
@@ -100,9 +100,9 @@ public class HeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 1, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("t-statistic"));
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 2, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), startsWith("Log2-fold"));
 
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 0, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("8.36 × 10-6"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 1, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("-19.16"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 2, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("-1.56"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 0, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("3.24 × 10-4"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 1, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("-8.79"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 2, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("-3.37"));
     }
 
 }

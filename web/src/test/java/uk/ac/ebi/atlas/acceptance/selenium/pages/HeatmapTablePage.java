@@ -143,6 +143,10 @@ public class HeatmapTablePage extends TablePage {
         return getFirstColumnValues(getHeatmapTable());
     }
 
+    public List<String> getDesignElementNames() {
+        return getSecondColumnValues(getHeatmapTable());
+    }
+
     public String getQueryFactorLabel() {
         return queryFactorLabel.getText();
     }

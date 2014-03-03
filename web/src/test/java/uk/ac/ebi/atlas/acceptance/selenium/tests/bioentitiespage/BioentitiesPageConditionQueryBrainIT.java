@@ -67,7 +67,7 @@ public class BioentitiesPageConditionQueryBrainIT extends SinglePageSeleniumFixt
         assertThat(subject.getContrastColumn(), contains(
                 "genotype:'p107 -/-' vs 'wild type' on A-AFFY-24",
                 "genotype:'p107 -/-' vs 'wild type' on A-AFFY-23"));
-        assertThat(subject.getPValues(), hasItems("0.02", "0.04"));
+        assertThat(subject.getFoldChange(), hasItems("0.02", "0.04"));
     }
 
     @Test

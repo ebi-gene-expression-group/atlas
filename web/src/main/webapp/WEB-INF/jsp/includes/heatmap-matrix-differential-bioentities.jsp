@@ -60,7 +60,7 @@
                         <div>Contrast</div>
                     </th>
                     <th class="horizontal-header-cell" style="padding: 5px;">
-                        <div class='factor-header' data-organism-part=''>Adjusted P-value</div>
+                        <div class='factor-header' data-organism-part=''>Log<sub>2</sub>-fold change</div>
                     </th>
                 </tr>
 
@@ -68,6 +68,7 @@
 
                 <tbody>
 
+                <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions"--%>
                 <c:forEach items="${bioentities}"
                            var="differentialBioentityExpression">
                     <tr>
@@ -103,11 +104,11 @@
                                 <%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
                                 <c:when test="${expression.overExpressed}">
                                     <c:set var="cellColour"
-                                           value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - bioentities.getMaxUpRegulatedExpressionLevel(), 1 - bioentities.getMinUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
+                                           value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - bioentities.getMinUpRegulatedExpressionLevel(), 1 - bioentities.getMaxUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
                                 </c:when>
                                 <c:otherwise>
                                     <c:set var="cellColour"
-                                           value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - bioentities.getMaxDownRegulatedExpressionLevel(), 1 - bioentities.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
+                                           value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - bioentities.getMinDownRegulatedExpressionLevel(), 1 - bioentities.getMaxDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
                                 </c:otherwise>
                             </c:choose>
 

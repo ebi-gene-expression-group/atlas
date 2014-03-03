@@ -31,5 +31,13 @@ public class IndexedAssayGroup {
         final IndexedAssayGroup other = (IndexedAssayGroup) obj;
         return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.assayGroupOrContrastId, other.assayGroupOrContrastId);
     }
+
+    @Override
+    public String toString() {
+        return com.google.common.base.Objects.toStringHelper(this)
+                .add("experimentAccession", experimentAccession)
+                .add("assayGroupOrContrastId", assayGroupOrContrastId)
+                .toString();
+    }
 }
 

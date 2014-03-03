@@ -49,6 +49,9 @@ public class DifferentialProfileTest {
 
     private DifferentialProfile subject;
 
+    @Mock
+    private Contrast contrastMock1;
+
     @Before
     public void setUp() throws Exception {
         this.subject = new DifferentialProfile(GENE_ID, GENE_NAME);
@@ -60,9 +63,7 @@ public class DifferentialProfileTest {
         assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(0D));
         assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.MAX_VALUE));
         assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(0D));
-        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(Double.MAX_VALUE));
-        //and
-        assertThat(subject.getMinExpressionLevel(), is(Double.MAX_VALUE));
+        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-Double.MAX_VALUE));
     }
 
 
@@ -71,42 +72,48 @@ public class DifferentialProfileTest {
         //given
         given(differentialExpressionMock1.isOverExpressed()).willReturn(true);
         given(differentialExpressionMock1.getLevel()).willReturn(0.4D);
+        given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
+        given(differentialExpressionMock2.getLevel()).willReturn(0.6D);
+        given(differentialExpressionMock2.getContrast()).willReturn(contrastMock1);
 
         //when
         subject.add(differentialExpressionMock1);
+        subject.add(differentialExpressionMock2);
 
         //then
-        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(0.4D));
+        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(0.6D));
         assertThat(subject.getMinUpRegulatedExpressionLevel(), is(0.4D));
         assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(0D));
-        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(Double.MAX_VALUE));
+        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-Double.MAX_VALUE));
+
         //and
-        assertThat(subject.getMinExpressionLevel(), is(0.4D));
-        //and
-        assertThat(subject.getSpecificity(Regulation.UP), is(1));
-        assertThat(subject.getSpecificity(Regulation.UP_DOWN), is(1));
+        assertThat(subject.getSpecificity(Regulation.UP), is(2));
+        assertThat(subject.getSpecificity(Regulation.UP_DOWN), is(2));
         assertThat(subject.getSpecificity(Regulation.DOWN), is(0));
     }
 
     @Test
-    public void addingAnUnderExpressedExpressionShouldUpdateMinAndMaxDownRegulatedLevelsAndSpecificity() throws Exception {
+    public void addingUnderExpressedExpressionsShouldUpdateMinAndMaxDownRegulatedLevelsAndSpecificity() throws Exception {
         //given
         given(differentialExpressionMock1.isUnderExpressed()).willReturn(true);
-        given(differentialExpressionMock1.getLevel()).willReturn(0.3D);
+        given(differentialExpressionMock1.getLevel()).willReturn(-0.3D);
+        given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
+        given(differentialExpressionMock2.getLevel()).willReturn(-0.5D);
+        given(differentialExpressionMock2.getContrast()).willReturn(contrastMock1);
 
         //when
         subject.add(differentialExpressionMock1);
+        subject.add(differentialExpressionMock2);
 
         //then
         assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(0D));
         assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.MAX_VALUE));
-        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(0.3D));
-        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(0.3D));
+        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(-0.5D));
+        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-0.3D));
+
         //and
-        assertThat(subject.getMinExpressionLevel(), is(0.3D));
-        //and
-        assertThat(subject.getSpecificity(Regulation.DOWN), is(1));
-        assertThat(subject.getSpecificity(Regulation.UP_DOWN), is(1));
+        assertThat(subject.getSpecificity(Regulation.DOWN), is(2));
+        assertThat(subject.getSpecificity(Regulation.UP_DOWN), is(2));
         assertThat(subject.getSpecificity(Regulation.UP), is(0));
     }
 
@@ -138,14 +145,14 @@ public class DifferentialProfileTest {
     public void getAverageExpressionLevelOnShouldReturnAverageValueOfBoth() throws Exception {
         //given
         given(differentialExpressionMock1.isRegulatedLike(Regulation.DOWN)).willReturn(true);
-        given(differentialExpressionMock1.getLevel()).willReturn(0.3D);
+        given(differentialExpressionMock1.getLevel()).willReturn(-0.3D);
         given(differentialExpressionMock1.isKnown()).willReturn(true);
         Contrast contrastMock1 = mock(Contrast.class);
         given(differentialExpressionMock1.getContrast()).willReturn(contrastMock1);
 
         given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
         Contrast contrastMock2 = mock(Contrast.class);
-        given(differentialExpressionMock2.getLevel()).willReturn(0.5D);
+        given(differentialExpressionMock2.getLevel()).willReturn(-0.5D);
         given(differentialExpressionMock2.isKnown()).willReturn(true);
         given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
 

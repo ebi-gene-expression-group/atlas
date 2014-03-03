@@ -69,8 +69,8 @@ public class BioentitiesPageGeneQueryDifferentSpeciesIT extends SinglePageSeleni
     @Test
     public void checkDifferentialDisplaysGeneAndOrganismColumnWithValuesForEachSpecies() {
         subject.clickDifferentialDisplayLevelsButton();
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Arl8b", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "Arl8b"));
-        assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Mus musculus", "Homo sapiens", "Homo sapiens", "Homo sapiens", "Homo sapiens", "Mus musculus"));
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Arl8b", "Arl8b", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306"));
+        assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Mus musculus", "Mus musculus", "Homo sapiens", "Homo sapiens", "Homo sapiens", "Homo sapiens"));
     }
 
 

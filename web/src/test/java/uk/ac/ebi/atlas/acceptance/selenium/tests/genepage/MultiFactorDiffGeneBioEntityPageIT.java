@@ -51,12 +51,12 @@ public class MultiFactorDiffGeneBioEntityPageIT extends SinglePageSeleniumFixtur
         subject.clickDisplayLevelsButton();
         assertThat(subject.getContrastColumn(), contains(
                 "treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'"));
-        assertThat(subject.getPValues(), hasItems("8.94 × 10-4"));
+        assertThat(subject.getFoldChange(), hasItems("3.77"));
     }
 
     @Test
     public void checkHeatmap() {
-        assertThat(subject.getDiffHeatmapHeaders(), contains("Design Element", "Contrast", "Adjusted P-value"));
+        assertThat(subject.getDiffHeatmapHeaders(), contains("Design Element", "Contrast", "Log2-fold change"));
         assertThat(subject.getDiffHeatmapRow(1), contains("256252_at", "treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'", ""));
     }
 

@@ -61,14 +61,14 @@ public class RnaSeqProfilesHeatMapIT {
         RnaSeqProfile profile1 = (RnaSeqProfile) profiles.get(0);
         DifferentialExpression g1_g2Expression = profile1.getExpression(experiment.getContrast("g1_g2"));
 
-        assertThat(profile1.getName(), is("AT1G33840"));
-        assertThat(g1_g2Expression.getLevel(), is(1.20805302393608E-16));
-        assertThat(g1_g2Expression.getFoldChange(), is(5.6341090817188));
+        assertThat(profile1.getName(), is("AT3G48131"));
+        assertThat(g1_g2Expression.getPValue(), is(4.2479998366313E-5));
+        assertThat(g1_g2Expression.getFoldChange(), is(6.89620951324986));
 
         System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
 
         assertThat(profiles.getTotalResultCount(), is(51));
-        assertThat(profiles.extractGeneNames(), (Matcher)contains("AT1G33840", "F14M2.2", "T5N23_130", "AT5G35207", "GRXS4", "RSU1", "AT5G62920", "AT4G04223", "AT3G48131", "NRPD1B", "AT2G05200", "GRXS5", "AT5G35935", "T5N23_90", "ATPF", "AT5G40450", "AT3G59765", "AT2G07733", "AT5G11090", "AT5G28300", "F13F21.6", "AT5G35205", "AT5G52070", "AT5G24240", "ATMG00410", "ATMG00510", "ANAC003", "GRXS10", "ATCG00490", "AT2G16310", "AT4G04293", "AT1G11785", "AT5G27850", "AT1G62310", "AT5G24150", "MYR1", "F21F23.9", "PSBE", "SEN1", "AT5G27845", "AT1G12730", "ATMRU1", "AT2G35382", "GRXS13", "AT5G26220", "AT5G61190", "GRXS3", "GRXS8", "ATMSRB6", "DML1"));
+        assertThat(profiles.extractGeneNames(), (Matcher)contains("AT3G48131", "F14M2.2", "AT1G33840", "AT5G35207", "RSU1", "AT5G27845", "T5N23_130", "AT5G35205", "T5N23_90", "AT2G16310", "AT4G04293", "AT2G05200", "AT5G24240", "AT1G11785", "AT4G04223", "NRPD1B", "ATMG00510", "ANAC003", "AT5G62920", "GRXS4", "AT5G35935", "AT5G52070", "PSBE", "GRXS5", "GRXS10", "F21F23.9", "ATMG00410", "AT1G12730", "AT3G59765", "AT5G27850", "ATPF", "AT5G11090", "AT2G07733", "AT5G28300", "F13F21.6", "AT5G40450", "GRXS8", "GRXS3", "GRXS13", "AT5G24150", "AT1G62310", "AT5G26220", "ATCG00490", "MYR1", "SEN1", "AT2G35382", "ATMRU1", "AT5G61190", "ATMSRB6", "DML1"));
     }
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400?_specific=on
@@ -81,7 +81,7 @@ public class RnaSeqProfilesHeatMapIT {
         System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
 
         assertThat(profiles.getTotalResultCount(), is(51));
-        assertThat(profiles.extractGeneNames(), (Matcher)contains("DML1", "AT3G29644", "AT1G33840", "F14M2.2", "T5N23_130", "AT5G35207", "GRXS4", "RSU1", "AT5G62920", "AT4G04223", "AT3G48131", "NRPD1B", "AT2G05200", "GRXS5", "AT5G35935", "T5N23_90",  "ATPF", "AT5G40450", "AT3G59765", "AT2G07733", "AT5G11090", "AT5G28300", "F13F21.6", "AT5G35205", "AT5G52070", "AT5G24240", "ATMG00410", "ATMG00510", "ANAC003", "GRXS10", "ATCG00490", "AT2G16310", "AT4G04293", "AT1G11785", "AT5G27850", "AT1G62310", "MYR1", "AT5G24150", "F21F23.9", "SEN1", "PSBE", "AT5G27845", "AT1G12730", "ATMRU1", "AT2G35382", "GRXS13", "AT5G26220", "AT5G61190", "GRXS3", "ATMSRB6"));
+        assertThat(profiles.extractGeneNames(), (Matcher)contains("AT3G48131", "DML1", "F14M2.2", "AT3G29644", "AT1G33840", "AT5G35207", "RSU1", "AT5G27845", "T5N23_130", "AT5G35205", "T5N23_90", "AT2G16310", "AT4G04293", "AT2G05200", "AT5G24240", "AT1G11785", "AT4G04223", "NRPD1B", "ATMG00510", "ANAC003", "AT5G62920", "GRXS4", "AT5G35935", "AT5G52070", "PSBE", "GRXS5", "GRXS10", "F21F23.9", "ATMG00410", "AT1G12730", "AT3G59765", "AT5G27850", "ATPF", "AT5G11090", "AT2G07733", "AT5G28300", "F13F21.6", "AT5G40450", "GRXS8", "GRXS3", "GRXS13", "AT5G24150", "AT1G62310", "AT5G26220", "ATCG00490", "MYR1", "SEN1", "AT2G35382", "ATMRU1", "AT5G61190"));
     }
 
 
@@ -94,8 +94,8 @@ public class RnaSeqProfilesHeatMapIT {
 
         System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
 
-        assertThat(profiles.getTotalResultCount(), is(148));
-        assertThat(profiles.extractGeneNames(), (Matcher)contains("Cldn8", "Lactbl1", "Tph1", "Ivd", "Fmo1", "Matn2", "Chgb", "Cish", "Lrrc55", "Neb", "Ogdhl", "Ehhadh", "Wipi1", "Rgs2", "Tmem255a", "Gpr26", "Reg3b", "Vip", "Prlr", "Dnahc8", "Hsbp1", "Tnfrsf11b", "Npas4", "Dnajb1", "Enpp2", "Sftpd", "Reg3a", "Disp2", "Igfals", "B3galnt1", "Ikzf4", "Nr4a1", "Cspg5", "Dnaja1", "Ern1", "Dhcr7", "Junb", "Aqp4", "Ovol2", "Hspa1a", "Igfbp5", "Lonrf3", "Nupr1", "Dusp1", "Gabbr2", "Rab3d", "Znrf2", "Hsph1", "Socs2", "Rnf182"));
+        assertThat(profiles.getTotalResultCount(), is(108));
+        assertThat(profiles.extractGeneNames(), (Matcher)contains("Lactbl1", "Prok1", "Gpr26", "Lrrc55", "Tph1", "Cldn8", "Fmo1", "Sftpd", "Lonrf3", "Neb", "Tnfrsf11b", "Fmo4", "Mctp1", "Tph2", "Ivd", "Matn2", "Dnahc8", "Cspg5", "Gbp8", "Cish", "Ehhadh", "Reg3b", "Cartpt", "Grem2", "Chgb", "Reg3a", "Tmem255a", "Ikzf4", "Gm16314", "Grp", "Ovol2", "Cntn3", "Synpr", "Npas4", "Txnrd2", "Acvr1c", "Rnf182", "Syce2", "Aqp4", "Grhl1", "Wipi1", "Rgs2", "Ogdhl", "Gas2", "Dnmt3b", "Hspa1b", "Vip", "Igfals", "Dhcr7", "Reg3d"));
     }
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400?regulation=UP
@@ -108,7 +108,7 @@ public class RnaSeqProfilesHeatMapIT {
         System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
 
         assertThat(profiles.getTotalResultCount(), is(36));
-        assertThat(profiles.extractGeneNames(), (Matcher)contains("AT1G33840", "F14M2.2", "T5N23_130", "AT5G35207", "GRXS4", "RSU1", "AT5G62920", "AT4G04223", "AT3G48131", "AT2G05200", "GRXS5", "AT5G35935", "T5N23_90", "AT3G59765", "AT5G11090", "F13F21.6", "AT5G35205", "AT5G52070", "AT5G24240", "ANAC003", "GRXS10", "AT4G04293", "AT2G16310", "AT1G11785", "AT5G27850", "AT5G24150", "F21F23.9", "AT5G27845", "ATMRU1", "AT2G35382", "GRXS13", "AT5G26220", "GRXS3", "ATMSRB6", "GRXS8",  "AT3G29644"));
+        assertThat(profiles.extractGeneNames(), (Matcher)contains("AT3G48131", "F14M2.2", "AT1G33840", "AT5G35207", "RSU1", "AT5G27845", "T5N23_130", "AT5G35205", "T5N23_90", "AT2G16310", "AT4G04293", "AT2G05200", "AT5G24240", "AT1G11785", "AT4G04223", "ANAC003", "AT5G62920", "GRXS4", "AT5G35935", "AT5G52070", "GRXS5", "GRXS10", "F21F23.9", "AT3G59765", "AT5G27850", "AT5G11090", "F13F21.6", "GRXS8", "GRXS3", "GRXS13", "AT5G24150", "AT5G26220", "AT2G35382", "ATMRU1", "ATMSRB6", "AT3G29644"));
     }
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400?regulation=DOWN
@@ -121,7 +121,7 @@ public class RnaSeqProfilesHeatMapIT {
         System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
 
         assertThat(profiles.getTotalResultCount(), is(15));
-        assertThat(profiles.extractGeneNames(), (Matcher)contains("NRPD1B", "AT2G07733", "AT5G40450", "ATPF", "AT5G28300", "ATMG00410", "ATMG00510", "ATCG00490", "AT1G62310", "MYR1", "PSBE", "SEN1", "AT1G12730", "AT5G61190", "DML1"));
+        assertThat(profiles.extractGeneNames(), (Matcher)contains("NRPD1B", "ATMG00510", "PSBE", "ATMG00410", "AT1G12730", "ATPF", "AT2G07733", "AT5G28300", "AT5G40450", "AT1G62310", "ATCG00490", "MYR1", "SEN1", "AT5G61190", "DML1"));
     }
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400?cutoff=0.002
@@ -134,7 +134,20 @@ public class RnaSeqProfilesHeatMapIT {
         System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
 
         assertThat(profiles.getTotalResultCount(), is(27));
-        assertThat(profiles.extractGeneNames(), (Matcher)contains("AT1G33840", "F14M2.2", "T5N23_130", "AT3G29644", "AT5G35207", "GRXS4", "RSU1", "AT5G62920", "AT4G04223", "NRPD1B", "AT3G48131", "AT2G05200", "GRXS5", "AT5G35935", "T5N23_90", "AT2G07733", "AT5G40450", "AT3G59765", "ATPF", "AT5G11090", "AT5G28300", "F13F21.6", "AT5G35205", "AT5G52070", "AT5G24240", "ATMG00410", "DML1"));
+        assertThat(profiles.extractGeneNames(), (Matcher)contains("AT3G48131", "F14M2.2", "AT1G33840", "AT5G35207", "RSU1", "T5N23_130", "AT3G29644", "AT5G35205", "T5N23_90", "AT2G05200", "AT5G24240", "AT4G04223", "NRPD1B", "AT5G62920", "GRXS4", "AT5G35935", "AT5G52070", "GRXS5", "ATMG00410", "AT3G59765", "ATPF", "AT5G11090", "AT2G07733", "AT5G28300", "F13F21.6", "AT5G40450", "DML1"));
+    }
+
+    // http://localhost:8080/gxa/experiments/E-GEOD-38400?foldChangeCutOff=5
+    @Test
+    public void withFoldChangeCutoff() throws GenesNotFoundException {
+        requestPreferences.setFoldChangeCutOff(5);
+        RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
+        DifferentialProfilesList profiles = subject.fetch(requestContext);
+
+        System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
+
+        assertThat(profiles.getTotalResultCount(), is(5));
+        assertThat(profiles.extractGeneNames(), (Matcher)contains("AT3G48131", "F14M2.2", "AT1G33840", "AT5G35207", "RSU1"));
     }
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400?queryFactorValues=g1_g2&_specific=on
@@ -148,7 +161,7 @@ public class RnaSeqProfilesHeatMapIT {
         System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
 
         assertThat(profiles.getTotalResultCount(), is(19));
-        assertThat(profiles.extractGeneNames(), (Matcher)contains("AT1G33840", "F14M2.2", "AT5G35207", "RSU1", "NRPD1B", "AT3G48131", "AT2G05200", "DML1", "AT5G35205", "AT5G52070", "AT5G24240", "ANAC003", "AT2G16310", "AT4G04293", "AT5G27850", "F21F23.9", "AT3G29644", "AT5G27845", "AT1G12730"));
+        assertThat(profiles.extractGeneNames(), (Matcher)contains("AT3G48131", "F14M2.2", "AT1G33840", "AT5G35207", "RSU1", "AT5G27845", "AT5G35205", "DML1", "AT2G16310", "AT4G04293", "AT3G29644", "AT2G05200", "AT5G24240", "NRPD1B", "ANAC003", "AT5G52070", "F21F23.9", "AT1G12730", "AT5G27850"));
     }
 
     //  http://localhost:8080/gxa/experiments/E-GEOD-38400?queryFactorValues=g1_g2
@@ -161,7 +174,7 @@ public class RnaSeqProfilesHeatMapIT {
         System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
 
         assertThat(profiles.getTotalResultCount(), is(17));
-        assertThat(profiles.extractGeneNames(), (Matcher) contains("AT1G33840", "F14M2.2", "AT5G35207", "RSU1", "NRPD1B", "AT3G48131", "AT2G05200", "AT5G35205", "AT5G52070", "AT5G24240", "ANAC003", "AT2G16310", "AT4G04293", "AT5G27850", "F21F23.9", "AT5G27845", "AT1G12730"));
+        assertThat(profiles.extractGeneNames(), (Matcher) contains("AT3G48131", "F14M2.2", "AT1G33840", "AT5G35207", "RSU1", "AT5G27845", "AT5G35205", "AT2G16310", "AT4G04293", "AT2G05200", "AT5G24240", "NRPD1B", "ANAC003", "AT5G52070", "F21F23.9", "AT1G12730", "AT5G27850"));
     }
 
     private void setGeneQuery(String geneQuery) {

@@ -32,7 +32,7 @@ import static org.junit.Assert.assertThat;
 
 public class MaPlotButtonsIT extends SeleniumFixture {
 
-    private static final String E_GEOD_3779_ACCESSION = "E-GEOD-3779";
+    private static final String E_GEOD_3779_ACCESSION = "E-GEOD-3779?foldChangeCutOff=0";
     protected HeatmapTableWithMaPlotButtonsPage subject;
 
     @Before

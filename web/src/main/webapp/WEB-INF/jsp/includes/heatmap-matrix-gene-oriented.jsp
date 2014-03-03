@@ -108,7 +108,7 @@
                                         </c:when>
                                         <c:otherwise>
                                             <c:set var="cellColour"
-                                                   value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - geneProfiles.getMaxDownRegulatedExpressionLevel(), 1 - geneProfiles.getMinDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
+                                                   value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - geneProfiles.getMinDownRegulatedExpressionLevel(), 1 - geneProfiles.getMaxDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:otherwise>
