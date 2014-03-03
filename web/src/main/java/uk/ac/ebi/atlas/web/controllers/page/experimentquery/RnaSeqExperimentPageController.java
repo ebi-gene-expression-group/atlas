@@ -28,7 +28,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.RankRnaSeqProfilesCommand;
+import uk.ac.ebi.atlas.commands.RnaSeqProfilesHeatMap;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
@@ -45,9 +45,9 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
 
     @Inject
     public RnaSeqExperimentPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
-                                          RankRnaSeqProfilesCommand rnaSeqRankProfilesCommand,
+                                          RnaSeqProfilesHeatMap profilesHeatMap,
                                           DownloadURLBuilder downloadURLBuilder) {
-        super(rnaSeqRequestContextBuilder, rnaSeqRankProfilesCommand, downloadURLBuilder);
+        super(rnaSeqRequestContextBuilder, profilesHeatMap, downloadURLBuilder);
     }
 
     @Override

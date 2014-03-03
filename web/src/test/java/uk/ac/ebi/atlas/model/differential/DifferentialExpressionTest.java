@@ -34,7 +34,12 @@ public class DifferentialExpressionTest {
 
     @Test
     public void testGetLevel() {
-        assertThat(subject.getLevel(), is(PVALUE));
+        assertThat(subject.getLevel(), is(FOLD_CHANGE));
+    }
+
+    @Test
+    public void testGetPValue() {
+        assertThat(subject.getPValue(), is(PVALUE));
     }
 
     @Test
@@ -90,7 +95,7 @@ public class DifferentialExpressionTest {
         DifferentialExpression expression = new DifferentialExpression(SMALLPVALUE, -1.0, null);
 
         //then
-        assertThat(expression.getLevel(), is(0D));
+        assertThat(expression.getPValue(), is(0D));
     }
 
 }

@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.WriteHeatMapBaselineProfilesCommand;
+import uk.ac.ebi.atlas.commands.BaselineProfilesWriteCommand;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -54,7 +54,7 @@ public class BaselineExperimentDownloadControllerTest {
     private FilterFactorsConverter filterFactorsConverterMock;
 
     @Mock
-    private WriteHeatMapBaselineProfilesCommand writeBaselineProfilesCommandMock;
+    private BaselineProfilesWriteCommand writeBaselineProfilesCommandMock;
 
     @Mock
     private HttpServletRequest requestMock;
@@ -94,7 +94,7 @@ public class BaselineExperimentDownloadControllerTest {
         when(requestContextBuilderMock.build()).thenReturn(baselineRequestContextMock);
 
         when(responseMock.getWriter()).thenReturn(printWriterMock);
-        when(writeBaselineProfilesCommandMock.execute(baselineRequestContextMock)).thenReturn(0L);
+        when(writeBaselineProfilesCommandMock.write(baselineRequestContextMock)).thenReturn(0L);
 
         subject.downloadGeneProfiles(requestMock, preferencesMock, responseMock);
 
@@ -102,6 +102,6 @@ public class BaselineExperimentDownloadControllerTest {
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
         verify(writeBaselineProfilesCommandMock).setResponseWriter(printWriterMock);
-        verify(writeBaselineProfilesCommandMock).execute(baselineRequestContextMock);
+        verify(writeBaselineProfilesCommandMock).write(baselineRequestContextMock);
     }
 }

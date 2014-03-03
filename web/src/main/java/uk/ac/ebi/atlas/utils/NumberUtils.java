@@ -24,9 +24,11 @@ package uk.ac.ebi.atlas.utils;
 
 import org.apache.commons.math.util.MathUtils;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.inject.Named;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 @Named("numberUtils")
 @Scope("singleton")
@@ -49,7 +51,16 @@ public class NumberUtils {
     public double round(double value) {
         int numberOfFractionalDigits = value >= 1 ? FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE
                 : FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ONE;
-        return MathUtils.round(value, numberOfFractionalDigits);
+        return round(value, numberOfFractionalDigits);
+    }
+
+    public String htmlFormatDoubleEncoded(double number) {
+        return HtmlUtils.htmlEscape(htmlFormatDouble(number));
+    }
+
+
+    public double round(double number, int maxFractionDigits) {
+        return MathUtils.round(number, maxFractionDigits);
     }
 
     public String htmlFormatDouble(double number) {

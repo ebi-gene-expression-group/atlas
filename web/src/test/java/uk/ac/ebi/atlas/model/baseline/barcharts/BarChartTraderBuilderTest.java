@@ -33,8 +33,8 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.streams.BaselineExpressionsInputStreamFactory;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
 import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsInputStream;
 
 import java.util.*;
@@ -77,7 +77,7 @@ public class BarChartTraderBuilderTest {
     private BaselineExperimentsCache experimentsCacheMock;
 
     @Mock
-    private InputStreamFactory inputStreamFactory;
+    private BaselineExpressionsInputStreamFactory baselineExpressionsInputStreamFactory;
 
     @Mock
     private CutoffScale cutoffScale;
@@ -119,9 +119,9 @@ public class BarChartTraderBuilderTest {
         when(inputStream.readNext()).thenReturn(GENE_PROFILE_1).thenReturn(GENE_PROFILE_2).thenReturn(null);
 
         //mock stream builder
-        when(inputStreamFactory.createGeneExpressionsInputStream(anyString())).thenReturn(inputStream);
+        when(baselineExpressionsInputStreamFactory.createGeneExpressionsInputStream(anyString())).thenReturn(inputStream);
 
-        subject = new BitIndexBuilder(inputStreamFactory, cutoffScale);
+        subject = new BitIndexBuilder(baselineExpressionsInputStreamFactory, cutoffScale);
 
     }
 

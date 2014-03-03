@@ -132,7 +132,7 @@ public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable,
                 dbExpression.getDesignElement(),
                 dbExpression.getSpecies(),
                 dbExpression.getContrastDisplayName(),
-                expressionValueAsString(expression.getLevel()),
+                expressionValueAsString(expression.getPValue()),
                 expressionValueAsString(expression.getFoldChange()),
                 expressionValueAsString(tstatistic)
         };

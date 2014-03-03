@@ -24,7 +24,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:util="http://www.springframework.org/schema/util" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -33,9 +33,7 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd
            http://www.springframework.org/schema/util
-           http://www.springframework.org/schema/util/spring-util-3.0.xsd
-           http://www.springframework.org/schema/jdbc
-           http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+           http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 
     <!-- enables annotation-based dependency injection -->
@@ -52,11 +50,6 @@
     <bean id="baselineExperimentLoader" class="uk.ac.ebi.atlas.trader.loader.BaselineExperimentsCacheLoader">
         <lookup-method name="createExperimentBuilder" bean="baselineExperimentBuilder"/>
         <lookup-method name="createExperimentalFactorsBuilder" bean="experimentalFactorsBuilder"/>
-    </bean>
-
-    <bean id="rankProfilesCommandFactory" class="uk.ac.ebi.atlas.commands.RankProfilesCommandFactory">
-        <lookup-method name="getRankRnaSeqProfilesCommand" bean="rankRnaSeqProfilesCommand"/>
-        <lookup-method name="getRankMicroarrayProfilesCommand" bean="rankMicroarrayProfilesCommand"/>
     </bean>
 
     <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.trader.loader.BarChartTradersCacheLoader">

@@ -130,7 +130,7 @@ public class DifferentialProfileTest {
         subject.add(differentialExpressionMock2);
 
         //then
-        double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock1, contrastMock2), Regulation.DOWN);
+        double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock1, contrastMock2));
         assertThat(averageExpressionLevelOn, is(0.15));
     }
 
@@ -154,7 +154,7 @@ public class DifferentialProfileTest {
         subject.add(differentialExpressionMock2);
 
         //then
-        double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock1, contrastMock2), Regulation.DOWN);
+        double averageExpressionLevelOn = subject.getAverageExpressionLevelOn(Sets.newHashSet(contrastMock1, contrastMock2));
         assertThat(averageExpressionLevelOn, is(0.4D));
     }
 

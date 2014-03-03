@@ -26,9 +26,11 @@ import com.jayway.jsonpath.JsonPath;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.net.URI;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -62,9 +64,22 @@ public class BioontologyClient {
             return 0 != hitsCount.get(0);
 
         }catch (RuntimeException e){
-            LOGGER.error(e.getMessage(), e);
-            throw e;
+
+            UriTemplate uriTemplate = new UriTemplate(bioontologyServiceEndPoint);
+            URI expanded = uriTemplate.expand(ontologyTerm);
+            String errorMessage = "Cannot access " + expanded + " " + e.getMessage();
+
+            LOGGER.error(errorMessage, e);
+            throw new BioOntologyClientException(errorMessage, e);
         }
+    }
+
+    private class BioOntologyClientException extends RuntimeException {
+
+        public BioOntologyClientException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
     }
 
 }

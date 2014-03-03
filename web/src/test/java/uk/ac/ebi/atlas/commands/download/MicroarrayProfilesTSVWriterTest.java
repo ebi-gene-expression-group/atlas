@@ -57,8 +57,8 @@ import static org.mockito.Mockito.*;
 public class MicroarrayProfilesTSVWriterTest {
 
     private static final String HEADER_TEMPLATE = "# Expression Atlas version: 0.1.4-SNAPSHOT\n" +
-            "# Query: Genes matching: ''{0}''{1},{2}{3} differentially expressed in {4} given the False Discovery Rate cutoff: {5} in experiment {6}\n" +
-            "# Timestamp: {7}";
+            "# Query: Genes matching: ''{0}''{1},{2}{3} differentially expressed in {4} given the p-value cutoff {5} and log2-fold change cutoff {6} in experiment {7}\n" +
+            "# Timestamp: {8}";
 
     @Mock
     private MicroarrayProfile geneProfileMock;
@@ -112,7 +112,7 @@ public class MicroarrayProfilesTSVWriterTest {
 
         //given
         when(expressionMock.getFoldChange()).thenReturn(-0.978932452151424);
-        when(expressionMock.getLevel()).thenReturn(0.134707651014487);
+        when(expressionMock.getPValue()).thenReturn(0.134707651014487);
         when(expressionMock.getTstatistic()).thenReturn(0.0099999999);
     }
 
@@ -159,7 +159,7 @@ public class MicroarrayProfilesTSVWriterTest {
         assertThat(stringArgumentCaptor.getValue(), startsWith("# Expression Atlas version:"));
 
         assertThat(stringArgumentCaptor.getValue() , containsString(
-                "\n# Query: Genes matching: '', up differentially expressed in any contrast given the False Discovery Rate cutoff: 0 in experiment ACCESSION" +
+                "\n# Query: Genes matching: '', up differentially expressed in any contrast given the p-value cutoff 0 and log2-fold change cutoff 0 in experiment ACCESSION" +
                         "\n# Timestamp: "));
 
         verify(responseWriterMock).write("Gene ID\tGene Name\tDesign Element\tcond1.p-value\tcond1.log2foldchange\tcond1.t-statistic\tcond2.p-value\tcond2.log2foldchange\tcond2.t-statistic\n", 0, 139);

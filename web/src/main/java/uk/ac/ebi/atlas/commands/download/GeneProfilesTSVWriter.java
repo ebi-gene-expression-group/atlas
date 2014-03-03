@@ -48,7 +48,7 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
         this.csvWriterFactory = csvWriterFactory;
     }
 
-    public Long write(GeneProfilesList<T> geneProfilesList, Set<K> conditions) throws IOException {
+    public long write(GeneProfilesList<T> geneProfilesList, Set<K> conditions) throws IOException {
 
         responseWriter.write(getTsvFileMasthead() + "\n");
         csvWriter.writeNext(buildCsvColumnHeaders(conditions));
@@ -63,7 +63,7 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
         return (long) geneProfilesList.size();
     }
 
-    public Long write(ObjectInputStream<T> inputStream, Set<K> conditions) throws IOException {
+    public long write(ObjectInputStream<T> inputStream, Set<K> conditions) throws IOException {
 
         responseWriter.write(getTsvFileMasthead() + "\n");
         csvWriter.writeNext(buildCsvColumnHeaders(conditions));
@@ -81,7 +81,7 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
         return count;
     }
 
-    public Long write(Iterable<T> inputStream, Set<K> conditions) throws IOException {
+    public long write(Iterable<T> inputStream, Set<K> conditions) throws IOException {
 
         responseWriter.write(getTsvFileMasthead() + "\n");
         csvWriter.writeNext(buildCsvColumnHeaders(conditions));

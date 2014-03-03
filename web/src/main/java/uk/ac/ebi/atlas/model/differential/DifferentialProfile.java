@@ -34,8 +34,7 @@ import static java.lang.Math.min;
 
 public class DifferentialProfile<T extends DifferentialExpression> extends Profile<Contrast, T> implements DifferentialExpressionLimits {
 
-    private static final double MIN_EXPRESSION_LEVEL = 1D;
-    private static final int MAX_PVALUE = 1;
+    private static final double MIN_P_VALUE = 1;
     private double maxUpRegulatedExpressionLevel = 0D;
     private double minUpRegulatedExpressionLevel = Double.MAX_VALUE;
     private double maxDownRegulatedExpressionLevel = 0D;
@@ -49,7 +48,7 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         super(geneId, geneName);
     }
 
-    DifferentialProfile add(T expression) {
+    public DifferentialProfile add(T expression) {
         addExpression(expression.getContrast(), expression);
         return this;
     }
@@ -80,64 +79,75 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
         return getSpecificity();
     }
 
-    public double getAverageExpressionLevelOn(Set<Contrast> conditions, Regulation regulation) {
-        checkArgument(!CollectionUtils.isEmpty(conditions),
+    public double getStrongestExpressionLevelOn(Set<Contrast> queryContrasts) {
+        double expressionLevel = DifferentialExpression.WEAKEST_LEVEL;
+
+        for (Contrast condition : queryContrasts) {
+            Double level = getKnownExpressionLevel(condition);
+            if (level != null) {
+                expressionLevel = max(expressionLevel, Math.abs(level));
+            }
+        }
+        return expressionLevel;
+    }
+
+    public double getAverageExpressionLevelOn(Set<Contrast> contrasts) {
+        checkArgument(!CollectionUtils.isEmpty(contrasts),
                 "This method must be invoked with all conditions when the set of selected conditions is empty");
 
         double expressionLevel = 0D;
 
-        for (Contrast condition : conditions) {
-            Double level = getExpressionLevel(condition);
+        for (Contrast contrast : contrasts) {
+            Double level = getKnownExpressionLevel(contrast);
             if (level != null) {
-                expressionLevel += level;
-            } else {
-                expressionLevel += MIN_EXPRESSION_LEVEL;
+                expressionLevel += Math.abs(level);
             }
-
         }
 
-        return expressionLevel / conditions.size();
+        return expressionLevel / contrasts.size();
+    }
+
+    public double getAveragePValueOn(Set<Contrast> contrasts) {
+        checkArgument(!CollectionUtils.isEmpty(contrasts),
+                "This method must be invoked with all conditions when the set of selected conditions is empty");
+
+        double pValueTotal = 0D;
+
+        for (Contrast contrast : contrasts) {
+            T expression = getExpression(contrast);
+            if (expression != null && expression.isKnown()) {
+                pValueTotal += expression.getPValue();
+            } else {
+                pValueTotal += MIN_P_VALUE;
+            }
+        }
+
+        return pValueTotal / contrasts.size();
     }
 
     @Override
-    protected void updateProfileExpression(DifferentialExpression differentialExpression) {
+    protected void addExpression(DifferentialExpression differentialExpression) {
         if (differentialExpression.isOverExpressed()) {
-            updateUpRegulatedProfileExpression(differentialExpression.getLevel());
-            upRegulatedExpressionsCount++;
+            addUpRegulatedExpression(differentialExpression.getLevel());
         } else if (differentialExpression.isUnderExpressed()) {
-            updateDownRegulatedProfileExpression(differentialExpression.getLevel());
-            downRegulatedExpressionsCount++;
+            addDownRegulatedExpression(differentialExpression.getLevel());
         }
     }
 
-    void updateUpRegulatedProfileExpression(double expressionLevel) {
+    void addUpRegulatedExpression(double expressionLevel) {
         maxUpRegulatedExpressionLevel = max(maxUpRegulatedExpressionLevel, expressionLevel);
         minUpRegulatedExpressionLevel = min(minUpRegulatedExpressionLevel, expressionLevel);
+        upRegulatedExpressionsCount++;
     }
 
-    void updateDownRegulatedProfileExpression(double expressionLevel) {
+    void addDownRegulatedExpression(double expressionLevel) {
         maxDownRegulatedExpressionLevel = max(maxDownRegulatedExpressionLevel, expressionLevel);
         minDownRegulatedExpressionLevel = min(minDownRegulatedExpressionLevel, expressionLevel);
+        downRegulatedExpressionsCount++;
     }
 
     public double getMinExpressionLevel() {
         return min(minUpRegulatedExpressionLevel, minDownRegulatedExpressionLevel);
     }
 
-    public double getMinExpressionLevelOn(Set<Contrast> queryContrasts, Regulation regulation) {
-        //checkArgument(CollectionUtils.isNotEmpty(queryContrasts));
-        if(queryContrasts.isEmpty()){
-            return MAX_PVALUE;
-        }
-
-        double expressionLevel = MAX_PVALUE;
-
-        for (Contrast condition : queryContrasts) {
-            Double level = getExpressionLevel(condition);
-            if (level != null) {
-                expressionLevel = min(expressionLevel, level);
-            }
-        }
-        return expressionLevel;
-    }
 }

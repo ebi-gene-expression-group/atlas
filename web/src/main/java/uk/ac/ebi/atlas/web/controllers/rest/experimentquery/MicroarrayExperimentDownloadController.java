@@ -28,7 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.WriteMicroarrayProfilesCommand;
+import uk.ac.ebi.atlas.commands.MicroarrayProfilesWriter;
+import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.commands.download.DataWriterFactory;
 import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
@@ -60,16 +61,16 @@ public class MicroarrayExperimentDownloadController {
 
     private final MicroarrayRequestContextBuilder requestContextBuilder;
 
-    private WriteMicroarrayProfilesCommand writeGeneProfilesCommand;
+    private MicroarrayProfilesWriter profilesWriter;
 
     private DataWriterFactory dataWriterFactory;
 
     @Inject
     public MicroarrayExperimentDownloadController(
-            MicroarrayRequestContextBuilder requestContextBuilder, WriteMicroarrayProfilesCommand writeGeneProfilesCommand, DataWriterFactory dataWriterFactory) {
+            MicroarrayRequestContextBuilder requestContextBuilder, MicroarrayProfilesWriter profilesWriter, DataWriterFactory dataWriterFactory) {
 
         this.requestContextBuilder = requestContextBuilder;
-        this.writeGeneProfilesCommand = writeGeneProfilesCommand;
+        this.profilesWriter = profilesWriter;
         this.dataWriterFactory = dataWriterFactory;
     }
 
@@ -84,12 +85,13 @@ public class MicroarrayExperimentDownloadController {
 
         prepareResponse(response, experiment.getAccession(), experiment.getArrayDesignAccessions(), QUERY_RESULTS_TSV);
 
+        MicroarrayRequestContext requestContext = requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
+
         if (experiment.getArrayDesignAccessions().size() == 1) {
 
-            preferences.setArrayDesignAccession(experiment.getArrayDesignAccessions().first());
-            requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
+            String arrayDesign = experiment.getArrayDesignAccessions().first();
 
-            writeMicroarrayGeneProfiles(response.getWriter(), experiment);
+            writeMicroarrayGeneProfiles(response.getWriter(), experiment, requestContext, arrayDesign);
 
         } else {
 
@@ -103,12 +105,7 @@ public class MicroarrayExperimentDownloadController {
 
                 zipOutputStream.putNextEntry(ze);
 
-                //(B) this is very broken. It's overriding the same parameter for every array design
-                preferences.setArrayDesignAccession(selectedArrayDesign);
-                requestContextBuilder.forExperiment(experiment).withPreferences(preferences).build();
-                //
-
-                writeMicroarrayGeneProfiles(new PrintWriter(zipOutputStream), experiment);
+                writeMicroarrayGeneProfiles(new PrintWriter(zipOutputStream), experiment, requestContext, selectedArrayDesign);
 
                 zipOutputStream.closeEntry();
             }
@@ -118,12 +115,10 @@ public class MicroarrayExperimentDownloadController {
 
     }
 
-    void writeMicroarrayGeneProfiles(PrintWriter writer, MicroarrayExperiment experiment){
-        writeGeneProfilesCommand.setResponseWriter(writer);
-
+    void writeMicroarrayGeneProfiles(PrintWriter writer, MicroarrayExperiment experiment, MicroarrayRequestContext requestContext, String arrayDesign){
         try {
 
-            long genesCount = writeGeneProfilesCommand.execute(experiment.getAccession());
+            long genesCount = profilesWriter.write(writer, requestContext, arrayDesign);
             LOGGER.info("<writeMicroarrayGeneProfiles> wrote " + genesCount + " genes for experiment " + experiment.getAccession());
 
         } catch (GenesNotFoundException e) {

@@ -44,8 +44,8 @@ public class BaselineProfileTest {
 
     private static final String QUERY_FACTOR_TYPE = "ORGANISM_PART";
 
-    private static String GENE_ID = "geneId_1";
-    private static String GENE_NAME = "geneName_1";
+    private static final String GENE_ID = "geneId_1";
+    private static final String GENE_NAME = "geneName_1";
 
     private Factor factor1 = new Factor(QUERY_FACTOR_TYPE, "nose");
     private Factor factor2 = new Factor(QUERY_FACTOR_TYPE, "trunk");
@@ -57,9 +57,6 @@ public class BaselineProfileTest {
     private BaselineExpression expression_3 = new BaselineExpression(3.001D, new FactorSet().add(factor3));
 
     private BaselineProfile subject;
-
-    private double cutoff  = 0.5;
-    //private GeneProfile.Builder geneProfileBuilder;
 
     @Before
     public void setUp() throws Exception {
@@ -105,10 +102,10 @@ public class BaselineProfileTest {
 
         subject.sumProfile(buildOtherProfile());
         assertThat(subject.getId(), is(subject.getId()));
-        assertThat(subject.getExpressionLevel(factor1), is(2.2D + 1D));
-        assertThat(subject.getExpressionLevel(factor2), is(3D + 2D));
-        assertThat(subject.getExpressionLevel(factor3), is(3.001D + 3D));
-        assertThat(subject.getExpressionLevel(factor4), is(300D));
+        assertThat(subject.getKnownExpressionLevel(factor1), is(2.2D + 1D));
+        assertThat(subject.getKnownExpressionLevel(factor2), is(3D + 2D));
+        assertThat(subject.getKnownExpressionLevel(factor3), is(3.001D + 3D));
+        assertThat(subject.getKnownExpressionLevel(factor4), is(300D));
 
     }
 
@@ -119,10 +116,10 @@ public class BaselineProfileTest {
 
         subject.sumProfile(otherProfile);
         assertThat(subject.getId(), is(GENE_ID));
-        assertThat(subject.getExpressionLevel(factor1), is(subject.getExpressionLevel(factor1)));
-        assertThat(subject.getExpressionLevel(factor2), is(6D));
-        assertThat(subject.getExpressionLevel(factor3), is(subject.getExpressionLevel(factor3)));
-        assertThat(subject.getExpressionLevel(factor4), is(nullValue()));
+        assertThat(subject.getKnownExpressionLevel(factor1), is(subject.getKnownExpressionLevel(factor1)));
+        assertThat(subject.getKnownExpressionLevel(factor2), is(6D));
+        assertThat(subject.getKnownExpressionLevel(factor3), is(subject.getKnownExpressionLevel(factor3)));
+        assertThat(subject.getKnownExpressionLevel(factor4), is(nullValue()));
 
     }
 
@@ -131,10 +128,10 @@ public class BaselineProfileTest {
 
         BaselineProfile sumProfile = subject.foldProfile(3);
         assertThat(sumProfile.getId(), is(subject.getId()));
-        assertThat(sumProfile.getExpressionLevel(factor1), is(0.7D));
-        assertThat(sumProfile.getExpressionLevel(factor2), is(1.0D));
-        assertThat(sumProfile.getExpressionLevel(factor3), is(1.0D));
-        assertThat(sumProfile.getExpressionLevel(factor4), is(nullValue()));
+        assertThat(sumProfile.getKnownExpressionLevel(factor1), is(0.7D));
+        assertThat(sumProfile.getKnownExpressionLevel(factor2), is(1.0D));
+        assertThat(sumProfile.getKnownExpressionLevel(factor3), is(1.0D));
+        assertThat(sumProfile.getKnownExpressionLevel(factor4), is(nullValue()));
 
     }
 

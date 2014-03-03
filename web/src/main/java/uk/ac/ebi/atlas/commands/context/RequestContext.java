@@ -23,10 +23,14 @@
 package uk.ac.ebi.atlas.commands.context;
 
 import com.google.common.base.Objects;
+import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
+import java.util.Collections;
 import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 
 public abstract class RequestContext<T, K extends ExperimentPageRequestPreferences> {
@@ -36,12 +40,17 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
     private Set<T> allQueryFactors;
     private GeneQueryResponse geneQueryResponse;
 
-    public GeneQueryResponse getGeneQueryResponse() {
-        return geneQueryResponse;
-    }
-
     public void setGeneQueryResponse(GeneQueryResponse geneQueryResponse) {
         this.geneQueryResponse = geneQueryResponse;
+    }
+
+    // called by DifferentialProfileStreamPipelineBuilder
+    public Set<String> getSelectedGeneIDs() {
+        if (StringUtils.isBlank(getGeneQuery())) {
+            return Collections.emptySet();
+        }
+        checkNotNull(geneQueryResponse, "geneQueryResponse not set");
+        return geneQueryResponse.getAllGeneIds();
     }
 
     public String getGeneQuery() {

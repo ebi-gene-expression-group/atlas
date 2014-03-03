@@ -63,7 +63,7 @@ public class MicroarrayProfilesTSVWriter extends DifferentialProfilesTSVWriter<M
 
     @Override
     protected List<Double> getExpressionLevelData(MicroarrayExpression expression){
-        return Lists.newArrayList(expression.getLevel(), expression.getFoldChange(), expression.getTstatistic());
+        return Lists.newArrayList(expression.getPValue(), expression.getFoldChange(), expression.getTstatistic());
     }
 
     @Override

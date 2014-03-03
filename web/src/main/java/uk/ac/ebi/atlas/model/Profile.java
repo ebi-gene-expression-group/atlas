@@ -26,6 +26,7 @@ import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -35,7 +36,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 //K is the Condition type (i.e. Factor or Contrast),
 //T is the Expression type (Baseline Expression or DifferentialExpression)
 public abstract class Profile<K, T extends Expression> {
-    private Map<K, T> expressionsByCondition = new HashMap<>();
+    protected Map<K, T> expressionsByCondition = new HashMap<>();
 
     private String id;
 
@@ -58,7 +59,8 @@ public abstract class Profile<K, T extends Expression> {
         return expressionsByCondition.size();
     }
 
-    public Double getExpressionLevel(K condition) {
+    @Nullable
+    public Double getKnownExpressionLevel(K condition) {
         Expression expression = expressionsByCondition.get(condition);
         if (expression != null && expression.isKnown()) {
             return expression.getLevel();
@@ -71,7 +73,7 @@ public abstract class Profile<K, T extends Expression> {
         return expression != null && expression.isKnown();
     }
 
-    protected abstract void updateProfileExpression(T expression);
+    protected abstract void addExpression(T expression);
 
     public boolean isExpressedOnAnyOf(Set<K> conditions) {
         checkArgument(CollectionUtils.isNotEmpty(conditions));
@@ -83,7 +85,7 @@ public abstract class Profile<K, T extends Expression> {
     }
 
     protected Profile addExpression(K condition, T expression) {
-        updateProfileExpression(expression);
+        addExpression(expression);
         expressionsByCondition.put(condition, expression);
         return this;
     }

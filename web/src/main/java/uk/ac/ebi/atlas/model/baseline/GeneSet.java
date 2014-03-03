@@ -29,15 +29,15 @@ import java.util.Set;
 //and Spring doesn't support assisted constructor injection
 public class GeneSet{
 
-    private BaselineProfileBuilder baselineProfileBuilder;
+    private GeneSetBaselineProfileBuilder geneSetBaselineProfileBuilder;
 
     private Set<BaselineProfile> baselineProfiles = new HashSet<>();
 
     private String id;
 
-    GeneSet(String id, BaselineProfileBuilder baselineProfileBuilder){
+    GeneSet(String id, GeneSetBaselineProfileBuilder geneSetBaselineProfileBuilder){
         this.id = id;
-        this.baselineProfileBuilder = baselineProfileBuilder;
+        this.geneSetBaselineProfileBuilder = geneSetBaselineProfileBuilder;
     }
 
     public GeneSet addBaselineProfile(BaselineProfile baselineProfile){
@@ -46,7 +46,7 @@ public class GeneSet{
     }
 
     public BaselineProfile getAverageProfile(){
-        BaselineProfile summaryProfile = baselineProfileBuilder.withGeneName(id).build();
+        BaselineProfile summaryProfile = geneSetBaselineProfileBuilder.withGeneName(id).build();
 
         for(BaselineProfile baselineProfile: baselineProfiles){
             summaryProfile.sumProfile(baselineProfile);

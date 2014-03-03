@@ -43,16 +43,16 @@ public class GeneSetTest {
     @Mock
     private BaselineProfile baselineProfile2Mock;
     @Mock
-    private BaselineProfileBuilder baselineProfileBuilderMock;
+    private GeneSetBaselineProfileBuilder geneSetBaselineProfileBuilderMock;
 
     private GeneSet subject;
 
     @Before
     public void initSubject() throws Exception {
-        when(baselineProfileBuilderMock.withGeneName(GENE_SET_ID)).thenReturn(baselineProfileBuilderMock);
-        when(baselineProfileBuilderMock.build()).thenReturn(averageProfileMock);
+        when(geneSetBaselineProfileBuilderMock.withGeneName(GENE_SET_ID)).thenReturn(geneSetBaselineProfileBuilderMock);
+        when(geneSetBaselineProfileBuilderMock.build()).thenReturn(averageProfileMock);
 
-        subject = new GeneSet(GENE_SET_ID, baselineProfileBuilderMock);
+        subject = new GeneSet(GENE_SET_ID, geneSetBaselineProfileBuilderMock);
     }
 
     @Test
@@ -62,8 +62,8 @@ public class GeneSetTest {
 
         subject.getAverageProfile();
 
-        verify(baselineProfileBuilderMock).withGeneName(GENE_SET_ID);
-        verify(baselineProfileBuilderMock).build();
+        verify(geneSetBaselineProfileBuilderMock).withGeneName(GENE_SET_ID);
+        verify(geneSetBaselineProfileBuilderMock).build();
         verify(averageProfileMock).sumProfile(baselineProfile1Mock);
         verify(averageProfileMock).sumProfile(baselineProfile2Mock);
         verify(averageProfileMock).foldProfile(2);

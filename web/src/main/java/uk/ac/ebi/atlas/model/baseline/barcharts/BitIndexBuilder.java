@@ -28,7 +28,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.streams.InputStreamFactory;
+import uk.ac.ebi.atlas.streams.BaselineExpressionsInputStreamFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,20 +47,20 @@ public class BitIndexBuilder {
 
     private CutoffScale cutoffScale;
 
-    private InputStreamFactory geneProfilesInputStreamBuilder;
+    private BaselineExpressionsInputStreamFactory inputStreamFactory;
 
 
     @Inject
-    public BitIndexBuilder(InputStreamFactory geneProfilesInputStreamBuilder
+    public BitIndexBuilder(BaselineExpressionsInputStreamFactory inputStreamFactory
             , CutoffScale cutoffScale) {
         this.cutoffScale = cutoffScale;
-        this.geneProfilesInputStreamBuilder = geneProfilesInputStreamBuilder;
+        this.inputStreamFactory = inputStreamFactory;
     }
 
     public BitIndexBuilder forExperiment(String experimentAccession) {
 
         try (ObjectInputStream<BaselineExpressions> inputStream =
-                     geneProfilesInputStreamBuilder.createGeneExpressionsInputStream(experimentAccession)) {
+                     inputStreamFactory.createGeneExpressionsInputStream(experimentAccession)) {
 
             populateGeneExpressionIndexes(inputStream);
 

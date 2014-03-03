@@ -71,14 +71,14 @@ public class MicroarrayExpressionsBufferTest {
         //when
         MicroarrayExpression expression = subject.poll();
         //then we expect first expression
-        assertThat(expression.getLevel(), is(Double.valueOf(P_VAL_1)));
+        assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_1)));
         assertThat(expression.getTstatistic(), is(Double.valueOf(T_VAL_1)));
         assertThat(expression.getFoldChange(), is(Double.valueOf(FOLD_CHANGE_1)));
         assertThat(expression.getContrast(), is(contrast1Mock));
 
         //given we poll again
         expression = subject.poll();
-        assertThat(expression.getLevel(), is(Double.valueOf(P_VAL_2)));
+        assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_2)));
         assertThat(expression.getTstatistic(), is(Double.valueOf(T_VAL_2)));
         assertThat(expression.getFoldChange(), is(Double.NEGATIVE_INFINITY));
         assertThat(expression.getContrast(), is(contrast2Mock));
@@ -115,7 +115,7 @@ public class MicroarrayExpressionsBufferTest {
         //and we poll
         MicroarrayExpression expression = subject.poll();
         //then we expect to find the new values
-        assertThat(expression.getLevel(), is(1d));
+        assertThat(expression.getPValue(), is(1d));
         assertThat(expression.getTstatistic(), is(0.5d));
     }
 
@@ -161,7 +161,7 @@ public class MicroarrayExpressionsBufferTest {
 
         MicroarrayExpression expression = subject.poll();
 
-        assertThat(expression.getLevel(), is(Double.valueOf(P_VAL_2)));
+        assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_2)));
         assertThat(expression.getTstatistic(), is(Double.valueOf(T_VAL_2)));
         assertThat(expression.getFoldChange(), is(Double.NEGATIVE_INFINITY));
         assertThat(expression.getContrast(), is(contrast2Mock));
