@@ -53,9 +53,9 @@ public class GeneQueryDifferentialServiceIT {
 
         List<String> names = getBioentityNames(bioentityExpressions);
 
-        //System.out.println(Joiner.on("\", \"").join(names));
+        System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        assertThat(names, contains("Arl8b", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "Arl8b"));
+        assertThat(names, contains("Arl8b", "Arl8b", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306"));
     }
 
     @Test
@@ -102,9 +102,9 @@ public class GeneQueryDifferentialServiceIT {
 
         List<String> names = getBioentityNames(bioentityExpressions);
 
-        //System.out.println(Joiner.on("\", \"").join(names));
+        System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        assertThat(names, contains("Zfp292", "Zfp503", "Zfp810", "Zfp758", "Zfp46", "Zfp68", "Zfp703", "Zfp146", "Zfp260", "Zfp948", "Zfp260", "Rlf", "Zfp568", "Zfp354a", "Zfp617", "Zfx", "Zfp109", "Zfp292", "Gli2", "Zfp68", "Zfp92"));
+        assertThat(names, contains("Zfp260", "Zfp503", "Zfp758", "Zfp292", "Zfp948", "Zfp68", "Zfp292", "Zfp260", "Zfp810", "Zfp703", "Zfp617", "Zfp568", "Gli2", "Zfp46", "Zfp109", "Zfp354a", "Zfp146", "Zfp68", "Zfx", "Rlf", "Zfp92"));
     }
 
 
@@ -121,15 +121,13 @@ public class GeneQueryDifferentialServiceIT {
 
         List<String> names = getBioentityNames(bioentityExpressions);
 
-        //System.out.println(Joiner.on("\", \"").join(names));
+        System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        // match the first 10 only, because they are the only ones the same in both ATLAS3DEV and ATLAS3IT
-        assertThat(Iterables.limit(names, 10), contains("Cish", "Rgs2", "Ern1", "Cdkn1a", "Igfbp5", "Dusp1", "Kitl", "Apoe", "Tyrobp", "Hsp90ab1"));
+        assertThat(names, contains("Ccl3", "Cish", "Cdkn1a", "AT5G24240", "Thbs1", "Jun", "Pdk4", "Kitl", "Acvr1c", "Rgs2", "Irs1", "Apoe", "FRK1", "AT4G18250", "Dusp1", "CPK29", "Gja1", "Errfi1", "T7B11.18", "AT1G51890", "Tyrobp", "F19C24.15", "Ddr1", "Jun", "Plek", "S100a4", "F13E7.26", "LECRK18", "AT1G74360", "ATMPK11", "AT1G51790", "Eif2ak3", "Mknk2", "Igbp1", "AT4G11890/T26M18_100", "Fos", "Chp1", "LRR-RLK", "Kras", "Igfbp5", "CPK6", "MZB10.4", "T14L22.6", "Igf1", "CRK34", "Hsp90ab1", "F15B8.110", "WAKL8", "CRK29", "AT1G35710"));
 
     }
 
 
-    // NB: this will fail on Atlas3Dev (but not Atlas3It) because order of "Tph1 and "Lactbl1" is reversed
     @Test
     public void geneQueryKeywordProteinCoding() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
@@ -142,22 +140,14 @@ public class GeneQueryDifferentialServiceIT {
 
         List<String> names = getBioentityNames(bioentityExpressions);
 
-        //System.out.println(Joiner.on("\", \"").join(names));
+        System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        assertThat(names.get(0), is("Arl8b"));
+        // match in any order because order differs between ATLAS3DEV and ATLAS3IT.
+        // order is unpredictable in Oracle when rows have the same order by value.
+        assertThat(Iterables.limit(names, 5), containsInAnyOrder("Lactbl1", "Prok1", "Kdm5d", "Eif2s3y", "Ddx3y"));
 
-        Iterable<String> tail1 = Iterables.skip(names, 1);
-
-        assertThat(Iterables.limit(tail1, 5), contains("Ddx3y", "Eif2s3y", "Uty", "Kdm5d", "Cldn8"));
-
-        Iterable<String> tail2 = Iterables.skip(tail1, 5);
-
-        //match is unpredictable
-        assertThat(Iterables.limit(tail2, 2), containsInAnyOrder("Tph1", "Lactbl1"));
-        Iterable<String> tail3 = Iterables.skip(tail2, 2);
-
-        // NB: this will fail on Atlas3Dev (but not Atlas3It) because order of "Tph1 and "Lactbl1" is reversed
-        assertThat(Iterables.limit(tail3, 42), contains("Ivd", "Fmo1", "Matn2", "Chgb", "Cish", "Lrrc55", "Neb", "Ogdhl", "Ehhadh", "Wipi1", "Rgs2", "Gpnmb", "Tmem255a", "Gpr26", "Gpx6", "Reg3b", "Vip", "Prlr", "Dnahc8", "Hsbp1", "Cst7", "Tnfrsf11b", "Npas4", "Dnajb1", "Enpp2", "Sftpd", "Reg3a", "Disp2", "Igfals", "Itgax", "Mpeg1", "B3galnt1", "Ikzf4", "Nr4a1", "Lgals3", "Dnase1", "Lpl", "Cspg5", "Dnaja1", "Ern1", "Ch25h", "Dhcr7"));
+        // match the remaining in order, which will be the same in both ATLAS3DEV and ATLAS3IT
+        assertThat(Iterables.skip(names, 5), contains("Uty", "Gpr26", "Lrrc55", "Tph1", "Scgb1b27", "Cldn8", "Hmgcs2", "Acot1", "Fmo1", "Scgb2b27", "Sftpd", "Cst7", "Lonrf3", "Itgax", "Neb", "Tnfrsf11b", "Lcn2", "Fmo4", "Ccl4", "Hmgcs2", "Ccl3", "Mctp1", "1700017B05Rik", "Ch25h", "Tph2", "Ivd", "Matn2", "Dnahc8", "Serpinf2", "Abca1", "Cspg5", "Gpnmb", "Gbp8", "Cish", "Lgals3", "Ang", "Cdkn1a", "Ehhadh", "Gal", "Reg3b", "Cartpt", "Socs2", "Thbs1", "Arg1", "Wisp2"));
 
     }
 
@@ -221,10 +211,9 @@ public class GeneQueryDifferentialServiceIT {
 
         List<String> names = getBioentityNames(bioentityExpressions);
 
-        System.out.println(Joiner.on("\", \"").join(names));
+        System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        // match the first 11 only, because they are the only ones the same in both ATLAS3DEV and ATLAS3IT
-        assertThat(Iterables.limit(names,11), contains("Gas2", "Psmb10", "Bax", "Vim", "Rock1", "Psmc6", "Ywhag", "Psmd6", "Psme1", "Bcap31", "Fnta"));
+        assertThat(names, contains("Gas2", "Psme1", "Bax", "Psmb10", "Lmna", "Psmd11", "Akt1", "Rock1", "Vim", "Rock1", "Psmc6", "Ywhaz", "Gsn", "Stk24", "Psmd6", "Ywhag", "Fnta", "Bcap31", "Sptan1", "Kpnb1", "Psmd7", "Mapt", "Mapt", "Psmc4", "Prkcd", "Xiap", "Dynll2", "Psmd11", "Akt1", "Psmd4", "PSMA7", "Psmd4", "Vim", "Vim", "Bcl2l11", "Gsn", "Psmc4", "Lmnb1", "Rock1", "Bcl2l11", "Gsn", "Ywhab", "Tradd", "Ywhab", "Ywhab", "Apc", "Bcl2", "Psmd14", "Sptan1", "Tnf"));
     }
 
 
@@ -239,19 +228,15 @@ public class GeneQueryDifferentialServiceIT {
 
         List<String> names = getBioentityNames(bioentityExpressions);
 
-        System.out.println(Joiner.on("\", \"").join(names));
+        System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        assertThat(names.get(0), is("Cldn8"));
+        // match in any order because order differs between ATLAS3DEV and ATLAS3IT.
+        // order is unpredictable in Oracle when rows have the same order by value.
+        assertThat(Iterables.limit(names, 3), containsInAnyOrder("Gbp11", "Prok1", "Lactbl1"));
 
-        Iterable<String> tail1 = Iterables.skip(names, 1);
+        // match the remaining in order, which will be the same in both ATLAS3DEV and ATLAS3IT
+        assertThat(Iterables.skip(names, 3), contains("Gpr26", "Lrrc55", "Tph1", "Cldn8", "Gm17040", "Fmo1", "Sftpd", "Lonrf3", "Neb", "Tnfrsf11b", "A130066N16Rik", "Fmo4", "Gm13716", "Mctp1", "Tph2", "Ivd", "Matn2", "Dnahc8", "Cspg5", "Gbp8", "Cish", "Ehhadh", "Reg3b", "Cartpt", "Grem2", "Chgb", "Reg3a", "Tmem255a", "Ikzf4", "Gm16314", "Grp", "Ovol2", "Cntn3", "mt-Rnr2", "Synpr", "Npas4", "Txnrd2", "Acvr1c", "Rnf182", "Syce2", "Aqp4", "Grhl1", "Wipi1", "Rgs2", "Ogdhl", "Gas2", "Dnmt3b"));
 
-        // match in any order because order is unpredictable in Oracle when rows are the same
-        assertThat(Iterables.limit(tail1, 2), containsInAnyOrder("Tph1", "Lactbl1"));
-
-        Iterable<String> tail2 = Iterables.skip(tail1, 2);
-
-        // match the remaining 43 only, because they are the only ones the same in both ATLAS3DEV and ATLAS3IT
-        assertThat(Iterables.limit(tail2, 43), contains("Ivd", "Fmo1", "Matn2", "Chgb", "Cish", "Lrrc55", "Neb", "Ogdhl", "Ehhadh", "Wipi1", "Rgs2", "Tmem255a", "Gpr26", "Reg3b", "Vip", "Prlr", "Dnahc8", "Hsbp1", "Tnfrsf11b", "Npas4", "Dnajb1", "Enpp2", "Sftpd", "Reg3a", "Disp2", "Igfals", "B3galnt1", "Ikzf4", "Nr4a1", "Cspg5", "Dnaja1", "Ern1", "Gm13716", "Dhcr7", "Junb", "Gm16211", "Aqp4", "Ovol2", "Hspa1a", "Igfbp5", "Lonrf3", "Nupr1", "Dusp1"));
     }
 
     @Test
