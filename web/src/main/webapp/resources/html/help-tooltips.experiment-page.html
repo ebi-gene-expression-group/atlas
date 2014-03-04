@@ -43,7 +43,7 @@
 <div id="specific">Check to see genes specific to factor value(s) selected, with most specific genes first. Uncheck to sort by highest expressed genes.
 </div>
 
-<div id="specific-differential">Check to see genes specific to contrast(s) selected, with most specific genes first. Uncheck to sort by lowest adjusted <i>p</i>-value.
+<div id="specific-differential">Check to see genes specific to contrast(s) selected, with most specific genes first. Uncheck to sort by highest absolute log<sub>2</sub> fold-change.
 </div>
 
 <div id="factorSearch">Select experimental factor value(s). Factor values are experimental variables, e.g. different tissues or cell types.
@@ -56,12 +56,12 @@
 	above this are displayed. Set to 0 to retrieve all genes.
 </div>
 
-<div id="cutoff-differential">Enter value from 0 to 1 to use as the maximum p-value cutoff.
-    Only genes that show differential expression with an adjusted p-value at or below this cutoff will be shown.
+<div id="cutoff-differential">Enter value from 0 to 1 to use as the maximum <i>p</i>-value cutoff.
+    Only genes that show differential expression with an adjusted <i>p</i>-value at or below this cutoff will be shown.
 </div>
 
-<div id="foldChangeCutOff">Enter value equal or greater than 0 to use as the minimum absolute log2-fold change.
-    Only genes that show absolute log2-fold change at or greater than this cutoff will be shown.
+<div id="foldChangeCutOff">Enter value equal or greater than 0 to use as the minimum absolute log<sub>2</sub>-fold change.
+    Only genes that show absolute log<sub>2</sub>-fold change at or greater than this cutoff will be shown.
 </div>
 
 <div id="gene-distribution">The histogram shows number of genes (y-axis)
@@ -82,7 +82,7 @@
 <div id="gradient-base">Expression level: greater colour saturation means higher expression.
 </div>
 
-<div id="gradient-differential">Greater colour saturation means higher log<sub>2</sub>-fold change value.
+<div id="gradient-differential">Greater colour saturation means higher absolute log<sub>2</sub>-fold change value.
     Blue indicates the gene is down–regulated and red means up–regulated.
 </div>
 
