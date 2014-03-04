@@ -140,7 +140,7 @@ public class RnaSeqProfilesHeatMapIT {
     // http://localhost:8080/gxa/experiments/E-GEOD-38400?foldChangeCutOff=5
     @Test
     public void withFoldChangeCutoff() throws GenesNotFoundException {
-        requestPreferences.setFoldChangeCutOff(5);
+        requestPreferences.setFoldChangeCutOff(5D);
         RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_38400);
         DifferentialProfilesList profiles = subject.fetch(requestContext);
 

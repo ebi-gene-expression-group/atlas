@@ -38,7 +38,7 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
     }
 
     @Override
-    public Double getDefaultCutoff() {
+    public double getDefaultCutoff() {
         return DEFAULT_CUTOFF;
     }
 

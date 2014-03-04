@@ -39,8 +39,13 @@ public class DifferentialRequestPreferences extends ExperimentPageRequestPrefere
     private double foldChangeCutOff = DEFAULT_FOLD_CHANGE_CUTOFF;
 
     @Override
-    public Double getDefaultCutoff() {
+    public double getDefaultCutoff() {
         return DEFAULT_CUTOFF;
+    }
+
+    // exposed as JavaBean getter so JSP can read it
+    public double getDefaultFoldChangeCutOff() {
+        return DEFAULT_FOLD_CHANGE_CUTOFF;
     }
 
     public Regulation getRegulation() {
@@ -51,11 +56,14 @@ public class DifferentialRequestPreferences extends ExperimentPageRequestPrefere
         this.regulation = regulation;
     }
 
-    public double getFoldChangeCutOff() {
+    public Double getFoldChangeCutOff() {
         return foldChangeCutOff;
     }
 
-    public void setFoldChangeCutOff(double foldChangeCutOff) {
-        this.foldChangeCutOff = foldChangeCutOff;
+    public void setFoldChangeCutOff(Double foldChangeCutOff) {
+        // handle no value case, eg: when textbox is left empty
+        if (foldChangeCutOff != null) {
+            this.foldChangeCutOff = foldChangeCutOff;
+        }
     }
 }

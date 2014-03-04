@@ -55,10 +55,14 @@ var searchFormModule = (function($) {
 
     }
 
-    function initWatermarks(defaultCutoff){
+    function initWatermarks(defaultPValueCutOff, defaultFoldChangeCutOff){
         $("#geneQuery").watermark("(all genes)");
 
-        $("#cutoff").watermark("(default "+ defaultCutoff +")");
+        $("#cutoff").watermark("(default "+ defaultPValueCutOff +")");
+
+        if (defaultFoldChangeCutOff) {
+            $("#foldChangeCutOff").watermark("(default "+ defaultFoldChangeCutOff +")");
+        }
     }
 
     function initSelectBox(watermarkLabel){
@@ -152,13 +156,13 @@ var searchFormModule = (function($) {
         });
     }
 
-    function init (watermarkLabel, species, defaultCutoff) {
+    function init (watermarkLabel, species, defaultPValueCutOff, defaultFoldChangeCutOff) {
 
         _species = species;
 
         initButtons();
 
-        initWatermarks(defaultCutoff);
+        initWatermarks(defaultPValueCutOff, defaultFoldChangeCutOff);
 
         initSelectBox(watermarkLabel);
 
