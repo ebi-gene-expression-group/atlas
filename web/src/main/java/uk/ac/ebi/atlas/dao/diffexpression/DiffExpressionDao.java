@@ -89,7 +89,7 @@ public class DiffExpressionDao {
 
             stopwatch.stop();
 
-            LOGGER.debug(String.format("getTopExpressions returned %s expressions in %s seconds", results.size(), stopwatch.elapsed(TimeUnit.SECONDS)));
+            LOGGER.debug(String.format("getTopExpressions returned %s expressions in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
@@ -154,7 +154,7 @@ public class DiffExpressionDao {
 
         int count = jdbcTemplate.queryForObject(databaseQuery.getQuery(), Integer.class, databaseQuery.getParameters().toArray());
 
-        LOGGER.debug(String.format("getResultCount returned %s in %s seconds", count, stopwatch.elapsed(TimeUnit.SECONDS)));
+        LOGGER.debug(String.format("getResultCount returned %s in %.2f seconds", count, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
         return count;
     }
 
