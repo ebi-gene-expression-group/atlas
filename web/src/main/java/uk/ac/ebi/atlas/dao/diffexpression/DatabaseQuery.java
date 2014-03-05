@@ -26,7 +26,7 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-public class Query<T> {
+public class DatabaseQuery<T> {
 
     private List<T> params = Lists.newArrayList();
     private StringBuilder queryBuilder = new StringBuilder();
@@ -51,7 +51,7 @@ public class Query<T> {
         queryBuilder = new StringBuilder(query);
     }
 
-    Query appendToQueryString(String text) {
+    DatabaseQuery appendToQueryString(String text) {
         queryBuilder.append(text);
         return this;
     }

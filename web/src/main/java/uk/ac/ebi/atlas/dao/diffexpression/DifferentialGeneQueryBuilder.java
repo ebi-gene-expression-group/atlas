@@ -58,35 +58,35 @@ public class DifferentialGeneQueryBuilder {
         return this;
     }
 
-    public Query<Object> buildSelect() {
+    public DatabaseQuery<Object> buildSelect() {
         return build(SELECT_QUERY + JOIN_PUBLIC_EXPERIMENTS_ONLY);
     }
 
-    public Query<Object> buildCount() {
+    public DatabaseQuery<Object> buildCount() {
         return build(COUNT_QUERY + JOIN_PUBLIC_EXPERIMENTS_ONLY);
     }
 
-    private Query<Object> build(String selectPart) {
+    private DatabaseQuery<Object> build(String selectPart) {
 
         checkState(geneIds != null || CollectionUtils.isNotEmpty(indexedAssayGroups), "Condition or/and geneIds must be specified!");
 
-        Query<Object> query = new Query<>();
+        DatabaseQuery<Object> databaseQuery = new DatabaseQuery<>();
 
-        query.appendToQueryString(selectPart);
+        databaseQuery.appendToQueryString(selectPart);
 
-        addGeneIds(query);
+        addGeneIds(databaseQuery);
 
-        addContrasts(query);
+        addContrasts(databaseQuery);
 
-        query.appendToQueryString(ORDER_BY_LOG2FOLD);
+        databaseQuery.appendToQueryString(ORDER_BY_LOG2FOLD);
 
-        return query;
+        return databaseQuery;
     }
 
     // eg: "((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? ))"
-    private void addContrasts(Query<Object> query) {
+    private void addContrasts(DatabaseQuery<Object> databaseQuery) {
         if (CollectionUtils.isNotEmpty(indexedAssayGroups)) {
-            query.appendToQueryString("WHERE ");
+            databaseQuery.appendToQueryString("WHERE ");
 
             List<String> queryParts = Lists.newArrayList();
 
@@ -94,22 +94,22 @@ public class DifferentialGeneQueryBuilder {
 
             for (IndexedAssayGroup indexedContrast : indexedAssayGroups) {
                 queryParts.add(queryPart);
-                query.addParameter(indexedContrast.getExperimentAccession());
-                query.addParameter(indexedContrast.getAssayGroupOrContrastId());
+                databaseQuery.addParameter(indexedContrast.getExperimentAccession());
+                databaseQuery.addParameter(indexedContrast.getAssayGroupOrContrastId());
             }
 
-            query.appendToQueryString("(");
+            databaseQuery.appendToQueryString("(");
             Joiner joiner = Joiner.on(" OR ");
             String queryPartsString = joiner.join(queryParts);
-            query.appendToQueryString(queryPartsString).appendToQueryString(") ");
+            databaseQuery.appendToQueryString(queryPartsString).appendToQueryString(") ");
         }
     }
 
     // "JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value"
-    protected void addGeneIds(Query<Object> query) {
+    protected void addGeneIds(DatabaseQuery<Object> databaseQuery) {
         if (geneIds != null) {
-            query.appendToQueryString("JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value ");
-            query.addParameter(geneIds);
+            databaseQuery.appendToQueryString("JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value ");
+            databaseQuery.addParameter(geneIds);
         }
     }
 }

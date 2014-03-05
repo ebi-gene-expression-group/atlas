@@ -76,7 +76,7 @@ public class DiffExpressionDao {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        Query<Object> indexedContrastQuery = buildSelect(indexedContrasts, geneIds);
+        DatabaseQuery<Object> indexedContrastQuery = buildSelect(indexedContrasts, geneIds);
 
         jdbcTemplate.setMaxRows(RESULT_SIZE);
 
@@ -105,7 +105,7 @@ public class DiffExpressionDao {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        Query<Object> indexedContrastQuery = buildSelect(indexedContrasts, geneIds);
+        DatabaseQuery<Object> indexedContrastQuery = buildSelect(indexedContrasts, geneIds);
 
         final MutableInt count = new MutableInt(0);
 
@@ -150,20 +150,20 @@ public class DiffExpressionDao {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        Query query = buildCount(indexedContrasts, geneIds);
+        DatabaseQuery databaseQuery = buildCount(indexedContrasts, geneIds);
 
-        int count = jdbcTemplate.queryForObject(query.getQuery(), Integer.class, query.getParameters().toArray());
+        int count = jdbcTemplate.queryForObject(databaseQuery.getQuery(), Integer.class, databaseQuery.getParameters().toArray());
 
         LOGGER.debug(String.format("getResultCount returned %s in %s seconds", count, stopwatch.elapsed(TimeUnit.SECONDS)));
         return count;
     }
 
-    Query<Object> buildCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    DatabaseQuery<Object> buildCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
         DifferentialGeneQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
         return builder.buildCount();
     }
 
-    Query<Object> buildSelect(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    DatabaseQuery<Object> buildSelect(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
         DifferentialGeneQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
         return builder.buildSelect();
     }
