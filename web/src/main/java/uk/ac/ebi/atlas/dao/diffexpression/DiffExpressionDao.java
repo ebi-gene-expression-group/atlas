@@ -80,7 +80,7 @@ public class DiffExpressionDao {
 
         jdbcTemplate.setMaxRows(RESULT_SIZE);
 
-        List<DifferentialBioentityExpression> results = null;
+        List<DifferentialBioentityExpression> results;
 
         try {
             results = jdbcTemplate.query(indexedContrastQuery.getQuery(),
