@@ -31,7 +31,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.solr.query.SolrSuggestionsService;
+import uk.ac.ebi.atlas.solr.query.GeneIdSuggestionService;
+import uk.ac.ebi.atlas.solr.query.MultiTermSuggestionService;
 
 import javax.inject.Inject;
 import java.util.LinkedHashSet;
@@ -43,11 +44,13 @@ public class AutocompleteController {
 
     private static final int MAX_NUMBER_OF_SUGGESTIONS = 15;
 
-    private SolrSuggestionsService solrSuggestionsService;
+    private GeneIdSuggestionService geneIdSuggestionService;
+    private MultiTermSuggestionService multiTermSuggestionService;
 
     @Inject
-    public AutocompleteController(SolrSuggestionsService solrSuggestionsService) {
-        this.solrSuggestionsService = solrSuggestionsService;
+    public AutocompleteController(GeneIdSuggestionService geneIdSuggestionService, MultiTermSuggestionService multiTermSuggestionService) {
+        this.geneIdSuggestionService = geneIdSuggestionService;
+        this.multiTermSuggestionService = multiTermSuggestionService;
     }
 
     @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET, produces = "application/json")
@@ -63,19 +66,19 @@ public class AutocompleteController {
         species = StringUtils.lowerCase(species);
 
         if (!StringUtils.containsWhitespace(query)) {
-            suggestions.addAll(solrSuggestionsService.fetchGeneIdSuggestionsInName(query, species));
+            suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInName(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(solrSuggestionsService.fetchGeneIdSuggestionsInSynonym(query, species));
+            suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInSynonym(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(solrSuggestionsService.fetchGeneIdSuggestionsInIdentifier(query, species));
+            suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInIdentifier(query, species));
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(solrSuggestionsService.fetchMultiTermSuggestions(query, species));
+            suggestions.addAll(multiTermSuggestionService.fetchMultiTermSuggestions(query, species));
         }
 
         List<String> topSuggestions = Lists.newArrayList(suggestions);

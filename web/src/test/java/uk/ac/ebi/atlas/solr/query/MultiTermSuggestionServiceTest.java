@@ -45,7 +45,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SolrSuggestionsServiceTest {
+public class MultiTermSuggestionServiceTest {
 
     @Mock
     private RestTemplate restTemplateMock;
@@ -56,31 +56,31 @@ public class SolrSuggestionsServiceTest {
     @Mock
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizerMock;
 
-    private SolrSuggestionsService subject;
+    private MultiTermSuggestionService subject;
 
-    private String jsonAutocompleteResponse;
-    private String jsonAutocompleteEmptyResponse;
+    private String jsonAutoCompleteResponse;
+    private String jsonAutoCompleteEmptyResponse;
 
     @Before
     public void loadTestData() throws IOException {
-        jsonAutocompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
-        jsonAutocompleteEmptyResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.emptySuggestions.json");
+        jsonAutoCompleteResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.json");
+        jsonAutoCompleteEmptyResponse = Files.readTextFileFromClasspath(this.getClass(), "solrAutocompleteResponse.emptySuggestions.json");
 
-        given(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).willReturn(jsonAutocompleteResponse);
+        given(restTemplateMock.getForObject(anyString(), any(Class.class), anyVararg())).willReturn(jsonAutoCompleteResponse);
 
-        subject = new SolrSuggestionsService(restTemplateMock, null, null);
+        subject = new MultiTermSuggestionService(restTemplateMock);
     }
 
     @Test
     public void shouldContainCollations(){
-        List<String> suggestions = subject.extractCollations(jsonAutocompleteResponse);
+        List<String> suggestions = subject.extractCollations(jsonAutoCompleteResponse);
         assertThat(suggestions.size(), is(5));
         assertThat(suggestions, contains("mus", "mus81", "musculus", "musk", "mustn1"));
     }
 
     @Test
     public void shouldContainCollationsIfSuggestionsElementIsEmpty(){
-        List<String> suggestions = subject.extractCollations(jsonAutocompleteEmptyResponse);
+        List<String> suggestions = subject.extractCollations(jsonAutoCompleteEmptyResponse);
         assertThat(suggestions, is(empty()));
     }
 
