@@ -64,7 +64,7 @@ public class BioentitiesPageConditionAndGeneQueryIT extends SinglePageSeleniumFi
         assertThat(subject.getContrastColumn(), contains(
                 "compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36",
                 "genotype:'p107 -/-' vs 'wild type' on A-AFFY-24"));
-        assertThat(subject.getFoldChange(), hasItems("0.54", "0.006"));
+        assertThat(subject.getFoldChange(), hasItems("0.54", "0.01"));
     }
 
     @Test

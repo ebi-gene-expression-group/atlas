@@ -27,6 +27,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import java.util.Arrays;
 
+//see: http://stackoverflow.com/questions/2848415/accessing-spring-beans-from-a-tiles-view-jsp
 public class TilesExposingBeansViewResolver extends UrlBasedViewResolver {
 
     private Boolean exposeContextBeansAsAttributes;

@@ -51,7 +51,7 @@ public class DiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
         subject.clickDisplayLevelsButton();
         assertThat(subject.getContrastColumn(), contains("idn2 mutant vs wild type",
                 "nrpe1 mutant vs wild type"));
-        assertThat(subject.getFoldChange(), hasItems("3.284", "2.573"));
+        assertThat(subject.getFoldChange(), hasItems("3.28", "2.57"));
     }
 
     //This is not working with PhantomJS browser :((

@@ -22,21 +22,23 @@
 
 package uk.ac.ebi.atlas.dao.diffexpression;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 
+import java.util.Iterator;
 import java.util.List;
 
-public class Query<T> {
+import static com.google.common.base.Preconditions.checkArgument;
+
+public class DatabaseQuery<T> {
 
     private List<T> params = Lists.newArrayList();
     private StringBuilder queryBuilder = new StringBuilder();
 
     void addParameter(T value) {
         params.add(value);
-    }
-
-    void addParameters(List<T> values) {
-        params.addAll(values);
     }
 
     List<T> getParameters() {
@@ -51,9 +53,42 @@ public class Query<T> {
         queryBuilder = new StringBuilder(query);
     }
 
-    Query appendToQueryString(String text) {
+    DatabaseQuery appendToQueryString(String text) {
         queryBuilder.append(text);
         return this;
+    }
+
+    //used for debugging
+    public String expand() {
+        return substituteQuestionMarksForParameters(queryBuilder.toString(), quote(params));
+    }
+
+    protected static String substituteQuestionMarksForParameters(String string, List<?> params) {
+        StringBuilder result = new StringBuilder();
+
+        checkArgument(StringUtils.countMatches(string, "?") == params.size(), String.format("Number of question marks (%s) does not match number of params (%s)", StringUtils.countMatches(string, "?"), params.size()));
+
+        Iterable < String > nonParameters = Splitter.on('?').split(string);
+        Iterator<?> parameters = params.iterator();
+
+        for (String nonParam : nonParameters) {
+            result.append(nonParam);
+            if (parameters.hasNext()) {
+                result.append(parameters.next().toString());
+            }
+        }
+
+        return result.toString();
+    }
+
+    protected static ImmutableList<String> quote(List<?> params) {
+        ImmutableList.Builder<String> builder = ImmutableList.builder();
+
+        for (Object param : params) {
+            builder.add("'" + param.toString() + "'");
+        }
+
+        return builder.build();
     }
 
     @Override

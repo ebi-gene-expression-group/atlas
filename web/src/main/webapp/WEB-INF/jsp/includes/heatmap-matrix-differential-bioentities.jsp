@@ -138,7 +138,7 @@
                                 <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
                                     ${'data-fold-change="'.concat(foldChange).concat('"')}
                                      data-organism-part="${firstInRow}" data-color="${cellColour}">
-                                        ${numberUtils.htmlFormatDouble(expressionLevel)}
+                                        ${foldChange}
                                 </div>
 
                             </c:if>

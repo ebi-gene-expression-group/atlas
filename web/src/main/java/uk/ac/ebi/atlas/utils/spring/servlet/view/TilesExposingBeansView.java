@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+//see: http://stackoverflow.com/questions/2848415/accessing-spring-beans-from-a-tiles-view-jsp
 public class TilesExposingBeansView extends TilesView {
 
     private boolean exposeContextBeansAsAttributes = false;

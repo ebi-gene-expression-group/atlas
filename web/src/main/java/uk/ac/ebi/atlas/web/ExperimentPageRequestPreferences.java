@@ -23,11 +23,9 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Objects;
-import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Set;
 
 
@@ -39,7 +37,7 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
 
     private static final int HEATMAP_SIZE_MAX = 1000;
 
-    private Double cutoff = getDefaultCutoff();
+    private double cutoff = getDefaultCutoff();
 
     private String serializedFilterFactors;
 
@@ -110,9 +108,10 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
     }
 
     //must be public because the jsp needs to access it
-    public abstract Double getDefaultCutoff();
+    public abstract double getDefaultCutoff();
 
     public void setCutoff(Double cutoff) {
+        // handle no value case, eg: when textbox is left empty
         if (cutoff != null) {
             this.cutoff = cutoff;
         }

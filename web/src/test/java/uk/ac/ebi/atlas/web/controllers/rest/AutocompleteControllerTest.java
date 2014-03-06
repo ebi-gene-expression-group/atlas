@@ -29,7 +29,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.solr.query.SolrSuggestionsService;
+import uk.ac.ebi.atlas.solr.query.GeneIdSuggestionService;
+import uk.ac.ebi.atlas.solr.query.MultiTermSuggestionService;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class AutocompleteControllerTest {
 
     private static final String QUERY_STRING = "This is a query";
 
-    private static final String SPECIES = "homo sapiens";
+    private static final String HOMO_SAPIENS = "homo sapiens";
 
     private AutocompleteController subject;
 
@@ -50,26 +51,29 @@ public class AutocompleteControllerTest {
     private BaselineRequestContext requestContextMock;
 
     @Mock
-    private SolrSuggestionsService solrSuggestionsServiceMock;
+    private GeneIdSuggestionService geneIdSuggestionServiceMock;
+
+    @Mock
+    private MultiTermSuggestionService multiTermSuggestionServiceMock;
 
     @Before
     public void setUp() throws Exception {
 
         List<String> suggestions = Lists.newArrayList("Value1", "Value2");
 
-        when(solrSuggestionsServiceMock.fetchGeneIdSuggestionsInName(QUERY_STRING, SPECIES)).thenReturn(suggestions);
-        when(solrSuggestionsServiceMock.fetchMultiTermSuggestions(QUERY_STRING, SPECIES)).thenReturn(suggestions);
+        when(geneIdSuggestionServiceMock.fetchGeneIdSuggestionsInName(QUERY_STRING, HOMO_SAPIENS)).thenReturn(suggestions);
+        when(multiTermSuggestionServiceMock.fetchMultiTermSuggestions(QUERY_STRING, HOMO_SAPIENS)).thenReturn(suggestions);
 
-        when(requestContextMock.getFilteredBySpecies()).thenReturn(SPECIES);
+        when(requestContextMock.getFilteredBySpecies()).thenReturn(HOMO_SAPIENS);
 
-        subject = new AutocompleteController(solrSuggestionsServiceMock);
+        subject = new AutocompleteController(geneIdSuggestionServiceMock, multiTermSuggestionServiceMock);
 
     }
 
     @Test
     public void testGetTopSuggestions() throws Exception {
         //given
-        String jsonResponse = subject.getTopSuggestions(QUERY_STRING, SPECIES);
+        String jsonResponse = subject.getTopSuggestions(QUERY_STRING, HOMO_SAPIENS);
 
         //then
         assertThat(jsonResponse, is("[\"Value1\",\"Value2\"]"));

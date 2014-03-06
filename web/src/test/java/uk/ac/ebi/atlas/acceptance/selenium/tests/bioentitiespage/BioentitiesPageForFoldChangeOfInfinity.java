@@ -20,35 +20,29 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web;
+package uk.ac.ebi.atlas.acceptance.selenium.tests.bioentitiespage;
 
-import uk.ac.ebi.atlas.utils.NumberUtils;
+import org.junit.Test;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
 
-public class BaselineRequestPreferences extends ExperimentPageRequestPreferences {
+public class BioentitiesPageForFoldChangeOfInfinity extends SinglePageSeleniumFixture {
 
-    private static final double DEFAULT_CUTOFF = 0.5d;
-    private static final String DEFAULT_GENE_QUERY = "protein_coding";
-
-    private NumberUtils numberUtils = new NumberUtils();
+    private BioEntitiesPage subject;
 
     @Override
-    protected String getDefaultGeneQuery() {
-        return DEFAULT_GENE_QUERY;
+    protected void getStartingPage() {
+        subject = new BioEntitiesPage(driver, "geneQuery=Prok1");
+        subject.get();
     }
 
-    @Override
-    public double getDefaultCutoff() {
-        return DEFAULT_CUTOFF;
-    }
-
-    @Override
-    public void setCutoff(Double cutoff) {
-        if (cutoff != null) {
-            super.setCutoff(numberUtils.round(cutoff));
-        } else {
-            super.setCutoff(cutoff);
-        }
+    @Test
+    public void profileShowsInfinity() {
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getFoldChange(), hasItems("∞"));
     }
 
 }
