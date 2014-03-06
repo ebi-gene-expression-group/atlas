@@ -55,7 +55,7 @@ public class GxaSolrServer {
     public QueryResponse query(SolrQuery solrQuery) {
         try {
             QueryResponse queryResponse = solrServer.query(solrQuery);
-            LOGGER.info("<query> Solr query time: " + queryResponse.getQTime() + ", status code: " + queryResponse.getStatus());
+            LOGGER.info("<query> Solr query time: " + queryResponse.getQTime() + "ms, status code: " + queryResponse.getStatus());
             return queryResponse;
         } catch (SolrServerException e) {
             LOGGER.error(e.getMessage(), e);
@@ -93,8 +93,6 @@ public class GxaSolrServer {
         return results;
 
     }
-
-
 
 
 }

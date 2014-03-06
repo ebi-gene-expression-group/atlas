@@ -27,6 +27,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -40,7 +41,9 @@ import java.util.List;
 
 @Controller
 @Scope("request")
-public class AutocompleteController {
+public class AutoCompleteController {
+
+    private static final Logger LOGGER = Logger.getLogger(AutoCompleteController.class);
 
     private static final int MAX_NUMBER_OF_SUGGESTIONS = 15;
 
@@ -48,7 +51,7 @@ public class AutocompleteController {
     private MultiTermSuggestionService multiTermSuggestionService;
 
     @Inject
-    public AutocompleteController(GeneIdSuggestionService geneIdSuggestionService, MultiTermSuggestionService multiTermSuggestionService) {
+    public AutoCompleteController(GeneIdSuggestionService geneIdSuggestionService, MultiTermSuggestionService multiTermSuggestionService) {
         this.geneIdSuggestionService = geneIdSuggestionService;
         this.multiTermSuggestionService = multiTermSuggestionService;
     }
@@ -56,7 +59,9 @@ public class AutocompleteController {
     @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String getTopSuggestions(@RequestParam(value = "query") String query, @RequestParam(value = "species", required = false) String species) {
+    public String fetchTopSuggestions(@RequestParam(value = "query") String query, @RequestParam(value = "species", required = false) String species) {
+        LOGGER.info(String.format("fetchTopSuggestions for query %s, species %s", query, species));
+
         if (StringUtils.isBlank(query)) {
             return StringUtils.EMPTY;
         }
@@ -87,8 +92,7 @@ public class AutocompleteController {
             topSuggestions = topSuggestions.subList(0, MAX_NUMBER_OF_SUGGESTIONS);
         }
 
-        Gson gson = new Gson();
-        return gson.toJson(topSuggestions);
+        return new Gson().toJson(topSuggestions);
     }
 
 }

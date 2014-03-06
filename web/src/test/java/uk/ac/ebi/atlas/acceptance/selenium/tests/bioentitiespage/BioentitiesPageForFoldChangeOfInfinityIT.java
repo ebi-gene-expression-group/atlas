@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
-public class BioentitiesPageForFoldChangeOfInfinity extends SinglePageSeleniumFixture {
+public class BioentitiesPageForFoldChangeOfInfinityIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 

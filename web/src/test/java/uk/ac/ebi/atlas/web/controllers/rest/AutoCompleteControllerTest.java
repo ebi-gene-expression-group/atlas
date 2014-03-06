@@ -39,13 +39,13 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AutocompleteControllerTest {
+public class AutoCompleteControllerTest {
 
     private static final String QUERY_STRING = "This is a query";
 
     private static final String HOMO_SAPIENS = "homo sapiens";
 
-    private AutocompleteController subject;
+    private AutoCompleteController subject;
 
     @Mock
     private BaselineRequestContext requestContextMock;
@@ -66,14 +66,14 @@ public class AutocompleteControllerTest {
 
         when(requestContextMock.getFilteredBySpecies()).thenReturn(HOMO_SAPIENS);
 
-        subject = new AutocompleteController(geneIdSuggestionServiceMock, multiTermSuggestionServiceMock);
+        subject = new AutoCompleteController(geneIdSuggestionServiceMock, multiTermSuggestionServiceMock);
 
     }
 
     @Test
-    public void testGetTopSuggestions() throws Exception {
+    public void fetchTopSuggestions() throws Exception {
         //given
-        String jsonResponse = subject.getTopSuggestions(QUERY_STRING, HOMO_SAPIENS);
+        String jsonResponse = subject.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS);
 
         //then
         assertThat(jsonResponse, is("[\"Value1\",\"Value2\"]"));
