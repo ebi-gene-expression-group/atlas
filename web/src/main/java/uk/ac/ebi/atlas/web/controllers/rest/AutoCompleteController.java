@@ -23,76 +23,39 @@
 package uk.ac.ebi.atlas.web.controllers.rest;
 
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.solr.query.GeneIdSuggestionService;
-import uk.ac.ebi.atlas.solr.query.MultiTermSuggestionService;
+import uk.ac.ebi.atlas.solr.query.SuggestionService;
 
 import javax.inject.Inject;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 @Controller
 @Scope("request")
 public class AutoCompleteController {
 
-    private static final Logger LOGGER = Logger.getLogger(AutoCompleteController.class);
-
-    private static final int MAX_NUMBER_OF_SUGGESTIONS = 15;
-
-    private GeneIdSuggestionService geneIdSuggestionService;
-    private MultiTermSuggestionService multiTermSuggestionService;
+    private final SuggestionService suggestionService;
 
     @Inject
-    public AutoCompleteController(GeneIdSuggestionService geneIdSuggestionService, MultiTermSuggestionService multiTermSuggestionService) {
-        this.geneIdSuggestionService = geneIdSuggestionService;
-        this.multiTermSuggestionService = multiTermSuggestionService;
+    public AutoCompleteController(SuggestionService suggestionService) {
+        this.suggestionService = suggestionService;
     }
 
     @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String fetchTopSuggestions(@RequestParam(value = "query") String query, @RequestParam(value = "species", required = false) String species) {
-        LOGGER.info(String.format("fetchTopSuggestions for query %s, species %s", query, species));
-
         if (StringUtils.isBlank(query)) {
             return StringUtils.EMPTY;
         }
 
-        LinkedHashSet<String> suggestions = Sets.newLinkedHashSet();
+        List<String> suggestions = suggestionService.fetchTopSuggestions(query, species);
 
-        species = StringUtils.lowerCase(species);
-
-        if (!StringUtils.containsWhitespace(query)) {
-            suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInName(query, species));
-        }
-
-        if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInSynonym(query, species));
-        }
-
-        if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInIdentifier(query, species));
-        }
-
-        if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(multiTermSuggestionService.fetchMultiTermSuggestions(query, species));
-        }
-
-        List<String> topSuggestions = Lists.newArrayList(suggestions);
-
-        if (topSuggestions.size() > MAX_NUMBER_OF_SUGGESTIONS) {
-            topSuggestions = topSuggestions.subList(0, MAX_NUMBER_OF_SUGGESTIONS);
-        }
-
-        return new Gson().toJson(topSuggestions);
+        return new Gson().toJson(suggestions);
     }
 
 }

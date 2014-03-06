@@ -29,8 +29,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
-import uk.ac.ebi.atlas.solr.query.GeneIdSuggestionService;
 import uk.ac.ebi.atlas.solr.query.MultiTermSuggestionService;
+import uk.ac.ebi.atlas.solr.query.SuggestionService;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class AutoCompleteControllerTest {
     private BaselineRequestContext requestContextMock;
 
     @Mock
-    private GeneIdSuggestionService geneIdSuggestionServiceMock;
+    private SuggestionService suggestionServiceMock;
 
     @Mock
     private MultiTermSuggestionService multiTermSuggestionServiceMock;
@@ -61,12 +61,11 @@ public class AutoCompleteControllerTest {
 
         List<String> suggestions = Lists.newArrayList("Value1", "Value2");
 
-        when(geneIdSuggestionServiceMock.fetchGeneIdSuggestionsInName(QUERY_STRING, HOMO_SAPIENS)).thenReturn(suggestions);
-        when(multiTermSuggestionServiceMock.fetchMultiTermSuggestions(QUERY_STRING, HOMO_SAPIENS)).thenReturn(suggestions);
+        when(suggestionServiceMock.fetchTopSuggestions(QUERY_STRING, HOMO_SAPIENS)).thenReturn(suggestions);
 
         when(requestContextMock.getFilteredBySpecies()).thenReturn(HOMO_SAPIENS);
 
-        subject = new AutoCompleteController(geneIdSuggestionServiceMock, multiTermSuggestionServiceMock);
+        subject = new AutoCompleteController(suggestionServiceMock);
 
     }
 
