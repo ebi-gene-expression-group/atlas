@@ -39,7 +39,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class SolrSuggestionsServiceIT {
+public class MultiTermSuggestionServiceIT {
 
     private static final String HOMO_SAPIENS_SPECIES = "homo sapiens";
     private static final String MUS_MUSCULUS_SPECIES = "mus musculus";
@@ -62,6 +62,12 @@ public class SolrSuggestionsServiceIT {
     }
 
     @Test
+    public void apop() {
+        List<String> properties = subject.fetchMultiTermSuggestions("apop", null);
+        assertThat(properties.size(), is(0));
+    }
+
+    @Test
     @Ignore //TODO: fix me!
     public void findGenePropertySuggestionsForPartialQuery() {
 
@@ -80,6 +86,5 @@ public class SolrSuggestionsServiceIT {
         assertThat(properties.size(), is(15));
         assertThat(properties, hasItems("protein b", "p binding", "protein binding"));
     }
-
 
 }

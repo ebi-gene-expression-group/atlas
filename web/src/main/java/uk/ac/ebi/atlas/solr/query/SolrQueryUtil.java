@@ -3,7 +3,10 @@ package uk.ac.ebi.atlas.solr.query;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
-public class SolrQueryUtil {
+public final class SolrQueryUtil {
+
+    private SolrQueryUtil() {
+    }
 
     public static String limitSpeciesNameToTwoWords(String species) {
 

@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.collect.Lists;
-import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -39,7 +38,6 @@ import java.util.List;
 @Named
 @Scope("singleton")
 public class GeneIdSuggestionService {
-    private static final Logger LOGGER = Logger.getLogger(GeneIdSuggestionService.class);
 
     @Value("#{configuration['index.property_names.bioentity_name']}")
     private String[] bioentityNamePropertyNames;
@@ -76,7 +74,6 @@ public class GeneIdSuggestionService {
     }
 
     List<String> fetchAutoCompleteSuggestions(String queryString, String species, String[] propertyNames) {
-
         SolrQuery solrQuery = solrQueryBuilderFactory.createAutocompleFacetedPropertyValueQueryBuilder()
                 .withSpecies(species)
                 .withBioentityTypes(BioentityType.getAllSolrAliases())
@@ -87,8 +84,6 @@ public class GeneIdSuggestionService {
     }
 
     List<String> fetchFacetedResults(SolrQuery solrQuery) {
-
-        LOGGER.debug("<fetchFacetedResults> processing solr query: " + solrQuery.getQuery());
 
         QueryResponse solrResponse = solrServer.query(solrQuery);
 

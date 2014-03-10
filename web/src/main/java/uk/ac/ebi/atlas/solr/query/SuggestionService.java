@@ -20,27 +20,29 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest;
+package uk.ac.ebi.atlas.solr.query;
 
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.solr.query.GeneIdSuggestionService;
-import uk.ac.ebi.atlas.solr.query.MultiTermSuggestionService;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.LinkedHashSet;
 import java.util.List;
 
 @Controller
 @Scope("request")
-public class AutocompleteController {
+public class SuggestionService {
+
+    private static final Logger LOGGER = Logger.getLogger(SuggestionService.class);
 
     private static final int MAX_NUMBER_OF_SUGGESTIONS = 15;
 
@@ -48,18 +50,13 @@ public class AutocompleteController {
     private MultiTermSuggestionService multiTermSuggestionService;
 
     @Inject
-    public AutocompleteController(GeneIdSuggestionService geneIdSuggestionService, MultiTermSuggestionService multiTermSuggestionService) {
+    public SuggestionService(GeneIdSuggestionService geneIdSuggestionService, MultiTermSuggestionService multiTermSuggestionService) {
         this.geneIdSuggestionService = geneIdSuggestionService;
         this.multiTermSuggestionService = multiTermSuggestionService;
     }
 
-    @RequestMapping(value = "/json/suggestions", method = RequestMethod.GET, produces = "application/json")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public String getTopSuggestions(@RequestParam(value = "query") String query, @RequestParam(value = "species", required = false) String species) {
-        if (StringUtils.isBlank(query)) {
-            return StringUtils.EMPTY;
-        }
+    public List<String> fetchTopSuggestions(String query, @Nullable String species) {
+        LOGGER.info(String.format("fetchTopSuggestions for query %s, species %s", query, species));
 
         LinkedHashSet<String> suggestions = Sets.newLinkedHashSet();
 
@@ -87,8 +84,7 @@ public class AutocompleteController {
             topSuggestions = topSuggestions.subList(0, MAX_NUMBER_OF_SUGGESTIONS);
         }
 
-        Gson gson = new Gson();
-        return gson.toJson(topSuggestions);
+        return topSuggestions;
     }
 
 }
