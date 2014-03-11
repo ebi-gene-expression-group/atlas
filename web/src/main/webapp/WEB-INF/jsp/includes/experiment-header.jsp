@@ -9,7 +9,6 @@
 <section class="extra-padding">
 
     <div id="helpContentTooltip" style='display:none'></div>
-
     <table width="100%">
         <tbody>
         <tr>
@@ -17,28 +16,51 @@
             <td width="130px">
                 <table cellpadding="2" cellspacing="0" style="float:right">
                     <tr>
+
+                        <c:if test="${allArrayDesigns!=null}">
+
+                            <c:forEach items="${allArrayDesigns}" var="arrayDesign" varStatus="loop">
+
+                                <c:if test="${loop.first}">
+                                    <%--@elvariable id="qcReportUtil" type="uk.ac.ebi.atlas.utils.QCReportUtil"--%>
+                                    <c:set var="hasQcReport" value="${qcReportUtil.hasQCReport(experimentAccession, arrayDesign)}"/>
+
+                                    <c:if test="${hasQcReport}">
+                                    <td>
+                                        <a id="display-qc-report" class="button-image" title="View QC report"
+                                           href="${pageContext.request.contextPath}/experiments/${experimentAccession}/qc/${arrayDesign}/index.html">
+                                            <img src="${pageContext.request.contextPath}/resources/images/qc_v16.png"/>
+                                        </a>
+                                    </td>
+                                    </c:if>
+
+                                </c:if>
+
+                            </c:forEach>
+                        </c:if>
+
                         <td>
                             <a id="display-experiment" class="button-image"
-                               title="Experiment Page" href="experiments/${experimentAccession}${accessKeyQueryString}">
-                                <img src="resources/images/experiment_page_small.png"/></a>
+                               title="Experiment Page" href="${pageContext.request.contextPath}/experiments/${experimentAccession}${accessKeyQueryString}">
+                                <img src="${pageContext.request.contextPath}/resources/images/experiment_page_small.png"/></a>
                         </td>
                         <td>
                             <a id="display-analysis-methods" class="button-image" title="Analysis Methods"
-                               href="experiments/${experimentAccession}/analysis-methods${accessKeyQueryString}">
+                               href="${pageContext.request.contextPath}/experiments/${experimentAccession}/analysis-methods${accessKeyQueryString}">
                                 <img style="width:23px;height:23px"
-                                     src="resources/images/analysis_icon.png"/></a>
+                                     src="${pageContext.request.contextPath}/resources/images/analysis_icon.png"/></a>
                         </td>
                         <td>
                             <a id="display-experiment-design" class="button-image"
-                               title="Experiment Design" href="experiments/${experimentAccession}/experiment-design${accessKeyQueryString}">
-                                <img src="resources/images/experiment_design_icon.png"/></a>
+                               title="Experiment Design" href="${pageContext.request.contextPath}/experiments/${experimentAccession}/experiment-design${accessKeyQueryString}">
+                                <img src="${pageContext.request.contextPath}/resources/images/experiment_design_icon.png"/></a>
                         </td>
                         <c:if test="${type.isDifferential()}">
                             <td>
                                 <a id="download-raw" class="button-image"
                                    title="Download all raw counts for the experiment"
                                    href="${rawDownloadUrl}${accessKeyQueryString}">
-                                    <img src="resources/images/download_blue_small_raw.png"/></a>
+                                    <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_raw.png"/></a>
                             </td>
                         </c:if>
                         <c:if test="${type.isMicroarray()}">
@@ -48,13 +70,13 @@
                                         <a id="download-logFold" class="button-image"
                                            title="Download all log fold expression changes for the experiment"
                                            href="${logFoldUrl}${accessKeyQueryString}">
-                                            <img src="resources/images/download_blue_small_logfold.png"/></a>
+                                            <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_logfold.png"/></a>
                                     </c:when>
                                     <c:otherwise>
                                         <a id="download-normalized" class="button-image"
                                            title="Download all normalized expressions for the experiment"
                                            href="${normalizedUrl}${accessKeyQueryString}">
-                                            <img src="resources/images/download_blue_small_normalized.png"/></a>
+                                            <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/></a>
                                     </c:otherwise>
                                 </c:choose>
 
@@ -65,7 +87,7 @@
                                 <a id="download-analytics" class="button-image"
                                    title="Download all analytics for the experiment"
                                    href="${analyticsDownloadUrl}${accessKeyQueryString}">
-                                    <img src="resources/images/download_blue_small_analytics.png"/></a>
+                                    <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_analytics.png"/></a>
                             </td>
                         </c:if>
                     </tr>

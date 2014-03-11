@@ -47,7 +47,6 @@
 </td>
 <td width="100%">
     <div id="experimentDescription">
-
         <a id="goto-experiment" class="thick-link" title="Experiment Page"
            href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}${accessKeyQueryString}${additionalQueryOptionsString}">${experimentDescription}</a>
         <c:if test="${hasExtraInfo}">
@@ -65,14 +64,6 @@
                 <a class="array-design" id="${arrayDesign}" title="View array design in ArrayExpress"
                    href="${applicationProperties.getArrayExpressArrayURL(arrayDesign)}"
                    target='_blank'>${arrayDesign}</a>
-
-                <%--@elvariable id="qcReportUtil" type="uk.ac.ebi.atlas.utils.QCReportUtil"--%>
-                <c:set var="hasQcReport" value="${qcReportUtil.hasQCReport(experimentAccession, arrayDesign)}"/>
-
-                <c:if test="${hasQcReport}">
-                    <a class="array-design" id="Qc" title="View QC report" href="${pageContext.request.contextPath}/experiments/${experimentAccession}/qc/${arrayDesign}/index.html">QC</a>
-                </c:if>
-
             </c:forEach>
         </div>
     </c:if>

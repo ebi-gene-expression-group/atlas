@@ -85,7 +85,7 @@
     </definition>
 
     <definition name="qc-template" extends="base.definition">
-        <put-attribute name="menu" value=""/>
+        <put-attribute name="title" value="Experiment - QC Report"/>
         <put-attribute name="body" value="/WEB-INF/jsp/qc-template.jsp"/>
     </definition>
 
