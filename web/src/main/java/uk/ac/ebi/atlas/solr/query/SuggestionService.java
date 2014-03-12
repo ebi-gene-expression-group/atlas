@@ -76,9 +76,7 @@ public class SuggestionService {
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
             List<String> multiTermSuggestions = multiTermSuggestionService.fetchMultiTermSuggestions(query);
-            for (String suggestion : multiTermSuggestions) {
-                suggestions.add(SolrQueryUtil.quoteTextThatContainsMoreThanOneWord(suggestion));
-            }
+            suggestions.addAll(multiTermSuggestions);
         }
 
         List<String> topSuggestions = Lists.newArrayList(suggestions);

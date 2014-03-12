@@ -18,12 +18,4 @@ public final class SolrQueryUtil {
         return species;
     }
 
-    public static String quoteTextThatContainsMoreThanOneWord(String text) {
-        String[] words = StringUtils.split(text);
-
-        if (ArrayUtils.getLength(words) > 1) {
-            return "\"" + text + "\"";
-        }
-        return text;
-    }
 }

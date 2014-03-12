@@ -25,7 +25,8 @@ public class SuggestionServiceIT {
     public void apop() {
         List<String> suggestions = suggestionService.fetchTopSuggestions("apop", null);
         System.out.println(Joiner.on(",\n").join(suggestions));
-        assertThat(suggestions, hasItem("\"apoptotic process\""));
+        assertThat(suggestions, hasItem("apoptotic process"));
+
     }
 
 }
