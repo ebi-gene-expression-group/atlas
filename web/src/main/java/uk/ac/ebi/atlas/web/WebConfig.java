@@ -26,7 +26,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 import uk.ac.ebi.atlas.web.interceptors.AdminInterceptor;
-import uk.ac.ebi.atlas.web.interceptors.ExperimentInterceptor;
+import uk.ac.ebi.atlas.web.interceptors.ExperimentTimingInterceptor;
+import uk.ac.ebi.atlas.web.interceptors.SearchTimingInterceptor;
 
 import javax.inject.Inject;
 
@@ -36,7 +37,10 @@ import javax.inject.Inject;
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Inject
-    private ExperimentInterceptor experimentInterceptor;
+    private ExperimentTimingInterceptor experimentTimingInterceptor;
+    @Inject
+    private SearchTimingInterceptor searchTimingInterceptor;
+
     @Inject
     private AdminInterceptor adminInterceptor;
 
@@ -62,7 +66,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     // equivalent to mvc:interceptors
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(experimentInterceptor).addPathPatterns("/experiments/**");
+        registry.addInterceptor(experimentTimingInterceptor).addPathPatterns("/experiments/**");
+        registry.addInterceptor(searchTimingInterceptor).addPathPatterns("/query");
         registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**");
     }
 

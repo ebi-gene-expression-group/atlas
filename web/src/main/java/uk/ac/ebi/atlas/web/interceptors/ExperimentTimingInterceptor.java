@@ -31,10 +31,10 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Named("experimentInterceptor")
-public class ExperimentInterceptor extends HandlerInterceptorAdapter {
+@Named
+public class ExperimentTimingInterceptor extends HandlerInterceptorAdapter {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentInterceptor.class);
+    private static final Logger LOGGER = Logger.getLogger(ExperimentTimingInterceptor.class);
 
     protected static final String STOP_WATCH = "stopWatch";
 
