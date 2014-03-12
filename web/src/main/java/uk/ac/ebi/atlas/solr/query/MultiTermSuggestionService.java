@@ -5,7 +5,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -34,20 +33,16 @@ public class MultiTermSuggestionService {
 
     private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w ]|_");
 
-    private static final String SOLR_SPELLING_SUGGESTER_TEMPLATE = "suggest_properties?q=\"{0}\" AND species:\"{1}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
-
-    private static final String SOLR_SPELLING_SUGGESTER_TEMPLATE_NO_SPECIES = "suggest_properties?q=\"{0}\"&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
+    private static final String SOLR_SPELLING_SUGGESTER_TEMPLATE = "suggest_properties?spellcheck.q={0}&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
     @Inject
     public MultiTermSuggestionService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    public List<String> fetchMultiTermSuggestions(String multiTermToken, String species) {
+    public List<String> fetchMultiTermSuggestions(String multiTermToken) {
         // uses Spelling suggester, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Solr+server#Solrserver-Suggestcomponent
-        // ie: http://lime:8983/solr/gxa/suggest_properties?q="<multiTermToken>"&wt=json&omitHeader=true&rows=0&json.nl=arrarr
-
-        species = SolrQueryUtil.limitSpeciesNameToTwoWords(species);
+        // ie: http://lime:8983/solr/gxa/suggest_properties?spellcheck.q=<multiTermPhrase>&wt=json&omitHeader=true&rows=0&json.nl=arrarr
 
         Matcher notSpellCheckableMatcher = NON_WORD_CHARACTERS_PATTERN.matcher(multiTermToken);
 
@@ -55,13 +50,8 @@ public class MultiTermSuggestionService {
             return Lists.newArrayList();
         }
 
-        String jsonString;
-        if (StringUtils.isNotBlank(species)) {
-            jsonString = getJsonResponse(SOLR_SPELLING_SUGGESTER_TEMPLATE, multiTermToken, species);
-        } else {
-            jsonString = getJsonResponse(SOLR_SPELLING_SUGGESTER_TEMPLATE_NO_SPECIES, multiTermToken);
-        }
-        return extractCollations(jsonString);
+        String jsonString = getJsonResponse(SOLR_SPELLING_SUGGESTER_TEMPLATE, multiTermToken);
+        return extractSuggestions(jsonString);
     }
 
 
@@ -74,28 +64,20 @@ public class MultiTermSuggestionService {
         return null;
     }
 
-    List<String> extractCollations(String jsonString) {
+    List<String> extractSuggestions(String jsonString) {
         List<String> suggestionStrings = new ArrayList<>();
 
         JsonElement suggestionsElement = extractSuggestionsElement(jsonString);
 
         if (suggestionsElement != null && suggestionsElement.isJsonArray()) {
 
-            JsonArray suggestionElements = suggestionsElement.getAsJsonArray();
+            JsonArray suggestionElements = suggestionsElement.getAsJsonArray().get(0).getAsJsonArray().get(1).getAsJsonObject().get("suggestion").getAsJsonArray();
 
             for (JsonElement suggestionElement : suggestionElements) {
-                JsonArray suggestionEntry = suggestionElement.getAsJsonArray();
-                if ("collation".equals(suggestionEntry.get(0).getAsString())) {
-                    String collation = suggestionEntry.get(1).getAsString();
-                    suggestionStrings.add(extractSuggestion(collation));
-                }
+                 suggestionStrings.add(suggestionElement.getAsString());
             }
         }
         return suggestionStrings;
-    }
-
-    String extractSuggestion(String collation) {
-        return StringUtils.split(collation, "\"")[0];
     }
 
     String getJsonResponse(String restQueryTemplate, Object... arguments) {

@@ -1,102 +1,50 @@
 {
-    "spellcheck":{
-        "suggestions":[
+    "spellcheck": {
+        "suggestions": [
             [
                 "mus",
                 {
-                    "numFound":19,
-                    "startOffset":23,
-                    "endOffset":26,
-                    "suggestion":[
-                        "mus",
-                        "mus-101",
-                        "mus-81",
-                        "mus101",
-                        "mus201",
-                        "mus205",
-                        "mus209",
-                        "mus210",
-                        "mus301",
-                        "mus304",
-                        "mus308",
-                        "mus309",
-                        "mus312",
-                        "mus7",
-                        "mus81",
-                        "musculus",
-                        "musk",
-                        "muskelin",
-                        "mustn1"
+                    "numFound": 29,
+                    "startOffset": 0,
+                    "endOffset": 3,
+                    "suggestion": [
+                        "muscle organ development",
+                        "muscle contraction",
+                        "muscle cell differentiation",
+                        "muscle cell homeostasis",
+                        "muscle fiber development",
+                        "mushroom body development",
+                        "Muscle contraction",
+                        "muscle filament sliding",
+                        "Muscarinic acetylcholine receptor family",
+                        "muscle organ morphogenesis",
+                        "MUSCLEBLIND",
+                        "muscle attachment",
+                        "musculoskeletal movement",
+                        "MUSCARINIC ACETYLCHOLINE RECEPTOR",
+                        "muscle cell development",
+                        "Muscarinic acetylcholine receptor",
+                        "muscle alpha-actinin binding",
+                        "muscle cell cellular homeostasis",
+                        "MUSCLE SKELETAL RECEPTOR TYROSINE KINASE PRECURSOR EC_2.7.10.1 MUSCLE SPECIFIC TYROSINE KINASE RECEPTOR MUSK MUSCLE SPECIFIC KINASE RECEPTOR",
+                        "muscle myosin complex",
+                        "muscle tendon junction",
+                        "muscle tissue morphogenesis",
+                        " MUSCULAR DYSTROPHY-DYSTROGLYCANOPATHY (CONGENITAL WITH BRAIN AND EYE",
+                        "muscle cell fate determination",
+                        "muscular septum morphogenesis",
+                        "muscle system process",
+                        "muscle cell fate specification",
+                        "muscle thin filament tropomyosin",
+                        " MUSCULAR DYSTROPHY-DYSTROGLYCANOPATHY (CONGENITAL WITH MENTAL RETARDATION),"
                     ]
                 }
-            ],
-            [
-                "mus",
-                {
-                    "numFound":19,
-                    "startOffset":41,
-                    "endOffset":44,
-                    "suggestion":[
-                        "mus",
-                        "mus-101",
-                        "mus-81",
-                        "mus101",
-                        "mus201",
-                        "mus205",
-                        "mus209",
-                        "mus210",
-                        "mus301",
-                        "mus304",
-                        "mus308",
-                        "mus309",
-                        "mus312",
-                        "mus7",
-                        "mus81",
-                        "musculus",
-                        "musk",
-                        "muskelin",
-                        "mustn1"
-                    ]
-                }
-            ],
-            [
-                "musculus",
-                {
-                    "numFound":1,
-                    "startOffset":45,
-                    "endOffset":53,
-                    "suggestion":[
-                        "musculus"
-                    ]
-                }
-            ],
-            [
-                "collation",
-                "\"mus\" AND species:\"mus musculus\""
-            ],
-            [
-                "collation",
-                "\"mus81\" AND species:\"mus musculus\""
-            ],
-            [
-                "collation",
-                "\"musculus\" AND species:\"mus musculus\""
-            ],
-            [
-                "collation",
-                "\"musk\" AND species:\"mus musculus\""
-            ],
-            [
-                "collation",
-                "\"mustn1\" AND species:\"mus musculus\""
             ]
         ]
     },
-    "response":{
-        "numFound":45910,
-        "start":0,
-        "docs":[
-
-        ]
+    "response": {
+        "numFound": 0,
+        "start": 0,
+        "docs": []
     }
 }

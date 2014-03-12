@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.solr.query;
 
 
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,39 +72,32 @@ public class MultiTermSuggestionServiceTest {
 
     @Test
     public void shouldContainCollations(){
-        List<String> suggestions = subject.extractCollations(jsonAutoCompleteResponse);
-        assertThat(suggestions.size(), is(5));
-        assertThat(suggestions, contains("mus", "mus81", "musculus", "musk", "mustn1"));
+        List<String> suggestions = subject.extractSuggestions(jsonAutoCompleteResponse);
+
+        assertThat(suggestions.size(), is(29));
+        assertThat(suggestions, contains("muscle organ development", "muscle contraction", "muscle cell differentiation", "muscle cell homeostasis", "muscle fiber development", "mushroom body development", "Muscle contraction", "muscle filament sliding", "Muscarinic acetylcholine receptor family", "muscle organ morphogenesis", "MUSCLEBLIND", "muscle attachment", "musculoskeletal movement", "MUSCARINIC ACETYLCHOLINE RECEPTOR", "muscle cell development", "Muscarinic acetylcholine receptor", "muscle alpha-actinin binding", "muscle cell cellular homeostasis", "MUSCLE SKELETAL RECEPTOR TYROSINE KINASE PRECURSOR EC_2.7.10.1 MUSCLE SPECIFIC TYROSINE KINASE RECEPTOR MUSK MUSCLE SPECIFIC KINASE RECEPTOR", "muscle myosin complex", "muscle tendon junction", "muscle tissue morphogenesis", " MUSCULAR DYSTROPHY-DYSTROGLYCANOPATHY (CONGENITAL WITH BRAIN AND EYE", "muscle cell fate determination", "muscular septum morphogenesis", "muscle system process", "muscle cell fate specification", "muscle thin filament tropomyosin", " MUSCULAR DYSTROPHY-DYSTROGLYCANOPATHY (CONGENITAL WITH MENTAL RETARDATION),"));
     }
 
     @Test
     public void shouldContainCollationsIfSuggestionsElementIsEmpty(){
-        List<String> suggestions = subject.extractCollations(jsonAutoCompleteEmptyResponse);
+        List<String> suggestions = subject.extractSuggestions(jsonAutoCompleteEmptyResponse);
         assertThat(suggestions, is(empty()));
     }
 
     @Test
     public void shouldReturnEmptyListIfResponseIsEmpty(){
-        List<String> suggestions = subject.extractCollations("{}");
+        List<String> suggestions = subject.extractSuggestions("{}");
         assertThat(suggestions, is(empty()));
     }
 
     @Test
-    public void testExtractSuggestion() {
-        //given
-        String suggestion = subject.extractSuggestion("\"musk\" AND species:\"mus musculus\"");
-
-        MatcherAssert.assertThat(suggestion, Matchers.is("musk"));
-    }
-
-    @Test
     public void findGenePropertiesShouldReturnEmptyListWhenTermContainsNonSpellCheckableCharacters() {
-        assertThat(subject.fetchMultiTermSuggestions("hello > boy", "mus mus"), Matchers.is(empty()));
+        assertThat(subject.fetchMultiTermSuggestions("hello > boy"), Matchers.is(empty()));
     }
 
     @Test
     public void findGenePropertiesShouldNotReturnEmptyList() {
-        assertThat(subject.fetchMultiTermSuggestions("p53", "mus mus"), Matchers.is(not(empty())));
+        assertThat(subject.fetchMultiTermSuggestions("p53"), Matchers.is(not(empty())));
     }
 
 }

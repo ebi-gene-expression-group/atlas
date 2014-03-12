@@ -75,7 +75,10 @@ public class SuggestionService {
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(multiTermSuggestionService.fetchMultiTermSuggestions(query, species));
+            List<String> multiTermSuggestions = multiTermSuggestionService.fetchMultiTermSuggestions(query);
+            for (String suggestion : multiTermSuggestions) {
+                suggestions.add(SolrQueryUtil.quoteTextThatContainsMoreThanOneWord(suggestion));
+            }
         }
 
         List<String> topSuggestions = Lists.newArrayList(suggestions);
