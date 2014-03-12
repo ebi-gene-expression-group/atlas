@@ -82,6 +82,7 @@
         <sonar.jacoco.itReportPath>${project.build.directory}/jacoco-it.exec</sonar.jacoco.itReportPath>
         <!-- Tells Sonar where the code coverage report is -->
         <!-- /Code Coverage with SONAR -->
+        <resources.host>wwwdev.ebi.ac.uk</resources.host>
 
     </properties>
 
@@ -565,6 +566,7 @@
             <id>production</id>
             <!-- oracleContext.xml is located on the filesystem and specified in tomcat's context xml -->
             <properties>
+                <resources.host>www.ebi.ac.uk</resources.host>
                 <data.files.location>/srv/gxa/data</data.files.location>
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>
