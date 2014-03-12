@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class BioentitiesQueryDifferentialDownloadControllerIT {
+public class BioentitiesSearchDifferentialDownloadControllerIT {
 
     private EndPoint subject = new EndPoint("/gxa/query.tsv?geneQuery=AT1G02220");
 

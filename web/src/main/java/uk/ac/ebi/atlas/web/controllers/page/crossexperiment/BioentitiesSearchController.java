@@ -55,7 +55,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 @Controller
 @Scope("prototype")
-public class BioentitiesQueryController {
+public class BioentitiesSearchController {
 
     private GeneQueryDifferentialService geneQueryDifferentialService;
     private BaselineBioentityCountsService baselineBioentityCountsService;
@@ -65,7 +65,7 @@ public class BioentitiesQueryController {
     private SolrQueryService solrQueryService;
 
     @Inject
-    public BioentitiesQueryController(GeneQueryDifferentialService geneQueryDifferentialService, BaselineBioentityCountsService baselineBioentityCountsService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService) {
+    public BioentitiesSearchController(GeneQueryDifferentialService geneQueryDifferentialService, BaselineBioentityCountsService baselineBioentityCountsService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService) {
         this.geneQueryDifferentialService = geneQueryDifferentialService;
         this.baselineBioentityCountsService = baselineBioentityCountsService;
         this.ebiGlobalSearchQueryBuilder = ebiGlobalSearchQueryBuilder;
