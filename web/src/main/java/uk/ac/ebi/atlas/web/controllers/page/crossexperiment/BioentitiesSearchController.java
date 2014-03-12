@@ -137,7 +137,7 @@ public class BioentitiesSearchController {
             return Optional.of("redirect:/" + bioentityPageName + "/" + geneId);
         }
 
-        Optional<Collection<String>> geneIdsOrSets = geneQueryDifferentialService.findGeneIdsOrSets(requestParameters);
+        Optional<Collection<String>> geneIdsOrSets = geneQueryDifferentialService.expandGeneQueryIntoGeneIds(requestParameters);
 
         if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
             return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());
