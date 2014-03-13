@@ -1,29 +1,39 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 <%@ page import="org.apache.commons.io.IOUtils" %>
 <%@ page import="java.nio.file.Path" %>
 <%@ page import="java.nio.file.Files" %>
 
 
-<%--<section class="extra-padding">--%>
-    <%--<c:import url="includes/experiment-header.jsp" />--%>
-<%--</section>--%>
+    <div id="arrayDesignsQc" style="width: 50%">
 
-    <%--<table>--%>
-        <%--<tbody cellpadding="2" cellspacing="0" style="float:right">--%>
-        <%--<tr>--%>
-            <%--<td width="130px"></td>--%>
-            <%--<td width="1000px"></td>--%>
-            <%--<td width="160px" style="text-align: right">--%>
-                <%--<a id="display-experiment" class="button-image"--%>
-                   <%--title="Experiment Page" href="${pageContext.request.contextPath}/experiments/${experimentAccession}">--%>
-                    <%--<img src="${pageContext.request.contextPath}/resources/images/experiment_page_small.png"/></a>--%>
-            <%--</td>--%>
-        <%--</tr>--%>
-        <%--</tbody>--%>
-<%--</table>--%>
+        <c:if test="${fn:length(expArrayDesigns) > 1}">
 
+            <c:if test= "${not empty expArrayDesigns}" />
+
+            <form:form commandName="preferences" method="get" id="prefForm" >
+                <table cellpadding="0" cellspacing="0" border="0" style="margin-left: 10px" >
+                    <tr>
+                        <td style="margin-left: 20px;">QC reports for array design : </td>
+
+                        <td>
+                            <form:select path="arrayDesignAccession">
+                                <form:options items="${expArrayDesigns}" />
+                             </form:select>
+                        </td>
+
+                    </tr>
+                </table>
+
+            </form:form>
+
+        </c:if>
+
+    </div>
 
 <div id="qc-content">
     <%
@@ -33,3 +43,18 @@
         IOUtils.copy(Files.newInputStream(filePath), pageContext.getOut());
     %>
 </div>
+
+<script>
+    $(function () {
+
+        $(document).ready(function () {
+
+            $('#arrayDesignAccession').change(function () {
+                $('#prefForm').submit();
+            });
+
+        });
+
+    });
+
+</script>

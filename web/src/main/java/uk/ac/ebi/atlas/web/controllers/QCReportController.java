@@ -2,19 +2,22 @@ package uk.ac.ebi.atlas.web.controllers;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.support.ServletContextResourceLoader;
-import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.QCReportUtil;
+import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.text.MessageFormat;
@@ -30,10 +33,14 @@ public class QCReportController {
     private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
     private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
+    private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "expArrayDesigns";
+
 
     private final ServletContextResourceLoader servletContextResourceLoader;
     private final QCReportUtil qcReportUtil;
     private ExperimentTrader experimentTrader;
+    private String arrayDesignAccession;
+    private String arrayDesign;
 
     @Inject
     public QCReportController(ServletContext servletContext, QCReportUtil qcReportUtil, ExperimentTrader experimentTrader) {
@@ -42,27 +49,35 @@ public class QCReportController {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/qc/{arrayDesign}/{resource:.*}")
+    @RequestMapping(value = "/experiments/{experimentAccession}/qc/{arrayDesign}/{resource:.*}",
+                    method = RequestMethod.GET)
     public String getQCPage(HttpServletRequest request, Model model,
                             @PathVariable String experimentAccession,
                             @PathVariable String arrayDesign,
-                            @PathVariable String resource) throws IOException {
+                            @PathVariable String resource,
+                            @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences) throws IOException {
 
-        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+        MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
         prepareModel(request, model, experiment);
+
+        arrayDesignAccession =  preferences.getArrayDesignAccession();
+        if(arrayDesignAccession != null) {
+            this.arrayDesign = arrayDesignAccession;
+        } else {
+            this.arrayDesign = arrayDesign;
+        }
 
         if(!resource.equals("index.html")) {
             return forwardToQcResource(experimentAccession, arrayDesign, resource);
         }
 
         if(!qcReportUtil.hasQCReport(experimentAccession, arrayDesign)) {
-            throw new ResourceNotFoundException("No qc report for " + experimentAccession + " array design " + arrayDesign);
+            throw new ResourceNotFoundException("No qc report for " + experimentAccession + " array design " + this.arrayDesign);
         }
 
-        String path = qcReportUtil.buildQCReportIndexHtmlPath(experimentAccession, arrayDesign);
-
+        String path = qcReportUtil.buildQCReportIndexHtmlPath(experimentAccession, this.arrayDesign);
         request.setAttribute("contentPath", FileSystems.getDefault().getPath(path));
-        request.setAttribute("experimentAccession", experimentAccession);
+        extendModel(request, experiment);
 
         return "qc-template";
     }
@@ -74,7 +89,7 @@ public class QCReportController {
         return "forward:" + path;
     }
 
-    private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) {
+    private void prepareModel(HttpServletRequest request, Model model, MicroarrayExperiment experiment) {
         request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
 
         Set<String> allSpecies = experiment.getSpecies();
@@ -90,11 +105,9 @@ public class QCReportController {
         model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
     }
 
-    private Resource fetchResource(String path) {
-        Resource resource = servletContextResourceLoader.getResource(path);
-        if (!resource.exists() || !resource.isReadable()) {
-            throw new ResourceNotFoundException("Resource " + path + " does not exist");
-        }
-        return resource;
+    private void extendModel(HttpServletRequest request, MicroarrayExperiment experiment) {
+        request.setAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
+
     }
+
 }
