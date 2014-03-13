@@ -41,9 +41,9 @@ var autocompleteModule = (function($) {
                     return false;
                 },
                 select: function( event, ui ) {
-                    var selectedValue = ui.item.value.trim(),
+                    var selectedValue = quoteTextThatContainsMoreThanOneWord(ui.item.value.trim()),
                         lastItem = extractLast(this.value);
-                    this.value = this.value.substr(0, this.value.length - lastItem.length).concat(selectedValue);
+                    this.value = this.value.substr(0, this.value.length - lastItem.length).concat(selectedValue) + " ";
                     return false;
                 },
                 source:function (request, response) {
@@ -66,6 +66,13 @@ var autocompleteModule = (function($) {
             });
     }
 
+    function quoteTextThatContainsMoreThanOneWord (text) {
+        return hasMoreThanOneWord(text) ? "\"" + text + "\"" : text;
+    }
+
+    function hasMoreThanOneWord(text) {
+        return /\s/.test(text.trim());
+    }
 
     function extractLast( term ) {
 

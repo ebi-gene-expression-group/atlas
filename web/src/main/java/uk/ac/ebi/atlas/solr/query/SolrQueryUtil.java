@@ -17,4 +17,5 @@ public final class SolrQueryUtil {
         }
         return species;
     }
+
 }

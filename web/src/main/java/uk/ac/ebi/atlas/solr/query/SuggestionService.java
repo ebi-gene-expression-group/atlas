@@ -25,13 +25,10 @@ package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -75,7 +72,8 @@ public class SuggestionService {
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(multiTermSuggestionService.fetchMultiTermSuggestions(query, species));
+            List<String> multiTermSuggestions = multiTermSuggestionService.fetchMultiTermSuggestions(query);
+            suggestions.addAll(multiTermSuggestions);
         }
 
         List<String> topSuggestions = Lists.newArrayList(suggestions);

@@ -25,7 +25,9 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.dao.BaselineExperimentDao;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -42,6 +44,8 @@ import java.util.*;
 @Named
 @Scope("request")
 public class BaselineBioentityCountsService {
+
+    private static final Logger LOGGER = Logger.getLogger(BaselineBioentityCountsService.class);
 
     private final BaselineExperimentsCache baselineExperimentsCache;
 
@@ -71,6 +75,9 @@ public class BaselineBioentityCountsService {
 
 
     public Set<BaselineExperimentResult> query(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
+        LOGGER.info(String.format("<query> geneQuery=%s, condition=%s", requestParameters.getGeneQuery(), requestParameters.getCondition()));
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+        stopWatch.start();
 
         SortedSet<BaselineExperimentResult> results =
                 Sets.newTreeSet(new Comparator<BaselineExperimentResult>() {
@@ -122,6 +129,8 @@ public class BaselineBioentityCountsService {
             }
         }
 
+        stopWatch.stop();
+        LOGGER.info(String.format("<query> %s results, took %s seconds", results.size(), stopWatch.getTotalTimeSeconds()));
 
         return results;
     }

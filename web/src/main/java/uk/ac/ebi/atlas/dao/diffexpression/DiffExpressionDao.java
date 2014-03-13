@@ -72,7 +72,7 @@ public class DiffExpressionDao {
 
     public List<DifferentialBioentityExpression> getTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
 
-        log(indexedContrasts, geneIds);
+        log("getTopExpressions", indexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -101,7 +101,7 @@ public class DiffExpressionDao {
     }
 
     public void foreachExpression(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds, final Visitor<DifferentialBioentityExpression> visitor)  {
-        log(indexedContrasts, geneIds);
+        log("foreachExpression", indexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -146,7 +146,7 @@ public class DiffExpressionDao {
 
 
     public int getResultCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
-        log(indexedContrasts, geneIds);
+        log("getResultCount", indexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -196,8 +196,8 @@ public class DiffExpressionDao {
         });
     }
 
-    private void log(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
-        LOGGER.debug(String.format("getTopExpressions for %s contrasts and %s genes", (indexedContrasts.isPresent()) ? indexedContrasts.get().size() : 0,
+    private void log(final String methodName, Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+        LOGGER.debug(String.format(methodName + " for %s contrasts and %s genes", (indexedContrasts.isPresent()) ? indexedContrasts.get().size() : 0,
                 (geneIds.isPresent()) ? geneIds.get().size() : 0));
     }
 

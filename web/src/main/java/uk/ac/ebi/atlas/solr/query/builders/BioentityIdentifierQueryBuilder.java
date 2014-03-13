@@ -80,7 +80,7 @@ public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityI
         solrQuery.setParam("group.main", true);
         solrQuery.setRows(MAX_GENE_IDS_TO_FETCH);
 
-        LOGGER.debug("<buildQueryObject> solr query: " + solrQuery.toString());
+        LOGGER.trace("<buildQueryObject> solr query: " + solrQuery.toString());
 
         return solrQuery;
     }

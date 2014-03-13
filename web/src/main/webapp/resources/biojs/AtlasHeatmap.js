@@ -69,9 +69,11 @@ Biojs.AtlasHeatmap = Biojs.extend({
         var httpRequest = {
             url:options.featuresUrl,
             data:{rootContext:options.rootContext},
-            methid:"GET",
+            method:"GET",
             beforeSend:function () {
-                containerDiv.html("<img src='http://www.ebi.ac.uk/gxa/resources/images/loading.gif' />");
+                // TODO: nasty workaround for Intellij 12 because it doesn't filter web resources. Fixed in Intellij 13
+                var resource_host = ("${resources.host}" === "\${resources.host}") ? "wwwdev.ebi.ac.uk" : "${resources.host}";
+                containerDiv.html("<img src='http://" + resource_host + "/gxa/resources/images/loading.gif' />");
             },
             success:function (htmlResponse) {
                 Biojs.console.log("SUCCESS: data received");

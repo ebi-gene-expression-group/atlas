@@ -25,7 +25,9 @@ package uk.ac.ebi.atlas.commands;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.dao.diffexpression.DiffExpressionDao;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
@@ -47,6 +49,8 @@ import java.util.Set;
 @Scope("prototype")
 public class GeneQueryDifferentialService {
 
+    private static final Logger LOGGER = Logger.getLogger(GeneQueryDifferentialService.class);
+
     private DiffExpressionDao diffExpressionDao;
     private DifferentialConditionsSearchService differentialConditionsSearchService;
     private SolrQueryService solrQueryService;
@@ -64,7 +68,7 @@ public class GeneQueryDifferentialService {
     public int forEachExpression(GeneQuerySearchRequestParameters requestParameters, Visitor<DifferentialBioentityExpression> visitor) {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
-        Optional<Collection<String>> geneIdsResult = findGeneIdsOrSets(requestParameters);
+        Optional<Collection<String>> geneIdsResult = expandGeneQueryIntoGeneIds(requestParameters);
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
                  || contrastsResult.isPresent() && contrastsResult.get().isEmpty()) {
@@ -107,7 +111,7 @@ public class GeneQueryDifferentialService {
 
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
-        Optional<Collection<String>> geneIdsResult = findGeneIdsOrSets(requestParameters);
+        Optional<Collection<String>> geneIdsResult = expandGeneQueryIntoGeneIds(requestParameters);
 
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
@@ -137,10 +141,15 @@ public class GeneQueryDifferentialService {
         return Optional.of(contrasts);
     }
 
-    public Optional<Collection<String>> findGeneIdsOrSets(GeneQuerySearchRequestParameters requestParameters) {
+    public Optional<Collection<String>> expandGeneQueryIntoGeneIds(GeneQuerySearchRequestParameters requestParameters) {
         if (!requestParameters.hasGeneQuery()) {
             return Optional.absent();
         }
+
+        LOGGER.info(String.format("<expandGeneQueryIntoGeneIds> geneQuery=" + requestParameters.getGeneQuery()));
+
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+        stopWatch.start();
 
         String geneQuery = requestParameters.getGeneQuery();
 
@@ -158,6 +167,8 @@ public class GeneQueryDifferentialService {
         Set<String> matureRNAIds = solrQueryService.findMatureRNAIds(geneQuery);
         geneIds.addAll(matureRNAIds);
 
+        stopWatch.stop();
+        LOGGER.info(String.format("<query> %s results, took %s seconds", geneIds.size(), stopWatch.getTotalTimeSeconds()));
 
         return Optional.of(geneIds);
     }

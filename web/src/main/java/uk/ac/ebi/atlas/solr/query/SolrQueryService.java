@@ -203,18 +203,18 @@ public class SolrQueryService {
 
         if (tokenizeQuery) {
             for (String queryToken : bioentityPropertyValueTokenizer.split(geneQuery)) {
-                Set<String> geneIds = getGeneIds(queryToken, exactMatch, species);
+                Set<String> geneIds = fetchGeneIds(queryToken, exactMatch, species);
                 geneQueryResponse.addGeneIds(queryToken, geneIds);
             }
         } else {
-            Set<String> geneIds = getGeneIds(geneQuery, exactMatch, species);
+            Set<String> geneIds = fetchGeneIds(geneQuery, exactMatch, species);
             geneQueryResponse.addGeneIds(geneQuery, geneIds);
         }
         return geneQueryResponse;
 
     }
 
-    Set<String> getGeneIds(String geneQuery, boolean exactMatch, String species) {
+    Set<String> fetchGeneIds(String geneQuery, boolean exactMatch, String species) {
 
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
                 .forQueryString(geneQuery, true).withExactMatch(exactMatch)

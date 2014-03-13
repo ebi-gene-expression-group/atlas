@@ -39,15 +39,15 @@ import java.io.IOException;
 
 @Controller
 @Scope("request")
-public class BioentitiesQueryDifferentialDownloadController {
+public class BioentitiesSearchDifferentialDownloadController {
 
-    private static final Logger LOGGER = Logger.getLogger(BioentitiesQueryDifferentialDownloadController.class);
+    private static final Logger LOGGER = Logger.getLogger(BioentitiesSearchDifferentialDownloadController.class);
 
     private GeneQueryDifferentialService geneQueryDifferentialService;
     private DifferentialBioentityExpressionsTSVWriter tsvWriter;
 
     @Inject
-    public BioentitiesQueryDifferentialDownloadController(GeneQueryDifferentialService geneQueryDifferentialService, DifferentialBioentityExpressionsTSVWriter tsvWriter) {
+    public BioentitiesSearchDifferentialDownloadController(GeneQueryDifferentialService geneQueryDifferentialService, DifferentialBioentityExpressionsTSVWriter tsvWriter) {
         this.geneQueryDifferentialService = geneQueryDifferentialService;
         this.tsvWriter = tsvWriter;
     }

@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,7 +31,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import javax.inject.Inject;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -41,50 +40,31 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class MultiTermSuggestionServiceIT {
 
-    private static final String HOMO_SAPIENS_SPECIES = "homo sapiens";
-    private static final String MUS_MUSCULUS_SPECIES = "mus musculus";
-
     @Inject
     private MultiTermSuggestionService subject;
 
     @Test
-    public void findGeneNameSuggestionsForPartialGeneNames() {
+    public void apop_suggests_multi_term_suggestion() {
+        List<String> suggestions = subject.fetchMultiTermSuggestions("apop");
+        assertThat(suggestions, hasItem("apoptotic process"));
+    }
 
-        List<String> properties = subject.fetchMultiTermSuggestions("MT-AT", HOMO_SAPIENS_SPECIES);
+    @Test
+    public void apoptotic_p_suggests_apototic_process() {
+        List<String> suggestions = subject.fetchMultiTermSuggestions("apoptotic p");
+        assertThat(suggestions.get(0), is("apoptotic process"));
+    }
+
+    @Test
+    public void mitochondrial_enc() {
+        List<String> suggestions = subject.fetchMultiTermSuggestions("mitochondrial enc");
+        assertThat(suggestions.get(0), is("Mitochondrial-encoded proline-accepting tRNA. [Source:TAIR_LOCUS;Acc:ATMG00350]"));
+    }
+
+    @Test
+    public void ifContainsNonWordCharactersReturnNoSuggestions() {
+        List<String> properties = subject.fetchMultiTermSuggestions("prot%");
         assertThat(properties.size(), is(0));
-    }
-
-
-    @Test
-    public void findSomethingStupidShouldReturnEmpty() {
-        List<String> properties = subject.fetchMultiTermSuggestions("prot%", HOMO_SAPIENS_SPECIES);
-        assertThat(properties.size(), is(0));
-    }
-
-    @Test
-    public void apop() {
-        List<String> properties = subject.fetchMultiTermSuggestions("apop", null);
-        assertThat(properties.size(), is(0));
-    }
-
-    @Test
-    @Ignore //TODO: fix me!
-    public void findGenePropertySuggestionsForPartialQuery() {
-
-        //"mitochondrial enco
-        List<String> properties = subject.fetchMultiTermSuggestions("mitochondrial enco", HOMO_SAPIENS_SPECIES);
-        assertThat(properties, hasItems("mitochondrially encoded"));
-
-    }
-
-    @Test
-    @Ignore //TODO: fix me!
-    public void findGenePropertySuggestionsShouldSupportMultiTermQueries() {
-
-        List<String> properties = subject.fetchMultiTermSuggestions("p b", HOMO_SAPIENS_SPECIES);
-
-        assertThat(properties.size(), is(15));
-        assertThat(properties, hasItems("protein b", "p binding", "protein binding"));
     }
 
 }
