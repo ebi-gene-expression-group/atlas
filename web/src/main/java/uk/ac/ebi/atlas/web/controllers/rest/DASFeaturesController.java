@@ -32,12 +32,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalytics;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
@@ -50,12 +50,12 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Scope("request")
 public class DASFeaturesController {
 
-    private GeneQueryDifferentialService geneQueryDifferentialService;
+    private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private ExperimentTrader experimentTrader;
 
     @Inject
-    public DASFeaturesController(GeneQueryDifferentialService geneQueryDifferentialService, ExperimentTrader experimentTrader) {
-        this.geneQueryDifferentialService = geneQueryDifferentialService;
+    public DASFeaturesController(DiffAnalyticsSearchService diffAnalyticsSearchService, ExperimentTrader experimentTrader) {
+        this.diffAnalyticsSearchService = diffAnalyticsSearchService;
         this.experimentTrader = experimentTrader;
     }
 
@@ -72,13 +72,13 @@ public class DASFeaturesController {
 
         checkArgument(geneId.length() <= 255, "Segment parameter is too long");
 
-        List<DifferentialBioentityExpression> differentialBioentityExpressions = geneQueryDifferentialService.queryWithoutCount(geneId);
+        List<DiffAnalytics> diffAnalyticsList = diffAnalyticsSearchService.queryWithoutCount(geneId);
 
-        String geneName = differentialBioentityExpressions.isEmpty() ? geneId : differentialBioentityExpressions.get(0).getBioentityName();
+        String geneName = diffAnalyticsList.isEmpty() ? geneId : diffAnalyticsList.get(0).getBioentityName();
 
         SetMultimap<String, String> factorValuesByType = HashMultimap.create();
 
-        for (DifferentialBioentityExpression dbe : differentialBioentityExpressions) {
+        for (DiffAnalytics dbe : diffAnalyticsList) {
             AssayGroup testAssayGroup = dbe.getContrastTestAssayGroup();
             Experiment experiment = experimentTrader.getPublicExperiment(dbe.getExperimentAccession());
 

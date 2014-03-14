@@ -138,7 +138,7 @@
                 </ul>
 
                 <c:choose>
-                    <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions"--%>
+                    <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList"--%>
                     <c:when test="${not empty bioentities}">
 
                         <div id="diffProfileBody" class="bioEntityCard">
@@ -163,7 +163,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <c:import url="includes/heatmap-matrix-differential-bioentities.jsp"/>
+                                            <c:import url="includes/heatmap-matrix-searchresults-diffanalytics.jsp"/>
                                         </td>
                                     </tr>
                                 </table>

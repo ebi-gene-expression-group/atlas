@@ -29,8 +29,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -44,7 +44,7 @@ public class GenePageController extends BioEntityPageController {
 
     private String[] bioentityPropertyNames;
 
-    private GeneQueryDifferentialService geneQueryDifferentialService;
+    private DiffAnalyticsSearchService diffAnalyticsSearchService;
 
     @Value("#{configuration['index.property_names.genepage']}")
     void setBioentityPropertyNames(String[] bioentityPropertyNames) {
@@ -52,8 +52,8 @@ public class GenePageController extends BioEntityPageController {
     }
 
     @Inject
-    void setDifferentialBioentityExpressionBuilder(GeneQueryDifferentialService geneQueryDifferentialService) {
-        this.geneQueryDifferentialService = geneQueryDifferentialService;
+    void setDifferentialBioentityExpressionBuilder(DiffAnalyticsSearchService diffAnalyticsSearchService) {
+        this.diffAnalyticsSearchService = diffAnalyticsSearchService;
     }
 
     @RequestMapping(value = "/genes/{identifier:.*}")
@@ -62,10 +62,10 @@ public class GenePageController extends BioEntityPageController {
         // throw ResourceNotFoundException, so we don't get a Solr SyntaxException later on
         checkIdentifierDoesNotContainColon(identifier);
 
-        DifferentialBioentityExpressions differentialBioentityExpressions =
-                geneQueryDifferentialService.query(Sets.newHashSet(identifier));
+        DiffAnalyticsList diffAnalyticsList =
+                diffAnalyticsSearchService.query(Sets.newHashSet(identifier));
 
-        model.addAttribute("bioentities", differentialBioentityExpressions);
+        model.addAttribute("bioentities", diffAnalyticsList);
 
         // setting FDR as cutoff
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();

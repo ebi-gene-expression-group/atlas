@@ -169,7 +169,7 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public List<String> getDiffHeatmapTableOrganismColumn() {
-        return getColumnValues(this.diffHeatmapTable, 3);
+        return getColumnValues(this.diffHeatmapTable, 2);
     }
 
     public String getContrastSummaryTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex) {
