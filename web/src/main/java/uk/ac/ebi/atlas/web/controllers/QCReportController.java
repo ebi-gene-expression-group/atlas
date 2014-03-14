@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.support.ServletContextResourceLoader;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.QCReportUtil;
@@ -36,18 +37,28 @@ public class QCReportController {
     private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "expArrayDesigns";
 
 
-    private final ServletContextResourceLoader servletContextResourceLoader;
     private final QCReportUtil qcReportUtil;
     private ExperimentTrader experimentTrader;
-    private String arrayDesignAccession;
-    private String arrayDesign;
 
     @Inject
-    public QCReportController(ServletContext servletContext, QCReportUtil qcReportUtil, ExperimentTrader experimentTrader) {
-        this.servletContextResourceLoader = new ServletContextResourceLoader(servletContext);
+    public QCReportController(QCReportUtil qcReportUtil, ExperimentTrader experimentTrader) {
         this.qcReportUtil = qcReportUtil;
         this.experimentTrader = experimentTrader;
     }
+
+    /**
+     *
+     * @param request
+     * @param model
+     * @param experimentAccession
+     * @param arrayDesign
+     * @param resource
+     * @param preferences
+     * @param ra RedirectAttributes is needed for redirection without parameters being added to the url
+     *           DO NOT REMOVE IT
+     * @return
+     * @throws IOException
+     */
 
     @RequestMapping(value = "/experiments/{experimentAccession}/qc/{arrayDesign}/{resource:.*}",
                     method = RequestMethod.GET)
@@ -55,27 +66,31 @@ public class QCReportController {
                             @PathVariable String experimentAccession,
                             @PathVariable String arrayDesign,
                             @PathVariable String resource,
-                            @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences) throws IOException {
+                            @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences, RedirectAttributes ra) throws IOException {
 
         MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
         prepareModel(request, model, experiment);
 
-        arrayDesignAccession =  preferences.getArrayDesignAccession();
-        if(arrayDesignAccession != null) {
-            this.arrayDesign = arrayDesignAccession;
-        } else {
-            this.arrayDesign = arrayDesign;
+        String selectedArrayDesign = preferences.getArrayDesignAccession();
+
+        if(selectedArrayDesign != null) {
+            String path = MessageFormat.format("/experiments/{0}/qc/{1}/{2}", experimentAccession, selectedArrayDesign, resource);
+            return "redirect:/" + path;
         }
+
+        //When changing the selection in the combo, we need to set the new selection in the preferences
+        //otherwise the combo is not being updated.
+        preferences.setArrayDesignAccession(arrayDesign);
 
         if(!resource.equals("index.html")) {
             return forwardToQcResource(experimentAccession, arrayDesign, resource);
         }
 
         if(!qcReportUtil.hasQCReport(experimentAccession, arrayDesign)) {
-            throw new ResourceNotFoundException("No qc report for " + experimentAccession + " array design " + this.arrayDesign);
+            throw new ResourceNotFoundException("No qc report for " + experimentAccession + " array design " + arrayDesign);
         }
 
-        String path = qcReportUtil.buildQCReportIndexHtmlPath(experimentAccession, this.arrayDesign);
+        String path = qcReportUtil.buildQCReportIndexHtmlPath(experimentAccession, arrayDesign);
         request.setAttribute("contentPath", FileSystems.getDefault().getPath(path));
         extendModel(request, experiment);
 
