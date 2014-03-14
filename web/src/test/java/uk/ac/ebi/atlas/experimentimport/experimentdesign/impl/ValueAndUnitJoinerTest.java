@@ -31,13 +31,13 @@ import static org.junit.Assert.assertEquals;
 public class ValueAndUnitJoinerTest {
 
     @Mock
-    private BioontologyClient bioontologyClientMock;
+    private OLSClient olsClientMock;
 
     private ValueAndUnitJoiner subject;
     
     @Before
     public void initSubject() {
-        subject = new ValueAndUnitJoiner(bioontologyClientMock);
+        subject = new ValueAndUnitJoiner(olsClientMock);
     }
     
     @Test

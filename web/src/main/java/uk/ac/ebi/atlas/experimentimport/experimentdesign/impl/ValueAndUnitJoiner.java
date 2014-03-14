@@ -63,18 +63,18 @@ public class ValueAndUnitJoiner {
         TRANSLATED_UNITS.put("degrees_F", "degree fahrenheit");
     }
 
-    private BioontologyClient bioontologyClient;
+    private OLSClient olsClient;
 
     @Inject
-    public ValueAndUnitJoiner(BioontologyClient bioontologyClient){
-        this.bioontologyClient = bioontologyClient;
+    public ValueAndUnitJoiner(OLSClient olsClient){
+       this.olsClient = olsClient;
     }
 
     public String pluraliseAndJoin(String value, String unit) {
         unit = translateUnitToEFOIfApplicable(unit.trim());
 
-        if (!bioontologyClient.isValid(unit)) {
-            throw new IllegalArgumentException("Unit: " + unit + " not found in bioontology");
+        if (!olsClient.isValid(unit)) {
+            throw new IllegalArgumentException("Unit: " + unit + " not found in OLS");
         }
 
         value = value.trim();
