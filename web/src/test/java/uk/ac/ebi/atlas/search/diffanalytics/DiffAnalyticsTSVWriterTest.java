@@ -39,7 +39,6 @@ public class DiffAnalyticsTSVWriterTest {
     public static final String BIOENTITY_NAME = "jane";
     public static final String EXPERIMENT_ACCESSION = "E-1";
     public static final String SPECIES = "tiger";
-    public static final String DESIGN_ELEMENT = "designelement1";
 
     @Before
     public void init() {
@@ -54,14 +53,14 @@ public class DiffAnalyticsTSVWriterTest {
         double foldChange = 0.004;
         DifferentialExpression diffExpression = new DifferentialExpression(pvalue, foldChange, contrastMock);
 
-        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES, DESIGN_ELEMENT);
+        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES);
 
         List<DiffAnalytics> dbExpressionList = Lists.newArrayList(dbExpression);
         DiffAnalyticsList dbExpressions = new DiffAnalyticsList(dbExpressionList, dbExpressionList.size());
 
         subject.write(dbExpressions);
 
-        String expectedRow = BIOENTITY_NAME + "\t" + DESIGN_ELEMENT + "\t" + SPECIES + "\t" + CONTRAST_NAME + "\t" + pvalue + "\t" + foldChange + "\tNA\n" ;
+        String expectedRow = BIOENTITY_NAME + "\t" + SPECIES + "\t" + CONTRAST_NAME + "\t" + pvalue + "\t" + foldChange + "\tNA\n" ;
         verify(responseWriterMock).write(eq(expectedRow), any(Integer.class), any(Integer.class));
     }
 
@@ -72,14 +71,14 @@ public class DiffAnalyticsTSVWriterTest {
         double tstatistic = 0.007;
         DifferentialExpression diffExpression = new MicroarrayExpression(pvalue, foldChange, tstatistic, contrastMock);
 
-        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES, DESIGN_ELEMENT);
+        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES);
 
         List<DiffAnalytics> dbExpressionList = Lists.newArrayList(dbExpression);
         DiffAnalyticsList dbExpressions = new DiffAnalyticsList(dbExpressionList, dbExpressionList.size());
 
         subject.write(dbExpressions);
 
-        String expectedRow = BIOENTITY_NAME + "\t" + DESIGN_ELEMENT + "\t" + SPECIES + "\t" + CONTRAST_NAME + "\t" + pvalue + "\t" + foldChange + "\t" + tstatistic + "\n" ;
+        String expectedRow = BIOENTITY_NAME + "\t" + SPECIES + "\t" + CONTRAST_NAME + "\t" + pvalue + "\t" + foldChange + "\t" + tstatistic + "\n" ;
         verify(responseWriterMock).write(eq(expectedRow), any(Integer.class), any(Integer.class));
     }
 

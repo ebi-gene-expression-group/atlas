@@ -36,7 +36,6 @@ public class DiffAnalyticsRowMapperTest {
         Mockito.when(resultSetMock.getString(DiffAnalyticsQueryBuilder.CONTRASTID)).thenReturn("c1");
         Mockito.when(resultSetMock.getString(DiffAnalyticsQueryBuilder.IDENTIFIER)).thenReturn("id1");
         Mockito.when(resultSetMock.getString(DiffAnalyticsQueryBuilder.ORGANISM)).thenReturn("org1");
-        Mockito.when(resultSetMock.getString(DiffAnalyticsQueryBuilder.DESIGNELEMENT)).thenReturn("de1");
         Mockito.when(resultSetMock.getDouble(DiffAnalyticsQueryBuilder.PVALUE)).thenReturn(0.0001);
         Mockito.when(resultSetMock.getDouble(DiffAnalyticsQueryBuilder.LOG_2_FOLD)).thenReturn(-1.1);
         Mockito.when(resultSetMock.getString(DiffAnalyticsQueryBuilder.TSTAT)).thenReturn("1.1");
@@ -51,7 +50,6 @@ public class DiffAnalyticsRowMapperTest {
         MatcherAssert.assertThat(expression.getBioentityId(), Is.is("id1"));
         MatcherAssert.assertThat(expression.getExperimentAccession(), Is.is("e1"));
         MatcherAssert.assertThat(expression.getSpecies(), Is.is("org1"));
-        MatcherAssert.assertThat(expression.getDesignElement(), Is.is("de1"));
 
         DifferentialExpression value = new MicroarrayExpression(0.0001, -1.1, 1.1, contrast);
         MatcherAssert.assertThat(expression.getExpression(), Is.is(value));

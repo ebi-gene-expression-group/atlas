@@ -38,16 +38,13 @@ public class DiffAnalytics {
 
     private String species;
 
-    private String designElement;
-
     public DiffAnalytics(String bioentityId, String bioentityName, String experimentAccession, DifferentialExpression expression,
-                         String species, String designElement) {
+                         String species) {
         this.bioentityId = bioentityId;
         this.bioentityName = bioentityName;
         this.experimentAccession = experimentAccession;
         this.expression = expression;
         this.species = species;
-        this.designElement = designElement;
     }
 
     public String getBioentityId() {
@@ -80,10 +77,6 @@ public class DiffAnalytics {
 
     public String getSpecies() {
         return species;
-    }
-
-    public String getDesignElement() {
-        return designElement;
     }
 
     public String getBioentityName() {

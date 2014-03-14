@@ -29,7 +29,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
         List<String> header = subject.getRowValues(3);
 
         assertThat(header,
-                contains("Gene", "Design Element", "Organism", "Contrast", "p-value", "log2foldchange", "t-statistic")
+                contains("Gene", "Organism", "Contrast", "p-value", "log2foldchange", "t-statistic")
         );
 
     }
@@ -39,7 +39,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
         List<String> firstGene = subject.getRowValues(4);
 
         assertThat(firstGene,
-                contains("ANAC003", "", "Arabidopsis thaliana","nrpe1 mutant vs wild type",	"0.00355665145244311", "2.17880566798814", "NA"));
+                contains("ANAC003", "Arabidopsis thaliana","nrpe1 mutant vs wild type",	"0.00355665145244311", "2.17880566798814", "NA"));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
         List<String> firstGene = subject.getRowValues(5);
 
         assertThat(firstGene,
-                contains("ANAC003", "264148_at", "Arabidopsis thaliana","treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'",	"0.0476008286349805", "0.982933333333333", "4.81369176288206"));
+                contains("ANAC003", "Arabidopsis thaliana","treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'",	"0.0476008286349805", "0.982933333333333", "4.81369176288206"));
     }
 
 

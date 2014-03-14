@@ -67,7 +67,7 @@ public class BioentitiesSearchControllerGeneQueryZincFingerSIT extends SinglePag
 
     @Test
     public void differentialPaneHasResults() {
-        assertThat(subject.diffExpressionResultCount(), is("21 search result(s) found"));
+        assertThat(subject.diffExpressionResultCount(), is("18 search result(s) found"));
     }
 
 

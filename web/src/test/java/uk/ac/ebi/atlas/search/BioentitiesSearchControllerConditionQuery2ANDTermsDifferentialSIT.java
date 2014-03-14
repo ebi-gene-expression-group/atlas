@@ -44,7 +44,7 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT e
 
     @Test
     public void checkDifferentialProfilesCount() {
-        assertThat(subject.diffExpressionResultCount(), is("4156 search result(s) found"));
+        assertThat(subject.diffExpressionResultCount(), is("3349 search result(s) found"));
     }
 
     @Test

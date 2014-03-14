@@ -55,7 +55,7 @@ public class DiffAnalyticsQueryBuilderTest {
         List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
         DatabaseQuery<Object> databaseQuery = subject.withAssayGroups(indexedContrasts).buildSelect();
 
-        MatcherAssert.assertThat(databaseQuery.getQuery(), Matchers.is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by abs(LOG2FOLD) desc"));
+        MatcherAssert.assertThat(databaseQuery.getQuery(), Matchers.is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by abs(LOG2FOLD) desc"));
         MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains(new Object[]{"exp1", "c1", "exp2", "c2"}));
 
     }
@@ -84,7 +84,7 @@ public class DiffAnalyticsQueryBuilderTest {
                 .withGeneIds(geneIds)
                 .buildSelect();
 
-        MatcherAssert.assertThat(databaseQuery.getQuery(), Matchers.is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
+        MatcherAssert.assertThat(databaseQuery.getQuery(), Matchers.is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
                 "FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value order by abs(LOG2FOLD) desc"));
         MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains((Object) geneIds));
 
@@ -102,7 +102,7 @@ public class DiffAnalyticsQueryBuilderTest {
                 .withGeneIds(geneIds)
                 .buildSelect();
 
-        MatcherAssert.assertThat(databaseQuery.getQuery(), Matchers.is("SELECT IDENTIFIER, NAME, DESIGNELEMENT, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
+        MatcherAssert.assertThat(databaseQuery.getQuery(), Matchers.is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
                 "FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) " +
                 "order by abs(LOG2FOLD) desc"));
         MatcherAssert.assertThat(databaseQuery.getParameters().size(), Matchers.is(5));

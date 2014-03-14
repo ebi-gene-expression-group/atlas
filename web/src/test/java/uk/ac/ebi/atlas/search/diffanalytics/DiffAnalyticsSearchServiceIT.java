@@ -47,14 +47,12 @@ public class DiffAnalyticsSearchServiceIT {
         requestParameters.setGeneQuery("ENSG00000161547 ENSMUSG00000030105");
 
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
-
-        assertThat(bioentityExpressions, hasSize(6));
-
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        assertThat(names, contains("Arl8b", "Arl8b", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306"));
+        assertThat(bioentityExpressions, hasSize(3));
+        assertThat(names, contains("Arl8b", "Arl8b", "MIMAT0003306"));
     }
 
     @Test
@@ -63,15 +61,13 @@ public class DiffAnalyticsSearchServiceIT {
         requestParameters.setGeneQuery("ENSG00000161547 ENSG00000211855");
 
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
-
-        assertThat(bioentityExpressions, hasSize(4));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(4));
-
         List<String> names = getBioentityNames(bioentityExpressions);
 
         //System.out.println(Joiner.on("\", \"").join(names));
 
-        assertThat(names, contains("MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306"));
+        assertThat(bioentityExpressions, hasSize(1));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(1));
+        assertThat(names, contains("MIMAT0003306"));
     }
 
     @Test
@@ -80,14 +76,12 @@ public class DiffAnalyticsSearchServiceIT {
         requestParameters.setGeneQuery("hsa-mir-636");
 
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
-
-        assertThat(bioentityExpressions, hasSize(4));
-
         List<String> names = getBioentityNames(bioentityExpressions);
 
-        //System.out.println(Joiner.on("\", \"").join(names));
+        System.out.println(Joiner.on("\", \"").join(names));
 
-        assertThat(names, contains("MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306"));
+        assertThat(bioentityExpressions, hasSize(1));
+        assertThat(names, contains("MIMAT0003306"));
     }
 
     @Test
@@ -96,14 +90,12 @@ public class DiffAnalyticsSearchServiceIT {
         requestParameters.setGeneQuery("\"zinc finger\"");
 
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
-
-        assertThat(bioentityExpressions, hasSize(21));
-
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        assertThat(names, contains("Zfp260", "Zfp503", "Zfp758", "Zfp292", "Zfp948", "Zfp68", "Zfp292", "Zfp260", "Zfp810", "Zfp703", "Zfp617", "Zfp568", "Gli2", "Zfp46", "Zfp109", "Zfp354a", "Zfp146", "Zfp68", "Zfx", "Rlf", "Zfp92"));
+        assertThat(bioentityExpressions, hasSize(18));
+        assertThat(names, contains("Zfp260", "Zfp503", "Zfp758", "Zfp292", "Zfp948", "Zfp68", "Zfp810", "Zfp703", "Zfp617", "Zfp568", "Gli2", "Zfp46", "Zfp109", "Zfp354a", "Zfp146", "Zfx", "Rlf", "Zfp92"));
     }
 
 
@@ -114,15 +106,13 @@ public class DiffAnalyticsSearchServiceIT {
         requestParameters.setExactMatch(false);
 
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
-
-        assertThat(bioentityExpressions, hasSize(50));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(697));
-
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        assertThat(names, contains("Ccl3", "Cish", "Cdkn1a", "AT5G24240", "Thbs1", "Jun", "Pdk4", "Kitl", "Acvr1c", "Rgs2", "Irs1", "Apoe", "FRK1", "AT4G18250", "Dusp1", "CPK29", "Gja1", "Errfi1", "T7B11.18", "AT1G51890", "Tyrobp", "F19C24.15", "Ddr1", "Jun", "Plek", "S100a4", "F13E7.26", "LECRK18", "AT1G74360", "ATMPK11", "AT1G51790", "Eif2ak3", "Mknk2", "Igbp1", "AT4G11890/T26M18_100", "Fos", "Chp1", "LRR-RLK", "Kras", "Igfbp5", "CPK6", "MZB10.4", "T14L22.6", "Igf1", "CRK34", "Hsp90ab1", "F15B8.110", "WAKL8", "CRK29", "AT1G35710"));
+        assertThat(bioentityExpressions, hasSize(50));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(567));
+        assertThat(names, contains("Ccl3", "Cish", "Cdkn1a", "AT5G24240", "Thbs1", "Jun", "Pdk4", "Kitl", "Acvr1c", "Rgs2", "Irs1", "Apoe", "FRK1", "AT4G18250", "Dusp1", "CPK29", "Gja1", "Errfi1", "T7B11.18", "AT1G51890", "Tyrobp", "F19C24.15", "Ddr1", "Plek", "S100a4", "F13E7.26", "LECRK18", "AT1G74360", "ATMPK11", "AT1G51790", "Eif2ak3", "Mknk2", "Igbp1", "AT4G11890/T26M18_100", "Fos", "Chp1", "LRR-RLK", "Kras", "Igfbp5", "CPK6", "MZB10.4", "T14L22.6", "Igf1", "CRK34", "Hsp90ab1", "F15B8.110", "WAKL8", "CRK29", "AT1G35710", "CIPK23"));
 
     }
 
@@ -134,19 +124,18 @@ public class DiffAnalyticsSearchServiceIT {
 
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
 
-        assertThat(bioentityExpressions, hasSize(50));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(4347));
-
         List<String> names = getBioentityNames(bioentityExpressions);
-
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
+
+        assertThat(bioentityExpressions, hasSize(50));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(3546));
 
         // match in any order because order differs between ATLAS3DEV and ATLAS3IT.
         // order is unpredictable in Oracle when rows have the same order by value.
         assertThat(Iterables.limit(names, 5), containsInAnyOrder("Lactbl1", "Prok1", "Kdm5d", "Eif2s3y", "Ddx3y"));
 
         // match the remaining in order, which will be the same in both ATLAS3DEV and ATLAS3IT
-        assertThat(Iterables.skip(names, 5), contains("Uty", "Gpr26", "Lrrc55", "Tph1", "Scgb1b27", "Cldn8", "Hmgcs2", "Acot1", "Fmo1", "Scgb2b27", "Sftpd", "Cst7", "Lonrf3", "Itgax", "Neb", "Tnfrsf11b", "Lcn2", "Fmo4", "Ccl4", "Hmgcs2", "Ccl3", "Mctp1", "1700017B05Rik", "Ch25h", "Tph2", "Ivd", "Matn2", "Dnahc8", "Serpinf2", "Abca1", "Cspg5", "Gpnmb", "Gbp8", "Cish", "Lgals3", "Ang", "Cdkn1a", "Ehhadh", "Gal", "Reg3b", "Cartpt", "Socs2", "Thbs1", "Arg1", "Wisp2"));
+        assertThat(Iterables.skip(names, 5), contains("Uty", "Gpr26", "Lrrc55", "Tph1", "Scgb1b27", "Cldn8", "Hmgcs2", "Acot1", "Fmo1", "Scgb2b27", "Sftpd", "Cst7", "Lonrf3", "Itgax", "Neb", "Tnfrsf11b", "Lcn2", "Fmo4", "Ccl4", "Ccl3", "Mctp1", "1700017B05Rik", "Ch25h", "Tph2", "Ivd", "Matn2", "Dnahc8", "Serpinf2", "Abca1", "Cspg5", "Gpnmb", "Gbp8", "Cish", "Lgals3", "Ang", "Cdkn1a", "Ehhadh", "Gal", "Reg3b", "Cartpt", "Socs2", "Thbs1", "Arg1", "Wisp2", "Lgals3"));
 
     }
 
@@ -166,9 +155,11 @@ public class DiffAnalyticsSearchServiceIT {
             }
         });
 
-        assertThat(count, is(4));
-        assertThat(names, hasSize(4));
-        assertThat(names, contains("MIMAT0003306", "MIMAT0003306", "MIMAT0003306", "MIMAT0003306"));
+        System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
+
+        assertThat(count, is(1));
+        assertThat(names, hasSize(1));
+        assertThat(names, contains("MIMAT0003306"));
 
     }
 
@@ -205,14 +196,12 @@ public class DiffAnalyticsSearchServiceIT {
         requestParameters.setGeneQuery("apoptosis");
 
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
-
-        assertThat(bioentityExpressions, hasSize(50));
-
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        assertThat(names, contains("Gas2", "Psme1", "Bax", "Psmb10", "Lmna", "Psmd11", "Akt1", "Rock1", "Vim", "Rock1", "Psmc6", "Ywhaz", "Gsn", "Stk24", "Psmd6", "Ywhag", "Fnta", "Bcap31", "Sptan1", "Kpnb1", "Psmd7", "Mapt", "Mapt", "Psmc4", "Prkcd", "Xiap", "Dynll2", "Psmd11", "Akt1", "Psmd4", "PSMA7", "Psmd4", "Vim", "Vim", "Bcl2l11", "Gsn", "Psmc4", "Lmnb1", "Rock1", "Bcl2l11", "Gsn", "Ywhab", "Tradd", "Ywhab", "Ywhab", "Apc", "Bcl2", "Psmd14", "Sptan1", "Tnf"));
+        assertThat(bioentityExpressions, hasSize(46));
+        assertThat(names, contains("Gas2", "Psme1", "Bax", "Psmb10", "Lmna", "Psmd11", "Akt1", "Rock1", "Vim", "Psmc6", "Ywhaz", "Gsn", "Stk24", "Psmd6", "Ywhag", "Fnta", "Bcap31", "Sptan1", "Kpnb1", "Psmd7", "Mapt", "Psmc4", "Prkcd", "Xiap", "Dynll2", "Akt1", "Psmd4", "PSMA7", "Bcl2l11", "Lmnb1", "Ywhab", "Tradd", "Apc", "Bcl2", "Psmd14", "Tnf", "Psmb4", "Dynll1", "Cdh1", "Psmb1", "Diablo", "Apaf1", "Hmgb1", "Pak2", "Psma7", "Psmd8"));
     }
 
 
@@ -222,12 +211,11 @@ public class DiffAnalyticsSearchServiceIT {
         requestParameters.setCondition("pregnant");
 
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
-
-        assertThat(bioentityExpressions, hasSize(50));
-
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
+
+        assertThat(bioentityExpressions, hasSize(50));
 
         // match in any order because order differs between ATLAS3DEV and ATLAS3IT.
         // order is unpredictable in Oracle when rows have the same order by value.
@@ -263,6 +251,21 @@ public class DiffAnalyticsSearchServiceIT {
         //System.out.println(Joiner.on("\", \"").join(names));
 
         assertThat(names, contains("Gas2", "Akt1"));
+    }
+
+    @Test
+    public void onlyShowTopGeneContrastCombination() throws GenesNotFoundException {
+        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        requestParameters.setGeneQuery("Cct4");
+
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
+
+        assertThat(bioentityExpressions, hasSize(1));
+
+        DiffAnalytics cct4 = bioentityExpressions.get(0);
+
+        assertThat(cct4.getBioentityName(), is("Cct4"));
+        assertThat(cct4.getExpression().getFoldChange(), is(1.40000766666667));
     }
 
 }

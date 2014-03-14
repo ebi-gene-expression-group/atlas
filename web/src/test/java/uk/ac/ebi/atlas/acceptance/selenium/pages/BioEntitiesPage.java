@@ -59,7 +59,7 @@ public class BioEntitiesPage extends BioEntityPage {
 
     @Override
     protected int getContrastColumnIndex() {
-        return 4;
+        return 3;
     }
 
     public List<BaselineBioEntitiesCountWithHref> getBaselineCounts() {

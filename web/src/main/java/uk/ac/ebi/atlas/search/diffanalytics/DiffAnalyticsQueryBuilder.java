@@ -24,13 +24,11 @@ public class DiffAnalyticsQueryBuilder {
     static final String IDENTIFIER = "IDENTIFIER";
     static final String NAME = "NAME";
     static final String ORGANISM = "ORGANISM";
-    static final String DESIGNELEMENT = "DESIGNELEMENT";
     static final String EXPERIMENT = "EXPERIMENT";
 
     static final String SELECT_QUERY = "SELECT " +
             IDENTIFIER + ", " +
             NAME  + ", " +
-            DESIGNELEMENT  + ", " +
             ORGANISM + ", " +
             EXPERIMENT + ", " +
             CONTRASTID + ", " +

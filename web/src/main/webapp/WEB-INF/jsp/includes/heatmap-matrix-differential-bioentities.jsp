@@ -47,10 +47,6 @@
                     </th>
                 </c:if>
 
-                    <th id="design-element-header" class="horizontal-header-cell"
-                        style="padding: 5px; text-align:center;">
-                        <div>Design Element</div>
-                    </th>
                 <c:if test="${!isSameGeneId}">
                     <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
                         <div>Organism</div>
@@ -77,10 +73,6 @@
                                 <a href="genes/${diffAnalytics.bioentityId}">${diffAnalytics.bioentityName}</a>
                         </td>
                      </c:if>
-                        <td class="horizontal-header-cell">
-                                ${diffAnalytics.designElement}
-                        </td>
-
                       <c:if test="${!isSameGeneId}">
                         <td class="horizontal-header-cell">
                                 ${diffAnalytics.species}
