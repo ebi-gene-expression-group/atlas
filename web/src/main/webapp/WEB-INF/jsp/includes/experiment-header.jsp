@@ -29,7 +29,7 @@
                                     <td>
                                         <a id="display-qc-report" class="button-image" title="View QC report"
                                            href="${pageContext.request.contextPath}/experiments/${experimentAccession}/qc/${arrayDesign}/index.html">
-                                            <img src="${pageContext.request.contextPath}/resources/images/qc_v16.png"/>
+                                            <img src="${pageContext.request.contextPath}/resources/images/qc_v15.png"/>
                                         </a>
                                     </td>
                                     </c:if>
