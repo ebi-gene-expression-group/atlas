@@ -32,7 +32,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.search.diffanalytics.DifferentialExpressionSearchService;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -50,12 +50,12 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Scope("request")
 public class DASFeaturesController {
 
-    private DifferentialExpressionSearchService differentialExpressionSearchService;
+    private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private ExperimentTrader experimentTrader;
 
     @Inject
-    public DASFeaturesController(DifferentialExpressionSearchService differentialExpressionSearchService, ExperimentTrader experimentTrader) {
-        this.differentialExpressionSearchService = differentialExpressionSearchService;
+    public DASFeaturesController(DiffAnalyticsSearchService diffAnalyticsSearchService, ExperimentTrader experimentTrader) {
+        this.diffAnalyticsSearchService = diffAnalyticsSearchService;
         this.experimentTrader = experimentTrader;
     }
 
@@ -72,7 +72,7 @@ public class DASFeaturesController {
 
         checkArgument(geneId.length() <= 255, "Segment parameter is too long");
 
-        List<DiffAnalytics> diffAnalyticsList = differentialExpressionSearchService.queryWithoutCount(geneId);
+        List<DiffAnalytics> diffAnalyticsList = diffAnalyticsSearchService.queryWithoutCount(geneId);
 
         String geneName = diffAnalyticsList.isEmpty() ? geneId : diffAnalyticsList.get(0).getBioentityName();
 

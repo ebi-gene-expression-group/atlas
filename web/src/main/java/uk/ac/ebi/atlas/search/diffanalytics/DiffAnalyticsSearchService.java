@@ -45,18 +45,18 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class DifferentialExpressionSearchService {
+public class DiffAnalyticsSearchService {
 
-    private static final Logger LOGGER = Logger.getLogger(DifferentialExpressionSearchService.class);
+    private static final Logger LOGGER = Logger.getLogger(DiffAnalyticsSearchService.class);
 
     private DiffAnalyticsDao diffAnalyticsDao;
     private DifferentialConditionsSearchService differentialConditionsSearchService;
     private SolrQueryService solrQueryService;
 
     @Inject
-    public DifferentialExpressionSearchService(DiffAnalyticsDao diffAnalyticsDao,
-                                               DifferentialConditionsSearchService differentialConditionsSearchService,
-                                               SolrQueryService solrQueryService) {
+    public DiffAnalyticsSearchService(DiffAnalyticsDao diffAnalyticsDao,
+                                      DifferentialConditionsSearchService differentialConditionsSearchService,
+                                      SolrQueryService solrQueryService) {
         this.diffAnalyticsDao = diffAnalyticsDao;
         this.differentialConditionsSearchService = differentialConditionsSearchService;
         this.solrQueryService = solrQueryService;

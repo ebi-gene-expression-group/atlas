@@ -29,7 +29,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.search.diffanalytics.DifferentialExpressionSearchService;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -44,7 +44,7 @@ public class GenePageController extends BioEntityPageController {
 
     private String[] bioentityPropertyNames;
 
-    private DifferentialExpressionSearchService differentialExpressionSearchService;
+    private DiffAnalyticsSearchService diffAnalyticsSearchService;
 
     @Value("#{configuration['index.property_names.genepage']}")
     void setBioentityPropertyNames(String[] bioentityPropertyNames) {
@@ -52,8 +52,8 @@ public class GenePageController extends BioEntityPageController {
     }
 
     @Inject
-    void setDifferentialBioentityExpressionBuilder(DifferentialExpressionSearchService differentialExpressionSearchService) {
-        this.differentialExpressionSearchService = differentialExpressionSearchService;
+    void setDifferentialBioentityExpressionBuilder(DiffAnalyticsSearchService diffAnalyticsSearchService) {
+        this.diffAnalyticsSearchService = diffAnalyticsSearchService;
     }
 
     @RequestMapping(value = "/genes/{identifier:.*}")
@@ -63,7 +63,7 @@ public class GenePageController extends BioEntityPageController {
         checkIdentifierDoesNotContainColon(identifier);
 
         DiffAnalyticsList diffAnalyticsList =
-                differentialExpressionSearchService.query(Sets.newHashSet(identifier));
+                diffAnalyticsSearchService.query(Sets.newHashSet(identifier));
 
         model.addAttribute("bioentities", diffAnalyticsList);
 

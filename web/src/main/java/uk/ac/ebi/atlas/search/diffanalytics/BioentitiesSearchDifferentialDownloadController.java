@@ -41,12 +41,12 @@ public class BioentitiesSearchDifferentialDownloadController {
 
     private static final Logger LOGGER = Logger.getLogger(BioentitiesSearchDifferentialDownloadController.class);
 
-    private DifferentialExpressionSearchService differentialExpressionSearchService;
+    private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private DiffAnalyticsTSVWriter tsvWriter;
 
     @Inject
-    public BioentitiesSearchDifferentialDownloadController(DifferentialExpressionSearchService differentialExpressionSearchService, DiffAnalyticsTSVWriter tsvWriter) {
-        this.differentialExpressionSearchService = differentialExpressionSearchService;
+    public BioentitiesSearchDifferentialDownloadController(DiffAnalyticsSearchService diffAnalyticsSearchService, DiffAnalyticsTSVWriter tsvWriter) {
+        this.diffAnalyticsSearchService = diffAnalyticsSearchService;
         this.tsvWriter = tsvWriter;
     }
 
@@ -77,7 +77,7 @@ public class BioentitiesSearchDifferentialDownloadController {
             writer.setResponseWriter(response.getWriter());
             writer.writeHeader(requestParameters);
 
-            int count = differentialExpressionSearchService.forEachExpression(requestParameters, writer);
+            int count = diffAnalyticsSearchService.forEachExpression(requestParameters, writer);
             LOGGER.info("downloadGeneQueryResults streamed " + count + " differential gene expressions");
         } catch (VisitorException e) {
             LOGGER.warn("downloadGeneQueryResults aborted, connection may have been lost with the client:" + e.getMessage());

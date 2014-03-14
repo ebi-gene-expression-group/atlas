@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.commands.BaselineBioentityCountsService;
-import uk.ac.ebi.atlas.search.diffanalytics.DifferentialExpressionSearchService;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
@@ -57,7 +57,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Scope("prototype")
 public class BioentitiesSearchController {
 
-    private DifferentialExpressionSearchService differentialExpressionSearchService;
+    private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private BaselineBioentityCountsService baselineBioentityCountsService;
 
     private EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder;
@@ -65,8 +65,8 @@ public class BioentitiesSearchController {
     private SolrQueryService solrQueryService;
 
     @Inject
-    public BioentitiesSearchController(DifferentialExpressionSearchService differentialExpressionSearchService, BaselineBioentityCountsService baselineBioentityCountsService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService) {
-        this.differentialExpressionSearchService = differentialExpressionSearchService;
+    public BioentitiesSearchController(DiffAnalyticsSearchService diffAnalyticsSearchService, BaselineBioentityCountsService baselineBioentityCountsService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService) {
+        this.diffAnalyticsSearchService = diffAnalyticsSearchService;
         this.baselineBioentityCountsService = baselineBioentityCountsService;
         this.ebiGlobalSearchQueryBuilder = ebiGlobalSearchQueryBuilder;
         this.solrQueryService = solrQueryService;
@@ -103,7 +103,7 @@ public class BioentitiesSearchController {
             model.addAttribute("baselineCounts", baselineCounts);
 
             // used to populate diff-heatmap-table
-            DiffAnalyticsList bioentityExpressions = differentialExpressionSearchService.query(requestParameters);
+            DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
 
             model.addAttribute("bioentities", bioentityExpressions);
 
@@ -137,7 +137,7 @@ public class BioentitiesSearchController {
             return Optional.of("redirect:/" + bioentityPageName + "/" + geneId);
         }
 
-        Optional<Collection<String>> geneIdsOrSets = differentialExpressionSearchService.expandGeneQueryIntoGeneIds(requestParameters);
+        Optional<Collection<String>> geneIdsOrSets = diffAnalyticsSearchService.expandGeneQueryIntoGeneIds(requestParameters);
 
         if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
             return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());
