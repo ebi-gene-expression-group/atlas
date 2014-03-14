@@ -20,15 +20,18 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpressionLimits;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DifferentialBioentityExpressions extends ArrayList<DifferentialBioentityExpression> implements DifferentialExpressionLimits {
+public class DiffAnalyticsList extends ArrayList<DiffAnalytics> implements DifferentialExpressionLimits {
 
     private int totalNumberOfResults;
 
@@ -37,11 +40,11 @@ public class DifferentialBioentityExpressions extends ArrayList<DifferentialBioe
     private Double minDownRegulated;
     private Double maxDownRegulated;
 
-    public DifferentialBioentityExpressions(){
+    public DiffAnalyticsList(){
     }
 
-    public DifferentialBioentityExpressions(List<DifferentialBioentityExpression> differentialBioentityExpressions, int totalNumberOfResults) {
-        super(differentialBioentityExpressions);
+    public DiffAnalyticsList(List<DiffAnalytics> diffAnalyticses, int totalNumberOfResults) {
+        super(diffAnalyticses);
         this.totalNumberOfResults = totalNumberOfResults;
     }
 
@@ -77,7 +80,7 @@ public class DifferentialBioentityExpressions extends ArrayList<DifferentialBioe
         return totalNumberOfResults;
     }
 
-    static class FindTopLevelByRegulation implements Function<List<DifferentialBioentityExpression>, Double>{
+    static class FindTopLevelByRegulation implements Function<List<DiffAnalytics>, Double>{
 
         private Regulation regulation;
 
@@ -87,9 +90,9 @@ public class DifferentialBioentityExpressions extends ArrayList<DifferentialBioe
         }
 
         @Override
-        public Double apply(List<DifferentialBioentityExpression> sortedExpressions) {
-            for(DifferentialBioentityExpression differentialBioentityExpression:sortedExpressions){
-                DifferentialExpression differentialExpression = differentialBioentityExpression.getExpression();
+        public Double apply(List<DiffAnalytics> sortedExpressions) {
+            for(DiffAnalytics diffAnalytics :sortedExpressions){
+                DifferentialExpression differentialExpression = diffAnalytics.getExpression();
                 if (differentialExpression.isRegulatedLike(regulation)){
                     return differentialExpression.getLevel();
                 }

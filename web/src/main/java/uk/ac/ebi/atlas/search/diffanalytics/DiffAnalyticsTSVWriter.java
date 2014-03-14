@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands.download;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.io.IOUtils;
@@ -29,8 +29,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.utils.Visitor;
@@ -50,8 +48,8 @@ import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 
 @Named
 @Scope("prototype")
-public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable, Visitor<DifferentialBioentityExpression> {
-    private static final Logger LOGGER = Logger.getLogger(DifferentialBioentityExpressionsTSVWriter.class);
+public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalytics> {
+    private static final Logger LOGGER = Logger.getLogger(DiffAnalyticsTSVWriter.class);
     private String tsvFileMastheadTemplate;
     private static final String[] HEADERS = {"Gene", "Design Element", "Organism", "Contrast", "p-value", "log2foldchange", "t-statistic"};
 
@@ -87,9 +85,9 @@ public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable,
         responseWriter.flush();
     }
 
-    public int write(DifferentialBioentityExpressions expressions) throws IOException {
+    public int write(DiffAnalyticsList expressions) throws IOException {
 
-        for (DifferentialBioentityExpression expression : expressions) {
+        for (DiffAnalytics expression : expressions) {
             write(expression);
         }
 
@@ -98,7 +96,7 @@ public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable,
         return expressions.size();
     }
 
-    private void write(DifferentialBioentityExpression expression) throws IOException {
+    private void write(DiffAnalytics expression) throws IOException {
         checkWriterNotInError();
 
         String[] csvRow = buildCsvRow(expression);
@@ -117,7 +115,7 @@ public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable,
 
     //will throw VisitorException if there are errors during writing
     @Override
-    public void visit(DifferentialBioentityExpression value) {
+    public void visit(DiffAnalytics value) {
         try {
             write(value);
         } catch (IOException e) {
@@ -125,7 +123,7 @@ public class DifferentialBioentityExpressionsTSVWriter implements AutoCloseable,
         }
     }
 
-    private String[] buildCsvRow(DifferentialBioentityExpression dbExpression) {
+    private String[] buildCsvRow(DiffAnalytics dbExpression) {
         DifferentialExpression expression = dbExpression.getExpression();
         double tstatistic = (expression instanceof MicroarrayExpression) ? ((MicroarrayExpression)expression).getTstatistic() : Double.POSITIVE_INFINITY;
         return new String[] {dbExpression.getBioentityName(),

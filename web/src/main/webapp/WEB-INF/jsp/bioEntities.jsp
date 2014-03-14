@@ -138,7 +138,7 @@
                 </ul>
 
                 <c:choose>
-                    <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions"--%>
+                    <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList"--%>
                     <c:when test="${not empty bioentities}">
 
                         <div id="diffProfileBody" class="bioEntityCard">

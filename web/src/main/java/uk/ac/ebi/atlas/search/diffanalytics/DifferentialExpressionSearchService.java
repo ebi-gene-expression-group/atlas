@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.commands;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
@@ -28,9 +28,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
-import uk.ac.ebi.atlas.dao.diffexpression.DiffExpressionDao;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
@@ -47,25 +45,25 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class GeneQueryDifferentialService {
+public class DifferentialExpressionSearchService {
 
-    private static final Logger LOGGER = Logger.getLogger(GeneQueryDifferentialService.class);
+    private static final Logger LOGGER = Logger.getLogger(DifferentialExpressionSearchService.class);
 
-    private DiffExpressionDao diffExpressionDao;
+    private DiffAnalyticsDao diffAnalyticsDao;
     private DifferentialConditionsSearchService differentialConditionsSearchService;
     private SolrQueryService solrQueryService;
 
     @Inject
-    public GeneQueryDifferentialService(DiffExpressionDao diffExpressionDao,
-                                        DifferentialConditionsSearchService differentialConditionsSearchService,
-                                        SolrQueryService solrQueryService) {
-        this.diffExpressionDao = diffExpressionDao;
+    public DifferentialExpressionSearchService(DiffAnalyticsDao diffAnalyticsDao,
+                                               DifferentialConditionsSearchService differentialConditionsSearchService,
+                                               SolrQueryService solrQueryService) {
+        this.diffAnalyticsDao = diffAnalyticsDao;
         this.differentialConditionsSearchService = differentialConditionsSearchService;
         this.solrQueryService = solrQueryService;
     }
 
 
-    public int forEachExpression(GeneQuerySearchRequestParameters requestParameters, Visitor<DifferentialBioentityExpression> visitor) {
+    public int forEachExpression(GeneQuerySearchRequestParameters requestParameters, Visitor<DiffAnalytics> visitor) {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
         Optional<Collection<String>> geneIdsResult = expandGeneQueryIntoGeneIds(requestParameters);
@@ -77,37 +75,37 @@ public class GeneQueryDifferentialService {
              return 0;
          }
 
-        CountingVisitor<DifferentialBioentityExpression> counter = new CountingVisitor<>(visitor);
+        CountingVisitor<DiffAnalytics> counter = new CountingVisitor<>(visitor);
 
-        diffExpressionDao.foreachExpression(contrastsResult, geneIdsResult, counter);
+        diffAnalyticsDao.foreachExpression(contrastsResult, geneIdsResult, counter);
 
         return counter.getCount();
 
     }
 
-    public List<DifferentialBioentityExpression> queryWithoutCount(String geneId) {
+    public List<DiffAnalytics> queryWithoutCount(String geneId) {
         Collection<String> geneIds = Lists.newArrayList(geneId);
-        return diffExpressionDao.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
+        return diffAnalyticsDao.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
     }
 
-    public DifferentialBioentityExpressions query(Collection<String> geneIdentifiers) {
+    public DiffAnalyticsList query(Collection<String> geneIdentifiers) {
 
         if (CollectionUtils.isNotEmpty(geneIdentifiers)) {
 
-            List<DifferentialBioentityExpression> expressions = diffExpressionDao.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(),
+            List<DiffAnalytics> expressions = diffAnalyticsDao.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(),
                     Optional.of(geneIdentifiers));
 
-            int resultCount = diffExpressionDao.getResultCount(Optional.<Collection<IndexedAssayGroup>>absent(),
+            int resultCount = diffAnalyticsDao.getResultCount(Optional.<Collection<IndexedAssayGroup>>absent(),
                                 Optional.of(geneIdentifiers));
 
-            return new DifferentialBioentityExpressions(expressions, resultCount);
+            return new DiffAnalyticsList(expressions, resultCount);
 
         }
-        return new DifferentialBioentityExpressions();
+        return new DiffAnalyticsList();
     }
 
 
-    public DifferentialBioentityExpressions query(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
+    public DiffAnalyticsList query(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
 
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
@@ -118,13 +116,13 @@ public class GeneQueryDifferentialService {
                 || contrastsResult.isPresent() && contrastsResult.get().isEmpty()) {
             // no contrasts when condition specified, or no genes when gene ids specified,
             // so return empty results
-            return new DifferentialBioentityExpressions();
+            return new DiffAnalyticsList();
         }
 
-        List<DifferentialBioentityExpression> expressions = diffExpressionDao.getTopExpressions(contrastsResult, geneIdsResult);
-        int resultCount = diffExpressionDao.getResultCount(contrastsResult, geneIdsResult);
+        List<DiffAnalytics> expressions = diffAnalyticsDao.getTopExpressions(contrastsResult, geneIdsResult);
+        int resultCount = diffAnalyticsDao.getResultCount(contrastsResult, geneIdsResult);
 
-        return new DifferentialBioentityExpressions(expressions, resultCount);
+        return new DiffAnalyticsList(expressions, resultCount);
 
 
     }

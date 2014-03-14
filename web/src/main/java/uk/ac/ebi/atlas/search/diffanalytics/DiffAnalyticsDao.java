@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.dao.diffexpression;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
@@ -34,7 +34,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import uk.ac.ebi.atlas.utils.Visitor;
 import uk.ac.ebi.atlas.utils.VisitorException;
@@ -51,9 +50,9 @@ import java.util.concurrent.TimeUnit;
 
 @Named
 @Scope("prototype")
-public class DiffExpressionDao {
+public class DiffAnalyticsDao {
 
-    private static final Logger LOGGER = Logger.getLogger(DiffExpressionDao.class);
+    private static final Logger LOGGER = Logger.getLogger(DiffAnalyticsDao.class);
 
     static final int RESULT_SIZE = 50;
 
@@ -61,16 +60,16 @@ public class DiffExpressionDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private DifferentialBioentityExpressionRowMapper dbeRowMapper;
+    private DiffAnalyticsRowMapper dbeRowMapper;
 
     @Inject
-    public DiffExpressionDao(@Qualifier("dataSourceOracle") DataSource dataSource, DifferentialBioentityExpressionRowMapper dbeRowMapper) {
+    public DiffAnalyticsDao(@Qualifier("dataSourceOracle") DataSource dataSource, DiffAnalyticsRowMapper dbeRowMapper) {
         this.dbeRowMapper = dbeRowMapper;
         this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<DifferentialBioentityExpression> getTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    public List<DiffAnalytics> getTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
 
         log("getTopExpressions", indexedContrasts, geneIds);
 
@@ -80,7 +79,7 @@ public class DiffExpressionDao {
 
         jdbcTemplate.setMaxRows(RESULT_SIZE);
 
-        List<DifferentialBioentityExpression> results;
+        List<DiffAnalytics> results;
 
         try {
             results = jdbcTemplate.query(indexedContrastQuery.getQuery(),
@@ -100,7 +99,7 @@ public class DiffExpressionDao {
 
     }
 
-    public void foreachExpression(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds, final Visitor<DifferentialBioentityExpression> visitor)  {
+    public void foreachExpression(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds, final Visitor<DiffAnalytics> visitor)  {
         log("foreachExpression", indexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
@@ -120,7 +119,7 @@ public class DiffExpressionDao {
                 public void processRow(ResultSet resultSet) throws SQLException {
                     count.increment();
 
-                    DifferentialBioentityExpression dbe = dbeRowMapper.mapRow(resultSet, count.intValue());
+                    DiffAnalytics dbe = dbeRowMapper.mapRow(resultSet, count.intValue());
 
                     try {
                         visitor.visit(dbe);
@@ -159,18 +158,18 @@ public class DiffExpressionDao {
     }
 
     DatabaseQuery<Object> buildCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
-        DifferentialGeneQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
+        DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
         return builder.buildCount();
     }
 
     DatabaseQuery<Object> buildSelect(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
-        DifferentialGeneQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
+        DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
         return builder.buildSelect();
     }
 
-    DifferentialGeneQueryBuilder createDifferentialGeneQueryBuilder(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    DiffAnalyticsQueryBuilder createDifferentialGeneQueryBuilder(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
 
-        DifferentialGeneQueryBuilder builder = new DifferentialGeneQueryBuilder();
+        DiffAnalyticsQueryBuilder builder = new DiffAnalyticsQueryBuilder();
 
         if (indexedContrasts.isPresent()) {
             builder.withAssayGroups(indexedContrasts.get());

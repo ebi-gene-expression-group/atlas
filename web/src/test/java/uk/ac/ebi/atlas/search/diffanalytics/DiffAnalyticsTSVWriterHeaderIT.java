@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.commands.download;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 
 import org.junit.Test;
@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsTSVWriter;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -18,10 +19,10 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class DifferentialBioentityExpressionsTSVWriterHeaderIT {
+public class DiffAnalyticsTSVWriterHeaderIT {
 
     @Inject
-    private DifferentialBioentityExpressionsTSVWriter subject;
+    private DiffAnalyticsTSVWriter subject;
 
     @Test
     public void headerTextShouldContainThreeRows(){

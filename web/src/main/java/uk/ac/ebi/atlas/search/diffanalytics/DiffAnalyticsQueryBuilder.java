@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.dao.diffexpression;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class DifferentialGeneQueryBuilder {
+public class DiffAnalyticsQueryBuilder {
 
     static final String CONTRASTID = "CONTRASTID";
     static final String PVALUE = "PVAL";
@@ -47,13 +47,13 @@ public class DifferentialGeneQueryBuilder {
     private Collection<IndexedAssayGroup> indexedAssayGroups;
     private ARRAY geneIds;
 
-    public DifferentialGeneQueryBuilder withAssayGroups(Collection<IndexedAssayGroup> indexedAssayGroups) {
+    public DiffAnalyticsQueryBuilder withAssayGroups(Collection<IndexedAssayGroup> indexedAssayGroups) {
         //TODO: make a set, as sometimes we get the same assay group multiple times, eg: when running GeneQueryDifferentialSerivceIT.conditionPregnant()
         this.indexedAssayGroups = indexedAssayGroups;
         return this;
     }
 
-    public DifferentialGeneQueryBuilder withGeneIds(ARRAY geneIds) {
+    public DiffAnalyticsQueryBuilder withGeneIds(ARRAY geneIds) {
         this.geneIds = geneIds;
         return this;
     }

@@ -68,32 +68,32 @@
 
                 <tbody>
 
-                <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions"--%>
+                <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList"--%>
                 <c:forEach items="${bioentities}"
-                           var="differentialBioentityExpression">
+                           var="diffAnalytics">
                     <tr>
                      <c:if test="${!isSameGeneId}">
                         <td class="horizontal-header-cell">
-                                <a href="genes/${differentialBioentityExpression.bioentityId}">${differentialBioentityExpression.bioentityName}</a>
+                                <a href="genes/${diffAnalytics.bioentityId}">${diffAnalytics.bioentityName}</a>
                         </td>
                      </c:if>
                         <td class="horizontal-header-cell">
-                                ${differentialBioentityExpression.designElement}
+                                ${diffAnalytics.designElement}
                         </td>
 
                       <c:if test="${!isSameGeneId}">
                         <td class="horizontal-header-cell">
-                                ${differentialBioentityExpression.species}
+                                ${diffAnalytics.species}
                         </td>
                       </c:if>
 
                         <td class="horizontal-header-cell contrastNameCell"
-                            data-experiment-accession="${differentialBioentityExpression.experimentAccession}"
-                            data-contrast-id="${differentialBioentityExpression.contrastId}">
-                            <a href="experiments/${differentialBioentityExpression.experimentPageUrl}">${differentialBioentityExpression.contrastDisplayName}</a>
+                            data-experiment-accession="${diffAnalytics.experimentAccession}"
+                            data-contrast-id="${diffAnalytics.contrastId}">
+                            <a href="experiments/${diffAnalytics.experimentPageUrl}">${diffAnalytics.contrastDisplayName}</a>
                         </td>
 
-                        <c:set var="expression" value="${differentialBioentityExpression.expression}"/>
+                        <c:set var="expression" value="${diffAnalytics.expression}"/>
 
                         <c:set var="expressionLevel"
                                value="${expression.level}"/>

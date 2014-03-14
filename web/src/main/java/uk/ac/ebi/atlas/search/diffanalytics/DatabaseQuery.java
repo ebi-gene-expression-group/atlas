@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.dao.diffexpression;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;

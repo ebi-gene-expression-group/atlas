@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.commands.download;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 
 import com.google.common.collect.Lists;
@@ -8,10 +8,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalytics;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsTSVWriter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,9 +24,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DifferentialBioentityExpressionsTSVWriterTest {
+public class DiffAnalyticsTSVWriterTest {
 
-    private DifferentialBioentityExpressionsTSVWriter subject;
+    private DiffAnalyticsTSVWriter subject;
 
     @Mock
     private PrintWriter responseWriterMock;
@@ -42,7 +43,7 @@ public class DifferentialBioentityExpressionsTSVWriterTest {
 
     @Before
     public void init() {
-        subject = new DifferentialBioentityExpressionsTSVWriter();
+        subject = new DiffAnalyticsTSVWriter();
         subject.setResponseWriter(responseWriterMock);
         when(contrastMock.getDisplayName()).thenReturn(CONTRAST_NAME);
     }
@@ -53,10 +54,10 @@ public class DifferentialBioentityExpressionsTSVWriterTest {
         double foldChange = 0.004;
         DifferentialExpression diffExpression = new DifferentialExpression(pvalue, foldChange, contrastMock);
 
-        DifferentialBioentityExpression dbExpression = new DifferentialBioentityExpression(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES, DESIGN_ELEMENT);
+        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES, DESIGN_ELEMENT);
 
-        List<DifferentialBioentityExpression> dbExpressionList = Lists.newArrayList(dbExpression);
-        DifferentialBioentityExpressions dbExpressions = new DifferentialBioentityExpressions(dbExpressionList, dbExpressionList.size());
+        List<DiffAnalytics> dbExpressionList = Lists.newArrayList(dbExpression);
+        DiffAnalyticsList dbExpressions = new DiffAnalyticsList(dbExpressionList, dbExpressionList.size());
 
         subject.write(dbExpressions);
 
@@ -71,10 +72,10 @@ public class DifferentialBioentityExpressionsTSVWriterTest {
         double tstatistic = 0.007;
         DifferentialExpression diffExpression = new MicroarrayExpression(pvalue, foldChange, tstatistic, contrastMock);
 
-        DifferentialBioentityExpression dbExpression = new DifferentialBioentityExpression(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES, DESIGN_ELEMENT);
+        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES, DESIGN_ELEMENT);
 
-        List<DifferentialBioentityExpression> dbExpressionList = Lists.newArrayList(dbExpression);
-        DifferentialBioentityExpressions dbExpressions = new DifferentialBioentityExpressions(dbExpressionList, dbExpressionList.size());
+        List<DiffAnalytics> dbExpressionList = Lists.newArrayList(dbExpression);
+        DiffAnalyticsList dbExpressions = new DiffAnalyticsList(dbExpressionList, dbExpressionList.size());
 
         subject.write(dbExpressions);
 

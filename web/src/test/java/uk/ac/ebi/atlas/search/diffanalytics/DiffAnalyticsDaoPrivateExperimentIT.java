@@ -20,9 +20,11 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.dao.diffexpression;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Optional;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +33,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Inject;
@@ -40,19 +41,15 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class DiffExpressionDaoPrivateExperimentsIT {
+public class DiffAnalyticsDaoPrivateExperimentIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-21860";
 
     @Inject
-    private DiffExpressionDao subject;
+    private DiffAnalyticsDao subject;
 
     @Inject
     private ExperimentMetadataCRUD experimentMetadataCRUD;
@@ -65,8 +62,8 @@ public class DiffExpressionDaoPrivateExperimentsIT {
     @Test
     public void getTopExpressionsDoesNotReturnResultsInPrivateExperiments() {
         Collection<String> geneIds = Collections.singleton("ENSMUSG00000050520");
-        List<DifferentialBioentityExpression> expressions = subject.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
-        assertThat(expressions, hasSize(0));
+        List<DiffAnalytics> expressions = subject.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
+        MatcherAssert.assertThat(expressions, Matchers.hasSize(0));
     }
 
     @After

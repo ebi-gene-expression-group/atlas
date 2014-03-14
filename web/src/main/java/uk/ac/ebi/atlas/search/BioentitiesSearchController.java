@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.page.crossexperiment;
+package uk.ac.ebi.atlas.search;
 
 import com.google.common.base.Optional;
 import org.springframework.context.annotation.Scope;
@@ -35,10 +35,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.commands.BaselineBioentityCountsService;
-import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
+import uk.ac.ebi.atlas.search.diffanalytics.DifferentialExpressionSearchService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpressions;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -57,7 +57,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Scope("prototype")
 public class BioentitiesSearchController {
 
-    private GeneQueryDifferentialService geneQueryDifferentialService;
+    private DifferentialExpressionSearchService differentialExpressionSearchService;
     private BaselineBioentityCountsService baselineBioentityCountsService;
 
     private EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder;
@@ -65,8 +65,8 @@ public class BioentitiesSearchController {
     private SolrQueryService solrQueryService;
 
     @Inject
-    public BioentitiesSearchController(GeneQueryDifferentialService geneQueryDifferentialService, BaselineBioentityCountsService baselineBioentityCountsService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService) {
-        this.geneQueryDifferentialService = geneQueryDifferentialService;
+    public BioentitiesSearchController(DifferentialExpressionSearchService differentialExpressionSearchService, BaselineBioentityCountsService baselineBioentityCountsService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService) {
+        this.differentialExpressionSearchService = differentialExpressionSearchService;
         this.baselineBioentityCountsService = baselineBioentityCountsService;
         this.ebiGlobalSearchQueryBuilder = ebiGlobalSearchQueryBuilder;
         this.solrQueryService = solrQueryService;
@@ -103,7 +103,7 @@ public class BioentitiesSearchController {
             model.addAttribute("baselineCounts", baselineCounts);
 
             // used to populate diff-heatmap-table
-            DifferentialBioentityExpressions bioentityExpressions = geneQueryDifferentialService.query(requestParameters);
+            DiffAnalyticsList bioentityExpressions = differentialExpressionSearchService.query(requestParameters);
 
             model.addAttribute("bioentities", bioentityExpressions);
 
@@ -137,7 +137,7 @@ public class BioentitiesSearchController {
             return Optional.of("redirect:/" + bioentityPageName + "/" + geneId);
         }
 
-        Optional<Collection<String>> geneIdsOrSets = geneQueryDifferentialService.expandGeneQueryIntoGeneIds(requestParameters);
+        Optional<Collection<String>> geneIdsOrSets = differentialExpressionSearchService.expandGeneQueryIntoGeneIds(requestParameters);
 
         if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
             return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.acceptance.rest.tests.crossexperiment;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class BioentitiesSearchDifferentialDownloadControllerIT {
+public class BioentitiesSearchDifferentialDownloadControllerSIT {
 
     private EndPoint subject = new EndPoint("/gxa/query.tsv?geneQuery=AT1G02220");
 

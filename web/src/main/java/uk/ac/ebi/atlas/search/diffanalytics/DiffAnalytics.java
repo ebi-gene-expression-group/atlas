@@ -20,12 +20,13 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.model.AssayGroup;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 
-public class DifferentialBioentityExpression {
+public class DiffAnalytics {
 
     private String bioentityId;
 
@@ -39,8 +40,8 @@ public class DifferentialBioentityExpression {
 
     private String designElement;
 
-    public DifferentialBioentityExpression(String bioentityId, String bioentityName, String experimentAccession, DifferentialExpression expression,
-                                           String species, String designElement) {
+    public DiffAnalytics(String bioentityId, String bioentityName, String experimentAccession, DifferentialExpression expression,
+                         String species, String designElement) {
         this.bioentityId = bioentityId;
         this.bioentityName = bioentityName;
         this.experimentAccession = experimentAccession;

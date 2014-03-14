@@ -20,15 +20,13 @@
 * http://gxa.github.com/gxa
 */
 
-package uk.ac.ebi.atlas.web.controllers.rest.crossexperiment;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commands.GeneQueryDifferentialService;
-import uk.ac.ebi.atlas.commands.download.DifferentialBioentityExpressionsTSVWriter;
 import uk.ac.ebi.atlas.utils.VisitorException;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
@@ -43,12 +41,12 @@ public class BioentitiesSearchDifferentialDownloadController {
 
     private static final Logger LOGGER = Logger.getLogger(BioentitiesSearchDifferentialDownloadController.class);
 
-    private GeneQueryDifferentialService geneQueryDifferentialService;
-    private DifferentialBioentityExpressionsTSVWriter tsvWriter;
+    private DifferentialExpressionSearchService differentialExpressionSearchService;
+    private DiffAnalyticsTSVWriter tsvWriter;
 
     @Inject
-    public BioentitiesSearchDifferentialDownloadController(GeneQueryDifferentialService geneQueryDifferentialService, DifferentialBioentityExpressionsTSVWriter tsvWriter) {
-        this.geneQueryDifferentialService = geneQueryDifferentialService;
+    public BioentitiesSearchDifferentialDownloadController(DifferentialExpressionSearchService differentialExpressionSearchService, DiffAnalyticsTSVWriter tsvWriter) {
+        this.differentialExpressionSearchService = differentialExpressionSearchService;
         this.tsvWriter = tsvWriter;
     }
 
@@ -75,11 +73,11 @@ public class BioentitiesSearchDifferentialDownloadController {
 
         setDownloadHeaders(response, requestParameters.getDescription() + ".tsv");
 
-        try (DifferentialBioentityExpressionsTSVWriter writer = tsvWriter) {
+        try (DiffAnalyticsTSVWriter writer = tsvWriter) {
             writer.setResponseWriter(response.getWriter());
             writer.writeHeader(requestParameters);
 
-            int count = geneQueryDifferentialService.forEachExpression(requestParameters, writer);
+            int count = differentialExpressionSearchService.forEachExpression(requestParameters, writer);
             LOGGER.info("downloadGeneQueryResults streamed " + count + " differential gene expressions");
         } catch (VisitorException e) {
             LOGGER.warn("downloadGeneQueryResults aborted, connection may have been lost with the client:" + e.getMessage());

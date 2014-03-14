@@ -1,10 +1,9 @@
-package uk.ac.ebi.atlas.dao.diffexpression;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.RowMapper;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialBioentityExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 
@@ -15,7 +14,7 @@ import java.sql.SQLException;
 
 @Named
 @Scope("prototype")
-class DifferentialBioentityExpressionRowMapper implements RowMapper<DifferentialBioentityExpression> {
+class DiffAnalyticsRowMapper implements RowMapper<DiffAnalytics> {
 
     //Used to handle positive/negative infinite values in the DB
     private static final int INFINITY_VALUE = 1000000;
@@ -23,26 +22,26 @@ class DifferentialBioentityExpressionRowMapper implements RowMapper<Differential
     private ContrastTrader contrastTrader;
 
     @Inject
-    DifferentialBioentityExpressionRowMapper(ContrastTrader contrastTrader) {
+    DiffAnalyticsRowMapper(ContrastTrader contrastTrader) {
         this.contrastTrader = contrastTrader;
     }
 
     @Override
-    public DifferentialBioentityExpression mapRow(ResultSet rs, int rowNum) throws SQLException {
-        String experimentAccession = rs.getString(DifferentialGeneQueryBuilder.EXPERIMENT);
-        String contrastId = rs.getString(DifferentialGeneQueryBuilder.CONTRASTID);
+    public DiffAnalytics mapRow(ResultSet rs, int rowNum) throws SQLException {
+        String experimentAccession = rs.getString(DiffAnalyticsQueryBuilder.EXPERIMENT);
+        String contrastId = rs.getString(DiffAnalyticsQueryBuilder.CONTRASTID);
 
         //TODO: getting contrast is slow because we go back to the database to get the experiment for each contrast
         Contrast contrast = contrastTrader.getContrast(experimentAccession, contrastId);
-        DifferentialExpression expression = buildDifferentialExpression(rs.getDouble(DifferentialGeneQueryBuilder.PVALUE), rs.getDouble(DifferentialGeneQueryBuilder.LOG_2_FOLD), rs.getString(DifferentialGeneQueryBuilder.TSTAT), contrast);
+        DifferentialExpression expression = buildDifferentialExpression(rs.getDouble(DiffAnalyticsQueryBuilder.PVALUE), rs.getDouble(DiffAnalyticsQueryBuilder.LOG_2_FOLD), rs.getString(DiffAnalyticsQueryBuilder.TSTAT), contrast);
 
-        return new DifferentialBioentityExpression(
-                rs.getString(DifferentialGeneQueryBuilder.IDENTIFIER),
-                rs.getString(DifferentialGeneQueryBuilder.NAME),
+        return new DiffAnalytics(
+                rs.getString(DiffAnalyticsQueryBuilder.IDENTIFIER),
+                rs.getString(DiffAnalyticsQueryBuilder.NAME),
                 experimentAccession,
                 expression,
-                rs.getString(DifferentialGeneQueryBuilder.ORGANISM),
-                rs.getString(DifferentialGeneQueryBuilder.DESIGNELEMENT));
+                rs.getString(DiffAnalyticsQueryBuilder.ORGANISM),
+                rs.getString(DiffAnalyticsQueryBuilder.DESIGNELEMENT));
     }
 
     DifferentialExpression buildDifferentialExpression(double pValue, double foldChange, String tstatistic, Contrast contrast) {

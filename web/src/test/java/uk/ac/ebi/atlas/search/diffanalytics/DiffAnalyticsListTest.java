@@ -1,11 +1,14 @@
-package uk.ac.ebi.atlas.model.differential;
+package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.collect.Lists;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalytics;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 
 import java.util.List;
 
@@ -14,16 +17,16 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DifferentialBioentityExpressionsTest {
+public class DiffAnalyticsListTest {
 
-    private DifferentialBioentityExpressions subject;
+    private DiffAnalyticsList subject;
 
     @Mock
-    private DifferentialBioentityExpression differentialBioentityExpression1;
+    private DiffAnalytics diffAnalytics1;
     @Mock
-    private DifferentialBioentityExpression differentialBioentityExpression2;
+    private DiffAnalytics diffAnalytics2;
     @Mock
-    private DifferentialBioentityExpression differentialBioentityExpression3;
+    private DiffAnalytics diffAnalytics3;
 
     private DifferentialExpression expression1;
     private DifferentialExpression expression2;
@@ -34,13 +37,13 @@ public class DifferentialBioentityExpressionsTest {
 
 
     public void initSubject() throws Exception {
-        given(differentialBioentityExpression1.getExpression()).willReturn(expression1);
-        given(differentialBioentityExpression2.getExpression()).willReturn(expression2);
-        given(differentialBioentityExpression3.getExpression()).willReturn(expression3);
+        given(diffAnalytics1.getExpression()).willReturn(expression1);
+        given(diffAnalytics2.getExpression()).willReturn(expression2);
+        given(diffAnalytics3.getExpression()).willReturn(expression3);
 
-        List<DifferentialBioentityExpression> expressions = Lists.newArrayList(differentialBioentityExpression1, differentialBioentityExpression2, differentialBioentityExpression3);
+        List<DiffAnalytics> expressions = Lists.newArrayList(diffAnalytics1, diffAnalytics2, diffAnalytics3);
 
-        subject = new DifferentialBioentityExpressions(expressions, 3);
+        subject = new DiffAnalyticsList(expressions, 3);
     }
 
     @Test
