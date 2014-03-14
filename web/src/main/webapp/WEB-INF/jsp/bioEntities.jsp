@@ -163,7 +163,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <c:import url="includes/heatmap-matrix-differential-bioentities.jsp"/>
+                                            <c:import url="includes/heatmap-matrix-searchresults-diffanalytics.jsp"/>
                                         </td>
                                     </tr>
                                 </table>
