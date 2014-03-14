@@ -99,7 +99,7 @@ public class QCReportController {
 
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
     public String forwardToQcResource(String experimentAccession, String arrayDesign, String resource) throws IOException {
-        String path = MessageFormat.format("/qc/{0}/qc/{0}_{1}_QM/{2}", experimentAccession, arrayDesign, resource);
+        String path = MessageFormat.format("/expdata/{0}/qc/{0}_{1}_QM/{2}", experimentAccession, arrayDesign, resource);
 
         return "forward:" + path;
     }

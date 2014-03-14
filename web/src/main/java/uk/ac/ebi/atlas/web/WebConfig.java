@@ -44,16 +44,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Inject
     private AdminInterceptor adminInterceptor;
 
-    @Value("#{configuration['microarray.experiment.root.path.template']}")
-    private String qcRootPath;
+    @Value("#{configuration['experiment.data.location']}")
+    private String experimentDataLocation;
 
     // equivalent to mvc:resources
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/json/gene-by-cutoff/**").addResourceLocations("classpath:/cutoff-histograms/");
-        registry.addResourceHandler("/qc/**").addResourceLocations("file:" + qcRootPath);
-        registry.addResourceHandler("/foo/**").addResourceLocations("file:/Users/omannion/ATLAS3.TEST/integration-test-data/magetab/E-MTAB-1066/qc/E-MTAB-1066_A-AFFY-35_QM/");
+        registry.addResourceHandler("/expdata/**").addResourceLocations("file:" + experimentDataLocation);
     }
 
     // equivalent to mvc:view-controller
