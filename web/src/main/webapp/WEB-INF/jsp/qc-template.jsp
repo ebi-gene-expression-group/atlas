@@ -11,9 +11,9 @@
 
     <div id="arrayDesignsQc" style="width: 50%">
 
-        <c:if test="${fn:length(expArrayDesigns) > 1}">
+        <c:if test="${fn:length(qcArrayDesigns) > 1}">
 
-            <c:if test= "${not empty expArrayDesigns}" />
+            <c:if test= "${not empty qcArrayDesigns}" />
 
             <form:form commandName="preferences" method="get" id="prefForm" >
                 <table cellpadding="0" cellspacing="0" border="0" style="margin-left: 10px" >
@@ -22,7 +22,7 @@
 
                         <td>
                             <form:select path="arrayDesignAccession">
-                                <form:options items="${expArrayDesigns}" />
+                                <form:options items="${qcArrayDesigns}" />
                              </form:select>
                         </td>
 

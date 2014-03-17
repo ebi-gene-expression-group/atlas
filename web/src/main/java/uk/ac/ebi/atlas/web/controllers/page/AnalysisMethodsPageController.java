@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
@@ -43,14 +45,17 @@ public class AnalysisMethodsPageController {
     private TsvReaderBuilder tsvReaderBuilder;
 
     private DownloadURLBuilder downloadURLBuilder;
+    private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
+    private ExperimentTrader experimentTrader;
 
     @Inject
-    public AnalysisMethodsPageController(TsvReaderBuilder tsvReaderBuilder, DownloadURLBuilder downloadURLBuilder,
+    public AnalysisMethodsPageController(TsvReaderBuilder tsvReaderBuilder, DownloadURLBuilder downloadURLBuilder, ExperimentTrader experimentTrader,
                                          @Value("#{configuration['experiment.analysis-method.path.template']}")
                                          String pathTemplate) {
 
         this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
         this.downloadURLBuilder = downloadURLBuilder;
+        this.experimentTrader = experimentTrader;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = "type")
@@ -63,6 +68,10 @@ public class AnalysisMethodsPageController {
         model.addAttribute("experimentAccession", experimentAccession);
 
         downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
+
+        //For showing the QC REPORTS button in the header
+        MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+        request.setAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
 
         return "experiment-analysis-methods";
     }

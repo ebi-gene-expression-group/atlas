@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +46,7 @@ import java.util.Set;
 public class DifferentialDesignPageController extends ExperimentDesignPageRequestHandler<DifferentialExperiment> {
 
     private String contrastId;
+    private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
@@ -83,6 +85,9 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
         model.addAttribute("referenceAssays", gson.toJson(Sets.newHashSet(contrast.getReferenceAssayGroup())));
         model.addAttribute("testAssays", gson.toJson(Sets.newHashSet(contrast.getTestAssayGroup())));
 
+        //For showing the QC REPORTS button in the header
+        MicroarrayExperiment microarrayExperiment = (MicroarrayExperiment) experiment;
+        model.addAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, microarrayExperiment.getArrayDesignAccessions());
     }
 
 }

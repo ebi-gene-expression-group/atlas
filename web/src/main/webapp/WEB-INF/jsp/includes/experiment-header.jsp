@@ -16,29 +16,6 @@
             <td width="130px">
                 <table cellpadding="2" cellspacing="0" style="float:right">
                     <tr>
-
-                        <c:if test="${allArrayDesigns!=null}">
-
-                            <c:forEach items="${allArrayDesigns}" var="arrayDesign" varStatus="loop">
-
-                                <c:if test="${loop.first}">
-                                    <%--@elvariable id="qcReportUtil" type="uk.ac.ebi.atlas.utils.QCReportUtil"--%>
-                                    <c:set var="hasQcReport" value="${qcReportUtil.hasQCReport(experimentAccession, arrayDesign)}"/>
-
-                                    <c:if test="${hasQcReport}">
-                                    <td>
-                                        <a id="display-qc-report" class="button-image" title="View QC report"
-                                           href="${pageContext.request.contextPath}/experiments/${experimentAccession}/qc/${arrayDesign}/index.html">
-                                            <img src="${pageContext.request.contextPath}/resources/images/qc_v15.png"/>
-                                        </a>
-                                    </td>
-                                    </c:if>
-
-                                </c:if>
-
-                            </c:forEach>
-                        </c:if>
-
                         <td>
                             <a id="display-experiment" class="button-image"
                                title="Experiment Page" href="${pageContext.request.contextPath}/experiments/${experimentAccession}${accessKeyQueryString}">
@@ -55,6 +32,29 @@
                                title="Experiment Design" href="${pageContext.request.contextPath}/experiments/${experimentAccession}/experiment-design${accessKeyQueryString}">
                                 <img src="${pageContext.request.contextPath}/resources/images/experiment_design_icon.png"/></a>
                         </td>
+
+                        <c:if test="${qcArrayDesigns!=null}">
+
+                            <c:forEach items="${qcArrayDesigns}" var="arrayDesign" varStatus="loop">
+
+                                <c:if test="${loop.first}">
+                                    <%--@elvariable id="qcReportUtil" type="uk.ac.ebi.atlas.utils.QCReportUtil"--%>
+                                    <c:set var="hasQcReport" value="${qcReportUtil.hasQCReport(experimentAccession, arrayDesign)}"/>
+
+                                    <c:if test="${hasQcReport}">
+                                        <td>
+                                            <a id="display-qc-report" class="button-image" title="View QC report"
+                                               href="${pageContext.request.contextPath}/experiments/${experimentAccession}/qc/${arrayDesign}/index.html">
+                                                <img src="${pageContext.request.contextPath}/resources/images/qc_v15.png"/>
+                                            </a>
+                                        </td>
+                                    </c:if>
+
+                                </c:if>
+
+                            </c:forEach>
+                        </c:if>
+
                         <c:if test="${type.isDifferential()}">
                             <td>
                                 <a id="download-raw" class="button-image"

@@ -43,6 +43,7 @@ import javax.validation.Valid;
 @Scope("request")
 public class MicroarrayExperimentPageController extends DifferentialExperimentPageController<MicroarrayExperiment, MicroarrayRequestPreferences, MicroarrayProfile> {
     private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
+    private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
 
     @Inject
     public MicroarrayExperimentPageController(MicroarrayRequestContextBuilder requestContextBuilder,
@@ -62,6 +63,9 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     @Override
     protected void initExtraPageConfigurations(Model model, MicroarrayRequestPreferences requestPreferences, MicroarrayExperiment experiment) {
         model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
+
+        //For showing the QC REPORTS button in the header
+        model.addAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
     }
 
 }

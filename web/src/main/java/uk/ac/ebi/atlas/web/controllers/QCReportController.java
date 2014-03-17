@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.support.ServletContextResourceLoader;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -16,7 +15,6 @@ import uk.ac.ebi.atlas.utils.QCReportUtil;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -34,7 +32,7 @@ public class QCReportController {
     private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
     private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
-    private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "expArrayDesigns";
+    private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
 
 
     private final QCReportUtil qcReportUtil;
@@ -121,7 +119,7 @@ public class QCReportController {
     }
 
     private void extendModel(HttpServletRequest request, MicroarrayExperiment experiment) {
-        request.setAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
+        request.setAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
 
     }
 
