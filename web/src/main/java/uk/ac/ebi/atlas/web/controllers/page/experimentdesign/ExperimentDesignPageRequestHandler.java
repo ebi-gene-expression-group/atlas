@@ -69,13 +69,13 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
 
         downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
 
-        extendModel(model, experiment);
+        extendModel(model, experiment, experimentAccession);
 
         return "experiment-experiment-design";
 
     }
 
-    protected abstract void extendModel(Model model, T experiment);
+    protected abstract void extendModel(Model model, T experiment, String experimentAccession);
 
     protected abstract Set<String> getAnalysedRowsAccessions(T experiment);
 

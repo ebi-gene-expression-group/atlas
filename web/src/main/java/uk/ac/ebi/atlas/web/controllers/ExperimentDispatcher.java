@@ -25,13 +25,10 @@ package uk.ac.ebi.atlas.web.controllers;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -130,6 +127,15 @@ public final class ExperimentDispatcher {
         model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
 
         model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
+    }
+
+    @ExceptionHandler(value = {ResourceNotFoundException.class})
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ModelAndView handleException(Exception e) {
+        ModelAndView mav = new ModelAndView("experiment-notFound-page");
+        mav.addObject("exceptionMessage", e.getMessage());
+
+        return mav;
     }
 
 }

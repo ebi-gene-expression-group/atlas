@@ -44,7 +44,7 @@ public class BaselineDesignPageController extends ExperimentDesignPageRequestHan
     }
 
     @Override
-    protected void extendModel(Model model, BaselineExperiment experiment) {
+    protected void extendModel(Model model, BaselineExperiment experiment, String experimentAccession) {
         //No need to add extra attributes to the model, parent template method does enough
     }
 

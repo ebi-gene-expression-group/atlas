@@ -31,11 +31,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -47,7 +50,12 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
 
     private String contrastId;
     private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
+    private ExperimentTrader experimentTrader;
 
+    @Inject
+    public DifferentialDesignPageController(ExperimentTrader experimentTrader) {
+        this.experimentTrader = experimentTrader;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
     public String showRnaSeqExperimentDesign(@ModelAttribute("preferences") @Valid DifferentialDesignRequestPreferences preferences
@@ -71,7 +79,7 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
     }
 
     @Override
-    protected void extendModel(Model model, DifferentialExperiment experiment) {
+    protected void extendModel(Model model, DifferentialExperiment experiment, String experimentAccession) {
 
         model.addAttribute("contrasts", experiment.getContrasts());
 
@@ -86,8 +94,11 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
         model.addAttribute("testAssays", gson.toJson(Sets.newHashSet(contrast.getTestAssayGroup())));
 
         //For showing the QC REPORTS button in the header
-        MicroarrayExperiment microarrayExperiment = (MicroarrayExperiment) experiment;
-        model.addAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, microarrayExperiment.getArrayDesignAccessions());
+        if(experiment instanceof MicroarrayExperiment){
+            MicroarrayExperiment microarrayExperiment =  (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+            model.addAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, microarrayExperiment.getArrayDesignAccessions());
+        }
+
     }
 
 }
