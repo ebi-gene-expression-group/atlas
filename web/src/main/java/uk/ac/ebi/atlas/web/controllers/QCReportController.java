@@ -72,6 +72,7 @@ public class QCReportController {
         String selectedArrayDesign = preferences.getArrayDesignAccession();
 
         if(selectedArrayDesign != null) {
+            //eg: redirect to nicer URL when arrayDesign is provided as a query string parameter
             String path = MessageFormat.format("/experiments/{0}/qc/{1}/{2}", experimentAccession, selectedArrayDesign, resource);
             return "redirect:/" + path;
         }

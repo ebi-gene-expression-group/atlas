@@ -27,4 +27,11 @@ public class QCReportControllerSIT extends RestAssuredFixture {
         response.then().assertThat().contentType("image/png");
     }
 
+    @Test
+    public void directRequestToExpdataIsForbidden(){
+        Response response = get("/expdata/E-MTAB-1066/qc/E-MTAB-1066_A-AFFY-35_QM/box.png");
+
+        response.then().assertThat().statusCode(403);
+    }
+
 }
