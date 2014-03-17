@@ -102,6 +102,16 @@
             <role-name>admin</role-name>
         </auth-constraint>
     </security-constraint>
+
+    <security-constraint>
+        <display-name>restrict direct requests (only forwarded requests will work)</display-name>
+        <web-resource-collection>
+            <web-resource-name>Restricted folders</web-resource-name>
+            <url-pattern>/expdata/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint />
+    </security-constraint>
+
     <login-config>
         <auth-method>BASIC</auth-method>
         <realm-name>default</realm-name>
