@@ -1,0 +1,6 @@
+track type=bedGraph name="hippocampus" description="hippocampus"  visibility=full
+1	3054232	3054732	0
+1	3102015	3102124	0
+1	3205900	3671497	20
+1	3466586	3513552	0
+1	3783875	3783932	0
