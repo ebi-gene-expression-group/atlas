@@ -86,7 +86,5 @@
                 </table>
             </div>
         </div>
-
-        </div>
     </c:otherwise>
 </c:choose>
