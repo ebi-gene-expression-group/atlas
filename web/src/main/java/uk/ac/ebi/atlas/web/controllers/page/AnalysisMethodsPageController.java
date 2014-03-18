@@ -58,8 +58,27 @@ public class AnalysisMethodsPageController {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = "type")
-    public String showGeneProfiles(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
+    @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = {"type=RNASEQ_MRNA_BASELINE"})
+    public String baselineAnalysisMethods(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
+        return analysisMethods(experimentAccession, model, request);
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
+    public String rnaSeqAnalysisMethods(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
+        return analysisMethods(experimentAccession, model, request);
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = {"type=MICROARRAY_ANY"})
+    public String microArrayAnalysisMethods(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
+
+        //For showing the QC REPORTS button in the header
+        MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+        request.setAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
+
+        return analysisMethods(experimentAccession, model, request);
+    }
+
+    public String analysisMethods(String experimentAccession, Model model, HttpServletRequest request) throws IOException {
 
         TsvReader tsvReader = tsvReaderBuilder.withExperimentAccession(experimentAccession).build();
 
@@ -68,10 +87,6 @@ public class AnalysisMethodsPageController {
         model.addAttribute("experimentAccession", experimentAccession);
 
         downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
-
-        //For showing the QC REPORTS button in the header
-        MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-        request.setAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
 
         return "experiment-analysis-methods";
     }
