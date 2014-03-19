@@ -71,7 +71,7 @@
                     </c:when>
                     <c:otherwise>
                         <td>
-                            <form:label path="cutoff"><i>p</i>-value cutoff</form:label>
+                            <form:label path="cutoff">Adjusted <i>p</i>-value cutoff</form:label>
                             <span data-help-loc="#cutoff-differential"/>
                         </td>
                         <td>
