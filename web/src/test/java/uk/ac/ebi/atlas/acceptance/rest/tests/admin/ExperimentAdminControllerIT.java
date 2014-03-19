@@ -97,7 +97,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     public void deleteNonExisting() {
         String blablaExperimentAccession = "E-MTAB-BLA-BLA-BLA";
 
-        expect().body(is("ResourceNotFoundException: Experiment not found for experiment accession: " + blablaExperimentAccession))
+        expect().body(is("ResourceNotFoundException: Experiment: " + blablaExperimentAccession + " not found"))
                 .when().get("deleteExperiment?accession=" + blablaExperimentAccession);
     }
 
