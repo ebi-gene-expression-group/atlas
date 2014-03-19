@@ -18,7 +18,7 @@
             <form:form commandName="preferences" method="get" id="prefForm" >
                 <table cellpadding="0" cellspacing="0" border="0" style="margin-left: 10px" >
                     <tr>
-                        <td style="margin-left: 20px;">QC reports for array design : </td>
+                        <td style="margin-left: 20px;">Choose array design to view report for : </td>
 
                         <td>
                             <form:select path="arrayDesignAccession">

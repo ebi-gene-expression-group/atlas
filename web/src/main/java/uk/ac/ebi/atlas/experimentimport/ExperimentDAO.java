@@ -209,7 +209,7 @@ public class ExperimentDAO {
         }
 
         if (experimentDTOs.size() == 0) {
-            throw new ResourceNotFoundException("Experiment not found for experiment accession: " + accession);
+            throw new ResourceNotFoundException("Experiment: " + accession + " not found");
         }
         throw new IncorrectResultSizeDataAccessException(experimentDTOs.size());
 
