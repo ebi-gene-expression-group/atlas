@@ -12,9 +12,9 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.streams.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.streams.baseline.BaselineProfilesPipelineBuilder;
-import uk.ac.ebi.atlas.streams.IterableObjectInputStream;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesPipelineBuilder;
+import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;

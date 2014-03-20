@@ -31,7 +31,7 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.*;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfilesHeatMap;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfilesHeatMap;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;

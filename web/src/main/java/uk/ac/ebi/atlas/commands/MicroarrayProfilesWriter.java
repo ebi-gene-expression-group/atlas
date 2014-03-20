@@ -6,10 +6,10 @@ import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.download.MicroarrayProfilesTSVWriter;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamPipelineBuilder;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfilesWriter;
-import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayProfileStream;
-import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfilesWriter;
+import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStream;
+import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;

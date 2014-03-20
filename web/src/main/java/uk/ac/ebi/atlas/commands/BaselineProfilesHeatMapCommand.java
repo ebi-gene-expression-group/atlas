@@ -11,8 +11,8 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.streams.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.streams.baseline.RankAndPipeBaselineProfiles;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.RankAndPipeBaselineProfiles;
 
 import javax.inject.Inject;
 import javax.inject.Named;

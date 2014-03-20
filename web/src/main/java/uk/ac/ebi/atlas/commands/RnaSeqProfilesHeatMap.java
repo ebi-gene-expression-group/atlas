@@ -5,10 +5,10 @@ import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamPipelineBuilder;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfilesHeatMap;
-import uk.ac.ebi.atlas.streams.differential.rnaseq.RankRnaSeqProfilesFactory;
-import uk.ac.ebi.atlas.streams.differential.rnaseq.RnaSeqProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfilesHeatMap;
+import uk.ac.ebi.atlas.profiles.differential.rnaseq.RankRnaSeqProfilesFactory;
+import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;

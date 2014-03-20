@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.model.differential;
 
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 
 import javax.inject.Named;
 
