@@ -59,6 +59,10 @@ public class GenePageController extends BioEntityPageController {
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
 
+        if(identifier.startsWith("MGI:")){
+            return "forward:/query?geneQuery=" + identifier;
+        }
+
         // throw ResourceNotFoundException, so we don't get a Solr SyntaxException later on
         checkIdentifierDoesNotContainColon(identifier);
 
