@@ -52,6 +52,26 @@ high enough quality.  If there are still enough assays in the experiment after t
 few replicates or low quality then we continue
 processing the experiment for the Expression Atlas.</p>
 
+<h3><a name="arrayQuality">How is microarray data quality controlled?</a></h3>
+
+<p>Microarray data quality is assessed using the <a
+href="http://www.bioconductor.org/packages/release/bioc/html/arrayQualityMetrics.html">arrayQualityMetrics</a>
+package in <a href="http://www.r-project.org/">R</a>. Outlier arrays are
+detected using distance measures, boxplots, and MA plots. If an array is
+classed as an outlier by all three methods, it is excluded from further
+analysis. Please see the arrayQualityMetrics <a
+href="http://www.bioconductor.org/packages/release/bioc/vignettes/arrayQualityMetrics/inst/doc/arrayQualityMetrics.pdf">documentation</a>
+for more details on the methods used.</p>
+
+<h3><a name="rnaseqQuality">How is RNA-seq data quality controlled?</a></h3>
+
+<p>RNA-seq reads are discarded based on several criteria. First, reads with
+quality scores less than Q10 are removed. Second, the reads are mapped against
+a contamination reference genome (<i>E. coli</i> for animal data, fungal and
+microbial non-redundant reference for plants). Any reads that map to the
+contamination reference are removed. Third, reads with "uncalled" characters
+(i.e. "N"s) are discarded. Lastly, for paired-end libraries, any reads whose
+mate was lost in the previous three steps are also discarded.</p>
 
 <h3><a name="microarrayAnalysis">How is microarray data analysed?</a></h3>
 
@@ -193,25 +213,22 @@ using the following format:</p>
 
 <h3><a name="deResults">When I search all of Expression Atlas, what do the &quot;Differential Expression&quot; results show?</a></h3>
 
-<p>The table in the <strong>Differential Expression</strong> section of the
-results shows all contrasts that matched your search and has a gene
-differentially expressed with an adjusted <i>p</i>-value &lt; 0.05.</p>
+<p>The heatmap table in the <strong>Differential Expression</strong> section
+shows all genes matching your query that are differentially expressed with
+adjusted <i>p</i>-value &lt; 0.05. If your search included an experimental
+condition then the table displays contrasts with a sample property or
+experimental factor (variable) that matched that condition.</p>
 
-<p>If your search was for an experimental condition then
-the table includes all experiments with a sample property or
-experimental factor (variable) that matched that condition and has a
-gene that was differentially expressed with an adjusted <i>p</i>-value &lt; 0.05. For
-example, you might be interested in experiments that are from 'liver'
-samples so you could search for this term. There is one row for each gene and contrast that showed differential
-expression. The genes are ordered so that the one with the lowest adjusted <i>p</i>-value is at the
-top.  Click on the contrast name to find out more information about a particular
-gene/contrast combination.  </p>
-
-<p>If your search was for a particular gene the table lists the
-contrasts in which that gene was differentially expressed with an
-adjusted <i>p</i>-value &lt; 0.05.  Again, click on the contrast name to find out more information about a particular
-gene/contrast combination. The contrasts are ordered so that the one
-with the lowest  adjusted <i>p</i>-value is at the top. </p>
+<p>There is one row for each gene and contrast in which it showed differential
+expression. The genes are ordered so that the one with the largest
+log<sub>2</sub> fold-change is at the top. If some genes have identical
+log<sub>2</sub> fold-changes, the one with the lower adjusted <i>p</i>-value
+goes first. In microarray experiments, some genes may be targeted by more than
+one probe set. For each experiment, the table shows the values for the probe
+set that had the largest absolute log<sub>2</sub> fold-change only. You can see
+details of all probe sets for a given gene on the <a href="FAQ.html#DEexptPage">experiment
+page</a>. Click on the contrast name to find out more information about a
+particular gene/contrast combination.</p>
 
 <p>Please see the <a
 	href="help/differential-atlas.html">Differential Atlas help page</a> for
@@ -220,7 +237,7 @@ more details.</p>
 
 <h3><a name="designElement">What is a &quot;design element&quot;?</a></h3>
 
-<p>In results from microarray experiments, you will see the <strong>design
+<p>On microarray experiment pages, you will see the <strong>design
 	element</strong> name alongside the gene name. A design element is also
 known as a probe or probe set. This is the oligonucleotide probe (or group
 thereof) on the microarray that targets that gene.</p>
@@ -271,23 +288,23 @@ box means that the gene was <strong>down-regulated</strong> in the test
 condition.</p>
 
 <p>The colour intensity of filled boxes in the table
-represents how low the adjusted <i>p</i>-value is for each gene. The lower the
-<i>p</i>-value, the more intense the red or blue colour.</p>
+represents how large the log<sub>2</sub> fold-change is for each gene. The larger the
+log<sub>2</sub> fold-change, the more intense the red or blue colour.</p>
 
 
 
-<h3><a name="displayPvalues">How do I see the actual <i>p</i>-values in the results table?</a></h3>
+<h3><a name="displayLogFoldChanges">How do I see the actual log<sub>2</sub> fold-changes in the results table?</a></h3>
 
-<p>Click the <strong>Display levels</strong> button to the top left of the table.</p>
+<p>Click the <strong>Display log<sub>2</sub> fold-change</strong> button to the top left of the table.</p>
 
 
 <h3><a name="deBars">What are the blue and red bars above the results table?</a></h3>
 
 <p>The two bars show the red and blue colour intensities for the <strong>top
 	50</strong> genes shown on the page. The colour intensities represent the
-adjusted <i>p</i>-values for the genes shown. To see the actual
-<i>p</i>-values, click the &quot;Display levels&quot; button to the top left of
-the table.</p>
+log<sub>2</sub> fold-changes for the genes shown. To see the actual
+log<sub>2</sub> fold-changes, click the &quot;Display log<sub>2</sub>
+fold-change&quot; button to the top left of the table.</p>
 
 <h3><a name="DEexptPage">What does the differential expression experiment page show?</a></h3>
 
@@ -315,7 +332,7 @@ please see the <a href="help/differential-atlas.html">Differential Atlas help
 page. For single-channel microarray experiments you can download the normalized
 intensities using the <img src="resources/images/help/dlNorm_btn.png"
 alt="normalized data download button" align="bottom" /> button. For two-channel
-microarray experiments you can download the log<sub>2</sub> fold changes using
+microarray experiments you can download the log<sub>2</sub> fold-changes using
 the <img src="resources/images/help/dlLogFC_btn.png"
 alt="download log2 fold changes button" align="bottom" /> button. For RNA-seq
 experiments you can download the raw counts generated by <a
@@ -403,6 +420,8 @@ button  to download the full results of your query in tab&ndash;delimited format
 		<li><a href="FAQ.html#exptChosen">How are experiments chosen to be in the Expression Atlas?</a></li>
 		<li><a href="FAQ.html#getOrigData">How can I obtain the original data for an experiment?</a></li>
 		<li><a href="FAQ.html#wholeExpt">It doesn't look like the whole of the original experiment is in the Expression Atlas, why not?</a></li>
+		<li><a href="FAQ.html#arrayQuality">How is microarray data quality controlled?</a></li>
+		<li><a href="FAQ.html#rnaseqQuality">How is RNA-seq data quality controlled?</a></li>
 		<li><a href="FAQ.html#microarrayAnalysis">How is microarray data analysed?</a></li>
 		<li><a href="FAQ.html#rnaseqAnalysis">How is RNA-seq data analysed?</a></li>
 		<li><a href="FAQ.html#analysisMethods">How do I see how an individual experiment was analysed?</a></li>
@@ -423,8 +442,9 @@ button  to download the full results of your query in tab&ndash;delimited format
 		<li><a href="FAQ.html#contrast">What is a &quot;contrast&quot;?</a></li>
 		<li><a href="FAQ.html#pvalue">Where do the <i>p</i>-values come from?</a></li>
 		<li><a href="FAQ.html#deHeatmapColours">In Differential Atlas, what do the red and blue colours in the table mean?</a></li>
-		<li><a href="FAQ.html#displayPvalues">How do I see the actual <i>p</i>-values in the results table?</a></li>
+		<li><a href="FAQ.html#displayLogFoldChanges">How do I see the actual <i>p</i>-values in the results table?</a></li>
 		<li><a href="FAQ.html#deBars">What are the blue and red bars above the results table?</a></li>
+		<li><a href="FAQ.html#DEexptPage">What does the differential expression experiment page show?</a></li>
 		<li><a href="FAQ.html#downloadAnalytics">Can I download the differential expression results?</a></li>
 		<li><a href="FAQ.html#downloadDEdata">Can I download
 		the data used for differential expression
@@ -441,7 +461,7 @@ button  to download the full results of your query in tab&ndash;delimited format
 		the actual expression levels in the Baseline Atlas heat map?</a></li>
 		<li><a href="FAQ.html#blTranscripts">How can I see
 		information about transcript-level expression?</a></li>
-                <li><a href="FAQ.html#BLdownloadAnalytics">Can I
+        <li><a href="FAQ.html#BLdownloadAnalytics">Can I
 		download the baseline expression results?</a></li>
 
 		
