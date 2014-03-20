@@ -208,7 +208,7 @@
         <script src="${pageContext.request.contextPath}/resources/js/ebi-global-search.js"></script>
 
 
-        <script language="JavaScript" type="text/javascript" src="http://www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
+        <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
         <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmap.js"></script>
 
         <script>
