@@ -31,7 +31,7 @@ public class BaselineProfilesHeatMapCommandIT {
     private static final Factor FACTOR_LEUKOCYTE = new Factor("ORGANISM_PART", "leukocyte");
 
     @Inject
-    private BaselineProfilesHeatMapCommand subject;
+    private BaselineProfilesHeatMap subject;
 
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;

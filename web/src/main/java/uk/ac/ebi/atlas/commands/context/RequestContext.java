@@ -38,7 +38,7 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
     private Set<T> selectedQueryFactors;
     private String filteredBySpecies;
     private Set<T> allQueryFactors;
-    private GeneQueryResponse geneQueryResponse;
+    protected GeneQueryResponse geneQueryResponse;
 
     public void setGeneQueryResponse(GeneQueryResponse geneQueryResponse) {
         this.geneQueryResponse = geneQueryResponse;

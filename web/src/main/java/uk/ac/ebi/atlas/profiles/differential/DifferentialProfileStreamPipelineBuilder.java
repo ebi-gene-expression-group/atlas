@@ -2,49 +2,40 @@ package uk.ac.ebi.atlas.profiles.differential;
 
 import com.google.common.collect.Iterables;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
-import uk.ac.ebi.atlas.profiles.IsExpressedForQueryCondition;
-import uk.ac.ebi.atlas.profiles.IsGeneIdMatch;
+import uk.ac.ebi.atlas.profiles.ProfileStreamFilters;
 
 import javax.inject.Named;
 import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class DifferentialProfileStreamPipelineBuilder<T extends DifferentialProfile> {
+public class DifferentialProfileStreamPipelineBuilder<P extends DifferentialProfile> implements ProfileStreamPipelineBuilder<P, DifferentialProfileStreamOptions> {
 
-    public Iterable<T> build(Iterable<T> profiles, DifferentialProfileStreamOptions options) {
+    @Override
+    public Iterable<P> build(Iterable<P> profiles, DifferentialProfileStreamOptions options) {
         boolean isSpecific = options.isSpecific();
         Set<Contrast> queryFactors = options.getSelectedQueryFactors();
         Set<String> uppercaseGeneIDs = options.getSelectedGeneIDs();
         Set<Contrast> allQueryFactors = options.getAllQueryFactors();
 
-        Iterable<T> profilesPipeline = profiles;
+        Iterable<P> profilesPipeline = profiles;
 
         if (!uppercaseGeneIDs.isEmpty()) {
-            profilesPipeline = DifferentialProfileStreamPipelineBuilder.filterByGeneIds(profilesPipeline, uppercaseGeneIDs);
+            profilesPipeline = ProfileStreamFilters.filterByGeneIds(profilesPipeline, uppercaseGeneIDs);
         }
 
         if (!queryFactors.isEmpty()) {
             profilesPipeline = isSpecific ?
-                    DifferentialProfileStreamPipelineBuilder.filterByQueryFactorSpecificity(profilesPipeline, queryFactors, allQueryFactors) :
-                    DifferentialProfileStreamPipelineBuilder.filterByQueryFactors(profilesPipeline, queryFactors);
+                    filterByQueryFactorSpecificity(profilesPipeline, queryFactors, allQueryFactors) :
+                    ProfileStreamFilters.filterByQueryFactors(profilesPipeline, queryFactors);
         }
 
         return profilesPipeline;
     }
 
-    public static <T extends DifferentialProfile> Iterable<T> filterByGeneIds(Iterable<T> profiles, Set<String> uppercaseGeneIDs) {
-        return Iterables.filter(profiles, new IsGeneIdMatch(uppercaseGeneIDs));
-    }
-
-    public static <K, T extends Profile<K, ?>>Iterable<T> filterByQueryFactors(Iterable<T> profiles, Set<K> queryFactors) {
-        return Iterables.filter(profiles, new IsExpressedForQueryCondition<K, T>(queryFactors));
-    }
-
-    public static <T extends DifferentialProfile> Iterable<T> filterByQueryFactorSpecificity(Iterable<T> profiles, Set<Contrast> queryFactors, Set<Contrast> allQueryFactors) {
+    public static <P extends DifferentialProfile> Iterable<P> filterByQueryFactorSpecificity(Iterable<P> profiles, Set<Contrast> queryFactors, Set<Contrast> allQueryFactors) {
         IsDifferentialProfileSpecific isDifferentialProfileSpecific = new IsDifferentialProfileSpecific(queryFactors, allQueryFactors);
         return Iterables.filter(profiles, isDifferentialProfileSpecific);
     }

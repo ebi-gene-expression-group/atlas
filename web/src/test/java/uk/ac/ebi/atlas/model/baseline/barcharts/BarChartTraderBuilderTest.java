@@ -33,7 +33,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.profiles.BaselineExpressionsInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsInputStreamFactory;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsInputStream;
 

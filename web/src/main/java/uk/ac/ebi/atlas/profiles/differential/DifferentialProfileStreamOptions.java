@@ -5,7 +5,7 @@ import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import java.util.Set;
 
-public interface DifferentialProfileStreamOptions {
+public interface DifferentialProfileStreamOptions extends ProfileStreamOptions {
 
     Set<String> getSelectedGeneIDs();
 
@@ -16,8 +16,6 @@ public interface DifferentialProfileStreamOptions {
     Set<Contrast> getAllQueryFactors();
 
     Regulation getRegulation();
-
-    Integer getHeatmapMatrixSize();
 
     String getExperimentAccession();
 

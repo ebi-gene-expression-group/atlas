@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.profiles;
+package uk.ac.ebi.atlas.profiles.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;

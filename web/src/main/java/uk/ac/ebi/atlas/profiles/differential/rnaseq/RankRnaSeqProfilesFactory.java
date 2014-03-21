@@ -7,7 +7,8 @@ import uk.ac.ebi.atlas.profiles.GeneProfilesListBuilder;
 import uk.ac.ebi.atlas.profiles.RankProfiles;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparatorFactory;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
-import uk.ac.ebi.atlas.profiles.differential.RankDifferentialProfilesFactory;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfilesListBuilder;
+import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,13 +16,13 @@ import java.util.Comparator;
 
 @Named
 @Scope("singleton")
-public class RankRnaSeqProfilesFactory implements RankDifferentialProfilesFactory<RnaSeqProfile> {
+public class RankRnaSeqProfilesFactory implements RankProfilesFactory<RnaSeqProfile, DifferentialProfilesList<RnaSeqProfile>, DifferentialProfileStreamOptions> {
 
     private DifferentialProfileComparatorFactory<RnaSeqProfile> differentialProfileComparatorFactory;
-    private GeneProfilesListBuilder<DifferentialProfilesList<RnaSeqProfile>> geneProfilesListBuilder;
+    private DifferentialProfilesListBuilder<RnaSeqProfile> geneProfilesListBuilder;
 
     @Inject
-    public RankRnaSeqProfilesFactory(DifferentialProfileComparatorFactory<RnaSeqProfile> differentialProfileComparatorFactory, GeneProfilesListBuilder<DifferentialProfilesList<RnaSeqProfile>> geneProfilesListBuilder) {
+    public RankRnaSeqProfilesFactory(DifferentialProfileComparatorFactory<RnaSeqProfile> differentialProfileComparatorFactory, DifferentialProfilesListBuilder<RnaSeqProfile> geneProfilesListBuilder) {
         this.differentialProfileComparatorFactory = differentialProfileComparatorFactory;
         this.geneProfilesListBuilder = geneProfilesListBuilder;
     }

@@ -7,10 +7,10 @@ import uk.ac.ebi.atlas.profiles.GeneProfilesListBuilder;
 import javax.inject.Named;
 
 @Named
-public class DifferentialProfilesListBuilder implements GeneProfilesListBuilder<DifferentialProfilesList> {
+public class DifferentialProfilesListBuilder<P extends DifferentialProfile> implements GeneProfilesListBuilder<DifferentialProfilesList<P>> {
 
     @Override
-    public DifferentialProfilesList<DifferentialProfile> create() {
+    public DifferentialProfilesList<P> create() {
         return new DifferentialProfilesList<>();
     }
 }
