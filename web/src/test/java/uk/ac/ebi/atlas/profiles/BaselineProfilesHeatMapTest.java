@@ -1,24 +1,27 @@
-package uk.ac.ebi.atlas.profiles.baseline;
+package uk.ac.ebi.atlas.profiles;
 
 import com.google.common.collect.ImmutableSetMultimap;
 import org.apache.commons.math.util.MathUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.commands.BaselineProfilesHeatMap;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.profiles.baseline.*;
 
 import java.util.Collections;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RankAndPipeBaselineProfilesTest {
+public class BaselineProfilesHeatMapTest {
 
     public static final double POLR2B_LEUKOCYTE = 47D;
     public static final double SNRPA_LEUKOCYTE = 19D;
@@ -29,23 +32,31 @@ public class RankAndPipeBaselineProfilesTest {
     private static final Factor FACTOR_LEUKOCYTE = new Factor("ORGANISM_PART", "leukocyte");
 
     private GeneSetBaselineProfilesBuilder geneSetBaselineProfilesBuilder = new GeneSetBaselineProfilesBuilder(new GeneSetFactory(new GeneSetBaselineProfileBuilder()));
-    private RankAndPipeBaselineProfiles subject = new RankAndPipeBaselineProfiles(new BaselineProfilesPipelineBuilder(geneSetBaselineProfilesBuilder), new RankBaselineProfiles());
+    private BaselineProfileStreamPipelineBuilder baselineProfileStreamPipelineBuilder = new BaselineProfileStreamPipelineBuilder(geneSetBaselineProfilesBuilder);
+    private BaselineProfileComparatorFactory baselineProfileComparatorFactory = new BaselineProfileComparatorFactory();
+    private BaselineProfilesListBuilder geneProfilesListBuilder = new BaselineProfilesListBuilder();
+    private RankBaselineProfilesFactory rankProfilesFactory = new RankBaselineProfilesFactory(baselineProfileComparatorFactory, geneProfilesListBuilder);
+    private BaselineProfilesHeatMap subject = new BaselineProfilesHeatMap(baselineProfileStreamPipelineBuilder, rankProfilesFactory, null, null);
 
     private BaselineProfilesEMTab513React71 eMTab513react71InputStream = new BaselineProfilesEMTab513React71(0.5);
 
     private ImmutableSetMultimap<String, String> react71GeneIds = ImmutableSetMultimap.<String, String>builder().putAll("react_71", "ENSG00000196652", "ENSG00000082258", "ENSG00000047315", "ENSG00000077312", "ENSG00000198939", "ENSG00000178665", "ENSG00000161547").build();
 
+    @Mock
+    BaselineProfileStreamOptions options;
+
     @Before
     public void before() {
-        subject.inputStream(eMTab513react71InputStream);
-        subject.allQueryFactors(eMTab513react71InputStream.getOrderedFactorGroups().extractFactors());
+        when(options.getHeatmapMatrixSize()).thenReturn(50);
+
+        when(options.getAllQueryFactors()).thenReturn(eMTab513react71InputStream.getOrderedFactorGroups().extractFactors());
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true
     @Test
     public void eMTab513react71_Specific() {
-        subject.isSpecific();
-        BaselineProfilesList profiles = subject.fetch();
+        isSpecific();
+        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options);
 
         assertThat(profiles.extractGeneNames(), contains("SRSF2", "ZNF713", "ZFP2", "POLR2B", "SNRPA", "CCNT2", "ZKSCAN5"));
 
@@ -75,10 +86,14 @@ public class RankAndPipeBaselineProfilesTest {
         checkAllPolr2bExpressionLevels(polr2b);
     }
 
+    private void isSpecific() {
+        when(options.isSpecific()).thenReturn(true);
+    }
+
     //http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&_specific=on
     @Test
     public void eMTab513react71_NotSpecific() {
-        BaselineProfilesList profiles = subject.fetch();
+        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options);
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B", "SNRPA", "CCNT2", "ZKSCAN5", "ZFP2", "ZNF713", "SRSF2"));
 
@@ -111,10 +126,10 @@ public class RankAndPipeBaselineProfilesTest {
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true&geneSetMatch=true
     @Test
     public void eMTab513react71_Specific_GeneSet() {
-        subject.isSpecific();
-        subject.averageIntoGeneSets(react71GeneIds);
+        isSpecific();
+        averageIntoGeneSets();
 
-        BaselineProfilesList profiles = subject.fetch();
+        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options);
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
@@ -124,12 +139,17 @@ public class RankAndPipeBaselineProfilesTest {
 
     }
 
+    private void averageIntoGeneSets() {
+        when(options.isGeneSetMatch()).thenReturn(true);
+        when(options.getGeneSetIdsToGeneIds()).thenReturn(react71GeneIds);
+    }
+
     //http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&_specific=on&geneSetMatch=true
     @Test
     public void eMTab513react71_NotSpecific_GeneSet() {
-        subject.averageIntoGeneSets(react71GeneIds);
+        averageIntoGeneSets();
 
-        BaselineProfilesList profiles = subject.fetch();
+        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options);
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
@@ -141,10 +161,10 @@ public class RankAndPipeBaselineProfilesTest {
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true&queryFactorValues=leukocyte
     @Test
     public void eMTab513react71_Specific_QueryFactorLeukocyte() throws GenesNotFoundException {
-        subject.isSpecific();
-        subject.queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
+        isSpecific();
+        queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
-        BaselineProfilesList profiles = subject.fetch();
+        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options);
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B"));
 
@@ -153,12 +173,16 @@ public class RankAndPipeBaselineProfilesTest {
         checkAllPolr2bExpressionLevels(polr2b);
     }
 
+    private void queryFactors(Set<Factor> factors) {
+        when(options.getSelectedQueryFactors()).thenReturn(factors);
+    }
+
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&_specific=on&queryFactorValues=leukocyte
     @Test
     public void eMTab513react71_NotSpecific_QueryFactorLeukocyte() throws GenesNotFoundException {
-        subject.queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
+        queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
 
-        BaselineProfilesList profiles = subject.fetch();
+        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options);
 
         assertThat(profiles.extractGeneNames(), contains("POLR2B", "SNRPA", "CCNT2", "ZKSCAN5"));
 
@@ -182,11 +206,11 @@ public class RankAndPipeBaselineProfilesTest {
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true&queryFactorValues=leukocyte&geneSetMatch=true
     @Test
     public void eMTab513react71_Specific_GeneSet_QueryFactorLeukocyteGeneSet_NoResults() throws GenesNotFoundException {
-        subject.isSpecific();
-        subject.queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
-        subject.averageIntoGeneSets(react71GeneIds);
+        isSpecific();
+        queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
+        averageIntoGeneSets();
 
-        BaselineProfilesList profiles = subject.fetch();
+        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options);
 
         // no results because Leukoctye is not specific to react_71
         assertThat(profiles, is(empty()));
@@ -195,11 +219,11 @@ public class RankAndPipeBaselineProfilesTest {
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&specific=true&queryFactorValues=prostate&geneSetMatch=true
     @Test
     public void eMTab513react71_Specific_GeneSet_QueryFactorProstateGeneSet_CheckExpressionLevelsForReact71() throws GenesNotFoundException {
-        subject.isSpecific();
-        subject.queryFactors(Collections.singleton(factor("prostate")));
-        subject.averageIntoGeneSets(react71GeneIds);
+        isSpecific();
+        queryFactors(Collections.singleton(factor("prostate")));
+        averageIntoGeneSets();
 
-        BaselineProfilesList profiles = subject.fetch();
+        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options);
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 
@@ -211,10 +235,10 @@ public class RankAndPipeBaselineProfilesTest {
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&geneQuery=react_71&_specific=on&queryFactorValues=leukocyte&geneSetMatch=true
     @Test
     public void eMTab513react71_NotSpecific_GeneSet_QueryFactorLeukocyteGeneSet_NoResults() throws GenesNotFoundException {
-        subject.queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
-        subject.averageIntoGeneSets(react71GeneIds);
+        queryFactors(Collections.singleton(FACTOR_LEUKOCYTE));
+        averageIntoGeneSets();
 
-        BaselineProfilesList profiles = subject.fetch();
+        BaselineProfilesList profiles = subject.fetch(eMTab513react71InputStream, options);
 
         assertThat(profiles.extractGeneNames(), contains("react_71"));
 

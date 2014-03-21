@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.profiles.differential;
+package uk.ac.ebi.atlas.profiles;
 
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
@@ -6,8 +6,9 @@ import uk.ac.ebi.atlas.commands.context.RequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
-import uk.ac.ebi.atlas.profiles.RankProfiles;
+import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.differential.ProfileStreamPipelineBuilder;
+import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;
 
 import java.io.IOException;
 

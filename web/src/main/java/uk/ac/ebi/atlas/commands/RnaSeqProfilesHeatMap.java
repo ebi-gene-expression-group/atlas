@@ -7,7 +7,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
-import uk.ac.ebi.atlas.profiles.differential.ProfilesHeatMap;
+import uk.ac.ebi.atlas.profiles.ProfilesHeatMap;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RankRnaSeqProfilesFactory;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
 

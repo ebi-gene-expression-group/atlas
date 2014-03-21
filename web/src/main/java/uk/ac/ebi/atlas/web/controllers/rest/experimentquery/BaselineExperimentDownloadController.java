@@ -27,8 +27,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.commands.BaselineProfilesWriter;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.commands.BaselineProfilesWriteCommand;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -48,17 +48,14 @@ import java.io.IOException;
 public class BaselineExperimentDownloadController extends BaselineExperimentController {
     private static final Logger LOGGER = Logger.getLogger(BaselineExperimentDownloadController.class);
 
-    private BaselineProfilesWriteCommand baselineProfilesWriteCommand;
-
-    private BaselineRequestContext requestContext;
+    private BaselineProfilesWriter baselineProfilesWriter;
 
     @Inject
     public BaselineExperimentDownloadController(BaselineRequestContextBuilder requestContextBuilder,
                                                 FilterFactorsConverter filterFactorsConverter,
-                                                BaselineProfilesWriteCommand baselineProfilesWriteCommand) {
-
+                                                BaselineProfilesWriter baselineProfilesWriter) {
         super(requestContextBuilder, filterFactorsConverter);
-        this.baselineProfilesWriteCommand = baselineProfilesWriteCommand;
+        this.baselineProfilesWriter = baselineProfilesWriter;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=RNASEQ_MRNA_BASELINE")
@@ -76,12 +73,10 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
         response.setContentType("text/plain; charset=utf-8");
 
-        requestContext = initRequestContext(experiment, preferences);
-
-        baselineProfilesWriteCommand.setResponseWriter(response.getWriter());
+        BaselineRequestContext requestContext = initRequestContext(experiment, preferences);
 
         try {
-            long genesCount = baselineProfilesWriteCommand.write(requestContext);
+            long genesCount = baselineProfilesWriter.write(response.getWriter(), requestContext);
 
             LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
 

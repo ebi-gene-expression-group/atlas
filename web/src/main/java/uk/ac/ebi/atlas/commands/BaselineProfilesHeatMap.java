@@ -5,15 +5,11 @@ import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.RankBaselineProfilesFactory;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
-import uk.ac.ebi.atlas.profiles.differential.ProfilesHeatMap;
-import uk.ac.ebi.atlas.profiles.differential.rnaseq.RankRnaSeqProfilesFactory;
-import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.ProfilesHeatMap;
 
 import javax.inject.Inject;
 import javax.inject.Named;

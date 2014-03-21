@@ -44,7 +44,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class BaselineProfilesWriteCommandIT {
+public class BaselineProfilesWriterIT {
 
     public static final String E_MTAB_513 = "E-MTAB-513";
     private static final Factor FACTOR_LEUKOCYTE = new Factor("ORGANISM_PART", "leukocyte");
