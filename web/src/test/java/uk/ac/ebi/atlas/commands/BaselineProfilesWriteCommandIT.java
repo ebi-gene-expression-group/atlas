@@ -15,13 +15,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
+import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.download.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.commands.download.CsvWriterFactory;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfilesPipelineBuilder;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
@@ -50,7 +51,7 @@ public class BaselineProfilesWriteCommandIT {
     public static final int GENE_NAME_INDEX = 1;
     private static final int GENE_SET_NAME_INDEX = 0;
 
-    private BaselineProfilesWriteCommand subject;
+    private BaselineProfilesWriter subject;
 
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;
@@ -68,29 +69,24 @@ public class BaselineProfilesWriteCommandIT {
     private CsvWriterFactory csvWriterFactoryMock;
 
     private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
-    private BaselineRequestContext baselineRequestContext;
 
-    @Inject
-    private SolrQueryService solrQueryService;
     @Inject
     private BaselineProfileInputStreamFactory baselineProfileInputStreamFactory;
     @Inject
-    private BaselineProfilesPipelineBuilder baselineProfilesPipelineBuilder;
+    private BaselineProfileStreamPipelineBuilder baselineProfileStreamPipelineBuilder;
+
+    @Inject
+    private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
 
     @Value("classpath:/file-templates/download-headers-baseline.txt")
     public Resource tsvFileMastheadTemplateResource;
 
-    @Before
-    public void initRequestContext() {
-        populateRequestContext();
-    }
-
-    private void populateRequestContext() {
+    private BaselineRequestContext populateRequestContext(String experimentAccession) {
         MockitoAnnotations.initMocks(this);
-        BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(E_MTAB_513);
+        BaselineExperiment baselineExperiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
         requestPreferences.setQueryFactorType("ORGANISM_PART");
-        baselineRequestContext = baselineRequestContextBuilder.forExperiment(baselineExperiment)
+        BaselineRequestContext baselineRequestContext = baselineRequestContextBuilder.forExperiment(baselineExperiment)
                 .withPreferences(requestPreferences)
                 .build();
 
@@ -100,16 +96,16 @@ public class BaselineProfilesWriteCommandIT {
 
         when(csvWriterFactoryMock.createTsvWriter((Writer) anyObject())).thenReturn(csvWriterMock);
 
-        subject = new BaselineProfilesWriteCommand(solrQueryService, baselineProfilesTSVWriter, baselineProfileInputStreamFactory, baselineProfilesPipelineBuilder);
+        subject = new BaselineProfilesWriter(baselineProfileStreamPipelineBuilder, baselineProfilesTSVWriter, baselineProfileInputStreamFactory, loadGeneIdsIntoRequestContext);
 
-        subject.setResponseWriter(printWriterMock);
-
+        return baselineRequestContext;
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true
     @Test
     public void eMTab513_Specific() throws GenesNotFoundException {
-        long genesCount = subject.write(baselineRequestContext);
+        BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
+        long genesCount = subject.write(printWriterMock, requestContext);
 
         int expectedCount = 148;
 
@@ -149,7 +145,8 @@ public class BaselineProfilesWriteCommandIT {
     public void eMTab513_Specific_QueryFactorLeukocyte() throws GenesNotFoundException {
         setQueryFactor(FACTOR_LEUKOCYTE);
 
-        long genesCount = subject.write(baselineRequestContext);  //E_MTAB_513
+        BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
+        long genesCount = subject.write(printWriterMock, requestContext);
         int expectedCount = 19;
 
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
@@ -180,7 +177,8 @@ public class BaselineProfilesWriteCommandIT {
         setNotSpecific();
         setQueryFactor(FACTOR_LEUKOCYTE);
 
-        long genesCount = subject.write(baselineRequestContext); //E_MTAB_513
+        BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
+        long genesCount = subject.write(printWriterMock, requestContext);
         int expectedCount = 103;
 
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
@@ -217,7 +215,8 @@ public class BaselineProfilesWriteCommandIT {
         setGeneSet();
         setGeneQuery(geneSets);
 
-        long genesCount = subject.write(baselineRequestContext); //E_MTAB_513
+        BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
+        long genesCount = subject.write(printWriterMock, requestContext);
         int expectedCount = 15;
 
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
@@ -248,7 +247,8 @@ public class BaselineProfilesWriteCommandIT {
         setGeneSet();
         setGeneQuery("react_71");
 
-        long genesCount = subject.write(baselineRequestContext);//E_MTAB_513
+        BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
+        long genesCount = subject.write(printWriterMock, requestContext);
         int expectedCount = 0;
 
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
@@ -271,7 +271,8 @@ public class BaselineProfilesWriteCommandIT {
         setGeneSet();
         setGeneQuery("react_71");
 
-        long genesCount = subject.write(baselineRequestContext);  //E_MTAB_513
+        BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
+        long genesCount = subject.write(printWriterMock, requestContext);
         int expectedCount = 1;
 
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
@@ -342,9 +343,6 @@ public class BaselineProfilesWriteCommandIT {
     private void setQueryFactor(Factor factor) {
         requestPreferences.setQueryFactorType(factor.getType());
         requestPreferences.setQueryFactorValues(Collections.singleton(factor.getValue()));
-
-        // set query factor on request context
-        populateRequestContext();
     }
 
 }

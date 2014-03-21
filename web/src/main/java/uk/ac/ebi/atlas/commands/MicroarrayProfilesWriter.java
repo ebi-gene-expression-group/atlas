@@ -7,7 +7,7 @@ import uk.ac.ebi.atlas.commands.download.MicroarrayProfilesTSVWriter;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfilesWriter;
+import uk.ac.ebi.atlas.profiles.ProfilesWriter;
 import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStream;
 import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
 
@@ -18,7 +18,7 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class MicroarrayProfilesWriter extends DifferentialProfilesWriter<MicroarrayProfile> {
+public class MicroarrayProfilesWriter extends ProfilesWriter<MicroarrayProfile, Contrast> {
 
     private MicroarrayProfileStreamFactory inputStreamFactory;
     private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
