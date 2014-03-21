@@ -205,7 +205,46 @@ using the following format:</p>
 
 <h3><a name="api">Can I search Expression Atlas programmatically?</a></h3>
 
-<p>Not right now, but we are working to implement an API. Please check back soon!<p>
+<p>We are working to implement a formal API to query Expression Atlas. Please
+check back soon for updates.</p>
+
+<p>In the meantime, if you would like to query <strong>differential</strong>
+Expression Atlas data programmatically, you can construct queries using URLs
+like the ones in the table below. Please be aware that the format of these URLs
+is subject to change. If your queries stop working, please check back here for
+the latest standard or email us at <a
+href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a>.<p>
+
+<p>
+<table style="border: 1px #cdd4d2 solid; width: 95%" >
+	<thead>
+		<tr style="background-color: #E1EEE9">
+			<th style="border-right: 1px #cdd4d2 solid; border-bottom: 1px #cdd4d2 solid; padding: 0.5em 1em;">Query</th>
+			<th style="border-right: 1px #cdd4d2 solid; border-bottom: 1px #cdd4d2 solid;">URL</th>
+			<th style="border-right: 1px #cdd4d2 solid; border-bottom: 1px #cdd4d2 solid;">Result</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="text-align: center; border-right: 1px #cdd4d2 solid;">In what conditions is <a href="http://www.ebi.ac.uk/gxa/genes/ENSG00000066279">ASPM</a> differentially expressed?</td>
+			<td style="text-align: center; border-right: 1px #cdd4d2 solid;">http://www.ebi.ac.uk/gxa/query.tsv?geneQuery=ASPM</td>
+			<td style="text-align: center; border-right: 1px #cdd4d2 solid;">A <a href="http://en.wikipedia.org/wiki/Tab-separated_values">tab-delimited</a> text file containing results of contrasts where ASPM is differentially expressed with adjusted <i>p</i>-value &lt; 0.05.</td>
+		</tr>
+		<tr>
+			<td style="text-align: center; border-right: 1px #cdd4d2 solid;">What genes are differentially expressed in cancer?</td>
+			<td style="text-align: center; border-right: 1px #cdd4d2 solid;">http://www.ebi.ac.uk/gxa/query.tsv?condition=cancer</td>
+			<td style="text-align: center; border-right: 1px #cdd4d2 solid;">A tab-delimited text file containing results for genes that are differentially expressed in experiments about cancer.</td>
+		</tr>
+		<tr>
+			<td style="text-align: center; border-right: 1px #cdd4d2 solid;">Show me contrasts where <a href="http://www.ebi.ac.uk/interpro/entry/IPR007087">zinc finger</a> genes are differentially expressed in mice.</td>
+			<td style="text-align: center; border-right: 1px #cdd4d2 solid;">http://www.ebi.ac.uk/gxa/query.tsv?geneQuery=%22zinc+finger%22&amp;condition=%22mus+musculus%22</td>
+			<td style="text-align: center; border-right: 1px #cdd4d2 solid;">A tab-delimited text file containing results of contrasts where genes annotated as having zinc finger domains are differentially expressed, in <i>Mus musculus</i>.</td>
+		</tr>
+	</tbody>
+</table>
+</p>
+
+
 
 
 <h2><a name="results">Results</a></h2>
