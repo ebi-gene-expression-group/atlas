@@ -23,6 +23,7 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:tx="http://www.springframework.org/schema/tx"
@@ -68,6 +69,11 @@
     </bean>
 
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory"
+                  p:readTimeout="3500"
+                  p:connectTimeout="3500" />
+        </constructor-arg>
         <!--<property name="messageConverters">-->
         <!--<list>-->
         <!--<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>-->
