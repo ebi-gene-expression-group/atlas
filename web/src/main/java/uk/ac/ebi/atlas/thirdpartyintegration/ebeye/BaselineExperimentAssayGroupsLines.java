@@ -22,13 +22,13 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
     private LinkedHashSet<ImmutableList<String>> buildAssayGroupsDetails(BaselineExperiment experiment) {
         AssayGroups assayGroups = experiment.getAssayGroups();
 
-        for (String assayAccession : assayGroups.getAssayAccessions()) {
-            for(AssayGroup assayGroupById : assayGroups){
+        for(AssayGroup assayGroupById : assayGroups) {
+            for(String assayAccession : assayGroupById) {
                 this.populateSamples(experiment, assayAccession, assayGroupById);
                 this.populateFactors(experiment, assayAccession, assayGroupById);
             }
-
         }
+
         return result;
     }
 
