@@ -67,7 +67,7 @@ var heatmapModule = (function ($) {
         $(".gradient-level-max").css("display", "none");
     }
 
-    function initDisplayLevelsButton() { //binds toggle handler
+    function initDisplayLevelsButtonOnClick() { //binds toggle handler
 
         $("#display-levels").button()
             .toggle(
@@ -201,7 +201,7 @@ var heatmapModule = (function ($) {
             "</table>";
     }
 
-    function initHeatmapCellsTooltip() {
+    function initDifferentialHeatmapCellsTooltip() {
         $("#heatmap-table td:has(div[data-pValue])").attr('title', '').tooltip(
             {
                 open:function (event, ui) {
@@ -221,7 +221,7 @@ var heatmapModule = (function ($) {
             });
     }
 
-    function initDownloadButton() {
+    function initDownloadButtonTooltip() {
         $('#download-profiles-link').button().tooltip();
     }
 
@@ -254,15 +254,17 @@ var heatmapModule = (function ($) {
 
     }
 
-    function createAccessionHeaders(accessionHeaders) {
+    function insertFirstColumnHeaders(accessionHeaders) {
 
-        var headers;
+        var headers = "";
 
         $(accessionHeaders).each(function () {
             headers += "<td class='horizontal-header-cell'>" + this + "</td>";
         });
-        //add custom header cells for gene name and design element
-        $($("#heatmap-table thead")).append("<tr id='injected-header'>" + headers + "</tr>");
+
+        //add header cells for gene name and design element (if any)
+        //NB: this is subsequently removed when the heatmap is loaded by heatmap-matrix-searchresults-diffanalytics.jsp
+        $("#heatmap-table thead").append("<tr id='injected-header'>" + headers + "</tr>");
 
         //add display levels cell colspan
         if (accessionHeaders.length === 2) {
@@ -320,18 +322,13 @@ var heatmapModule = (function ($) {
             initTranscriptBreakdownFancyBox(experimentAccession, parameters);
         }
 
-        initHeatmapCellsTooltip();
-        initDownloadButton();
-        initDisplayLevelsButton();
+        initDifferentialHeatmapCellsTooltip();
+        initDownloadButtonTooltip();
+        initDisplayLevelsButtonOnClick();
         initHeatmapFactorHeaders();
 
-        var firstColumnHeader = parameters.geneSetMatch ? "Gene set" : "Gene";
-
-        if (parameters.isMicroarray) { //then it is a microarray experiment
-            createAccessionHeaders([firstColumnHeader, "Design Element"]);
-        } else {
-            createAccessionHeaders([firstColumnHeader]);
-        }
+        var geneNameHeader = parameters.geneSetMatch ? "Gene set" : "Gene";
+        insertFirstColumnHeaders(parameters.isMicroarray ? [geneNameHeader, "Design Element"] : [geneNameHeader]);
 
         if (experimentAccession !== undefined && parameters.cutoff === 0.05 && !parameters.geneQuery) {
             initMaPlotButtons(experimentAccession);
@@ -348,10 +345,6 @@ var heatmapModule = (function ($) {
             geneSetMatch:geneSetMatch,
             isWidget:isWidget
         });
-    }
-
-    function initRnaSeqHeatmap(cutoff) {
-        initHeatmap(undefined, {cutoff:cutoff, geneQuery:undefined});
     }
 
     function initRnaSeqHeatmap(experimentAccession, cutoff, geneQuery) {
