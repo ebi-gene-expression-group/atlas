@@ -22,13 +22,31 @@ analysis pipeline.</p>
 <h2>Searching the Differential Atlas</h2>
 
 
+<h3>Specifying the maximum adjusted <i>p</i>-value and minimum log<sub>2</sub> fold-change</h3>
 
-<h3>Specifying the maximum FDR</h3>
+<p>By default, the maximum adjusted <i>p</i>-value is 0.05, and the minimum 
+log<sub>2</sub> fold-change is 1. This means only genes with an adjusted
+<i>p</i>-value below 0.05 and log<sub>2</sub> fold-change above 1 (or below -1)
+are displayed.</p>
 
-<p>You can specify any value from 0 to 1 to use as the maximum false
-discovery rate (FDR) cutoff. Only genes that show differential expression with
-an adjusted <i>p</i>-value at or below this cutoff will be returned.</p>
+<p>You may change the two cutoff values to whatever you like, to
+relax constraints or make them stricter. Changing these values will affect the
+number of genes displayed. Generally, the higher the chosen adjusted
+<i>p</i>-value, and the lower the minimum log<sub>2</sub> fold-change, the more
+genes will be displayed.</p>
 
+<p>Type any value from 0 to 1 in the <strong>Adjusted <i>p</i>-value cutoff</strong>
+box to use as the maximum false discovery rate (FDR) -adjusted <i>p</i>-value
+cutoff. Only genes that show differential expression with an adjusted
+<i>p</i>-value at or below this cutoff will be returned.</p>
+
+<p>Type any numerical value in the <strong>Log<sub>2</sub> fold-change
+cutoff</strong> box to use as the minimum absolute log<sub>2</sub> fold-change.
+Only genes that have a larger absolute log<sub>2</sub> fold-change will be
+displayed. When we say "absolute" value, we mean the value without a "+" or
+"-" sign in front. For example, if you choose an absolute value of 2, then
+genes with log<sub>2</sub> fold-change of greater than +2 <strong>or</strong>
+less than -2 are shown.</p>
 
 
 <h3>Searching with genes</h3>
@@ -93,42 +111,41 @@ genes so that genes that are differentially expressed in just <b>one</b>
 contrast come first, followed by genes differentially expressed in <b>two</b>
 contrasts, then three and so on, reporting genes that are differentially
 expressed in all available contrasts at the end of the list of results. Within
-each group of N contrasts, genes are ordered by lowest average adjusted
-<i>p</i>-value.</p>
+each group of N contrasts, genes are ordered by largest average absolute (i.e.
+ignoring positive or negative status) log<sub>2</sub> fold-change.</p>
 
-<p>Only <i>p</i>-values for differential expression in the
+<p>Only log<sub>2</sub> fold-changes for differential expression in the
 direction selected are considered for specificity. For example, if you search
 for only up&ndash;regulated genes (by clicking the "up" radio button next to
-the Gene Query box), only the adjusted <i>p</i>-values of up&ndash;regulated
-genes are used in the calculations for specificity.</p>
+the Gene Query box), only genes with positive log<sub>2</sub> fold-changes are
+used in the calculations for specificity.</p>
 
 
 
 <h5>If at least one contrast is selected&hellip;</h5>
 
 <p>If at least one contrast is selected, the <i>Specific</i> search will
-promote genes with <b>lower average adjusted <i>p</i>-value</b> in the
+promote genes with <b>larger average absolute log<sub>2</sub> fold-change</b> in the
 <b>selected</b> contrast(s), and at the same time penalize genes with the same
-or lower adjusted <i>p</i>-values in the <b>un&ndash;selected</b> contrast(s).
+or larger log<sub>2</sub> fold-change in the <b>un&ndash;selected</b> contrast(s).
 This is done using the "fold difference" between the selected and
-un&ndash;selected adjusted <i>p</i>-values:</p>
+un&ndash;selected absolute log<sub>2</sub> fold-changes:</p>
 
 <ul>
+	<li>Fold difference is calculated by dividing the <b>average
+		absolute log<sub>2</sub> fold-change</b> of the selected contrast(s) by the
+	largest absolute log<sub>2</sub> fold-change of the un&ndash;selected
+	contrasts.</li>
 	
-	<li>Fold difference is calculated by dividing the <b>average adjusted
-		<i>p</i>-value</b> of the selected contrast(s) by the lowest adjusted
-	<i>p</i>-value of the un&ndash;selected contrasts.</li>
-	
-	<li>If <b>none</b> of the un&ndash;selected contrasts' adjusted
-	<i>p</i>-values are at or below the selected FDR cutoff, the average of the
-	selected contrasts' adjusted <i>p</i>-values is is divided by the cutoff
-	instead.</li>
-
+	<li>If <b>none</b> of the un&ndash;selected contrasts' absolute log<sub>2</sub>
+	fold-changes are at or above the selected log<sub>2</sub> fold-change
+	cutoff, the average of the selected contrasts' absolute log<sub>2</sub> fold-changes
+	is divided by the cutoff instead.</li>
 </ul>
 
-<p>Genes with the <b>greatest fold difference</b> in adjusted <i>p</i>-values
+<p>Genes with the <b>greatest fold difference</b> in absolute log<sub>2</sub> fold-changes
 between selected and un&ndash;selected contrasts will be pushed towards the top
-of the list. Genes that have a lower adjusted <i>p</i>-value in the
+of the list. Genes that have a larger absolute log<sub>2</sub> fold-change in the
 un&ndash;selected contrasts are not shown.</p>
 
 
@@ -141,12 +158,12 @@ results. In particular:</p>
 
 <ul>
 	
-	<li>If no contrasts are selected, genes with lowest adjusted
-	<i>p</i>-values in <b>all</b> contrasts will be reported first.</li>
+	<li>If no contrasts are selected, genes with largest absolute
+	log<sub>2</sub> fold-changes in <b>all</b> contrasts will be reported first.</li>
 
-	<li>If at least one contrast is selected, genes with lower adjusted
-	<i>p</i>-values across the <b>selected</b> contrasts are reported first.
-	Adjusted <i>p</i>-values in the un&ndash;selected contrasts are ignored in
+	<li>If at least one contrast is selected, genes with larger
+	absolute log<sub>2</sub> fold-changes across the <b>selected</b> contrasts are reported first.
+	Log<sub>2</sub> fold-changes in the un&ndash;selected contrasts are ignored in
 	the ordering of results.</li>
 
 </ul>
@@ -160,20 +177,23 @@ labelled with gene symbols (and design elements in the case of microarray
 data). The columns are labelled with contrast descriptions. Mouseover the
 column headings to see the full description.</p>
 
-<p>The heatmap ranks genes by adjusted <i>p</i>-value, with the lowest at the
-top. Greater colour intensity means lower <i>p</i>-value, as illustrated by the
-gradient bars (e.g. <img alt="heatmap colour gradient"
+<p>The heatmap ranks genes by absolute (i.e. ignoring up- or down-regulated
+status) log<sub>2</sub> fold-change, with the largest at the top. If some genes
+have identical log<sub>2</sub> fold-changes, these are then ordered by adjusted
+<i>p</i>-value, with the gene with the lowest adjusted <i>p</i>-value first.
+Greater colour intensity means larger absolute log<sub>2</sub> fold-change, as
+illustrated by the gradient bars (e.g. <img alt="heatmap colour gradient"
 src="resources/images/help/gradient.png" align="bottom" />) displayed above the
 heatmap. Blue boxes indicate the gene is down&ndash;regulated, while red ones
 mean up&ndash;regulated. Mouseover a filled box in the heatmap to see the
-adjusted <i>p</i>-value, log<sub>2</sub> fold-change (and <i>t</i>-statistic for
-microarray data). To see the adjusted <i>p</i>-values for all genes, click the
-<img alt="Display levels" src="resources/images/help/display_levels.png"
-align="bottom" /> button. This also reveals the maximum and minimum adjusted
-<i>p</i>-values either side of the gradient bars. The gradient shows
-intensities corresponding to the <b>top
-	50</b> differentially expressed genes currently displayed (rather than all
-genes returned by the query).</p>
+adjusted <i>p</i>-value and log<sub>2</sub> fold-change (and <i>t</i>-statistic
+for microarray data). To see the log<sub>2</sub> fold-changes for all genes,
+click the <img alt="Display log2 fold-changes"
+src="resources/images/help/display_logFCs.png" align="bottom" /> button. This
+also reveals the maximum and minimum log<sub>2</sub> fold-changes in the
+experiment either side of the gradient bars. The gradient shows intensities
+corresponding to up to the <b>top 50</b> differentially expressed genes
+currently displayed (rather than all genes returned by the query).</p>
 
 <p>If you mouseover a gene name in the heatmap, synonyms, <a
 	href="http://www.geneontology.org/">Gene Ontology</a> terms, and <a
@@ -219,6 +239,35 @@ alt="analytics download button" align="bottom" /> button). All data is
 provided as tab-delimited text files.</p>
 
 
+<h2>Microarray QC reports</h2>
+
+<p>Click the <img alt="array QC report button"
+src="resources/images/help/qc_button.png" align="bottom" /> button to see the
+results of quality assessment for a microarray experiment. This report is
+generated by the <a
+href="http://www.bioconductor.org/packages/release/bioc/html/arrayQualityMetrics.html">arrayQualityMetrics</a>
+package from <a href="http://www.bioconductor.org">Bioconductor</a> in <a
+href="http://www.r-project.org">R</a>. Please see the arrayQualityMetrics <a
+href="http://www.bioconductor.org/packages/release/bioc/vignettes/arrayQualityMetrics/inst/doc/arrayQualityMetrics.pdf">documentation</a>
+for more details about the methods used. Breifly, outlier arrays are detected
+using distance measures, box plots, and MA plots. Any array that is found to be
+an outlier by all three of these methods is excluded from further analysis.</p>
+
+
+<h2>Analysis methods page</h2>
+
+<p>The Analysis Methods page (e.g. for <a
+	href="experiments/E-MTAB-1066/analysis-methods"><i>D.
+		melanogaster</i> CDK8 and CycC mutants</a> or <a
+	href="experiments/E-GEOD-38400/analysis-methods"><i>Arabidopsis</i>
+	lncRNA-mediated transcriptional silencing mutants</a>) lists the data
+analysis methods applied to the raw experimental data (<a
+	href="http://nar.oxfordjournals.org/content/38/6/1767.full">FASTQ</a> files
+or microarray intensity data), to obtain the differential expression statistics
+shown in the Differential Atlas. You can access it by clicking the <img
+alt="Analysis Methods button" src="resources/images/help/am_btn.png"
+align="bottom" /> button.</p>
+
 
 <h2>Experiment design page</h2>
 
@@ -256,27 +305,16 @@ right&ndash;hand side to download the full results of the current query (with
 no ordering applied) in tab&ndash;delimited format.</p>
 
 
-
-<h2>Analysis methods page</h2>
-
-<p>The Analysis Methods page (e.g. for <a
-	href="experiments/E-MTAB-1066/analysis-methods"><i>D.
-		melanogaster</i> CDK8 and CycC mutants</a> or <a
-	href="experiments/E-GEOD-38400/analysis-methods"><i>Arabidopsis</i>
-	lncRNA-mediated transcriptional silencing mutants</a>) lists the data
-analysis methods applied to the raw experimental data (<a
-	href="http://nar.oxfordjournals.org/content/38/6/1767.full">FASTQ</a> files
-or microarray intensity data), to obtain the differential expression statistics
-shown in the Differential Atlas. You can access it by clicking the <img
-alt="Analysis Methods button" src="resources/images/help/am_btn.png"
-align="bottom" /> button.</p>
-
-
-
 <h2>Providing feedback</h2>
 
-<p>We value your feedback on what Expression Atlas is doing right, what does not work or what could be achieved more intuitively. We would also be grateful for any feedback on the analysis methods we have adopted &mdash; we are passionate about not only about intuitive data presentation, the highest level of experimental metadata curation, but also about the quality and biological validity of the data presented in the Differential Atlas.</p>
+<p>We value your feedback on what Expression Atlas is doing right, what does
+not work or what could be achieved more intuitively. We would also be grateful
+for any feedback on the analysis methods we have adopted &mdash; we are
+passionate about not only about intuitive data presentation, the highest level
+of experimental metadata curation, but also about the quality and biological
+validity of the data presented in the Differential Atlas.</p>
 
-<p>To send us your feedback, please fill in the form accessed by clicking on the <i>Feedback</i> link in the top&ndash;right of the page:</p>
+<p>To send us your feedback, please fill in the form accessed by clicking on
+the <i>Feedback</i> link in the top&ndash;right of the page:</p>
 
 <p><img alt="Feedback Pop-up" src="resources/images/help/feedback.png" align="bottom" /></p>

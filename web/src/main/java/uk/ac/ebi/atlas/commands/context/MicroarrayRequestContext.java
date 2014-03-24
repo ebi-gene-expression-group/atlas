@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.commands.context;
 import com.google.common.base.Objects;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamOptions;
 
 import javax.inject.Named;
 

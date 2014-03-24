@@ -33,9 +33,9 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.streams.BaselineExpressionsInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsInputStreamFactory;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.streams.baseline.BaselineExpressionsInputStream;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsInputStream;
 
 import java.util.*;
 

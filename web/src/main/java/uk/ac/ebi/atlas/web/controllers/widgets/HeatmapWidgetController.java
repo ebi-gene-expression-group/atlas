@@ -66,6 +66,7 @@ public final class HeatmapWidgetController {
         this.solrQueryService = solrQueryService;
     }
 
+    // similar to ExperimentDispatcher but for the widget, ie: loads baseline experiment into model and request
     //ToDo: (OMannion) deprecate protein in favour of bioentity
     @RequestMapping(value = "/widgets/heatmap/protein")
     public String dispatchWidget(HttpServletRequest request,
@@ -75,43 +76,41 @@ public final class HeatmapWidgetController {
                                  Model model) {
 
         String species;
-        try{
+        try {
             species = solrQueryService.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
-        } catch(Exception e){
+        } catch (Exception e) {
             model.addAttribute("errorMessage", "Species could not be determined");
             return "widget-error";
         }
-        String experimentAccession = applicationProperties.getExperimentAccessionBySpecies(species);
 
-        if (!StringUtils.isEmpty(experimentAccession)) {
-            Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+        String experimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
 
-            request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
-
-            Set<String> allSpecies = experiment.getSpecies();
-
-            model.addAttribute(EXPERIMENT_TYPE_ATTRIBUTE, experiment.getType());
-
-            model.addAttribute(ALL_SPECIES_ATTRIBUTE, StringUtils.join(allSpecies, ", "));
-
-            model.addAttribute(EXPERIMENT_DESCRIPTION_ATTRIBUTE, experiment.getDescription());
-
-            model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
-
-            model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
-
-            String requestURL = getRequestURL(request);
-
-            String mappedSpecies = experiment.getRequestSpeciesName(species);
-
-            String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
-
-            return "forward:" + requestURL + "?type=" + experiment.getType().getParent() + organismParameters;
-        } else {
+        if (StringUtils.isEmpty(experimentAccession)) {
             model.addAttribute("identifier", bioEntityAccession);
             return "widget-error";
         }
 
+        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+
+        prepareModel(request, model, experiment);
+
+        return "forward:" + getRequestURL(request) + buildQueryString(species, experiment);
+    }
+
+    private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) {
+        request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
+
+        Set<String> allSpecies = experiment.getSpecies();
+
+        model.addAttribute(EXPERIMENT_TYPE_ATTRIBUTE, experiment.getType());
+
+        model.addAttribute(ALL_SPECIES_ATTRIBUTE, StringUtils.join(allSpecies, ", "));
+
+        model.addAttribute(EXPERIMENT_DESCRIPTION_ATTRIBUTE, experiment.getDescription());
+
+        model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
+
+        model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
     }
 
     private String getRequestURL(HttpServletRequest request) {
@@ -119,6 +118,12 @@ public final class HeatmapWidgetController {
         String requestURI = request.getRequestURI();
 
         return StringUtils.substringAfter(requestURI, contextPath);
+    }
+
+    private String buildQueryString(String species, Experiment experiment) {
+        String mappedSpecies = experiment.getRequestSpeciesName(species);
+        String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
+        return "?type=" + experiment.getType().getParent() + organismParameters;
     }
 
 }

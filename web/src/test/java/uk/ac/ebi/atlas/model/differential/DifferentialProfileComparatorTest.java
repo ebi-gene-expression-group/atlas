@@ -34,14 +34,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.streams.differential.IsDifferentialExpressionAboveCutOff;
-import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayProfileDeserializer;
+import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
+import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileDeserializer;
 
 import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Matchers.any;

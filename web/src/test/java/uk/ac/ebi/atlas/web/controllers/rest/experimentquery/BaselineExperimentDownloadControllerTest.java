@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.BaselineProfilesWriteCommand;
+import uk.ac.ebi.atlas.commands.BaselineProfilesWriter;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -54,7 +54,7 @@ public class BaselineExperimentDownloadControllerTest {
     private FilterFactorsConverter filterFactorsConverterMock;
 
     @Mock
-    private BaselineProfilesWriteCommand writeBaselineProfilesCommandMock;
+    private BaselineProfilesWriter baselineProfilesWriterMock;
 
     @Mock
     private HttpServletRequest requestMock;
@@ -78,7 +78,7 @@ public class BaselineExperimentDownloadControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineExperimentDownloadController(requestContextBuilderMock, filterFactorsConverterMock, writeBaselineProfilesCommandMock);
+        subject = new BaselineExperimentDownloadController(requestContextBuilderMock, filterFactorsConverterMock, baselineProfilesWriterMock);
     }
 
     @Test
@@ -94,14 +94,13 @@ public class BaselineExperimentDownloadControllerTest {
         when(requestContextBuilderMock.build()).thenReturn(baselineRequestContextMock);
 
         when(responseMock.getWriter()).thenReturn(printWriterMock);
-        when(writeBaselineProfilesCommandMock.write(baselineRequestContextMock)).thenReturn(0L);
+        when(baselineProfilesWriterMock.write(printWriterMock, baselineRequestContextMock)).thenReturn(0L);
 
         subject.downloadGeneProfiles(requestMock, preferencesMock, responseMock);
 
         verify(responseMock).setHeader("Content-Disposition", "attachment; filename=\"" + EXPERIMENT_ACCESSION + "-query-results.tsv\"");
         verify(responseMock).setContentType("text/plain; charset=utf-8");
 
-        verify(writeBaselineProfilesCommandMock).setResponseWriter(printWriterMock);
-        verify(writeBaselineProfilesCommandMock).write(baselineRequestContextMock);
+        verify(baselineProfilesWriterMock).write(printWriterMock, baselineRequestContextMock);
     }
 }

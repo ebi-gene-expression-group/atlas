@@ -26,7 +26,7 @@ import com.google.common.base.Objects;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.Regulation;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 
 public class DifferentialRequestContext<T extends DifferentialExperiment> extends RequestContext<Contrast, DifferentialRequestPreferences> implements DifferentialProfileStreamOptions {

@@ -31,7 +31,8 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.*;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfilesHeatMap;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.ProfilesHeatMap;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -40,20 +41,20 @@ import uk.ac.ebi.atlas.web.controllers.page.validators.DifferentialRequestPrefer
 import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
-public abstract class DifferentialExperimentPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences, Z extends DifferentialProfile> {
+public abstract class DifferentialExperimentPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences, P extends DifferentialProfile> {
 
     private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
-    private DifferentialProfilesHeatMap<Z, DifferentialRequestContext> profilesHeatMap;
+    private ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap;
 
 
     @SuppressWarnings("unchecked")
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
-                                                   DifferentialProfilesHeatMap<Z, ? extends DifferentialRequestContext> profilesHeatMap,
+                                                   ProfilesHeatMap<P, ? extends DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap,
                                                    DownloadURLBuilder downloadURLBuilder) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         // cast here to avoid having to make a type parameter for DifferentialRequestContext
-        this.profilesHeatMap = (DifferentialProfilesHeatMap<Z, DifferentialRequestContext>) profilesHeatMap;
+        this.profilesHeatMap = (ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions>) profilesHeatMap;
         this.downloadURLBuilder = downloadURLBuilder;
     }
 

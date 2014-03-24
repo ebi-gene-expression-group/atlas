@@ -95,7 +95,7 @@ public class ApplicationProperties {
         return Sets.newHashSet(configurationProperties.getProperty(propertyKey).trim().split(","));
     }
 
-    public String getExperimentAccessionBySpecies(String species) {
+    public String getBaselineWidgetExperimentAccessionBySpecies(String species) {
         return speciesToExperimentProperties.getProperty(species.replace(" ", "_"));
     }
 

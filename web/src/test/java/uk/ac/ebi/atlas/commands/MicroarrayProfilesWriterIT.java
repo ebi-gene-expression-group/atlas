@@ -21,8 +21,8 @@ import uk.ac.ebi.atlas.commands.download.MicroarrayProfilesTSVWriter;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamPipelineBuilder;
-import uk.ac.ebi.atlas.streams.differential.microarray.MicroarrayProfileStreamFactory;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
+import uk.ac.ebi.atlas.profiles.differential.microarray.MicroarrayProfileStreamFactory;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 

@@ -28,7 +28,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.streams.BaselineExpressionsInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsInputStreamFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;

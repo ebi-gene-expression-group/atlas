@@ -35,7 +35,7 @@ import uk.ac.ebi.atlas.commands.download.DataWriterFactory;
 import uk.ac.ebi.atlas.commands.download.ExpressionsWriter;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.streams.differential.DifferentialProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
