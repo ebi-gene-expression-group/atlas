@@ -94,8 +94,7 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
 
         //For showing the QC REPORTS button in the header
         if(experiment instanceof MicroarrayExperiment){
-            MicroarrayExperiment microarrayExperiment =  (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-            model.addAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, microarrayExperiment.getArrayDesignAccessions());
+            model.addAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, ((MicroarrayExperiment)experiment).getArrayDesignAccessions());
         }
 
     }
