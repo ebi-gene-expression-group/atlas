@@ -160,9 +160,9 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
     private void initializeContext(BaselineRequestPreferences preferences, HttpServletRequest request) {
         experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        initPreferences(preferences, experiment);
+        setPreferenceDefaults(preferences, experiment);
 
-        requestContext = initRequestContext(experiment, preferences);
+        requestContext = buildRequestContext(experiment, preferences);
     }
 
     private void addFactorMenu(Model model) {
