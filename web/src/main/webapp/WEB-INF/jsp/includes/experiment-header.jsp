@@ -44,7 +44,7 @@
                                     <c:if test="${hasQcReport}">
                                         <td>
                                             <a id="display-qc-report" class="button-image" title="Quality Metrics Report"
-                                               href="${pageContext.request.contextPath}/experiments/${experimentAccession}/qc/${arrayDesign}/index.html">
+                                               href="${pageContext.request.contextPath}/experiments/${experimentAccession}/qc/${arrayDesign}/index.html${accessKeyQueryString}">
                                                 <img src="${pageContext.request.contextPath}/resources/images/qc_v15.png"/>
                                             </a>
                                         </td>
