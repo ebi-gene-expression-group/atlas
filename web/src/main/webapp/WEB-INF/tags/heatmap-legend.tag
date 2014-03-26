@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
@@ -28,6 +27,7 @@
 <%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
 <%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
 
+<%@ attribute name="geneProfiles" required="true" type="uk.ac.ebi.atlas.model.GeneProfilesList"%>
 
 <div style="float:right; padding-left: 100px">
     <%--<div style="float:left">--%>

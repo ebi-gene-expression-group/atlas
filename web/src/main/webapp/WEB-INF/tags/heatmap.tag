@@ -29,6 +29,10 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
+<%@ attribute name="geneProfiles" required="true" type="uk.ac.ebi.atlas.model.GeneProfilesList"%>
+<%@ attribute name="elementId" required="true"%>
+<%@ attribute name="hidden" required="false" type="java.lang.Boolean"%>
+
 <fmt:setBundle basename="configuration" var="configuration"/>
 
 <div class="block">
@@ -42,7 +46,7 @@
                             title="
                                     <div class='heatmap-matrix-top-left-corner'>
                                     <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo'></span>
-                                    <button id='display-levels' />
+                                    <button id='display-levels' class='display-levels-button' />
                                     </button>
                                     </div>"
                             class="horizontal-header-cell">
@@ -274,7 +278,7 @@
         src="${base}/resources/js/factorInfoTooltipModule.js"></script>
 
 <script type="text/javascript">
-    (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
+    (function ($, heatmapModule) { //self invoking wrapper function that prevents $ namespace conflicts
         $(document).ready(function () {
 
             if (${preferences.geneSetMatch == false && !type.isMicroRna()}) {
@@ -287,14 +291,14 @@
 
                 var isWidget = ${isWidget != null? isWidget : false};
 
-                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${preferences.geneSetMatch}, isWidget);
+                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${preferences.geneSetMatch}, isWidget, '${elementId}', ${hidden != null ? hidden : 'false'});
 
             } else if (${type.isMicroarray()}) {
 
-                heatmapModule.initMicroarrayHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}');
+                heatmapModule.initMicroarrayHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}', 'heatmap-div');
 
             } else {
-                heatmapModule.initRnaSeqHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}');
+                heatmapModule.initRnaSeqHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}', 'heatmap-div');
             }
 
             if (!${type.isBaseline()}) {
@@ -304,5 +308,5 @@
             }
 
         });
-    })(jQuery);
+    })(jQuery, heatmapModule);
 </script>

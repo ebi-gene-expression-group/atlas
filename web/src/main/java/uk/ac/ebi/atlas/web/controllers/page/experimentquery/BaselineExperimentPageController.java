@@ -41,6 +41,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperNoGeneSetMatch;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
@@ -107,11 +108,25 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         prepareModel(preferences, result, model, request);
 
-        model.addAttribute("isWidget", true);
+        if (preferences.isGeneSetMatch()) {
+            BaselineProfilesList constituentGeneProfiles = fetchConstituentGeneProfiles(preferences, result);
+            model.addAttribute("constituentGeneProfiles", constituentGeneProfiles);
+        }
 
+        model.addAttribute("isWidget", true);
         return "heatmap-widget";
     }
 
+    private BaselineProfilesList fetchConstituentGeneProfiles(BaselineRequestPreferences preferences, BindingResult result) {
+        try {
+            BaselineProfileStreamOptionsWrapperNoGeneSetMatch options = new BaselineProfileStreamOptionsWrapperNoGeneSetMatch(requestContext);
+
+            return baselineProfilesHeatMap.fetch(options);
+        } catch (GenesNotFoundException e) {
+            result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
+        }
+        return new BaselineProfilesList();
+    }
 
     private void prepareModel(BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request) {
 
