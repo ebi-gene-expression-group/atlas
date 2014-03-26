@@ -49,12 +49,6 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
 
     private String contrastId;
     private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
-    private ExperimentTrader experimentTrader;
-
-    @Inject
-    public DifferentialDesignPageController(ExperimentTrader experimentTrader) {
-        this.experimentTrader = experimentTrader;
-    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
     public String showRnaSeqExperimentDesign(@ModelAttribute("preferences") @Valid DifferentialDesignRequestPreferences preferences

@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.collect.ImmutableSetMultimap;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 
 import java.util.Set;

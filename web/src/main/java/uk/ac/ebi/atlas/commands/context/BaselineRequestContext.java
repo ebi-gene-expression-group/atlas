@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.commands.context;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSetMultimap;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -32,7 +31,6 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
 import javax.inject.Named;
-import java.util.Collections;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;

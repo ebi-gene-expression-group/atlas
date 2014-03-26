@@ -47,16 +47,14 @@ public class AnalysisMethodsPageController {
 
     private DownloadURLBuilder downloadURLBuilder;
     private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
-    private ExperimentTrader experimentTrader;
 
     @Inject
-    public AnalysisMethodsPageController(TsvReaderBuilder tsvReaderBuilder, DownloadURLBuilder downloadURLBuilder, ExperimentTrader experimentTrader,
+    public AnalysisMethodsPageController(TsvReaderBuilder tsvReaderBuilder, DownloadURLBuilder downloadURLBuilder,
                                          @Value("#{configuration['experiment.analysis-method.path.template']}")
                                          String pathTemplate) {
 
         this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
         this.downloadURLBuilder = downloadURLBuilder;
-        this.experimentTrader = experimentTrader;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = {"type=RNASEQ_MRNA_BASELINE"})
