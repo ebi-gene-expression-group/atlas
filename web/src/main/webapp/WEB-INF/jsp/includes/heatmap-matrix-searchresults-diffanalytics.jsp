@@ -161,7 +161,7 @@
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
         $(document).ready(function () {
 
-            heatmapModule.initRnaSeqHeatmap(${preferences.cutoff});
+            heatmapModule.initRnaSeqHeatmap(undefined, ${preferences.cutoff}, undefined, 'heatmap-div');
 
             $("#injected-header").remove();
             $("#heatmap-table th").attr("rowspan", "1");

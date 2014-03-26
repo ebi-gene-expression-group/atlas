@@ -63,7 +63,7 @@ public class BaselineGeneBioEntityPageHairpinRNAIT extends SinglePageSeleniumFix
             assertThat(subject.isBaselineProfileExpanded(), is(true));
             subject.clickDifferentialProfile();
             subject.clickDisplayLevelsButton();
-            assertThat(subject.getDesignElementNames(), contains("A_25_P00010664","A_25_P00010662","A_25_P00010661","A_25_P00010663"));
+            assertThat(subject.getContrastColumn(), contains("disease state: 'sepsis' vs 'control'"));
         }
 
     }

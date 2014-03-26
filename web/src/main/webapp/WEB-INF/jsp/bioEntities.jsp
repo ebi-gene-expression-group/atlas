@@ -159,8 +159,7 @@
                                             <span id='buttonText' pressedtext='Hide log<sub>2</sub>-fold change' unpressedText='Display log<sub>2</sub>-fold change'/>
                                         </td>
                                         <td>
-                                            <c:set var="geneProfiles" scope="request" value="${bioentities}"/>
-                                            <h:heatmap-legend geneProfiles="${geneProfiles}"/>
+                                            <h:heatmap-differential-legend geneProfiles="${bioentities}"/>
                                         </td>
                                     </tr>
                                     <tr>
