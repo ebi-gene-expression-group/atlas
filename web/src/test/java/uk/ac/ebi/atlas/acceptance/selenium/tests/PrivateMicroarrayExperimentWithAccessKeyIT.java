@@ -1,18 +1,23 @@
 package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
+import com.jayway.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
+import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentAnalysisMethodsPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormAndBarChartPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.QCReportPage;
 
+import java.text.MessageFormat;
+
 import static com.jayway.restassured.RestAssured.expect;
+import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.path.json.JsonPath.from;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -114,6 +119,17 @@ public class PrivateMicroarrayExperimentWithAccessKeyIT extends SeleniumFixture 
                 new QCReportPage(driver, EXPERIMENT_ACCESSION, ARRAY_DESIGN, "accessKey=" + accessKey);
         qcReportPage.get();
         qcReportPage.getExperimentDescription();
+    }
+
+    @Test
+    public void qcReportResourcesAvailableWithoutAccessKey(){
+        RestAssuredFixture.initRestAssured();
+
+        Response response = get(MessageFormat.format("/experiments/{0}/qc/{1}/box.png", EXPERIMENT_ACCESSION, ARRAY_DESIGN));
+
+        response.then().assertThat().statusCode(200);
+
+        RestAssuredAuthenticatedFixture.initRestAssured();
     }
 
 }
