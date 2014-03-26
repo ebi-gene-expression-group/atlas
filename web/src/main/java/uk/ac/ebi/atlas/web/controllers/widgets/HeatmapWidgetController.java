@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.widgets;
 
+import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -38,6 +42,7 @@ import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.Set;
 
 @Controller
@@ -94,7 +99,17 @@ public final class HeatmapWidgetController {
 
         prepareModel(request, model, experiment);
 
+        prepareModelForTranscripts(model, species, experiment);
+
         return "forward:" + getRequestURL(request) + buildQueryString(species, experiment);
+    }
+
+    private void prepareModelForTranscripts(Model model, String species, Experiment experiment) {
+        ExperimentalFactors experimentalFactors = ((BaselineExperiment) experiment).getExperimentalFactors();
+
+        model.addAttribute("queryFactorType", experimentalFactors.getDefaultQueryFactorType());
+
+        loadJSONFilterFactors(species, experiment, model);
     }
 
     private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) {
@@ -124,6 +139,17 @@ public final class HeatmapWidgetController {
         String mappedSpecies = experiment.getRequestSpeciesName(species);
         String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
         return "?type=" + experiment.getType().getParent() + organismParameters;
+    }
+
+    private void loadJSONFilterFactors(String species, Experiment experiment, Model model) {
+        String mappedSpecies = experiment.getRequestSpeciesName(species);
+        Set<Factor> factors = new HashSet<>();
+
+        if(StringUtils.isNotEmpty(mappedSpecies)){
+            Factor factor = new Factor("ORGANISM", mappedSpecies);
+            factors.add(factor);
+        }
+        model.addAttribute("selectedFilterFactorsJson", new Gson().toJson(factors));
     }
 
 }

@@ -28,6 +28,8 @@ var heatmapModule = (function ($) {
 
     "use strict";
 
+    var _transcriptUrlRoot;
+
     function showTranscriptBreakdownFancyBox() {
         $.fancybox({
                 href:'#transcript-breakdown',
@@ -142,11 +144,11 @@ var heatmapModule = (function ($) {
             //gene and factor properties are extracted from gene and factor headers in the html table
             var factorValue = $(this).find("div").attr("data-organism-part"),
                 factorType = $("#queryFactorType").attr("value"),
-                geneId = $(this).parent().find("td a:eq(0)").attr("id"),
-                geneName = $(this).parent().find("td a:eq(0)").text();
+                geneId = $(this).parent().find("td a:eq(0)").attr("id") || $(this).parent().find("td div:eq(0)").attr("id"),
+                geneName = $(this).parent().find("td a:eq(0)").text() || $(this).parent().find("td div:eq(0)").text() ;
 
             $.ajax({
-                url:"json/transcripts/" + experimentAccession,
+                url: _transcriptUrlRoot + "/json/transcripts/" + experimentAccession,
                 type:"GET",
                 data:{
                     'geneId':geneId,
@@ -316,7 +318,7 @@ var heatmapModule = (function ($) {
 
         $('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
-        if (experimentAccession !== undefined && parameters.species && !parameters.isWidget) {
+        if (experimentAccession !== undefined && parameters.species) {
             initTranscriptBreakdownFancyBox(experimentAccession, parameters);
         }
 
@@ -341,7 +343,9 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, isWidget) {
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, isWidget, transcriptUrlRoot) {
+        _transcriptUrlRoot = transcriptUrlRoot;
+
         initHeatmap(experimentAccession, {
             species:species,
             selectedFilterFactorsJson:selectedFilterFactorsJson,
@@ -367,7 +371,6 @@ var heatmapModule = (function ($) {
         initBaselineHeatmap:initBaselineHeatmap,
         initRnaSeqHeatmap:initRnaSeqHeatmap,
         initMicroarrayHeatmap:initMicroarrayHeatmap
-
     };
 
 }(jQuery));

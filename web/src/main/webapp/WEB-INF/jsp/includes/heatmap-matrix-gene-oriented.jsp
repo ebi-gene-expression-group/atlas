@@ -262,6 +262,16 @@
     </table>
 </section>
 
+<style>
+    .fancybox-lock .fancybox-overlay {
+        overflow: hidden;
+    }
+
+    .fancybox-lock {
+        overflow: hidden;
+    }
+</style>
+
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/highlight.js"></script>
 <script language="JavaScript" type="text/javascript"
@@ -272,6 +282,23 @@
         src="${base}/resources/js/contrastInfoTooltipModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/factorInfoTooltipModule.js"></script>
+
+<!--[if lte IE 8]>
+<script language="JavaScript" type="text/javascript"
+src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></script>
+<![endif]-->
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/flot/jquery.flot.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/flot/jquery.flot.pie.js"></script>
+
+<!-- fancybox start -->
+<link rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css"
+      type="text/css" media="screen"/>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
+<!-- fancybox end -->
 
 <script type="text/javascript">
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
@@ -287,7 +314,7 @@
 
                 var isWidget = ${isWidget != null? isWidget : false};
 
-                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${preferences.geneSetMatch}, isWidget);
+                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${preferences.geneSetMatch}, isWidget, '${base}');
 
             } else if (${type.isMicroarray()}) {
 
