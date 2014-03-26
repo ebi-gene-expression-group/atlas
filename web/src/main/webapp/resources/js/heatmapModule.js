@@ -378,14 +378,13 @@ var heatmapModule = (function ($) {
         }
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, isWidget,  transcriptUrlRoot, heatmapElementId, isHidden) {
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, transcriptUrlRoot, heatmapElementId, isHidden) {
         _transcriptUrlRoot = transcriptUrlRoot;
         
         initHeatmap(experimentAccession, {
             species:species,
             selectedFilterFactorsJson:selectedFilterFactorsJson,
-            geneSetMatch:geneSetMatch,
-            isWidget:isWidget
+            geneSetMatch:geneSetMatch
         }, heatmapElementId, isHidden);
     }
 

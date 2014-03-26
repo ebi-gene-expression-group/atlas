@@ -316,9 +316,7 @@ src="${pageContext.request.contextPath}/resources/js/flot/excanvas.min.js"></scr
 
                 var selectedFilterFactorsJson = ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"};
 
-                var isWidget = ${isWidget != null? isWidget : false};
-
-                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${preferences.geneSetMatch}, isWidget, '${base}', '${elementId}', ${hidden != null ? hidden : 'false'});
+                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${preferences.geneSetMatch}, '${base}', '${elementId}', ${hidden != null ? hidden : 'false'});
 
             } else if (${type.isMicroarray()}) {
 
