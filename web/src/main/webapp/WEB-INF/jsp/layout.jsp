@@ -34,7 +34,7 @@
     <c:set var="baseUri" value="${requestScope['javax.servlet.forward.request_uri']}" />
     <c:set var="experimentAccession" value="${experimentAccession}"/>
     <c:set var="arrayDesign" value="${arrayDesign}"/>
-    <c:set var="serverPort" value="${pageContext.request.serverPort.equals(80) ? '' : ':'.concat(pageContext.request.serverPort)}"/>
+    <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
 
     <c:if test="${!baseUri.equals('/gxa/experiments/'.concat(experimentAccession).concat('/qc/').concat(arrayDesign).concat('/index.html'))}">
         <base href="//${pageContext.request.serverName}${serverPort}${pageContext.request.contextPath}/"/>

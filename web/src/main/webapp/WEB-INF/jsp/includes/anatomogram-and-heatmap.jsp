@@ -21,6 +21,7 @@
   --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
 <c:set var="base" value="${pageContext.request.contextPath}"/>
 <c:if test="${not empty preferences.rootContext}">
@@ -73,18 +74,46 @@
                         <span id="geneCount">Showing ${geneProfiles.size()}
                             of ${geneProfiles.getTotalResultCount()} ${preferences.geneSetMatch?'gene sets':'genes'} found:
                         </span>
+                        <c:if test="${not empty constituentGeneProfiles}">
+                            <a id="showConstituentGeneProfiles" href="javascript:void(0)">(show constituent genes)</a>
+                        </c:if>
                         </td>
                         <td>
-                            <c:import url="includes/gradient-legend.jsp"/>
+                            <h:heatmap-legend geneProfiles="${geneProfiles}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <c:import url="includes/heatmap-matrix-gene-oriented.jsp"/>
+                            <h:heatmap geneProfiles="${geneProfiles}" elementId="heatmap-div"/>
                         </td>
                     </tr>
                 </table>
             </div>
+
+            <c:if test="${not empty constituentGeneProfiles}">
+                <div id="heatmap-constituentGeneProfiles" class="heatmap-position" style="display:none">
+
+                    <table>
+                        <tr>
+                            <td>
+                        <span id="geneConstituentCount">Showing ${constituentGeneProfiles.size()}
+                            of ${constituentGeneProfiles.getTotalResultCount()} constituent genes found:
+                        </span>
+                        <a id="showGeneSetProfiles" href="javascript:void(0)">(show gene set)</a>
+                            </td>
+                            <td>
+                                <h:heatmap-legend geneProfiles="${geneProfiles}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <h:heatmap geneProfiles="${constituentGeneProfiles}" elementId="heatmap-constituentGeneProfiles" hidden="true"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </c:if>
+
         </div>
     </c:otherwise>
 </c:choose>

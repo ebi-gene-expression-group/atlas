@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparatorFactory;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
-import uk.ac.ebi.atlas.profiles.GeneProfilesListBuilder;
 import uk.ac.ebi.atlas.profiles.RankProfiles;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfilesListBuilder;

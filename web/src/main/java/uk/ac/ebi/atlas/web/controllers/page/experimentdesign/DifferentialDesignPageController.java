@@ -49,12 +49,6 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
 
     private String contrastId;
     private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
-    private ExperimentTrader experimentTrader;
-
-    @Inject
-    public DifferentialDesignPageController(ExperimentTrader experimentTrader) {
-        this.experimentTrader = experimentTrader;
-    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/experiments/{experimentAccession}/experiment-design", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
     public String showRnaSeqExperimentDesign(@ModelAttribute("preferences") @Valid DifferentialDesignRequestPreferences preferences
@@ -94,8 +88,7 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
 
         //For showing the QC REPORTS button in the header
         if(experiment instanceof MicroarrayExperiment){
-            MicroarrayExperiment microarrayExperiment =  (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-            model.addAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, microarrayExperiment.getArrayDesignAccessions());
+            model.addAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, ((MicroarrayExperiment)experiment).getArrayDesignAccessions());
         }
 
     }

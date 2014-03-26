@@ -40,7 +40,7 @@ public abstract class BaselineExperimentController {
         this.filterFactorsConverter = filterFactorsConverter;
     }
 
-    protected void initPreferences(BaselineRequestPreferences preferences, BaselineExperiment baselineExperiment) {
+    protected void setPreferenceDefaults(BaselineRequestPreferences preferences, BaselineExperiment baselineExperiment) {
 
         if (StringUtils.isBlank(preferences.getQueryFactorType())) {
             preferences.setQueryFactorType(baselineExperiment.getExperimentalFactors().getDefaultQueryFactorType());
@@ -50,7 +50,7 @@ public abstract class BaselineExperimentController {
         }
     }
 
-    protected BaselineRequestContext initRequestContext(BaselineExperiment experiment, BaselineRequestPreferences preferences) {
+    protected BaselineRequestContext buildRequestContext(BaselineExperiment experiment, BaselineRequestPreferences preferences) {
 
         return baselineRequestContextBuilder.forExperiment(experiment)
                                         .withPreferences(preferences)

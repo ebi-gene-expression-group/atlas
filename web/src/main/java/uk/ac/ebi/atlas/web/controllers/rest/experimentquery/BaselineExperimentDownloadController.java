@@ -65,7 +65,7 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        initPreferences(preferences, experiment);
+        setPreferenceDefaults(preferences, experiment);
 
         LOGGER.info("<downloadGeneProfiles> received download request for requestPreferences: " + preferences);
 
@@ -73,7 +73,7 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
         response.setContentType("text/plain; charset=utf-8");
 
-        BaselineRequestContext requestContext = initRequestContext(experiment, preferences);
+        BaselineRequestContext requestContext = buildRequestContext(experiment, preferences);
 
         try {
             long genesCount = baselineProfilesWriter.write(response.getWriter(), requestContext);

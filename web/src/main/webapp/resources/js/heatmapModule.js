@@ -29,7 +29,7 @@ var heatmapModule = (function ($) {
     "use strict";
 
     var _transcriptUrlRoot;
-
+    
     function showTranscriptBreakdownFancyBox() {
         $.fancybox({
                 href:'#transcript-breakdown',
@@ -54,38 +54,63 @@ var heatmapModule = (function ($) {
     }
 
     function showExpressionLevels() {
-        $("div[data-color]").each(function () {
+        $heatmap("div[data-color]").each(function () {
             showCellText(this);
         });
-        $(".gradient-level-min").attr("style", 'white-space: nowrap;');
-        $(".gradient-level-max").attr("style", 'white-space: nowrap;');
+        $heatmap(".gradient-level-min").attr("style", 'white-space: nowrap;');
+        $heatmap(".gradient-level-max").attr("style", 'white-space: nowrap;');
     }
 
     function hideExpressionLevels() {
-        $("div[data-color]").each(function () {
+        $heatmap("div[data-color]").each(function () {
             hideCellText(this);
         });
-        $(".gradient-level-min").css("display", "none");
-        $(".gradient-level-max").css("display", "none");
+        $heatmap(".gradient-level-min").css("display", "none");
+        $heatmap(".gradient-level-max").css("display", "none");
     }
 
-    function initDisplayLevelsButton() { //binds toggle handler
+    function initConstituentGenesLinkOnClick() {
+        $("#showConstituentGeneProfiles").click(function () {
+            $("#heatmap-div").hide();
+            $("#heatmap-constituentGeneProfiles").show();
+        });
+        $("#showGeneSetProfiles").click(function () {
+            $("#heatmap-constituentGeneProfiles").hide();
+            $("#heatmap-div").show();
+        });
+    }
 
-        $("#display-levels").button()
+    function initDisplayLevelsButtonOnClick() { //binds toggle handler
+
+        // hacky!
+        function syncDisplayLevelButtonOnOtherHeatmap(syntheticEvent) {
+            if (!syntheticEvent) {
+                // don't want to get stuck in an infinite loop,
+                // so click other button only in response to original click
+                // not the synthetic event we generate here
+                $('.display-levels-button').not(this).trigger("click", "syntheticEvent")
+            }
+        }
+
+        $heatmap("#display-levels").button()
             .toggle(
-            function () {
+            function (eventObject, syntheticEvent) {
                 $(this).button('option', 'label', $("#buttonText").attr('pressedtext'));
                 showExpressionLevels(this);
                 $("#prefForm #displayLevels").val("true");
+
+                syncDisplayLevelButtonOnOtherHeatmap.call(this, syntheticEvent);
             },
-            function () {
+            function (eventObject, syntheticEvent) {
                 $(this).button('option', 'label', $("#buttonText").attr('unpressedtext'));
                 hideExpressionLevels(this);
                 $("#prefForm #displayLevels").val("false");
+
+                syncDisplayLevelButtonOnOtherHeatmap.call(this, syntheticEvent);
             }
         );
 
-        $("#display-levels").button({ label:$("#buttonText").attr('unpressedtext') });
+        $heatmap("#display-levels").button({ label:$("#buttonText").attr('unpressedtext') });
 
         if ($("#prefForm #displayLevels").val() === "true") {
             $("#display-levels").click();
@@ -203,8 +228,8 @@ var heatmapModule = (function ($) {
             "</table>";
     }
 
-    function initHeatmapCellsTooltip() {
-        $("#heatmap-table td:has(div[data-pValue])").attr('title', '').tooltip(
+    function initDifferentialHeatmapCellsTooltip() {
+        $heatmap("#heatmap-table td:has(div[data-pValue])").attr('title', '').tooltip(
             {
                 open:function (event, ui) {
                     var colour = $(this).find("div").attr("data-color");
@@ -212,7 +237,7 @@ var heatmapModule = (function ($) {
                 },
                 tooltipClass:"help-tooltip pvalue-tooltip-styling",
 
-                content:function (callback) {
+                content:function () {
                     var foldChange = $(this).find("div").html(),
                         pValue = $(this).find("div").attr("data-pValue"),
                         tstatistic = $(this).find("div").attr("data-tstatistic");
@@ -223,30 +248,30 @@ var heatmapModule = (function ($) {
             });
     }
 
-    function initDownloadButton() {
-        $('#download-profiles-link').button().tooltip();
+    function initDownloadButtonTooltip() {
+        $heatmap('#download-profiles-link').button().tooltip();
     }
 
     function restrictLabelSize(label, maxSize) {
         var result = label;
-        if (label.length > maxSize) {
-            label = label.substring(0, maxSize);
-            if (label.lastIndexOf(" ") > maxSize - 5) {
-                label = label.substring(0, label.lastIndexOf(" "));
+        if (result.length > maxSize) {
+            result = result.substring(0, maxSize);
+            if (result.lastIndexOf(" ") > maxSize - 5) {
+                result = result.substring(0, result.lastIndexOf(" "));
             }
-            label = label + "...";
+            result = result + "...";
         }
-        return label;
+        return result;
     }
 
-    function initHeatmapFactorHeaders() {//shorten header labels if necessary and inits tooltips
+    function createHeatmapFactorHeaders() {//shorten header labels if necessary and inits tooltips
 
-        $(".factor-header")
+        $heatmap(".factor-header")
             .each(function () {
                 if ($.browser.msie) {
                     $(this).append($(this).attr("data-organism-part"));
-                    $("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
-                    $("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell');
+                    $heatmap("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
+                    $heatmap("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell');
                 } else {
                     var organismPartName = $(this).attr("data-organism-part");
                     organismPartName = restrictLabelSize(organismPartName, 17);
@@ -256,34 +281,36 @@ var heatmapModule = (function ($) {
 
     }
 
-    function createAccessionHeaders(accessionHeaders) {
+    function insertFirstColumnHeaders(accessionHeaders) {
 
-        var headers;
+        var headers = "";
 
         $(accessionHeaders).each(function () {
             headers += "<td class='horizontal-header-cell'>" + this + "</td>";
         });
-        //add custom header cells for gene name and design element
-        $($("#heatmap-table thead")).append("<tr id='injected-header'>" + headers + "</tr>");
+
+        //add header cells for gene name and design element (if any)
+        //NB: this is subsequently removed when the heatmap is loaded by heatmap-matrix-searchresults-diffanalytics.jsp
+        $heatmap("#heatmap-table thead").append("<tr id='injected-header'>" + headers + "</tr>");
 
         //add display levels cell colspan
         if (accessionHeaders.length === 2) {
 
-            $("#heatmap-table thead tr th:eq(1)").remove();
-            $("#heatmap-table thead tr th:eq(0)").attr("colspan", 2);
+            $heatmap("#heatmap-table thead tr th:eq(1)").remove();
+            $heatmap("#heatmap-table thead tr th:eq(0)").attr("colspan", 2);
 
         }
         //add rowspan to factor headers
-        $($("#heatmap-table thead tr th:gt(0)")).attr("rowspan", 2);
+        $heatmap("#heatmap-table thead tr th:gt(0)").attr("rowspan", 2);
     }
 
     function initMaPlotButtons(experimentAccession) {
-        var thElements = $(".factor-header").parent(),
+        var thElements = $heatmap(".factor-header").parent(),
             maPlotURL;
 
         thElements.css("width", "60px");
-        $(".factor-header").css("transform-origin");
-        $(".factor-header").css("top", "57px");
+        $heatmap(".factor-header").css("transform-origin");
+        $heatmap(".factor-header").css("top", "57px");
 
         $(thElements).each(function () {
             var contrastId = $(this).children().attr("data-contrast-id");
@@ -296,9 +323,9 @@ var heatmapModule = (function ($) {
 
         });
 
-        $(".ma-button").tooltip().button();
+        $heatmap(".ma-button").tooltip().button();
 
-        $(".ma-button").fancybox({
+        $heatmap(".ma-button").fancybox({
             padding:0,
             openEffect:'elastic',
             closeEffect:'elastic'
@@ -314,56 +341,60 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initHeatmap(experimentAccession, parameters) {
 
-        $('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
+    function contextFactory(ctx) {
+        return function(selector) {
+            return $(selector, ctx);
+        };
+    }
+
+    var $heatmap; // stores current heatmap element. allows us to have multiple heatmaps on the same page
+
+    function initHeatmap(experimentAccession, parameters, heatmapElementId, isHidden) {
+        var heatmapElement = $('#' + heatmapElementId);
+        $heatmap = contextFactory(heatmapElement);
+
+        $heatmap('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
         if (experimentAccession !== undefined && parameters.species) {
             initTranscriptBreakdownFancyBox(experimentAccession, parameters);
         }
 
-        initHeatmapCellsTooltip();
-        initDownloadButton();
-        initDisplayLevelsButton();
-        initHeatmapFactorHeaders();
+        initDifferentialHeatmapCellsTooltip();
+        initDownloadButtonTooltip();
+        initDisplayLevelsButtonOnClick();
+        initConstituentGenesLinkOnClick();
+        createHeatmapFactorHeaders();
 
-        var firstColumnHeader = parameters.geneSetMatch ? "Gene set" : "Gene";
-
-        if (parameters.isMicroarray) { //then it is a microarray experiment
-            createAccessionHeaders([firstColumnHeader, "Design Element"]);
-        } else {
-            createAccessionHeaders([firstColumnHeader]);
-        }
+        var geneNameHeader = parameters.geneSetMatch ? "Gene set" : "Gene";
+        insertFirstColumnHeaders(parameters.isMicroarray ? [geneNameHeader, "Design Element"] : [geneNameHeader]);
 
         if (experimentAccession !== undefined && parameters.cutoff === 0.05 && !parameters.geneQuery) {
             initMaPlotButtons(experimentAccession);
         }
 
-        $("#heatmap-div").show();
-
+        if (!isHidden) {
+            heatmapElement.show();
+        }
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, isWidget, transcriptUrlRoot) {
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, isWidget,  transcriptUrlRoot, heatmapElementId, isHidden) {
         _transcriptUrlRoot = transcriptUrlRoot;
-
+        
         initHeatmap(experimentAccession, {
             species:species,
             selectedFilterFactorsJson:selectedFilterFactorsJson,
             geneSetMatch:geneSetMatch,
             isWidget:isWidget
-        });
+        }, heatmapElementId, isHidden);
     }
 
-    function initRnaSeqHeatmap(cutoff) {
-        initHeatmap(undefined, {cutoff:cutoff, geneQuery:undefined});
+    function initRnaSeqHeatmap(experimentAccession, cutoff, geneQuery, heatmapElementId) {
+        initHeatmap(experimentAccession, {cutoff:cutoff, geneQuery:geneQuery}, heatmapElementId);
     }
 
-    function initRnaSeqHeatmap(experimentAccession, cutoff, geneQuery) {
-        initHeatmap(experimentAccession, {cutoff:cutoff, geneQuery:geneQuery});
-    }
-
-    function initMicroarrayHeatmap(experimentAccession, cutoff, geneQuery) {
-        initHeatmap(experimentAccession, {cutoff:cutoff, geneQuery:geneQuery, isMicroarray:true});
+    function initMicroarrayHeatmap(experimentAccession, cutoff, geneQuery, heatmapElementId) {
+        initHeatmap(experimentAccession, {cutoff:cutoff, geneQuery:geneQuery, isMicroarray:true}, heatmapElementId);
     }
 
     return {
@@ -371,6 +402,7 @@ var heatmapModule = (function ($) {
         initBaselineHeatmap:initBaselineHeatmap,
         initRnaSeqHeatmap:initRnaSeqHeatmap,
         initMicroarrayHeatmap:initMicroarrayHeatmap
+
     };
 
 }(jQuery));

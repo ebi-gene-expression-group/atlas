@@ -73,6 +73,9 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "download-normalized")
     private WebElement downloadNormalizedLink;
 
+    @FindBy(id = "display-qc-report")
+    private WebElement qcReportLink;
+
     @FindBy(id = "download-logFold")
     private WebElement downloadLogFoldLink;
 
@@ -199,6 +202,10 @@ public class HeatmapTablePage extends TablePage {
 
     public String getDownloadNormalizedLink() {
         return downloadNormalizedLink.getAttribute("href");
+    }
+
+    public String getQCReportLink() {
+        return qcReportLink.getAttribute("href");
     }
 
     public String getDownloadLogFoldLink() {

@@ -70,7 +70,7 @@
 
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
         <constructor-arg>
-            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory"
+            <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory"
                   p:readTimeout="3500"
                   p:connectTimeout="3500" />
         </constructor-arg>

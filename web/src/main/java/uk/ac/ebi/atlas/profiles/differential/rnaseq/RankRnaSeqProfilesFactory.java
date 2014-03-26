@@ -1,11 +1,10 @@
 package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparatorFactory;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
-import uk.ac.ebi.atlas.profiles.GeneProfilesListBuilder;
 import uk.ac.ebi.atlas.profiles.RankProfiles;
-import uk.ac.ebi.atlas.model.differential.DifferentialProfileComparatorFactory;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfilesListBuilder;
 import uk.ac.ebi.atlas.profiles.differential.RankProfilesFactory;

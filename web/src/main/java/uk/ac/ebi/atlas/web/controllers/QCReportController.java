@@ -4,10 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -64,9 +61,10 @@ public class QCReportController {
                             @PathVariable String experimentAccession,
                             @PathVariable String arrayDesign,
                             @PathVariable String resource,
+                            @RequestParam(value = "accessKey",required = false) String accessKey,
                             @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences, RedirectAttributes ra) throws IOException {
 
-        MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+        MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
         prepareModel(request, model, experiment);
 
         String selectedArrayDesign = preferences.getArrayDesignAccession();
@@ -74,7 +72,7 @@ public class QCReportController {
         if(selectedArrayDesign != null) {
             //eg: redirect to nicer URL when arrayDesign is provided as a query string parameter
             String path = MessageFormat.format("/experiments/{0}/qc/{1}/{2}", experimentAccession, selectedArrayDesign, resource);
-            return "redirect:" + path;
+            return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
         }
 
         //When changing the selection in the combo, we need to set the new selection in the preferences

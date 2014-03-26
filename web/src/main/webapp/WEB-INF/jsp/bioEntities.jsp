@@ -24,6 +24,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
+
 
 <input type="text" value="${empty globalSearchTerm ? entityIdentifier : applicationProperties.urlParamEncode(globalSearchTerm)}" style="display: none" id="searchterm">
 
@@ -157,8 +159,7 @@
                                             <span id='buttonText' pressedtext='Hide log<sub>2</sub>-fold change' unpressedText='Display log<sub>2</sub>-fold change'/>
                                         </td>
                                         <td>
-                                            <c:set var="geneProfiles" scope="request" value="${bioentities}"/>
-                                            <c:import url="includes/gradient-legend.jsp"/>
+                                            <h:heatmap-differential-legend geneProfiles="${bioentities}"/>
                                         </td>
                                     </tr>
                                     <tr>

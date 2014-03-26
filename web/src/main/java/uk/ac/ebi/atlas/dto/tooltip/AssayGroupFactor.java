@@ -12,7 +12,7 @@ public class AssayGroupFactor implements Comparable<AssayGroupFactor>{
         this.factor = factor;
     }
 
-    //used in heatmap-matrix-gene-oriented.jsp
+    //used in heatmap.tag
     public String getAssayGroupId() {
         return assayGroupId;
     }
@@ -29,7 +29,7 @@ public class AssayGroupFactor implements Comparable<AssayGroupFactor>{
         return factor.getType();
     }
 
-    //used in heatmap-matrix-gene-oriented.jsp
+    //used in heatmap.tag
     public String getValueOntologyTerm() {
         return factor.getValueOntologyTerm();
     }
