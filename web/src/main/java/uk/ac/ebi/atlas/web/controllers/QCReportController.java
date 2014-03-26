@@ -54,7 +54,6 @@ public class QCReportController {
      * @return
      * @throws IOException
      */
-
     @RequestMapping(value = "/experiments/{experimentAccession}/qc/{arrayDesign}/{resource:.*}",
                     method = RequestMethod.GET)
     public String getQCPage(HttpServletRequest request, Model model,

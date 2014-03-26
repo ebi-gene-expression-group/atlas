@@ -132,6 +132,16 @@
           type="text/css" media="screen"/>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
+
+    <style>
+        .fancybox-lock .fancybox-overlay {
+            overflow: hidden;
+        }
+
+        .fancybox-lock {
+            overflow: hidden;
+        }
+    </style>
     <!-- fancybox end -->
 
     <script>
@@ -148,6 +158,7 @@
 </head>
 
 <body class="level2 atlas-body">
+
 <div id="skip-to">
     <ul>
         <li><a href="#content">Skip to main content</a></li>
@@ -174,6 +185,7 @@
     <tiles:insertAttribute name="footer"/>
 
 </div>
+
 
 
 </body>

@@ -82,6 +82,8 @@ var heatmapModule = (function ($) {
 
     function initDisplayLevelsButtonOnClick() { //binds toggle handler
 
+        var prefFormDisplayLevels = $("#prefForm").find("#displayLevels");
+
         // hacky!
         function syncDisplayLevelButtonOnOtherHeatmap(syntheticEvent) {
             if (!syntheticEvent) {
@@ -97,14 +99,14 @@ var heatmapModule = (function ($) {
             function (eventObject, syntheticEvent) {
                 $(this).button('option', 'label', $("#buttonText").attr('pressedtext'));
                 showExpressionLevels(this);
-                $("#prefForm #displayLevels").val("true");
+                prefFormDisplayLevels.val("true");
 
                 syncDisplayLevelButtonOnOtherHeatmap.call(this, syntheticEvent);
             },
             function (eventObject, syntheticEvent) {
                 $(this).button('option', 'label', $("#buttonText").attr('unpressedtext'));
                 hideExpressionLevels(this);
-                $("#prefForm #displayLevels").val("false");
+                prefFormDisplayLevels.val("false");
 
                 syncDisplayLevelButtonOnOtherHeatmap.call(this, syntheticEvent);
             }
@@ -112,13 +114,14 @@ var heatmapModule = (function ($) {
 
         $heatmap("#display-levels").button({ label:$("#buttonText").attr('unpressedtext') });
 
-        if ($("#prefForm #displayLevels").val() === "true") {
+        if (prefFormDisplayLevels.val() === "true") {
             $("#display-levels").click();
         }
 
     }
 
-    function initHeatmapCellsClickHandling(experimentAccession, species, selectedFilterFactorsJson) { //binds heatmap cells click handler
+    function initTranscriptPopupOnHeatMapCellClick(experimentAccession, species, selectedFilterFactorsJson) {
+        var $transcript = $('#transcript-breakdown');
 
         function buildPlotData(transcriptRates) {
             var data = [],
@@ -131,9 +134,8 @@ var heatmapModule = (function ($) {
 
         function paintPieChart(plotData, geneId) {
 
-            $('#transcript-breakdown').css('position', 'absolute')
-                .css('left', '-5000px')
-            $('#transcript-breakdown').show();
+            $transcript.css('position', 'absolute').css('left', '-5000px');
+            $transcript.show();
 
             $.plot('#transcripts-pie', plotData, {
                 series:{
@@ -157,18 +159,19 @@ var heatmapModule = (function ($) {
             //next lines are required because the div is configured to stay in an invisible position (position:absolute; left:-5000px)
             //in order to make it invisible during the show-up of fancybox
             //all of this is required because of IE8 :( . It doesn' t allow painting canvas in a hidden div, so we need to first show the div, then paint in it, then reposition it, then fancybox it...
-            $('#transcript-breakdown').hide();
-            $('#transcript-breakdown').css('position', 'relative')
+            $transcript.hide();
+            $transcript.css('position', 'relative')
                 .css('left', '0px');
 
         }
 
-        //on click...
-        $("#heatmap-table td:has(div[data-color])").click(function () {
+        $heatmap("#heatmap-table").find("td:has(div[data-color])").click(function () {
 
             //gene and factor properties are extracted from gene and factor headers in the html table
+            var $queryFactorType = $("#queryFactorType");
+
             var factorValue = $(this).find("div").attr("data-organism-part"),
-                factorType = $("#queryFactorType").attr("value"),
+                factorType = $queryFactorType.attr("value") || $queryFactorType.attr("data-value"),
                 geneId = $(this).parent().find("td a:eq(0)").attr("id") || $(this).parent().find("td div:eq(0)").attr("id"),
                 geneName = $(this).parent().find("td a:eq(0)").text() || $(this).parent().find("td div:eq(0)").text() ;
 
@@ -204,7 +207,7 @@ var heatmapModule = (function ($) {
                     }
 
                     $('#transcript-breakdown-title').html("Expression Level Breakdown for " +
-                        "<a id='geneid' href='http://www.ensembl.org/" + species + "/Gene/Summary?g=" + geneId +
+                        "<a id='transcript-breakdown-geneid' href='http://www.ensembl.org/" + species + "/Gene/Summary?g=" + geneId +
                         "' target='_blank'" + "title='View gene in Ensembl'" + ">" + geneName + "</a> in " + factorValue +
                         "<br/>(" + expressedCount + " out of " + totalCount + " transcript" + s +
                         " " + is + " expressed):");
@@ -334,13 +337,12 @@ var heatmapModule = (function ($) {
     }
 
     function initTranscriptBreakdownFancyBox(experimentAccession, parameters) {
-        initHeatmapCellsClickHandling(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
+        initTranscriptPopupOnHeatMapCellClick(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
 
-        $('#geneid').tooltip();
+        $('#transcript-breakdown-geneid').tooltip();
         $('#transcript-breakdown-title-help').tooltip();
 
     }
-
 
     function contextFactory(ctx) {
         return function(selector) {
@@ -350,13 +352,13 @@ var heatmapModule = (function ($) {
 
     var $heatmap; // stores current heatmap element. allows us to have multiple heatmaps on the same page
 
-    function initHeatmap(experimentAccession, parameters, heatmapElementId, isHidden) {
+    function initHeatmap(experimentAccession, parameters, heatmapElementId, isHidden, disableTranscriptPopup) {
         var heatmapElement = $('#' + heatmapElementId);
         $heatmap = contextFactory(heatmapElement);
 
         $heatmap('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
-        if (experimentAccession !== undefined && parameters.species) {
+        if (experimentAccession !== undefined && parameters.species && !disableTranscriptPopup) {
             initTranscriptBreakdownFancyBox(experimentAccession, parameters);
         }
 
@@ -378,14 +380,14 @@ var heatmapModule = (function ($) {
         }
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, transcriptUrlRoot, heatmapElementId, isHidden) {
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, transcriptUrlRoot, heatmapElementId, isHidden, disableTranscriptPopup) {
         _transcriptUrlRoot = transcriptUrlRoot;
         
         initHeatmap(experimentAccession, {
             species:species,
             selectedFilterFactorsJson:selectedFilterFactorsJson,
             geneSetMatch:geneSetMatch
-        }, heatmapElementId, isHidden);
+        }, heatmapElementId, isHidden, disableTranscriptPopup);
     }
 
     function initRnaSeqHeatmap(experimentAccession, cutoff, geneQuery, heatmapElementId) {
