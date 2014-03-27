@@ -84,7 +84,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <h:heatmap geneProfiles="${geneProfiles}" elementId="heatmap-div" disableTranscriptPopup="${preferences.geneSetMatch}"/>
+                            <h:heatmap geneProfiles="${geneProfiles}" elementId="heatmap-div" geneSet="${preferences.geneSetMatch}"/>
                         </td>
                     </tr>
                 </table>

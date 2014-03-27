@@ -352,13 +352,13 @@ var heatmapModule = (function ($) {
 
     var $heatmap; // stores current heatmap element. allows us to have multiple heatmaps on the same page
 
-    function initHeatmap(experimentAccession, parameters, heatmapElementId, isHidden, disableTranscriptPopup) {
+    function initHeatmap(experimentAccession, parameters, heatmapElementId, isHidden) {
         var heatmapElement = $('#' + heatmapElementId);
         $heatmap = contextFactory(heatmapElement);
 
         $heatmap('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
-        if (experimentAccession !== undefined && parameters.species && !disableTranscriptPopup) {
+        if (experimentAccession !== undefined && parameters.species && !parameters.geneSetMatch) {
             initTranscriptBreakdownFancyBox(experimentAccession, parameters);
         }
 
@@ -380,14 +380,14 @@ var heatmapModule = (function ($) {
         }
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, transcriptUrlRoot, heatmapElementId, isHidden, disableTranscriptPopup) {
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, transcriptUrlRoot, heatmapElementId, isHidden) {
         _transcriptUrlRoot = transcriptUrlRoot;
         
         initHeatmap(experimentAccession, {
             species:species,
             selectedFilterFactorsJson:selectedFilterFactorsJson,
             geneSetMatch:geneSetMatch
-        }, heatmapElementId, isHidden, disableTranscriptPopup);
+        }, heatmapElementId, isHidden);
     }
 
     function initRnaSeqHeatmap(experimentAccession, cutoff, geneQuery, heatmapElementId) {
