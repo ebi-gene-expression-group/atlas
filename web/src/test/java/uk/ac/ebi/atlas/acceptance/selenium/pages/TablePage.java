@@ -48,6 +48,9 @@ abstract class TablePage extends GlobalSearchPage {
     @FindBy(id = "experimentDescription")
     private WebElement experimentDescription;
 
+    @FindBy(id = "goto-experiment")
+    private WebElement experimentDescriptionLink;
+
     @FindBy(id = "experimentOrganisms")
     private WebElement experimentOrganisms;
 
@@ -56,6 +59,7 @@ abstract class TablePage extends GlobalSearchPage {
 
     @FindBy(id = "experimentArrayDesigns")
     private WebElement experimentArrayDesigns;
+
 
     TablePage(WebDriver driver) {
         this(driver, null);
@@ -169,6 +173,10 @@ abstract class TablePage extends GlobalSearchPage {
 
     public String getExperimentDescription() {
         return experimentDescription.getText();
+    }
+
+    public String getExperimentDescriptionLink() {
+        return experimentDescriptionLink.getAttribute("href");
     }
 
     public String getExperimentOrganisms() {
