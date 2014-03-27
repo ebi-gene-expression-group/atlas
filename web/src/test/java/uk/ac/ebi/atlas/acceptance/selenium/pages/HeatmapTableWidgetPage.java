@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
 import org.openqa.selenium.WebDriver;
 
-public class HeatmapTableWidgetPage extends HeatmapTablePage{
+public class HeatmapTableWidgetPage extends HeatmapTableWithTranscriptBreakdownPage {
     private static final String PAGE_LOCATION = "/gxa/widgets/heatmap/protein";
 
     public HeatmapTableWidgetPage(WebDriver driver, String httpParameters) {
