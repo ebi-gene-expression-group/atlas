@@ -102,7 +102,7 @@
                         <a id="showGeneSetProfiles" href="javascript:void(0)">(show gene set)</a>
                             </td>
                             <td>
-                                <h:heatmap-legend geneProfiles="${geneProfiles}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
+                                <h:heatmap-legend geneProfiles="${constituentGeneProfiles}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
                             </td>
                         </tr>
                         <tr>
