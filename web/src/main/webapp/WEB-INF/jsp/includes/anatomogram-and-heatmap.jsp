@@ -99,7 +99,7 @@
                         <span id="geneConstituentCount">Showing ${constituentGeneProfiles.size()}
                             of ${constituentGeneProfiles.getTotalResultCount()} constituent genes found:
                         </span>
-                        <a id="showGeneSetProfiles" href="javascript:void(0)">(show gene set)</a>
+                        <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
                             </td>
                             <td>
                                 <h:heatmap-legend geneProfiles="${constituentGeneProfiles}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
