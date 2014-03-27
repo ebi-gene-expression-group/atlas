@@ -63,7 +63,7 @@ public class DiffAnalyticsSearchService {
     }
 
 
-    public int forEachExpression(GeneQuerySearchRequestParameters requestParameters, Visitor<DiffAnalytics> visitor) {
+    public int visitEachExpression(GeneQuerySearchRequestParameters requestParameters, Visitor<DiffAnalytics> visitor) {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
         Optional<Collection<String>> geneIdsResult = expandGeneQueryIntoGeneIds(requestParameters);
@@ -77,26 +77,26 @@ public class DiffAnalyticsSearchService {
 
         CountingVisitor<DiffAnalytics> counter = new CountingVisitor<>(visitor);
 
-        diffAnalyticsDao.foreachExpression(contrastsResult, geneIdsResult, counter);
+        diffAnalyticsDao.visitEachExpression(contrastsResult, geneIdsResult, counter);
 
         return counter.getCount();
 
     }
 
-    public List<DiffAnalytics> queryWithoutCount(String geneId) {
+    public List<DiffAnalytics> fetchTopWithoutCount(String geneId) {
         Collection<String> geneIds = Lists.newArrayList(geneId);
-        return diffAnalyticsDao.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
+        return diffAnalyticsDao.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
     }
 
-    public DiffAnalyticsList query(Collection<String> geneIdentifiers) {
+    public DiffAnalyticsList fetchTop(Collection<String> geneIdentifiers) {
 
         if (CollectionUtils.isNotEmpty(geneIdentifiers)) {
 
-            List<DiffAnalytics> expressions = diffAnalyticsDao.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(),
+            List<DiffAnalytics> expressions = diffAnalyticsDao.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(),
                     Optional.of(geneIdentifiers));
 
-            int resultCount = diffAnalyticsDao.getResultCount(Optional.<Collection<IndexedAssayGroup>>absent(),
-                                Optional.of(geneIdentifiers));
+            int resultCount = diffAnalyticsDao.fetchResultCount(Optional.<Collection<IndexedAssayGroup>>absent(),
+                    Optional.of(geneIdentifiers));
 
             return new DiffAnalyticsList(expressions, resultCount);
 
@@ -105,7 +105,7 @@ public class DiffAnalyticsSearchService {
     }
 
 
-    public DiffAnalyticsList query(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
+    public DiffAnalyticsList fetchTop(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
 
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
@@ -119,15 +119,15 @@ public class DiffAnalyticsSearchService {
             return new DiffAnalyticsList();
         }
 
-        List<DiffAnalytics> expressions = diffAnalyticsDao.getTopExpressions(contrastsResult, geneIdsResult);
-        int resultCount = diffAnalyticsDao.getResultCount(contrastsResult, geneIdsResult);
+        List<DiffAnalytics> expressions = diffAnalyticsDao.fetchTopExpressions(contrastsResult, geneIdsResult);
+        int resultCount = diffAnalyticsDao.fetchResultCount(contrastsResult, geneIdsResult);
 
         return new DiffAnalyticsList(expressions, resultCount);
 
 
     }
 
-    public Optional<Collection<IndexedAssayGroup>> findContrasts(GeneQuerySearchRequestParameters requestParameters) {
+    private Optional<Collection<IndexedAssayGroup>> findContrasts(GeneQuerySearchRequestParameters requestParameters) {
         if (!requestParameters.hasCondition()) {
             return Optional.absent();
         }
@@ -139,6 +139,7 @@ public class DiffAnalyticsSearchService {
         return Optional.of(contrasts);
     }
 
+    //TODO: move to solrqueryservice
     public Optional<Collection<String>> expandGeneQueryIntoGeneIds(GeneQuerySearchRequestParameters requestParameters) {
         if (!requestParameters.hasGeneQuery()) {
             return Optional.absent();
@@ -166,7 +167,7 @@ public class DiffAnalyticsSearchService {
         geneIds.addAll(matureRNAIds);
 
         stopWatch.stop();
-        LOGGER.info(String.format("<query> %s results, took %s seconds", geneIds.size(), stopWatch.getTotalTimeSeconds()));
+        LOGGER.info(String.format("<expandGeneQueryIntoGeneIds> %s results, took %s seconds", geneIds.size(), stopWatch.getTotalTimeSeconds()));
 
         return Optional.of(geneIds);
     }

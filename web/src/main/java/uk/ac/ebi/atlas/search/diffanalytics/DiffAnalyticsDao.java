@@ -69,9 +69,9 @@ public class DiffAnalyticsDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<DiffAnalytics> getTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    public List<DiffAnalytics> fetchTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
 
-        log("getTopExpressions", indexedContrasts, geneIds);
+        log("fetchTopExpressions", indexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -88,7 +88,7 @@ public class DiffAnalyticsDao {
 
             stopwatch.stop();
 
-            LOGGER.debug(String.format("getTopExpressions returned %s expressions in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+            LOGGER.debug(String.format("fetchTopExpressions returned %s expressions in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
@@ -99,8 +99,8 @@ public class DiffAnalyticsDao {
 
     }
 
-    public void foreachExpression(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds, final Visitor<DiffAnalytics> visitor)  {
-        log("foreachExpression", indexedContrasts, geneIds);
+    public void visitEachExpression(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds, final Visitor<DiffAnalytics> visitor)  {
+        log("visitEachExpression", indexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -140,12 +140,12 @@ public class DiffAnalyticsDao {
         }
 
         stopwatch.stop();
-        LOGGER.debug(String.format("foreachExpression processed %s expressions in %s seconds", count.intValue(), stopwatch.elapsed(TimeUnit.SECONDS)));
+        LOGGER.debug(String.format("visitEachExpression processed %s expressions in %s seconds", count.intValue(), stopwatch.elapsed(TimeUnit.SECONDS)));
     }
 
 
-    public int getResultCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
-        log("getResultCount", indexedContrasts, geneIds);
+    public int fetchResultCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+        log("fetchResultCount", indexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -153,7 +153,7 @@ public class DiffAnalyticsDao {
 
         int count = jdbcTemplate.queryForObject(databaseQuery.getQuery(), Integer.class, databaseQuery.getParameters().toArray());
 
-        LOGGER.debug(String.format("getResultCount returned %s in %.2f seconds", count, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+        LOGGER.debug(String.format("fetchResultCount returned %s in %.2f seconds", count, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
         return count;
     }
 

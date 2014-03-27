@@ -55,8 +55,8 @@ public class DiffAnalyticsDaoIT {
         Collection<IndexedAssayGroup> contrasts = Lists.newArrayList(indexedContrast1);
         Collection<String> geneIds = new HashSet<>();
 
-        List<DiffAnalytics> expressions = subject.getTopExpressions(Optional.of(contrasts), Optional.of(geneIds));
-        MatcherAssert.assertThat(expressions.size(), Matchers.is(16));
+        List<DiffAnalytics> expressions = subject.fetchTopExpressions(Optional.of(contrasts), Optional.of(geneIds));
+        MatcherAssert.assertThat(expressions.size(), Matchers.is(6));
         MatcherAssert.assertThat(expressions.get(0).getBioentityId(), Matchers.is("FBgn0040393"));
         MatcherAssert.assertThat(expressions.get(1).getBioentityId(), Matchers.is("FBgn0030746"));
 
@@ -68,25 +68,23 @@ public class DiffAnalyticsDaoIT {
 
         Collection<IndexedAssayGroup> indexedAssayGroups = Lists.newArrayList(indexedContrast1);
         Collection<String> strings = new HashSet<>();
-        int resultCount = subject.getResultCount(Optional.of(indexedAssayGroups), Optional.of(strings));
-        MatcherAssert.assertThat(resultCount, Matchers.is(16));
+        int resultCount = subject.fetchResultCount(Optional.of(indexedAssayGroups), Optional.of(strings));
+        MatcherAssert.assertThat(resultCount, Matchers.is(6));
     }
 
     @Test
     public void getTopExpressionsForGene() throws Exception {
         Collection<String> geneIds = Sets.newHashSet("AT1G02220");
-        List<DiffAnalytics> expressions = subject.getTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
-        MatcherAssert.assertThat(expressions, Matchers.hasSize(2));
+        List<DiffAnalytics> expressions = subject.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
+        MatcherAssert.assertThat(expressions, Matchers.hasSize(1));
         MatcherAssert.assertThat(expressions.get(0).getBioentityId(), Matchers.is("AT1G02220"));
         MatcherAssert.assertThat(expressions.get(0).getExperimentAccession(), Matchers.is("E-GEOD-38400"));
-        MatcherAssert.assertThat(expressions.get(1).getBioentityId(), Matchers.is("AT1G02220"));
-        MatcherAssert.assertThat(expressions.get(1).getExperimentAccession(), Matchers.is("E-TABM-51"));
     }
 
     @Test
     public void getResultCountForGene() throws Exception {
         Collection<IndexedAssayGroup> assayGroups = new HashSet<>();
         Collection<String> geneIds = Sets.newHashSet("AT1G02220");
-        MatcherAssert.assertThat(subject.getResultCount(Optional.of(assayGroups), Optional.of(geneIds)), Matchers.is(2));
+        MatcherAssert.assertThat(subject.fetchResultCount(Optional.of(assayGroups), Optional.of(geneIds)), Matchers.is(1));
     }
 }

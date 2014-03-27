@@ -67,7 +67,7 @@ public class GenePageController extends BioEntityPageController {
         checkIdentifierDoesNotContainColon(identifier);
 
         DiffAnalyticsList diffAnalyticsList =
-                diffAnalyticsSearchService.query(Sets.newHashSet(identifier));
+                diffAnalyticsSearchService.fetchTop(Sets.newHashSet(identifier));
 
         model.addAttribute("bioentities", diffAnalyticsList);
 
