@@ -54,7 +54,6 @@ public class QCReportController {
      * @return
      * @throws IOException
      */
-
     @RequestMapping(value = "/experiments/{experimentAccession}/qc/{arrayDesign}/{resource:.*}",
                     method = RequestMethod.GET)
     public String getQCPage(HttpServletRequest request, Model model,
@@ -64,6 +63,13 @@ public class QCReportController {
                             @RequestParam(value = "accessKey",required = false) String accessKey,
                             @ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences, RedirectAttributes ra) throws IOException {
 
+        if(!resource.equals("index.html")) {
+            // NB: resources do not need access key
+            // otherwise we would have to add the access key to the query string for every resource in the page
+            return forwardToQcResource(experimentAccession, arrayDesign, resource);
+        }
+
+        // will generate 404 here for private experiments without access key
         MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
         prepareModel(request, model, experiment);
 
@@ -78,10 +84,6 @@ public class QCReportController {
         //When changing the selection in the combo, we need to set the new selection in the preferences
         //otherwise the combo is not being updated.
         preferences.setArrayDesignAccession(arrayDesign);
-
-        if(!resource.equals("index.html")) {
-            return forwardToQcResource(experimentAccession, arrayDesign, resource);
-        }
 
         if(!qcReportUtil.hasQCReport(experimentAccession, arrayDesign)) {
             throw new ResourceNotFoundException("No qc report for " + experimentAccession + " array design " + arrayDesign);
