@@ -22,19 +22,16 @@
 
 package uk.ac.ebi.atlas.search.diffanalytics;
 
-import com.google.common.collect.Lists;
 import oracle.sql.ARRAY;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
-import java.util.List;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DiffAnalyticsQueryBuilderTest {
@@ -49,42 +46,30 @@ public class DiffAnalyticsQueryBuilderTest {
 
     @Test
     public void selectWhereContrasts() throws Exception {
-        IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("exp1", "c1");
-        IndexedAssayGroup indexedContrast2 = new IndexedAssayGroup("exp2", "c2");
+        ARRAY indexedContrasts = Mockito.mock(ARRAY.class);
 
-        List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
-        DatabaseQuery<Object> databaseQuery = subject.withAssayGroups(indexedContrasts).buildSelect();
+        DatabaseQuery<Object> databaseQuery = subject.withExperimentContrasts(indexedContrasts).buildSelect();
 
-        MatcherAssert.assertThat(databaseQuery.getQuery(), Matchers.is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by abs(LOG2FOLD) desc"));
-        MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains(new Object[]{"exp1", "c1", "exp2", "c2"}));
-
+        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(?) exprContrast ON VW_DIFFANALYTICS.EXPERIMENT = exprContrast.EXPERIMENT AND VW_DIFFANALYTICS.CONTRASTID = exprContrast.CONTRASTID order by abs(LOG2FOLD) desc"));
     }
 
     @Test
     public void countWhereContrasts() throws Exception {
-        IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("exp1", "c1");
-        IndexedAssayGroup indexedContrast2 = new IndexedAssayGroup("exp2", "c2");
+        ARRAY indexedContrasts = Mockito.mock(ARRAY.class);
 
-        List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
-        DatabaseQuery<Object> databaseQuery = subject.withAssayGroups(indexedContrasts).buildCount();
+        DatabaseQuery<Object> databaseQuery = subject.withExperimentContrasts(indexedContrasts).buildCount();
 
-        MatcherAssert.assertThat(databaseQuery.getQuery(), Matchers.is("SELECT count(1) FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by abs(LOG2FOLD) desc"));
-        MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains(new Object[]{"exp1", "c1", "exp2", "c2"}));
-
+        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT count(1) FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(?) exprContrast ON VW_DIFFANALYTICS.EXPERIMENT = exprContrast.EXPERIMENT AND VW_DIFFANALYTICS.CONTRASTID = exprContrast.CONTRASTID order by abs(LOG2FOLD) desc"));
     }
 
 
     @Test
     public void selectWhereGeneIds() throws Exception {
-
-        List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList();
         ARRAY geneIds = Mockito.mock(ARRAY.class);
 
-        DatabaseQuery<Object> databaseQuery = subject.withAssayGroups(indexedContrasts)
-                .withGeneIds(geneIds)
-                .buildSelect();
+        DatabaseQuery<Object> databaseQuery = subject.withGeneIds(geneIds).buildSelect();
 
-        MatcherAssert.assertThat(databaseQuery.getQuery(), Matchers.is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
+        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
                 "FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value order by abs(LOG2FOLD) desc"));
         MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains((Object) geneIds));
 
@@ -93,19 +78,14 @@ public class DiffAnalyticsQueryBuilderTest {
     @Test
     public void selectWhereContrastsAndGeneIds() throws Exception {
         ARRAY geneIds = Mockito.mock(ARRAY.class);
+        ARRAY indexedContrasts = Mockito.mock(ARRAY.class);
 
-        IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("exp1", "g1");
-        IndexedAssayGroup indexedContrast2 = new IndexedAssayGroup("exp2", "g2");
-
-        List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
-        DatabaseQuery<Object> databaseQuery = subject.withAssayGroups(indexedContrasts)
+        DatabaseQuery<Object> databaseQuery = subject.withExperimentContrasts(indexedContrasts)
                 .withGeneIds(geneIds)
                 .buildSelect();
 
-        MatcherAssert.assertThat(databaseQuery.getQuery(), Matchers.is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT " +
-                "FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) " +
-                "order by abs(LOG2FOLD) desc"));
-        MatcherAssert.assertThat(databaseQuery.getParameters().size(), Matchers.is(5));
+        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value JOIN TABLE(?) exprContrast ON VW_DIFFANALYTICS.EXPERIMENT = exprContrast.EXPERIMENT AND VW_DIFFANALYTICS.CONTRASTID = exprContrast.CONTRASTID order by abs(LOG2FOLD) desc"));
+        MatcherAssert.assertThat(databaseQuery.getParameters().size(), is(2));
 
     }
 
@@ -113,17 +93,13 @@ public class DiffAnalyticsQueryBuilderTest {
     @Test
     public void countWhereContrastsAndGeneIds() throws Exception {
         ARRAY geneIds = Mockito.mock(ARRAY.class);
+        ARRAY indexedContrasts = Mockito.mock(ARRAY.class);
 
-        IndexedAssayGroup indexedContrast1 = new IndexedAssayGroup("exp1", "c1");
-        IndexedAssayGroup indexedContrast2 = new IndexedAssayGroup("exp2", "c2");
-
-        List<IndexedAssayGroup> indexedContrasts = Lists.newArrayList(indexedContrast1, indexedContrast2);
-        DatabaseQuery<Object> databaseQuery = subject.withAssayGroups(indexedContrasts)
+        DatabaseQuery<Object> databaseQuery = subject.withExperimentContrasts(indexedContrasts)
                 .withGeneIds(geneIds)
                 .buildCount();
 
-        MatcherAssert.assertThat(databaseQuery.getQuery(), Matchers.is("SELECT count(1) FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value " +
-                "WHERE ((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? )) order by abs(LOG2FOLD) desc"));
+        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT count(1) FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value JOIN TABLE(?) exprContrast ON VW_DIFFANALYTICS.EXPERIMENT = exprContrast.EXPERIMENT AND VW_DIFFANALYTICS.CONTRASTID = exprContrast.CONTRASTID order by abs(LOG2FOLD) desc"));
 
     }
 

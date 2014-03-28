@@ -26,6 +26,8 @@ import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import oracle.jdbc.OracleConnection;
 import oracle.sql.ArrayDescriptor;
+import oracle.sql.STRUCT;
+import oracle.sql.StructDescriptor;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -172,7 +174,9 @@ public class DiffAnalyticsDao {
         DiffAnalyticsQueryBuilder builder = new DiffAnalyticsQueryBuilder();
 
         if (indexedContrasts.isPresent()) {
-            builder.withAssayGroups(indexedContrasts.get());
+            //TODO: make a set, as sometimes we get the same assay group multiple times, eg: when running GeneQueryDifferentialSerivceIT.conditionPregnant()
+
+            builder.withExperimentContrasts(createOracleArrayForIndexedAssayGroup(indexedContrasts.get()));
         }
 
         if (geneIds.isPresent() && !geneIds.get().isEmpty()) {
@@ -188,9 +192,30 @@ public class DiffAnalyticsDao {
 
         return jdbcTemplate.execute(new ConnectionCallback<oracle.sql.ARRAY>() {
             public oracle.sql.ARRAY doInConnection(Connection connection) throws SQLException, DataAccessException {
-                OracleConnection oracleConnection = connection.unwrap(OracleConnection.class);
-                ArrayDescriptor descriptor = ArrayDescriptor.createDescriptor("IDENTIFIERS_TABLE", oracleConnection);
-                return new oracle.sql.ARRAY(descriptor, oracleConnection, ids);
+            OracleConnection oracleConnection = connection.unwrap(OracleConnection.class);
+            ArrayDescriptor descriptor = ArrayDescriptor.createDescriptor("IDENTIFIERS_TABLE", oracleConnection);
+            return new oracle.sql.ARRAY(descriptor, oracleConnection, ids);
+            }
+        });
+    }
+
+    oracle.sql.ARRAY createOracleArrayForIndexedAssayGroup(final Collection<IndexedAssayGroup> indexedAssayGroups) {
+
+        return jdbcTemplate.execute(new ConnectionCallback<oracle.sql.ARRAY>() {
+            public oracle.sql.ARRAY doInConnection(Connection connection) throws SQLException, DataAccessException {
+            OracleConnection oracleConnection = connection.unwrap(OracleConnection.class);
+
+            StructDescriptor exprContrastDescriptor = StructDescriptor.createDescriptor("EXPR_CONTRAST", oracleConnection);
+
+            STRUCT[] exprContrasts = new STRUCT[indexedAssayGroups.size()];
+
+            int i = 0;
+            for (IndexedAssayGroup iag : indexedAssayGroups) {
+                exprContrasts[i++] = new STRUCT(exprContrastDescriptor, oracleConnection, new Object[]{iag.getExperimentAccession(), iag.getAssayGroupOrContrastId()});
+            }
+
+            ArrayDescriptor descriptor = ArrayDescriptor.createDescriptor("EXPR_CONTRAST_TABLE", oracleConnection);
+            return new oracle.sql.ARRAY(descriptor, oracleConnection, exprContrasts);
             }
         });
     }
