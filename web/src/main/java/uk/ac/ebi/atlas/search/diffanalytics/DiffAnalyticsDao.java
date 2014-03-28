@@ -162,12 +162,12 @@ public class DiffAnalyticsDao {
         return builder.buildCount();
     }
 
-    DatabaseQuery<Object> buildSelect(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    DatabaseQuery<Object> buildSelect(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
         DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
         return builder.buildSelect();
     }
 
-    DiffAnalyticsQueryBuilder createDifferentialGeneQueryBuilder(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    DiffAnalyticsQueryBuilder createDifferentialGeneQueryBuilder(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
 
         DiffAnalyticsQueryBuilder builder = new DiffAnalyticsQueryBuilder();
 
@@ -183,7 +183,7 @@ public class DiffAnalyticsDao {
 
     }
 
-    private oracle.sql.ARRAY createOracleArrayForIdentifiers(Collection<String> geneIds) {
+    oracle.sql.ARRAY createOracleArrayForIdentifiers(Collection<String> geneIds) {
         final String[] ids = geneIds.toArray(new String[geneIds.size()]);
 
         return jdbcTemplate.execute(new ConnectionCallback<oracle.sql.ARRAY>() {
