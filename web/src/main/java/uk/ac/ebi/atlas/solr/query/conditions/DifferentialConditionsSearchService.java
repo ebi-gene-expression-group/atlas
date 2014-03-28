@@ -24,10 +24,12 @@ package uk.ac.ebi.atlas.solr.query.conditions;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.context.annotation.Scope;
+import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
 
 import javax.inject.Inject;
@@ -38,6 +40,8 @@ import java.util.List;
 @Named
 @Scope("singleton")
 public class DifferentialConditionsSearchService {
+
+    private static final Logger LOGGER = Logger.getLogger(DifferentialConditionsSearchService.class);
 
     private SolrServer differentialConditionsSolrServer;
 
@@ -52,8 +56,15 @@ public class DifferentialConditionsSearchService {
     public Collection<IndexedAssayGroup> findContrasts(String queryString) {
 
         try {
+
+            StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+            stopWatch.start();
+
             QueryResponse queryResponse = differentialConditionsSolrServer.query(queryBuilder.build(queryString));
             List<DifferentialCondition> beans = queryResponse.getBeans(DifferentialCondition.class);
+
+            stopWatch.stop();
+            LOGGER.info(String.format("<findContrasts: %s> %s results, took %s seconds", queryString, beans.size(), stopWatch.getTotalTimeSeconds()));
 
             return Collections2.transform(beans, new Function<DifferentialCondition, IndexedAssayGroup>() {
                 @Override
