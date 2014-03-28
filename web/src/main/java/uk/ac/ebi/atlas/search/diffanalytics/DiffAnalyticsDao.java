@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.ImmutableSet;
 import oracle.jdbc.OracleConnection;
 import oracle.sql.ArrayDescriptor;
 import oracle.sql.STRUCT;
@@ -72,12 +73,13 @@ public class DiffAnalyticsDao {
     }
 
     public List<DiffAnalytics> fetchTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+        Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
 
-        log("fetchTopExpressions", indexedContrasts, geneIds);
+        log("fetchTopExpressions", uniqueIndexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DatabaseQuery<Object> indexedContrastQuery = buildSelect(indexedContrasts, geneIds);
+        DatabaseQuery<Object> indexedContrastQuery = buildSelect(uniqueIndexedContrasts, geneIds);
 
         jdbcTemplate.setMaxRows(RESULT_SIZE);
 
@@ -101,12 +103,22 @@ public class DiffAnalyticsDao {
 
     }
 
+    // get uniques, as we get contrasts multiple times for each assay group in the contrast
+    private Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts(Optional<Collection<IndexedAssayGroup>> indexedContrasts) {
+        if (!indexedContrasts.isPresent()) {
+            return Optional.absent();
+        }
+        return Optional.of(ImmutableSet.copyOf(indexedContrasts.get()));
+    }
+
     public void visitEachExpression(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds, final Visitor<DiffAnalytics> visitor)  {
-        log("visitEachExpression", indexedContrasts, geneIds);
+        Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
+
+        log("visitEachExpression", uniqueIndexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DatabaseQuery<Object> indexedContrastQuery = buildSelect(indexedContrasts, geneIds);
+        DatabaseQuery<Object> indexedContrastQuery = buildSelect(uniqueIndexedContrasts, geneIds);
 
         final MutableInt count = new MutableInt(0);
 
@@ -147,11 +159,13 @@ public class DiffAnalyticsDao {
 
 
     public int fetchResultCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
-        log("fetchResultCount", indexedContrasts, geneIds);
+        Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
+
+        log("fetchResultCount", uniqueIndexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DatabaseQuery databaseQuery = buildCount(indexedContrasts, geneIds);
+        DatabaseQuery databaseQuery = buildCount(uniqueIndexedContrasts, geneIds);
 
         int count = jdbcTemplate.queryForObject(databaseQuery.getQuery(), Integer.class, databaseQuery.getParameters().toArray());
 
@@ -159,7 +173,7 @@ public class DiffAnalyticsDao {
         return count;
     }
 
-    DatabaseQuery<Object> buildCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    DatabaseQuery<Object> buildCount(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
         DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
         return builder.buildCount();
     }
@@ -174,8 +188,6 @@ public class DiffAnalyticsDao {
         DiffAnalyticsQueryBuilder builder = new DiffAnalyticsQueryBuilder();
 
         if (indexedContrasts.isPresent()) {
-            //TODO: make a set, as sometimes we get the same assay group multiple times, eg: when running GeneQueryDifferentialSerivceIT.conditionPregnant()
-
             builder.withExperimentContrasts(createOracleArrayForIndexedAssayGroup(indexedContrasts.get()));
         }
 
@@ -220,8 +232,8 @@ public class DiffAnalyticsDao {
         });
     }
 
-    private void log(final String methodName, Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
-        LOGGER.debug(String.format(methodName + " for %s contrasts and %s genes", (indexedContrasts.isPresent()) ? indexedContrasts.get().size() : 0,
+    private void log(final String methodName, Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
+        LOGGER.debug(String.format(methodName + " for %s unique contrasts and %s genes", (indexedContrasts.isPresent()) ? indexedContrasts.get().size() : 0,
                 (geneIds.isPresent()) ? geneIds.get().size() : 0));
     }
 
