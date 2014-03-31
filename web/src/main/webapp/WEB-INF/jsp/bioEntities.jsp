@@ -111,6 +111,30 @@
                          style="position: absolute; left: 0.5em; "
                          src="resources/images/allup2_transparent_bkg.png"/>
                     <span class="bioEntityCardBioentityName">Baseline Expression</span>
+                        <c:choose>
+                            <c:when test="${not empty baselineCounts}" >
+                                <c:set var="resultsCount" value="${baselineCounts.size()}"/>
+                                <span style="margin-left: 10px; margin-top:10px">
+                                    ${resultsCount} search results found
+                                </span>
+                            </c:when>
+
+
+                            <c:otherwise>
+                                <c:choose>
+                                    <c:when test="${singleBioentityPage && isWidgetIdentifier}">
+                                        <span style="margin-left: 10px; margin-top:10px">
+                                            Baseline experiments tissues were found for ${entityIdentifier}
+                                        </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span style="margin-left: 10px">
+                                            No baseline experiments were found for ${entityIdentifier}
+                                        <span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:otherwise>
+                        </c:choose>
                 </ul>
 
 
@@ -137,6 +161,14 @@
                          style="position: absolute; left: 0.5em; "
                          src="resources/images/updown_transparent_bkg.png"/>
                     <span class="bioEntityCardBioentityName">Differential Expression</span>
+                    <c:choose>
+                        <c:when test="${not empty bioentities}">
+                            <span style="margin-left: 10px; margin-top:10px">${bioentities.getTotalNumberOfResults()} search result(s) found</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span style="margin-left: 10px; margin-top:10px">No differential experiments were found for ${entityIdentifier}</span>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
 
                 <c:choose>
@@ -145,7 +177,7 @@
 
                         <div id="diffProfileBody" class="bioEntityCard">
                             <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                                <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
+                                <span style="visibility:hidden">c</span>
                                 <span style="float: right">cutoffs: adjusted <i>p</i>-value ${preferences.defaultCutoff} &nbsp;&nbsp; log<sub>2</sub>-fold change 0</sub></span>
                             </div>
 
@@ -172,7 +204,6 @@
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <div>No differential experiments were found for ${entityIdentifier} </div>
                     </c:otherwise>
                 </c:choose>
             </div>

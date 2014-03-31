@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.web.controllers.page.bioentity;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import java.util.SortedSet;
@@ -49,6 +51,9 @@ public class GeneSetPageController extends BioEntityPageController {
 
     private String[] geneSetPagePropertyTypes;
 
+    private ApplicationProperties applicationProperties;
+
+
     @Value("#{configuration['index.property_names.genesetpage']}")
     void setGenePagePropertyTypes(String[] geneSetPagePropertyTypes) {
         this.geneSetPagePropertyTypes = geneSetPagePropertyTypes;
@@ -59,6 +64,11 @@ public class GeneSetPageController extends BioEntityPageController {
         this.solrQueryService = solrQueryService;
         this.bioEntityPropertyService = bioEntityPropertyService;
         this.reactomeBiomartClient = reactomeBiomartClient;
+    }
+
+    @Inject
+    public void setApplicationProperties(ApplicationProperties applicationProperties) {
+        this.applicationProperties = applicationProperties;
     }
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
@@ -83,6 +93,15 @@ public class GeneSetPageController extends BioEntityPageController {
         SortedSet<String> names = Sets.newTreeSet();
         names.add(trimmedIdentifier);
         bioEntityPropertyService.init(species, propertyValuesByType, names, trimmedIdentifier);
+    }
+
+    @Override
+    protected boolean hasWidgetIdentifier(String identifier){
+        String trimmedIdentifier = identifier.replaceAll("\"", "");
+        String species = solrQueryService.getSpeciesForPropertyValue(trimmedIdentifier);
+        String experimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
+
+        return StringUtils.isNotEmpty(experimentAccession);
     }
 
     @Override

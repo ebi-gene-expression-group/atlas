@@ -24,9 +24,6 @@
   --%>
 
 <div id="content" class="block">
-    <c:if test="${not empty identifier}">
-        No baseline experiments were found for ${identifier}
-    </c:if>
     <c:if test="${not empty errorMessage}">
         <span style="font-weight: bold;">An error occurred: </span><span>${errorMessage}</span>
     </c:if>

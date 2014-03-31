@@ -67,6 +67,6 @@
 
     </c:when>
     <c:otherwise>
-        <div>No baseline experiments were found.</div>
+        <%--<div>No baseline experiments were found.</div>--%>
     </c:otherwise>
 </c:choose>

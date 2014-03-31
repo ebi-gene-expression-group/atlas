@@ -25,8 +25,10 @@ package uk.ac.ebi.atlas.web.controllers.page.bioentity;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SortedSetMultimap;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import javax.inject.Inject;
 import java.util.LinkedHashMap;
@@ -44,6 +46,8 @@ public abstract class BioEntityPageController {
 
     private BioEntityPropertyService bioEntityPropertyService;
 
+    private ApplicationProperties applicationProperties;
+
     @Inject
     public void setBioEntityCardProperties(BioEntityCardProperties bioEntityCardProperties) {
         this.bioEntityCardProperties = bioEntityCardProperties;
@@ -57,6 +61,11 @@ public abstract class BioEntityPageController {
     @Inject
     public void setSolrQueryService(SolrQueryService solrQueryService) {
         this.solrQueryService = solrQueryService;
+    }
+
+    @Inject
+    public void setApplicationProperties(ApplicationProperties applicationProperties) {
+        this.applicationProperties = applicationProperties;
     }
 
     public String showBioentityPage(String identifier, Model model) {
@@ -77,6 +86,8 @@ public abstract class BioEntityPageController {
 
         //if all geneIds and geneNames in the BioentityPage are the same we don't want to display in the heatmap the columns Genes and Organism
         model.addAttribute("bioentitySameIdentifier", true);
+
+        model.addAttribute("isWidgetIdentifier", hasWidgetIdentifier(identifier));
 
         //bioentity properties panel data
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
@@ -109,5 +120,13 @@ public abstract class BioEntityPageController {
             entityNames.add(identifier);
         }
         bioEntityPropertyService.init(species, propertyValuesByType, entityNames, identifier);
+    }
+
+    protected boolean hasWidgetIdentifier(String identifier){
+        String species = solrQueryService.findSpeciesForBioentityId(identifier);
+        String experimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
+
+        return StringUtils.isNotEmpty(experimentAccession);
+
     }
 }
