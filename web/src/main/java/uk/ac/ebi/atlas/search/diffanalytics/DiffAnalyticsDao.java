@@ -187,7 +187,7 @@ public class DiffAnalyticsDao {
 
         DiffAnalyticsQueryBuilder builder = new DiffAnalyticsQueryBuilder();
 
-        if (indexedContrasts.isPresent()) {
+        if (indexedContrasts.isPresent() && !indexedContrasts.get().isEmpty()) {
             builder.withExperimentContrasts(createOracleArrayForIndexedAssayGroup(indexedContrasts.get()));
         }
 

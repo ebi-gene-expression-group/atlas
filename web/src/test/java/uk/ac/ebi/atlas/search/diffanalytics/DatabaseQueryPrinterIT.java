@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Sets;
 import oracle.sql.ARRAY;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +33,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Inject;
-
 import java.util.Collections;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -59,7 +57,7 @@ public class DatabaseQueryPrinterIT {
         IndexedAssayGroup iag1 = new IndexedAssayGroup("EXP1", "G1");
         DatabaseQuery<Object> databaseQuery = diffAnalyticsDao.buildSelect(Optional.of(Collections.singleton(iag1)), Optional.of(ImmutableList.of("A", "B", "C", "D", "E")));
 
-        assertThat(databaseQuery.print(), is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(IDENTIFIERS_TABLE('A', 'B', 'C', 'D', 'E')) identifiersTable ON IDENTIFIER = identifiersTable.column_value WHERE ((EXPERIMENT='EXP1' AND CONTRASTID='G1' )) order by abs(LOG2FOLD) desc"));
+        assertThat(databaseQuery.print(), is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(IDENTIFIERS_TABLE('A', 'B', 'C', 'D', 'E')) identifiersTable ON IDENTIFIER = identifiersTable.column_value JOIN TABLE(EXPR_CONTRAST_TABLE('oracle.sql.STRUCT@430d9b69')) exprContrast ON VW_DIFFANALYTICS.EXPERIMENT = exprContrast.EXPERIMENT AND VW_DIFFANALYTICS.CONTRASTID = exprContrast.CONTRASTID order by abs(LOG2FOLD) desc"));
     }
 
 }
