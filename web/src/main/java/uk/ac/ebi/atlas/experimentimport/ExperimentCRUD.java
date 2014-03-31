@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport;
 
+import com.google.common.base.Optional;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
@@ -51,14 +52,25 @@ public class ExperimentCRUD {
         ExperimentConfiguration configuration = loadExperimentConfiguration(experimentAccession);
         experimentChecker.checkAllFiles(experimentAccession, configuration.getExperimentType());
 
-        if (experimentAccessionExists(experimentAccession)) {
+        Optional<String> accessKey = fetchExperimentAccessKey(experimentAccession);
+
+        if (accessKey.isPresent()) {
             deleteExperiment(experimentAccession);
         }
 
         AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(configuration.getExperimentType());
         analyticsLoader.loadAnalytics(experimentAccession);
 
-        return experimentMetadataCRUD.importExperiment(experimentAccession, configuration, isPrivate);
+        return experimentMetadataCRUD.importExperiment(experimentAccession, configuration, isPrivate, accessKey);
+    }
+
+    private Optional<String> fetchExperimentAccessKey(String experimentAccession) {
+        try {
+            ExperimentDTO experiment = experimentMetadataCRUD.findExperiment(experimentAccession);
+            return Optional.of(experiment.getAccessKey());
+        } catch (ResourceNotFoundException e) {
+            return Optional.absent();
+        }
     }
 
     private boolean experimentAccessionExists(String experimentAccession) {
@@ -70,8 +82,9 @@ public class ExperimentCRUD {
         }
     }
 
+    // returns access key, so it can be reused during a reload
     @Transactional
-    public void deleteExperiment(String experimentAccession) {
+    public String deleteExperiment(String experimentAccession) {
         ExperimentDTO experimentDTO = experimentMetadataCRUD.findExperiment(experimentAccession);
 
         AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(experimentDTO.getExperimentType());
@@ -82,6 +95,8 @@ public class ExperimentCRUD {
         }
 
         experimentMetadataCRUD.deleteExperiment(experimentDTO);
+
+        return experimentDTO.getAccessKey();
     }
 
     private ExperimentConfiguration loadExperimentConfiguration(String experimentAccession) {

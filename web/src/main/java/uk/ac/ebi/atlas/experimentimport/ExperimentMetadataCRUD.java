@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentimport;
 
+import com.google.common.base.Optional;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
@@ -29,7 +30,10 @@ import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWri
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.impl.MageTabParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.impl.MageTabParserFactory;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.impl.MageTabParserOutput;
-import uk.ac.ebi.atlas.model.*;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentConfiguration;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -80,7 +84,7 @@ public class ExperimentMetadataCRUD {
         return configurationTrader.getExperimentConfiguration(accession);
     }
 
-    public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate) throws IOException {
+    public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate, Optional<String> accessKey) throws IOException {
         checkNotNull(accession);
         checkNotNull(experimentConfiguration);
 
@@ -100,7 +104,7 @@ public class ExperimentMetadataCRUD {
         ExperimentDTO experimentDTO = experimentDTOBuilder.forExperimentAccession(accession)
                 .withExperimentType(experimentType).withPrivate(isPrivate).withSpecies(species).build();
 
-        UUID uuid = experimentDAO.addExperiment(experimentDTO);
+        UUID uuid = experimentDAO.addExperiment(experimentDTO, accessKey);
 
         //experiment can be indexed only after it's been added to the DB, since fetching experiment
         //from cache gets this experiment from the DB first
@@ -173,7 +177,7 @@ public class ExperimentMetadataCRUD {
         for (ExperimentDTO experiment : experiments) {
             String accession = experiment.getExperimentAccession();
             deleteExperiment(experiment);
-            importExperiment(accession, loadExperimentConfiguration(accession), experiment.isPrivate());
+            importExperiment(accession, loadExperimentConfiguration(accession), experiment.isPrivate(), Optional.of(experiment.getAccessKey()));
         }
         return experiments.size();
     }
