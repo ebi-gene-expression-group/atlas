@@ -124,7 +124,7 @@
                                 <c:choose>
                                     <c:when test="${singleBioentityPage && isWidgetIdentifier}">
                                         <span style="margin-left: 10px; margin-top:10px">
-                                            Baseline experiments tissues were found for ${entityIdentifier}
+                                            Baseline expression in tissue(s) was found for ${entityIdentifier}
                                         </span>
                                     </c:when>
                                     <c:otherwise>
@@ -178,7 +178,9 @@
                         <div id="diffProfileBody" class="bioEntityCard">
                             <div class="ui-corner-all bioEntityCardDifferentialSummary">
                                 <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
-                                <span style="float: right">cutoffs: adjusted <i>p</i>-value 0.05 &nbsp;&nbsp; log<sub>2</sub>-fold change 1.0</sub></span>                            </div>
+                                <span style="float: right">cutoffs: adjusted <i>p</i>-value 0.05 &nbsp;&nbsp; log<sub>2</sub>-fold change 1.0</span>
+                            </div>
+
                             <div id="heatmap-div" style="display:none;">
                                 <table style="margin-left:auto;margin-right:auto;">
                                     <tr>
