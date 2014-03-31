@@ -87,6 +87,7 @@ public abstract class BioEntityPageController {
         //if all geneIds and geneNames in the BioentityPage are the same we don't want to display in the heatmap the columns Genes and Organism
         model.addAttribute("bioentitySameIdentifier", true);
 
+        //to check if the widget contains the identifier or not and inform properly in the results gene pages
         model.addAttribute("isWidgetIdentifier", hasWidgetIdentifier(identifier));
 
         //bioentity properties panel data
