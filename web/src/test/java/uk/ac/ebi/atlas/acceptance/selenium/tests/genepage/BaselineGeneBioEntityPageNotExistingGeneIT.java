@@ -50,11 +50,8 @@ public class BaselineGeneBioEntityPageNotExistingGeneIT extends SinglePageSeleni
     @Test
     public void checkSelectedProfiles() {
         String widgetBody = subject.getWidgetBody();
-        assertThat(widgetBody, containsString("No baseline experiments were found for AT3G29644"));
+        assertThat(widgetBody, containsString(""));
 
     }
-
-
-
 
 }
