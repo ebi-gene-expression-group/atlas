@@ -99,6 +99,45 @@ var experimentsPageModule = (function ($) {
             }
         });
 
+        /* Sorting by date */
+        $.extend($.fn.dataTableExt.oSort, {
+            "date-eu-pre": function ( date ) {
+                var date = date.replace(" ", "");
+
+                /*date a, format dd/mn/(yyyy) ; (year is optional)*/
+                var eu_date = date.split('-');
+
+                /*year (optional)*/
+                if (eu_date[2]) {
+                    var year = eu_date[2];
+                } else {
+                    var year = 0;
+                }
+
+                /*month*/
+                var month = eu_date[1];
+                if (month.length == 1) {
+                    month = 0+month;
+                }
+
+                /*day*/
+                var day = eu_date[0];
+                if (day.length == 1) {
+                    day = 0+day;
+                }
+
+                return (year + month + day) * 1;
+            },
+
+            "date-eu-asc": function ( a, b ) {
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            },
+
+            "date-eu-desc": function ( a, b ) {
+                return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+            }
+        } );
+
         //reset empty data message to avoid showing "Showing 0 to 0 of 0 entries"
         $('#experiments-table').dataTable.defaults.oLanguage.sInfoEmpty = ' ';
 
@@ -114,7 +153,7 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return formatExperimentAccession(data, type, full);
                     } },
-                { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center bb nowrap",
+                { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center bb nowrap", 'sType': 'date-eu',
                     "mRender":function (data, type, full) {
                         return formatLastUpdate(data, type, full);
                     } },
