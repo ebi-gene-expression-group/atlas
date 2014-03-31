@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -41,7 +40,8 @@ import java.io.IOException;
 
 @Controller
 @Scope("request")
-public class AnalysisMethodsPageController {
+public class
+        AnalysisMethodsPageController {
 
     private TsvReaderBuilder tsvReaderBuilder;
 

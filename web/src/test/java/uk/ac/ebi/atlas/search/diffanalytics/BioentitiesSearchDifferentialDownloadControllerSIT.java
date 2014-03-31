@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.is;
 
 public class BioentitiesSearchDifferentialDownloadControllerSIT {
 
-    private EndPoint subject = new EndPoint("/gxa/query.tsv?geneQuery=AT1G02220");
+    private EndPoint subject = new EndPoint("/gxa/query.tsv?geneQuery=Cyba");
 
     @Test
     public void verifyLengthOfDocument() {
@@ -35,19 +35,19 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
     }
 
     @Test
-    public void verifyBaselineGene() {
-        List<String> firstGene = subject.getRowValues(4);
+    public void verifyRnaSeqGene() {
+        List<String> firstGene = subject.getRowValues(5);
 
         assertThat(firstGene,
-                contains("ANAC003", "Arabidopsis thaliana","nrpe1 mutant vs wild type",	"0.00355665145244311", "2.17880566798814", "NA"));
+                contains("Cyba\tMus musculus\tgenotype:'expressing human TDP-43' vs 'non transgenic'\t0.0206187013724948\t1.33594422753461\tNA".split("\t")));
     }
 
     @Test
     public void verifyMicroArrayGene() {
-        List<String> firstGene = subject.getRowValues(5);
+        List<String> firstGene = subject.getRowValues(4);
 
         assertThat(firstGene,
-                contains("ANAC003", "Arabidopsis thaliana","treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'",	"0.0476008286349805", "0.982933333333333", "4.81369176288206"));
+                contains("Cyba\tMus musculus\tcompound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36\t4.12746725021875E-5\t1.35626816666667\t14.8773555318722".split("\t")));
     }
 
 

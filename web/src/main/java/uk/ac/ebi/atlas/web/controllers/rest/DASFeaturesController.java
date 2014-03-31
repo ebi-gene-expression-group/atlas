@@ -72,7 +72,7 @@ public class DASFeaturesController {
 
         checkArgument(geneId.length() <= 255, "Segment parameter is too long");
 
-        List<DiffAnalytics> diffAnalyticsList = diffAnalyticsSearchService.queryWithoutCount(geneId);
+        List<DiffAnalytics> diffAnalyticsList = diffAnalyticsSearchService.fetchTopWithoutCount(geneId);
 
         String geneName = diffAnalyticsList.isEmpty() ? geneId : diffAnalyticsList.get(0).getBioentityName();
 

@@ -32,7 +32,7 @@
 <%@ attribute name="geneProfiles" required="true" type="uk.ac.ebi.atlas.model.GeneProfilesList"%>
 <%@ attribute name="elementId" required="true"%>
 <%@ attribute name="hidden" required="false" type="java.lang.Boolean"%>
-<%@ attribute name="disableTranscriptPopup" required="false" type="java.lang.Boolean"%>
+<%@ attribute name="geneSet" required="false" type="java.lang.Boolean"%>
 
 <fmt:setBundle basename="configuration" var="configuration"/>
 
@@ -290,7 +290,7 @@
 
                 var selectedFilterFactorsJson = ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"};
 
-                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${preferences.geneSetMatch}, '${base}', '${elementId}', ${hidden != null ? hidden : 'false'}, ${disableTranscriptPopup != null ? disableTranscriptPopup : 'false'});
+                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${geneSet != null ? geneSet : 'false'}, '${base}', '${elementId}', ${hidden != null ? hidden : 'false'});
 
             } else if (${type.isMicroarray()}) {
 

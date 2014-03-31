@@ -103,7 +103,7 @@ public class BioentitiesSearchController {
             model.addAttribute("baselineCounts", baselineCounts);
 
             // used to populate diff-heatmap-table
-            DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
+            DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
 
             model.addAttribute("bioentities", bioentityExpressions);
 

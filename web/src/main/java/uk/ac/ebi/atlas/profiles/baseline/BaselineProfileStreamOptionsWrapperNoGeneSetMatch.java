@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class BaselineProfileStreamOptionsWrapperNoGeneSetMatch implements BaselineProfileStreamOptions {
 
-    BaselineRequestContext context;
+    private BaselineRequestContext context;
 
     public BaselineProfileStreamOptionsWrapperNoGeneSetMatch(BaselineRequestContext context) {
         this.context = context;

@@ -13,7 +13,7 @@ CREATE TABLE MICROARRAY_DIFF_ANALYTICS (
 PARTITION BY LIST (ISACTIVE)
 SUBPARTITION BY RANGE (PVAL) 
 ( PARTITION DIFF_ANALYTICS_ACTIVE VALUES ('T')
-       ( SUBPARTITION BELOW_DEFAULT_FDR VALUES LESS THAN (0.05)
+       ( SUBPARTITION BELOW_DEFAULT_FDR VALUES LESS THAN (0.05)         --doesn't include 0.05, but in practice there are none so we can say to users this is <=0.05
        , SUBPARTITION OTHERS VALUES LESS THAN (MAXVALUE)
        )
 , PARTITION DIFF_ANALYTICS_INACTIVE VALUES ('F')
@@ -51,7 +51,7 @@ CREATE TABLE RNASEQ_DIFF_ANALYTICS (
 PARTITION BY LIST (ISACTIVE)
 SUBPARTITION BY RANGE (PVAL) 
 ( PARTITION DIFF_ANALYTICS_ACTIVE VALUES ('T')
-       ( SUBPARTITION BELOW_DEFAULT_FDR VALUES LESS THAN (0.05)
+       ( SUBPARTITION BELOW_DEFAULT_FDR VALUES LESS THAN (0.05)         --doesn't include 0.05, but in practice there are none so we can say to users this is <=0.05
        , SUBPARTITION OTHERS VALUES LESS THAN (MAXVALUE)
        )
 , PARTITION DIFF_ANALYTICS_INACTIVE VALUES ('F')
@@ -91,13 +91,15 @@ from MICROARRAY_DIFF_ANALYTICS subpartition( BELOW_DEFAULT_FDR ) mda
 join DESIGNELEMENT_MAPPING dem on mda.designelement=dem.designelement and mda.arraydesign = dem.arraydesign
 join BIOENTITY_NAME bn on dem.identifier=bn.identifier
 join BIOENTITY_ORGANISM o on bn.organismid = o.organismid
+where abs(mda.LOG2FOLD) >= 1
 ) where lfrank = 1
 union all
 select rda.IDENTIFIER, bn.NAME AS NAME, o.name AS ORGANISM, rda.EXPERIMENT, rda.CONTRASTID, rda.PVAL, rda.LOG2FOLD, null
 from RNASEQ_DIFF_ANALYTICS subpartition( BELOW_DEFAULT_FDR ) rda
 join BIOENTITY_NAME bn on rda.IDENTIFIER=bn.identifier
 join BIOENTITY_ORGANISM o on bn.organismid = o.organismid
-join EXPERIMENT_ORGANISM eo on o.name = eo.bioentity_organism and eo.experiment = rda.experiment;
+join EXPERIMENT_ORGANISM eo on o.name = eo.bioentity_organism and eo.experiment = rda.experiment
+where abs(rda.LOG2FOLD) >= 1;
 
 exec dbms_mview.refresh( 'VW_DIFFANALYTICS', 'C' );
 
@@ -552,5 +554,9 @@ WHEN OTHERS THEN
 END;
 
 create or replace type IDENTIFIERS_TABLE as table of varchar2(255 byte);
+
+CREATE OR REPLACE TYPE EXPR_CONTRAST AS OBJECT (EXPERIMENT VARCHAR2(255 byte), CONTRASTID VARCHAR2(255 byte));
+
+CREATE OR REPLACE TYPE EXPR_CONTRAST_TABLE AS TABLE OF EXPR_CONTRAST;
 
 exit;

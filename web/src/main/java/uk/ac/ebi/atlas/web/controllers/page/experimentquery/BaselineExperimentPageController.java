@@ -97,6 +97,8 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         addFactorMenu(model);
 
+        model.addAttribute("isWidget", false);
+
         return "experiment";
     }
 
@@ -111,6 +113,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
             model.addAttribute("constituentGeneProfiles", constituentGeneProfiles);
         }
 
+        model.addAttribute("isWidget", true);
         return "heatmap-widget";
     }
 

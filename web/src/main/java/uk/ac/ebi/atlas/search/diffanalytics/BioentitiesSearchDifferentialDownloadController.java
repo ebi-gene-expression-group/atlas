@@ -77,7 +77,7 @@ public class BioentitiesSearchDifferentialDownloadController {
             writer.setResponseWriter(response.getWriter());
             writer.writeHeader(requestParameters);
 
-            int count = diffAnalyticsSearchService.forEachExpression(requestParameters, writer);
+            int count = diffAnalyticsSearchService.visitEachExpression(requestParameters, writer);
             LOGGER.info("downloadGeneQueryResults streamed " + count + " differential gene expressions");
         } catch (VisitorException e) {
             LOGGER.warn("downloadGeneQueryResults aborted, connection may have been lost with the client:" + e.getMessage());

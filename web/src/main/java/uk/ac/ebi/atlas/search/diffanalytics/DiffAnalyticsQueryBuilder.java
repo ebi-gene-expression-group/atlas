@@ -1,15 +1,9 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 import oracle.sql.ARRAY;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Named;
-import java.util.Collection;
-import java.util.List;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -42,12 +36,11 @@ public class DiffAnalyticsQueryBuilder {
     static final String JOIN_PUBLIC_EXPERIMENTS_ONLY = "JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' ";
     static final String ORDER_BY_LOG2FOLD = "order by abs(LOG2FOLD) desc";
 
-    private Collection<IndexedAssayGroup> indexedAssayGroups;
+    private ARRAY experimentContrasts;
     private ARRAY geneIds;
 
-    public DiffAnalyticsQueryBuilder withAssayGroups(Collection<IndexedAssayGroup> indexedAssayGroups) {
-        //TODO: make a set, as sometimes we get the same assay group multiple times, eg: when running GeneQueryDifferentialSerivceIT.conditionPregnant()
-        this.indexedAssayGroups = indexedAssayGroups;
+    public DiffAnalyticsQueryBuilder withExperimentContrasts(ARRAY experimentContrasts) {
+        this.experimentContrasts = experimentContrasts;
         return this;
     }
 
@@ -66,7 +59,7 @@ public class DiffAnalyticsQueryBuilder {
 
     private DatabaseQuery<Object> build(String selectPart) {
 
-        checkState(geneIds != null || CollectionUtils.isNotEmpty(indexedAssayGroups), "Condition or/and geneIds must be specified!");
+        checkState(geneIds != null || experimentContrasts != null, "Conditions and/or genes must be specified!");
 
         DatabaseQuery<Object> databaseQuery = new DatabaseQuery<>();
 
@@ -81,25 +74,11 @@ public class DiffAnalyticsQueryBuilder {
         return databaseQuery;
     }
 
-    // eg: "((EXPERIMENT=? AND CONTRASTID=? ) OR (EXPERIMENT=? AND CONTRASTID=? ))"
+    // eg: "JOIN TABLE(?) exprContrast ON VW_DIFFANALYTICS.EXPERIMENT = exprContrast.EXPERIMENT AND VW_DIFFANALYTICS.CONTRASTID = exprContrast.CONTRASTID"
     private void addContrasts(DatabaseQuery<Object> databaseQuery) {
-        if (CollectionUtils.isNotEmpty(indexedAssayGroups)) {
-            databaseQuery.appendToQueryString("WHERE ");
-
-            List<String> queryParts = Lists.newArrayList();
-
-            String queryPart = "(" + EXPERIMENT + "=? AND " + CONTRASTID + "=? )";
-
-            for (IndexedAssayGroup indexedContrast : indexedAssayGroups) {
-                queryParts.add(queryPart);
-                databaseQuery.addParameter(indexedContrast.getExperimentAccession());
-                databaseQuery.addParameter(indexedContrast.getAssayGroupOrContrastId());
-            }
-
-            databaseQuery.appendToQueryString("(");
-            Joiner joiner = Joiner.on(" OR ");
-            String queryPartsString = joiner.join(queryParts);
-            databaseQuery.appendToQueryString(queryPartsString).appendToQueryString(") ");
+        if (experimentContrasts != null) {
+            databaseQuery.appendToQueryString("JOIN TABLE(?) exprContrast ON VW_DIFFANALYTICS.EXPERIMENT = exprContrast.EXPERIMENT AND VW_DIFFANALYTICS.CONTRASTID = exprContrast.CONTRASTID ");
+            databaseQuery.addParameter(experimentContrasts);
         }
     }
 

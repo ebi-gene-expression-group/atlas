@@ -84,7 +84,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <h:heatmap geneProfiles="${geneProfiles}" elementId="heatmap-div" disableTranscriptPopup="${preferences.geneSetMatch}"/>
+                            <h:heatmap geneProfiles="${geneProfiles}" elementId="heatmap-div" geneSet="${preferences.geneSetMatch}"/>
                         </td>
                     </tr>
                 </table>
@@ -99,10 +99,10 @@
                         <span id="geneConstituentCount">Showing ${constituentGeneProfiles.size()}
                             of ${constituentGeneProfiles.getTotalResultCount()} constituent genes found:
                         </span>
-                        <a id="showGeneSetProfiles" href="javascript:void(0)">(show gene set)</a>
+                        <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
                             </td>
                             <td>
-                                <h:heatmap-legend geneProfiles="${geneProfiles}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
+                                <h:heatmap-legend geneProfiles="${constituentGeneProfiles}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
                             </td>
                         </tr>
                         <tr>

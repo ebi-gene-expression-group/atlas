@@ -23,52 +23,41 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Optional;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.After;
-import org.junit.Before;
+import com.google.common.collect.ImmutableList;
+import oracle.sql.ARRAY;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Inject;
-import java.io.IOException;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class DiffAnalyticsDaoPrivateExperimentIT {
-
-    private static final String EXPERIMENT_ACCESSION = "E-GEOD-21860";
+public class DatabaseQueryPrinterIT {
 
     @Inject
-    private DiffAnalyticsDao subject;
+    DiffAnalyticsDao diffAnalyticsDao;
 
-    @Inject
-    private ExperimentMetadataCRUD experimentMetadataCRUD;
-
-    @Before
-    public void setPrivate() throws IOException {
-        experimentMetadataCRUD.updateExperiment(EXPERIMENT_ACCESSION, true);
+    @Test
+    public void oracleArrayToString() throws Exception {
+        ARRAY oracleArray = diffAnalyticsDao.createOracleArrayForIdentifiers(ImmutableList.of("A", "B", "C", "D", "E"));
+        assertThat(DatabaseQueryPrinter.oracleArrayToString(oracleArray), is("IDENTIFIERS_TABLE('A', 'B', 'C', 'D', 'E')"));
     }
 
     @Test
-    public void getTopExpressionsDoesNotReturnResultsInPrivateExperiments() {
-        Collection<String> geneIds = Collections.singleton("ENSMUSG00000050520");
-        List<DiffAnalytics> expressions = subject.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
-        MatcherAssert.assertThat(expressions, Matchers.hasSize(0));
-    }
+    public void printDatabaseQueryWithGeneIds() throws Exception {
+        //IndexedAssayGroup iag1 = new IndexedAssayGroup("EXP1", "G1");
+        DatabaseQuery<Object> databaseQuery = diffAnalyticsDao.buildSelect(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(ImmutableList.of("A", "B", "C", "D", "E")));
 
-    @After
-    public void setPublic() throws IOException {
-        experimentMetadataCRUD.updateExperiment(EXPERIMENT_ACCESSION, false);
+        assertThat(databaseQuery.print(), is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(IDENTIFIERS_TABLE('A', 'B', 'C', 'D', 'E')) identifiersTable ON IDENTIFIER = identifiersTable.column_value order by abs(LOG2FOLD) desc"));
     }
 
 }

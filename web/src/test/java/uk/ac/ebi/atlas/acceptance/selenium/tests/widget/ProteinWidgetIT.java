@@ -29,6 +29,7 @@ import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWidgetPage;
 
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.startsWith;
@@ -73,6 +74,12 @@ public class ProteinWidgetIT extends SeleniumFixture {
     public void testGeneName() {
         String firstGeneName = heatmapTablePage.getGeneNames().get(0);
         assertThat(firstGeneName, is("ACTL7A"));
+    }
+
+    @Test
+    public void testLinkToExperiment() {
+        String experimentDescriptionLink = heatmapTablePage.getExperimentDescriptionLink();
+        assertThat(experimentDescriptionLink, endsWith("/experiments/E-MTAB-1733?geneQuery=Q9Y615&serializedFilterFactors="));
     }
 
 }

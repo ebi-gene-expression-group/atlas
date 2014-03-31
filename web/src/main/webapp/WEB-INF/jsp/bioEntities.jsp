@@ -177,10 +177,8 @@
 
                         <div id="diffProfileBody" class="bioEntityCard">
                             <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                                <span style="visibility:hidden">c</span>
-                                <span style="float: right">cutoffs: adjusted <i>p</i>-value ${preferences.defaultCutoff} &nbsp;&nbsp; log<sub>2</sub>-fold change 0</sub></span>
-                            </div>
-
+                                <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
+                                <span style="float: right">cutoffs: adjusted <i>p</i>-value 0.05 &nbsp;&nbsp; log<sub>2</sub>-fold change 1.0</sub></span>                            </div>
                             <div id="heatmap-div" style="display:none;">
                                 <table style="margin-left:auto;margin-right:auto;">
                                     <tr>

@@ -34,8 +34,8 @@ import static org.hamcrest.Matchers.*;
 
 public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends SinglePageSeleniumFixture {
 
-    public static final String GENE_QUERY_PARAM = "ENSG00000161547%20ENSMUSG00000030105";
-    public static final String GLOBAL_SEARCH_TERM = "ENSG00000161547+OR+ENSMUSG00000030105";
+    public static final String GENE_QUERY_PARAM = "ENSMUSG00000022255+ENSG00000109929";
+    public static final String GLOBAL_SEARCH_TERM = "ENSMUSG00000022255+OR+ENSG00000109929";
 
 
     private BioEntitiesPage subject;
@@ -65,14 +65,12 @@ public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends Sin
         assertThat(baselineCounts.get(1).getCount(), is(-1));
     }
 
-
     @Test
     public void checkDifferentialDisplaysGeneAndOrganismColumnWithValuesForEachSpecies() {
         subject.clickDifferentialDisplayLevelsButton();
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Arl8b", "Arl8b", "MIMAT0003306"));
-        assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Mus musculus", "Mus musculus", "Homo sapiens"));
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("SC5D", "Mtdh"));
+        assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Homo sapiens", "Mus musculus"));
     }
-
 
     @Test
     public void globalSearchTermIsIdentifiersSeparatedByOR() {

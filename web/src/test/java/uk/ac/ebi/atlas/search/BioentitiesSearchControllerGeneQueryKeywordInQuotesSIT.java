@@ -33,9 +33,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.is;
 
-public class BioentitiesSearchControllerGeneQueryZincFingerSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends SinglePageSeleniumFixture {
 
-    public static final String GENE_QUERY_PARAM = "%22zinc+finger%22";
+    public static final String GENE_QUERY_PARAM = "%22cofactor+binding%22";
 
     private BioEntitiesPage subject;
 
@@ -67,14 +67,14 @@ public class BioentitiesSearchControllerGeneQueryZincFingerSIT extends SinglePag
 
     @Test
     public void differentialPaneHasResults() {
-        assertThat(subject.diffExpressionResultCount(), is("18 search result(s) found"));
+        assertThat(subject.diffExpressionResultCount(), is("1 search result(s) found"));
     }
 
 
     @Test
     public void differentialPaneHasCorrectGenesAndSpecies() {
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), hasItems("Zfp292", "Zfp503", "Zfp810", "Zfp758", "Zfp46"));
-        assertThat(subject.getDiffHeatmapTableOrganismColumn(), hasItems("Mus musculus"));
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), hasItems("ATCAD1"));
+        assertThat(subject.getDiffHeatmapTableOrganismColumn(), hasItems("Arabidopsis thaliana"));
     }
 
     @Test

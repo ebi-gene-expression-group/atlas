@@ -24,8 +24,11 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.ImmutableSet;
 import oracle.jdbc.OracleConnection;
 import oracle.sql.ArrayDescriptor;
+import oracle.sql.STRUCT;
+import oracle.sql.StructDescriptor;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -69,13 +72,14 @@ public class DiffAnalyticsDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<DiffAnalytics> getTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    public List<DiffAnalytics> fetchTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+        Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
 
-        log("getTopExpressions", indexedContrasts, geneIds);
+        log("fetchTopExpressions", uniqueIndexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DatabaseQuery<Object> indexedContrastQuery = buildSelect(indexedContrasts, geneIds);
+        DatabaseQuery<Object> indexedContrastQuery = buildSelect(uniqueIndexedContrasts, geneIds);
 
         jdbcTemplate.setMaxRows(RESULT_SIZE);
 
@@ -88,7 +92,7 @@ public class DiffAnalyticsDao {
 
             stopwatch.stop();
 
-            LOGGER.debug(String.format("getTopExpressions returned %s expressions in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+            LOGGER.debug(String.format("fetchTopExpressions returned %s expressions in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
@@ -99,12 +103,22 @@ public class DiffAnalyticsDao {
 
     }
 
-    public void foreachExpression(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds, final Visitor<DiffAnalytics> visitor)  {
-        log("foreachExpression", indexedContrasts, geneIds);
+    // get uniques, as we get contrasts multiple times for each assay group in the contrast
+    private Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts(Optional<Collection<IndexedAssayGroup>> indexedContrasts) {
+        if (!indexedContrasts.isPresent()) {
+            return Optional.absent();
+        }
+        return Optional.of(ImmutableSet.copyOf(indexedContrasts.get()));
+    }
+
+    public void visitEachExpression(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds, final Visitor<DiffAnalytics> visitor)  {
+        Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
+
+        log("visitEachExpression", uniqueIndexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DatabaseQuery<Object> indexedContrastQuery = buildSelect(indexedContrasts, geneIds);
+        DatabaseQuery<Object> indexedContrastQuery = buildSelect(uniqueIndexedContrasts, geneIds);
 
         final MutableInt count = new MutableInt(0);
 
@@ -140,39 +154,41 @@ public class DiffAnalyticsDao {
         }
 
         stopwatch.stop();
-        LOGGER.debug(String.format("foreachExpression processed %s expressions in %s seconds", count.intValue(), stopwatch.elapsed(TimeUnit.SECONDS)));
+        LOGGER.debug(String.format("visitEachExpression processed %s expressions in %s seconds", count.intValue(), stopwatch.elapsed(TimeUnit.SECONDS)));
     }
 
 
-    public int getResultCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
-        log("getResultCount", indexedContrasts, geneIds);
+    public int fetchResultCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+        Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
+
+        log("fetchResultCount", uniqueIndexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DatabaseQuery databaseQuery = buildCount(indexedContrasts, geneIds);
+        DatabaseQuery databaseQuery = buildCount(uniqueIndexedContrasts, geneIds);
 
         int count = jdbcTemplate.queryForObject(databaseQuery.getQuery(), Integer.class, databaseQuery.getParameters().toArray());
 
-        LOGGER.debug(String.format("getResultCount returned %s in %.2f seconds", count, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+        LOGGER.debug(String.format("fetchResultCount returned %s in %.2f seconds", count, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
         return count;
     }
 
-    DatabaseQuery<Object> buildCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    DatabaseQuery<Object> buildCount(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
         DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
         return builder.buildCount();
     }
 
-    DatabaseQuery<Object> buildSelect(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    DatabaseQuery<Object> buildSelect(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
         DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
         return builder.buildSelect();
     }
 
-    DiffAnalyticsQueryBuilder createDifferentialGeneQueryBuilder(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    DiffAnalyticsQueryBuilder createDifferentialGeneQueryBuilder(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
 
         DiffAnalyticsQueryBuilder builder = new DiffAnalyticsQueryBuilder();
 
-        if (indexedContrasts.isPresent()) {
-            builder.withAssayGroups(indexedContrasts.get());
+        if (indexedContrasts.isPresent() && !indexedContrasts.get().isEmpty()) {
+            builder.withExperimentContrasts(createOracleArrayForIndexedAssayGroup(indexedContrasts.get()));
         }
 
         if (geneIds.isPresent() && !geneIds.get().isEmpty()) {
@@ -183,20 +199,41 @@ public class DiffAnalyticsDao {
 
     }
 
-    private oracle.sql.ARRAY createOracleArrayForIdentifiers(Collection<String> geneIds) {
+    oracle.sql.ARRAY createOracleArrayForIdentifiers(Collection<String> geneIds) {
         final String[] ids = geneIds.toArray(new String[geneIds.size()]);
 
         return jdbcTemplate.execute(new ConnectionCallback<oracle.sql.ARRAY>() {
             public oracle.sql.ARRAY doInConnection(Connection connection) throws SQLException, DataAccessException {
-                OracleConnection oracleConnection = connection.unwrap(OracleConnection.class);
-                ArrayDescriptor descriptor = ArrayDescriptor.createDescriptor("IDENTIFIERS_TABLE", oracleConnection);
-                return new oracle.sql.ARRAY(descriptor, oracleConnection, ids);
+            OracleConnection oracleConnection = connection.unwrap(OracleConnection.class);
+            ArrayDescriptor descriptor = ArrayDescriptor.createDescriptor("IDENTIFIERS_TABLE", oracleConnection);
+            return new oracle.sql.ARRAY(descriptor, oracleConnection, ids);
             }
         });
     }
 
-    private void log(final String methodName, Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
-        LOGGER.debug(String.format(methodName + " for %s contrasts and %s genes", (indexedContrasts.isPresent()) ? indexedContrasts.get().size() : 0,
+    oracle.sql.ARRAY createOracleArrayForIndexedAssayGroup(final Collection<IndexedAssayGroup> indexedAssayGroups) {
+
+        return jdbcTemplate.execute(new ConnectionCallback<oracle.sql.ARRAY>() {
+            public oracle.sql.ARRAY doInConnection(Connection connection) throws SQLException, DataAccessException {
+            OracleConnection oracleConnection = connection.unwrap(OracleConnection.class);
+
+            StructDescriptor exprContrastDescriptor = StructDescriptor.createDescriptor("EXPR_CONTRAST", oracleConnection);
+
+            STRUCT[] exprContrasts = new STRUCT[indexedAssayGroups.size()];
+
+            int i = 0;
+            for (IndexedAssayGroup iag : indexedAssayGroups) {
+                exprContrasts[i++] = new STRUCT(exprContrastDescriptor, oracleConnection, new Object[]{iag.getExperimentAccession(), iag.getAssayGroupOrContrastId()});
+            }
+
+            ArrayDescriptor descriptor = ArrayDescriptor.createDescriptor("EXPR_CONTRAST_TABLE", oracleConnection);
+            return new oracle.sql.ARRAY(descriptor, oracleConnection, exprContrasts);
+            }
+        });
+    }
+
+    private void log(final String methodName, Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
+        LOGGER.debug(String.format(methodName + " for %s unique contrasts and %s genes", (indexedContrasts.isPresent()) ? indexedContrasts.get().size() : 0,
                 (geneIds.isPresent()) ? geneIds.get().size() : 0));
     }
 

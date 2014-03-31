@@ -38,7 +38,7 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=%22BAR%20domain%22&condition=%22wild%20type%22");
+        subject = new BioEntitiesPage(driver, "geneQuery=%22apoptotic+process%22&condition=%22wild+type%22");
         subject.get();
     }
 
@@ -54,22 +54,21 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("-MTAB-599?queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=%22BAR+domain%22"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("-MTAB-599?queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=%22apoptotic+process%22"));
 
     }
 
     @Test
     public void checkDifferentialProfiles() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getContrastColumn(), contains(
-                "compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36",
-                "genotype:'p107 -/-' vs 'wild type' on A-AFFY-24"));
-        assertThat(subject.getFoldChange(), hasItems("0.54", "0.01"));
+        assertThat(subject.getContrastColumn(), hasItem(
+                "compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36"));
+        assertThat(subject.getFoldChange(), hasItems("3.46", "1"));
     }
 
     @Test
     public void checkDifferentialProfilesCount() {
-        assertThat(subject.diffExpressionResultCount(), is("2 search result(s) found"));
+        assertThat(subject.diffExpressionResultCount(), is("14 search result(s) found"));
     }
 
 }

@@ -4,33 +4,66 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.model.differential.Contrast;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
+import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.utils.Visitor;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
-
+import javax.sql.DataSource;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class DiffAnalyticsSearchServiceIT {
 
-    @Inject
     DiffAnalyticsSearchService diffAnalyticsSearchService;
+
+    @Inject
+    DifferentialConditionsSearchService differentialConditionsSearchService;
+
+    @Inject
+    SolrQueryService solrQueryService;
+
+    @Inject
+    @Qualifier("dataSourceOracle")
+    private DataSource dataSource;
+
+    @Mock
+    private ContrastTrader contrastTraderMock;
+
+    @Mock
+    private Contrast contrastMock;
+
+    @Before
+    public void mockOutContrastTrader() {
+        //mock out contrast trader so as not to load experiments, so we don't need experiment data files and also for performance
+        MockitoAnnotations.initMocks(this);
+        when(contrastTraderMock.getContrast(anyString(), anyString())).thenReturn(contrastMock);
+        DiffAnalyticsRowMapper dbeRowMapper = new DiffAnalyticsRowMapper(contrastTraderMock);
+        DiffAnalyticsDao diffAnalyticsDao = new DiffAnalyticsDao(dataSource, dbeRowMapper);
+        diffAnalyticsSearchService = new DiffAnalyticsSearchService(diffAnalyticsDao, differentialConditionsSearchService, solrQueryService);
+    }
 
     public static List<String> getBioentityNames(DiffAnalyticsList bioentityExpressions) {
         List<String> names = Lists.newArrayList();
@@ -44,58 +77,58 @@ public class DiffAnalyticsSearchServiceIT {
     @Test
     public void geneQuery2IDsDifferentSpecies() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("ENSG00000161547 ENSMUSG00000030105");
+        requestParameters.setGeneQuery("ENSMUSG00000091366 AT5G26220");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        assertThat(bioentityExpressions, hasSize(3));
-        assertThat(names, contains("Arl8b", "Arl8b", "MIMAT0003306"));
+        assertThat(bioentityExpressions, hasSize(2));
+        assertThat(names, contains("Gm17040", "AT5G26220/T19G15_70"));
     }
 
     @Test
     public void geneQuery2IDsSameSpecies() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("ENSG00000161547 ENSG00000211855");
+        requestParameters.setGeneQuery("ENSMUSG00000000278 ENSMUSG00000002985");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
         List<String> names = getBioentityNames(bioentityExpressions);
 
         //System.out.println(Joiner.on("\", \"").join(names));
 
-        assertThat(bioentityExpressions, hasSize(1));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(1));
-        assertThat(names, contains("MIMAT0003306"));
+        assertThat(bioentityExpressions, hasSize(2));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(2));
+        assertThat(names, contains("Apoe","Scpep1"));
     }
 
     @Test
     public void geneQueryMiRNA() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("hsa-mir-636");
+        requestParameters.setGeneQuery("hsa-mir-136");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println(Joiner.on("\", \"").join(names));
 
         assertThat(bioentityExpressions, hasSize(1));
-        assertThat(names, contains("MIMAT0003306"));
+        assertThat(names, contains("MIMAT0000448"));
     }
 
     @Test
-    public void geneQueryKeywordWithQuotesZincFinger() throws GenesNotFoundException {
+    public void geneQueryKeywordWithQuotesApoptoticProcess() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("\"zinc finger\"");
+        requestParameters.setGeneQuery("\"apoptotic process\"");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        assertThat(bioentityExpressions, hasSize(18));
-        assertThat(names, contains("Zfp260", "Zfp503", "Zfp758", "Zfp292", "Zfp948", "Zfp68", "Zfp810", "Zfp703", "Zfp617", "Zfp568", "Gli2", "Zfp46", "Zfp109", "Zfp354a", "Zfp146", "Zfx", "Rlf", "Zfp92"));
+        assertThat(bioentityExpressions, hasSize(23));
+        assertThat(names, contains("Tnfrsf11b", "Lcn2", "Dnase1", "Tnfrsf12a", "Trp53inp1", "Gas2", "Apip", "Gja1", "Comp", "Srgn", "Eif2ak3", "Mknk2", "Kras", "Nr4a1", "Arf6", "Tgfbr1", "Sgms1", "Prkd1", "Mef2a", "Ern1", "Slc40a1", "Csrnp1", "Dab2"));
     }
 
 
@@ -105,13 +138,13 @@ public class DiffAnalyticsSearchServiceIT {
         requestParameters.setGeneQuery("kinase");
         requestParameters.setExactMatch(false);
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
         assertThat(bioentityExpressions, hasSize(50));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(567));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(120));
         assertThat(names, contains("Ccl3", "Cish", "Cdkn1a", "AT5G24240", "Thbs1", "Jun", "Pdk4", "Kitl", "Acvr1c", "Rgs2", "Irs1", "Apoe", "FRK1", "AT4G18250", "Dusp1", "CPK29", "Gja1", "Errfi1", "T7B11.18", "AT1G51890", "Tyrobp", "F19C24.15", "Ddr1", "Plek", "S100a4", "F13E7.26", "LECRK18", "AT1G74360", "ATMPK11", "AT1G51790", "Eif2ak3", "Mknk2", "Igbp1", "AT4G11890/T26M18_100", "Fos", "Chp1", "LRR-RLK", "Kras", "Igfbp5", "CPK6", "MZB10.4", "T14L22.6", "Igf1", "CRK34", "Hsp90ab1", "F15B8.110", "WAKL8", "CRK29", "AT1G35710", "CIPK23"));
 
     }
@@ -122,13 +155,13 @@ public class DiffAnalyticsSearchServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
 
         List<String> names = getBioentityNames(bioentityExpressions);
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
         assertThat(bioentityExpressions, hasSize(50));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(3546));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(482));
 
         // match in any order because order differs between ATLAS3DEV and ATLAS3IT.
         // order is unpredictable in Oracle when rows have the same order by value.
@@ -141,13 +174,13 @@ public class DiffAnalyticsSearchServiceIT {
 
 
     @Test
-    public void forEachExpressionGeneQueryMiRNA() throws GenesNotFoundException {
+    public void visitEachExpressionGeneQueryMiRNA() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("hsa-mir-636");
+        requestParameters.setGeneQuery("hsa-mir-136");
 
         final List<String> names = Lists.newArrayList();
 
-        int count = diffAnalyticsSearchService.forEachExpression(requestParameters, new Visitor<DiffAnalytics>() {
+        int count = diffAnalyticsSearchService.visitEachExpression(requestParameters, new Visitor<DiffAnalytics>() {
 
             @Override
             public void visit(DiffAnalytics value) {
@@ -159,30 +192,27 @@ public class DiffAnalyticsSearchServiceIT {
 
         assertThat(count, is(1));
         assertThat(names, hasSize(1));
-        assertThat(names, contains("MIMAT0003306"));
+        assertThat(names, contains("MIMAT0000448"));
 
     }
 
     @Test
     @Ignore //TODO: re-enable when performance fixed
-    public void forEachExpressionGeneQueryKeywordProteinCoding() throws GenesNotFoundException {
+    public void visitEachExpressionGeneQueryKeywordProteinCoding() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
 
         final List<String> names = Lists.newArrayList();
 
-        diffAnalyticsSearchService.forEachExpression(requestParameters, new Visitor<DiffAnalytics>() {
-
-            int count = 0;
+        diffAnalyticsSearchService.visitEachExpression(requestParameters, new Visitor<DiffAnalytics>() {
 
             @Override
             public void visit(DiffAnalytics value) {
-                System.out.print(++count + "\t");
                 names.add(value.getBioentityName());
             }
         });
 
-        assertThat(names, hasSize(4347));
+        assertThat(names, hasSize(482));
 
         //System.out.println(Joiner.on("\", \"").join(names));
 
@@ -191,26 +221,11 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
-    public void geneQueryKeywordApoptosis() throws GenesNotFoundException {
-        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("apoptosis");
-
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
-        List<String> names = getBioentityNames(bioentityExpressions);
-
-        System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
-
-        assertThat(bioentityExpressions, hasSize(46));
-        assertThat(names, contains("Gas2", "Psme1", "Bax", "Psmb10", "Lmna", "Psmd11", "Akt1", "Rock1", "Vim", "Psmc6", "Ywhaz", "Gsn", "Stk24", "Psmd6", "Ywhag", "Fnta", "Bcap31", "Sptan1", "Kpnb1", "Psmd7", "Mapt", "Psmc4", "Prkcd", "Xiap", "Dynll2", "Akt1", "Psmd4", "PSMA7", "Bcl2l11", "Lmnb1", "Ywhab", "Tradd", "Apc", "Bcl2", "Psmd14", "Tnf", "Psmb4", "Dynll1", "Cdh1", "Psmb1", "Diablo", "Apaf1", "Hmgb1", "Pak2", "Psma7", "Psmd8"));
-    }
-
-
-    @Test
     public void conditionPregnant() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("pregnant");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
@@ -226,31 +241,31 @@ public class DiffAnalyticsSearchServiceIT {
 
     }
 
+
     @Test
     public void conditionAND() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("\"Mus musculus\" AND \"wild type\"");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
 
         assertThat(bioentityExpressions, hasSize(50));
     }
 
     @Test
-    public void geneQueryApoptosisAndConditionPregnant() throws GenesNotFoundException {
+    public void geneQueryKinaseAndConditionPregnant() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("apoptosis");
+        requestParameters.setGeneQuery("kinase");
+        requestParameters.setExactMatch(false);
         requestParameters.setCondition("pregnant");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
-
-        assertThat(bioentityExpressions, hasSize(2));
-
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
         List<String> names = getBioentityNames(bioentityExpressions);
 
-        //System.out.println(Joiner.on("\", \"").join(names));
+        System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        assertThat(names, contains("Gas2", "Akt1"));
+        assertThat(bioentityExpressions, hasSize(9));
+        assertThat(names, contains("Cish", "Acvr1c", "Rgs2", "Igfbp5", "Prkd1", "Ern1", "Lrp8", "Dusp1", "Prkar2b"));
     }
 
     @Test
@@ -258,7 +273,7 @@ public class DiffAnalyticsSearchServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("Cct4");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.query(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
 
         assertThat(bioentityExpressions, hasSize(1));
 
