@@ -63,4 +63,9 @@ public class RnaSeqDiffExperimentsCache implements ExperimentsCache<Differential
         experiments.invalidate(experimentAccession);
     }
 
+    @Override
+    public void evictAll() {
+        experiments.invalidateAll();
+    }
+
 }

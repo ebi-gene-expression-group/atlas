@@ -29,4 +29,6 @@ public interface ExperimentsCache<T extends Experiment> {
     T getExperiment(String experimentAccession);
 
     void evictExperiment(String experimentAccession);
+
+    void evictAll();
 }

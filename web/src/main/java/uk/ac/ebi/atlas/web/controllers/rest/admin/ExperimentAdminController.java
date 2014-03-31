@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +50,7 @@ public class ExperimentAdminController {
 
     private ExperimentCRUD experimentCRUD;
     private ExperimentMetadataCRUD experimentMetadataCRUD;
-
+    private ExperimentTrader trader;
 
     @Inject
     public ExperimentAdminController(ExperimentCRUD experimentCRUD,
@@ -130,6 +131,13 @@ public class ExperimentAdminController {
     public String updateAllExperiments() throws IOException {
         int updatedExperimentsCount = experimentMetadataCRUD.updateAllExperiments();
         return "Experiment design was updated for " + updatedExperimentsCount + " experiments";
+    }
+
+    @RequestMapping("/invalidateExperimentCache")
+    @ResponseBody
+    public String emptyExperimentCache() throws IOException {
+        trader.removeAllExperimentsFromCache();
+        return "All experiments removed from cache";
     }
 
 }
