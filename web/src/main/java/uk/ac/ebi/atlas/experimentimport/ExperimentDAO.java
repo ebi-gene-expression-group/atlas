@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DuplicateKeyException;
@@ -97,10 +98,10 @@ public class ExperimentDAO {
         return Sets.newHashSet(experimentAccessions);
     }
 
-    public UUID addExperiment(ExperimentDTO experimentDTO) {
+    public UUID addExperiment(ExperimentDTO experimentDTO, Optional<String> accessKey) {
         try {
 
-            UUID accessKeyUUID = addExperimentRow(experimentDTO);
+            UUID accessKeyUUID = addExperimentRow(experimentDTO, accessKey);
             addExperimentSpeciesRows(experimentDTO);
             return accessKeyUUID;
 
@@ -112,8 +113,8 @@ public class ExperimentDAO {
     private static final String INSERT_NEW_EXPERIMENT = "INSERT INTO experiment " +
             "(accession, type, private, access_key, pubmed_ids, title) VALUES (?, ?, ?, ?, ?, ?)";
 
-    private UUID addExperimentRow(ExperimentDTO experimentDTO) {
-        UUID accessKeyUUID = UUID.randomUUID();
+    private UUID addExperimentRow(ExperimentDTO experimentDTO, Optional<String> accessKey) {
+        UUID accessKeyUUID = accessKey.isPresent() ? UUID.fromString(accessKey.get()) : UUID.randomUUID();
 
         String pubmedIds = Joiner.on(", ").join(experimentDTO.getPubmedIds());
 

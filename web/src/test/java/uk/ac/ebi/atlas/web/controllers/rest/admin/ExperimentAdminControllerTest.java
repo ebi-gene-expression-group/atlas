@@ -22,14 +22,19 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest.admin;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentimport.*;
+import uk.ac.ebi.atlas.experimentimport.ExperimentCRUD;
+import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
+import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
@@ -41,6 +46,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -79,7 +85,7 @@ public class ExperimentAdminControllerTest {
                 Lists.newArrayList(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false)));
         ExperimentDTO experimentDTO = new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, Sets.newHashSet("human", "mouse"),
                         Sets.newHashSet("1", "2"), "Illumina", false);
-        given(experimentDAOMock.addExperiment(experimentDTO)).willReturn(UUID.randomUUID());
+        given(experimentDAOMock.addExperiment(eq(experimentDTO), Matchers.<Optional<String>>anyObject())).willReturn(UUID.randomUUID());
     }
 
     @Test

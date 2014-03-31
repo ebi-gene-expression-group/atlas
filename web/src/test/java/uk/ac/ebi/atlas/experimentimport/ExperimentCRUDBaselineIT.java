@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import org.apache.log4j.Logger;
-import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,9 +31,12 @@ public class ExperimentCRUDBaselineIT {
     private ExperimentCRUD subject;
 
     @Inject
+    private ExperimentMetadataCRUD experimentMetadataCRUD;
+
+    @Inject
     private JdbcTemplate jdbcTemplate;
 
-    @After
+    @Before
     public void cleanUp() {
         deleteInactiveAnalytics();
     }
@@ -59,6 +62,8 @@ public class ExperimentCRUDBaselineIT {
 
     @Test
     public void reloadExistingExperiment() throws IOException {
+        ExperimentDTO originalExperimentDTO = experimentMetadataCRUD.findExperiment(EXISTING_EXPERIMENT_ACCESSION);
+
         assertThat("experiment does not already exist in db", experimentCount(EXISTING_EXPERIMENT_ACCESSION), is(1));
         assertThat("baseline transcripts do not already exist in db", baselinesTranscriptsCount(EXISTING_EXPERIMENT_ACCESSION), is(3));
         assertThat("baseline expressions do not already exist in db", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(124394));
@@ -68,6 +73,10 @@ public class ExperimentCRUDBaselineIT {
         assertThat("count of experiment rows has changed", experimentCount(EXISTING_EXPERIMENT_ACCESSION), is(1));
         assertThat("count of transcripts has changed", baselinesTranscriptsCount(EXISTING_EXPERIMENT_ACCESSION), is(3));
         assertThat("count of baseline expressions has changed", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(124394));
+
+        ExperimentDTO newExperimentDTO = experimentMetadataCRUD.findExperiment(EXISTING_EXPERIMENT_ACCESSION);
+
+        assertThat("access key has changed", originalExperimentDTO.getAccessKey(), is(newExperimentDTO.getAccessKey()));
     }
 
     @Test(expected = ResourceNotFoundException.class)

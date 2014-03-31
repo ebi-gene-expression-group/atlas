@@ -52,7 +52,7 @@ public class ExperimentCRUDMicroArrayDifferentialIT {
         assertThat("analytics were not deleted from db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(0));
     }
 
-     private int experimentCount(String accession) {
+    private int experimentCount(String accession) {
         return jdbcTemplate.queryForObject("select COUNT(*) from EXPERIMENT WHERE accession = ?", Integer.class, accession);
     }
 

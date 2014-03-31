@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.base.Optional;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -37,7 +38,10 @@ import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWri
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.impl.MageTabParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.impl.MageTabParserFactory;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.impl.MageTabParserOutput;
-import uk.ac.ebi.atlas.model.*;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentConfiguration;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
@@ -178,7 +182,7 @@ public class ExperimentMetadataCRUDTest {
 
     @Test
     public void importExperimentShouldAddExperimentToIndex() throws Exception {
-        subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false);
+        subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false, Optional.<String>absent());
         verify(conditionsIndex).addConditions(any(Experiment.class), any(SetMultimap.class));
     }
 }

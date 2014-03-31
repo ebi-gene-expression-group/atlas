@@ -22,9 +22,8 @@
 
 package uk.ac.ebi.atlas.experimentimport;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -59,7 +58,7 @@ public class ExperimentDAOIT {
         ExperimentDTO mtab = new ExperimentDTO(SECRET_111, TYPE_MICROARRAY, Sets.newHashSet("cow"),
                 Sets.newHashSet("1"), "diff", false);
 
-        subject.addExperiment(mtab);
+        subject.addExperiment(mtab, Optional.<String>absent());
     }
 
     public void deleteSecret111() throws Exception {
@@ -100,7 +99,7 @@ public class ExperimentDAOIT {
         int size = experimentDTOs.size();
         ExperimentDTO mtabNew = new ExperimentDTO("new", TYPE_MICROARRAY, Sets.newHashSet("cow"),
                         Sets.newHashSet("1"), "diff", true);
-        subject.addExperiment(mtabNew);
+        subject.addExperiment(mtabNew, Optional.<String>absent());
         experimentDTOs = subject.findAllExperiments();
         assertThat(experimentDTOs.size(), is(size + 1));
         assertThat(experimentDTOs, hasItem(mtabNew));
