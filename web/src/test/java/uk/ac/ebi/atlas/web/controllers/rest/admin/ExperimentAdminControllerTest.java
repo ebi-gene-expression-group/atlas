@@ -37,6 +37,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import java.util.GregorianCalendar;
 import java.util.UUID;
@@ -71,10 +72,13 @@ public class ExperimentAdminControllerTest {
 
     private ExperimentAdminController subject;
 
+    @Mock
+    private ExperimentTrader trader;
+
     @Before
     public void setUp() throws Exception {
 
-        subject = new ExperimentAdminController(experimentCRUDMock, experimentMetadataCRUDMock);
+        subject = new ExperimentAdminController(experimentCRUDMock, experimentMetadataCRUDMock, trader);
 
 
         when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);

@@ -54,7 +54,8 @@ public class ExperimentAdminController {
 
     @Inject
     public ExperimentAdminController(ExperimentCRUD experimentCRUD,
-                                     ExperimentMetadataCRUD experimentMetadataCRUD) {
+                                     ExperimentMetadataCRUD experimentMetadataCRUD, ExperimentTrader trader) {
+        this.trader = trader;
         this.experimentCRUD = experimentCRUD;
         this.experimentMetadataCRUD = experimentMetadataCRUD;
     }
