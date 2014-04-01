@@ -30,8 +30,8 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -95,6 +95,12 @@ public class ExperimentTrader {
                 throw new IllegalStateException("invalid enum value: " + type);
         }
 
+    }
+
+    public void removeAllExperimentsFromCache() {
+        baselineExperimentsCache.evictAll();
+        rnaSeqDiffExperimentsCache.evictAll();
+        microarrayExperimentsCache.evictAll();
     }
 
     private Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {

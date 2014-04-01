@@ -63,4 +63,10 @@ public class BaselineExperimentsCache implements ExperimentsCache<BaselineExperi
         experiments.invalidate(experimentAccession);
     }
 
+    @Override
+    public void evictAll() {
+        experiments.invalidateAll();
+    }
+
+
 }
