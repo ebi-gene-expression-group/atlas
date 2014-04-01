@@ -60,6 +60,13 @@ public class ExperimentConfigurationIT {
     }
 
     @Test
+    public void testGetContrastWithCommaInName() throws Exception {
+        subject = configurationTrader.getExperimentConfiguration("TEST-MICROARRAY");
+        Contrast contrast = subject.getContrast("g2_g1", ARRAY_DESIGN);
+        assertThat(contrast.getDisplayName(), is("'10 micromolar 2,3-dimethoxy-1,4-naphthoquinone' vs 'none'"));
+    }
+
+   @Test
     public void testGetAssayGroups() throws Exception {
         subject = configurationTrader.getExperimentConfiguration("E-MTAB-513");
         AssayGroups assayGroups = subject.getAssayGroups();

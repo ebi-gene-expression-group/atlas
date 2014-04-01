@@ -18,7 +18,7 @@
         </assay_groups>
         <contrasts>
             <contrast id="g2_g1">
-                <name>genotype:'p107 -/-' vs 'wild type' on A-AFFY-24</name>
+                <name>'10 micromolar 2,3-dimethoxy-1,4-naphthoquinone' vs 'none'</name>
                 <reference_assay_group>g2</reference_assay_group>
                 <test_assay_group>g1</test_assay_group>
             </contrast>

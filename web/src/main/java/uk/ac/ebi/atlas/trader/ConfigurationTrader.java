@@ -37,6 +37,7 @@ import javax.inject.Named;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -93,12 +94,31 @@ public class ConfigurationTrader {
 
     private XMLConfiguration getXmlConfiguration(String pathTemplate, String experimentAccession) {
         Path path = Paths.get(MessageFormat.format(pathTemplate, experimentAccession));
+
+        File file = path.toFile();
+
+        if (!file.exists()) {
+            throw new IllegalStateException("Configuration file " + path.toString() + " does not exist");
+        }
+
         try {
-            return new XMLConfiguration(path.toFile());
+            XMLConfiguration xmlConfiguration = new XMLConfiguration();
+            xmlConfiguration.setDelimiterParsingDisabled(true);
+            xmlConfiguration.load(path.toFile());
+            return xmlConfiguration;
         } catch (ConfigurationException cex) {
             LOGGER.error(cex.getMessage(), cex);
             throw new IllegalStateException("Cannot read configuration from path " + path.toString(), cex);
         }
+
+//        try {
+//            XMLConfiguration xmlConfiguration = new XMLConfiguration(path.toFile());
+//            xmlConfiguration.setDelimiterParsingDisabled(true);
+//            return xmlConfiguration;
+//        } catch (ConfigurationException cex) {
+//            LOGGER.error(cex.getMessage(), cex);
+//            throw new IllegalStateException("Cannot read configuration from path " + path.toString(), cex);
+//        }
     }
 
 }
