@@ -56,7 +56,7 @@ public class ConfigurationTrader {
     private String configurationPathTemplate;
 
     public BaselineExperimentConfiguration getFactorsConfiguration(String experimentAccession) {
-        XMLConfiguration xmlConfiguration = getXmlConfiguration(baselineFactorsConfigurationPathTemplate, experimentAccession);
+        XMLConfiguration xmlConfiguration = getXmlConfiguration(baselineFactorsConfigurationPathTemplate, experimentAccession, true);
         return new BaselineExperimentConfiguration(xmlConfiguration);
     }
 
@@ -66,7 +66,7 @@ public class ConfigurationTrader {
 
     private ExperimentConfiguration getExperimentConfiguration(String experimentAccession, boolean isMicroarray) {
 
-        XMLConfiguration xmlConfiguration = getXmlConfiguration(configurationPathTemplate, experimentAccession);
+        XMLConfiguration xmlConfiguration = getXmlConfiguration(configurationPathTemplate, experimentAccession, false);
         xmlConfiguration.setExpressionEngine(new XPathExpressionEngine());
         Document document = parseConfigurationXml(experimentAccession);
         if (isMicroarray) {
@@ -92,7 +92,7 @@ public class ConfigurationTrader {
         }
     }
 
-    private XMLConfiguration getXmlConfiguration(String pathTemplate, String experimentAccession) {
+    private XMLConfiguration getXmlConfiguration(String pathTemplate, String experimentAccession, boolean splitOnComma) {
         Path path = Paths.get(MessageFormat.format(pathTemplate, experimentAccession));
 
         File file = path.toFile();
@@ -103,7 +103,9 @@ public class ConfigurationTrader {
 
         try {
             XMLConfiguration xmlConfiguration = new XMLConfiguration();
-            xmlConfiguration.setDelimiterParsingDisabled(true);
+            if (!splitOnComma) {
+                xmlConfiguration.setDelimiterParsingDisabled(true);
+            }
             xmlConfiguration.load(path.toFile());
             return xmlConfiguration;
         } catch (ConfigurationException cex) {
