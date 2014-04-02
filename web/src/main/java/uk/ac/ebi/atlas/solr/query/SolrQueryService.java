@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
+import com.google.common.base.Stopwatch;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.lang.ArrayUtils;
@@ -41,6 +42,7 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static uk.ac.ebi.atlas.solr.BioentityType.GENE;
@@ -202,11 +204,15 @@ public class SolrQueryService {
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
         if (tokenizeQuery) {
+            //geneSetMatch = true
+            //associate gene ids with each token in the query string
             for (String queryToken : bioentityPropertyValueTokenizer.split(geneQuery)) {
                 Set<String> geneIds = fetchGeneIds(queryToken, exactMatch, species);
                 geneQueryResponse.addGeneIds(queryToken, geneIds);
             }
         } else {
+            //geneSetMatch = false
+            //associate gene ids with the complete query string
             Set<String> geneIds = fetchGeneIds(geneQuery, exactMatch, species);
             geneQueryResponse.addGeneIds(geneQuery, geneIds);
         }
@@ -216,12 +222,18 @@ public class SolrQueryService {
 
     Set<String> fetchGeneIds(String geneQuery, boolean exactMatch, String species) {
 
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
                 .forQueryString(geneQuery, true).withExactMatch(exactMatch)
                 .withSpecies(species).withBioentityTypes(GENE.getSolrAliases()).build();
 
-        return solrServer.query(solrQuery, BIOENTITY_IDENTIFIER_FIELD, true);
+        Set<String> geneIds = solrServer.query(solrQuery, BIOENTITY_IDENTIFIER_FIELD, true);
 
+        stopwatch.stop();
+        LOGGER.debug(String.format("Fetched gene ids for %s: returned %s results in %s secs", geneQuery, geneIds.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+
+        return geneIds;
     }
 
     String limitSpeciesNameToTwoWords(String species) {
