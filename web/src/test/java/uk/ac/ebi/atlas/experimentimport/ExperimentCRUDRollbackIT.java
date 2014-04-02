@@ -13,10 +13,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.impl.MageTabParserFactory;
-import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
+import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -92,7 +92,7 @@ public class ExperimentCRUDRollbackIT {
             exceptionMessage = e.getMessage();
         }
 
-        LOGGER.info("loadExperiment complete");
+        LOGGER.info("importExperiment complete");
 
         assertThat("no exception thrown", exceptionMessage, is("die!"));
 

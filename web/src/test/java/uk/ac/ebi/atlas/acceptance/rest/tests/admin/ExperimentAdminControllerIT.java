@@ -59,7 +59,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     public void loadAndDeleteNewBaselineExperimentPublic() {
 
         expect().body(startsWith("Experiment " + NEW_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
-                .get("loadExperiment?accession=" + NEW_EXPERIMENT_ACCESSION + "&private=false");
+                .get("importExperiment?accession=" + NEW_EXPERIMENT_ACCESSION + "&private=false");
 
         expect().body("experimentAccession", hasItem(NEW_EXPERIMENT_ACCESSION))
                 .and().body("isPrivate", contains(false))
@@ -78,7 +78,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     public void loadAndDeleteNewBaselineExperimentPrivate() {
 
         expect().body(startsWith("Experiment " + NEW_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
-                .get("loadExperiment?accession=" + NEW_EXPERIMENT_ACCESSION + "&private=true");
+                .get("importExperiment?accession=" + NEW_EXPERIMENT_ACCESSION + "&private=true");
 
         expect().body("experimentAccession", hasItem(NEW_EXPERIMENT_ACCESSION))
                 .and().body("isPrivate", contains(true))
@@ -108,7 +108,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 .when().get("listExperiments?accession=" + EXISTING_EXPERIMENT_ACCESSION);
 
         expect().body(startsWith("Experiment " + EXISTING_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
-                .get("loadExperiment?accession=" + EXISTING_EXPERIMENT_ACCESSION + "&private=false");
+                .get("importExperiment?accession=" + EXISTING_EXPERIMENT_ACCESSION + "&private=false");
     }
 
     @Test
@@ -116,7 +116,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
         String blablaExperimentAccession = "E-MTAB-BLA-BLA-BLA";
 
         expect().body(startsWith("IllegalStateException: Required file can not be read"))
-                .when().get("loadExperiment?accession=" + blablaExperimentAccession);
+                .when().get("importExperiment?accession=" + blablaExperimentAccession);
 
         expect().body("experimentAccession", is(empty())).when().get("listExperiments?accession=" + blablaExperimentAccession);
 
@@ -145,7 +145,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(0));
 
         expect().body(startsWith("Experiment " + DIFFERENTIAL_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
-                .get("loadExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=false");
+                .get("importExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=false");
 
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(4));
 

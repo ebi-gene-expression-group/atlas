@@ -68,10 +68,10 @@ public class ExperimentAdminController {
         return e.getClass().getSimpleName() + ": " + e.getMessage();
     }
 
-    @RequestMapping(value={"/loadExperiment", "importExperiment"})
+    @RequestMapping("/importExperiment")
     @ResponseBody
-    public String loadExperiment(@RequestParam("accession") String experimentAccession,
-                                 @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
+    public String importExperiment(@RequestParam("accession") String experimentAccession,
+                                   @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
         UUID accessKeyUUID = experimentCRUD.importExperiment(experimentAccession, isPrivate);
         return "Experiment " + experimentAccession + " loaded, accessKey: " + accessKeyUUID;
     }

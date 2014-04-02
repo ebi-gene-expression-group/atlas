@@ -94,7 +94,7 @@ public class ExperimentAdminControllerTest {
 
     @Test
     public void loadExperimentShouldSucceed() throws Exception {
-        String responseText = subject.loadExperiment(EXPERIMENT_ACCESSION, false);
+        String responseText = subject.importExperiment(EXPERIMENT_ACCESSION, false);
         assertThat(responseText, startsWith("Experiment " + EXPERIMENT_ACCESSION + " loaded, accessKey:"));
         verify(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, false);
     }
@@ -104,7 +104,7 @@ public class ExperimentAdminControllerTest {
         willThrow(new IllegalStateException(EXCEPTION_MESSAGE))
                 .given(experimentCRUDMock).importExperiment(EXPERIMENT_ACCESSION, false);
 
-        subject.loadExperiment(EXPERIMENT_ACCESSION, false);
+        subject.importExperiment(EXPERIMENT_ACCESSION, false);
     }
 
     @Test
