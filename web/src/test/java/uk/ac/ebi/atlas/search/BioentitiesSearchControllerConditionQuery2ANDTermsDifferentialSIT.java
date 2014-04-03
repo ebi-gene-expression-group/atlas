@@ -54,7 +54,6 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT e
     }
 
     @Test
-    @Ignore
     public void globalSearchWidgetShouldHaveResults(){
         subject.clickShowMoreDataWidget();
         assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));

@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.search;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
@@ -65,12 +64,10 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
         assertThat(baselineCounts.get(1).getCount(), is(-1));
     }
 
-
     @Test
     public void differentialPaneHasResults() {
         assertThat(subject.diffExpressionResultCount(), is("1 search result(s) found"));
     }
-
 
     @Test
     public void differentialPaneHasCorrectGenesAndSpecies() {
@@ -84,11 +81,9 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
     }
 
     @Test
-    @Ignore
     public void globalSearchWidgetShouldHaveResults(){
         subject.clickShowMoreDataWidget();
         assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
     }
-
 
 }
