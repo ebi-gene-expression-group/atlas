@@ -29,7 +29,6 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
@@ -66,7 +65,7 @@ public class DiffAnalyticsSearchService {
     public int visitEachExpression(GeneQuerySearchRequestParameters requestParameters, Visitor<DiffAnalytics> visitor) {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
-        Optional<Collection<String>> geneIdsResult = expandGeneQueryIntoGeneIds(requestParameters);
+        Optional<Set<String>> geneIdsResult = expandGeneQueryIntoGeneIds(requestParameters);
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
                  || contrastsResult.isPresent() && contrastsResult.get().isEmpty()) {
@@ -109,7 +108,7 @@ public class DiffAnalyticsSearchService {
 
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
-        Optional<Collection<String>> geneIdsResult = expandGeneQueryIntoGeneIds(requestParameters);
+        Optional<Set<String>> geneIdsResult = expandGeneQueryIntoGeneIds(requestParameters);
 
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
@@ -140,7 +139,7 @@ public class DiffAnalyticsSearchService {
     }
 
     //TODO: move to solrqueryservice
-    public Optional<Collection<String>> expandGeneQueryIntoGeneIds(GeneQuerySearchRequestParameters requestParameters) {
+    public Optional<Set<String>> expandGeneQueryIntoGeneIds(GeneQuerySearchRequestParameters requestParameters) {
         if (!requestParameters.hasGeneQuery()) {
             return Optional.absent();
         }
@@ -156,12 +155,7 @@ public class DiffAnalyticsSearchService {
         String species = "";
 
         //resolve any gene keywords to identifiers
-        GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(geneQuery,
-                requestParameters.isExactMatch(),
-                species,
-                requestParameters.isGeneSetMatch());
-
-        Collection<String> geneIds = geneQueryResponse.getAllGeneIds();
+        Set<String> geneIds = solrQueryService.findGeneIdsOrSets(geneQuery, requestParameters.isExactMatch(), species);
 
         Set<String> matureRNAIds = solrQueryService.findMatureRNAIds(geneQuery);
         geneIds.addAll(matureRNAIds);

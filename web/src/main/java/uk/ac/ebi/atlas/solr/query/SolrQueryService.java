@@ -195,7 +195,7 @@ public class SolrQueryService {
 
     }
 
-    public GeneQueryResponse findGeneIdsOrSets(String geneQuery, boolean exactMatch, String species, boolean tokenizeQuery) {
+    public GeneQueryResponse findGeneIdsOrSetsGroupedByGeneQueryToken(String geneQuery, boolean exactMatch, String species) {
 
         checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
 
@@ -203,21 +203,22 @@ public class SolrQueryService {
 
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
-        if (tokenizeQuery) {
-            //geneSetMatch = true
-            //associate gene ids with each token in the query string
-            for (String queryToken : bioentityPropertyValueTokenizer.split(geneQuery)) {
-                Set<String> geneIds = fetchGeneIds(queryToken, exactMatch, species);
-                geneQueryResponse.addGeneIds(queryToken, geneIds);
-            }
-        } else {
-            //geneSetMatch = false
-            //associate gene ids with the complete query string
-            Set<String> geneIds = fetchGeneIds(geneQuery, exactMatch, species);
-            geneQueryResponse.addGeneIds(geneQuery, geneIds);
+        //associate gene ids with each token in the query string
+        for (String queryToken : bioentityPropertyValueTokenizer.split(geneQuery)) {
+            Set<String> geneIds = fetchGeneIds(queryToken, exactMatch, species);
+            geneQueryResponse.addGeneIds(queryToken, geneIds);
         }
         return geneQueryResponse;
 
+    }
+
+    public Set<String> findGeneIdsOrSets(String geneQuery, boolean exactMatch, String species) {
+
+        checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
+
+        species = limitSpeciesNameToTwoWords(species);
+
+        return fetchGeneIds(geneQuery, exactMatch, species);
     }
 
     Set<String> fetchGeneIds(String geneQuery, boolean exactMatch, String species) {

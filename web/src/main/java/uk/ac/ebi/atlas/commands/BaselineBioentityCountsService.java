@@ -22,24 +22,23 @@
 
 package uk.ac.ebi.atlas.commands;
 
-import com.google.common.collect.Maps;
-import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Sets;
-import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Scope;
-import org.springframework.util.StopWatch;
-import uk.ac.ebi.atlas.dao.BaselineExperimentDao;
-import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.solr.query.GeneQueryResponse;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.solr.query.conditions.BaselineConditionsSearchService;
-import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
+    import com.google.common.collect.Maps;
+    import com.google.common.collect.SetMultimap;
+    import com.google.common.collect.Sets;
+    import org.apache.log4j.Logger;
+    import org.springframework.context.annotation.Scope;
+    import org.springframework.util.StopWatch;
+    import uk.ac.ebi.atlas.dao.BaselineExperimentDao;
+    import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
+    import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+    import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+    import uk.ac.ebi.atlas.solr.query.conditions.BaselineConditionsSearchService;
+    import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+    import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.util.*;
+    import javax.inject.Inject;
+    import javax.inject.Named;
+    import java.util.*;
 
 @Named
 @Scope("request")
@@ -117,12 +116,9 @@ public class BaselineBioentityCountsService {
 
             for (String experimentAccession : LIMITED_BY_EXPERIMENTS.keySet()) {
 
-                GeneQueryResponse geneIds = solrQueryService.findGeneIdsOrSets(requestParameters.getGeneQuery(),
-                        requestParameters.isExactMatch(),
-                        LIMITED_BY_EXPERIMENTS.get(experimentAccession).getSpecies().toLowerCase(),
-                        requestParameters.isGeneSetMatch());
+                Set<String> geneIds = solrQueryService.findGeneIdsOrSets(requestParameters.getGeneQuery(), requestParameters.isExactMatch(),  LIMITED_BY_EXPERIMENTS.get(experimentAccession).getSpecies().toLowerCase());
 
-                if (!geneIds.isEmpty() && baselineExperimentDao.isExperimentWithGenesExpressedAboveCutOff(experimentAccession, geneIds.getAllGeneIds())) {
+                if (!geneIds.isEmpty() && baselineExperimentDao.isExperimentWithGenesExpressedAboveCutOff(experimentAccession, geneIds)) {
                     results.add(LIMITED_BY_EXPERIMENTS.get(experimentAccession));
                 }
 
@@ -137,12 +133,9 @@ public class BaselineBioentityCountsService {
 
     private boolean isExperimentWithGenesExpressedAboveCutOff(GeneQuerySearchRequestParameters requestParameters, String experimentAccession, String species, Collection<String> assayGroups) {
         if (requestParameters.hasGeneQuery()) {
-            GeneQueryResponse geneIds = solrQueryService.findGeneIdsOrSets(requestParameters.getGeneQuery(),
-                    requestParameters.isExactMatch(),
-                    species.toLowerCase(),
-                    requestParameters.isGeneSetMatch());
+            Set<String> geneIds = solrQueryService.findGeneIdsOrSets(requestParameters.getGeneQuery(), requestParameters.isExactMatch(), species.toLowerCase());
 
-            if (!geneIds.isEmpty() && baselineExperimentDao.isExperimentWithGenesExpressedAboveCutOff(experimentAccession, assayGroups, geneIds.getAllGeneIds())) {
+            if (!geneIds.isEmpty() && baselineExperimentDao.isExperimentWithGenesExpressedAboveCutOff(experimentAccession, assayGroups, geneIds)) {
                 return true;
             }
         } else {

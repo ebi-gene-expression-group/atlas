@@ -27,10 +27,9 @@ public class LoadGeneIdsIntoRequestContext {
             return;
         }
 
-        GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSets(geneQuery,
+        GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSetsGroupedByGeneQueryToken(geneQuery,
                 requestContext.isExactMatch(),
-                species,
-                requestContext.isGeneSetMatch());
+                species);
 
         if (geneQueryResponse.isEmpty()) {
             throw new GenesNotFoundException("No genes found for searchText = " + geneQuery + ", species = " + species);

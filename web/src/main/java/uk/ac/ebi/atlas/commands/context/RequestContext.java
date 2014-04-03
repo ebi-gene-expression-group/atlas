@@ -81,10 +81,6 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         return getRequestPreferences().isExactMatch();
     }
 
-    public boolean isGeneSetMatch() {
-        return getRequestPreferences().isGeneSetMatch();
-    }
-
     public Set<T> getAllQueryFactors() {
         return allQueryFactors;
     }
