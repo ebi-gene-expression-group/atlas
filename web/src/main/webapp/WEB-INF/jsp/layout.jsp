@@ -123,8 +123,6 @@
             src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/autocompleteModule.js"></script>
-    <script language="JavaScript"type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/arrayQualityMetrics.js"></script>
 
     <!-- fancybox start -->
     <link rel="stylesheet"
