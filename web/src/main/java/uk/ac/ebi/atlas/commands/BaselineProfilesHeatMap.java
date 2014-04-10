@@ -38,21 +38,21 @@ public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, Ba
 
     public BaselineProfilesList fetch(BaselineRequestContext requestContext) throws GenesNotFoundException {
         loadGeneIdsIntoRequestContext.load(requestContext, requestContext.getFilteredBySpecies());
+        LOGGER.debug(String.format("<fetch> for %s genes (asGeneSets=%s) for gene query [%s]", requestContext.getSelectedGeneIDs().size(), requestContext.asGeneSets(), requestContext.getGeneQuery()));
 
-        Stopwatch stopwatch = Stopwatch.createStarted();
-
-        ObjectInputStream<BaselineProfile> inputStream = inputStreamFactory.create(requestContext);
-        BaselineProfilesList profiles = super.fetch(inputStream, requestContext);
-
-        stopwatch.stop();
-        LOGGER.debug(String.format("<fetch> for [%s] (geneSetMatch=%s) took %s secs", requestContext.getGeneQuery(), requestContext.isGeneSetMatch(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
-
-        return profiles;
+        return fetch((BaselineProfileStreamOptions)requestContext);
     }
 
     public BaselineProfilesList fetch(BaselineProfileStreamOptions options) throws GenesNotFoundException {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
         ObjectInputStream<BaselineProfile> inputStream = inputStreamFactory.create(options);
-        return super.fetch(inputStream, options);
+        BaselineProfilesList profiles = super.fetch(inputStream, options);
+
+        stopwatch.stop();
+        LOGGER.debug(String.format("<fetch> for [%s] (asGeneSets=%s) took %s secs", options.getSelectedGeneIDs().size(), options.asGeneSets(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+
+        return profiles;
     }
 
 }

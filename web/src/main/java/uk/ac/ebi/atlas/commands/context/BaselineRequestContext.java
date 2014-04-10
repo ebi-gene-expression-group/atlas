@@ -81,6 +81,11 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
         return getRequestPreferences().isGeneSetMatch();
     }
 
+    @Override
+    public boolean asGeneSets() {
+        return getRequestPreferences().isGeneSetMatch();
+    }
+
 
     @Override
     public String toString() {

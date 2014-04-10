@@ -29,7 +29,7 @@ public class BaselineProfileStreamPipelineBuilder implements ProfileStreamPipeli
         Set<Factor> queryFactors = options.getSelectedQueryFactors();
         Set<String> uppercaseGeneIDs = options.getSelectedGeneIDs();
         Set<Factor> allQueryFactors = options.getAllQueryFactors();
-        boolean isGeneSetMatch = options.isGeneSetMatch();
+        boolean asGeneSets = options.asGeneSets();
 
         Iterable<BaselineProfile> profilesPipeline = profiles;
 
@@ -37,7 +37,7 @@ public class BaselineProfileStreamPipelineBuilder implements ProfileStreamPipeli
             profilesPipeline = ProfileStreamFilters.filterByGeneIds(profilesPipeline, uppercaseGeneIDs);
         }
 
-        if (isGeneSetMatch) {
+        if (asGeneSets) {
             ImmutableSetMultimap<String,String> geneSetIdsToGeneIds = options.getGeneSetIdsToGeneIds();
             profilesPipeline = geneSetBaselineProfilesBuilder.averageIntoGeneSets(profilesPipeline, geneSetIdsToGeneIds);
         }

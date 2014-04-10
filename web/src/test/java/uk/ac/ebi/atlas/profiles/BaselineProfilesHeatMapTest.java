@@ -140,7 +140,7 @@ public class BaselineProfilesHeatMapTest {
     }
 
     private void averageIntoGeneSets() {
-        when(options.isGeneSetMatch()).thenReturn(true);
+        when(options.asGeneSets()).thenReturn(true);
         when(options.getGeneSetIdsToGeneIds()).thenReturn(react71GeneIds);
     }
 

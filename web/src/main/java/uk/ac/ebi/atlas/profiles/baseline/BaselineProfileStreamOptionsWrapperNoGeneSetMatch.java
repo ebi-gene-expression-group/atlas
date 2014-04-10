@@ -60,7 +60,7 @@ public class BaselineProfileStreamOptionsWrapperNoGeneSetMatch implements Baseli
     }
 
     @Override
-    public boolean isGeneSetMatch() {
+    public boolean asGeneSets() {
         return false;
     }
 

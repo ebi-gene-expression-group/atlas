@@ -26,5 +26,5 @@ public interface BaselineProfileStreamOptions extends ProfileStreamOptions {
 
     Set<Factor> getSelectedFilterFactors();
 
-    boolean isGeneSetMatch();
+    boolean asGeneSets();
 }
