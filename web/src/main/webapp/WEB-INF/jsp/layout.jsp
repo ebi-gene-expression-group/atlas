@@ -36,9 +36,19 @@
     <c:set var="arrayDesign" value="${arrayDesign}"/>
     <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
 
-    <c:if test="${!baseUri.equals('/gxa/experiments/'.concat(experimentAccession).concat('/qc/').concat(arrayDesign).concat('/index.html'))}">
+    <br>
+    <c:set var="qcUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/qc/').concat(arrayDesign).concat('/index.html')}" />
+    <c:set var="fastQCUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/qc/').concat('qc.html')}" />
+    <c:set var="fastQCMappingUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/qc/mapping/').concat('tophat1.html')}" />
+
+    <c:if test="${!baseUri.equals(qcUri) && !baseUri.equals(fastQCUri) && !baseUri.equals(fastQCMappingUri) && !baseUri.endsWith('fastqc_report.html')}">
         <base href="//${pageContext.request.serverName}${serverPort}${pageContext.request.contextPath}/"/>
     </c:if>
+
+    <%--<c:if test="${!baseUri.equals('/gxa/experiments/'.concat(experimentAccession).concat('/qc/').concat(arrayDesign).concat('/index.html'))}">--%>
+        <%--<c:if test="${!baseUri.equals(qcUri) && !baseUri.equals(fastQCUri) && !baseUri.equals(fastQCMappingUri)}">--%>
+        <%--<base href="//${pageContext.request.serverName}${serverPort}${pageContext.request.contextPath}"/>--%>
+    <%--</c:if>--%>
 
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta content="en-GB" http-equiv="Content-Language">

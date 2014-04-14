@@ -55,6 +55,20 @@
                             </c:forEach>
                         </c:if>
 
+
+                        <%--@elvariable id="fastQReportUtil" type="uk.ac.ebi.atlas.utils.FastQCReportUtil"--%>
+                        <c:set var="hasFastQcReport" value="${fastQReportUtil.hasFastQC(experimentAccession)}"/>
+                        <c:if test="${hasFastQcReport && qcArrayDesigns==null}" >
+                            <td>
+                                <a id="display-fastqc-report" class="button-image" title="Quality Metrics Report"
+                                   href="${pageContext.request.contextPath}/experiments/${experimentAccession}/qc/qc.html${accessKeyQueryString}">
+                                    <img src="${pageContext.request.contextPath}/resources/images/qc_v15.png"/>
+                                </a>
+                            </td>
+                        </c:if>
+
+
+
                         <c:if test="${type.isDifferential()}">
                             <td>
                                 <a id="download-raw" class="button-image"

@@ -95,6 +95,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/qc-template.jsp"/>
     </definition>
 
+    <definition name="fast-qc-template" extends="base.definition">
+        <put-attribute name="title" value="Experiment - FastQC Report"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/fast-qc-template.jsp"/>
+    </definition>
+
     <definition name="widget.base.definition" template="/WEB-INF/jsp/widget-layout.jsp">
         <put-attribute name="title" value="Expression Atlas"/>
         <put-attribute name="header" value=""/>
