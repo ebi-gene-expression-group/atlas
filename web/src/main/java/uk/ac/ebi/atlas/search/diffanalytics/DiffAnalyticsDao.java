@@ -72,7 +72,7 @@ public class DiffAnalyticsDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<DiffAnalytics> fetchTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    public List<DiffAnalytics> fetchTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
         Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
 
         log("fetchTopExpressions", uniqueIndexedContrasts, geneIds);
@@ -104,14 +104,14 @@ public class DiffAnalyticsDao {
     }
 
     // get uniques, as we get contrasts multiple times for each assay group in the contrast
-    private Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts(Optional<Collection<IndexedAssayGroup>> indexedContrasts) {
+    private Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts) {
         if (!indexedContrasts.isPresent()) {
             return Optional.absent();
         }
         return Optional.of(ImmutableSet.copyOf(indexedContrasts.get()));
     }
 
-    public void visitEachExpression(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds, final Visitor<DiffAnalytics> visitor)  {
+    public void visitEachExpression(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, final Visitor<DiffAnalytics> visitor)  {
         Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
 
         log("visitEachExpression", uniqueIndexedContrasts, geneIds);
@@ -158,7 +158,7 @@ public class DiffAnalyticsDao {
     }
 
 
-    public int fetchResultCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<Collection<String>> geneIds) {
+    public int fetchResultCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
         Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
 
         log("fetchResultCount", uniqueIndexedContrasts, geneIds);

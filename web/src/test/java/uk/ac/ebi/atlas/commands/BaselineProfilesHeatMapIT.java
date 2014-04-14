@@ -12,6 +12,8 @@ import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
@@ -42,6 +44,9 @@ public class BaselineProfilesHeatMapIT {
     private BaselineRequestPreferences requestPreferences = new BaselineRequestPreferences();
 
     private BaselineRequestContext baselineRequestContext;
+
+    @Inject
+    private LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext;
 
     @Before
     public void initRequestContext() {
@@ -114,10 +119,9 @@ public class BaselineProfilesHeatMapIT {
     @Test
     public void eMTab513_NotSpecific_MultipleGeneSets_Order() throws GenesNotFoundException {
         setNotSpecific();
-        setGeneSet();
         setGeneQuery("react_14797 react_19184 react_604 react_111102 react_111217 react_6900 react_71 react_116125 react_75774 react_6802 react_17015 react_22258 react_15518 react_115566 react_12627");
 
-        BaselineProfilesList profiles = subject.fetch(baselineRequestContext);
+        BaselineProfilesList profiles = subject.fetch(asGeneSet(baselineRequestContext));
         //System.out.println(Joiner.on("\", \"").join(profiles.extractGeneNames()));
 
         assertThat(profiles.getTotalResultCount(), is(15));
@@ -125,13 +129,17 @@ public class BaselineProfilesHeatMapIT {
 
     }
 
+    private BaselineProfileStreamOptions asGeneSet(BaselineRequestContext baselineRequestContext) throws GenesNotFoundException {
+        loadGeneIdsIntoRequestContext.load(baselineRequestContext, baselineRequestContext.getFilteredBySpecies());
+        return new BaselineProfileStreamOptionsWrapperAsGeneSets(baselineRequestContext);
+    }
+
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true&geneQuery=react_14797+react_19184+react_604+react_111102+react_111217+react_6900+react_71+react_116125+react_75774+react_6802+react_17015+react_22258+react_15518+react_115566+react_12627&geneSetMatch=true
     @Test
     public void eMTab513_Specific_MultipleGeneSets_Order() throws GenesNotFoundException {
-        setGeneSet();
         setGeneQuery("react_14797 react_19184 react_604 react_111102 react_111217 react_6900 react_71 react_116125 react_75774 react_6802 react_17015 react_22258 react_15518 react_115566 react_12627");
 
-        BaselineProfilesList profiles = subject.fetch(baselineRequestContext);
+        BaselineProfilesList profiles = subject.fetch(asGeneSet(baselineRequestContext));
         //System.out.println(Joiner.on("\", \"").join(profiles.extractGeneNames()));
 
         assertThat(profiles.getTotalResultCount(), is(15));
@@ -141,10 +149,6 @@ public class BaselineProfilesHeatMapIT {
 
     private void setGeneQuery(String geneQuery) {
         requestPreferences.setGeneQuery(geneQuery);
-    }
-
-    private void setGeneSet() {
-        requestPreferences.setGeneSetMatch(true);
     }
 
     private void setNotSpecific() {

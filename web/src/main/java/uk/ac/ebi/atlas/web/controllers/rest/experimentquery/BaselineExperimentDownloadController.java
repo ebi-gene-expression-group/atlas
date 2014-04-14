@@ -76,6 +76,8 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
         BaselineRequestContext requestContext = buildRequestContext(experiment, preferences);
 
         try {
+
+
             long genesCount = baselineProfilesWriter.write(response.getWriter(), requestContext);
 
             LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");

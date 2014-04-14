@@ -41,7 +41,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperNoGeneSetMatch;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
@@ -95,6 +95,11 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         prepareModel(preferences, result, model, request);
 
+        if (requestContext.geneQueryResponseContainsGeneSets()) {
+            BaselineProfilesList profilesAsGeneSets = fetchGeneProfilesAsGeneSets();
+            model.addAttribute("profilesAsGeneSets", profilesAsGeneSets);
+        }
+
         addFactorMenu(model);
 
         model.addAttribute("isWidget", false);
@@ -108,24 +113,18 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         prepareModel(preferences, result, model, request);
 
-        if (preferences.isGeneSetMatch()) {
-            BaselineProfilesList constituentGeneProfiles = fetchConstituentGeneProfiles(preferences, result);
-            model.addAttribute("constituentGeneProfiles", constituentGeneProfiles);
+        if (requestContext.geneQueryResponseContainsGeneSets()) {
+            BaselineProfilesList profilesAsGeneSets = fetchGeneProfilesAsGeneSets();
+            model.addAttribute("profilesAsGeneSets", profilesAsGeneSets);
         }
 
         model.addAttribute("isWidget", true);
         return "heatmap-widget";
     }
 
-    private BaselineProfilesList fetchConstituentGeneProfiles(BaselineRequestPreferences preferences, BindingResult result) {
-        try {
-            BaselineProfileStreamOptionsWrapperNoGeneSetMatch options = new BaselineProfileStreamOptionsWrapperNoGeneSetMatch(requestContext);
-
-            return baselineProfilesHeatMap.fetch(options);
-        } catch (GenesNotFoundException e) {
-            result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
-        }
-        return new BaselineProfilesList();
+    private BaselineProfilesList fetchGeneProfilesAsGeneSets() {
+        BaselineProfileStreamOptionsWrapperAsGeneSets options = new BaselineProfileStreamOptionsWrapperAsGeneSets(requestContext);
+        return baselineProfilesHeatMap.fetch(options);
     }
 
     private void prepareModel(BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request) {

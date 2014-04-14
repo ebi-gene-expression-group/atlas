@@ -97,10 +97,10 @@ public class SolrQueryServiceIT {
     public void testFetchGeneIdentifiersFromSolr() throws SolrServerException, GenesNotFoundException {
 
         // given
-        GeneQueryResponse geneQueryResponse = subject.findGeneIdsOrSets("aspm", false, "homo sapiens", false);
+        Set<String> geneQueryResponse = subject.findGeneIdsOrSets("aspm", false, "homo sapiens");
 
         // then
-        assertThat(geneQueryResponse.getAllGeneIds(), contains("ENSG00000066279"));
+        assertThat(geneQueryResponse, contains("ENSG00000066279"));
 
     }
 
@@ -108,11 +108,11 @@ public class SolrQueryServiceIT {
     public void testFetchGeneIdentifiersFromSolrMany() throws SolrServerException, GenesNotFoundException {
 
         // given
-        GeneQueryResponse geneQueryResponse = subject.findGeneIdsOrSets("protein", false, "homo sapiens", false);
+        Set<String> geneQueryResponse = subject.findGeneIdsOrSets("protein", false, "homo sapiens");
 
         // then
-        assertThat(geneQueryResponse.getAllGeneIds().size(), lessThan(200000));
-        assertThat(geneQueryResponse.getAllGeneIds(), hasItems("ENSG00000126773", "ENSG00000183878"));
+        assertThat(geneQueryResponse.size(), lessThan(200000));
+        assertThat(geneQueryResponse, hasItems("ENSG00000126773", "ENSG00000183878"));
 
     }
 

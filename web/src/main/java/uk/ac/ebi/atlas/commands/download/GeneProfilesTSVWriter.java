@@ -28,13 +28,14 @@ import org.apache.commons.lang3.ArrayUtils;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.GeneProfilesList;
 import uk.ac.ebi.atlas.model.Profile;
+import uk.ac.ebi.atlas.profiles.differential.ProfileStreamOptions;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Set;
 
-public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements AutoCloseable {
+public abstract class GeneProfilesTSVWriter<T extends Profile, K, O extends ProfileStreamOptions> implements AutoCloseable {
 
     private static final String GENE_NAME_COLUMN_NAME = "Gene Name";
     private static final String GENE_ID_COLUMN_NAME = "Gene ID";
@@ -48,10 +49,10 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
         this.csvWriterFactory = csvWriterFactory;
     }
 
-    public long write(GeneProfilesList<T> geneProfilesList, Set<K> conditions) throws IOException {
+    public long write(GeneProfilesList<T> geneProfilesList, Set<K> conditions, O options) throws IOException {
 
-        responseWriter.write(getTsvFileMasthead() + "\n");
-        csvWriter.writeNext(buildCsvColumnHeaders(conditions));
+        responseWriter.write(getTsvFileMasthead(options) + "\n");
+        csvWriter.writeNext(buildCsvColumnHeaders(conditions, options));
 
         for (T profile : geneProfilesList) {
             String[] csvRow = buildCsvRow(profile, conditions);
@@ -63,10 +64,10 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
         return (long) geneProfilesList.size();
     }
 
-    public long write(ObjectInputStream<T> inputStream, Set<K> conditions) throws IOException {
+    public long write(ObjectInputStream<T> inputStream, Set<K> conditions, O options) throws IOException {
 
-        responseWriter.write(getTsvFileMasthead() + "\n");
-        csvWriter.writeNext(buildCsvColumnHeaders(conditions));
+        responseWriter.write(getTsvFileMasthead(options) + "\n");
+        csvWriter.writeNext(buildCsvColumnHeaders(conditions, options));
 
         long count = 0;
         T geneProfile;
@@ -81,10 +82,10 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
         return count;
     }
 
-    public long write(Iterable<T> inputStream, Set<K> conditions) throws IOException {
+    public long write(Iterable<T> inputStream, Set<K> conditions, O options) throws IOException {
 
-        responseWriter.write(getTsvFileMasthead() + "\n");
-        csvWriter.writeNext(buildCsvColumnHeaders(conditions));
+        responseWriter.write(getTsvFileMasthead(options) + "\n");
+        csvWriter.writeNext(buildCsvColumnHeaders(conditions, options));
 
         long count = 0;
         for (T geneProfile : inputStream) {
@@ -105,14 +106,14 @@ public abstract class GeneProfilesTSVWriter<T extends Profile, K> implements Aut
 
     protected abstract String[] getConditionColumnHeaders(Set<K> conditions);
 
-    protected abstract String getTsvFileMasthead();
+    protected abstract String getTsvFileMasthead(O options);
 
-    protected String[] getProfileIdColumnHeaders(){
+    protected String[] getProfileIdColumnHeaders(O options){
         return new String[]{GENE_ID_COLUMN_NAME, GENE_NAME_COLUMN_NAME};
     }
 
-    protected String[] buildCsvColumnHeaders(Set<K> conditionValues) {
-        String[] profileIdColumnHeaders = getProfileIdColumnHeaders();
+    protected String[] buildCsvColumnHeaders(Set<K> conditionValues, O options) {
+        String[] profileIdColumnHeaders = getProfileIdColumnHeaders(options);
         String[] conditionColumnHeaders = getConditionColumnHeaders(conditionValues);
         return buildCsvRow(profileIdColumnHeaders, conditionColumnHeaders);
     }

@@ -31,6 +31,7 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 
 import javax.inject.Inject;
 import java.net.URISyntaxException;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -50,12 +51,12 @@ public class FindGeneIdsIT {
         //given
         String geneQuery = "GO:0008134 \"p53 binding\"";
         //when
-        GeneQueryResponse result = subject.findGeneIdsOrSets(geneQuery, false, SPECIES, false);
+        Set<String> result = subject.findGeneIdsOrSets(geneQuery, false, SPECIES);
 
         //some genes are found
-        assertThat(result.getAllGeneIds(), hasItems("ENSG00000131759", "ENSG00000112592"));
-        assertThat(result.getAllGeneIds().size(), is(greaterThan(300)));
-        assertThat(result.getAllGeneIds().size(), is(lessThan(600)));
+        assertThat(result, hasItems("ENSG00000131759", "ENSG00000112592"));
+        assertThat(result.size(), is(greaterThan(300)));
+        assertThat(result.size(), is(lessThan(600)));
 
     }
 
@@ -64,11 +65,11 @@ public class FindGeneIdsIT {
         //given
         String geneQuery = "ENSG00000131759 \"mRNA splicing, via spliceosome\"";
         //when
-        GeneQueryResponse result = subject.findGeneIdsOrSets(geneQuery, true, SPECIES, false);
+        Set<String> result = subject.findGeneIdsOrSets(geneQuery, true, SPECIES);
 
         //some genes are found
-        assertThat(result.getAllGeneIds(), hasItems("ENSG00000131759", "ENSG00000084072"));
-        assertThat(result.getAllGeneIds().size(), is(169));
+        assertThat(result, hasItems("ENSG00000131759", "ENSG00000084072"));
+        assertThat(result.size(), is(169));
 
     }
 
@@ -77,7 +78,7 @@ public class FindGeneIdsIT {
         //given
         String query = "\"NOTHING FOUND\"";
 
-        GeneQueryResponse geneQueryResponse = subject.findGeneIdsOrSets(query, false, SPECIES, false);
+        Set<String> geneQueryResponse = subject.findGeneIdsOrSets(query, false, SPECIES);
 
         assertThat(geneQueryResponse.isEmpty(), is(true));
 

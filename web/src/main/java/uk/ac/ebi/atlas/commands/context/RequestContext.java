@@ -44,6 +44,10 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         this.geneQueryResponse = geneQueryResponse;
     }
 
+    public boolean geneQueryResponseContainsGeneSets() {
+        return geneQueryResponse != null && geneQueryResponse.containsGeneSets();
+    }
+
     // called by DifferentialProfileStreamPipelineBuilder
     public Set<String> getSelectedGeneIDs() {
         if (StringUtils.isBlank(getGeneQuery())) {
@@ -79,10 +83,6 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
 
     public boolean isExactMatch() {
         return getRequestPreferences().isExactMatch();
-    }
-
-    public boolean isGeneSetMatch() {
-        return getRequestPreferences().isGeneSetMatch();
     }
 
     public Set<T> getAllQueryFactors() {

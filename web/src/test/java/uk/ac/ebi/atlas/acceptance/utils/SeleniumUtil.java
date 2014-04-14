@@ -27,4 +27,17 @@ public class SeleniumUtil {
         });
     }
 
+    public static WebElement findElementByCssWaitingUntilAvailable(final WebDriver driver, final String css) {
+        FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                .withTimeout(10, TimeUnit.SECONDS)
+                .pollingEvery(250, TimeUnit.MILLISECONDS)
+                .ignoring(NoSuchElementException.class);
+
+        return wait.until(new Function<WebDriver, WebElement>() {
+            public WebElement apply(WebDriver webDriver) {
+                return driver.findElement(By.cssSelector(css));
+            }
+        });
+    }
+
 }

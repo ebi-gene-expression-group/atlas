@@ -38,14 +38,24 @@ public class GeneQueryResponse {
 
     private Multimap<String, String> geneIdsByQueryTerm = HashMultimap.create();
 
+    private boolean containsGeneSets;
+
     public GeneQueryResponse addGeneIds(String queryTerm, Set<String> geneIds){
         checkArgument(StringUtils.isNotBlank(queryTerm));
         checkArgument(!geneIdsByQueryTerm.containsKey(queryTerm));
 
-        if(!geneIds.isEmpty()){
+        if (!geneIds.isEmpty()) {
             geneIdsByQueryTerm.putAll(queryTerm, geneIds);
         }
+
+        if (geneIds.size() > 1) {
+            containsGeneSets = true;
+        }
         return this;
+    }
+
+    public boolean containsGeneSets() {
+        return this.containsGeneSets;
     }
 
     public ImmutableSetMultimap<String, String> getQueryTermsToIds() {

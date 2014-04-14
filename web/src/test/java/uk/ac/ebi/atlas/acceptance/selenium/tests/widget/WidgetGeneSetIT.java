@@ -22,11 +22,11 @@ public class WidgetGeneSetIT extends SeleniumFixture {
 
     @Test
     public void heatmapChangesOnClick() {
-        assertThat(widget.isGeneSetProfilesVisible(), is(true));
-        assertThat(widget.isConstituentGeneProfilesVisible(), is(false));
-        widget.clickShowConstituentGeneProfiles();
+        assertThat(widget.isIndividualGenesVisible(), is(true));
         assertThat(widget.isGeneSetProfilesVisible(), is(false));
-        assertThat(widget.isConstituentGeneProfilesVisible(), is(true));
+        widget.clickShowGeneSetProfiles();
+        assertThat(widget.isIndividualGenesVisible(), is(false));
+        assertThat(widget.isGeneSetProfilesVisible(), is(true));
     }
 
 }

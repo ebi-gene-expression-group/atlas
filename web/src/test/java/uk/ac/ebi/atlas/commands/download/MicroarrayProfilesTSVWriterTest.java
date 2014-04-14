@@ -149,8 +149,8 @@ public class MicroarrayProfilesTSVWriterTest {
     @Test
     public void testWrite() throws Exception {
         subject.setResponseWriter(responseWriterMock);
-        subject.write(inputStreamMock, conditions);
-        subject.getTsvFileMasthead();
+        subject.write(inputStreamMock, conditions, microarrayRequestContextMock);
+        subject.getTsvFileMasthead(microarrayRequestContextMock);
 
         ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
@@ -179,7 +179,7 @@ public class MicroarrayProfilesTSVWriterTest {
 
     @Test
     public void testGetProfileIdColumnHeaders() {
-        assertThat(subject.getProfileIdColumnHeaders(), arrayContaining("Gene ID", "Gene Name", "Design Element"));
+        assertThat(subject.getProfileIdColumnHeaders(microarrayRequestContextMock), arrayContaining("Gene ID", "Gene Name", "Design Element"));
     }
 
     @Test

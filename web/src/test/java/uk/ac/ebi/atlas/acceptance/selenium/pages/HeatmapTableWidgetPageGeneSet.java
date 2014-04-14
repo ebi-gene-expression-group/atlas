@@ -4,11 +4,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class HeatmapTableWidgetPageGeneSet extends HeatmapTableWidgetPage {
     private static final String PAGE_LOCATION = "/gxa/widgets/heatmap/protein";
 
-    @FindBy(id = "showConstituentGeneProfiles")
-    private WebElement showConstituentGeneProfiles;
+    @FindBy(id = "showIndividualGenes")
+    private WebElement showIndividualGenes;
 
     @FindBy(id = "showGeneSetProfiles")
     private WebElement showGeneSetProfiles;
@@ -16,23 +18,30 @@ public class HeatmapTableWidgetPageGeneSet extends HeatmapTableWidgetPage {
     @FindBy(id = "heatmap-div")
     private WebElement heatmap;
 
-    @FindBy(id = "heatmap-constituentGeneProfiles")
-    private WebElement heatmapConstituentGeneProfiles;
+    @FindBy(id = "heatmap-profilesAsGeneSets")
+    private WebElement heatmapProfilesAsGeneSets;
+
+    @FindBy(css = "#global-search-results > li > a")
+    private List<WebElement> globalSearchPointers;
 
     public HeatmapTableWidgetPageGeneSet(WebDriver driver, String httpParameters) {
-        super(driver, "geneSetMatch=true&" + httpParameters);
+        super(driver, httpParameters);
     }
 
-    public void clickShowConstituentGeneProfiles() {
-        showConstituentGeneProfiles.click();
+    public void clickShowIndividualGeneProfiles() {
+        showIndividualGenes.click();
     }
 
-    public boolean isGeneSetProfilesVisible() {
+    public void clickShowGeneSetProfiles() {
+        showGeneSetProfiles.click();
+    }
+
+    public boolean isIndividualGenesVisible() {
         return heatmap.isDisplayed();
     }
 
-    public boolean isConstituentGeneProfilesVisible() {
-        return heatmapConstituentGeneProfiles.isDisplayed();
+    public boolean isGeneSetProfilesVisible() {
+        return heatmapProfilesAsGeneSets.isDisplayed();
     }
 
     @Override

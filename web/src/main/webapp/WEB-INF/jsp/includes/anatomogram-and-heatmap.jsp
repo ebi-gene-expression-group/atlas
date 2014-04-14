@@ -72,10 +72,10 @@
                     <tr>
                         <td>
                         <span id="geneCount">Showing ${geneProfiles.size()}
-                            of ${geneProfiles.getTotalResultCount()} ${preferences.geneSetMatch?'gene sets':'genes'} found:
+                            of ${geneProfiles.getTotalResultCount()} genes found:
                         </span>
-                        <c:if test="${not empty constituentGeneProfiles}">
-                            <a id="showConstituentGeneProfiles" href="javascript:void(0)">(show constituent genes)</a>
+                        <c:if test="${not empty profilesAsGeneSets}">
+                            <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
                         </c:if>
                         </td>
                         <td>
@@ -84,30 +84,30 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <h:heatmap geneProfiles="${geneProfiles}" elementId="heatmap-div" geneSet="${preferences.geneSetMatch}"/>
+                            <h:heatmap geneProfiles="${geneProfiles}" elementId="heatmap-div"/>
                         </td>
                     </tr>
                 </table>
             </div>
 
-            <c:if test="${not empty constituentGeneProfiles}">
-                <div id="heatmap-constituentGeneProfiles" class="heatmap-position" style="display:none">
+            <c:if test="${not empty profilesAsGeneSets}">
+                <div id="heatmap-profilesAsGeneSets" class="heatmap-position" style="display:none">
 
                     <table>
                         <tr>
                             <td>
-                        <span id="geneConstituentCount">Showing ${constituentGeneProfiles.size()}
-                            of ${constituentGeneProfiles.getTotalResultCount()} constituent genes found:
+                        <span id="geneSetsCount">Showing ${profilesAsGeneSets.size()}
+                            of ${profilesAsGeneSets.getTotalResultCount()} gene sets found:
                         </span>
-                        <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
+                        <a id="showIndividualGenes" href="javascript:void(0)">(show individual genes)</a>
                             </td>
                             <td>
-                                <h:heatmap-legend geneProfiles="${constituentGeneProfiles}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
+                                <h:heatmap-legend geneProfiles="${profilesAsGeneSets}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <h:heatmap geneProfiles="${constituentGeneProfiles}" elementId="heatmap-constituentGeneProfiles" hidden="true"/>
+                                <h:heatmap geneProfiles="${profilesAsGeneSets}" elementId="heatmap-profilesAsGeneSets" geneSet="true" hidden="true"/>
                             </td>
                         </tr>
                     </table>

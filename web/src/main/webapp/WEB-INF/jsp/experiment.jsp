@@ -83,6 +83,7 @@
             if ($.browser.msie && $.browser.version <= 8) {
                 $("#anatomogram").remove();
                 $("#heatmap-div").removeClass();
+                $("#heatmap-profilesAsGeneSets").removeClass();
                 $("#gene-distribution-button").hide();//hide the bar chart button
                 $("#gene-distribution-panel").hide();//hide the bar chart
                 $("#slider-range-max").hide();//hide the cutoff slider
@@ -95,6 +96,7 @@
 
                 $("#anatomogram").remove();
                 $("#heatmap-div").removeClass();
+                $("#heatmap-profilesAsGeneSets").removeClass();
                 $("#gene-distribution-button").hide();//hide the bar chart button
                 $("#gene-distribution-panel").hide();//hide the bar chart
                 $("#slider-range-max").hide();//hide the cutoff slider
@@ -126,6 +128,7 @@
             if (!anyAnatomogramFile || 0 === anyAnatomogramFile.length) {
                 $("#anatomogram").remove();//remove the anatomogram
                 $("#heatmap-div").removeClass();
+                $("#heatmap-profilesAsGeneSets").removeClass();
             }
 
             searchFormModule.init($('#queryFactorValues').attr('data-placeholder'), '${species}', '${preferences.defaultCutoff}', '${type.isBaseline() ? '' : preferences.defaultFoldChangeCutOff}');

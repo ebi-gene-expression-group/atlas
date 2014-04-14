@@ -35,6 +35,7 @@ import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -43,7 +44,7 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfile<K>, K extends DifferentialExpression> extends GeneProfilesTSVWriter<T, Contrast> {
+public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfile<K>, K extends DifferentialExpression> extends GeneProfilesTSVWriter<T, Contrast, DifferentialProfileStreamOptions> {
     private static final Logger LOGGER = Logger.getLogger(DifferentialProfilesTSVWriter.class);
     private Resource tsvFileMastheadResource;
     private String tsvFileMastheadTemplate;
@@ -86,7 +87,7 @@ public abstract class DifferentialProfilesTSVWriter<T extends DifferentialProfil
     protected abstract List<String> getExpressionColumnsHeaders();
 
     @Override
-    protected String getTsvFileMasthead() {
+    protected String getTsvFileMasthead(DifferentialProfileStreamOptions options) {
         //TODO: this class should be decoupled from requestContext
         DifferentialRequestContext requestContext = getRequestContext();
         String geneQuery = requestContext.getGeneQuery();

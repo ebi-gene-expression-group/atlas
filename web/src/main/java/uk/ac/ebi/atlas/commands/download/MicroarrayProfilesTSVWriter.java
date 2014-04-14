@@ -28,6 +28,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -67,8 +68,8 @@ public class MicroarrayProfilesTSVWriter extends DifferentialProfilesTSVWriter<M
     }
 
     @Override
-    protected String[] getProfileIdColumnHeaders() {
-        return (String[]) ArrayUtils.addAll(super.getProfileIdColumnHeaders(), new String[]{DESIGN_ELEMENT});
+    protected String[] getProfileIdColumnHeaders(DifferentialProfileStreamOptions options) {
+        return (String[]) ArrayUtils.addAll(super.getProfileIdColumnHeaders(options), new String[]{DESIGN_ELEMENT});
     }
 
     @Override

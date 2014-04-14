@@ -1,8 +1,8 @@
 package uk.ac.ebi.atlas.commands;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -15,14 +15,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
-import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.download.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.commands.download.CsvWriterFactory;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamPipelineBuilder;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileInputStreamFactory;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamPipelineBuilder;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
@@ -35,11 +33,8 @@ import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -212,11 +207,10 @@ public class BaselineProfilesWriterIT {
     @Test
     public void eMTab513_Specific_MultipleGeneSets() throws GenesNotFoundException {
         String geneSets = "react_14797 react_19184 react_604 react_111102 react_111217 react_6900 react_71 react_116125 react_75774 react_6802 react_17015 react_22258 react_15518 react_115566 react_12627";
-        setGeneSet();
         setGeneQuery(geneSets);
 
         BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
-        long genesCount = subject.write(printWriterMock, requestContext);
+        long genesCount = subject.writeAsGeneSets(printWriterMock, requestContext);
         int expectedCount = 15;
 
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
@@ -244,11 +238,10 @@ public class BaselineProfilesWriterIT {
 //    @Ignore
     public void eMTab513react71_Specific_GeneSet_QueryFactorLeukocyteGeneSet_NoResults() throws GenesNotFoundException {
         setQueryFactor(FACTOR_LEUKOCYTE);
-        setGeneSet();
         setGeneQuery("react_71");
 
         BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
-        long genesCount = subject.write(printWriterMock, requestContext);
+        long genesCount = subject.writeAsGeneSets(printWriterMock, requestContext);
         int expectedCount = 0;
 
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
@@ -268,11 +261,10 @@ public class BaselineProfilesWriterIT {
     @Test
     public void eMTab513react71_Specific_GeneSet_QueryFactorProstateGeneSet_CheckExpressionLevelsForReact71() throws GenesNotFoundException {
         setQueryFactor(factor("prostate"));
-        setGeneSet();
         setGeneQuery("react_71");
 
         BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
-        long genesCount = subject.write(printWriterMock, requestContext);
+        long genesCount = subject.writeAsGeneSets(printWriterMock, requestContext);
         int expectedCount = 1;
 
         ArgumentCaptor<String[]> lineCaptor = ArgumentCaptor.forClass(String[].class);
@@ -282,6 +274,8 @@ public class BaselineProfilesWriterIT {
 
         ImmutableMap<String, String[]> geneNameToLine = indexByGeneSetName(lines);
         Set<String> geneNames = geneNameToLine.keySet();
+
+        System.out.println(Joiner.on("\", \"").join(geneNames));
 
         assertThat(genesCount, is((long)expectedCount));
         assertThat(geneNames, hasSize(expectedCount));
@@ -330,10 +324,6 @@ public class BaselineProfilesWriterIT {
 
     private void setGeneQuery(String geneQuery) {
         requestPreferences.setGeneQuery(geneQuery);
-    }
-
-    private void setGeneSet() {
-        requestPreferences.setGeneSetMatch(true);
     }
 
     private void setNotSpecific() {

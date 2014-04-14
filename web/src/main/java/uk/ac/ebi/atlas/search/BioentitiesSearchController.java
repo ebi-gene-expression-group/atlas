@@ -35,10 +35,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.commands.BaselineBioentityCountsService;
-import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -48,7 +48,6 @@ import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -137,7 +136,7 @@ public class BioentitiesSearchController {
             return Optional.of("redirect:/" + bioentityPageName + "/" + geneId);
         }
 
-        Optional<Collection<String>> geneIdsOrSets = diffAnalyticsSearchService.expandGeneQueryIntoGeneIds(requestParameters);
+        Optional<Set<String>> geneIdsOrSets = diffAnalyticsSearchService.expandGeneQueryIntoGeneIds(requestParameters);
 
         if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
             return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());

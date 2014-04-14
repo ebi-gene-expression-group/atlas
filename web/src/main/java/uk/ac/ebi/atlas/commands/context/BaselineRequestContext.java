@@ -78,6 +78,12 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
     }
 
     @Override
+    public boolean asGeneSets() {
+        return false;
+    }
+
+
+    @Override
     public String toString() {
         return Objects.toStringHelper(getClass())
                 .addValue(super.toString())

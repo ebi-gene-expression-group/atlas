@@ -29,9 +29,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
@@ -72,10 +73,10 @@ public class MicroarrayProfilesTSVWriterIT {
 
         requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("g2_g3")));
 
-        microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
+        MicroarrayRequestContext requestContext = microarrayRequestContextBuilder.forExperiment(microarrayExperiment)
                 .withPreferences(requestPreferences).build();
 
-        String[] headerRows = subject.getTsvFileMasthead().split("\n");
+        String[] headerRows = subject.getTsvFileMasthead(requestContext).split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: '' exactly, specifically up/down differentially expressed in contrast: genotype:'cdk8 mutant' vs 'wild type' given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment E-MTAB-1066"));
         assertThat(headerRows[2], startsWith("# Timestamp: "));

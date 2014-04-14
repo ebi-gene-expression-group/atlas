@@ -113,14 +113,6 @@ public class ConfigurationTrader {
             throw new IllegalStateException("Cannot read configuration from path " + path.toString(), cex);
         }
 
-//        try {
-//            XMLConfiguration xmlConfiguration = new XMLConfiguration(path.toFile());
-//            xmlConfiguration.setDelimiterParsingDisabled(true);
-//            return xmlConfiguration;
-//        } catch (ConfigurationException cex) {
-//            LOGGER.error(cex.getMessage(), cex);
-//            throw new IllegalStateException("Cannot read configuration from path " + path.toString(), cex);
-//        }
     }
 
 }
