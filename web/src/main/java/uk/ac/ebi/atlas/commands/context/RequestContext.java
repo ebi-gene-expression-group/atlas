@@ -45,7 +45,7 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
     }
 
     public boolean geneQueryResponseContainsGeneSets() {
-        return geneQueryResponse.containsGeneSets();
+        return geneQueryResponse != null && geneQueryResponse.containsGeneSets();
     }
 
     // called by DifferentialProfileStreamPipelineBuilder

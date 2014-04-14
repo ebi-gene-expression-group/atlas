@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class HeatmapTableWidgetPageGeneSet extends HeatmapTableWidgetPage {
     private static final String PAGE_LOCATION = "/gxa/widgets/heatmap/protein";
 
@@ -18,6 +20,9 @@ public class HeatmapTableWidgetPageGeneSet extends HeatmapTableWidgetPage {
 
     @FindBy(id = "heatmap-profilesAsGeneSets")
     private WebElement heatmapProfilesAsGeneSets;
+
+    @FindBy(css = "#global-search-results > li > a")
+    private List<WebElement> globalSearchPointers;
 
     public HeatmapTableWidgetPageGeneSet(WebDriver driver, String httpParameters) {
         super(driver, httpParameters);

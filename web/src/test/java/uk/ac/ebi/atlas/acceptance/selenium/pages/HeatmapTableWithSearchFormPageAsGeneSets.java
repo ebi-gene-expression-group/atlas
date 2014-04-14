@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class HeatmapTableWithSearchFormPageAsGeneSets extends HeatmapTableWithSearchFormPage {
 
     @FindBy(id = "showIndividualGenes")
@@ -18,6 +20,19 @@ public class HeatmapTableWithSearchFormPageAsGeneSets extends HeatmapTableWithSe
     @FindBy(id = "heatmap-profilesAsGeneSets")
     private WebElement heatmapProfilesAsGeneSets;
 
+    @FindBy(id = "geneSetsCount")
+    private WebElement geneSetsCount;
+
+    @FindBy(css = "#heatmap-profilesAsGeneSets #heatmap-table")
+    private WebElement heatmapProfilesAsGeneSetsTable;
+
+    @FindBy(css = "#heatmap-profilesAsGeneSets #heatmap-table tr td")
+    private List<WebElement> heatmapProfilesAsGeneSetsTableColumn;
+
+    public String getGeneCount() {
+        return geneSetsCount.getText();
+    }
+
     public HeatmapTableWithSearchFormPageAsGeneSets(WebDriver driver, String experimentAccession) {
         super(driver, experimentAccession);
     }
@@ -26,20 +41,30 @@ public class HeatmapTableWithSearchFormPageAsGeneSets extends HeatmapTableWithSe
         super(driver, experimentAccession, httpParameters);
     }
 
-    public void clickShowIndividualGeneProfiles() {
-        showIndividualGenes.click();
-    }
-
     public void clickShowGeneSetProfiles() {
         showGeneSetProfiles.click();
     }
 
-    public boolean isIndividualGenesVisible() {
-        return heatmap.isDisplayed();
-    }
-
     public boolean isGeneSetProfilesVisible() {
         return heatmapProfilesAsGeneSets.isDisplayed();
+    }
+
+    public List<String> getGeneSetGeneNames() {
+        return getFirstColumnValues(heatmapProfilesAsGeneSetsTable);
+    }
+
+    public List<String> getFirstGeneSetProfile() {
+        List<String> firstTableRow = getRowValues(heatmapProfilesAsGeneSetsTable, 1);
+        return firstTableRow.subList(getGeneExpressionStartingRowIndex(), firstTableRow.size());
+    }
+
+    public List<String> getGeneSetProfile(int oneBasedRowIndex) {
+        List<String> rowValues = getRowValues(heatmapProfilesAsGeneSetsTable, oneBasedRowIndex);
+        return rowValues.subList(getGeneExpressionStartingRowIndex(), rowValues.size());
+    }
+
+    public String getGeneColumnHeader() {
+        return heatmapProfilesAsGeneSetsTableColumn.get(0).getText();
     }
 
 }

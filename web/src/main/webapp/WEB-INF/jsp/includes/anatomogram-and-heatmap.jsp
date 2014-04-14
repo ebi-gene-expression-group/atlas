@@ -96,7 +96,7 @@
                     <table>
                         <tr>
                             <td>
-                        <span id="geneConstituentCount">Showing ${profilesAsGeneSets.size()}
+                        <span id="geneSetsCount">Showing ${profilesAsGeneSets.size()}
                             of ${profilesAsGeneSets.getTotalResultCount()} gene sets found:
                         </span>
                         <a id="showIndividualGenes" href="javascript:void(0)">(show individual genes)</a>

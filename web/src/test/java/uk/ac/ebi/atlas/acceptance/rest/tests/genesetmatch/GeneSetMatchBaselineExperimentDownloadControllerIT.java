@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.acceptance.rest.tests.genesetmatch;
 
 
 import com.jayway.restassured.response.ResponseBody;
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 
@@ -33,6 +34,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
+@Ignore
 public class GeneSetMatchBaselineExperimentDownloadControllerIT {
 
     private EndPoint subject = new EndPoint("/gxa/experiments/E-GEOD-30352.tsv?serializedFilterFactors=ORGANISM:Homo sapiens" +
