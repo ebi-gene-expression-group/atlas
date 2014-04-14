@@ -37,18 +37,8 @@ public class SearchRequest {
 
     private boolean exactMatch = true;
 
-    private boolean geneSetMatch;
-
     protected String getDefaultGeneQuery() {
         return StringUtils.EMPTY;
-    }
-
-    public boolean isGeneSetMatch() {
-        return geneSetMatch;
-    }
-
-    public void setGeneSetMatch(boolean geneSetMatch) {
-        this.geneSetMatch = geneSetMatch;
     }
 
     public String getGeneQuery() {
@@ -72,7 +62,6 @@ public class SearchRequest {
         return Objects.toStringHelper(this.getClass())
                 .add("geneQuery", geneQuery)
                 .add("exactMatch", exactMatch)
-                .add("geneSetMatch", geneSetMatch)
                 .toString();
     }
 

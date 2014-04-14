@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.genesetmatch;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPageAsGeneSets;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
@@ -34,7 +34,7 @@ import static org.junit.Assert.assertThat;
 public class GeneSetExpressionLevelsIT extends SeleniumFixture {
 
     private static final String E_E_GEOD_30352_ACCESSION = "E-GEOD-30352";
-    protected HeatmapTableWithSearchFormPage subject;
+    protected HeatmapTableWithSearchFormPageAsGeneSets subject;
 
     @Before
     public void initSubject() {
@@ -46,24 +46,15 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
                 "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22&_exactMatch=on&geneSetMatch=true" +
                 "&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
-        subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
+        subject = new HeatmapTableWithSearchFormPageAsGeneSets(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
         //when
         subject.get();
         //then
-        assertThat(subject.getGeneColumnHeader(), is("Gene set"));
-    }
 
-    @Test
-    public void shouldHaveGeneSetCheckBoxSelected() {
-        String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50" +
-                "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22&_exactMatch=on&geneSetMatch=true" +
-                "&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
-        //given
-        subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
-        //when
-        subject.get();
-        //then
-        assertThat(subject.isGeneSetMatch(), is(true));
+        subject.clickShowGeneSetProfiles();
+        assertThat(subject.isGeneSetProfilesVisible(), is(true));
+
+        assertThat(subject.getGeneColumnHeader(), is("Gene set"));
     }
 
     @Test
@@ -72,7 +63,7 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
                 "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22&_exactMatch=on&geneSetMatch=true" +
                 "&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
-        subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
+        subject = new HeatmapTableWithSearchFormPageAsGeneSets(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
         //when
         subject.get();
         //then
@@ -87,7 +78,7 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
                 "displayLevels=true&displayGeneDistribution=true&geneQuery=react_1619&" +
                 "_exactMatch=on&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
-        subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
+        subject = new HeatmapTableWithSearchFormPageAsGeneSets(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
         //when
         subject.get();
         //then
@@ -102,7 +93,7 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
                 "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22+react_1619&_exactMatch=on" +
                 "&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
-        subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
+        subject = new HeatmapTableWithSearchFormPageAsGeneSets(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
         //when
         subject.get();
         //then
@@ -118,7 +109,7 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
                 "&displayLevels=true&displayGeneDistribution=true&geneQuery=%22Alpha-1-acid+glycoprotein%22+react_1619&_exactMatch=on" +
                 "&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
         //given
-        subject = new HeatmapTableWithSearchFormPage(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
+        subject = new HeatmapTableWithSearchFormPageAsGeneSets(driver, E_E_GEOD_30352_ACCESSION, geneSetMatchQuery);
         //when
         subject.get();
         String geneCountMessage = subject.getGeneCount();

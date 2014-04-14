@@ -102,16 +102,6 @@
                                                path="exactMatch"
                                                label="Exact match"/>
                             </span>
-                            <c:if test="${type.isBaseline()}">
-                                <span data-help-loc="#gene-set-match" style="float:right;"></span>
-                            <span style="float:right;">
-                                <form:checkbox id="geneSetMatch"
-                                               path="geneSetMatch"
-                                               label="Gene set"/>
-                            </span>
-
-                                <div style="clear:both;"></div>
-                            </c:if>
                         </div>
                     </div>
                 </td>

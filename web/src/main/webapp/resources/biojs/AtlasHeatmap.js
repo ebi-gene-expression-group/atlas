@@ -97,9 +97,6 @@ Biojs.AtlasHeatmap = Biojs.extend({
          please use a unique accession (e.g. ENSEMBL gene id or UniProt id).
          For example search with UniProt id P00846 returns the gene mt-atp6,
          a search for REACT_6900 returns genes belonging to this pathway.
-         An additional parameter (&geneSetMatch=true) can be appended after
-         the query term to collapse multiple returned gene profiles into one
-         single line of average expression (this feature is still experimental).
          For multiple identifiers of the same species please use:
          geneQuery=ENSG00000187003+ENSG00000185264&propertyType=identifier
          */

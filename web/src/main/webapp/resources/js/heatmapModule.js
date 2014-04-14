@@ -69,13 +69,13 @@ var heatmapModule = (function ($) {
         $heatmap(".gradient-level-max").css("display", "none");
     }
 
-    function initConstituentGenesLinkOnClick() {
-        $("#showConstituentGeneProfiles").click(function () {
-            $("#heatmap-div").hide();
-            $("#heatmap-constituentGeneProfiles").show();
-        });
+    function initGeneSetLinkOnClick() {
         $("#showGeneSetProfiles").click(function () {
-            $("#heatmap-constituentGeneProfiles").hide();
+            $("#heatmap-div").hide();
+            $("#heatmap-profilesAsGeneSets").show();
+        });
+        $("#showIndividualGenes").click(function () {
+            $("#heatmap-profilesAsGeneSets").hide();
             $("#heatmap-div").show();
         });
     }
@@ -115,7 +115,7 @@ var heatmapModule = (function ($) {
         $heatmap("#display-levels").button({ label:$("#buttonText").attr('unpressedtext') });
 
         if (prefFormDisplayLevels.val() === "true") {
-            $("#display-levels").click();
+            $heatmap("#display-levels").click();
         }
 
     }
@@ -358,17 +358,17 @@ var heatmapModule = (function ($) {
 
         $heatmap('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
-        if (experimentAccession !== undefined && parameters.species && !parameters.geneSetMatch) {
+        if (experimentAccession !== undefined && parameters.species && !parameters.asGeneSets) {
             initTranscriptBreakdownFancyBox(experimentAccession, parameters);
         }
 
         initDifferentialHeatmapCellsTooltip();
         initDownloadButtonTooltip();
         initDisplayLevelsButtonOnClick();
-        initConstituentGenesLinkOnClick();
+        initGeneSetLinkOnClick();
         createHeatmapFactorHeaders();
 
-        var geneNameHeader = parameters.geneSetMatch ? "Gene set" : "Gene";
+        var geneNameHeader = parameters.asGeneSets ? "Gene set" : "Gene";
         insertFirstColumnHeaders(parameters.isMicroarray ? [geneNameHeader, "Design Element"] : [geneNameHeader]);
 
         if (experimentAccession !== undefined && parameters.cutoff === 0.05 && !parameters.geneQuery) {
@@ -380,13 +380,13 @@ var heatmapModule = (function ($) {
         }
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, geneSetMatch, transcriptUrlRoot, heatmapElementId, isHidden) {
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, asGeneSets, transcriptUrlRoot, heatmapElementId, isHidden) {
         _transcriptUrlRoot = transcriptUrlRoot;
         
         initHeatmap(experimentAccession, {
             species:species,
             selectedFilterFactorsJson:selectedFilterFactorsJson,
-            geneSetMatch:geneSetMatch
+            asGeneSets:asGeneSets
         }, heatmapElementId, isHidden);
     }
 

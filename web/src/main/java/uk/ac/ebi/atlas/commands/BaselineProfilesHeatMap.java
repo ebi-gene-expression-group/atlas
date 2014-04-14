@@ -43,7 +43,7 @@ public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, Ba
         return fetch((BaselineProfileStreamOptions)requestContext);
     }
 
-    public BaselineProfilesList fetch(BaselineProfileStreamOptions options) throws GenesNotFoundException {
+    public BaselineProfilesList fetch(BaselineProfileStreamOptions options) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         ObjectInputStream<BaselineProfile> inputStream = inputStreamFactory.create(options);

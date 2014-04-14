@@ -11,20 +11,19 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Set;
 
-public class ProfilesWriter<P extends Profile, K> {
+public class ProfilesWriter<P extends Profile, K, O extends ProfileStreamOptions> {
 
     private static final Logger LOGGER = Logger.getLogger(ProfilesWriter.class);
 
-    private ProfileStreamPipelineBuilder<P, ProfileStreamOptions> pipelineBuilder;
-    private GeneProfilesTSVWriter<P, K> tsvWriter;
+    private ProfileStreamPipelineBuilder<P, O> pipelineBuilder;
+    private GeneProfilesTSVWriter<P, K, O> tsvWriter;
 
-    public ProfilesWriter(ProfileStreamPipelineBuilder<P, ? extends ProfileStreamOptions> pipelineBuilder, GeneProfilesTSVWriter<P, K> tsvWriter) {
-        // add cast to avoid requiring additional class type parameter
-        this.pipelineBuilder = (ProfileStreamPipelineBuilder<P, ProfileStreamOptions>) pipelineBuilder;
+    public ProfilesWriter(ProfileStreamPipelineBuilder<P, O> pipelineBuilder, GeneProfilesTSVWriter<P, K, O> tsvWriter) {
+        this.pipelineBuilder = pipelineBuilder;
         this.tsvWriter = tsvWriter;
     }
 
-    public long write(PrintWriter outputWriter, ObjectInputStream<P> inputStream, ProfileStreamOptions options, Set<K> conditions)  {
+    public long write(PrintWriter outputWriter, ObjectInputStream<P> inputStream, O options, Set<K> conditions)  {
 
         tsvWriter.setResponseWriter(outputWriter);
 
@@ -34,7 +33,7 @@ public class ProfilesWriter<P extends Profile, K> {
 
             Iterable<P> profilesPipeline = pipelineBuilder.build(profiles, options);
 
-            return tsvWriter.write(profilesPipeline, conditions);
+            return tsvWriter.write(profilesPipeline, conditions, options);
 
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);

@@ -6,11 +6,11 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.Set;
 
-public class BaselineProfileStreamOptionsWrapperNoGeneSetMatch implements BaselineProfileStreamOptions {
+public class BaselineProfileStreamOptionsWrapperAsGeneSets implements BaselineProfileStreamOptions {
 
     private BaselineRequestContext context;
 
-    public BaselineProfileStreamOptionsWrapperNoGeneSetMatch(BaselineRequestContext context) {
+    public BaselineProfileStreamOptionsWrapperAsGeneSets(BaselineRequestContext context) {
         this.context = context;
     }
 
@@ -61,7 +61,7 @@ public class BaselineProfileStreamOptionsWrapperNoGeneSetMatch implements Baseli
 
     @Override
     public boolean asGeneSets() {
-        return false;
+        return true;
     }
 
     @Override

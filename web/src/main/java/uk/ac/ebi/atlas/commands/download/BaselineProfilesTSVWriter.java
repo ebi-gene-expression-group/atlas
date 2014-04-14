@@ -35,8 +35,8 @@ import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -49,7 +49,7 @@ import java.util.Set;
 
 @Named("geneProfileWriter")
 @Scope("prototype")
-public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselineProfile, Factor> {
+public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselineProfile, Factor, BaselineProfileStreamOptions> {
 
     private static final Logger LOGGER = Logger.getLogger(BaselineProfilesTSVWriter.class);
     private static final String GENE_SET_COLUMN_NAME = "Gene set";
@@ -86,8 +86,8 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     }
 
     @Override
-    protected String[] getProfileIdColumnHeaders() {
-        if (requestContext.isGeneSetMatch()) {
+    protected String[] getProfileIdColumnHeaders(BaselineProfileStreamOptions options) {
+        if (options.asGeneSets()) {
             return new String[]{GENE_SET_COLUMN_NAME};
         }
         return new String[]{"Gene ID", "Gene Name"};
@@ -120,8 +120,8 @@ public class BaselineProfilesTSVWriter extends GeneProfilesTSVWriter<BaselinePro
     }
 
     @Override
-    protected String getTsvFileMasthead() {
-        String responseType = requestContext.isGeneSetMatch() ? "Gene sets" : "Genes";
+    protected String getTsvFileMasthead(BaselineProfileStreamOptions options) {
+        String responseType = requestContext.asGeneSets() ? "Gene sets" : "Genes";
         String geneQuery = requestContext.getGeneQuery();
         String specific = requestContext.isSpecific() ? "specifically " : "";
         String exactMatch = requestContext.isExactMatch() ? " exactly" : "";

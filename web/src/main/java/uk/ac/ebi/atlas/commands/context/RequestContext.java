@@ -44,6 +44,10 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         this.geneQueryResponse = geneQueryResponse;
     }
 
+    public boolean geneQueryResponseContainsGeneSets() {
+        return geneQueryResponse.containsGeneSets();
+    }
+
     // called by DifferentialProfileStreamPipelineBuilder
     public Set<String> getSelectedGeneIDs() {
         if (StringUtils.isBlank(getGeneQuery())) {

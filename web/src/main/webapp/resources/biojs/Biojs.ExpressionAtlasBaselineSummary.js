@@ -117,9 +117,6 @@ Biojs.ExpressionAtlasBaselineSummary = Biojs.extend(
              a search for REACT_6900 returns genes belonging to this pathway.
              To narrow to search scope of a query term, please provide a type:
              &propertyType=identifier (here only the identifier property is searched)
-             An additional parameter (&geneSetMatch=true) can be appended after
-             the query term to collapse multiple returned gene profiles into one
-             single line of average expression (this feature is still experimental).
              For multiple identifiers of the same species please use:
              geneQuery=ENSG00000187003+ENSG00000185264&propertyType=identifier
              */

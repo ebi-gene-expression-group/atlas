@@ -56,6 +56,7 @@
             if (!anyAnatomogramFile || 0 === anyAnatomogramFile.length) {
                 $("#anatomogram").remove();//remove the anatomogram
                 $("#heatmap-div").removeClass();
+                $("#heatmap-profilesAsGeneSets").removeClass();
             }
 
         });

@@ -53,7 +53,7 @@
                             class="horizontal-header-cell">
 
                         <c:set var="geneId" value="${geneProfile.id}"/>
-                        <c:set var="bioEntityURL" value="${preferences.geneSetMatch? \"query?geneQuery=\".concat(geneProfile.getName()).concat(\"&exactMatch=\").concat(preferences.isExactMatch()) : \"genes/\".concat(geneProfile.id)}"/>
+                        <c:set var="bioEntityURL" value="${geneSet? \"query?geneQuery=\".concat(geneProfile.getName()).concat(\"&exactMatch=\").concat(preferences.isExactMatch()) : \"genes/\".concat(geneProfile.id)}"/>
 
                         <c:choose>
                             <c:when test="${isExperimentPage}">
@@ -282,7 +282,7 @@
     (function ($, heatmapModule) { //self invoking wrapper function that prevents $ namespace conflicts
         $(document).ready(function () {
 
-            if (${preferences.geneSetMatch == false && !type.isMicroRna()}) {
+            if (${geneSet == false && !type.isMicroRna()}) {
                 genePropertiesTooltipModule.init('${preferences.geneQuery}', '${base}');
             }
 

@@ -266,9 +266,6 @@
 
 
                 var widgetParameters = "&propertyType=bioentity_identifier";
-                if (${isGeneSet == true}) {
-                    widgetParameters = "&geneSetMatch=true";
-                }
 
                 <c:choose>
 

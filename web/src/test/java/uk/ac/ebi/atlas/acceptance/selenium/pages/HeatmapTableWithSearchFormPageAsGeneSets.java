@@ -4,8 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class HeatmapTableWidgetPageGeneSet extends HeatmapTableWidgetPage {
-    private static final String PAGE_LOCATION = "/gxa/widgets/heatmap/protein";
+public class HeatmapTableWithSearchFormPageAsGeneSets extends HeatmapTableWithSearchFormPage {
 
     @FindBy(id = "showIndividualGenes")
     private WebElement showIndividualGenes;
@@ -19,8 +18,12 @@ public class HeatmapTableWidgetPageGeneSet extends HeatmapTableWidgetPage {
     @FindBy(id = "heatmap-profilesAsGeneSets")
     private WebElement heatmapProfilesAsGeneSets;
 
-    public HeatmapTableWidgetPageGeneSet(WebDriver driver, String httpParameters) {
-        super(driver, httpParameters);
+    public HeatmapTableWithSearchFormPageAsGeneSets(WebDriver driver, String experimentAccession) {
+        super(driver, experimentAccession);
+    }
+
+    public HeatmapTableWithSearchFormPageAsGeneSets(WebDriver driver, String experimentAccession, String httpParameters) {
+        super(driver, experimentAccession, httpParameters);
     }
 
     public void clickShowIndividualGeneProfiles() {
@@ -37,11 +40,6 @@ public class HeatmapTableWidgetPageGeneSet extends HeatmapTableWidgetPage {
 
     public boolean isGeneSetProfilesVisible() {
         return heatmapProfilesAsGeneSets.isDisplayed();
-    }
-
-    @Override
-    protected String getPageURI() {
-        return PAGE_LOCATION;
     }
 
 }
