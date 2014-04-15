@@ -114,8 +114,8 @@ var heatmapModule = (function ($) {
 
         $heatmap("#display-levels").button({ label:$("#buttonText").attr('unpressedtext') });
 
-        if (!asGeneSets && prefFormDisplayLevels.val() === "true") {
-            $heatmap("#display-levels").click();
+        if (prefFormDisplayLevels.val() === "true") {
+            $heatmap("#display-levels").trigger("click", "syntheticEvent")
         }
 
     }
