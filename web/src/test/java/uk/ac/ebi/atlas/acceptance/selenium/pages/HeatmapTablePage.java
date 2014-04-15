@@ -129,7 +129,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     protected WebElement getHeatmapTable() {
-        return SeleniumUtil.findElementByIdWaitingUntilAvailable(driver, "heatmap-table");
+            return SeleniumUtil.findElementByIdWaitingUntilAvailable(driver, "heatmap-table");
     }
 
     public List<String> getFactorValueHeaders() {
