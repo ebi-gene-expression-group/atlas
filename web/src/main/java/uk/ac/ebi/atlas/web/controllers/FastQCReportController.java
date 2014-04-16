@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -64,7 +65,7 @@ public class FastQCReportController {
         }
 
         // will generate 404 here for private experiments without access key
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         prepareModel(request, model, experiment);
 
         model.addAttribute("fastQCReports", preferences.fastQCReportsList());
@@ -118,7 +119,7 @@ public class FastQCReportController {
             return forwardToMappingQcResource(experimentAccession, resource);
         }
 
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         prepareModel(request, model, experiment);
 
         model.addAttribute("fastQCReports", preferences.fastQCReportsList());
@@ -165,7 +166,7 @@ public class FastQCReportController {
                                       @RequestParam(value = "accessKey",required = false) String accessKey,
                                       @ModelAttribute("preferences") @Valid FastQCReportRequestPreferences preferences) throws IOException {
 
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
         prepareModel(request, model, experiment);
 
         model.addAttribute("fastQCReports", preferences.fastQCReportsList());
@@ -215,7 +216,7 @@ public class FastQCReportController {
         return "forward:" + path;
     }
 
-    private void prepareModel(HttpServletRequest request, Model model, BaselineExperiment experiment) {
+    private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) {
         request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
 
         Set<String> allSpecies = experiment.getSpecies();
