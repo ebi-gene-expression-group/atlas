@@ -142,13 +142,13 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
 
     void addUpRegulatedExpression(double expressionLevel) {
         maxUpRegulatedExpressionLevel = max(maxUpRegulatedExpressionLevel, expressionLevel);
-        minUpRegulatedExpressionLevel = min(minUpRegulatedExpressionLevel, expressionLevel);
+        minUpRegulatedExpressionLevel = (expressionLevel == Double.POSITIVE_INFINITY) ? Double.POSITIVE_INFINITY :min(minUpRegulatedExpressionLevel, expressionLevel);
         upRegulatedExpressionsCount++;
     }
 
     void addDownRegulatedExpression(double expressionLevel) {
         maxDownRegulatedExpressionLevel = -max(Math.abs(maxDownRegulatedExpressionLevel), Math.abs(expressionLevel));
-        minDownRegulatedExpressionLevel = -min(Math.abs(minDownRegulatedExpressionLevel), Math.abs(expressionLevel));
+        minDownRegulatedExpressionLevel = (expressionLevel == Double.NEGATIVE_INFINITY) ? Double.NEGATIVE_INFINITY : -min(Math.abs(minDownRegulatedExpressionLevel), Math.abs(expressionLevel));
         downRegulatedExpressionsCount++;
     }
 
