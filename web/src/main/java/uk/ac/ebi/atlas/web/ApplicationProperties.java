@@ -96,7 +96,7 @@ public class ApplicationProperties {
     }
 
     public String getBaselineWidgetExperimentAccessionBySpecies(String species) {
-        return speciesToExperimentProperties.getProperty(species.replace(" ", "_"));
+        return speciesToExperimentProperties.getProperty(species.toLowerCase().replace(" ", "_"));
     }
 
     public String buildServerURL(HttpServletRequest request) throws MalformedURLException {

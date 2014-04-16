@@ -42,7 +42,6 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
         subject.get();
     }
 
-
     @Test
     public void checkBaselineExperimentCounts() {
         //given

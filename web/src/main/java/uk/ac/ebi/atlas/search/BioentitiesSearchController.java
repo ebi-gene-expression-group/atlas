@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -100,6 +101,10 @@ public class BioentitiesSearchController {
 
             Set<BaselineExperimentResult> baselineCounts = baselineBioentityCountsService.query(requestParameters);
             model.addAttribute("baselineCounts", baselineCounts);
+            if (hasOnlyOneSpecies(baselineCounts) & !requestParameters.hasCondition()) {
+                model.addAttribute("singleSpecies", true);
+                model.addAttribute("species", baselineCounts.iterator().next().getSpecies());
+            }
 
             // used to populate diff-heatmap-table
             DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
@@ -118,6 +123,17 @@ public class BioentitiesSearchController {
         }
 
         return "bioEntities";
+    }
+
+    private boolean hasOnlyOneSpecies(Set<BaselineExperimentResult> baselineCounts) {
+        ImmutableSet.Builder<String> setBuilder = ImmutableSet.builder();
+
+        for (BaselineExperimentResult result : baselineCounts) {
+            setBuilder.add(result.getSpecies());
+        }
+
+        ImmutableSet<String> species = setBuilder.build();
+        return species.size() == 1;
     }
 
 

@@ -34,8 +34,8 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
@@ -77,12 +77,14 @@ public final class HeatmapWidgetController {
     public String dispatchWidget(HttpServletRequest request,
                                  @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
+                                 @RequestParam(value = "species", required = false) String species,
                                  @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                  Model model) {
 
-        String species;
         try {
-            species = solrQueryService.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
+            if (species == null) {
+                species = solrQueryService.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
+            }
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Species could not be determined");
             return "widget-error";

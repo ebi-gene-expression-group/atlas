@@ -146,12 +146,12 @@
                     </div>
 
                     <c:choose>
-                        <c:when test="${singleBioentityPage}">
+                        <c:when test="${singleBioentityPage || singleSpecies}">
                             <div id="widgetBody"></div>
                         </c:when>
 
                         <c:otherwise>
-                            <c:import url="baselineCounts-widget.jsp"/>
+                            <c:import url="baseline-search-results.jsp"/>
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -247,7 +247,7 @@
 
             window.onload = function () {
 
-                var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : 1};
+                var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : singleSpecies ? 0 : 1};
 
                 $("#bioentity-info-image").tooltip();
                 $("#differential-info-image").tooltip();
@@ -265,11 +265,11 @@
                 helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
 
-                var widgetParameters = "&propertyType=bioentity_identifier";
+                var widgetParameters = "&propertyType=bioentity_identifier" + "${singleSpecies ? "&species=".concat(species) : ""}";
 
                 <c:choose>
 
-                    <c:when test="${singleBioentityPage}">
+                    <c:when test="${singleBioentityPage || singleSpecies}">
 
                         new Biojs.AtlasHeatmap({
                         featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}' + widgetParameters,

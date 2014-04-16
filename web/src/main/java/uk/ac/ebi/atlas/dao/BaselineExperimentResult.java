@@ -44,7 +44,7 @@ public class BaselineExperimentResult {
         this.species = species;
     }
 
-    // used in baselineCounts-widget.jsp
+    // used in baseline-search-results.jsp
     public SortedSet<String> getDefaultFactorValuesForSpecificAssayGroupsWithCondition() {
         return Factor.getValues(defaultFactorsForSpecificAssayGroupsWithCondition);
     }
