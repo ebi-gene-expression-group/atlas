@@ -133,7 +133,7 @@ public class DifferentialProfilesListTest {
     }
 
     @Test
-    public void minDownRegulatedExpressionLevelShouldReturnTheMinDownRegulatedExpressionLevelAcrossAllProfiiles() throws Exception {
+    public void minDownRegulatedExpressionLevelShouldReturnTheMinDownRegulatedExpressionLevelAcrossAllProfiles() throws Exception {
         //given
         given(differentialProfileMock1.getMinDownRegulatedExpressionLevel()).willReturn(-23D);
         given(differentialProfileMock2.getMinDownRegulatedExpressionLevel()).willReturn(-0.001D);
@@ -142,5 +142,50 @@ public class DifferentialProfilesListTest {
         //
         assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-0.001D));
     }
+
+    @Test
+    public void minDownRegulatedExpressionLevelNegativeInfinity() throws Exception {
+        //given
+        given(differentialProfileMock1.getMinDownRegulatedExpressionLevel()).willReturn(Double.NEGATIVE_INFINITY);
+        given(differentialProfileMock2.getMinDownRegulatedExpressionLevel()).willReturn(Double.NEGATIVE_INFINITY);
+        given(differentialProfileMock3.getMinDownRegulatedExpressionLevel()).willReturn(Double.NEGATIVE_INFINITY);
+
+        //
+        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
+    }
+
+    @Test
+    public void maxDownRegulatedExpressionLevelNegativeInfinity() throws Exception {
+        //given
+        given(differentialProfileMock1.getMaxDownRegulatedExpressionLevel()).willReturn(Double.NEGATIVE_INFINITY);
+        given(differentialProfileMock2.getMaxDownRegulatedExpressionLevel()).willReturn(Double.NEGATIVE_INFINITY);
+        given(differentialProfileMock3.getMaxDownRegulatedExpressionLevel()).willReturn(Double.NEGATIVE_INFINITY);
+
+        //
+        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
+    }
+
+    @Test
+    public void minUpRegulatedExpressionLevelInfinity() throws Exception {
+        //given
+        given(differentialProfileMock1.getMinUpRegulatedExpressionLevel()).willReturn(Double.POSITIVE_INFINITY);
+        given(differentialProfileMock2.getMinUpRegulatedExpressionLevel()).willReturn(Double.POSITIVE_INFINITY);
+        given(differentialProfileMock3.getMinUpRegulatedExpressionLevel()).willReturn(Double.POSITIVE_INFINITY);
+
+        //
+        assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));
+    }
+
+    @Test
+    public void maxUpRegulatedExpressionLevelInfinity() throws Exception {
+        //given
+        given(differentialProfileMock1.getMaxUpRegulatedExpressionLevel()).willReturn(Double.POSITIVE_INFINITY);
+        given(differentialProfileMock2.getMaxUpRegulatedExpressionLevel()).willReturn(Double.POSITIVE_INFINITY);
+        given(differentialProfileMock3.getMaxUpRegulatedExpressionLevel()).willReturn(Double.POSITIVE_INFINITY);
+
+        //
+        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));
+    }
+
 
 }

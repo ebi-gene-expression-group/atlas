@@ -80,7 +80,7 @@ var heatmapModule = (function ($) {
         });
     }
 
-    function initDisplayLevelsButtonOnClick() { //binds toggle handler
+    function initDisplayLevelsButtonOnClick(asGeneSets) { //binds toggle handler
 
         var prefFormDisplayLevels = $("#prefForm").find("#displayLevels");
 
@@ -115,7 +115,7 @@ var heatmapModule = (function ($) {
         $heatmap("#display-levels").button({ label:$("#buttonText").attr('unpressedtext') });
 
         if (prefFormDisplayLevels.val() === "true") {
-            $heatmap("#display-levels").click();
+            $heatmap("#display-levels").trigger("click", "syntheticEvent")
         }
 
     }
@@ -364,7 +364,7 @@ var heatmapModule = (function ($) {
 
         initDifferentialHeatmapCellsTooltip();
         initDownloadButtonTooltip();
-        initDisplayLevelsButtonOnClick();
+        initDisplayLevelsButtonOnClick(parameters.asGeneSets);
         initGeneSetLinkOnClick();
         createHeatmapFactorHeaders();
 

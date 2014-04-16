@@ -42,7 +42,8 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
     public double getMaxUpRegulatedExpressionLevel(){
         double maxUpRegulatedExpressionLevel = -Double.MAX_VALUE;
         for (DifferentialProfile differentialProfile : this) {
-            maxUpRegulatedExpressionLevel = max(maxUpRegulatedExpressionLevel, differentialProfile.getMaxUpRegulatedExpressionLevel());
+            double expressionLevel = differentialProfile.getMaxUpRegulatedExpressionLevel();
+            maxUpRegulatedExpressionLevel = max(maxUpRegulatedExpressionLevel, expressionLevel);
         }
         return maxUpRegulatedExpressionLevel == -Double.MAX_VALUE ? Double.NaN : maxUpRegulatedExpressionLevel;
     }
@@ -50,7 +51,11 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
     public double getMinUpRegulatedExpressionLevel(){
         double minUpRegulatedExpressionLevel = Double.MAX_VALUE;
         for (DifferentialProfile differentialProfile : this) {
-            minUpRegulatedExpressionLevel = min(minUpRegulatedExpressionLevel, differentialProfile.getMinUpRegulatedExpressionLevel());
+            double expressionLevel = differentialProfile.getMinUpRegulatedExpressionLevel();
+            if (expressionLevel == Double.POSITIVE_INFINITY) {
+                return Double.POSITIVE_INFINITY;
+            }
+            minUpRegulatedExpressionLevel = min(minUpRegulatedExpressionLevel, expressionLevel);
         }
         return minUpRegulatedExpressionLevel == Double.MAX_VALUE ? Double.NaN : minUpRegulatedExpressionLevel;
     }
@@ -67,7 +72,11 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
     public double getMinDownRegulatedExpressionLevel(){
         double minDownRegulatedExpressionLevel = Double.MAX_VALUE;
         for (DifferentialProfile differentialProfile : this) {
-            minDownRegulatedExpressionLevel = min(minDownRegulatedExpressionLevel, Math.abs(differentialProfile.getMinDownRegulatedExpressionLevel()));
+            double expressionLevel = differentialProfile.getMinDownRegulatedExpressionLevel();
+            if (expressionLevel == Double.NEGATIVE_INFINITY) {
+                return Double.NEGATIVE_INFINITY;
+            }
+            minDownRegulatedExpressionLevel = min(minDownRegulatedExpressionLevel, Math.abs(expressionLevel));
         }
         return minDownRegulatedExpressionLevel == Double.MAX_VALUE ? Double.NaN : negate(minDownRegulatedExpressionLevel);
     }

@@ -57,12 +57,12 @@
 
                         <c:choose>
                             <c:when test="${isExperimentPage}">
-                                <a class="genename" id="${geneId}"
+                                <a ${(geneSet == null || !geneSet) ? 'class="genename" id="'.concat(geneId).concat('"') : ''}
                                    href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityURL}'
                                    title="">${geneProfile.getName()}</a>
                             </c:when>
                             <c:otherwise>
-                                <div class="genename" id="${geneId}">${geneProfile.getName()}</div>
+                                <div ${(geneSet == null || !geneSet) ? 'class="genename" id="'.concat(geneId).concat('"') : ''}>${geneProfile.getName()}</div>
                             </c:otherwise>
                         </c:choose>
 
@@ -282,7 +282,7 @@
     (function ($, heatmapModule) { //self invoking wrapper function that prevents $ namespace conflicts
         $(document).ready(function () {
 
-            if (${geneSet == false && !type.isMicroRna()}) {
+            if (${((geneSet == null) || !geneSet) && !type.isMicroRna()}) {
                 genePropertiesTooltipModule.init('${preferences.geneQuery}', '${base}');
             }
 

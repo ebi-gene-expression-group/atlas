@@ -71,10 +71,14 @@ public class MultiTermSuggestionService {
 
         if (suggestionsElement != null && suggestionsElement.isJsonArray()) {
 
-            JsonArray suggestionElements = suggestionsElement.getAsJsonArray().get(0).getAsJsonArray().get(1).getAsJsonObject().get("suggestion").getAsJsonArray();
+            JsonArray suggestionsArray = suggestionsElement.getAsJsonArray();
 
-            for (JsonElement suggestionElement : suggestionElements) {
-                 suggestionStrings.add(suggestionElement.getAsString());
+            if (suggestionsArray.size() > 0) {
+                JsonArray suggestionElements = suggestionsArray.get(0).getAsJsonArray().get(1).getAsJsonObject().get("suggestion").getAsJsonArray();
+
+                for (JsonElement suggestionElement : suggestionElements) {
+                     suggestionStrings.add(suggestionElement.getAsString());
+                }
             }
         }
         return suggestionStrings;
