@@ -83,6 +83,10 @@
         <put-attribute name="body" value="/WEB-INF/jsp/experiment-notFound-page.jsp"/>
     </definition>
 
+    <definition name="query-error-page" extends="base.definition">
+        <put-attribute name="menu" value=""/>
+        <put-attribute name="body" value="/WEB-INF/jsp/query-error-page.jsp"/>
+    </definition>
 
     <!-- static pages, eg: about, help -->
     <definition name="static-template" extends="base.definition">

@@ -23,6 +23,8 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.base.Optional;
+import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -45,6 +47,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -55,6 +58,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Controller
 @Scope("prototype")
 public class BioentitiesSearchController {
+    private static final Logger LOGGER = Logger.getLogger(BioentitiesSearchController.class);
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private BaselineBioentityCountsService baselineBioentityCountsService;
@@ -136,15 +140,30 @@ public class BioentitiesSearchController {
             return Optional.of("redirect:/" + bioentityPageName + "/" + geneId);
         }
 
-        Optional<Set<String>> geneIdsOrSets = diffAnalyticsSearchService.expandGeneQueryIntoGeneIds(requestParameters);
+        try {
 
-        if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
-            return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());
+            Optional<Set<String>> geneIdsOrSets = diffAnalyticsSearchService.expandGeneQueryIntoGeneIds(requestParameters);
+
+            if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
+                return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());
+            }
+
+        } catch (HttpSolrServer.RemoteSolrException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new IllegalStateException(geneId, e);
         }
 
         return Optional.absent();
 
+    }
 
+    @ExceptionHandler(value = {RuntimeException.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ModelAndView InternalServerHandleException(Exception e) {
+        ModelAndView mav = new ModelAndView("query-error-page");
+        mav.addObject("exceptionMessage", e.getMessage());
+
+        return mav;
     }
 
 }
