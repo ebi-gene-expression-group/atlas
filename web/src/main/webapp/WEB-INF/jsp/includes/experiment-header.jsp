@@ -17,6 +17,12 @@
                 <table cellpadding="2" cellspacing="0" style="float:right">
                     <tr>
                         <td>
+                            <a id="display-ae" class="button-image"
+                               title="View experiment in ArrayExpress"
+                               href="${applicationProperties.getArrayExpressURL(experimentAccession)}">
+                                <img src="${pageContext.request.contextPath}/resources/images/arrayexpress_logo.gif"/></a>
+                        </td>
+                        <td>
                             <a id="display-experiment" class="button-image"
                                title="Experiment Page" href="${pageContext.request.contextPath}/experiments/${experimentAccession}${accessKeyQueryString}">
                                 <img src="${pageContext.request.contextPath}/resources/images/experiment_page_small.png"/></a>

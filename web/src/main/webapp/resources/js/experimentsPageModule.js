@@ -53,7 +53,8 @@ var experimentsPageModule = (function ($) {
     }
 
     function formatExperimentAccession(data, type, full) {
-        return '<a href="http://www.ebi.ac.uk/arrayexpress/experiments/' + data + '" title="View in Array Express">' + data + '</a>';
+        return '<a href="http://www.ebi.ac.uk/arrayexpress/experiments/' + data + '" title="View in Array Express">' +
+            '<span class="icon icon-generic" data-icon="L"></span>' + '</a>';
     }
 
     function formatLastUpdate(data, type, full) {
@@ -142,6 +143,7 @@ var experimentsPageModule = (function ($) {
         $('#experiments-table').dataTable.defaults.oLanguage.sInfoEmpty = ' ';
 
         var oTable = $('#experiments-table').dataTable({
+            "bAutoWidth": false,
             "bProcessing":true,
             "sAjaxSource":"json/experiments",
             "aoColumns":[
@@ -149,19 +151,15 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return formatExperimentType(data, type, full);
                     } },
-                { "sTitle":"Experiment", "mData":"experimentAccession", "sClass":"center bb nowrap",
-                    "mRender":function (data, type, full) {
-                        return formatExperimentAccession(data, type, full);
-                    } },
                 { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center bb nowrap", 'sType': 'date-eu',
                     "mRender":function (data, type, full) {
                         return formatLastUpdate(data, type, full);
                     } },
-                { "sTitle":"Description", "mData":"experimentDescription", "sClass":"center bb padding",
+                { "sTitle":"Experiment", "mData":"experimentDescription", "sClass":"center bb padding",
                     "mRender":function (data, type, full) {
                         return formatExperimentDescription(data, type, full);
                     } },
-                { "sTitle":"Assays", "mData":"numberOfAssays", "sClass":"center bb", "sType":"title-numeric",
+                { "sTitle":"Assays", "mData":"numberOfAssays", "sClass":"center bb", "sType":"title-numeric", "sWidth":"5%",
                     "mRender":function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, type, full);
                     } },
@@ -169,7 +167,7 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, type, full);
                     } },
-                { "sTitle":"Organisms", "mData":"species", "sClass":"center bb italic",
+                { "sTitle":"Organisms", "mData":"species", "sClass":"center bb italic", "sWidth":"10%",
                     "mRender":function (data, type, full) {
                         return withLineBreaks(data, type, full);
                     } },
@@ -177,9 +175,13 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return withLineBreaks(data, type, full);
                     } },
-                { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center bb br",
+                { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center bb", "sWidth":"8%",
                     "mRender":function (data, type, full) {
                         return formatArrayDesign(data, type, full);
+                    } },
+                { "sTitle":"ArrayExpress", "mData":"experimentAccession", "sClass":"center bb br",
+                    "mRender":function (data, type, full) {
+                        return formatExperimentAccession(data, type, full);
                     } }
             ],
             "aLengthMenu":[

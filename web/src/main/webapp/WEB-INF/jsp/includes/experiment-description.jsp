@@ -37,18 +37,12 @@
            value="?geneQuery=${preferences.geneQuery}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
 </c:if>
 
-<td style="width:140px;padding-right:20px">
-    <div class="experiment-accession">
-        <a id="goto-ae" class="thick-link"
-           href="${applicationProperties.getArrayExpressURL(experimentAccession)}"
-           title="View experiment in ArrayExpress"
-           target="_blank">${experimentAccession}</a>
-    </div>
-</td>
+<c:set var="experimentURL" value="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}${accessKeyQueryString}${additionalQueryOptionsString}"></c:set>
+
 <td width="100%">
     <div id="experimentDescription">
         <a id="goto-experiment" class="thick-link" title="Experiment Page"
-           href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}${accessKeyQueryString}${additionalQueryOptionsString}">${experimentDescription}</a>
+           href="${experimentURL}">${experimentDescription}</a>
         <c:if test="${hasExtraInfo}">
             <a id="extra-info"
                href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">

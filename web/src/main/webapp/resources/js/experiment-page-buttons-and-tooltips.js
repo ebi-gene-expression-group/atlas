@@ -22,6 +22,7 @@
 
 function initExperimentPageButtonsAndTooltips() {
 
+    $('#display-ae').button().tooltip();
     $('#display-analysis-methods').button().tooltip();
     $('#display-experiment-design').button().tooltip();
     $('#display-experiment').button().tooltip();
@@ -33,6 +34,7 @@ function initExperimentPageButtonsAndTooltips() {
     if (undefined !== $('#download-analytics')) $('#download-analytics').button().tooltip();
     $('#goto-ae').tooltip();
     $('#goto-experiment').tooltip();
+    $("#goto-experiment-name").tooltip();
     $('.array-design').tooltip();
     $('.pubmed-id').tooltip();
 }
