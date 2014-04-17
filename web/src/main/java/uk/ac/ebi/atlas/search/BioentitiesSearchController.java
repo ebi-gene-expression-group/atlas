@@ -23,7 +23,7 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.base.Optional;
-import org.apache.log4j.Logger;
+import com.google.common.collect.ImmutableSet;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -47,7 +47,6 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -58,7 +57,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Controller
 @Scope("prototype")
 public class BioentitiesSearchController {
-    private static final Logger LOGGER = Logger.getLogger(BioentitiesSearchController.class);
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private BaselineBioentityCountsService baselineBioentityCountsService;
@@ -104,6 +102,10 @@ public class BioentitiesSearchController {
 
             Set<BaselineExperimentResult> baselineCounts = baselineBioentityCountsService.query(requestParameters);
             model.addAttribute("baselineCounts", baselineCounts);
+            if (hasOnlyOneSpecies(baselineCounts) & !requestParameters.hasCondition()) {
+                model.addAttribute("singleSpecies", true);
+                model.addAttribute("species", baselineCounts.iterator().next().getSpecies());
+            }
 
             // used to populate diff-heatmap-table
             DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
@@ -122,6 +124,17 @@ public class BioentitiesSearchController {
         }
 
         return "bioEntities";
+    }
+
+    private boolean hasOnlyOneSpecies(Set<BaselineExperimentResult> baselineCounts) {
+        ImmutableSet.Builder<String> setBuilder = ImmutableSet.builder();
+
+        for (BaselineExperimentResult result : baselineCounts) {
+            setBuilder.add(result.getSpecies());
+        }
+
+        ImmutableSet<String> species = setBuilder.build();
+        return species.size() == 1;
     }
 
 
@@ -149,7 +162,6 @@ public class BioentitiesSearchController {
             }
 
         } catch (HttpSolrServer.RemoteSolrException e) {
-            LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(geneId, e);
         }
 

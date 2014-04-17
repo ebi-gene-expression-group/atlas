@@ -40,14 +40,13 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
     private static final double MIN_UP_REGULATED_EXPRESSION_LEVEL = 0;
     private static final double MIN_DOWN_REGULATED_EXPRESSION_LEVEL = 0;
 
-    private double maxUpRegulatedExpressionLevel = MIN_UP_REGULATED_EXPRESSION_LEVEL;
-    private double minUpRegulatedExpressionLevel = MAX_UP_REGULATED_EXPRESSION_LEVEL;
-    private double maxDownRegulatedExpressionLevel = MIN_DOWN_REGULATED_EXPRESSION_LEVEL;
-    private double minDownRegulatedExpressionLevel = MAX_DOWN_REGULATED_EXPRESSION_LEVEL;
+    private Double maxUpRegulatedExpressionLevel;
+    private Double minUpRegulatedExpressionLevel;
+    private Double maxDownRegulatedExpressionLevel;
+    private Double minDownRegulatedExpressionLevel;
 
     private int downRegulatedExpressionsCount;
     private int upRegulatedExpressionsCount;
-
 
     public DifferentialProfile(String geneId, String geneName) {
         super(geneId, geneName);
@@ -59,19 +58,19 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
     }
 
     public double getMaxUpRegulatedExpressionLevel() {
-        return maxUpRegulatedExpressionLevel;
+        return maxUpRegulatedExpressionLevel == null ? Double.NaN : maxUpRegulatedExpressionLevel;
     }
 
     public double getMinUpRegulatedExpressionLevel() {
-        return minUpRegulatedExpressionLevel;
+        return minUpRegulatedExpressionLevel == null ? Double.NaN : minUpRegulatedExpressionLevel;
     }
 
     public double getMaxDownRegulatedExpressionLevel() {
-        return maxDownRegulatedExpressionLevel;
+        return maxDownRegulatedExpressionLevel == null ? Double.NaN : maxDownRegulatedExpressionLevel;
     }
 
     public double getMinDownRegulatedExpressionLevel() {
-        return minDownRegulatedExpressionLevel;
+        return minDownRegulatedExpressionLevel == null ? Double.NaN : minDownRegulatedExpressionLevel;
     }
 
     public int getSpecificity(Regulation regulation) {
@@ -141,14 +140,14 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
     }
 
     void addUpRegulatedExpression(double expressionLevel) {
-        maxUpRegulatedExpressionLevel = max(maxUpRegulatedExpressionLevel, expressionLevel);
-        minUpRegulatedExpressionLevel = min(minUpRegulatedExpressionLevel, expressionLevel);
+        maxUpRegulatedExpressionLevel = (maxUpRegulatedExpressionLevel == null) ? expressionLevel : max(maxUpRegulatedExpressionLevel, expressionLevel);
+        minUpRegulatedExpressionLevel = (minUpRegulatedExpressionLevel == null) ? expressionLevel : min(minUpRegulatedExpressionLevel, expressionLevel);
         upRegulatedExpressionsCount++;
     }
 
     void addDownRegulatedExpression(double expressionLevel) {
-        maxDownRegulatedExpressionLevel = -max(Math.abs(maxDownRegulatedExpressionLevel), Math.abs(expressionLevel));
-        minDownRegulatedExpressionLevel = -min(Math.abs(minDownRegulatedExpressionLevel), Math.abs(expressionLevel));
+        maxDownRegulatedExpressionLevel = (maxDownRegulatedExpressionLevel == null) ? expressionLevel : -max(Math.abs(maxDownRegulatedExpressionLevel), Math.abs(expressionLevel));
+        minDownRegulatedExpressionLevel = (minDownRegulatedExpressionLevel == null) ? expressionLevel : -min(Math.abs(minDownRegulatedExpressionLevel), Math.abs(expressionLevel));
         downRegulatedExpressionsCount++;
     }
 

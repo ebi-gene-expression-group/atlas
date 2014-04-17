@@ -23,15 +23,17 @@
 package uk.ac.ebi.atlas.search;
 
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 public class BioentitiesSearchControllerGeneQuerySameSpeciesSIT extends SinglePageSeleniumFixture {
@@ -45,17 +47,16 @@ public class BioentitiesSearchControllerGeneQuerySameSpeciesSIT extends SinglePa
     }
 
     @Test
-    public void checkBaselineExperimentCounts()  {
-        subject.clickBaselineProfile();
+    public void checkBaselineWidget()  {
+        FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
+        wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
 
-        List<BaselineBioEntitiesCountWithHref> baselineCounts = subject.getBaselineCounts();
+        assertThat(subject.isBaselineProfileExpanded(), is(true));
 
-        assertThat(baselineCounts, hasSize(1));
+        subject.clickDisplayLevelsButton();
 
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-1733"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Twenty seven tissues"));
-        assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(0).getCount(), is(-1));
+        assertThat(subject.getGeneNames(), contains("SRSF2"));
+        assertThat(subject.getGeneNames().size(), is(1));
     }
 
 }
