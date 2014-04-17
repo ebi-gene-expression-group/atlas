@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWidgetPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.endsWith;
 
 public class WidgetDownloadSIT extends SeleniumFixture {
 
@@ -21,8 +21,8 @@ public class WidgetDownloadSIT extends SeleniumFixture {
     }
 
     @Test
-    public void heatmapChangesOnClick() {
-        assertThat(widget.downloadProfilesLink(), is("http://172.22.69.130:8080/gxa/experiments/E-MTAB-1733.tsv?geneQuery=REACT_1619"));
+    public void downloadProfilesLink() {
+        assertThat(widget.downloadProfilesLink(), endsWith("/gxa/experiments/E-MTAB-1733.tsv?geneQuery=REACT_1619"));
     }
 
 }
