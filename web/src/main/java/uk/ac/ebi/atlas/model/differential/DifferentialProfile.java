@@ -58,19 +58,19 @@ public class DifferentialProfile<T extends DifferentialExpression> extends Profi
     }
 
     public double getMaxUpRegulatedExpressionLevel() {
-        return maxUpRegulatedExpressionLevel == null ? MIN_UP_REGULATED_EXPRESSION_LEVEL : maxUpRegulatedExpressionLevel;
+        return maxUpRegulatedExpressionLevel == null ? Double.NaN : maxUpRegulatedExpressionLevel;
     }
 
     public double getMinUpRegulatedExpressionLevel() {
-        return minUpRegulatedExpressionLevel == null ? MAX_UP_REGULATED_EXPRESSION_LEVEL : minUpRegulatedExpressionLevel;
+        return minUpRegulatedExpressionLevel == null ? Double.NaN : minUpRegulatedExpressionLevel;
     }
 
     public double getMaxDownRegulatedExpressionLevel() {
-        return maxDownRegulatedExpressionLevel == null ? MIN_DOWN_REGULATED_EXPRESSION_LEVEL : maxDownRegulatedExpressionLevel;
+        return maxDownRegulatedExpressionLevel == null ? Double.NaN : maxDownRegulatedExpressionLevel;
     }
 
     public double getMinDownRegulatedExpressionLevel() {
-        return minDownRegulatedExpressionLevel == null ? MAX_DOWN_REGULATED_EXPRESSION_LEVEL : minDownRegulatedExpressionLevel;
+        return minDownRegulatedExpressionLevel == null ? Double.NaN : minDownRegulatedExpressionLevel;
     }
 
     public int getSpecificity(Regulation regulation) {

@@ -49,13 +49,10 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
     }
 
     public double getMinUpRegulatedExpressionLevel(){
-        double minUpRegulatedExpressionLevel = Double.MAX_VALUE;
+        Double minUpRegulatedExpressionLevel = null;
         for (DifferentialProfile differentialProfile : this) {
             double expressionLevel = differentialProfile.getMinUpRegulatedExpressionLevel();
-            if (expressionLevel == Double.POSITIVE_INFINITY) {
-                return Double.POSITIVE_INFINITY;
-            }
-            minUpRegulatedExpressionLevel = min(minUpRegulatedExpressionLevel, expressionLevel);
+            minUpRegulatedExpressionLevel = (minUpRegulatedExpressionLevel == null) ? expressionLevel : min(minUpRegulatedExpressionLevel, expressionLevel);
         }
         return minUpRegulatedExpressionLevel == Double.MAX_VALUE ? Double.NaN : minUpRegulatedExpressionLevel;
     }
@@ -70,15 +67,12 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
     }
 
     public double getMinDownRegulatedExpressionLevel(){
-        double minDownRegulatedExpressionLevel = Double.MAX_VALUE;
+        Double minDownRegulatedExpressionLevel = null;
         for (DifferentialProfile differentialProfile : this) {
             double expressionLevel = differentialProfile.getMinDownRegulatedExpressionLevel();
-            if (expressionLevel == Double.NEGATIVE_INFINITY) {
-                return Double.NEGATIVE_INFINITY;
-            }
-            minDownRegulatedExpressionLevel = min(minDownRegulatedExpressionLevel, Math.abs(expressionLevel));
+            minDownRegulatedExpressionLevel = (minDownRegulatedExpressionLevel == null) ? Math.abs(expressionLevel) : min(minDownRegulatedExpressionLevel, Math.abs(expressionLevel));
         }
-        return minDownRegulatedExpressionLevel == Double.MAX_VALUE ? Double.NaN : negate(minDownRegulatedExpressionLevel);
+        return minDownRegulatedExpressionLevel == null ? Double.NaN : negate(minDownRegulatedExpressionLevel);
     }
 
     public static double negate(double value) {

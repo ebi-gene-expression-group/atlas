@@ -60,10 +60,10 @@ public class DifferentialProfileTest {
     @Test
     public void testDefaultMinMaxExpressionLevels() throws Exception {
         //given
-        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(0D));
-        assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.MAX_VALUE));
-        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(0D));
-        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-Double.MAX_VALUE));
+        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.NaN));
+        assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.NaN));
+        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NaN));
+        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(Double.NaN));
     }
 
 
@@ -83,8 +83,8 @@ public class DifferentialProfileTest {
         //then
         assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(0.6D));
         assertThat(subject.getMinUpRegulatedExpressionLevel(), is(0.4D));
-        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(0D));
-        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-Double.MAX_VALUE));
+        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NaN));
+        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(Double.NaN));
 
         //and
         assertThat(subject.getSpecificity(Regulation.UP), is(2));
@@ -106,8 +106,8 @@ public class DifferentialProfileTest {
         subject.add(differentialExpressionMock2);
 
         //then
-        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(0D));
-        assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.MAX_VALUE));
+        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.NaN));
+        assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.NaN));
         assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(-0.5D));
         assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-0.3D));
 
