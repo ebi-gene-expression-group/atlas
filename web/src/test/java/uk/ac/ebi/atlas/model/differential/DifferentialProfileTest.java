@@ -166,7 +166,7 @@ public class DifferentialProfileTest {
     }
 
     @Test
-    public void getMinDownRegulatedWhenExpressionIsNegativeInfinity() {
+    public void getMinDownRegulatedWhen1ExpressionIsNegativeInfinity() {
         //given
         given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
         given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
@@ -182,8 +182,61 @@ public class DifferentialProfileTest {
         assertThat(subject.getMinDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
     }
 
+
     @Test
-    public void getMaxDownRegulatedWhenExpressionIsNegativeInfinity() {
+    public void getMinDownRegulatedWhen1of2ExpressionIsNegativeInfinity() {
+        //given
+        given(differentialExpressionMock1.isRegulatedLike(Regulation.DOWN)).willReturn(true);
+        given(differentialExpressionMock1.isUnderExpressed()).willReturn(true);
+        Contrast contrastMock1 = mock(Contrast.class);
+        given(differentialExpressionMock1.getLevel()).willReturn(-5D);
+        given(differentialExpressionMock1.isKnown()).willReturn(true);
+        given(differentialExpressionMock1.getContrast()).willReturn(contrastMock1);
+
+        given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
+        given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
+        Contrast contrastMock2 = mock(Contrast.class);
+        given(differentialExpressionMock2.getLevel()).willReturn(Double.NEGATIVE_INFINITY);
+        given(differentialExpressionMock2.isKnown()).willReturn(true);
+        given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
+
+        //when
+        subject.add(differentialExpressionMock1);
+        subject.add(differentialExpressionMock2);
+
+        //then
+        assertThat(subject.getMinDownRegulatedExpressionLevel(), is(-5D));
+    }
+
+
+    @Test
+    public void getMaxDownRegulatedWhen1of2ExpressionIsNegativeInfinity() {
+        //given
+        given(differentialExpressionMock1.isRegulatedLike(Regulation.DOWN)).willReturn(true);
+        given(differentialExpressionMock1.isUnderExpressed()).willReturn(true);
+        Contrast contrastMock1 = mock(Contrast.class);
+        given(differentialExpressionMock1.getLevel()).willReturn(-5D);
+        given(differentialExpressionMock1.isKnown()).willReturn(true);
+        given(differentialExpressionMock1.getContrast()).willReturn(contrastMock1);
+
+        given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
+        given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
+        Contrast contrastMock2 = mock(Contrast.class);
+        given(differentialExpressionMock2.getLevel()).willReturn(Double.NEGATIVE_INFINITY);
+        given(differentialExpressionMock2.isKnown()).willReturn(true);
+        given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
+
+        //when
+        subject.add(differentialExpressionMock1);
+        subject.add(differentialExpressionMock2);
+
+        //then
+        assertThat(subject.getMaxDownRegulatedExpressionLevel(), is(Double.NEGATIVE_INFINITY));
+    }
+
+
+    @Test
+    public void getMaxDownRegulatedWhen1ExpressionIsNegativeInfinity() {
         //given
         given(differentialExpressionMock2.isRegulatedLike(Regulation.DOWN)).willReturn(true);
         given(differentialExpressionMock2.isUnderExpressed()).willReturn(true);
@@ -201,7 +254,7 @@ public class DifferentialProfileTest {
 
 
     @Test
-    public void getMinUpRegulatedWhenExpressionIsInfinity() {
+    public void getMinUpRegulatedWhen1ExpressionIsInfinity() {
         //given
         given(differentialExpressionMock2.isRegulatedLike(Regulation.UP)).willReturn(true);
         given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
@@ -217,9 +270,51 @@ public class DifferentialProfileTest {
         assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));
     }
 
+    @Test
+    public void getMinUpRegulatedWhen1of2ExpressionsIsInfinity() {
+        //given
+        given(differentialExpressionMock1.isRegulatedLike(Regulation.UP)).willReturn(true);
+        given(differentialExpressionMock1.isOverExpressed()).willReturn(true);
+        given(differentialExpressionMock1.getLevel()).willReturn(5D);
+        given(differentialExpressionMock1.isKnown()).willReturn(true);
+        Contrast contrastMock1 = mock(Contrast.class);
+        given(differentialExpressionMock1.getContrast()).willReturn(contrastMock1);
+
+        given(differentialExpressionMock2.isRegulatedLike(Regulation.UP)).willReturn(true);
+        given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
+        Contrast contrastMock2 = mock(Contrast.class);
+        given(differentialExpressionMock2.getLevel()).willReturn(Double.POSITIVE_INFINITY);
+        given(differentialExpressionMock2.isKnown()).willReturn(true);
+        given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
+
+        //when
+        subject.add(differentialExpressionMock1);
+        subject.add(differentialExpressionMock2);
+
+        //then
+        assertThat(subject.getMinUpRegulatedExpressionLevel(), is(5D));
+    }
 
     @Test
-    public void getMaxUpRegulatedWhenExpressionIsInfinity() {
+    public void getMaxUpRegulatedWhen1ExpressionIsInfinity() {
+        //given
+        given(differentialExpressionMock2.isRegulatedLike(Regulation.UP)).willReturn(true);
+        given(differentialExpressionMock2.isOverExpressed()).willReturn(true);
+        Contrast contrastMock2 = mock(Contrast.class);
+        given(differentialExpressionMock2.getLevel()).willReturn(Double.POSITIVE_INFINITY);
+        given(differentialExpressionMock2.isKnown()).willReturn(true);
+        given(differentialExpressionMock2.getContrast()).willReturn(contrastMock2);
+
+        //when
+        subject.add(differentialExpressionMock2);
+
+        //then
+        assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));
+    }
+
+
+    @Test
+    public void getMaxUpRegulatedWhen1of2ExpressionsIsInfinity() {
         //given
         given(differentialExpressionMock1.isRegulatedLike(Regulation.UP)).willReturn(true);
         given(differentialExpressionMock1.isOverExpressed()).willReturn(true);
@@ -242,6 +337,5 @@ public class DifferentialProfileTest {
         //then
         assertThat(subject.getMaxUpRegulatedExpressionLevel(), is(Double.POSITIVE_INFINITY));
     }
-
 
 }
