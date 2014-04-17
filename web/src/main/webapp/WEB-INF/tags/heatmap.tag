@@ -1,3 +1,4 @@
+<%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -199,13 +200,13 @@
                 </display:table>
             </td>
             <td style="vertical-align: top">
-                <div style="float:left; ${isWidget ? 'display:none' : ''}">
+                <div style="float:left;">
                     <!--
                      <button id="download-profiles" class="button-image" value="D"></button>
                     -->
                     <a id="download-profiles-link"
                        title="Top 50 genes displayed on page. Download results to see the rest."
-                       href="${applicationProperties.buildDownloadURL(pageContext.request)}"
+                       href="${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
                        class="button-image" target="_blank">
                         <img id="download-profiles" alt="Download query results" style="width:20px"
                              src="${base}/resources/images/download_blue_small.png">

@@ -23,13 +23,23 @@
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class HeatmapTableWidgetPage extends HeatmapTableWithTranscriptBreakdownPage {
     private static final String PAGE_LOCATION = "/gxa/widgets/heatmap/protein";
 
+    @FindBy(id = "download-profiles-link")
+    private WebElement downloadProfiles;
+
     public HeatmapTableWidgetPage(WebDriver driver, String httpParameters) {
         super(driver, null, httpParameters);
     }
+
+    public String downloadProfilesLink() {
+        return downloadProfiles.getAttribute("href");
+    }
+
 
     @Override
     protected String getPageURI() {

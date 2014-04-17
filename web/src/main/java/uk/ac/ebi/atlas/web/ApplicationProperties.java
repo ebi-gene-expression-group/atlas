@@ -118,6 +118,13 @@ public class ApplicationProperties {
                 .join(new String[]{request.getAttribute("javax.servlet.forward.request_uri") + TSV_FILE_EXTENSION, queryString}).toString();
     }
 
+    public String buildDownloadURLForWidget(HttpServletRequest request, String experimentAccession) {
+        // get original query string, not the one modified by ExperimentDispatcher
+        String queryString = (String) request.getAttribute("javax.servlet.forward.query_string");
+        return Joiner.on("?").skipNulls()
+                .join(new String[]{request.getContextPath() + "/experiments/" + experimentAccession + TSV_FILE_EXTENSION, queryString}).toString();
+    }
+
     public String urlParamEncode(String value) throws UnsupportedEncodingException {
         return URLEncoder.encode(value, "UTF-8");
     }
