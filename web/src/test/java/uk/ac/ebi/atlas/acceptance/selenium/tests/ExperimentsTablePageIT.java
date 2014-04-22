@@ -42,6 +42,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -173,7 +175,22 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
         subject.clickSecondColumnHeader();
         List<ExperimentInfo> allInfos = Lists.newArrayList(baselineInfos);
         allInfos.addAll(differentialInfos);
-        Collections.sort(allInfos);
+        Collections.sort(allInfos, new Comparator<ExperimentInfo>() {
+            @Override
+            public int compare(ExperimentInfo o1, ExperimentInfo o2) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+                try {
+                    java.util.Date o1Loaded = dateFormat.parse(o1.getLastUpdate());
+                    java.util.Date o2Loaded = dateFormat.parse(o2.getLastUpdate());
+                    int compare = o1Loaded.compareTo(o2Loaded);
+                    return (compare != 0) ? compare : Integer.compare(o1.getNumberOfAssays(), o2.getNumberOfAssays());
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        });
         assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstDescription));
         if (allInfos.size() < 10) {
             assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(allInfos.size() - 1).getExperimentDescription()));
@@ -182,7 +199,7 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
         }
         subject.clickSecondColumnHeader();
         Collections.reverse(allInfos);
-        assertThat(subject.getFirstExperimentInfo(), hasItem("RNA-seq of mouse DBA/2J x C57BL/6J heart, hippocampus, liver, lung, spleen and thymus"));
+        assertThat(subject.getFirstExperimentInfo(), hasItem(allInfos.get(0).getExperimentDescription()));
     }
 
     @Test
