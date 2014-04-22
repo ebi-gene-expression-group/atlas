@@ -41,7 +41,6 @@
         <c:set var="isPreferenceError" value="true"/>
     </spring:hasBindErrors>
 
-    <c:set var="isExperimentPage" value="true" scope="request"/>
     <%@ include file="includes/anatomogram-and-heatmap.jsp" %>
 
     <br/>

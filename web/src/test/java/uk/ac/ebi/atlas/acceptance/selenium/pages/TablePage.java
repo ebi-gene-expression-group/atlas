@@ -78,8 +78,12 @@ abstract class TablePage extends GlobalSearchPage {
     }
 
     protected List<String> getFirstColumnValues(WebElement table) {
-        List<WebElement> tableCells = table.findElements(By.xpath(FIRST_COLUMN_CELLS_XPATH));
+        List<WebElement> tableCells = getFirstColumnElements(table);
         return toStrings(tableCells);
+    }
+
+    protected List<WebElement> getFirstColumnElements(WebElement table) {
+        return table.findElements(By.xpath(FIRST_COLUMN_CELLS_XPATH));
     }
 
     protected List<String> getSecondColumnValues(WebElement table) {

@@ -57,6 +57,7 @@ public class BioentitiesSearchControllerGeneQuerySameSpeciesSIT extends SinglePa
 
         assertThat(subject.getGeneNames(), contains("SRSF2"));
         assertThat(subject.getGeneNames().size(), is(1));
+        assertThat(subject.getGeneLink(0),is("http://172.22.69.130:8080/gxa/genes/ENSG00000161547"));
     }
 
 }
