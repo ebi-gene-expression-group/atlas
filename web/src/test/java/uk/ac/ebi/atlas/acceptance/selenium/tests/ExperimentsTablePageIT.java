@@ -66,15 +66,27 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
 
     private int numberResults = 0;
 
-    private String defaultFirstAccession;
-
-    private String defaultLastAccession;
-
     private ExperimentsTablePage subject;
+    private String defaultFirstDescription;
+    private String defaultLastDescription;
 
     @Override
     protected void getStartingPage() {
 
+        readJsonEndpoint();
+
+        subject = new ExperimentsTablePage(driver);
+        subject.get();
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.pollingEvery(5, TimeUnit.SECONDS).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                return !subject.getExperimentsTableInfo().startsWith("Showing 0");
+            }
+        });
+    }
+
+    private void readJsonEndpoint() {
         URLBuilder urlBuilder = new URLBuilder(EXPERIMENTS_REST_URI);
         String s = urlBuilder.buildURL(null);
         try {
@@ -94,11 +106,12 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
             totalExperiments = experimentInfoWrapper.getAaData().size();
             Collections.sort(baselineInfos);
             Collections.sort(differentialInfos);
-            defaultFirstAccession = baselineInfos.get(0).getExperimentAccession();
+            defaultFirstDescription = baselineInfos.get(0).getExperimentDescription();
+
             if (baselineInfos.size() < 10) {
-                defaultLastAccession = differentialInfos.get(9 - baselineInfos.size()).getExperimentAccession();
+                defaultLastDescription = differentialInfos.get(9 - baselineInfos.size()).getExperimentDescription();
             } else {
-                defaultLastAccession = baselineInfos.get(9).getExperimentAccession();
+                defaultLastDescription = baselineInfos.get(9).getExperimentDescription();
             }
             numberResults = totalExperiments < 10 ? totalExperiments : 10;
         } catch (MalformedURLException e) {
@@ -106,16 +119,6 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
         } catch (IOException e) {
             LOGGER.error(e);
         }
-
-        subject = new ExperimentsTablePage(driver);
-        subject.get();
-        WebDriverWait wait = new WebDriverWait(driver, 20);
-        wait.pollingEvery(5, TimeUnit.SECONDS).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver webDriver) {
-                return !subject.getExperimentsTableInfo().startsWith("Showing 0");
-            }
-        });
     }
 
     @Test
@@ -128,8 +131,8 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
     public void defaultExperimentsPage() {
         assertThat(subject.getExperimentsTableHeader().size(), is(9));
         assertThat(subject.getExperimentsTableInfo(), startsWith("Showing 1 to " + numberResults + " of " + totalExperiments + " entries"));
-        assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstAccession));
-        assertThat(subject.getLastExperimentInfo(), hasItem(defaultLastAccession));
+        assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstDescription));
+        assertThat(subject.getLastExperimentInfo(), hasItem(defaultLastDescription));
     }
 
     @Test
@@ -139,11 +142,11 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getSearchFieldValue(), is("baseline"));
         int baselineResults = baselineInfos.size() < 10 ? baselineInfos.size() : 10;
         assertThat(subject.getExperimentsTableInfo(), startsWith("Showing 1 to " + baselineResults + " of " + baselineInfos.size() + " entries"));
-        assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstAccession));
+        assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstDescription));
         if (baselineInfos.size() < 10) {
-            assertThat(subject.getLastExperimentInfo(), hasItem(baselineInfos.get(baselineInfos.size() - 1).getExperimentAccession()));
+            assertThat(subject.getLastExperimentInfo(), hasItem(baselineInfos.get(baselineInfos.size() - 1).getExperimentDescription()));
         } else {
-            assertThat(subject.getLastExperimentInfo(), hasItem(baselineInfos.get(9).getExperimentAccession()));
+            assertThat(subject.getLastExperimentInfo(), hasItem(baselineInfos.get(9).getExperimentDescription()));
         }
     }
 
@@ -151,47 +154,42 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
 
     @Test
     public void sortOnFirstColumn() {
-        assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstAccession));
-        assertThat(subject.getLastExperimentInfo(), hasItem(defaultLastAccession));
+        assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstDescription));
+        assertThat(subject.getLastExperimentInfo(), hasItem(defaultLastDescription));
         subject.clickFirstColumnHeader();
-        assertThat(subject.getFirstExperimentInfo(), hasItem(differentialInfos.get(0).getExperimentAccession()));
+        assertThat(subject.getFirstExperimentInfo(), hasItem(differentialInfos.get(0).getExperimentDescription()));
         if (differentialInfos.size() < 10) {
-            assertThat(subject.getLastExperimentInfo(), hasItem(baselineInfos.get(9 - differentialInfos.size()).getExperimentAccession()));
+            assertThat(subject.getLastExperimentInfo(), hasItem(baselineInfos.get(9 - differentialInfos.size()).getExperimentDescription()));
         } else {
-            assertThat(subject.getLastExperimentInfo(), hasItem(differentialInfos.get(9).getExperimentAccession()));
+            assertThat(subject.getLastExperimentInfo(), hasItem(differentialInfos.get(9).getExperimentDescription()));
         }
         subject.clickFirstColumnHeader();
-        assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstAccession));
-        assertThat(subject.getLastExperimentInfo(), hasItem(defaultLastAccession));
+        assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstDescription));
+        assertThat(subject.getLastExperimentInfo(), hasItem(defaultLastDescription));
     }
 
     @Test
-    public void sortOnSecondColumn() {
+    public void sortOnLoadedColumn() {
         subject.clickSecondColumnHeader();
         List<ExperimentInfo> allInfos = Lists.newArrayList(baselineInfos);
         allInfos.addAll(differentialInfos);
         Collections.sort(allInfos);
-        assertThat(subject.getFirstExperimentInfo(), hasItem(allInfos.get(0).getExperimentAccession()));
+        assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstDescription));
         if (allInfos.size() < 10) {
-            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(allInfos.size() - 1).getExperimentAccession()));
+            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(allInfos.size() - 1).getExperimentDescription()));
         } else {
-            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(9).getExperimentAccession()));
+            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(9).getExperimentDescription()));
         }
         subject.clickSecondColumnHeader();
         Collections.reverse(allInfos);
-        assertThat(subject.getFirstExperimentInfo(), hasItem(allInfos.get(0).getExperimentAccession()));
-        if (allInfos.size() < 10) {
-            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(allInfos.size() - 1).getExperimentAccession()));
-        } else {
-            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(9).getExperimentAccession()));
-        }
+        assertThat(subject.getFirstExperimentInfo(), hasItem("RNA-seq of mouse DBA/2J x C57BL/6J heart, hippocampus, liver, lung, spleen and thymus"));
     }
 
     @Test
     public void sortOnDescriptionColumn() {
-        assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstAccession));
-        assertThat(subject.getLastExperimentInfo(), hasItem(defaultLastAccession));
-        subject.clickFourthColumnHeader();
+        assertThat(subject.getFirstExperimentInfo(), hasItem(defaultFirstDescription));
+        assertThat(subject.getLastExperimentInfo(), hasItem(defaultLastDescription));
+        subject.clickThirdColumnHeader();
         List<ExperimentInfo> allInfos = Lists.newArrayList(baselineInfos);
         allInfos.addAll(differentialInfos);
         Collections.sort(allInfos, new Comparator<ExperimentInfo>() {
@@ -200,19 +198,19 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
                 return o1.getExperimentDescription().compareToIgnoreCase(o2.getExperimentDescription());
             }
         });
-        assertThat(subject.getFirstExperimentInfo(), hasItem(allInfos.get(0).getExperimentAccession()));
+        assertThat(subject.getFirstExperimentInfo(), hasItem(allInfos.get(0).getExperimentDescription()));
         if (allInfos.size() < 10) {
-            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(allInfos.size() - 1).getExperimentAccession()));
+            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(allInfos.size() - 1).getExperimentDescription()));
         } else {
-            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(9).getExperimentAccession()));
+            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(9).getExperimentDescription()));
         }
-        subject.clickFourthColumnHeader();
+        subject.clickThirdColumnHeader();
         Collections.reverse(allInfos);
-        assertThat(subject.getFirstExperimentInfo(), hasItem(allInfos.get(0).getExperimentAccession()));
+        assertThat(subject.getFirstExperimentInfo(), hasItem(allInfos.get(0).getExperimentDescription()));
         if (allInfos.size() < 10) {
-            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(allInfos.size() - 1).getExperimentAccession()));
+            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(allInfos.size() - 1).getExperimentDescription()));
         } else {
-            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(9).getExperimentAccession()));
+            assertThat(subject.getLastExperimentInfo(), hasItem(allInfos.get(9).getExperimentDescription()));
         }
     }
 

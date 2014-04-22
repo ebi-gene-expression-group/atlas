@@ -22,13 +22,11 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.pages;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -58,8 +56,8 @@ public class ExperimentsTablePage extends AtlasPage{
     @FindBy(xpath = "//thead/tr[1]/th[2]")
     private WebElement secondColumnHeader;
 
-    @FindBy(xpath = "//thead/tr[1]/th[4]")
-    private WebElement fourthColumnHeader;
+    @FindBy(xpath = "//thead/tr[1]/th[3]")
+    private WebElement thirdColumnHeader;
 
     public ExperimentsTablePage(WebDriver driver) {
         super(driver);
@@ -78,8 +76,8 @@ public class ExperimentsTablePage extends AtlasPage{
         secondColumnHeader.click();
     }
 
-    public void clickFourthColumnHeader() {
-        fourthColumnHeader.click();
+    public void clickThirdColumnHeader() {
+        thirdColumnHeader.click();
     }
 
     public String getSearchFieldValue() {
