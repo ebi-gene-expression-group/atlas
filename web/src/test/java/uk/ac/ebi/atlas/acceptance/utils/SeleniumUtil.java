@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.concurrent.TimeUnit;
@@ -25,6 +26,15 @@ public class SeleniumUtil {
                 return driver.findElement(By.id(id));
             }
         });
+    }
+
+    public static void waitForElementByIdUntilVisible(final WebDriver driver, final String id) {
+        FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                .withTimeout(10, TimeUnit.SECONDS)
+                .pollingEvery(250, TimeUnit.MILLISECONDS)
+                .ignoring(NoSuchElementException.class);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
     }
 
     public static WebElement findElementByCssWaitingUntilAvailable(final WebDriver driver, final String css) {

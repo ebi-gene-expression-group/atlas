@@ -86,6 +86,18 @@ public class BioEntityPage extends HeatmapTablePage {
     @FindBy(css = "[data-icon='u']")
     private WebElement showMoreDataWidget;
 
+    @FindBy(id = "showIndividualGenes")
+    private WebElement showIndividualGenes;
+
+    @FindBy(id = "showGeneSetProfiles")
+    private WebElement showGeneSetProfiles;
+
+    @FindBy(id = "heatmap-div")
+    private WebElement heatmap;
+
+    @FindBy(id = "heatmap-profilesAsGeneSets")
+    private WebElement heatmapProfilesAsGeneSets;
+
     @FindBy(css = "#global-search-results > li > a")
     private List<WebElement> globalSearchPointers;
     private Iterable<? extends String> diffHeatmapHeaders;
@@ -104,6 +116,22 @@ public class BioEntityPage extends HeatmapTablePage {
         super(driver, null, httpParameters);
         this.bioEntityIdentifier = bioEntityIdentifier;
         this.type = type;
+    }
+
+    public void clickShowIndividualGeneProfiles() {
+        showIndividualGenes.click();
+    }
+
+    public void clickShowGeneSetProfiles() {
+        showGeneSetProfiles.click();
+    }
+
+    public boolean isIndividualGenesVisible() {
+        return heatmap.isDisplayed();
+    }
+
+    public boolean isGeneSetProfilesVisible() {
+        return heatmapProfilesAsGeneSets.isDisplayed();
     }
 
     public WebElement getDiffHeatmapTable() {

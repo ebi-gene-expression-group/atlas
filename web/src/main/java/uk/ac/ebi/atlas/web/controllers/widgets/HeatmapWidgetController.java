@@ -86,7 +86,7 @@ public final class HeatmapWidgetController {
                 species = solrQueryService.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
             }
         } catch (Exception e) {
-            model.addAttribute("errorMessage", "Species could not be determined");
+            model.addAttribute("errorMessage", e.getMessage());
             return "widget-error";
         }
 

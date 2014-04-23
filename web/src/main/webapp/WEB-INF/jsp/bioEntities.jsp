@@ -265,7 +265,7 @@
                 helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
 
-                var widgetParameters = "&propertyType=bioentity_identifier" + "${singleSpecies ? "&species=".concat(species) : ""}";
+                var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${singleSpecies ? "&species=".concat(species) : ""}";
 
                 <c:choose>
 

@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.search;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -142,7 +143,7 @@ public class BioentitiesSearchController {
 
         String geneId = requestParameters.getGeneQuery();
 
-        if (geneId.toUpperCase().startsWith("REACT_")) {
+        if (!StringUtils.containsWhitespace(geneId) && geneId.toUpperCase().startsWith("REACT_")) {
             return Optional.of("redirect:/genesets/" + geneId);
         }
 

@@ -25,38 +25,31 @@ package uk.ac.ebi.atlas.search;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
+import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-public class BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerConditionGeneQuery2GeneSetsSIT extends SinglePageSeleniumFixture {
 
-    private static final String GLOBAL_SEARCH_TERM = "%22Mus+musculus%22+AND+%22wild+type%22";
     private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "condition=%22Mus%20musculus%22+and+%22wild%20type%22");
+        subject = new BioEntitiesPage(driver, "geneQuery=REACT_1258+REACT_1619");
         subject.get();
     }
 
-
     @Test
-    public void checkDifferentialProfilesCount() {
-        assertThat(subject.diffExpressionResultCount(), is("316 search result(s) found"));
-    }
+    public void checkWidget() {
+        // wait for ajax widget to load
+        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
 
-    @Test
-    public void globalSearchTermIsIdentifiersSeparatedByAND() {
-        assertThat(subject.getGlobalSearchTerm(), is(GLOBAL_SEARCH_TERM));
+        assertThat(subject.isIndividualGenesVisible(), is(true));
+        assertThat(subject.isGeneSetProfilesVisible(), is(false));
+        subject.clickShowGeneSetProfiles();
+        assertThat(subject.isIndividualGenesVisible(), is(false));
+        assertThat(subject.isGeneSetProfilesVisible(), is(true));
     }
-
-    @Test
-    public void globalSearchWidgetShouldHaveResults(){
-        subject.clickShowMoreDataWidget();
-        assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
-    }
-
 
 }
