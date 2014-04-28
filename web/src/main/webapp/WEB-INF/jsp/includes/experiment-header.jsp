@@ -20,7 +20,7 @@
                             <a id="display-ae" class="button-image"
                                title="View experiment in ArrayExpress"
                                href="${applicationProperties.getArrayExpressURL(experimentAccession)}">
-                                <img src="${pageContext.request.contextPath}/resources/images/arrayexpress_logo.gif"/></a>
+                                <img src="${pageContext.request.contextPath}/resources/images/ae-logo-64.png"/></a>
                         </td>
                         <td>
                             <a id="display-experiment" class="button-image"
