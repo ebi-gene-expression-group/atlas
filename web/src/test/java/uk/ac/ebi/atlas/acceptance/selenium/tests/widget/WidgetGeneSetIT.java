@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.widget;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -21,6 +22,9 @@ public class WidgetGeneSetIT extends SeleniumFixture {
 
     @Test
     public void heatmapChangesOnClick() {
+        // wait for ajax widget to load
+        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
+
         assertThat(subject.isIndividualGenesVisible(), is(true));
         assertThat(subject.isGeneSetProfilesVisible(), is(false));
         subject.clickShowGeneSetProfiles();
