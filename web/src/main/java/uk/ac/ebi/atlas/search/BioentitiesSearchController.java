@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.search;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -58,6 +59,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Controller
 @Scope("prototype")
 public class BioentitiesSearchController {
+
+    private static final Logger LOGGER = Logger.getLogger(BioentitiesSearchController.class);
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private BaselineBioentityCountsService baselineBioentityCountsService;
@@ -163,15 +166,16 @@ public class BioentitiesSearchController {
             }
 
         } catch (HttpSolrServer.RemoteSolrException e) {
-            throw new IllegalStateException(geneId, e);
+            LOGGER.error(e.getMessage(), e);
+            throw new HttpSolrServer.RemoteSolrException(e.code(), geneId, e);
         }
 
         return Optional.absent();
 
     }
 
-    @ExceptionHandler(value = {RuntimeException.class})
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(value = {HttpSolrServer.RemoteSolrException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView InternalServerHandleException(Exception e) {
         ModelAndView mav = new ModelAndView("query-error-page");
         mav.addObject("exceptionMessage", e.getMessage());

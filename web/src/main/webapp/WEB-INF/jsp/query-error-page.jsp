@@ -6,7 +6,7 @@
         ${exceptionMessage}
     </div>
     <br/>
-    <div>Please try again</div>
+    <div>Please try again.</div>
 </div>
 <div id="content" class="block">
     <a href="/gxa">Go to Baseline Atlas home page</a>
