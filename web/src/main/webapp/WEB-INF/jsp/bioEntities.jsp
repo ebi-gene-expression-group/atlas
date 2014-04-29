@@ -37,7 +37,7 @@
             </div>
         </div>
         <div id="content" class="block">
-            <a href="/gxa">Go to Baseline Atlas home page</a>
+            <a href="/gxa">Go to Expression Atlas home page</a>
         </div>
     </c:when>
     <c:otherwise>
