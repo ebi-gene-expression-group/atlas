@@ -150,6 +150,11 @@ abstract class TablePage extends GlobalSearchPage {
         return getCell(table, xPath);
     }
 
+    protected boolean hasGeneAnchor(WebElement table, int geneProfileIndex) {
+        String xPath = String.format(GENE_ANCHOR_XPATH_TEMPLATE, geneProfileIndex);
+        return !table.findElements(By.xpath(xPath)).isEmpty();
+    }
+
     protected List<String> getTableHeaders(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(TABLE_HEADERS_XPATH));
         return toStrings(tableCells);

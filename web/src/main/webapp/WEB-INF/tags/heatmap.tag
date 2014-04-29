@@ -57,7 +57,7 @@
                         <c:set var="bioEntityURL" value="${geneSet? \"query?geneQuery=\".concat(geneProfile.getName()).concat(\"&exactMatch=\").concat(preferences.isExactMatch()) : \"genes/\".concat(geneProfile.id)}"/>
 
                         <c:choose>
-                            <c:when test="${!singleBioentityPage}">
+                            <c:when test="${!disableGeneLinks}">
                                 <a ${(geneSet == null || !geneSet) ? 'class="genename" id="'.concat(geneId).concat('"') : ''}
                                    href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityURL}'
                                    title="">${geneProfile.getName()}</a>

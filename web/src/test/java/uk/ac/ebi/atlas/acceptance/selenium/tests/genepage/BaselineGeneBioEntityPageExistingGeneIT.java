@@ -65,6 +65,7 @@ public class BaselineGeneBioEntityPageExistingGeneIT extends SinglePageSeleniumF
 
         assertThat(subject.getGeneNames(), contains("DAPL1"));
         assertThat(subject.getGeneNames().size(), is(1));
+        assertThat(subject.hasGeneLink(0), is(false));
 
     }
 

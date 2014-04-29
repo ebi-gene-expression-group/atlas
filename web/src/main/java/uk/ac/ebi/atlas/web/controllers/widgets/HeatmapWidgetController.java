@@ -78,6 +78,7 @@ public final class HeatmapWidgetController {
                                  @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
                                  @RequestParam(value = "species", required = false) String species,
+                                 @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks,
                                  @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
                                  Model model) {
 
@@ -103,7 +104,7 @@ public final class HeatmapWidgetController {
 
         prepareModelForTranscripts(model, species, experiment);
 
-        return "forward:" + getRequestURL(request) + buildQueryString(species, experiment);
+        return "forward:" + getRequestURL(request) + buildQueryString(species, experiment, disableGeneLinks);
     }
 
     private void prepareModelForTranscripts(Model model, String species, Experiment experiment) {
@@ -137,10 +138,10 @@ public final class HeatmapWidgetController {
         return StringUtils.substringAfter(requestURI, contextPath);
     }
 
-    private String buildQueryString(String species, Experiment experiment) {
+    private String buildQueryString(String species, Experiment experiment, boolean disableGeneLinks) {
         String mappedSpecies = experiment.getRequestSpeciesName(species);
         String organismParameters = StringUtils.isEmpty(mappedSpecies) ? "" : "&serializedFilterFactors=ORGANISM:" + mappedSpecies;
-        return "?type=" + experiment.getType().getParent() + organismParameters;
+        return "?type=" + experiment.getType().getParent() + organismParameters + (disableGeneLinks ? "&disableGeneLinks=true" : "");
     }
 
     private void loadJSONFilterFactors(String species, Experiment experiment, Model model) {

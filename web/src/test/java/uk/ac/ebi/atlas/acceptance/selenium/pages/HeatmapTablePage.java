@@ -315,6 +315,10 @@ public class HeatmapTablePage extends TablePage {
         return getGeneAnchor(getHeatmapTable(), profileIndex + 1);
     }
 
+    public boolean hasGeneLink(int profileIndex) {
+        return hasGeneAnchor(getHeatmapTable(), profileIndex + 1);
+    }
+
     public String getGeneLink(int profileIndex) {
         WebElement geneAnchor = getGeneAnchor(profileIndex);
         return geneAnchor.getAttribute("href");

@@ -32,6 +32,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.commands.BaselineProfilesHeatMap;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
@@ -109,7 +110,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
     @RequestMapping(value = "/widgets/heatmap/protein", params = {"type=RNASEQ_MRNA_BASELINE"})
     public String showGeneProfilesWidget(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
-            , BindingResult result, Model model, HttpServletRequest request) {
+            , @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request) {
 
         prepareModel(preferences, result, model, request);
 
@@ -119,6 +120,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         }
 
         model.addAttribute("isWidget", true);
+        model.addAttribute("disableGeneLinks", disableGeneLinks);
         return "heatmap-widget";
     }
 

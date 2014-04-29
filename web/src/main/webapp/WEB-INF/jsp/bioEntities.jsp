@@ -272,7 +272,7 @@
                     <c:when test="${singleBioentityPage || singleSpecies}">
 
                         new Biojs.AtlasHeatmap({
-                        featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}' + widgetParameters,
+                        featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}${disableGeneLinks ? "&disableGeneLinks=true" : ""}' + widgetParameters,
                         target: "widgetBody"
                         });
 
