@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
@@ -32,6 +33,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -212,6 +214,33 @@ public class SolrQueryService {
 
     }
 
+    public Optional<Set<String>> expandGeneQueryIntoGeneIds(String geneQuery, boolean isExactMatch) {
+        if (StringUtils.isNotBlank(geneQuery)) {
+            return Optional.absent();
+        }
+
+        LOGGER.info(String.format("<expandGeneQueryIntoGeneIds> geneQuery=" + geneQuery));
+
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+        stopWatch.start();
+
+        // search across any species
+        String species = "";
+
+        //resolve any gene keywords to identifiers
+        Set<String> geneIds = findGeneIdsOrSets(geneQuery, isExactMatch, species);
+
+        Set<String> matureRNAIds = findMatureRNAIds(geneQuery);
+        geneIds.addAll(matureRNAIds);
+
+        stopWatch.stop();
+        LOGGER.info(String.format("<expandGeneQueryIntoGeneIds> %s results, took %s seconds", geneIds.size(), stopWatch.getTotalTimeSeconds()));
+
+        return Optional.of(geneIds);
+    }
+
+
+    // NB: if species = "" then will search across all species
     public Set<String> findGeneIdsOrSets(String geneQuery, boolean exactMatch, String species) {
 
         checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");

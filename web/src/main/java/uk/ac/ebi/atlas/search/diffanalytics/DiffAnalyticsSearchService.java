@@ -25,9 +25,7 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
@@ -46,8 +44,6 @@ import java.util.Set;
 @Scope("prototype")
 public class DiffAnalyticsSearchService {
 
-    private static final Logger LOGGER = Logger.getLogger(DiffAnalyticsSearchService.class);
-
     private DiffAnalyticsDao diffAnalyticsDao;
     private DifferentialConditionsSearchService differentialConditionsSearchService;
     private SolrQueryService solrQueryService;
@@ -65,7 +61,7 @@ public class DiffAnalyticsSearchService {
     public int visitEachExpression(GeneQuerySearchRequestParameters requestParameters, Visitor<DiffAnalytics> visitor) {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
-        Optional<Set<String>> geneIdsResult = expandGeneQueryIntoGeneIds(requestParameters);
+        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(requestParameters.getGeneQuery(), requestParameters.isExactMatch());
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
                  || contrastsResult.isPresent() && contrastsResult.get().isEmpty()) {
@@ -108,7 +104,7 @@ public class DiffAnalyticsSearchService {
 
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
-        Optional<Set<String>> geneIdsResult = expandGeneQueryIntoGeneIds(requestParameters);
+        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(requestParameters.getGeneQuery(), requestParameters.isExactMatch());
 
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
@@ -136,34 +132,6 @@ public class DiffAnalyticsSearchService {
         Collection<IndexedAssayGroup> contrasts = differentialConditionsSearchService.findContrasts(condition);
 
         return Optional.of(contrasts);
-    }
-
-    //TODO: move to solrqueryservice
-    public Optional<Set<String>> expandGeneQueryIntoGeneIds(GeneQuerySearchRequestParameters requestParameters) {
-        if (!requestParameters.hasGeneQuery()) {
-            return Optional.absent();
-        }
-
-        LOGGER.info(String.format("<expandGeneQueryIntoGeneIds> geneQuery=" + requestParameters.getGeneQuery()));
-
-        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-        stopWatch.start();
-
-        String geneQuery = requestParameters.getGeneQuery();
-
-        // search across any species
-        String species = "";
-
-        //resolve any gene keywords to identifiers
-        Set<String> geneIds = solrQueryService.findGeneIdsOrSets(geneQuery, requestParameters.isExactMatch(), species);
-
-        Set<String> matureRNAIds = solrQueryService.findMatureRNAIds(geneQuery);
-        geneIds.addAll(matureRNAIds);
-
-        stopWatch.stop();
-        LOGGER.info(String.format("<expandGeneQueryIntoGeneIds> %s results, took %s seconds", geneIds.size(), stopWatch.getTotalTimeSeconds()));
-
-        return Optional.of(geneIds);
     }
 
 }
