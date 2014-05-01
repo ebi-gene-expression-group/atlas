@@ -53,7 +53,7 @@ public class BaselineExpressionsQueryBuilderTest {
 
         MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
                 "JOIN TABLE(?) assayGroups on rbe.EXPERIMENT = assayGroups.EXPERIMENT and rbe.ASSAYGROUPID = assayGroups.CONTRASTID " +
-                "GROUP BY rbe.experiment, rbe.identifier"));
+                "GROUP BY rbe.experiment, rbe.assaygroupid"));
         MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains((Object) assayGroups));
     }
 
@@ -65,7 +65,7 @@ public class BaselineExpressionsQueryBuilderTest {
 
         MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
                 "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value " +
-                "GROUP BY rbe.experiment, rbe.identifier"));
+                "GROUP BY rbe.experiment, rbe.assaygroupid"));
         MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains((Object) geneIds));
 
     }
@@ -82,7 +82,7 @@ public class BaselineExpressionsQueryBuilderTest {
         MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
                 "JOIN TABLE(?) assayGroups on rbe.EXPERIMENT = assayGroups.EXPERIMENT and rbe.ASSAYGROUPID = assayGroups.CONTRASTID " +
                 "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value " +
-                "GROUP BY rbe.experiment, rbe.identifier"));
+                "GROUP BY rbe.experiment, rbe.assaygroupid"));
         MatcherAssert.assertThat(databaseQuery.getParameters().size(), is(2));
 
     }
