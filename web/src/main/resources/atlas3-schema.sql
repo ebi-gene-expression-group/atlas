@@ -282,7 +282,7 @@ IS
    select count(distinct rbe.identifier)
    from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe
    where rbe.ASSAYGROUPID in (assaygroupids_in) and rbe.EXPERIMENT = experiment_in
-   and exists (select 1 from bioentity_name where identifier = rbe.identifier)
+   and exists (select 1 from bioentity_name where identifier = rbe.identifier)  --hide genes that are no longer part of the ensemble release and for which we have no annotations.. typically this number will negligible
    and 
    ( select avg(expression)
    from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) 

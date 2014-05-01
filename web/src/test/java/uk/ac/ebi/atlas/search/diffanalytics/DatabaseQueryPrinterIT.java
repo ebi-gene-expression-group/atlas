@@ -53,6 +53,12 @@ public class DatabaseQueryPrinterIT {
     }
 
     @Test
+    public void oracleObjectArrayToString() throws Exception {
+        ARRAY oracleArray = diffAnalyticsDao.createOracleArrayForIndexedAssayGroup(ImmutableList.of(new IndexedAssayGroup("EXP1", "G1"), new IndexedAssayGroup("EXP2", "G2")));
+        assertThat(DatabaseQueryPrinter.oracleArrayToString(oracleArray), is("EXPR_CONTRAST_TABLE(EXPR_CONTRAST('EXP1', 'G1'), EXPR_CONTRAST('EXP2', 'G2'))"));
+    }
+
+    @Test
     public void printDatabaseQueryWithGeneIds() throws Exception {
         //IndexedAssayGroup iag1 = new IndexedAssayGroup("EXP1", "G1");
         DatabaseQuery<Object> databaseQuery = diffAnalyticsDao.buildSelect(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(ImmutableList.of("A", "B", "C", "D", "E")));
