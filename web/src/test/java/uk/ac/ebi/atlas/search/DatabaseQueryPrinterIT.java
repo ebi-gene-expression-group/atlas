@@ -20,9 +20,8 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.search.diffanalytics;
+package uk.ac.ebi.atlas.search;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import oracle.sql.ARRAY;
 import org.junit.Test;
@@ -33,7 +32,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Inject;
-import java.util.Collection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -44,26 +42,34 @@ import static org.hamcrest.Matchers.is;
 public class DatabaseQueryPrinterIT {
 
     @Inject
-    DiffAnalyticsDao diffAnalyticsDao;
+    OracleObjectFactory subject;
 
     @Test
     public void oracleArrayToString() throws Exception {
-        ARRAY oracleArray = diffAnalyticsDao.createOracleArrayForIdentifiers(ImmutableList.of("A", "B", "C", "D", "E"));
+        ARRAY oracleArray = subject.createOracleArrayForIdentifiers(ImmutableList.of("A", "B", "C", "D", "E"));
         assertThat(DatabaseQueryPrinter.oracleArrayToString(oracleArray), is("IDENTIFIERS_TABLE('A', 'B', 'C', 'D', 'E')"));
     }
 
     @Test
     public void oracleObjectArrayToString() throws Exception {
-        ARRAY oracleArray = diffAnalyticsDao.createOracleArrayForIndexedAssayGroup(ImmutableList.of(new IndexedAssayGroup("EXP1", "G1"), new IndexedAssayGroup("EXP2", "G2")));
+        ARRAY oracleArray = subject.createOracleArrayForIndexedAssayGroup(ImmutableList.of(new IndexedAssayGroup("EXP1", "G1"), new IndexedAssayGroup("EXP2", "G2")));
         assertThat(DatabaseQueryPrinter.oracleArrayToString(oracleArray), is("EXPR_CONTRAST_TABLE(EXPR_CONTRAST('EXP1', 'G1'), EXPR_CONTRAST('EXP2', 'G2'))"));
     }
 
     @Test
     public void printDatabaseQueryWithGeneIds() throws Exception {
-        //IndexedAssayGroup iag1 = new IndexedAssayGroup("EXP1", "G1");
-        DatabaseQuery<Object> databaseQuery = diffAnalyticsDao.buildSelect(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(ImmutableList.of("A", "B", "C", "D", "E")));
+        ARRAY experimentContrasts = subject.createOracleArrayForIndexedAssayGroup(ImmutableList.of(new IndexedAssayGroup("EXP1", "G1"), new IndexedAssayGroup("EXP2", "G2")));
+        ARRAY geneIds = subject.createOracleArrayForIdentifiers(ImmutableList.of("A", "B", "C", "D", "E"));
 
-        assertThat(databaseQuery.print(), is("SELECT IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT FROM VW_DIFFANALYTICS JOIN EXPERIMENT on VW_DIFFANALYTICS.EXPERIMENT = EXPERIMENT.ACCESSION AND PRIVATE = 'F' JOIN TABLE(IDENTIFIERS_TABLE('A', 'B', 'C', 'D', 'E')) identifiersTable ON IDENTIFIER = identifiersTable.column_value order by abs(LOG2FOLD) desc"));
+        DatabaseQuery<Object> databaseQuery = new DatabaseQuery<>();
+
+        databaseQuery.appendToQueryString("JOIN TABLE(?) exprContrast ON VW_DIFFANALYTICS.EXPERIMENT = exprContrast.EXPERIMENT AND VW_DIFFANALYTICS.CONTRASTID = exprContrast.CONTRASTID ");
+        databaseQuery.addParameter(experimentContrasts);
+
+        databaseQuery.appendToQueryString("JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value ");
+        databaseQuery.addParameter(geneIds);
+
+        assertThat(databaseQuery.print(), is("JOIN TABLE(EXPR_CONTRAST_TABLE(EXPR_CONTRAST('EXP1', 'G1'), EXPR_CONTRAST('EXP2', 'G2'))) exprContrast ON VW_DIFFANALYTICS.EXPERIMENT = exprContrast.EXPERIMENT AND VW_DIFFANALYTICS.CONTRASTID = exprContrast.CONTRASTID JOIN TABLE(IDENTIFIERS_TABLE('A', 'B', 'C', 'D', 'E')) identifiersTable ON IDENTIFIER = identifiersTable.column_value "));
     }
 
 }

@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.search.DatabaseQuery;
 
 import static org.hamcrest.Matchers.is;
 

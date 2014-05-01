@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.diffanalytics;
+package uk.ac.ebi.atlas.search;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
@@ -60,7 +60,7 @@ public class DatabaseQueryPrinter {
         }
     }
 
-    static String oracleArrayToString(ARRAY array) {
+    public static String oracleArrayToString(ARRAY array) {
         try {
             StringBuilder sb = new StringBuilder();
             sb.append(getUnqualifiedDescriptorName(array.getDescriptor()));

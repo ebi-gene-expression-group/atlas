@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.diffanalytics;
+package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.ImmutableList;
 import org.hamcrest.MatcherAssert;

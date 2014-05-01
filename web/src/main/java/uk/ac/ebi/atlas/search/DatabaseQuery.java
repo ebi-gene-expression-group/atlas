@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.search.diffanalytics;
+package uk.ac.ebi.atlas.search;
 
 import com.google.common.collect.Lists;
 
@@ -31,15 +31,15 @@ public class DatabaseQuery<T> {
     private List<T> params = Lists.newArrayList();
     private StringBuilder queryBuilder = new StringBuilder();
 
-    void addParameter(T value) {
+    public void addParameter(T value) {
         params.add(value);
     }
 
-    List<T> getParameters() {
+    public List<T> getParameters() {
         return params;
     }
 
-    String getQuery() {
+    public String getQuery() {
         return queryBuilder.toString();
     }
 
@@ -47,7 +47,7 @@ public class DatabaseQuery<T> {
         queryBuilder = new StringBuilder(query);
     }
 
-    DatabaseQuery appendToQueryString(String text) {
+    public DatabaseQuery appendToQueryString(String text) {
         queryBuilder.append(text);
         return this;
     }

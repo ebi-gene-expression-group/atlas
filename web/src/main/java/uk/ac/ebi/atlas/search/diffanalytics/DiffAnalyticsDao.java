@@ -25,18 +25,15 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableSet;
-import oracle.jdbc.OracleConnection;
-import oracle.sql.ArrayDescriptor;
-import oracle.sql.STRUCT;
-import oracle.sql.StructDescriptor;
 import org.apache.commons.lang.mutable.MutableInt;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import uk.ac.ebi.atlas.search.DatabaseQuery;
+import uk.ac.ebi.atlas.search.OracleObjectFactory;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import uk.ac.ebi.atlas.utils.Visitor;
 import uk.ac.ebi.atlas.utils.VisitorException;
@@ -44,7 +41,6 @@ import uk.ac.ebi.atlas.utils.VisitorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -65,11 +61,14 @@ public class DiffAnalyticsDao {
 
     private DiffAnalyticsRowMapper dbeRowMapper;
 
+    private OracleObjectFactory oracleObjectFactory;
+
     @Inject
-    public DiffAnalyticsDao(@Qualifier("dataSourceOracle") DataSource dataSource, DiffAnalyticsRowMapper dbeRowMapper) {
+    public DiffAnalyticsDao(@Qualifier("dataSourceOracle") DataSource dataSource, DiffAnalyticsRowMapper dbeRowMapper, OracleObjectFactory oracleObjectFactory) {
         this.dbeRowMapper = dbeRowMapper;
         this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.oracleObjectFactory = oracleObjectFactory;
     }
 
     public List<DiffAnalytics> fetchTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
@@ -188,48 +187,15 @@ public class DiffAnalyticsDao {
         DiffAnalyticsQueryBuilder builder = new DiffAnalyticsQueryBuilder();
 
         if (indexedContrasts.isPresent() && !indexedContrasts.get().isEmpty()) {
-            builder.withExperimentContrasts(createOracleArrayForIndexedAssayGroup(indexedContrasts.get()));
+            builder.withExperimentContrasts(oracleObjectFactory.createOracleArrayForIndexedAssayGroup(indexedContrasts.get()));
         }
 
         if (geneIds.isPresent() && !geneIds.get().isEmpty()) {
-            builder.withGeneIds(createOracleArrayForIdentifiers(geneIds.get()));
+            builder.withGeneIds(oracleObjectFactory.createOracleArrayForIdentifiers(geneIds.get()));
         }
 
         return builder;
 
-    }
-
-    oracle.sql.ARRAY createOracleArrayForIdentifiers(Collection<String> geneIds) {
-        final String[] ids = geneIds.toArray(new String[geneIds.size()]);
-
-        return jdbcTemplate.execute(new ConnectionCallback<oracle.sql.ARRAY>() {
-            public oracle.sql.ARRAY doInConnection(Connection connection) throws SQLException, DataAccessException {
-            OracleConnection oracleConnection = connection.unwrap(OracleConnection.class);
-            ArrayDescriptor descriptor = ArrayDescriptor.createDescriptor("IDENTIFIERS_TABLE", oracleConnection);
-            return new oracle.sql.ARRAY(descriptor, oracleConnection, ids);
-            }
-        });
-    }
-
-    oracle.sql.ARRAY createOracleArrayForIndexedAssayGroup(final Collection<IndexedAssayGroup> indexedAssayGroups) {
-
-        return jdbcTemplate.execute(new ConnectionCallback<oracle.sql.ARRAY>() {
-            public oracle.sql.ARRAY doInConnection(Connection connection) throws SQLException, DataAccessException {
-            OracleConnection oracleConnection = connection.unwrap(OracleConnection.class);
-
-            StructDescriptor exprContrastDescriptor = StructDescriptor.createDescriptor("EXPR_CONTRAST", oracleConnection);
-
-            STRUCT[] exprContrasts = new STRUCT[indexedAssayGroups.size()];
-
-            int i = 0;
-            for (IndexedAssayGroup iag : indexedAssayGroups) {
-                exprContrasts[i++] = new STRUCT(exprContrastDescriptor, oracleConnection, new Object[]{iag.getExperimentAccession(), iag.getAssayGroupOrContrastId()});
-            }
-
-            ArrayDescriptor descriptor = ArrayDescriptor.createDescriptor("EXPR_CONTRAST_TABLE", oracleConnection);
-            return new oracle.sql.ARRAY(descriptor, oracleConnection, exprContrasts);
-            }
-        });
     }
 
     private void log(final String methodName, Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
