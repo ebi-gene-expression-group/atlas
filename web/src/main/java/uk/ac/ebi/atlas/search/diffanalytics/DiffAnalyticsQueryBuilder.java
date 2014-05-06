@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 
 import oracle.sql.ARRAY;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.search.DatabaseQuery;
 
 import javax.inject.Named;
 

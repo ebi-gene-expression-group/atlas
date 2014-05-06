@@ -29,6 +29,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -65,9 +66,13 @@ public class BaselineGeneBioEntityPageExistingGeneIT extends SinglePageSeleniumF
 
         assertThat(subject.getGeneNames(), contains("DAPL1"));
         assertThat(subject.getGeneNames().size(), is(1));
-        assertThat(subject.hasGeneLink(0), is(false));
-
     }
 
+    @Test
+    public void heatmapHasNoGeneLinks() {
+        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
+        assertThat(subject.getGeneNames().size(), is(1));
+        assertThat(subject.hasGeneLink(0), is(false));
+    }
 
 }

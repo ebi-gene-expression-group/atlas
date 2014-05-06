@@ -23,10 +23,8 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import oracle.sql.ARRAY;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +34,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Inject;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -93,14 +90,5 @@ public class DiffAnalyticsDaoIT {
         assertThat(subject.fetchResultCount(Optional.of(assayGroups), Optional.of(geneIds)), is(1));
     }
 
-    @Test
-    public void createOracleArrayForIndexedAssayGroup() throws SQLException {
-        IndexedAssayGroup iag1 = new IndexedAssayGroup("EXP1", "G1");
-        IndexedAssayGroup iag2 = new IndexedAssayGroup("EXP2", "G2");
-
-        ARRAY array = subject.createOracleArrayForIndexedAssayGroup(ImmutableList.of(iag1, iag2));
-
-        assertThat(array.getOracleArray().length, is(2));
-    }
 
 }

@@ -1,9 +1,12 @@
-package uk.ac.ebi.atlas.search.diffanalytics;
+package uk.ac.ebi.atlas.search;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import oracle.sql.ARRAY;
+import oracle.sql.Datum;
+import oracle.sql.STRUCT;
+import oracle.sql.TypeDescriptor;
 import org.apache.commons.lang.StringUtils;
 
 import java.sql.SQLException;
@@ -57,14 +60,11 @@ public class DatabaseQueryPrinter {
         }
     }
 
-    static String oracleArrayToString(ARRAY array) {
+    public static String oracleArrayToString(ARRAY array) {
         try {
             StringBuilder sb = new StringBuilder();
-            sb.append(getUnqualifiedArrayName(array)).append("('");
-
-            sb.append(Joiner.on("', '").join(array.getOracleArray()));
-
-            sb.append("')");
+            sb.append(getUnqualifiedDescriptorName(array.getDescriptor()));
+            sb.append(datumArrayToString(array.getOracleArray()));
             return sb.toString();
 
         } catch (SQLException e) {
@@ -72,9 +72,37 @@ public class DatabaseQueryPrinter {
         }
     }
 
-    //eg: return IDENTIFIERS_TABLE (and not ATLAS3DEV.IDENTIFIERS_TABLE)
-    static String getUnqualifiedArrayName(ARRAY array) throws SQLException {
-        return array.getDescriptor().getSQLName().getSimpleName();
+    static String datumArrayToString(Datum[] datums) throws SQLException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+
+        sb.append(Joiner.on(", ").join(datumArrayContentsToString(datums)));
+
+        sb.append(")");
+        return sb.toString();
+    }
+
+    static ImmutableList<String> datumArrayContentsToString(Datum[] oracleArray) throws SQLException {
+        ImmutableList.Builder<String> builder = ImmutableList.builder();
+
+        for (Datum datum : oracleArray) {
+            if (datum instanceof STRUCT) {
+                STRUCT struct = (STRUCT) datum;
+                StringBuilder sb = new StringBuilder();
+                sb.append(getUnqualifiedDescriptorName(struct.getDescriptor()));
+                sb.append(datumArrayToString(struct.getOracleAttributes()));
+                builder.add(sb.toString());
+            } else {
+                builder.add("'" + datum.toString() + "'");
+            }
+        }
+
+        return builder.build();
+    }
+
+    //eg: return IDENTIFIERS_TABLE (and not ATLAS3DEV.IDENTIFIERS_TABLE) or EXPR_CONTRAST (and not ATLAS3DEV.EXPR_CONTRAST)
+    static String getUnqualifiedDescriptorName(TypeDescriptor descriptor) throws SQLException {
+        return descriptor.getSQLName().getSimpleName();
     }
 
 }

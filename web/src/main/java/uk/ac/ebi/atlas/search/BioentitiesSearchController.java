@@ -159,7 +159,7 @@ public class BioentitiesSearchController {
 
         try {
 
-            Optional<Set<String>> geneIdsOrSets = diffAnalyticsSearchService.expandGeneQueryIntoGeneIds(requestParameters);
+            Optional<Set<String>> geneIdsOrSets = solrQueryService.expandGeneQueryIntoGeneIds(requestParameters.getGeneQuery(), requestParameters.isExactMatch());
 
             if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
                 return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());
