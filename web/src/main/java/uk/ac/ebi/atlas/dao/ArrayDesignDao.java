@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.dao;
 
+import com.google.common.collect.ImmutableMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -31,6 +32,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Map;
 
 @Named
 @Scope("singleton")
@@ -61,6 +63,25 @@ public class ArrayDesignDao {
     public List<String> getArrayDesignAccessions() {
         String query = "select distinct arraydesign from designelement_mapping";
         return jdbcTemplate.queryForList(query, String.class);
+    }
+
+    public Map<String, String> getArrayDesignMapNames() {
+        return populateImmutableMap();
+    }
+
+    private Map<String, String> populateImmutableMap() {
+        ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder();
+
+        String query = "select * from arraydesign";
+        List<Map<String, Object>> allArrayDesigns = jdbcTemplate.queryForList(query);
+
+        for (Map<String, Object> arrayDesign : allArrayDesigns) {
+            String accession = (String) arrayDesign.get("ACCESSION");
+            String name = (String)arrayDesign.get("NAME");
+            mapBuilder.put(accession, name);
+
+        }
+        return mapBuilder.build();
     }
 
 }

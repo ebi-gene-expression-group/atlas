@@ -29,7 +29,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -64,4 +64,11 @@ public class ArrayDesignDaoIT {
         List<String> arrayDesignAccessions = subject.getArrayDesignAccessions();
         assertThat(arrayDesignAccessions, hasItem("A-AFFY-44"));
     }
+
+    @Test
+    public void testGetAllArrayDesignMapNames() throws Exception {
+        Map<String,String> arrayDesigns = subject.getArrayDesignMapNames();
+        assertThat(arrayDesigns.size(), is(72));
+    }
+
 }
