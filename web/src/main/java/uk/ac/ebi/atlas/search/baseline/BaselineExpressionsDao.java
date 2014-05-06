@@ -25,10 +25,13 @@ package uk.ac.ebi.atlas.search.baseline;
 import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.SetMultimap;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import uk.ac.ebi.atlas.search.DatabaseQuery;
 import uk.ac.ebi.atlas.search.OracleObjectFactory;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
@@ -38,14 +41,13 @@ import javax.inject.Named;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Named
 @Scope("prototype")
-public class RnaSeqBslnExpressionsDao {
+public class BaselineExpressionsDao {
 
-    private static final Logger LOGGER = Logger.getLogger(RnaSeqBslnExpressionsDao.class);
+    private static final Logger LOGGER = Logger.getLogger(BaselineExpressionsDao.class);
 
     static final int RESULT_SIZE = 50;
 
@@ -54,47 +56,61 @@ public class RnaSeqBslnExpressionsDao {
     private OracleObjectFactory oracleObjectFactory;
 
     @Inject
-    public RnaSeqBslnExpressionsDao(JdbcTemplate jdbcTemplate, OracleObjectFactory oracleObjectFactory) {
+    public BaselineExpressionsDao(JdbcTemplate jdbcTemplate, OracleObjectFactory oracleObjectFactory) {
         this.jdbcTemplate = jdbcTemplate;
         this.oracleObjectFactory = oracleObjectFactory;
     }
 
-    public ImmutableSet<IndexedAssayGroup> fetchExperimentAssayGroups(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
-        Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
+    boolean isEmpty(Optional<? extends Collection<?>> coll) {
+        return (!coll.isPresent() || coll.get().isEmpty());
+    }
 
-        log("fetchExperimentAssayGroups", uniqueIndexedContrasts, geneIds);
+    // results SetMultimap of experimentAccession, assaygroupids
+    public SetMultimap<String, String> fetchExperimentAssayGroupsWithNonSpecificExpression(Optional<? extends Collection<IndexedAssayGroup>> indexedAssayGroups, Optional<? extends Collection<String>> geneIds) {
+        if (isEmpty(indexedAssayGroups) && isEmpty(geneIds)) {
+            return ImmutableSetMultimap.<String, String>builder().build();
+        }
+
+        Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedAssayGroups = uniqueIndexedContrasts(indexedAssayGroups);
+
+        log("fetchExperimentAssayGroupsWithNonSpecificExpression", uniqueIndexedAssayGroups, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DatabaseQuery<Object> baselineExpressionQuery = buildSelect(uniqueIndexedContrasts, geneIds);
+        DatabaseQuery<Object> baselineExpressionQuery = buildSelect(uniqueIndexedAssayGroups, geneIds);
 
         jdbcTemplate.setMaxRows(RESULT_SIZE);
 
-        List<IndexedAssayGroup> results;
-
         try {
-            results = jdbcTemplate.query(baselineExpressionQuery.getQuery(),
+            SetMultimap<String, String> results = jdbcTemplate.query(baselineExpressionQuery.getQuery(),
                     baselineExpressionQuery.getParameters().toArray(),
-                    new RowMapper<IndexedAssayGroup>() {
+                    new ResultSetExtractor<SetMultimap<String, String>>() {
                         @Override
-                        public IndexedAssayGroup mapRow(ResultSet rs, int rowNum) throws SQLException {
-                            String experimentAccession = rs.getString("experiment");
-                            String assayGroupId = rs.getString("assaygroupid");
+                        public SetMultimap<String, String> extractData(ResultSet rs) throws SQLException, DataAccessException {
 
-                            return new IndexedAssayGroup(experimentAccession, assayGroupId);
+                            ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
+
+                            while (rs.next()) {
+                                String experimentAccession = rs.getString("experiment");
+                                String assayGroupId = rs.getString("assaygroupid");
+
+                                builder.put(experimentAccession, assayGroupId);
+                            }
+
+                            return builder.build();
                         }
                     });
 
             stopwatch.stop();
 
-            LOGGER.debug(String.format("fetchExperimentAssayGroups returned %s results in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+            LOGGER.debug(String.format("fetchExperimentAssayGroupsWithNonSpecificExpression returned %s results in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+
+            return results;
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             throw e;
         }
-
-        return ImmutableSet.copyOf(results);
 
     }
 
