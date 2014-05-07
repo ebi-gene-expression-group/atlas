@@ -29,6 +29,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -84,6 +85,9 @@ public class ExperimentInfoListBuilderTest {
     private MicroarrayExperiment microarrayExperimentMock;
 
     @Mock
+    private ArrayDesignTrader arrayDesignTraderMock;
+
+    @Mock
     private ExperimentDesign experimentDesignMock;
 
     private ExperimentInfoListBuilder subject;
@@ -131,7 +135,8 @@ public class ExperimentInfoListBuilderTest {
         subject = new ExperimentInfoListBuilder(experimentTraderMock,
                 baselineExperimentsCacheMock,
                 rnaSeqDiffExperimentsCacheMock,
-                microarrayExperimentsCacheMock);
+                microarrayExperimentsCacheMock,
+                arrayDesignTraderMock);
     }
 
     @Test

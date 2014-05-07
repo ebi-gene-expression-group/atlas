@@ -96,7 +96,7 @@ public class ExperimentChecker {
     void checkMicroarrayFiles(String experimentAccession) {
         MicroarrayExperimentConfiguration microarrayConfiguration =
                         configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
-        for (String arrayDesign : microarrayConfiguration.getArrayDesignNames()) {
+        for (String arrayDesign : microarrayConfiguration.getArrayDesignAccessions()) {
             Set<String> arrayDesignDependentPathTemplates = Sets.newHashSet("microarray.experiment.data.path.template", "microarray.normalized.data.path.template");
             checkFilesPermissions(arrayDesignDependentPathTemplates, experimentAccession, arrayDesign);
         }
@@ -107,7 +107,7 @@ public class ExperimentChecker {
                 configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
 
         Set<String> arrayDesignDependentPathTemplates = Sets.newHashSet("microarray.experiment.data.path.template", "microarray.log-fold-changes.data.path.template");
-        for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignNames()) {
+        for (String arrayDesign : microarrayExperimentConfiguration.getArrayDesignAccessions()) {
             checkFilesPermissions(arrayDesignDependentPathTemplates, experimentAccession, arrayDesign);
         }
     }

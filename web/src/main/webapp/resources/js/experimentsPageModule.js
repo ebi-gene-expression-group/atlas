@@ -68,7 +68,7 @@ var experimentsPageModule = (function ($) {
     function formatArrayDesign(data, type, full) {
         var result = "";
         $(data).each(function (index, elem) {
-            result = result + '<a href="http://www.ebi.ac.uk/arrayexpress/arrays/' + elem + '" title="View in Array Express">' + elem + '</a><br/>';
+            result = result + '<a href="http://www.ebi.ac.uk/arrayexpress/arrays/' + elem + '" title="View in Array Express">' + full.arrayDesignNames[index] + '</a><br/>';
         });
 
         return result;
@@ -175,7 +175,7 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return withLineBreaks(data, type, full);
                     } },
-                { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center bb", "sWidth":"8%",
+                { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center bb", "sWidth":"15%",
                     "mRender":function (data, type, full) {
                         return formatArrayDesign(data, type, full);
                     } },

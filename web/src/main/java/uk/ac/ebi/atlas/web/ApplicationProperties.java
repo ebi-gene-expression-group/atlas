@@ -24,7 +24,9 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -46,12 +48,15 @@ public class ApplicationProperties {
     private Properties speciesToExperimentProperties;
 
     private Properties configurationProperties;
+    private ArrayDesignTrader arrayDesignTrader;
 
     @Inject
     ApplicationProperties(@Named("configuration") Properties configurationProperties,
-                          @Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties) {
+                          @Named("speciesToExperimentPropertyFile") Properties speciesToExperimentProperties,
+                          ArrayDesignTrader arrayDesignTrader) {
         this.speciesToExperimentProperties = speciesToExperimentProperties;
         this.configurationProperties = configurationProperties;
+        this.arrayDesignTrader = arrayDesignTrader;
     }
 
     public String getAnatomogramFileName(String specie, boolean isMale) {
@@ -68,8 +73,9 @@ public class ApplicationProperties {
 
     //This is invoked from jsp el
     public String getArrayExpressArrayURL(String arrayAccession) {
+        String arrayDesign = arrayDesignTrader.getArrayDesignAccession(arrayAccession);  //getKey from arrayDesignMap
         String arrayExpressUrlTemplate = configurationProperties.getProperty("experiment.arrayexpress.arrays.url.template");
-        return MessageFormat.format(arrayExpressUrlTemplate, arrayAccession);
+        return MessageFormat.format(arrayExpressUrlTemplate, arrayDesign);
     }
 
     public String getArrayExpressRestURL(String experimentAccession) {

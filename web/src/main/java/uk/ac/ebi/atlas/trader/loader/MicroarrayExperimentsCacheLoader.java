@@ -64,14 +64,14 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
         MicroarrayExperimentConfiguration microarrayExperimentConfiguration = configurationTrader.getMicroarrayExperimentConfiguration(experimentAccession);
         Set<Contrast> contrasts = microarrayExperimentConfiguration.getContrasts();
 
-        SortedSet<String> arrayDesignNames = microarrayExperimentConfiguration.getArrayDesignNames();
+        SortedSet<String> arrayDesignAccessions = microarrayExperimentConfiguration.getArrayDesignAccessions();
 
-        String logFoldChangeFileLocation = MessageFormat.format(logFoldChangePathTemplate, experimentAccession, arrayDesignNames.first());
+        String logFoldChangeFileLocation = MessageFormat.format(logFoldChangePathTemplate, experimentAccession, arrayDesignAccessions.first());
 
         boolean hasLogFoldChangeFile = Files.exists(Paths.get(logFoldChangeFileLocation));
 
         return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession, experimentDTO.getLastUpdate(),
-                                        contrasts, experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), arrayDesignNames,
+                                        contrasts, experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), arrayDesignAccessions,
                                         hasLogFoldChangeFile, experimentDTO.getPubmedIds(), experimentDesign);
 
     }

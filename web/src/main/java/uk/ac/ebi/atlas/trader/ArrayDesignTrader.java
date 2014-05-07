@@ -35,6 +35,16 @@ public class ArrayDesignTrader {
         return arrayDesignMap;
     }
 
+    public String getArrayDesignAccession(String value) {
+        for(Map.Entry<String, String> entry : arrayDesignMap.entrySet()) {
+            if(value.equals(entry.getValue())) {
+                return entry.getKey();
+            }
+        }
+
+        return null;
+    }
+
     public SortedSet<String> getArrayDesignNames(SortedSet<String> arrayDesignAccessions) {
         SortedSet<String> arrayDesignNames = Sets.newTreeSet();
 

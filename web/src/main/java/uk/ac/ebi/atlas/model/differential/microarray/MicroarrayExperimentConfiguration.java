@@ -32,14 +32,14 @@ import java.util.SortedSet;
 
 public class MicroarrayExperimentConfiguration extends ExperimentConfiguration {
 
-    private SortedSet<String> arrayDesignNames;
+    private SortedSet<String> arrayDesignAccessions;
 
     public MicroarrayExperimentConfiguration(XMLConfiguration xmlConfiguration, Document document) {
         super(xmlConfiguration, document);
-        this.arrayDesignNames = Sets.newTreeSet((List) xmlConfiguration.getList("analytics/array_design"));
+        this.arrayDesignAccessions = Sets.newTreeSet((List) xmlConfiguration.getList("analytics/array_design"));
     }
 
-    public SortedSet<String> getArrayDesignNames() {
-        return arrayDesignNames;
+    public SortedSet<String> getArrayDesignAccessions() {
+        return arrayDesignAccessions;
     }
 }

@@ -26,6 +26,7 @@ import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
@@ -39,6 +40,7 @@ import javax.inject.Named;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.SortedSet;
 
 @Named
 @Scope("prototype")
@@ -52,15 +54,19 @@ public class ExperimentInfoListBuilder {
 
     private ExperimentTrader experimentTrader;
 
+    private ArrayDesignTrader arrayDesignTrader;
+
     @Inject
     public ExperimentInfoListBuilder(ExperimentTrader experimentTrader,
                                      BaselineExperimentsCache baselineExperimentsCache,
                                      RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
-                                     MicroarrayExperimentsCache microarrayExperimentsCache) {
+                                     MicroarrayExperimentsCache microarrayExperimentsCache,
+                                     ArrayDesignTrader arrayDesignTrader) {
         this.experimentTrader = experimentTrader;
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
+        this.arrayDesignTrader = arrayDesignTrader;
     }
 
     public List<ExperimentInfo> build() {
@@ -84,6 +90,7 @@ public class ExperimentInfoListBuilder {
             experimentInfo.setNumberOfAssays(experiment.getAssayAccessions().size());
             experimentInfo.setNumberOfContrasts(experiment.getContrastIds().size());
             experimentInfo.setArrayDesigns(experiment.getArrayDesignAccessions());
+            experimentInfo.setArrayDesignNames(arrayDesignTrader.getArrayDesignNames(experiment.getArrayDesignAccessions()));
 
             experimentInfos.add(experimentInfo);
         }

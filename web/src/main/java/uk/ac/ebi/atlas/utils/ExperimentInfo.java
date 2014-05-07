@@ -48,6 +48,8 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
 
     private SortedSet<String> arrayDesigns = Sets.newTreeSet();
 
+    private SortedSet<String> arrayDesignNames = Sets.newTreeSet();
+
     public ExperimentType getExperimentType() {
         return experimentType;
     }
@@ -110,6 +112,14 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
 
     public void setArrayDesigns(Set<String> arrayDesigns) {
         this.arrayDesigns = Sets.newTreeSet(arrayDesigns);
+    }
+
+    public SortedSet<String> getArrayDesignNames() {
+        return arrayDesignNames;
+    }
+
+    public void setArrayDesignNames(SortedSet<String> arrayDesignNames) {
+        this.arrayDesignNames = arrayDesignNames;
     }
 
     @Override

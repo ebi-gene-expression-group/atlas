@@ -32,12 +32,14 @@ import uk.ac.ebi.atlas.commands.MicroarrayProfilesHeatMap;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.SortedSet;
 
 @Controller
 @Scope("request")
@@ -45,11 +47,16 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     private static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
     private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
 
+    private ArrayDesignTrader arrayDesignTrader;
+
     @Inject
     public MicroarrayExperimentPageController(MicroarrayRequestContextBuilder requestContextBuilder,
                                               MicroarrayProfilesHeatMap profilesHeatMap,
-                                              DownloadURLBuilder downloadURLBuilder) {
+                                              DownloadURLBuilder downloadURLBuilder,
+                                              ArrayDesignTrader arrayDesignTrader) {
         super(requestContextBuilder, profilesHeatMap, downloadURLBuilder);
+
+        this.arrayDesignTrader = arrayDesignTrader;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=MICROARRAY_ANY"})
@@ -62,7 +69,8 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
 
     @Override
     protected void initExtraPageConfigurations(Model model, MicroarrayRequestPreferences requestPreferences, MicroarrayExperiment experiment) {
-        model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
+        SortedSet<String> arrayDesignNames = arrayDesignTrader.getArrayDesignNames(experiment.getArrayDesignAccessions());
+        model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, arrayDesignNames);
 
         //For showing the QC REPORTS button in the header
         model.addAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());

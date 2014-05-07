@@ -28,7 +28,7 @@ public class MicroarrayDifferentialAnalyticsLoader implements AnalyticsLoader {
     public void loadAnalytics(String accession) throws IOException {
         MicroarrayExperimentConfiguration configuration = configurationTrader.getMicroarrayExperimentConfiguration(accession);
 
-        for (String arrayDesign : configuration.getArrayDesignNames()) {
+        for (String arrayDesign : configuration.getArrayDesignAccessions()) {
             MicroarrayDifferentialAnalyticsInputStream analyticsInputStream = analyticsInputStreamFactory.create(accession, arrayDesign);
             analyticsDao.loadAnalytics(accession, arrayDesign, analyticsInputStream);
         }

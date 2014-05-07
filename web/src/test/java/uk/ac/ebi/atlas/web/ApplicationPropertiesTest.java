@@ -28,6 +28,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,6 +59,7 @@ public class ApplicationPropertiesTest {
     private static final String EXPERIMENT_ARRAYEXPRESS_REST_URL_TEMPLATE = "experiment.arrayexpress.rest.url.template";
     private static final String LIST_SEPARATOR = ",";
     private static final String A_AFFY_35 = "A-AFFY-35";
+    private static final String A_AFFY_35_NAME = "A-AFFY-35-NAME";
     private static final String EXPERIMENT_ARRAYEXPRESS_ARRAYS_URL_TEMPLATE = "experiment.arrayexpress.arrays.url.template";
     private static final String ARRAYEXPRESS_ARRAYS_URL = "http://www.ebi.ac.uk/arrayexpress/arrays/";
     private static final String EXPERIMENT_PUBMED_URL_TEMPLATE = "experiment.pubmed.url.template";
@@ -88,6 +90,9 @@ public class ApplicationPropertiesTest {
     @Mock
     private Properties speciesToExperimentPropertiesMock;
 
+    @Mock
+    private ArrayDesignTrader arrayDesignTraderMock;
+
     private ApplicationProperties subject;
 
     @Before
@@ -112,7 +117,9 @@ public class ApplicationPropertiesTest {
         when(httpServletRequestMock.getAttribute("javax.servlet.forward.request_uri")).thenReturn(EXPERIMENT_URL);
         when(httpServletRequestMock.getAttribute("javax.servlet.forward.query_string")).thenReturn(REQUEST_PARAMETERS);
 
-        subject = new ApplicationProperties(configurationPropertiesMock, speciesToExperimentPropertiesMock);
+        when(arrayDesignTraderMock.getArrayDesignAccession(A_AFFY_35_NAME)).thenReturn(A_AFFY_35);
+
+        subject = new ApplicationProperties(configurationPropertiesMock, speciesToExperimentPropertiesMock, arrayDesignTraderMock);
     }
 
     @Test
@@ -140,7 +147,7 @@ public class ApplicationPropertiesTest {
 
     @Test
     public void testGetArrayExpressArrayURL() throws Exception {
-        assertThat(subject.getArrayExpressArrayURL(A_AFFY_35), is(ARRAYEXPRESS_ARRAYS_URL + A_AFFY_35));
+        assertThat(subject.getArrayExpressArrayURL(A_AFFY_35_NAME), is(ARRAYEXPRESS_ARRAYS_URL + A_AFFY_35));
     }
 
     @Test

@@ -64,7 +64,7 @@ public class ExperimentCheckerTest {
     public void setUp() throws Exception {
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
-        when(microarrayExperimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet("ARRAYDESIGN")));
+        when(microarrayExperimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet("ARRAYDESIGN")));
 
         subject = new ExperimentChecker(configurationPropertiesMock, configurationTraderMock);
     }

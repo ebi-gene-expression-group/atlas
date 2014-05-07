@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.QCReportUtil;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.text.MessageFormat;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Controller
 @Scope("singleton")
@@ -34,11 +36,13 @@ public class QCReportController {
 
     private final QCReportUtil qcReportUtil;
     private ExperimentTrader experimentTrader;
+    private ArrayDesignTrader arrayDesignTrader;
 
     @Inject
-    public QCReportController(QCReportUtil qcReportUtil, ExperimentTrader experimentTrader) {
+    public QCReportController(QCReportUtil qcReportUtil, ExperimentTrader experimentTrader, ArrayDesignTrader arrayDesignTrader) {
         this.qcReportUtil = qcReportUtil;
         this.experimentTrader = experimentTrader;
+        this.arrayDesignTrader = arrayDesignTrader;
     }
 
     /**
@@ -73,9 +77,10 @@ public class QCReportController {
         MicroarrayExperiment experiment = (MicroarrayExperiment) experimentTrader.getExperiment(experimentAccession, accessKey);
         prepareModel(request, model, experiment);
 
-        String selectedArrayDesign = preferences.getArrayDesignAccession();
+        String selectedArrayDesignName = preferences.getArrayDesignAccession();
+        if(selectedArrayDesignName != null) {
+            String selectedArrayDesign = arrayDesignTrader.getArrayDesignAccession(selectedArrayDesignName);
 
-        if(selectedArrayDesign != null) {
             //eg: redirect to nicer URL when arrayDesign is provided as a query string parameter
             String path = MessageFormat.format("/experiments/{0}/qc/{1}/{2}", experimentAccession, selectedArrayDesign, resource);
             return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
@@ -83,7 +88,7 @@ public class QCReportController {
 
         //When changing the selection in the combo, we need to set the new selection in the preferences
         //otherwise the combo is not being updated.
-        preferences.setArrayDesignAccession(arrayDesign);
+        preferences.setArrayDesignAccession(arrayDesignTrader.getArrayDesignByName(arrayDesign));
 
         if(!qcReportUtil.hasQCReport(experimentAccession, arrayDesign)) {
             throw new ResourceNotFoundException("No qc report for " + experimentAccession + " array design " + arrayDesign);
@@ -120,7 +125,10 @@ public class QCReportController {
     }
 
     private void extendModel(HttpServletRequest request, MicroarrayExperiment experiment) {
-        request.setAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
+
+        SortedSet<String> arrayDesignNames = arrayDesignTrader.getArrayDesignNames(experiment.getArrayDesignAccessions());
+
+        request.setAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, arrayDesignNames);
 
     }
 

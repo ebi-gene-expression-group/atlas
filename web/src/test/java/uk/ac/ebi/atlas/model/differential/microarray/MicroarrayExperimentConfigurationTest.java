@@ -56,6 +56,6 @@ public class MicroarrayExperimentConfigurationTest {
 
     @Test
     public void testGetArrayDesignNames() throws Exception {
-        assertThat(subject.getArrayDesignNames(), hasItem(ARRAYDESIGN));
+        assertThat(subject.getArrayDesignAccessions(), hasItem(ARRAYDESIGN));
     }
 }

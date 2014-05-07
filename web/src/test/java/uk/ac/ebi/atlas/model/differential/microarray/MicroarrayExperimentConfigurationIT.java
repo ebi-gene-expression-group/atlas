@@ -59,7 +59,7 @@ public class MicroarrayExperimentConfigurationIT {
 
     @Test
     public void testGetArrayDesignNames() throws Exception {
-        assertThat(subject.getArrayDesignNames(), contains("A-AFFY-23", "A-AFFY-24"));
+        assertThat(subject.getArrayDesignAccessions(), contains("A-AFFY-23", "A-AFFY-24"));
     }
 
     @Test

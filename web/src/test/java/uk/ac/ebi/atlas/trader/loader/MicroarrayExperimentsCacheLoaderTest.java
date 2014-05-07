@@ -38,7 +38,6 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
-import uk.ac.ebi.atlas.trader.loader.MicroarrayExperimentsCacheLoader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -92,7 +91,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
-        when(experimentConfigurationMock.getArrayDesignNames()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGNS)));
+        when(experimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGNS)));
         when(mageTabLimpopoUtilsMock.parseInvestigation(ACCESSION)).thenReturn(investigationMock);
 
         when(experimentDAOMock.findPublicExperiment(ACCESSION)).thenReturn(experimentDTOMock);
