@@ -22,10 +22,12 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.base.Function;
 import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.dto.tooltip.AssayGroupFactor;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.*;
 
@@ -127,6 +129,22 @@ public class ExperimentalFactors implements Serializable {
 
         return filteredFactors;
 
+    }
+
+    public FactorGroup getNonDefaultFilterFactors(String assayGroupId) {
+        FactorGroup factorGroup = orderedFactorGroupsByAssayGroupId.get(assayGroupId);
+        return factorGroup.removeType(getDefaultQueryFactorType());
+    }
+
+    public Multimap<FactorGroup, String> groupAssayGroupIdsByNonDefaultFilterFactor(Iterable<String> assayGroupIds) {
+        Function<String, FactorGroup> groupByFunction = new Function<String, FactorGroup>() {
+            @Nullable
+            @Override
+            public FactorGroup apply(@Nullable String assayGroupId) {
+                return getNonDefaultFilterFactors(assayGroupId);
+            }
+        };
+        return Multimaps.index(assayGroupIds, groupByFunction);
     }
 
     public SortedSet<AssayGroupFactor> getFilteredAssayGroupFactors(final Set<Factor> filterFactors) {

@@ -79,8 +79,6 @@ public class BaselineExpressionsDao {
 
         DatabaseQuery<Object> baselineExpressionQuery = buildSelect(uniqueIndexedAssayGroups, geneIds);
 
-        jdbcTemplate.setMaxRows(RESULT_SIZE);
-
         try {
             SetMultimap<String, String> results = jdbcTemplate.query(baselineExpressionQuery.getQuery(),
                     baselineExpressionQuery.getParameters().toArray(),

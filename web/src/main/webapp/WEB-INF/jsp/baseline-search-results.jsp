@@ -44,6 +44,7 @@
                 </tr>
             </thead>
             <tbody>
+                <%--@elvariable id="baselineCount" type="uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchResult"--%>
                 <c:forEach var="baselineCount" items="${baselineCounts}">
                 
                     <tr>

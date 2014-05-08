@@ -29,8 +29,8 @@ package uk.ac.ebi.atlas.commands;
     import org.springframework.context.annotation.Scope;
     import org.springframework.util.StopWatch;
     import uk.ac.ebi.atlas.dao.BaselineExperimentDao;
-    import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
     import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+    import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchResult;
     import uk.ac.ebi.atlas.solr.query.SolrQueryService;
     import uk.ac.ebi.atlas.solr.query.conditions.BaselineConditionsSearchService;
     import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
@@ -54,13 +54,13 @@ public class BaselineBioentityCountsService {
 
     private SolrQueryService solrQueryService;
 
-    private static final Map<String, BaselineExperimentResult> LIMITED_BY_EXPERIMENTS = Maps.newHashMap();
+    private static final Map<String, BaselineExpressionSearchResult> LIMITED_BY_EXPERIMENTS = Maps.newHashMap();
 
     static {
-        LIMITED_BY_EXPERIMENTS.put("E-MTAB-1733", new BaselineExperimentResult("E-MTAB-1733", "Twenty seven tissues", "Homo sapiens"));
-        LIMITED_BY_EXPERIMENTS.put("E-MTAB-599", new BaselineExperimentResult("E-MTAB-599", "Six tissues", "Mus musculus"));
-        LIMITED_BY_EXPERIMENTS.put("E-MTAB-2037", new BaselineExperimentResult("E-MTAB-2037", "Seven tissues", "Oryza sativa Japonica Group"));
-        LIMITED_BY_EXPERIMENTS.put("E-MTAB-2039", new BaselineExperimentResult("E-MTAB-2039", "Nine tissues", "Oryza sativa Japonica Group"));
+        LIMITED_BY_EXPERIMENTS.put("E-MTAB-1733", new BaselineExpressionSearchResult("E-MTAB-1733", "Twenty seven tissues", "Homo sapiens"));
+        LIMITED_BY_EXPERIMENTS.put("E-MTAB-599", new BaselineExpressionSearchResult("E-MTAB-599", "Six tissues", "Mus musculus"));
+        LIMITED_BY_EXPERIMENTS.put("E-MTAB-2037", new BaselineExpressionSearchResult("E-MTAB-2037", "Seven tissues", "Oryza sativa Japonica Group"));
+        LIMITED_BY_EXPERIMENTS.put("E-MTAB-2039", new BaselineExpressionSearchResult("E-MTAB-2039", "Nine tissues", "Oryza sativa Japonica Group"));
     }
 
 
@@ -73,15 +73,15 @@ public class BaselineBioentityCountsService {
     }
 
 
-    public Set<BaselineExperimentResult> query(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
+    public Set<BaselineExpressionSearchResult> query(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
         LOGGER.info(String.format("<query> geneQuery=%s, condition=%s", requestParameters.getGeneQuery(), requestParameters.getCondition()));
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        SortedSet<BaselineExperimentResult> results =
-                Sets.newTreeSet(new Comparator<BaselineExperimentResult>() {
+        SortedSet<BaselineExpressionSearchResult> results =
+                Sets.newTreeSet(new Comparator<BaselineExpressionSearchResult>() {
                     @Override
-                    public int compare(BaselineExperimentResult count, BaselineExperimentResult otherCount) {
+                    public int compare(BaselineExpressionSearchResult count, BaselineExpressionSearchResult otherCount) {
                         return count.getExperimentName().compareTo(otherCount.getExperimentName());
                     }
                 });
@@ -100,7 +100,7 @@ public class BaselineBioentityCountsService {
                     String species = LIMITED_BY_EXPERIMENTS.get(experimentAccession).getSpecies();
 
                     if (isExperimentWithGenesExpressedAboveCutOff(requestParameters, experimentAccession, species, assayGroupIds)) {
-                        BaselineExperimentResult result = LIMITED_BY_EXPERIMENTS.get(experimentAccession);
+                        BaselineExpressionSearchResult result = LIMITED_BY_EXPERIMENTS.get(experimentAccession);
 
                         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
 

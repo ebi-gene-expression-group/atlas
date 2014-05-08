@@ -36,6 +36,13 @@ public class FactorSet implements FactorGroup {
 
     public FactorSet() {}
 
+    FactorSet(Map<String, Factor> factorsByType) {
+        this.factorsByType = factorsByType;
+    }
+
+    public FactorSet(Collection<Factor> factors) {
+        addAll(factors);
+    }
 
     public FactorSet add(Factor factor) {
         factorsByType.put(factor.getType(), factor);
@@ -66,6 +73,27 @@ public class FactorSet implements FactorGroup {
     }
 
     @Override
+    public int compareTo(FactorGroup other) {
+        if (this.size() != other.size()) {
+            return Integer.compare(this.size(), other.size());
+        }
+
+        Iterator<Factor> thisIterator = this.iterator();
+        Iterator<Factor> otherIterator = other.iterator();
+
+        while (thisIterator.hasNext()) {
+            Factor thisFactor = thisIterator.next();
+            Factor otherFactor = otherIterator.next();
+            int c = thisFactor.compareTo(otherFactor);
+            if (c != 0) {
+                return c;
+            }
+        }
+
+        return 0;
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == null || getClass() != other.getClass()) {
             return false;
@@ -79,13 +107,15 @@ public class FactorSet implements FactorGroup {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(factorsByType.values());
+        // hashcode on factorsByType.values() doesn't work
+        return Objects.hashCode(factorsByType.entrySet());
     }
 
     @Override
     public String toString() {
         return Objects.toStringHelper(this.getClass())
                 .add("factors", factorsByType.values())
+                .add("hasCode", hashCode())
                 .toString();
     }
 
@@ -104,6 +134,13 @@ public class FactorSet implements FactorGroup {
     }
 
     @Override
+    public FactorSet removeType(String factorType) {
+        HashMap<String, Factor> factorsByTypeClone = new HashMap<>(factorsByType);
+        factorsByTypeClone.remove(factorType);
+        return new FactorSet(factorsByTypeClone);
+    }
+
+    @Override
     public boolean contains(Factor factor) {
         return factorsByType.containsValue(factor);
     }
@@ -118,4 +155,9 @@ public class FactorSet implements FactorGroup {
 
         return factorSet;
     }
+
+    public int size() {
+        return factorsByType.size();
+    }
+
 }

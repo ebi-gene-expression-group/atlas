@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
@@ -31,8 +32,8 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.BaselineConditionsSearchService;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
@@ -40,7 +41,10 @@ import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 
 @Named
 @Scope("request")
@@ -64,19 +68,14 @@ public class BaselineExpressionSearchService {
         this.solrQueryService = solrQueryService;
     }
 
-    public Set<BaselineExperimentResult> query(String geneQuery, String condition, boolean isExactMatch) throws GenesNotFoundException {
+    boolean isEmpty(Optional<? extends Collection<?>> coll) {
+        return (!coll.isPresent() || coll.get().isEmpty());
+    }
+
+    public Set<BaselineExpressionSearchResult> query(String geneQuery, String condition, boolean isExactMatch) throws GenesNotFoundException {
         LOGGER.info(String.format("<query> geneQuery=%s, condition=%s", geneQuery, condition));
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
-
-        SortedSet<BaselineExperimentResult> results =
-                Sets.newTreeSet(new Comparator<BaselineExperimentResult>() {
-                    @Override
-                    public int compare(BaselineExperimentResult count, BaselineExperimentResult otherCount) {
-                        return count.getExperimentName().compareTo(otherCount.getExperimentName());
-                    }
-                });
-
 
         Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups = fetchAssayGroupsForCondition(condition);
 
@@ -84,23 +83,36 @@ public class BaselineExpressionSearchService {
 
         SetMultimap<String, String> assayGroupsWithExpressionByExperiment = baselineExpressionsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, geneIds);
 
+        Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = buildResults(assayGroupsWithExpressionByExperiment, isEmpty(indexedAssayGroups));
+
+        stopWatch.stop();
+        LOGGER.info(String.format("<query> %s results, took %s seconds", baselineExpressionSearchResults.size(), stopWatch.getTotalTimeSeconds()));
+
+        return baselineExpressionSearchResults;
+    }
+
+    SortedSet<BaselineExpressionSearchResult> buildResults(SetMultimap<String, String> assayGroupsWithExpressionByExperiment, boolean conditionSearch) {
+        SortedSet<BaselineExpressionSearchResult> results = Sets.newTreeSet();
+
         for (Map.Entry<String, Collection<String>> exprAssayGroups : assayGroupsWithExpressionByExperiment.asMap().entrySet()) {
 
             String experimentAccession = exprAssayGroups.getKey();
-            Collection<String> assayGroups = exprAssayGroups.getValue();
+            Collection<String> assayGroupIds = exprAssayGroups.getValue();
 
             BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
-            BaselineExperimentResult result = new BaselineExperimentResult(experiment.getAccession(), experiment.getDisplayName(), experiment.getFirstSpecies());
+            Multimap<FactorGroup,String> assayGroupIdsByFilterFactors = experiment.getExperimentalFactors().groupAssayGroupIdsByNonDefaultFilterFactor(assayGroupIds);
 
-            result.setAssayGroupsWithCondition(ImmutableSet.copyOf(assayGroups), experiment);
-
-            results.add(result);
+            for (Map.Entry<FactorGroup, Collection<String>> assayGroupIdsAndFilterFactor : assayGroupIdsByFilterFactors.asMap().entrySet()) {
+                BaselineExpressionSearchResult result = new BaselineExpressionSearchResult(experiment.getAccession(), experiment.getDisplayName(), experiment.getFirstSpecies());
+                result.setFilterFactors(assayGroupIdsAndFilterFactor.getKey());
+                if (conditionSearch) {
+                    result.setAssayGroupsWithCondition(ImmutableSet.copyOf(assayGroupIdsAndFilterFactor.getValue()), experiment);
+                }
+                results.add(result);
+            }
 
         }
-
-        stopWatch.stop();
-        LOGGER.info(String.format("<query> %s results, took %s seconds", results.size(), stopWatch.getTotalTimeSeconds()));
 
         return results;
     }

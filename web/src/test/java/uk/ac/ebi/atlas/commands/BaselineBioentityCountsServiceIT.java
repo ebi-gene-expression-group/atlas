@@ -1,15 +1,14 @@
 package uk.ac.ebi.atlas.commands;
 
 import com.google.common.collect.Lists;
-import org.hamcrest.Matcher;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchResult;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -30,9 +29,9 @@ public class BaselineBioentityCountsServiceIT {
     BaselineBioentityCountsService subject;
 
 
-    public static List<String> getExperimentAccessions(Set<BaselineExperimentResult> results) {
+    public static List<String> getExperimentAccessions(Set<BaselineExpressionSearchResult> results) {
         List<String> names = Lists.newArrayList();
-        for (BaselineExperimentResult result: results) {
+        for (BaselineExpressionSearchResult result: results) {
             names.add(result.getExperimentAccession());
         }
         return names;
@@ -44,7 +43,7 @@ public class BaselineBioentityCountsServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("ENSG00000161547 ENSMUSG00000030105");
 
-        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        Set<BaselineExpressionSearchResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
@@ -55,7 +54,7 @@ public class BaselineBioentityCountsServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("ENSG00000161547 ENSG00000211855");
 
-        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        Set<BaselineExpressionSearchResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-1733"));
@@ -66,7 +65,7 @@ public class BaselineBioentityCountsServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("hsa-mir-636");
 
-        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        Set<BaselineExpressionSearchResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-1733"));
@@ -77,7 +76,7 @@ public class BaselineBioentityCountsServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("\"zinc finger\"");
 
-        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        Set<BaselineExpressionSearchResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
@@ -89,7 +88,7 @@ public class BaselineBioentityCountsServiceIT {
         requestParameters.setGeneQuery("kinase");
         requestParameters.setExactMatch(false);
 
-        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        Set<BaselineExpressionSearchResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
@@ -101,7 +100,7 @@ public class BaselineBioentityCountsServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
 
-        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        Set<BaselineExpressionSearchResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-1733", "E-MTAB-599"));
@@ -113,7 +112,7 @@ public class BaselineBioentityCountsServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("pregnant");
 
-        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        Set<BaselineExpressionSearchResult> results = subject.query(requestParameters);
 
         assertThat(results, hasSize(0));
     }
@@ -123,10 +122,10 @@ public class BaselineBioentityCountsServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("frozen specimen");
 
-        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        Set<BaselineExpressionSearchResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        BaselineExperimentResult eMtab1733 = results.iterator().next();
+        BaselineExpressionSearchResult eMtab1733 = results.iterator().next();
 
         assertThat(experimentAccessions, contains("E-MTAB-1733"));
         assertThat(eMtab1733.getSpecies(), is("Homo sapiens"));
@@ -137,17 +136,17 @@ public class BaselineBioentityCountsServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("adipose thymus");
 
-        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        Set<BaselineExpressionSearchResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
 
-        BaselineExperimentResult[] resultsArray = results.toArray(new BaselineExperimentResult[results.size()]);
+        BaselineExpressionSearchResult[] resultsArray = results.toArray(new BaselineExpressionSearchResult[results.size()]);
 
-        BaselineExperimentResult eMtab599 = resultsArray[0];
+        BaselineExpressionSearchResult eMtab599 = resultsArray[0];
         assertThat(eMtab599.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "thymus", "UBERON:0002370")));
 
-        BaselineExperimentResult eMtab1733 = resultsArray[1];
+        BaselineExpressionSearchResult eMtab1733 = resultsArray[1];
         assertThat(eMtab1733.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "adipose tissue", "UBERON:0001013")));
 
     }
@@ -157,10 +156,10 @@ public class BaselineBioentityCountsServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("heart AND frozen specimen");
 
-        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        Set<BaselineExpressionSearchResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        BaselineExperimentResult eMtab1733 = results.iterator().next();
+        BaselineExpressionSearchResult eMtab1733 = results.iterator().next();
 
         assertThat(experimentAccessions, contains("E-MTAB-1733"));
 
@@ -173,17 +172,17 @@ public class BaselineBioentityCountsServiceIT {
         requestParameters.setGeneQuery("ENSG00000129170");                   //expressed in ovary
         requestParameters.setCondition("heart");
 
-        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        Set<BaselineExpressionSearchResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
 
-        BaselineExperimentResult[] resultsArray = results.toArray(new BaselineExperimentResult[results.size()]);
+        BaselineExpressionSearchResult[] resultsArray = results.toArray(new BaselineExpressionSearchResult[results.size()]);
 
-        BaselineExperimentResult eMtab599 = resultsArray[0];
+        BaselineExpressionSearchResult eMtab599 = resultsArray[0];
         assertThat(eMtab599.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "heart", "UBERON:0000948")));
 
-        BaselineExperimentResult eMtab1733 = resultsArray[1];
+        BaselineExpressionSearchResult eMtab1733 = resultsArray[1];
         assertThat(eMtab1733.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "heart", "UBERON:0000948")));
     }
 
@@ -192,10 +191,10 @@ public class BaselineBioentityCountsServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("wild type");
 
-        Set<BaselineExperimentResult> results = subject.query(requestParameters);
+        Set<BaselineExpressionSearchResult> results = subject.query(requestParameters);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        BaselineExperimentResult eMtab513 = results.iterator().next();
+        BaselineExpressionSearchResult eMtab513 = results.iterator().next();
 
         assertThat(experimentAccessions, contains("E-MTAB-599"));
 

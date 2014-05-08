@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.commands.BaselineBioentityCountsService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
+import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchResult;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
@@ -104,7 +104,7 @@ public class BioentitiesSearchController {
 
             model.addAttribute("entityIdentifier", requestParameters.getDescription());
 
-            Set<BaselineExperimentResult> baselineCounts = baselineBioentityCountsService.query(requestParameters);
+            Set<BaselineExpressionSearchResult> baselineCounts = baselineBioentityCountsService.query(requestParameters);
             model.addAttribute("baselineCounts", baselineCounts);
             if (hasOnlyOneSpecies(baselineCounts) & !requestParameters.hasCondition()) {
                 model.addAttribute("singleSpecies", true);
@@ -130,10 +130,10 @@ public class BioentitiesSearchController {
         return "bioEntities";
     }
 
-    private boolean hasOnlyOneSpecies(Set<BaselineExperimentResult> baselineCounts) {
+    private boolean hasOnlyOneSpecies(Set<BaselineExpressionSearchResult> baselineCounts) {
         ImmutableSet.Builder<String> setBuilder = ImmutableSet.builder();
 
-        for (BaselineExperimentResult result : baselineCounts) {
+        for (BaselineExpressionSearchResult result : baselineCounts) {
             setBuilder.add(result.getSpecies());
         }
 
