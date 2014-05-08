@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Scope("request")
@@ -24,10 +25,17 @@ public class AssayDesignController {
 
     @RequestMapping(value = "/api/arraydesigns.txt", method = RequestMethod.GET)
     @ResponseBody
-    public String getAllArrayDesigns() {
+    public String getAllArrayDesignsWithNames() {
 
-        List<String> arrayDesignAccessions = arrayDesignDao.getArrayDesignAccessions();
+        Map<String,String> arrayDesigns = arrayDesignDao.getArrayDesignMapNames();
 
-        return Joiner.on("\n").join(arrayDesignAccessions);
+        String keysAndValuesJoined = Joiner
+                .on("\n")
+                .withKeyValueSeparator("\t")
+                .join(arrayDesigns.entrySet());
+
+        return  keysAndValuesJoined;
+
     }
+
 }
