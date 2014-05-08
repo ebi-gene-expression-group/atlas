@@ -21,7 +21,7 @@ import java.util.SortedSet;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class ArrayDesignTraderTest {
+public class ArrayDesignTraderIT {
 
     private static final String AD_ACC1 = "A-AFFY-106";
     private static final String AD_ACC2 = "A-AFFY-128";
