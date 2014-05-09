@@ -22,10 +22,12 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.base.Function;
 import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.dto.tooltip.AssayGroupFactor;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.*;
 
@@ -56,18 +58,18 @@ public class ExperimentalFactors implements Serializable {
 
     private List<FactorGroup> orderedFactorGroups;
 
-    private Map<String, FactorGroup> orderedFactorGroupsByAssayGroup;
+    private Map<String, FactorGroup> orderedFactorGroupsByAssayGroupId;
 
     ExperimentalFactors(SortedSetMultimap<String, Factor> factorsByType,
                         Map<String, String> factorDisplayNamesByType,
                         List<FactorGroup> orderedFactorGroups,
                         SortedSetMultimap<Factor, Factor> coOccurringFactors,
                         Set<String> menuFilterFactorTypes,
-                        Map<String, FactorGroup> orderedFactorGroupsByAssayGroup,
+                        Map<String, FactorGroup> orderedFactorGroupsByAssayGroupId,
                         String defaultQueryFactorType,
                         Set<Factor> defaultFilterFactors) {
         this.factorsByType = factorsByType;
-        this.orderedFactorGroupsByAssayGroup = orderedFactorGroupsByAssayGroup;
+        this.orderedFactorGroupsByAssayGroupId = orderedFactorGroupsByAssayGroupId;
         this.factorDisplayNamesByType.putAll(factorDisplayNamesByType);
         this.orderedFactorGroups = orderedFactorGroups;
         this.coOccurringFactors = coOccurringFactors;
@@ -129,17 +131,33 @@ public class ExperimentalFactors implements Serializable {
 
     }
 
+    public FactorGroup getNonDefaultFilterFactors(String assayGroupId) {
+        FactorGroup factorGroup = orderedFactorGroupsByAssayGroupId.get(assayGroupId);
+        return factorGroup.removeType(getDefaultQueryFactorType());
+    }
+
+    public Multimap<FactorGroup, String> groupAssayGroupIdsByNonDefaultFilterFactor(Iterable<String> assayGroupIds) {
+        Function<String, FactorGroup> groupByFunction = new Function<String, FactorGroup>() {
+            @Nullable
+            @Override
+            public FactorGroup apply(@Nullable String assayGroupId) {
+                return getNonDefaultFilterFactors(assayGroupId);
+            }
+        };
+        return Multimaps.index(assayGroupIds, groupByFunction);
+    }
+
     public SortedSet<AssayGroupFactor> getFilteredAssayGroupFactors(final Set<Factor> filterFactors) {
 
         SortedSet<AssayGroupFactor> result = Sets.newTreeSet();
 
-        for (String groupId : orderedFactorGroupsByAssayGroup.keySet()) {
+        for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
             List<Factor> remainingFactors;
 
             if (CollectionUtils.isNotEmpty(filterFactors)) {
-                remainingFactors = orderedFactorGroupsByAssayGroup.get(groupId).remove(filterFactors);
+                remainingFactors = orderedFactorGroupsByAssayGroupId.get(groupId).remove(filterFactors);
             } else {
-                remainingFactors = Lists.newArrayList(orderedFactorGroupsByAssayGroup.get(groupId).iterator());
+                remainingFactors = Lists.newArrayList(orderedFactorGroupsByAssayGroupId.get(groupId).iterator());
             }
             if (remainingFactors.size() == 1) {
                 result.add(new AssayGroupFactor(groupId, remainingFactors.get(0)));
@@ -149,14 +167,14 @@ public class ExperimentalFactors implements Serializable {
         return result;
     }
 
-    public FactorGroup getFactorGroupByAssayGroup(String assayGroupId) {
-        return orderedFactorGroupsByAssayGroup.get(assayGroupId);
+    public FactorGroup getFactorGroupByAssayGroupId(String assayGroupId) {
+        return orderedFactorGroupsByAssayGroupId.get(assayGroupId);
     }
 
     public SortedSet<Factor> getFactorsForAssayGroupsByType(Collection<String> assayGroupIds, String factorType) {
         SortedSet<Factor> factors = Sets.newTreeSet();
         for (String assayGroupId : assayGroupIds) {
-            FactorGroup factorGroupForAssay = getFactorGroupByAssayGroup(assayGroupId);
+            FactorGroup factorGroupForAssay = getFactorGroupByAssayGroupId(assayGroupId);
             Factor defaultFactorForAssay = factorGroupForAssay.getFactorByType(factorType);
             factors.add(defaultFactorForAssay);
         }

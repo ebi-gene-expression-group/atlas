@@ -215,7 +215,7 @@ public class SolrQueryService {
     }
 
     public Optional<Set<String>> expandGeneQueryIntoGeneIds(String geneQuery, boolean isExactMatch) {
-        if (StringUtils.isNotBlank(geneQuery)) {
+        if (StringUtils.isBlank(geneQuery)) {
             return Optional.absent();
         }
 

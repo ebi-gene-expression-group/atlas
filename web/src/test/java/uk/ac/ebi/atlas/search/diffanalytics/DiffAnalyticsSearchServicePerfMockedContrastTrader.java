@@ -31,6 +31,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContext.xml", "classpath:oracleContext.xml"})
+@Ignore
 public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
 
     DiffAnalyticsSearchService diffAnalyticsSearchService;

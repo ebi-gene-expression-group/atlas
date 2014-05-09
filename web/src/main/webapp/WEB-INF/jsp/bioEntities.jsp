@@ -146,7 +146,7 @@
                     </div>
 
                     <c:choose>
-                        <c:when test="${singleBioentityPage || singleSpecies}">
+                        <c:when test="${singleBioentityPage || singleBaselineSearchResult}">
                             <div id="widgetBody"></div>
                         </c:when>
 
@@ -247,7 +247,7 @@
 
             window.onload = function () {
 
-                var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : singleSpecies ? 0 : 1};
+                var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : singleBaselineSearchResult ? 0 : 1};
 
                 $("#bioentity-info-image").tooltip();
                 $("#differential-info-image").tooltip();
@@ -265,11 +265,11 @@
                 helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
 
-                var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${singleSpecies ? "&species=".concat(species) : ""}";
+                var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${singleBaselineSearchResult ? "&species=".concat(species) : ""}";
 
                 <c:choose>
 
-                    <c:when test="${singleBioentityPage || singleSpecies}">
+                    <c:when test="${singleBioentityPage || singleBaselineSearchResult}">
 
                         new Biojs.AtlasHeatmap({
                         featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}${disableGeneLinks ? "&disableGeneLinks=true" : ""}' + widgetParameters,

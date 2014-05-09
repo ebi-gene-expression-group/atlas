@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
@@ -68,5 +69,19 @@ public class GenesetBioEntityPageIT extends SinglePageSeleniumFixture {
     @Test
     public void checkLinksInTable() {
         assertThat(subject.getLinksInTableRow(0).get(0), is("http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_1698"));
+    }
+
+    @Test
+    public void checkWidget() {
+        subject.clickBaselineProfile();
+
+        // wait for ajax widget to load
+        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
+
+        assertThat(subject.isIndividualGenesVisible(), is(true));
+        assertThat(subject.isGeneSetProfilesVisible(), is(false));
+        subject.clickShowGeneSetProfiles();
+        assertThat(subject.isIndividualGenesVisible(), is(false));
+        assertThat(subject.isGeneSetProfilesVisible(), is(true));
     }
 }

@@ -23,6 +23,7 @@
   ~ http://gxa.github.com/gxa
   --%>
 <%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
+<%--@elvariable id="filterFactorsConverter" type="uk.ac.ebi.atlas.web.FilterFactorsConverter"--%>
 
 <c:set var="base" value="${pageContext.request.contextPath}"/>
 <c:if test="${not empty preferences.rootContext}">
@@ -44,20 +45,21 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="baselineCount" items="${baselineCounts}">
+                <%--@elvariable id="baselineResult" type="uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchResult"--%>
+                <c:forEach var="baselineResult" items="${baselineCounts}">
                 
                     <tr>
                         <td>
                             <a class="bioEntityCardLink"
-                                   href="${base}/experiments/${baselineCount.experimentAccession}?queryFactorType=ORGANISM_PART&queryFactorValues=${applicationProperties.encodeMultiValues(baselineCount.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${applicationProperties.urlParamEncode(param.geneQuery)}"
+                                   href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${applicationProperties.urlParamEncode(param.geneQuery)}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
                                title="experiment">
-                                    ${baselineCount.species} - ${baselineCount.experimentName}
+                                    ${baselineResult.species} - ${baselineResult.experimentName}${baselineResult.filterFactors.isEmpty() ? "" : " - ".concat(filterFactorsConverter.prettyPrint(baselineResult.filterFactors))}
                             </a>
                         </td>
                         <%-- We don't show counts for now --%>
                         <%--<c:if test="${empty param.geneQuery}">--%>
                             <%--<td class="count">--%>
-                                <%--(${baselineCount.count})--%>
+                                <%--(${baselineResult.count})--%>
                             <%--</td>--%>
                         <%--</c:if>--%>
                     </tr>

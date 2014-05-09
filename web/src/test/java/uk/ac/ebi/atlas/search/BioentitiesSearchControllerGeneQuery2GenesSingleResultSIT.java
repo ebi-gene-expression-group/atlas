@@ -30,26 +30,22 @@ import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class BioentitiesSearchControllerConditionGeneQuery2GeneSetsSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerGeneQuery2GenesSingleResultSIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=REACT_1258+REACT_1619");
+        subject = new BioEntitiesPage(driver, "geneQuery=ENSMUSG00000097801+ENSMUSG00000090429");
         subject.get();
     }
 
     @Test
-    public void checkWidget() {
+    public void displaysWidget() {
         // wait for ajax widget to load
         SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
 
         assertThat(subject.isIndividualGenesVisible(), is(true));
-        assertThat(subject.isGeneSetProfilesVisible(), is(false));
-        subject.clickShowGeneSetProfiles();
-        assertThat(subject.isIndividualGenesVisible(), is(false));
-        assertThat(subject.isGeneSetProfilesVisible(), is(true));
     }
 
 }

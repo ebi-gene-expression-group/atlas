@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,13 +31,18 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.inject.Inject;
 import java.util.SortedSet;
 
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -47,27 +54,19 @@ public class ExperimentalFactorsIT {
     @Inject
     private BaselineExperimentsCache experimentsCache;
 
-    private BaselineExperiment experiment;
-
     ExperimentalFactors subject;
-
 
     @Before
     public void setUp() throws Exception {
-
-        experiment = experimentsCache.getExperiment(BASELINE_EXPERIMENT_ACCESSION);
+        BaselineExperiment experiment = experimentsCache.getExperiment(BASELINE_EXPERIMENT_ACCESSION);
         subject = experiment.getExperimentalFactors();
-
     }
-
 
     @Test
     public void getFactorsByTypeTest() {
-        ExperimentalFactors experimentalFactors = experiment.getExperimentalFactors();
-
-        assertThat(experimentalFactors.getFactorsByType("RNA").size(), is(3));
-        assertThat(experimentalFactors.getFactorsByType("CELL_LINE").size(), is(23));
-        assertThat(experimentalFactors.getFactorsByType("CELLULAR_COMPONENT").size(), is(6));
+        assertThat(subject.getFactorsByType("RNA").size(), is(3));
+        assertThat(subject.getFactorsByType("CELL_LINE").size(), is(23));
+        assertThat(subject.getFactorsByType("CELLULAR_COMPONENT").size(), is(6));
     }
 
     @Test
@@ -119,6 +118,53 @@ public class ExperimentalFactorsIT {
 
         assertThat(filteredFactors.size(), is(1));
         assertThat(filteredFactors.first().getValue(), is("whole cell"));
+    }
+
+    @Test
+    public void getNonDefaultFilterFactors_g59() {
+        Factor filterFactor1 = new Factor("RNA", "total RNA");
+        Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
+
+        assertThat(subject.getNonDefaultFilterFactors("g59"), contains(filterFactor1, filterFactor2));
+    }
+
+    @Test
+    public void getNonDefaultFilterFactors_g41() {
+        Factor filterFactor1 = new Factor("RNA", "long polyA RNA");
+        Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "cytosol");
+
+        assertThat(subject.getNonDefaultFilterFactors("g41"), contains(filterFactor1, filterFactor2));
+    }
+
+    @Test
+    public void getNonDefaultFilterFactors_g20() {
+        Factor filterFactor1 = new Factor("RNA", "long polyA RNA");
+        Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "cytosol");
+
+        assertThat(subject.getNonDefaultFilterFactors("g20"), contains(filterFactor1, filterFactor2));
+    }
+
+    @Test
+    public void groupAssayGroupIdsByNonDefaultFilterFactor() {
+        Multimap<FactorGroup,String> byFactorGroup = subject.groupAssayGroupIdsByNonDefaultFilterFactor(ImmutableList.of("g59", "g41", "g20"));
+
+        Factor filterFactor1 = new Factor("RNA", "total RNA");
+        Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
+        FactorSet factorSet1 = new FactorSet();
+        factorSet1.add(filterFactor1);
+        factorSet1.add(filterFactor2);
+
+        Factor filterFactor3 = new Factor("RNA", "long polyA RNA");
+        Factor filterFactor4 = new Factor("CELLULAR_COMPONENT", "cytosol");
+        FactorSet factorSet2 = new FactorSet();
+        factorSet2.add(filterFactor3);
+        factorSet2.add(filterFactor4);
+
+        assertThat(byFactorGroup.entries(), hasSize(3));
+        assertThat(byFactorGroup.asMap(), allOf(
+                hasEntry(equalTo((FactorGroup) factorSet1), containsInAnyOrder("g59")),
+                hasEntry(equalTo((FactorGroup) factorSet2), containsInAnyOrder("g41", "g20"))
+        ));
     }
 
 }

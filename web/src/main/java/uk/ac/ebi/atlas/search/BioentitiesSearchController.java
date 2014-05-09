@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.search;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
@@ -38,9 +37,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.atlas.commands.BaselineBioentityCountsService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.dao.BaselineExperimentResult;
+import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchResult;
+import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchService;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
@@ -63,16 +62,16 @@ public class BioentitiesSearchController {
     private static final Logger LOGGER = Logger.getLogger(BioentitiesSearchController.class);
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
-    private BaselineBioentityCountsService baselineBioentityCountsService;
+    private BaselineExpressionSearchService baselineExpressionSearchService;
 
     private EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder;
 
     private SolrQueryService solrQueryService;
 
     @Inject
-    public BioentitiesSearchController(DiffAnalyticsSearchService diffAnalyticsSearchService, BaselineBioentityCountsService baselineBioentityCountsService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService) {
+    public BioentitiesSearchController(DiffAnalyticsSearchService diffAnalyticsSearchService, BaselineExpressionSearchService baselineExpressionSearchService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService) {
         this.diffAnalyticsSearchService = diffAnalyticsSearchService;
-        this.baselineBioentityCountsService = baselineBioentityCountsService;
+        this.baselineExpressionSearchService = baselineExpressionSearchService;
         this.ebiGlobalSearchQueryBuilder = ebiGlobalSearchQueryBuilder;
         this.solrQueryService = solrQueryService;
     }
@@ -104,11 +103,11 @@ public class BioentitiesSearchController {
 
             model.addAttribute("entityIdentifier", requestParameters.getDescription());
 
-            Set<BaselineExperimentResult> baselineCounts = baselineBioentityCountsService.query(requestParameters);
-            model.addAttribute("baselineCounts", baselineCounts);
-            if (hasOnlyOneSpecies(baselineCounts) & !requestParameters.hasCondition()) {
-                model.addAttribute("singleSpecies", true);
-                model.addAttribute("species", baselineCounts.iterator().next().getSpecies());
+            Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = baselineExpressionSearchService.query(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
+            model.addAttribute("baselineCounts", baselineExpressionSearchResults);
+            if (baselineExpressionSearchResults.size() == 1 & !requestParameters.hasCondition()) {
+                model.addAttribute("singleBaselineSearchResult", true);
+                model.addAttribute("species", baselineExpressionSearchResults.iterator().next().getSpecies());
             }
 
             // used to populate diff-heatmap-table
@@ -129,18 +128,6 @@ public class BioentitiesSearchController {
 
         return "bioEntities";
     }
-
-    private boolean hasOnlyOneSpecies(Set<BaselineExperimentResult> baselineCounts) {
-        ImmutableSet.Builder<String> setBuilder = ImmutableSet.builder();
-
-        for (BaselineExperimentResult result : baselineCounts) {
-            setBuilder.add(result.getSpecies());
-        }
-
-        ImmutableSet<String> species = setBuilder.build();
-        return species.size() == 1;
-    }
-
 
     private Optional<String> getGeneIdRedirectString(GeneQuerySearchRequestParameters requestParameters) {
 

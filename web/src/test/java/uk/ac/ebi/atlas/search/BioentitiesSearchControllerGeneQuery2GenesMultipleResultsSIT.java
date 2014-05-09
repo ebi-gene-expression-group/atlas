@@ -32,53 +32,34 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends SinglePageSeleniumFixture {
-
-    public static final String GENE_QUERY_PARAM = "ENSMUSG00000022255+ENSG00000109929";
-    public static final String GLOBAL_SEARCH_TERM = "ENSMUSG00000022255+OR+ENSG00000109929";
-
+public class BioentitiesSearchControllerGeneQuery2GenesMultipleResultsSIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=" + GENE_QUERY_PARAM);
+        subject = new BioEntitiesPage(driver, "geneQuery=ENSG00000161547%20ENSG00000211855");
         subject.get();
     }
 
     @Test
-    public void checkBaselineExperimentCounts() {
+    public void checkBaselineCounts()  {
+        //given
         subject.clickBaselineProfile();
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(2));
 
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
-        assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-513"));
+        assertThat(baselineCounts.get(0).getExperimentName(), is("Illumina Body Map"));
+        assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-513?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=ENSG00000161547+ENSG00000211855"));
 
         assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-1733"));
         assertThat(baselineCounts.get(1).getExperimentName(), is("Twenty seven tissues"));
         assertThat(baselineCounts.get(1).getSpecies(), is("Homo sapiens"));
-    }
-
-    @Test
-    public void checkDifferentialDisplaysGeneAndOrganismColumnWithValuesForEachSpecies() {
-        subject.clickDifferentialDisplayLevelsButton();
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("SC5D", "Mtdh"));
-        assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Homo sapiens", "Mus musculus"));
-    }
-
-    @Test
-    public void globalSearchTermIsIdentifiersSeparatedByOR() {
-        assertThat(subject.getGlobalSearchTerm(), is(GLOBAL_SEARCH_TERM));
-    }
-
-    @Test
-    public void globalSearchWidgetShouldHaveResults(){
-        subject.clickShowMoreDataWidget();
-        assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
+        assertThat(baselineCounts.get(1).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=ENSG00000161547+ENSG00000211855"));
     }
 
 }
