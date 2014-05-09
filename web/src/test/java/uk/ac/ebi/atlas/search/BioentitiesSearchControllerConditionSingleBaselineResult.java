@@ -32,53 +32,28 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends SinglePageSeleniumFixture {
-
-    public static final String GENE_QUERY_PARAM = "ENSMUSG00000022255+ENSG00000109929";
-    public static final String GLOBAL_SEARCH_TERM = "ENSMUSG00000022255+OR+ENSG00000109929";
-
+public class BioentitiesSearchControllerConditionSingleBaselineResult extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=" + GENE_QUERY_PARAM);
+        subject = new BioEntitiesPage(driver, "geneQuery=REACT_77799%20REACT_115202&condition=DBA%2F2J+x+C57BL%2F6J");
         subject.get();
     }
 
     @Test
-    public void checkBaselineExperimentCounts() {
+    public void displaysResultsTableBecauseThereIsACondition() {
         subject.clickBaselineProfile();
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(2));
+        assertThat(baselineCounts, hasSize(1));
 
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
-
-        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-1733"));
-        assertThat(baselineCounts.get(1).getExperimentName(), is("Twenty seven tissues"));
-        assertThat(baselineCounts.get(1).getSpecies(), is("Homo sapiens"));
-    }
-
-    @Test
-    public void checkDifferentialDisplaysGeneAndOrganismColumnWithValuesForEachSpecies() {
-        subject.clickDifferentialDisplayLevelsButton();
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("SC5D", "Mtdh"));
-        assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Homo sapiens", "Mus musculus"));
-    }
-
-    @Test
-    public void globalSearchTermIsIdentifiersSeparatedByOR() {
-        assertThat(subject.getGlobalSearchTerm(), is(GLOBAL_SEARCH_TERM));
-    }
-
-    @Test
-    public void globalSearchWidgetShouldHaveResults(){
-        subject.clickShowMoreDataWidget();
-        assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=REACT_77799+REACT_115202"));
     }
 
 }

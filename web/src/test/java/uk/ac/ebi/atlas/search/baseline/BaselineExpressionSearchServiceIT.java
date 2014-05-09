@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Lists;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -81,7 +80,7 @@ public class BaselineExpressionSearchServiceIT {
         Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-599", "E-MTAB-1733", "E-GEOD-30352"));
+        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-599", "E-MTAB-1733", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352"));
     }
 
     @Test
@@ -99,7 +98,6 @@ public class BaselineExpressionSearchServiceIT {
     }
 
     @Test
-    @Ignore //TODO: make this performant, currently too slow to run
     public void geneQueryKeywordProteinCoding() throws GenesNotFoundException {
         String geneQuery = "protein_coding";
         String condition = "";
@@ -108,7 +106,7 @@ public class BaselineExpressionSearchServiceIT {
         Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, contains("E-MTAB-1733", "E-MTAB-599"));
+        assertThat(experimentAccessions, hasSize(22));
     }
 
     @Test
@@ -183,11 +181,12 @@ public class BaselineExpressionSearchServiceIT {
         Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        BaselineExpressionSearchResult eMtab1733 = results.iterator().next();
+        BaselineExpressionSearchResult first = results.iterator().next();
 
-        assertThat(experimentAccessions, contains("E-GEOD-26284"));
+        assertThat(experimentAccessions, contains("E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284",
+                                                    "E-MTAB-513", "E-MTAB-599", "E-MTAB-1733"));
 
-        assertThat(eMtab1733.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "heart", "UBERON:0000948")));
+        assertThat(first.getFilterFactors(), contains(new Factor("RNA", "long non-polyA RNA"), new Factor("CELLULAR_COMPONENT", "cytosol")));
     }
 
     @Test
@@ -224,8 +223,6 @@ public class BaselineExpressionSearchServiceIT {
         assertThat(searchResult.getFilterFactors().size(), is(0));
 
     }
-
-
 
     @Test
     public void geneQueryGeneIDAndConditionHeart() throws GenesNotFoundException {

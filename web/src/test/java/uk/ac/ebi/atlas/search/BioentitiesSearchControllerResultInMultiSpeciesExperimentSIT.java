@@ -32,13 +32,13 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class BioentitiesSearchControllerConditionQuery2TermsBaselineSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerResultInMultiSpeciesExperimentSIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "condition=adipose+thymus");
+        subject = new BioEntitiesPage(driver, "geneQuery=tex33");
         subject.get();
     }
 
@@ -52,16 +52,16 @@ public class BioentitiesSearchControllerConditionQuery2TermsBaselineSIT extends 
 
         assertThat(baselineCounts, hasSize(4));
 
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-GEOD-26284"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("ENCODE cell lines - total RNA, whole cell"));
-        assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-GEOD-26284?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=hMSC-AT%20cell%20line&geneQuery=&serializedFilterFactors=RNA:total%20RNA,CELLULAR_COMPONENT:whole%20cell"));
+        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-GEOD-30352"));
+        assertThat(baselineCounts.get(2).getExperimentName(), is("Vertebrate tissues - Homo sapiens"));
+        assertThat(baselineCounts.get(2).getSpecies(), is("Multi-species"));
+        assertThat(baselineCounts.get(2).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=tex33&serializedFilterFactors=ORGANISM:Homo%20sapiens"));
 
 
-        assertThat(baselineCounts.get(3).getExperimentAccession(), is("E-MTAB-1733"));
-        assertThat(baselineCounts.get(3).getExperimentName(), is("Twenty seven tissues"));
-        assertThat(baselineCounts.get(3).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(3).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=adipose%20tissue&geneQuery="));
+        assertThat(baselineCounts.get(3).getExperimentAccession(), is("E-GEOD-30352"));
+        assertThat(baselineCounts.get(3).getExperimentName(), is("Vertebrate tissues - Mus musculus"));
+        assertThat(baselineCounts.get(3).getSpecies(), is("Multi-species"));
+        assertThat(baselineCounts.get(3).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=tex33&serializedFilterFactors=ORGANISM:Mus%20musculus"));
     }
 
 }

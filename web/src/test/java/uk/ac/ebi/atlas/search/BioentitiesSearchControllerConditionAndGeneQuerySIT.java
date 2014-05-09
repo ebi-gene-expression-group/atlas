@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.search;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
 import java.util.List;
@@ -47,13 +47,13 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
         //given
         subject.clickBaselineProfile();
 
-        List<BaselineBioEntitiesCountWithHref> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(1));
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("-MTAB-599?queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=%22apoptotic+process%22"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=%22apoptotic+process%22"));
 
     }
 

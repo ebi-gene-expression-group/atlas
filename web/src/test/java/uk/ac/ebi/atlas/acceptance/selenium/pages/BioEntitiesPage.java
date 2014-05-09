@@ -31,7 +31,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import uk.ac.ebi.atlas.model.baseline.BaselineBioentitiesCount;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -62,8 +61,8 @@ public class BioEntitiesPage extends BioEntityPage {
         return 3;
     }
 
-    public List<BaselineBioEntitiesCountWithHref> getBaselineCounts() {
-        List<BaselineBioEntitiesCountWithHref> baselineCounts = Lists.newArrayList();
+    public List<BaselineBioEntitiesSearchResult> getBaselineCounts() {
+        List<BaselineBioEntitiesSearchResult> baselineCounts = Lists.newArrayList();
 
         By byBaselineCountsTableId = By.id("baselineCountsTable");
         FluentWait wait = new WebDriverWait(driver, 25L).pollingEvery(20, TimeUnit.MILLISECONDS);
@@ -83,20 +82,20 @@ public class BioEntitiesPage extends BioEntityPage {
 
     }
 
-    private BaselineBioEntitiesCountWithHref buildBaselineEntityCount(WebElement linkElement, WebElement countElement) {
+    private BaselineBioEntitiesSearchResult buildBaselineEntityCount(WebElement linkElement, WebElement countElement) {
 
         String linkText = linkElement.getText();
         String linkHref = linkElement.getAttribute("href");
 
-        String species = StringUtils.substringBefore(linkText, "-").trim();
-        String experimentName = StringUtils.substringAfter(linkText, "-").trim();
+        String species = StringUtils.substringBefore(linkText, " - ").trim();
+        String experimentName = StringUtils.substringAfter(linkText, " - ").trim();
 
         String experimentAccession = StringUtils.substringAfterLast(linkHref, "/");
         experimentAccession = StringUtils.substringBeforeLast(experimentAccession, "?");
 
         int baselineCount = (countElement == null) ? -1 : Integer.parseInt(StringUtils.substringBetween(countElement.getText(), "(", ")"));
 
-        return new BaselineBioEntitiesCountWithHref(experimentName, species, experimentAccession, baselineCount, linkHref);
+        return new BaselineBioEntitiesSearchResult(experimentName, species, experimentAccession, baselineCount, linkHref);
     }
 
     public String diffExpressionResultCount() {

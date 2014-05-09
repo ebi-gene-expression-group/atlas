@@ -46,4 +46,6 @@ public interface FactorGroup extends Iterable<Factor>, Serializable, Comparable<
     FactorGroup removeType(String factorType);
 
     int size();
+
+    boolean isEmpty();
 }

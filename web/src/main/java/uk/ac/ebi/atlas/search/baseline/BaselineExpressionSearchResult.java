@@ -18,20 +18,20 @@ public class BaselineExpressionSearchResult implements Comparable<BaselineExpres
     private String experimentAccession;
 
     private SortedSet<Factor> defaultFactorsForSpecificAssayGroupsWithCondition = new TreeSet<>();
+
     private FactorGroup filterFactors;
 
-    public BaselineExpressionSearchResult(String experimentAccession, String experimentName, String species) {
+    private String defaultQueryFactorType;
+
+    public BaselineExpressionSearchResult(String experimentAccession, String experimentName, String species, String defaultQueryFactorType) {
         this.experimentAccession = experimentAccession;
         this.experimentName = experimentName;
         this.species = species;
+        this.defaultQueryFactorType = defaultQueryFactorType;
     }
 
     public String getExperimentAccession() {
         return experimentAccession;
-    }
-
-    public void setExperimentAccession(String experimentAccession) {
-        this.experimentAccession = experimentAccession;
     }
 
     public String getExperimentName() {
@@ -42,8 +42,8 @@ public class BaselineExpressionSearchResult implements Comparable<BaselineExpres
         return species;
     }
 
-    public void setSpecies(String species) {
-        this.species = species;
+    public String getDefaultQueryFactorType() {
+        return defaultQueryFactorType;
     }
 
     public SortedSet<String> getDefaultFactorValuesForSpecificAssayGroupsWithCondition() {

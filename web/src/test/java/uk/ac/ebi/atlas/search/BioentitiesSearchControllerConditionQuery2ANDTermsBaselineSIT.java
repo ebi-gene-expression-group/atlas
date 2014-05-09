@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.search;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
 import java.util.List;
@@ -48,13 +48,13 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsBaselineSIT exten
         //given
         subject.clickBaselineProfile();
 
-        List<BaselineBioEntitiesCountWithHref> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(2));
+        assertThat(baselineCounts, hasSize(4));
         assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-1733"));
         assertThat(baselineCounts.get(1).getExperimentName(), is("Twenty seven tissues"));
         assertThat(baselineCounts.get(1).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(1).getHref(), endsWith("E-MTAB-1733?queryFactorType=ORGANISM_PART&queryFactorValues=heart&geneQuery="));
+        assertThat(baselineCounts.get(1).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=heart&geneQuery="));
     }
 
 }

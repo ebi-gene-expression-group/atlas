@@ -27,6 +27,7 @@ public class BaselineExpressionSearchResultIT {
 
     public static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_GEOD_26284 = "E-GEOD-26284";
+    private static final String ORGANISM_PART = "ORGANISM_PART";
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;
 
@@ -34,7 +35,7 @@ public class BaselineExpressionSearchResultIT {
     public void e_mtab_513_TwoSpecificAssayGroups() {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_MTAB_513);
 
-        BaselineExpressionSearchResult subject = new BaselineExpressionSearchResult(E_MTAB_513, E_MTAB_513, "Homo sapiens");
+        BaselineExpressionSearchResult subject = new BaselineExpressionSearchResult(E_MTAB_513, E_MTAB_513, "Homo sapiens", ORGANISM_PART);
 
         Set<String> assayGroupIdsWithExpression = ImmutableSet.of("g1","g2");
         subject.setAssayGroupsWithCondition(assayGroupIdsWithExpression, experiment);
@@ -52,7 +53,7 @@ public class BaselineExpressionSearchResultIT {
     public void e_mtab_513_AllAssayGroups() {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_MTAB_513);
 
-        BaselineExpressionSearchResult subject = new BaselineExpressionSearchResult(E_MTAB_513, E_MTAB_513, "Homo sapiens");
+        BaselineExpressionSearchResult subject = new BaselineExpressionSearchResult(E_MTAB_513, E_MTAB_513, "Homo sapiens", ORGANISM_PART);
 
         Set<String> assayGroupIdsWithExpression = ImmutableSet.<String>builder().add("g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8", "g9", "g10", "g11", "g12", "g13", "g14", "g15", "g16").build();
         subject.setAssayGroupsWithCondition(assayGroupIdsWithExpression, experiment);
@@ -66,7 +67,7 @@ public class BaselineExpressionSearchResultIT {
     public void multiFactor_TwoSpecificAssayGroups_InSlice() {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_GEOD_26284);
 
-        BaselineExpressionSearchResult subject = new BaselineExpressionSearchResult(E_MTAB_513, E_MTAB_513, "Homo sapiens");
+        BaselineExpressionSearchResult subject = new BaselineExpressionSearchResult(E_MTAB_513, E_MTAB_513, "Homo sapiens", ORGANISM_PART);
 
         Set<String> assayGroupIdsWithExpression = ImmutableSet.<String>builder().add("g11", "g59").build();
         Factor factor1 = new Factor("RNA", "total RNA");
@@ -86,7 +87,7 @@ public class BaselineExpressionSearchResultIT {
     public void multiFactor_AllAssayGroups_InSlice() {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_GEOD_26284);
 
-        BaselineExpressionSearchResult subject = new BaselineExpressionSearchResult(E_MTAB_513, E_MTAB_513, "Homo sapiens");
+        BaselineExpressionSearchResult subject = new BaselineExpressionSearchResult(E_MTAB_513, E_MTAB_513, "Homo sapiens", ORGANISM_PART);
 
         Set<String> assayGroupIdsWithExpression = ImmutableSet.<String>builder().add("g11", "g59", "g54", "g71", "g9").build();
         Factor factor1 = new Factor("RNA", "total RNA");

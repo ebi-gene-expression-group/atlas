@@ -24,14 +24,13 @@ package uk.ac.ebi.atlas.search;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesCountWithHref;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.is;
 
 public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends SinglePageSeleniumFixture {
 
@@ -49,19 +48,17 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
     public void baselineExperimentCountsAreCorrect() {
         subject.clickBaselineProfile();
 
-        List<BaselineBioEntitiesCountWithHref> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(2));
+        assertThat(baselineCounts, hasSize(3));
 
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
-        assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
-        assertThat(baselineCounts.get(0).getCount(), is(-1));
+        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-599"));
+        assertThat(baselineCounts.get(1).getExperimentName(), is("Six tissues"));
+        assertThat(baselineCounts.get(1).getSpecies(), is("Mus musculus"));
 
-        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-1733"));
-        assertThat(baselineCounts.get(1).getExperimentName(), is("Twenty seven tissues"));
-        assertThat(baselineCounts.get(1).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(1).getCount(), is(-1));
+        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-MTAB-1733"));
+        assertThat(baselineCounts.get(2).getExperimentName(), is("Twenty seven tissues"));
+        assertThat(baselineCounts.get(2).getSpecies(), is("Homo sapiens"));
     }
 
     @Test

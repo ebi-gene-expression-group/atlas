@@ -24,22 +24,35 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Named;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkState;
 
 @Named
+@Scope("singleton")
 public class FilterFactorsConverter {
 
     private static final String SEPARATOR = ":";
 
-    public String serialize(Collection<Factor> factors) {
+    public String prettyPrint(Iterable<Factor> factors) {
+        StringBuilder sb = new StringBuilder();
+
+        for (Factor factor : factors) {
+            //sb.append(factor.getHeader()).append(": ");
+            sb.append(factor.getValue()).append(", ");
+        }
+
+        sb.delete(sb.length()-2, sb.length());
+        return sb.toString();
+    }
+
+    public String serialize(Iterable<Factor> factors) {
         List<String> serializedFactors = new ArrayList<>();
         for (Factor factor : factors) {
             serializedFactors.add(factor.getType() + SEPARATOR + factor.getValue());

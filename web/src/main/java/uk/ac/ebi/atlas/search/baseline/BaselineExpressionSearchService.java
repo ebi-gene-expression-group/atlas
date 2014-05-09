@@ -83,7 +83,7 @@ public class BaselineExpressionSearchService {
 
         SetMultimap<String, String> assayGroupsWithExpressionByExperiment = baselineExpressionsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, geneIds);
 
-        Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = buildResults(assayGroupsWithExpressionByExperiment, isEmpty(indexedAssayGroups));
+        Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = buildResults(assayGroupsWithExpressionByExperiment, !isEmpty(indexedAssayGroups));
 
         stopWatch.stop();
         LOGGER.info(String.format("<query> %s results, took %s seconds", baselineExpressionSearchResults.size(), stopWatch.getTotalTimeSeconds()));
@@ -104,7 +104,8 @@ public class BaselineExpressionSearchService {
             Multimap<FactorGroup,String> assayGroupIdsByFilterFactors = experiment.getExperimentalFactors().groupAssayGroupIdsByNonDefaultFilterFactor(assayGroupIds);
 
             for (Map.Entry<FactorGroup, Collection<String>> assayGroupIdsAndFilterFactor : assayGroupIdsByFilterFactors.asMap().entrySet()) {
-                BaselineExpressionSearchResult result = new BaselineExpressionSearchResult(experiment.getAccession(), experiment.getDisplayName(), experiment.getFirstSpecies());
+                String species = experiment.getSpecies().size() > 1 ? "Multi-species" : experiment.getFirstSpecies();
+                BaselineExpressionSearchResult result = new BaselineExpressionSearchResult(experiment.getAccession(), experiment.getDisplayName(), species, experiment.getExperimentalFactors().getDefaultQueryFactorType());
                 result.setFilterFactors(assayGroupIdsAndFilterFactor.getKey());
                 if (conditionSearch) {
                     result.setAssayGroupsWithCondition(ImmutableSet.copyOf(assayGroupIdsAndFilterFactor.getValue()), experiment);

@@ -27,6 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.Set;
 
@@ -49,6 +50,15 @@ public class FilterFactorsConverterTest {
     public void setUp() throws Exception {
         BaselineExperiment experimentMock = mock(BaselineExperiment.class);
         subject = new FilterFactorsConverter();
+    }
+
+    @Test
+    public void prettyPrint() {
+        FactorSet factors = new FactorSet();
+        factors.add(factor1);
+        factors.add(factor2);
+
+        assertThat(subject.prettyPrint(factors), is("value2, value1"));
     }
 
     @Test

@@ -160,4 +160,9 @@ public class FactorSet implements FactorGroup {
         return factorsByType.size();
     }
 
+    @Override
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
 }
