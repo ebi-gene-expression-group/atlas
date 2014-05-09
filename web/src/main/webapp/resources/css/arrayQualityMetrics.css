@@ -127,37 +127,38 @@
 
 
 #fast-qc-content DIV.dplot {
-    width: 980px;
+    width: auto;
     height: 500px;
     margin: 10px;
+    overflow-x: auto;
 }
 
 #fast-qc-content img {
-    border: 0;
-    margin: 0;
     width: auto;
-    max-width: 100% !important;
+    height: 500px;
+    margin: 0px;
 }
 
 #fast-qc-content DIV.downbar {
     float: left;
     text-align: left;
-    width: 160px;
-    color: black;
+    width: 150px;
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 30px;
-    margin-left: 10px;
-    border-radius: 5px;
-    font-weight: bold;
     font-size: 10pt;
-    background: lightgrey;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f6f6f6;
+    font-weight: bold;
+    color: #1c94c4;
 }
 
 #fast-qc-content A.download {
-    color: white;
-    background: black;
+    color: #1c94c4;
+    background: white;
     padding:2px 5px;
+    font-size: 12px;
     font-weight: bold;
     border-radius: 5px;
     text-decoration: none;
@@ -192,15 +193,12 @@
 }
 
 #fast-qc-content A.button_info {
-    margin-left: 10px;
-    margin-top: 10px;
-    color: white;
-    background: gray;
-    padding:3px 3px;
-    font-weight: bold;
-    text-decoration: none;
-    text-align: left;
-    border-radius: 5px;
+    color: rgb(255, 82, 0) !important;
+    vertical-align: top;
+    font-size: 10px !important;
+    font-weight: bold !important;
+    font-family: Verdana, Helvetica, Arial, sans-serif !important;
+    background: rgba(250, 250, 202, 0.28);
 }
 
 #fast-qc-content div.info_wrapper {
