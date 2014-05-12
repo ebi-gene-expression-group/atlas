@@ -53,7 +53,7 @@ public class ExperimentPageHeaderIT extends SinglePageSeleniumFixture {
 
     @Test
     public void testArrayDesigns() {
-        assertThat(subject.getExperimentArrayDesigns(), is("Array Design(s): A-AFFY-23 A-AFFY-24"));
+        assertThat(subject.getExperimentArrayDesigns(), is("Array Design(s): Affymetrix GeneChip Mouse Expression Array MOE430A [MOE430A] Affymetrix GeneChip Mouse Expression Array MOE430B [MOE430B]"));
     }
 
 }
