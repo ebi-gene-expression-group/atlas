@@ -48,6 +48,10 @@ public abstract class BaselineExperimentController {
         if (StringUtils.isBlank(preferences.getSerializedFilterFactors())) {
             preferences.setSerializedFilterFactors(filterFactorsConverter.serialize(baselineExperiment.getExperimentalFactors().getDefaultFilterFactors()));
         }
+
+        if (preferences.getQueryFactorValues().size() == baselineExperiment.getAssayGroups().getAssayGroupIds().size()) {
+                preferences.setSpecific(false);
+        }
     }
 
     protected BaselineRequestContext buildRequestContext(BaselineExperiment experiment, BaselineRequestPreferences preferences) {

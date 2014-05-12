@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.rest.experimentquery;
 
+import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +31,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commands.BaselineProfilesWriter;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
+import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -74,6 +77,12 @@ public class BaselineExperimentDownloadControllerTest {
     @Mock
     private PrintWriter printWriterMock;
 
+    @Mock
+    private ExperimentalFactors experimentalFactorsMock;
+
+    @Mock
+    private AssayGroups assayGroupsMock;
+
     private BaselineExperimentDownloadController subject;
 
     @Before
@@ -83,11 +92,13 @@ public class BaselineExperimentDownloadControllerTest {
 
     @Test
     public void testDownloadGeneProfiles() throws Exception {
-
         when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(baselineExperimentMock);
         when(preferencesMock.getQueryFactorType()).thenReturn("queryFactorType");
         when(preferencesMock.getSerializedFilterFactors()).thenReturn("serializedFilterFactors");
+        when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet("factorValues")));
+        when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newTreeSet(Sets.newHashSet("assayGroupIds")));
         when(baselineExperimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
+        when(baselineExperimentMock.getAssayGroups()).thenReturn(assayGroupsMock);
 
         when(requestContextBuilderMock.forExperiment(baselineExperimentMock)).thenReturn(requestContextBuilderMock);
         when(requestContextBuilderMock.withPreferences(preferencesMock)).thenReturn(requestContextBuilderMock);
