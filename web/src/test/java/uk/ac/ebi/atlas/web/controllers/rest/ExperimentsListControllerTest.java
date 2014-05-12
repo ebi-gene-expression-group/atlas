@@ -40,7 +40,7 @@ public class ExperimentsListControllerTest {
 
     private static final String EXPERIMENT_ACCESSION = "ACCESSION";
     private static final String EXPECTED_JSON = "{\"aaData\":[{\"experimentAccession\":\"" + EXPERIMENT_ACCESSION +
-            "\",\"numberOfAssays\":0,\"numberOfContrasts\":0,\"species\":[],\"experimentalFactors\":[],\"arrayDesigns\":[]}]}";
+            "\",\"numberOfAssays\":0,\"numberOfContrasts\":0,\"species\":[],\"experimentalFactors\":[],\"arrayDesigns\":[],\"arrayDesignNames\":[]}]}";
 
     @Mock
     private ExperimentInfoListBuilder experimentInfoListBuilderMock;
