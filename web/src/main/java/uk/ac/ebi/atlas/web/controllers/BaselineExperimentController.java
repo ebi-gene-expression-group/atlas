@@ -49,9 +49,11 @@ public abstract class BaselineExperimentController {
             preferences.setSerializedFilterFactors(filterFactorsConverter.serialize(baselineExperiment.getExperimentalFactors().getDefaultFilterFactors()));
         }
 
-//        if (preferences.getQueryFactorValues().size() == baselineExperiment.getAssayGroups().getAssayGroupIds().size()) {
-//                preferences.setSpecific(false);
-//        }
+        if(preferences.getQueryFactorValues() != null && baselineExperiment.getAssayGroups().getAssayGroupIds() != null) {
+            if (preferences.getQueryFactorValues().size() == baselineExperiment.getAssayGroups().getAssayGroupIds().size()) {
+                preferences.setSpecific(false);
+            }
+        }
     }
 
     protected BaselineRequestContext buildRequestContext(BaselineExperiment experiment, BaselineRequestPreferences preferences) {
