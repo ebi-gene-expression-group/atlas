@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
@@ -49,7 +50,7 @@ public abstract class BaselineExperimentController {
             preferences.setSerializedFilterFactors(filterFactorsConverter.serialize(baselineExperiment.getExperimentalFactors().getDefaultFilterFactors()));
         }
 
-        if(preferences.getQueryFactorValues() != null && baselineExperiment.getAssayGroups().getAssayGroupIds() != null) {
+        if(CollectionUtils.isNotEmpty(preferences.getQueryFactorValues()) && CollectionUtils.isNotEmpty(baselineExperiment.getAssayGroups().getAssayGroupIds())) {
             if (preferences.getQueryFactorValues().size() == baselineExperiment.getAssayGroups().getAssayGroupIds().size()) {
                 preferences.setSpecific(false);
             }
