@@ -35,10 +35,6 @@ import static java.lang.Math.min;
 public class DifferentialProfile<T extends DifferentialExpression> extends Profile<Contrast, T> implements DifferentialExpressionLimits {
 
     private static final double MIN_P_VALUE = 1;
-    private static final double MAX_UP_REGULATED_EXPRESSION_LEVEL = Double.MAX_VALUE;
-    private static final double MAX_DOWN_REGULATED_EXPRESSION_LEVEL = -Double.MAX_VALUE;
-    private static final double MIN_UP_REGULATED_EXPRESSION_LEVEL = 0;
-    private static final double MIN_DOWN_REGULATED_EXPRESSION_LEVEL = 0;
 
     private Double maxUpRegulatedExpressionLevel;
     private Double minUpRegulatedExpressionLevel;

@@ -69,9 +69,9 @@ public class DifferentialProfilesListTest {
     @Test
     public void minUpRegulatedExpressionLevelShouldBeNaNWhenAllProfilesHaveNoUpRegulatedExpressionLevel() throws Exception {
         //given
-        given(differentialProfileMock1.getMinUpRegulatedExpressionLevel()).willReturn(Double.MAX_VALUE);
-        given(differentialProfileMock2.getMinUpRegulatedExpressionLevel()).willReturn(Double.MAX_VALUE);
-        given(differentialProfileMock3.getMinUpRegulatedExpressionLevel()).willReturn(Double.MAX_VALUE);
+        given(differentialProfileMock1.getMinUpRegulatedExpressionLevel()).willReturn(Double.NaN);
+        given(differentialProfileMock2.getMinUpRegulatedExpressionLevel()).willReturn(Double.NaN);
+        given(differentialProfileMock3.getMinUpRegulatedExpressionLevel()).willReturn(Double.NaN);
 
         //
         assertThat(subject.getMinUpRegulatedExpressionLevel(), is(Double.NaN));

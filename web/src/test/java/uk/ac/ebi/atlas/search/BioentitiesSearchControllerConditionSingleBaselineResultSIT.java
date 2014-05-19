@@ -32,7 +32,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class BioentitiesSearchControllerConditionSingleBaselineResult extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerConditionSingleBaselineResultSIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
