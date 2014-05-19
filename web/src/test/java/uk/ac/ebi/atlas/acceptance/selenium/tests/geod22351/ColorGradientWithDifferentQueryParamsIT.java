@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests.geod22351;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
@@ -79,7 +78,6 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
     }
 
     @Test
-    @Ignore
     public void verifyDownGradientStartAndEndColor() {
         subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=DOWN&displayLevels=true");
         subject.get();
@@ -90,7 +88,6 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
     }
 
     @Test
-    @Ignore
     public void verifyUpDownGradientLevelsAreShowingAndCorrect() {
         subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
         subject.get();
@@ -106,7 +103,6 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
     }
 
     @Test
-    @Ignore
     public void verifyUpDownGradientStartAndEndColor() {
         subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=UP_DOWN&displayLevels=true");
         subject.get();
