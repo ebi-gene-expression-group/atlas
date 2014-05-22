@@ -1,34 +1,12 @@
 /** @jsx React.DOM */
 
-
-var experimentAccession = 'E-GEOD-26284';
-
-
-var factors = [
-  { factorName: "factor1", svgPathId: "testpath", assayGroupId: "g71"},
-  { factorName: "factor2", assayGroupId: "g16"},
-]
-
-var profiles = [
-  { geneId: "geneId1", geneName: "Gene 1", 
-    expressions: [ {factorName: "factor1", color: "#BFBFC0", value: 1.03, svgPathId: "testpath"},
-                   {factorName: "factor2", color: "#2F30CF", value: 2}
-                 ]
-  }
-  ,{ geneId: "geneId2", geneName: "Gene 2", 
-    expressions: [ {factorName: "factor1", color: "#BFBFC0", value: 3, svgPathId: "testpath"},
-                   {factorName: "factor2", color: "#2F30CF", value: 4}
-                 ]
-  }
-];
-
-
 var HeatmapTableHeader = React.createClass({
 
   render: function() {
     var experimentAccession = this.props.experimentAccession;
-    var factorNames = this.props.factors.map(function (factor) {
-      return <HeatmapTableHeaderFactorNames factorName={factor.factorName} svgPathId={factor.svgPathId} assayGroupId={factor.assayGroupId} experimentAccession={experimentAccession}/>;
+    var factorNames = this.props.assayGroupFactors.map(function (assayGroupFactor) {
+      var factor = assayGroupFactor.factor;
+      return <HeatmapTableHeaderFactorNames factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={experimentAccession}/>;
     });
 
     return (
@@ -136,12 +114,3 @@ var HeatmapCell = React.createClass({
     );
   }
 });
-
-
-React.renderComponent(
-  <table id="heatmap-table" className="table-grid">
-    <HeatmapTableHeader factors={factors} experimentAccession={experimentAccession}/>
-    <HeatmapTableBody profiles={profiles} />
-  </table>,
-  document.getElementById('example')
-);

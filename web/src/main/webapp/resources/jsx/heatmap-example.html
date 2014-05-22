@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/JSXTransformer.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/javascript">
+      var experimentAccession = 'E-GEOD-26284';
+
+      var assayGroupFactors = [
+        {
+          "assayGroupId": "g1",
+          "factor": {
+            "header": "ORGANISM_PART",
+            "type": "ORGANISM_PART",
+            "value": "adipose",
+            "valueOntologyTerm": "ontologyTerm"
+          }
+        },
+        {
+          "assayGroupId": "g2",
+          "factor": {
+            "header": "ORGANISM_PART",
+            "type": "ORGANISM_PART",
+            "value": "adrenal"
+          }
+        },
+        {
+          "assayGroupId": "g3",
+          "factor": {
+            "header": "ORGANISM_PART",
+            "type": "ORGANISM_PART",
+            "value": "brain"
+          }
+        },
+        {
+          "assayGroupId": "g4",
+          "factor": {
+            "header": "ORGANISM_PART",
+            "type": "ORGANISM_PART",
+            "value": "breast"
+          }
+        }
+      ];
+
+      var profiles = [
+        {
+          "geneId": "ENSG00000082258",
+          "geneName": "CCNT2",
+          "expressions": [
+            {
+              "factorName": "adipose",
+              "color": "#B3B3C0",
+              "value": "3.0",
+              "svgPathId": "ontologyTerm"
+            },
+            {
+              "factorName": "adrenal",
+              "color": "#9697C0",
+              "value": "9.0"
+            },
+            {
+              "factorName": "brain",
+              "color": "#A9AAC0",
+              "value": "5.0"
+            },
+            {
+              "factorName": "breast",
+              "color": "#8D8DC0",
+              "value": "11.0"
+            }
+          ]
+        },
+        {
+          "geneId": "ENSG00000047315",
+          "geneName": "POLR2B",
+          "expressions": [
+            {
+              "factorName": "adipose",
+              "color": "UNKNOWN",
+              "value": "UNKNOWN",
+              "svgPathId": "ontologyTerm"
+            },
+            {
+              "factorName": "adrenal",
+              "color": "#0000FF",
+              "value": "47.0"
+            },
+            {
+              "factorName": "brain",
+              "color": "",
+              "value": ""
+            },
+            {
+              "factorName": "breast",
+              "color": "#4A4AC0",
+              "value": "25.0"
+            }
+          ]
+        }
+      ];
+
+    </script>
+    <script src="heatmap.jsx" type="text/jsx"></script>
+    <script type="text/jsx">
+      /** @jsx React.DOM */
+
+      React.renderComponent(
+        <table id="heatmap-table" className="table-grid">
+          <HeatmapTableHeader assayGroupFactors={assayGroupFactors} experimentAccession={experimentAccession}/>
+          <HeatmapTableBody profiles={profiles} />
+        </table>,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>
