@@ -37,11 +37,7 @@ import uk.ac.ebi.atlas.commands.BaselineProfilesHeatMap;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
-import uk.ac.ebi.atlas.dto.tooltip.AssayGroupFactor;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
-import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -144,6 +140,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = experimentalFactors.getFilteredAssayGroupFactors(selectedFilterFactors);
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
+        // and to generate the heatmap. It is in order.
         model.addAttribute("allQueryFactors", filteredAssayGroupFactors);
 
         String species = requestContext.getFilteredBySpecies();

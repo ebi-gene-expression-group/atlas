@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.model.baseline;
 import com.google.common.base.Function;
 import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
-import uk.ac.ebi.atlas.dto.tooltip.AssayGroupFactor;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;

@@ -1,6 +1,4 @@
-package uk.ac.ebi.atlas.dto.tooltip;
-
-import uk.ac.ebi.atlas.model.baseline.Factor;
+package uk.ac.ebi.atlas.model.baseline;
 
 public class AssayGroupFactor implements Comparable<AssayGroupFactor>{
 
