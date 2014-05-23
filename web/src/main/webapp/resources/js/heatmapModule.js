@@ -53,7 +53,7 @@ var heatmapModule = (function ($) {
         $(div).removeClass("show_cell").addClass("hide_cell");
     }
 
-    function showExpressionLevels() {
+    function showExpressionLevels($heatmap) {
         $heatmap("div[data-color]").each(function () {
             showCellText(this);
         });
@@ -61,7 +61,7 @@ var heatmapModule = (function ($) {
         $heatmap(".gradient-level-max").attr("style", 'white-space: nowrap;');
     }
 
-    function hideExpressionLevels() {
+    function hideExpressionLevels($heatmap) {
         $heatmap("div[data-color]").each(function () {
             hideCellText(this);
         });
@@ -80,8 +80,8 @@ var heatmapModule = (function ($) {
         });
     }
 
-    function initDisplayLevelsButtonOnClick(asGeneSets) { //binds toggle handler
-
+    function initDisplayLevelsButtonOnClick(heatmapElement) { //binds toggle handler
+        var $heatmap = contextFactory(heatmapElement);
         var prefFormDisplayLevels = $("#prefForm").find("#displayLevels");
 
         // hacky!
@@ -98,14 +98,14 @@ var heatmapModule = (function ($) {
             .toggle(
             function (eventObject, syntheticEvent) {
                 $(this).button('option', 'label', $("#buttonText").attr('pressedtext'));
-                showExpressionLevels(this);
+                showExpressionLevels($heatmap);
                 prefFormDisplayLevels.val("true");
 
                 syncDisplayLevelButtonOnOtherHeatmap.call(this, syntheticEvent);
             },
             function (eventObject, syntheticEvent) {
                 $(this).button('option', 'label', $("#buttonText").attr('unpressedtext'));
-                hideExpressionLevels(this);
+                hideExpressionLevels($heatmap);
                 prefFormDisplayLevels.val("false");
 
                 syncDisplayLevelButtonOnOtherHeatmap.call(this, syntheticEvent);
@@ -267,7 +267,7 @@ var heatmapModule = (function ($) {
         return result;
     }
 
-    function createHeatmapFactorHeaders() {//shorten header labels if necessary and inits tooltips
+    function createHeatmapFactorHeaders() {// shorten/rotate header labels
 
         $heatmap(".factor-header")
             .each(function () {
@@ -280,7 +280,7 @@ var heatmapModule = (function ($) {
                     organismPartName = restrictLabelSize(organismPartName, 17);
                     $(this).append(organismPartName);
                 }
-            }).tooltip();
+            });
 
     }
 
@@ -364,7 +364,7 @@ var heatmapModule = (function ($) {
 
         initDifferentialHeatmapCellsTooltip();
         initDownloadButtonTooltip();
-        initDisplayLevelsButtonOnClick(parameters.asGeneSets);
+        initDisplayLevelsButtonOnClick(heatmapElement);
         initGeneSetLinkOnClick();
         createHeatmapFactorHeaders();
 
@@ -402,7 +402,8 @@ var heatmapModule = (function ($) {
 
         initBaselineHeatmap:initBaselineHeatmap,
         initRnaSeqHeatmap:initRnaSeqHeatmap,
-        initMicroarrayHeatmap:initMicroarrayHeatmap
+        initMicroarrayHeatmap:initMicroarrayHeatmap,
+        initDisplayLevelsButtonOnClick:initDisplayLevelsButtonOnClick
 
     };
 
