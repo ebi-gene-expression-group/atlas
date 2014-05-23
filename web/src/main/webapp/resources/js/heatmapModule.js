@@ -80,9 +80,8 @@ var heatmapModule = (function ($) {
         });
     }
 
-    function initDisplayLevelsButtonOnClick(heatmapElement) { //binds toggle handler
+    function initDisplayLevelsButtonOnClick(heatmapElement, prefFormDisplayLevelsInputElement) { //binds toggle handler
         var $heatmap = contextFactory(heatmapElement);
-        var prefFormDisplayLevels = $("#prefForm").find("#displayLevels");
 
         // hacky!
         function syncDisplayLevelButtonOnOtherHeatmap(syntheticEvent) {
@@ -99,14 +98,14 @@ var heatmapModule = (function ($) {
             function (eventObject, syntheticEvent) {
                 $(this).button('option', 'label', $("#buttonText").attr('pressedtext'));
                 showExpressionLevels($heatmap);
-                prefFormDisplayLevels.val("true");
+                prefFormDisplayLevelsInputElement.val("true");
 
                 syncDisplayLevelButtonOnOtherHeatmap.call(this, syntheticEvent);
             },
             function (eventObject, syntheticEvent) {
                 $(this).button('option', 'label', $("#buttonText").attr('unpressedtext'));
                 hideExpressionLevels($heatmap);
-                prefFormDisplayLevels.val("false");
+                prefFormDisplayLevelsInputElement.val("false");
 
                 syncDisplayLevelButtonOnOtherHeatmap.call(this, syntheticEvent);
             }
@@ -114,7 +113,7 @@ var heatmapModule = (function ($) {
 
         $heatmap("#display-levels").button({ label:$("#buttonText").attr('unpressedtext') });
 
-        if (prefFormDisplayLevels.val() === "true") {
+        if (prefFormDisplayLevelsInputElement.val() === "true") {
             $heatmap("#display-levels").trigger("click", "syntheticEvent")
         }
 
@@ -353,6 +352,7 @@ var heatmapModule = (function ($) {
     var $heatmap; // stores current heatmap element. allows us to have multiple heatmaps on the same page
 
     function initHeatmap(experimentAccession, parameters, heatmapElementId, isHidden) {
+        var prefFormDisplayLevelsInputElement = $("#prefForm").find("#displayLevels");
         var heatmapElement = $('#' + heatmapElementId);
         $heatmap = contextFactory(heatmapElement);
 
@@ -364,7 +364,7 @@ var heatmapModule = (function ($) {
 
         initDifferentialHeatmapCellsTooltip();
         initDownloadButtonTooltip();
-        initDisplayLevelsButtonOnClick(heatmapElement);
+        initDisplayLevelsButtonOnClick(heatmapElement, prefFormDisplayLevelsInputElement);
         initGeneSetLinkOnClick();
         createHeatmapFactorHeaders();
 

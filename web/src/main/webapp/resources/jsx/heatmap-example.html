@@ -14,6 +14,7 @@
     <script language="JavaScript" type="text/javascript"
             src="/gxa/resources/js/jquery-ui-1.10.3.fix-8740.0520a49/dist/jquery-ui.min.js"></script>
     <script src="/gxa/resources/js/factorInfoTooltipModule.js"></script>
+    <script src="/gxa/resources/js/heatmapModule.js"></script>
 </head>
 <body>
 <section id="factorInfo" style="display:none">
@@ -32,7 +33,7 @@
         <tbody></tbody>
     </table>
 </section>
-
+<input id="displayLevels" name="displayLevels" type="hidden" value="true">
 <div id="heatmap-react">
     <table>
         <tr>
@@ -154,13 +155,22 @@
 <script type="text/jsx">
       /** @jsx React.DOM */
 
-      React.renderComponent(
-        <table id="heatmap-table" className="table-grid">
-          <HeatmapTableHeader assayGroupFactors={assayGroupFactors} experimentAccession={experimentAccession}/>
-          <HeatmapTableBody profiles={profiles} />
-        </table>,
-        document.getElementById('example')
-      );
+  React.renderComponent(
+    <table id="heatmap-table" className="table-grid">
+      <HeatmapTableHeader assayGroupFactors={assayGroupFactors} experimentAccession={experimentAccession}/>
+      <HeatmapTableBody profiles={profiles} />
+    </table>,
+    document.getElementById('example')
+  );
+
+    // initialise additional jquery-based functionality that requires access to whole react heatmap
+    (function ($, heatmapModule) {
+        $(document).ready(function () {
+            var prefFormDisplayLevelsInputElement = $("#displayLevels");
+            var heatmapElement = $('#heatmap-react');
+            heatmapModule.initDisplayLevelsButtonOnClick(heatmapElement, prefFormDisplayLevelsInputElement);
+       });
+    })(jQuery, heatmapModule);
 
 </script>
 </body>
