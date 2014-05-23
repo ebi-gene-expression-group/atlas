@@ -26,9 +26,9 @@
 var factorInfoTooltipModule = (function ($) {
     "use strict";
 
-    function initTooltip(contextRoot, accessKey) {
+    function initTooltip(contextRoot, accessKey, elements) {
 
-        $(".factorNameCell").attr("title", "").tooltip({
+        $(elements).attr("title", "").tooltip({
 
             hide:false,
             show:false,
@@ -87,8 +87,8 @@ var factorInfoTooltipModule = (function ($) {
     }
 
     return {
-        init:function (contextRoot, accessKey) {
-            initTooltip(contextRoot, accessKey);
+        init:function (contextRoot, accessKey, elements) {
+            initTooltip(contextRoot, accessKey, elements || ".factorNameCell");
         }
     };
 }(jQuery));

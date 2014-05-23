@@ -1,5 +1,5 @@
 /** @jsx React.DOM */
-
+/*global React */
 var HeatmapTableHeader = React.createClass({
 
   render: function() {
@@ -19,29 +19,34 @@ var HeatmapTableHeader = React.createClass({
   }
 });
 
-var HeatmapTableHeaderFactorNames = React.createClass({
+var HeatmapTableHeaderFactorNames = (function (factorInfoTooltipModule, contextRoot, accessKey) {
+  return React.createClass({
+    restrictLabelSize:  function (label, maxSize) {
+          var result = label;
+          if (result.length > maxSize) {
+              result = result.substring(0, maxSize);
+              if (result.lastIndexOf(" ") > maxSize - 5) {
+                  result = result.substring(0, result.lastIndexOf(" "));
+              }
+              result = result + "...";
+          }
+          return result;
+    },
 
-  restrictLabelSize:  function (label, maxSize) {
-        var result = label;
-        if (result.length > maxSize) {
-            result = result.substring(0, maxSize);
-            if (result.lastIndexOf(" ") > maxSize - 5) {
-                result = result.substring(0, result.lastIndexOf(" "));
-            }
-            result = result + "...";
-        }
-        return result;
-  },
+    componentDidMount: function() {
+      factorInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
+    },
 
-  render: function() {
-    var truncatedFactorName = this.restrictLabelSize(this.props.factorName, 17);
-    return (
-        <th className="rotated_cell vertical-header-cell factorNameCell" rowSpan="2">
-          <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{truncatedFactorName}</div>
-        </th>
-    );
-  }
-});
+    render: function() {
+      var truncatedFactorName = this.restrictLabelSize(this.props.factorName, 17);
+      return (
+          <th className="rotated_cell vertical-header-cell factorNameCell" rowSpan="2">
+            <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{truncatedFactorName}</div>
+          </th>
+      );
+    }
+  });
+})(factorInfoTooltipModule, '/gxa', '');
 
 var HeatmapTableHeaderTopLeftCorner = React.createClass({
   render: function() {
@@ -98,7 +103,6 @@ var GeneProfileRow = React.createClass({
     );
   }
 });
-
 
 var HeatmapCell = React.createClass({
   render: function() {
