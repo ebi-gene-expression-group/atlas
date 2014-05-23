@@ -36,12 +36,10 @@ var factorInfoTooltipModule = (function ($) {
             content:function (callback) {
 
                 var experimentAccession = $(this).attr("data-experiment-accession"),
-                    assayGroupId = $(this).attr("assay-group-id"),
-                    factorName = $(this).attr("factor-name");
+                    assayGroupId = $(this).attr("assay-group-id");
                 if (experimentAccession === undefined) {
                     experimentAccession = $(this).find(":nth-child(1)").attr("data-experiment-accession");
                     assayGroupId = $(this).find(":nth-child(1)").attr("assay-group-id");
-                    factorName = $(this).find(":nth-child(1)").attr("factor-name");
                 }
                 //callback($("#contrastInfo").html());
 

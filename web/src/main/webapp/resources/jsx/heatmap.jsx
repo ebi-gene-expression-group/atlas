@@ -34,9 +34,10 @@ var HeatmapTableHeaderFactorNames = React.createClass({
   },
 
   render: function() {
+    var truncatedFactorName = this.restrictLabelSize(this.props.factorName, 17);
     return (
         <th className="rotated_cell vertical-header-cell factorNameCell" rowSpan="2">
-          <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} assay-group-id={this.assayGroupId} factor-name={this.props.factorName} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{this.restrictLabelSize(this.props.factorName)}</div>
+          <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{truncatedFactorName}</div>
         </th>
     );
   }
