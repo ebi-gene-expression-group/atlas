@@ -133,7 +133,7 @@
                                 title="<div data-organism-part=\"${columnHeader}\"
                                     ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTerm).concat('\"') : ''}
                                     ${type.isMicroarray() ? 'data-array-design=\"'.concat(queryFactor.arrayDesignAccession).concat('\"') : ''}
-                                    ${type.isBaseline() ? 'assay-group-id=\"'.concat(factorHolder.assayGroupId).concat('\"') : ''}
+                                    ${type.isBaseline() ? 'data-assay-group-id=\"'.concat(factorHolder.assayGroupId).concat('\"') : ''}
                                     ${!type.isBaseline() ? 'data-contrast-id=\"'.concat(queryFactor.id).concat('\"') : ''}
                                     ${'data-experiment-accession=\"'.concat(experimentAccession).concat('\"')}
                                     class=\"factor-header rotate_text\"></div>"
