@@ -48,19 +48,24 @@ var HeatmapTableHeaderFactorNames = (function (factorInfoTooltipModule, contextR
   });
 })(factorInfoTooltipModule, '/gxa', '');
 
-var HeatmapTableHeaderTopLeftCorner = React.createClass({
-  render: function() {
+var HeatmapTableHeaderTopLeftCorner = (function (helpTooltipsModule, contextRoot) {
+  return React.createClass({
+      render: function () {
+          return (
+              <th className="horizontal-header-cell">
+                  <div className="heatmap-matrix-top-left-corner">
+                      <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo' ref='tooltipSpan'></span>
+                      <DisplayLevelsButton />
+                  </div>
+              </th>
+          );
+      },
 
-    return (
-      <th className="horizontal-header-cell">
-        <div className="heatmap-matrix-top-left-corner">
-          <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo'></span>
-          <DisplayLevelsButton />
-        </div>
-      </th>
-    );
-  }
-});
+      componentDidMount: function () {
+          helpTooltipsModule.init('experiment', contextRoot, this.refs.tooltipSpan.getDOMNode());
+      }
+  });
+})(helpTooltipsModule, '/gxa/', '');
 
 var DisplayLevelsButton = React.createClass({
   render: function() {
@@ -74,8 +79,9 @@ var DisplayLevelsButton = React.createClass({
 
 var HeatmapTableBody = React.createClass({
   render: function() {
+    var toolTipHighlightedWords = this.props.toolTipHighlightedWords;
     var geneProfilesRows = this.props.profiles.map(function (profile) {
-      return <GeneProfileRow geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions}/>;
+      return <GeneProfileRow geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions} toolTipHighlightedWords={toolTipHighlightedWords}/>;
     });
 
     return (
@@ -86,23 +92,30 @@ var HeatmapTableBody = React.createClass({
   }
 });
 
-var GeneProfileRow = React.createClass({
-  render: function() {
+var GeneProfileRow = (function (genePropertiesTooltipModule, contextRoot) {
+    return React.createClass({
+        render: function() {
 
-    var heatMapCells = this.props.expressions.map(function (expression) {
-      return <HeatmapCell factorName={expression.factorName} color={expression.color} value={expression.value} showValue="false" svgPathId={expression.svgPathId}/>
+            var heatMapCells = this.props.expressions.map(function (expression) {
+                return <HeatmapCell factorName={expression.factorName} color={expression.color} value={expression.value} showValue="false" svgPathId={expression.svgPathId}/>
+            });
+
+            // NB: empty title tag below is required for tooltip to work
+            return (
+                <tr>
+                    <td className="horizontal-header-cell">
+                        <a className="genename" ref="geneName" title="" id={this.props.geneId} href={"http://localhost:8080/gxa/genes/" + this.props.geneId}>{this.props.geneName}</a>
+                    </td>
+                    {heatMapCells}
+                </tr>
+                );
+        },
+
+        componentDidMount: function() {
+            genePropertiesTooltipModule.init(contextRoot, this.props.toolTipHighlightedWords, this.refs.geneName.getDOMNode());
+        }
     });
-
-    return (
-      <tr>
-        <td className="horizontal-header-cell">
-          <a className="genename" id={this.props.geneId} href={"http://localhost:8080/gxa/genes/" + this.props.geneId}>{this.props.geneName}</a>
-        </td>
-        {heatMapCells}
-      </tr>
-    );
-  }
-});
+})(genePropertiesTooltipModule, '/gxa');
 
 var HeatmapCell = React.createClass({
   render: function() {

@@ -47,7 +47,7 @@ var helpTooltipsModule = (function($) {
 
         var anchor = buildHelpAnchor();
 
-        var helpSelector = (parentElementId == '') ? "[data-help-loc]" : "#" + parentElementId + " [data-help-loc]";
+        var helpSelector = (typeof parentElementId === "object") ? parentElementId : (parentElementId == '') ? "[data-help-loc]" : "#" + parentElementId + " [data-help-loc]";
 
         $(helpSelector)
             .append(anchor)

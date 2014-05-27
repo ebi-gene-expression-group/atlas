@@ -26,7 +26,7 @@
 var genePropertiesTooltipModule = (function($) {
     "use strict";
 
-    function getWords(geneQuery){
+    function splitIntoWords(geneQuery){
         var words = [];
         geneQuery.replace(/"([^"]*)"|(\S+)/g,
             function(m,g1,g2){
@@ -37,9 +37,9 @@ var genePropertiesTooltipModule = (function($) {
         return words;
     }
 
-    function initTooltip(queryString, contextRoot){
+    function initTooltip(contextRoot, highlightedWords, element){
 
-        $(".genename").tooltip({
+        $(element).tooltip({
             tooltipClass:"genename-tooltip",
             position: { my: "left+120 top", at: "left top", collision: "flipfit" },
             hide:false,
@@ -62,10 +62,8 @@ var genePropertiesTooltipModule = (function($) {
                             return;
                         }
 
-                        if(queryString){
-
-                            $(this).highlight(getWords(queryString));
-
+                        if(highlightedWords){
+                            $(this).highlight(highlightedWords);
                         }
 
                         tooltipContent = $(this).html();
@@ -79,11 +77,12 @@ var genePropertiesTooltipModule = (function($) {
         });
     }
     return {
-        init:  function(queryString, contextRoot) {
-
-            initTooltip(queryString, contextRoot);
-
+        splitIntoWords: splitIntoWords,
+        init:  function(contextRoot, highlightedWords, element) {
+            initTooltip(contextRoot, highlightedWords, element);
+        },
+        initUsingGeneQuery:  function(contextRoot, geneQuery) {
+            initTooltip(contextRoot, splitIntoWords(geneQuery), ".genename");
         }
-
     };
 }(jQuery));

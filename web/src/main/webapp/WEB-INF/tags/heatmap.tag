@@ -283,7 +283,7 @@
         $(document).ready(function () {
 
             if (${((geneSet == null) || !geneSet) && !type.isMicroRna()}) {
-                genePropertiesTooltipModule.init('${preferences.geneQuery}', '${base}');
+                genePropertiesTooltipModule.initUsingGeneQuery('${base}', '${preferences.geneQuery}');
             }
 
             if (${type.isBaseline()}) {
