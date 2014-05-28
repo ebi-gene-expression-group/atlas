@@ -23,15 +23,20 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -41,16 +46,66 @@ import static org.hamcrest.Matchers.*;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class RnaSeqExperimentDesignMageTabParserIT {
 
-    private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
+    private static final String EXPERIMENT_ACCESSION_E_MTAB_513 = "E-MTAB-513";
 
-    private static final String MULTIFACTOR_EXPERIMENT_ACESSION = "E-GEOD-26284";
+    private static final String EXPERIMENT_ACCESSION_E_GEOD_26284 = "E-GEOD-26284";
 
     @Inject
+    private MageTabLimpopoUtils mageTabLimpopoUtils;
+
+    @Inject
+    private ValueAndUnitJoiner valueAndUnitJoiner;
+
     private RnaSeqExperimentDesignMageTabParser subject;
+
+    @Before
+    public void setUp() throws Exception {
+        subject = new RnaSeqExperimentDesignMageTabParser();
+        subject.setMageTabLimpopoUtils(mageTabLimpopoUtils);
+        subject.setValueAndUnitJoiner(valueAndUnitJoiner);
+    }
+
+    @Test
+    public void testExtractCharacteristics513() throws Exception {
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513).getExperimentDesign();
+        assertThat(experimentDesign.getSampleHeaders(), containsInAnyOrder("sex", "age", "organism part", "Organism", "ethnic group"));
+    }
+
+    @Test
+    public void testExtractCharacteristics26284() throws Exception {
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_GEOD_26284).getExperimentDesign();
+        assertThat(experimentDesign.getSampleHeaders(), containsInAnyOrder("sex", "biosource provider", "cell line", "cellular component", "organism part", "karyotype", "disease state", "cell type", "Organism"));
+    }
+
+    @Test
+    public void testGetSpeciesForAssays() throws IOException {
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513).getExperimentDesign();
+        Set<String> species = experimentDesign.getSpeciesForAssays(Sets.newHashSet("ERR030886", "ERR030883"));
+        assertThat(species, containsInAnyOrder("Homo sapiens"));
+
+    }
+
+    @Test
+    public void testGetSpeciesForAssaysOnMultispeciesExperiment() throws IOException {
+        ExperimentDesign experimentDesign = subject.parse("E-GEOD-30352").getExperimentDesign();
+        Set<String> species = experimentDesign.getSpeciesForAssays(Sets.newHashSet("SRR306848", "SRR306747"));
+        assertThat(species, containsInAnyOrder("Homo sapiens", "Monodelphis domestica"));
+
+    }
+
+    @Test
+    public void testGetFactors() throws IOException {
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513).getExperimentDesign();
+
+        Factor factor = new Factor("organism part", "adipose", "UBERON:0001013");
+
+        assertThat(experimentDesign.getFactors("ERR030880"), contains(factor));
+
+    }
 
     @Test
     public void asTableDataShouldReturnTheRightStuff() throws IOException {
-        MageTabParserOutput mageTabParserOutput = subject.parse(EXPERIMENT_ACCESSION);
+        MageTabParserOutput mageTabParserOutput = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513);
         ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
         SetMultimap<String, String> ontologyTerms = mageTabParserOutput.getCharacteristicsOntologyTerms();
 
@@ -67,10 +122,11 @@ public class RnaSeqExperimentDesignMageTabParserIT {
 
     @Test
     public void asTableDataForMultifactorShouldReturnTheRightStuff() throws IOException {
-        ExperimentDesign experimentDesign = subject.parse(MULTIFACTOR_EXPERIMENT_ACESSION).getExperimentDesign();
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_GEOD_26284).getExperimentDesign();
 
         assertThat(experimentDesign.asTableData().size(), is(171));
         assertThat(experimentDesign.asTableData().get(0), arrayContaining("SRR089332", "Homo sapiens", "Coriell Cell Repositories http://ccr.coriell.org/Sections/Search/Search.aspx?PgId=165&q=GM12878", "GM12878", "B cell", "whole cell", null, "relatively normal", null, "female", "total RNA", "GM12878", "whole cell"));
         assertThat(experimentDesign.asTableData().get(170), arrayContaining("SRR534335","Homo sapiens","PromoCell","hMSC-AT cell line","human mesenchymal stem cell from adipose tissue (hMSC-AT)","whole cell",null,null,"adipose",null,"total RNA","hMSC-AT cell line","whole cell"));
     }
+
 }
