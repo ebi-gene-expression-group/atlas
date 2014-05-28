@@ -335,9 +335,10 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initTranscriptBreakdownFancyBox(experimentAccession, parameters) {
-        initTranscriptPopupOnHeatMapCellClick(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
+    function initTranscriptBreakdownFancyBox(experimentAccession, species, selectedFilterFactorsJson) {
+        initTranscriptPopupOnHeatMapCellClick(experimentAccession, species, selectedFilterFactorsJson);
 
+        // init tooltips on the actual popup itself
         $('#transcript-breakdown-geneid').tooltip();
         $('#transcript-breakdown-title-help').tooltip();
 
@@ -359,7 +360,7 @@ var heatmapModule = (function ($) {
         $heatmap('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
         if (experimentAccession !== undefined && parameters.species && !parameters.asGeneSets) {
-            initTranscriptBreakdownFancyBox(experimentAccession, parameters);
+            initTranscriptBreakdownFancyBox(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
         }
 
         initDifferentialHeatmapCellsTooltip();
@@ -403,7 +404,8 @@ var heatmapModule = (function ($) {
         initBaselineHeatmap:initBaselineHeatmap,
         initRnaSeqHeatmap:initRnaSeqHeatmap,
         initMicroarrayHeatmap:initMicroarrayHeatmap,
-        initDisplayLevelsButtonOnClick:initDisplayLevelsButtonOnClick
+        initDisplayLevelsButtonOnClick:initDisplayLevelsButtonOnClick,
+        initTranscriptBreakdownFancyBox:initTranscriptBreakdownFancyBox
 
     };
 
