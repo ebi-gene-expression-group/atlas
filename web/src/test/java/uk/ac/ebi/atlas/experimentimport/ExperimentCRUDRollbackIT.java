@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.impl.MageTabParserFactory;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParserFactory;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;

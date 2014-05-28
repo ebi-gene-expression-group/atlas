@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.experimentdesign.impl;
+package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;

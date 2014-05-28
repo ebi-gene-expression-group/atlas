@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentimport.experimentdesign.impl;
+package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentType;

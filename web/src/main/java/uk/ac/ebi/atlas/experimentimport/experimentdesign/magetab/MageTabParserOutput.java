@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.experimentdesign.impl;
+package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.collect.SetMultimap;
 import uk.ac.ebi.atlas.model.ExperimentDesign;

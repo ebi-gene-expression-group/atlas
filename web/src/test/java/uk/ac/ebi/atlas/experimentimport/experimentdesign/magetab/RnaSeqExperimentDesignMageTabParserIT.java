@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentimport.experimentdesign.impl;
+package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.collect.SetMultimap;
 import org.junit.Test;

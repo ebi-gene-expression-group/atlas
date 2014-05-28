@@ -20,13 +20,13 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentimport.experimentdesign.impl;
+package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.SDRF;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.ScanNode;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -36,20 +36,26 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-@Named
+@Named("microarrayExperimentDesignMageTabParser")
 @Scope("prototype")
-public class RnaSeqExperimentDesignMageTabParser extends MageTabParser<ScanNode> {
-
-    private static final String ENA_RUN = "ENA_RUN";
+public class MicroarrayExperimentDesignMageTabParser extends MageTabParser<HybridizationNode> {
 
     @Override
-    protected Set<AssayNode<ScanNode>> getAssayNodes(SDRF sdrf) {
+    protected Set<AssayNode<HybridizationNode>> getAssayNodes(SDRF sdrf) {
+        Set<AssayNode<HybridizationNode>> assayNodes = Sets.newLinkedHashSet();
 
-        Set<AssayNode<ScanNode>> assayNodes = Sets.newLinkedHashSet();
-        for (ScanNode scanNode : sdrf.getNodes(ScanNode.class)) {
-            assayNodes.add(new AssayNode(scanNode.comments.get(ENA_RUN).iterator().next(), scanNode));
+        Collection<? extends HybridizationNode>  hybridizationNodes = sdrf.getNodes(HybridizationNode.class);
+
+        if (hybridizationNodes.size() == 0) {
+            //this is required because of a bug in limpopo...
+            hybridizationNodes = sdrf.getNodes(uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode.class);
+        }
+
+        for (HybridizationNode node : hybridizationNodes) {
+            assayNodes.add(new AssayNode<>(node.getNodeName(), node));
         }
         return assayNodes;
+
     }
 
     @Override
@@ -58,19 +64,19 @@ public class RnaSeqExperimentDesignMageTabParser extends MageTabParser<ScanNode>
     }
 
     @Override
-    protected List<FactorValueAttribute> getFactorAttributes(ScanNode node) {
-        Collection<uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode> assayNodes = GraphUtils.findUpstreamNodes(node, uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode.class);
-        if (assayNodes.size() != 1) {
-            throw new IllegalStateException("No assay corresponds to ENA run " + node.comments.get(ENA_RUN));
-        }
-
-        uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode assayNode = assayNodes.iterator().next();
-
-        return assayNode.factorValues;
+    protected List<FactorValueAttribute> getFactorAttributes(HybridizationNode node) {
+        return node.factorValues;
     }
 
     @Override
-    protected void addArrays(ExperimentDesign experimentDesign, Set<AssayNode<ScanNode>> asseyNodes) {
+    protected void addArrays(ExperimentDesign experimentDesign, Set<AssayNode<HybridizationNode>> assayNodes) {
+        for (AssayNode<? extends HybridizationNode> assayNode : assayNodes) {
 
+            if (assayNode.getSdrfNode().arrayDesigns.size() != 1) {
+                throw new IllegalStateException("Assays with multiple array designs are not supported.");
+            }
+            experimentDesign.putArrayDesign(assayNode.getName(), assayNode.getSdrfNode().arrayDesigns.get(0).getAttributeValue());
+        }
     }
+
 }

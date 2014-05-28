@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentimport.experimentdesign.impl;
+package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.collect.Sets;
 import org.junit.Test;
@@ -30,8 +30,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Set;
 
@@ -45,8 +44,7 @@ public class MicroArrayExperimentDesignMageTabParserIT {
 
     private static final String MICROARRAY_EXPERIMENT_ACCESSION = "E-MEXP-1276";
 
-    @Named("microarrayExperimentDesignMageTabParser")
-    @Inject
+    @Resource(name = "microarrayExperimentDesignMageTabParser")
     private MicroarrayExperimentDesignMageTabParser subject;
 
     @Test

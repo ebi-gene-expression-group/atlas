@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentimport.experimentdesign.impl;
+package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
@@ -42,7 +42,9 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 //ToDo (B): maybe this should not be a hierarchy but should rather "use" an ExperimentDesignBuilder (family) to build ExperimentDesign differently depending on the ExperimentType.
 //ToDo (B): Single Responsibility Principle...
