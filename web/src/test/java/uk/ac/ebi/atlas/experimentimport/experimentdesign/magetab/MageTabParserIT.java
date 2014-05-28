@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -22,14 +23,15 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class MageTabParserIT {
 
-    private static final String MICROARRAY_EXPERIMENT_ACCESSION = "E-TABM-713";
+    private static final String EXPERIMENT_WITH_FACTOR_TYPE_DIFFERENT_FROM_NAME = "E-TABM-713";
+    private static final String EXPERIMENT_WITH_COMPOUND_FACTOR_TYPE_DIFFERENT_FROM_NAME = "E-GEOD-10732";
 
     @Resource(name = "microarrayExperimentDesignMageTabParser")
     private MicroarrayExperimentDesignMageTabParser subject;
 
     @Test
     public void factorIsDescribedByFactorTypeAndNotName() throws IOException {
-        ExperimentDesign experimentDesign = subject.parse(MICROARRAY_EXPERIMENT_ACCESSION).getExperimentDesign();
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_WITH_FACTOR_TYPE_DIFFERENT_FROM_NAME).getExperimentDesign();
 
         assertThat(experimentDesign.getSampleHeaders(), contains("DiseaseState", "Organism", "organism part"));
         assertThat(experimentDesign.getFactorHeaders(), contains("disease state"));
@@ -39,6 +41,23 @@ public class MageTabParserIT {
         Factor factor1 = factors.iterator().next();
         assertThat(factor1.getHeader(), is("disease state"));
         assertThat(factor1.getType(), is("DISEASE_STATE"));
+    }
+
+    @Test
+    public void compoundFactorIsDescribedByFactorTypeAndNotName() throws IOException {
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_WITH_COMPOUND_FACTOR_TYPE_DIFFERENT_FROM_NAME).getExperimentDesign();
+
+        assertThat(experimentDesign.getFactorHeaders(), contains("compound", "genotype"));
+
+        FactorSet factors = experimentDesign.getFactors("Arabidopsis plant (Col-0), 4h_control_rep1");
+        Iterator<Factor> iterator = factors.iterator();
+        Factor factor1 = iterator.next();
+        Factor factor2 = iterator.next();
+        assertThat(factor1.getHeader(), is("genotype"));
+        assertThat(factor1.getType(), is("GENOTYPE"));
+        assertThat(factor2.getHeader(), is("compound"));
+        assertThat(factor2.getType(), is("COMPOUND"));
+        assertThat(iterator.hasNext(), is(false));
     }
 
 }
