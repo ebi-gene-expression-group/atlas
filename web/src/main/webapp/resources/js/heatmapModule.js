@@ -119,7 +119,8 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initTranscriptPopupOnHeatMapCellClick(experimentAccession, species, selectedFilterFactorsJson) {
+    function initTranscriptPopupOnHeatMapCellClick(experimentAccession, species, selectedFilterFactorsJson, heatmapElement) {
+        var $heatmap = contextFactory(heatmapElement);
         var $transcript = $('#transcript-breakdown');
 
         function buildPlotData(transcriptRates) {
@@ -335,8 +336,8 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initTranscriptBreakdownFancyBox(experimentAccession, species, selectedFilterFactorsJson) {
-        initTranscriptPopupOnHeatMapCellClick(experimentAccession, species, selectedFilterFactorsJson);
+    function initTranscriptBreakdownFancyBox(experimentAccession, species, selectedFilterFactorsJson, heatmapElement) {
+        initTranscriptPopupOnHeatMapCellClick(experimentAccession, species, selectedFilterFactorsJson, heatmapElement);
 
         // init tooltips on the actual popup itself
         $('#transcript-breakdown-geneid').tooltip();
@@ -360,7 +361,7 @@ var heatmapModule = (function ($) {
         $heatmap('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
         if (experimentAccession !== undefined && parameters.species && !parameters.asGeneSets) {
-            initTranscriptBreakdownFancyBox(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson);
+            initTranscriptBreakdownFancyBox(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson, heatmapElement);
         }
 
         initDifferentialHeatmapCellsTooltip();
