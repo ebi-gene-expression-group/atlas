@@ -25,9 +25,11 @@ package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.SDRF;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AbstractSDRFNode;
@@ -43,6 +45,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -71,10 +74,12 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
     public MageTabParserOutput parse(String experimentAccession)  throws IOException{
 
         Set<AssayNode<T>> assayNodes;
+        ImmutableMap<String, String> factorNamesToType;
 
         try {
             MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
             assayNodes = getAssayNodes(investigation.SDRF);
+            factorNamesToType = buildFactorNameToTypeMap(investigation.IDF);
         } catch (ParseException | MalformedURLException e) {
             throw new IOException("Cannot read or parse SDRF file: ", e);
         }
@@ -93,12 +98,27 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
                 }
             }
 
-            addFactorValues(experimentDesign, assayNode);
+            addFactorValues(experimentDesign, assayNode, factorNamesToType);
         }
 
         addArrays(experimentDesign, assayNodes);
 
         return new MageTabParserOutput(experimentDesign, characteristicsOntologyTerms);
+    }
+
+    private ImmutableMap<String, String> buildFactorNameToTypeMap(IDF idf) {
+        Iterator<String> experimentalFactorNames = idf.experimentalFactorName.iterator();
+        Iterator<String> experimentalFactorTypes = idf.experimentalFactorType.iterator();
+
+        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
+
+        while (experimentalFactorNames.hasNext()) {
+            String name = experimentalFactorNames.next();
+            String type = experimentalFactorTypes.next();
+            builder.put(name, type);
+        }
+
+        return builder.build();
     }
 
     private void addCharacteristicToExperimentDesign(ExperimentDesign experimentDesign, String name, CharacteristicsAttribute characteristicsAttribute) {
@@ -116,7 +136,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         return sourceNodes.iterator().next();
     }
 
-    protected void addFactorValues(ExperimentDesign experimentDesign, AssayNode<T> assayNode) {
+    protected void addFactorValues(ExperimentDesign experimentDesign, AssayNode<T> assayNode, ImmutableMap<String, String> factorNamesToType) {
 
         String compoundFactorValue = null;
         String compoundFactorType = null;
@@ -124,13 +144,13 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
         for (FactorValueAttribute factorValueAttribute : getFactorAttributes(assayNode.getSdrfNode())) {
 
-            String factorType = factorValueAttribute.type; //(B) isn't that factorName
+            String factorName = factorValueAttribute.type; // the SDRF calls this type, but in the IDF the same value is actually factor name
             String factorValue = cleanValueAndUnitIfNeeded(factorValueAttribute.getNodeName(), factorValueAttribute.unit);
             String factorValueOntologyTerm = factorValueAttribute.termAccessionNumber;
 
             if (isFactorThatHasADose(factorValueAttribute)) {
 
-                compoundFactorType = factorType;
+                compoundFactorType = factorName;
                 compoundFactorValue = factorValue;
                 compoundFactorValueOntologyTerm = factorValueOntologyTerm;
 
@@ -138,7 +158,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
                 if (StringUtils.isNotEmpty(compoundFactorValue)) {
                     factorValue = Joiner.on(" ").join(compoundFactorValue, factorValue);
-                    factorType = compoundFactorType;
+                    factorName = compoundFactorType;
                     factorValueOntologyTerm = compoundFactorValueOntologyTerm;
 
                     compoundFactorType = null;
@@ -149,6 +169,8 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
                 }
 
             }
+
+            String factorType = factorNamesToType.get(factorName);
 
             experimentDesign.putFactor(assayNode.getName(), factorType, factorValue, factorValueOntologyTerm);
         }
