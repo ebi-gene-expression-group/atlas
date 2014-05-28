@@ -58,8 +58,6 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
     private ValueAndUnitJoiner valueAndUnitJoiner;
 
-    private ExperimentDesign experimentDesign;
-
     @Inject
     public void setValueAndUnitJoiner(ValueAndUnitJoiner valueAndUnitJoiner) {
         this.valueAndUnitJoiner = valueAndUnitJoiner;
@@ -81,7 +79,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
             throw new IOException("Cannot read or parse SDRF file: ", e);
         }
 
-        experimentDesign = new ExperimentDesign();
+        ExperimentDesign experimentDesign = new ExperimentDesign();
 
         SetMultimap<String, String> characteristicsOntologyTerms = HashMultimap.create();
 
@@ -89,13 +87,13 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
             SourceNode sourceNode = findFirstUpstreamSourceNode(assayNode);
 
             for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
-                addCharacteristicToExperimentDesign(assayNode.getName(), characteristicsAttribute);
+                addCharacteristicToExperimentDesign(experimentDesign, assayNode.getName(), characteristicsAttribute);
                 if (!Strings.isNullOrEmpty(characteristicsAttribute.termAccessionNumber)) {
                     characteristicsOntologyTerms.put(assayNode.getName(), characteristicsAttribute.termAccessionNumber);
                 }
             }
 
-            addFactorValues(assayNode);
+            addFactorValues(experimentDesign, assayNode);
         }
 
         addArrays(experimentDesign, assayNodes);
@@ -103,7 +101,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         return new MageTabParserOutput(experimentDesign, characteristicsOntologyTerms);
     }
 
-    private void addCharacteristicToExperimentDesign(String name, CharacteristicsAttribute characteristicsAttribute) {
+    private void addCharacteristicToExperimentDesign(ExperimentDesign experimentDesign, String name, CharacteristicsAttribute characteristicsAttribute) {
         String value = cleanValueAndUnitIfNeeded(characteristicsAttribute.getNodeName(), characteristicsAttribute.unit);
         experimentDesign.putSample(name, characteristicsAttribute.type, value);
     }
@@ -118,7 +116,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         return sourceNodes.iterator().next();
     }
 
-    protected void addFactorValues(AssayNode<T> assayNode) {
+    protected void addFactorValues(ExperimentDesign experimentDesign, AssayNode<T> assayNode) {
 
         String compoundFactorValue = null;
         String compoundFactorType = null;
