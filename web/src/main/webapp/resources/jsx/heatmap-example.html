@@ -156,6 +156,10 @@
         }
     ];
 
+    var minExpressionLevel = 3;
+    var maxExpressionLevel = 47;
+    var totalGeneCount = 2;
+
     var profiles = [
         {
             "geneId": "ENSG00000082258",
@@ -221,7 +225,7 @@
     /*global React */
     (function ($, React, heatmapModule, Heatmap, assayGroupFactors, profiles) {
 
-        React.renderComponent(Heatmap( {assayGroupFactors:assayGroupFactors, profiles:profiles} ),
+        React.renderComponent(Heatmap( {assayGroupFactors:assayGroupFactors, profiles:profiles, minExpressionLevel: minExpressionLevel, maxExpressionLevel: maxExpressionLevel, totalGeneCount: totalGeneCount} ),
             document.getElementById('heatmap-react')
         );
 

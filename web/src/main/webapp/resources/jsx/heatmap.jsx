@@ -4,40 +4,27 @@
  Parameters that affect how the DOM is generated as passed in as props. */
 var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsInputElement, $, React, heatmapModule, genePropertiesTooltipModule, factorInfoTooltipModule, helpTooltipsModule) {
 
-    var Heatmap = React.createClass({
-        render: function () {
-            return (
-                <table>
-                    <tr>
-                        <td>
-                            <span id="geneSetsCount">Showing X of Y genes found:
-                            </span>
-                            <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
-                        </td>
-                        <td>
-                        Heatmap legend
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div class="heatmap-position">
-                                <HeatmapTable assayGroupFactors={this.props.assayGroupFactors} profiles={this.props.profiles}/>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            );
-        }
-    });
-
-    var HeatmapTable = (function (heatmapModule, prefFormDisplayLevelsInputElement) {
+    var Heatmap = (function (heatmapModule, prefFormDisplayLevelsInputElement) {
         return React.createClass({
-
             render: function () {
                 return (
-                    <table id="heatmap-table" className="table-grid">
-                        <HeatmapTableHeader assayGroupFactors={this.props.assayGroupFactors} experimentAccession={heatmapConfig.experimentAccession} />
-                        <HeatmapTableBody profiles={this.props.profiles} />
+                    <table>
+                        <tr>
+                            <td>
+                                <span id="geneSetsCount">Showing {this.props.profiles.length} of {this.props.totalGeneCount} genes found:</span>
+                                <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
+                            </td>
+                            <td>
+                                <HeatmapLegend lowExpressionLevel={this.props.minExpressionLevel} highExpressionLevel={this.props.maxExpressionLevel}/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan="2">
+                                <div className="heatmap-position">
+                                    <HeatmapTable assayGroupFactors={this.props.assayGroupFactors} profiles={this.props.profiles}/>
+                                </div>
+                            </td>
+                        </tr>
                     </table>
                     );
             },
@@ -49,6 +36,68 @@ var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsI
 
         });
     })(heatmapModule, prefFormDisplayLevelsInputElement);
+
+    var HeatmapLegend = React.createClass({
+        render: function () {
+            return (
+                <div style={{float:"right", "padding-left": "100px"}}>
+                    <div style={{float:"left"}}>
+                        <table style={{"font-size":"10px"}} id="baseline-heatmap-legend">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span style={{display:"none"}} className="gradient-level-min">{this.props.lowExpressionLevel}</span>
+                                    </td>
+                                    <td width="200px">
+                                        <HeatmapLegendGradient lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
+                                    </td>
+                                    <td>
+                                        <span style={{display:"none"}} className="gradient-level-max">{this.props.highExpressionLevel}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="baseline-help-diff" data-help-loc="#gradient-base" style={{float:"left;"}}></div>
+                </div>
+            );
+        }
+    });
+
+    var HeatmapLegendGradient = React.createClass({
+        render: function () {
+
+            var BACKGROUND_IMAGE_TEMPLATE = "-webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour})";
+            var FILTER_TEMPLATE = "progid:DXImageTransform.Microsoft.Gradient(GradientType =1,startColorstr=${lowValueColour},endColorstr=${highValueColour})";
+
+            var backgroundImage = BACKGROUND_IMAGE_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
+            var filter = FILTER_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
+
+            return (
+                <div className="color-gradient" style={{
+                    overflow:"auto",
+                    "background-image": backgroundImage,
+                    filter: filter}}>
+                    &nbsp;
+                </div>
+            );
+        }
+    });
+
+    var HeatmapTable = (function (experimentAccession) {
+        return React.createClass({
+
+            render: function () {
+                return (
+                    <table id="heatmap-table" className="table-grid">
+                        <HeatmapTableHeader assayGroupFactors={this.props.assayGroupFactors} experimentAccession={experimentAccession} />
+                        <HeatmapTableBody profiles={this.props.profiles} />
+                    </table>
+                    );
+            }
+
+        });
+    })(heatmapConfig.experimentAccession);
 
     var HeatmapTableHeader = React.createClass({
 
