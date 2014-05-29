@@ -4,7 +4,33 @@
  Parameters that affect how the DOM is generated as passed in as props. */
 var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsInputElement, $, React, heatmapModule, genePropertiesTooltipModule, factorInfoTooltipModule, helpTooltipsModule) {
 
-    var Heatmap = (function (heatmapModule, prefFormDisplayLevelsInputElement) {
+    var Heatmap = React.createClass({
+        render: function () {
+            return (
+                <table>
+                    <tr>
+                        <td>
+                            <span id="geneSetsCount">Showing X of Y genes found:
+                            </span>
+                            <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
+                        </td>
+                        <td>
+                        Heatmap legend
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="heatmap-position">
+                                <HeatmapTable assayGroupFactors={this.props.assayGroupFactors} profiles={this.props.profiles}/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            );
+        }
+    });
+
+    var HeatmapTable = (function (heatmapModule, prefFormDisplayLevelsInputElement) {
         return React.createClass({
 
             render: function () {

@@ -103,25 +103,7 @@
 <input id="displayLevels" name="displayLevels" type="hidden" value="true">
 
 <div id="atlas-content">
-    <div id="heatmap-react">
-        <table>
-            <tr>
-                <td>
-                            <span id="geneSetsCount">Showing X of Y genes found:
-                            </span>
-                    <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
-                </td>
-                <td>
-                    Heatmap legend
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <div id="example" class="heatmap-position"></div>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <div id="heatmap-react"></div>
 </div>
 
 
@@ -240,7 +222,7 @@
     (function ($, React, heatmapModule, Heatmap, assayGroupFactors, profiles) {
 
         React.renderComponent(Heatmap( {assayGroupFactors:assayGroupFactors, profiles:profiles} ),
-            document.getElementById('example')
+            document.getElementById('heatmap-react')
         );
 
     })(jQuery, React, heatmapModule,
