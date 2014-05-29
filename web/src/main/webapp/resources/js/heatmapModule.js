@@ -28,7 +28,7 @@ var heatmapModule = (function ($) {
 
     "use strict";
 
-    var _transcriptUrlRoot;
+    var _contextRoot;
     
     function showTranscriptBreakdownFancyBox() {
         $.fancybox({
@@ -119,8 +119,7 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initTranscriptPopupOnHeatMapCellClick(experimentAccession, species, selectedFilterFactorsJson, heatmapElement) {
-        var $heatmap = contextFactory(heatmapElement);
+    function initTranscriptPopupOnHeatMapCellClick(contextRoot, experimentAccession, species, selectedFilterFactorsJson, heatmapCells) {
         var $transcript = $('#transcript-breakdown');
 
         function buildPlotData(transcriptRates) {
@@ -165,7 +164,7 @@ var heatmapModule = (function ($) {
 
         }
 
-        $heatmap("#heatmap-table").find("td:has(div[data-color])").click(function () {
+        $(heatmapCells).click(function () {
 
             //gene and factor properties are extracted from gene and factor headers in the html table
             var $queryFactorType = $("#queryFactorType");
@@ -176,7 +175,7 @@ var heatmapModule = (function ($) {
                 geneName = $(this).parent().find("td a:eq(0)").text() || $(this).parent().find("td div:eq(0)").text() ;
 
             $.ajax({
-                url: _transcriptUrlRoot + "/json/transcripts/" + experimentAccession,
+                url: contextRoot + "/json/transcripts/" + experimentAccession,
                 type:"GET",
                 data:{
                     'geneId':geneId,
@@ -336,8 +335,8 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initTranscriptBreakdownFancyBox(experimentAccession, species, selectedFilterFactorsJson, heatmapElement) {
-        initTranscriptPopupOnHeatMapCellClick(experimentAccession, species, selectedFilterFactorsJson, heatmapElement);
+    function initTranscriptBreakdownFancyBox(contextRoot, experimentAccession, species, selectedFilterFactorsJson, heatmapCells) {
+        initTranscriptPopupOnHeatMapCellClick(contextRoot, experimentAccession, species, selectedFilterFactorsJson, heatmapCells);
 
         // init tooltips on the actual popup itself
         $('#transcript-breakdown-geneid').tooltip();
@@ -361,7 +360,8 @@ var heatmapModule = (function ($) {
         $heatmap('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
 
         if (experimentAccession !== undefined && parameters.species && !parameters.asGeneSets) {
-            initTranscriptBreakdownFancyBox(experimentAccession, parameters.species, parameters.selectedFilterFactorsJson, heatmapElement);
+            var heatmapCells = $heatmap("#heatmap-table").find("td:has(div[data-color])");
+            initTranscriptBreakdownFancyBox(_contextRoot, experimentAccession, parameters.species, parameters.selectedFilterFactorsJson, heatmapCells);
         }
 
         initDifferentialHeatmapCellsTooltip();
@@ -382,8 +382,8 @@ var heatmapModule = (function ($) {
         }
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, asGeneSets, transcriptUrlRoot, heatmapElementId, isHidden) {
-        _transcriptUrlRoot = transcriptUrlRoot;
+    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, asGeneSets, contextRoot, heatmapElementId, isHidden) {
+        _contextRoot = contextRoot;
         
         initHeatmap(experimentAccession, {
             species:species,
