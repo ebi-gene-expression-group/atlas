@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link type="text/css" rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
+    <link type="text/css" rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css">
+
+
+
     <link rel="stylesheet" type="text/css" href="/gxa/resources/css/atlas.css">
     <link rel="stylesheet" type="text/css"
           href="/gxa/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
@@ -97,25 +102,28 @@
 <span id='buttonText' pressedtext='Hide levels' unpressedText='Display levels'></span>
 <input id="displayLevels" name="displayLevels" type="hidden" value="true">
 
-<div id="heatmap-react">
-    <table>
-        <tr>
-            <td>
-                        <span id="geneSetsCount">Showing X of Y genes found:
-                        </span>
-                <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
-            </td>
-            <td>
-                Heatmap legend
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div id="example" class="heatmap-position"></div>
-            </td>
-        </tr>
-    </table>
+<div id="atlas-content">
+    <div id="heatmap-react">
+        <table>
+            <tr>
+                <td>
+                            <span id="geneSetsCount">Showing X of Y genes found:
+                            </span>
+                    <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
+                </td>
+                <td>
+                    Heatmap legend
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div id="example" class="heatmap-position"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
+
 
 <script type="text/javascript">
 
