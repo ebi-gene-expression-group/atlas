@@ -143,11 +143,21 @@ var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsI
         });
     })(genePropertiesTooltipModule, heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords);
 
-    var HeatmapCell = (function (heatmapModule, contextRoot, experimentAccession, species, selectedFilterFactorsJson) {
+    var HeatmapCell = (function (heatmapModule, helpTooltipsModule, contextRoot, experimentAccession, species, selectedFilterFactorsJson) {
 
         function hasKnownExpression(value) {
             // true if not blank or UNKNOWN, ie: has a expression with a known value
-            return (value && value != "UNKNOWN");
+            return (value && !isUnknownExpression(value));
+        }
+
+        function isUnknownExpression(value) {
+            return (value === "UNKNOWN")
+        }
+
+        function unknownCell() {
+            return (
+                <span id='unknownCell' ref='unknownCell' data-help-loc='#heatMapTableUnknownCell'></span>
+            );
         }
 
         return React.createClass({
@@ -159,7 +169,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsI
                         data-organism-part={this.props.factorName}
                         data-color={this.props.color}
                         data-svg-path-id={this.props.svgPathId}>
-            {this.props.value}
+                            {isUnknownExpression(this.props.value) ? unknownCell() : this.props.value}
                         </div>
                     </td>
                     );
@@ -168,10 +178,12 @@ var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsI
             componentDidMount: function() {
                 if (hasKnownExpression(this.props.value)) {
                     heatmapModule.initTranscriptBreakdownFancyBox(contextRoot, experimentAccession, species, selectedFilterFactorsJson, this.getDOMNode());
+                } else if (isUnknownExpression(this.props.value)) {
+                    helpTooltipsModule.init('experiment', contextRoot, this.refs.unknownCell.getDOMNode())
                 }
             }
         });
-    })(heatmapModule, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.species, heatmapConfig.selectedFilterFactorsJson);
+    })(heatmapModule, helpTooltipsModule, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.species, heatmapConfig.selectedFilterFactorsJson);
 
     return Heatmap;
 };
