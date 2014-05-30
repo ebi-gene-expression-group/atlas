@@ -2,7 +2,7 @@
 
 /* Modules and parameters for their init methods are passed in here.
  Parameters that affect how the DOM is generated as passed in as props. */
-var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevelsInputElement, $, React, heatmapModule, genePropertiesTooltipModule, factorInfoTooltipModule, helpTooltipsModule) {
+var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevelsInputElement, $, React, TranscriptPopup, genePropertiesTooltipModule, factorInfoTooltipModule, helpTooltipsModule) {
 
     var Heatmap = (function ($prefFormDisplayLevelsInputElement) {
         return React.createClass({
@@ -10,11 +10,13 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
             getInitialState: function() {
                 var displayLevels = ($prefFormDisplayLevelsInputElement.val() === "true");
                 return { showGeneSetProfiles: false,
-                         displayLevels: displayLevels };
+                         displayLevels: displayLevels,
+                         profiles: this.props.profiles};
             },
 
             toggleGeneSets: function () {
-                this.setState( {showGeneSetProfiles: !this.state.showGeneSetProfiles} );
+                var newProfiles = this.state.showGeneSetProfiles ? this.props.profiles : this.props.geneSetProfiles;
+                this.setState( {showGeneSetProfiles: !this.state.showGeneSetProfiles, profiles: newProfiles} );
             },
 
             toggleLevels: function () {
@@ -28,11 +30,11 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
                     <table>
                         <tr>
                             <td>
-                                <span id="geneSetsCount">Showing {this.props.profiles.length} of {this.props.totalGeneCount} genes found: </span>
+                                <span id="geneSetsCount">Showing {this.state.profiles.genes.length} of {this.state.profiles.totalGeneCount} genes found: </span>
                                     {this.props.geneSetProfiles ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
                             </td>
                             <td>
-                                <HeatmapLegend displayLevels={this.state.displayLevels} lowExpressionLevel={this.props.minExpressionLevel} highExpressionLevel={this.props.maxExpressionLevel}/>
+                                <HeatmapLegend displayLevels={this.state.displayLevels} lowExpressionLevel={this.state.profiles.minExpressionLevel} highExpressionLevel={this.state.profiles.maxExpressionLevel}/>
                             </td>
                         </tr>
                         <tr>
@@ -42,7 +44,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <HeatmapTable assayGroupFactors={this.props.assayGroupFactors} profiles={this.props.profiles} displayLevels={this.state.displayLevels} toggleLevels={this.toggleLevels}/>
+                                                    <HeatmapTable assayGroupFactors={this.props.assayGroupFactors} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} toggleLevels={this.toggleLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
                                                 </td>
                                                 <td style={{"vertical-align": "top"}}>
                                                     <DownloadProfilesButton />
@@ -136,8 +138,8 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
             render: function () {
                 return (
                     <table id="heatmap-table" className="table-grid">
-                        <HeatmapTableHeader assayGroupFactors={this.props.assayGroupFactors} experimentAccession={experimentAccession} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
-                        <HeatmapTableBody profiles={this.props.profiles} displayLevels={this.props.displayLevels}/>
+                        <HeatmapTableHeader assayGroupFactors={this.props.assayGroupFactors} experimentAccession={experimentAccession} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
+                        <HeatmapTableBody profiles={this.props.profiles} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
                     </table>
                     );
             }
@@ -159,7 +161,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
                     <HeatmapTableHeaderTopLeftCorner displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
         {factorNames}
                     <tr id="injected-header">
-                        <td className="horizontal-header-cell">Gene</td>
+                        <td className="horizontal-header-cell">{this.props.showGeneSetProfiles ? 'Gene set' : 'Gene'}</td>
                     </tr>
                 </thead>
                 );
@@ -246,7 +248,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
         render: function () {
             var props = this.props;
             var geneProfilesRows = this.props.profiles.map(function (profile) {
-                return <GeneProfileRow geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions} displayLevels={props.displayLevels}/>;
+                return <GeneProfileRow geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions} displayLevels={props.displayLevels} showGeneSetProfiles={props.showGeneSetProfiles}/>;
             });
 
             return (
@@ -262,7 +264,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
             render: function () {
                 var props = this.props;
                 var heatMapCells = this.props.expressions.map(function (expression) {
-                    return <HeatmapCell factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={props.displayLevels} svgPathId={expression.svgPathId}/>
+                    return <HeatmapCell factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={props.showGeneSetProfiles} geneId={props.geneId} geneName={props.geneName}/>
                 });
 
                 // NB: empty title tag below is required for tooltip to work
@@ -282,7 +284,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
         });
     })(genePropertiesTooltipModule, heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords);
 
-    var HeatmapCell = (function (heatmapModule, helpTooltipsModule, contextRoot, experimentAccession, species, selectedFilterFactorsJson) {
+    var HeatmapCell = (function (TranscriptPopup, helpTooltipsModule, contextRoot, experimentAccession, species, selectedFilterFactorsJson, queryFactorType) {
 
         function hasKnownExpression(value) {
             // true if not blank or UNKNOWN, ie: has a expression with a known value
@@ -300,9 +302,21 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
         }
 
         return React.createClass({
+
+            onClick: function () {
+                if (!this.props.showGeneSetProfiles && hasKnownExpression(this.props.value)) {
+
+                    var factorValue = this.props.factorName,
+                        geneId = this.props.geneId,
+                        geneName = this.props.geneName;
+
+                    TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, queryFactorType, factorValue, selectedFilterFactorsJson, species);
+                }
+            },
+
             render: function () {
                 return (
-                    <td style={{"background-color": this.props.color}}>
+                    <td style={{"background-color": this.props.color}} onClick={this.onClick}>
                         <div
                         className={isUnknownExpression(this.props.value) || this.props.displayLevels ? "show_cell" : "hide_cell"}
                         data-organism-part={this.props.factorName}
@@ -315,14 +329,12 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
             },
 
             componentDidMount: function() {
-                if (hasKnownExpression(this.props.value)) {
-                    heatmapModule.initTranscriptBreakdownFancyBox(contextRoot, experimentAccession, species, selectedFilterFactorsJson, this.getDOMNode());
-                } else if (isUnknownExpression(this.props.value)) {
-                    helpTooltipsModule.init('experiment', contextRoot, this.refs.unknownCell.getDOMNode())
+                if (isUnknownExpression(this.props.value)) {
+                    helpTooltipsModule.init('experiment', contextRoot, this.refs.unknownCell.getDOMNode());
                 }
             }
         });
-    })(heatmapModule, helpTooltipsModule, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.species, heatmapConfig.selectedFilterFactorsJson);
+    })(TranscriptPopup, helpTooltipsModule, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.species, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
 
     return Heatmap;
 };

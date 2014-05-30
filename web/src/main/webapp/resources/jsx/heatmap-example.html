@@ -25,6 +25,7 @@
     <script src="/gxa/resources/js/genePropertiesTooltipModule.js"></script>
     <script src="/gxa/resources/js/highlight.js"></script>
     <script src="/gxa/resources/js/heatmapModule.js"></script>
+    <script src="/gxa/resources/js/transcriptPopupModule.js"></script>
 
 
     <!-- for transcripts start -->
@@ -57,7 +58,6 @@
 <body>
 
 <!-- for transcript popups -->
-<input id="queryFactorType" name="queryFactorType" type="hidden" value="ORGANISM_PART">
 
 <div id="transcript-breakdown" style="display:none;height: 320px;width: 500px; padding-top:10px">
     <p style="text-align: center">
@@ -114,6 +114,7 @@
             experimentAccession: 'E-GEOD-26284',
             accessKey: '',
             species: 'homo sapiens',
+            queryFactorType: 'ORGANISM_PART',
             selectedFilterFactorsJson: [],
             toolTipHighlightedWords: genePropertiesTooltipModule.splitIntoWords('CCNT2 POLR2B'),
             downloadProfilesURL: '/gxa/experiments/E-MTAB-1733.tsv?accessKey=&amp;serializedFilterFactors=&amp;queryFactorType=ORGANISM_PART&amp;rootContext=&amp;heatmapMatrixSize=50&amp;displayLevels=false&amp;displayGeneDistribution=false&amp;geneQuery=ids&amp;exactMatch=true&amp;_exactMatch=on&amp;_queryFactorValues=1&amp;specific=true&amp;_specific=on&amp;cutoff=0.5'
@@ -156,96 +157,102 @@
         }
     ];
 
-    var minExpressionLevel = 3;
-    var maxExpressionLevel = 1011;
-    var totalGeneCount = 2;
+    var geneSetProfiles = {
+        minExpressionLevel: 10,
+        maxExpressionLevel: 40,
+        totalGeneCount: 1,
+        genes: [
+            {
+                "geneId": "protein_coding",
+                "geneName": "protein_coding",
+                "expressions": [
+                    {
+                        "factorName": "adipose",
+                        "color": "#B3B3C0",
+                        "value": "10",
+                        "svgPathId": "ontologyTerm"
+                    },
+                    {
+                        "factorName": "adrenal",
+                        "color": "#9697C0",
+                        "value": "20"
+                    },
+                    {
+                        "factorName": "brain",
+                        "color": "#A9AAC0",
+                        "value": "30"
+                    },
+                    {
+                        "factorName": "breast",
+                        "color": "#8D8DC0",
+                        "value": "40"
+                    }
+                ]
+            }
+        ]
+    };
 
-    var geneSetProfiles = [
-        {
-            "geneId": "protein_coding",
-            "geneName": "protein_coding",
-            "expressions": [
-                {
-                    "factorName": "adipose",
-                    "color": "#B3B3C0",
-                    "value": "10",
-                    "svgPathId": "ontologyTerm"
-                },
-                {
-                    "factorName": "adrenal",
-                    "color": "#9697C0",
-                    "value": "20"
-                },
-                {
-                    "factorName": "brain",
-                    "color": "#A9AAC0",
-                    "value": "30"
-                },
-                {
-                    "factorName": "breast",
-                    "color": "#8D8DC0",
-                    "value": "40"
-                }
-            ]
-        }
-    ];
-
-    var profiles = [
-        {
-            "geneId": "ENSG00000082258",
-            "geneName": "CCNT2",
-            "expressions": [
-                {
-                    "factorName": "adipose",
-                    "color": "#B3B3C0",
-                    "value": "3.0",
-                    "svgPathId": "ontologyTerm"
-                },
-                {
-                    "factorName": "adrenal",
-                    "color": "#9697C0",
-                    "value": "9.0"
-                },
-                {
-                    "factorName": "brain",
-                    "color": "#A9AAC0",
-                    "value": "5.0"
-                },
-                {
-                    "factorName": "breast",
-                    "color": "#8D8DC0",
-                    "value": "11.0"
-                }
-            ]
-        },
-        {
-            "geneId": "ENSG00000047315",
-            "geneName": "POLR2B",
-            "expressions": [
-                {
-                    "factorName": "adipose",
-                    "color": "UNKNOWN",
-                    "value": "UNKNOWN",
-                    "svgPathId": "ontologyTerm"
-                },
-                {
-                    "factorName": "adrenal",
-                    "color": "#0000FF",
-                    "value": "47.0"
-                },
-                {
-                    "factorName": "brain",
-                    "color": "",
-                    "value": ""
-                },
-                {
-                    "factorName": "breast",
-                    "color": "#4A4AC0",
-                    "value": "25.0"
-                }
-            ]
-        }
-    ];
+    var profiles = {
+        minExpressionLevel: 3,
+        maxExpressionLevel: 47,
+        totalGeneCount: 20,
+        genes:[
+            {
+                "geneId": "ENSG00000082258",
+                "geneName": "CCNT2",
+                "expressions": [
+                    {
+                        "factorName": "adipose",
+                        "color": "#B3B3C0",
+                        "value": "3.0",
+                        "svgPathId": "ontologyTerm"
+                    },
+                    {
+                        "factorName": "adrenal",
+                        "color": "#9697C0",
+                        "value": "9.0"
+                    },
+                    {
+                        "factorName": "brain",
+                        "color": "#A9AAC0",
+                        "value": "5.0"
+                    },
+                    {
+                        "factorName": "breast",
+                        "color": "#8D8DC0",
+                        "value": "11.0"
+                    }
+                ]
+            },
+            {
+                "geneId": "ENSG00000047315",
+                "geneName": "POLR2B",
+                "expressions": [
+                    {
+                        "factorName": "adipose",
+                        "color": "UNKNOWN",
+                        "value": "UNKNOWN",
+                        "svgPathId": "ontologyTerm"
+                    },
+                    {
+                        "factorName": "adrenal",
+                        "color": "#0000FF",
+                        "value": "47.0"
+                    },
+                    {
+                        "factorName": "brain",
+                        "color": "",
+                        "value": ""
+                    },
+                    {
+                        "factorName": "breast",
+                        "color": "#4A4AC0",
+                        "value": "25.0"
+                    }
+                ]
+            }
+        ]
+    };
 
 </script>
 <script src="heatmap.jsx" type="text/jsx"></script>
@@ -255,12 +262,12 @@
     /*global React */
     (function ($, React, heatmapModule, Heatmap, assayGroupFactors, profiles) {
 
-        React.renderComponent(Heatmap( {assayGroupFactors:assayGroupFactors, profiles:profiles, minExpressionLevel: minExpressionLevel, maxExpressionLevel: maxExpressionLevel, totalGeneCount: totalGeneCount, geneSetProfiles: geneSetProfiles} ),
+        React.renderComponent(Heatmap( {assayGroupFactors:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
             document.getElementById('heatmap-react')
         );
 
     })(jQuery, React, heatmapModule,
-            createHeatmap(heatmapConfig,  jQuery("#displayLevels"), jQuery, React, heatmapModule, genePropertiesTooltipModule, factorInfoTooltipModule, helpTooltipsModule),
+            createHeatmap(heatmapConfig,  jQuery("#displayLevels"), jQuery, React, TranscriptPopup, genePropertiesTooltipModule, factorInfoTooltipModule, helpTooltipsModule),
             assayGroupFactors, profiles);
 
 </script>
