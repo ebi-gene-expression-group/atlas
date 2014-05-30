@@ -37,16 +37,45 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
                         </tr>
                         <tr>
                             <td colSpan="2">
-                                <div className="heatmap-position">
-                                    <HeatmapTable assayGroupFactors={this.props.assayGroupFactors} profiles={this.props.profiles} displayLevels={this.state.displayLevels} toggleLevels={this.toggleLevels}/>
+                                <div className="block">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <HeatmapTable assayGroupFactors={this.props.assayGroupFactors} profiles={this.props.profiles} displayLevels={this.state.displayLevels} toggleLevels={this.toggleLevels}/>
+                                                </td>
+                                                <td style={{"vertical-align": "top"}}>
+                                                    <DownloadProfilesButton />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </td>
                         </tr>
                     </table>
-                    );
+                );
             }
         });
     })($prefFormDisplayLevelsInputElement);
+
+    var DownloadProfilesButton = (function ($, contextRoot, downloadProfilesURL) {
+        return React.createClass({
+            render: function () {
+                return (
+                    <div style={{"float":"left"}}>
+                        <a ref="downloadProfilesLink" title="Top 50 genes displayed on page. Download results to see the rest." href={downloadProfilesURL} className="button-image" target="_blank">
+                            <img id="download-profiles" alt="Download query results" style={{width:"20px"}} src={contextRoot + "/resources/images/download_blue_small.png"}/>
+                        </a>
+                    </div>
+                    );
+            },
+
+            componentDidMount: function() {
+                $(this.refs.downloadProfilesLink.getDOMNode()).button().tooltip();
+            }
+        });
+    })($, heatmapConfig.contextRoot, heatmapConfig.downloadProfilesURL);
 
     var HeatmapLegend = (function (helpTooltipsModule, contextRoot) {
         return React.createClass({
