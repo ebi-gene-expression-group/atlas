@@ -50,29 +50,33 @@ var genePropertiesTooltipModule = (function($) {
                 var identifier = $(this).attr("id"),
                     geneName = $.trim($(this).text());
 
-                $("#genenametooltip-content").load(
+                if (identifier)  {
 
-                    contextRoot + "/rest/genename-tooltip?geneName=" + geneName + "&identifier=" + identifier,
+                    $("#genenametooltip-content").load(
 
-                    function (response, status, xhr) {
-                        var tooltipContent;
-                        if (status === "error") {
-                            tooltipContent = "Sorry but there was an error: " + xhr.status + " " + xhr.statusText;
+                        contextRoot + "/rest/genename-tooltip?geneName=" + geneName + "&identifier=" + identifier,
+
+                        function (response, status, xhr) {
+                            var tooltipContent;
+                            if (status === "error") {
+                                tooltipContent = "Sorry but there was an error: " + xhr.status + " " + xhr.statusText;
+                                callback(tooltipContent);
+                                return;
+                            }
+
+                            if(highlightedWords){
+                                $(this).highlight(highlightedWords);
+                            }
+
+                            tooltipContent = $(this).html();
+                            if (!tooltipContent) {
+                                tooltipContent = "Missing properties for id = " + identifier + " in Solr.";
+                            }
                             callback(tooltipContent);
-                            return;
                         }
+                    );
 
-                        if(highlightedWords){
-                            $(this).highlight(highlightedWords);
-                        }
-
-                        tooltipContent = $(this).html();
-                        if (!tooltipContent) {
-                            tooltipContent = "Missing properties for id = " + identifier + " in Solr.";
-                        }
-                        callback(tooltipContent);
-                    }
-                );
+                }
             }
         });
     }

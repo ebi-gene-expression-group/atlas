@@ -259,8 +259,26 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
         }
     });
 
-    var GeneProfileRow = (function (genePropertiesTooltipModule, contextRoot, toolTipHighlightedWords) {
+    var GeneProfileRow = (function (genePropertiesTooltipModule, contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks) {
+
+
         return React.createClass({
+            geneNameLinked: function() {
+                var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.geneName + '&exactMatch=' + isExactMatch : '/genes/' + this.props.geneId;
+
+                // don't render id for gene sets to prevent tooltips
+                return (
+                    <a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.geneId} href={contextRoot + geneURL}>{this.props.geneName}</a>
+                    );
+            },
+
+            geneNameNotLinked: function() {
+                // don't render id for gene sets to prevent tooltips
+                return (
+                    <div ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.geneId}>{this.props.geneName}</div>
+                    );
+            },
+
             render: function () {
                 var props = this.props;
                 var heatMapCells = this.props.expressions.map(function (expression) {
@@ -271,7 +289,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
                 return (
                     <tr>
                         <td className="horizontal-header-cell">
-                            <a className="genename" ref="geneName" title="" id={this.props.geneId} href={"http://localhost:8080/gxa/genes/" + this.props.geneId}>{this.props.geneName}</a>
+                            { enableGeneLinks ? this.geneNameLinked() : this.geneNameNotLinked()}
                         </td>
                         {heatMapCells}
                     </tr>
@@ -282,7 +300,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
                 genePropertiesTooltipModule.init(contextRoot, toolTipHighlightedWords, this.refs.geneName.getDOMNode());
             }
         });
-    })(genePropertiesTooltipModule, heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords);
+    })(genePropertiesTooltipModule, heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks);
 
     var HeatmapCell = (function (TranscriptPopup, helpTooltipsModule, contextRoot, experimentAccession, species, selectedFilterFactorsJson, queryFactorType) {
 
