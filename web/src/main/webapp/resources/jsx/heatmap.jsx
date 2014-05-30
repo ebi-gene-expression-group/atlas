@@ -304,7 +304,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
                 return (
                     <td style={{"background-color": this.props.color}}>
                         <div
-                        className={this.props.displayLevels ? "show_cell" : "hide_cell"}
+                        className={isUnknownExpression(this.props.value) || this.props.displayLevels ? "show_cell" : "hide_cell"}
                         data-organism-part={this.props.factorName}
                         data-color={this.props.color}
                         data-svg-path-id={this.props.svgPathId}>
