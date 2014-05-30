@@ -99,8 +99,7 @@
 </section>
 
 <!-- for display levels button -->
-<span id='buttonText' pressedtext='Hide levels' unpressedText='Display levels'></span>
-<input id="displayLevels" name="displayLevels" type="hidden" value="true">
+<input id="displayLevels" name="displayLevels" type="hidden" value="false">
 
 <div id="atlas-content">
     <div id="heatmap-react"></div>
@@ -157,8 +156,38 @@
     ];
 
     var minExpressionLevel = 3;
-    var maxExpressionLevel = 47;
+    var maxExpressionLevel = 1011;
     var totalGeneCount = 2;
+
+    var geneSetProfiles = [
+        {
+            "geneId": "protein_coding",
+            "geneName": "protein_coding",
+            "expressions": [
+                {
+                    "factorName": "adipose",
+                    "color": "#B3B3C0",
+                    "value": "10",
+                    "svgPathId": "ontologyTerm"
+                },
+                {
+                    "factorName": "adrenal",
+                    "color": "#9697C0",
+                    "value": "20"
+                },
+                {
+                    "factorName": "brain",
+                    "color": "#A9AAC0",
+                    "value": "30"
+                },
+                {
+                    "factorName": "breast",
+                    "color": "#8D8DC0",
+                    "value": "40"
+                }
+            ]
+        }
+    ];
 
     var profiles = [
         {
@@ -225,7 +254,7 @@
     /*global React */
     (function ($, React, heatmapModule, Heatmap, assayGroupFactors, profiles) {
 
-        React.renderComponent(Heatmap( {assayGroupFactors:assayGroupFactors, profiles:profiles, minExpressionLevel: minExpressionLevel, maxExpressionLevel: maxExpressionLevel, totalGeneCount: totalGeneCount} ),
+        React.renderComponent(Heatmap( {assayGroupFactors:assayGroupFactors, profiles:profiles, minExpressionLevel: minExpressionLevel, maxExpressionLevel: maxExpressionLevel, totalGeneCount: totalGeneCount, geneSetProfiles: geneSetProfiles} ),
             document.getElementById('heatmap-react')
         );
 

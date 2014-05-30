@@ -2,67 +2,84 @@
 
 /* Modules and parameters for their init methods are passed in here.
  Parameters that affect how the DOM is generated as passed in as props. */
-var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsInputElement, $, React, heatmapModule, genePropertiesTooltipModule, factorInfoTooltipModule, helpTooltipsModule) {
+var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevelsInputElement, $, React, heatmapModule, genePropertiesTooltipModule, factorInfoTooltipModule, helpTooltipsModule) {
 
-    var Heatmap = (function (heatmapModule, prefFormDisplayLevelsInputElement) {
+    var Heatmap = (function ($prefFormDisplayLevelsInputElement) {
         return React.createClass({
+
+            getInitialState: function() {
+                var displayLevels = ($prefFormDisplayLevelsInputElement.val() === "true");
+                return { showGeneSetProfiles: false,
+                         displayLevels: displayLevels };
+            },
+
+            toggleGeneSets: function () {
+                this.setState( {showGeneSetProfiles: !this.state.showGeneSetProfiles} );
+            },
+
+            toggleLevels: function () {
+                var newDisplayLevels = !this.state.displayLevels
+                this.setState( {displayLevels: newDisplayLevels} );
+                $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
+            },
+
             render: function () {
                 return (
                     <table>
                         <tr>
                             <td>
-                                <span id="geneSetsCount">Showing {this.props.profiles.length} of {this.props.totalGeneCount} genes found:</span>
-                                <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
+                                <span id="geneSetsCount">Showing {this.props.profiles.length} of {this.props.totalGeneCount} genes found: </span>
+                                    {this.props.geneSetProfiles ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
                             </td>
                             <td>
-                                <HeatmapLegend lowExpressionLevel={this.props.minExpressionLevel} highExpressionLevel={this.props.maxExpressionLevel}/>
+                                <HeatmapLegend displayLevels={this.state.displayLevels} lowExpressionLevel={this.props.minExpressionLevel} highExpressionLevel={this.props.maxExpressionLevel}/>
                             </td>
                         </tr>
                         <tr>
                             <td colSpan="2">
                                 <div className="heatmap-position">
-                                    <HeatmapTable assayGroupFactors={this.props.assayGroupFactors} profiles={this.props.profiles}/>
+                                    <HeatmapTable assayGroupFactors={this.props.assayGroupFactors} profiles={this.props.profiles} displayLevels={this.state.displayLevels} toggleLevels={this.toggleLevels}/>
                                 </div>
                             </td>
                         </tr>
                     </table>
                     );
+            }
+        });
+    })($prefFormDisplayLevelsInputElement);
+
+    var HeatmapLegend = (function (helpTooltipsModule, contextRoot) {
+        return React.createClass({
+            render: function () {
+                return (
+                    <div style={{float:"right", "padding-left": "100px"}}>
+                        <div style={{float:"left"}}>
+                            <table style={{"font-size":"10px"}} id="baseline-heatmap-legend">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span style={this.props.displayLevels ? {'white-space': 'nowrap'} : {display:"none"}} className="gradient-level-min">{this.props.lowExpressionLevel}</span>
+                                        </td>
+                                        <td width="200px">
+                                            <HeatmapLegendGradient lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
+                                        </td>
+                                        <td>
+                                            <span style={this.props.displayLevels ? {'white-space': 'nowrap'} : {display:"none"}} className="gradient-level-max">{this.props.highExpressionLevel}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div ref="baselineHelpDiff" data-help-loc="#gradient-base" style={{float:"left;"}}></div>
+                    </div>
+                    );
             },
 
             componentDidMount: function () {
-                var heatmapElement = this.getDOMNode();
-                heatmapModule.initDisplayLevelsButtonOnClick(heatmapElement, prefFormDisplayLevelsInputElement);
+                helpTooltipsModule.init('experiment', contextRoot, this.refs.baselineHelpDiff.getDOMNode());
             }
-
         });
-    })(heatmapModule, prefFormDisplayLevelsInputElement);
-
-    var HeatmapLegend = React.createClass({
-        render: function () {
-            return (
-                <div style={{float:"right", "padding-left": "100px"}}>
-                    <div style={{float:"left"}}>
-                        <table style={{"font-size":"10px"}} id="baseline-heatmap-legend">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <span style={{display:"none"}} className="gradient-level-min">{this.props.lowExpressionLevel}</span>
-                                    </td>
-                                    <td width="200px">
-                                        <HeatmapLegendGradient lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
-                                    </td>
-                                    <td>
-                                        <span style={{display:"none"}} className="gradient-level-max">{this.props.highExpressionLevel}</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="baseline-help-diff" data-help-loc="#gradient-base" style={{float:"left;"}}></div>
-                </div>
-            );
-        }
-    });
+    })(helpTooltipsModule, heatmapConfig.contextRoot);
 
     var HeatmapLegendGradient = React.createClass({
         render: function () {
@@ -90,8 +107,8 @@ var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsI
             render: function () {
                 return (
                     <table id="heatmap-table" className="table-grid">
-                        <HeatmapTableHeader assayGroupFactors={this.props.assayGroupFactors} experimentAccession={experimentAccession} />
-                        <HeatmapTableBody profiles={this.props.profiles} />
+                        <HeatmapTableHeader assayGroupFactors={this.props.assayGroupFactors} experimentAccession={experimentAccession} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
+                        <HeatmapTableBody profiles={this.props.profiles} displayLevels={this.props.displayLevels}/>
                     </table>
                     );
             }
@@ -110,7 +127,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsI
 
             return (
                 <thead>
-                    <HeatmapTableHeaderTopLeftCorner />
+                    <HeatmapTableHeaderTopLeftCorner displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
         {factorNames}
                     <tr id="injected-header">
                         <td className="horizontal-header-cell">Gene</td>
@@ -157,7 +174,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsI
                     <th className="horizontal-header-cell">
                         <div className="heatmap-matrix-top-left-corner">
                             <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo' ref='tooltipSpan'></span>
-                            <DisplayLevelsButton />
+                            <DisplayLevelsButton displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
                         </div>
                     </th>
                     );
@@ -170,19 +187,37 @@ var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsI
     })(helpTooltipsModule, heatmapConfig.contextRoot);
 
     var DisplayLevelsButton = React.createClass({
-        render: function () {
 
+        buttonText: function (displayLevels) {
+            return displayLevels ? 'Hide levels' : 'Display levels'
+        },
+
+        updateButtonText: function() {
+            $(this.getDOMNode()).button({ label: this.buttonText(this.props.displayLevels) });
+        },
+
+        render: function () {
             return (
-                <button id='display-levels' className='display-levels-button' />
-                );
+                <button id='display-levels' className='display-levels-button' onClick={this.props.toggleLevels}></button>
+            );
+        },
+
+        componentDidMount: function () {
+            this.updateButtonText();
+        },
+
+        componentDidUpdate: function () {
+            this.updateButtonText();
         }
+
     });
 
 
     var HeatmapTableBody = React.createClass({
         render: function () {
+            var props = this.props;
             var geneProfilesRows = this.props.profiles.map(function (profile) {
-                return <GeneProfileRow geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions}/>;
+                return <GeneProfileRow geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions} displayLevels={props.displayLevels}/>;
             });
 
             return (
@@ -196,9 +231,9 @@ var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsI
     var GeneProfileRow = (function (genePropertiesTooltipModule, contextRoot, toolTipHighlightedWords) {
         return React.createClass({
             render: function () {
-
+                var props = this.props;
                 var heatMapCells = this.props.expressions.map(function (expression) {
-                    return <HeatmapCell factorName={expression.factorName} color={expression.color} value={expression.value} showValue="false" svgPathId={expression.svgPathId}/>
+                    return <HeatmapCell factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={props.displayLevels} svgPathId={expression.svgPathId}/>
                 });
 
                 // NB: empty title tag below is required for tooltip to work
@@ -240,7 +275,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, prefFormDisplayLevelsI
                 return (
                     <td style={{"background-color": this.props.color}}>
                         <div
-                        className={this.props.showValue == "true" ? "show_cell" : "hide_cell"}
+                        className={this.props.displayLevels ? "show_cell" : "hide_cell"}
                         data-organism-part={this.props.factorName}
                         data-color={this.props.color}
                         data-svg-path-id={this.props.svgPathId}>
