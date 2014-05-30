@@ -4,6 +4,28 @@
  Parameters that affect how the DOM is generated as passed in as props. */
 var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevelsInputElement, $, React, TranscriptPopup, genePropertiesTooltipModule, factorInfoTooltipModule, helpTooltipsModule) {
 
+    var HeatmapBaseline = (function (experimentAccession) {
+        return React.createClass({
+
+            columnHeaders: function () {
+                var props = this.props;
+                return React.createClass({
+                    render: function () {
+                    return (
+                        <FactorHeaders assayGroupFactors={props.assayGroupFactors} experimentAccession={experimentAccession} />
+                        )
+                    }
+                });
+            },
+
+            render: function () {
+                return (
+                    <Heatmap columnHeaders={this.columnHeaders()} displayLevelsButton={DisplayLevelsButtonBaseline} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
+                    );
+            }
+        });
+    })(heatmapConfig.experimentAccession);
+
     var Heatmap = (function ($prefFormDisplayLevelsInputElement) {
         return React.createClass({
 
@@ -44,7 +66,7 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <HeatmapTable assayGroupFactors={this.props.assayGroupFactors} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} toggleLevels={this.toggleLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
+                                                    <HeatmapTable displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} toggleLevels={this.toggleLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
                                                 </td>
                                                 <td style={{"vertical-align": "top"}}>
                                                     <DownloadProfilesButton />
@@ -132,34 +154,27 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
         }
     });
 
-    var HeatmapTable = (function (experimentAccession) {
-        return React.createClass({
+    var HeatmapTable = React.createClass({
 
-            render: function () {
-                return (
-                    <table id="heatmap-table" className="table-grid">
-                        <HeatmapTableHeader assayGroupFactors={this.props.assayGroupFactors} experimentAccession={experimentAccession} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
-                        <HeatmapTableBody profiles={this.props.profiles} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
-                    </table>
-                    );
-            }
+        render: function () {
+            return (
+                <table id="heatmap-table" className="table-grid">
+                    <HeatmapTableHeader displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
+                    <HeatmapTableBody profiles={this.props.profiles} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
+                </table>
+                );
+        }
 
-        });
-    })(heatmapConfig.experimentAccession);
+    });
 
     var HeatmapTableHeader = React.createClass({
 
         render: function () {
-            var experimentAccession = this.props.experimentAccession;
-            var factorNames = this.props.assayGroupFactors.map(function (assayGroupFactor) {
-                var factor = assayGroupFactor.factor;
-                return <HeatmapTableHeaderFactorNames factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={experimentAccession}/>;
-            });
-
+            var ColumnHeaders = this.props.columnHeaders;
             return (
                 <thead>
-                    <HeatmapTableHeaderTopLeftCorner displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
-        {factorNames}
+                    <TopLeftCorner displayLevelsButton={this.props.displayLevelsButton} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
+                    <ColumnHeaders />
                     <tr id="injected-header">
                         <td className="horizontal-header-cell">{this.props.showGeneSetProfiles ? 'Gene set' : 'Gene'}</td>
                     </tr>
@@ -169,7 +184,23 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
 
     });
 
-    var HeatmapTableHeaderFactorNames = (function (factorInfoTooltipModule, contextRoot, accessKey) {
+    var FactorHeaders = React.createClass({
+
+        render: function () {
+            var props = this.props;
+            var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
+                var factor = assayGroupFactor.factor;
+                return <FactorHeader factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={props.experimentAccession}/>;
+            });
+
+            return (
+                <div>{factorHeaders}</div>
+                );
+        }
+
+    });
+
+    var FactorHeader = (function (factorInfoTooltipModule, contextRoot, accessKey) {
         return React.createClass({
             restrictLabelSize: function (label, maxSize) {
                 var result = label;
@@ -198,14 +229,16 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
         });
     })(factorInfoTooltipModule, heatmapConfig.contextRoot, heatmapConfig.accessKey);
 
-    var HeatmapTableHeaderTopLeftCorner = (function (helpTooltipsModule, contextRoot) {
+    var TopLeftCorner = (function (helpTooltipsModule, contextRoot) {
         return React.createClass({
+
             render: function () {
+                var displayLevelsButton = this.props.displayLevelsButton;
                 return (
                     <th className="horizontal-header-cell">
                         <div className="heatmap-matrix-top-left-corner">
                             <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo' ref='tooltipSpan'></span>
-                            <DisplayLevelsButton displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
+                            <displayLevelsButton displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
                         </div>
                     </th>
                     );
@@ -217,32 +250,36 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
         });
     })(helpTooltipsModule, heatmapConfig.contextRoot);
 
-    var DisplayLevelsButton = React.createClass({
+    var createDisplayLevelsButton = function(hideText, showText) {
 
-        buttonText: function (displayLevels) {
-            return displayLevels ? 'Hide levels' : 'Display levels'
-        },
+        return React.createClass({
 
-        updateButtonText: function() {
-            $(this.getDOMNode()).button({ label: this.buttonText(this.props.displayLevels) });
-        },
+            buttonText: function (displayLevels) {
+                return displayLevels ? hideText : showText;
+            },
 
-        render: function () {
-            return (
-                <button id='display-levels' className='display-levels-button' onClick={this.props.toggleLevels}></button>
-            );
-        },
+            updateButtonText: function () {
+                $(this.getDOMNode()).button({ label: this.buttonText(this.props.displayLevels) });
+            },
 
-        componentDidMount: function () {
-            this.updateButtonText();
-        },
+            render: function () {
+                return (
+                    <button id='display-levels' className='display-levels-button' onClick={this.props.toggleLevels}></button>
+                    );
+            },
 
-        componentDidUpdate: function () {
-            this.updateButtonText();
-        }
+            componentDidMount: function () {
+                this.updateButtonText();
+            },
 
-    });
+            componentDidUpdate: function () {
+                this.updateButtonText();
+            }
 
+        });
+    };
+
+    var DisplayLevelsButtonBaseline = createDisplayLevelsButton('Hide levels', 'Display levels');
 
     var HeatmapTableBody = React.createClass({
         render: function () {
@@ -354,5 +391,5 @@ var createHeatmap = function createHeatMap(heatmapConfig, $prefFormDisplayLevels
         });
     })(TranscriptPopup, helpTooltipsModule, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.species, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
 
-    return Heatmap;
+    return HeatmapBaseline;
 };
