@@ -49,4 +49,13 @@ public class MicroarrayProfile extends DifferentialProfile<MicroarrayExpression>
                 .add("expressions", expressionsByCondition)
                 .toString();
     }
+
+    @Override
+    public MicroarrayProfile add(MicroarrayExpression expression) {
+        return (MicroarrayProfile)super.add(expression);
+    }
+
+    public static MicroarrayProfile create(String geneId, String geneName, String designElementName) {
+        return new MicroarrayProfile(geneId, geneName, designElementName);
+    }
 }
