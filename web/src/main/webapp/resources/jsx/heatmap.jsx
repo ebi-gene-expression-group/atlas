@@ -4,9 +4,29 @@
 /* Modules and parameters for their init methods are passed in here.
  Parameters that affect how the DOM is generated as passed in as props. */
 
-var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoTooltipModule, helpTooltipsModule, TranscriptPopup) {
+var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoTooltipModule, contrastInfoTooltipModule, helpTooltipsModule, TranscriptPopup) {
 
     var build = function build(heatmapConfig, $prefFormDisplayLevelsInputElement) {
+
+        var Differential = React.createClass({
+
+            columnHeaders: function () {
+                var props = this.props;
+                return React.createClass({
+                    render: function () {
+                        return (
+                            <ContrastHeaders contrasts={props.contrasts} experimentAccession={heatmapConfig.experimentAccession} showMaPlotButton={heatmapConfig.showMaPlotButton}/>
+                            );
+                    }
+                });
+            },
+
+            render: function () {
+                return (
+                    <Heatmap columnHeaders={this.columnHeaders()} displayLevelsButton={DisplayLevelsButtonDifferential} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
+                    );
+            }
+        });
 
         var Baseline = React.createClass({
 
@@ -184,6 +204,18 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         });
 
+        function restrictLabelSize(label, maxSize) {
+            var result = label;
+            if (result.length > maxSize) {
+                result = result.substring(0, maxSize);
+                if (result.lastIndexOf(" ") > maxSize - 5) {
+                    result = result.substring(0, result.lastIndexOf(" "));
+                }
+                result = result + "...";
+            }
+            return result;
+        }
+
         var FactorHeaders = React.createClass({
 
             render: function () {
@@ -202,27 +234,71 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         var FactorHeader = (function (contextRoot, accessKey) {
             return React.createClass({
-                restrictLabelSize: function (label, maxSize) {
-                    var result = label;
-                    if (result.length > maxSize) {
-                        result = result.substring(0, maxSize);
-                        if (result.lastIndexOf(" ") > maxSize - 5) {
-                            result = result.substring(0, result.lastIndexOf(" "));
-                        }
-                        result = result + "...";
-                    }
-                    return result;
-                },
 
                 componentDidMount: function () {
                     factorInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
                 },
 
                 render: function () {
-                    var truncatedFactorName = this.restrictLabelSize(this.props.factorName, 17);
+                    var truncatedFactorName = restrictLabelSize(this.props.factorName, 17);
                     return (
                         <th className="rotated_cell vertical-header-cell factorNameCell" rowSpan="2">
                             <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{truncatedFactorName}</div>
+                        </th>
+                        );
+                }
+            });
+        })(heatmapConfig.contextRoot, heatmapConfig.accessKey);
+
+        var ContrastHeaders = React.createClass({
+
+            render: function () {
+                var props = this.props;
+                var contrastHeaders = this.props.contrasts.map(function (contrast) {
+                    return <ContrastHeader contrastName={contrast.displayName} arrayDesignAccession={contrast.arrayDesignAccession} contrastId={contrast.id} experimentAccession={props.experimentAccession} showMaPlotButton={props.showMaPlotButton}/>;
+                });
+
+                return (
+                    <div>{contrastHeaders}</div>
+                    );
+            }
+
+        });
+
+        var ContrastHeader = (function (contextRoot, accessKey) {
+            return React.createClass({
+
+                componentDidMount: function () {
+                    contrastInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
+                    if (this.props.showMaPlotButton) {
+                        var maButton = this.refs.maButton.getDOMNode();
+
+                        $(maButton).tooltip().button();
+
+                        $(maButton).fancybox({
+                            padding:0,
+                            openEffect:'elastic',
+                            closeEffect:'elastic'
+                        });
+                    }
+                },
+
+                render: function () {
+                    var truncatedName = restrictLabelSize(this.props.contrastName, 17);
+                    var maPlotURL = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + '/' : '' ) + this.props.contrastId + '/ma-plot.png';
+                    var thStyle = this.props.showMaPlotButton ? {width: "60px"} : {};
+                    var textStyle = this.props.showMaPlotButton ? {top: "57px"} : {};
+
+                    var maPlotButton = (
+                        <div style={{"text-align":"right", "padding-right":"3px"}}>
+                            <a href={maPlotURL} ref="maButton" className='button-image' title='Click to view MA plot for the contrast across all genes'><img src={contextRoot + '/resources/images/maplot-button.png'}/></a>
+                        </div>
+                    );
+
+                    return (
+                        <th className="rotated_cell vertical-header-cell contrastNameCell" rowSpan="2" style={thStyle}>
+                            <div data-organism-part={this.props.contrastName} data-contrast-id={this.props.contrastId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text" style={textStyle}>{truncatedName}</div>
+                            {this.props.showMaPlotButton ? maPlotButton : ''}
                         </th>
                         );
                 }
@@ -280,6 +356,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         };
 
         var DisplayLevelsButtonBaseline = createDisplayLevelsButton('Hide levels', 'Display levels');
+
+        var DisplayLevelsButtonDifferential = createDisplayLevelsButton('Hide log<sub>2</sub>-fold change', 'Display log<sub>2</sub>-fold change');
 
         var HeatmapTableBody = React.createClass({
             render: function () {
@@ -391,7 +469,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.species, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
 
         return {
-            Baseline: Baseline
+            Baseline: Baseline,
+            Differential: Differential
         };
     };
 
@@ -399,4 +478,4 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         build: build
     };
 
-})(jQuery, React, genePropertiesTooltipModule, factorInfoTooltipModule, helpTooltipsModule, TranscriptPopup);
+})(jQuery, React, genePropertiesTooltipModule, factorInfoTooltipModule, contrastInfoTooltipModule, helpTooltipsModule, TranscriptPopup);

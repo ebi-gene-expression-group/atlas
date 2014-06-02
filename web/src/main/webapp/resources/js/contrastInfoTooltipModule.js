@@ -26,9 +26,9 @@
 var contrastInfoTooltipModule = (function ($) {
     "use strict";
 
-    function initTooltip(contextRoot, accessKey) {
+    function initTooltip(contextRoot, accessKey, elements) {
 
-        $(".contrastNameCell").attr("title", "").tooltip({
+        $(elements).attr("title", "").tooltip({
 
             hide:false,
             show:false,
@@ -90,8 +90,8 @@ var contrastInfoTooltipModule = (function ($) {
     }
 
     return {
-        init:function (contextRoot, accessKey) {
-            initTooltip(contextRoot, accessKey);
+        init:function (contextRoot, accessKey, elements) {
+            initTooltip(contextRoot, accessKey, elements || ".contrastNameCell");
         }
     };
 }(jQuery));
