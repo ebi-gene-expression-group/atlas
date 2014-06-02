@@ -102,12 +102,12 @@
 <input id="displayLevels" name="displayLevels" type="hidden" value="false">
 
 <div id="atlas-content">
-    <div id="heatmap-react-baseline" class="heatmap-position"></div>
+    <div id="heatmap-react-diff" class="heatmap-position"></div>
 </div>
 
 <script type="text/javascript">
 
-    var baseline = (function (genePropertiesTooltipModule) {
+    var diff = (function (genePropertiesTooltipModule) {
 
         var heatmapConfig = (function (genePropertiesTooltipModule) {
             return {
@@ -272,6 +272,7 @@
 <script type="text/jsx"> // text/jsx only so it runs after previous script
     /** @jsx React.DOM */
 
+
     /*global React */
 
     (function ($, React, heatmapModule, heatmapConfig, assayGroupFactors, profiles, geneSetProfiles) {
@@ -279,13 +280,12 @@
         var Heatmap = heatmapModule.build(heatmapConfig, $('#displayLevels')).Baseline;
 
         React.renderComponent(Heatmap( {assayGroupFactors:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
-            document.getElementById('heatmap-react-baseline')
+            document.getElementById('heatmap-react-diff')
         );
 
 
-    })(jQuery, React, heatmapModule, baseline.heatmapConfig,
-            baseline.assayGroupFactors, baseline.profiles, baseline.geneSetProfiles);
-
+    })(jQuery, React, heatmapModule, diff.heatmapConfig,
+            diff.assayGroupFactors, diff.profiles, diff.geneSetProfiles);
 </script>
 </body>
 </html>
