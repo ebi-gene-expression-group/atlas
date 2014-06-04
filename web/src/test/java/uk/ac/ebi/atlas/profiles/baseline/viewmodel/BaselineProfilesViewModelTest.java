@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.Test;
 import org.springframework.util.StringUtils;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
@@ -10,6 +11,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileDeserializer;
 import uk.ac.ebi.atlas.utils.ColourGradient;
+import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.awt.*;
 import java.util.SortedSet;
@@ -46,21 +48,21 @@ public class BaselineProfilesViewModelTest {
     private Color blankColour = Color.WHITE;
     private double colourScale = 1;
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
-    private BaselineGeneViewModelBuilder subject = new BaselineGeneViewModelBuilder(colorGradient);
+    private BaselineGeneViewModelBuilder subject = new BaselineGeneViewModelBuilder(colorGradient, new NumberUtils());
     private SortedSet<Factor> orderedFactors = ImmutableSortedSet.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
 
     @Test
     public void buildProfilesViewModel() {
         BaselineGeneViewModel[] genes = subject.build(baselineProfiles, orderedFactors, minExpressionLevel, maxExpressionLevel);
 
-        BaselineProfilesViewModel profiles = new BaselineProfilesViewModel(1.1, 2.2, 50, genes);
+        BaselineProfilesViewModel profiles = new BaselineProfilesViewModel(new NumberUtils(), 1.1, 2.2, 50, genes);
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(profiles);
 
         String expected = "{\n" +
-                "  \"minExpressionLevel\": 1.1,\n" +
-                "  \"maxExpressionLevel\": 2.2,\n" +
+                "  \"minExpressionLevel\": 1.0,\n" +
+                "  \"maxExpressionLevel\": 2.0,\n" +
                 "  \"totalGeneCount\": 50,\n" +
                 "  \"genes\": [\n" +
                 "    {\n" +
@@ -70,23 +72,23 @@ public class BaselineProfilesViewModelTest {
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
                 "          \"color\": \"#B3B3C0\",\n" +
-                "          \"value\": \"3.0\",\n" +
+                "          \"value\": \"3\",\n" +
                 "          \"svgPathId\": \"ontologyTerm\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"adrenal\",\n" +
                 "          \"color\": \"#9697C0\",\n" +
-                "          \"value\": \"9.0\"\n" +
+                "          \"value\": \"9\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"brain\",\n" +
                 "          \"color\": \"#A9AAC0\",\n" +
-                "          \"value\": \"5.0\"\n" +
+                "          \"value\": \"5\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"breast\",\n" +
                 "          \"color\": \"#8D8DC0\",\n" +
-                "          \"value\": \"11.0\"\n" +
+                "          \"value\": \"11\"\n" +
                 "        }\n" +
                 "      ]\n" +
                 "    },\n" +
@@ -103,7 +105,7 @@ public class BaselineProfilesViewModelTest {
                 "        {\n" +
                 "          \"factorName\": \"adrenal\",\n" +
                 "          \"color\": \"#0000FF\",\n" +
-                "          \"value\": \"47.0\"\n" +
+                "          \"value\": \"47\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"factorName\": \"brain\",\n" +
@@ -113,14 +115,14 @@ public class BaselineProfilesViewModelTest {
                 "        {\n" +
                 "          \"factorName\": \"breast\",\n" +
                 "          \"color\": \"#4A4AC0\",\n" +
-                "          \"value\": \"25.0\"\n" +
+                "          \"value\": \"25\"\n" +
                 "        }\n" +
                 "      ]\n" +
                 "    }\n" +
                 "  ]\n" +
                 "}";
 
-        assertThat(json, is(StringUtils.trimAllWhitespace(expected)));
+        assertThat(json, is(expected));
 
     }
 

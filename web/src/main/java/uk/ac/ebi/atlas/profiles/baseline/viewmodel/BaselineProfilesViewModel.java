@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
+import uk.ac.ebi.atlas.utils.NumberUtils;
+
 public class BaselineProfilesViewModel {
 
     private final double minExpressionLevel;
@@ -7,9 +9,9 @@ public class BaselineProfilesViewModel {
     private final int totalGeneCount;
     private final BaselineGeneViewModel[] genes;
 
-    public BaselineProfilesViewModel(double minExpressionLevel, double maxExpressionLevel, int totalGeneCount, BaselineGeneViewModel[] genes) {
-        this.minExpressionLevel = minExpressionLevel;
-        this.maxExpressionLevel = maxExpressionLevel;
+    public BaselineProfilesViewModel(NumberUtils numberUtils, double minExpressionLevel, double maxExpressionLevel, int totalGeneCount, BaselineGeneViewModel[] genes) {
+        this.minExpressionLevel = numberUtils.round(minExpressionLevel);
+        this.maxExpressionLevel = numberUtils.round(maxExpressionLevel);
         this.totalGeneCount = totalGeneCount;
         this.genes = genes;
     }

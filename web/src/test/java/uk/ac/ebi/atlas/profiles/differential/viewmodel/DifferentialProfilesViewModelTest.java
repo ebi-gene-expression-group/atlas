@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.profiles.differential.viewmodel;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.Test;
 import org.springframework.util.StringUtils;
 import uk.ac.ebi.atlas.model.AssayGroup;
@@ -11,6 +12,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.utils.ColourGradient;
+import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.awt.*;
 import java.util.SortedSet;
@@ -48,7 +50,7 @@ public class DifferentialProfilesViewModelTest {
     private Color blankColour = Color.WHITE;
     private double colourScale = 1;
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
-    private DifferentialGeneViewModelBuilder subject = new DifferentialGeneViewModelBuilder(colorGradient);
+    private DifferentialGeneViewModelBuilder subject = new DifferentialGeneViewModelBuilder(colorGradient, new NumberUtils());
     private SortedSet<Contrast> orderedContrasts = ImmutableSortedSet.of(G2_G1, G2_G3);
 
     @Test
@@ -57,62 +59,64 @@ public class DifferentialProfilesViewModelTest {
 
         DifferentialProfilesViewModel profiles = new DifferentialProfilesViewModel(diffProfiles.getMinUpRegulatedExpressionLevel(), diffProfiles.getMaxUpRegulatedExpressionLevel(), diffProfiles.getMinDownRegulatedExpressionLevel(), diffProfiles.getMaxDownRegulatedExpressionLevel(), 50, genes);
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
         String json = gson.toJson(profiles);
 
         String expected = "{\n" +
-                "  \"minUpLevel\": 0.714417566666667,\n" +
-                "  \"maxUpLevel\": 1.33047243333334,\n" +
+                "  \"minUpLevel\": 0.71,\n" +
+                "  \"maxUpLevel\": 1.33,\n" +
                 "  \"totalGeneCount\": 50,\n" +
                 "  \"genes\": [\n" +
                 "    {\n" +
                 "      \"geneId\": \"FBgn0051624\",\n" +
                 "      \"geneName\": \"CG31624\",\n" +
-                "      \"designElement\":\"1630811_at\",\n" +
+                "      \"designElement\": \"1630811_at\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
                 "          \"contrastName\": \"cdk8\",\n" +
                 "          \"color\": \"#C0C0C0\",\n" +
-                "          \"foldChange\": \"-0.761232333333333\",\n" +
-                "          \"pValue\": \"0.00226603492883074\",\n" +
-                "          \"tStat\": \"-6.44757385549733\"\n" +
+                "          \"foldChange\": \"-0.76\",\n" +
+                "          \"pValue\": \"0.002\",\n" +
+                "          \"tStat\": \"-6.45\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"contrastName\": \"cycC\",\n" +
                 "          \"color\": \"#0000FF\",\n" +
-                "          \"foldChange\": \"-8.79117189098254\",\n" +
-                "          \"pValue\": \"3.23957214317996E-4\",\n" +
-                "          \"tStat\": \"-3.36862716666667\"\n" +
+                "          \"foldChange\": \"-8.79\",\n" +
+                "          \"pValue\": \"3.24E-4\",\n" +
+                "          \"tStat\": \"-3.37\"\n" +
                 "        }\n" +
                 "      ]\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"geneId\": \"FBgn0053459\",\n" +
                 "      \"geneName\": \"CG33459\",\n" +
-                "      \"designElement\":\"1640410_at\",\n" +
+                "      \"designElement\": \"1640410_at\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
                 "          \"contrastName\": \"cdk8\",\n" +
                 "          \"color\": \"#FF0000\",\n" +
-                "          \"foldChange\": \"1.33047243333334\",\n" +
-                "          \"pValue\": \"2.16315773519821E-4\",\n" +
-                "          \"tStat\": \"10.7092831659167\"\n" +
+                "          \"foldChange\": \"1.33\",\n" +
+                "          \"pValue\": \"2.16E-4\",\n" +
+                "          \"tStat\": \"10.71\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"contrastName\": \"cycC\",\n" +
                 "          \"color\": \"#FFAFAF\",\n" +
-                "          \"foldChange\": \"0.714417566666667\",\n" +
-                "          \"pValue\": \"0.00212698465597433\",\n" +
-                "          \"tStat\": \"6.03548553011526\"\n" +
+                "          \"foldChange\": \"0.71\",\n" +
+                "          \"pValue\": \"0.002\",\n" +
+                "          \"tStat\": \"6.04\"\n" +
                 "        }\n" +
                 "      ]\n" +
                 "    }\n" +
                 "  ],\n" +
-                "  \"minDownLevel\": -0.761232333333333,\n" +
-                "  \"maxDownLevel\": -8.79117189098254\n" +
+                "  \"minDownLevel\": -0.76,\n" +
+                "  \"maxDownLevel\": -8.79\n" +
                 "}";
 
-        assertThat(json, is(StringUtils.trimAllWhitespace(expected)));
+        assertThat(json, is(expected));
 
     }
 

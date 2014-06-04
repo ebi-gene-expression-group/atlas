@@ -28,6 +28,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import javax.inject.Named;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 @Named("numberUtils")
 @Scope("singleton")
@@ -46,6 +47,19 @@ public class NumberUtils {
     private static final String SUP_POST = "</span>";
     private static final int EXPONENT_MINIMUM = -3;
 
+    private final NumberFormat format1Dp = NumberFormat.getNumberInstance();
+    private final NumberFormat formatNoDp = NumberFormat.getNumberInstance();
+
+    public NumberUtils() {
+        format1Dp.setGroupingUsed(false);
+        format1Dp.setMaximumFractionDigits(2);
+        formatNoDp.setGroupingUsed(false);
+        formatNoDp.setMaximumFractionDigits(0);
+    }
+
+    public String baselineExpressionLevelAsString(double expressionLevel) {
+        return expressionLevel >= 1 ? formatNoDp.format(expressionLevel) : format1Dp.format(expressionLevel);
+    }
 
     public double round(double value) {
         int numberOfFractionalDigits = value >= 1 ? FRACTIONAL_DIGITS_FOR_VALUE_LARGER_OR_EQUAL_TO_ONE
@@ -97,7 +111,7 @@ public class NumberUtils {
         }
 
         String mantissa = formatParts[0];
-        int exponent = Integer.parseInt(formatParts[1]);
+        String exponent = formatParts[1];
 
         StringBuilder stringBuilder = new StringBuilder();
 

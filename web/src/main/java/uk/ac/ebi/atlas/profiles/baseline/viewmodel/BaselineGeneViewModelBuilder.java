@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.utils.ColourGradient;
+import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,10 +18,12 @@ import java.util.SortedSet;
 public class BaselineGeneViewModelBuilder {
 
     private final ColourGradient colourGradient;
+    private final NumberUtils numberUtils;
 
     @Inject
-    public BaselineGeneViewModelBuilder(ColourGradient colourGradient) {
+    public BaselineGeneViewModelBuilder(ColourGradient colourGradient, NumberUtils numberUtils) {
         this.colourGradient = colourGradient;
+        this.numberUtils = numberUtils;
     }
 
     public BaselineGeneViewModel[] build(List<BaselineProfile> baselineProfiles, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
@@ -50,7 +53,7 @@ public class BaselineGeneViewModelBuilder {
             String factorName = factor.getValue();
             BaselineExpression expression = profile.getExpression(factor);
 
-            String value = (expression == null) ? "" : (expression.isKnown() ? Double.toString(expression.getLevel()) : "UNKNOWN");
+            String value = (expression == null) ? "" : (!expression.isKnown() ? "UNKNOWN" : numberUtils.baselineExpressionLevelAsString(expression.getLevel()));
             String color = (expression == null) ? "" : (expression.isKnown() ? colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel) : "UNKNOWN");
 
             String svgPathId = factor.getValueOntologyTerm();

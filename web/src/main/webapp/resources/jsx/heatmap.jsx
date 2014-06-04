@@ -566,10 +566,25 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     //there must be a cleaner way to do this!
                     function buildHeatmapCellTooltip (pValue, tstatistic, foldChange) {
+
+                        function pValueAsHtml(pValue) {
+
+                            var formatParts = pValue.split('E');
+
+                            if (formatParts.length == 1) {
+                                return pValue;
+                            }
+
+                            var mantissa = formatParts[0];
+                            var exponent = formatParts[1];
+
+                            return (mantissa !== "1" ? mantissa + " \u00D7 " : '') + "10 <span style='vertical-align: super;'>" + exponent + "</span>";
+                        }
+
                         return "<table class='table-grid' style='margin: 0px; padding: 0px;'><thead><th class='header-cell'>Adjusted <i>p</i>-value</th>" +
                             (tstatistic !== undefined ? "<th class='header-cell'><i>t</i>-statistic</th>" : "") +
                             "<th class='header-cell'>Log<sub>2</sub>-fold change</th></thead>" +
-                            "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + pValue + "</span></td>" +
+                            "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + pValueAsHtml(pValue) + "</span></td>" +
                             (tstatistic !== undefined ? "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
                             "<td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
                             "</table>";

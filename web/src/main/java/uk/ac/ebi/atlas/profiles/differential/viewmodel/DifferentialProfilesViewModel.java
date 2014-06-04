@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.profiles.differential.viewmodel;
 
+import org.apache.commons.math.util.MathUtils;
+
 public class DifferentialProfilesViewModel {
 
     private final double minUpLevel;
@@ -10,10 +12,10 @@ public class DifferentialProfilesViewModel {
     private final double maxDownLevel;
 
     public DifferentialProfilesViewModel(double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel, int totalGeneCount, DifferentialGeneViewModel[] genes) {
-        this.minUpLevel = minUpLevel;
-        this.maxUpLevel = maxUpLevel;
-        this.minDownLevel = minDownLevel;
-        this.maxDownLevel = maxDownLevel;
+        this.minUpLevel = MathUtils.round(minUpLevel, 2);
+        this.maxUpLevel = MathUtils.round(maxUpLevel, 2);
+        this.minDownLevel = MathUtils.round(minDownLevel, 2);
+        this.maxDownLevel = MathUtils.round(maxDownLevel, 2);
         this.totalGeneCount = totalGeneCount;
         this.genes = genes;
     }
