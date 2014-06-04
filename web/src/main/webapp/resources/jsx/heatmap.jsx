@@ -23,7 +23,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             cells: function (props) {
                 return props.expressions.map(function (expression) {
-                    return <HeatmapCellDifferential contrastName={expression.contrastName} color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={props.showGeneSetProfiles} geneId={props.geneId} geneName={props.geneName}/>
+                    return <CellDifferential contrastName={expression.contrastName} color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={props.showGeneSetProfiles} geneId={props.geneId} geneName={props.geneName}/>
                 });
             },
 
@@ -59,7 +59,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             cells: function (props) {
                 return props.expressions.map(function (expression) {
-                    return <HeatmapCellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={props.showGeneSetProfiles} geneId={props.geneId} geneName={props.geneName}/>
+                    return <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={props.showGeneSetProfiles} geneId={props.geneId} geneName={props.geneName}/>
                 });
             },
 
@@ -492,7 +492,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks);
 
 
-        var HeatmapCellBaseline = (function (contextRoot, experimentAccession, species, selectedFilterFactorsJson, queryFactorType) {
+        var CellBaseline = (function (contextRoot, experimentAccession, species, selectedFilterFactorsJson, queryFactorType) {
 
             function hasKnownExpression(value) {
                 // true if not blank or UNKNOWN, ie: has a expression with a known value
@@ -544,7 +544,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             });
         })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.species, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
 
-        var HeatmapCellDifferential = (function () {
+        var CellDifferential = (function () {
 
             return React.createClass({
 
@@ -564,7 +564,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                 initTooltip: function(element) {
 
-                    //there must be a cleaner way to do this, but I don't know it yet!
+                    //there must be a cleaner way to do this!
                     function buildHeatmapCellTooltip (pValue, tstatistic, foldChange) {
                         return "<table class='table-grid' style='margin: 0px; padding: 0px;'><thead><th class='header-cell'>Adjusted <i>p</i>-value</th>" +
                             (tstatistic !== undefined ? "<th class='header-cell'><i>t</i>-statistic</th>" : "") +
