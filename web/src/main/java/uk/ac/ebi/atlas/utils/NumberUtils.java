@@ -28,7 +28,6 @@ import org.springframework.web.util.HtmlUtils;
 
 import javax.inject.Named;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 @Named("numberUtils")
 @Scope("singleton")
@@ -58,17 +57,21 @@ public class NumberUtils {
         return HtmlUtils.htmlEscape(htmlFormatDouble(number));
     }
 
-
     public double round(double number, int maxFractionDigits) {
         return MathUtils.round(number, maxFractionDigits);
     }
 
-    public String htmlFormatDouble(double number) {
-        return (number > 0 && number < MIN_REPORTED_VALUE) ? "<" + formatNumber(MIN_REPORTED_VALUE)
-                : formatNumber(number);
+    public String formatDouble(double number) {
+        return (number > 0 && number < MIN_REPORTED_VALUE) ? "<" + format2DpWithExponent(MIN_REPORTED_VALUE)
+                : format2DpWithExponent(number);
     }
 
-    String formatNumber(double number) {
+    public String htmlFormatDouble(double number) {
+        return (number > 0 && number < MIN_REPORTED_VALUE) ? "<" + formatNumberHTML(MIN_REPORTED_VALUE)
+                : formatNumberHTML(number);
+    }
+
+    String format2DpWithExponent(double number) {
 
         DecimalFormat df = new DecimalFormat(E_PATTERN);
         // Examples values of auxFormat: 6.2E-3, 0E0
@@ -76,13 +79,25 @@ public class NumberUtils {
 
         // We now convert this format to 6.2*10^-3 (and 0 in the case of 0E0 specifically)
         String[] formatParts = auxFormat.split(E);
-        // in 6.2E-3, mantissa = 6.2
-        String mantissa = formatParts[0];
-        // in 6.2E-3, exponent= -3
         int exponent = Integer.parseInt(formatParts[1]);
         if (exponent >= EXPONENT_MINIMUM && exponent <= 0) {
             return new DecimalFormat("#.###").format(number);
         }
+
+        return auxFormat;
+    }
+
+    String formatNumberHTML(double number) {
+        String formattedNumber = format2DpWithExponent(number);
+
+        String[] formatParts = formattedNumber.split(E);
+
+        if (formatParts.length == 1) {
+            return formattedNumber;
+        }
+
+        String mantissa = formatParts[0];
+        int exponent = Integer.parseInt(formatParts[1]);
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -95,6 +110,5 @@ public class NumberUtils {
                 .append(SUP_POST);
         return stringBuilder.toString();
     }
-
 
 }
