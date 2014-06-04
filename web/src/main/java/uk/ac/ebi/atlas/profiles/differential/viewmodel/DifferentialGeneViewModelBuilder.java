@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfile;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import javax.inject.Inject;
@@ -43,8 +44,9 @@ public class DifferentialGeneViewModelBuilder {
     public DifferentialGeneViewModel build(DifferentialProfile<? extends DifferentialExpression> profile, SortedSet<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
         String geneId = profile.getId();
         String geneName = profile.getName();
+        String designElement = (profile instanceof MicroarrayProfile) ? ((MicroarrayProfile)profile).getDesignElementName() : null;
         DifferentialExpressionViewModel[] expressions = buildExpressions(profile, orderedContrasts, minUpLevel, maxUpLevel, minDownLevel, maxDownLevel);
-        return new DifferentialGeneViewModel(geneId, geneName, expressions);
+        return new DifferentialGeneViewModel(geneId, geneName, designElement, expressions);
     }
 
     private DifferentialExpressionViewModel[] buildExpressions(DifferentialProfile<? extends DifferentialExpression> profile, SortedSet<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
@@ -58,7 +60,7 @@ public class DifferentialGeneViewModelBuilder {
             String foldChange = (expression == null) ? "" : Double.toString(expression.getFoldChange());
             String color = (expression == null) ? "" : expression.isOverExpressed() ? colourGradient.getGradientColour(expression.getFoldChange(), minUpLevel, maxUpLevel, "pink", "red") : colourGradient.getGradientColour(expression.getFoldChange(), minDownLevel, maxDownLevel, "lightGray", "blue");
             String pValue = (expression == null) ? "" : Double.toString(expression.getPValue());
-            String tStat = !(expression instanceof MicroarrayExpression) ? "" : Double.toString(((MicroarrayExpression) expression).getTstatistic());
+            String tStat = !(expression instanceof MicroarrayExpression) ? null : Double.toString(((MicroarrayExpression) expression).getTstatistic());
 
             DifferentialExpressionViewModel expressionViewModel = new DifferentialExpressionViewModel(contrastName, color, foldChange, pValue, tStat);
             expressionViewModels[i++] = expressionViewModel;

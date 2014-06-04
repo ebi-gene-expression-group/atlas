@@ -33,9 +33,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     );
             },
 
+            isMicroarray: function () {
+                return !(typeof(this.props.profiles.genes[0].designElement) === "undefined");
+            },
+
             render: function () {
                 return (
-                    <Heatmap legend={this.legend} columnHeaders={this.columnHeaders()} cells={this.cells} displayLevelsButton={DisplayLevelsButtonDifferential} profiles={this.props.profiles}/>
+                    <Heatmap isMicroarray={this.isMicroarray()} legend={this.legend} columnHeaders={this.columnHeaders()} cells={this.cells} displayLevelsButton={DisplayLevelsButtonDifferential} profiles={this.props.profiles}/>
                     );
             }
         });
@@ -111,7 +115,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <HeatmapTable cells={this.props.cells} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} toggleLevels={this.toggleLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
+                                                    <HeatmapTable isMicroarray={this.props.isMicroarray} cells={this.props.cells} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} toggleLevels={this.toggleLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
                                                 </td>
                                                 <td style={{"vertical-align": "top"}}>
                                                     <DownloadProfilesButton />
@@ -202,7 +206,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             <span style={this.props.displayLevels ? {'white-space': 'nowrap'} : {display: "none"}} className="gradient-level-min">{this.props.lowExpressionLevel}</span>
                         </td>
                         <td width="200px">
-                            <HeatmapLegendGradient lowValueColour={this.props.lowValueColour} highValueColour={this.props.highValueColour}/>
+                            <LegendGradient lowValueColour={this.props.lowValueColour} highValueColour={this.props.highValueColour}/>
                         </td>
                         <td>
                             <span style={this.props.displayLevels ? {'white-space': 'nowrap'} : {display: "none"}} className="gradient-level-max">{this.props.highExpressionLevel}</span>
@@ -213,7 +217,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         });
 
 
-        var HeatmapLegendGradient = React.createClass({
+        var LegendGradient = React.createClass({
             render: function () {
 
                 var BACKGROUND_IMAGE_TEMPLATE = "-webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour})";
@@ -238,7 +242,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             render: function () {
                 return (
                     <table id="heatmap-table" className="table-grid">
-                        <HeatmapTableHeader displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
+                        <HeatmapTableHeader isMicroarray={this.props.isMicroarray} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
                         <HeatmapTableBody cells={this.props.cells} profiles={this.props.profiles} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
                     </table>
                     );
@@ -248,14 +252,23 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         var HeatmapTableHeader = React.createClass({
 
+            designElementHeader: function() {
+                return (
+                    <td className="horizontal-header-cell">Design Element</td>
+                    );
+            },
+
             render: function () {
                 var ColumnHeaders = this.props.columnHeaders;
                 return (
                     <thead>
-                        <TopLeftCorner displayLevelsButton={this.props.displayLevelsButton} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
+                        <th className="horizontal-header-cell" colSpan={this.props.isMicroarray ? 2 : undefined}>
+                            <TopLeftCorner displayLevelsButton={this.props.displayLevelsButton} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
+                        </th>
                         <ColumnHeaders />
                         <tr id="injected-header">
                             <td className="horizontal-header-cell">{this.props.showGeneSetProfiles ? 'Gene set' : 'Gene'}</td>
+                            { this.props.isMicroarray ? this.designElementHeader() : ''}
                         </tr>
                     </thead>
                     );
@@ -370,12 +383,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 render: function () {
                     var displayLevelsButton = this.props.displayLevelsButton;
                     return (
-                        <th className="horizontal-header-cell">
                             <div className="heatmap-matrix-top-left-corner">
                                 <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo' ref='tooltipSpan'></span>
                                 <displayLevelsButton displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
                             </div>
-                        </th>
                         );
                 },
 
@@ -422,7 +433,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             render: function () {
                 var props = this.props;
                 var geneProfilesRows = this.props.profiles.map(function (profile) {
-                    return <GeneProfileRow cells={props.cells} geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions} displayLevels={props.displayLevels} showGeneSetProfiles={props.showGeneSetProfiles}/>;
+                    return <GeneProfileRow cells={props.cells} designElement={profile.designElement} geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions} displayLevels={props.displayLevels} showGeneSetProfiles={props.showGeneSetProfiles}/>;
                 });
 
                 return (
@@ -436,6 +447,15 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         var GeneProfileRow = (function (contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks) {
 
             return React.createClass({
+
+                designElementCell: function () {
+                    return (
+                        <td class="design-element">
+                            {this.props.designElement}
+                        </td>
+                        );
+                },
+
                 geneNameLinked: function () {
                     var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.geneName + '&exactMatch=' + isExactMatch : '/genes/' + this.props.geneId;
 
@@ -459,6 +479,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             <td className="horizontal-header-cell">
                                 { enableGeneLinks ? this.geneNameLinked() : this.geneNameNotLinked()}
                             </td>
+                            {this.props.designElement ? this.designElementCell() : ''}
                             {this.props.cells(this.props)}
                         </tr>
                         );

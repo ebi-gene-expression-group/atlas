@@ -68,6 +68,7 @@ public class DifferentialProfilesViewModelTest {
                 "    {\n" +
                 "      \"geneId\": \"FBgn0051624\",\n" +
                 "      \"geneName\": \"CG31624\",\n" +
+                "      \"designElement\":\"1630811_at\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
                 "          \"contrastName\": \"cdk8\",\n" +
@@ -88,6 +89,7 @@ public class DifferentialProfilesViewModelTest {
                 "    {\n" +
                 "      \"geneId\": \"FBgn0053459\",\n" +
                 "      \"geneName\": \"CG33459\",\n" +
+                "      \"designElement\":\"1640410_at\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
                 "          \"contrastName\": \"cdk8\",\n" +
