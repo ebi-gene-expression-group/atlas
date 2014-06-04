@@ -35,7 +35,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             render: function () {
                 return (
-                    <Heatmap legend={this.legend} columnHeaders={this.columnHeaders()} cells={this.cells} displayLevelsButton={DisplayLevelsButtonDifferential} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
+                    <Heatmap legend={this.legend} columnHeaders={this.columnHeaders()} cells={this.cells} displayLevelsButton={DisplayLevelsButtonDifferential} profiles={this.props.profiles}/>
                     );
             }
         });

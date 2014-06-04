@@ -277,9 +277,9 @@
 
     (function ($, React, heatmapModule, heatmapConfig, assayGroupFactors, profiles, geneSetProfiles) {
 
-        var Heatmap = heatmapModule.build(heatmapConfig, $('#displayLevels')).Baseline;
+        var BaselineHeatmap = heatmapModule.build(heatmapConfig, $('#displayLevels')).Baseline;
 
-        React.renderComponent(Heatmap( {assayGroupFactors:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
+        React.renderComponent(BaselineHeatmap( {assayGroupFactors:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
             document.getElementById('heatmap-react-baseline')
         );
 

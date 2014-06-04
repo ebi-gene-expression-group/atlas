@@ -175,41 +175,6 @@
             }
         ];
 
-        var geneSetProfiles = {
-            minUpLevel: 10,
-            maxUpLevel: 40,
-            totalGeneCount: 1,
-            genes: [
-                {
-                    "geneId": "protein_coding",
-                    "geneName": "protein_coding",
-                    "expressions": [
-                        {
-                            "factorName": "adipose",
-                            "color": "#B3B3C0",
-                            "value": "10",
-                            "svgPathId": "ontologyTerm"
-                        },
-                        {
-                            "factorName": "adrenal",
-                            "color": "#9697C0",
-                            "value": "20"
-                        },
-                        {
-                            "factorName": "brain",
-                            "color": "#A9AAC0",
-                            "value": "30"
-                        },
-                        {
-                            "factorName": "breast",
-                            "color": "#8D8DC0",
-                            "value": "40"
-                        }
-                    ]
-                }
-            ]
-        };
-
         var profiles = {
             "minUpLevel": 0.714417566666667,
             "maxUpLevel": 1.33047243333334,
@@ -263,7 +228,6 @@
         return {
             heatmapConfig: heatmapConfig,
             contrasts: contrasts,
-            geneSetProfiles: geneSetProfiles,
             profiles: profiles
         }
     })(genePropertiesTooltipModule);
@@ -280,9 +244,9 @@
 
     (function ($, React, heatmapModule, heatmapConfig, contrasts, profiles, geneSetProfiles) {
 
-        var Heatmap = heatmapModule.build(heatmapConfig, $('#displayLevels')).Differential;
+        var DifferentialHeatmap = heatmapModule.build(heatmapConfig, $('#displayLevels')).Differential;
 
-        React.renderComponent(Heatmap( {contrasts:contrasts, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
+        React.renderComponent(DifferentialHeatmap( {contrasts:contrasts, profiles:profiles} ),
             document.getElementById('heatmap-react-diff')
         );
 
