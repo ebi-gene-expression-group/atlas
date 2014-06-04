@@ -29,7 +29,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             legend: function (state) {
                 return (
-                    <HeatmapLegend displayLevels={state.displayLevels} lowExpressionLevel={state.profiles.minExpressionLevel} highExpressionLevel={state.profiles.maxExpressionLevel}/>
+                    <LegendDifferential displayLevels={state.displayLevels} minDownLevel={state.profiles.minDownLevel} maxDownLevel={state.profiles.maxDownLevel} minUpLevel={state.profiles.minUpLevel} maxUpLevel={state.profiles.maxUpLevel}/>
                     );
             },
 
@@ -61,7 +61,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             legend: function (state) {
                 return (
-                    <HeatmapLegend displayLevels={state.displayLevels} lowExpressionLevel={state.profiles.minExpressionLevel} highExpressionLevel={state.profiles.maxExpressionLevel}/>
+                    <LegendBaseline displayLevels={state.displayLevels} minExpressionLevel={state.profiles.minExpressionLevel} maxExpressionLevel={state.profiles.maxExpressionLevel}/>
                 );
             },
 
@@ -145,7 +145,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             });
         })(heatmapConfig.contextRoot, heatmapConfig.downloadProfilesURL);
 
-        var HeatmapLegend = (function (contextRoot) {
+        var LegendBaseline = (function (contextRoot) {
             return React.createClass({
                 render: function () {
                     return (
@@ -153,17 +153,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             <div style={{float: "left"}}>
                                 <table style={{"font-size": "10px"}}>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <span style={this.props.displayLevels ? {'white-space': 'nowrap'} : {display: "none"}} className="gradient-level-min">{this.props.lowExpressionLevel}</span>
-                                            </td>
-                                            <td width="200px">
-                                                <HeatmapLegendGradient lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
-                                            </td>
-                                            <td>
-                                                <span style={this.props.displayLevels ? {'white-space': 'nowrap'} : {display: "none"}} className="gradient-level-max">{this.props.highExpressionLevel}</span>
-                                            </td>
-                                        </tr>
+                                        <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minExpressionLevel} highExpressionLevel={this.props.maxExpressionLevel} lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
                                     </tbody>
                                 </table>
                             </div>
@@ -177,6 +167,51 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 }
             });
         })(heatmapConfig.contextRoot);
+
+
+        var LegendDifferential = (function (contextRoot) {
+            return React.createClass({
+                render: function () {
+                    return (
+                        <div style={{float: "right", "padding-left": "100px"}}>
+                            <div style={{float: "left"}}>
+                                <table style={{"font-size": "10px"}}>
+                                    <tbody>
+                                        <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minDownLevel} highExpressionLevel={this.props.maxDownLevel} lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
+                                        <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minUpLevel} highExpressionLevel={this.props.maxUpLevel} lowValueColour="#FFAFAF" highValueColour="#FF0000"/>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div ref="legendHelp" data-help-loc="#gradient-differential" style={{float: "left;"}}></div>
+                        </div>
+                        );
+                },
+
+                componentDidMount: function () {
+                    helpTooltipsModule.init('experiment', contextRoot, this.refs.legendHelp.getDOMNode());
+                }
+            });
+        })(heatmapConfig.contextRoot);
+
+
+        var LegendRow = React.createClass({
+            render: function () {
+                return (
+                    <tr>
+                        <td>
+                            <span style={this.props.displayLevels ? {'white-space': 'nowrap'} : {display: "none"}} className="gradient-level-min">{this.props.lowExpressionLevel}</span>
+                        </td>
+                        <td width="200px">
+                            <HeatmapLegendGradient lowValueColour={this.props.lowValueColour} highValueColour={this.props.highValueColour}/>
+                        </td>
+                        <td>
+                            <span style={this.props.displayLevels ? {'white-space': 'nowrap'} : {display: "none"}} className="gradient-level-max">{this.props.highExpressionLevel}</span>
+                        </td>
+                    </tr>
+                    );
+            }
+        });
+
 
         var HeatmapLegendGradient = React.createClass({
             render: function () {
