@@ -21,9 +21,21 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 });
             },
 
+            cells: function (props) {
+                return props.expressions.map(function (expression) {
+                    return <HeatmapCellDifferential contrastName={expression.contrastName} color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={props.showGeneSetProfiles} geneId={props.geneId} geneName={props.geneName}/>
+                });
+            },
+
+            legend: function (state) {
+                return (
+                    <HeatmapLegend displayLevels={state.displayLevels} lowExpressionLevel={state.profiles.minExpressionLevel} highExpressionLevel={state.profiles.maxExpressionLevel}/>
+                    );
+            },
+
             render: function () {
                 return (
-                    <Heatmap columnHeaders={this.columnHeaders()} displayLevelsButton={DisplayLevelsButtonDifferential} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
+                    <Heatmap legend={this.legend} columnHeaders={this.columnHeaders()} cells={this.cells} displayLevelsButton={DisplayLevelsButtonDifferential} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
                     );
             }
         });
@@ -41,9 +53,21 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 });
             },
 
+            cells: function (props) {
+                return props.expressions.map(function (expression) {
+                    return <HeatmapCellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={props.showGeneSetProfiles} geneId={props.geneId} geneName={props.geneName}/>
+                });
+            },
+
+            legend: function (state) {
+                return (
+                    <HeatmapLegend displayLevels={state.displayLevels} lowExpressionLevel={state.profiles.minExpressionLevel} highExpressionLevel={state.profiles.maxExpressionLevel}/>
+                );
+            },
+
             render: function () {
                 return (
-                    <Heatmap columnHeaders={this.columnHeaders()} displayLevelsButton={DisplayLevelsButtonBaseline} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
+                    <Heatmap legend={this.legend} columnHeaders={this.columnHeaders()} cells={this.cells} displayLevelsButton={DisplayLevelsButtonBaseline} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
                     );
             }
         });
@@ -77,7 +101,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                     {this.props.geneSetProfiles ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
                             </td>
                             <td>
-                                <HeatmapLegend displayLevels={this.state.displayLevels} lowExpressionLevel={this.state.profiles.minExpressionLevel} highExpressionLevel={this.state.profiles.maxExpressionLevel}/>
+                                {this.props.legend(this.state)}
                             </td>
                         </tr>
                         <tr>
@@ -87,7 +111,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <HeatmapTable displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} toggleLevels={this.toggleLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
+                                                    <HeatmapTable cells={this.props.cells} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} toggleLevels={this.toggleLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
                                                 </td>
                                                 <td style={{"vertical-align": "top"}}>
                                                     <DownloadProfilesButton />
@@ -127,7 +151,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     return (
                         <div style={{float: "right", "padding-left": "100px"}}>
                             <div style={{float: "left"}}>
-                                <table style={{"font-size": "10px"}} id="baseline-heatmap-legend">
+                                <table style={{"font-size": "10px"}}>
                                     <tbody>
                                         <tr>
                                             <td>
@@ -143,13 +167,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                     </tbody>
                                 </table>
                             </div>
-                            <div ref="baselineHelpDiff" data-help-loc="#gradient-base" style={{float: "left;"}}></div>
+                            <div ref="legendHelp" data-help-loc="#gradient-base" style={{float: "left;"}}></div>
                         </div>
                         );
                 },
 
                 componentDidMount: function () {
-                    helpTooltipsModule.init('experiment', contextRoot, this.refs.baselineHelpDiff.getDOMNode());
+                    helpTooltipsModule.init('experiment', contextRoot, this.refs.legendHelp.getDOMNode());
                 }
             });
         })(heatmapConfig.contextRoot);
@@ -180,7 +204,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 return (
                     <table id="heatmap-table" className="table-grid">
                         <HeatmapTableHeader displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
-                        <HeatmapTableBody profiles={this.props.profiles} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
+                        <HeatmapTableBody cells={this.props.cells} profiles={this.props.profiles} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
                     </table>
                     );
             }
@@ -363,7 +387,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             render: function () {
                 var props = this.props;
                 var geneProfilesRows = this.props.profiles.map(function (profile) {
-                    return <GeneProfileRow geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions} displayLevels={props.displayLevels} showGeneSetProfiles={props.showGeneSetProfiles}/>;
+                    return <GeneProfileRow cells={props.cells} geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions} displayLevels={props.displayLevels} showGeneSetProfiles={props.showGeneSetProfiles}/>;
                 });
 
                 return (
@@ -394,18 +418,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 render: function () {
-                    var props = this.props;
-                    var heatMapCells = this.props.expressions.map(function (expression) {
-                        return <HeatmapCell factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={props.showGeneSetProfiles} geneId={props.geneId} geneName={props.geneName}/>
-                    });
-
                     // NB: empty title tag below is required for tooltip to work
                     return (
                         <tr>
                             <td className="horizontal-header-cell">
                                 { enableGeneLinks ? this.geneNameLinked() : this.geneNameNotLinked()}
                             </td>
-                            {heatMapCells}
+                            {this.props.cells(this.props)}
                         </tr>
                         );
                 },
@@ -416,7 +435,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             });
         })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks);
 
-        var HeatmapCell = (function (contextRoot, experimentAccession, species, selectedFilterFactorsJson, queryFactorType) {
+
+        var HeatmapCellBaseline = (function (contextRoot, experimentAccession, species, selectedFilterFactorsJson, queryFactorType) {
 
             function hasKnownExpression(value) {
                 // true if not blank or UNKNOWN, ie: has a expression with a known value
@@ -467,6 +487,56 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 }
             });
         })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.species, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
+
+        var HeatmapCellDifferential = (function () {
+
+            return React.createClass({
+
+                render: function () {
+                    return (
+                        <td style={{"background-color": this.props.color}} onClick={this.onClick}>
+                            <div className={this.props.displayLevels ? "show_cell" : "hide_cell"}>
+                                {this.props.foldChange}
+                            </div>
+                        </td>
+                        );
+                },
+
+                componentDidMount: function () {
+                    this.initTooltip(this.getDOMNode());
+                },
+
+                initTooltip: function(element) {
+
+                    //there must be a cleaner way to do this, but I don't know it yet!
+                    function buildHeatmapCellTooltip (pValue, tstatistic, foldChange) {
+                        return "<table class='table-grid' style='margin: 0px; padding: 0px;'><thead><th class='header-cell'>Adjusted <i>p</i>-value</th>" +
+                            (tstatistic !== undefined ? "<th class='header-cell'><i>t</i>-statistic</th>" : "") +
+                            "<th class='header-cell'>Log<sub>2</sub>-fold change</th></thead>" +
+                            "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + pValue + "</span></td>" +
+                            (tstatistic !== undefined ? "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
+                            "<td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
+                            "</table>";
+                    }
+
+                    var props = this.props;
+
+                    $(element).attr('title', '').tooltip(
+                        {
+                            open:function (event, ui) {
+                                ui.tooltip.css('background', props.color);
+                            },
+                            tooltipClass:"help-tooltip pvalue-tooltip-styling",
+
+                            content:function () {
+                                return buildHeatmapCellTooltip(props.pValue, props.tStat, props.foldChange);
+                            }
+
+                        });
+                }
+
+            });
+        })();
 
         return {
             Baseline: Baseline,

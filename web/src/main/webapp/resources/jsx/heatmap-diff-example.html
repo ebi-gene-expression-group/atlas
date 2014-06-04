@@ -176,8 +176,8 @@
         ];
 
         var geneSetProfiles = {
-            minExpressionLevel: 10,
-            maxExpressionLevel: 40,
+            minUpLevel: 10,
+            maxUpLevel: 40,
             totalGeneCount: 1,
             genes: [
                 {
@@ -211,65 +211,53 @@
         };
 
         var profiles = {
-            minExpressionLevel: 3,
-            maxExpressionLevel: 47,
-            totalGeneCount: 20,
-            genes:[
+            "minUpLevel": 0.714417566666667,
+            "maxUpLevel": 1.33047243333334,
+            "totalGeneCount": 50,
+            "genes": [
                 {
-                    "geneId": "ENSG00000082258",
-                    "geneName": "CCNT2",
+                    "geneId": "FBgn0051624",
+                    "geneName": "CG31624",
                     "expressions": [
                         {
-                            "factorName": "adipose",
-                            "color": "#B3B3C0",
-                            "value": "3.0",
-                            "svgPathId": "ontologyTerm"
+                            "contrastName": "cdk8",
+                            "color": "#C0C0C0",
+                            "foldChange": "-0.761232333333333",
+                            "pValue": "0.00226603492883074",
+                            "tStat": "-6.44757385549733"
                         },
                         {
-                            "factorName": "adrenal",
-                            "color": "#9697C0",
-                            "value": "9.0"
-                        },
-                        {
-                            "factorName": "brain",
-                            "color": "#A9AAC0",
-                            "value": "5.0"
-                        },
-                        {
-                            "factorName": "breast",
-                            "color": "#8D8DC0",
-                            "value": "11.0"
+                            "contrastName": "cycC",
+                            "color": "#0000FF",
+                            "foldChange": "-8.79117189098254",
+                            "pValue": "3.23957214317996E-4",
+                            "tStat": "-3.36862716666667"
                         }
                     ]
                 },
                 {
-                    "geneId": "ENSG00000047315",
-                    "geneName": "POLR2B",
+                    "geneId": "FBgn0053459",
+                    "geneName": "CG33459",
                     "expressions": [
                         {
-                            "factorName": "adipose",
-                            "color": "UNKNOWN",
-                            "value": "UNKNOWN",
-                            "svgPathId": "ontologyTerm"
+                            "contrastName": "cdk8",
+                            "color": "#FF0000",
+                            "foldChange": "1.33047243333334",
+                            "pValue": "2.16315773519821E-4",
+                            "tStat": "10.7092831659167"
                         },
                         {
-                            "factorName": "adrenal",
-                            "color": "#0000FF",
-                            "value": "47.0"
-                        },
-                        {
-                            "factorName": "brain",
-                            "color": "",
-                            "value": ""
-                        },
-                        {
-                            "factorName": "breast",
-                            "color": "#4A4AC0",
-                            "value": "25.0"
+                            "contrastName": "cycC",
+                            "color": "#FFAFAF",
+                            "foldChange": "0.714417566666667",
+                            "pValue": "0.00212698465597433",
+                            "tStat": "6.03548553011526"
                         }
                     ]
                 }
-            ]
+            ],
+            "minDownLevel": -0.761232333333333,
+            "maxDownLevel": -8.79117189098254
         };
 
         return {
