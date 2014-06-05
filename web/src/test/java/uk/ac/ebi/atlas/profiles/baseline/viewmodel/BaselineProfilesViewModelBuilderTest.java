@@ -19,7 +19,7 @@ import java.util.SortedSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class BaselineProfilesViewModelTest {
+public class BaselineProfilesViewModelBuilderTest {
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
     private static final Factor ADIPOSE = new Factor(ORGANISM_PART, "adipose", "ontologyTerm");
@@ -48,12 +48,12 @@ public class BaselineProfilesViewModelTest {
     private Color blankColour = Color.WHITE;
     private double colourScale = 1;
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
-    private BaselineGeneViewModelBuilder subject = new BaselineGeneViewModelBuilder(colorGradient, new NumberUtils());
+    private BaselineProfilesViewModelBuilder subject = new BaselineProfilesViewModelBuilder(colorGradient, new NumberUtils());
     private SortedSet<Factor> orderedFactors = ImmutableSortedSet.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
 
     @Test
     public void buildProfilesViewModel() {
-        BaselineGeneViewModel[] genes = subject.build(baselineProfiles, orderedFactors, minExpressionLevel, maxExpressionLevel);
+        BaselineGeneViewModel[] genes = subject.buildGenes(baselineProfiles, orderedFactors, minExpressionLevel, maxExpressionLevel);
 
         BaselineProfilesViewModel profiles = new BaselineProfilesViewModel(new NumberUtils(), 1.1, 2.2, 50, genes);
 

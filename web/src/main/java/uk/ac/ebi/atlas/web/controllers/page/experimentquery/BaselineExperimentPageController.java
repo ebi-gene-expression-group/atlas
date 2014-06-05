@@ -39,6 +39,9 @@ import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineGeneViewModel;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
@@ -68,17 +71,21 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
     private BaselineExperiment experiment;
 
+    private BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
+
     @Inject
     public BaselineExperimentPageController(BaselineProfilesHeatMap baselineProfilesHeatMap,
                                             ApplicationProperties applicationProperties,
                                             BaselineRequestContextBuilder requestContextBuilder,
                                             FilterFactorsConverter filterFactorsConverter,
-                                            FilterFactorMenuBuilder filterFactorMenuBuilder) {
+                                            FilterFactorMenuBuilder filterFactorMenuBuilder,
+                                            BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
         this.baselineProfilesHeatMap = baselineProfilesHeatMap;
         this.filterFactorMenuBuilder = filterFactorMenuBuilder;
+        this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
     }
 
     @InitBinder
@@ -92,16 +99,11 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         prepareModel(preferences, result, model, request);
 
-        if (requestContext.geneQueryResponseContainsGeneSets()) {
-            BaselineProfilesList profilesAsGeneSets = fetchGeneProfilesAsGeneSets();
-            model.addAttribute("profilesAsGeneSets", profilesAsGeneSets);
-        }
-
         addFactorMenu(model);
 
         model.addAttribute("isWidget", false);
 
-        return "experiment";
+        return "experiment-react";
     }
 
     @RequestMapping(value = "/widgets/heatmap/protein", params = {"type=RNASEQ_MRNA_BASELINE"})
@@ -109,11 +111,6 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
             , @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request) {
 
         prepareModel(preferences, result, model, request);
-
-        if (requestContext.geneQueryResponseContainsGeneSets()) {
-            BaselineProfilesList profilesAsGeneSets = fetchGeneProfilesAsGeneSets();
-            model.addAttribute("profilesAsGeneSets", profilesAsGeneSets);
-        }
 
         model.addAttribute("isWidget", true);
         model.addAttribute("disableGeneLinks", disableGeneLinks);
@@ -153,8 +150,15 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
             try {
 
                 BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext);
-
                 model.addAttribute("geneProfiles", baselineProfiles);
+
+
+                BaselineProfilesList profilesAsGeneSets = requestContext.geneQueryResponseContainsGeneSets() ? fetchGeneProfilesAsGeneSets() : null;
+                if (profilesAsGeneSets != null) {
+                    model.addAttribute("profilesAsGeneSets", profilesAsGeneSets);
+                }
+
+                addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, experimentalFactors.getFilteredFactors(selectedFilterFactors), model);
 
                 //ToDo: check if this can be externalized in the view with a cutom EL or tag function
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
@@ -168,6 +172,21 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
             }
 
         }
+    }
+
+    private void addJsonForHeatMap(BaselineProfilesList baselineProfiles, BaselineProfilesList geneSetProfiles, SortedSet<AssayGroupFactor> filteredAssayGroupFactors, SortedSet<Factor> orderedFactors, Model model) {
+        Gson gson = new Gson();
+
+        String jsonAssayGroupFactors = gson.toJson(filteredAssayGroupFactors);
+        model.addAttribute("jsonAssayGroupFactors", jsonAssayGroupFactors);
+
+        BaselineProfilesViewModel profilesViewModel = baselineProfilesViewModelBuilder.build(baselineProfiles, orderedFactors);
+
+        String jsonProfiles = gson.toJson(profilesViewModel);
+        model.addAttribute("jsonProfiles", jsonProfiles);
+
+        String jsonGeneSetProfiles = (geneSetProfiles != null) ? gson.toJson(baselineProfilesViewModelBuilder.build(geneSetProfiles, orderedFactors)) : "undefined";
+        model.addAttribute("jsonGeneSetProfiles", jsonGeneSetProfiles);
     }
 
     private void initializeContext(BaselineRequestPreferences preferences, HttpServletRequest request) {

@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 import uk.ac.ebi.atlas.utils.NumberUtils;
@@ -15,18 +16,23 @@ import java.util.SortedSet;
 
 @Named
 @Scope("prototype")
-public class BaselineGeneViewModelBuilder {
+public class BaselineProfilesViewModelBuilder {
 
     private final ColourGradient colourGradient;
     private final NumberUtils numberUtils;
 
     @Inject
-    public BaselineGeneViewModelBuilder(ColourGradient colourGradient, NumberUtils numberUtils) {
+    public BaselineProfilesViewModelBuilder(ColourGradient colourGradient, NumberUtils numberUtils) {
         this.colourGradient = colourGradient;
         this.numberUtils = numberUtils;
     }
 
-    public BaselineGeneViewModel[] build(List<BaselineProfile> baselineProfiles, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+    public BaselineProfilesViewModel build(BaselineProfilesList profiles, SortedSet<Factor> orderedFactors) {
+        BaselineGeneViewModel[] genes = buildGenes(profiles, orderedFactors, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel());
+        return new BaselineProfilesViewModel(numberUtils, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel(), profiles.getTotalResultCount(), genes);
+    }
+
+    public BaselineGeneViewModel[] buildGenes(List<BaselineProfile> baselineProfiles, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
         BaselineGeneViewModel[] viewModels = new BaselineGeneViewModel[baselineProfiles.size()];
 
         int i = 0;

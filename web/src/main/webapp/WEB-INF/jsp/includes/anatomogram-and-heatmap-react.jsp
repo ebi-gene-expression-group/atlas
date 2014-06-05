@@ -66,55 +66,7 @@
                 </table>
             </div>
 
-            <div id="heatmap-div" class="heatmap-position" style="display:none" style="display:inline">
-
-                <table>
-                    <tr>
-                        <td>
-                        <span id="geneCount">Showing ${geneProfiles.size()}
-                            of ${geneProfiles.getTotalResultCount()} genes found:
-                        </span>
-                        <c:if test="${not empty profilesAsGeneSets}">
-                            <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
-                        </c:if>
-                        </td>
-                        <td>
-                            <h:heatmap-legend geneProfiles="${geneProfiles}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <h:heatmap geneProfiles="${geneProfiles}" elementId="heatmap-div"/>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <c:if test="${not empty profilesAsGeneSets}">
-                <div id="heatmap-profilesAsGeneSets" class="heatmap-position" style="display:none">
-
-                    <table>
-                        <tr>
-                            <td>
-                        <span id="geneSetsCount">Showing ${profilesAsGeneSets.size()}
-                            of ${profilesAsGeneSets.getTotalResultCount()} gene sets found:
-                        </span>
-                        <a id="showIndividualGenes" href="javascript:void(0)">(show individual genes)</a>
-                            </td>
-                            <td>
-                                <h:heatmap-legend geneProfiles="${profilesAsGeneSets}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <h:heatmap geneProfiles="${profilesAsGeneSets}" elementId="heatmap-profilesAsGeneSets" geneSet="true" hidden="true"/>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </c:if>
-
-            <div id="heatmap-react-baseline" class="heatmap-position"></div>
+            <div id="heatmap-react" class="heatmap-position"></div>
 
         </div>
     </c:otherwise>
