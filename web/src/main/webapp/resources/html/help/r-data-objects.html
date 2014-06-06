@@ -1,0 +1,66 @@
+<h1>Expression Atlas data in R</h1>
+
+<p>For <a href="">differential expression</a> experiments in Expression Atlas,
+you can download a file containing the expression data and meta-data that you
+can load into <a href="">R</a>. Click the button on the top-right of any
+differential experiment page to download one.</p>
+
+<!-- SCREENSHOT OF DOWNLOAD -->
+
+<h2>How to load an Atlas experiment summary in R</h2>
+
+<p>Start an R session on your computer.</p>
+
+<!-- screenshot of new R session -->
+
+<p>Load the object you downloaded into your R session:</p>
+
+<p><code>load( "/path/to/E-MEXP-1066-atlasExperimentSummary.Rdata" )</code></p>
+
+<p>This has created an object called <code>experimentSummary</code>. This
+object is a <a href="">SimpleList</a> object. Each element is one of three <a href="">Bioconductor</a> objects: 
+	<ul>
+		<li><a href="">SummarizedExperiment</a> (RNA-seq experiments)</li>
+		<li><a href="">ExpressionSet</a> (1-colour microarray experiments)</li>
+		<li><a href="">MAList</a> (2-colour microarray experiments)</li>
+	</ul>
+</p>
+
+<h2>How to use it</h2>
+
+<h3>Seeing what's available</h3>
+	
+<p>Now that you have loaded it, you can access the objects by their names in
+the SimpleList. To see these names, type <code>names( experimentSummary )</code>.</p>
+
+<!-- screenshot of names -->
+
+<p>The names of objects in a microarray experiment correspond to the <a
+href="">ArrayExpress</a> array design accessions used in the experiment. In
+our example of <a href="">E-MTAB-1066</a>, only one array design was used,
+which is usually the case for microarray experiments in Expression Atlas.
+However, sometimes microarray experiments contain more than one data-set, each
+of which was done using a different array design. For example, the experiment
+&quot;<a href="http://www.ebi.ac.uk/gxa/experiments/E-MEXP-1025">Transcription
+profiling by array of spinal cord from rats with experimental autoimmune
+encephalomyelitis</a>&quot; uses three different versions of the Affymetrix
+GeneChip Rat Genome U34 array (<a
+href="https://www.ebi.ac.uk/arrayexpress/arrays/A-AFFY-18/">A</a>, <a
+href="https://www.ebi.ac.uk/arrayexpress/arrays/A-AFFY-19/">B</a>, and <a
+href="https://www.ebi.ac.uk/arrayexpress/arrays/A-AFFY-20/">C</a>). For this
+experiment, the SimpleList object that you load will have three elements, each
+one with data from one of the three array versions used.</p>
+
+<p>Expression Atlas SimpleList objects for RNA-seq experiments will always
+contain only one element, named <code>rnaseq</code>.</p>
+
+<h3>Accessing the expression data</h3>
+
+<p>First, to keep things simple we assign one of the objects in the SimpleList
+to a new variable, by typing e.g. 
+	<code>mtab1066_affy35 &lt;- mtab1066_list[[ "A-AFFY-35" ]]</code>
+.</p>
+
+<!-- screenshot of assignment -->
+
+
