@@ -38,10 +38,9 @@ public class DifferentialProfilesViewModelTest {
     private static final MicroarrayExpression CG31624_G2_G1 = new MicroarrayExpression(0.000323957214317996, -8.79117189098254, -3.36862716666667, G2_G1);
 
     private static final MicroarrayExpression CG33459_G2_G3 = new MicroarrayExpression(0.000216315773519821, 1.33047243333334, 10.7092831659167, G2_G3);
-    private static final MicroarrayExpression CG33459_G2_G1 = new MicroarrayExpression(0.00212698465597433, 0.714417566666667, 6.03548553011526, G2_G1);
 
     private static final MicroarrayProfile CG31624 = MicroarrayProfile.create("FBgn0051624", "CG31624", "1630811_at").add(CG31624_G2_G3).add(CG31624_G2_G1);
-    private static final MicroarrayProfile CG33459 = MicroarrayProfile.create("FBgn0053459", "CG33459", "1640410_at").add(CG33459_G2_G3).add(CG33459_G2_G1);
+    private static final MicroarrayProfile CG33459 = MicroarrayProfile.create("FBgn0053459", "CG33459", "1640410_at").add(CG33459_G2_G3);
 
     private static final DifferentialProfilesList<MicroarrayProfile> diffProfiles = new DifferentialProfilesList(ImmutableList.of(CG31624, CG33459));
 
@@ -65,7 +64,7 @@ public class DifferentialProfilesViewModelTest {
         String json = gson.toJson(profiles);
 
         String expected = "{\n" +
-                "  \"minUpLevel\": 0.71,\n" +
+                "  \"minUpLevel\": 1.33,\n" +
                 "  \"maxUpLevel\": 1.33,\n" +
                 "  \"totalGeneCount\": 50,\n" +
                 "  \"genes\": [\n" +
@@ -103,11 +102,7 @@ public class DifferentialProfilesViewModelTest {
                 "          \"tStat\": \"10.71\"\n" +
                 "        },\n" +
                 "        {\n" +
-                "          \"contrastName\": \"cycC\",\n" +
-                "          \"color\": \"#FFAFAF\",\n" +
-                "          \"foldChange\": \"0.71\",\n" +
-                "          \"pValue\": \"0.002\",\n" +
-                "          \"tStat\": \"6.04\"\n" +
+                "          \"contrastName\": \"cycC\"\n" +
                 "        }\n" +
                 "      ]\n" +
                 "    }\n" +

@@ -1,6 +1,4 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/JSXTransformer.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/transcriptPopupModule.js"></script>
 <script language="JavaScript" type="text/javascript"

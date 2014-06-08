@@ -503,6 +503,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 return (value === "UNKNOWN")
             }
 
+            function noExpression(value) {
+                return !value;
+            }
+
             function unknownCell() {
                 return (
                     <span id='unknownCell' ref='unknownCell' data-help-loc='#heatMapTableUnknownCell'></span>
@@ -523,12 +527,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 render: function () {
+                    if (noExpression(this.props.value)) {
+                        return (<td></td>);
+                    }
+
                     return (
                         <td style={{"background-color": this.props.color}} onClick={this.onClick}>
                             <div
                             className={isUnknownExpression(this.props.value) || this.props.displayLevels ? "show_cell" : "hide_cell"}
-                            data-organism-part={this.props.factorName}
-                            data-color={this.props.color}
                             data-svg-path-id={this.props.svgPathId}>
                                 {isUnknownExpression(this.props.value) ? unknownCell() : this.props.value}
                             </div>
@@ -549,6 +555,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             return React.createClass({
 
                 render: function () {
+                    if (!this.props.foldChange) {
+                        return (<td></td>);
+                    }
+
                     return (
                         <td style={{"background-color": this.props.color}} onClick={this.onClick}>
                             <div className={this.props.displayLevels ? "show_cell" : "hide_cell"}>

@@ -65,9 +65,9 @@ public class DifferentialGeneViewModelBuilder {
             String contrastName = contrast.getDisplayName();
             DifferentialExpression expression = profile.getExpression(contrast);
 
-            String foldChange = (expression == null) ? "" : format2Dp.format(expression.getFoldChange());
-            String color = (expression == null) ? "" : expression.isOverExpressed() ? colourGradient.getGradientColour(expression.getFoldChange(), minUpLevel, maxUpLevel, "pink", "red") : colourGradient.getGradientColour(expression.getFoldChange(), minDownLevel, maxDownLevel, "lightGray", "blue");
-            String pValue = (expression == null) ? "" : numberUtils.formatDouble(expression.getPValue());
+            String foldChange = (expression == null) ? null : format2Dp.format(expression.getFoldChange());
+            String color = (expression == null) ? null : expression.isOverExpressed() ? colourGradient.getGradientColour(expression.getFoldChange(), minUpLevel, maxUpLevel, "pink", "red") : colourGradient.getGradientColour(expression.getFoldChange(), minDownLevel, maxDownLevel, "lightGray", "blue");
+            String pValue = (expression == null) ? null : numberUtils.formatDouble(expression.getPValue());
             String tStat = !(expression instanceof MicroarrayExpression) ? null : format2Dp.format(((MicroarrayExpression) expression).getTstatistic());
 
             DifferentialExpressionViewModel expressionViewModel = new DifferentialExpressionViewModel(contrastName, color, foldChange, pValue, tStat);
