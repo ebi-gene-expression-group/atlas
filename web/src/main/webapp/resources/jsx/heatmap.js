@@ -101,7 +101,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     React.DOM.table(null, 
                         React.DOM.tr(null, 
                             React.DOM.td(null, 
-                                React.DOM.span( {id:"geneSetsCount"}, "Showing ", this.state.profiles.genes.length, " of ", this.state.profiles.totalGeneCount, " genes found: " ),
+                                React.DOM.span( {id:"geneCount"}, "Showing ", this.state.profiles.genes.length, " of ", this.state.profiles.totalGeneCount, " ", this.state.showGeneSetProfiles ? 'gene sets' : 'genes',  " found: " ),
                                     this.props.geneSetProfiles ? React.DOM.a( {href:"javascript:void(0)", onClick:this.toggleGeneSets}, this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)') : ''
                             ),
                             React.DOM.td(null, 
