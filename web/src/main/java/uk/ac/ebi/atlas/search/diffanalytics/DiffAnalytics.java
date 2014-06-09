@@ -68,7 +68,7 @@ public class DiffAnalytics {
     }
 
     public String getExperimentPageUrl() {
-        return experimentAccession + "?geneQuery=" + bioentityId + "&queryFactorValues=" + getContrastId();
+        return experimentAccession + "?geneQuery=" + bioentityId + "&queryFactorValues=" + getContrastId() + "&_specific=on";
     }
 
     public DifferentialExpression getExpression() {
