@@ -102,7 +102,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         <tr>
                             <td>
                                 <span id="geneCount">Showing {this.state.profiles.genes.length} of {this.state.profiles.totalGeneCount} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span>
-                                    {this.props.geneSetProfiles ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
+                                        {this.props.geneSetProfiles ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
                             </td>
                             <td>
                                 {this.props.legend(this.state)}
@@ -315,7 +315,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     var truncatedFactorName = restrictLabelSize(this.props.factorName, 17);
                     return (
                         <th className="rotated_cell vertical-header-cell factorNameCell" rowSpan="2">
-                            <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{truncatedFactorName}</div>
+                            <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{truncatedFactorName}
+                            </div>
                         </th>
                         );
                 }
@@ -513,10 +514,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     );
             }
 
+            function hasTranscriptTooltip(props) {
+                return (!props.showGeneSetProfiles && hasKnownExpression(props.value));
+            }
+
             return React.createClass({
 
                 onClick: function () {
-                    if (!this.props.showGeneSetProfiles && hasKnownExpression(this.props.value)) {
+                    if (hasTranscriptTooltip(this.props)) {
 
                         var factorValue = this.props.factorName,
                             geneId = this.props.geneId,
@@ -531,8 +536,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         return (<td></td>);
                     }
 
+                    var style = {"background-color": this.props.color};
+
+                    if (hasTranscriptTooltip(this.props)) {
+                        style.cursor = "pointer";
+                    }
+
                     return (
-                        <td style={{"background-color": this.props.color}} onClick={this.onClick}>
+                        <td style={style} onClick={this.onClick}>
                             <div
                             className={isUnknownExpression(this.props.value) || this.props.displayLevels ? "show_cell" : "hide_cell"}
                             data-svg-path-id={this.props.svgPathId}>
