@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.5" jmeter="2.10 r1533061">
+<jmeterTestPlan version="1.2" properties="2.6" jmeter="2.11 r1554548">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="atlasLoadTest" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -647,6 +647,138 @@
             <stringProp name="SizeAssertion.size">2800</stringProp>
             <intProp name="SizeAssertion.operator">3</intProp>
           </SizeAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="condition cache bug ves-pg-76" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ves-pg-76</stringProp>
+          <stringProp name="HTTPSampler.port">8080</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/gxa/query?geneQuery=saa4+ysl2&amp;exactMatch=true&amp;_exactMatch=on&amp;condition=</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-1849794571">/gxa/experiments/E-MTAB-2039?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+              <stringProp name="536714935">/gxa/experiments/E-MTAB-2037?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+              <stringProp name="-66140144">/gxa/experiments/E-MTAB-599?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+              <stringProp name="91957075">/gxa/experiments/E-MTAB-1733?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="condition cache bug ves-pg-77" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ves-pg-77</stringProp>
+          <stringProp name="HTTPSampler.port">8080</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/gxa/query?geneQuery=saa4+ysl2&amp;exactMatch=true&amp;_exactMatch=on&amp;condition=</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-1849794571">/gxa/experiments/E-MTAB-2039?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+              <stringProp name="536714935">/gxa/experiments/E-MTAB-2037?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+              <stringProp name="-66140144">/gxa/experiments/E-MTAB-599?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+              <stringProp name="91957075">/gxa/experiments/E-MTAB-1733?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="condition cache bug ves-oy-76" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ves-oy-76</stringProp>
+          <stringProp name="HTTPSampler.port">8080</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/gxa/query?geneQuery=saa4+ysl2&amp;exactMatch=true&amp;_exactMatch=on&amp;condition=</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-1849794571">/gxa/experiments/E-MTAB-2039?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+              <stringProp name="536714935">/gxa/experiments/E-MTAB-2037?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+              <stringProp name="-66140144">/gxa/experiments/E-MTAB-599?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+              <stringProp name="91957075">/gxa/experiments/E-MTAB-1733?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="condition cache bug ves-oy-77" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">ves-oy-77</stringProp>
+          <stringProp name="HTTPSampler.port">8080</stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">/gxa/query?geneQuery=saa4+ysl2&amp;exactMatch=true&amp;_exactMatch=on&amp;condition=</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.monitor">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-1849794571">/gxa/experiments/E-MTAB-2039?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+              <stringProp name="536714935">/gxa/experiments/E-MTAB-2037?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+              <stringProp name="-66140144">/gxa/experiments/E-MTAB-599?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+              <stringProp name="91957075">/gxa/experiments/E-MTAB-1733?queryFactorType=ORGANISM_PART&amp;queryFactorValues=&amp;geneQuery=saa4+ysl2</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
           <hashTree/>
         </hashTree>
       </hashTree>
