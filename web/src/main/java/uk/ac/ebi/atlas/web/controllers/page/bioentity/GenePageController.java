@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.bioentity;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -35,6 +36,7 @@ import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
+import java.util.Set;
 
 @Controller
 @Scope("request")
@@ -66,6 +68,22 @@ public class GenePageController extends BioEntityPageController {
         // throw ResourceNotFoundException, so we don't get a Solr SyntaxException later on
         checkIdentifierDoesNotContainColon(identifier);
 
+        Set<String> ensemblIDs = solrQueryService.fetchGeneIdentifiersFromSolr(identifier, "ensgene", true, "mirbase_id");
+        if (ensemblIDs.size() == 1) {
+            // if identifer is mirbase ID with one ensgene result, then use the ensgene identifier which has more info
+            identifier = ensemblIDs.iterator().next();
+        } else if (ensemblIDs.size() > 0) {
+            // if identifer is mirbase ID with more than one ensgene result,
+            // then add all the ensembl IDs for the widget to display all ensembl gene IDs in the baseline results heatmap
+            model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
+        }
+
+        loadDifferentialResults(identifier, model);
+
+        return showBioentityPage(identifier, model);
+    }
+
+    private void loadDifferentialResults(String identifier, Model model) {
         DiffAnalyticsList diffAnalyticsList =
                 diffAnalyticsSearchService.fetchTop(Sets.newHashSet(identifier));
 
@@ -76,8 +94,6 @@ public class GenePageController extends BioEntityPageController {
 
         model.addAttribute("preferences", requestPreferences);
         model.addAttribute("disableGeneLinks", true);
-
-        return showBioentityPage(identifier, model);
     }
 
     private void checkIdentifierDoesNotContainColon(String identifier) {

@@ -40,7 +40,7 @@ public abstract class BioEntityPageController {
 
     protected static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
-    private SolrQueryService solrQueryService;
+    protected SolrQueryService solrQueryService;
 
     private BioEntityCardProperties bioEntityCardProperties;
 
@@ -71,12 +71,6 @@ public abstract class BioEntityPageController {
     public String showBioentityPage(String identifier, Model model) {
 
         initBioentityPropertyService(identifier);
-
-        //add ensambl identifiers to model in case the searched ID is a mirbase ID
-        Set<String> ensemblIDs = solrQueryService.fetchGeneIdentifiersFromSolr(identifier, "ensgene", true, "mirbase_id");
-        if (ensemblIDs.size() > 0) {
-            model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
-        }
 
         model.addAttribute("entityIdentifier", identifier);
 

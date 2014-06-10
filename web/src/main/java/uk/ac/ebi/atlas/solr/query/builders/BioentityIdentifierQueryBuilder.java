@@ -66,9 +66,7 @@ public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityI
 
         queryStringBuilder.insert(0, queryConditionBuilder);
 
-        SolrQuery solrQuery = buildQueryObject(queryStringBuilder.toString());
-
-        return solrQuery;
+        return buildQueryObject(queryStringBuilder.toString());
     }
 
     private SolrQuery buildQueryObject(String queryString) {

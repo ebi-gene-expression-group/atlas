@@ -139,7 +139,7 @@ public class BioentitiesSearchController {
 
         if (bioentityProperty != null) {
             String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
-            return Optional.of("redirect:/" + bioentityPageName + "/" + bioentityProperty.getBioentityIdentifier());
+            return Optional.of("redirect:/" + bioentityPageName + "/" + geneQuery);
         }
 
         try {
