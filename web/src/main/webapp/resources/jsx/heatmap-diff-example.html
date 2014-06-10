@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
+    <link type="text/css" rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css">
+
+
+
+    <link rel="stylesheet" type="text/css" href="/gxa/resources/css/atlas.css">
+    <link rel="stylesheet" type="text/css"
+          href="/gxa/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
+    <link rel="stylesheet" type="text/css" href="/gxa/resources/css/table-grid.css">
+    <link rel="stylesheet" type="text/css"
+          href="/gxa/resources/css/heatmap-and-anatomogram.css">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/JSXTransformer.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="/gxa/resources/js/jquery-ui-1.10.3.fix-8740.0520a49/dist/jquery-ui.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="/gxa/resources/js/jquery-migrate-1.2.0.min.js"></script>
+    <script src="/gxa/resources/js/factorInfoTooltipModule.js"></script>
+    <script src="/gxa/resources/js/contrastInfoTooltipModule.js"></script>
+    <script src="/gxa/resources/js/helpTooltipsModule.js"></script>
+    <script src="/gxa/resources/js/genePropertiesTooltipModule.js"></script>
+    <script src="/gxa/resources/js/highlight.js"></script>
+    <script src="/gxa/resources/js/heatmapModule.js"></script>
+    <script src="/gxa/resources/js/transcriptPopupModule.js"></script>
+
+
+    <!-- for transcripts start -->
+        <!--[if lte IE 8]>
+        <script src="/gxa/resources/js/flot/excanvas.min.js"></script>
+        <![endif]-->
+        <script src="/gxa/resources/js/flot/jquery.flot.js"></script>
+        <script src="/gxa/resources/js/flot/jquery.flot.pie.js"></script>
+
+        <!-- fancybox start -->
+            <link rel="stylesheet"
+                  href="/gxa/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css"
+                  type="text/css" media="screen"/>
+            <script type="text/javascript"
+                    src="/gxa/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
+
+            <style>
+                .fancybox-lock .fancybox-overlay {
+                    overflow: hidden;
+                }
+
+                .fancybox-lock {
+                    overflow: hidden;
+                }
+            </style>
+        <!-- fancybox end -->
+    <!-- transcripts end -->
+
+</head>
+<body>
+
+<!-- for transcript popups -->
+
+<div id="transcript-breakdown" style="display:none;height: 320px;width: 500px; padding-top:10px">
+    <p style="text-align: center">
+        <span id="transcript-breakdown-title"></span>
+            <span id="transcript-breakdown-title-help">
+                <a class="help-icon" href="#"
+                   title="Transcripts with zero expression are excluded from the pie chart. Transcripts shown in white colour have been reported with low confidence.">?</a>
+            </span>
+    </p>
+
+    <div>
+        <div id="transcripts-pie" style="width: 500px;height:250px;">
+        </div>
+    </div>
+</div>
+
+<!-- for ? tool tips  -->
+<div id="help-placeholder" style="display: none"></div>
+
+<!-- for gene name tooltips -->
+<div id="genenametooltip-content" style="display: none"></div>
+
+<!-- for contrast header tool tips -->
+<section id="contrastInfo" style="display:none">
+    <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
+    <div id="contrastDescription" style="text-align: center"></div>
+    <table class='table-grid' style="padding: 0px; margin: 0px;">
+        <thead>
+        <tr>
+            <th class='header-cell'>
+                Property
+            </th>
+            <th class='header-cell'>
+                Test value
+            </th>
+            <th class='header-cell'>
+                Reference value
+            </th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</section>
+
+<!-- for display levels button -->
+<input id="displayLevels" name="displayLevels" type="hidden" value="false">
+
+<div id="atlas-content">
+    <div id="heatmap-react-diff" class="heatmap-position"></div>
+</div>
+
+<script type="text/javascript">
+
+    var diff = (function (genePropertiesTooltipModule) {
+
+        var heatmapConfig = (function (genePropertiesTooltipModule) {
+            return {
+                contextRoot: '/gxa',
+                experimentAccession: 'E-MTAB-1066',
+                accessKey: '',
+                species: 'homo sapiens',
+                queryFactorType: 'ORGANISM_PART',
+                isExactMatch: true,
+                enableGeneLinks: true,
+                selectedFilterFactorsJson: [],
+                toolTipHighlightedWords: genePropertiesTooltipModule.splitIntoWords('CCNT2 POLR2B'),
+                downloadProfilesURL: '/gxa/experiments/E-MTAB-1733.tsv?accessKey=&amp;serializedFilterFactors=&amp;queryFactorType=ORGANISM_PART&amp;rootContext=&amp;heatmapMatrixSize=50&amp;displayLevels=false&amp;displayGeneDistribution=false&amp;geneQuery=ids&amp;exactMatch=true&amp;_exactMatch=on&amp;_queryFactorValues=1&amp;specific=true&amp;_specific=on&amp;cutoff=0.5',
+                showMaPlotButton: true
+            };
+        })(genePropertiesTooltipModule);
+
+        var contrasts = [
+            {
+                "id": "g2_g3",
+                "arrayDesignAccession": "A-AFFY-35",
+                "referenceAssayGroup": {
+                    "id": "g2",
+                    "assayAccessions": [
+                        "WT3",
+                        "WT1",
+                        "WT2"
+                    ]
+                },
+                "testAssayGroup": {
+                    "id": "g1",
+                    "assayAccessions": [
+                        "K1",
+                        "K2",
+                        "K3"
+                    ]
+                },
+                "displayName": "genotype:'cdk8 mutant' vs 'wild type'"
+            },
+            {
+                "id": "g2_g1",
+                "arrayDesignAccession": "A-AFFY-35",
+                "referenceAssayGroup": {
+                    "id": "g2",
+                    "assayAccessions": [
+                        "WT3",
+                        "WT1",
+                        "WT2"
+                    ]
+                },
+                "testAssayGroup": {
+                    "id": "g1",
+                    "assayAccessions": [
+                        "C3",
+                        "C1",
+                        "C2"
+                    ]
+                },
+                "displayName": "genotype:'cycC mutant' vs 'wild type'"
+            }
+        ];
+
+        var profiles = {
+            "minUpLevel": 0.71,
+            "maxUpLevel": 1.33,
+            "totalGeneCount": 50,
+            "genes": [
+                {
+                    "geneId": "FBgn0051624",
+                    "geneName": "CG31624",
+                    "expressions": [
+                        {
+                            "contrastName": "cdk8",
+                            "color": "#C0C0C0",
+                            "foldChange": "-0.76",
+                            "pValue": "0.002"
+                        },
+                        {
+                            "contrastName": "cycC",
+                            "color": "#0000FF",
+                            "foldChange": "-8.79",
+                            "pValue": "3.24E-4"
+                        }
+                    ]
+                },
+                {
+                    "geneId": "FBgn0053459",
+                    "geneName": "CG33459",
+                    "expressions": [
+                        {
+                            "contrastName": "cdk8",
+                            "color": "#FF0000",
+                            "foldChange": "1.33",
+                            "pValue": "2.16E-4"
+                        },
+                        {
+                            "contrastName": "cycC",
+                            "color": "#FFAFAF",
+                            "foldChange": "0.71",
+                            "pValue": "0.002"
+                        }
+                    ]
+                }
+            ],
+            "minDownLevel": -0.761232333333333,
+            "maxDownLevel": -8.79117189098254
+        };
+
+        return {
+            heatmapConfig: heatmapConfig,
+            contrasts: contrasts,
+            profiles: profiles
+        }
+    })(genePropertiesTooltipModule);
+
+</script>
+
+
+<script src="heatmap.jsx" type="text/jsx"></script>
+<script type="text/jsx"> // text/jsx only so it runs after previous script
+    /** @jsx React.DOM */
+
+
+    /*global React */
+
+    (function ($, React, heatmapModule, heatmapConfig, contrasts, profiles, geneSetProfiles) {
+
+        var DifferentialHeatmap = heatmapModule.build(heatmapConfig, $('#displayLevels')).Differential;
+
+        React.renderComponent(DifferentialHeatmap( {contrasts:contrasts, profiles:profiles} ),
+            document.getElementById('heatmap-react-diff')
+        );
+
+
+    })(jQuery, React, heatmapModule, diff.heatmapConfig,
+            diff.contrasts, diff.profiles, diff.geneSetProfiles);
+</script>
+</body>
+</html>

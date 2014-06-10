@@ -54,11 +54,6 @@ public class DifferentialExpression implements Expression {
         return foldChange;
     }
 
-    //ToDo: Try to replace with INFINITE_POSITIVE and NEGATIVE
-    public boolean isNotApplicable() {
-        return (getFoldChange() == Double.MAX_VALUE) || (getFoldChange() == Double.MIN_VALUE);
-    }
-
     public boolean isRegulatedLike(Regulation regulation) {
         return Regulation.UP_DOWN.equals(regulation)
                 || isLikeUpRegulation(regulation)

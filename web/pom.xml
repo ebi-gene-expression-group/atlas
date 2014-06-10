@@ -37,7 +37,7 @@
     <url>http://www.ebi.ac.uk/gxa</url>
 
     <properties>
-        <selenium.version>2.33.0</selenium.version>
+        <selenium.version>2.42.0</selenium.version>
         <tiles.version>2.2.2</tiles.version>
         <jasmine.js.src.location>src/main/webapp/resources/js</jasmine.js.src.location>
         <solr.version>4.5.0</solr.version>
@@ -334,12 +334,12 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <scope>compile</scope>
-            <version>4.2.3</version>
+            <version>4.3.4</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
-            <version>4.2.3</version>
+            <version>4.3.4</version>
         </dependency>
         <dependency>
             <groupId>xml-apis</groupId>

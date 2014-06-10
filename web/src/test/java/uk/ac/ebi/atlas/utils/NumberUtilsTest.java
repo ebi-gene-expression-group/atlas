@@ -50,7 +50,52 @@ public class NumberUtilsTest {
         assertThat(subject.htmlFormatDouble(1.0001d), is("1"));
     }
 
+
     @Test
+    public void testFormatDoubleEscapeUnicode() {
+        assertThat(subject.formatDouble(0.0d), is("0"));
+
+        assertThat(subject.formatDouble(1.2E-11d), is("<1E-10"));
+        assertThat(subject.formatDouble(-1.2E-11d), is("-1.2E-11"));
+
+        assertThat(subject.formatDouble(1.2E-5d), is("1.2E-5"));
+        assertThat(subject.formatDouble(-1.2E-5d), is("-1.2E-5"));
+
+        assertThat(subject.formatDouble(123.456d), is("1.23E2"));
+        assertThat(subject.formatDouble(-123.456d), is("-1.23E2"));
+
+        assertThat(subject.formatDouble(123.567d), is("1.24E2"));
+        assertThat(subject.formatDouble(-123.567d), is("-1.24E2"));
+
+        assertThat(subject.formatDouble(10.0d), is("1E1"));
+        assertThat(subject.formatDouble(-10.0d), is("-1E1"));
+
+        assertThat(subject.formatDouble(10.123d), is("1.01E1"));
+        assertThat(subject.formatDouble(-10.123d), is("-1.01E1"));
+
+        assertThat(subject.formatDouble(10.623d), is("1.06E1"));
+        assertThat(subject.formatDouble(-10.623d), is("-1.06E1"));
+
+        assertThat(subject.formatDouble(0.123d), is("0.123"));
+        assertThat(subject.formatDouble(-0.123d), is("-0.123"));
+
+        assertThat(subject.formatDouble(0.1267d), is("0.127"));
+        assertThat(subject.formatDouble(-0.1267d), is("-0.127"));
+
+        assertThat(subject.formatDouble(1.32d), is("1.32"));
+        assertThat(subject.formatDouble(-1.32d), is("-1.32"));
+
+        assertThat(subject.formatDouble(1.356d), is("1.356"));
+        assertThat(subject.formatDouble(-1.356d), is("-1.356"));
+
+        assertThat(subject.formatDouble(1.3567d), is("1.357"));
+        assertThat(subject.formatDouble(-1.3567d), is("-1.357"));
+
+        assertThat(subject.formatDouble(9.02d), is("9.02"));
+
+    }
+
+        @Test
     public void testhtmlFormatDouble() {
         assertThat(subject.htmlFormatDouble(0.0d), is("0"));
 

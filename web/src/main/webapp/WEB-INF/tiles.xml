@@ -38,6 +38,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/experiment.jsp"/>
     </definition>
 
+    <definition name="experiment-react" extends="base.definition">
+        <put-attribute name="title" value="Experiment"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/experiment-react.jsp"/>
+    </definition>
+
     <definition name="experiment-analysis-methods" extends="base.definition">
         <put-attribute name="title" value="Experiment - analysis methods"/>
         <put-attribute name="body" value="/WEB-INF/jsp/experiment-analysis-methods.jsp"/>

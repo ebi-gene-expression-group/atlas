@@ -85,7 +85,7 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(className = "gradient-level-max")
     private WebElement gradientLevelsMax;
 
-    @FindBy(className = "genename")
+    @FindBy(css = "#heatmap-table > tbody > tr > td > a")
     private List<WebElement> geneNames;
 
     @FindBy(xpath = "//label[@for='queryFactorValues']")
@@ -242,7 +242,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public WebElement getDisplayLevelsButton() {
-        return SeleniumUtil.findElementByCssWaitingUntilAvailable(driver, "#heatmap-div #display-levels");
+        return SeleniumUtil.findElementByCssWaitingUntilAvailable(driver, "#display-levels");
     }
 
     public void clickDisplayLevelsButton() {

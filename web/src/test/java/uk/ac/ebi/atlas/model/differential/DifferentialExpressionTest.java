@@ -48,11 +48,6 @@ public class DifferentialExpressionTest {
     }
 
     @Test
-    public void testIsNotApplicable() {
-        assertThat(subject.isNotApplicable(), is(false));
-    }
-
-    @Test
     public void testEquals() {
         assertThat(subject.equals(new DifferentialExpression(PVALUE, FOLD_CHANGE, contrastMock)), is(true));
     }

@@ -113,19 +113,11 @@
                             <c:if test="${not empty expressionLevel}">
                                 <%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
 
-                                <c:choose>
-                                    <c:when test="${expression.notApplicable}">
-                                        <c:set var="foldChange" value="N/A"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <fmt:formatNumber type="number"
-                                                          maxFractionDigits="2"
-                                                          value="${expression.foldChange}"
-                                                          groupingUsed="false"
-                                                          var="foldChange"/>
-
-                                    </c:otherwise>
-                                </c:choose>
+                                <fmt:formatNumber type="number"
+                                                  maxFractionDigits="2"
+                                                  value="${expression.foldChange}"
+                                                  groupingUsed="false"
+                                                  var="foldChange"/>
 
                                 <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
                                     ${'data-fold-change="'.concat(foldChange).concat('"')}

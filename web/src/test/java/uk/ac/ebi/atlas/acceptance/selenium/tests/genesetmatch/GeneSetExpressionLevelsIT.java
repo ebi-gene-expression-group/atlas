@@ -52,8 +52,6 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
         subject.clickShowGeneSetProfiles();
         //then
 
-        assertThat(subject.isGeneSetProfilesVisible(), is(true));
-
         assertThat(subject.getGeneColumnHeader(), is("Gene set"));
     }
 
@@ -68,8 +66,8 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
         subject.get();
         subject.clickShowGeneSetProfiles();
         //then
-        assertThat(subject.getGeneSetGeneNames(), contains("\"Alpha-1-acid glycoprotein\""));
-        assertThat(subject.getFirstGeneSetProfile(), contains("", "", "0.5", "0.5", "6451", "", "", "3" ));
+        assertThat(subject.getGeneNames(), contains("\"Alpha-1-acid glycoprotein\""));
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "0.5", "0.5", "6451", "", "", "3" ));
 
     }
 
@@ -84,8 +82,8 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
         subject.get();
         subject.clickShowGeneSetProfiles();
         //then
-        assertThat(subject.getGeneSetGeneNames(), contains("react_1619"));
-        assertThat(subject.getFirstGeneSetProfile(), contains("4", "4", "12", "22", "17", "4", "6", "14"));
+        assertThat(subject.getGeneNames(), contains("react_1619"));
+        assertThat(subject.getFirstGeneProfile(), contains("4", "4", "12", "22", "17", "4", "6", "14"));
 
     }
 
@@ -100,9 +98,9 @@ public class GeneSetExpressionLevelsIT extends SeleniumFixture {
         subject.get();
         subject.clickShowGeneSetProfiles();
         //then
-        assertThat(subject.getGeneSetGeneNames(), contains("\"Alpha-1-acid glycoprotein\"", "react_1619"));
-        assertThat(subject.getFirstGeneSetProfile(), contains("", "", "0.5", "0.5", "6451", "", "", "3" ));
-        assertThat(subject.getGeneSetProfile(2), contains("4", "4", "12", "22", "17", "4", "6", "14"));
+        assertThat(subject.getGeneNames(), contains("\"Alpha-1-acid glycoprotein\"", "react_1619"));
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "0.5", "0.5", "6451", "", "", "3" ));
+        assertThat(subject.getGeneProfile(2), contains("4", "4", "12", "22", "17", "4", "6", "14"));
 
     }
 

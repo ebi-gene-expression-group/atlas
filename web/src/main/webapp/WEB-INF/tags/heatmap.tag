@@ -149,26 +149,19 @@
                                                           var="roundedExpressionLevel"/>
                                     </c:when>
                                     <c:when test="${!type.isBaseline()}">
-                                        <c:choose>
-                                            <c:when test="${expression.notApplicable}">
-                                                <c:set var="foldChange" value="N/A"/>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:set var="pValue" value="${numberUtils.htmlFormatDoubleEncoded(expression.getPValue())}"/>
-                                                <fmt:formatNumber type="number"
-                                                                  maxFractionDigits="2"
-                                                                  value="${expression.foldChange}"
-                                                                  groupingUsed="false"
-                                                                  var="foldChange"/>
-                                                <c:if test="${type.isMicroarray()}">
-                                                    <fmt:formatNumber type="number"
-                                                                      maxFractionDigits="2"
-                                                                      value="${expression.tstatistic}"
-                                                                      groupingUsed="false"
-                                                                      var="tstatistic"/>
-                                                </c:if>
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <c:set var="pValue" value="${numberUtils.htmlFormatDoubleEncoded(expression.getPValue())}"/>
+                                        <fmt:formatNumber type="number"
+                                                          maxFractionDigits="2"
+                                                          value="${expression.foldChange}"
+                                                          groupingUsed="false"
+                                                          var="foldChange"/>
+                                        <c:if test="${type.isMicroarray()}">
+                                            <fmt:formatNumber type="number"
+                                                              maxFractionDigits="2"
+                                                              value="${expression.tstatistic}"
+                                                              groupingUsed="false"
+                                                              var="tstatistic"/>
+                                        </c:if>
                                     </c:when>
                                 </c:choose>
 
@@ -208,7 +201,7 @@
                        href="${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
                        class="button-image" target="_blank">
                         <img id="download-profiles" alt="Download query results" style="width:20px"
-                             src="${base}/resources/images/download_blue_small.png">
+                             src="${base}/resources/images/download_blue_small.png"/>
                     </a>
                 </div>
             </td>
