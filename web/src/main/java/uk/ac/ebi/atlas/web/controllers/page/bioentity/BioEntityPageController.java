@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.bioentity;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.lang.StringUtils;
@@ -33,7 +32,6 @@ import uk.ac.ebi.atlas.web.ApplicationProperties;
 import javax.inject.Inject;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.SortedSet;
 
 public abstract class BioEntityPageController {
@@ -82,7 +80,7 @@ public abstract class BioEntityPageController {
         model.addAttribute("bioentitySameIdentifier", true);
 
         //to check if the widget contains the identifier or not and inform properly in the results gene pages
-        model.addAttribute("isWidgetIdentifier", hasWidgetIdentifier(identifier));
+        model.addAttribute("hasBaselineExperimentForSpecies", hasBaselineExperimentForSpecies(identifier));
 
         //bioentity properties panel data
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
@@ -117,7 +115,7 @@ public abstract class BioEntityPageController {
         bioEntityPropertyService.init(species, propertyValuesByType, entityNames, identifier);
     }
 
-    protected boolean hasWidgetIdentifier(String identifier){
+    protected boolean hasBaselineExperimentForSpecies(String identifier){
         String species = solrQueryService.findSpeciesForBioentityId(identifier);
         String experimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
 

@@ -94,6 +94,7 @@ public final class HeatmapWidgetController {
         String experimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
 
         if (StringUtils.isEmpty(experimentAccession)) {
+            model.addAttribute("errorMessage", "No baseline experiment for species " + species);
             model.addAttribute("identifier", bioEntityAccession);
             return "widget-error";
         }

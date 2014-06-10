@@ -115,21 +115,19 @@
                             <c:when test="${not empty baselineCounts}" >
                                 <c:set var="resultsCount" value="${baselineCounts.size()}"/>
                                 <span style="margin-left: 10px; margin-top:10px">
-                                    ${resultsCount} search results found
+                                    ${resultsCount} results
                                 </span>
                             </c:when>
-
-
                             <c:otherwise>
                                 <c:choose>
-                                    <c:when test="${singleBioentityPage && isWidgetIdentifier}">
+                                    <c:when test="${hasBaselineExperimentForSpecies}">
                                         <span style="margin-left: 10px; margin-top:10px">
-                                            Baseline expression in tissue(s) was found for ${entityIdentifier}
+                                          Results in tissues
                                         </span>
                                     </c:when>
                                     <c:otherwise>
                                         <span style="margin-left: 10px">
-                                            No baseline experiments were found for ${entityIdentifier}
+                                            No results
                                         <span>
                                     </c:otherwise>
                                 </c:choose>
@@ -137,16 +135,19 @@
                         </c:choose>
                 </ul>
 
+                <c:set var="hasBaselineResults" value="${hasBaselineExperimentForSpecies || not empty baselineCounts}"/>
 
                 <div id="baselineProfileBody" class="bioEntityCard">
 
-                    <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                        <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
-                        <span style="float: right">Expression Level cut-off: 0.5</span>
-                    </div>
+                    <c:if test="${hasBaselineResults}">
+                        <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                            <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
+                            <span style="float: right">Expression Level cut-off: 0.5</span>
+                        </div>
+                    </c:if>
 
                     <c:choose>
-                        <c:when test="${singleBioentityPage || singleBaselineSearchResult}">
+                        <c:when test="${hasBaselineExperimentForSpecies || singleBaselineSearchResult}">
                             <div id="widgetBody"></div>
                         </c:when>
 
@@ -163,10 +164,10 @@
                     <span class="bioEntityCardBioentityName">Differential Expression</span>
                     <c:choose>
                         <c:when test="${not empty bioentities}">
-                            <span style="margin-left: 10px; margin-top:10px">${bioentities.getTotalNumberOfResults()} search result(s) found</span>
+                            <span style="margin-left: 10px; margin-top:10px">${bioentities.getTotalNumberOfResults()} ${bioentities.getTotalNumberOfResults() == 1 ? "result" : "results"}</span>
                         </c:when>
                         <c:otherwise>
-                            <span style="margin-left: 10px; margin-top:10px">No differential experiments were found for ${entityIdentifier}</span>
+                            <span style="margin-left: 10px; margin-top:10px">No results</span>
                         </c:otherwise>
                     </c:choose>
                 </ul>
@@ -269,7 +270,7 @@
 
                 <c:choose>
 
-                    <c:when test="${singleBioentityPage || singleBaselineSearchResult}">
+                    <c:when test="${hasBaselineExperimentForSpecies || singleBaselineSearchResult}">
 
                         new Biojs.AtlasHeatmap({
                         featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}${disableGeneLinks ? "&disableGeneLinks=true" : ""}' + widgetParameters,

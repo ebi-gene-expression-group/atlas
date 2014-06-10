@@ -35,15 +35,6 @@
     <c:set var="resultsCount" value="${baselineCounts.size()}"/>
 
         <table id="baselineCountsTable">
-            <thead>
-                <tr>
-                    <th>
-                        <div style="margin-top:10px">
-                            ${resultsCount} search results (showing ${resultsCount} of ${resultsCount})
-                        </div>
-                    </th>
-                </tr>
-            </thead>
             <tbody>
                 <%--@elvariable id="baselineResult" type="uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchResult"--%>
                 <c:forEach var="baselineResult" items="${baselineCounts}">
