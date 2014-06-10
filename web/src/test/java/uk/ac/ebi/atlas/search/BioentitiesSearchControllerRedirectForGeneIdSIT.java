@@ -50,6 +50,20 @@ public class BioentitiesSearchControllerRedirectForGeneIdSIT extends SinglePageS
 
     }
 
+
+    @Test
+    public void geneIdWithLeadingAndTrailingSpaceShouldRedirect() {
+        PageFactory.initElements(driver, this);
+
+        String uri = "/gxa/query?geneQuery=+ENSG00000161547+";
+
+        loadPage(uri);
+
+        assertThat(driver.getCurrentUrl(), containsString("genes/ENSG00000161547"));
+
+    }
+
+
     @Test
     public void proteinIdShouldRedirect() {
         PageFactory.initElements(driver, this);
@@ -63,14 +77,14 @@ public class BioentitiesSearchControllerRedirectForGeneIdSIT extends SinglePageS
     }
 
     @Test
-    public void mirbaseIdShouldRedirect() {
+    public void mirbaseIdShouldRedirectToEnsembleGene() {
         PageFactory.initElements(driver, this);
 
         String uri = "/gxa/query?geneQuery=hsa-mir-636";
 
         loadPage(uri);
 
-        assertThat(driver.getCurrentUrl(), containsString("genes/hsa-mir-636"));
+        assertThat(driver.getCurrentUrl(), containsString("genes/ENSG00000207556"));
 
     }
 

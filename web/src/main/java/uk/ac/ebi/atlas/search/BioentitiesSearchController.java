@@ -89,11 +89,11 @@ public class BioentitiesSearchController {
 
         checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
 
-        String geneQuery = requestParameters.getGeneQuery();
+        String geneQuery = requestParameters.getGeneQuery().trim();
 
         if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
             //If Query just for a single bioentityID
-            Optional<String> geneIdRedirectString = getGeneIdRedirectString(requestParameters);
+            Optional<String> geneIdRedirectString = getGeneIdRedirectString(geneQuery, requestParameters.isExactMatch());
             if (geneIdRedirectString.isPresent()) {
                 return geneIdRedirectString.get();
             }
@@ -103,7 +103,7 @@ public class BioentitiesSearchController {
 
             model.addAttribute("entityIdentifier", requestParameters.getDescription());
 
-            Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = baselineExpressionSearchService.query(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
+            Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = baselineExpressionSearchService.query(geneQuery, requestParameters.getCondition(), requestParameters.isExactMatch());
             model.addAttribute("baselineCounts", baselineExpressionSearchResults);
             if (baselineExpressionSearchResults.size() == 1 & !requestParameters.hasCondition()) {
                 model.addAttribute("singleBaselineSearchResult", true);
@@ -129,15 +129,13 @@ public class BioentitiesSearchController {
         return "bioEntities";
     }
 
-    private Optional<String> getGeneIdRedirectString(GeneQuerySearchRequestParameters requestParameters) {
+    private Optional<String> getGeneIdRedirectString(String geneQuery, boolean isExactMatch) {
 
-        String geneId = requestParameters.getGeneQuery();
-
-        if (!StringUtils.containsWhitespace(geneId) && geneId.toUpperCase().startsWith("REACT_")) {
-            return Optional.of("redirect:/genesets/" + geneId);
+        if (!StringUtils.containsWhitespace(geneQuery) && geneQuery.toUpperCase().startsWith("REACT_")) {
+            return Optional.of("redirect:/genesets/" + geneQuery);
         }
 
-        BioentityProperty bioentityProperty = solrQueryService.findBioentityIdentifierProperty(geneId);
+        BioentityProperty bioentityProperty = solrQueryService.findBioentityIdentifierProperty(geneQuery);
 
         if (bioentityProperty != null) {
             String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
@@ -146,7 +144,7 @@ public class BioentitiesSearchController {
 
         try {
 
-            Optional<Set<String>> geneIdsOrSets = solrQueryService.expandGeneQueryIntoGeneIds(requestParameters.getGeneQuery(), requestParameters.isExactMatch());
+            Optional<Set<String>> geneIdsOrSets = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, isExactMatch);
 
             if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
                 return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());
@@ -154,7 +152,7 @@ public class BioentitiesSearchController {
 
         } catch (HttpSolrServer.RemoteSolrException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new HttpSolrServer.RemoteSolrException(e.code(), geneId, e);
+            throw new HttpSolrServer.RemoteSolrException(e.code(), geneQuery, e);
         }
 
         return Optional.absent();
