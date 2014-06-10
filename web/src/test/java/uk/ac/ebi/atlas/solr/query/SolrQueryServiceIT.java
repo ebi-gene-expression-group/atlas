@@ -94,6 +94,13 @@ public class SolrQueryServiceIT {
     }
 
     @Test
+    public void returnEnsGeneForMirbaseId() {
+        BioentityProperty bioentityProperty = subject.findBioentityIdentifierProperty("hsa-mir-15a");
+        assertThat(bioentityProperty.getBioentityType(), is("ensgene"));
+        assertThat(bioentityProperty.getBioentityIdentifier(), is("ENSG00000231607"));
+    }
+
+    @Test
     public void testFetchGeneIdentifiersFromSolr() throws SolrServerException, GenesNotFoundException {
 
         // given
