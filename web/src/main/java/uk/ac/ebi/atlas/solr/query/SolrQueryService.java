@@ -65,8 +65,9 @@ public class SolrQueryService {
     public static final String PROPERTY_EDGENGRAM_FIELD = "property_value_edgengram";
 
     private static final String BIOENTITY_TYPE_QUERY =
-            "(property_name:\"ensgene\"" +
-                    "OR property_name:\"mirna\" OR property_name:\"ensprotein\" OR property_name:\"enstranscript\") AND property_value_lower: \"{0}\"";
+        "((property_name:\"ensgene\"OR property_name:\"mirna\" OR property_name:\"ensprotein\" OR property_name:\"enstranscript\") " +
+                "OR ( property_name:\"mirbase_id\" AND bioentity_type:\"ensgene\")) " +
+                " AND property_value_lower: \"{0}\"";
 
     private static final int PROPERTY_VALUES_LIMIT = 1000;
 
@@ -98,17 +99,31 @@ public class SolrQueryService {
         solrQuery.setRows(PROPERTY_VALUES_LIMIT);
         QueryResponse response = solrServer.query(solrQuery);
         List<BioentityProperty> bioentityProperties = response.getBeans(BioentityProperty.class);
+
+        BioentityProperty result = null;
+
         if (!bioentityProperties.isEmpty()) {
 
             for (BioentityProperty bioentityProperty : bioentityProperties) {
                 String bioentityIdentifier = bioentityProperty.getBioentityIdentifier();
                 String propertyValue = bioentityProperty.getValue();
+
+                String bioentityType = bioentityProperty.getBioentityType();
+                String propertyName = bioentityProperty.getName();
+
+                if (propertyName.equals("mirbase_id") && bioentityType.equals("ensgene")) {
+                    // handle the case returnEnsGeneForMirbaseId, ie: preferentially return the ensgene
+                    // when mirbase_id is found
+                    result = bioentityProperty;
+                    break;
+                }
+
                 if (bioentityIdentifier.equals(propertyValue)) {
-                    return bioentityProperty;
+                    result = bioentityProperty;
                 }
             }
         }
-        return null;
+        return result;
     }
 
     public SortedSetMultimap<String, String> fetchTooltipProperties(String identifier) {
