@@ -137,6 +137,12 @@
     -o-transform-origin: top left;
 }
 
+.rotate_tick {
+    -moz-transform: rotate(-270deg);
+    -webkit-transform: rotate(-270deg);
+    -o-transform: rotate(-270deg);
+}
+
 .rotate_text_IE {
 }
 

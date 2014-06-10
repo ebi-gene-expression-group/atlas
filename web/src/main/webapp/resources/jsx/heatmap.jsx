@@ -51,7 +51,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 return React.createClass({
                     render: function () {
                         return (
-                            <FactorHeaders assayGroupFactors={props.assayGroupFactors} experimentAccession={heatmapConfig.experimentAccession} />
+                            <FactorHeaders assayGroupFactors={props.assayGroupFactors} experimentAccession={heatmapConfig.experimentAccession}  />
                             )
                     }
                 });
@@ -79,13 +79,16 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         var EmblTrackButton = React.createClass({
             render: function () {
                 return (
-                    <button>Genome Track</button>
+                    <div>
+                        <button ref="button">Genome Track</button>
+                        <span style={{"font-size": "x-small", "color": "red"}} > {this.props.columnSelected ? "hi" : "bye"} </span>
+                    </div>
                     );
 
             },
 
             componentDidMount: function () {
-                $(this.getDOMNode()).button();
+                $(this.refs.button.getDOMNode()).button();
             }
         });
 
@@ -116,8 +119,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         <tr>
                             <td>
                                 <span> Ensembl Track: </span>
-                                <EmblTrackButton />
-                                <span style={{"font-size": "x-small", "color": "red"}} > Please continue with the message... </span>
+                                <EmblTrackButton columnSelected={true} />
                             </td>
                         </tr>
                         <tr>
@@ -315,7 +317,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 var props = this.props;
                 var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
                     var factor = assayGroupFactor.factor;
-                    return <FactorHeader factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={props.experimentAccession}/>;
+                    return <FactorHeader factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={props.experimentAccession} addColumnSelection={props.addColumnSelection}
+                        removeColumnSelection={props.removeColumnSelection}/>;
                 });
 
                 return (
@@ -345,16 +348,28 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 onClick: function () {
+                    if(!this.state.selected) {
+                        this.props.addColumnSelection(this.props.factorName);
+                    } else {
+                        this.props.removeColumnSelection(this.props.factorName);
+                    }
+
                     this.setState({selected:!this.state.selected});
+
                 },
 
                 render: function () {
                     var truncatedFactorName = restrictLabelSize(this.props.factorName, 17);
+
+                    var hover = this.state.hover && !this.state.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"80px", float:"right", color:"red"}}>  select</span> : null;
+
+                    var selected = this.state.selected ? <span className="rotate_tick" style={{position: "absolute", width:"10px", right:"0px", left:"100px", float:"right", color:"green"}}> &#10004; </span>: null ;
+
                     return (
                         <th className="rotated_cell vertical-header-cell factorNameCell" style={{cursor:"pointer"}} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick} rowSpan="2">
                             <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{truncatedFactorName}
-                                {this.state.hover && !this.state.selected ? <span>  select</span> : null}
-                                {this.state.selected ? <span>&#10004;</span> : null}
+                                {hover}
+                                {selected}
                             </div>
 
                         </th>
@@ -437,14 +452,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             });
         })(heatmapConfig.contextRoot);
 
-        var createDisplayLabelMessage = function (message1, message2) {
-
-            return React.createClass({
-
-
-            });
-        }
-
         var createDisplayLevelsButton = function (hideText, showText) {
 
             return React.createClass({
@@ -477,6 +484,30 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         var DisplayLevelsButtonBaseline = createDisplayLevelsButton('Hide levels', 'Display levels');
 
         var DisplayLevelsButtonDifferential = createDisplayLevelsButton('Hide log<sub>2</sub>-fold change', 'Display log<sub>2</sub>-fold change');
+
+        var createMessageTrackButton = function () {
+
+            return React.createClass({
+
+                messageText: function (text) {
+                    return text;
+                },
+
+                updateMessageButton: function () {
+                    this.setState({text: this.messageText()});
+                },
+
+                componentDidMount: function () {
+                    this.updateMessageButton();
+                },
+
+                componentDidUpdate: function () {
+                    this.updateMessageButton();
+                }
+
+            });
+        };
+
 
         var HeatmapTableBody = React.createClass({
             render: function () {
