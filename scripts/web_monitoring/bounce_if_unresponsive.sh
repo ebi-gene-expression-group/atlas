@@ -4,14 +4,17 @@
 # This script bounces $HOSTNAME if response time exceeds allowed maximum                                                                                                                                                                                      
 
 if [ $# -lt 2 ]; then
-        echo "Usage: $0 HOSTNAME TOMCAT_DIR MAXTIME"
+        echo "Usage: $0 HOSTNAME TOMCAT_DIR MAXTIME (NAGIOS_URL)"
         exit;
 fi
 
 HOSTNAME=$1
 TOMCAT_DIR=$2
 MAXTIME=$3
-ATLAS3_NAGIOS_URL="http://${HOSTNAME}:8080/gxa/experiments/E-GEOD-22351?geneQuery=Gpnmb"
+ATLAS3_NAGIOS_URL=$4
+if [ -z "$ATLAS3_NAGIOS_URL" ]; then 
+    ATLAS3_NAGIOS_URL="http://${HOSTNAME}:8080/gxa/experiments/E-GEOD-22351?geneQuery=Gpnmb"
+fi
 
 log="/tmp/${HOSTNAME}_bounces.log"
 
