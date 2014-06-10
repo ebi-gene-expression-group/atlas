@@ -73,6 +73,9 @@ public class GeneSetPageController extends BioEntityPageController {
 
     @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showBioentityPage(@PathVariable String identifier, Model model) {
+        //when we query for genesets the bioentity page must
+        //not display Differential Expression panel so we just need to invoke parent controller (that handles baseline expressions)
+
         model.addAttribute("isGeneSet", true);
         return super.showBioentityPage(identifier, model);
     }

@@ -77,18 +77,6 @@ public class BioentitiesSearchControllerRedirectForGeneIdSIT extends SinglePageS
     }
 
     @Test
-    public void mirbaseIdShouldRedirectToEnsembleGene() {
-        PageFactory.initElements(driver, this);
-
-        String uri = "/gxa/query?geneQuery=hsa-mir-636";
-
-        loadPage(uri);
-
-        assertThat(driver.getCurrentUrl(), containsString("genes/ENSG00000207556"));
-
-    }
-
-    @Test
     public void reactomeIdShouldRedirect() {
         PageFactory.initElements(driver, this);
 

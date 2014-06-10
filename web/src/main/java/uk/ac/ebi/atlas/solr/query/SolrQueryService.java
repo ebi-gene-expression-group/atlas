@@ -126,6 +126,7 @@ public class SolrQueryService {
 
     public Set<String> fetchGeneIdentifiersFromSolr(String queryString, String bioentityType, boolean toUppercase, String... propertyNames) {
 
+        //eg: property_value_lower:"hsa-mir-636" AND (bioentity_type:"ensgene") AND (property_name:"mirbase_id")
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
                 .forQueryString(queryString, false)
                 .withBioentityTypes(Sets.newHashSet(bioentityType))
