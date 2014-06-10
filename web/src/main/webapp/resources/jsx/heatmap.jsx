@@ -76,6 +76,20 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
         });
 
+        var EmblTrackButton = React.createClass({
+            render: function () {
+                return (
+                    <button>Genome Track</button>
+                    );
+
+            },
+
+            componentDidMount: function () {
+                $(this.getDOMNode()).button();
+            }
+        });
+
+
         var Heatmap = React.createClass({
 
             getInitialState: function () {
@@ -99,6 +113,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             render: function () {
                 return (
                     <table>
+                        <tr>
+                            <td>
+                                <span> Ensembl Track: </span>
+                                <EmblTrackButton />
+                                <span style={{"font-size": "x-small", "color": "red"}} > Please continue with the message... </span>
+                            </td>
+                        </tr>
                         <tr>
                             <td>
                                 <span id="geneCount">Showing {this.state.profiles.genes.length} of {this.state.profiles.totalGeneCount} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span>
@@ -307,15 +328,35 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         var FactorHeader = (function (contextRoot, accessKey) {
             return React.createClass({
 
+                getInitialState: function () {
+                    return ({hover:false, selected:false});
+                },
+
                 componentDidMount: function () {
                     factorInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
+                },
+
+                onMouseEnter: function () {
+                    this.setState({hover:true});
+                },
+
+                onMouseLeave: function () {
+                    this.setState({hover:false});
+                },
+
+                onClick: function () {
+                    this.setState({selected:!this.state.selected});
                 },
 
                 render: function () {
                     var truncatedFactorName = restrictLabelSize(this.props.factorName, 17);
                     return (
-                        <th className="rotated_cell vertical-header-cell factorNameCell" rowSpan="2">
-                            <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{truncatedFactorName}</div>
+                        <th className="rotated_cell vertical-header-cell factorNameCell" style={{cursor:"pointer"}} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick} rowSpan="2">
+                            <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{truncatedFactorName}
+                                {this.state.hover && !this.state.selected ? <span>  select</span> : null}
+                                {this.state.selected ? <span>&#10004;</span> : null}
+                            </div>
+
                         </th>
                         );
                 }
@@ -396,6 +437,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             });
         })(heatmapConfig.contextRoot);
 
+        var createDisplayLabelMessage = function (message1, message2) {
+
+            return React.createClass({
+
+
+            });
+        }
+
         var createDisplayLevelsButton = function (hideText, showText) {
 
             return React.createClass({
@@ -410,7 +459,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                 render: function () {
                     return (
-                        <button id='display-levels' className='display-levels-button' onClick={this.props.toggleLevels}></button>
+                        <button id='display-levels' onClick={this.props.toggleLevels}></button>
                         );
                 },
 
