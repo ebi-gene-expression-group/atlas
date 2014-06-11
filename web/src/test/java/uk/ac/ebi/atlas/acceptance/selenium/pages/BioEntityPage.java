@@ -149,7 +149,7 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public String getBioEntityCardTitle() {
-        WebElement header = accordion.findElement(By.className("bioEntityCardHeader"));
+        WebElement header = SeleniumUtil.findChildElementWaitingUntilAvailable(driver, accordion, By.className("bioEntityCardHeader"));
         return header.getText();
     }
 
@@ -229,7 +229,7 @@ public class BioEntityPage extends HeatmapTablePage {
         hoverOnElement(firstContrastDescriptionCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastExperimentDescription']");
-        FluentWait wait = new WebDriverWait(driver, 5L).pollingEvery(50, TimeUnit.MILLISECONDS);
+        FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(50, TimeUnit.MILLISECONDS);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
