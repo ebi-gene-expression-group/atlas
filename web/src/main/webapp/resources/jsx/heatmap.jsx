@@ -46,13 +46,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         var Baseline = React.createClass({
 
-            columnHeaders: function () {
-                var props = this.props;
+            columnHeaders: function (assayGroupFactors, experimentAccession) {
                 return React.createClass({
+
                     render: function () {
                         return (
-                            <FactorHeaders assayGroupFactors={props.assayGroupFactors} experimentAccession={heatmapConfig.experimentAccession}  />
-                            )
+                            <FactorHeaders assayGroupFactors={assayGroupFactors} experimentAccession={experimentAccession} onColumnSelectionChange={this.props.onColumnSelectionChange} />
+                            );
                     }
                 });
             },
@@ -66,12 +66,12 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             legend: function (state) {
                 return (
                     <LegendBaseline displayLevels={state.displayLevels} minExpressionLevel={state.profiles.minExpressionLevel} maxExpressionLevel={state.profiles.maxExpressionLevel}/>
-                );
+                    );
             },
 
             render: function () {
                 return (
-                    <Heatmap legend={this.legend} columnHeaders={this.columnHeaders()} cells={this.cells} displayLevelsButton={DisplayLevelsButtonBaseline} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
+                    <Heatmap legend={this.legend} columnHeaders={this.columnHeaders(this.props.assayGroupFactors, heatmapConfig.experimentAccession)} cells={this.cells} displayLevelsButton={DisplayLevelsButtonBaseline} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
                     );
             }
         });
@@ -113,6 +113,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
             },
 
+            onColumnSelectionChange: function (columnsSelected) {
+                console.log(columnsSelected);
+            },
+
             render: function () {
                 return (
                     <table>
@@ -139,7 +143,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                             <tr>
                                                 <td>
                                                     <table id="heatmap-table" className="table-grid">
-                                                        <HeatmapTableHeader isMicroarray={this.props.isMicroarray} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
+                                                        <HeatmapTableHeader isMicroarray={this.props.isMicroarray} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} onColumnSelectionChange={this.onColumnSelectionChange} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
                                                         <HeatmapTableBody cells={this.props.cells} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
                                                     </table>
                                                 </td>
@@ -266,12 +270,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         var HeatmapTableHeader = React.createClass({
 
             render: function () {
+                var ColumnHeaders = this.props.columnHeaders;
                 return (
                     <thead>
                         <th className="horizontal-header-cell" colSpan={this.props.isMicroarray ? 2 : undefined}>
                             <TopLeftCorner displayLevelsButton={this.props.displayLevelsButton} displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels}/>
                         </th>
-                        { this.props.columnHeaders() }
+                        <ColumnHeaders onColumnSelectionChange={this.props.onColumnSelectionChange}/>
                         <tr id="injected-header">
                             <td className="horizontal-header-cell">{this.props.showGeneSetProfiles ? 'Gene set' : 'Gene'}</td>
                             { this.props.isMicroarray ? <td className="horizontal-header-cell">Design Element</td> : null}
@@ -296,13 +301,26 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         var FactorHeaders = React.createClass({
 
+            selectedColumns: [],
+
+            addColumnSelected: function (factorName) {
+                this.selectedColumns.push(factorName);
+                this.props.onColumnSelectionChange(this.selectedColumns);
+            },
+
+            removeColumnSelected: function (factorName) {
+                var factorIndex = this.selectedColumns.indexOf(factorName);
+                this.selectedColumns.splice(factorIndex, 1);
+                this.props.onColumnSelectionChange(this.selectedColumns);
+            },
+
             render: function () {
                 var props = this.props;
                 var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
                     var factor = assayGroupFactor.factor;
                     return <FactorHeader factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={props.experimentAccession}
-                        addColumnSelection={props.addColumnSelection} removeColumnSelection={props.removeColumnSelection}/>;
-                });
+                        addColumnSelected={this.addColumnSelected} removeColumnSelected={this.removeColumnSelected}/>;
+                }.bind(this));
 
                 return (
                     <div>{factorHeaders}</div>
@@ -331,7 +349,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 onClick: function () {
-
+                    if (this.state.selected) {
+                        this.props.removeColumnSelected(this.props.factorName);
+                    } else {
+                        this.props.addColumnSelected(this.props.factorName);
+                    }
                     this.setState({selected:!this.state.selected});
                 },
 
