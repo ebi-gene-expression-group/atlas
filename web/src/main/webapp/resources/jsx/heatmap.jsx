@@ -107,7 +107,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 this.setState({showGeneSetProfiles: !this.state.showGeneSetProfiles, profiles: newProfiles});
             },
 
-            toggleLevels: function () {
+            toggleDisplayLevels: function () {
                 var newDisplayLevels = !this.state.displayLevels;
                 this.setState({displayLevels: newDisplayLevels});
                 $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
@@ -138,7 +138,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <HeatmapTable isMicroarray={this.props.isMicroarray} cells={this.props.cells} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} toggleLevels={this.toggleLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
+                                                    <table id="heatmap-table" className="table-grid">
+                                                        <HeatmapTableHeader isMicroarray={this.props.isMicroarray} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
+                                                        <HeatmapTableBody cells={this.props.cells} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
+                                                    </table>
                                                 </td>
                                                 <td style={{"vertical-align": "top"}}>
                                                     <DownloadProfilesButton />
@@ -260,38 +263,18 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
         });
 
-        var HeatmapTable = React.createClass({
-
-            render: function () {
-                return (
-                    <table id="heatmap-table" className="table-grid">
-                        <HeatmapTableHeader isMicroarray={this.props.isMicroarray} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
-                        <HeatmapTableBody cells={this.props.cells} profiles={this.props.profiles} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
-                    </table>
-                    );
-            }
-
-        });
-
         var HeatmapTableHeader = React.createClass({
 
-            designElementHeader: function() {
-                return (
-                    <td className="horizontal-header-cell">Design Element</td>
-                    );
-            },
-
             render: function () {
-                var ColumnHeaders = this.props.columnHeaders;
                 return (
                     <thead>
                         <th className="horizontal-header-cell" colSpan={this.props.isMicroarray ? 2 : undefined}>
-                            <TopLeftCorner displayLevelsButton={this.props.displayLevelsButton} displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
+                            <TopLeftCorner displayLevelsButton={this.props.displayLevelsButton} displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels}/>
                         </th>
-                        <ColumnHeaders />
+                        { this.props.columnHeaders() }
                         <tr id="injected-header">
                             <td className="horizontal-header-cell">{this.props.showGeneSetProfiles ? 'Gene set' : 'Gene'}</td>
-                            { this.props.isMicroarray ? this.designElementHeader() : null}
+                            { this.props.isMicroarray ? <td className="horizontal-header-cell">Design Element</td> : null}
                         </tr>
                     </thead>
                     );
@@ -317,8 +300,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 var props = this.props;
                 var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
                     var factor = assayGroupFactor.factor;
-                    return <FactorHeader factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={props.experimentAccession} addColumnSelection={props.addColumnSelection}
-                        removeColumnSelection={props.removeColumnSelection}/>;
+                    return <FactorHeader factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={props.experimentAccession}
+                        addColumnSelection={props.addColumnSelection} removeColumnSelection={props.removeColumnSelection}/>;
                 });
 
                 return (
@@ -348,8 +331,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 onClick: function () {
-                    this.setState({selected:!this.state.selected});
 
+                    this.setState({selected:!this.state.selected});
                 },
 
                 render: function () {
@@ -435,7 +418,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     return (
                             <div className="heatmap-matrix-top-left-corner">
                                 <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo' ref='tooltipSpan'></span>
-                                <displayLevelsButton displayLevels={this.props.displayLevels} toggleLevels={this.props.toggleLevels}/>
+                                <displayLevelsButton displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels}/>
                             </div>
                         );
                 },
@@ -460,7 +443,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                 render: function () {
                     return (
-                        <button id='display-levels' onClick={this.props.toggleLevels}></button>
+                        <button id='display-levels' onClick={this.props.toggleDisplayLevels}></button>
                         );
                 },
 
