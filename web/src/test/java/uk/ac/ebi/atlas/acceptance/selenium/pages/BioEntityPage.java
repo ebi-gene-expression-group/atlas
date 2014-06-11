@@ -30,6 +30,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -62,7 +63,7 @@ public class BioEntityPage extends HeatmapTablePage {
     @FindBy(id = "baselineProfileHeader")
     private WebElement baselinePaneHeader;
 
-    @FindBy(css = "#baselineProfileHeader span:nth-child(3)")
+    @FindBy(css = "#baselineProfileHeader span:nth-child(4)")
     private WebElement baselinePaneHeaderSpan;
 
     @FindBy(id = "diffProfileHeader")
@@ -167,8 +168,7 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public boolean isBaselineProfileExpanded() {
-        WebDriverWait wait = new WebDriverWait(driver, 4L);
-        wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
+        SeleniumUtil.findElementByIdWaitingUntilAvailable(driver, "baselineProfileBody");
         return baselineProfilePaneBody.isDisplayed();
     }
 
@@ -328,6 +328,9 @@ public class BioEntityPage extends HeatmapTablePage {
         }
     }
 
+    public String getBaselinePaneHeaderResultsMessage() {
+        return baselinePaneHeaderSpan.getText();
+    }
 
     public List<String> getDiffHeatmapHeaders() {
         return getTableHeaders(diffHeatmapTable);

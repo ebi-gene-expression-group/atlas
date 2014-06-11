@@ -27,7 +27,6 @@ import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 public class BaselineGeneBioEntityPageNotExistingGeneIT extends SinglePageSeleniumFixture {
@@ -48,9 +47,9 @@ public class BaselineGeneBioEntityPageNotExistingGeneIT extends SinglePageSeleni
     }
 
     @Test
-    public void checkSelectedProfiles() {
-        String widgetBody = subject.getWidgetBody();
-        assertThat(widgetBody, containsString(""));
+    public void baselinePaneHeaderResultsMessage() {
+        String widgetBody = subject.getBaselinePaneHeaderResultsMessage();
+        assertThat(widgetBody, is("No results"));
 
     }
 

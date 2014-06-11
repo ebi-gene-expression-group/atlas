@@ -348,7 +348,7 @@ public class HeatmapTablePage extends TablePage {
         hoverOnElement(geneProfileHeaderCell);
 
         By byTooltipClass = By.className("genename-tooltip");
-        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        WebDriverWait wait = new WebDriverWait(driver, 8L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
