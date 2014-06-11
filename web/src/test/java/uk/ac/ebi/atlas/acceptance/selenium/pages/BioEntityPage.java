@@ -285,7 +285,7 @@ public class BioEntityPage extends HeatmapTablePage {
 
     public BioEntityPage clickShowMoreDataWidget() {
         showMoreDataWidget.click();
-        WebDriverWait wait = new WebDriverWait(driver, 8L);
+        WebDriverWait wait = new WebDriverWait(driver, 10L);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#global-search-results > li > a")));
         return this;
     }
