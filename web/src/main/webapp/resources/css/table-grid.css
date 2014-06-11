@@ -81,10 +81,11 @@
     text-align: left;
 }
 
-.horizontal-header-cell:hover, .table-grid th:hover, .headerHover {
+.horizontal-header-cell:hover, .vertical-header-cell:hover, .headerHover {
     background-color: #deebeb !important;
     cursor: default;
 }
+
 
 .table-grid th.highlight {
     background-color: #deebeb;
