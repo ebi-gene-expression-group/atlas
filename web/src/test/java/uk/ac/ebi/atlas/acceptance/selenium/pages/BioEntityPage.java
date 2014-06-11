@@ -218,7 +218,7 @@ public class BioEntityPage extends HeatmapTablePage {
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//tr[" + (zeroBasedTooltipTableRowIndex + 1)
                 + "]//td[" + (zeroBasedTooltipTableColumnIndex + 1) + "]");
-        FluentWait wait = new WebDriverWait(driver, 6L)
+        FluentWait wait = new WebDriverWait(driver, 10L)
                 .pollingEvery(50, TimeUnit.MILLISECONDS);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
