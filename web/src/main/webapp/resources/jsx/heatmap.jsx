@@ -348,17 +348,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 onClick: function () {
-                    var fHeader = this.refs.factorHeaderCell.getDOMNode();
-
-                    if(!this.state.selected) {
-                        $(fHeader).attr('style', 'background-color: #b5eaea !important;');
-//                        this.props.addColumnSelection(this.props.factorName);
-
-                    } else {
-                        $(fHeader).attr('style', 'background-color: #edf6f6 !important;');
-//                        this.props.removeColumnSelection(this.props.factorName);
-                    }
-
                     this.setState({selected:!this.state.selected});
 
                 },
@@ -368,9 +357,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     var hover = this.state.hover && !this.state.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"90px", float:"right", color:"green"}}>  select</span> : null;
                     var selected = this.state.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"120px", float:"right", color:"green"}}> &#10004; </span>: null ;
+                    var className = this.state.selected ? "rotated_cell vertical-header-cell-selected factorNameCell" : "rotated_cell vertical-header-cell factorNameCell";
 
                     return (
-                        <th ref="factorHeaderCell" className="rotated_cell vertical-header-cell factorNameCell" style={{cursor:"pointer"}} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick} rowSpan="2">
+                        <th ref="factorHeaderCell" className={className} style={{cursor:"pointer"}} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick} rowSpan="2">
                             <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{truncatedFactorName}
                                 {hover}
                                 {selected}

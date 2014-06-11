@@ -67,6 +67,10 @@
     background-color: rgb(237, 246, 246) !important;
 }
 
+.vertical-header-cell-selected, .horizontal-header-cell-selected {
+    background-color: rgb(181, 234, 234) !important;
+}
+
 .horizontal-header-cell {
     border: 1px solid #cdcdcd;
     white-space: nowrap;
