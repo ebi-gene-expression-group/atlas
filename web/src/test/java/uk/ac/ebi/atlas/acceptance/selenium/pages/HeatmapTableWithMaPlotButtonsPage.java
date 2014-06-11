@@ -46,7 +46,7 @@ public class HeatmapTableWithMaPlotButtonsPage extends HeatmapTablePage {
 
     public HeatmapTableWithMaPlotButtonsPage clickMaPlotButton(int zeroBasedButtonIndex) {
         maPlotButtons.get(zeroBasedButtonIndex).click();
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {

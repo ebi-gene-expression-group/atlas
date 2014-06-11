@@ -205,7 +205,7 @@ public class BioEntityPage extends HeatmapTablePage {
         hoverOnElement(firstContrastDescriptionCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
-        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        WebDriverWait wait = new WebDriverWait(driver, 10L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
@@ -239,7 +239,7 @@ public class BioEntityPage extends HeatmapTablePage {
         hoverOnElement(firstContrastDescriptionCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastDescription']");
-        WebDriverWait wait = new WebDriverWait(driver, 2L);
+        WebDriverWait wait = new WebDriverWait(driver, 10L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
