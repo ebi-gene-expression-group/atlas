@@ -43,7 +43,7 @@ public class GenePageControllerMirbaseWith1EnsgeneResultSIT extends SinglePageSe
 
     @Test
     public void searchResultsHeader(){
-        assertThat(subject.getSearchResultsHeader(), endsWith("results for ENSG00000231607"));
+        assertThat(subject.getSearchResultsHeader(), endsWith("results for hsa-mir-15a"));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class GenePageControllerMirbaseWith1EnsgeneResultSIT extends SinglePageSe
 
     @Test
     public void globalSearchWidget() {
-        assertThat(subject.getGlobalSearchTerm(), is("ENSG00000231607"));
+        assertThat(subject.getGlobalSearchTerm(), is("hsa-mir-15a"));
         subject.clickShowMoreDataWidget();
         assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
     }

@@ -71,6 +71,7 @@ public class GenePageController extends BioEntityPageController {
         Set<String> ensemblIDs = solrQueryService.fetchGeneIdentifiersFromSolr(identifier, "ensgene", true, "mirbase_id");
         if (ensemblIDs.size() == 1) {
             // if identifer is mirbase ID with one ensgene result, then use the ensgene identifier which has more info
+            model.addAttribute("originalSearchTerm", identifier);
             identifier = ensemblIDs.iterator().next();
         } else if (ensemblIDs.size() > 0) {
             // if identifer is mirbase ID with more than one ensgene result,

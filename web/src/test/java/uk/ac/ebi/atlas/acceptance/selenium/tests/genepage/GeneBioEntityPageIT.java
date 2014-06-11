@@ -46,6 +46,12 @@ public class GeneBioEntityPageIT extends SinglePageSeleniumFixture {
         assertThat(subject.getBioEntityCardTitle(), is("Gpnmb Mus musculus glycoprotein (transmembrane) nmb"));
     }
 
+    @Test
+    public void searchResultsHeader(){
+        assertThat(subject.getSearchResultsHeader(), endsWith("results for ENSMUSG00000029816"));
+    }
+
+
     //This will fail with PhantomJS
     @Test
     public void checkCardExpansion() {

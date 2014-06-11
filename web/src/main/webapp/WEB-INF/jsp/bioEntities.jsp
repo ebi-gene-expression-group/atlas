@@ -27,7 +27,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
 
-<input type="text" value="${empty globalSearchTerm ? entityIdentifier : applicationProperties.urlParamEncode(globalSearchTerm)}" style="display: none" id="searchterm">
+<input type="text" value="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : not empty originalSearchTerm ? originalSearchTerm : entityIdentifier}" style="display: none" id="searchterm">
 
 <c:choose>
     <c:when test="${not empty exceptionMessage}">
@@ -43,7 +43,7 @@
     <c:otherwise>
         <section class="grid_17 alpha extra-padding">
             <h2 class="strapline">
-                Expression Atlas results for <span class="searchterm">${entityIdentifier}</span>
+                Expression Atlas results for <span class="searchterm">${not empty originalSearchTerm ? originalSearchTerm : entityIdentifier}</span>
             </h2>
         </section>
         <aside id="search-extras" class="grid_6 omega shortcuts expander">
