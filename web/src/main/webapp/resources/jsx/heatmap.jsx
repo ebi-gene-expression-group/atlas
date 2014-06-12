@@ -78,11 +78,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         var GenomeTrackBrowserSection = React.createClass({
             render: function () {
-                console.log(this.props.columnsSelected);
+                console.log("selected gene id " + this.props.selectedGeneId + " columns: " + this.props.selectedColumns);
                 return (
                     <div>
                         <button ref="button">Genome Track</button>
-                        <span style={{"font-size": "x-small", "color": "red"}} > {this.props.columnsSelected.length > 0 ? "Selected columns" : "No columns selected"} </span>
+                        <span style={{"font-size": "x-small", "color": "red"}} > {this.props.selectedColumns.length > 0 ? "Selected columns" : "No columns selected"} </span>
                     </div>
                     );
 
@@ -101,7 +101,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 return { showGeneSetProfiles: false,
                     displayLevels: displayLevels,
                     profiles: this.props.profiles,
-                    columnsSelected: []};
+                    selectedColumns: [],
+                    selectedGeneId: null};
             },
 
             toggleGeneSets: function () {
@@ -115,8 +116,12 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
             },
 
-            onColumnSelectionChange: function (columnsSelected) {
-                this.setState({columnsSelected: columnsSelected});
+            onColumnSelectionChange: function (selectedColumns) {
+                this.setState({selectedColumns: selectedColumns});
+            },
+
+            onGeneSelectionChange: function (geneId) {
+                this.setState({selectedGeneId: geneId});
             },
 
             render: function () {
@@ -125,7 +130,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         <tr>
                             <td>
                                 <span> Ensembl Track: </span>
-                                <GenomeTrackBrowserSection columnsSelected={this.state.columnsSelected} />
+                                <GenomeTrackBrowserSection selectedColumns={this.state.selectedColumns} selectedGeneId={this.state.selectedGeneId} />
                             </td>
                         </tr>
                         <tr>
@@ -146,7 +151,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                                 <td>
                                                     <table id="heatmap-table" className="table-grid">
                                                         <HeatmapTableHeader isMicroarray={this.props.isMicroarray} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} onColumnSelectionChange={this.onColumnSelectionChange} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
-                                                        <HeatmapTableBody cells={this.props.cells} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
+                                                        <HeatmapTableRows onGeneSelectionChange={this.onGeneSelectionChange} cells={this.props.cells} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
                                                     </table>
                                                 </td>
                                                 <td style={{"vertical-align": "top"}}>
@@ -510,16 +515,28 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         };
 
 
-        var HeatmapTableBody = React.createClass({
-            render: function () {
-                var props = this.props;
-                var geneProfilesRows = this.props.profiles.map(function (profile) {
-                    return <GeneProfileRow cells={props.cells} designElement={profile.designElement} geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions} displayLevels={props.displayLevels} showGeneSetProfiles={props.showGeneSetProfiles}/>;
+        var HeatmapTableRows = React.createClass({
+
+            getInitialState: function () {
+                return ({selectedGeneId: null});
+            },
+
+            selectGene: function (geneId) {
+                var selectedGeneId = (geneId === this.state.selectedGeneId) ? null : geneId;
+                this.setState({selectedGeneId: selectedGeneId}, function() {
+                    this.props.onGeneSelectionChange(selectedGeneId);
                 });
+
+            },
+
+            render: function () {
+                var geneProfilesRows = this.props.profiles.map(function (profile) {
+                    return <GeneProfileRow selected={profile.geneId === this.state.selectedGeneId} selectGene={this.selectGene} cells={this.props.cells} designElement={profile.designElement} geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>;
+                }.bind(this));
 
                 return (
                     <tbody>
-            {geneProfilesRows}
+                        {geneProfilesRows}
                     </tbody>
                     );
             }
@@ -542,12 +559,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 onClick: function () {
-//                    if (this.state.selected) {
-//                        this.props.removeSelectedColumn(this.props.factorName);
-//                    } else {
-//                        this.props.addSelectedColumn(this.props.factorName);
-//                    }
-                    this.setState({selected:!this.state.selected});
+                    this.props.selectGene(this.props.geneId);
                 },
 
                 geneNameLinked: function () {
@@ -567,9 +579,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 render: function () {
-                    var showSelectTextOnHover = this.state.hover && !this.state.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"130px", float:"right", color:"green"}}>  select</span> : null;
-                    var showTickWhenSelected = this.state.selected ? <span style={{position: "absolute", width:"5px", right:"0px", left:"160px", float:"right", color:"green"}}> &#10004; </span>: null ;
-                    var className = this.state.selected ? "horizontal-header-cell-selected hoverable-header" : "horizontal-header-cell hoverable-header";
+                    var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"130px", float:"right", color:"green"}}>  select</span> : null;
+                    var showTickWhenSelected = this.props.selected ? <span style={{position: "absolute", width:"5px", right:"0px", left:"160px", float:"right", color:"green"}}> &#10004; </span>: null ;
+                    var className = this.props.selected ? "horizontal-header-cell-selected hoverable-header" : "horizontal-header-cell hoverable-header";
 
                     // NB: empty title tag below is required for tooltip to work
                     return (
