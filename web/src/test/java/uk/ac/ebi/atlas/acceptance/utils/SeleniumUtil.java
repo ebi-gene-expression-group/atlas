@@ -12,12 +12,14 @@ import java.util.concurrent.TimeUnit;
 
 public class SeleniumUtil {
 
+    public static final int TIMEOUT_DURATION = 15;
+
     /*
-    Find an element by ID, but wait until the element is available first, ignoringNoSuchElementException errors.
-    */
+                Find an element by ID, but wait until the element is available first, ignoringNoSuchElementException errors.
+                */
     public static WebElement findElementByIdWaitingUntilAvailable(final WebDriver driver, final String id) {
         FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(10, TimeUnit.SECONDS)
+                .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
 
@@ -30,7 +32,7 @@ public class SeleniumUtil {
 
     public static void waitForElementByIdUntilVisible(final WebDriver driver, final String id) {
         FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(10, TimeUnit.SECONDS)
+                .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
 
@@ -39,7 +41,7 @@ public class SeleniumUtil {
 
     public static WebElement findElementByCssWaitingUntilAvailable(final WebDriver driver, final String css) {
         FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(10, TimeUnit.SECONDS)
+                .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
 
@@ -52,7 +54,7 @@ public class SeleniumUtil {
 
     public static WebElement findElementWaitingUntilAvailable(final WebDriver driver, final By by) {
         FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(10, TimeUnit.SECONDS)
+                .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
 
@@ -65,7 +67,7 @@ public class SeleniumUtil {
 
     public static WebElement findChildElementWaitingUntilAvailable(final WebDriver driver, final WebElement parent, final By by) {
         FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(10, TimeUnit.SECONDS)
+                .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
 
