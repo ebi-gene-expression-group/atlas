@@ -146,7 +146,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                                 <td>
                                                     <table id="heatmap-table" className="table-grid">
                                                         <HeatmapTableHeader isMicroarray={this.props.isMicroarray} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} onColumnSelectionChange={this.onColumnSelectionChange} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
-                                                        <HeatmapTableBody cells={this.props.cells} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
+                                                        <HeatmapTableBody cells={this.props.cells} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
                                                     </table>
                                                 </td>
                                                 <td style={{"vertical-align": "top"}}>
@@ -362,15 +362,15 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 render: function () {
                     var truncatedFactorName = restrictLabelSize(this.props.factorName, 17);
 
-                    var hover = this.state.hover && !this.state.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"90px", float:"right", color:"green"}}>  select</span> : null;
-                    var selected = this.state.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"120px", float:"right", color:"green"}}> &#10004; </span>: null ;
-                    var className = this.state.selected ? "rotated_cell vertical-header-cell-selected factorNameCell" : "rotated_cell vertical-header-cell factorNameCell";
+                    var showSelectTextOnHover = this.state.hover && !this.state.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}>  select</span> : null;
+                    var showTickWhenSelected = this.state.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}> &#10004; </span>: null ;
+                    var className = this.state.selected ? "rotated_cell hoverable-header vertical-header-cell-selected " : "rotated_cell hoverable-header vertical-header-cell ";
 
                     return (
-                        <th ref="factorHeaderCell" className={className} style={{cursor:"pointer"}} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick} rowSpan="2">
+                        <th className={className} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick} rowSpan="2">
                             <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{truncatedFactorName}
-                                {hover}
-                                {selected}
+                                {showSelectTextOnHover}
+                                {showTickWhenSelected}
                             </div>
 
                         </th>
@@ -529,12 +529,25 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             return React.createClass({
 
-                designElementCell: function () {
-                    return (
-                        <td class="design-element">
-                            {this.props.designElement}
-                        </td>
-                        );
+                getInitialState: function () {
+                    return ({hover:false, selected:false});
+                },
+
+                onMouseEnter: function () {
+                    this.setState({hover:true});
+                },
+
+                onMouseLeave: function () {
+                    this.setState({hover:false});
+                },
+
+                onClick: function () {
+//                    if (this.state.selected) {
+//                        this.props.removeSelectedColumn(this.props.factorName);
+//                    } else {
+//                        this.props.addSelectedColumn(this.props.factorName);
+//                    }
+                    this.setState({selected:!this.state.selected});
                 },
 
                 geneNameLinked: function () {
@@ -554,13 +567,19 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 render: function () {
+                    var showSelectTextOnHover = this.state.hover && !this.state.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"130px", float:"right", color:"green"}}>  select</span> : null;
+                    var showTickWhenSelected = this.state.selected ? <span style={{position: "absolute", width:"5px", right:"0px", left:"160px", float:"right", color:"green"}}> &#10004; </span>: null ;
+                    var className = this.state.selected ? "horizontal-header-cell-selected hoverable-header" : "horizontal-header-cell hoverable-header";
+
                     // NB: empty title tag below is required for tooltip to work
                     return (
                         <tr>
-                            <td className="horizontal-header-cell">
+                            <td className={className} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick}>
                                 { enableGeneLinks ? this.geneNameLinked() : this.geneNameNotLinked()}
+                                {showSelectTextOnHover}
+                                {showTickWhenSelected}
                             </td>
-                            {this.props.designElement ? this.designElementCell() : null}
+                            {this.props.designElement ?  <td class="design-element">{this.props.designElement}</td> : null}
                             {this.props.cells(this.props)}
                         </tr>
                         );

@@ -63,11 +63,16 @@
     white-space: nowrap;
 }
 
+.hoverable-header:hover, .headerHover {
+    background-color: #deebeb !important;
+    cursor: pointer;
+}
+
 .vertical-header-cell, .horizontal-header-cell {
     background-color: rgb(237, 246, 246) !important;
 }
 
-.vertical-header-cell-selected, .horizontal-header-cell-selected {
+.vertical-header-cell-selected, .vertical-header-cell-selected:hover, .horizontal-header-cell-selected, .horizontal-header-cell-selected:hover {
     background-color: rgb(181, 234, 234) !important;
 }
 
@@ -80,12 +85,6 @@
     padding-right: 5px;
     text-align: left;
 }
-
-.horizontal-header-cell:hover, .vertical-header-cell:hover, .headerHover {
-    background-color: #deebeb !important;
-    cursor: default;
-}
-
 
 .table-grid th.highlight {
     background-color: #deebeb;
