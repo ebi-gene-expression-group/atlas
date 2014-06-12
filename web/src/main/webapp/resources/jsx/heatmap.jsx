@@ -76,12 +76,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
         });
 
-        var EmblTrackButton = React.createClass({
+        var GenomeTrackBrowserSection = React.createClass({
             render: function () {
+                console.log(this.props.columnsSelected);
                 return (
                     <div>
                         <button ref="button">Genome Track</button>
-                        <span style={{"font-size": "x-small", "color": "red"}} > {this.props.columnSelected ? "hi" : "bye"} </span>
+                        <span style={{"font-size": "x-small", "color": "red"}} > {this.props.columnsSelected.length > 0 ? "Selected columns" : "No columns selected"} </span>
                     </div>
                     );
 
@@ -99,7 +100,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 var displayLevels = ($prefFormDisplayLevelsInputElement.val() === "true");
                 return { showGeneSetProfiles: false,
                     displayLevels: displayLevels,
-                    profiles: this.props.profiles};
+                    profiles: this.props.profiles,
+                    columnsSelected: []};
             },
 
             toggleGeneSets: function () {
@@ -114,7 +116,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             },
 
             onColumnSelectionChange: function (columnsSelected) {
-                console.log(columnsSelected);
+                this.setState({columnsSelected: columnsSelected});
             },
 
             render: function () {
@@ -123,7 +125,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         <tr>
                             <td>
                                 <span> Ensembl Track: </span>
-                                <EmblTrackButton columnSelected={true} />
+                                <GenomeTrackBrowserSection columnsSelected={this.state.columnsSelected} />
                             </td>
                         </tr>
                         <tr>
@@ -303,12 +305,12 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             selectedColumns: [],
 
-            addColumnSelected: function (factorName) {
+            addSelectedColumn: function (factorName) {
                 this.selectedColumns.push(factorName);
                 this.props.onColumnSelectionChange(this.selectedColumns);
             },
 
-            removeColumnSelected: function (factorName) {
+            removeSelectedColumn: function (factorName) {
                 var factorIndex = this.selectedColumns.indexOf(factorName);
                 this.selectedColumns.splice(factorIndex, 1);
                 this.props.onColumnSelectionChange(this.selectedColumns);
@@ -319,7 +321,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
                     var factor = assayGroupFactor.factor;
                     return <FactorHeader factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={props.experimentAccession}
-                        addColumnSelected={this.addColumnSelected} removeColumnSelected={this.removeColumnSelected}/>;
+                        addSelectedColumn={this.addSelectedColumn} removeSelectedColumn={this.removeSelectedColumn}/>;
                 }.bind(this));
 
                 return (
@@ -350,9 +352,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                 onClick: function () {
                     if (this.state.selected) {
-                        this.props.removeColumnSelected(this.props.factorName);
+                        this.props.removeSelectedColumn(this.props.factorName);
                     } else {
-                        this.props.addColumnSelected(this.props.factorName);
+                        this.props.addSelectedColumn(this.props.factorName);
                     }
                     this.setState({selected:!this.state.selected});
                 },
