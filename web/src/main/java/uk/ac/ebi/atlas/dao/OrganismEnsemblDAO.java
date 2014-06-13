@@ -36,7 +36,7 @@ public class OrganismEnsemblDAO {
         for (Map<String, Object> it : ensemblNames) {
             String name = (String) it.get("NAME");
             String ensembldb = (String)it.get("ENSEMBLDB");
-            mapBuilder.put(name, ensembldb);
+            mapBuilder.put(name.toLowerCase(), ensembldb);
         }
 
         return mapBuilder.build();

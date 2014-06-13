@@ -25,10 +25,10 @@ public class OrganismEnsemblDAOIT {
     public void getOrganismEnsemblNamesMap() throws Exception {
         Map<String, String> organismEnsemblNames = subject.getEnsemblOrganismNamesMap();
 
-        assertThat(organismEnsemblNames.get("Homo sapiens"), is("ensembl"));
-        assertThat(organismEnsemblNames.get("Mus musculus"), is("ensembl"));
+        assertThat(organismEnsemblNames.get("homo sapiens"), is("ensembl"));
+        assertThat(organismEnsemblNames.get("mus musculus"), is("ensembl"));
         assertThat(organismEnsemblNames.size(), is(30));
-        assertThat(organismEnsemblNames.get("Arabidopsis thaliana"), is("plants"));
+        assertThat(organismEnsemblNames.get("arabidopsis thaliana"), is("plants"));
 
     }
 

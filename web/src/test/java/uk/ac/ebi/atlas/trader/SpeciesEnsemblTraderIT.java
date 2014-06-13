@@ -29,9 +29,9 @@ public class SpeciesEnsemblTraderIT {
     @Before
     public void setUp() throws Exception {
         species = Sets.newTreeSet();
-        species.add("Homo sapiens");
-        species.add("Mus musculus");
-        species.add("Arabidopsis thaliana");
+        species.add("homo sapiens");
+        species.add("mus musculus");
+        species.add("arabidopsis thaliana");
 
     }
 
@@ -40,10 +40,10 @@ public class SpeciesEnsemblTraderIT {
 
         SortedSet<String> ensemblAccessions = subject.getEnsemblAccessions(species);
 
-        assertThat(species, hasItems("Homo sapiens", "Mus musculus", "Arabidopsis thaliana"));
+        assertThat(species, hasItems("homo sapiens", "mus musculus", "arabidopsis thaliana"));
         assertThat(ensemblAccessions, hasItems("ensembl", "plants"));
-        assertThat(subject.getEnsemblAccession("Caenorhabditis elegans"), is("metazoa"));
-        assertThat(subject.getEnsemblAccession("Bos taurus"), is("ensembl"));
+        assertThat(subject.getEnsemblAccession("caenorhabditis elegans"), is("metazoa"));
+        assertThat(subject.getEnsemblAccession("bos taurus"), is("ensembl"));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class SpeciesEnsemblTraderIT {
         Map<String, String> speciesEnsemblMap = subject.getSpeciesEnsemblMap();
 
         assertThat(speciesEnsemblMap.size(), is(30));
-        assertThat(speciesEnsemblMap.get("Homo sapiens"), is("ensembl"));
+        assertThat(speciesEnsemblMap.get("homo sapiens"), is("ensembl"));
 
     }
 

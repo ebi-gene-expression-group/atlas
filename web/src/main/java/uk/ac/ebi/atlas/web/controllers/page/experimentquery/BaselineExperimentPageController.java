@@ -42,6 +42,7 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGe
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineGeneViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
+import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
@@ -73,19 +74,23 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
     private BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
 
+    private SpeciesEnsemblTrader speciesEnsemblTrader;
+
     @Inject
     public BaselineExperimentPageController(BaselineProfilesHeatMap baselineProfilesHeatMap,
                                             ApplicationProperties applicationProperties,
                                             BaselineRequestContextBuilder requestContextBuilder,
                                             FilterFactorsConverter filterFactorsConverter,
                                             FilterFactorMenuBuilder filterFactorMenuBuilder,
-                                            BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder) {
+                                            BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
+                                            SpeciesEnsemblTrader speciesEnsemblTrader) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
         this.baselineProfilesHeatMap = baselineProfilesHeatMap;
         this.filterFactorMenuBuilder = filterFactorMenuBuilder;
         this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
+        this.speciesEnsemblTrader = speciesEnsemblTrader;
     }
 
     @InitBinder
@@ -144,6 +149,10 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         //required by autocomplete
         model.addAttribute("species", species);
+
+        //required for genome track browser in ensembl
+        String ensemblDB = speciesEnsemblTrader.getEnsemblAccession(species);
+        model.addAttribute("ensemblDB", ensemblDB);
 
         if (!result.hasErrors()) {
 

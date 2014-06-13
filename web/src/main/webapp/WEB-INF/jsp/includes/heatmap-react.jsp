@@ -59,10 +59,12 @@
 
         var config = (function (genePropertiesTooltipModule) {
             return {
+                atlasHost: '${pageContext.request.serverName}${serverPort}',
                 contextRoot: '${pageContext.request.contextPath}',
                 experimentAccession: '${experimentAccession}',
                 accessKey: '${param.accessKey}',
                 species: '${species}',
+                ensemblDB: '${ensemblDB}',
                 queryFactorType: '${preferences.queryFactorType}',
                 isExactMatch: ${preferences.exactMatch},
                 enableGeneLinks: true,
