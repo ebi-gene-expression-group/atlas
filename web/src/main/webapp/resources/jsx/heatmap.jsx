@@ -76,22 +76,42 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
         });
 
-        var GenomeTrackBrowserSection = React.createClass({
-            render: function () {
-                console.log("selected gene id " + this.props.selectedGeneId + " columns: " + this.props.selectedColumns);
-                return (
-                    <div>
-                        <button ref="button">Genome Track</button>
-                        <span style={{"font-size": "x-small", "color": "red"}} > {this.props.selectedColumns.length > 0 ? "Selected columns" : "No columns selected"} </span>
-                    </div>
-                    );
+        var GenomeTrackBrowserSection = (function (atlasHost, contextRoot, experimentAccession, accessKey, species, ensemblDB ) {
 
-            },
+            return React.createClass({
 
-            componentDidMount: function () {
-                $(this.refs.button.getDOMNode()).button();
-            }
-        });
+                getInitialState: function () {
+                    return {buttonText: ""};
+                },
+
+                handleOnClick: function () {
+                    this.setState({buttonText: "click!"});
+                },
+
+                goToGenomeTrackBrowser: function () {
+                    var format = (ensemblDB == "ensembl") ? "BEDGRAPH" : "bedGraph";
+                    var url = "http://www.ensembl.org/" + species + "/Location/View?g=" + this.props.selectedGeneId + ";db=core;contigviewbottom=url:http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession
+                        + "/tracks/" + this.props.selectedColumnId + ".genes.expressions.bedGraph;format=" + format;
+
+                    window.location.href=url;
+                },
+
+                render: function () {
+                    console.log("selected gene id " + this.props.selectedGeneId + " selected column: " + this.props.selectedColumnId);
+                    return (
+                        <div>
+                            <button ref="button" onClick={this.goToGenomeTrackBrowser}>Genome Track</button>
+                            <span style={{"font-size": "x-small", "color": "red"}} > {this.state.buttonText} </span>
+                        </div>
+                        );
+
+                },
+
+                componentDidMount: function () {
+                    $(this.refs.button.getDOMNode()).button();
+                }
+            });
+        })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, heatmapConfig.species, heatmapConfig.ensemblDB);
 
 
         var Heatmap = React.createClass({
@@ -101,7 +121,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 return { showGeneSetProfiles: false,
                     displayLevels: displayLevels,
                     profiles: this.props.profiles,
-                    selectedColumns: [],
+                    selectedColumnId: null,
                     selectedGeneId: null};
             },
 
@@ -116,8 +136,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
             },
 
-            onColumnSelectionChange: function (selectedColumns) {
-                this.setState({selectedColumns: selectedColumns});
+            onColumnSelectionChange: function (columnId) {
+                this.setState({selectedColumnId: columnId});
             },
 
             onGeneSelectionChange: function (geneId) {
@@ -130,7 +150,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         <tr>
                             <td>
                                 <span> Ensembl Track: </span>
-                                <GenomeTrackBrowserSection selectedColumns={this.state.selectedColumns} selectedGeneId={this.state.selectedGeneId} />
+                                <GenomeTrackBrowserSection selectedColumnId={this.state.selectedColumnId} selectedGeneId={this.state.selectedGeneId} />
                             </td>
                         </tr>
                         <tr>
@@ -308,17 +328,15 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         var FactorHeaders = React.createClass({
 
-            selectedColumns: [],
-
-            addSelectedColumn: function (factorName) {
-                this.selectedColumns.push(factorName);
-                this.props.onColumnSelectionChange(this.selectedColumns);
+             getInitialState: function () {
+                return ({selectedColumnId: null});
             },
 
-            removeSelectedColumn: function (factorName) {
-                var factorIndex = this.selectedColumns.indexOf(factorName);
-                this.selectedColumns.splice(factorIndex, 1);
-                this.props.onColumnSelectionChange(this.selectedColumns);
+            selectColumn: function (columnId) {
+                var selectedColumnId = (columnId === this.state.selectedColumnId) ? null : columnId;
+                this.setState({selectedColumnId: selectedColumnId}, function() {
+                    this.props.onColumnSelectionChange(selectedColumnId);
+                });
             },
 
             render: function () {
@@ -326,7 +344,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
                     var factor = assayGroupFactor.factor;
                     return <FactorHeader factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={props.experimentAccession}
-                        addSelectedColumn={this.addSelectedColumn} removeSelectedColumn={this.removeSelectedColumn}/>;
+                            selectColumn={this.selectColumn} selected={assayGroupFactor.assayGroupId === this.state.selectedColumnId} />;
                 }.bind(this));
 
                 return (
@@ -356,20 +374,15 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 onClick: function () {
-                    if (this.state.selected) {
-                        this.props.removeSelectedColumn(this.props.factorName);
-                    } else {
-                        this.props.addSelectedColumn(this.props.factorName);
-                    }
-                    this.setState({selected:!this.state.selected});
+                    this.props.selectColumn(this.props.assayGroupId);
                 },
 
                 render: function () {
                     var truncatedFactorName = restrictLabelSize(this.props.factorName, 17);
 
-                    var showSelectTextOnHover = this.state.hover && !this.state.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}>  select</span> : null;
-                    var showTickWhenSelected = this.state.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}> &#10004; </span>: null ;
-                    var className = this.state.selected ? "rotated_cell hoverable-header vertical-header-cell-selected " : "rotated_cell hoverable-header vertical-header-cell ";
+                    var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}>  select</span> : null;
+                    var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}> &#10004; </span>: null ;
+                    var className = this.props.selected ? "rotated_cell hoverable-header vertical-header-cell-selected " : "rotated_cell hoverable-header vertical-header-cell ";
 
                     return (
                         <th className={className} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick} rowSpan="2">
@@ -377,7 +390,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                 {showSelectTextOnHover}
                                 {showTickWhenSelected}
                             </div>
-
                         </th>
                         );
                 }
