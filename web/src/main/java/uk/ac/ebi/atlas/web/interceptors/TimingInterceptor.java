@@ -32,14 +32,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Named
-public class ExperimentTimingInterceptor extends HandlerInterceptorAdapter {
+public class TimingInterceptor extends HandlerInterceptorAdapter {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentTimingInterceptor.class);
+    private static final Logger LOGGER = Logger.getLogger(TimingInterceptor.class);
 
-    protected static final String STOP_WATCH = "stopWatch";
+    protected static final String STOP_WATCH = "requestURLStopWatch";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+
+        String requestURL = request.getRequestURI() +
+                (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+
+        LOGGER.info(requestURL + " - start");
 
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
@@ -55,10 +60,10 @@ public class ExperimentTimingInterceptor extends HandlerInterceptorAdapter {
         StopWatch stopWatch = (StopWatch) request.getAttribute(STOP_WATCH);
         stopWatch.stop();
 
-        LOGGER.info("<postHandle> time taken " + stopWatch.getTotalTimeSeconds()
-                + " s - geneQuery = " + request.getParameter("geneQuery")
-                + ", query factor values = " + request.getParameter("queryFactorValues")
-                + ", cutoff = " + request.getParameter("cutoff"));
+        String requestURL = request.getRequestURI() +
+                (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+
+        LOGGER.info(requestURL + " - time taken " + stopWatch.getTotalTimeSeconds());
     }
 
 }

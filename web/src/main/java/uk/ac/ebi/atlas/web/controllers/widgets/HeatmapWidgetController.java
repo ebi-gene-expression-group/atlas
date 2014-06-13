@@ -105,6 +105,7 @@ public final class HeatmapWidgetController {
 
         prepareModelForTranscripts(model, species, experiment);
 
+        // forward to /widgets/heatmap/protein?type=RNASEQ_MRNA_BASELINE in BaselineExperimentPageController
         return "forward:" + getRequestURL(request) + buildQueryString(species, experiment, disableGeneLinks);
     }
 

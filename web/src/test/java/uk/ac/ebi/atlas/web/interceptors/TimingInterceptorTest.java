@@ -38,9 +38,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExperimentTimingInterceptorTest {
+public class TimingInterceptorTest {
 
-    private ExperimentTimingInterceptor subject;
+    private TimingInterceptor subject;
 
     private HttpServletRequestWrapper requestWrapper;
 
@@ -52,16 +52,16 @@ public class ExperimentTimingInterceptorTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new ExperimentTimingInterceptor();
+        subject = new TimingInterceptor();
         requestWrapper = new HttpServletRequestWrapper(requestMock);
-        when(requestMock.getAttribute(ExperimentTimingInterceptor.STOP_WATCH)).thenReturn(stopWatch);
+        when(requestMock.getAttribute(TimingInterceptor.STOP_WATCH)).thenReturn(stopWatch);
     }
 
     @Test
     public void testPreHandle() throws Exception {
         assertThat(subject.preHandle(requestWrapper, null, null), is(true));
 
-        StopWatch stopWatch = (StopWatch) requestWrapper.getAttribute(ExperimentTimingInterceptor.STOP_WATCH);
+        StopWatch stopWatch = (StopWatch) requestWrapper.getAttribute(TimingInterceptor.STOP_WATCH);
         assertThat(stopWatch, is(not(nullValue())));
     }
 
@@ -69,7 +69,7 @@ public class ExperimentTimingInterceptorTest {
     public void testPostHandle() throws Exception {
         subject.postHandle(requestMock, null, null, null);
 
-        verify(requestMock).getAttribute(ExperimentTimingInterceptor.STOP_WATCH);
+        verify(requestMock).getAttribute(TimingInterceptor.STOP_WATCH);
         verify(stopWatch).stop();
     }
 }

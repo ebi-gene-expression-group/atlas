@@ -112,7 +112,6 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
     @Override
     public void close() throws IOException {
         csvReader.close();
-        LOGGER.debug("<close> close invoked on TsvInputStream");
     }
 
     protected String[] removeGeneIDAndNameColumns(String[] columns) {
