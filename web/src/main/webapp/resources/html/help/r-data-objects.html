@@ -18,7 +18,8 @@ differential experiment page to download one.</p>
 <p><code>load( "/path/to/E-MEXP-1066-atlasExperimentSummary.Rdata" )</code></p>
 
 <p>This has created an object called <code>experimentSummary</code>. This
-object is a <a href="">SimpleList</a> object. Each element is one of three <a href="">Bioconductor</a> objects: 
+object is a <a href="">SimpleList</a> object. Each element is one of three <a
+href="">Bioconductor</a> objects: 
 	<ul>
 		<li><a href="">SummarizedExperiment</a> (RNA-seq experiments)</li>
 		<li><a href="">ExpressionSet</a> (1-colour microarray experiments)</li>
@@ -28,39 +29,89 @@ object is a <a href="">SimpleList</a> object. Each element is one of three <a hr
 
 <h2>How to use it</h2>
 
-<h3>Seeing what's available</h3>
-	
-<p>Now that you have loaded it, you can access the objects by their names in
-the SimpleList. To see these names, type <code>names( experimentSummary )</code>.</p>
+<h3>What does the object contain?</h3>
 
-<!-- screenshot of names -->
+<p>You can see the names of the elements in the list, and thus how many
+elements there are, by typing <code>names( experimentSummary )</code>.</p>
 
-<p>The names of objects in a microarray experiment correspond to the <a
-href="">ArrayExpress</a> array design accessions used in the experiment. In
-our example of <a href="">E-MTAB-1066</a>, only one array design was used,
-which is usually the case for microarray experiments in Expression Atlas.
-However, sometimes microarray experiments contain more than one data-set, each
-of which was done using a different array design. For example, the experiment
-&quot;<a href="http://www.ebi.ac.uk/gxa/experiments/E-MEXP-1025">Transcription
-profiling by array of spinal cord from rats with experimental autoimmune
-encephalomyelitis</a>&quot; uses three different versions of the Affymetrix
-GeneChip Rat Genome U34 array (<a
-href="https://www.ebi.ac.uk/arrayexpress/arrays/A-AFFY-18/">A</a>, <a
-href="https://www.ebi.ac.uk/arrayexpress/arrays/A-AFFY-19/">B</a>, and <a
-href="https://www.ebi.ac.uk/arrayexpress/arrays/A-AFFY-20/">C</a>). For this
-experiment, the SimpleList object that you load will have three elements, each
-one with data from one of the three array versions used.</p>
+<h3>RNA-seq data</h3>
 
-<p>Expression Atlas SimpleList objects for RNA-seq experiments will always
-contain only one element, named <code>rnaseq</code>.</p>
+<p>Data from an RNA-seq experiment is contained in a single <a
+	href="">SummarizedExperiment</a> object in the SimpleList you have loaded.</p>
 
-<h3>Accessing the expression data</h3>
+<!-- screenshot of RNA-seq names -->
 
-<p>First, to keep things simple we assign one of the objects in the SimpleList
-to a new variable, by typing e.g. 
-	<code>mtab1066_affy35 &lt;- mtab1066_list[[ "A-AFFY-35" ]]</code>
-.</p>
+<p>This object is stored under the name "rnaseq", so you can assign it to a new
+variable like this: <code>summarizedExperiment &lt;-
+experimentSummary$rnaseq</code>.</p>
 
 <!-- screenshot of assignment -->
 
+<p>The SummarizedExperiment object contains the following:
+	<ul>
+		<li>Matrix of raw counts (not normalized), in the <strong>assays</strong> slot.</li>
+		<li>Sample annotations, in the <strong>colData</strong> slot.</li>
+		<li>Brief outline of methods, from QC of FASTQ files to production of
+		raw counts, in the <strong>exptData</strong> slot.</li>
+	</ul>
+</p>
 
+<!-- screenshot(s) of these slots? -->
+
+<p>For more information on how to use a SummarizedExperiment object, please see
+the <a href="">documentation</a> from <a href="">Bioconductor</a>.</p>
+
+<h3>One-colour microarray data</h3>
+
+<p>Data from a one-colour, or single-channel, microarray experiment is stored
+in potentially multiple <a href="">ExpressionSet</a> objects in the SimpleList
+summary you have loaded. There is one ExpressionSet per array design used in
+the experiment. The ExpressionSets are indexed by the <a
+	href="">ArrayExpress</a> accession of the array design used.</p>
+
+<!-- screenshot of multi-array names -->
+
+<p>You can access each ExpressionSet via its array design accession, by typing
+e.g. <code>expressionSet &lt;- experimentSummary[[ "A-AFFY-18" ]]</code>.</p>
+
+<!-- screenshot of assignment -->
+
+<p>Each ExpressionSet object contains the following:
+	<ul>
+		<li>Matrix of normalized intensity values, in the
+		<strong>assayData</strong>, accessed via <code>exprs( expressionSet
+			)</code>.</li>
+		<li>Sample annotations, in the <strong>phenoData</strong>, accessed via
+		<code>pData( expressionSet )</code>.</li>
+		<li>Brief outline of normalization method applied, in the
+		<strong>experimentData</strong> slot, accessed via <code>preproc(
+			experimentData( expressionSet ) )</code>.</li>
+	</ul>
+</p>
+
+<!-- screenshot(s) of above? -->
+
+<p>For more information on how to use an ExpressionSet object, please see the
+<a href="">documentation</a> from <a href="">Bioconductor</a>.
+
+<h3>Two-colour microarray data</h3>
+
+<p> Data from a two-colour microarray experiment is stored in one or more <a
+href="">MAList</a> objects. As for ExpressionSet objects, there is one MAList
+per array design used in the experiment. This means you can access each MAList
+object via its <a herf="">ArrayExpress</a> array design accession.</p>
+
+<!-- screenshot of assignment -->
+
+<p>Each MAList object contains the following:
+	<ul>
+		<li>Vector of probe names, in the <strong>genes</strong> element.</li>
+		<li>Matrix of log<sub>2</sub>(fold-changes), in the <strong>M</strong> element.</li>
+		<li>Matrix of LOESS normalized average intensities, in the <strong>A</strong> element.</li>
+	</ul>
+</p>
+
+<!-- screenshot(s) of above? -->
+
+<p>For more information on how to use an MAList object, please see the <a
+href="">documentation</a> from <a href="">Bioconductor</a>.</p>
