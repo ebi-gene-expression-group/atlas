@@ -63,13 +63,13 @@
     white-space: nowrap;
 }
 
+.vertical-header-cell, .horizontal-header-cell {
+    background-color: rgb(237, 246, 246) !important;
+}
+
 .hoverable-header:hover, .headerHover {
     background-color: #deebeb !important;
     cursor: pointer;
-}
-
-.vertical-header-cell, .horizontal-header-cell {
-    background-color: rgb(237, 246, 246) !important;
 }
 
 .vertical-header-cell-selected, .vertical-header-cell-selected:hover, .horizontal-header-cell-selected, .horizontal-header-cell-selected:hover {
