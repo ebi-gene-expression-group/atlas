@@ -64,7 +64,10 @@
                         </td>
                     </tr>
                 </table>
+                <div id="anatomogram-ensembl-browser"></div>
             </div>
+
+            <div id="ensembl-browser" class="aside stickem" style="display:inline"></div>
 
             <div id="heatmap-react" class="heatmap-position"></div>
 

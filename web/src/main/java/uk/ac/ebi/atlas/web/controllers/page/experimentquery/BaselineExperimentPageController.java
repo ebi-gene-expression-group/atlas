@@ -39,9 +39,8 @@ import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineGeneViewModel;
-import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -171,9 +170,15 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
                 //ToDo: check if this can be externalized in the view with a cutom EL or tag function
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
-                    model.addAttribute("maleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, true));
+                    String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, true);
+                    model.addAttribute("maleAnatomogramFile", maleAnatomogramFileName);
 
-                    model.addAttribute("femaleAnatomogramFile", applicationProperties.getAnatomogramFileName(species, false));
+                    String femaleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, false);
+                    model.addAttribute("femaleAnatomogramFile", femaleAnatomogramFileName);
+
+                    model.addAttribute("hasAnatomogram", maleAnatomogramFileName != null || femaleAnatomogramFileName != null);
+                } else {
+                    model.addAttribute("hasAnatomogram", false);
                 }
 
             } catch (GenesNotFoundException e) {

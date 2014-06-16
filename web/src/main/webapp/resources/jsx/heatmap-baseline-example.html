@@ -109,9 +109,7 @@
 
             <div id="heatmap" class="row stickem-container">
 
-                <div class="aside stickem" style="display:inline">
-                    <div id="ensembl-browser"></div>
-                </div>
+                <div id="ensembl-browser" class="aside stickem" style="display:inline"></div>
 
                 <div id="heatmap-react-baseline" class="heatmap-position"></div>
 
@@ -293,8 +291,7 @@
 
     (function ($, React, heatmapModule, heatmapConfig, assayGroupFactors, profiles, geneSetProfiles) {
 
-        var eventEmitter = new EventEmitter();
-        var heatmap = heatmapModule.build(heatmapConfig, eventEmitter, $('#displayLevels'));
+        var heatmap = heatmapModule.build(heatmapConfig, new EventEmitter(), $('#displayLevels'));
 
         React.renderComponent(heatmap.Baseline( {assayGroupFactors:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
             document.getElementById('heatmap-react-baseline')

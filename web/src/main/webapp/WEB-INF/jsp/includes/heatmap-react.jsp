@@ -12,6 +12,8 @@
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/factorInfoTooltipModule.js"></script>
 
+<script src="${pageContext.request.contextPath}/resources/js/EventEmitter-4.2.7.min.js" type="text/javascript"></script>
+
 <script src="${pageContext.request.contextPath}/resources/jsx/heatmap.js" type="text/javascript"></script>
 
 <div id="genenametooltip-content" style="display: none"></div>
@@ -91,12 +93,15 @@
 
 <script type="text/javascript">
     (function ($, React, heatmapModule, heatmapConfig, assayGroupFactors, profiles, geneSetProfiles) {
-        var BaselineHeatmap = heatmapModule.build(heatmapConfig, $('#displayLevels')).Baseline;
+        var heatmap = heatmapModule.build(heatmapConfig, new EventEmitter(), $('#displayLevels'));
 
-        React.renderComponent(BaselineHeatmap( {assayGroupFactors:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
+        React.renderComponent(heatmap.Baseline( {assayGroupFactors:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
             document.getElementById('heatmap-react')
         );
 
+        React.renderComponent(heatmap.EnsemblBrowser(),
+                document.getElementById('${hasAnatomogram ? "anatomogram-ensembl-browser" : "ensembl-browser"}')
+        );
 
     })(jQuery, React, heatmapModule, heatmapData.config,
             heatmapData.assayGroupFactors, heatmapData.profiles, heatmapData.geneSetProfiles);

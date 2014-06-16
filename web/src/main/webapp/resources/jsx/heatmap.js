@@ -6,7 +6,7 @@
 
 var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoTooltipModule, contrastInfoTooltipModule, helpTooltipsModule, TranscriptPopup) {
 
-    var build = function build(heatmapConfig, $prefFormDisplayLevelsInputElement) {
+    var build = function build(heatmapConfig, eventEmitter, $prefFormDisplayLevelsInputElement) {
 
         var Differential = React.createClass({displayName: 'Differential',
 
@@ -46,13 +46,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         var Baseline = React.createClass({displayName: 'Baseline',
 
-            columnHeaders: function () {
-                var props = this.props;
+            columnHeaders: function (assayGroupFactors, experimentAccession) {
                 return React.createClass({
+
                     render: function () {
                         return (
-                            FactorHeaders( {assayGroupFactors:props.assayGroupFactors, experimentAccession:heatmapConfig.experimentAccession} )
-                            )
+                            FactorHeaders( {assayGroupFactors:assayGroupFactors, experimentAccession:experimentAccession})
+                            );
                     }
                 });
             },
@@ -66,15 +66,85 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             legend: function (state) {
                 return (
                     LegendBaseline( {displayLevels:state.displayLevels, minExpressionLevel:state.profiles.minExpressionLevel, maxExpressionLevel:state.profiles.maxExpressionLevel})
-                );
+                    );
             },
 
             render: function () {
                 return (
-                    Heatmap( {legend:this.legend, columnHeaders:this.columnHeaders(), cells:this.cells, displayLevelsButton:DisplayLevelsButtonBaseline, profiles:this.props.profiles, geneSetProfiles:this.props.geneSetProfiles} )
+                    Heatmap( {legend:this.legend, columnHeaders:this.columnHeaders(this.props.assayGroupFactors, heatmapConfig.experimentAccession), cells:this.cells, displayLevelsButton:DisplayLevelsButtonBaseline, profiles:this.props.profiles, geneSetProfiles:this.props.geneSetProfiles} )
                     );
             }
         });
+
+        var EnsemblBrowser = (function (atlasHost, contextRoot, experimentAccession, accessKey, species, ensemblDB ) {
+
+            return React.createClass({
+
+                getInitialState: function () {
+                    return {selectedColumnId: null, selectedGeneId: null, buttonText: ""};
+                },
+
+                componentDidMount: function () {
+                    $(this.refs.button.getDOMNode()).button();
+                    this.updateButton();
+                    eventEmitter.addListener('onColumnSelectionChange', this.onColumnSelectionChange);
+                    eventEmitter.addListener('onGeneSelectionChange', this.onGeneSelectionChange);
+                },
+
+                componentWillUnmount: function () {
+                    eventEmitter.addListener('onColumnSelectionChange', this.onColumnSelectionChange);
+                    eventEmitter.addListener('onGeneSelectionChange', this.onGeneSelectionChange);
+                },
+
+                onColumnSelectionChange: function (selectedColumnId) {
+                    this.setState({selectedColumnId: selectedColumnId});
+                },
+
+                onGeneSelectionChange: function (selectedGeneId) {
+                    this.setState({selectedGeneId: selectedGeneId});
+                },
+
+                updateButton: function() {
+                    var buttonEnabled = this.state.selectedColumnId && this.state.selectedGeneId ? true : false;
+                    $(this.refs.button.getDOMNode()).button("option", "disabled", !buttonEnabled);
+                },
+
+                helpMessage: function (selectedColumnId, selectedGeneId) {
+                    if (selectedColumnId && selectedGeneId) {
+                        return "Go!";
+                    }
+
+                    var noSelectedColumnMessage = selectedColumnId ? "" : "factor";
+                    var noSelectedGeneMessage = selectedGeneId ? "" : "gene";
+
+                    return "Please select a " + noSelectedColumnMessage + (!(selectedColumnId || selectedGeneId) ? " and a " : "") + noSelectedGeneMessage;
+                },
+
+                componentDidUpdate: function () {
+                    this.updateButton();
+                },
+
+                goToGenomeTrackBrowser: function () {
+                    var ensemblHost = (ensemblDB == "ensembl") ? "www" : ensemblDB;
+                    var url = "http://" + ensemblHost + ".ensembl.org/" + species + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;contigviewbottom=url:http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession
+                        + "/tracks/" + this.state.selectedColumnId + ".genes.expressions.bedGraph;format=BEDGRAPH";
+
+                    window.location.href=url;
+                },
+
+                render: function () {
+                    console.log("selected gene id " + this.state.selectedGeneId + " selected column: " + this.state.selectedColumnId);
+                    return (
+                        React.DOM.div(null, 
+                            React.DOM.div( {style:{"font-size": "x-small", "color": "red"}}, this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)),
+                            React.DOM.button( {ref:"button", onClick:this.goToGenomeTrackBrowser}, "Ensembl Browser")
+                        )
+                        );
+
+                }
+            });
+        })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, heatmapConfig.species, heatmapConfig.ensemblDB);
+
 
         var Heatmap = React.createClass({displayName: 'Heatmap',
 
@@ -82,7 +152,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 var displayLevels = ($prefFormDisplayLevelsInputElement.val() === "true");
                 return { showGeneSetProfiles: false,
                     displayLevels: displayLevels,
-                    profiles: this.props.profiles};
+                    profiles: this.props.profiles,
+                    selectedColumnId: null,
+                    selectedGeneId: null};
             },
 
             toggleGeneSets: function () {
@@ -90,7 +162,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 this.setState({showGeneSetProfiles: !this.state.showGeneSetProfiles, profiles: newProfiles});
             },
 
-            toggleLevels: function () {
+            toggleDisplayLevels: function () {
                 var newDisplayLevels = !this.state.displayLevels;
                 this.setState({displayLevels: newDisplayLevels});
                 $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
@@ -102,7 +174,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         React.DOM.tr(null, 
                             React.DOM.td(null, 
                                 React.DOM.span( {id:"geneCount"}, "Showing ", this.state.profiles.genes.length, " of ", this.state.profiles.totalGeneCount, " ", this.state.showGeneSetProfiles ? 'gene sets' : 'genes',  " found: " ),
-                                    this.props.geneSetProfiles ? React.DOM.a( {href:"javascript:void(0)", onClick:this.toggleGeneSets}, this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)') : ''
+                                        this.props.geneSetProfiles ? React.DOM.a( {href:"javascript:void(0)", onClick:this.toggleGeneSets}, this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)') : ''
                             ),
                             React.DOM.td(null, 
                                 this.props.legend(this.state)
@@ -115,7 +187,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                         React.DOM.tbody(null, 
                                             React.DOM.tr(null, 
                                                 React.DOM.td(null, 
-                                                    HeatmapTable( {isMicroarray:this.props.isMicroarray, cells:this.props.cells, displayLevelsButton:this.props.displayLevelsButton, columnHeaders:this.props.columnHeaders, profiles:this.state.profiles.genes, displayLevels:this.state.displayLevels, toggleLevels:this.toggleLevels, showGeneSetProfiles:this.state.showGeneSetProfiles})
+                                                    React.DOM.table( {id:"heatmap-table", className:"table-grid"}, 
+                                                        HeatmapTableHeader( {isMicroarray:this.props.isMicroarray, displayLevelsButton:this.props.displayLevelsButton, columnHeaders:this.props.columnHeaders, displayLevels:this.state.displayLevels, toggleDisplayLevels:this.toggleDisplayLevels, showGeneSetProfiles:this.state.showGeneSetProfiles}),
+                                                        HeatmapTableRows( {cells:this.props.cells, profiles:this.state.profiles.genes, displayLevels:this.state.displayLevels, showGeneSetProfiles:this.state.showGeneSetProfiles})
+                                                    )
                                                 ),
                                                 React.DOM.td( {style:{"vertical-align": "top"}}, 
                                                     DownloadProfilesButton(null )
@@ -237,38 +312,19 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
         });
 
-        var HeatmapTable = React.createClass({displayName: 'HeatmapTable',
-
-            render: function () {
-                return (
-                    React.DOM.table( {id:"heatmap-table", className:"table-grid"}, 
-                        HeatmapTableHeader( {isMicroarray:this.props.isMicroarray, displayLevelsButton:this.props.displayLevelsButton, columnHeaders:this.props.columnHeaders, displayLevels:this.props.displayLevels, toggleLevels:this.props.toggleLevels, showGeneSetProfiles:this.props.showGeneSetProfiles}),
-                        HeatmapTableBody( {cells:this.props.cells, profiles:this.props.profiles, displayLevels:this.props.displayLevels, showGeneSetProfiles:this.props.showGeneSetProfiles})
-                    )
-                    );
-            }
-
-        });
-
         var HeatmapTableHeader = React.createClass({displayName: 'HeatmapTableHeader',
-
-            designElementHeader: function() {
-                return (
-                    React.DOM.td( {className:"horizontal-header-cell"}, "Design Element")
-                    );
-            },
 
             render: function () {
                 var ColumnHeaders = this.props.columnHeaders;
                 return (
                     React.DOM.thead(null, 
                         React.DOM.th( {className:"horizontal-header-cell", colSpan:this.props.isMicroarray ? 2 : undefined}, 
-                            TopLeftCorner( {displayLevelsButton:this.props.displayLevelsButton, displayLevels:this.props.displayLevels, toggleLevels:this.props.toggleLevels})
+                            TopLeftCorner( {displayLevelsButton:this.props.displayLevelsButton, displayLevels:this.props.displayLevels, toggleDisplayLevels:this.props.toggleDisplayLevels})
                         ),
                         ColumnHeaders(null ),
                         React.DOM.tr( {id:"injected-header"}, 
                             React.DOM.td( {className:"horizontal-header-cell"}, this.props.showGeneSetProfiles ? 'Gene set' : 'Gene'),
-                             this.props.isMicroarray ? this.designElementHeader() : null
+                             this.props.isMicroarray ? React.DOM.td( {className:"horizontal-header-cell"}, "Design Element") : null
                         )
                     )
                     );
@@ -290,12 +346,24 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         var FactorHeaders = React.createClass({displayName: 'FactorHeaders',
 
+             getInitialState: function () {
+                return ({selectedColumnId: null});
+            },
+
+            selectColumn: function (columnId) {
+                var selectedColumnId = (columnId === this.state.selectedColumnId) ? null : columnId;
+                this.setState({selectedColumnId: selectedColumnId}, function() {
+                    eventEmitter.emitEvent('onColumnSelectionChange', [selectedColumnId]);
+                });
+            },
+
             render: function () {
                 var props = this.props;
                 var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
                     var factor = assayGroupFactor.factor;
-                    return FactorHeader( {factorName:factor.value, svgPathId:factor.valueOntologyTerm, assayGroupId:assayGroupFactor.assayGroupId, experimentAccession:props.experimentAccession});
-                });
+                    return FactorHeader( {factorName:factor.value, svgPathId:factor.valueOntologyTerm, assayGroupId:assayGroupFactor.assayGroupId, experimentAccession:props.experimentAccession,
+                            selectColumn:this.selectColumn, selected:assayGroupFactor.assayGroupId === this.state.selectedColumnId} );
+                }.bind(this));
 
                 return (
                     React.DOM.div(null, factorHeaders)
@@ -307,15 +375,39 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         var FactorHeader = (function (contextRoot, accessKey) {
             return React.createClass({
 
+                getInitialState: function () {
+                    return ({hover:false, selected:false});
+                },
+
                 componentDidMount: function () {
                     factorInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
                 },
 
+                onMouseEnter: function () {
+                    this.setState({hover:true});
+                },
+
+                onMouseLeave: function () {
+                    this.setState({hover:false});
+                },
+
+                onClick: function () {
+                    this.props.selectColumn(this.props.assayGroupId);
+                },
+
                 render: function () {
                     var truncatedFactorName = restrictLabelSize(this.props.factorName, 17);
+
+                    var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.DOM.span( {style:{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}},   "  select") : null;
+                    var showTickWhenSelected = this.props.selected ? React.DOM.span( {className:"rotate_tick", style:{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}},  " ✔ " ): null ;
+                    var className = this.props.selected ? "rotated_cell hoverable-header vertical-header-cell-selected " : "rotated_cell hoverable-header vertical-header-cell ";
+
                     return (
-                        React.DOM.th( {className:"rotated_cell vertical-header-cell factorNameCell", rowSpan:"2"}, 
-                            React.DOM.div( {'data-organism-part':this.props.factorName, 'data-svg-path-id':this.props.svgPathId, 'data-assay-group-id':this.props.assayGroupId, 'data-experiment-accession':this.props.experimentAccession, className:"factor-header rotate_text"}, truncatedFactorName)
+                        React.DOM.th( {className:className, onMouseEnter:this.onMouseEnter, onMouseLeave:this.onMouseLeave, onClick:this.onClick, rowSpan:"2"}, 
+                            React.DOM.div( {'data-organism-part':this.props.factorName, 'data-svg-path-id':this.props.svgPathId, 'data-assay-group-id':this.props.assayGroupId, 'data-experiment-accession':this.props.experimentAccession, className:"factor-header rotate_text"}, truncatedFactorName,
+                                showSelectTextOnHover,
+                                showTickWhenSelected
+                            )
                         )
                         );
                 }
@@ -385,7 +477,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     return (
                             React.DOM.div( {className:"heatmap-matrix-top-left-corner"}, 
                                 React.DOM.span( {id:"tooltip-span", 'data-help-loc':"#heatMapTableCellInfo", ref:"tooltipSpan"}),
-                                displayLevelsButton( {displayLevels:this.props.displayLevels, toggleLevels:this.props.toggleLevels})
+                                displayLevelsButton( {displayLevels:this.props.displayLevels, toggleDisplayLevels:this.props.toggleDisplayLevels})
                             )
                         );
                 },
@@ -410,7 +502,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                 render: function () {
                     return (
-                        React.DOM.button( {id:"display-levels", className:"display-levels-button", onClick:this.props.toggleLevels})
+                        React.DOM.button( {id:"display-levels", onClick:this.props.toggleDisplayLevels})
                         );
                 },
 
@@ -429,16 +521,52 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         var DisplayLevelsButtonDifferential = createDisplayLevelsButton('Hide log<sub>2</sub>-fold change', 'Display log<sub>2</sub>-fold change');
 
-        var HeatmapTableBody = React.createClass({displayName: 'HeatmapTableBody',
-            render: function () {
-                var props = this.props;
-                var geneProfilesRows = this.props.profiles.map(function (profile) {
-                    return GeneProfileRow( {cells:props.cells, designElement:profile.designElement, geneId:profile.geneId, geneName:profile.geneName, expressions:profile.expressions, displayLevels:props.displayLevels, showGeneSetProfiles:props.showGeneSetProfiles});
+        var createMessageTrackButton = function () {
+
+            return React.createClass({
+
+                messageText: function (text) {
+                    return text;
+                },
+
+                updateMessageButton: function () {
+                    this.setState({text: this.messageText()});
+                },
+
+                componentDidMount: function () {
+                    this.updateMessageButton();
+                },
+
+                componentDidUpdate: function () {
+                    this.updateMessageButton();
+                }
+
+            });
+        };
+
+
+        var HeatmapTableRows = React.createClass({displayName: 'HeatmapTableRows',
+
+            getInitialState: function () {
+                return ({selectedGeneId: null});
+            },
+
+            selectGene: function (geneId) {
+                var selectedGeneId = (geneId === this.state.selectedGeneId) ? null : geneId;
+                this.setState({selectedGeneId: selectedGeneId}, function() {
+                    eventEmitter.emitEvent('onGeneSelectionChange', [selectedGeneId]);
                 });
+
+            },
+
+            render: function () {
+                var geneProfilesRows = this.props.profiles.map(function (profile) {
+                    return GeneProfileRow( {selected:profile.geneId === this.state.selectedGeneId, selectGene:this.selectGene, cells:this.props.cells, designElement:profile.designElement, geneId:profile.geneId, geneName:profile.geneName, expressions:profile.expressions, displayLevels:this.props.displayLevels, showGeneSetProfiles:this.props.showGeneSetProfiles});
+                }.bind(this));
 
                 return (
                     React.DOM.tbody(null, 
-            geneProfilesRows
+                        geneProfilesRows
                     )
                     );
             }
@@ -448,12 +576,20 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             return React.createClass({
 
-                designElementCell: function () {
-                    return (
-                        React.DOM.td( {class:"design-element"}, 
-                            this.props.designElement
-                        )
-                        );
+                getInitialState: function () {
+                    return ({hover:false, selected:false});
+                },
+
+                onMouseEnter: function () {
+                    this.setState({hover:true});
+                },
+
+                onMouseLeave: function () {
+                    this.setState({hover:false});
+                },
+
+                onClick: function () {
+                    this.props.selectGene(this.props.geneId);
                 },
 
                 geneNameLinked: function () {
@@ -473,13 +609,19 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 render: function () {
+                    var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.DOM.span( {style:{position: "relative", float:"right", color:"green"}},   "  select") : null;
+                    var showTickWhenSelected = this.props.selected ? React.DOM.span( {style:{position: "relative", float:"right", color:"green"}},  " ✔ " ): null ;
+                    var className = this.props.selected ? "horizontal-header-cell-selected hoverable-header" : "horizontal-header-cell hoverable-header";
+
                     // NB: empty title tag below is required for tooltip to work
                     return (
                         React.DOM.tr(null, 
-                            React.DOM.td( {className:"horizontal-header-cell"}, 
-                                 enableGeneLinks ? this.geneNameLinked() : this.geneNameNotLinked()
+                            React.DOM.td( {className:className, onMouseEnter:this.onMouseEnter, onMouseLeave:this.onMouseLeave, onClick:this.onClick}, 
+                                 enableGeneLinks ? this.geneNameLinked() : this.geneNameNotLinked(),
+                                showSelectTextOnHover,
+                                showTickWhenSelected
                             ),
-                            this.props.designElement ? this.designElementCell() : null,
+                            this.props.designElement ?  React.DOM.td( {class:"design-element"}, this.props.designElement) : null,
                             this.props.cells(this.props)
                         )
                         );
@@ -513,10 +655,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     );
             }
 
+            function hasTranscriptTooltip(props) {
+                return (!props.showGeneSetProfiles && hasKnownExpression(props.value));
+            }
+
             return React.createClass({
 
                 onClick: function () {
-                    if (!this.props.showGeneSetProfiles && hasKnownExpression(this.props.value)) {
+                    if (hasTranscriptTooltip(this.props)) {
 
                         var factorValue = this.props.factorName,
                             geneId = this.props.geneId,
@@ -531,8 +677,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         return (React.DOM.td(null));
                     }
 
+                    var style = {"background-color": this.props.color};
+
+                    if (hasTranscriptTooltip(this.props)) {
+                        style.cursor = "pointer";
+                    }
+
                     return (
-                        React.DOM.td( {style:{"background-color": this.props.color}, onClick:this.onClick}, 
+                        React.DOM.td( {style:style, onClick:this.onClick}, 
                             React.DOM.div(
                             {className:isUnknownExpression(this.props.value) || this.props.displayLevels ? "show_cell" : "hide_cell",
                             'data-svg-path-id':this.props.svgPathId}, 
@@ -621,7 +773,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         return {
             Baseline: Baseline,
-            Differential: Differential
+            Differential: Differential,
+            EnsemblBrowser: EnsemblBrowser
         };
     };
 
