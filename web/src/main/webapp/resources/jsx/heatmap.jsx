@@ -6,7 +6,7 @@
 
 var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoTooltipModule, contrastInfoTooltipModule, helpTooltipsModule, TranscriptPopup) {
 
-    var build = function build(heatmapConfig, $prefFormDisplayLevelsInputElement) {
+    var build = function build(heatmapConfig, eventEmitter, $prefFormDisplayLevelsInputElement) {
 
         var Differential = React.createClass({
 
@@ -51,7 +51,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     render: function () {
                         return (
-                            <FactorHeaders assayGroupFactors={assayGroupFactors} experimentAccession={experimentAccession} onColumnSelectionChange={this.props.onColumnSelectionChange} />
+                            <FactorHeaders assayGroupFactors={assayGroupFactors} experimentAccession={experimentAccession}/>
                             );
                     }
                 });
@@ -76,39 +76,71 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
         });
 
-        var GenomeTrackBrowserSection = (function (atlasHost, contextRoot, experimentAccession, accessKey, species, ensemblDB ) {
+        var EnsemblBrowser = (function (atlasHost, contextRoot, experimentAccession, accessKey, species, ensemblDB ) {
 
             return React.createClass({
 
                 getInitialState: function () {
-                    return {buttonText: ""};
+                    return {selectedColumnId: null, selectedGeneId: null, buttonText: ""};
                 },
 
-                handleOnClick: function () {
-                    this.setState({buttonText: "click!"});
+                componentDidMount: function () {
+                    $(this.refs.button.getDOMNode()).button();
+                    this.updateButton();
+                    eventEmitter.addListener('onColumnSelectionChange', this.onColumnSelectionChange);
+                    eventEmitter.addListener('onGeneSelectionChange', this.onGeneSelectionChange);
+                },
+
+                componentWillUnmount: function () {
+                    eventEmitter.addListener('onColumnSelectionChange', this.onColumnSelectionChange);
+                    eventEmitter.addListener('onGeneSelectionChange', this.onGeneSelectionChange);
+                },
+
+                onColumnSelectionChange: function (selectedColumnId) {
+                    this.setState({selectedColumnId: selectedColumnId});
+                },
+
+                onGeneSelectionChange: function (selectedGeneId) {
+                    this.setState({selectedGeneId: selectedGeneId});
+                },
+
+                updateButton: function() {
+                    var buttonEnabled = this.state.selectedColumnId && this.state.selectedGeneId ? true : false;
+                    $(this.refs.button.getDOMNode()).button("option", "disabled", !buttonEnabled);
+                },
+
+                helpMessage: function (selectedColumnId, selectedGeneId) {
+                    if (selectedColumnId && selectedGeneId) {
+                        return "Go!";
+                    }
+
+                    var noSelectedColumnMessage = selectedColumnId ? "" : "factor";
+                    var noSelectedGeneMessage = selectedGeneId ? "" : "gene";
+
+                    return "Please select a " + noSelectedColumnMessage + (!(selectedColumnId || selectedGeneId) ? " and a " : "") + noSelectedGeneMessage;
+                },
+
+                componentDidUpdate: function () {
+                    this.updateButton();
                 },
 
                 goToGenomeTrackBrowser: function () {
-                    var format = (ensemblDB == "ensembl") ? "BEDGRAPH" : "bedGraph";
-                    var url = "http://www.ensembl.org/" + species + "/Location/View?g=" + this.props.selectedGeneId + ";db=core;contigviewbottom=url:http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession
-                        + "/tracks/" + this.props.selectedColumnId + ".genes.expressions.bedGraph;format=" + format;
+                    var ensemblHost = (ensemblDB == "ensembl") ? "www" : ensemblDB;
+                    var url = "http://" + ensemblHost + ".ensembl.org/" + species + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;contigviewbottom=url:http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession
+                        + "/tracks/" + this.state.selectedColumnId + ".genes.expressions.bedGraph;format=BEDGRAPH";
 
                     window.location.href=url;
                 },
 
                 render: function () {
-                    console.log("selected gene id " + this.props.selectedGeneId + " selected column: " + this.props.selectedColumnId);
+                    console.log("selected gene id " + this.state.selectedGeneId + " selected column: " + this.state.selectedColumnId);
                     return (
                         <div>
-                            <button ref="button" onClick={this.goToGenomeTrackBrowser}>Genome Track</button>
-                            <span style={{"font-size": "x-small", "color": "red"}} > {this.state.buttonText} </span>
+                            <div style={{"font-size": "x-small", "color": "red"}}>{this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)}</div>
+                            <button ref="button" onClick={this.goToGenomeTrackBrowser}>Ensembl Browser</button>
                         </div>
                         );
 
-                },
-
-                componentDidMount: function () {
-                    $(this.refs.button.getDOMNode()).button();
                 }
             });
         })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, heatmapConfig.species, heatmapConfig.ensemblDB);
@@ -136,23 +168,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
             },
 
-            onColumnSelectionChange: function (columnId) {
-                this.setState({selectedColumnId: columnId});
-            },
-
-            onGeneSelectionChange: function (geneId) {
-                this.setState({selectedGeneId: geneId});
-            },
-
             render: function () {
                 return (
                     <table>
-                        <tr>
-                            <td>
-                                <span> Ensembl Track: </span>
-                                <GenomeTrackBrowserSection selectedColumnId={this.state.selectedColumnId} selectedGeneId={this.state.selectedGeneId} />
-                            </td>
-                        </tr>
                         <tr>
                             <td>
                                 <span id="geneCount">Showing {this.state.profiles.genes.length} of {this.state.profiles.totalGeneCount} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span>
@@ -170,8 +188,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                             <tr>
                                                 <td>
                                                     <table id="heatmap-table" className="table-grid">
-                                                        <HeatmapTableHeader isMicroarray={this.props.isMicroarray} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} onColumnSelectionChange={this.onColumnSelectionChange} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
-                                                        <HeatmapTableRows onGeneSelectionChange={this.onGeneSelectionChange} cells={this.props.cells} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
+                                                        <HeatmapTableHeader isMicroarray={this.props.isMicroarray} displayLevelsButton={this.props.displayLevelsButton} columnHeaders={this.props.columnHeaders} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
+                                                        <HeatmapTableRows cells={this.props.cells} profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
                                                     </table>
                                                 </td>
                                                 <td style={{"vertical-align": "top"}}>
@@ -303,7 +321,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         <th className="horizontal-header-cell" colSpan={this.props.isMicroarray ? 2 : undefined}>
                             <TopLeftCorner displayLevelsButton={this.props.displayLevelsButton} displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels}/>
                         </th>
-                        <ColumnHeaders onColumnSelectionChange={this.props.onColumnSelectionChange}/>
+                        <ColumnHeaders />
                         <tr id="injected-header">
                             <td className="horizontal-header-cell">{this.props.showGeneSetProfiles ? 'Gene set' : 'Gene'}</td>
                             { this.props.isMicroarray ? <td className="horizontal-header-cell">Design Element</td> : null}
@@ -335,7 +353,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             selectColumn: function (columnId) {
                 var selectedColumnId = (columnId === this.state.selectedColumnId) ? null : columnId;
                 this.setState({selectedColumnId: selectedColumnId}, function() {
-                    this.props.onColumnSelectionChange(selectedColumnId);
+                    eventEmitter.emitEvent('onColumnSelectionChange', [selectedColumnId]);
                 });
             },
 
@@ -536,7 +554,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             selectGene: function (geneId) {
                 var selectedGeneId = (geneId === this.state.selectedGeneId) ? null : geneId;
                 this.setState({selectedGeneId: selectedGeneId}, function() {
-                    this.props.onGeneSelectionChange(selectedGeneId);
+                    eventEmitter.emitEvent('onGeneSelectionChange', [selectedGeneId]);
                 });
 
             },
@@ -591,8 +609,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 render: function () {
-                    var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"130px", float:"right", color:"green"}}>  select</span> : null;
-                    var showTickWhenSelected = this.props.selected ? <span style={{position: "absolute", width:"5px", right:"0px", left:"160px", float:"right", color:"green"}}> &#10004; </span>: null ;
+                    var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "relative", float:"right", color:"green"}}>  select</span> : null;
+                    var showTickWhenSelected = this.props.selected ? <span style={{position: "relative", float:"right", color:"green"}}> &#10004; </span>: null ;
                     var className = this.props.selected ? "horizontal-header-cell-selected hoverable-header" : "horizontal-header-cell hoverable-header";
 
                     // NB: empty title tag below is required for tooltip to work
@@ -755,7 +773,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         return {
             Baseline: Baseline,
-            Differential: Differential
+            Differential: Differential,
+            EnsemblBrowser: EnsemblBrowser
         };
     };
 

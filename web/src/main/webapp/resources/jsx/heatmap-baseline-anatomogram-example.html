@@ -29,6 +29,7 @@
     <script src="/gxa/resources/js/transcriptPopupModule.js"></script>
     <script src="/gxa/resources/js/anatomogramModule.js"></script>
     <script src="/gxa/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
+    <script src="/gxa/resources/js/EventEmitter-4.2.7.js"></script>
 
     <!-- for transcripts start -->
         <!--[if lte IE 8]>
@@ -103,31 +104,39 @@
 <!-- for display levels button -->
 <input id="displayLevels" name="displayLevels" type="hidden" value="false">
 
-<div id="atlas-content">
-    <div id="heatmap" class="row stickem-container">
+<div id="content" class="grid_24">
+    <div id="atlas-content">
+        <section id="stickem-container" style="overflow: auto;" class="extra-padding">
 
-        <div id="anatomogram" class="aside stickem double-click-noselection" style="display:inline">
-            <table>
-                <tr>
-                    <td style="padding-top: 15px; vertical-align:top">
-                    <span id="sex-toggle">
-                        <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
-                             style="width:20px;height:38px;padding:2px"
-                             src="/gxa/resources/images/male_selected.png"/>
-                    </span>
-                        <!--
-                        <span data-help-loc="#anatomogram"/>
-                        -->
-                    </td>
-                    <td>
-                        <div id="anatomogramBody" style="display:inline-block;width: 230px; height:360px;">
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
+            <div id="heatmap" class="row stickem-container">
 
-        <div id="heatmap-react-baseline" class="heatmap-position"></div>
+                <div id="anatomogram" class="aside stickem double-click-noselection" style="display:inline">
+                    <table>
+                        <tr>
+                            <td style="padding-top: 15px; vertical-align:top">
+                            <span id="sex-toggle">
+                                <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
+                                     style="width:20px;height:38px;padding:2px"
+                                     src="/gxa/resources/images/male_selected.png"/>
+                            </span>
+                                <!--
+                                <span data-help-loc="#anatomogram"/>
+                                -->
+                            </td>
+                            <td>
+                                <div id="anatomogramBody" style="display:inline-block;width: 230px; height:360px;">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="ensembl-browser"></div>
+                </div>
+
+                <div id="heatmap-react-baseline" class="heatmap-position"></div>
+
+            </div>
+
+        </section>
     </div>
 </div>
 
@@ -137,10 +146,12 @@
 
         var heatmapConfig = (function (genePropertiesTooltipModule) {
             return {
+                atlasHost: 'wwwdev.ebi.ac.uk',
                 contextRoot: '/gxa',
                 experimentAccession: 'E-GEOD-26284',
                 accessKey: '',
                 species: 'homo sapiens',
+                ensemblDB: 'ensembl',
                 queryFactorType: 'ORGANISM_PART',
                 isExactMatch: true,
                 enableGeneLinks: true,
@@ -314,10 +325,15 @@
 
     (function ($, React, heatmapModule, anatomogramModule, heatmapConfig, assayGroupFactors, profiles, geneSetProfiles) {
 
-        var BaselineHeatmap = heatmapModule.build(heatmapConfig, $('#displayLevels')).Baseline;
+        var eventEmitter = new EventEmitter();
+        var heatmap = heatmapModule.build(heatmapConfig, eventEmitter, $('#displayLevels'));
 
-        React.renderComponent(BaselineHeatmap( {assayGroupFactors:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
+        React.renderComponent(heatmap.Baseline( {assayGroupFactors:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
             document.getElementById('heatmap-react-baseline')
+        );
+
+        React.renderComponent(heatmap.EnsemblBrowser(),
+            document.getElementById('ensembl-browser')
         );
 
         var allQueryFactorValues = [16];
