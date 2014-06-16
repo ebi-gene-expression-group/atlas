@@ -117,6 +117,8 @@ public class BioentitiesSearchController {
 
             model.addAttribute("preferences", new DifferentialRequestPreferences());
 
+            model.addAttribute("requestParameters", requestParameters);
+
             String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery, requestParameters.getCondition());
 
             model.addAttribute("globalSearchTerm", globalSearchTerm);
