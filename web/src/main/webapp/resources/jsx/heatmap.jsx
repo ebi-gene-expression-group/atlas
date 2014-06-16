@@ -133,7 +133,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 render: function () {
-                    console.log("selected gene id " + this.state.selectedGeneId + " selected column: " + this.state.selectedColumnId);
+                    //console.log("selected gene id " + this.state.selectedGeneId + " selected column: " + this.state.selectedColumnId);
                     return (
                         <div>
                             <div style={{"font-size": "x-small"}}>{this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)}</div>

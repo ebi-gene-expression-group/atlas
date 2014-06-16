@@ -56,6 +56,8 @@
     </table>
 </section>
 
+<c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
+
 <script type="text/javascript">
     var heatmapData = (function (genePropertiesTooltipModule) {
 
