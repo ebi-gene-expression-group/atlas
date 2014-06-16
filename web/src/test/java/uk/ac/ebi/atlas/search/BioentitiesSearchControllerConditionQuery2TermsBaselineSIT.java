@@ -55,13 +55,13 @@ public class BioentitiesSearchControllerConditionQuery2TermsBaselineSIT extends 
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-GEOD-26284"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("ENCODE cell lines - total RNA, whole cell"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-GEOD-26284?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=hMSC-AT%20cell%20line&geneQuery=&serializedFilterFactors=RNA:total%20RNA,CELLULAR_COMPONENT:whole%20cell"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-GEOD-26284?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=hMSC-AT%20cell%20line&geneQuery=&exactMatch=true&serializedFilterFactors=RNA:total%20RNA,CELLULAR_COMPONENT:whole%20cell"));
 
 
         assertThat(baselineCounts.get(3).getExperimentAccession(), is("E-MTAB-1733"));
         assertThat(baselineCounts.get(3).getExperimentName(), is("Twenty seven tissues"));
         assertThat(baselineCounts.get(3).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(3).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=adipose%20tissue&geneQuery="));
+        assertThat(baselineCounts.get(3).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=adipose%20tissue&geneQuery=&exactMatch=true"));
     }
 
 }

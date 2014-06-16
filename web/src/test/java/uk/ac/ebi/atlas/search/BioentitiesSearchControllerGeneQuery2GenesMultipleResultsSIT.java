@@ -54,12 +54,12 @@ public class BioentitiesSearchControllerGeneQuery2GenesMultipleResultsSIT extend
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-513"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Illumina Body Map"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-513?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=ENSG00000161547+ENSG00000211855"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-513?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=ENSG00000161547+ENSG00000211855&exactMatch=true"));
 
         assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-1733"));
         assertThat(baselineCounts.get(1).getExperimentName(), is("Twenty seven tissues"));
         assertThat(baselineCounts.get(1).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(1).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=ENSG00000161547+ENSG00000211855"));
+        assertThat(baselineCounts.get(1).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=ENSG00000161547+ENSG00000211855&exactMatch=true"));
     }
 
 }

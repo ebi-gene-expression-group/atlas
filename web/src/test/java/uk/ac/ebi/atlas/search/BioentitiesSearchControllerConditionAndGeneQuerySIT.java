@@ -53,7 +53,7 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=%22apoptotic+process%22"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=%22apoptotic+process%22&exactMatch=true"));
 
     }
 
