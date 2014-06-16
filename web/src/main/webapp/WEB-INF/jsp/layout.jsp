@@ -24,6 +24,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="eng"
       class=" js flexbox canvas canvastext no-touch rgba hsla multiplebgs backgroundsize borderimage
@@ -34,21 +35,19 @@
     <c:set var="baseUri" value="${requestScope['javax.servlet.forward.request_uri']}" />
     <c:set var="experimentAccession" value="${experimentAccession}"/>
     <c:set var="arrayDesign" value="${arrayDesign}"/>
+    <c:set var="species" value="${species}" />
+    <c:set var="specie_s" value="${fn:replace(species,' ','%20')}"/>
+
     <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
 
     <br>
     <c:set var="qcUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/qc/').concat(arrayDesign).concat('/index.html')}" />
-    <c:set var="fastQCUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/qc/').concat('qc.html')}" />
-    <c:set var="fastQCMappingUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/qc/mapping/').concat('tophat1.html')}" />
+    <c:set var="fastQCUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/fastqc/').concat(specie_s).concat('/qc.html')}" />
+    <c:set var="fastQCMappingUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/fastqc/').concat(specie_s).concat('/mapping/tophat1.html')}" />
 
     <c:if test="${!baseUri.equals(qcUri) && !baseUri.equals(fastQCUri) && !baseUri.equals(fastQCMappingUri) && !baseUri.endsWith('fastqc_report.html')}">
         <base href="//${pageContext.request.serverName}${serverPort}${pageContext.request.contextPath}/"/>
     </c:if>
-
-    <%--<c:if test="${!baseUri.equals('/gxa/experiments/'.concat(experimentAccession).concat('/qc/').concat(arrayDesign).concat('/index.html'))}">--%>
-        <%--<c:if test="${!baseUri.equals(qcUri) && !baseUri.equals(fastQCUri) && !baseUri.equals(fastQCMappingUri)}">--%>
-        <%--<base href="//${pageContext.request.serverName}${serverPort}${pageContext.request.contextPath}"/>--%>
-    <%--</c:if>--%>
 
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
     <meta content="en-GB" http-equiv="Content-Language">

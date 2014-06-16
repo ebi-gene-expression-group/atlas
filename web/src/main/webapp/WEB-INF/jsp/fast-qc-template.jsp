@@ -9,7 +9,7 @@
 <div id="fastQcReports" style="width: 100%">
 
     <%--@elvariable id="fastQReportUtil" type="uk.ac.ebi.atlas.utils.FastQCReportUtil"--%>
-    <c:set var="hasFastQcReport" value="${fastQReportUtil.hasFastQC(experimentAccession)}"/>
+    <c:set var="hasFastQcReport" value="${fastQReportUtil.hasFastQC(experimentAccession,species)}"/>
     <c:if test="${hasFastQcReport}" >
 
         <form:form commandName="preferences" method="get" id="prefForm" >

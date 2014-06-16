@@ -49,23 +49,24 @@ public class FastQCReportController {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/qc/{resource:.*}",
+    @RequestMapping(value = "/experiments/{experimentAccession}/fastqc/{species}/{resource:.*}",
                     method = RequestMethod.GET)
     public String getFastQCPage(HttpServletRequest request, Model model,
                                 @PathVariable String experimentAccession,
+                                @PathVariable String species,
                                 @PathVariable String resource,
                                 @RequestParam(value = "accessKey",required = false) String accessKey,
                                 @ModelAttribute("preferences") @Valid FastQCReportRequestPreferences preferences, RedirectAttributes ra) throws IOException {
 
-
         if(!resource.equals("qc.html")) {
             // NB: resources do not need access key
             // otherwise we would have to add the access key to the query string for every resource in the page
-            return forwardToQcResource(experimentAccession, resource);
+            return forwardToQcResource(experimentAccession, species, resource);
         }
 
         // will generate 404 here for private experiments without access key
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+
         prepareModel(request, model, experiment);
 
         model.addAttribute("fastQCReports", preferences.fastQCReportsList());
@@ -79,7 +80,7 @@ public class FastQCReportController {
         if(reportSelected != null) {
             //eg: redirect to nicer URL when arrayDesign is provided as a query string parameter
             if(reportSelected.equals("MAPPING")){
-                String path = MessageFormat.format("/experiments/{0}/qc/mapping/{1}", experimentAccession, "tophat1.html");
+                String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/mapping/{2}", experimentAccession, species, "tophat1.html");
                 return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
             }
         }
@@ -88,35 +89,37 @@ public class FastQCReportController {
         //otherwise the combo is not being updated.
         preferences.setSelectedReport(reportSelected);
 
-        if(!fastQCReportUtil.hasFastQC(experimentAccession)) {
+        if(!fastQCReportUtil.hasFastQC(experimentAccession, species)) {
             throw new ResourceNotFoundException("No fast qc report for " + experimentAccession);
         }
 
-        String path = fastQCReportUtil.buildFastQCIndexHtmlPath(experimentAccession);
+        String path = fastQCReportUtil.buildFastQCIndexHtmlPath(experimentAccession, species);
         request.setAttribute("contentPath", FileSystems.getDefault().getPath(path));
 
         return "fast-qc-template";
     }
 
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
-    public String forwardToQcResource(String experimentAccession, String resource) throws IOException {
-        String path = MessageFormat.format("/expdata/{0}/qc/{1}/", experimentAccession, resource);
+    public String forwardToQcResource(String experimentAccession, String species, String resource) throws IOException {
+        String specie_s = species.replaceAll(" ", "_").toLowerCase();
+        String path = MessageFormat.format("/expdata/{0}/qc/{1}/{2}/", experimentAccession, specie_s, resource);
 
         return "forward:" + path;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/qc/mapping/{resource:.*}",
+    @RequestMapping(value = "/experiments/{experimentAccession}/fastqc/{species}/mapping/{resource:.*}",
             method = RequestMethod.GET)
     public String getFastMappingQCPage(HttpServletRequest request, Model model,
                                 @PathVariable String experimentAccession,
                                 @PathVariable String resource,
+                                @PathVariable String species,
                                 @RequestParam(value = "accessKey",required = false) String accessKey,
                                 @ModelAttribute("preferences") @Valid FastQCReportRequestPreferences preferences, RedirectAttributes ra) throws IOException {
 
         if(!resource.equals("tophat1.html")) {
             // NB: resources do not need access key
             // otherwise we would have to add the access key to the query string for every resource in the page
-            return forwardToMappingQcResource(experimentAccession, resource);
+            return forwardToMappingQcResource(experimentAccession, species, resource);
         }
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
@@ -133,7 +136,7 @@ public class FastQCReportController {
         if(reportSelected != null) {
             //eg: redirect to nicer URL when arrayDesign is provided as a query string parameter
             if(reportSelected.equals("QC")){
-                String path = MessageFormat.format("/experiments/{0}/qc/{1}", experimentAccession, "qc.html");
+                String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/{2}", experimentAccession, species, "qc.html");
                 return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
             }
         }
@@ -142,11 +145,11 @@ public class FastQCReportController {
         //otherwise the combo is not being updated.
         preferences.setSelectedReport(reportSelected);
 
-        if(!fastQCReportUtil.hasMappingQC(experimentAccession)) {
+        if(!fastQCReportUtil.hasMappingQC(experimentAccession, species)) {
             throw new ResourceNotFoundException("No fast qc report for " + experimentAccession);
         }
 
-        String path = fastQCReportUtil.buildMappingQCIndexHtmlPath(experimentAccession);
+        String path = fastQCReportUtil.buildMappingQCIndexHtmlPath(experimentAccession, species);
         request.setAttribute("contentPath", FileSystems.getDefault().getPath(path));
 
         return "fast-qc-template";
@@ -154,15 +157,17 @@ public class FastQCReportController {
     }
 
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
-    public String forwardToMappingQcResource(String experimentAccession, String resource) throws IOException {
-        String path = MessageFormat.format("/expdata/{0}/qc/mapping/{1}", experimentAccession, resource);
+    public String forwardToMappingQcResource(String experimentAccession, String species, String resource) throws IOException {
+        String specie_s = species.replaceAll(" ", "_").toLowerCase();
+        String path = MessageFormat.format("/expdata/{0}/qc/{1}/mapping/{2}", experimentAccession, specie_s, resource);
 
         return "forward:" + path;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/qc/riq/**",
+    @RequestMapping(value = "/experiments/{experimentAccession}/fastqc/{species}/riq/**",
                     method = RequestMethod.GET)
     public String getFastQCReportPage(HttpServletRequest request, Model model, @PathVariable String experimentAccession,
+                                      @PathVariable String species,
                                       @RequestParam(value = "accessKey",required = false) String accessKey,
                                       @ModelAttribute("preferences") @Valid FastQCReportRequestPreferences preferences) throws IOException {
 
@@ -170,6 +175,7 @@ public class FastQCReportController {
         prepareModel(request, model, experiment);
 
         model.addAttribute("fastQCReports", preferences.fastQCReportsList());
+
 
         reportSelected = preferences.getSelectedReport();
 
@@ -180,7 +186,7 @@ public class FastQCReportController {
         if(reportSelected != null) {
             //eg: redirect to nicer URL when arrayDesign is provided as a query string parameter
             if(reportSelected.equals("MAPPING")){
-                String path = MessageFormat.format("/experiments/{0}/qc/mapping/{1}", experimentAccession, "tophat1.html");
+                String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/mapping/{2}", experimentAccession, species, "tophat1.html");
                 return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
             }
         }
@@ -189,14 +195,14 @@ public class FastQCReportController {
         //otherwise the combo is not being updated.
         preferences.setSelectedReport(reportSelected);
 
-        String beginPath = fastQCReportUtil.buildFastQCReportIndexHtmlPath(experimentAccession);
+        String beginPath = fastQCReportUtil.buildFastQCReportIndexHtmlPath(experimentAccession, species);
 
         String endPath = extractPath(request.getServletPath());
 
         //We need to check if the resource is an image or icon and handle it to the correspondent path
         String file = endPath.substring(endPath.lastIndexOf("/") + 1);
         if(!file.equals("fastqc_report.html")){
-            return forwardToFastQCReportMappingResources(experimentAccession, endPath);
+            return forwardToFastQCReportMappingResources(experimentAccession, species, endPath);
         }
 
         String fullPath = beginPath + "/" + endPath;
@@ -210,8 +216,9 @@ public class FastQCReportController {
     }
 
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
-    public String forwardToFastQCReportMappingResources(String experimentAccession, String resource) throws IOException {
-        String path = MessageFormat.format("/expdata/{0}/qc/riq/{1}", experimentAccession, resource);
+    public String forwardToFastQCReportMappingResources(String experimentAccession, String species, String resource) throws IOException {
+        String specie_s = species.replaceAll(" ", "_").toLowerCase();
+        String path = MessageFormat.format("/expdata/{0}/qc/{1}/riq/{2}", experimentAccession, specie_s, resource);
 
         return "forward:" + path;
     }

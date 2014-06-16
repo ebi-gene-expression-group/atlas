@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,29 +34,31 @@ public class FastQCReportUtil {
     }
 
     /***** FAST QC index ****/
-    public boolean hasFastQC(String experimentAccession) throws IOException {
-        String path = buildFastQCIndexHtmlPath(experimentAccession);
+    public boolean hasFastQC(String experimentAccession, String species) throws IOException {
+        String path = buildFastQCIndexHtmlPath(experimentAccession, species);
         return Files.exists(FileSystems.getDefault().getPath(path));
     }
 
-    public String buildFastQCIndexHtmlPath(String experimentAccession)  {
-        return MessageFormat.format(qcFilePathTemplate, experimentAccession, "qc.html");
+    public String buildFastQCIndexHtmlPath(String experimentAccession, String species)  {
+        String specie_s = species.replaceAll(" ", "_").toLowerCase();
+        return MessageFormat.format(qcFilePathTemplate, experimentAccession, specie_s, "qc.html");
     }
 
     /***** FAST QC Mapping index ****/
-    public boolean hasMappingQC(String experimentAccession) throws IOException {
-        String path = buildMappingQCIndexHtmlPath(experimentAccession);
+    public boolean hasMappingQC(String experimentAccession, String species) throws IOException {
+        String path = buildMappingQCIndexHtmlPath(experimentAccession, species);
         return Files.exists(FileSystems.getDefault().getPath(path));
     }
 
-    public String buildMappingQCIndexHtmlPath(String experimentAccession)  {
-        return MessageFormat.format(mappingQCFilePathTemplate, experimentAccession, "tophat1.html");
+    public String buildMappingQCIndexHtmlPath(String experimentAccession, String species)  {
+        String specie_s = species.replaceAll(" ", "_").toLowerCase();
+        return MessageFormat.format(mappingQCFilePathTemplate, experimentAccession, specie_s, "tophat1.html");
     }
 
     /***** FAST QC Report index (sub-folder of FAST QC) ****/
-
-    public String buildFastQCReportIndexHtmlPath(String experimentAccession)  {
-        return MessageFormat.format(fastQCFilePathTemplate, experimentAccession);
+    public String buildFastQCReportIndexHtmlPath(String experimentAccession, String species)  {
+        String specie_s = species.replaceAll(" ", "_").toLowerCase();
+        return MessageFormat.format(fastQCFilePathTemplate, experimentAccession, specie_s);
     }
 
 }

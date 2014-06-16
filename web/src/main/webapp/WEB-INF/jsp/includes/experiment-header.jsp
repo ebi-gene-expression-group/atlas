@@ -63,11 +63,11 @@
 
 
                         <%--@elvariable id="fastQReportUtil" type="uk.ac.ebi.atlas.utils.FastQCReportUtil"--%>
-                        <c:set var="hasFastQcReport" value="${fastQReportUtil.hasFastQC(experimentAccession)}"/>
+                        <c:set var="hasFastQcReport" value="${fastQReportUtil.hasFastQC(experimentAccession, species)}"/>
                         <c:if test="${hasFastQcReport && qcArrayDesigns==null}" >
                             <td>
                                 <a id="display-fastqc-report" class="button-image" title="Quality Metrics Report"
-                                   href="${pageContext.request.contextPath}/experiments/${experimentAccession}/qc/qc.html${accessKeyQueryString}">
+                                   href="${pageContext.request.contextPath}/experiments/${experimentAccession}/fastqc/${species}/qc.html${accessKeyQueryString}">
                                     <img src="${pageContext.request.contextPath}/resources/images/qc_v15.png"/>
                                 </a>
                             </td>
