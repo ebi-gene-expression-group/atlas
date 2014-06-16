@@ -136,7 +136,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     console.log("selected gene id " + this.state.selectedGeneId + " selected column: " + this.state.selectedColumnId);
                     return (
                         React.DOM.div(null, 
-                            React.DOM.div( {style:{"font-size": "x-small", "color": "red"}}, this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)),
+                            React.DOM.div( {style:{"font-size": "x-small"}}, this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)),
                             React.DOM.button( {ref:"button", onClick:this.goToGenomeTrackBrowser}, "Ensembl Browser")
                         )
                         );
