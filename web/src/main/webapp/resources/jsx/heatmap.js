@@ -8,6 +8,21 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
     var build = function build(heatmapConfig, eventEmitter, $prefFormDisplayLevelsInputElement) {
 
+        // ensemblSpecies is two words only, with underscores instead of spaces, and all lower case except for the first character
+        var ensemblSpecies = (function toEnsemblSpecies(species) {
+            function capitaliseFirstLetter(string)
+            {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+
+            function firstTwoWords(text) {
+                var words = text.split(" ");
+                return (words.length <= 2) ? text : words[0] + " " + words[1];
+            }
+
+            return capitaliseFirstLetter(firstTwoWords(species).replace(" ", "_").toLowerCase());
+        })(heatmapConfig.species);
+
         var Differential = React.createClass({displayName: 'Differential',
 
             columnHeaders: function () {
@@ -76,7 +91,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
         });
 
-        var EnsemblBrowser = (function (atlasHost, contextRoot, experimentAccession, accessKey, species, ensemblDB ) {
+        var EnsemblBrowser = (function (atlasHost, contextRoot, experimentAccession, accessKey, ensemblSpecies, ensemblDB ) {
 
             return React.createClass({
 
@@ -126,14 +141,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                 goToGenomeTrackBrowser: function () {
                     var ensemblHost = (ensemblDB == "ensembl") ? "www" : ensemblDB;
-                    var url = "http://" + ensemblHost + ".ensembl.org/" + species + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;contigviewbottom=url:http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession
+                    var url = "http://" + ensemblHost + ".ensembl.org/" + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;contigviewbottom=url:http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession
                         + "/tracks/" + this.state.selectedColumnId + ".genes.expressions.bedGraph;format=BEDGRAPH";
 
                     window.location.href=url;
                 },
 
                 render: function () {
-                    console.log("selected gene id " + this.state.selectedGeneId + " selected column: " + this.state.selectedColumnId);
+                    //console.log("selected gene id " + this.state.selectedGeneId + " selected column: " + this.state.selectedColumnId);
                     return (
                         React.DOM.div(null, 
                             React.DOM.div( {style:{"font-size": "x-small"}}, this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)),
@@ -143,7 +158,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                 }
             });
-        })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, heatmapConfig.species, heatmapConfig.ensemblDB);
+        })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, ensemblSpecies, heatmapConfig.ensemblDB);
 
 
         var Heatmap = React.createClass({displayName: 'Heatmap',
@@ -634,7 +649,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks);
 
 
-        var CellBaseline = (function (contextRoot, experimentAccession, species, selectedFilterFactorsJson, queryFactorType) {
+        var CellBaseline = (function (contextRoot, experimentAccession, ensemblSpecies, selectedFilterFactorsJson, queryFactorType) {
 
             function hasKnownExpression(value) {
                 // true if not blank or UNKNOWN, ie: has a expression with a known value
@@ -668,7 +683,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             geneId = this.props.geneId,
                             geneName = this.props.geneName;
 
-                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, queryFactorType, factorValue, selectedFilterFactorsJson, species);
+                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, queryFactorType, factorValue, selectedFilterFactorsJson, ensemblSpecies);
                     }
                 },
 
@@ -700,7 +715,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     }
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.species, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
+        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblSpecies, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
 
         var CellDifferential = (function () {
 

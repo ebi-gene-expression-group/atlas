@@ -8,7 +8,7 @@ public final class Species {
     private Species() {
     }
 
-    public static String limitSpeciesNameToTwoWords(String species) {
+    public static String limitSpeciesNameToFirstTwoWords(String species) {
 
         String[] words = StringUtils.split(species);
 

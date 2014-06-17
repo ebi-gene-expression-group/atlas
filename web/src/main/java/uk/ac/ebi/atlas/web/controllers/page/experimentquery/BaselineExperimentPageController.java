@@ -150,7 +150,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         model.addAttribute("species", species);
 
         //required for genome track browser in ensembl
-        String ensemblDB = speciesEnsemblTrader.getEnsemblAccession(species);
+        String ensemblDB = speciesEnsemblTrader.getEnsemblDb(species);
         model.addAttribute("ensemblDB", ensemblDB);
 
         if (!result.hasErrors()) {
@@ -159,7 +159,6 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
                 BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext);
                 model.addAttribute("geneProfiles", baselineProfiles);
-
 
                 BaselineProfilesList profilesAsGeneSets = requestContext.geneQueryResponseContainsGeneSets() ? fetchGeneProfilesAsGeneSets() : null;
                 if (profilesAsGeneSets != null) {

@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
@@ -98,7 +99,8 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
     }
 
     private ImmutableList<BaselineAnalytics> createList(String geneId, String[] assayGroupIds, String[] expressionLevels) {
-        checkArgument(assayGroupIds.length == expressionLevels.length);
+        checkArgument(StringUtils.isNotBlank(geneId), "Cannot load analytics - gene id is blank");
+        checkArgument(assayGroupIds.length == expressionLevels.length, String.format("Cannot load analytics - expecting %s expressions but got %s instead.", assayGroupIds.length, expressionLevels.length));
 
         ImmutableList.Builder<BaselineAnalytics> builder = ImmutableList.builder();
 

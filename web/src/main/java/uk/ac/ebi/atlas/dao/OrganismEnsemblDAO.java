@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.dao;
 
 
 import com.google.common.collect.ImmutableMap;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -15,8 +14,6 @@ import java.util.Map;
 @Scope("singleton")
 public class OrganismEnsemblDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(OrganismEnsemblDAO.class);
-
     private static final String SELECT_ENSEMBLDB = "SELECT ORGANISM_ENSEMBLDB.ENSEMBLDB, BIOENTITY_ORGANISM.NAME FROM ORGANISM_ENSEMBLDB" +
                                                    " JOIN BIOENTITY_ORGANISM ON ORGANISM_ENSEMBLDB.ORGANISMID=BIOENTITY_ORGANISM.ORGANISMID";
 
@@ -27,9 +24,9 @@ public class OrganismEnsemblDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Map<String, String> getEnsemblOrganismNamesMap() {
+    public ImmutableMap<String, String> getEnsemblOrganismNamesMap() {
 
-        ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder();
+        ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder<>();
 
         List<Map<String, Object>> ensemblNames = jdbcTemplate.queryForList(SELECT_ENSEMBLDB);
 
