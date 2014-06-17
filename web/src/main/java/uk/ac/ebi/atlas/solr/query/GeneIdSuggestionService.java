@@ -28,6 +28,7 @@ import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 
@@ -60,17 +61,17 @@ public class GeneIdSuggestionService {
 
     public List<String> fetchGeneIdSuggestionsInName(String geneName, String species) {
         // ie: property_value_edgengram:"<geneName>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"symbol")
-        return fetchAutoCompleteSuggestions(geneName, SolrQueryUtil.limitSpeciesNameToTwoWords(species), bioentityNamePropertyNames);
+        return fetchAutoCompleteSuggestions(geneName, Species.limitSpeciesNameToTwoWords(species), bioentityNamePropertyNames);
     }
 
     public List<String> fetchGeneIdSuggestionsInSynonym(String geneName, String species) {
         // ie: property_value_edgengram:"<geneName>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"synonym")
-        return fetchAutoCompleteSuggestions(geneName, SolrQueryUtil.limitSpeciesNameToTwoWords(species), synonymPropertyNames);
+        return fetchAutoCompleteSuggestions(geneName, Species.limitSpeciesNameToTwoWords(species), synonymPropertyNames);
     }
 
     public List<String> fetchGeneIdSuggestionsInIdentifier(String geneName, String species) {
         // ie: property_value_edgengram:"<geneName>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"gene_biotype" OR property_name:"ensfamily" OR property_name:"refseq" OR property_name:"rgd" OR property_name:"design_element" OR property_name:"mirbase_accession" OR property_name:"mirbase_name" OR property_name:"flybase_transcript_id" OR property_name:"unigene" OR property_name:"embl" OR property_name:"interpro" OR property_name:"ensgene" OR property_name:"flybase_gene_id" OR property_name:"pathwayid" OR property_name:"mgi_id" OR property_name:"ensprotein" OR property_name:"mirbase_id" OR property_name:"enstranscript" OR property_name:"entrezgene" OR property_name:"uniprot" OR property_name:"go")
-        return fetchAutoCompleteSuggestions(geneName, SolrQueryUtil.limitSpeciesNameToTwoWords(species), identifierPropertyNames);
+        return fetchAutoCompleteSuggestions(geneName, Species.limitSpeciesNameToTwoWords(species), identifierPropertyNames);
     }
 
     List<String> fetchAutoCompleteSuggestions(String queryString, String species, String[] propertyNames) {

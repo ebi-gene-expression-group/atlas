@@ -13,4 +13,6 @@ public class StringUtil {
         return StringUtils.isAllUpperCase(s) ? s : StringUtils.lowerCase(s);
     }
 
+
+
 }

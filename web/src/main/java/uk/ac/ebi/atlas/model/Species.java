@@ -1,11 +1,11 @@
-package uk.ac.ebi.atlas.solr.query;
+package uk.ac.ebi.atlas.model;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
-public final class SolrQueryUtil {
+public final class Species {
 
-    private SolrQueryUtil() {
+    private Species() {
     }
 
     public static String limitSpeciesNameToTwoWords(String species) {
