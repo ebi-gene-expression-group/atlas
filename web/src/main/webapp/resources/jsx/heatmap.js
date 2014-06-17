@@ -142,7 +142,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 goToGenomeTrackBrowser: function () {
                     var ensemblHost = (ensemblDB == "ensembl") ? "www" : ensemblDB;
                     var url = "http://" + ensemblHost + ".ensembl.org/" + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;contigviewbottom=url:http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession
-                        + "/tracks/" + this.state.selectedColumnId + ".genes.expressions.bedGraph;format=BEDGRAPH";
+                        + "/tracks/" + experimentAccession + "." + this.state.selectedColumnId + ".genes.expressions.bedGraph;format=BEDGRAPH";
 
                     window.open(
                         url,
