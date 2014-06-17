@@ -66,8 +66,8 @@ public class GenePageControllerMirbaseWith3EnsgeneResultsSIT extends SinglePageS
     public void baselineHeatmapContains3EnsgeneResults() {
         subject.clickBaselineProfile();
 
-//        FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
-//        wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
+        FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
+        wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
 
         assertThat(subject.isBaselineProfileExpanded(), is(true));
 
