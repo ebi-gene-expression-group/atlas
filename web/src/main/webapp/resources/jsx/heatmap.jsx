@@ -144,7 +144,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     var url = "http://" + ensemblHost + ".ensembl.org/" + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;contigviewbottom=url:http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession
                         + "/tracks/" + this.state.selectedColumnId + ".genes.expressions.bedGraph;format=BEDGRAPH";
 
-                    window.location.href=url;
+                    window.open(
+                        url,
+                        '_blank'
+                    );
                 },
 
                 render: function () {

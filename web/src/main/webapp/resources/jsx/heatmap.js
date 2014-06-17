@@ -8,7 +8,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
     var build = function build(heatmapConfig, eventEmitter, $prefFormDisplayLevelsInputElement) {
 
-        // ensemblSpecies is two words only, with underscores instead of spaces, and all lower case except for the first character
+        // ensemblSpecies is the first two words only, with underscores instead of spaces, and all lower case except for the first character
         var ensemblSpecies = (function toEnsemblSpecies(species) {
             function capitaliseFirstLetter(string)
             {
@@ -144,7 +144,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     var url = "http://" + ensemblHost + ".ensembl.org/" + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;contigviewbottom=url:http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession
                         + "/tracks/" + this.state.selectedColumnId + ".genes.expressions.bedGraph;format=BEDGRAPH";
 
-                    window.location.href=url;
+                    window.open(
+                        url,
+                        '_blank'
+                    );
                 },
 
                 render: function () {
