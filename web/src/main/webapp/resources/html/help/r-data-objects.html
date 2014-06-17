@@ -1,8 +1,8 @@
 <h1>Expression Atlas data in R</h1>
 
-<p>For <a href="">differential expression</a> experiments in Expression Atlas,
+<p>For <a href="help/differential-atlas.html">differential expression</a> experiments in Expression Atlas,
 you can download a file containing the expression data and meta-data that you
-can load into <a href="">R</a>. Click the button on the top-right of any
+can load into <a href="http://www.r-project.org/">R</a>. Click the button on the top-right of any
 differential experiment page to download one.</p>
 
 <!-- SCREENSHOT OF DOWNLOAD -->
@@ -13,9 +13,9 @@ differential experiment page to download one.</p>
 
 <!-- screenshot of new R session -->
 
-<p>Load the object you downloaded into your R session:</p>
+<p>Load the object you downloaded into your R session, e.g.:</p>
 
-<p><code>load( "/path/to/E-MEXP-1066-atlasExperimentSummary.Rdata" )</code></p>
+<p><code>load( "/path/to/E-GEOD-38400-atlasExperimentSummary.Rdata" )</code></p>
 
 <p>This has created an object called <code>experimentSummary</code>. This
 object is a <a href="">SimpleList</a> object. Each element is one of three <a
@@ -37,15 +37,21 @@ elements there are, by typing <code>names( experimentSummary )</code>.</p>
 <h3>RNA-seq data</h3>
 
 <p>Data from an RNA-seq experiment is contained in a single <a
-	href="">SummarizedExperiment</a> object in the SimpleList you have loaded.</p>
+	href="">SummarizedExperiment</a> object in the SimpleList you have loaded.
+In order to use it properly you will need to install and load the <a
+	href="">GenomicRanges</a> package from <a href="">Bioconductor</a>. Do this
+by running the following three commands:</p>
 
-<!-- screenshot of RNA-seq names -->
+<p><code>source( &quot;http://bioconductor.org/biocLite.R&quot; )</code></p>
+<p><code>biocLite( &quot;GenomicRanges&quot; )</code></p>
+<p><code>library( GenomicRanges )</code></p>
 
-<p>This object is stored under the name "rnaseq", so you can assign it to a new
-variable like this: <code>summarizedExperiment &lt;-
-experimentSummary$rnaseq</code>.</p>
+<p>For more details about using using this package please see the <a href="">documentation</a>.
 
-<!-- screenshot of assignment -->
+<p>The SummarizedExperiment object is stored under the name "rnaseq", so you
+can assign it to a new variable like this:</p>
+
+<p><code>summarizedExperiment &lt;- experimentSummary$rnaseq</code></p>
 
 <p>The SummarizedExperiment object contains the following:
 	<ul>
