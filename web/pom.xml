@@ -341,6 +341,14 @@
             <artifactId>httpmime</artifactId>
             <version>4.3.4</version>
         </dependency>
+
+        <!-- for URLrewrite proxying -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+
         <dependency>
             <groupId>xml-apis</groupId>
             <artifactId>xml-apis</artifactId>

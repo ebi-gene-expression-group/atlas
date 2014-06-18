@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.1//EN" "http://www.tuckey.org/res/dtds/urlrewrite3.1.dtd">
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.1//EN" "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
 <urlrewrite>
     <rule>
         <note>Remove trailing slash from all experiments</note>
@@ -24,6 +24,11 @@
         <note>To catch people browsing to the old GXA gene URL from stale google cache - can be removed in Jan 2014</note>
         <from>/gene/(.*)</from>
         <to type="permanent-redirect">/gxa/genes/$1</to>
+    </rule>
+    <rule>
+        <note>For development and testing of condition autocomplete, which is served by arrayexpress</note>
+        <from>/arrayexpress/(.*)</from>
+        <to type="proxy">http://www.ebi.ac.uk/arrayexpress/$1?%{query-string}</to>
     </rule>
 
 </urlrewrite>
