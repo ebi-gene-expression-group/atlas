@@ -69,6 +69,9 @@
 
 .hoverable-header:hover, .headerHover {
     background-color: #deebeb !important;
+}
+
+.selectable-header:hover {
     cursor: pointer;
 }
 

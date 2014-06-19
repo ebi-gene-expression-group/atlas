@@ -262,7 +262,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         });
 
-        var FactorHeader = (function (contextRoot, accessKey) {
+        var FactorHeader = (function (contextRoot, accessKey, enableEnsemblBrowser) {
             return React.createClass({
 
                 getInitialState: function () {
@@ -290,10 +290,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}>  select</span> : null;
                     var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}> &#10004; </span>: null ;
-                    var className = this.props.selected ? "rotated_cell hoverable-header vertical-header-cell-selected " : "rotated_cell hoverable-header vertical-header-cell ";
+                    var className = (this.props.selected ? "rotated_cell hoverable-header vertical-header-cell-selected" : "rotated_cell hoverable-header vertical-header-cell") + (enableEnsemblBrowser ? " selectable-header" : "");
 
                     return (
-                        <th className={className} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick} rowSpan="2">
+                        <th className={className} onMouseEnter={enableEnsemblBrowser ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblBrowser ? this.onMouseLeave : undefined} onClick={enableEnsemblBrowser ? this.onClick : undefined} rowSpan="2">
                             <div data-organism-part={this.props.factorName} data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">{truncatedFactorName}
                                 {showSelectTextOnHover}
                                 {showTickWhenSelected}
@@ -302,7 +302,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         );
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.accessKey);
+        })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblBrowser);
 
         var ContrastHeaders = React.createClass({
 
@@ -512,7 +512,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
         });
 
-        var GeneProfileRow = (function (contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks) {
+        var GeneProfileRow = (function (contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks, enableEnsemblBrowser) {
 
             return React.createClass({
 
@@ -558,12 +558,12 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 render: function () {
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "relative", float:"right", color:"green"}}>  select</span> : null;
                     var showTickWhenSelected = this.props.selected ? <span style={{position: "relative", float:"right", color:"green"}}> &#10004; </span>: null ;
-                    var className = this.props.selected ? "horizontal-header-cell-selected hoverable-header" : "horizontal-header-cell hoverable-header";
+                    var className = (this.props.selected ? "horizontal-header-cell-selected hoverable-header" : "horizontal-header-cell hoverable-header") + (enableEnsemblBrowser ? " selectable-header" : "");
 
                     // NB: empty title tag below is required for tooltip to work
                     return (
                         <tr>
-                            <td className={className} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick}>
+                            <td className={className} onMouseEnter={enableEnsemblBrowser ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblBrowser ? this.onMouseLeave : undefined} onClick={enableEnsemblBrowser ? this.onClick : undefined}>
                                 { enableGeneLinks ? this.geneNameLinked() : this.geneNameNotLinked()}
                                 {showSelectTextOnHover}
                                 {showTickWhenSelected}
@@ -578,7 +578,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     genePropertiesTooltipModule.init(contextRoot, toolTipHighlightedWords, this.refs.geneName.getDOMNode());
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks);
+        })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblBrowser);
 
 
         var CellBaseline = (function (contextRoot, experimentAccession, ensemblSpecies, selectedFilterFactorsJson, queryFactorType) {
@@ -718,11 +718,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             });
         })();
 
-
-
         return {
             Heatmap: Heatmap,
-            EnsemblBrowser: EnsemblBrowser
+            EnsemblBrowser: heatmapConfig.enableEnsemblBrowser ? EnsemblBrowser : undefined
         };
     };
 
