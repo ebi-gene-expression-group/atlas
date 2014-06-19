@@ -43,7 +43,7 @@
     <br>
     <c:set var="qcUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/qc/').concat(arrayDesign).concat('/index.html')}" />
     <c:set var="fastQCUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/fastqc/').concat(specie_s).concat('/qc.html')}" />
-    <c:set var="fastQCMappingUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/fastqc/').concat(specie_s).concat('/mapping/tophat1.html')}" />
+    <c:set var="fastQCMappingUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/fastqc/').concat(specie_s).concat('/mapping/tophat2.html')}" />
 
     <c:if test="${!baseUri.equals(qcUri) && !baseUri.equals(fastQCUri) && !baseUri.equals(fastQCMappingUri) && !baseUri.endsWith('fastqc_report.html')}">
         <base href="//${pageContext.request.serverName}${serverPort}${pageContext.request.contextPath}/"/>

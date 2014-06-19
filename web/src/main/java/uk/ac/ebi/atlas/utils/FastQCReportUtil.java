@@ -52,7 +52,7 @@ public class FastQCReportUtil {
 
     public String buildMappingQCIndexHtmlPath(String experimentAccession, String species)  {
         String specie_s = species.replaceAll(" ", "_").toLowerCase();
-        return MessageFormat.format(mappingQCFilePathTemplate, experimentAccession, specie_s, "tophat1.html");
+        return MessageFormat.format(mappingQCFilePathTemplate, experimentAccession, specie_s, "tophat2.html");
     }
 
     /***** FAST QC Report index (sub-folder of FAST QC) ****/

@@ -80,7 +80,7 @@ public class FastQCReportController {
         if(reportSelected != null) {
             //eg: redirect to nicer URL when arrayDesign is provided as a query string parameter
             if(reportSelected.equals("MAPPING")){
-                String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/mapping/{2}", experimentAccession, species, "tophat1.html");
+                String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/mapping/{2}", experimentAccession, species, "tophat2.html");
                 return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
             }
         }
@@ -116,7 +116,7 @@ public class FastQCReportController {
                                 @RequestParam(value = "accessKey",required = false) String accessKey,
                                 @ModelAttribute("preferences") @Valid FastQCReportRequestPreferences preferences, RedirectAttributes ra) throws IOException {
 
-        if(!resource.equals("tophat1.html")) {
+        if(!resource.equals("tophat2.html")) {
             // NB: resources do not need access key
             // otherwise we would have to add the access key to the query string for every resource in the page
             return forwardToMappingQcResource(experimentAccession, species, resource);
@@ -186,7 +186,7 @@ public class FastQCReportController {
         if(reportSelected != null) {
             //eg: redirect to nicer URL when arrayDesign is provided as a query string parameter
             if(reportSelected.equals("MAPPING")){
-                String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/mapping/{2}", experimentAccession, species, "tophat1.html");
+                String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/mapping/{2}", experimentAccession, species, "tophat2.html");
                 return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
             }
         }
