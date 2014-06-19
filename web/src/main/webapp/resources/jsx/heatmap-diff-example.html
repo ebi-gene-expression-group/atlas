@@ -27,7 +27,7 @@
     <script src="/gxa/resources/js/highlight.js"></script>
     <script src="/gxa/resources/js/heatmapModule.js"></script>
     <script src="/gxa/resources/js/transcriptPopupModule.js"></script>
-
+    <script src="/gxa/resources/js/EventEmitter-4.2.7.js"></script>
 
     <!-- for transcripts start -->
         <!--[if lte IE 8]>
@@ -217,8 +217,8 @@
                     ]
                 }
             ],
-            "minDownLevel": -0.761232333333333,
-            "maxDownLevel": -8.79117189098254
+            "minDownLevel": -0.76,
+            "maxDownLevel": -8.79
         };
 
         return {
@@ -240,9 +240,9 @@
 
     (function ($, React, heatmapModule, heatmapConfig, contrasts, profiles, geneSetProfiles) {
 
-        var DifferentialHeatmap = heatmapModule.build(heatmapConfig, $('#displayLevels')).Differential;
+        var DifferentialHeatmap = heatmapModule.buildDifferential(heatmapConfig, $('#displayLevels')).Heatmap;
 
-        React.renderComponent(DifferentialHeatmap( {contrasts:contrasts, profiles:profiles} ),
+        React.renderComponent(DifferentialHeatmap( {columnHeaders:contrasts, profiles:profiles} ),
             document.getElementById('heatmap-react-diff')
         );
 
