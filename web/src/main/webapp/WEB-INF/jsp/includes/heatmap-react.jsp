@@ -72,6 +72,7 @@
                 queryFactorType: '${preferences.queryFactorType}',
                 isExactMatch: ${preferences.exactMatch},
                 enableGeneLinks: true,
+                enableEnsemblBrowser: true,
                 selectedFilterFactorsJson: ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"},
                 toolTipHighlightedWords: genePropertiesTooltipModule.splitIntoWords('${preferences.geneQuery}'),
                 downloadProfilesURL: '${applicationProperties.buildDownloadURL(pageContext.request)}'
@@ -95,9 +96,9 @@
 
 <script type="text/javascript">
     (function ($, React, heatmapModule, heatmapConfig, assayGroupFactors, profiles, geneSetProfiles) {
-        var heatmap = heatmapModule.build(heatmapConfig, new EventEmitter(), $('#displayLevels'));
+        var heatmap = heatmapModule.buildBaseline(heatmapConfig, $('#displayLevels'));
 
-        React.renderComponent(heatmap.Baseline( {assayGroupFactors:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
+        React.renderComponent(heatmap.Heatmap( {columnHeaders:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
             document.getElementById('heatmap-react')
         );
 
