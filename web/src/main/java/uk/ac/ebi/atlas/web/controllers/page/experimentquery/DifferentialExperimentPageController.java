@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.experimentquery;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -31,8 +33,11 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.*;
-import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.ProfilesHeatMap;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModel;
+import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -43,6 +48,8 @@ import java.util.Set;
 
 public abstract class DifferentialExperimentPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences, P extends DifferentialProfile> {
 
+    private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
+    private final SpeciesEnsemblTrader speciesEnsemblTrader;
     private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
     private ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap;
@@ -51,11 +58,14 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     @SuppressWarnings("unchecked")
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
                                                    ProfilesHeatMap<P, ? extends DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap,
-                                                   DownloadURLBuilder downloadURLBuilder) {
+                                                   DownloadURLBuilder downloadURLBuilder, DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
+                                                   SpeciesEnsemblTrader speciesEnsemblTrader) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         // cast here to avoid having to make a type parameter for DifferentialRequestContext
         this.profilesHeatMap = (ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions>) profilesHeatMap;
         this.downloadURLBuilder = downloadURLBuilder;
+        this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
+        this.speciesEnsemblTrader = speciesEnsemblTrader;
     }
 
     @InitBinder
@@ -89,10 +99,18 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
             try {
                 DifferentialProfilesList differentialProfiles = profilesHeatMap.fetch(requestContext);
+                addJsonForHeatMap(differentialProfiles, contrasts, model);
 
+                //TODO: remove when widget converted to React
                 model.addAttribute("geneProfiles", differentialProfiles);
 
+                model.addAttribute("isDifferential", true);
                 downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
+
+                //required for genome track browser in ensembl
+                String ensemblDB = speciesEnsemblTrader.getEnsemblDb(requestContext.getFilteredBySpecies());
+                model.addAttribute("ensemblDB", ensemblDB);
+
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery() + "'"));
@@ -100,7 +118,21 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
         }
 
-        return "experiment";
+        return "experiment-react";
+    }
+
+    private void addJsonForHeatMap(DifferentialProfilesList diffProfiles, Set<Contrast> contrasts, Model model) {
+        Gson gson = new GsonBuilder()
+                .serializeSpecialFloatingPointValues()
+                .create();
+
+        String jsonContrasts = gson.toJson(contrasts);
+        model.addAttribute("jsonColumnHeaders", jsonContrasts);
+
+        DifferentialProfilesViewModel profilesViewModel = differentialProfilesViewModelBuilder.build(diffProfiles, contrasts);
+
+        String jsonProfiles = gson.toJson(profilesViewModel);
+        model.addAttribute("jsonProfiles", jsonProfiles);
     }
 
     private void initRequestPreferences(Model model, K requestPreferences, T experiment) {

@@ -35,6 +35,7 @@ var contrastInfoTooltipModule = (function ($) {
             tooltipClass:"help-tooltip pvalue-tooltip-styling",
             content:function (callback) {
 
+                //TODO: get this via parameter instead of from the DOM
                 var experimentAccession = $(this).attr("data-experiment-accession"),
                     contrastId = $(this).attr("data-contrast-id");
                 if (experimentAccession === undefined) {
@@ -55,6 +56,7 @@ var contrastInfoTooltipModule = (function ($) {
                         var experimentDescription = data.experimentDescription,
                             contrastDescription = data.contrastDescription;
 
+                        //TODO: build this in React instead of string concatenation
                         $('#contrastExperimentDescription').text(experimentDescription);
                         $('#contrastDescription').text(contrastDescription);
 

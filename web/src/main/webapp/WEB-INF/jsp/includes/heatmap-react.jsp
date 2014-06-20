@@ -57,13 +57,14 @@
 </section>
 
 <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
+<c:set var="atlasHost" value="${pageContext.request.serverName == 'localhost' ? 'wwwdev' : pageContext.request.serverName.concat(serverPort)}"/>
 
 <script type="text/javascript">
     var heatmapData = (function (genePropertiesTooltipModule) {
 
         var config = (function (genePropertiesTooltipModule) {
             return {
-                atlasHost: '${pageContext.request.serverName}${serverPort}',
+                atlasHost: '${atlasHost}',
                 contextRoot: '${pageContext.request.contextPath}',
                 experimentAccession: '${experimentAccession}',
                 accessKey: '${param.accessKey}',
@@ -73,21 +74,22 @@
                 isExactMatch: ${preferences.exactMatch},
                 enableGeneLinks: true,
                 enableEnsemblBrowser: true,
+                showMaPlotButton: true,
                 selectedFilterFactorsJson: ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"},
                 toolTipHighlightedWords: genePropertiesTooltipModule.splitIntoWords('${preferences.geneQuery}'),
                 downloadProfilesURL: '${applicationProperties.buildDownloadURL(pageContext.request)}'
             };
         })(genePropertiesTooltipModule);
 
-        var assayGroupFactors = ${jsonAssayGroupFactors};
+        var columnHeaders = ${jsonColumnHeaders};
 
-        var geneSetProfiles = ${jsonGeneSetProfiles};
+        var geneSetProfiles = ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : 'undefined'};
 
         var profiles = ${jsonProfiles};
 
         return {
             config: config,
-            assayGroupFactors: assayGroupFactors,
+            columnHeaders: columnHeaders,
             geneSetProfiles: geneSetProfiles,
             profiles: profiles
         }
@@ -95,10 +97,11 @@
 </script>
 
 <script type="text/javascript">
-    (function ($, React, heatmapModule, heatmapConfig, assayGroupFactors, profiles, geneSetProfiles) {
-        var heatmap = heatmapModule.buildBaseline(heatmapConfig, $('#displayLevels'));
+    (function ($, React, heatmapModule, heatmapConfig, columnHeaders, profiles, geneSetProfiles) {
+        var build = ${isDifferential ? 'heatmapModule.buildDifferential': 'heatmapModule.buildBaseline'};
+        var heatmap = build(heatmapConfig, $('#displayLevels'));
 
-        React.renderComponent(heatmap.Heatmap( {columnHeaders:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
+        React.renderComponent(heatmap.Heatmap( {columnHeaders:columnHeaders, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
             document.getElementById('heatmap-react')
         );
 
@@ -107,6 +110,6 @@
         );
 
     })(jQuery, React, heatmapModule, heatmapData.config,
-            heatmapData.assayGroupFactors, heatmapData.profiles, heatmapData.geneSetProfiles);
+            heatmapData.columnHeaders, heatmapData.profiles, heatmapData.geneSetProfiles);
 </script>
 

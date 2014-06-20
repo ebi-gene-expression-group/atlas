@@ -35,6 +35,7 @@ var factorInfoTooltipModule = (function ($) {
             tooltipClass:"help-tooltip pvalue-tooltip-styling",
             content:function (callback) {
 
+                //TODO: get this via a function parameter instead of the DOM
                 var experimentAccession = $(this).attr("data-experiment-accession"),
                     assayGroupId = $(this).attr("data-assay-group-id");
                 if (experimentAccession === undefined) {
@@ -56,6 +57,7 @@ var factorInfoTooltipModule = (function ($) {
 
 //                        $('#factorDescription').text(contrastDescription);
 
+                        //TODO: build this in React instead of by string concatenation here
                         $("#factorInfo tbody").html("");
 
                         for (var i = 0; i < data.properties.length; i++) {

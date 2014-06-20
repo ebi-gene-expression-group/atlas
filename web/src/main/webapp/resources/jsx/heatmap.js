@@ -202,9 +202,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         var HeatmapTableHeader = React.createClass({displayName: 'HeatmapTableHeader',
 
             render: function () {
-                var ColumnHeaders = this.props.columnHeaders;
-
-
                 return (
                     React.DOM.thead(null, 
                         React.DOM.th( {className:"horizontal-header-cell", colSpan:this.props.isMicroarray ? 2 : undefined}, 
@@ -212,8 +209,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         ),
                         type === TypeEnum.BASELINE ? FactorHeaders( {assayGroupFactors:this.props.columnHeaders, experimentAccession:heatmapConfig.experimentAccession})
                                                     : ContrastHeaders( {contrasts:this.props.columnHeaders, experimentAccession:heatmapConfig.experimentAccession, showMaPlotButton:heatmapConfig.showMaPlotButton}),
-                        React.DOM.tr( {id:"injected-header"}, 
-                            React.DOM.td( {className:"horizontal-header-cell"}, this.props.showGeneSetProfiles ? 'Gene set' : 'Gene'),
+                        React.DOM.tr(null, 
+                            React.DOM.td( {className:"horizontal-header-cell", style: this.props.isMicroarray ? {width:"166px"} : undefined}, this.props.showGeneSetProfiles ? 'Gene set' : 'Gene'),
                              this.props.isMicroarray ? React.DOM.td( {className:"horizontal-header-cell"}, "Design Element") : null
                         )
                     )
@@ -269,10 +266,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     return ({hover:false, selected:false});
                 },
 
-                componentDidMount: function () {
-                    factorInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
-                },
-
                 onMouseEnter: function () {
                     this.setState({hover:true});
                 },
@@ -285,6 +278,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     this.props.selectColumn(this.props.assayGroupId);
                 },
 
+                componentDidMount: function () {
+                    factorInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
+                },
+
                 render: function () {
                     var truncatedFactorName = restrictLabelSize(this.props.factorName, 17);
 
@@ -294,7 +291,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     return (
                         React.DOM.th( {className:className, onMouseEnter:enableEnsemblBrowser ? this.onMouseEnter : undefined, onMouseLeave:enableEnsemblBrowser ? this.onMouseLeave : undefined, onClick:enableEnsemblBrowser ? this.onClick : undefined, rowSpan:"2"}, 
-                            React.DOM.div( {'data-organism-part':this.props.factorName, 'data-svg-path-id':this.props.svgPathId, 'data-assay-group-id':this.props.assayGroupId, 'data-experiment-accession':this.props.experimentAccession, className:"factor-header rotate_text"}, truncatedFactorName,
+                            React.DOM.div( {'data-svg-path-id':this.props.svgPathId, 'data-assay-group-id':this.props.assayGroupId, 'data-experiment-accession':this.props.experimentAccession, className:"factor-header rotate_text"}, 
+                                truncatedFactorName,
                                 showSelectTextOnHover,
                                 showTickWhenSelected
                             )
@@ -306,11 +304,21 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         var ContrastHeaders = React.createClass({displayName: 'ContrastHeaders',
 
-            render: function () {
-                var props = this.props;
-                var contrastHeaders = this.props.contrasts.map(function (contrast) {
-                    return ContrastHeader( {contrastName:contrast.displayName, arrayDesignAccession:contrast.arrayDesignAccession, contrastId:contrast.id, experimentAccession:props.experimentAccession, showMaPlotButton:props.showMaPlotButton});
+            getInitialState: function () {
+                return ({selectedColumnId: null});
+            },
+
+            selectColumn: function (columnId) {
+                var selectedColumnId = (columnId === this.state.selectedColumnId) ? null : columnId;
+                this.setState({selectedColumnId: selectedColumnId}, function() {
+                    eventEmitter.emitEvent('onColumnSelectionChange', [selectedColumnId]);
                 });
+            },
+
+            render: function () {
+                var contrastHeaders = this.props.contrasts.map(function (contrast) {
+                    return ContrastHeader( {selectColumn:this.selectColumn, selected:contrast.id === this.state.selectedColumnId, contrastName:contrast.displayName, arrayDesignAccession:contrast.arrayDesignAccession, contrastId:contrast.id, experimentAccession:this.props.experimentAccession, showMaPlotButton:this.props.showMaPlotButton});
+                }.bind(this));
 
                 return (
                     React.DOM.div(null, contrastHeaders)
@@ -319,8 +327,24 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         });
 
-        var ContrastHeader = (function (contextRoot, accessKey) {
+        var ContrastHeader = (function (contextRoot, accessKey, enableEnsemblBrowser) {
             return React.createClass({
+
+                getInitialState: function () {
+                    return ({hover:false, selected:false});
+                },
+
+                onMouseEnter: function () {
+                    this.setState({hover:true});
+                },
+
+                onMouseLeave: function () {
+                    this.setState({hover:false});
+                },
+
+                onClick: function () {
+                    this.props.selectColumn(this.props.contrastId);
+                },
 
                 componentDidMount: function () {
                     contrastInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
@@ -349,15 +373,23 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         )
                     );
 
+                    var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.DOM.span( {style:{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}},   "  select") : null;
+                    var showTickWhenSelected = this.props.selected ? React.DOM.span( {className:"rotate_tick", style:{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}},  " ✔ " ): null ;
+                    var className = (this.props.selected ? "rotated_cell hoverable-header vertical-header-cell-selected" : "rotated_cell hoverable-header vertical-header-cell") + (enableEnsemblBrowser ? " selectable-header" : "");
+
                     return (
-                        React.DOM.th( {className:"rotated_cell vertical-header-cell contrastNameCell", rowSpan:"2", style:thStyle}, 
-                            React.DOM.div( {'data-organism-part':this.props.contrastName, 'data-contrast-id':this.props.contrastId, 'data-experiment-accession':this.props.experimentAccession, className:"factor-header rotate_text", style:textStyle}, truncatedName),
+                        React.DOM.th( {className:className, rowSpan:"2", style:thStyle, onMouseEnter:enableEnsemblBrowser ? this.onMouseEnter : undefined, onMouseLeave:enableEnsemblBrowser ? this.onMouseLeave : undefined, onClick:enableEnsemblBrowser ? this.onClick : undefined}, 
+                            React.DOM.div( {'data-contrast-id':this.props.contrastId, 'data-experiment-accession':this.props.experimentAccession, className:"factor-header rotate_text", style:textStyle}, 
+                                truncatedName,
+                                showSelectTextOnHover,
+                                showTickWhenSelected
+                            ),
                             this.props.showMaPlotButton ? maPlotButton : null
                         )
                         );
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.accessKey);
+        })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblBrowser);
 
 
         var EnsemblBrowser = (function (atlasHost, contextRoot, experimentAccession, accessKey, ensemblSpecies, ensemblDB ) {
@@ -409,9 +441,12 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 goToGenomeTrackBrowser: function () {
-                    var ensemblHost = (ensemblDB == "ensembl") ? "www" : ensemblDB;
-                    var url = "http://" + ensemblHost + ".ensembl.org/" + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;contigviewbottom=url:http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession
-                        + "/tracks/" + experimentAccession + "." + this.state.selectedColumnId + ".genes.expressions.bedGraph;format=BEDGRAPH";
+                    var ensemblHost = "http://" + ((ensemblDB == "ensembl") ? "www" : ensemblDB) + ".ensembl.org/";
+                    var trackFileHeader = experimentAccession + "." + this.state.selectedColumnId;
+                    var atlasTrackBaseUrl = "http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession + "/tracks/";
+                    var contigviewbottom = "contigviewbottom=url:" + atlasTrackBaseUrl + trackFileHeader + (type === TypeEnum.BASELINE ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
+                    var tiling = (type === TypeEnum.BASELINE || ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseUrl + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
+                    var url =  ensemblHost + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigviewbottom + tiling + ";format=BEDGRAPH";
 
                     window.open(
                         url,

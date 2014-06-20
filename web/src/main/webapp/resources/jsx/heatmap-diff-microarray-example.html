@@ -107,8 +107,19 @@
 <!-- for display levels button -->
 <input id="displayLevels" name="displayLevels" type="hidden" value="false">
 
-<div id="atlas-content">
-    <div id="heatmap-react-diff" class="heatmap-position"></div>
+<div id="content" class="grid_24">
+    <div id="atlas-content">
+        <section id="stickem-container" style="overflow: auto;" class="extra-padding">
+
+            <div id="heatmap" class="row stickem-container">
+
+                <div id="ensembl-browser" class="aside stickem" style="display:inline"></div>
+
+                <div id="heatmap-react-diff" class="heatmap-position"></div>
+
+            </div>
+        </section>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -117,10 +128,12 @@
 
         var heatmapConfig = (function (genePropertiesTooltipModule) {
             return {
+                atlasHost: 'wwwdev.ebi.ac.uk',
                 contextRoot: '/gxa',
                 experimentAccession: 'E-MTAB-1066',
                 accessKey: '',
-                species: 'homo sapiens',
+                species: 'Drosophila melanogaster',
+                ensemblDB: 'ensembl',
                 queryFactorType: 'ORGANISM_PART',
                 isExactMatch: true,
                 enableGeneLinks: true,
@@ -248,12 +261,15 @@
 
     (function ($, React, heatmapModule, heatmapConfig, contrasts, profiles, geneSetProfiles) {
 
-        var DifferentialHeatmap = heatmapModule.buildDifferential(heatmapConfig, $('#displayLevels')).Heatmap;
+        var heatmap = heatmapModule.buildDifferential(heatmapConfig, $('#displayLevels'));
 
-        React.renderComponent(DifferentialHeatmap( {columnHeaders:contrasts, profiles:profiles} ),
+        React.renderComponent(heatmap.Heatmap ( {columnHeaders:contrasts, profiles:profiles} ),
             document.getElementById('heatmap-react-diff')
         );
 
+        React.renderComponent(heatmap.EnsemblBrowser(),
+            document.getElementById('ensembl-browser')
+        );
 
     })(jQuery, React, heatmapModule, diff.heatmapConfig,
             diff.contrasts, diff.profiles, diff.geneSetProfiles);
