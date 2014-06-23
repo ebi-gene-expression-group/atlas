@@ -116,6 +116,8 @@
           rel="stylesheet">
     <link media="screen" type="text/css" href="${pageContext.request.contextPath}/resources/css/arrayQualityMetrics.css"
           rel="stylesheet">
+    <link media="screen" type="text/css" href="${pageContext.request.contextPath}/resources/css/ae-autocomplete.css"
+          rel="stylesheet">
 
 
     <script language="JavaScript" type="text/javascript"
@@ -132,6 +134,14 @@
             src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/autocompleteModule.js"></script>
+
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/jquery.caret-range-1.0.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/jquery.arrayExpress-autocomplete-1.1.0.130305.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/conditionAutocompleteModule.js"></script>
+
 
     <!-- fancybox start -->
     <link rel="stylesheet"
@@ -157,7 +167,7 @@
 
                 initExperimentPageButtonsAndTooltips();
                 autocompleteModule.init();
-
+                conditonAutocompleteModule.init("${configuration['arrayexpress.autocomplete.url']}");
             });
         })(jQuery);
     </script>

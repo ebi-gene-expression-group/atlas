@@ -32,6 +32,8 @@ import uk.ac.ebi.atlas.commands.RnaSeqProfilesHeatMap;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
+import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
@@ -46,8 +48,9 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
     @Inject
     public RnaSeqExperimentPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
                                           RnaSeqProfilesHeatMap profilesHeatMap,
-                                          DownloadURLBuilder downloadURLBuilder) {
-        super(rnaSeqRequestContextBuilder, profilesHeatMap, downloadURLBuilder);
+                                          DownloadURLBuilder downloadURLBuilder,
+                                          DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesEnsemblTrader speciesEnsemblTrader) {
+        super(rnaSeqRequestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder, speciesEnsemblTrader);
     }
 
     @Override

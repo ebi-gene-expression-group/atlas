@@ -69,6 +69,9 @@
 
 .hoverable-header:hover, .headerHover {
     background-color: #deebeb !important;
+}
+
+.selectable-header:hover {
     cursor: pointer;
 }
 
@@ -79,7 +82,6 @@
 .horizontal-header-cell {
     border: 1px solid #cdcdcd;
     white-space: nowrap;
-    width: auto !important;
     padding-bottom: 0px;
     padding-left: 5px;
     padding-right: 5px;

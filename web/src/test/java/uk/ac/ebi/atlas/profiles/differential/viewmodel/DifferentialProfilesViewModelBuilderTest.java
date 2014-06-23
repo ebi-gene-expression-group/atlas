@@ -20,7 +20,7 @@ import java.util.SortedSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class DifferentialProfilesViewModelTest {
+public class DifferentialProfilesViewModelBuilderTest {
 
     //E-MTAB-1066
     private static final AssayGroup G2 = new AssayGroup("g2", "WT3", "WT1", "WT2");
@@ -49,12 +49,12 @@ public class DifferentialProfilesViewModelTest {
     private Color blankColour = Color.WHITE;
     private double colourScale = 1;
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
-    private DifferentialGeneViewModelBuilder subject = new DifferentialGeneViewModelBuilder(colorGradient, new NumberUtils());
+    private DifferentialProfilesViewModelBuilder subject = new DifferentialProfilesViewModelBuilder(colorGradient, new NumberUtils());
     private SortedSet<Contrast> orderedContrasts = ImmutableSortedSet.of(G2_G1, G2_G3);
 
     @Test
     public void buildProfilesViewModel() {
-        DifferentialGeneViewModel[] genes = subject.build(diffProfiles, orderedContrasts);
+        DifferentialGeneViewModel[] genes = subject.buildGenes(diffProfiles, orderedContrasts);
 
         DifferentialProfilesViewModel profiles = new DifferentialProfilesViewModel(diffProfiles.getMinUpRegulatedExpressionLevel(), diffProfiles.getMaxUpRegulatedExpressionLevel(), diffProfiles.getMinDownRegulatedExpressionLevel(), diffProfiles.getMaxDownRegulatedExpressionLevel(), 50, genes);
 

@@ -157,6 +157,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
             try {
 
+                //TODO: remove model attributes for profiles when widget is converted over to React
                 BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext);
                 model.addAttribute("geneProfiles", baselineProfiles);
 
@@ -191,7 +192,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         Gson gson = new Gson();
 
         String jsonAssayGroupFactors = gson.toJson(filteredAssayGroupFactors);
-        model.addAttribute("jsonAssayGroupFactors", jsonAssayGroupFactors);
+        model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
 
         BaselineProfilesViewModel profilesViewModel = baselineProfilesViewModelBuilder.build(baselineProfiles, orderedFactors);
 

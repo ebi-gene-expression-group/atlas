@@ -14,18 +14,18 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.NumberFormat;
 import java.util.List;
-import java.util.SortedSet;
+import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class DifferentialGeneViewModelBuilder {
+public class DifferentialProfilesViewModelBuilder {
 
     private final ColourGradient colourGradient;
     private final NumberUtils numberUtils;
     private final NumberFormat format2Dp = NumberFormat.getNumberInstance();
 
     @Inject
-    public DifferentialGeneViewModelBuilder(ColourGradient colourGradient, NumberUtils numberUtils) {
+    public DifferentialProfilesViewModelBuilder(ColourGradient colourGradient, NumberUtils numberUtils) {
         this.colourGradient = colourGradient;
         this.numberUtils = numberUtils;
 
@@ -33,11 +33,17 @@ public class DifferentialGeneViewModelBuilder {
         format2Dp.setMaximumFractionDigits(2);
     }
 
-    public DifferentialGeneViewModel[] build(DifferentialProfilesList<? extends DifferentialProfile<? extends DifferentialExpression>> profiles, SortedSet<Contrast> orderedContrasts) {
+    public DifferentialProfilesViewModel build(DifferentialProfilesList<? extends DifferentialProfile<? extends DifferentialExpression>> diffProfiles, Set<Contrast> orderedContrasts) {
+        DifferentialGeneViewModel[] genes = buildGenes(diffProfiles, orderedContrasts);
+
+        return new DifferentialProfilesViewModel(diffProfiles.getMinUpRegulatedExpressionLevel(), diffProfiles.getMaxUpRegulatedExpressionLevel(), diffProfiles.getMinDownRegulatedExpressionLevel(), diffProfiles.getMaxDownRegulatedExpressionLevel(), diffProfiles.getTotalResultCount(), genes);
+    }
+
+    public DifferentialGeneViewModel[] buildGenes(DifferentialProfilesList<? extends DifferentialProfile<? extends DifferentialExpression>> profiles, Set<Contrast> orderedContrasts) {
         return build(profiles, orderedContrasts, profiles.getMinUpRegulatedExpressionLevel(), profiles.getMaxUpRegulatedExpressionLevel(), profiles.getMinDownRegulatedExpressionLevel(), profiles.getMaxDownRegulatedExpressionLevel());
     }
 
-    public DifferentialGeneViewModel[] build(List<? extends DifferentialProfile<? extends DifferentialExpression>> profiles, SortedSet<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
+    private DifferentialGeneViewModel[] build(List<? extends DifferentialProfile<? extends DifferentialExpression>> profiles, Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
         DifferentialGeneViewModel[] viewModels = new DifferentialGeneViewModel[profiles.size()];
 
         int i = 0;
@@ -49,7 +55,7 @@ public class DifferentialGeneViewModelBuilder {
         return viewModels;
     }
 
-    public DifferentialGeneViewModel build(DifferentialProfile<? extends DifferentialExpression> profile, SortedSet<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
+    private DifferentialGeneViewModel build(DifferentialProfile<? extends DifferentialExpression> profile, Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
         String geneId = profile.getId();
         String geneName = profile.getName();
         String designElement = (profile instanceof MicroarrayProfile) ? ((MicroarrayProfile)profile).getDesignElementName() : null;
@@ -57,7 +63,7 @@ public class DifferentialGeneViewModelBuilder {
         return new DifferentialGeneViewModel(geneId, geneName, designElement, expressions);
     }
 
-    private DifferentialExpressionViewModel[] buildExpressions(DifferentialProfile<? extends DifferentialExpression> profile, SortedSet<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
+    private DifferentialExpressionViewModel[] buildExpressions(DifferentialProfile<? extends DifferentialExpression> profile, Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
         DifferentialExpressionViewModel[] expressionViewModels = new DifferentialExpressionViewModel[orderedContrasts.size()];
 
         int i = 0;

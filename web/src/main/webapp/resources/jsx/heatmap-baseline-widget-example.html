@@ -82,10 +82,9 @@
 <!-- for gene name tooltips -->
 <div id="genenametooltip-content" style="display: none"></div>
 
-<!-- for contrast header tool tips -->
-<section id="contrastInfo" style="display:none">
-    <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
-    <div id="contrastDescription" style="text-align: center"></div>
+<!-- for factor header tool tips -->
+<section id="factorInfo" style="display:none">
+    <div id="factorDescription" style="text-align: center"></div>
     <table class='table-grid' style="padding: 0px; margin: 0px;">
         <thead>
         <tr>
@@ -93,10 +92,7 @@
                 Property
             </th>
             <th class='header-cell'>
-                Test value
-            </th>
-            <th class='header-cell'>
-                Reference value
+                Value
             </th>
         </tr>
         </thead>
@@ -115,7 +111,7 @@
 
                 <div id="ensembl-browser" class="aside stickem" style="display:inline"></div>
 
-                <div id="heatmap-react-diff" class="heatmap-position"></div>
+                <div id="heatmap-react-baseline" class="heatmap-position"></div>
 
             </div>
         </section>
@@ -124,127 +120,163 @@
 
 <script type="text/javascript">
 
-    var diff = (function (genePropertiesTooltipModule) {
+    var baseline = (function (genePropertiesTooltipModule) {
 
         var heatmapConfig = (function (genePropertiesTooltipModule) {
             return {
                 atlasHost: 'wwwdev.ebi.ac.uk',
                 contextRoot: '/gxa',
-                experimentAccession: 'E-MTAB-1066',
+                experimentAccession: 'E-GEOD-26284',
                 accessKey: '',
-                species: 'Drosophila melanogaster',
+                species: 'homo sapiens',
                 ensemblDB: 'ensembl',
                 queryFactorType: 'ORGANISM_PART',
                 isExactMatch: true,
                 enableGeneLinks: true,
-                enableEnsemblBrowser: true,
                 selectedFilterFactorsJson: [],
-                toolTipHighlightedWords: genePropertiesTooltipModule.splitIntoWords('CCNT2 POLR2B'),
-                downloadProfilesURL: '/gxa/experiments/E-MTAB-1733.tsv?accessKey=&amp;serializedFilterFactors=&amp;queryFactorType=ORGANISM_PART&amp;rootContext=&amp;heatmapMatrixSize=50&amp;displayLevels=false&amp;displayGeneDistribution=false&amp;geneQuery=ids&amp;exactMatch=true&amp;_exactMatch=on&amp;_queryFactorValues=1&amp;specific=true&amp;_specific=on&amp;cutoff=0.5',
-                showMaPlotButton: true
+                toolTipHighlightedWords: [],
+                enableEnsemblBrowser: false,
+                downloadProfilesURL: '/gxa/experiments/E-MTAB-1733.tsv?accessKey=&amp;serializedFilterFactors=&amp;queryFactorType=ORGANISM_PART&amp;rootContext=&amp;heatmapMatrixSize=50&amp;displayLevels=false&amp;displayGeneDistribution=false&amp;geneQuery=ids&amp;exactMatch=true&amp;_exactMatch=on&amp;_queryFactorValues=1&amp;specific=true&amp;_specific=on&amp;cutoff=0.5'
             };
         })(genePropertiesTooltipModule);
 
-        var contrasts = [
+        var assayGroupFactors = [
             {
-                "id": "g2_g3",
-                "arrayDesignAccession": "A-AFFY-35",
-                "referenceAssayGroup": {
-                    "id": "g2",
-                    "assayAccessions": [
-                        "WT3",
-                        "WT1",
-                        "WT2"
-                    ]
-                },
-                "testAssayGroup": {
-                    "id": "g1",
-                    "assayAccessions": [
-                        "K1",
-                        "K2",
-                        "K3"
-                    ]
-                },
-                "displayName": "genotype:'cdk8 mutant' vs 'wild type'"
+                "assayGroupId": "g1",
+                "factor": {
+                    "header": "ORGANISM_PART",
+                    "type": "ORGANISM_PART",
+                    "value": "adipose",
+                    "valueOntologyTerm": "ontologyTerm"
+                }
             },
             {
-                "id": "g2_g1",
-                "arrayDesignAccession": "A-AFFY-35",
-                "referenceAssayGroup": {
-                    "id": "g2",
-                    "assayAccessions": [
-                        "WT3",
-                        "WT1",
-                        "WT2"
-                    ]
-                },
-                "testAssayGroup": {
-                    "id": "g1",
-                    "assayAccessions": [
-                        "C3",
-                        "C1",
-                        "C2"
-                    ]
-                },
-                "displayName": "genotype:'cycC mutant' vs 'wild type'"
+                "assayGroupId": "g2",
+                "factor": {
+                    "header": "ORGANISM_PART",
+                    "type": "ORGANISM_PART",
+                    "value": "adrenal"
+                }
+            },
+            {
+                "assayGroupId": "g3",
+                "factor": {
+                    "header": "ORGANISM_PART",
+                    "type": "ORGANISM_PART",
+                    "value": "brain"
+                }
+            },
+            {
+                "assayGroupId": "g4",
+                "factor": {
+                    "header": "ORGANISM_PART",
+                    "type": "ORGANISM_PART",
+                    "value": "breast"
+                }
             }
         ];
 
-        var profiles = {
-            "minUpLevel": 0.71,
-            "maxUpLevel": 1.33,
-            "totalGeneCount": 50,
-            "genes": [
+        var geneSetProfiles = {
+            minExpressionLevel: 10,
+            maxExpressionLevel: 40,
+            totalGeneCount: 1,
+            genes: [
                 {
-                    "geneId": "FBgn0051624",
-                    "geneName": "CG31624",
-                    "designElement": "1630811_at",
+                    "geneId": "protein_coding",
+                    "geneName": "protein_coding",
                     "expressions": [
                         {
-                            "contrastName": "cdk8",
-                            "color": "#C0C0C0",
-                            "foldChange": "-0.76",
-                            "pValue": "0.002",
-                            "tStat": "-6.44"
+                            "factorName": "adipose",
+                            "color": "#B3B3C0",
+                            "value": "10",
+                            "svgPathId": "ontologyTerm"
                         },
                         {
-                            "contrastName": "cycC",
-                            "color": "#0000FF",
-                            "foldChange": "-8.79",
-                            "pValue": "3.23E-4",
-                            "tStat": "-3.36"
+                            "factorName": "adrenal",
+                            "color": "#9697C0",
+                            "value": "20"
+                        },
+                        {
+                            "factorName": "brain",
+                            "color": "#A9AAC0",
+                            "value": "30"
+                        },
+                        {
+                            "factorName": "breast",
+                            "color": "#8D8DC0",
+                            "value": "40"
+                        }
+                    ]
+                }
+            ]
+        };
+
+        var profiles = {
+            minExpressionLevel: 3,
+            maxExpressionLevel: 47,
+            totalGeneCount: 20,
+            genes:[
+                {
+                    "geneId": "ENSG00000082258",
+                    "geneName": "CCNT2",
+                    "expressions": [
+                        {
+                            "factorName": "adipose",
+                            "color": "#B3B3C0",
+                            "value": "3",
+                            "svgPathId": "ontologyTerm"
+                        },
+                        {
+                            "factorName": "adrenal",
+                            "color": "#9697C0",
+                            "value": "9"
+                        },
+                        {
+                            "factorName": "brain",
+                            "color": "#A9AAC0",
+                            "value": "5"
+                        },
+                        {
+                            "factorName": "breast",
+                            "color": "#8D8DC0",
+                            "value": "11"
                         }
                     ]
                 },
                 {
-                    "geneId": "FBgn0053459",
-                    "geneName": "CG33459",
-                    "designElement": "1640410_at",
+                    "geneId": "ENSG00000047315",
+                    "geneName": "POLR2B",
                     "expressions": [
                         {
-                            "contrastName": "cdk8",
-                            "color": "#FF0000",
-                            "foldChange": "1.33",
-                            "pValue": "2.16E-4",
-                            "tStat": "10.71"
+                            "factorName": "adipose",
+                            "color": "UNKNOWN",
+                            "value": "UNKNOWN",
+                            "svgPathId": "ontologyTerm"
                         },
                         {
-                            "contrastName": "cycC",
-                            "color": "#FFAFAF",
-                            "foldChange": "0.71",
-                            "pValue": "0.002",
-                            "tStat": "6.04"
+                            "factorName": "adrenal",
+                            "color": "#0000FF",
+                            "value": "47"
+                        },
+                        {
+                            "factorName": "brain",
+                            "color": "",
+                            "value": ""
+                        },
+                        {
+                            "factorName": "breast",
+                            "color": "#4A4AC0",
+                            "value": "25"
                         }
                     ]
                 }
-            ],
-            "minDownLevel": -0.76,
-            "maxDownLevel": -8.79
+            ]
         };
 
         return {
             heatmapConfig: heatmapConfig,
-            contrasts: contrasts,
+            assayGroupFactors: assayGroupFactors,
+            geneSetProfiles: geneSetProfiles,
             profiles: profiles
         }
     })(genePropertiesTooltipModule);
@@ -256,23 +288,23 @@
 <script type="text/jsx"> // text/jsx only so it runs after previous script
     /** @jsx React.DOM */
 
-
     /*global React */
 
-    (function ($, React, heatmapModule, heatmapConfig, contrasts, profiles, geneSetProfiles) {
+    (function ($, React, heatmapModule, heatmapConfig, assayGroupFactors, profiles, geneSetProfiles) {
 
-        var heatmap = heatmapModule.buildDifferential(heatmapConfig, $('#displayLevels'));
+        var heatmap = heatmapModule.buildBaseline(heatmapConfig, $('#displayLevels'));
 
-        React.renderComponent(heatmap.Heatmap ( {columnHeaders:contrasts, profiles:profiles} ),
-            document.getElementById('heatmap-react-diff')
+        React.renderComponent(heatmap.Heatmap( {columnHeaders:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
+            document.getElementById('heatmap-react-baseline')
         );
 
         React.renderComponent(heatmap.EnsemblBrowser(),
             document.getElementById('ensembl-browser')
         );
 
-    })(jQuery, React, heatmapModule, diff.heatmapConfig,
-            diff.contrasts, diff.profiles, diff.geneSetProfiles);
+    })(jQuery, React, heatmapModule, baseline.heatmapConfig,
+            baseline.assayGroupFactors, baseline.profiles, baseline.geneSetProfiles);
+
 </script>
 </body>
 </html>
