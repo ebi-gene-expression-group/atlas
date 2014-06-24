@@ -60,7 +60,7 @@ public class DiffAnalyticsTSVWriterTest {
 
         subject.write(dbExpressions);
 
-        String expectedRow = BIOENTITY_NAME + "\t" + SPECIES + "\t" + CONTRAST_NAME + "\t" + pvalue + "\t" + foldChange + "\tNA\n" ;
+        String expectedRow = BIOENTITY_NAME + "\t" + SPECIES + "\t" + EXPERIMENT_ACCESSION + "\t" + CONTRAST_NAME + "\t" + pvalue + "\t" + foldChange + "\tNA\n" ;
         verify(responseWriterMock).write(eq(expectedRow), any(Integer.class), any(Integer.class));
     }
 
@@ -78,7 +78,7 @@ public class DiffAnalyticsTSVWriterTest {
 
         subject.write(dbExpressions);
 
-        String expectedRow = BIOENTITY_NAME + "\t" + SPECIES + "\t" + CONTRAST_NAME + "\t" + pvalue + "\t" + foldChange + "\t" + tstatistic + "\n" ;
+        String expectedRow = BIOENTITY_NAME + "\t" + SPECIES + "\t" + EXPERIMENT_ACCESSION + "\t" + CONTRAST_NAME + "\t" + pvalue + "\t" + foldChange + "\t" + tstatistic + "\n" ;
         verify(responseWriterMock).write(eq(expectedRow), any(Integer.class), any(Integer.class));
     }
 
