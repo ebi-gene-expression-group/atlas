@@ -586,7 +586,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 cells: function (expressions) {
                     return expressions.map(function (expression) {
                         return (type == TypeEnum.BASELINE ? <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={this.props.showGeneSetProfiles} geneId={this.props.geneId} geneName={this.props.geneName}/>
-                                                          : <CellDifferential contrastName={expression.contrastName} color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={this.props.showGeneSetProfiles} geneId={this.props.geneId} geneName={this.props.geneName}/>);
+                                                          : <CellDifferential color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={this.props.displayLevels} geneId={this.props.geneId} geneName={this.props.geneName}/>);
                     }.bind(this));
                 },
 
@@ -694,7 +694,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     }
 
                     return (
-                        <td style={{"background-color": this.props.color}} onClick={this.onClick}>
+                        <td style={{"background-color": this.props.color}}>
                             <div className={this.props.displayLevels ? "show_cell" : "hide_cell"}>
                                 {this.props.foldChange}
                             </div>
