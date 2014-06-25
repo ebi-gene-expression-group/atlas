@@ -63,7 +63,7 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
 
     @Test
     public void differentialPaneHasResults() {
-        assertThat(subject.diffExpressionResultCount(), is("1 search result(s) found"));
+        assertThat(subject.diffExpressionResultCount(), is("2 search result(s) found"));
     }
 
     @Test
