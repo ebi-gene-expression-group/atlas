@@ -44,6 +44,7 @@ public class BaselineExperimentsControllerIT extends SinglePageSeleniumFixture {
     @Test
     public void countNumberOfSpecies() {
         assertThat(subject.getAllSpeciesItems().size(), is(10));
+
     }
 
     @Test
