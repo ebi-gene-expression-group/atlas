@@ -98,7 +98,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 render: function () {
                     return (
                         React.DOM.div( {style:{"float": "left"}}, 
-                            React.DOM.a( {ref:"downloadProfilesLink", title:"Top 50 genes displayed on page. Download results to see the rest.", href:downloadProfilesURL, className:"button-image", target:"_blank"}, 
+                            React.DOM.a( {id:"download-profiles-link", ref:"downloadProfilesLink", title:"Top 50 genes displayed on page. Download results to see the rest.", href:downloadProfilesURL, className:"button-image", target:"_blank"}, 
                                 React.DOM.img( {id:"download-profiles", alt:"Download query results", style:{width: "20px"}, src:contextRoot + "/resources/images/download_blue_small.png"})
                             )
                         )
@@ -143,8 +143,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             React.DOM.div( {style:{float: "left"}}, 
                                 React.DOM.table( {style:{"font-size": "10px"}}, 
                                     React.DOM.tbody(null, 
-                                        LegendRow( {displayLevels:this.props.displayLevels, lowExpressionLevel:this.props.minDownLevel, highExpressionLevel:this.props.maxDownLevel, lowValueColour:"#C0C0C0", highValueColour:"#0000FF"}),
-                                        LegendRow( {displayLevels:this.props.displayLevels, lowExpressionLevel:this.props.minUpLevel, highExpressionLevel:this.props.maxUpLevel, lowValueColour:"#FFAFAF", highValueColour:"#FF0000"})
+                                        !isNaN(this.props.minDownLevel) && !isNaN(this.props.maxDownLevel) ? LegendRow( {displayLevels:this.props.displayLevels, lowExpressionLevel:this.props.minDownLevel, highExpressionLevel:this.props.maxDownLevel, lowValueColour:"#C0C0C0", highValueColour:"#0000FF"}) : null, 
+                                        !isNaN(this.props.minUpLevel) && !isNaN(this.props.maxUpLevel) ? LegendRow( {displayLevels:this.props.displayLevels, lowExpressionLevel:this.props.minUpLevel, highExpressionLevel:this.props.maxUpLevel, lowValueColour:"#FFAFAF", highValueColour:"#FF0000"}) : null 
                                     )
                                 )
                             ),
@@ -185,7 +185,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 var BACKGROUND_IMAGE_TEMPLATE = "-webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour})";
                 var FILTER_TEMPLATE = "progid:DXImageTransform.Microsoft.Gradient(GradientType =1,startColorstr=${lowValueColour},endColorstr=${highValueColour})";
 
-                var backgroundImage = BACKGROUND_IMAGE_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
+                var backgroundImage = BACKGROUND_IMAGE_TEMPLATE.replace(/\${lowValueColour}/g, this.props.lowValueColour).replace(/\${highValueColour}/g, this.props.highValueColour);
                 var filter = FILTER_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
 
                 return (
@@ -369,7 +369,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     var maPlotButton = (
                         React.DOM.div( {style:{"text-align":"right", "padding-right":"3px"}}, 
-                            React.DOM.a( {href:maPlotURL, ref:"maButton", className:"button-image", title:"Click to view MA plot for the contrast across all genes"}, React.DOM.img( {src:contextRoot + '/resources/images/maplot-button.png'}))
+                            React.DOM.a( {href:maPlotURL, ref:"maButton", className:"button-image ma-button", title:"Click to view MA plot for the contrast across all genes"}, React.DOM.img( {src:contextRoot + '/resources/images/maplot-button.png'}))
                         )
                     );
 
@@ -586,7 +586,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 cells: function (expressions) {
                     return expressions.map(function (expression) {
                         return (type == TypeEnum.BASELINE ? CellBaseline( {factorName:expression.factorName, color:expression.color, value:expression.value, displayLevels:this.props.displayLevels, svgPathId:expression.svgPathId, showGeneSetProfiles:this.props.showGeneSetProfiles, geneId:this.props.geneId, geneName:this.props.geneName})
-                                                          : CellDifferential( {contrastName:expression.contrastName, color:expression.color, foldChange:expression.foldChange, pValue:expression.pValue, tStat:expression.tStat, displayLevels:this.props.displayLevels, svgPathId:expression.svgPathId, showGeneSetProfiles:this.props.showGeneSetProfiles, geneId:this.props.geneId, geneName:this.props.geneName}));
+                                                          : CellDifferential( {color:expression.color, foldChange:expression.foldChange, pValue:expression.pValue, tStat:expression.tStat, displayLevels:this.props.displayLevels, geneId:this.props.geneId, geneName:this.props.geneName}));
                     }.bind(this));
                 },
 
@@ -694,7 +694,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     }
 
                     return (
-                        React.DOM.td( {style:{"background-color": this.props.color}, onClick:this.onClick}, 
+                        React.DOM.td( {style:{"background-color": this.props.color}}, 
                             React.DOM.div( {className:this.props.displayLevels ? "show_cell" : "hide_cell"}, 
                                 this.props.foldChange
                             )
@@ -722,7 +722,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             var mantissa = formatParts[0];
                             var exponent = formatParts[1];
 
-                            return (mantissa !== "1" ? mantissa + " \u00D7 " : '') + "10 <span style='vertical-align: super;'>" + exponent + "</span>";
+                            return (mantissa !== "1" ? mantissa + " \u00D7 " : '') + "10<span style='vertical-align: super;'>" + exponent + "</span>";
                         }
 
                         return "<table class='table-grid' style='margin: 0px; padding: 0px;'><thead><th class='header-cell'>Adjusted <i>p</i>-value</th>" +

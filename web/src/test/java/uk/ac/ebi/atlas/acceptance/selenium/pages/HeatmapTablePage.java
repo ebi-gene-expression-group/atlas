@@ -94,7 +94,7 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "anatomogram")
     private WebElement anatomogram;
 
-    @FindBy(id = "diff-heatmap-legend")
+    @FindBy(css = "#heatmap-react table table")
     private WebElement diffHeatmapTableLegend;
 
     @FindBy(xpath = "//thead/tr/td[1]")
