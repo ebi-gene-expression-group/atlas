@@ -23,7 +23,10 @@
 package uk.ac.ebi.atlas.solr.query.conditions;
 
 import com.google.common.base.Function;
-import com.google.common.collect.*;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -50,7 +53,7 @@ public class BaselineConditionsSearchService {
         this.queryBuilder = queryBuilder;
     }
 
-    public Collection<IndexedAssayGroup> findAssayGroups(String queryString) {
+    Collection<IndexedAssayGroup> findAssayGroups(String queryString) {
 
         try {
             QueryResponse queryResponse = baselineConditionsSolrServer.query(queryBuilder.build(queryString));
