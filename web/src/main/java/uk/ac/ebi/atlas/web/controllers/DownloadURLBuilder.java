@@ -40,6 +40,7 @@ public class DownloadURLBuilder {
 
     private static final String TSV_ANALYTICS_FILE_EXTENSION = "/all-analytics.tsv";
 
+    private static final String R_FILE_EXTENSION = "-atlasExperimentSummary.Rdata";
 
     public void addDataDownloadUrlsToModel(Model model, HttpServletRequest request) {
 
@@ -50,6 +51,8 @@ public class DownloadURLBuilder {
         model.addAttribute("logFoldUrl", buildDownloadLogFoldDataUrl(request));
 
         model.addAttribute("analyticsDownloadUrl", buildDownloadAllAnalyticsUrl(request));
+
+        model.addAttribute("rDownloadUrl", buildDownloadRFileUrl(request));
     }
 
     private String buildDownloadRawUrl(HttpServletRequest request) {
@@ -66,6 +69,12 @@ public class DownloadURLBuilder {
 
     private String buildDownloadLogFoldDataUrl(HttpServletRequest request) {
         return extractBaseURL(request) + TSV_LOG_FOLD_FILE_EXTENSION;
+    }
+
+    private String buildDownloadRFileUrl(HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        String last = requestURI.substring(requestURI.lastIndexOf("/"));
+        return requestURI + last + R_FILE_EXTENSION;
     }
 
     private String extractBaseURL(HttpServletRequest request) {
