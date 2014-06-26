@@ -28,8 +28,6 @@ import uk.ac.ebi.atlas.acceptance.selenium.fixture.DriverFactory;
 
 public class FirefoxDriverFactory implements DriverFactory {
 
-    private static final String SELENIUM_SERVER_URL = "http://ma-selenium:4444/wd/hub";
-
     protected FirefoxDriver driver;
 
     @Override
