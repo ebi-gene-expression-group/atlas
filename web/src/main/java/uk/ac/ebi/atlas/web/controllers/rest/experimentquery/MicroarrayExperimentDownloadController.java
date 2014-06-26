@@ -117,16 +117,12 @@ public class MicroarrayExperimentDownloadController {
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = PARAMS_TYPE_MICROARRAY)
-    public String downloadRdataURL(HttpServletRequest request
-            , @ModelAttribute(MODEL_ATTRIBUTE_PREFERENCES) @Valid MicroarrayRequestPreferences preferences
-            , HttpServletResponse response) throws IOException {
+    public String downloadRdataURL(HttpServletRequest request) throws IOException {
         MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
         String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experiment.getAccession());
 
         return "forward:" + path;
-
-
     }
 
 
