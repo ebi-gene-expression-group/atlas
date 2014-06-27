@@ -3,6 +3,8 @@ package uk.ac.ebi.atlas.acceptance.selenium.pages;
 import com.google.common.base.Joiner;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import uk.ac.ebi.atlas.acceptance.utils.URLBuilder;
@@ -18,6 +20,10 @@ public abstract class AtlasPage extends LoadableComponent<AtlasPage> {
     private URLBuilder urlBuilder;
 
     private String pageURL;
+
+    @FindBy(id = "cookie-dismiss")
+    private WebElement cookieDismissButton;
+
 
     public AtlasPage(WebDriver driver) {
         this(driver, null);
@@ -49,5 +55,9 @@ public abstract class AtlasPage extends LoadableComponent<AtlasPage> {
         String url = driver.getCurrentUrl();
         assertThat(url, endsWith(Joiner.on("?").skipNulls().join(getPageURI(), httpParameters)));
 
+    }
+
+    public void dismissCookieNotice() {
+        cookieDismissButton.click();
     }
 }
