@@ -69,10 +69,12 @@ public class ExperimentsTablePage extends AtlasPage{
     }
 
     public void clickFirstColumnHeader() {
+        getExperimentTable();
         firstColumnHeader.click();
     }
 
     public void clickSecondColumnHeader() {
+        getExperimentTable();
         secondColumnHeader.click();
     }
 
@@ -102,16 +104,19 @@ public class ExperimentsTablePage extends AtlasPage{
         return strings;
     }
 
-    //We can't load the table at page loading time because it is ajax,
-    //assertions could be executed when the page is still in an incomplete state if we did that
     private WebElement getExperimentTable(){
+        waitForExperimentTableToLoad();
+        return driver.findElement(By.id("experiments-table"));
+    }
+
+    // wait for the ajax table to load
+    private void waitForExperimentTableToLoad() {
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
                 .withTimeout(30, TimeUnit.SECONDS)
                 .pollingEvery(1, TimeUnit.SECONDS)
                 .ignoring(NoSuchElementException.class);
 
-        wait.until(ExpectedConditions.invisibilityOfElementWithText(By.xpath("tbody/tr[1]/td"),"loading..."));
-        return driver.findElement(By.id("experiments-table"));
+        wait.until(ExpectedConditions.invisibilityOfElementWithText(By.xpath("//*[@id=\"experiments-table\"]/tbody/tr/td"), "Loading..."));
     }
 
     public List<String> getExperimentsTableHeader() {

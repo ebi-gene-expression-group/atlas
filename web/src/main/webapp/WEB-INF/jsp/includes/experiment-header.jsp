@@ -73,8 +73,6 @@
                             </td>
                         </c:if>
 
-
-
                         <c:if test="${type.isDifferential()}">
                             <td>
                                 <a id="download-raw" class="button-image"
@@ -100,6 +98,13 @@
                                     </c:otherwise>
                                 </c:choose>
 
+                            </td>
+                            <td>
+                                <a id="download-r" class="button-image"
+                                   title="Download R file for the experiment"
+                                   href="${rDownloadUrl}${accessKeyQueryString}">
+                                    <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
+                                </a>
                             </td>
                         </c:if>
                         <c:if test="${!type.isBaseline()}">

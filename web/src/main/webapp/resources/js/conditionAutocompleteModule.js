@@ -17,7 +17,7 @@ var conditonAutocompleteModule = (function ($) {
 
         $("#condition")
             .arrayExpressAutocomplete(
-                contextPath + "keywords.txt",
+                contextPath + "efowords.txt",
                 { matchContains: false
                 , selectFirst: false
                 , scroll: true

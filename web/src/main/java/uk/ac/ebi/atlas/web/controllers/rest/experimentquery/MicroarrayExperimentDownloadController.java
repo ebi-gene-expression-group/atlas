@@ -43,6 +43,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.MessageFormat;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -114,6 +115,16 @@ public class MicroarrayExperimentDownloadController {
         }
 
     }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = PARAMS_TYPE_MICROARRAY)
+    public String downloadRdataURL(HttpServletRequest request) throws IOException {
+        MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+        String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experiment.getAccession());
+
+        return "forward:" + path;
+    }
+
 
     void writeMicroarrayGeneProfiles(PrintWriter writer, MicroarrayExperiment experiment, MicroarrayRequestContext requestContext, String arrayDesign){
         try {

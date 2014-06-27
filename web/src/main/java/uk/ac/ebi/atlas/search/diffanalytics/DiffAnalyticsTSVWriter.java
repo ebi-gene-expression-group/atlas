@@ -51,7 +51,7 @@ import static au.com.bytecode.opencsv.CSVWriter.NO_QUOTE_CHARACTER;
 public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalytics> {
     private static final Logger LOGGER = Logger.getLogger(DiffAnalyticsTSVWriter.class);
     private String tsvFileMastheadTemplate;
-    private static final String[] HEADERS = {"Gene", "Organism", "Contrast", "p-value", "log2foldchange", "t-statistic"};
+    private static final String[] HEADERS = {"Gene", "Organism", "Experiment Accession", "Contrast", "p-value", "log2foldchange", "t-statistic"};
 
     private CSVWriter csvWriter;
     private PrintWriter responseWriter;
@@ -128,6 +128,7 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalyt
         double tstatistic = (expression instanceof MicroarrayExpression) ? ((MicroarrayExpression)expression).getTstatistic() : Double.POSITIVE_INFINITY;
         return new String[] {dbExpression.getBioentityName(),
                 dbExpression.getSpecies(),
+                dbExpression.getExperimentAccession(),
                 dbExpression.getContrastDisplayName(),
                 expressionValueAsString(expression.getPValue()),
                 expressionValueAsString(expression.getFoldChange()),

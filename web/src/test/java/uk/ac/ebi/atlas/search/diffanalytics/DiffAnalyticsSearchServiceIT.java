@@ -131,8 +131,8 @@ public class DiffAnalyticsSearchServiceIT {
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
-        assertThat(bioentityExpressions, hasSize(23));
-        assertThat(names, contains("Tnfrsf11b", "Lcn2", "Dnase1", "Tnfrsf12a", "Trp53inp1", "Gas2", "Apip", "Gja1", "Comp", "Srgn", "Eif2ak3", "Mknk2", "Kras", "Nr4a1", "Arf6", "Tgfbr1", "Sgms1", "Prkd1", "Mef2a", "Ern1", "Slc40a1", "Csrnp1", "Dab2"));
+        assertThat(bioentityExpressions, hasSize(24));
+        assertThat(names, contains("Tnfrsf11b", "Lcn2", "Dnase1", "Tnfrsf12a", "Trp53inp1", "Gas2", "Apip", "Gja1", "AT5G18400", "Comp", "Srgn", "Eif2ak3", "Mknk2", "Kras", "Nr4a1", "Arf6", "Tgfbr1", "Sgms1", "Prkd1", "Mef2a", "Ern1", "Slc40a1", "Csrnp1", "Dab2"));
     }
 
 
@@ -148,9 +148,8 @@ public class DiffAnalyticsSearchServiceIT {
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
         assertThat(bioentityExpressions, hasSize(50));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(120));
-        assertThat(names, contains("Ccl3", "Cish", "Cdkn1a", "AT5G24240", "Thbs1", "Jun", "Pdk4", "Kitl", "Acvr1c", "Rgs2", "Irs1", "Apoe", "FRK1", "AT4G18250", "Dusp1", "CPK29", "Gja1", "Errfi1", "T7B11.18", "AT1G51890", "Tyrobp", "F19C24.15", "Ddr1", "Plek", "S100a4", "F13E7.26", "LECRK18", "AT1G74360", "ATMPK11", "AT1G51790", "Eif2ak3", "Mknk2", "Igbp1", "AT4G11890/T26M18_100", "Fos", "Chp1", "LRR-RLK", "Kras", "Igfbp5", "CPK6", "MZB10.4", "T14L22.6", "Igf1", "CRK34", "Hsp90ab1", "F15B8.110", "WAKL8", "CRK29", "AT1G35710", "CIPK23"));
-
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(296));
+        assertThat(names, contains("PFK3", "F1O17.1", "Hsp89.1", "AKN2", "FGR", "CRK4", "WNK1", "ATMKK9", "ERS1", "Ccl3", "F16P17.10", "AT4G10390", "FUS5", "T9N14.3", "ARK3", "SK1", "SD1-29", "AT1G11440/T23J18_11", "APK1B", "AT1G33260", "Cish", "CR88", "F21F23.8", "LECRKA4.2", "WAK1", "Cdkn1a", "AT1G27590", "AT1G21590", "AT1G51820", "AT5G24240", "PKP4", "Thbs1", "LRR XI-23", "PHYB", "Jun", "Pdk4", "AT3G61960", "RLK", "AT1G64460", "HSL1", "TSPAN6", "LRR-RLK", "WAK2", "CRK5", "EIN4", "LYK4", "B120", "Kitl", "AtRLP23", "AT4G03960/T24M8_4"));
     }
 
 
@@ -165,14 +164,14 @@ public class DiffAnalyticsSearchServiceIT {
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
         assertThat(bioentityExpressions, hasSize(50));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(482));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(488));
 
         // match in any order because order differs between ATLAS3DEV and ATLAS3IT.
         // order is unpredictable in Oracle when rows have the same order by value.
-        assertThat(Iterables.limit(names, 5), containsInAnyOrder("Lactbl1", "Prok1", "Kdm5d", "Eif2s3y", "Ddx3y"));
+        assertThat(Iterables.limit(names, 5), containsInAnyOrder("Lactbl1", "Prok1", "Ddx3y", "Kdm5d", "Eif2s3y"));
 
         // match the remaining in order, which will be the same in both ATLAS3DEV and ATLAS3IT
-        assertThat(Iterables.skip(names, 5), contains("Uty", "Gpr26", "Lrrc55", "Tph1", "Scgb1b27", "Cldn8", "Hmgcs2", "Acot1", "Fmo1", "Scgb2b27", "Sftpd", "Cst7", "Lonrf3", "Itgax", "Neb", "Tnfrsf11b", "Lcn2", "Fmo4", "Ccl4", "Ccl3", "Mctp1", "1700017B05Rik", "Ch25h", "Tph2", "Ivd", "Matn2", "Dnahc8", "Serpinf2", "Abca1", "Cspg5", "Gpnmb", "Gbp8", "Cish", "Lgals3", "Ang", "Cdkn1a", "Ehhadh", "Gal", "Reg3b", "Cartpt", "Socs2", "Thbs1", "Arg1", "Wisp2", "Lgals3"));
+        assertThat(Iterables.skip(names, 5), contains("Uty", "Gpr26", "Lrrc55", "Tph1", "Scgb1b27", "Cldn8", "Hmgcs2", "Acot1", "Fmo1", "Scgb2b27", "Sftpd", "Cst7", "Lonrf3", "FGR", "Itgax", "Neb", "Tnfrsf11b", "Lcn2", "Fmo4", "Ccl4", "Ccl3", "Mctp1", "1700017B05Rik", "Ch25h", "Tph2", "Ivd", "Matn2", "Dnahc8", "Serpinf2", "Abca1", "Cspg5", "Gpnmb", "Gbp8", "Cish", "Lgals3", "Ang", "Cdkn1a", "Ehhadh", "Gal", "Reg3b", "Cartpt", "Socs2", "Thbs1", "Arg1", "Wisp2"));
 
     }
 

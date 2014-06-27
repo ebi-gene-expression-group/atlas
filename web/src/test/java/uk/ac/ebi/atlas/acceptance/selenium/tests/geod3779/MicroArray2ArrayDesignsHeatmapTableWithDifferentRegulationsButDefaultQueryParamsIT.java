@@ -94,6 +94,9 @@ public class MicroArray2ArrayDesignsHeatmapTableWithDifferentRegulationsButDefau
         subject = new HeatmapTablePage(driver, E_GEOD_3779_ACCESSION, "regulation=UP_DOWN&displayLevels=true&cutoff=1&foldChangeCutOff=0");
         subject.get();
 
+        // dismiss cookie notice otherwise we get a Element cannot be scrolled into view
+        subject.dismissCookieNotice();
+
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 0, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("Adjusted p-value"));
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 1, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("t-statistic"));
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 2, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), startsWith("Log2-fold"));

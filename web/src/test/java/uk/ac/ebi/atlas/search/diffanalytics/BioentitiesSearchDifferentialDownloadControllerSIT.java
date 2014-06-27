@@ -29,7 +29,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
         List<String> header = subject.getRowValues(3);
 
         assertThat(header,
-                contains("Gene", "Organism", "Contrast", "p-value", "log2foldchange", "t-statistic")
+                contains("Gene", "Organism", "Experiment Accession", "Contrast", "p-value", "log2foldchange", "t-statistic")
         );
 
     }
@@ -39,7 +39,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
         List<String> firstGene = subject.getRowValues(5);
 
         assertThat(firstGene,
-                contains("Cyba\tMus musculus\tgenotype:'expressing human TDP-43' vs 'non transgenic'\t0.0206187013724948\t1.33594422753461\tNA".split("\t")));
+                contains("Cyba\tMus musculus\tE-GEOD-22351\tgenotype:'expressing human TDP-43' vs 'non transgenic'\t0.0206187013724948\t1.33594422753461\tNA".split("\t")));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
         List<String> firstGene = subject.getRowValues(4);
 
         assertThat(firstGene,
-                contains("Cyba\tMus musculus\tcompound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36\t4.12746725021875E-5\t1.35626816666667\t14.8773555318722".split("\t")));
+                contains("Cyba\tMus musculus\tE-MEXP-1276\tcompound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36\t4.12746725021875E-5\t1.35626816666667\t14.8773555318722".split("\t")));
     }
 
 
