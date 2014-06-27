@@ -83,7 +83,7 @@ public class DiffAnalyticsSearchServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("ENSMUSG00000091366 AT5G26220");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
@@ -97,7 +97,7 @@ public class DiffAnalyticsSearchServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("ENSMUSG00000000278 ENSMUSG00000002985");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
         List<String> names = getBioentityNames(bioentityExpressions);
 
         //System.out.println(Joiner.on("\", \"").join(names));
@@ -112,7 +112,7 @@ public class DiffAnalyticsSearchServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("hsa-mir-136");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println(Joiner.on("\", \"").join(names));
@@ -126,7 +126,7 @@ public class DiffAnalyticsSearchServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("\"apoptotic process\"");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
@@ -142,7 +142,7 @@ public class DiffAnalyticsSearchServiceIT {
         requestParameters.setGeneQuery("kinase");
         requestParameters.setExactMatch(false);
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
@@ -158,7 +158,7 @@ public class DiffAnalyticsSearchServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
 
         List<String> names = getBioentityNames(bioentityExpressions);
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
@@ -183,7 +183,7 @@ public class DiffAnalyticsSearchServiceIT {
 
         final List<String> names = Lists.newArrayList();
 
-        int count = diffAnalyticsSearchService.visitEachExpression(requestParameters, new Visitor<DiffAnalytics>() {
+        int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch(), new Visitor<DiffAnalytics>() {
 
             @Override
             public void visit(DiffAnalytics value) {
@@ -207,7 +207,7 @@ public class DiffAnalyticsSearchServiceIT {
 
         final List<String> names = Lists.newArrayList();
 
-        diffAnalyticsSearchService.visitEachExpression(requestParameters, new Visitor<DiffAnalytics>() {
+        diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch(), new Visitor<DiffAnalytics>() {
 
             @Override
             public void visit(DiffAnalytics value) {
@@ -228,7 +228,7 @@ public class DiffAnalyticsSearchServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("pregnant");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
@@ -250,7 +250,7 @@ public class DiffAnalyticsSearchServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("\"Mus musculus\" AND \"wild type\"");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
 
         assertThat(bioentityExpressions, hasSize(50));
     }
@@ -262,7 +262,7 @@ public class DiffAnalyticsSearchServiceIT {
         requestParameters.setExactMatch(false);
         requestParameters.setCondition("pregnant");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
         List<String> names = getBioentityNames(bioentityExpressions);
 
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
@@ -276,7 +276,7 @@ public class DiffAnalyticsSearchServiceIT {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("Cct4");
 
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
 
         assertThat(bioentityExpressions, hasSize(1));
 

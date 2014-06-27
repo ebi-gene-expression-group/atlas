@@ -27,6 +27,8 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -75,7 +77,8 @@ public class BaselineConditionsSearchService {
     public SetMultimap<String, String> findAssayGroupsPerExperiment(String queryString) {
 
            try {
-               QueryResponse queryResponse = baselineConditionsSolrServer.query(queryBuilder.build(queryString));
+               SolrQuery solrQuery = queryBuilder.build(queryString);
+               QueryResponse queryResponse = baselineConditionsSolrServer.query(solrQuery, SolrRequest.METHOD.POST);
                List<Condition> beans = queryResponse.getBeans(Condition.class);
 
                SetMultimap<String, String> result = HashMultimap.create();
