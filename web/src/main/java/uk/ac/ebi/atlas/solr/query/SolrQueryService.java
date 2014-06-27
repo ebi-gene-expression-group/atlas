@@ -175,7 +175,7 @@ public class SolrQueryService {
 
     }
 
-    public Set<String> findMatureRNAIds(String geneQuery) {
+    Set<String> findMatureRNAIds(String geneQuery) {
         return findMatureRNAIds(Sets.newHashSet(bioentityPropertyValueTokenizer.split(geneQuery)));
     }
 
@@ -242,7 +242,7 @@ public class SolrQueryService {
 
 
     // NB: if species = "" then will search across all species
-    public Set<String> findGeneIdsOrSets(String geneQuery, boolean exactMatch, String species) {
+    Set<String> findGeneIdsOrSets(String geneQuery, boolean exactMatch, String species) {
 
         checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
 
