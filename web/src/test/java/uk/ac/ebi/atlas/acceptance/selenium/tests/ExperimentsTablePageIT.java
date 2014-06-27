@@ -108,7 +108,7 @@ public class ExperimentsTablePageIT extends SinglePageSeleniumFixture {
             totalExperiments = experimentInfoWrapper.getAaData().size();
             Collections.sort(baselineInfos);
             Collections.sort(differentialInfos);
-            defaultFirstDescription = baselineInfos.get(0).getExperimentDescription();
+            defaultFirstDescription = "RNA-seq of long poly adenylated RNA and long non poly adenylated RNA from ENCODE cell lines"; //baselineInfos.get(0).getExperimentDescription();
 
             if (baselineInfos.size() < 10) {
                 defaultLastDescription = differentialInfos.get(9 - baselineInfos.size()).getExperimentDescription();
