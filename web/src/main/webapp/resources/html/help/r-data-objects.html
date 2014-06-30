@@ -9,13 +9,17 @@ differential experiment page to download one.</p>
 
 <h2>How to load an Atlas experiment summary in R</h2>
 
-<p>Start an R session on your computer.</p>
+<p>Start an R session on your computer. For details on how to get and use R,
+please see the documentation on the <a href="http://www.r-project.org/">R
+project website</a>.</p>
 
-<!-- screenshot of new R session -->
+<p><img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_startR.png" alt="New R session screenshot" /></p>
 
 <p>Load the object you downloaded into your R session, e.g.:</p>
 
 <p><code>load( "/path/to/E-GEOD-38400-atlasExperimentSummary.Rdata" )</code></p>
+
+<p><img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_loadData.png" alt="Load Atlas Rdata object screenshot" /></p>
 
 <p>This has created an object called <code>experimentSummary</code>. This
 object is a <a href="">SimpleList</a> object. Each element is one of three <a
@@ -29,36 +33,46 @@ href="">Bioconductor</a> objects:
 
 <h2>How to use it</h2>
 
-<h3>What does the object contain?</h3>
+<p>In order to use the object you will need to install and load the <a
+	href="">GenomicRanges</a> package from <a href="">Bioconductor</a>.</p>
 
-<p>You can see the names of the elements in the list, and thus how many
-elements there are, by typing <code>names( experimentSummary )</code>.</p>
+<p>If you have not already installed this package, do this
+by running the following two commands:</p>
+
+<p><code>source( &quot;http://bioconductor.org/biocLite.R&quot; )</code></p>
+<p><code>biocLite( &quot;GenomicRanges&quot; )</code></p>
+
+<p>Now load the package into your R session:</p>
+
+<p><code>library( GenomicRanges )</code></p>
+
+<p><img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_loadGranges.png" alt="Load GenomicRanges screenshot" /></p>
+
+<p>For more details about using using this package please see the <a href="">documentation</a>.
 
 <h3>RNA-seq data</h3>
 
 <p>Data from an RNA-seq experiment is contained in a single <a
 	href="">SummarizedExperiment</a> object in the SimpleList you have loaded.
-In order to use it properly you will need to install and load the <a
-	href="">GenomicRanges</a> package from <a href="">Bioconductor</a>. Do this
-by running the following three commands:</p>
-
-<p><code>source( &quot;http://bioconductor.org/biocLite.R&quot; )</code></p>
-<p><code>biocLite( &quot;GenomicRanges&quot; )</code></p>
-<p><code>library( GenomicRanges )</code></p>
-
-<p>For more details about using using this package please see the <a href="">documentation</a>.
-
 <p>The SummarizedExperiment object is stored under the name "rnaseq", so you
 can assign it to a new variable like this:</p>
 
 <p><code>summarizedExperiment &lt;- experimentSummary$rnaseq</code></p>
 
+<p><img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_sumExp.png" alt="SummarizedExperiment screenshot" /></p>
+
+
 <p>The SummarizedExperiment object contains the following:
 	<ul>
-		<li>Matrix of raw counts (not normalized), in the <strong>assays</strong> slot.</li>
+		<li>Matrix of raw counts (not normalized), in the
+		<strong>assays</strong> slot, in a <strong>counts</strong>
+		element.</li>
+<img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_sumExp_counts.png" alt="SummarizedExperiment counts screenshot" />
 		<li>Sample annotations, in the <strong>colData</strong> slot.</li>
+<img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_sumExp_coldata.png" alt="SummarizedExperiment coldata screenshot" />
 		<li>Brief outline of methods, from QC of FASTQ files to production of
 		raw counts, in the <strong>exptData</strong> slot.</li>
+<img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_sumExp_exptdata.png" alt="SummarizedExperiment exptdata screenshot" />
 	</ul>
 </p>
 
@@ -85,13 +99,13 @@ e.g. <code>expressionSet &lt;- experimentSummary[[ "A-AFFY-18" ]]</code>.</p>
 <p>Each ExpressionSet object contains the following:
 	<ul>
 		<li>Matrix of normalized intensity values, in the
-		<strong>assayData</strong>, accessed via <code>exprs( expressionSet
-			)</code>.</li>
-		<li>Sample annotations, in the <strong>phenoData</strong>, accessed via
-		<code>pData( expressionSet )</code>.</li>
+		<strong>assayData</strong>, accessed via: <code>exprs( expressionSet
+			)</code></li>
+		<li>Sample annotations, in the <strong>phenoData</strong>, accessed via:
+		<code>pData( expressionSet )</code></li>
 		<li>Brief outline of normalization method applied, in the
-		<strong>experimentData</strong> slot, accessed via <code>preproc(
-			experimentData( expressionSet ) )</code>.</li>
+		<strong>experimentData</strong> slot, accessed via: <code>preproc(
+			experimentData( expressionSet ) )</code></li>
 	</ul>
 </p>
 
@@ -112,7 +126,7 @@ object via its <a herf="">ArrayExpress</a> array design accession.</p>
 <p>Each MAList object contains the following:
 	<ul>
 		<li>Vector of probe names, in the <strong>genes</strong> element.</li>
-		<li>Matrix of log<sub>2</sub>(fold-changes), in the <strong>M</strong> element.</li>
+		<li>Matrix of log<sub>2</sub>(fold-change) values, in the <strong>M</strong> element.</li>
 		<li>Matrix of LOESS normalized average intensities, in the <strong>A</strong> element.</li>
 	</ul>
 </p>
