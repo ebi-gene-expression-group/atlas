@@ -13,13 +13,13 @@ differential experiment page to download one.</p>
 please see the documentation on the <a href="http://www.r-project.org/">R
 project website</a>.</p>
 
-<p><img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_startR.png" alt="New R session screenshot" /></p>
+<img src="resources/images/help/Rhelp_startR.png" alt="New R session screenshot" />
 
 <p>Load the object you downloaded into your R session, e.g.:</p>
 
 <p><code>load( "/path/to/E-GEOD-38400-atlasExperimentSummary.Rdata" )</code></p>
 
-<p><img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_loadData.png" alt="Load Atlas Rdata object screenshot" /></p>
+<img src="resources/images/help/Rhelp_loadData.png" alt="Load Atlas Rdata object screenshot" />
 
 <p>This has created an object called <code>experimentSummary</code>. This
 object is a <a href="">SimpleList</a> object. Each element is one of three <a
@@ -46,7 +46,7 @@ by running the following two commands:</p>
 
 <p><code>library( GenomicRanges )</code></p>
 
-<p><img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_loadGranges.png" alt="Load GenomicRanges screenshot" /></p>
+<img src="resources/images/help/Rhelp_loadGranges.png" alt="Load GenomicRanges screenshot" />
 
 <p>For more details about using using this package please see the <a href="">documentation</a>.
 
@@ -59,7 +59,7 @@ can assign it to a new variable like this:</p>
 
 <p><code>summarizedExperiment &lt;- experimentSummary$rnaseq</code></p>
 
-<p><img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_sumExp.png" alt="SummarizedExperiment screenshot" /></p>
+<img src="resources/images/help/Rhelp_sumExp.png" alt="SummarizedExperiment screenshot" />
 
 
 <p>The SummarizedExperiment object contains the following:
@@ -67,16 +67,14 @@ can assign it to a new variable like this:</p>
 		<li>Matrix of raw counts (not normalized), in the
 		<strong>assays</strong> slot, in a <strong>counts</strong>
 		element.</li>
-<img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_sumExp_counts.png" alt="SummarizedExperiment counts screenshot" />
+<img src="resources/images/help/Rhelp_sumExp_counts.png" alt="SummarizedExperiment counts screenshot" />
 		<li>Sample annotations, in the <strong>colData</strong> slot.</li>
-<img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_sumExp_coldata.png" alt="SummarizedExperiment coldata screenshot" />
+<img src="resources/images/help/Rhelp_sumExp_coldata.png" alt="SummarizedExperiment coldata screenshot" />
 		<li>Brief outline of methods, from QC of FASTQ files to production of
 		raw counts, in the <strong>exptData</strong> slot.</li>
-<img src="/Users/mkeays/Atlas/git/atlas/web/src/main/webapp/resources/images/help/Rhelp_sumExp_exptdata.png" alt="SummarizedExperiment exptdata screenshot" />
+<img src="resources/images/help/Rhelp_sumExp_exptdata.png" alt="SummarizedExperiment exptdata screenshot" />
 	</ul>
 </p>
-
-<!-- screenshot(s) of these slots? -->
 
 <p>For more information on how to use a SummarizedExperiment object, please see
 the <a href="">documentation</a> from <a href="">Bioconductor</a>.</p>
@@ -89,27 +87,28 @@ summary you have loaded. There is one ExpressionSet per array design used in
 the experiment. The ExpressionSets are indexed by the <a
 	href="">ArrayExpress</a> accession of the array design used.</p>
 
-<!-- screenshot of multi-array names -->
+<img src="resources/images/help/Rhelp_multiArrayNames.png" alt="Multiple array design names screenshot" />
 
 <p>You can access each ExpressionSet via its array design accession, by typing
-e.g. <code>expressionSet &lt;- experimentSummary[[ "A-AFFY-18" ]]</code>.</p>
+e.g. <code>expressionSet &lt;- experimentSummary[[ "A-AFFY-18" ]]</code></p>
 
-<!-- screenshot of assignment -->
+<img src="resources/images/help/Rhelp_exprSet.png" alt="ExpressionSet screenshot" />
 
 <p>Each ExpressionSet object contains the following:
 	<ul>
 		<li>Matrix of normalized intensity values, in the
 		<strong>assayData</strong>, accessed via: <code>exprs( expressionSet
 			)</code></li>
+<img src="resources/images/help/Rhelp_exprSet_exprs.png" alt="ExpressionSet normalized intensities screenshot" />
 		<li>Sample annotations, in the <strong>phenoData</strong>, accessed via:
 		<code>pData( expressionSet )</code></li>
+<img src="resources/images/help/Rhelp_exprSet_pdata.png" alt="ExpressionSet phenodata screenshot" />
 		<li>Brief outline of normalization method applied, in the
 		<strong>experimentData</strong> slot, accessed via: <code>preproc(
 			experimentData( expressionSet ) )</code></li>
+<img src="resources/images/help/Rhelp_exprSet_preproc.png" alt="ExpressionSet preproc screenshot" />
 	</ul>
 </p>
-
-<!-- screenshot(s) of above? -->
 
 <p>For more information on how to use an ExpressionSet object, please see the
 <a href="">documentation</a> from <a href="">Bioconductor</a>.
@@ -121,8 +120,6 @@ href="">MAList</a> objects. As for ExpressionSet objects, there is one MAList
 per array design used in the experiment. This means you can access each MAList
 object via its <a herf="">ArrayExpress</a> array design accession.</p>
 
-<!-- screenshot of assignment -->
-
 <p>Each MAList object contains the following:
 	<ul>
 		<li>Vector of probe names, in the <strong>genes</strong> element.</li>
@@ -131,7 +128,7 @@ object via its <a herf="">ArrayExpress</a> array design accession.</p>
 	</ul>
 </p>
 
-<!-- screenshot(s) of above? -->
+<img src="resources/images/help/Rhelp_malist.png" alt="MAList screenshot" />
 
 <p>For more information on how to use an MAList object, please see the <a
 href="">documentation</a> from <a href="">Bioconductor</a>.</p>
