@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import java.util.SortedSet;
@@ -77,6 +78,9 @@ public class GeneSetPageController extends BioEntityPageController {
         //not display Differential Expression panel so we just need to invoke parent controller (that handles baseline expressions)
 
         model.addAttribute("isGeneSet", true);
+
+        checkIdentifierNotFound(identifier);
+
         return super.showBioentityPage(identifier, model);
     }
 
@@ -117,5 +121,11 @@ public class GeneSetPageController extends BioEntityPageController {
         return null;
     }
 
+    private void checkIdentifierNotFound(String identifier) {
+        String pattern = "IPR" + "(\\d)+";
+        if (!identifier.startsWith("REACT_") && !identifier.startsWith("GO:") && !identifier.matches(pattern)) {
+            throw new ResourceNotFoundException("Resource not found");
+        }
+    }
 
 }
