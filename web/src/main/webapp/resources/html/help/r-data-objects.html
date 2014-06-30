@@ -22,19 +22,19 @@ project website</a>.</p>
 <img src="resources/images/help/Rhelp_loadData.png" alt="Load Atlas Rdata object screenshot" />
 
 <p>This has created an object called <code>experimentSummary</code>. This
-object is a <a href="">SimpleList</a> object. Each element is one of three <a
-href="">Bioconductor</a> objects: 
+object is a <a href="http://www.bioconductor.org/packages/release/bioc/manuals/IRanges/man/IRanges.pdf#page.123">SimpleList</a> object. Each element is one of three <a
+href="http://www.bioconductor.org">Bioconductor</a> objects: 
 	<ul>
-		<li><a href="">SummarizedExperiment</a> (RNA-seq experiments)</li>
-		<li><a href="">ExpressionSet</a> (1-colour microarray experiments)</li>
-		<li><a href="">MAList</a> (2-colour microarray experiments)</li>
+		<li><a href="http://www.bioconductor.org/packages/release/bioc/manuals/GenomicRanges/man/GenomicRanges.pdf#page.59">SummarizedExperiment</a> (RNA-seq experiments)</li>
+		<li><a href="http://www.bioconductor.org/packages/release/bioc/manuals/Biobase/man/Biobase.pdf#page.34">ExpressionSet</a> (1-colour microarray experiments)</li>
+		<li><a href="http://www.bioconductor.org/packages/release/bioc/manuals/limma/man/limma.pdf#page.96">MAList</a> (2-colour microarray experiments)</li>
 	</ul>
 </p>
 
 <h2>How to use it</h2>
 
 <p>In order to use the object you will need to install and load the <a
-	href="">GenomicRanges</a> package from <a href="">Bioconductor</a>.</p>
+	href="http://www.bioconductor.org/packages/release/bioc/html/GenomicRanges.html">GenomicRanges</a> package from <a href="http://www.bioconductor.org/">Bioconductor</a>.</p>
 
 <p>If you have not already installed this package, do this
 by running the following two commands:</p>
@@ -48,12 +48,12 @@ by running the following two commands:</p>
 
 <img src="resources/images/help/Rhelp_loadGranges.png" alt="Load GenomicRanges screenshot" />
 
-<p>For more details about using using this package please see the <a href="">documentation</a>.
+<p>For more details about using using this package please see the <a href="http://www.bioconductor.org/packages/release/bioc/html/GenomicRanges.html">documentation</a>.
 
 <h3>RNA-seq data</h3>
 
 <p>Data from an RNA-seq experiment is contained in a single <a
-	href="">SummarizedExperiment</a> object in the SimpleList you have loaded.
+	href="http://www.bioconductor.org/packages/release/bioc/manuals/GenomicRanges/man/GenomicRanges.pdf#page.59">SummarizedExperiment</a> object in the SimpleList you have loaded.
 <p>The SummarizedExperiment object is stored under the name "rnaseq", so you
 can assign it to a new variable like this:</p>
 
@@ -77,15 +77,15 @@ can assign it to a new variable like this:</p>
 </p>
 
 <p>For more information on how to use a SummarizedExperiment object, please see
-the <a href="">documentation</a> from <a href="">Bioconductor</a>.</p>
+the <a href="http://www.bioconductor.org/packages/release/bioc/manuals/GenomicRanges/man/GenomicRanges.pdf#page.59">documentation</a> from <a href="http://www.bioconductor.org/">Bioconductor</a>.</p>
 
 <h3>One-colour microarray data</h3>
 
 <p>Data from a one-colour, or single-channel, microarray experiment is stored
-in potentially multiple <a href="">ExpressionSet</a> objects in the SimpleList
+in potentially multiple <a href="http://www.bioconductor.org/packages/release/bioc/manuals/Biobase/man/Biobase.pdf#page.34">ExpressionSet</a> objects in the SimpleList
 summary you have loaded. There is one ExpressionSet per array design used in
 the experiment. The ExpressionSets are indexed by the <a
-	href="">ArrayExpress</a> accession of the array design used.</p>
+	href="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> accession of the array design used.</p>
 
 <img src="resources/images/help/Rhelp_multiArrayNames.png" alt="Multiple array design names screenshot" />
 
@@ -111,14 +111,14 @@ e.g. <code>expressionSet &lt;- experimentSummary[[ "A-AFFY-18" ]]</code></p>
 </p>
 
 <p>For more information on how to use an ExpressionSet object, please see the
-<a href="">documentation</a> from <a href="">Bioconductor</a>.
+<a href="http://www.bioconductor.org/packages/release/bioc/manuals/Biobase/man/Biobase.pdf#page.34">documentation</a> from <a href="http://www.bioconductor.org">Bioconductor</a>.
 
 <h3>Two-colour microarray data</h3>
 
 <p> Data from a two-colour microarray experiment is stored in one or more <a
-href="">MAList</a> objects. As for ExpressionSet objects, there is one MAList
+href="http://www.bioconductor.org/packages/release/bioc/manuals/limma/man/limma.pdf#page.96">MAList</a> objects. As for ExpressionSet objects, there is one MAList
 per array design used in the experiment. This means you can access each MAList
-object via its <a herf="">ArrayExpress</a> array design accession.</p>
+object via its <a herf="http://www.ebi.ac.uk/arrayexpress">ArrayExpress</a> array design accession.</p>
 
 <p>Each MAList object contains the following:
 	<ul>
@@ -131,4 +131,4 @@ object via its <a herf="">ArrayExpress</a> array design accession.</p>
 <img src="resources/images/help/Rhelp_malist.png" alt="MAList screenshot" />
 
 <p>For more information on how to use an MAList object, please see the <a
-href="">documentation</a> from <a href="">Bioconductor</a>.</p>
+href="http://www.bioconductor.org/packages/release/bioc/manuals/limma/man/limma.pdf#page.96">documentation</a> from <a href="http://www.bioconductor.org">Bioconductor</a>.</p>
