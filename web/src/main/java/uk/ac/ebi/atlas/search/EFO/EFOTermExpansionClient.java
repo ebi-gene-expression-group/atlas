@@ -22,10 +22,12 @@
 
 package uk.ac.ebi.atlas.search.EFO;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -51,7 +53,16 @@ public class EFOTermExpansionClient {
         this.url = url;
     }
 
-    public ImmutableList<String> fetchEFOChildren(String term) {
+    public String fetchExpandedTermWithEFOChildren(String term) {
+        ImmutableList<String> efoChildren = fetchEFOChildren(term);
+        return term + (efoChildren.isEmpty() ? "" : " " + Joiner.on(" ").join(efoChildren));
+    }
+
+    ImmutableList<String> fetchEFOChildren(String term) {
+
+        if (StringUtils.isBlank(term)) {
+            return ImmutableList.of();
+        }
 
         try {
             String result = restTemplate.getForObject(url, String.class, term);
@@ -59,8 +70,9 @@ public class EFOTermExpansionClient {
             return extractIds(result);
 
         } catch (RestClientException e) {
+            // log error but continue
             LOGGER.error(e);
-            throw new EFOTermExpansionClientException(e.getMessage(), e);
+            return ImmutableList.of();
         }
 
     }
@@ -72,17 +84,11 @@ public class EFOTermExpansionClient {
 
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for (JsonElement element : root.getAsJsonArray("tree")) {
-            String id = element.getAsJsonObject().get("id").getAsString();
+            String id = element.getAsJsonObject().get("id").getAsString().replace("EFO_", "EFO:");
             builder.add(id);
         }
 
         return builder.build();
-    }
-
-    private class EFOTermExpansionClientException extends RuntimeException {
-        public EFOTermExpansionClientException(String message, Throwable cause) {
-            super(message, cause);
-        }
     }
 
 }

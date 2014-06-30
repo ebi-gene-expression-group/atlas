@@ -43,6 +43,6 @@ public class EFOTermExpansionClientTest {
                 "    }\n" +
                 "  ]\n" +
                 "}";
-        assertThat(subject.extractIds(jsonString), contains("EFO_0000304", "EFO_0001416"));
+        assertThat(subject.extractIds(jsonString), contains("EFO:0000304", "EFO:0001416"));
     }
 }

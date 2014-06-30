@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -32,7 +33,6 @@ import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import uk.ac.ebi.atlas.utils.Visitor;
 import uk.ac.ebi.atlas.utils.spring.servlet.view.CountingVisitor;
-import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -58,10 +58,10 @@ public class DiffAnalyticsSearchService {
     }
 
 
-    public int visitEachExpression(GeneQuerySearchRequestParameters requestParameters, Visitor<DiffAnalytics> visitor) {
+    public int visitEachExpression(String geneQuery, String condition, boolean isExactMatch, Visitor<DiffAnalytics> visitor) {
 
-        Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
-        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(requestParameters.getGeneQuery(), requestParameters.isExactMatch());
+        Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(condition);
+        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, isExactMatch);
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
                  || contrastsResult.isPresent() && contrastsResult.get().isEmpty()) {
@@ -100,11 +100,11 @@ public class DiffAnalyticsSearchService {
     }
 
 
-    public DiffAnalyticsList fetchTop(GeneQuerySearchRequestParameters requestParameters) throws GenesNotFoundException {
+    public DiffAnalyticsList fetchTop(String geneQuery, String condition, boolean isExactMatch) throws GenesNotFoundException {
 
 
-        Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(requestParameters);
-        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(requestParameters.getGeneQuery(), requestParameters.isExactMatch());
+        Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(condition);
+        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, isExactMatch);
 
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
@@ -122,12 +122,10 @@ public class DiffAnalyticsSearchService {
 
     }
 
-    private Optional<Collection<IndexedAssayGroup>> findContrasts(GeneQuerySearchRequestParameters requestParameters) {
-        if (!requestParameters.hasCondition()) {
+    private Optional<Collection<IndexedAssayGroup>> findContrasts(String condition) {
+        if (StringUtils.isBlank(condition)) {
             return Optional.absent();
         }
-
-        String condition = requestParameters.getCondition();
 
         Collection<IndexedAssayGroup> contrasts = differentialConditionsSearchService.findContrasts(condition);
 

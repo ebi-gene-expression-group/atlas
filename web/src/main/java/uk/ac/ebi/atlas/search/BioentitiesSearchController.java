@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.search.EFO.EFOTermExpansionClient;
 import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchResult;
 import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchService;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
@@ -67,13 +68,15 @@ public class BioentitiesSearchController {
     private EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder;
 
     private SolrQueryService solrQueryService;
+    private EFOTermExpansionClient efoTermExpansionClient;
 
     @Inject
-    public BioentitiesSearchController(DiffAnalyticsSearchService diffAnalyticsSearchService, BaselineExpressionSearchService baselineExpressionSearchService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService) {
+    public BioentitiesSearchController(DiffAnalyticsSearchService diffAnalyticsSearchService, BaselineExpressionSearchService baselineExpressionSearchService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService, EFOTermExpansionClient efoTermExpansionClient) {
         this.diffAnalyticsSearchService = diffAnalyticsSearchService;
         this.baselineExpressionSearchService = baselineExpressionSearchService;
         this.ebiGlobalSearchQueryBuilder = ebiGlobalSearchQueryBuilder;
         this.solrQueryService = solrQueryService;
+        this.efoTermExpansionClient = efoTermExpansionClient;
     }
 
     @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
@@ -103,7 +106,9 @@ public class BioentitiesSearchController {
 
             model.addAttribute("entityIdentifier", requestParameters.getDescription());
 
-            Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = baselineExpressionSearchService.query(geneQuery, requestParameters.getCondition(), requestParameters.isExactMatch());
+            String condition = efoTermExpansionClient.fetchExpandedTermWithEFOChildren(requestParameters.getCondition());
+
+            Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = baselineExpressionSearchService.query(geneQuery, condition, requestParameters.isExactMatch());
             model.addAttribute("baselineCounts", baselineExpressionSearchResults);
             if (baselineExpressionSearchResults.size() == 1 & !requestParameters.hasCondition()) {
                 model.addAttribute("singleBaselineSearchResult", true);
@@ -111,7 +116,7 @@ public class BioentitiesSearchController {
             }
 
             // used to populate diff-heatmap-table
-            DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters);
+            DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(geneQuery, condition, requestParameters.isExactMatch());
 
             model.addAttribute("bioentities", bioentityExpressions);
 

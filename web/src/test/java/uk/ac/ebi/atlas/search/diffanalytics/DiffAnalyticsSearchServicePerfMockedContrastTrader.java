@@ -70,7 +70,7 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
 
-        diffAnalyticsSearchService.fetchTop(requestParameters);
+        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
     }
 
 
@@ -82,7 +82,7 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
 
         final List<String> names = Lists.newArrayList();
 
-        diffAnalyticsSearchService.visitEachExpression(requestParameters, new Visitor<DiffAnalytics>() {
+        diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch(), new Visitor<DiffAnalytics>() {
 
             @Override
             public void visit(DiffAnalytics value) {
@@ -96,7 +96,7 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("Homo sapiens");
 
-        diffAnalyticsSearchService.fetchTop(requestParameters);
+        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
     }
 
 
@@ -106,7 +106,7 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
         requestParameters.setGeneQuery("protein_coding");
         requestParameters.setCondition("Homo sapiens");
 
-        diffAnalyticsSearchService.fetchTop(requestParameters);
+        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
     }
 
 }
