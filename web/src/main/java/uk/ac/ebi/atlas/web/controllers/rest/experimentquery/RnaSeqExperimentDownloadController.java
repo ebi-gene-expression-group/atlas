@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.text.MessageFormat;
 
 @Controller
 @Scope("request")
@@ -120,6 +121,15 @@ public class RnaSeqExperimentDownloadController {
         long genesCount = rnaSeqAnalyticsDataWriter.write();
         LOGGER.info("<download" + ALL_ANALYTICS_TSV + "> streamed " + genesCount + " gene expression profiles");
 
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/{experimentAccession}-atlasExperimentSummary.Rdata", params = PARAMS_TYPE_DIFFERENTIAL)
+    public String downloadRdataURL(HttpServletRequest request) throws IOException {
+        DifferentialExperiment experiment = (DifferentialExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+        String path = MessageFormat.format("/expdata/{0}/{0}-atlasExperimentSummary.Rdata", experiment.getAccession());
+
+        return "forward:" + path;
     }
 
     private void prepareResponse(HttpServletResponse response, String experimentAccession, String fileExtension) {
