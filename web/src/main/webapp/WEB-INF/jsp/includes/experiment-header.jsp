@@ -73,6 +73,17 @@
                             </td>
                         </c:if>
 
+                        <!-- download-r button section -->
+                        <c:if test="${type.isMicroarray() || type.isDifferential()}">
+                            <td>
+                                <a id="download-r" class="button-image"
+                                   title="Download experiment data ready to load into R"
+                                   href="${rDownloadUrl}${accessKeyQueryString}">
+                                    <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
+                                </a>
+                            </td>
+                        </c:if>
+
                         <c:if test="${type.isDifferential()}">
                             <td>
                                 <a id="download-raw" class="button-image"
@@ -105,17 +116,6 @@
                                    title="Download all analytics for the experiment"
                                    href="${analyticsDownloadUrl}${accessKeyQueryString}">
                                     <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_analytics.png"/></a>
-                            </td>
-                        </c:if>
-
-                        <!-- download-r button section -->
-                        <c:if test="${type.isMicroarray() || type.isDifferential()}">
-                            <td>
-                                <a id="download-r" class="button-image"
-                                   title="Download experiment data ready to load into R"
-                                   href="${rDownloadUrl}${accessKeyQueryString}">
-                                    <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
-                                </a>
                             </td>
                         </c:if>
 
