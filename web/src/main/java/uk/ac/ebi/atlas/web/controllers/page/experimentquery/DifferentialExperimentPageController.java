@@ -37,6 +37,7 @@ import uk.ac.ebi.atlas.profiles.ProfilesHeatMap;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModel;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
@@ -53,19 +54,21 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
     private ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap;
+    private TracksUtil tracksUtil;
 
 
     @SuppressWarnings("unchecked")
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
                                                    ProfilesHeatMap<P, ? extends DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap,
                                                    DownloadURLBuilder downloadURLBuilder, DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
-                                                   SpeciesEnsemblTrader speciesEnsemblTrader) {
+                                                   SpeciesEnsemblTrader speciesEnsemblTrader, TracksUtil tracksUtil) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         // cast here to avoid having to make a type parameter for DifferentialRequestContext
         this.profilesHeatMap = (ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions>) profilesHeatMap;
         this.downloadURLBuilder = downloadURLBuilder;
         this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
         this.speciesEnsemblTrader = speciesEnsemblTrader;
+        this.tracksUtil = tracksUtil;
     }
 
     @InitBinder
@@ -94,6 +97,8 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         model.addAttribute("allQueryFactors", contrasts);
 
         model.addAttribute("regulationValues", Regulation.values());
+
+        model.addAttribute("enableEnsemblLauncher", tracksUtil.hasDiffTracksPath(experiment.getAccession(), contrasts.iterator().next().getId()));
 
         if (!result.hasErrors()) {
 

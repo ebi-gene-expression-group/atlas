@@ -73,7 +73,7 @@
                 queryFactorType: '${preferences.queryFactorType}',
                 isExactMatch: ${preferences.exactMatch},
                 enableGeneLinks: true,
-                enableEnsemblLauncher: true,
+                enableEnsemblLauncher: ${empty enableEnsemblLauncher ? true : enableEnsemblLauncher},
                 showMaPlotButton: true,
                 selectedFilterFactorsJson: ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"},
                 toolTipHighlightedWords: genePropertiesTooltipModule.splitIntoWords('${preferences.geneQuery}'),

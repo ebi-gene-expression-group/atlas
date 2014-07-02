@@ -103,8 +103,13 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(xpath = "//thead/tr/td[2]")
     private WebElement designElementHeader;
 
-    private String experimentAccession;
+    @FindBy(id = "ensembl-launcher")
+    private WebElement ensemblLauncher;
 
+    @FindBy(id = "anatomogram-ensembl-launcher")
+    private WebElement anatomogramEnsemblLauncher;
+
+    private String experimentAccession;
 
     public HeatmapTablePage(WebDriver driver, String experimentAccession) {
         this(driver, experimentAccession, null);
@@ -406,5 +411,13 @@ public class HeatmapTablePage extends TablePage {
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("accordion")));
 
         return new BioEntityPage(driver);
+    }
+
+    public boolean hasAnatomogram() {
+        return !driver.findElements(By.id("anatomogram")).isEmpty();
+    }
+
+    public boolean hasEnsemblLauncher() {
+        return (hasAnatomogram() && SeleniumUtil.findChildElements(anatomogramEnsemblLauncher).size() > 0) || SeleniumUtil.findChildElements(ensemblLauncher).size() > 0;
     }
 }

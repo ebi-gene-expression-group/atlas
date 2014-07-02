@@ -41,6 +41,7 @@ import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -61,19 +62,21 @@ import java.util.SortedSet;
 @Scope("request")
 public class BaselineExperimentPageController extends BaselineExperimentController {
 
-    private BaselineProfilesHeatMap baselineProfilesHeatMap;
+    private final TracksUtil tracksUtil;
 
-    private ApplicationProperties applicationProperties;
+    private final BaselineProfilesHeatMap baselineProfilesHeatMap;
 
-    private FilterFactorMenuBuilder filterFactorMenuBuilder;
+    private final ApplicationProperties applicationProperties;
+
+    private final FilterFactorMenuBuilder filterFactorMenuBuilder;
 
     private BaselineRequestContext requestContext;
 
     private BaselineExperiment experiment;
 
-    private BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
+    private final BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
 
-    private SpeciesEnsemblTrader speciesEnsemblTrader;
+    private final SpeciesEnsemblTrader speciesEnsemblTrader;
 
     @Inject
     public BaselineExperimentPageController(BaselineProfilesHeatMap baselineProfilesHeatMap,
@@ -82,7 +85,8 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
                                             FilterFactorsConverter filterFactorsConverter,
                                             FilterFactorMenuBuilder filterFactorMenuBuilder,
                                             BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
-                                            SpeciesEnsemblTrader speciesEnsemblTrader) {
+                                            SpeciesEnsemblTrader speciesEnsemblTrader,
+                                            TracksUtil tracksUtil) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
@@ -90,6 +94,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         this.filterFactorMenuBuilder = filterFactorMenuBuilder;
         this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
         this.speciesEnsemblTrader = speciesEnsemblTrader;
+        this.tracksUtil = tracksUtil;
     }
 
     @InitBinder
@@ -152,6 +157,8 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         //required for genome track browser in ensembl
         String ensemblDB = speciesEnsemblTrader.getEnsemblDb(species);
         model.addAttribute("ensemblDB", ensemblDB);
+
+        model.addAttribute("enableEnsemblLauncher", tracksUtil.hasBaselineTracksPath(experiment.getAccession(), filteredAssayGroupFactors.iterator().next().getAssayGroupId()));
 
         if (!result.hasErrors()) {
 

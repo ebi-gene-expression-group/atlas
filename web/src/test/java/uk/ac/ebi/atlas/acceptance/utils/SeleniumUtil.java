@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SeleniumUtil {
@@ -76,6 +77,10 @@ public class SeleniumUtil {
                 return parent.findElement(by);
             }
         });
+    }
+
+    public static List<WebElement> findChildElements(WebElement element) {
+        return element.findElements(By.xpath("./*"));
     }
 
 }
