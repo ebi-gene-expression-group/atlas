@@ -120,7 +120,7 @@
                             </c:when>
                             <c:otherwise>
                                 <c:choose>
-                                    <c:when test="${hasBaselineExperimentForSpecies}">
+                                    <c:when test="${hasBaselineExperimentForSpecies && hasGeneProfiles}">
                                         <span style="margin-left: 10px; margin-top:10px">
                                           Results in tissues
                                         </span>
@@ -138,23 +138,24 @@
                 <c:set var="hasBaselineResults" value="${hasBaselineExperimentForSpecies || not empty baselineCounts}"/>
 
                 <div id="baselineProfileBody" class="bioEntityCard">
-
-                    <c:if test="${hasBaselineResults}">
+                    <c:if test="${hasGeneProfiles}">
+                        <c:if test="${hasBaselineResults}">
                         <div class="ui-corner-all bioEntityCardDifferentialSummary">
                             <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
                             <span style="float: right">Expression Level cut-off: 0.5</span>
                         </div>
+                        </c:if>
+
+                        <c:choose>
+                            <c:when test="${hasBaselineExperimentForSpecies || singleBaselineSearchResult}">
+                                <div id="widgetBody"></div>
+                            </c:when>
+
+                            <c:otherwise>
+                                <c:import url="baseline-search-results.jsp"/>
+                            </c:otherwise>
+                        </c:choose>
                     </c:if>
-
-                    <c:choose>
-                        <c:when test="${hasBaselineExperimentForSpecies || singleBaselineSearchResult}">
-                            <div id="widgetBody"></div>
-                        </c:when>
-
-                        <c:otherwise>
-                            <c:import url="baseline-search-results.jsp"/>
-                        </c:otherwise>
-                    </c:choose>
                 </div>
 
                 <ul id="diffProfileHeader" class="bioEntityCardHeader">

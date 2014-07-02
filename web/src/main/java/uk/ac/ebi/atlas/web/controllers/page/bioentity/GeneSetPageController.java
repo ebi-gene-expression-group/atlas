@@ -103,12 +103,12 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Override
-    protected boolean hasBaselineExperimentForSpecies(String identifier){
+    protected String hasBaselineExperimentForSpecies(String identifier){
         String trimmedIdentifier = identifier.replaceAll("\"", "");
         String species = solrQueryService.getSpeciesForPropertyValue(trimmedIdentifier);
         String experimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
 
-        return StringUtils.isNotEmpty(experimentAccession);
+        return experimentAccession;
     }
 
     @Override

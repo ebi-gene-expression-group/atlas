@@ -475,7 +475,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     var displayLevelsButton = (type === TypeEnum.BASELINE) ? DisplayLevelsButtonBaseline : DisplayLevelsButtonDifferential;
                     return (
                             React.DOM.div( {className:"heatmap-matrix-top-left-corner"}, 
-                                React.DOM.span( {id:"tooltip-span", 'data-help-loc':"#heatMapTableCellInfo", ref:"tooltipSpan"}),
+                                React.DOM.span( {id:"tooltip-span", 'data-help-loc':"#heatMapTableCellInfo-differential", ref:"tooltipSpan"}),
                                 displayLevelsButton( {displayLevels:this.props.displayLevels, toggleDisplayLevels:this.props.toggleDisplayLevels})
                             )
                         );
