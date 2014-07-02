@@ -73,7 +73,7 @@
                 queryFactorType: '${preferences.queryFactorType}',
                 isExactMatch: ${preferences.exactMatch},
                 enableGeneLinks: true,
-                enableEnsemblBrowser: true,
+                enableEnsemblLauncher: true,
                 showMaPlotButton: true,
                 selectedFilterFactorsJson: ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"},
                 toolTipHighlightedWords: genePropertiesTooltipModule.splitIntoWords('${preferences.geneQuery}'),
@@ -105,8 +105,8 @@
             document.getElementById('heatmap-react')
         );
 
-        React.renderComponent(heatmap.EnsemblBrowser(),
-                document.getElementById('${hasAnatomogram ? "anatomogram-ensembl-browser" : "ensembl-browser"}')
+        React.renderComponent(heatmap.EnsemblLauncher(),
+                document.getElementById('${hasAnatomogram ? "anatomogram-ensembl-launcher" : "ensembl-launcher"}')
         );
 
     })(jQuery, React, heatmapModule, heatmapData.config,
