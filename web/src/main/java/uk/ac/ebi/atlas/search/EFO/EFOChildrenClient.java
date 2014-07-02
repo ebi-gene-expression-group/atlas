@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.search.EFO;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -38,27 +37,22 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@Scope("prototype")
-public class EFOTermExpansionClient {
+@Scope("singleton")
+public class EFOChildrenClient {
 
-    private static final Logger LOGGER = Logger.getLogger(EFOTermExpansionClient.class);
+    private static final Logger LOGGER = Logger.getLogger(EFOChildrenClient.class);
 
     private RestTemplate restTemplate;
 
     private String url;
 
     @Inject
-    public EFOTermExpansionClient(RestTemplate restTemplate, @Value("#{configuration['efo.term.expansion.query.url']}") String url) {
+    public EFOChildrenClient(RestTemplate restTemplate, @Value("#{configuration['efo.term.expansion.query.url']}") String url) {
         this.restTemplate = restTemplate;
         this.url = url;
     }
 
-    public String fetchExpandedTermWithEFOChildren(String term) {
-        ImmutableList<String> efoChildren = fetchEFOChildren(term);
-        return term + (efoChildren.isEmpty() ? "" : " " + Joiner.on(" ").join(efoChildren));
-    }
-
-    ImmutableList<String> fetchEFOChildren(String term) {
+    public ImmutableList<String> fetchEFOChildren(String term) {
 
         if (StringUtils.isBlank(term)) {
             return ImmutableList.of();
