@@ -42,18 +42,21 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT e
         subject.get();
     }
 
+    //TODO: fix ConditionSearchEFOExpander
     @Ignore
     @Test
     public void checkDifferentialProfilesCount() {
         assertThat(subject.diffExpressionResultCount(), is("316 search result(s) found"));
     }
 
+    //TODO: fix ConditionSearchEFOExpander
     @Ignore
     @Test
     public void globalSearchTermIsIdentifiersSeparatedByAND() {
         assertThat(subject.getGlobalSearchTerm(), is(GLOBAL_SEARCH_TERM));
     }
 
+    //TODO: fix ConditionSearchEFOExpander
     @Ignore
     @Test
     public void globalSearchWidgetShouldHaveResults(){

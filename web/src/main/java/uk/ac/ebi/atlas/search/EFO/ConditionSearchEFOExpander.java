@@ -32,7 +32,7 @@ public class ConditionSearchEFOExpander {
         }
 
         if (term.contains(" AND ")) {
-            //TODO: implement AND, and fix test  BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT
+            //TODO: implement AND, and fix test  BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT and BioentitiesSearchControllerConditionQuery2ANDTermsBaselineSIT
             throw new NotImplementedException("EFO expansion of terms containing AND not yet implemented");
         }
 
