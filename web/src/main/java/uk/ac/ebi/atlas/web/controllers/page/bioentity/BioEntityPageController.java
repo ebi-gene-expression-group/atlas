@@ -39,7 +39,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineGeneQueryRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -126,17 +126,20 @@ public abstract class BioEntityPageController {
         model.addAttribute("bioentitySameIdentifier", true);
 
         String experimentAccession = hasBaselineExperimentForSpecies(identifier);
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, null);
 
         //to check if the widget contains the identifier or not and inform properly in the results gene pages
         model.addAttribute("hasBaselineExperimentForSpecies", StringUtils.isNotEmpty(experimentAccession));
 
         try {
-
-            model.addAttribute("hasGeneProfiles", hasGeneProfilesExperiment(experiment, identifier));
+            if(experimentAccession != null) {
+                BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, null);
+                model.addAttribute("hasGeneProfiles", hasGeneProfilesExperiment(experiment, identifier));
+            } else {
+                model.addAttribute("hasGeneProfiles", false);
+            }
 
         } catch (GenesNotFoundException e) {
-             e.printStackTrace();
+            throw new ResourceNotFoundException("No gene profiles with identifier "+ identifier);
         }
 
         //bioentity properties panel data

@@ -138,8 +138,7 @@
                 <c:set var="hasBaselineResults" value="${hasBaselineExperimentForSpecies || not empty baselineCounts}"/>
 
                 <div id="baselineProfileBody" class="bioEntityCard">
-                    <c:if test="${hasGeneProfiles}">
-                        <c:if test="${hasBaselineResults}">
+                        <c:if test="${hasBaselineResults && hasGeneProfiles}">
                         <div class="ui-corner-all bioEntityCardDifferentialSummary">
                             <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
                             <span style="float: right">Expression Level cut-off: 0.5</span>
@@ -147,7 +146,7 @@
                         </c:if>
 
                         <c:choose>
-                            <c:when test="${hasBaselineExperimentForSpecies || singleBaselineSearchResult}">
+                            <c:when test="${hasBaselineExperimentForSpecies || singleBaselineSearchResult || hasGeneProfiles}">
                                 <div id="widgetBody"></div>
                             </c:when>
 
@@ -155,7 +154,6 @@
                                 <c:import url="baseline-search-results.jsp"/>
                             </c:otherwise>
                         </c:choose>
-                    </c:if>
                 </div>
 
                 <ul id="diffProfileHeader" class="bioEntityCardHeader">
