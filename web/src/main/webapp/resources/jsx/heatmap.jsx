@@ -392,7 +392,22 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher);
 
 
-        var EnsemblLauncher = (function (atlasHost, contextRoot, experimentAccession, accessKey, ensemblSpecies, ensemblDB ) {
+        var EnsemblLauncher = (function (atlasHost, contextRoot, experimentAccession, accessKey, ensemblSpecies, ensemblDB, columnType ) {
+
+            var noSelectedColumnMessageArticle = (function (columnType) {
+                var isVowel = (function() {
+                    var re = /^[aeiou]$/i;
+                    return function(char) {
+                        return re.test(char);
+                    }
+                })();
+
+                var beginsWithVowel = function (string) {
+                    return isVowel(string.charAt(0));
+                };
+
+                return beginsWithVowel(columnType) ? "an " : "a ";
+            })(columnType);
 
             return React.createClass({
 
@@ -401,7 +416,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 componentDidMount: function () {
-                    $(this.refs.button.getDOMNode()).button();
+                    $(this.refs.button.getDOMNode()).button({icons: {primary: "ui-icon-newwin"}});
                     this.updateButton();
                     eventEmitter.addListener('onColumnSelectionChange', this.onColumnSelectionChange);
                     eventEmitter.addListener('onGeneSelectionChange', this.onGeneSelectionChange);
@@ -427,13 +442,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                 helpMessage: function (selectedColumnId, selectedGeneId) {
                     if (selectedColumnId && selectedGeneId) {
-                        return "Go!";
+                        return "";
                     }
 
-                    var noSelectedColumnMessage = selectedColumnId ? "" : "factor";
+                    var noSelectedColumnMessage = selectedColumnId ? "" : columnType;
                     var noSelectedGeneMessage = selectedGeneId ? "" : "gene";
 
-                    return "Please select a " + noSelectedColumnMessage + (!(selectedColumnId || selectedGeneId) ? " and a " : "") + noSelectedGeneMessage;
+                    return "Please select " + noSelectedColumnMessageArticle + noSelectedColumnMessage + (!(selectedColumnId || selectedGeneId) ? " and a " : "") + noSelectedGeneMessage + " from the table";
                 },
 
                 componentDidUpdate: function () {
@@ -457,15 +472,17 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 render: function () {
                     //console.log("selected gene id " + this.state.selectedGeneId + " selected column: " + this.state.selectedColumnId);
                     return (
-                        <div>
-                            <div style={{"font-size": "x-small"}}>{this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)}</div>
-                            <button ref="button" onClick={this.openEnsemblWindow}>Ensembl Browser</button>
+                        <div id="ensembl-launcher-box" style={{width: "245px"}}>
+                            <label>Ensembl Genome Browser</label>
+                            <img src="/gxa/resources/images/ensembl.gif" style={{padding: "0px 5px"}}></img>
+                            <div style={{"font-size": "x-small", height: "30px"}}>{this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)}</div>
+                            <button ref="button" onClick={this.openEnsemblWindow}>Open</button>
                         </div>
                         );
 
                 }
             });
-        })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, ensemblSpecies, heatmapConfig.ensemblDB);
+        })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, ensemblSpecies, heatmapConfig.ensemblDB, heatmapConfig.columnType);
 
 
         var TopLeftCorner = (function (contextRoot) {

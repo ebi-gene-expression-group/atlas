@@ -1,3 +1,5 @@
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/transcriptPopupModule.js"></script>
@@ -70,6 +72,7 @@
                 accessKey: '${param.accessKey}',
                 species: '${species}',
                 ensemblDB: '${ensemblDB}',
+                columnType: '${fn:toLowerCase(queryFactorName)}',
                 queryFactorType: '${preferences.queryFactorType}',
                 isExactMatch: ${preferences.exactMatch},
                 enableGeneLinks: true,
