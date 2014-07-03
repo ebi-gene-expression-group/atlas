@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.search.EFO;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -41,7 +42,11 @@ public class ConditionSearchEFOExpander {
 
     private String termPlusEFOChildren(String term) {
         ImmutableList<String> efoChildren = efoChildrenClient.fetchEFOChildren(term);
-        return term + (efoChildren.isEmpty() ? "" : " " + Joiner.on(" ").join(efoChildren));
+
+        // don't return more than 1024 terms because maxBooleanClauses in solr is 1024
+        // TODO: reimplement this
+        Iterable<String> topEfoChildren = Iterables.limit(efoChildren, 1023);
+        return term + (efoChildren.isEmpty() ? "" : " " + Joiner.on(" ").join(topEfoChildren));
     }
 
 //
