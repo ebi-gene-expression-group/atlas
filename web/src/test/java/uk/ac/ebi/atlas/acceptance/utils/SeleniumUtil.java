@@ -5,10 +5,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class SeleniumUtil {
@@ -81,6 +83,49 @@ public class SeleniumUtil {
 
     public static List<WebElement> findChildElements(WebElement element) {
         return element.findElements(By.xpath("./*"));
+    }
+
+    public static void waitForNumberOfWindowsToBe(final WebDriver driver, final int numberOfWindows) {
+        FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
+                .pollingEvery(250, TimeUnit.MILLISECONDS);
+
+        wait.until(numberOfWindowsToBe(numberOfWindows));
+    }
+
+
+    public static ExpectedCondition<Boolean> numberOfWindowsToBe(final int numberOfWindows) {
+
+        return new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver driver) {
+                driver.getWindowHandles();
+                return driver.getWindowHandles().size() == numberOfWindows;
+            }
+        };
+
+    }
+
+    public static void switchToOpenedWindow(final WebDriver driver) {
+        waitForNumberOfWindowsToBe(driver, 2);
+
+        String currentWindowHandle = driver.getWindowHandle();
+        String firstOtherWindowHandle = SeleniumUtil.firstOtherWindowHandle(driver, currentWindowHandle);
+        driver.switchTo().window(firstOtherWindowHandle);
+    }
+
+    public static String firstOtherWindowHandle(final WebDriver driver, String currentWindowHandle) {
+
+        Set<String> allWindowHandles = driver.getWindowHandles();
+
+        for (String windowHandle : allWindowHandles) {
+            if (!windowHandle.equals(currentWindowHandle)) {
+                return windowHandle;
+            }
+        }
+
+        throw new RuntimeException("No window handle other than " + currentWindowHandle);
+
     }
 
 }

@@ -28,6 +28,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             return capitaliseFirstLetter(firstTwoWords(species).replace(" ", "_").toLowerCase());
         })(heatmapConfig.species);
 
+        var ensemblHost = "http://" + ((heatmapConfig.ensemblDB == "ensembl") ? "www" : heatmapConfig.ensemblDB) + ".ensembl.org/";
+
         var Heatmap = React.createClass({
 
             getInitialState: function () {
@@ -392,7 +394,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher);
 
 
-        var EnsemblLauncher = (function (atlasHost, contextRoot, experimentAccession, accessKey, ensemblSpecies, ensemblDB, columnType ) {
+        var EnsemblLauncher = (function (atlasHost, contextRoot, experimentAccession, accessKey, ensemblHost, ensemblSpecies, ensemblDB, columnType ) {
 
             var noSelectedColumnMessageArticle = (function (columnType) {
                 var isVowel = (function() {
@@ -459,7 +461,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     if (!this.state.selectedColumnId || !this.state.selectedGeneId) {
                         return;
                     }
-                    var ensemblHost = "http://" + ((ensemblDB == "ensembl") ? "www" : ensemblDB) + ".ensembl.org/";
+
                     var trackFileHeader = experimentAccession + "." + this.state.selectedColumnId;
                     var atlasTrackBaseUrl = "http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession + "/tracks/";
                     var contigviewbottom = "contigviewbottom=url:" + atlasTrackBaseUrl + trackFileHeader + (type === TypeEnum.BASELINE ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
@@ -485,7 +487,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                 }
             });
-        })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, ensemblSpecies, heatmapConfig.ensemblDB, heatmapConfig.columnType);
+        })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, ensemblHost, ensemblSpecies, heatmapConfig.ensemblDB, heatmapConfig.columnType);
 
 
         var TopLeftCorner = (function (contextRoot) {
@@ -636,7 +638,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher);
 
 
-        var CellBaseline = (function (contextRoot, experimentAccession, ensemblSpecies, selectedFilterFactorsJson, queryFactorType) {
+        var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, selectedFilterFactorsJson, queryFactorType) {
 
             function hasKnownExpression(value) {
                 // true if not blank or UNKNOWN, ie: has a expression with a known value
@@ -670,7 +672,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             geneId = this.props.geneId,
                             geneName = this.props.geneName;
 
-                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, queryFactorType, factorValue, selectedFilterFactorsJson, ensemblSpecies);
+                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, queryFactorType, factorValue, selectedFilterFactorsJson, ensemblHost, ensemblSpecies);
                     }
                 },
 
@@ -702,7 +704,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     }
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblSpecies, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
+        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
 
         var CellDifferential = (function () {
 

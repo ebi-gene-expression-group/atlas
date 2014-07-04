@@ -82,6 +82,46 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
 
     public List<String> getTranscriptBreakdownLegendLabels() {
 
+        List<String> results = Lists.newArrayList();
+
+        for (WebElement element : getLegendElements()) {
+            try{
+                results.add(element.getText());
+            }catch(NoSuchElementException e){
+                results.add(element.getText());
+            }
+        }
+        return results;
+    }
+
+    public List<String> getTranscriptBreakdownLegendLinks() {
+
+        List<String> results = Lists.newArrayList();
+
+        for (WebElement element : getLegendElements()) {
+            results.add(element.getAttribute("href"));
+        }
+        return results;
+    }
+
+    public List<WebElement> getLegendElements() {
+        waitForTranscriptPopup();
+
+        WebElement transcriptPie = driver.findElement(By.id("transcripts-pie"));
+        WebElement legend = transcriptPie.findElement(By.className("legend"));
+
+        return legend.findElements(By.className("transcriptid"));
+    }
+
+    public String getGeneLink() {
+        waitForTranscriptPopup();
+
+        WebElement geneId = driver.findElement(By.id("transcript-breakdown-geneid"));
+
+        return geneId.getAttribute("href");
+    }
+
+    private void waitForTranscriptPopup() {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(new ExpectedCondition<Boolean>() {
             @Override
@@ -89,22 +129,6 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
                 return driver.findElement(By.id("transcripts-pie")) != null;
             }
         });
-
-        List<String> results = Lists.newArrayList();
-
-        WebElement transcriptPie = driver.findElement(By.id("transcripts-pie"));
-        WebElement legend = transcriptPie.findElement(By.className("legend"));
-        List<WebElement> elements = legend.findElements(By.className("legendLabel"));
-
-
-        for (WebElement element : elements) {
-            try{
-                results.add(element.findElement(By.xpath("a")).getText());
-            }catch(NoSuchElementException e){
-                results.add(element.getText());
-            }
-        }
-        return results;
     }
 
 }

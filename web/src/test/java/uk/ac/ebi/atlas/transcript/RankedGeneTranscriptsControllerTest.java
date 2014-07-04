@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest;
+package uk.ac.ebi.atlas.transcript;
 
 import com.google.common.collect.Maps;
 import org.junit.Before;
@@ -30,8 +30,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.transcript.TranscriptContributions;
-import uk.ac.ebi.atlas.transcript.TranscriptContributionsCalculator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
