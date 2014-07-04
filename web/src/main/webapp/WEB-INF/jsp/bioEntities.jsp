@@ -146,8 +146,10 @@
                         </c:if>
 
                         <c:choose>
-                            <c:when test="${hasBaselineExperimentForSpecies || singleBaselineSearchResult || hasGeneProfiles}">
-                                <div id="widgetBody"></div>
+                            <c:when test="${hasBaselineExperimentForSpecies || singleBaselineSearchResult}">
+                                <c:if test="${not empty baselineCounts || hasGeneProfiles}">
+                                    <div id="widgetBody"></div>
+                                </c:if>
                             </c:when>
 
                             <c:otherwise>
