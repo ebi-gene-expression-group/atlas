@@ -456,6 +456,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 openEnsemblWindow: function () {
+                    if (!this.state.selectedColumnId || !this.state.selectedGeneId) {
+                        return;
+                    }
                     var ensemblHost = "http://" + ((ensemblDB == "ensembl") ? "www" : ensemblDB) + ".ensembl.org/";
                     var trackFileHeader = experimentAccession + "." + this.state.selectedColumnId;
                     var atlasTrackBaseUrl = "http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession + "/tracks/";
