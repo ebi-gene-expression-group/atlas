@@ -594,8 +594,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     // don't render id for gene sets to prevent tooltips
                     return (
-                        React.DOM.a( {ref:"geneName", title:"", id:this.props.showGeneSetProfiles ? '' : this.props.geneId, href:contextRoot + geneURL}, this.props.geneName)
+                        React.DOM.a( {ref:"geneName", title:"", id:this.props.showGeneSetProfiles ? '' : this.props.geneId, href:contextRoot + geneURL, onClick:this.geneNameLinkClicked}, this.props.geneName)
                         );
+                },
+
+                geneNameLinkClicked: function (event) {
+                    //prevent row from being selected
+                    event.stopPropagation();
                 },
 
                 geneNameNotLinked: function () {
