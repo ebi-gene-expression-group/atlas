@@ -33,7 +33,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-public class TranscriptBreakdownPlotSIT extends SeleniumFixture {
+public class TranscriptPopupSIT extends SeleniumFixture {
 
     private static final String E_GEOD_26284_ACCESSION = "E-GEOD-26284";
     private static final String E_MTAB_599_ACCESSION = "E-MTAB-599";
