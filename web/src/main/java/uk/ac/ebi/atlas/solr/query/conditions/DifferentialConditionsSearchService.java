@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.solr.query.conditions;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -60,7 +61,7 @@ public class DifferentialConditionsSearchService {
             StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
             stopWatch.start();
 
-            QueryResponse queryResponse = differentialConditionsSolrServer.query(queryBuilder.build(queryString));
+            QueryResponse queryResponse = differentialConditionsSolrServer.query(queryBuilder.build(queryString), SolrRequest.METHOD.POST);
             List<DifferentialCondition> beans = queryResponse.getBeans(DifferentialCondition.class);
 
             stopWatch.stop();

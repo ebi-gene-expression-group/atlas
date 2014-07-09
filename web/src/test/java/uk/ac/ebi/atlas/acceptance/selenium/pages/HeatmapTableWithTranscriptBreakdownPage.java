@@ -55,13 +55,13 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
         wait.until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {
-            return driver.findElement(By.id("transcript-breakdown-title")) != null;
+                return driver.findElement(By.id("transcript-breakdown-title")) != null;
             }
         });
         return this;
     }
 
-    public String getTranscriptColor(int zeroBasedIndex){
+    public String getTranscriptColor(int zeroBasedIndex) {
         List<WebElement> colorDivs = driver.findElements(By.cssSelector(TRANSCRIPT_COLOR_CELLS));
         return colorDivs.get(zeroBasedIndex).findElement(By.cssSelector("div>div")).getCssValue("border-color");
     }
@@ -72,7 +72,7 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
         wait.until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {
-                return StringUtils.isNotBlank(driver.findElement(By.id("transcript-breakdown-title")).getText() );
+                return StringUtils.isNotBlank(driver.findElement(By.id("transcript-breakdown-title")).getText());
             }
         });
 
@@ -82,13 +82,7 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
 
     public List<String> getTranscriptBreakdownLegendLabels() {
 
-        WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver webDriver) {
-                return driver.findElement(By.id("transcripts-pie")) != null;
-            }
-        });
+        waitForTranscriptPopup();
 
         List<String> results = Lists.newArrayList();
 
@@ -96,15 +90,53 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
         WebElement legend = transcriptPie.findElement(By.className("legend"));
         List<WebElement> elements = legend.findElements(By.className("legendLabel"));
 
-
         for (WebElement element : elements) {
-            try{
+            try {
+                // get text from link inside TD
                 results.add(element.findElement(By.xpath("a")).getText());
-            }catch(NoSuchElementException e){
+            } catch (NoSuchElementException e) {
+                // get text from TD when there is no link, ie: the label is Others
                 results.add(element.getText());
             }
         }
         return results;
+    }
+
+    public List<String> getTranscriptBreakdownLegendLinks() {
+
+        List<String> results = Lists.newArrayList();
+
+        for (WebElement element : getLegendElements()) {
+            results.add(element.getAttribute("href"));
+        }
+        return results;
+    }
+
+    public List<WebElement> getLegendElements() {
+        waitForTranscriptPopup();
+
+        WebElement transcriptPie = driver.findElement(By.id("transcripts-pie"));
+        WebElement legend = transcriptPie.findElement(By.className("legend"));
+
+        return legend.findElements(By.className("transcriptid"));
+    }
+
+    public String getGeneLink() {
+        waitForTranscriptPopup();
+
+        WebElement geneId = driver.findElement(By.id("transcript-breakdown-geneid"));
+
+        return geneId.getAttribute("href");
+    }
+
+    private void waitForTranscriptPopup() {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                return driver.findElement(By.id("transcripts-pie")) != null;
+            }
+        });
     }
 
 }

@@ -10,12 +10,12 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EFOTermExpansionClientTest {
+public class EFOChildrenClientTest {
 
     @Mock
     private RestTemplate restTemplate;
 
-    private EFOTermExpansionClient subject = new EFOTermExpansionClient(restTemplate, "");
+    private EFOChildrenClient subject = new EFOChildrenClient(restTemplate, "");
 
     @Test
     public void testExtractIds() throws Exception {
@@ -43,6 +43,6 @@ public class EFOTermExpansionClientTest {
                 "    }\n" +
                 "  ]\n" +
                 "}";
-        assertThat(subject.extractIds(jsonString), contains("EFO_0000304", "EFO_0001416"));
+        assertThat(subject.extractIds(jsonString), contains("EFO:0000304", "EFO:0001416"));
     }
 }

@@ -15,7 +15,7 @@ var TranscriptPopup = (function ($) {
         return data;
     }
 
-    function paintPieChart(plotData, geneId, ensemblSpecies) {
+    function paintPieChart(plotData, geneId, ensemblHost, ensemblSpecies) {
 
         $transcript.css('position', 'absolute').css('left', '-5000px');
         $transcript.show();
@@ -32,7 +32,7 @@ var TranscriptPopup = (function ($) {
                 show:true,
                 labelFormatter:function (label) {
                     return label === "Others" ? "Others" :
-                        "<a class='transcriptid' href='http://www.ensembl.org/" + ensemblSpecies + "/Transcript/Summary?g=" + geneId + ";t="
+                        "<a class='transcriptid' href='" + ensemblHost + ensemblSpecies + "/Transcript/Summary?g=" + geneId + ";t="
                         + label + "' target='_blank'" + "title='View transcript in Ensembl'" + ">" +
                         label + "</a>";
                 }
@@ -64,7 +64,7 @@ var TranscriptPopup = (function ($) {
     }
 
     //NB: ensemblSpecies is the first two words only, with underscores instead of spaces, and all lower case except for the first character
-    var display = function display(contextRoot, experimentAccession, geneId, geneName, factorType, factorValue, selectedFilterFactorsJson, ensemblSpecies) {
+    var display = function display(contextRoot, experimentAccession, geneId, geneName, factorType, factorValue, selectedFilterFactorsJson, ensemblHost, ensemblSpecies) {
         $.ajax({
             url: contextRoot + "/json/transcripts/" + experimentAccession,
             type: "GET",
@@ -80,7 +80,7 @@ var TranscriptPopup = (function ($) {
                     expressedCount = data.expressedTranscriptsCount,
                     plotData = buildPlotData(data.transcriptExpressions);
 
-                paintPieChart(plotData, geneId, ensemblSpecies);
+                paintPieChart(plotData, geneId, ensemblHost, ensemblSpecies);
 
                 showTranscriptBreakdownFancyBox();
 
@@ -95,7 +95,7 @@ var TranscriptPopup = (function ($) {
                 }
 
                 $('#transcript-breakdown-title').html("Expression Level Breakdown for " +
-                    "<a id='transcript-breakdown-geneid' href='http://www.ensembl.org/" + ensemblSpecies + "/Gene/Summary?g=" + geneId +
+                    "<a id='transcript-breakdown-geneid' href='" + ensemblHost + ensemblSpecies + "/Gene/Summary?g=" + geneId +
                     "' target='_blank'" + "title='View gene in Ensembl'" + ">" + geneName + "</a> in " + factorValue +
                     "<br/>(" + expressedCount + " out of " + totalCount + " transcript" + s +
                     " " + is + " expressed):");

@@ -28,6 +28,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             return capitaliseFirstLetter(firstTwoWords(species).replace(" ", "_").toLowerCase());
         })(heatmapConfig.species);
 
+        var ensemblHost = "http://" + ((heatmapConfig.ensemblDB == "ensembl") ? "www" : heatmapConfig.ensemblDB) + ".ensembl.org/";
+
         var Heatmap = React.createClass({displayName: 'Heatmap',
 
             getInitialState: function () {
@@ -259,7 +261,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         });
 
-        var FactorHeader = (function (contextRoot, accessKey, enableEnsemblBrowser) {
+        var FactorHeader = (function (contextRoot, accessKey, enableEnsemblLauncher) {
             return React.createClass({
 
                 getInitialState: function () {
@@ -287,10 +289,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.DOM.span( {style:{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}},   "  select") : null;
                     var showTickWhenSelected = this.props.selected ? React.DOM.span( {className:"rotate_tick", style:{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}},  " ✔ " ): null ;
-                    var className = (this.props.selected ? "rotated_cell hoverable-header vertical-header-cell-selected" : "rotated_cell hoverable-header vertical-header-cell") + (enableEnsemblBrowser ? " selectable-header" : "");
+                    var className = (this.props.selected ? "rotated_cell hoverable-header vertical-header-cell-selected" : "rotated_cell hoverable-header vertical-header-cell") + (enableEnsemblLauncher ? " selectable-header" : "");
 
                     return (
-                        React.DOM.th( {className:className, onMouseEnter:enableEnsemblBrowser ? this.onMouseEnter : undefined, onMouseLeave:enableEnsemblBrowser ? this.onMouseLeave : undefined, onClick:enableEnsemblBrowser ? this.onClick : undefined, rowSpan:"2"}, 
+                        React.DOM.th( {className:className, onMouseEnter:enableEnsemblLauncher ? this.onMouseEnter : undefined, onMouseLeave:enableEnsemblLauncher ? this.onMouseLeave : undefined, onClick:enableEnsemblLauncher ? this.onClick : undefined, rowSpan:"2"}, 
                             React.DOM.div( {'data-svg-path-id':this.props.svgPathId, 'data-assay-group-id':this.props.assayGroupId, 'data-experiment-accession':this.props.experimentAccession, className:"factor-header rotate_text"}, 
                                 truncatedFactorName,
                                 showSelectTextOnHover,
@@ -300,7 +302,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         );
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblBrowser);
+        })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher);
 
         var ContrastHeaders = React.createClass({displayName: 'ContrastHeaders',
 
@@ -327,7 +329,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         });
 
-        var ContrastHeader = (function (contextRoot, accessKey, enableEnsemblBrowser) {
+        var ContrastHeader = (function (contextRoot, accessKey, enableEnsemblLauncher) {
             return React.createClass({
 
                 getInitialState: function () {
@@ -375,10 +377,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.DOM.span( {style:{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}},   "  select") : null;
                     var showTickWhenSelected = this.props.selected ? React.DOM.span( {className:"rotate_tick", style:{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}},  " ✔ " ): null ;
-                    var className = (this.props.selected ? "rotated_cell hoverable-header vertical-header-cell-selected" : "rotated_cell hoverable-header vertical-header-cell") + (enableEnsemblBrowser ? " selectable-header" : "");
+                    var className = (this.props.selected ? "rotated_cell hoverable-header vertical-header-cell-selected" : "rotated_cell hoverable-header vertical-header-cell") + (enableEnsemblLauncher ? " selectable-header" : "");
 
                     return (
-                        React.DOM.th( {className:className, rowSpan:"2", style:thStyle, onMouseEnter:enableEnsemblBrowser ? this.onMouseEnter : undefined, onMouseLeave:enableEnsemblBrowser ? this.onMouseLeave : undefined, onClick:enableEnsemblBrowser ? this.onClick : undefined}, 
+                        React.DOM.th( {className:className, rowSpan:"2", style:thStyle, onMouseEnter:enableEnsemblLauncher ? this.onMouseEnter : undefined, onMouseLeave:enableEnsemblLauncher ? this.onMouseLeave : undefined, onClick:enableEnsemblLauncher ? this.onClick : undefined}, 
                             React.DOM.div( {'data-contrast-id':this.props.contrastId, 'data-experiment-accession':this.props.experimentAccession, className:"factor-header rotate_text", style:textStyle}, 
                                 truncatedName,
                                 showSelectTextOnHover,
@@ -389,10 +391,25 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         );
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblBrowser);
+        })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher);
 
 
-        var EnsemblBrowser = (function (atlasHost, contextRoot, experimentAccession, accessKey, ensemblSpecies, ensemblDB ) {
+        var EnsemblLauncher = (function (atlasHost, contextRoot, experimentAccession, accessKey, ensemblHost, ensemblSpecies, ensemblDB, columnType ) {
+
+            var noSelectedColumnMessageArticle = (function (columnType) {
+                var isVowel = (function() {
+                    var re = /^[aeiou]$/i;
+                    return function(char) {
+                        return re.test(char);
+                    }
+                })();
+
+                var beginsWithVowel = function (string) {
+                    return isVowel(string.charAt(0));
+                };
+
+                return beginsWithVowel(columnType) ? "an " : "a ";
+            })(columnType);
 
             return React.createClass({
 
@@ -401,7 +418,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 componentDidMount: function () {
-                    $(this.refs.button.getDOMNode()).button();
+                    $(this.refs.button.getDOMNode()).button({icons: {primary: "ui-icon-newwin"}});
                     this.updateButton();
                     eventEmitter.addListener('onColumnSelectionChange', this.onColumnSelectionChange);
                     eventEmitter.addListener('onGeneSelectionChange', this.onGeneSelectionChange);
@@ -427,21 +444,24 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                 helpMessage: function (selectedColumnId, selectedGeneId) {
                     if (selectedColumnId && selectedGeneId) {
-                        return "Go!";
+                        return "";
                     }
 
-                    var noSelectedColumnMessage = selectedColumnId ? "" : "factor";
+                    var noSelectedColumnMessage = selectedColumnId ? "" : columnType;
                     var noSelectedGeneMessage = selectedGeneId ? "" : "gene";
 
-                    return "Please select a " + noSelectedColumnMessage + (!(selectedColumnId || selectedGeneId) ? " and a " : "") + noSelectedGeneMessage;
+                    return "Please select " + noSelectedColumnMessageArticle + noSelectedColumnMessage + (!(selectedColumnId || selectedGeneId) ? " and a " : "") + noSelectedGeneMessage + " from the table";
                 },
 
                 componentDidUpdate: function () {
                     this.updateButton();
                 },
 
-                goToGenomeTrackBrowser: function () {
-                    var ensemblHost = "http://" + ((ensemblDB == "ensembl") ? "www" : ensemblDB) + ".ensembl.org/";
+                openEnsemblWindow: function () {
+                    if (!this.state.selectedColumnId || !this.state.selectedGeneId) {
+                        return;
+                    }
+
                     var trackFileHeader = experimentAccession + "." + this.state.selectedColumnId;
                     var atlasTrackBaseUrl = "http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession + "/tracks/";
                     var contigviewbottom = "contigviewbottom=url:" + atlasTrackBaseUrl + trackFileHeader + (type === TypeEnum.BASELINE ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
@@ -457,15 +477,17 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 render: function () {
                     //console.log("selected gene id " + this.state.selectedGeneId + " selected column: " + this.state.selectedColumnId);
                     return (
-                        React.DOM.div(null, 
-                            React.DOM.div( {style:{"font-size": "x-small"}}, this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)),
-                            React.DOM.button( {ref:"button", onClick:this.goToGenomeTrackBrowser}, "Ensembl Browser")
+                        React.DOM.div( {id:"ensembl-launcher-box", style:{width: "245px"}}, 
+                            React.DOM.label(null, "Ensembl Genome Browser"),
+                            React.DOM.img( {src:"/gxa/resources/images/ensembl.gif", style:{padding: "0px 5px"}}),
+                            React.DOM.div( {style:{"font-size": "x-small", height: "30px"}}, this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)),
+                            React.DOM.button( {ref:"button", onClick:this.openEnsemblWindow}, "Open")
                         )
                         );
 
                 }
             });
-        })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, ensemblSpecies, heatmapConfig.ensemblDB);
+        })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, ensemblHost, ensemblSpecies, heatmapConfig.ensemblDB, heatmapConfig.columnType);
 
 
         var TopLeftCorner = (function (contextRoot) {
@@ -475,7 +497,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     var displayLevelsButton = (type === TypeEnum.BASELINE) ? DisplayLevelsButtonBaseline : DisplayLevelsButtonDifferential;
                     return (
                             React.DOM.div( {className:"heatmap-matrix-top-left-corner"}, 
-                                React.DOM.span( {id:"tooltip-span", 'data-help-loc':"#heatMapTableCellInfo", ref:"tooltipSpan"}),
+                                React.DOM.span( {id:"tooltip-span", 'data-help-loc':"#heatMapTableCellInfo-differential", ref:"tooltipSpan"}),
                                 displayLevelsButton( {displayLevels:this.props.displayLevels, toggleDisplayLevels:this.props.toggleDisplayLevels})
                             )
                         );
@@ -547,7 +569,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
         });
 
-        var GeneProfileRow = (function (contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks, enableEnsemblBrowser) {
+        var GeneProfileRow = (function (contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks, enableEnsemblLauncher) {
 
             return React.createClass({
 
@@ -572,8 +594,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     // don't render id for gene sets to prevent tooltips
                     return (
-                        React.DOM.a( {ref:"geneName", title:"", id:this.props.showGeneSetProfiles ? '' : this.props.geneId, href:contextRoot + geneURL}, this.props.geneName)
+                        React.DOM.a( {ref:"geneName", title:"", id:this.props.showGeneSetProfiles ? '' : this.props.geneId, href:contextRoot + geneURL, onClick:this.geneNameLinkClicked}, this.props.geneName)
                         );
+                },
+
+                geneNameLinkClicked: function (event) {
+                    //prevent row from being selected
+                    event.stopPropagation();
                 },
 
                 geneNameNotLinked: function () {
@@ -593,12 +620,12 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 render: function () {
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.DOM.span( {style:{position: "relative", float:"right", color:"green"}},   "  select") : null;
                     var showTickWhenSelected = this.props.selected ? React.DOM.span( {style:{position: "relative", float:"right", color:"green"}},  " ✔ " ): null ;
-                    var className = (this.props.selected ? "horizontal-header-cell-selected hoverable-header" : "horizontal-header-cell hoverable-header") + (enableEnsemblBrowser ? " selectable-header" : "");
+                    var className = (this.props.selected ? "horizontal-header-cell-selected hoverable-header" : "horizontal-header-cell hoverable-header") + (enableEnsemblLauncher ? " selectable-header" : "");
 
                     // NB: empty title tag below is required for tooltip to work
                     return (
                         React.DOM.tr(null, 
-                            React.DOM.td( {className:className, onMouseEnter:enableEnsemblBrowser ? this.onMouseEnter : undefined, onMouseLeave:enableEnsemblBrowser ? this.onMouseLeave : undefined, onClick:enableEnsemblBrowser ? this.onClick : undefined}, 
+                            React.DOM.td( {className:className, onMouseEnter:enableEnsemblLauncher ? this.onMouseEnter : undefined, onMouseLeave:enableEnsemblLauncher ? this.onMouseLeave : undefined, onClick:enableEnsemblLauncher ? this.onClick : undefined}, 
                                  enableGeneLinks ? this.geneNameLinked() : this.geneNameNotLinked(),
                                 showSelectTextOnHover,
                                 showTickWhenSelected
@@ -613,10 +640,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     genePropertiesTooltipModule.init(contextRoot, toolTipHighlightedWords, this.refs.geneName.getDOMNode());
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblBrowser);
+        })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher);
 
 
-        var CellBaseline = (function (contextRoot, experimentAccession, ensemblSpecies, selectedFilterFactorsJson, queryFactorType) {
+        var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, selectedFilterFactorsJson, queryFactorType) {
 
             function hasKnownExpression(value) {
                 // true if not blank or UNKNOWN, ie: has a expression with a known value
@@ -650,7 +677,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             geneId = this.props.geneId,
                             geneName = this.props.geneName;
 
-                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, queryFactorType, factorValue, selectedFilterFactorsJson, ensemblSpecies);
+                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, queryFactorType, factorValue, selectedFilterFactorsJson, ensemblHost, ensemblSpecies);
                     }
                 },
 
@@ -682,7 +709,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     }
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblSpecies, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
+        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
 
         var CellDifferential = (function () {
 
@@ -755,7 +782,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         return {
             Heatmap: Heatmap,
-            EnsemblBrowser: heatmapConfig.enableEnsemblBrowser ? EnsemblBrowser : undefined
+            EnsemblLauncher: heatmapConfig.enableEnsemblLauncher ? EnsemblLauncher : undefined
         };
     };
 

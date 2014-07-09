@@ -73,6 +73,17 @@
                             </td>
                         </c:if>
 
+                        <!-- download-r button section -->
+                        <c:if test="${type.isMicroarray() || type.isDifferential()}">
+                            <td>
+                                <a id="download-r" class="button-image"
+                                   title="Download experiment data ready to load into R"
+                                   href="${rDownloadUrl}${accessKeyQueryString}">
+                                    <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
+                                </a>
+                            </td>
+                        </c:if>
+
                         <c:if test="${type.isDifferential()}">
                             <td>
                                 <a id="download-raw" class="button-image"
@@ -97,14 +108,6 @@
                                             <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/></a>
                                     </c:otherwise>
                                 </c:choose>
-
-                            </td>
-                            <td>
-                                <a id="download-r" class="button-image"
-                                   title="Download R file for the experiment"
-                                   href="${rDownloadUrl}${accessKeyQueryString}">
-                                    <img src="${pageContext.request.contextPath}/resources/images/r-button.png"/>
-                                </a>
                             </td>
                         </c:if>
                         <c:if test="${!type.isBaseline()}">
@@ -115,6 +118,7 @@
                                     <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_analytics.png"/></a>
                             </td>
                         </c:if>
+
                     </tr>
                 </table>
             </td>

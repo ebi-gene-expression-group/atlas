@@ -31,6 +31,8 @@ import static org.hamcrest.Matchers.hasItems;
 
 public class BioentitiesSearchControllerForFoldChangeOfInfinitySIT extends SinglePageSeleniumFixture {
 
+
+
     private BioEntitiesPage subject;
 
     @Override

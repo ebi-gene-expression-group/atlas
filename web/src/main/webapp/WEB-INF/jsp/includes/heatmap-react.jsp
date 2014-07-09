@@ -1,3 +1,5 @@
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/transcriptPopupModule.js"></script>
@@ -70,10 +72,11 @@
                 accessKey: '${param.accessKey}',
                 species: '${species}',
                 ensemblDB: '${ensemblDB}',
+                columnType: '${fn:toLowerCase(queryFactorName)}',
                 queryFactorType: '${preferences.queryFactorType}',
                 isExactMatch: ${preferences.exactMatch},
                 enableGeneLinks: true,
-                enableEnsemblBrowser: true,
+                enableEnsemblLauncher: ${empty enableEnsemblLauncher ? true : enableEnsemblLauncher},
                 showMaPlotButton: true,
                 selectedFilterFactorsJson: ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"},
                 toolTipHighlightedWords: genePropertiesTooltipModule.splitIntoWords('${preferences.geneQuery}'),
@@ -105,8 +108,8 @@
             document.getElementById('heatmap-react')
         );
 
-        React.renderComponent(heatmap.EnsemblBrowser(),
-                document.getElementById('${hasAnatomogram ? "anatomogram-ensembl-browser" : "ensembl-browser"}')
+        React.renderComponent(heatmap.EnsemblLauncher(),
+                document.getElementById('${hasAnatomogram ? "anatomogram-ensembl-launcher" : "ensembl-launcher"}')
         );
 
     })(jQuery, React, heatmapModule, heatmapData.config,

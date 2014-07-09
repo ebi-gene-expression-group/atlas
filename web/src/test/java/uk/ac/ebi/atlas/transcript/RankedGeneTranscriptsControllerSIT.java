@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.rest.tests;
+package uk.ac.ebi.atlas.transcript;
 
 import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
@@ -30,7 +30,7 @@ import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class RankedGeneTranscriptsIT {
+public class RankedGeneTranscriptsControllerSIT {
 
     private static final String E_MTAB_513_URL_TEMPLATE = "/gxa/json/transcripts/E-MTAB-513";
 

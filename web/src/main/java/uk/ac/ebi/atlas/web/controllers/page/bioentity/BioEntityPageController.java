@@ -22,16 +22,30 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.bioentity;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SortedSetMultimap;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
+import uk.ac.ebi.atlas.commands.BaselineProfilesHeatMap;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.BaselineGeneQueryRequestPreferences;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 
 public abstract class BioEntityPageController {
@@ -45,6 +59,38 @@ public abstract class BioEntityPageController {
     private BioEntityPropertyService bioEntityPropertyService;
 
     private ApplicationProperties applicationProperties;
+
+    private BaselineRequestContext requestContext;
+    private BaselineProfilesHeatMap baselineProfilesHeatMap;
+    private BaselineRequestContextBuilder baselineRequestContextBuilder;
+    private FilterFactorsConverter filterFactorsConverter;
+
+    private ExperimentTrader experimentTrader;
+
+    @Inject
+    private void setExperimentTrader(ExperimentTrader experimentTrader) {
+        this.experimentTrader = experimentTrader;
+    }
+
+    @Inject
+    public void setBaselineRequestContextBuilder(BaselineRequestContextBuilder baselineRequestContextBuilder) {
+        this.baselineRequestContextBuilder = baselineRequestContextBuilder;
+    }
+
+    @Inject
+    public void setFilterFactorsConverter(FilterFactorsConverter filterFactorsConverter) {
+        this.filterFactorsConverter = filterFactorsConverter;
+    }
+
+    @Inject
+    public void setRequestContext(BaselineRequestContext requestContext) {
+        this.requestContext = requestContext;
+    }
+
+    @Inject
+    public void setBaselineProfilesHeatMap(BaselineProfilesHeatMap baselineProfilesHeatMap) {
+        this.baselineProfilesHeatMap = baselineProfilesHeatMap;
+    }
 
     @Inject
     public void setBioEntityCardProperties(BioEntityCardProperties bioEntityCardProperties) {
@@ -79,8 +125,22 @@ public abstract class BioEntityPageController {
         //if all geneIds and geneNames in the BioentityPage are the same we don't want to display in the heatmap the columns Genes and Organism
         model.addAttribute("bioentitySameIdentifier", true);
 
+        String experimentAccession = hasBaselineExperimentForSpecies(identifier);
+
         //to check if the widget contains the identifier or not and inform properly in the results gene pages
-        model.addAttribute("hasBaselineExperimentForSpecies", hasBaselineExperimentForSpecies(identifier));
+        model.addAttribute("hasBaselineExperimentForSpecies", StringUtils.isNotEmpty(experimentAccession));
+
+        try {
+            if(experimentAccession != null) {
+                BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, null);
+                model.addAttribute("hasGeneProfiles", hasGeneProfilesExperiment(experiment, identifier));
+            } else {
+                model.addAttribute("hasGeneProfiles", false);
+            }
+
+        } catch (GenesNotFoundException e) {
+            throw new ResourceNotFoundException("No gene profiles with identifier "+ identifier);
+        }
 
         //bioentity properties panel data
         model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
@@ -115,11 +175,63 @@ public abstract class BioEntityPageController {
         bioEntityPropertyService.init(species, propertyValuesByType, entityNames, identifier);
     }
 
-    protected boolean hasBaselineExperimentForSpecies(String identifier){
+    protected String hasBaselineExperimentForSpecies(String identifier){
         String species = solrQueryService.findSpeciesForBioentityId(identifier);
         String experimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
 
-        return StringUtils.isNotEmpty(experimentAccession);
-
+        return experimentAccession;
     }
+
+    //TODO: CLEAN THIS MESS
+    protected boolean hasGeneProfilesExperiment(BaselineExperiment experiment, String identifier) throws GenesNotFoundException {
+
+        BaselineGeneQueryRequestPreferences preferences = new BaselineGeneQueryRequestPreferences();
+        preferences.setEntityIdentifier(identifier);
+        preferences.setGeneQuery(identifier);
+
+        Set<String> ensemblIDs = solrQueryService.fetchGeneIdentifiersFromSolr(identifier, "ensgene", true, "mirbase_id");
+        if(ensemblIDs.size() > 0) {
+            preferences.setEnsemblIdentifiersForMiRNA("+" + Joiner.on("+").join(ensemblIDs));
+        }
+
+        initializeContext(preferences, experiment);
+
+        BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext);
+
+        return (baselineProfiles.size() > 0) ? true : false;
+    }
+
+    //TODO: CLEAN THIS MESS
+    private void initializeContext(BaselineGeneQueryRequestPreferences preferences, BaselineExperiment experiment) {
+
+        setPreferenceDefaults(preferences, experiment);
+
+        requestContext = buildRequestContext(experiment, preferences);
+    }
+
+    //TODO: CLEAN THIS MESS copied from baselineExperimentController
+    private void setPreferenceDefaults(BaselineGeneQueryRequestPreferences preferences, BaselineExperiment baselineExperiment) {
+
+        if (org.apache.commons.lang3.StringUtils.isBlank(preferences.getQueryFactorType())) {
+            preferences.setQueryFactorType(baselineExperiment.getExperimentalFactors().getDefaultQueryFactorType());
+        }
+        if (org.apache.commons.lang3.StringUtils.isBlank(preferences.getSerializedFilterFactors())) {
+            preferences.setSerializedFilterFactors(filterFactorsConverter.serialize(baselineExperiment.getExperimentalFactors().getDefaultFilterFactors()));
+        }
+
+        if(CollectionUtils.isNotEmpty(preferences.getQueryFactorValues()) && CollectionUtils.isNotEmpty(baselineExperiment.getAssayGroups().getAssayGroupIds())) {
+            if (preferences.getQueryFactorValues().size() == baselineExperiment.getAssayGroups().getAssayGroupIds().size()) {
+                preferences.setSpecific(false);
+            }
+        }
+    }
+
+    //TODO: CLEAN THIS MESS copied from baselineExperimentController
+    private BaselineRequestContext buildRequestContext(BaselineExperiment experiment, BaselineGeneQueryRequestPreferences preferences) {
+
+        return baselineRequestContextBuilder.forExperiment(experiment)
+                .withGeneQueryRequestPreferences(preferences)
+                .geneQueryRequestBuild();
+    }
+
 }

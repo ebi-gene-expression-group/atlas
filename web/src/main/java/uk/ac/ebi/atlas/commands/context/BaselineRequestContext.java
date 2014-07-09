@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
 
 import javax.inject.Named;
 import java.util.Set;
@@ -37,7 +37,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
 @Scope("request")
-public class BaselineRequestContext extends RequestContext<Factor, BaselineRequestPreferences> implements BaselineProfileStreamOptions {
+public class BaselineRequestContext extends RequestContext<Factor, ExperimentPageRequestPreferences> implements BaselineProfileStreamOptions {
 
     private BaselineExperiment experiment;
 
@@ -90,6 +90,5 @@ public class BaselineRequestContext extends RequestContext<Factor, BaselineReque
                 .add("selectedFilterFactors", selectedFilterFactors)
                 .add("experiment", experiment).toString();
     }
-
 
 }

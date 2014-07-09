@@ -79,3 +79,20 @@
     padding: 2px !important;
     margin: 0px !important;
 }
+
+#ensembl-launcher-box {
+    border: 1px solid #cdcdcd;
+    padding: 9px 9px;
+}
+
+#ensembl-launcher-box label {
+    font-weight: bold;
+    font-family: Helvetica, sans-serif;
+}
+
+#ensembl-launcher-box button {
+    display: table;
+    margin: 0 auto;
+}
+
+
