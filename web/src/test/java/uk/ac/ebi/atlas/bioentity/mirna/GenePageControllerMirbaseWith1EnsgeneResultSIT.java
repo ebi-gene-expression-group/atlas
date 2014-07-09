@@ -20,11 +20,17 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
+package uk.ac.ebi.atlas.bioentity.mirna;
 
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -63,10 +69,10 @@ public class GenePageControllerMirbaseWith1EnsgeneResultSIT extends SinglePageSe
     public void baselineHeatmapContains1Ensgene() {
         subject.clickBaselineProfile();
 
-//        FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
-//        wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
+        FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
+        wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
 
-        assertThat(subject.isBaselineProfileExpanded(), is(true));
+        assertThat(subject.isBaselinePaneExpanded(), is(true));
 
         assertThat(subject.getGeneNames().size(), is(1));
         assertThat(subject.getGeneNames(), contains("DLEU2"));

@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
+package uk.ac.ebi.atlas.bioentity;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class MultiFactorDiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
+public class MultiFactorDiffGeneBioEntityPageSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "AT3G11340";
 

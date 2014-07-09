@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
+package uk.ac.ebi.atlas.bioentity;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
@@ -32,7 +32,7 @@ import java.net.UnknownHostException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class ProteinBioEntityPageIT extends SinglePageSeleniumFixture {
+public class ProteinBioEntityPageSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSP00000355434";
 

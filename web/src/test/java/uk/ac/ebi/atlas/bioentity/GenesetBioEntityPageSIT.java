@@ -20,18 +20,21 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
+package uk.ac.ebi.atlas.bioentity;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
-public class GenesetBioEntityPageIT extends SinglePageSeleniumFixture {
+public class GenesetBioEntityPageSIT extends SinglePageSeleniumFixture {
 
     private static final String IDENTIFIER = "REACT_1698";
 
@@ -80,8 +83,17 @@ public class GenesetBioEntityPageIT extends SinglePageSeleniumFixture {
 
         assertThat(subject.isIndividualGenesVisible(), is(true));
         assertThat(subject.isGeneSetProfilesVisible(), is(false));
+        List<String> geneNames = subject.getGeneNames();
+
+        assertThat(geneNames, contains("NT5C1B", "GART", "UPB1", "UPP2", "AGXT2", "NT5C1A", "NME2", "DPYS", "XDH", "AMPD1", "GDA", "TYMS", "ADA", "GMPR2", "CDA", "AK5", "NT5E", "NT5M", "RRM2", "TK1", "GPX1P1", "NUDT18", "TXN", "GUK1", "CAT", "CMPK1", "IMPDH2", "GLRX", "AK2", "DUT", "APRT", "AK1", "DCTD", "PNP", "ADK", "TXNRD1", "ATIC", "DGUOK", "PAICS", "NT5C2", "GSR", "TYMP", "NUDT9", "HPRT1", "AMPD2", "ADSS", "NT5C", "NT5C3A", "ITPA", "GMPS"));
+
         subject.clickShowGeneSetProfiles();
+
         assertThat(subject.isIndividualGenesVisible(), is(false));
         assertThat(subject.isGeneSetProfilesVisible(), is(true));
+
+        //System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
+        //assertThat(geneNames, contains("REACT_1698"));
+
     }
 }

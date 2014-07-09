@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
+package uk.ac.ebi.atlas.bioentity;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -37,7 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class BaselineGeneBioEntityPageExistingGeneIT extends SinglePageSeleniumFixture {
+public class BaselineGeneBioEntityPageExistingGeneSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSG00000163331";
 
@@ -51,7 +51,7 @@ public class BaselineGeneBioEntityPageExistingGeneIT extends SinglePageSeleniumF
 
     @Test
     public void checkPaneExpansion() {
-        assertThat(subject.isBaselineProfileExpanded(), is(true));
+        assertThat(subject.isBaselinePaneExpanded(), is(true));
         assertThat(subject.isInfoCardExpanded(), is(false));
     }
 
@@ -60,7 +60,7 @@ public class BaselineGeneBioEntityPageExistingGeneIT extends SinglePageSeleniumF
         FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
         wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
 
-        assertThat(subject.isBaselineProfileExpanded(), is(true));
+        assertThat(subject.isBaselinePaneExpanded(), is(true));
 
         subject.clickDisplayLevelsButton();
 

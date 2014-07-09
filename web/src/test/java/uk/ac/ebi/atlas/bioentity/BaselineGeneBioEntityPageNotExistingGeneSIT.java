@@ -20,22 +20,18 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.mirna;
+package uk.ac.ebi.atlas.bioentity;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class BaselineGeneBioEntityPageHairpinRNAIT extends SinglePageSeleniumFixture {
+public class BaselineGeneBioEntityPageNotExistingGeneSIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "hsa-miR-636";
+    private static final String GENE_IDENTIFIER = "AT3G29644";
 
     private BioEntityPage subject;
 
@@ -47,26 +43,14 @@ public class BaselineGeneBioEntityPageHairpinRNAIT extends SinglePageSeleniumFix
 
     @Test
     public void checkPaneExpansion() {
-        assertThat(subject.isBaselineProfileExpanded(), is(true));
-        assertThat(subject.isInfoCardExpanded(), is(false));
+        assertThat(subject.isBaselinePaneExpanded(), is(true));
     }
 
-    // TODO: fix this failing when run from build server (ie: coconut)
     @Test
-    public void checkSelectedProfiles() throws UnknownHostException {
-        System.out.println("checkSelectedProfiles");
-        String hostName = InetAddress.getLocalHost().getHostName();
-        System.out.println("Hostname:" + hostName);
-
-        if (!hostName.equals("coconut.ebi.ac.uk")) {
-
-            assertThat(subject.isBaselineProfileExpanded(), is(true));
-            subject.clickDifferentialProfile();
-            subject.clickDisplayLevelsButton();
-            assertThat(subject.getContrastColumn(), contains("disease state: 'sepsis' vs 'control'"));
-        }
+    public void baselinePaneHeaderResultsMessage() {
+        String widgetBody = subject.getBaselinePaneHeaderResultsMessage();
+        assertThat(widgetBody, is("No results"));
 
     }
-
 
 }

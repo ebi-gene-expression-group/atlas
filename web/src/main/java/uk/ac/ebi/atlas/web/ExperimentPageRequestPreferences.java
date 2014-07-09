@@ -31,7 +31,7 @@ import java.util.Set;
 
 public abstract class ExperimentPageRequestPreferences extends SearchRequest {
 
-    static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
+    public static final int DEFAULT_NUMBER_OF_RANKED_GENES = 50;
 
     private static final int HEATMAP_SIZE_MIN = 0;
 

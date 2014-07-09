@@ -27,7 +27,7 @@ import uk.ac.ebi.atlas.utils.NumberUtils;
 
 public class BaselineRequestPreferences extends ExperimentPageRequestPreferences {
 
-    private static final double DEFAULT_CUTOFF = 0.5d;
+    public static final double DEFAULT_CUTOFF = 0.5d;
     private static final String DEFAULT_GENE_QUERY = "protein_coding";
 
     private NumberUtils numberUtils = new NumberUtils();

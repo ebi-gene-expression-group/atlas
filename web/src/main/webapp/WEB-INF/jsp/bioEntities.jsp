@@ -19,7 +19,7 @@
   ~
   ~ http://gxa.github.com/gxa
   --%>
-<%--@elvariable id="bioEntityPropertyService" type="uk.ac.ebi.atlas.web.controllers.page.bioentity.BioEntityPropertyService"--%>
+<%--@elvariable id="bioEntityPropertyService" type="uk.ac.ebi.atlas.bioentity.BioEntityPropertyService"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -120,7 +120,7 @@
                             </c:when>
                             <c:otherwise>
                                 <c:choose>
-                                    <c:when test="${hasBaselineExperimentForSpecies && hasGeneProfiles}">
+                                    <c:when test="${hasReferenceBaselineExperimentForSpecies && hasGeneProfiles}">
                                         <span style="margin-left: 10px; margin-top:10px">
                                           Results in tissues
                                         </span>
@@ -135,7 +135,7 @@
                         </c:choose>
                 </ul>
 
-                <c:set var="hasBaselineResults" value="${hasBaselineExperimentForSpecies || not empty baselineCounts}"/>
+                <c:set var="hasBaselineResults" value="${hasReferenceBaselineExperimentForSpecies || not empty baselineCounts}"/>
 
                 <div id="baselineProfileBody" class="bioEntityCard">
                         <c:if test="${hasBaselineResults && hasGeneProfiles}">
@@ -146,7 +146,7 @@
                         </c:if>
 
                         <c:choose>
-                            <c:when test="${hasBaselineExperimentForSpecies || singleBaselineSearchResult}">
+                            <c:when test="${hasReferenceBaselineExperimentForSpecies || singleBaselineSearchResult}">
                                 <c:if test="${not empty baselineCounts || hasGeneProfiles}">
                                     <div id="widgetBody"></div>
                                 </c:if>
@@ -271,7 +271,7 @@
 
                 <c:choose>
 
-                    <c:when test="${hasBaselineExperimentForSpecies || singleBaselineSearchResult}">
+                    <c:when test="${hasReferenceBaselineExperimentForSpecies || singleBaselineSearchResult}">
 
                         new Biojs.AtlasHeatmap({
                         featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}${disableGeneLinks ? "&disableGeneLinks=true" : ""}' + widgetParameters,

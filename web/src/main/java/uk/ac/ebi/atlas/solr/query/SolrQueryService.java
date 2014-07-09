@@ -198,7 +198,7 @@ public class SolrQueryService {
 
     }
 
-    public GeneQueryResponse findGeneIdsOrSetsGroupedByGeneQueryToken(String geneQuery, boolean exactMatch, String species) {
+    public GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(String geneQuery, boolean exactMatch, String species) {
 
         checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
 
@@ -251,7 +251,7 @@ public class SolrQueryService {
         return fetchGeneIds(geneQuery, exactMatch, species);
     }
 
-    Set<String> fetchGeneIds(String geneQuery, boolean exactMatch, String species) {
+    public Set<String> fetchGeneIds(String geneQuery, boolean exactMatch, String species) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 

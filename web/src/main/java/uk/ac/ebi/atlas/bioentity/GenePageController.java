@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.page.bioentity;
+package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
@@ -58,6 +58,9 @@ public class GenePageController extends BioEntityPageController {
         this.diffAnalyticsSearchService = diffAnalyticsSearchService;
     }
 
+    // identifier = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
+    // If it is a transcript/protein/mirna ID, the corresponding gene page will display
+    // If it is an MGI term, then will redirect to the gene query page
     @RequestMapping(value = "/genes/{identifier:.*}")
     public String showGenePage(@PathVariable String identifier, Model model) {
 

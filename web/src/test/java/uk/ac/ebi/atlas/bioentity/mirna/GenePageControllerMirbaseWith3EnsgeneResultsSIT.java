@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
+package uk.ac.ebi.atlas.bioentity.mirna;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -69,7 +69,7 @@ public class GenePageControllerMirbaseWith3EnsgeneResultsSIT extends SinglePageS
         FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
         wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
 
-        assertThat(subject.isBaselineProfileExpanded(), is(true));
+        assertThat(subject.isBaselinePaneExpanded(), is(true));
 
         assertThat(subject.getGeneNames().size(), is(3));
         assertThat(subject.getGeneNames(), contains("MFSD11","SRSF2","MIR636"));

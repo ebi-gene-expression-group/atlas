@@ -20,37 +20,42 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.genepage;
+package uk.ac.ebi.atlas.bioentity.mirna;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
-public class BaselineGeneBioEntityPageNotExistingGeneIT extends SinglePageSeleniumFixture {
+public class HairpinRNADiffGeneBioEntityPageSIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "AT3G29644";
+    private static final String GENE_IDENTIFIER = "hsa-mir-767";
 
     private BioEntityPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
+        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes", "openPanelIndex=2");
         subject.get();
     }
 
     @Test
+    @Ignore
     public void checkPaneExpansion() {
-        assertThat(subject.isBaselineProfileExpanded(), is(true));
+        assertThat(subject.isDifferentialProfileExpanded(), is(true));
     }
 
     @Test
-    public void baselinePaneHeaderResultsMessage() {
-        String widgetBody = subject.getBaselinePaneHeaderResultsMessage();
-        assertThat(widgetBody, is("No results"));
-
+    @Ignore
+    public void checkMatureRNADiffProfilesArePresentForHairpinRNA() {
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getContrastColumn(), contains("disease state: 'sepsis' vs 'control'",
+                "disease state: 'sepsis' vs 'control'",
+                "disease state: 'sepsis' vs 'control'"));
+        assertThat(subject.getFoldChange(), hasItems("0.001", "0.002", "0.031"));
     }
 
 }

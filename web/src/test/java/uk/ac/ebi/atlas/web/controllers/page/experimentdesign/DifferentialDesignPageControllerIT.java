@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.page.bioentity;
+package uk.ac.ebi.atlas.web.controllers.page.experimentdesign;
 
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
@@ -34,11 +34,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
-import uk.ac.ebi.atlas.web.controllers.page.experimentdesign.DifferentialDesignPageController;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;

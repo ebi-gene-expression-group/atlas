@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.page.bioentity;
+package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.SortedSetMultimap;

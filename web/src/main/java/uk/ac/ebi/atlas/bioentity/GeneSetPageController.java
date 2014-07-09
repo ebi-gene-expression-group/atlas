@@ -20,12 +20,11 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.page.bioentity;
+package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -34,7 +33,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -52,9 +50,6 @@ public class GeneSetPageController extends BioEntityPageController {
 
     private String[] geneSetPagePropertyTypes;
 
-    private ApplicationProperties applicationProperties;
-
-
     @Value("#{configuration['index.property_names.genesetpage']}")
     void setGenePagePropertyTypes(String[] geneSetPagePropertyTypes) {
         this.geneSetPagePropertyTypes = geneSetPagePropertyTypes;
@@ -67,11 +62,7 @@ public class GeneSetPageController extends BioEntityPageController {
         this.reactomeBiomartClient = reactomeBiomartClient;
     }
 
-    @Inject
-    public void setApplicationProperties(ApplicationProperties applicationProperties) {
-        this.applicationProperties = applicationProperties;
-    }
-
+    // identifier = Reactome, GO, or Interpro term
     @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showBioentityPage(@PathVariable String identifier, Model model) {
         //when we query for genesets the bioentity page must
@@ -103,12 +94,9 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Override
-    protected String hasBaselineExperimentForSpecies(String identifier){
+    String fetchSpecies(String identifier){
         String trimmedIdentifier = identifier.replaceAll("\"", "");
-        String species = solrQueryService.getSpeciesForPropertyValue(trimmedIdentifier);
-        String experimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
-
-        return experimentAccession;
+        return solrQueryService.getSpeciesForPropertyValue(trimmedIdentifier);
     }
 
     @Override

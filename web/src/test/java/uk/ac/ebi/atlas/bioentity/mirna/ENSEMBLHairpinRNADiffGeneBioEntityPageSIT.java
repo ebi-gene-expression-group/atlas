@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.mirna;
+package uk.ac.ebi.atlas.bioentity.mirna;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -32,7 +32,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class ENSEMBLHairpinRNADiffGeneBioEntityPageIT extends SinglePageSeleniumFixture {
+public class ENSEMBLHairpinRNADiffGeneBioEntityPageSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSG00000161547";
 

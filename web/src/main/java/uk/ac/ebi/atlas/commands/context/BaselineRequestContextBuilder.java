@@ -27,7 +27,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.web.BaselineGeneQueryRequestPreferences;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
@@ -47,8 +46,6 @@ public class BaselineRequestContextBuilder {
 
     private BaselineRequestPreferences preferences;
 
-    private BaselineGeneQueryRequestPreferences geneQueryRequestPreferences;
-
     // NB: although we are building a BaselineRequest object here, we get an empty one injected from
     // the spring container (and populate it) because we want it to come from the request scope.
     // This allows other request scoped beans (eg: BaselineProfilePreconditionBackedBuilder)
@@ -66,11 +63,6 @@ public class BaselineRequestContextBuilder {
 
     public BaselineRequestContextBuilder withPreferences(BaselineRequestPreferences preferences) {
         this.preferences = preferences;
-        return this;
-    }
-
-    public BaselineRequestContextBuilder withGeneQueryRequestPreferences(BaselineGeneQueryRequestPreferences preferences) {
-        this.geneQueryRequestPreferences = preferences;
         return this;
     }
 
@@ -104,40 +96,6 @@ public class BaselineRequestContextBuilder {
         requestContext.setAllQueryFactors(allQueryFactors);
 
         return requestContext;
-    }
-
-    //TODO REFACTOR THIS. IT IS BEING USED IN BIOENTITYPAGECONTROLLER
-    public BaselineRequestContext geneQueryRequestBuild() {
-        Preconditions.checkState(experiment != null, "Please invoke forExperiment before build");
-
-        requestContext.setExperiment(experiment);
-
-        requestContext.setRequestPreferences(geneQueryRequestPreferences);
-
-        Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(geneQueryRequestPreferences.getSerializedFilterFactors());
-        requestContext.setSelectedFilterFactors(selectedFilterFactors);
-
-        String filteredBySpecie = getFilteredBySpecie(selectedFilterFactors);
-        requestContext.setFilteredBySpecies(filteredBySpecie);
-
-        Set<Factor> queryFactors = new HashSet<Factor>();
-        for (String queryFactorValues : getGeneQueryFactorValues()) {
-            queryFactors.add(new Factor(requestContext.getQueryFactorType(), queryFactorValues));
-        }
-        requestContext.setSelectedQueryFactors(queryFactors);
-
-        SortedSet<Factor> allQueryFactors = experiment.getExperimentalFactors().getFilteredFactors(selectedFilterFactors);
-        requestContext.setAllQueryFactors(allQueryFactors);
-
-        return requestContext;
-    }
-
-    //TODO REFACTOR THIS. IT IS BEING USED IN BIOENTITYPAGECONTROLLER
-    Set<String> getGeneQueryFactorValues() {
-        if (CollectionUtils.isNotEmpty(geneQueryRequestPreferences.getQueryFactorValues())) {
-            return geneQueryRequestPreferences.getQueryFactorValues();
-        }
-        return Collections.EMPTY_SET;
     }
 
     String getFilteredBySpecie(Set<Factor> selectedFilterFactors) {

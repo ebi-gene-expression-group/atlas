@@ -27,7 +27,7 @@ public class LoadGeneIdsIntoRequestContext {
             return;
         }
 
-        GeneQueryResponse geneQueryResponse = solrQueryService.findGeneIdsOrSetsGroupedByGeneQueryToken(geneQuery,
+        GeneQueryResponse geneQueryResponse = solrQueryService.fetchGeneIdsOrSetsGroupedByGeneQueryToken(geneQuery,
                 requestContext.isExactMatch(),
                 species);
 

@@ -167,9 +167,14 @@ public class BioEntityPage extends HeatmapTablePage {
         }
     }
 
-    public boolean isBaselineProfileExpanded() {
+    public boolean isBaselinePaneExpanded() {
         SeleniumUtil.findElementByIdWaitingUntilAvailable(driver, "baselineProfileBody");
         return baselineProfilePaneBody.isDisplayed();
+    }
+
+    public String getBaselinePaneContents() {
+        SeleniumUtil.findElementByIdWaitingUntilAvailable(driver, "baselineProfileBody");
+        return baselineProfilePaneBody.getText();
     }
 
     public boolean isDifferentialProfileExpanded() {
