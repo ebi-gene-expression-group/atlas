@@ -363,6 +363,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     }
                 },
 
+                clickMaButton: function (event) {
+                    // prevent contrast from being selected
+                    event.stopPropagation();
+                },
+
                 render: function () {
                     var truncatedName = restrictLabelSize(this.props.contrastName, 17);
                     var maPlotURL = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + '/' : '' ) + this.props.contrastId + '/ma-plot.png';
@@ -371,7 +376,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     var maPlotButton = (
                         <div style={{"text-align":"right", "padding-right":"3px"}}>
-                            <a href={maPlotURL} ref="maButton" className='button-image ma-button' title='Click to view MA plot for the contrast across all genes'><img src={contextRoot + '/resources/images/maplot-button.png'}/></a>
+                            <a href={maPlotURL} ref="maButton" onClick={this.clickMaButton} className='button-image ma-button' title='Click to view MA plot for the contrast across all genes'><img src={contextRoot + '/resources/images/maplot-button.png'}/></a>
                         </div>
                     );
 
