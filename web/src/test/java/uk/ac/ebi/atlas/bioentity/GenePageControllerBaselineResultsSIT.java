@@ -37,7 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class BaselineGeneBioEntityPageExistingGeneSIT extends SinglePageSeleniumFixture {
+public class GenePageControllerBaselineResultsSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSG00000163331";
 

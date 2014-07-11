@@ -32,7 +32,7 @@ import java.net.UnknownHostException;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class ProteinBioEntityPageSIT extends SinglePageSeleniumFixture {
+public class ProteinPageControllerSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSP00000355434";
 

@@ -20,36 +20,38 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.bioentity.interpro;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
-public class BaselineGeneBioEntityPageNotExistingGeneSIT extends SinglePageSeleniumFixture {
+public class GeneSetPageControllerInterProTermSIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "AT3G29644";
+    private static final String IDENTIFIER = "IPR000003";
 
     private BioEntityPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
+        subject = new BioEntityPage(driver, IDENTIFIER, "genesets", "openPanelIndex=0");
         subject.get();
     }
 
     @Test
-    public void checkPaneExpansion() {
-        assertThat(subject.isBaselinePaneExpanded(), is(true));
+    public void searchResultsHeader() {
+        assertThat(subject.getSearchResultsHeader(), endsWith("results for " + IDENTIFIER));
     }
 
     @Test
-    public void baselinePaneHeaderResultsMessage() {
-        String widgetBody = subject.getBaselinePaneHeaderResultsMessage();
-        assertThat(widgetBody, is("No results"));
+    public void infoCard() {
+        assertThat(subject.getBioEntityCardTitle(), is("IPR000003 Retinoid X receptor/HNF4 (family)"));
+        assertThat(subject.getPropertiesTableSize(), is(1));
+        assertThat(subject.getPropertiesTableRow(0), hasItems("InterPro", "Retinoid X receptor/HNF4 (family)"));
+        assertThat(subject.getLinksInTableRow(0).get(0), is("http://www.ebi.ac.uk/interpro/entry/IPR000003"));
 
     }
 

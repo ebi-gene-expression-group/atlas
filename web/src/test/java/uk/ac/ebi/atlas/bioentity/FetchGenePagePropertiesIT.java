@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.solr.query;
+package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.collect.Multimap;
 import org.hamcrest.Matchers;
@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
 import javax.inject.Inject;
 
@@ -58,7 +59,7 @@ public class FetchGenePagePropertiesIT {
         assertThat(properties.get("synonym").size(), Matchers.is(2));
         assertThat(properties.get("synonym"), Matchers.hasItems("Dchil", "Osteoactivin"));
         assertThat(properties.get("ortholog"), Matchers.hasItems("ENSRNOG00000008816", "ENSGALG00000010949", "ENSBTAG00000000604", "ENSXETG00000007393", "ENSG00000136235"));
-        assertThat(properties.get("goterm"), Matchers.hasItems("heparin binding", "cell adhesion", "integral to plasma membrane", "cytoplasmic membrane-bounded vesicle"));
+        assertThat(properties.get("go"), Matchers.hasItems("GO:0001649", "GO:0005178", "GO:0005887", "GO:0007155", "GO:0008201", "GO:0016023", "GO:0030282", "GO:0030659", "GO:0042470"));
         assertThat(properties.get("interproterm"), Matchers.hasItems("PKD domain", "PKD/Chitinase domain"));
         assertThat(properties.get("ensfamily_description"), Matchers.hasItems("TRANSMEMBRANE GLYCOPROTEIN NMB PRECURSOR"));
         assertThat(properties.get("ensgene"), Matchers.hasItems("ENSMUSG00000029816"));

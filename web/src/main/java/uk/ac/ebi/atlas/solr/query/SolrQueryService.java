@@ -70,9 +70,6 @@ public class SolrQueryService {
 
     private static final int PROPERTY_VALUES_LIMIT = 1000;
 
-    @Value("#{configuration['index.property_names.description']}")
-    private String descriptionPropertyNames;
-
     private String[] tooltipPropertyTypes;
 
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;

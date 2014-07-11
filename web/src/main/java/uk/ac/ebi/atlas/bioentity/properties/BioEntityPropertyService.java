@@ -20,8 +20,9 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.bioentity.properties;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.collections.CollectionUtils;
@@ -29,14 +30,10 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 import uk.ac.ebi.atlas.utils.UniProtClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -48,11 +45,11 @@ public class BioEntityPropertyService {
 
     public static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
+    private final BioEntityPropertyLinkBuilder linkBuilder;
+
     private SolrQueryService solrQueryService;
 
     private UniProtClient uniProtClient;
-
-    private BioEntityCardProperties bioEntityCardProperties;
 
     private SortedSetMultimap<String, String> propertyValuesByType;
 
@@ -62,20 +59,17 @@ public class BioEntityPropertyService {
 
     private String identifier;
 
-    private ReactomeBiomartClient reactomeBiomartClient;
-
     private ArrayDesignDao arrayDesignDao;
 
     @Inject
-    public BioEntityPropertyService(SolrQueryService solrQueryService, UniProtClient uniProtClient, BioEntityCardProperties bioEntityCardProperties, ReactomeBiomartClient reactomeBiomartClient, ArrayDesignDao arrayDesignDao) {
+    public BioEntityPropertyService(SolrQueryService solrQueryService, UniProtClient uniProtClient, BioEntityPropertyLinkBuilder linkBuilder, ArrayDesignDao arrayDesignDao) {
         this.solrQueryService = solrQueryService;
         this.uniProtClient = uniProtClient;
-        this.bioEntityCardProperties = bioEntityCardProperties;
-        this.reactomeBiomartClient = reactomeBiomartClient;
         this.arrayDesignDao = arrayDesignDao;
+        this.linkBuilder = linkBuilder;
     }
 
-    void init(String species, SortedSetMultimap<String, String> propertyValuesByType, SortedSet<String> entityNames, String identifier) {
+    public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, SortedSet<String> entityNames, String identifier) {
         this.species = species;
         this.propertyValuesByType = propertyValuesByType;
         this.entityNames = entityNames;
@@ -101,7 +95,10 @@ public class BioEntityPropertyService {
 
         List<PropertyLink> propertyLinks = Lists.newArrayList();
         for (String propertyValue : propertyValuesByType.get(propertyType)) {
-            propertyLinks.add(createLink(propertyType, propertyValue, species));
+            Optional<PropertyLink> link = linkBuilder.createLink(identifier, propertyType, propertyValue, species);
+            if (link.isPresent()) {
+                propertyLinks.add(link.get());
+            }
         }
         return propertyLinks;
     }
@@ -140,56 +137,6 @@ public class BioEntityPropertyService {
                 Collection<String> reactomeIds = uniProtClient.fetchReactomeIds(uniprotId);
                 propertyValuesByType.putAll("reactome", reactomeIds);
             }
-        }
-    }
-
-    String transformOrthologToSymbol(String identifier) {
-        try {
-            String species = solrQueryService.findSpeciesForBioentityId(identifier);
-
-            String speciesToken = " (" + StringUtils.capitalize(species) + ")";
-
-            Set<String> propertyValuesForGeneId = solrQueryService.findPropertyValuesForGeneId(identifier, "symbol");
-            if (!propertyValuesForGeneId.isEmpty()) {
-                String symbol = propertyValuesForGeneId.iterator().next();
-                return symbol + speciesToken;
-            }
-            return identifier + speciesToken;
-        } catch (Exception e) {
-            return identifier;
-        }
-    }
-
-    PropertyLink createLink(String propertyType, String propertyValue, String species) {
-        final String linkSpecies = species.replaceAll(" ", "_");
-
-        String linkText = fetchLinkText(propertyType, propertyValue);
-
-        String link = bioEntityCardProperties.getLinkTemplate(propertyType);
-        if (link != null) {
-
-            link = MessageFormat.format(link, getEncodedString(propertyValue), linkSpecies, identifier);
-
-            return new PropertyLink(linkText, link);
-        }
-        return new PropertyLink(linkText);
-    }
-
-    String fetchLinkText(String propertyType, String propertyValue) {
-        String displayName = propertyValue;
-        if (propertyType.equals("ortholog")) {
-            displayName = transformOrthologToSymbol(displayName);
-        } else if (propertyType.equals("reactome")) {
-            displayName = reactomeBiomartClient.fetchPathwayNameFailSafe(propertyValue);
-        }
-        return displayName;
-    }
-
-    String getEncodedString(String value) {
-        try {
-            return URLEncoder.encode(value, "ISO-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException("Cannot create URL from " + value, e);
         }
     }
 

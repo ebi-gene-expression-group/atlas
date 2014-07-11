@@ -77,6 +77,7 @@
     width: 100%;
     overflow-x:auto;
     margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 #fast-qc-content table {
@@ -128,12 +129,18 @@
 
 #fast-qc-content DIV.dplot {
     width: auto;
-    height: 500px;
+    height: 900px;
     margin: 10px;
     overflow-x: auto;
 }
 
-#fast-qc-content img {
+#fast-qc-content DIV.dplot img {
+    width: auto;
+    height: 900px;
+    margin: 0px;
+}
+
+#fast-qc-content div.summary div.header div.main img {
     width: auto;
     height: 500px;
     margin: 0px;
@@ -152,6 +159,7 @@
     background: #f6f6f6;
     font-weight: bold;
     color: #1c94c4;
+    display: none !important;
 }
 
 #fast-qc-content A.download {

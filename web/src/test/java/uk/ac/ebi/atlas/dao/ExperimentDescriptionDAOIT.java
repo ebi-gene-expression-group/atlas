@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.experiments.NumberOfExperiments;
 import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.ExperimentDescription;
 import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.ExperimentDescriptionDAO;
 
@@ -23,12 +24,12 @@ public class ExperimentDescriptionDAOIT {
     @Inject
     private ExperimentDescriptionDAO subject;
 
-    private ExperimentDescription E_MTAB_513 = new ExperimentDescription("E-MTAB-513", "RNA-Seq of human individual tissues and mixture of 16 tissues (Illumina Body Map)");
+    private static final ExperimentDescription E_MTAB_513 = new ExperimentDescription("E-MTAB-513", "RNA-Seq of human individual tissues and mixture of 16 tissues (Illumina Body Map)");
 
     @Test
     public void selectAllPublicExperimentDescriptions() {
         List<ExperimentDescription> experimentDescriptions = subject.selectAllPublicExperimentDescriptions();
-        assertThat(experimentDescriptions.size(), is(20));
+        assertThat(experimentDescriptions.size(), is(NumberOfExperiments.ALL));
         assertThat(experimentDescriptions, hasItem(E_MTAB_513));
     }
 

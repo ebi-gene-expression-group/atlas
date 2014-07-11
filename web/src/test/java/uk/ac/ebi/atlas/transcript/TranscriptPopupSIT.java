@@ -81,6 +81,8 @@ public class TranscriptPopupSIT extends SeleniumFixture {
 
         SeleniumUtil.switchToOpenedWindow(driver);
 
+        SeleniumUtil.waitForPageTitle(driver);
+
         assertThat(driver.getTitle(), containsString("Transcript: OS12T0515800-01"));
     }
 

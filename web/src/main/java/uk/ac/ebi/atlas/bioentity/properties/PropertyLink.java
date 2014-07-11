@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.bioentity.properties;
 
 public class PropertyLink {
 
