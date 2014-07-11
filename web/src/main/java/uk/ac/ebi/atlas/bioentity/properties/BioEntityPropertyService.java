@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.bioentity.properties;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.collections.CollectionUtils;
@@ -94,7 +95,10 @@ public class BioEntityPropertyService {
 
         List<PropertyLink> propertyLinks = Lists.newArrayList();
         for (String propertyValue : propertyValuesByType.get(propertyType)) {
-            propertyLinks.add(linkBuilder.createLink(identifier, propertyType, propertyValue, species));
+            Optional<PropertyLink> link = linkBuilder.createLink(identifier, propertyType, propertyValue, species);
+            if (link.isPresent()) {
+                propertyLinks.add(link.get());
+            }
         }
         return propertyLinks;
     }

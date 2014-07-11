@@ -20,7 +20,7 @@ public class GoTermTSVReader implements Closeable {
         String[] nextLine;
         while ((nextLine = csvReader.readNext()) != null) {
             String accession = nextLine[0];
-            String term = nextLine[1];
+            String term = nextLine[1].replace("_", " ");
             builder.put(accession, term);
         }
 

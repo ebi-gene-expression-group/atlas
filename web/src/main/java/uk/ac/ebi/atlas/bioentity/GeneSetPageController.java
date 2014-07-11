@@ -102,7 +102,7 @@ public class GeneSetPageController extends BioEntityPageController {
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayNameFailSafe(trimmedIdentifier));
         } else if (isGeneOntology(identifier)) {
             String term = goTermTrader.getTerm(identifier);
-            propertyValuesByType.put("go_accession", identifier);
+            propertyValuesByType.put("go", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
         } else if (isInterPro(identifier)) {
             String term = interProTermTrader.getTerm(identifier);

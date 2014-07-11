@@ -60,7 +60,7 @@ public class GenePageControllerPropertiesSIT extends SinglePageSeleniumFixture {
         assertThat(subject.getPropertiesTableSize(), is(12));
         assertThat(subject.getPropertiesTableRow(0), hasItems("Synonyms", "Dchil, Osteoactivin"));
         assertThat(subject.getPropertiesTableRow(1), hasItems("Orthologs", "BT.99652 (Bos taurus), GPNMB (Canis familiaris), gpnmb (Danio rerio), GPNMB (Equus caballus), GPNMB (Homo sapiens), GPNMB (Gallus gallus), GPNMB (Macaca mulatta), Gpnmb (Rattus norvegicus), gpnmb (Xenopus tropicalis)"));
-        assertThat(subject.getPropertiesTableRow(2), hasItems("Gene Ontology", "bone mineralization, cell adhesion, cytoplasmic membrane-bounded vesicle, cytoplasmic vesicle membrane, heparin binding, integral to plasma membrane, integrin binding, melanosome, osteoblast differentiation"));
+        assertThat(subject.getPropertiesTableRow(2), hasItems("Gene Ontology", "osteoblast differentiation, integrin binding, integral component of plasma membrane, cell adhesion, heparin binding, cytoplasmic membrane-bounded vesicle, bone mineralization, cytoplasmic vesicle membrane, melanosome"));
         assertThat(subject.getPropertiesTableRow(3), hasItems("InterPro", "PKD domain, PKD/Chitinase domain"));
         assertThat(subject.getPropertiesTableRow(4), hasItems("Ensembl Family", "TRANSMEMBRANE GLYCOPROTEIN NMB PRECURSOR"));
         assertThat(subject.getPropertiesTableRow(5), hasItems("Ensembl Gene", "ENSMUSG00000029816"));
@@ -72,7 +72,7 @@ public class GenePageControllerPropertiesSIT extends SinglePageSeleniumFixture {
         assertThat(subject.getPropertiesTableRow(11), hasItems("Design Element", "10538187, 108822_at, 1448303_at, 4386581, 4444155, 4619897, 4701136, 4723852, 4992000, 5030507, 5044337, 5052678, 5182097, 5192219, 5246058, 5345790, 5526274, 5548029, 5605047, 5610568, A_51_P438967, A_52_P417819"));
 
         assertThat(subject.getLinksInTableRow(1).get(0), containsString("/gxa/genes/ENS"));
-        assertThat(subject.getLinksInTableRow(2).get(0), startsWith("http://amigo.geneontology.org/cgi-bin/amigo/search.cgi?search_constraint=term&exact_match=yes&action=new-search&search_query="));
+        assertThat(subject.getLinksInTableRow(2).get(0), is("http://amigo.geneontology.org/amigo/term/GO%3A0001649"));
         assertThat(subject.getLinksInTableRow(3).get(0), startsWith("http://www.ebi.ac.uk/interpro/search?q="));
         assertThat(subject.getLinksInTableRow(4).get(0), is("http://www.ensembl.org/mus_musculus/Search/Details?db=core;end=1;idx=Family;q=TRANSMEMBRANE+GLYCOPROTEIN+NMB+PRECURSOR;species=mus_musculus"));
         assertThat(subject.getLinksInTableRow(5).get(0), is("http://www.ensemblgenomes.org/id-gene/ENSMUSG00000029816"));

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
+import com.google.common.base.Optional;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
@@ -37,34 +38,25 @@ public class BioEntityPropertyLinkBuilder {
         this.interProTermTrader = interProTermTrader;
     }
 
-    public PropertyLink createLink(String identifier, String propertyType, String propertyValue, String species) {
+    public Optional<PropertyLink> createLink(String identifier, String propertyType, String propertyValue, String species) {
         final String linkSpecies = species.replaceAll(" ", "_");
 
         String linkText = fetchLinkText(propertyType, propertyValue);
+
+        if (linkText == null) {
+            return Optional.absent();
+        }
 
         String link = bioEntityCardProperties.getLinkTemplate(propertyType);
 
         if (link != null) {
 
-            String linkValue = fetchLinkValue(propertyType, propertyValue);
+            String linkValue = getEncodedString(propertyValue);
             link = MessageFormat.format(link, linkValue, linkSpecies, identifier);
 
-            return new PropertyLink(linkText, link);
+            return Optional.of(new PropertyLink(linkText, link));
         }
-        return new PropertyLink(linkText);
-    }
-
-    String fetchLinkValue(String propertyType, String propertyValue) {
-        String linkValue = propertyValue;
-//        switch (propertyType) {
-//            case "goterm":
-//                linkValue = goTermTrader.getTerm(propertyValue);
-//                break;
-//            case "interproterm":
-//                linkValue = interProTermTrader.getTerm(propertyValue);
-//                break;
-//        }
-        return getEncodedString(linkValue);
+        return Optional.of(new PropertyLink(linkText));
     }
 
     String fetchLinkText(String propertyType, String propertyValue) {
@@ -76,7 +68,7 @@ public class BioEntityPropertyLinkBuilder {
             case "reactome":
                 displayName = reactomeBiomartClient.fetchPathwayNameFailSafe(propertyValue);
                 break;
-            case "go_accession":
+            case "go":
                 displayName = goTermTrader.getTerm(propertyValue);
                 break;
             case "interpro_accession":

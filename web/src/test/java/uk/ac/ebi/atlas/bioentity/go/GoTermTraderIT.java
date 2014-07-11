@@ -29,4 +29,9 @@ public class GoTermTraderIT {
         assertThat(subject.getTerm("GO:2001317"), is("kojic acid biosynthetic process"));
     }
 
+    @Test
+    public void topLevelTermsDoNotHaveUnderscore() {
+        assertThat(subject.getTerm("GO:0003674"), is("molecular function"));
+    }
+
 }
