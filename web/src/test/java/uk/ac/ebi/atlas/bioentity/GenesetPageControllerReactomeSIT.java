@@ -34,7 +34,7 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
-public class GenesetBioEntityPageSIT extends SinglePageSeleniumFixture {
+public class GeneSetPageControllerReactomeSIT extends SinglePageSeleniumFixture {
 
     private static final String IDENTIFIER = "REACT_1698";
 

@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GeneBioEntityPageSIT extends SinglePageSeleniumFixture {
+public class GenePageControllerPropertiesSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSMUSG00000029816";
 
@@ -42,39 +42,35 @@ public class GeneBioEntityPageSIT extends SinglePageSeleniumFixture {
     }
 
     @Test
-    public void checkGeneCardTitle() {
-        assertThat(subject.getBioEntityCardTitle(), is("Gpnmb Mus musculus glycoprotein (transmembrane) nmb"));
-    }
-
-    @Test
     public void searchResultsHeader(){
         assertThat(subject.getSearchResultsHeader(), endsWith("results for ENSMUSG00000029816"));
     }
 
-
     //This will fail with PhantomJS
     @Test
-    public void checkCardExpansion() {
+    public void infoCardExpansion() {
         assertThat(subject.isInfoCardExpanded(), is(true));
         subject.clickInfoCard(false);
         assertThat(subject.isInfoCardExpanded(), is(false));
     }
 
     @Test
-    public void checkTableSize() {
+    public void infoCard() {
+        assertThat(subject.getBioEntityCardTitle(), is("Gpnmb Mus musculus glycoprotein (transmembrane) nmb"));
         assertThat(subject.getPropertiesTableSize(), is(12));
-    }
-
-    @Test
-    public void checkTableRows() {
         assertThat(subject.getPropertiesTableRow(0), hasItems("Synonyms", "Dchil, Osteoactivin"));
-        assertThat(subject.getPropertiesTableRow(1), hasItems("Orthologs"));
-        assertThat(subject.getPropertiesTableRow(1).get(1), containsString("Gpnmb"));
+        assertThat(subject.getPropertiesTableRow(1), hasItems("Orthologs", "BT.99652 (Bos taurus), GPNMB (Canis familiaris), gpnmb (Danio rerio), GPNMB (Equus caballus), GPNMB (Homo sapiens), GPNMB (Gallus gallus), GPNMB (Macaca mulatta), Gpnmb (Rattus norvegicus), gpnmb (Xenopus tropicalis)"));
+        assertThat(subject.getPropertiesTableRow(2), hasItems("Gene Ontology", "bone mineralization, cell adhesion, cytoplasmic membrane-bounded vesicle, cytoplasmic vesicle membrane, heparin binding, integral to plasma membrane, integrin binding, melanosome, osteoblast differentiation"));
+        assertThat(subject.getPropertiesTableRow(3), hasItems("InterPro", "PKD domain, PKD/Chitinase domain"));
+        assertThat(subject.getPropertiesTableRow(4), hasItems("Ensembl Family", "TRANSMEMBRANE GLYCOPROTEIN NMB PRECURSOR"));
+        assertThat(subject.getPropertiesTableRow(5), hasItems("Ensembl Gene", "ENSMUSG00000029816"));
+        assertThat(subject.getPropertiesTableRow(6), hasItems("Entrez", "93695"));
+        assertThat(subject.getPropertiesTableRow(7), hasItems("UniProt", "Q3UE75, Q99P91"));
+        assertThat(subject.getPropertiesTableRow(8), hasItems("EMAGE", "MGI:1934765"));
+        assertThat(subject.getPropertiesTableRow(9), hasItems("MGI", "glycoprotein (transmembrane) nmb"));
         assertThat(subject.getPropertiesTableRow(10), hasItems("Gene Biotype", "protein_coding"));
-    }
+        assertThat(subject.getPropertiesTableRow(11), hasItems("Design Element", "10538187, 108822_at, 1448303_at, 4386581, 4444155, 4619897, 4701136, 4723852, 4992000, 5030507, 5044337, 5052678, 5182097, 5192219, 5246058, 5345790, 5526274, 5548029, 5605047, 5610568, A_51_P438967, A_52_P417819"));
 
-    @Test
-    public void checkLinksInTable() {
         assertThat(subject.getLinksInTableRow(1).get(0), containsString("/gxa/genes/ENS"));
         assertThat(subject.getLinksInTableRow(2).get(0), startsWith("http://amigo.geneontology.org/cgi-bin/amigo/search.cgi?search_constraint=term&exact_match=yes&action=new-search&search_query="));
         assertThat(subject.getLinksInTableRow(3).get(0), startsWith("http://www.ebi.ac.uk/interpro/search?q="));
@@ -83,20 +79,5 @@ public class GeneBioEntityPageSIT extends SinglePageSeleniumFixture {
         assertThat(subject.getLinksInTableRow(6).get(0), is("http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&term=93695"));
     }
 
-    @Test
-    public void shouldDisplaySearchResultsHeader(){
-        assertThat(subject.getSearchResultsHeader(), endsWith("results for ENSMUSG00000029816"));
-    }
-
-    @Test
-    public void globalSearchTermIsGeneIdentifier() {
-        assertThat(subject.getGlobalSearchTerm(), is(GENE_IDENTIFIER));
-    }
-
-    @Test
-    public void clickingOnGlobalSearchWidgetShouldDisplayGlobalSearchResults(){
-        subject.clickShowMoreDataWidget();
-        assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
-    }
 
 }
