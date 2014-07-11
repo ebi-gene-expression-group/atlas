@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Set;
 
 /**
@@ -87,15 +88,26 @@ public final class ExperimentDispatcher {
 
     @RequestMapping(value = {"/experiments/{experimentAccession}",
             "/experiments/{experimentAccession}/*"})
-    public String dispatch(HttpServletRequest request, @PathVariable String experimentAccession,
+    public String dispatch(HttpServletRequest request, HttpServletResponse response, @PathVariable String experimentAccession,
                            @RequestParam(value = "accessKey",required = false) String accessKey,
                            Model model) {
+
+        if (alreadyForwardedButNoOtherControllerHandledTheRequest(request)) {
+            // prevent an infinite loop
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            request.setAttribute("javax.servlet.error.status_code", HttpServletResponse.SC_NOT_FOUND);
+            return "error-page";
+        }
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         prepareModel(request, model, experiment);
 
         return "forward:" + buildForwardURL(request, experiment, accessKey);
+    }
+
+    private boolean alreadyForwardedButNoOtherControllerHandledTheRequest(HttpServletRequest request) {
+        return StringUtils.startsWith(request.getQueryString(), "type=");
     }
 
     private String buildForwardURL(HttpServletRequest request, Experiment experiment, String accessKey){
@@ -138,5 +150,6 @@ public final class ExperimentDispatcher {
 
         return mav;
     }
+
 
 }
