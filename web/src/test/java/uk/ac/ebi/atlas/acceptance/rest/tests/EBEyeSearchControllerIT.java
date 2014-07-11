@@ -26,6 +26,7 @@ import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
+import uk.ac.ebi.atlas.experiments.NumberOfExperiments;
 
 import static com.jayway.restassured.RestAssured.get;
 import static org.hamcrest.Matchers.*;
@@ -38,7 +39,7 @@ public class EBEyeSearchControllerIT extends RestAssuredFixture {
 
         response.then().assertThat().statusCode(200);
         response.then().assertThat().contentType(ContentType.XML);
-        response.then().assertThat().body("database.entry_count", equalTo("20"));
+        response.then().assertThat().body("database.entry_count", equalTo(String.valueOf(NumberOfExperiments.ALL)));
         response.then().assertThat().body(hasXPath("/database/entries/entry[@id='E-GEOD-3779']/description", containsString("Transcription profiling by array of mouse neurospheres")));
     }
 }
