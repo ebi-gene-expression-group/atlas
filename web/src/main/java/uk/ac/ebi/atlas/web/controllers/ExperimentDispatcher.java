@@ -94,9 +94,7 @@ public final class ExperimentDispatcher {
 
         if (alreadyForwardedButNoOtherControllerHandledTheRequest(request)) {
             // prevent an infinite loop
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            request.setAttribute("javax.servlet.error.status_code", HttpServletResponse.SC_NOT_FOUND);
-            return "error-page";
+            throw new NoExperimentSubResourceException();
         }
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
@@ -151,5 +149,7 @@ public final class ExperimentDispatcher {
         return mav;
     }
 
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public class NoExperimentSubResourceException extends RuntimeException {}
 
 }
