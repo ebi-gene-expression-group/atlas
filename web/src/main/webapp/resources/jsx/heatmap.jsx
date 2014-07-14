@@ -360,6 +360,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             openEffect:'elastic',
                             closeEffect:'elastic'
                         });
+
+                        var generalButton = this.refs.plotButton.getDOMNode();
+                        $(generalButton).tooltip().button();
+                        $(generalButton).toolbar({
+                            content: '#plots-toolbar-options',
+                            position: 'right'
+                        });
+
                     }
                 },
 
@@ -374,9 +382,24 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     var thStyle = this.props.showMaPlotButton ? {width: "60px"} : {};
                     var textStyle = this.props.showMaPlotButton ? {top: "57px"} : {};
 
-                    var maPlotButton = (
-                        <div style={{"text-align":"right", "padding-right":"3px"}}>
-                            <a href={maPlotURL} ref="maButton" onClick={this.clickMaButton} className='button-image ma-button' title='Click to view MA plot for the contrast across all genes'><img src={contextRoot + '/resources/images/maplot-button.png'}/></a>
+//                    var maPlotButton = (
+//                        <div style={{"text-align":"right", "padding-right":"3px"}}>
+//                            <a href={maPlotURL} ref="maButton" onClick={this.clickMaButton} className='button-image ma-button' title='Click to view MA plot for the contrast across all genes'><img src={contextRoot + '/resources/images/maplot-button.png'}/></a>
+//                        </div>
+//                    );
+
+                    var plotButton= (
+                        <div style={{"text-align":"right", "padding-right":"3px"}} >
+                            <a href="#" ref="plotButton" onClick={this.clickMaButton} className='button-image ma-button' title='Click to view plots'><img src={contextRoot + '/resources/images/yellow-chart-icon.png'}/></a>
+                        </div>
+                    );
+
+                    var plotsButtons = (
+                        <div id="plots-toolbar-options" style={{display: "none"}} >
+                            <a href={maPlotURL} ref="maButton" title='Click to view MA plot for the contrast across all genes'><img src={contextRoot + '/resources/images/maplot-button.png'} /></a>
+                            <a href="#"><img src={contextRoot + '/resources/images/gsea-go-button.png'} /></a>
+                            <a href="#"><img src={contextRoot + '/resources/images/gsea-interpro-button.png'} /></a>
+                            <a href="#"><img src={contextRoot + '/resources/images/gsea-reactome-button.png'} /></a>
                         </div>
                     );
 
@@ -391,7 +414,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                 {showSelectTextOnHover}
                                 {showTickWhenSelected}
                             </div>
-                            {this.props.showMaPlotButton ? maPlotButton : null}
+                            {this.props.showMaPlotButton ? plotButton : null}
+                            {plotsButtons}
                         </th>
                         );
                 }

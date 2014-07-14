@@ -106,6 +106,19 @@ public class ExternalImageController {
     }
 
 
+//    @ResponseBody
+//    @RequestMapping(value = "/external-resources/{experimentAccession}/{contrastName}/{geneSetType}/gsea_class_non_dir_both.png")
+//    public void streamRnaSeqGeneTypePlotImage(HttpServletResponse response, @PathVariable String experimentAccession
+//            , @PathVariable String contrastName) throws IOException{
+//
+//        String rnaSeqMaPlotImagePath = MessageFormat.format(rnaSeqPathTemplate, experimentAccession, contrastName);
+//
+//        InputStream imageInputStream = Files.newInputStream(Paths.get(rnaSeqMaPlotImagePath));
+//
+//        streamExternalImage(response, imageInputStream);
+//
+//    }
+
     void streamExternalImage(HttpServletResponse response, InputStream extraInfoImageInputStream) {
         try {
 

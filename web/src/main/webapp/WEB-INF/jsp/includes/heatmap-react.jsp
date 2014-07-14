@@ -18,6 +18,11 @@
 
 <script src="${pageContext.request.contextPath}/resources/jsx/heatmap.js" type="text/javascript"></script>
 
+<script src="${pageContext.request.contextPath}/resources/js/jquery.toolbar.js"></script>
+
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.toolbars.css" />
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.icons.css" />
+
 <div id="genenametooltip-content" style="display: none"></div>
 
 <section id="contrastInfo" style="display:none">

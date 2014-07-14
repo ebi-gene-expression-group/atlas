@@ -360,11 +360,19 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             openEffect:'elastic',
                             closeEffect:'elastic'
                         });
+
+                        var generalButton = this.refs.plotButton.getDOMNode();
+                        $(generalButton).tooltip().button();
+                        $(generalButton).toolbar({
+                            content: '#plots-toolbar-options',
+                            position: 'right'
+                        });
+
                     }
                 },
 
                 clickMaButton: function (event) {
-                    // prevent row from being selected
+                    // prevent contrast from being selected
                     event.stopPropagation();
                 },
 
@@ -374,9 +382,24 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     var thStyle = this.props.showMaPlotButton ? {width: "60px"} : {};
                     var textStyle = this.props.showMaPlotButton ? {top: "57px"} : {};
 
-                    var maPlotButton = (
-                        React.DOM.div( {style:{"text-align":"right", "padding-right":"3px"}}, 
-                            React.DOM.a( {href:maPlotURL, ref:"maButton", onClick:this.clickMaButton, className:"button-image ma-button", title:"Click to view MA plot for the contrast across all genes"}, React.DOM.img( {src:contextRoot + '/resources/images/maplot-button.png'}))
+//                    var maPlotButton = (
+//                        <div style={{"text-align":"right", "padding-right":"3px"}}>
+//                            <a href={maPlotURL} ref="maButton" onClick={this.clickMaButton} className='button-image ma-button' title='Click to view MA plot for the contrast across all genes'><img src={contextRoot + '/resources/images/maplot-button.png'}/></a>
+//                        </div>
+//                    );
+
+                    var plotButton= (
+                        React.DOM.div( {style:{"text-align":"right", "padding-right":"3px"}} , 
+                            React.DOM.a( {href:"#", ref:"plotButton", onClick:this.clickMaButton, className:"button-image ma-button", title:"Click to view plots"}, React.DOM.img( {src:contextRoot + '/resources/images/yellow-chart-icon.png'}))
+                        )
+                    );
+
+                    var plotsButtons = (
+                        React.DOM.div( {id:"plots-toolbar-options", style:{display: "none"}} , 
+                            React.DOM.a( {href:maPlotURL, ref:"maButton", className:"tool-item gradient", title:"Click to view MA plot for the contrast across all genes"}, React.DOM.img( {src:contextRoot + '/resources/images/maplot-button.png'} )),
+                            React.DOM.a( {href:"#"}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-go-button.png'} )),
+                            React.DOM.a( {href:"#"}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-interpro-button.png'} )),
+                            React.DOM.a( {href:"#"}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-reactome-button.png'} ))
                         )
                     );
 
@@ -391,7 +414,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                 showSelectTextOnHover,
                                 showTickWhenSelected
                             ),
-                            this.props.showMaPlotButton ? maPlotButton : null
+                            this.props.showMaPlotButton ? plotButton : null,
+                            plotsButtons
                         )
                         );
                 }
