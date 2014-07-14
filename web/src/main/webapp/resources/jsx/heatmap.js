@@ -368,6 +368,15 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             position: 'right'
                         });
 
+                        var goButton = this.refs.goButton.getDOMNode();
+                        $(goButton).tooltip().button();
+
+                        var interproButton = this.refs.interproButton.getDOMNode();
+                        $(interproButton).tooltip().button();
+
+                        var reactomeButton = this.refs.reactomeButton.getDOMNode();
+                        $(reactomeButton).tooltip().button();
+
                     }
                 },
 
@@ -396,10 +405,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     var plotsButtons = (
                         React.DOM.div( {id:"plots-toolbar-options", style:{display: "none"}} , 
-                            React.DOM.a( {href:maPlotURL, ref:"maButton", className:"tool-item gradient", title:"Click to view MA plot for the contrast across all genes"}, React.DOM.img( {src:contextRoot + '/resources/images/maplot-button.png'} )),
-                            React.DOM.a( {href:"#"}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-go-button.png'} )),
-                            React.DOM.a( {href:"#"}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-interpro-button.png'} )),
-                            React.DOM.a( {href:"#"}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-reactome-button.png'} ))
+                            React.DOM.a( {href:maPlotURL, id:"maButtonID", ref:"maButton", title:"Click to view MA plot for the contrast across all genes"}, React.DOM.img( {src:contextRoot + '/resources/images/maplot-button.png'} )),
+                            React.DOM.a( {href:"#", id:"goButtonID", ref:"goButton", title:"Clict to view Go plot"}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-go-button.png'} )),
+                            React.DOM.a( {href:"#", id:"interproButtonID", ref:"interproButton"}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-interpro-button.png'} )),
+                            React.DOM.a( {href:"#", id:"reactomeButtonID", ref:"reactomeButton"}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-reactome-button.png'} ))
                         )
                     );
 

@@ -368,6 +368,15 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             position: 'right'
                         });
 
+                        var goButton = this.refs.goButton.getDOMNode();
+                        $(goButton).tooltip().button();
+
+                        var interproButton = this.refs.interproButton.getDOMNode();
+                        $(interproButton).tooltip().button();
+
+                        var reactomeButton = this.refs.reactomeButton.getDOMNode();
+                        $(reactomeButton).tooltip().button();
+
                     }
                 },
 
@@ -396,10 +405,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     var plotsButtons = (
                         <div id="plots-toolbar-options" style={{display: "none"}} >
-                            <a href={maPlotURL} ref="maButton" title='Click to view MA plot for the contrast across all genes'><img src={contextRoot + '/resources/images/maplot-button.png'} /></a>
-                            <a href="#"><img src={contextRoot + '/resources/images/gsea-go-button.png'} /></a>
-                            <a href="#"><img src={contextRoot + '/resources/images/gsea-interpro-button.png'} /></a>
-                            <a href="#"><img src={contextRoot + '/resources/images/gsea-reactome-button.png'} /></a>
+                            <a href={maPlotURL} id="maButtonID" ref="maButton" title='Click to view MA plot for the contrast across all genes'><img src={contextRoot + '/resources/images/maplot-button.png'} /></a>
+                            <a href="#" id="goButtonID" ref="goButton" title='Clict to view Go plot'><img src={contextRoot + '/resources/images/gsea-go-button.png'} /></a>
+                            <a href="#" id="interproButtonID" ref="interproButton"><img src={contextRoot + '/resources/images/gsea-interpro-button.png'} /></a>
+                            <a href="#" id="reactomeButtonID" ref="reactomeButton"><img src={contextRoot + '/resources/images/gsea-reactome-button.png'} /></a>
                         </div>
                     );
 
