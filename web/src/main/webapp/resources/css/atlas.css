@@ -232,16 +232,9 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a {
 }
 
 /****  STYLING FOR BUTTONS IN GENE SET TYPE ANALYSIS PLOTS *****/
-#maButtonID.ui-button, #goButtonID.ui-button, #interproButtonID.ui-button , #reactomeButtonID.ui-button {
-    background: #d0cbcb;
-    border-radius: 0px;
-    width: 44px;
-}
 
-#maButtonID .ui-button-text, #goButtonID .ui-button-text, #interproButtonID .ui-button-text, #reactomeButtonID .ui-button-text {
-    margin: 5px 2px 10px 8px;
-    padding: 2px 2px 2px 2px;
-    width: 26px;
+#reactomeButtonID.tool-item:last-child {
+    border-bottom: 1px;
 }
 
 /**** END ANALYSIS PLOTS STYLING **/
