@@ -47,11 +47,25 @@ public class ExternalImageControllerIT {
 
     private static final String MICROARRAY_MA_PLOT_IMAGE_URL_TEMPLATE = "/gxa/external-resources/".concat(MICROARRAY_EXPERIMENT_ACCESSION).concat("/{0}/{1}/ma-plot.png");
 
+    private static final String GSEA_PLOT_IMAGE_URL_TEMPLATE = "/gxa/external-resources/E-GEOD-11758/{0}/gsea_{1}.png";
 
     @Test
     public void responseForExtraInfoImageShouldBeNonEmpty() {
         EndPoint subject = new EndPoint(EXTRA_INFO_IMAGE_URL);
         responseAssertions(subject);
+    }
+
+    @Test
+    public void responseForGseaPlotsShouldBeNonEmpty() {
+        String goUrl = MessageFormat.format(GSEA_PLOT_IMAGE_URL_TEMPLATE, "g1_g2", "go");
+        responseAssertions(new EndPoint(goUrl));
+
+        String interproUrl = MessageFormat.format(GSEA_PLOT_IMAGE_URL_TEMPLATE, "g1_g2", "interpro");
+        responseAssertions(new EndPoint(interproUrl));
+
+        String reactomeUrl = MessageFormat.format(GSEA_PLOT_IMAGE_URL_TEMPLATE, "g1_g2", "reactome");
+        responseAssertions(new EndPoint(reactomeUrl));
+
     }
 
     @Test
