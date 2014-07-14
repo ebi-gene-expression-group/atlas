@@ -353,7 +353,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     if (this.props.showMaPlotButton) {
                         var maButton = this.refs.maButton.getDOMNode();
 
-                        $(maButton).tooltip().button();
+                        $(maButton).tooltip();
 
                         $(maButton).fancybox({
                             padding:0,
@@ -369,18 +369,18 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         });
 
                         var goButton = this.refs.goButton.getDOMNode();
-                        $(goButton).tooltip().button();
+                        $(goButton).tooltip();
 
                         var interproButton = this.refs.interproButton.getDOMNode();
-                        $(interproButton).tooltip().button();
+                        $(interproButton).tooltip();
 
                         var reactomeButton = this.refs.reactomeButton.getDOMNode();
-                        $(reactomeButton).tooltip().button();
+                        $(reactomeButton).tooltip();
 
                     }
                 },
 
-                clickMaButton: function (event) {
+                clickButton: function (event) {
                     // prevent contrast from being selected
                     event.stopPropagation();
                 },
@@ -391,24 +391,18 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     var thStyle = this.props.showMaPlotButton ? {width: "60px"} : {};
                     var textStyle = this.props.showMaPlotButton ? {top: "57px"} : {};
 
-//                    var maPlotButton = (
-//                        <div style={{"text-align":"right", "padding-right":"3px"}}>
-//                            <a href={maPlotURL} ref="maButton" onClick={this.clickMaButton} className='button-image ma-button' title='Click to view MA plot for the contrast across all genes'><img src={contextRoot + '/resources/images/maplot-button.png'}/></a>
-//                        </div>
-//                    );
-
                     var plotButton= (
                         <div style={{"text-align":"right", "padding-right":"3px"}} >
-                            <a href="#" ref="plotButton" onClick={this.clickMaButton} className='button-image ma-button' title='Click to view plots'><img src={contextRoot + '/resources/images/yellow-chart-icon.png'}/></a>
+                            <a href="#" ref="plotButton" onClick={this.clickButton} className='button-image ma-button' title='Click to view plots'><img src={contextRoot + '/resources/images/yellow-chart-icon.png'}/></a>
                         </div>
                     );
 
                     var plotsButtons = (
                         <div id="plots-toolbar-options" style={{display: "none"}} >
-                            <a href={maPlotURL} id="maButtonID" ref="maButton" title='Click to view MA plot for the contrast across all genes'><img src={contextRoot + '/resources/images/maplot-button.png'} /></a>
-                            <a href="#" id="goButtonID" ref="goButton" title='Clict to view Go plot'><img src={contextRoot + '/resources/images/gsea-go-button.png'} /></a>
-                            <a href="#" id="interproButtonID" ref="interproButton"><img src={contextRoot + '/resources/images/gsea-interpro-button.png'} /></a>
-                            <a href="#" id="reactomeButtonID" ref="reactomeButton"><img src={contextRoot + '/resources/images/gsea-reactome-button.png'} /></a>
+                            <a href={maPlotURL} id="maButtonID" ref="maButton" title='Click to view MA plot for the contrast across all genes' onClick={this.clickButton}><img src={contextRoot + '/resources/images/maplot-button.png'} /></a>
+                            <a href="#" id="goButtonID" ref="goButton" title='Clict to view Go plot' onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-go-button.png'} /></a>
+                            <a href="#" id="interproButtonID" ref="interproButton" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-interpro-button.png'} /></a>
+                            <a href="#" id="reactomeButtonID" ref="reactomeButton" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-reactome-button.png'} /></a>
                         </div>
                     );
 
