@@ -29,6 +29,8 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.commands.BaselineProfilesHeatMap;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -164,7 +166,13 @@ public abstract class BioEntityPageController {
     }
 
     protected boolean hasGeneProfiles(String experimentAccession, String species, Set<String> identifiers) throws GenesNotFoundException {
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, null);
+        BaselineExperiment experiment;
+        try {
+            experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, null);
+        } catch (ResourceNotFoundException e) {
+            // if we don't have the baseline reference experiment, then no gene profiles
+            return false;
+        }
 
         // convert enstranscript, ensgene, and geneset ID to individual gene ids
         Set<String> geneIds = solrQueryService.fetchGeneIds(Joiner.on(" ").join(identifiers), true, species);

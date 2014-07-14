@@ -31,12 +31,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
+import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import java.util.SortedSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @Scope("request")
@@ -48,6 +53,10 @@ public class GeneSetPageController extends BioEntityPageController {
 
     private ReactomeBiomartClient reactomeBiomartClient;
 
+    private GoTermTrader goTermTrader;
+
+    private InterProTermTrader interProTermTrader;
+
     private String[] geneSetPagePropertyTypes;
 
     @Value("#{configuration['index.property_names.genesetpage']}")
@@ -56,10 +65,12 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Inject
-    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeBiomartClient reactomeBiomartClient) {
+    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeBiomartClient reactomeBiomartClient, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader) {
         this.solrQueryService = solrQueryService;
         this.bioEntityPropertyService = bioEntityPropertyService;
         this.reactomeBiomartClient = reactomeBiomartClient;
+        this.goTermTrader = goTermTrader;
+        this.interProTermTrader = interProTermTrader;
     }
 
     // identifier = Reactome, GO, or Interpro term
@@ -67,10 +78,9 @@ public class GeneSetPageController extends BioEntityPageController {
     public String showBioentityPage(@PathVariable String identifier, Model model) {
         //when we query for genesets the bioentity page must
         //not display Differential Expression panel so we just need to invoke parent controller (that handles baseline expressions)
+        checkIdentifierIsGeneSet(identifier);
 
         model.addAttribute("isGeneSet", true);
-
-        checkIdentifierNotFound(identifier);
 
         return super.showBioentityPage(identifier, model);
     }
@@ -83,13 +93,26 @@ public class GeneSetPageController extends BioEntityPageController {
     @Override
     protected void initBioentityPropertyService(String identifier) {
         String trimmedIdentifier = identifier.replaceAll("\"", "");
-        String species = solrQueryService.getSpeciesForPropertyValue(trimmedIdentifier);
+        String species = isReactome(identifier) ? solrQueryService.getSpeciesForPropertyValue(trimmedIdentifier): "";
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
-        propertyValuesByType.put("reactome", trimmedIdentifier.toUpperCase());
-        propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayNameFailSafe(trimmedIdentifier));
+
+        if (isReactome(identifier)) {
+            propertyValuesByType.put("reactome", trimmedIdentifier.toUpperCase());
+            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayNameFailSafe(trimmedIdentifier));
+        } else if (isGeneOntology(identifier)) {
+            String term = goTermTrader.getTerm(identifier);
+            propertyValuesByType.put("go", identifier);
+            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
+        } else if (isInterPro(identifier)) {
+            String term = interProTermTrader.getTerm(identifier);
+            propertyValuesByType.put("interpro_accession", identifier);
+            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
+        }
+
         SortedSet<String> names = Sets.newTreeSet();
         names.add(trimmedIdentifier);
+
         bioEntityPropertyService.init(species, propertyValuesByType, names, trimmedIdentifier);
     }
 
@@ -109,11 +132,25 @@ public class GeneSetPageController extends BioEntityPageController {
         return null;
     }
 
-    private void checkIdentifierNotFound(String identifier) {
-        String pattern = "IPR" + "(\\d)+";
-        if (!identifier.startsWith("REACT_") && !identifier.startsWith("GO:") && !identifier.matches(pattern)) {
+    private void checkIdentifierIsGeneSet(String identifier) {
+        if (!isReactome(identifier) && !isGeneOntology(identifier) && !isInterPro(identifier)) {
             throw new ResourceNotFoundException("Resource not found");
         }
+    }
+
+    static Pattern INTER_PRO_REGEX = Pattern.compile("IPR" + "(\\d)+");
+
+    private boolean isInterPro(String identifier) {
+        Matcher m = INTER_PRO_REGEX.matcher(identifier);
+        return m.matches();
+    }
+
+    private boolean isGeneOntology(String identifier) {
+        return identifier.startsWith("GO:");
+    }
+
+    private boolean isReactome(String identifier) {
+        return identifier.startsWith("REACT_");
     }
 
 }

@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class MultiFactorDiffGeneBioEntityPageSIT extends SinglePageSeleniumFixture {
+public class GenePageControllerDifferentialResultsMultiFactorSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "AT3G11340";
 

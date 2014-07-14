@@ -19,7 +19,7 @@
   ~
   ~ http://gxa.github.com/gxa
   --%>
-<%--@elvariable id="bioEntityPropertyService" type="uk.ac.ebi.atlas.bioentity.BioEntityPropertyService"--%>
+<%--@elvariable id="bioEntityPropertyService" type="uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService"--%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
