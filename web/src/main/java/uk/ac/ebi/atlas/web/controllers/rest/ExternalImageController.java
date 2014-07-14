@@ -46,6 +46,8 @@ public class ExternalImageController {
 
     private static final Logger LOGGER = Logger.getLogger(ExternalImageController.class);
 
+    private String gseaPathTemplate;
+
     private String extraInfoPathTemplate;
 
     private String rnaSeqPathTemplate;
@@ -58,11 +60,13 @@ public class ExternalImageController {
     public ExternalImageController(ImageIOUtils imageIOUtils,
                                    @Value("#{configuration['experiment.extra-info-image.path.template']}") String extraInfoPathTemplate,
                                    @Value("#{configuration['experiment.rnaseq.ma-plot.path.template']}") String rnaSeqPathTemplate,
-                                   @Value("#{configuration['experiment.microarray.ma-plot.path.template']}") String microarrayPathTemplate) {
+                                   @Value("#{configuration['experiment.microarray.ma-plot.path.template']}") String microarrayPathTemplate,
+                                   @Value("#{configuration['experiment.gsea-plot.path.template']}") String gseaPathTemplate) {
         this.imageIOUtils = imageIOUtils;
         this.extraInfoPathTemplate = extraInfoPathTemplate;
         this.rnaSeqPathTemplate = rnaSeqPathTemplate;
         this.microarrayPathTemplate = microarrayPathTemplate;
+        this.gseaPathTemplate = gseaPathTemplate;
     }
 
     @ResponseBody
@@ -105,19 +109,18 @@ public class ExternalImageController {
 
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/external-resources/{experimentAccession}/{contrastName}/gsea_{geneSetType}.png")
+    public void streamGSEPlot(HttpServletResponse response, @PathVariable String experimentAccession
+            ,@PathVariable String contrastName, @PathVariable String geneSetType) throws IOException{
 
-//    @ResponseBody
-//    @RequestMapping(value = "/external-resources/{experimentAccession}/{contrastName}/{geneSetType}/gsea_class_non_dir_both.png")
-//    public void streamRnaSeqGeneTypePlotImage(HttpServletResponse response, @PathVariable String experimentAccession
-//            , @PathVariable String contrastName) throws IOException{
-//
-//        String rnaSeqMaPlotImagePath = MessageFormat.format(rnaSeqPathTemplate, experimentAccession, contrastName);
-//
-//        InputStream imageInputStream = Files.newInputStream(Paths.get(rnaSeqMaPlotImagePath));
-//
-//        streamExternalImage(response, imageInputStream);
-//
-//    }
+        String imagePath = MessageFormat.format(gseaPathTemplate, experimentAccession, contrastName, geneSetType);
+
+        InputStream imageInputStream = Files.newInputStream(Paths.get(imagePath));
+
+        streamExternalImage(response, imageInputStream);
+
+    }
 
     void streamExternalImage(HttpServletResponse response, InputStream extraInfoImageInputStream) {
         try {

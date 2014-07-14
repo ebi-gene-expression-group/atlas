@@ -210,7 +210,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             <TopLeftCorner displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels}/>
                         </th>
                         {type === TypeEnum.BASELINE ? <FactorHeaders assayGroupFactors={this.props.columnHeaders} experimentAccession={heatmapConfig.experimentAccession}/>
-                                                    : <ContrastHeaders contrasts={this.props.columnHeaders} experimentAccession={heatmapConfig.experimentAccession} showMaPlotButton={heatmapConfig.showMaPlotButton}/>}
+                                                    : <ContrastHeaders contrasts={this.props.columnHeaders} experimentAccession={heatmapConfig.experimentAccession} showMaPlotButton={heatmapConfig.showMaPlotButton} gseaPlots={heatmapConfig.gseaPlots}/>}
                         <tr>
                             <td className="horizontal-header-cell" style={ this.props.isMicroarray ? {width:"166px"} : undefined}>{this.props.showGeneSetProfiles ? 'Gene set' : 'Gene'}</td>
                             { this.props.isMicroarray ? <td className="horizontal-header-cell">Design Element</td> : null}
@@ -319,7 +319,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             render: function () {
                 var contrastHeaders = this.props.contrasts.map(function (contrast) {
-                    return <ContrastHeader selectColumn={this.selectColumn} selected={contrast.id === this.state.selectedColumnId} contrastName={contrast.displayName} arrayDesignAccession={contrast.arrayDesignAccession} contrastId={contrast.id} experimentAccession={this.props.experimentAccession} showMaPlotButton={this.props.showMaPlotButton}/>;
+                    var gseaPlotsThisContrast = this.props.gseaPlots ? this.props.gseaPlots[contrast.id] : {go: false, interpro: false, reactome: false};
+                    return <ContrastHeader selectColumn={this.selectColumn} selected={contrast.id === this.state.selectedColumnId} contrastName={contrast.displayName} arrayDesignAccession={contrast.arrayDesignAccession} contrastId={contrast.id} experimentAccession={this.props.experimentAccession} showMaPlotButton={this.props.showMaPlotButton}
+                    showGseaGoPlot={gseaPlotsThisContrast.go}
+                    showGseaInterproPlot={gseaPlotsThisContrast.interpro}
+                    showGseaReactomePlot={gseaPlotsThisContrast.reactome}/>;
                 }.bind(this));
 
                 return (
@@ -350,6 +354,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                 componentDidMount: function () {
                     contrastInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
+
+                    function enableTooltip(ref) {
+                        if (ref) {
+                            $(ref.getDOMNode()).tooltip();
+                        }
+                    }
+
                     if (this.props.showMaPlotButton) {
                         var maButton = this.refs.maButton.getDOMNode();
 
@@ -361,21 +372,18 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             closeEffect:'elastic'
                         });
 
-                        var generalButton = this.refs.plotButton.getDOMNode();
-                        $(generalButton).tooltip().button();
-                        $(generalButton).toolbar({
-                            content: '#plots-toolbar-options',
+                        var plotsButton = this.refs.plotsButton.getDOMNode();
+                        $(plotsButton).tooltip().button();
+                        $(plotsButton).toolbar({
+                            content: this.refs.plotsToolbarOptions.getDOMNode(),
                             position: 'right'
                         });
 
-                        var goButton = this.refs.goButton.getDOMNode();
-                        $(goButton).tooltip();
+                        enableTooltip(this.refs.goButton);
 
-                        var interproButton = this.refs.interproButton.getDOMNode();
-                        $(interproButton).tooltip();
+                        enableTooltip(this.refs.interproButton);
 
-                        var reactomeButton = this.refs.reactomeButton.getDOMNode();
-                        $(reactomeButton).tooltip();
+                        enableTooltip(this.refs.reactomeButton);
 
                     }
                 },
@@ -391,18 +399,18 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     var thStyle = this.props.showMaPlotButton ? {width: "60px"} : {};
                     var textStyle = this.props.showMaPlotButton ? {top: "57px"} : {};
 
-                    var plotButton= (
+                    var plotsButton= (
                         <div style={{"text-align":"right", "padding-right":"3px"}} >
-                            <a href="#" ref="plotButton" onClick={this.clickButton} className='button-image ma-button' title='Click to view plots'><img src={contextRoot + '/resources/images/yellow-chart-icon.png'}/></a>
+                            <a href="#" ref="plotsButton" onClick={this.clickButton} className='button-image ma-button' title='Click to view plots'><img src={contextRoot + '/resources/images/yellow-chart-icon.png'}/></a>
                         </div>
                     );
 
-                    var plotsButtons = (
-                        <div id="plots-toolbar-options" style={{display: "none"}} >
+                    var plotsToolbar = (
+                        <div ref="plotsToolbarOptions" style={{display: "none"}} >
                             <a href={maPlotURL} id="maButtonID" ref="maButton" title='Click to view MA plot for the contrast across all genes' onClick={this.clickButton}><img src={contextRoot + '/resources/images/maplot-button.png'} /></a>
-                            <a href="#" id="goButtonID" ref="goButton" title='Clict to view Go plot' onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-go-button.png'} /></a>
-                            <a href="#" id="interproButtonID" ref="interproButton" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-interpro-button.png'} /></a>
-                            <a href="#" id="reactomeButtonID" ref="reactomeButton" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-reactome-button.png'} /></a>
+                            {this.props.showGseaGoPlot ? <a href="#" id="goButtonID" ref="goButton" title='Click to view Go plot' onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-go-button.png'} /></a> : null }
+                            {this.props.showGseaInterproPlot ? <a href="#" id="interproButtonID" ref="interproButton" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-interpro-button.png'} /></a> : null }
+                            {this.props.showGseaReactomePlot ? <a href="#" id="reactomeButtonID" ref="reactomeButton" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-reactome-button.png'} /></a> : null }
                         </div>
                     );
 
@@ -417,8 +425,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                 {showSelectTextOnHover}
                                 {showTickWhenSelected}
                             </div>
-                            {this.props.showMaPlotButton ? plotButton : null}
-                            {plotsButtons}
+                            {this.props.showMaPlotButton ? plotsButton : null}
+                            {plotsToolbar}
                         </th>
                         );
                 }

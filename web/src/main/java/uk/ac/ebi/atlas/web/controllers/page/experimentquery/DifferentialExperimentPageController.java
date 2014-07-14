@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.web.controllers.page.experimentquery;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.ui.Model;
@@ -32,6 +33,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
+import uk.ac.ebi.atlas.experiment.differential.GseaPlots;
+import uk.ac.ebi.atlas.experiment.differential.GseaPlotsBuilder;
 import uk.ac.ebi.atlas.model.differential.*;
 import uk.ac.ebi.atlas.profiles.ProfilesHeatMap;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
@@ -51,6 +54,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
     private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
     private final SpeciesEnsemblTrader speciesEnsemblTrader;
+    private final GseaPlotsBuilder gseaPlotsBuilder;
     private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
     private ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap;
@@ -61,7 +65,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
                                                    ProfilesHeatMap<P, ? extends DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap,
                                                    DownloadURLBuilder downloadURLBuilder, DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
-                                                   SpeciesEnsemblTrader speciesEnsemblTrader, TracksUtil tracksUtil) {
+                                                   SpeciesEnsemblTrader speciesEnsemblTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         // cast here to avoid having to make a type parameter for DifferentialRequestContext
         this.profilesHeatMap = (ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions>) profilesHeatMap;
@@ -69,6 +73,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
         this.speciesEnsemblTrader = speciesEnsemblTrader;
         this.tracksUtil = tracksUtil;
+        this.gseaPlotsBuilder = gseaPlotsBuilder;
     }
 
     @InitBinder
@@ -103,8 +108,11 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         if (!result.hasErrors()) {
 
             try {
+
+                ImmutableMap<String, GseaPlots> gseaPlots = gseaPlotsBuilder.createMapByContrastId(experiment.getAccession(), contrasts);
+
                 DifferentialProfilesList differentialProfiles = profilesHeatMap.fetch(requestContext);
-                addJsonForHeatMap(differentialProfiles, contrasts, model);
+                addJsonForHeatMap(differentialProfiles, contrasts, gseaPlots, model);
 
                 //TODO: remove when widget converted to React
                 model.addAttribute("geneProfiles", differentialProfiles);
@@ -126,7 +134,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         return "experiment-react";
     }
 
-    private void addJsonForHeatMap(DifferentialProfilesList diffProfiles, Set<Contrast> contrasts, Model model) {
+    private void addJsonForHeatMap(DifferentialProfilesList diffProfiles, Set<Contrast> contrasts, ImmutableMap<String, GseaPlots> gseaPlots, Model model) {
         Gson gson = new GsonBuilder()
                 .serializeSpecialFloatingPointValues()
                 .create();
@@ -138,6 +146,10 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
         String jsonProfiles = gson.toJson(profilesViewModel);
         model.addAttribute("jsonProfiles", jsonProfiles);
+
+        String jsonGseaPlots = gson.toJson(gseaPlots);
+        model.addAttribute("gseaPlots", jsonGseaPlots);
+
     }
 
     private void initRequestPreferences(Model model, K requestPreferences, T experiment) {

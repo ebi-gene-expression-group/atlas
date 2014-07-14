@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.RnaSeqProfilesHeatMap;
 import uk.ac.ebi.atlas.commands.context.RnaSeqRequestContextBuilder;
+import uk.ac.ebi.atlas.experiment.differential.GseaPlotsBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
@@ -50,8 +51,8 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
     public RnaSeqExperimentPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
                                           RnaSeqProfilesHeatMap profilesHeatMap,
                                           DownloadURLBuilder downloadURLBuilder,
-                                          DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesEnsemblTrader speciesEnsemblTrader, TracksUtil tracksUtil) {
-        super(rnaSeqRequestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder, speciesEnsemblTrader, tracksUtil);
+                                          DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesEnsemblTrader speciesEnsemblTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
+        super(rnaSeqRequestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder, speciesEnsemblTrader, tracksUtil, gseaPlotsBuilder);
     }
 
     @Override
