@@ -1,5 +1,6 @@
 .tool-container {
-    background-color: #eeeeee;
+    background-color: white;
+    /*background-color: #eeeeee;  */
 	/*background-color: #deebeb;
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(14%, #d0cbcb), color-stop(100%, #e9e5e5));
 	background: -moz-linear-gradient(top, #d0cbcb 14%, #e9e5e5 100%);
