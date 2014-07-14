@@ -355,22 +355,28 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 componentDidMount: function () {
                     contrastInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
 
-                    function enableTooltip(ref) {
+                    function enableButton(ref) {
                         if (ref) {
-                            $(ref.getDOMNode()).tooltip();
+                            var element = ref.getDOMNode();
+                            $(element).tooltip();
+
+                            $(element).fancybox({
+                                padding:0,
+                                openEffect:'elastic',
+                                closeEffect:'elastic'
+                            });
                         }
                     }
 
-                    if (this.props.showMaPlotButton) {
-                        var maButton = this.refs.maButton.getDOMNode();
+                    if (this.showPlotsButton()) {
 
-                        $(maButton).tooltip();
+                        enableButton(this.refs.maButton);
 
-                        $(maButton).fancybox({
-                            padding:0,
-                            openEffect:'elastic',
-                            closeEffect:'elastic'
-                        });
+                        enableButton(this.refs.goButton);
+
+                        enableButton(this.refs.interproButton);
+
+                        enableButton(this.refs.reactomeButton);
 
                         var plotsButton = this.refs.plotsButton.getDOMNode();
                         $(plotsButton).tooltip().button();
@@ -379,38 +385,41 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             position: 'right'
                         });
 
-                        enableTooltip(this.refs.goButton);
-
-                        enableTooltip(this.refs.interproButton);
-
-                        enableTooltip(this.refs.reactomeButton);
-
                     }
                 },
+
 
                 clickButton: function (event) {
                     // prevent contrast from being selected
                     event.stopPropagation();
                 },
 
+                showPlotsButton: function () {
+                    return this.props.showMaPlotButton || this.props.showGseaGoPlot || this.props.showGseaInterproPlot || this.props.showGseaReactomePlot;
+                },
+
                 render: function () {
                     var truncatedName = restrictLabelSize(this.props.contrastName, 17);
-                    var maPlotURL = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + '/' : '' ) + this.props.contrastId + '/ma-plot.png';
-                    var thStyle = this.props.showMaPlotButton ? {width: "60px"} : {};
-                    var textStyle = this.props.showMaPlotButton ? {top: "57px"} : {};
+                    var thStyle = this.showPlotsButton() ? {width: "60px"} : {};
+                    var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
-                    var plotsButton= (
+                    var maPlotURL = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + '/' : '' ) + this.props.contrastId + '/ma-plot.png';
+                    var gseaGoPlotUrl = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + this.props.contrastId + '/gsea_go.png';
+                    var gseaInterproPlotUrl = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + this.props.contrastId + '/gsea_interpro.png';
+                    var gseaReactomePlotUrl = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + this.props.contrastId + '/gsea_reactome.png';
+
+                    var plotsButton = (
                         <div style={{"text-align":"right", "padding-right":"3px"}} >
-                            <a href="#" ref="plotsButton" onClick={this.clickButton} className='button-image ma-button' title='Click to view plots'><img src={contextRoot + '/resources/images/yellow-chart-icon.png'}/></a>
+                            <a href="#" ref="plotsButton" onClick={this.clickButton} className='button-image' title='Click to view plots'><img src={contextRoot + '/resources/images/yellow-chart-icon.png'}/></a>
                         </div>
                     );
 
                     var plotsToolbar = (
                         <div ref="plotsToolbarOptions" style={{display: "none"}} >
-                            <a href={maPlotURL} id="maButtonID" ref="maButton" title='Click to view MA plot for the contrast across all genes' onClick={this.clickButton}><img src={contextRoot + '/resources/images/maplot-button.png'} /></a>
-                            {this.props.showGseaGoPlot ? <a href="#" id="goButtonID" ref="goButton" title='Click to view Go plot' onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-go-button.png'} /></a> : null }
-                            {this.props.showGseaInterproPlot ? <a href="#" id="interproButtonID" ref="interproButton" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-interpro-button.png'} /></a> : null }
-                            {this.props.showGseaReactomePlot ? <a href="#" id="reactomeButtonID" ref="reactomeButton" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-reactome-button.png'} /></a> : null }
+                            {this.props.showMaPlotButton ? <a href={maPlotURL} id="maButtonID" ref="maButton" title='Click to view MA plot for the contrast across all genes' onClick={this.clickButton}><img src={contextRoot + '/resources/images/maplot-button.png'} /></a> : null }
+                            {this.props.showGseaGoPlot ? <a href={gseaGoPlotUrl} id="goButtonID" ref="goButton" title='Click to view GO terms enrichment analysis plot' onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-go-button.png'} /></a> : null }
+                            {this.props.showGseaInterproPlot ? <a href={gseaInterproPlotUrl} id="interproButtonID" ref="interproButton" title='Click to view Interpro domains enrichment analysis plot' onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-interpro-button.png'} /></a> : null }
+                            {this.props.showGseaReactomePlot ? <a href={gseaReactomePlotUrl} id="reactomeButtonID" ref="reactomeButton" title='Click to view Reactome pathways enrichment analysis plot' onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-reactome-button.png'} /></a> : null }
                         </div>
                     );
 
@@ -425,8 +434,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                 {showSelectTextOnHover}
                                 {showTickWhenSelected}
                             </div>
-                            {this.props.showMaPlotButton ? plotsButton : null}
-                            {plotsToolbar}
+                            {this.showPlotsButton() ? plotsButton : null}
+                            {this.showPlotsButton() ? plotsToolbar : null}
                         </th>
                         );
                 }
@@ -755,8 +764,12 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             return React.createClass({
 
+                hasValue: function () {
+                    return (this.props.foldChange !== undefined);
+                },
+
                 render: function () {
-                    if (!this.props.foldChange) {
+                    if (!this.hasValue()) {
                         return (<td></td>);
                     }
 
@@ -770,7 +783,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 componentDidMount: function () {
-                    this.initTooltip(this.getDOMNode());
+                    if (this.hasValue()) {
+                        this.initTooltip(this.getDOMNode());
+                    }
                 },
 
                 initTooltip: function(element) {

@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.utils.ImageIOUtils;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 
@@ -116,7 +118,13 @@ public class ExternalImageController {
 
         String imagePath = MessageFormat.format(gseaPathTemplate, experimentAccession, contrastName, geneSetType);
 
-        InputStream imageInputStream = Files.newInputStream(Paths.get(imagePath));
+        Path path = Paths.get(imagePath);
+
+        if (!Files.exists(path)) {
+            throw new ResourceNotFoundException(path + " does not exist");
+        }
+
+        InputStream imageInputStream = Files.newInputStream(path);
 
         streamExternalImage(response, imageInputStream);
 
