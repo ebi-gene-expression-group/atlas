@@ -1,6 +1,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/transcriptPopupModule.js"></script>
 <script language="JavaScript" type="text/javascript"
@@ -113,9 +113,11 @@
             document.getElementById('heatmap-react')
         );
 
-        React.renderComponent(heatmap.EnsemblLauncher(),
-                document.getElementById('${hasAnatomogram ? "anatomogram-ensembl-launcher" : "ensembl-launcher"}')
-        );
+        if (heatmap.EnsemblLauncher) {
+            React.renderComponent(heatmap.EnsemblLauncher(),
+                    document.getElementById('${hasAnatomogram ? "anatomogram-ensembl-launcher" : "ensembl-launcher"}')
+            );
+        }
 
     })(jQuery, React, heatmapModule, heatmapData.config,
             heatmapData.columnHeaders, heatmapData.profiles, heatmapData.geneSetProfiles);
