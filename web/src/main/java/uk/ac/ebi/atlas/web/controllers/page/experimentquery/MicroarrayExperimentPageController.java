@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commands.MicroarrayProfilesHeatMap;
 import uk.ac.ebi.atlas.commands.context.MicroarrayRequestContextBuilder;
+import uk.ac.ebi.atlas.experiment.differential.GseaPlotsBuilder;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
@@ -57,8 +58,8 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
                                               MicroarrayProfilesHeatMap profilesHeatMap,
                                               DownloadURLBuilder downloadURLBuilder,
                                               ArrayDesignTrader arrayDesignTrader,
-                                              DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesEnsemblTrader speciesEnsemblTrader, TracksUtil tracksUtil) {
-        super(requestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder, speciesEnsemblTrader, tracksUtil);
+                                              DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesEnsemblTrader speciesEnsemblTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
+        super(requestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder, speciesEnsemblTrader, tracksUtil, gseaPlotsBuilder);
 
         this.arrayDesignTrader = arrayDesignTrader;
     }
