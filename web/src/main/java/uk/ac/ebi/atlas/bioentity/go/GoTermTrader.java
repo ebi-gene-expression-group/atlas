@@ -11,11 +11,11 @@ import java.io.IOException;
 @Scope("singleton")
 public class GoTermTrader {
 
-    private ImmutableMap<String, String> interProAccessionToTerm;
+    private ImmutableMap<String, String> goAccessionToTerm;
 
     @Inject
     public GoTermTrader(GoTermTSVReaderFactory goTermTSVReaderFactory) {
-        interProAccessionToTerm = readAll(goTermTSVReaderFactory);
+        goAccessionToTerm = readAll(goTermTSVReaderFactory);
     }
 
     private ImmutableMap<String, String> readAll(GoTermTSVReaderFactory goTermTSVReaderFactory) {
@@ -29,7 +29,7 @@ public class GoTermTrader {
     }
 
     public String getTerm(String accession) {
-        return interProAccessionToTerm.get(accession);
+        return goAccessionToTerm.get(accession);
     }
 
     private class GoTraderException extends RuntimeException {

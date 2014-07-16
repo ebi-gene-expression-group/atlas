@@ -71,7 +71,7 @@ public class BioEntityPropertyLinkBuilder {
             case "go":
                 displayName = goTermTrader.getTerm(propertyValue);
                 break;
-            case "interpro_accession":
+            case "interpro":
                 displayName = interProTermTrader.getTerm(propertyValue);
                 break;
 

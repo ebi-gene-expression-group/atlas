@@ -60,7 +60,7 @@ public class FetchGenePagePropertiesIT {
         assertThat(properties.get("synonym"), Matchers.hasItems("Dchil", "Osteoactivin"));
         assertThat(properties.get("ortholog"), Matchers.hasItems("ENSRNOG00000008816", "ENSGALG00000010949", "ENSBTAG00000000604", "ENSXETG00000007393", "ENSG00000136235"));
         assertThat(properties.get("go"), Matchers.hasItems("GO:0001649", "GO:0005178", "GO:0005887", "GO:0007155", "GO:0008201", "GO:0016023", "GO:0030282", "GO:0030659", "GO:0042470"));
-        assertThat(properties.get("interproterm"), Matchers.hasItems("PKD domain", "PKD/Chitinase domain"));
+        assertThat(properties.get("interpro"), Matchers.hasItems("IPR000601", "IPR022409"));
         assertThat(properties.get("ensfamily_description"), Matchers.hasItems("TRANSMEMBRANE GLYCOPROTEIN NMB PRECURSOR"));
         assertThat(properties.get("ensgene"), Matchers.hasItems("ENSMUSG00000029816"));
         assertThat(properties.get("entrezgene"), Matchers.hasItems("93695"));
