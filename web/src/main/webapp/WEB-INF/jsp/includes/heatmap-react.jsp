@@ -83,7 +83,7 @@
                 enableGeneLinks: true,
                 enableEnsemblLauncher: ${empty enableEnsemblLauncher ? true : enableEnsemblLauncher},
                 showMaPlotButton: true,
-                gseaPlots: ${empty enableEnsemblLauncher ? 'undefined' : gseaPlots},
+                gseaPlots: ${empty gseaPlots ? 'undefined' : gseaPlots},
                 selectedFilterFactorsJson: ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"},
                 toolTipHighlightedWords: genePropertiesTooltipModule.splitIntoWords('${preferences.geneQuery}'),
                 downloadProfilesURL: '${applicationProperties.buildDownloadURL(pageContext.request)}'
