@@ -25,14 +25,8 @@ package uk.ac.ebi.atlas.web;
 import com.google.common.base.Objects;
 import org.apache.commons.lang.StringUtils;
 
-import javax.validation.constraints.Size;
-
 public class SearchRequest {
 
-    private static final int GENE_QUERY_MAX_LENGTH = 900;
-
-    @Size(max = GENE_QUERY_MAX_LENGTH,
-            message = "The gene query expression is too long, please limit it to a maximum length of 900 characters")
     private String geneQuery = getDefaultGeneQuery();
 
     private boolean exactMatch = true;
