@@ -43,7 +43,7 @@ public class GenePageControllerDifferentialResultsMultiFactorSIT extends SingleP
 
     @Test
     public void checkPaneExpansion() {
-        assertThat(subject.isDifferentialProfileExpanded(), is(true));
+        assertThat(subject.isDifferentialPaneExpanded(), is(true));
     }
 
     @Test

@@ -43,7 +43,7 @@ public class GenePageControllerDifferentialResultsSIT extends SinglePageSelenium
 
     @Test
     public void checkPaneExpansion() {
-        assertThat(subject.isDifferentialProfileExpanded(), is(true));
+        assertThat(subject.isDifferentialPaneExpanded(), is(true));
     }
 
     @Test

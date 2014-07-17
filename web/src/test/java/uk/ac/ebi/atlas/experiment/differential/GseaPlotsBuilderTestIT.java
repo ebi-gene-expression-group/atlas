@@ -44,7 +44,7 @@ public class GseaPlotsBuilderTestIT {
 
         String jsonGseaPlots = gson.toJson(gseaPlots);
 
-        System.out.println(jsonGseaPlots);
+        //System.out.println(jsonGseaPlots);
 
         assertThat(jsonGseaPlots, is("{\n" +
                 "  \"g3_g4\": {\n" +

@@ -45,7 +45,7 @@ public class HairpinRNADiffGeneBioEntityPageSIT extends SinglePageSeleniumFixtur
     @Test
     @Ignore
     public void checkPaneExpansion() {
-        assertThat(subject.isDifferentialProfileExpanded(), is(true));
+        assertThat(subject.isDifferentialPaneExpanded(), is(true));
     }
 
     @Test

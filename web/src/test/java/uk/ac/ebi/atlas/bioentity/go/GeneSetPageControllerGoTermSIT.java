@@ -56,7 +56,7 @@ public class GeneSetPageControllerGoTermSIT extends SinglePageSeleniumFixture {
 
     @Test
     public void hasDifferentialResults() {
-        subject.clickDifferentialProfile();
+        subject.clickDifferentialPane();
         subject.clickDisplayLevelsButton();
         assertThat(subject.getDiffHeatmapHeaders(), contains("Gene", "Organism", "Contrast", "Log2-fold change"));
         assertThat(subject.getDiffHeatmapRow(1), contains("Uty", "Mus musculus", "sex:'male' vs 'female'", "10.46"));

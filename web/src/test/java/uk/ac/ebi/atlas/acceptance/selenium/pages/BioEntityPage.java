@@ -177,11 +177,11 @@ public class BioEntityPage extends HeatmapTablePage {
         return baselineProfilePaneBody.getText();
     }
 
-    public boolean isDifferentialProfileExpanded() {
+    public boolean isDifferentialPaneExpanded() {
         return diffProfilePaneBody.isDisplayed();
     }
 
-    public void clickDifferentialProfile() {
+    public void clickDifferentialPane() {
         diffProfilePaneHeader.click();
 
         By byBioEntityCardClass = By.className("bioEntityCard");
@@ -322,7 +322,7 @@ public class BioEntityPage extends HeatmapTablePage {
         return 1;
     }
 
-    public void clickBaselineProfile() {
+    public void clickBaselinePane() {
         baselinePaneHeader.click();
 
         // wait for the accordion to expand

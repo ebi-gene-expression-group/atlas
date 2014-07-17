@@ -48,7 +48,7 @@ public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends Sin
 
     @Test
     public void checkBaselineExperimentCounts() {
-        subject.clickBaselineProfile();
+        subject.clickBaselinePane();
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 

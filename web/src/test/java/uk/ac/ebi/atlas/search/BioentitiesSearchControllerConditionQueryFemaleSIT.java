@@ -48,7 +48,7 @@ public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePa
     @Ignore
     public void checkBaselineExperimentCounts() {
         //given
-        subject.clickBaselineProfile();
+        subject.clickBaselinePane();
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 

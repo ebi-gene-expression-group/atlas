@@ -45,7 +45,7 @@ public class BioentitiesSearchControllerGeneQuery2GeneSetsMultipleExperimentResu
     @Test
     public void baselineResults() {
         //given
-        subject.clickBaselineProfile();
+        subject.clickBaselinePane();
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 

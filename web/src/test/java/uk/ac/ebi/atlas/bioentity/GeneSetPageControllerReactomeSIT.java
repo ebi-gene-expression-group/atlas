@@ -76,7 +76,7 @@ public class GeneSetPageControllerReactomeSIT extends SinglePageSeleniumFixture 
 
     @Test
     public void checkWidget() {
-        subject.clickBaselineProfile();
+        subject.clickBaselinePane();
 
         // wait for ajax widget to load
         SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");

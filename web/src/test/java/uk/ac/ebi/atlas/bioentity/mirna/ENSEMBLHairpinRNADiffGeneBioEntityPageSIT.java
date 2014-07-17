@@ -47,7 +47,7 @@ public class ENSEMBLHairpinRNADiffGeneBioEntityPageSIT extends SinglePageSeleniu
     @Test
     @Ignore
     public void checkPaneExpansion() {
-        assertThat(subject.isDifferentialProfileExpanded(), is(true));
+        assertThat(subject.isDifferentialPaneExpanded(), is(true));
     }
 
     @Test
