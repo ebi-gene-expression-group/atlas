@@ -31,7 +31,7 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
-<c:set var="isSameGeneId" value="${bioentitySameIdentifier}" />
+<c:set var="showMultiGeneColumns" value="${!singleGeneDiffHeatmap}" />
 
 <table>
     <tbody>
@@ -41,13 +41,13 @@
                 <thead>
 
                 <tr>
-                <c:if test="${!isSameGeneId}">
+                <c:if test="${showMultiGeneColumns}">
                     <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
                         <div>Gene</div>
                     </th>
                 </c:if>
 
-                <c:if test="${!isSameGeneId}">
+                <c:if test="${showMultiGeneColumns}">
                     <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
                         <div>Organism</div>
                     </th>
@@ -68,12 +68,12 @@
                 <c:forEach items="${bioentities}"
                            var="diffAnalytics">
                     <tr>
-                     <c:if test="${!isSameGeneId}">
+                     <c:if test="${showMultiGeneColumns}">
                         <td class="horizontal-header-cell">
                                 <a href="genes/${diffAnalytics.bioentityId}">${diffAnalytics.bioentityName}</a>
                         </td>
                      </c:if>
-                      <c:if test="${!isSameGeneId}">
+                      <c:if test="${showMultiGeneColumns}">
                         <td class="horizontal-header-cell">
                                 ${diffAnalytics.species}
                         </td>

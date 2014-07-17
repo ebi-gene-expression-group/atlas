@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.bioentity;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
@@ -39,6 +40,7 @@ import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -76,13 +78,20 @@ public class GeneSetPageController extends BioEntityPageController {
     // identifier = Reactome, GO, or Interpro term
     @RequestMapping(value = "/genesets/{identifier:.*}")
     public String showBioentityPage(@PathVariable String identifier, Model model) {
-        //when we query for genesets the bioentity page must
-        //not display Differential Expression panel so we just need to invoke parent controller (that handles baseline expressions)
         checkIdentifierIsGeneSet(identifier);
 
         model.addAttribute("isGeneSet", true);
 
-        return super.showBioentityPage(identifier, model);
+        // load diff results in same way as BioentitiesSearchController
+        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(identifier, true);
+
+        if (!geneIdsResult.isPresent() || geneIdsResult.get().isEmpty()) {
+            throw new ResourceNotFoundException(identifier);
+        }
+
+        loadDifferentialResults(geneIdsResult.get(), model);
+
+        return super.showBioentityPage(identifier, model, false);
     }
 
     @Override

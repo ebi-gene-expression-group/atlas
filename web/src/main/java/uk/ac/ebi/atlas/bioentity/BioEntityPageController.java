@@ -26,6 +26,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
@@ -36,16 +37,16 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWidgetQuery;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
+import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 public abstract class BioEntityPageController {
 
@@ -62,6 +63,9 @@ public abstract class BioEntityPageController {
     private BaselineProfilesHeatMap baselineProfilesHeatMap;
 
     private ExperimentTrader experimentTrader;
+
+    private DiffAnalyticsSearchService diffAnalyticsSearchService;
+
 
     @Inject
     public void setExperimentTrader(ExperimentTrader experimentTrader) {
@@ -93,18 +97,39 @@ public abstract class BioEntityPageController {
         this.applicationProperties = applicationProperties;
     }
 
-    public String showBioentityPage(String identifier, Model model) {
+    @Inject
+    void setDifferentialBioentityExpressionBuilder(DiffAnalyticsSearchService diffAnalyticsSearchService) {
+        this.diffAnalyticsSearchService = diffAnalyticsSearchService;
+    }
+
+    void loadDifferentialResults(String identifier, Model model) {
+        loadDifferentialResults(Sets.newHashSet(identifier), model);
+    }
+
+    void loadDifferentialResults(Collection<String> geneIdentifiers, Model model) {
+        DiffAnalyticsList diffAnalyticsList =
+                diffAnalyticsSearchService.fetchTop(geneIdentifiers);
+
+        model.addAttribute("bioentities", diffAnalyticsList);
+
+        // setting FDR as cutoff
+        DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
+
+        model.addAttribute("preferences", requestPreferences);
+        model.addAttribute("disableGeneLinks", true);
+    }
+
+
+    public String showBioentityPage(String identifier, Model model, boolean singleGeneDiffHeatmap) {
 
         initBioentityPropertyService(identifier);
 
         model.addAttribute("entityIdentifier", identifier);
 
-        //if it is false the bioentity property panel will not be shown and the
-        //differential heatmap will visualize an extra column for design element (not required when the heatmap displays a single bioentity)
-        model.addAttribute("singleBioentityPage", true);
+        model.addAttribute("showBioentityPropertiesPane", true);
 
-        //if all geneIds and geneNames in the BioentityPage are the same we don't want to display in the heatmap the columns Genes and Organism
-        model.addAttribute("bioentitySameIdentifier", true);
+        //toggle display of multi-gene columns (gene name, and organism) in the differential heatmap
+        model.addAttribute("singleGeneDiffHeatmap", singleGeneDiffHeatmap);
 
         String species = fetchSpecies(identifier);
         String referenceExperimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);

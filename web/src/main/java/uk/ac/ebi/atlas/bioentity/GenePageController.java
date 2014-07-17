@@ -23,19 +23,14 @@
 package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
-import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
-import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
-import javax.inject.Inject;
 import java.util.Set;
 
 @Controller
@@ -46,16 +41,9 @@ public class GenePageController extends BioEntityPageController {
 
     private String[] bioentityPropertyNames;
 
-    private DiffAnalyticsSearchService diffAnalyticsSearchService;
-
     @Value("#{configuration['index.property_names.genepage']}")
     void setBioentityPropertyNames(String[] bioentityPropertyNames) {
         this.bioentityPropertyNames = bioentityPropertyNames;
-    }
-
-    @Inject
-    void setDifferentialBioentityExpressionBuilder(DiffAnalyticsSearchService diffAnalyticsSearchService) {
-        this.diffAnalyticsSearchService = diffAnalyticsSearchService;
     }
 
     // identifier = an Ensembl identifier (gene, transcript, or protein) or a mirna identifier or an MGI term.
@@ -84,20 +72,7 @@ public class GenePageController extends BioEntityPageController {
 
         loadDifferentialResults(identifier, model);
 
-        return showBioentityPage(identifier, model);
-    }
-
-    private void loadDifferentialResults(String identifier, Model model) {
-        DiffAnalyticsList diffAnalyticsList =
-                diffAnalyticsSearchService.fetchTop(Sets.newHashSet(identifier));
-
-        model.addAttribute("bioentities", diffAnalyticsList);
-
-        // setting FDR as cutoff
-        DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
-
-        model.addAttribute("preferences", requestPreferences);
-        model.addAttribute("disableGeneLinks", true);
+        return showBioentityPage(identifier, model, true);
     }
 
     private void checkIdentifierDoesNotContainColon(String identifier) {

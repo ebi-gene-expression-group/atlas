@@ -54,7 +54,7 @@
 
         <section class="grid_23 extra-padding">
             <div id="accordion">
-                <c:if test="${singleBioentityPage}">
+                <c:if test="${showBioentityPropertiesPane}">
                     <ul id="infoHeader" class="bioEntityCardHeader">
                         <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
                              src="resources/images/bioentity_info_transparent_bkg.png"/>
