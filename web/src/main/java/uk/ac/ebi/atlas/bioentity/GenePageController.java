@@ -72,6 +72,8 @@ public class GenePageController extends BioEntityPageController {
 
         loadDifferentialResults(identifier, model);
 
+        model.addAttribute("disableGeneLinks", true);
+
         return showBioentityPage(identifier, model, true);
     }
 

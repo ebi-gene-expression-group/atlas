@@ -116,7 +116,6 @@ public abstract class BioEntityPageController {
         DifferentialRequestPreferences requestPreferences = new DifferentialRequestPreferences();
 
         model.addAttribute("preferences", requestPreferences);
-        model.addAttribute("disableGeneLinks", true);
     }
 
 
