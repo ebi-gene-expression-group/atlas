@@ -79,6 +79,7 @@ public class BaselineExpressionSearchService {
 
         Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups = fetchAssayGroupsForCondition(condition);
 
+        //TODO: move outside into caller, because this is called twice, here and in DiffAnalyticsSearchService
         Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, isExactMatch);
 
         SetMultimap<String, String> assayGroupsWithExpressionByExperiment = baselineExpressionsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, geneIds);
