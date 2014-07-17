@@ -36,6 +36,7 @@ public class ExperimentCRUDRnaSeqDifferentialIT {
         deleteInactiveAnalytics();
     }
 
+
     @Test
     public void loadAndDeleteNewExperiment() throws IOException {
         assertThat("experiment already exists in db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
