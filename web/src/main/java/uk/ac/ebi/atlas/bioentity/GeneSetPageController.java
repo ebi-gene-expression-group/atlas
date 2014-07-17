@@ -106,7 +106,7 @@ public class GeneSetPageController extends BioEntityPageController {
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
         } else if (isInterPro(identifier)) {
             String term = interProTermTrader.getTerm(identifier);
-            propertyValuesByType.put("interpro_accession", identifier);
+            propertyValuesByType.put("interpro", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
         }
 
