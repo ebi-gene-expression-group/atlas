@@ -4,6 +4,7 @@ import com.google.common.base.Optional;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
+import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
@@ -29,13 +30,18 @@ public class BioEntityPropertyLinkBuilder {
 
     private InterProTermTrader interProTermTrader;
 
+    private PoTermTrader poTermTrader;
+
     @Inject
-    public BioEntityPropertyLinkBuilder(BioEntityCardProperties bioEntityCardProperties, ReactomeBiomartClient reactomeBiomartClient, SolrQueryService solrQueryService, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader) {
+    public BioEntityPropertyLinkBuilder(BioEntityCardProperties bioEntityCardProperties, ReactomeBiomartClient reactomeBiomartClient,
+                                        SolrQueryService solrQueryService, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader,
+                                        PoTermTrader poTermTrader) {
         this.bioEntityCardProperties = bioEntityCardProperties;
         this.reactomeBiomartClient = reactomeBiomartClient;
         this.solrQueryService = solrQueryService;
         this.goTermTrader = goTermTrader;
         this.interProTermTrader = interProTermTrader;
+        this.poTermTrader = poTermTrader;
     }
 
     public Optional<PropertyLink> createLink(String identifier, String propertyType, String propertyValue, String species) {
@@ -73,6 +79,9 @@ public class BioEntityPropertyLinkBuilder {
                 break;
             case "interpro":
                 displayName = interProTermTrader.getTerm(propertyValue);
+                break;
+            case "po":
+                displayName = poTermTrader.getTerm(propertyValue);
                 break;
 
         }

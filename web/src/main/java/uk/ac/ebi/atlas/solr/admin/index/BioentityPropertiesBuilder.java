@@ -111,9 +111,15 @@ public class BioentityPropertiesBuilder {
             String [] values = SEPARATOR_PATTERN.split(propertyValues.get(i));
             for (String value: values){
                 if (StringUtils.isNotBlank(value)){
+                    String propertyName = propertyNames.get(i);
+
+                    //Split the input from ensembl into separate PO property when the accession starts with PO:
+                    if(value.startsWith("PO:") && propertyNames.get(i).equals("go")){
+                        propertyName = "po";
+                    }
                     BioentityProperty bioentityProperty =
                             new BioentityProperty(bioentityIdentifier, bioentityType,
-                                    species, propertyNames.get(i), value);
+                                    species, propertyName, value);
                     bioentityProperties.add(bioentityProperty);
                 }
             }

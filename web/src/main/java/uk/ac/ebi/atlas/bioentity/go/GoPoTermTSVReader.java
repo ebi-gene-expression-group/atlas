@@ -6,12 +6,14 @@ import com.google.common.collect.ImmutableMap;
 import java.io.Closeable;
 import java.io.IOException;
 
-public class GoTermTSVReader implements Closeable {
+public class GoPoTermTSVReader implements Closeable {
 
     private final CSVReader csvReader;
+    private String termType;
 
-    public GoTermTSVReader(CSVReader csvReader) {
+    public GoPoTermTSVReader(CSVReader csvReader, String termType) {
         this.csvReader = csvReader;
+        this.termType = termType;
     }
 
     ImmutableMap<String, String> readAll() throws IOException {
@@ -21,7 +23,9 @@ public class GoTermTSVReader implements Closeable {
         while ((nextLine = csvReader.readNext()) != null) {
             String accession = nextLine[0];
             String term = nextLine[1].replace("_", " ");
-            builder.put(accession, term);
+            if(accession.startsWith(termType)) {
+                builder.put(accession, term);
+            }
         }
 
         return builder.build();

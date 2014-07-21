@@ -10,22 +10,31 @@ import javax.inject.Named;
 
 @Named
 @Scope("singleton")
-public class GoTermTSVReaderFactory {
+public class GoPoTermTSVReaderFactory {
 
     private final CsvReaderFactory csvReaderFactory;
     private final String filePath;
+    private static final String GO_TERM = "GO:";
+    private static final String PO_TERM = "PO:";
 
     @Inject
-    public GoTermTSVReaderFactory(@Value("#{configuration['go.terms.file']}")
-                                  String filePath,
-                                  CsvReaderFactory csvReaderFactory) {
+    public GoPoTermTSVReaderFactory(@Value("#{configuration['go.terms.file']}")
+                                    String filePath,
+                                    CsvReaderFactory csvReaderFactory) {
         this.filePath = filePath;
         this.csvReaderFactory = csvReaderFactory;
     }
 
-    public GoTermTSVReader create() {
+    public GoPoTermTSVReader createGoTerms() {
         CSVReader csvReader = csvReaderFactory.createTsvReader(filePath);
-        return new GoTermTSVReader(csvReader);
+        return new GoPoTermTSVReader(csvReader, GO_TERM);
+
+    }
+
+    public GoPoTermTSVReader createPoTerms() {
+        CSVReader csvReader = csvReaderFactory.createTsvReader(filePath);
+        return new GoPoTermTSVReader(csvReader, PO_TERM);
+
     }
 
     public String getFilePath() {

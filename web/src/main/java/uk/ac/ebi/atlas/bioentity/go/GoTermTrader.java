@@ -14,17 +14,17 @@ public class GoTermTrader {
     private ImmutableMap<String, String> goAccessionToTerm;
 
     @Inject
-    public GoTermTrader(GoTermTSVReaderFactory goTermTSVReaderFactory) {
-        goAccessionToTerm = readAll(goTermTSVReaderFactory);
+    public GoTermTrader(GoPoTermTSVReaderFactory goPoTermTSVReaderFactory) {
+        goAccessionToTerm = readAll(goPoTermTSVReaderFactory);
     }
 
-    private ImmutableMap<String, String> readAll(GoTermTSVReaderFactory goTermTSVReaderFactory) {
-        try (GoTermTSVReader goTermTSVReader = goTermTSVReaderFactory.create()) {
+    private ImmutableMap<String, String> readAll(GoPoTermTSVReaderFactory goPoTermTSVReaderFactory) {
+        try (GoPoTermTSVReader goPoTermTSVReader = goPoTermTSVReaderFactory.createGoTerms()) {
 
-            return goTermTSVReader.readAll();
+            return goPoTermTSVReader.readAll();
 
         } catch (IOException e) {
-            throw new GoTraderException("Cannot read from " + goTermTSVReaderFactory.getFilePath(), e);
+            throw new GoTraderException("Cannot read from " + goPoTermTSVReaderFactory.getFilePath(), e);
         }
     }
 

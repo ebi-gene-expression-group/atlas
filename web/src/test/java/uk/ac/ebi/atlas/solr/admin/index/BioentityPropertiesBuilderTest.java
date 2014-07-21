@@ -80,6 +80,31 @@ public class BioentityPropertiesBuilderTest {
     }
 
     @Test
+    public void shouldBuildPOTermsPropertyValue() throws IOException {
+        subject = new BioentityPropertiesBuilder();
+
+        List<String> poPropertyValues = Lists.newArrayList("PO:0025281", "GO:0010150");
+        List<String> poPropertyNames = Lists.newArrayList("go", "go");
+
+        //when
+        List<BioentityProperty> bioentityProperties = subject
+                .forPropertyNames(poPropertyNames)
+                .forBioentityType(BIOENTITY_TYPE)
+                .forSpecies(SPECIES)
+                .withBioentityIdentifier(BIOENTITY_IDENTIFIER)
+                .withPropertyValues(poPropertyValues)
+                .build();
+        //then
+        BioentityProperty bioentityProperty1 = new BioentityProperty(BIOENTITY_IDENTIFIER, BIOENTITY_TYPE, SPECIES, "po", poPropertyValues.get(0));
+        BioentityProperty bioentityProperty2 = new BioentityProperty(BIOENTITY_IDENTIFIER, BIOENTITY_TYPE, SPECIES, poPropertyNames.get(1), poPropertyValues.get(1));
+
+        assertThat(bioentityProperties, hasSize(3));
+        assertThat(bioentityProperties.get(0), is(bioentityProperty1));
+        assertThat(bioentityProperties.get(1), is(bioentityProperty2));
+
+    }
+
+    @Test
     public void shouldBuildAnEmptyList() throws IOException {
         subject = new BioentityPropertiesBuilder();
         //when

@@ -18286,33 +18286,33 @@ GO:0034661	ncRNA catabolic process
 GO:0034662	CFTR-NHERF-ezrin complex
 GO:0034663	endoplasmic reticulum chaperone complex
 GO:0034664	Ig heavy chain-bound endoplasmic reticulum chaperone complex
-GO:0034665	alpha1-beta1 integrin complex
-GO:0034666	alpha2-beta1 integrin complex
-GO:0034667	alpha3-beta1 integrin complex
-GO:0034668	alpha4-beta1 integrin complex
-GO:0034669	alpha4-beta7 integrin complex
+GO:0034665	integrin alpha1-beta1 complex
+GO:0034666	integrin alpha2-beta1 complex
+GO:0034667	integrin alpha3-beta1 complex
+GO:0034668	integrin alpha4-beta1 complex
+GO:0034669	integrin alpha4-beta7 complex
 GO:0034670	chemotaxis to arachidonic acid
 GO:0034671	retinoic acid receptor signaling pathway involved in pronephros anterior/posterior pattern specification
 GO:0034672	anterior/posterior pattern specification involved in pronephros development
 GO:0034673	inhibin-betaglycan-ActRII complex
-GO:0034674	alpha5-beta1 integrin complex
-GO:0034675	alpha6-beta1 integrin complex
-GO:0034676	alpha6-beta4 integrin complex
-GO:0034677	alpha7-beta1 integrin complex
-GO:0034678	alpha8-beta1 integrin complex
-GO:0034679	alpha9-beta1 integrin complex
-GO:0034680	alpha10-beta1 integrin complex
-GO:0034681	alpha11-beta1 integrin complex
-GO:0034682	alphav-beta1 integrin complex
-GO:0034683	alphav-beta3 integrin complex
-GO:0034684	alphav-beta5 integrin complex
-GO:0034685	alphav-beta6 integrin complex
-GO:0034686	alphav-beta8 integrin complex
-GO:0034687	alphaL-beta2 integrin complex
-GO:0034688	alphaM-beta2 integrin complex
-GO:0034689	alphaX-beta2 integrin complex
-GO:0034690	alphaD-beta2 integrin complex
-GO:0034691	alphaE-beta7 integrin complex
+GO:0034674	integrin alpha5-beta1 complex
+GO:0034675	integrin alpha6-beta1 complex
+GO:0034676	integrin alpha6-beta4 complex
+GO:0034677	integrin alpha7-beta1 complex
+GO:0034678	integrin alpha8-beta1 complex
+GO:0034679	integrin alpha9-beta1 complex
+GO:0034680	integrin alpha10-beta1 complex
+GO:0034681	integrin alpha11-beta1 complex
+GO:0034682	integrin alphav-beta1 complex
+GO:0034683	integrin alphav-beta3 complex
+GO:0034684	integrin alphav-beta5 complex
+GO:0034685	integrin alphav-beta6 complex
+GO:0034686	integrin alphav-beta8 complex
+GO:0034687	integrin alphaL-beta2 complex
+GO:0034688	integrin alphaM-beta2 complex
+GO:0034689	integrin alphaX-beta2 complex
+GO:0034690	integrin alphaD-beta2 complex
+GO:0034691	integrin alphaE-beta7 complex
 GO:0034692	E.F.G complex
 GO:0034693	U11/U12 snRNP
 GO:0034694	response to prostaglandin
@@ -20055,6 +20055,9 @@ GO:0036460	cellular response to cell envelope stress
 GO:0036461	BLOC-2 complex binding
 GO:0036462	TRAIL-activated apoptotic signaling pathway
 GO:0036463	TRAIL receptor activity
+GO:0036464	cytoplasmic ribonucleoprotein granule
+GO:0036465	synaptic vesicle recycling
+GO:0036466	synaptic vesicle recycling via endosome
 GO:0038001	paracrine signaling
 GO:0038002	endocrine signaling
 GO:0038003	opioid receptor signaling pathway
@@ -23950,7 +23953,7 @@ GO:0045733	acetate catabolic process
 GO:0045734	regulation of acetate catabolic process
 GO:0045735	nutrient reservoir activity
 GO:0045736	negative regulation of cyclin-dependent protein serine/threonine kinase activity
-GO:0045737	positive regulation of cyclin-dependent protein kinase activity
+GO:0045737	positive regulation of cyclin-dependent protein serine/threonine kinase activity
 GO:0045738	negative regulation of DNA repair
 GO:0045739	positive regulation of DNA repair
 GO:0045740	positive regulation of DNA replication
@@ -26793,7 +26796,7 @@ GO:0048756	sieve cell differentiation
 GO:0048757	pigment granule maturation
 GO:0048758	companion cell differentiation
 GO:0048759	xylem vessel member cell differentiation
-GO:0048760	parenchymal cell differentiation
+GO:0048760	plant parenchymal cell differentiation
 GO:0048761	collenchyma cell differentiation
 GO:0048762	mesenchymal cell differentiation
 GO:0048763	calcium-induced calcium release activity
@@ -31587,6 +31590,8 @@ GO:0061628	H3K27me3 modified histone binding
 GO:0061629	RNA polymerase II sequence-specific DNA binding transcription factor binding
 GO:0061630	ubiquitin protein ligase activity
 GO:0061631	ubiquitin conjugating enzyme activity
+GO:0061632	RNA lariat debranching enzyme activator activity
+GO:0061633	transport-coupled glycolytic process through glucose-6-phosphate
 GO:0065001	specification of axis polarity
 GO:0065002	intracellular protein transmembrane transport
 GO:0065003	macromolecular complex assembly
@@ -31774,8 +31779,8 @@ GO:0070176	DRM complex
 GO:0070177	contractile vacuole discharge
 GO:0070178	D-serine metabolic process
 GO:0070179	D-serine biosynthetic process
-GO:0070180	LSU rRNA binding
-GO:0070181	SSU rRNA binding
+GO:0070180	large ribosomal subunit rRNA binding
+GO:0070181	small ribosomal subunit rRNA binding
 GO:0070182	DNA polymerase binding
 GO:0070183	mitochondrial tryptophanyl-tRNA aminoacylation
 GO:0070184	mitochondrial tyrosyl-tRNA aminoacylation
@@ -31883,7 +31888,7 @@ GO:0070286	axonemal dynein complex assembly
 GO:0070287	ferritin receptor activity
 GO:0070288	ferritin complex
 GO:0070289	extracellular ferritin complex
-GO:0070290	NAPE-specific phospholipase D activity
+GO:0070290	N-acylphosphatidylethanolamine-specific phospholipase D activity
 GO:0070291	N-acylethanolamine metabolic process
 GO:0070292	N-acylphosphatidylethanolamine metabolic process
 GO:0070293	renal absorption
@@ -32035,7 +32040,7 @@ GO:0070438	mTOR-FKBP12-rapamycin complex
 GO:0070439	Mad-Max-mSin3A complex
 GO:0070440	Mad-Max-mSin3B complex
 GO:0070441	G-protein beta/gamma-Btk complex
-GO:0070442	alphaIIb-beta3 integrin complex
+GO:0070442	integrin alphaIIb-beta3 complex
 GO:0070443	Mad-Max complex
 GO:0070444	oligodendrocyte progenitor proliferation
 GO:0070445	regulation of oligodendrocyte progenitor proliferation
@@ -36228,6 +36233,7 @@ GO:0097614	dinoflagellate hypocone
 GO:0097615	modulation by host of symbiont type IV pilus-dependent motility
 GO:0097616	positive regulation by host of symbiont type IV pilus-dependent motility
 GO:0097617	annealing activity
+GO:0097618	dinoflagellate sulcal notch
 GO:0098001	receptor-mediated bacteriophage reversible attachment to host cell
 GO:0098002	receptor-mediated bacteriophage irreversible attachment to host cell
 GO:0098003	viral tail assembly
@@ -36413,6 +36419,39 @@ GO:0098650	peptidyl-proline 4-dioxygenase binding
 GO:0098651	basement membrane collagen trimer
 GO:0098652	collagen type VII anchoring fibril
 GO:0098653	centromere clustering
+GO:0098654	CENP-A recruiting complex
+GO:0098655	cation transmembrane transport
+GO:0098656	anion transmembrane transport
+GO:0098657	import into cell
+GO:0098658	inorganic anion import into cell
+GO:0098659	inorganic cation import into cell
+GO:0098660	inorganic ion transmembrane transport
+GO:0098661	inorganic anion transmembrane transport
+GO:0098662	inorganic cation transmembrane transport
+GO:0098663	transmembrane transporter activity involved in import into cell
+GO:0098687	chromosomal region
+GO:0098700	neurotransmitter loading into synaptic vesicle
+GO:0098701	endocytic import into cell
+GO:0098702	adenine import across plasma membrane
+GO:0098703	calcium ion import across plasma membrane
+GO:0098704	carbohydrate import across plasma membrane
+GO:0098705	copper ion import across plasma membrane
+GO:0098706	ferric iron import across plasma membrane
+GO:0098707	ferrous iron import across plasma membrane
+GO:0098708	glucose import across plasma membrane
+GO:0098709	glutathione import across plasma membrane
+GO:0098710	guanine import across plasma membrane
+GO:0098711	iron ion import across plasma membrane
+GO:0098712	L-glutamate import across plasma membrane
+GO:0098713	leucine import across plasma membrane
+GO:0098714	malate import across plasma membrane
+GO:0098715	malonic acid import across plasma membrane
+GO:0098716	nickel cation import across plasma membrane
+GO:0098717	pantothenate import across plasma membrane
+GO:0098718	serine import across plasma membrane
+GO:0098719	sodium ion import across plasma membrane
+GO:0098720	succinate import across plasma membrane
+GO:0098721	uracil import across plasma membrane
 GO:0098900	regulation of action potential
 GO:0098901	regulation of cardiac muscle cell action potential
 GO:0098902	regulation of membrane depolarization during action potential
@@ -36429,6 +36468,7 @@ GO:0098912	membrane depolarization during atrial cardiac muscle cell action pote
 GO:0098913	membrane depolarization during ventricular cardiac muscle cell action potential
 GO:0098914	membrane repolarization during atrial cardiac muscle cell action potential
 GO:0098915	membrane repolarization during ventricular cardiac muscle cell action potential
+GO:0099587	inorganic ion import into cell
 GO:1900000	regulation of anthocyanin catabolic process
 GO:1900001	negative regulation of anthocyanin catabolic process
 GO:1900002	positive regulation of anthocyanin catabolic process
@@ -39461,6 +39501,7 @@ GO:1903061	positive regulation of protein lipidation
 GO:1903062	regulation of reverse cholesterol transport
 GO:1903063	negative regulation of reverse cholesterol transport
 GO:1903064	positive regulation of reverse cholesterol transport
+GO:1903065	protein localization to cell tip involved in positive regulation of establishment of cell polarity regulating cell shape
 GO:1903066	regulation of protein localization to cell tip
 GO:1903067	negative regulation of protein localization to cell tip
 GO:1903068	positive regulation of protein localization to cell tip
@@ -39474,6 +39515,7 @@ GO:1903075	pyridoxine import into cell
 GO:1903076	regulation of protein localization to plasma membrane
 GO:1903077	negative regulation of protein localization to plasma membrane
 GO:1903078	positive regulation of protein localization to plasma membrane
+GO:1903079	negative regulation of protein localization to cell tip involved in positive regulation of establishment of cell polarity regulating cell shape
 GO:1903080	regulation of C-C chemokine receptor CCR7 signaling pathway
 GO:1903081	negative regulation of C-C chemokine receptor CCR7 signaling pathway
 GO:1903082	positive regulation of C-C chemokine receptor CCR7 signaling pathway
@@ -39513,6 +39555,58 @@ GO:1903115	regulation of actin filament-based movement
 GO:1903116	positive regulation of actin filament-based movement
 GO:1903117	regulation of actin filament organization involved in cytokinetic actomyosin contractile ring assembly
 GO:1903118	urate homeostasis
+GO:1903119	protein localization to actin cytoskeleton
+GO:1903120	protein localization to actin filament bundle
+GO:1903121	regulation of TRAIL-activated apoptotic signaling pathway
+GO:1903122	negative regulation of TRAIL-activated apoptotic signaling pathway
+GO:1903123	regulation of thioredoxin peroxidase activity
+GO:1903124	negative regulation of thioredoxin peroxidase activity
+GO:1903125	negative regulation of thioredoxin peroxidase activity by peptidyl-threonine phosphorylation
+GO:1903126	negative regulation of centriole-centriole cohesion
+GO:1903127	positive regulation of centriole-centriole cohesion
+GO:1903128	regulation of leucine import into cell
+GO:1903129	negative regulation of leucine import into cell
+GO:1903130	positive regulation of leucine import into cell
+GO:1903131	mononuclear cell differentiation
+GO:1903132	regulation of tube lumen cavitation
+GO:1903133	negative regulation of tube lumen cavitation
+GO:1903134	trehalose catabolic process involved in cellular response to stress
+GO:1903135	cupric ion binding
+GO:1903136	cuprous ion binding
+GO:1903137	regulation of MAPK cascade involved in cell wall organization or biogenesis
+GO:1903138	negative regulation of MAPK cascade involved in cell wall organization or biogenesis
+GO:1903139	positive regulation of MAPK cascade involved in cell wall organization or biogenesis
+GO:1903140	regulation of establishment of endothelial barrier
+GO:1903141	negative regulation of establishment of endothelial barrier
+GO:1903142	positive regulation of establishment of endothelial barrier
+GO:1903143	adrenomedullin receptor complex
+GO:1903144	actomyosin contractile ring actin filament
+GO:1903145	actin filament of cell cortex of cell tip
+GO:1903146	regulation of mitochondrion degradation
+GO:1903147	negative regulation of mitochondrion degradation
+GO:1903148	uracil transmembrane transporter activity involved in uracil import into cell
+GO:1903149	adenine transmembrane transporter activity involved in adenine import into cell
+GO:1903150	calcium ion transmembrane transporter activity involved in calcium ion import into cell
+GO:1903151	carbohydrate transmembrane transporter activity involved in carbohydrate import into cell
+GO:1903152	copper ion transmembrane transporter activity involved in copper ion import into cell
+GO:1903153	ferrous iron transmembrane transporter activity involved in ferrous iron import into cell
+GO:1903154	glucose transmembrane transporter activity involved in glucose import into cell
+GO:1903155	glutathione transmembrane transporter activity involved in glutathione import into cell
+GO:1903156	guanine transmembrane transporter activity involved in guanine import into cell
+GO:1903157	iron ion transmembrane transporter activity involved in iron ion import into cell
+GO:1903158	L-glutamate transmembrane transporter activity involved in L-glutamate import into cell
+GO:1903159	malate transmembrane transporter activity involved in malate import into cell
+GO:1903160	nickel cation transmembrane transporter activity involved in nickel cation import into cell
+GO:1903161	pantothenate transmembrane transporter activity involved in pantothenate import into cell
+GO:1903162	serine transmembrane transporter activity involved in serine import into cell
+GO:1903163	sodium ion transmembrane transporter activity involved in sodium ion import into cell
+GO:1903164	succinate transmembrane transporter activity involved in succinate import into cell
+GO:1903165	response to polycyclic arene
+GO:1903166	cellular response to polycyclic arene
+GO:1903167	regulation of pyrroline-5-carboxylate reductase activity
+GO:1903168	positive regulation of pyrroline-5-carboxylate reductase activity
+GO:1903169	regulation of calcium ion transmembrane transport
+GO:1903170	negative regulation of calcium ion transmembrane transport
 GO:1990000	amyloid fibril formation
 GO:1990001	inhibition of cysteine-type endopeptidase activity involved in apoptotic process
 GO:1990002	methylglyoxal reductase (NADPH-dependent, acetol producing)
@@ -39897,6 +39991,23 @@ GO:1990396	single-strand break repair via homologous recombination
 GO:1990397	queuosine salvage
 GO:1990398	Cus cation efflux complex
 GO:1990399	epithelium regeneration
+GO:1990400	mitochondrial ribosomal large subunit rRNA binding
+GO:1990401	embryonic lung development
+GO:1990402	embryonic liver development
+GO:1990403	embryonic brain development
+GO:1990404	protein ADP-ribosylase activity
+GO:1990405	protein antigen binding
+GO:1990406	CGRP receptor complex
+GO:1990407	calcitonin-gene-related polypeptide binding
+GO:1990408	calcitonin-gene-related polypeptide receptor signaling pathway
+GO:1990409	adrenomedullin binding
+GO:1990410	adrenomedullin receptor signaling pathway
+GO:1990411	hercynylcysteine sulfoxide lyase activity (ergothioneine-forming)
+GO:1990412	hercynylselenocysteine lyase activity (selenoneine-forming)
+GO:1990413	eyespot apparatus
+GO:1990414	replication-born double-strand break repair via sister chromatid exchange
+GO:1990415	Pex17p-Pex14p docking complex
+GO:1990416	cellular response to brain-derived neurotrophic factor stimulus
 GO:2000001	regulation of DNA damage checkpoint
 GO:2000002	negative regulation of DNA damage checkpoint
 GO:2000003	positive regulation of DNA damage checkpoint
@@ -41209,3 +41320,1694 @@ GO:2001314	UDP-4-deoxy-4-formamido-beta-L-arabinopyranose catabolic process
 GO:2001315	UDP-4-deoxy-4-formamido-beta-L-arabinopyranose biosynthetic process
 GO:2001316	kojic acid metabolic process
 GO:2001317	kojic acid biosynthetic process
+PO:0000001	embryo proper
+PO:0000002	anther wall
+PO:0000003	whole plant
+PO:0000004	in vitro plant structure
+PO:0000005	cultured plant cell
+PO:0000006	plant protoplast
+PO:0000007	leaf-derived cultured plant cell
+PO:0000008	root-derived cultured plant cell
+PO:0000009	cultured plant callus
+PO:0000010	cultured plant embryo
+PO:0000011	cultured somatic plant embryo
+PO:0000012	apical hook
+PO:0000013	cauline leaf
+PO:0000014	rosette leaf
+PO:0000015	cotyledon primordium
+PO:0000016	lateral root primordium
+PO:0000017	vascular leaf primordium
+PO:0000018	ovule primordium
+PO:0000019	gynoecium primordium
+PO:0000020	starch sheath cell
+PO:0000021	petal primordium
+PO:0000022	plant cuticle
+PO:0000023	casparian strip
+PO:0000024	filiform apparatus
+PO:0000025	root tip
+PO:0000026	primary root tip
+PO:0000027	lateral root tip
+PO:0000028	pollen tube tip
+PO:0000029	root hair tip
+PO:0000030	septum
+PO:0000031	lenticel
+PO:0000032	tetrad of microspores
+PO:0000033	fruit valve
+PO:0000034	vascular system
+PO:0000035	cotyledon vascular system
+PO:0000036	leaf vascular system
+PO:0000037	shoot apex
+PO:0000038	primary endosperm cell
+PO:0000039	shoot axis vascular system
+PO:0000040	adventitious root nodule
+PO:0000041	epidermal cork cell
+PO:0000042	shoot-borne root
+PO:0000043	crown root
+PO:0000044	prop root
+PO:0000045	embryo root
+PO:0000046	seminal root
+PO:0000047	leaf lamina epidermis
+PO:0000048	leaf lamina vascular system
+PO:0000049	leaf lamina abaxial epidermis
+PO:0000050	leaf lamina adaxial epidermis
+PO:0000051	petiole epidermis
+PO:0000052	petiole vascular system
+PO:0000053	petiole cortex
+PO:0000054	petal vascular system
+PO:0000055	bud
+PO:0000056	flower bud
+PO:0000057	inflorescence bud
+PO:0000058	vegetative bud
+PO:0000059	root initial cell
+PO:0000060	root cortex-endodermis initial cell
+PO:0000061	lateral root-cap epidermal initial cell
+PO:0000062	stomatal initial cell
+PO:0000063	leaf procambial cell
+PO:0000064	xylem pole pericycle cell
+PO:0000065	phloem pole pericycle cell
+PO:0000066	epithem cell
+PO:0000071	companion cell
+PO:0000074	parenchyma cell
+PO:0000075	collenchyma cell
+PO:0000076	chlorenchyma cell
+PO:0000077	sclerenchyma cell
+PO:0000078	transfer cell
+PO:0000079	fusiform initial cell
+PO:0000081	axial cell
+PO:0000082	ray initial cell
+PO:0000084	plant sperm cell
+PO:0000112	shoot axis epidermis
+PO:0000115	socket cell
+PO:0000146	abscission zone
+PO:0000191	synergid
+PO:0000198	free nuclear endosperm
+PO:0000199	cellular endosperm
+PO:0000200	micropylar endosperm
+PO:0000201	chalazal cyst
+PO:0000207	nectary epidermis
+PO:0000223	shoot axis cortex
+PO:0000224	central zone
+PO:0000225	peripheral zone
+PO:0000226	rib zone
+PO:0000229	flower meristem
+PO:0000230	inflorescence meristem
+PO:0000232	axillary bud meristem
+PO:0000244	functional megaspore
+PO:0000245	degenerate megaspore
+PO:0000252	endodermis
+PO:0000256	root hair cell
+PO:0000258	root cortex
+PO:0000262	trichoblast
+PO:0000263	non-hair root epidermal cell
+PO:0000272	protoxylem
+PO:0000273	xylem element
+PO:0000274	xylem fiber cell
+PO:0000282	trichome
+PO:0000283	idioblast
+PO:0000284	subsidiary cell
+PO:0000289	sieve tube element
+PO:0000290	tracheary element
+PO:0000293	guard cell
+PO:0000295	cambial initial cell
+PO:0000301	tracheid
+PO:0000309	nectary parenchyma
+PO:0000332	epidermal pavement cell
+PO:0000349	epidermal initial cell
+PO:0000351	guard mother cell
+PO:0000352	myrosin cell
+PO:0000353	passage cell
+PO:0000355	fiber tracheid
+PO:0000372	metaxylem
+PO:0000373	mucilage cell
+PO:0000400	phloem mother cell
+PO:0000423	plant zygote
+PO:0000431	megasporocyte
+PO:0001000	meristem elaboration
+PO:0001002	fruit development stage
+PO:0001003	formation of the leaf founder cells stage
+PO:0001004	anther development stage
+PO:0001005	A archesporial cells visible stage
+PO:0001006	B enlarged microsporocyte stage
+PO:0001007	pollen development stage
+PO:0001008	C callose wall formation in pollen mother cells stage
+PO:0001009	D pollen mother cell meiosis stage
+PO:0001010	F microspore release stage
+PO:0001011	A microsporogenous mass stage
+PO:0001012	G early unicellular microspore stage
+PO:0001013	H late unicellular microspore stage
+PO:0001014	I first mitotic division stage
+PO:0001015	K second mitotic division stage
+PO:0001016	L mature pollen stage
+PO:0001017	M germinated pollen stage
+PO:0001018	B formation of primary parietal and sporogenous cells stage
+PO:0001019	formation of leaf primordium stage
+PO:0001020	hood-shaped primordium stage
+PO:0001021	formation of ligule primordium stage
+PO:0001023	rapid elongation of leaf blade stage
+PO:0001024	rapid elongation of leaf sheath stage
+PO:0001025	C four anther lobes formed stage
+PO:0001026	D locules established stage
+PO:0001027	meristamtic zone formation
+PO:0001028	elongation zone formation
+PO:0001029	E tetrad stage
+PO:0001030	specialization zone formation
+PO:0001031	4 root elongation stage
+PO:0001032	E anther wall tapetum degeneration initiated stage
+PO:0001034	F bilocular anther stage
+PO:0001035	G anther dehiscence stage
+PO:0001036	H anther senescence stage
+PO:0001040	dry seed stage
+PO:0001041	chalazal and micropylar domain establishment stage
+PO:0001042	functional specialization of the endosperm stage
+PO:0001044	sepal differentiation and expansion stage
+PO:0001045	fully expanded sepal stage
+PO:0001047	lemma development stage
+PO:0001048	palea development stage
+PO:0001049	lodicule development stage
+PO:0001050	leaf development stage
+PO:0001051	1 leaf initiation stage
+PO:0001052	2 leaf expansion stage
+PO:0001053	3 leaf fully expanded stage
+PO:0001054	4 leaf senescence stage
+PO:0001055	lemma primordia visible stage
+PO:0001056	lemma differentiation and expansion stage
+PO:0001057	fully expanded lemma stage
+PO:0001058	palea primordia visible stage
+PO:0001059	J bicellular pollen stage
+PO:0001070	palea differentiation and expansion stage
+PO:0001071	fully expanded palea stage
+PO:0001072	lodicule primordia visible stage
+PO:0001074	N second mitotic division stage in germinating pollen
+PO:0001077	lodicule differentiation and expansion stage
+PO:0001078	E expanded cotyledon stage
+PO:0001079	fully expanded lodicule stage
+PO:0001081	F mature embryo stage
+PO:0001083	inflorescence development stage
+PO:0001094	coleoptilar stage
+PO:0001095	true leaf formation stage
+PO:0001096	primary endosperm cell stage
+PO:0001097	plant zygote stage
+PO:0001098	formation of starchy endosperm
+PO:0001099	formation of aleurone and starchy layers stage
+PO:0001170	seed development stage
+PO:0001180	B proembryo stage
+PO:0001185	C globular stage
+PO:0001378	sepals enclosing meristem stage
+PO:0001380	sepals enclosing flower bud stage
+PO:0002000	stomatal complex
+PO:0002001	papillae
+PO:0002002	embryo basal cell
+PO:0002003	xylem vessel member
+PO:0002004	silk scar
+PO:0003000	transition zone
+PO:0003003	obsolete primary root elongation zone
+PO:0003004	haustorial root
+PO:0003005	nodal root
+PO:0003011	root vascular system
+PO:0003014	obsolete lateral root elongation zone
+PO:0003015	primary root differentiation zone
+PO:0003016	lateral root differentiation zone
+PO:0003017	root cap of primary root
+PO:0003018	root cap of lateral root
+PO:0003019	central root cap of lateral root
+PO:0003020	lateral root cap of lateral root
+PO:0003021	central root cap of primary root
+PO:0003022	lateral root cap of primary root
+PO:0003023	root nodule
+PO:0003024	stolon
+PO:0004000	obsolete apical cell
+PO:0004001	bulliform cell
+PO:0004002	contact cell
+PO:0004003	phellem
+PO:0004004	epithelium cell
+PO:0004005	laticiferous cell
+PO:0004006	mesophyll cell
+PO:0004007	phelloid cell
+PO:0004008	photosynthetic cell
+PO:0004009	silica cell
+PO:0004010	meristematic cell
+PO:0004011	initial cell
+PO:0004012	secretory cell
+PO:0004013	epidermal cell
+PO:0004500	formation of leaflet primordia stage
+PO:0004501	gynoecium differentiation and expansion stage
+PO:0004502	closure of carpel(s) stage
+PO:0004503	stigma cell differentiation stage
+PO:0004504	ovule differentiation and expansion stage
+PO:0004505	fertilized ovule stage
+PO:0004506	developing seed stage
+PO:0004507	D bilateral stage
+PO:0004509	glandular trichome
+PO:0004511	seed trichome
+PO:0004512	heartwood
+PO:0004513	sapwood
+PO:0004514	growth ring
+PO:0004515	early wood
+PO:0004516	late wood
+PO:0004517	growth ring boundary
+PO:0004518	bark
+PO:0004519	phloem fiber cell
+PO:0004520	libriform fiber cell
+PO:0004521	septate fiber cell
+PO:0004522	outer vascular cambium
+PO:0004523	included vascular cambium
+PO:0004524	included phloem
+PO:0004525	secondary xylem parenchyma cell
+PO:0004526	axial secondary xylem parenchyma cell
+PO:0004527	ray secondary xylem parenchyma cell
+PO:0004528	upright ray secondary xylem parenchyma cell
+PO:0004529	procumbent ray secondary xylem parenchyma cell
+PO:0004530	tile cell
+PO:0004531	sheath cell
+PO:0004532	secondary xylem parenchyma
+PO:0004533	axial secondary xylem parenchyma
+PO:0004534	ray secondary xylem parenchyma
+PO:0004535	fruit placenta
+PO:0004536	fruit pedicel
+PO:0004537	nucellar plant embryo
+PO:0004538	indeterminate nodule
+PO:0004539	determinate nodule
+PO:0004540	fruit columella
+PO:0004542	rhizome
+PO:0004543	shoot axis tuber
+PO:0004544	root-borne shoot system
+PO:0004545	shoot-borne shoot system
+PO:0004546	epicormic shoot system
+PO:0004547	subterranean tuber
+PO:0004548	aerial tuber
+PO:0004700	anther wall middle layer
+PO:0004701	short shoot
+PO:0004702	long shoot
+PO:0004703	carpel primordium
+PO:0004704	sepal primordium
+PO:0004705	stamen primordium
+PO:0004706	flower primordium
+PO:0004707	fruit dehiscence zone
+PO:0004708	scutellar node
+PO:0004709	axillary bud
+PO:0004710	axillary flower bud
+PO:0004711	axillary inflorescence bud
+PO:0004712	axillary vegetative bud
+PO:0004713	terminal bud
+PO:0004714	terminal flower bud
+PO:0004715	terminal inflorescence bud
+PO:0004716	terminal vegetative bud
+PO:0004717	long cell
+PO:0004718	short cell
+PO:0004719	hilum groove
+PO:0004721	paraclade cortex
+PO:0004722	pedicel cortex
+PO:0004723	sepal vascular system
+PO:0004724	hypocotyl-root junction
+PO:0004725	abaxial side of leaf primordium
+PO:0004726	adaxial side of leaf primordium
+PO:0005001	basal axillary shoot system
+PO:0005002	cauline axillary shoot
+PO:0005003	shoot axis trichome
+PO:0005004	shoot node
+PO:0005005	shoot internode
+PO:0005006	articulated laticifer
+PO:0005007	non-articulated laticifer
+PO:0005008	obsolete fruit septum
+PO:0005009	carpel septum
+PO:0005010	anther septum
+PO:0005011	anther dehiscence zone
+PO:0005012	pedicel vascular system
+PO:0005013	hypocotyl epidermis
+PO:0005014	embryo cortex
+PO:0005015	embryo endodermis
+PO:0005016	replum
+PO:0005017	flower vascular system
+PO:0005018	stamen vascular system
+PO:0005019	carpel vascular system
+PO:0005020	vascular bundle
+PO:0005021	sepal margin
+PO:0005022	ovary wall
+PO:0005023	abaxial epidermis of ovary
+PO:0005024	adaxial epidermis of ovary
+PO:0005025	middle layer of ovary wall
+PO:0005026	root giant cell
+PO:0005027	root syncytium cell
+PO:0005028	inflorescence vascular system
+PO:0005029	root primordium
+PO:0005039	primary thickening meristem
+PO:0005040	root pith
+PO:0005041	shoot axis pith
+PO:0005043	secondary phloem
+PO:0005046	periderm
+PO:0005047	root periderm
+PO:0005048	shoot axis periderm
+PO:0005050	phelloderm
+PO:0005051	hypodermis
+PO:0005052	plant callus
+PO:0005053	laticifer
+PO:0005057	shoot axis hypodermis
+PO:0005058	shoot axis endodermis
+PO:0005059	root endodermis
+PO:0005060	leaf endodermis
+PO:0005349	schizo-lysigenous aerenchyma
+PO:0005352	xylem
+PO:0005360	aleurone layer
+PO:0005415	endosperm parenchyma
+PO:0005417	phloem
+PO:0005421	parenchyma
+PO:0005423	collenchyma
+PO:0005426	chlorenchyma
+PO:0005427	sclerenchyma
+PO:0005597	cambium
+PO:0005598	vascular cambium
+PO:0005599	cork cambium
+PO:0005621	angular collenchyma
+PO:0005632	lacunar collenchyma
+PO:0005633	lamellar collenchyma
+PO:0005645	leaf mesophyll
+PO:0005647	spongy mesophyll
+PO:0005648	palisade mesophyll
+PO:0005656	portion of secretory tissue
+PO:0005660	hydathode
+PO:0005661	salt gland
+PO:0005665	resin canal
+PO:0005669	oil gland
+PO:0005679	epidermis
+PO:0005702	aerenchyma
+PO:0005704	rhexigenous aerenchyma
+PO:0005706	lysigenous aerenchyma
+PO:0005708	cortex
+PO:0005752	promeristem
+PO:0005772	exodermis
+PO:0005848	secondary xylem
+PO:0005849	primary xylem
+PO:0006000	caryopsis hull
+PO:0006001	phyllome
+PO:0006002	lower glume
+PO:0006003	scale leaf
+PO:0006004	upper glume
+PO:0006005	carpel anlagen
+PO:0006006	anther wall primary parietal cell layer
+PO:0006007	anther wall secondary parietal cell layer
+PO:0006008	anther wall inner secondary parietal cell layer
+PO:0006009	anther wall outer secondary parietal cell layer
+PO:0006010	primary parietal cell
+PO:0006011	lateral leaf vein
+PO:0006012	leaf collar
+PO:0006013	juice sac
+PO:0006014	male archesporial cell
+PO:0006015	female archesporial cell
+PO:0006016	leaf epidermis
+PO:0006017	helobial endosperm
+PO:0006018	leaf adaxial epidermis
+PO:0006019	leaf abaxial epidermis
+PO:0006020	lateral root apical meristem
+PO:0006021	adventitious root apical meristem
+PO:0006022	bundle sheath extension
+PO:0006023	bundle sheath
+PO:0006024	parenchyma sheath
+PO:0006025	mestome sheath
+PO:0006032	lemma awn
+PO:0006033	paleal apiculus
+PO:0006034	leaflet margin
+PO:0006035	shoot epidermis
+PO:0006036	root epidermis
+PO:0006039	adventitious root epidermis
+PO:0006040	sepal epidermis
+PO:0006041	petal epidermis
+PO:0006042	velamen
+PO:0006043	integument epidermis
+PO:0006044	inner integument epidermis
+PO:0006045	outer integument epidermis
+PO:0006048	seed coat epidermis
+PO:0006049	scutellum epidermis
+PO:0006050	exotesta
+PO:0006051	endotesta
+PO:0006052	petal abaxial epidermis
+PO:0006053	petal adaxial epidermis
+PO:0006054	sepal abaxial epidermis
+PO:0006055	sepal adaxial epidermis
+PO:0006056	cotyledon epidermis
+PO:0006057	cotyledon abaxial epidermis
+PO:0006058	cotyledon adaxial epidermis
+PO:0006060	filament epidermis
+PO:0006061	stigma epidermis
+PO:0006062	style epidermis
+PO:0006063	ovary epidermis
+PO:0006065	hypocotyl endodermis
+PO:0006066	petiole parenchyma
+PO:0006067	cambium-like transitional zone
+PO:0006068	sepal parenchyma
+PO:0006069	petal parenchyma
+PO:0006070	mesophyll
+PO:0006071	petal mesophyll
+PO:0006072	sepal mesophyll
+PO:0006073	intercalary meristem
+PO:0006074	obsolete procambium
+PO:0006075	primary phloem
+PO:0006076	metaphloem
+PO:0006077	protophloem
+PO:0006078	primary vascular tissue
+PO:0006079	shoot meristem
+PO:0006080	secondary vascular tissue
+PO:0006081	primary root apical meristem
+PO:0006082	abaxial protoderm
+PO:0006083	adaxial protoderm
+PO:0006084	portion of transfusion tissue
+PO:0006085	root meristem
+PO:0006086	accessory transfusion tissue
+PO:0006087	proliferation tissue
+PO:0006088	primary sporogenous cell
+PO:0006089	anther primordium
+PO:0006090	organogenic callus
+PO:0006091	embryogenic callus
+PO:0006109	pith
+PO:0006200	fascicular cambium
+PO:0006201	interfascicular cambium
+PO:0006202	interfascicular region
+PO:0006203	pericycle
+PO:0006204	sporocyte
+PO:0006205	spongy mesophyll cell
+PO:0006206	palisade mesophyll cell
+PO:0006207	exodermal passage cell
+PO:0006208	endodermal passage cell
+PO:0006209	lateral root epidermis
+PO:0006210	protoderm
+PO:0006211	separation layer
+PO:0006212	protective layer
+PO:0006213	root aerenchyma
+PO:0006214	stem aerenchyma
+PO:0006215	leaf aerenchyma
+PO:0006216	internal phloem
+PO:0006218	exotegmen
+PO:0006219	endotegmen
+PO:0006220	central endosperm
+PO:0006221	articulated laticifer cell
+PO:0006222	non-articulated laticifer cell
+PO:0006300	obsolete plant structure
+PO:0006301	corpus
+PO:0006302	tunica
+PO:0006303	L1
+PO:0006304	L2
+PO:0006305	L3
+PO:0006306	obsolete shoot procambium
+PO:0006307	root procambium
+PO:0006308	root lateral meristem
+PO:0006309	tassel spikelet
+PO:0006310	tassel floret
+PO:0006311	tassel sessile spikelet
+PO:0006312	tassel pedicellate spikelet
+PO:0006313	lower floret of pedicellate spikelet of tassel
+PO:0006314	upper floret of pedicellate spikelet of tassel
+PO:0006315	lower floret of sessile spikelet of tassel
+PO:0006316	upper floret of sessile spikelet of tassel
+PO:0006319	spikelet pedicel
+PO:0006320	ear spikelet
+PO:0006321	primary inflorescence branch
+PO:0006322	second order inflorescence branch
+PO:0006323	tassel inflorescence branch
+PO:0006324	central spike of tassel inflorescence
+PO:0006325	inflorescence node
+PO:0006326	inflorescence internode
+PO:0006327	spikelet meristem
+PO:0006328	spikelet pair meristem
+PO:0006330	gynophore
+PO:0006331	seed raphe
+PO:0006332	seed funicle
+PO:0006333	seed chalaza
+PO:0006334	seed micropyle
+PO:0006336	seed obturator
+PO:0006338	embryo leaf
+PO:0006339	juvenile vascular leaf
+PO:0006340	adult vascular leaf
+PO:0006341	primary shoot system
+PO:0006342	infructescence
+PO:0006343	axillary shoot system
+PO:0006344	shoot lateral meristem
+PO:0006345	pollen tube
+PO:0006346	leaf intercalary meristem
+PO:0006347	stem intercalary meristem
+PO:0006348	ear pedicellate spikelet
+PO:0006349	ear sessile spikelet
+PO:0006350	upper floret of pedicellate spikelet of ear
+PO:0006351	lower floret of sessile spikelet of ear
+PO:0006352	upper floret of sessile spikelet of ear
+PO:0006353	lower floret of pedicellate spikelet of ear
+PO:0006354	ear floret
+PO:0006358	tassel spikelet pair meristem
+PO:0006360	ear spikelet pair meristem
+PO:0006362	embryo shoot apical meristem
+PO:0006367	glume of ear spikelet
+PO:0006368	glume of tassel spikelet
+PO:0006369	lower glume of ear spikelet
+PO:0006370	upper glume of tassel spikelet
+PO:0006371	upper glume of ear spikelet
+PO:0006372	lower glume of tassel spikelet
+PO:0006375	ear apical meristem
+PO:0006376	tassel apical meristem
+PO:0006377	tassel spikelet meristem
+PO:0006378	ear spikelet meristem
+PO:0006379	tassel spikelet rachilla
+PO:0006380	ear spikelet rachilla
+PO:0006385	lower glume of pedicellate spikelet of tassel
+PO:0006386	lower glume of sessile spikelet of tassel
+PO:0006387	upper glume of sessile spikelet of tassel
+PO:0006388	upper glume of pedicellate spikelet of tassel
+PO:0006389	rachilla of sessile spikelet of tassel
+PO:0006390	rachilla of pedicellate spikelet of tassel
+PO:0006415	pedicel of ear spikelet
+PO:0006416	pedicel of tassel spikelet
+PO:0006417	tassel peduncle
+PO:0006418	ear peduncle
+PO:0006435	rachilla of pedicellate spikelet of ear
+PO:0006436	rachilla of sessile spikelet of ear
+PO:0006437	lower glume of pedicellate spikelet of ear
+PO:0006438	lower glume of sessile spikelet of ear
+PO:0006439	upper glume of pedicellate spikelet of ear
+PO:0006440	upper glume of sessile spikelet of ear
+PO:0006501	leaf abscission zone
+PO:0006502	flower abscission zone
+PO:0006503	fruit abscission zone
+PO:0006504	leaf trichome
+PO:0006505	central spike of ear inflorescence
+PO:0007001	early whole plant fruit ripening stage
+PO:0007002	IE.03 3/4 of inflorescence emerged from flag leaf sheath stage
+PO:0007003	IL.03 full inflorescence length reached stage
+PO:0007004	3 rapid growth stage
+PO:0007005	IL.02 1/2 inflorescence length reached stage
+PO:0007006	IL.00 inflorescence just visible stage
+PO:0007007	whole plant fruit formation stage 50 to 70%
+PO:0007008	IE.02 1/2 of inflorescence emerged from flag leaf sheath stage
+PO:0007009	whole plant fruit formation stage 10 to 30%
+PO:0007010	whole plant fruit ripening stage
+PO:0007013	BO.03 late boot stage
+PO:0007014	booting stage
+PO:0007015	radicle emergence stage
+PO:0007016	whole plant flowering stage
+PO:0007017	sporophyte senescent stage
+PO:0007018	BO.01 early boot stage
+PO:0007019	BO.05 flag leaf sheath opened stage
+PO:0007022	seed imbibition stage
+PO:0007023	IE.04 inflorescence fully emerged from flag leaf sheath stage
+PO:0007024	FL.04 end of flowering stage
+PO:0007025	IE.00 inflorescence tip just visible above flag leaf sheath stage
+PO:0007026	FL.00 first flower(s) open stage
+PO:0007027	whole plant fruit formation stage 70% to final size
+PO:0007028	BO.04 flag leaf sheath opening stage
+PO:0007029	whole plant fruit formation stage 30 to 50%
+PO:0007030	seedling shoot emergence stage
+PO:0007031	mid whole plant fruit ripening stage
+PO:0007032	whole plant fruit formation stage up to 10%
+PO:0007033	whole plant development stage
+PO:0007034	FL.01 1/4 of flowers open stage
+PO:0007035	7-8 fruit formation and maturation
+PO:0007036	beginning of whole plant fruit ripening stage
+PO:0007037	inflorescence bifurcation stage
+PO:0007038	whole plant fruit ripening complete stage
+PO:0007039	leaf trichome development stage
+PO:0007041	inflorescence emergence stage
+PO:0007042	whole plant fruit formation stage
+PO:0007043	hypocotyl emergence stage
+PO:0007044	BO.02 mid boot stage
+PO:0007045	coleoptile emergence stage
+PO:0007046	IL.01 1/4 inflorescence length reached stage
+PO:0007047	whole plant inflorescence detectable stage
+PO:0007048	IE.01 1/4 of inflorescence emerged from flag leaf sheath stage
+PO:0007049	cotyledon emergence stage
+PO:0007050	late whole plant fruit ripening stage
+PO:0007051	BO.00 booting begins stage
+PO:0007052	FL.03 3/4 of flowers open stage
+PO:0007053	FL.02 1/2 of flowers open stage
+PO:0007054	epicotyl emergence stage
+PO:0007056	1 pattern formation stage
+PO:0007057	0 seed germination stage
+PO:0007058	2 endoreduplication stage
+PO:0007059	3 branch formation stage
+PO:0007060	obsolete growth and development terms
+PO:0007061	2.00 main shoot only
+PO:0007062	SE.06 six nodes or internodes visible stage
+PO:0007063	LP.07 seven leaves visible stage
+PO:0007064	LP.12 twelve leaves visible stage
+PO:0007065	LP.05 five leaves visible stage
+PO:0007066	SE.09 nine nodes or internodes visible stage
+PO:0007067	LP.17 seventeen leaves visible stage
+PO:0007068	mid rosette growth stage
+PO:0007070	SE.08 eight nodes or internodes visible stage
+PO:0007071	2.02 main shoot and axillary shoots visible at two nodes stage
+PO:0007072	LP.18 eighteen leaves visible stage
+PO:0007073	2 formation of axillary shoot stage
+PO:0007074	SE.15 fifteen nodes or internodes visible stage
+PO:0007075	5.02 20% of inflorescence emerged.
+PO:0007076	late rosette growth stage
+PO:0007077	2.08 main shoot and axillary shoots visible at eight nodes stage
+PO:0007078	rosette growth complete stage
+PO:0007079	SE.00 stem elongation begins stage
+PO:0007080	2.03 main shoot and axillary shoots visible at three nodes stage
+PO:0007081	early rosette growth stage
+PO:0007082	LP.20 twenty or more leaves whorls visible stage
+PO:0007083	LP.13 thirteen leaves visible stage
+PO:0007084	SE.10 ten nodes or internodes visible stage
+PO:0007085	LP.14 fourteen leaves visible stage
+PO:0007086	SE.05 five nodes or internodes visible stage
+PO:0007087	2.01 main shoot and axillary shoots visible at one node stage
+PO:0007088	2.04 main shoot and axillary shoots visible at four nodes stage
+PO:0007089	stem elongation stage
+PO:0007090	SE.13 thirteen nodes or internodes visible stage
+PO:0007091	SE.01 one node or internode visible stage
+PO:0007092	SE.04 four nodes or internodes visible stage
+PO:0007093	2.05 main shoot and axillary shoots visible at five nodes stage
+PO:0007094	LP.01 one leaf visible stage
+PO:0007095	LP.08 eight leaves visible stage
+PO:0007096	SE.03 three nodes or internodes visible stage
+PO:0007097	SE.14 fourteen nodes or internodes visible stage
+PO:0007098	LP.02 two leaves visible stage
+PO:0007099	SE.97 flag leaf visible stage
+PO:0007100	SE.16 sixteen or more nodes or internodes visible stage
+PO:0007101	LP.09 nine leaves visible stage
+PO:0007102	5.04 40% of inflorescence emerged
+PO:0007103	LP.10 ten leaves visible stage
+PO:0007104	LP.15 fifteen leaves visible stage
+PO:0007105	5.06 60% of inflorescence emerged
+PO:0007106	LP.03 three leaves visible stage
+PO:0007107	5.08 80% of inflorescence emerged
+PO:0007108	SE.07 seven nodes or internodes visible stage
+PO:0007109	SE.99 maximum stem length reached stage
+PO:0007110	2.09 main shoot and axillary shoots visible at nine or more nodes stage
+PO:0007111	SE.12 twelve nodes or internodes visible stage
+PO:0007112	1 main shoot growth stage
+PO:0007113	rosette growth stage
+PO:0007114	SE.11 eleven nodes or internodes visible stage
+PO:0007115	LP.04 four leaves visible stage
+PO:0007116	LP.11 eleven leaves visible stage
+PO:0007117	SE.02 two nodes or internodes visible stage
+PO:0007118	2.06 main shoot and axillary shoots visible at six nodes stage
+PO:0007119	LP.16 sixteen leaves visible stage
+PO:0007120	LP.19 nineteen leaves visible stage
+PO:0007121	6.01 10% of flowers open
+PO:0007122	2.07 main shoot and axillary shoots visible at seven nodes stage
+PO:0007123	LP.06 six leaves visible stage
+PO:0007124	6.03 30% of flowers open
+PO:0007125	6.04 40% of flowers open
+PO:0007126	7.02 fruit size 20%
+PO:0007127	7.04 fruit size 40%
+PO:0007128	7.06 fruit size 60%
+PO:0007129	7.08 fruit size 80%
+PO:0007130	sporophyte reproductive stage
+PO:0007131	seedling development stage
+PO:0007132	sporophyte dormant stage
+PO:0007133	leaf production stage
+PO:0007134	sporophyte vegetative stage
+PO:0007135	4 growth directionality stage
+PO:0007501	root cap formation stage
+PO:0007503	A2.1 root intials differntiation of primary roots
+PO:0007504	crown root primordium formation stage
+PO:0007505	1 root primordium formation stage
+PO:0007506	primary root primordium formation stage
+PO:0007509	root vascular cylinder differentiation stage
+PO:0007510	root emergence stage
+PO:0007511	lateral root primordium formation stage
+PO:0007512	A2 root initials differentiation stage
+PO:0007513	root cortex differentiation stage
+PO:0007514	B3 crown root meristem formation
+PO:0007516	root epidermal differentiation stage
+PO:0007517	lateral root emergence stage
+PO:0007518	crown root emergence stage
+PO:0007519	5 root hair formation stage
+PO:0007520	root development stage
+PO:0007521	C3.1 metaxylem differentiation of root.
+PO:0007523	establishment of initial cells
+PO:0007524	B1 primary root meristem formation
+PO:0007525	3 establishment of tissue systems stage
+PO:0007526	F2 root hair elongation
+PO:0007527	2 root meristem formation stage
+PO:0007528	A2.2 root initials differentiation of lateral roots
+PO:0007529	E emerged root elongation
+PO:0007530	A2.3 founder cell derivatives of lateral root
+PO:0007531	F1 root hair initiation
+PO:0007532	obsolete plant growth and development terms
+PO:0007533	C3.3 maturation of protoxylem elements in root.
+PO:0007534	A2.4 root initials differentiation of crown roots
+PO:0007535	A1 root initials formation stage
+PO:0007536	root primordium visible
+PO:0007537	C3.2 maturation of phloem elements in root.
+PO:0007539	B2 lateral root meristem formation
+PO:0007600	floral organ differentiation stage
+PO:0007601	floral organ meristem development stage
+PO:0007602	floral organ primordium development stage
+PO:0007603	calyx development stage
+PO:0007604	corolla development stage
+PO:0007605	androecium development stage
+PO:0007606	gynoecium development stage
+PO:0007607	sepal primordium visible stage
+PO:0007608	petal primordium visible stage
+PO:0007609	sepals 50% of final size
+PO:0007610	sepals 100% of final size
+PO:0007611	petal differentiation and expansion stage
+PO:0007612	fully expanded petal stage
+PO:0007613	stamen primordium visible stage
+PO:0007615	flower development stage
+PO:0007616	flowering stage
+PO:0007618	carpel primordium visible stage
+PO:0007619	ovule development stage
+PO:0007620	ovule primordium visible stage
+PO:0007621	megagametophyte development stage
+PO:0007622	integument initiation stage
+PO:0007623	A megaspore mother cell enlarges stage
+PO:0007624	B meiosis of megaspore mother cell stage
+PO:0007625	C tetrad of megaspores stage
+PO:0007626	D megaspore degeneration stage
+PO:0007627	E two nucleate megagametophyte stage
+PO:0007628	F four nucleate megagametophyte stage
+PO:0007629	G eight nucleate megagametophyte stage
+PO:0007631	plant embryo stage
+PO:0007632	seed maturation stage
+PO:0007633	endosperm development stage
+PO:0008001	fruit distal end
+PO:0008002	fruit proximal end
+PO:0008003	fruit vascular system
+PO:0008005	fruit nucellus
+PO:0008006	nucellar epidermis
+PO:0008007	nucellar projection
+PO:0008008	modified aleurone
+PO:0008009	abaxial nucellar projection
+PO:0008010	adaxial nucellar projection
+PO:0008011	embryo vascular system
+PO:0008012	stigma vascular system
+PO:0008013	anther vascular system
+PO:0008014	filament vascular system
+PO:0008015	hypocotyl vascular system
+PO:0008016	vegetative shoot apical meristem
+PO:0008017	leaf sheath pulvinus
+PO:0008018	transition vascular leaf
+PO:0008019	leaf lamina base
+PO:0008020	central zone of the leaf lamina
+PO:0008021	tertiary leaf vein
+PO:0008022	quaternary leaf vein
+PO:0008023	higher order leaf vein
+PO:0008024	petiole proximal end
+PO:0008025	central zone of the petiole
+PO:0008026	petiole distal end
+PO:0008027	petiole adaxial epidermis
+PO:0008028	reproductive shoot apical meristem
+PO:0008029	petiole abaxial epidermis
+PO:0008030	trichome cell
+PO:0008031	trichome branch
+PO:0008032	stomatal pore
+PO:0008034	leaf whorl
+PO:0008035	plerome
+PO:0008036	periblem
+PO:0008037	seedling
+PO:0008038	adventitious root primordium
+PO:0008039	stem base
+PO:0008040	lodicule primordium
+PO:0008041	stem internode elongation zone
+PO:0008042	stem internode differentiation zone
+PO:0008043	floral epidermis
+PO:0008044	floral stomatal complex
+PO:0008045	floral guard cell
+PO:0008046	floral stomatal pore
+PO:0008047	scutellar vascular system
+PO:0008048	scutellar epithelium
+PO:0009000	pulvinus
+PO:0009001	fruit
+PO:0009002	plant cell
+PO:0009003	sporophyte
+PO:0009004	gametophyte
+PO:0009005	root
+PO:0009006	shoot system
+PO:0009007	portion of plant tissue
+PO:0009008	plant organ
+PO:0009009	plant embryo
+PO:0009010	seed
+PO:0009011	plant structure
+PO:0009012	plant structure development stage
+PO:0009013	portion of meristem tissue
+PO:0009014	dermal tissue
+PO:0009015	portion of vascular tissue
+PO:0009016	ground tissue
+PO:0009017	inflorescence branch pulvinus
+PO:0009018	basal endosperm transfer cell
+PO:0009019	obsolete basal endosperm transfer layer
+PO:0009020	meristem L1
+PO:0009021	meristem L2
+PO:0009022	meristem L3
+PO:0009023	leaf axil
+PO:0009025	vascular leaf
+PO:0009026	sporophyll
+PO:0009027	megasporophyll
+PO:0009028	microsporophyll
+PO:0009029	stamen
+PO:0009030	carpel
+PO:0009031	sepal
+PO:0009032	petal
+PO:0009033	tepal
+PO:0009034	flower bract
+PO:0009035	nectary
+PO:0009036	lodicule
+PO:0009037	lemma
+PO:0009038	palea
+PO:0009039	glume
+PO:0009040	sterile lemma
+PO:0009041	fertile lemma
+PO:0009042	prophyll
+PO:0009043	bracteole
+PO:0009044	perigynium
+PO:0009045	involucral bract
+PO:0009046	flower
+PO:0009047	stem
+PO:0009049	inflorescence
+PO:0009051	spikelet
+PO:0009052	pedicel
+PO:0009053	peduncle
+PO:0009054	inflorescence bract
+PO:0009055	bract
+PO:0009056	flower nectary
+PO:0009057	extrafloral nectary
+PO:0009058	perianth
+PO:0009059	corolla
+PO:0009060	calyx
+PO:0009061	androecium
+PO:0009062	gynoecium
+PO:0009063	epicalyx
+PO:0009064	receptacle
+PO:0009065	hypanthium
+PO:0009066	anther
+PO:0009067	filament
+PO:0009068	connective
+PO:0009069	anther theca
+PO:0009070	obsolete pollen sac
+PO:0009071	anther wall tapetum
+PO:0009072	plant ovary
+PO:0009073	stigma
+PO:0009074	style
+PO:0009075	plant ontology
+PO:0009077	staminode
+PO:0009078	pistillode
+PO:0009080	spikelet rachilla
+PO:0009081	inflorescence branch
+PO:0009082	spikelet floret
+PO:0009083	reproductive structures
+PO:0009084	pericarp
+PO:0009085	exocarp
+PO:0009086	endocarp
+PO:0009087	mesocarp
+PO:0009088	seed coat
+PO:0009089	endosperm
+PO:0009090	aril
+PO:0009091	mature dispersal unit
+PO:0009100	involucre
+PO:0009101	long lateral tassel branch
+PO:0009102	short tassel branch
+PO:0009103	short tassel branch meristem
+PO:0009104	long lateral tassel branch meristem
+PO:0009105	inflorescence branch meristem
+PO:0009106	tassel meristem
+PO:0009107	tassel inflorescence branch meristem
+PO:0009108	inflorescence apical meristem
+PO:0009109	ear meristem
+PO:0009110	ear inflorescence branch meristem
+PO:0009111	petiole pulvinus
+PO:0019018	plant embryo axis
+PO:0019022	arilloid
+PO:0019023	strophiole
+PO:0019024	seed operculum
+PO:0019026	tracheid bar
+PO:0020001	ovary placenta
+PO:0020002	anther wall endothecium
+PO:0020003	plant ovule
+PO:0020004	anther wall exothecium
+PO:0020005	placentoid
+PO:0020006	funicle
+PO:0020008	exine
+PO:0020009	ectexine
+PO:0020010	endexine
+PO:0020011	nexine
+PO:0020012	sexine
+PO:0020013	tectum
+PO:0020014	columella
+PO:0020015	sculpture elements
+PO:0020016	foot layer
+PO:0020017	intine
+PO:0020018	germination pore
+PO:0020019	megaspore
+PO:0020020	nucellus
+PO:0020021	integument
+PO:0020022	inner integument
+PO:0020023	outer integument
+PO:0020024	endothelium
+PO:0020025	micropyle
+PO:0020026	chalaza
+PO:0020027	raphe
+PO:0020028	antiraphe
+PO:0020029	obturator
+PO:0020030	cotyledon
+PO:0020031	radicle
+PO:0020032	plumule
+PO:0020033	coleoptile
+PO:0020034	coleorhiza
+PO:0020035	epicotyl
+PO:0020036	epiblast
+PO:0020037	mesocotyl
+PO:0020038	petiole
+PO:0020039	leaf lamina
+PO:0020040	leaf base
+PO:0020041	stipule
+PO:0020042	simple leaf
+PO:0020043	compound leaf
+PO:0020044	hyperphyll
+PO:0020045	pinnate leaf
+PO:0020046	palmate leaf
+PO:0020047	microsporocyte
+PO:0020048	microspore
+PO:0020049	leaflet
+PO:0020050	petiolule
+PO:0020051	stipel
+PO:0020052	megaphyll
+PO:0020053	microphyll
+PO:0020054	bud scale leaf
+PO:0020055	leaf rachis
+PO:0020056	tegmen
+PO:0020057	testa
+PO:0020058	perisperm
+PO:0020059	pollen wall
+PO:0020060	caruncle
+PO:0020061	coma
+PO:0020062	elaiosome
+PO:0020063	hilum
+PO:0020064	dehiscent fruit
+PO:0020065	indehiscent fruit
+PO:0020066	fleshy fruit
+PO:0020075	mericarp
+PO:0020081	seed as dispersal unit
+PO:0020084	pyrene
+PO:0020085	seed and fruit wall as dispersal unit
+PO:0020086	multiple fruit
+PO:0020090	embryo sac central cell
+PO:0020091	obsolete microgametophyte
+PO:0020092	obsolete megagametophyte
+PO:0020093	antipodal cell
+PO:0020094	plant egg cell
+PO:0020095	polar nucleus
+PO:0020096	egg apparatus
+PO:0020097	generative cell
+PO:0020099	vegetative cell
+PO:0020100	hypocotyl
+PO:0020101	stomium
+PO:0020102	portion of transmitting tissue
+PO:0020103	flag leaf
+PO:0020104	leaf sheath
+PO:0020105	ligule
+PO:0020106	leaf sheath auricle
+PO:0020108	suspensor
+PO:0020109	embryo hypophysis
+PO:0020110	scutellum
+PO:0020121	lateral root
+PO:0020122	inflorescence axis
+PO:0020123	root cap
+PO:0020124	root stele
+PO:0020125	elongation zone
+PO:0020126	tassel inflorescence
+PO:0020127	primary root
+PO:0020128	leaf margin
+PO:0020130	central root cap
+PO:0020131	lateral root cap
+PO:0020132	columella root cap cell
+PO:0020133	columella root cap initial cell
+PO:0020134	statolith
+PO:0020135	root differentiation zone
+PO:0020136	ear inflorescence
+PO:0020137	leaf apex
+PO:0020138	leaf lamina vein
+PO:0020139	leaf midvein
+PO:0020140	secondary leaf vein
+PO:0020141	stem node
+PO:0020142	stem internode
+PO:0020144	apical meristem
+PO:0020145	lateral meristem
+PO:0020147	root apical meristem
+PO:0020148	shoot apical meristem
+PO:0020149	quiescent center
+PO:0021002	calyx absolute size
+PO:0021003	calyx relationship
+PO:0021004	inflorescence initiation stage
+PO:0025001	cardinal organ part
+PO:0025002	basal root
+PO:0025003	tuber axillary shoot
+PO:0025004	plant axis
+PO:0025005	organ margin
+PO:0025006	gamete
+PO:0025007	collective plant organ structure
+PO:0025008	petal margin
+PO:0025009	leaf lamina margin
+PO:0025010	petiole margin
+PO:0025011	bract margin
+PO:0025012	cotyledon margin
+PO:0025013	prophyll margin
+PO:0025014	scale leaf margin
+PO:0025015	tepal margin
+PO:0025016	sporophyll margin
+PO:0025017	plant spore
+PO:0025018	phyllome margin
+PO:0025019	carpel margin
+PO:0025020	stamen margin
+PO:0025021	collective tepal structure
+PO:0025022	collective leaf structure
+PO:0025023	collective phyllome structure
+PO:0025024	branch node
+PO:0025025	root system
+PO:0025026	embryo sac cell
+PO:0025027	microgametophytic cell
+PO:0025028	embryo plant cell
+PO:0025029	shoot axis
+PO:0025030	ground tissue cell
+PO:0025031	laticifer cell
+PO:0025032	hydroid
+PO:0025033	leptoid
+PO:0025034	leaf
+PO:0025035	storage parenchyma
+PO:0025036	tuber storage parenchyma
+PO:0025037	fruit storage parenchyma
+PO:0025038	subterranean tuber storage parenchyma
+PO:0025039	aerial tuber storage parenchyma
+PO:0025040	shoot axis tuber axillary vegetative bud
+PO:0025041	aerial tuber axillary vegetative bud
+PO:0025042	subterranean tuber axillary vegetative bud
+PO:0025043	shoot axis tuber periderm
+PO:0025044	aerial tuber periderm
+PO:0025045	subterranean tuber periderm
+PO:0025046	shoot axis tuber epidermis
+PO:0025047	aerial tuber epidermis
+PO:0025048	subterranean tuber epidermis
+PO:0025049	subterranean tuber interfascicular region
+PO:0025050	tuber interfascicular region
+PO:0025051	aerial tuber interfascicular region
+PO:0025052	tuber pith
+PO:0025053	subterranean tuber pith
+PO:0025054	aerial tuber pith
+PO:0025055	tuber cortex
+PO:0025056	aerial tuber cortex
+PO:0025057	subterranean tuber cortex
+PO:0025058	perimedullary zone
+PO:0025059	portion of ground tissue
+PO:0025060	lamina
+PO:0025061	tuber perimedullary zone
+PO:0025062	aerial tuber perimedullary zone
+PO:0025063	subterranean tuber perimedullary zone
+PO:0025064	shoot axis perimedullary zone
+PO:0025065	root perimedullary zone
+PO:0025066	stalk
+PO:0025067	seed storage parenchyma
+PO:0025068	shoot axis tuber axillary bud meristem
+PO:0025069	aerial tuber axillary bud meristem
+PO:0025070	subterranean tuber axillary bud meristem
+PO:0025071	terminal reproductive bud
+PO:0025072	axillary reproductive bud
+PO:0025073	branch
+PO:0025074	embryo sac
+PO:0025075	non-vascular leaf
+PO:0025076	axillary strobilus bud
+PO:0025077	terminal strobilus bud
+PO:0025078	placenta
+PO:0025079	aerial tuber axillary shoot
+PO:0025080	branch internode
+PO:0025081	subterranean tuber axillary shoot
+PO:0025082	reproductive shoot system
+PO:0025083	strobilus
+PO:0025084	reproductive bud
+PO:0025085	strobilus bud
+PO:0025088	gynoecium ridge
+PO:0025092	dehiscence zone
+PO:0025093	spore capsule annulus
+PO:0025094	sporangium
+PO:0025095	root parenchyma
+PO:0025096	carpel epidermis
+PO:0025097	stamen epidermis
+PO:0025098	bract trichome
+PO:0025099	embryo plant structure
+PO:0025100	shoot internode elongation zone
+PO:0025101	branch internode elongation zone
+PO:0025102	shoot internode differentiation zone
+PO:0025103	branch internode differentiation zone
+PO:0025104	first order inflorescence axis
+PO:0025105	third order inflorescence branch
+PO:0025106	fourth order inflorescence branch
+PO:0025107	fifth order inflorescence branch
+PO:0025108	sixth order inflorescence branch
+PO:0025109	seventh order inflorescence branch
+PO:0025110	eighth order inflorescence branch
+PO:0025111	ninth or higher order inflorescence branch
+PO:0025112	primary infructescence branch
+PO:0025113	second order infructescence branch
+PO:0025114	third order infructescence branch
+PO:0025115	fourth order infructescence branch
+PO:0025116	fifth order infructescence branch
+PO:0025117	plant anatomical space
+PO:0025118	anther pore
+PO:0025119	plant axis differentiation zone
+PO:0025120	antheridium sperm cell
+PO:0025121	pollen sperm cell
+PO:0025122	archegonium egg cell
+PO:0025123	embryo sac egg cell
+PO:0025124	multicellular plant gametangium
+PO:0025125	antheridium
+PO:0025126	archegonium
+PO:0025127	primordium
+PO:0025128	phyllome primordium
+PO:0025129	petiole lamina
+PO:0025130	cigar leaf
+PO:0025131	plant anatomical entity
+PO:0025132	canal
+PO:0025133	petiole canal
+PO:0025134	inflorescence branch crown
+PO:0025135	cigar leaf lamina abaxial epidermis
+PO:0025136	free tepal
+PO:0025137	fused tepal
+PO:0025138	fused collective tepal structure
+PO:0025139	phyllome apex
+PO:0025140	phyllome base
+PO:0025141	phyllome tip
+PO:0025142	leaf tip
+PO:0025143	tepal apex
+PO:0025144	petal apex
+PO:0025145	sepal apex
+PO:0025146	petal base
+PO:0025147	sepal base
+PO:0025148	tepal base
+PO:0025149	petal tip
+PO:0025150	sepal tip
+PO:0025151	tepal tip
+PO:0025152	peduncle epidermis
+PO:0025153	peduncle trichome
+PO:0025154	bract apex
+PO:0025155	bract base
+PO:0025156	bract tip
+PO:0025157	phyllome epidermis
+PO:0025158	bract epidermis
+PO:0025159	bract abaxial epidermis
+PO:0025160	bract adaxial epidermis
+PO:0025161	portion of plant substance
+PO:0025162	multicellular trichome
+PO:0025163	multicellular trichome branch cell
+PO:0025164	root epidermal cell
+PO:0025165	shoot epidermal cell
+PO:0025166	papilla cell
+PO:0025167	leaf papilla cell
+PO:0025168	stigma papilla cell
+PO:0025169	prickle
+PO:0025170	root prickle
+PO:0025171	shoot axis prickle
+PO:0025172	thorn
+PO:0025173	spine leaf
+PO:0025174	spine stipule
+PO:0025175	leaf prickle
+PO:0025176	stem trichome
+PO:0025177	branch trichome
+PO:0025178	stem epidermis
+PO:0025179	branch epidermis
+PO:0025180	plant axis elongation zone
+PO:0025181	root elongation zone
+PO:0025182	sepal trichome
+PO:0025183	leaf stomatal complex
+PO:0025184	tepal epidermis
+PO:0025185	leaf lamina stomatal complex
+PO:0025186	phyllome trichome
+PO:0025187	petal trichome
+PO:0025188	tepal trichome
+PO:0025189	petiole stomatal complex
+PO:0025190	leaf abaxial stomatal complex
+PO:0025191	leaf adaxial stomatal complex
+PO:0025192	tepal abaxial epidermis
+PO:0025193	tepal adaxial epidermis
+PO:0025194	root nodule meristem
+PO:0025195	pollen tube cell
+PO:0025196	basal endosperm transfer layer
+PO:0025197	stele
+PO:0025198	shoot axis stele
+PO:0025199	branch stele
+PO:0025200	stem stele
+PO:0025201	megasporangium
+PO:0025202	microsporangium
+PO:0025203	pericarp vascular bundle
+PO:0025204	rhizome internode
+PO:0025205	shoot system vascular system
+PO:0025206	phyllome vascular system
+PO:0025207	tepal vascular system
+PO:0025208	carpel trichome
+PO:0025209	stamen trichome
+PO:0025210	leaf abaxial trichome
+PO:0025211	leaf adaxial trichome
+PO:0025212	leaf pavement cell
+PO:0025213	leaf abaxial pavement cell
+PO:0025214	leaf adaxial pavement cell
+PO:0025215	phyllome stomatal complex
+PO:0025216	bract stomatal complex
+PO:0025217	carpel stomatal complex
+PO:0025218	petal stomatal complex
+PO:0025219	sepal stomatal complex
+PO:0025220	stamen stomatal complex
+PO:0025221	tepal stomatal complex
+PO:0025222	reproductive shoot apex
+PO:0025223	vegetative shoot apex
+PO:0025224	axil
+PO:0025225	bract axil
+PO:0025226	branch axil
+PO:0025227	tetrad of megaspores
+PO:0025228	valve
+PO:0025229	spore capsule valve
+PO:0025230	columella
+PO:0025231	spore capsule columella
+PO:0025233	portion of embryo plant tissue
+PO:0025234	phyllome stomatal pore
+PO:0025235	leaf stomatal pore
+PO:0025236	phyllome guard cell
+PO:0025237	leaf guard cell
+PO:0025238	abaxial petiole canal
+PO:0025239	adaxial petiole canal
+PO:0025240	second order inflorescence
+PO:0025241	second order infructescence
+PO:0025242	infructescence axis
+PO:0025243	infructescence branch
+PO:0025244	first order infructescence axis
+PO:0025245	persistent sepal
+PO:0025246	persistent tepal
+PO:0025247	persistent stamen
+PO:0025248	pseudostem
+PO:0025249	leaf sheath epidermis
+PO:0025250	leaf sheath abaxial epidermis
+PO:0025251	leaf sheath adaxial epidermis
+PO:0025252	sixth order infructescence branch
+PO:0025253	seventh order infructescence branch
+PO:0025254	eighth order infructescence branch
+PO:0025255	ninth or higher order infructescence branch
+PO:0025256	lateral root elongation zone
+PO:0025257	primary root elongation zone
+PO:0025258	procambial cell
+PO:0025259	leaf procambium
+PO:0025260	shoot axis procambium
+PO:0025261	pericycle cell
+PO:0025262	ovary septum
+PO:0025263	locule
+PO:0025264	anther locule
+PO:0025265	sporangium locule
+PO:0025266	ovary locule
+PO:0025267	fruit replum
+PO:0025268	fruit septum
+PO:0025269	collective organ part structure
+PO:0025270	fruit locule
+PO:0025272	ovary replum
+PO:0025273	stem procambium
+PO:0025274	branch procambium
+PO:0025275	procambium
+PO:0025276	shoot procambium
+PO:0025277	pollen sac
+PO:0025278	rhizome scale leaf
+PO:0025279	megagametophyte
+PO:0025280	microgametophyte
+PO:0025281	pollen
+PO:0025282	archegonium megagametophyte
+PO:0025283	antheridium microgametophyte
+PO:0025284	embryo apical cell
+PO:0025285	callus parenchyma cell
+PO:0025286	embryo coleoptile
+PO:0025287	seedling coleoptile
+PO:0025288	embryo coleorhiza
+PO:0025289	seedling coleorhiza
+PO:0025290	embryo hypocotyl
+PO:0025291	seedling hypocotyl
+PO:0025292	embryo epicotyl
+PO:0025293	seedling epicotyl
+PO:0025294	embryo mesocotyl
+PO:0025295	seedling mesocotyl
+PO:0025296	embryo radicle
+PO:0025297	seedling radicle
+PO:0025298	fruit operculum
+PO:0025299	calyptra perianth
+PO:0025300	embryo hypocotyl-root junction
+PO:0025301	seedling hypocotyl-root junction
+PO:0025302	somatic plant embryo
+PO:0025303	zygotic plant embryo
+PO:0025304	cultured zygote-derived plant embryo
+PO:0025305	microspore-derived cultured plant embryo
+PO:0025306	sporangium wall
+PO:0025307	microsporangium wall
+PO:0025308	megasporangium wall
+PO:0025309	microsporangium endothecium
+PO:0025310	megasporangium endothecium
+PO:0025311	microsporangium exothecium
+PO:0025312	megasporangium exothecium
+PO:0025313	tapetum
+PO:0025314	microsporangium tapetum
+PO:0025315	megasporangium tapetum
+PO:0025316	axillary hair
+PO:0025317	axillary hair terminal cell
+PO:0025318	axillary hair base
+PO:0025319	axillary hair basal cell
+PO:0025320	cotyledonary node rhizoid
+PO:0025321	cotyledonary node
+PO:0025322	hydathode pore
+PO:0025323	flower fascicle
+PO:0025324	banner petal
+PO:0025325	wing petal
+PO:0025326	keel petal
+PO:0025327	keel
+PO:0025328	unifacial vascular leaf
+PO:0025329	calyptra calyx
+PO:0025330	calyptra corolla
+PO:0025331	ray flower
+PO:0025332	disk flower
+PO:0025333	ensiform vascular leaf
+PO:0025334	terete vascular leaf
+PO:0025335	phyllode leaf
+PO:0025336	transition phyllode leaf
+PO:0025337	life of whole plant stage
+PO:0025338	collective plant organ structure development stage
+PO:0025339	plant organ development stage
+PO:0025340	gametophyte vegetative stage
+PO:0025341	gametophyte reproductive stage
+PO:0025342	gametophyte dormant stage
+PO:0025343	gametophyte senescent stage
+PO:0025344	gametophore reproductive whole plant development stage
+PO:0025345	gametophore vegetative whole plant development stage
+PO:0025346	thallus reproductive whole plant development stage
+PO:0025347	thallus vegetative whole plant development stage
+PO:0025348	phyllome lamina vein
+PO:0025349	awn
+PO:0025350	palea awn
+PO:0025351	glume awn
+PO:0025352	tubercle
+PO:0025353	areole bud
+PO:0025354	cladode
+PO:0025355	corm
+PO:0025356	bulb
+PO:0025357	pneumatophore
+PO:0025358	pneumatorhiza
+PO:0025359	sorus
+PO:0025360	ceonosorus
+PO:0025361	leaf tendril
+PO:0025362	leaflet tendril
+PO:0025363	leaf apex tendril
+PO:0025364	branch tendril
+PO:0025365	stem apex tendril
+PO:0025366	leaf rachis tendril
+PO:0025367	prophyll tendril
+PO:0025368	trichome development stage
+PO:0025369	seed trichome development stage
+PO:0025370	seed trichome initiation stage
+PO:0025371	seed trichome elongation stage
+PO:0025372	seed trichome secondary wall biosynthesis stage
+PO:0025373	seed trichome maturation stage
+PO:0025374	seed dormant stage
+PO:0025375	plant spore stage
+PO:0025376	plant spore dormant stage
+PO:0025377	plant embryo dormant stage
+PO:0025378	arillode
+PO:0025379	intercellular space
+PO:0025380	leaf mesophyll intercellular space
+PO:0025381	spongy mesophyll intercellular space
+PO:0025382	substomatal cavity
+PO:0025383	phyllome sinus
+PO:0025384	leaf sinus
+PO:0025385	cutin
+PO:0025386	cuticular wax
+PO:0025387	plant cuticle proper
+PO:0025388	epicuticular wax
+PO:0025389	intercuticular wax
+PO:0025390	free ending veinlet
+PO:0025391	phyllome lamina areole
+PO:0025392	leaf lamina areole
+PO:0025393	pappus
+PO:0025394	pappus element
+PO:0025395	floral organ
+PO:0025396	phyllome lamina
+PO:0025397	palisade mesophyll intercellular space
+PO:0025398	phyllome substomatal cavity
+PO:0025399	leaf substomatal cavity
+PO:0025400	phyllome adaxial meristem
+PO:0025401	leaf adaxial meristem
+PO:0025402	phyllome abaxial meristem
+PO:0025403	leaf abaxial meristem
+PO:0025404	phyllome marginal meristem
+PO:0025405	leaf marginal meristem
+PO:0025406	sieve element
+PO:0025407	plant fiber cell
+PO:0025408	primary vascular tissue
+PO:0025409	secondary vascular tissue
+PO:0025410	axial system
+PO:0025411	ray system
+PO:0025412	albuminous cell
+PO:0025413	primary leaf vein
+PO:0025414	secondary thickening meristem
+PO:0025415	sieve cell
+PO:0025416	sieve tube
+PO:0025417	xylem vessel
+PO:0025418	sclerid cell
+PO:0025419	septate fiber tracheid
+PO:0025420	septate libriform fiber cell
+PO:0025421	septate phloem fiber cell
+PO:0025422	gelatinous fiber cell
+PO:0025423	plant tissue development stage
+PO:0025424	vascular tissue development stage
+PO:0025425	xylem development stage
+PO:0025426	phloem development stage
+PO:0025427	secondary xylem development stage
+PO:0025428	phyllome plate meristem
+PO:0025429	leaf plate meristem
+PO:0025430	phyllome anlagen
+PO:0025431	vascular leaf anlagen
+PO:0025432	cotyledon anlagen
+PO:0025433	root anlagen
+PO:0025434	petiole vascular bundle
+PO:0025435	shoot axis cork cambium
+PO:0025436	root cork cambium
+PO:0025437	shoot axis vascular cambium
+PO:0025438	root vascular cambium
+PO:0025439	cambial zone
+PO:0025440	shoot axis cambial zone
+PO:0025441	root cambial zone
+PO:0025442	stem secondary thickening meristem
+PO:0025443	root secondary thickening meristem
+PO:0025444	primary xylem tracheary element
+PO:0025445	secondary xylem tracheary element
+PO:0025446	primary xylem tracheid
+PO:0025447	secondary xylem tracheid
+PO:0025448	primary xylem vessel member
+PO:0025449	secondary xylem vessel member
+PO:0025450	primary xylem vessel
+PO:0025451	secondary xylem vessel
+PO:0025452	primary phloem sieve element
+PO:0025453	secondary phloem sieve element
+PO:0025454	primary phloem sieve cell
+PO:0025455	primary phloem sieve tube element
+PO:0025456	secondary phloem sieve cell
+PO:0025457	secondary phloem sieve tube element
+PO:0025458	transfer companion cell
+PO:0025459	ordinary companion cell
+PO:0025460	intermediary companion cell
+PO:0025461	early wood tracheary element
+PO:0025462	late wood tracheary element
+PO:0025463	cell division stage of secondary xylem
+PO:0025464	cell expansion stage of secondary xylem
+PO:0025465	secondary cell wall formation stage of secondary xylem
+PO:0025466	cell death stage of secondary xylem
+PO:0025467	tracheary element death stage of secondary xylem
+PO:0025468	secondary xylem parenchyma cell death stage of secondary xylem
+PO:0025469	cell differentiation stage of secondary xylem
+PO:0025470	embryo cotyledon
+PO:0025471	seedling cotyledon
+PO:0025472	reaction wood
+PO:0025473	compression wood
+PO:0025474	tension wood
+PO:0025475	coleorhiza emergence stage
+PO:0025476	tuberous root tuber
+PO:0025477	floral organ primordium
+PO:0025478	androecium primordium
+PO:0025479	basal root primordium
+PO:0025480	shoot-borne root primordium
+PO:0025481	leaflet primordium
+PO:0025482	bract anlagen
+PO:0025483	lodicule anlagen
+PO:0025484	petal anlagen
+PO:0025485	sepal anlagen
+PO:0025486	stamen anlagen
+PO:0025487	bract primordium
+PO:0025488	flower bract primordium
+PO:0025489	inflorescence bract primordium
+PO:0025490	plant ovary ovule
+PO:0025491	ovuliferous scale ovule
+PO:0025492	pericyclic lateral root primordium
+PO:0025493	non-pericyclic lateral root primordium
+PO:0025494	pericyclic lateral root
+PO:0025495	non-pericyclic lateral root
+PO:0025496	multi-tissue plant structure
+PO:0025497	collective plant structure
+PO:0025498	cardinal part of multi-tissue plant structure
+PO:0025499	sepal epidermis giant cell
+PO:0025500	whole plant fruit development stage
+PO:0025501	fruit formation stage
+PO:0025502	fruit ripening stage
+PO:0025503	fruit initiation stage
+PO:0025504	fruit size up to 10% stage
+PO:0025505	fruit size 10 to 30% stage
+PO:0025506	fruit size 30 to 50% stage
+PO:0025507	fruit size 50 to 70% stage
+PO:0025508	fruit size 70% to final size stage
+PO:0025509	archegonium central cell
+PO:0025510	archegonium initial cell
+PO:0025511	petal spur
+PO:0025512	corolla spur
+PO:0025513	organ lamina
+PO:0025514	phyllome lamina lobe
+PO:0025515	phyllome lamina tooth
+PO:0025516	phyllome lamina crena
+PO:0025517	leaf lamina lobe
+PO:0025518	leaf lamina tooth
+PO:0025519	leaf lamina crena
+PO:0025520	leaf lamina intramarginal vein
+PO:0025521	unicellular plant gametangium
+PO:0025522	tuber
+PO:0025523	tuberous root
+PO:0025524	ventral canal cell
+PO:0025525	spermatogenous cell
+PO:0025526	body cell
+PO:0025527	shoot system development stage
+PO:0025528	bud development stage
+PO:0025529	bud dormancy stage
+PO:0025530	reproductive shoot system development stage
+PO:0025531	bud swell stage
+PO:0025532	bud burst stage
+PO:0025533	prothallial cell
+PO:0025534	adventitious shoot axis
+PO:0025535	multicellular trichome tip
+PO:0025536	plant cuticle ridge
+PO:0025537	unicellular trichome
+PO:0025538	plant sap
+PO:0025539	xylem sap
+PO:0025540	phloem sap
+PO:0025541	bundle sheath cell
+PO:0025542	bundle sheath chlorenchyma cell
+PO:0025543	tapetum cell
+PO:0025544	microsporangium tapetum cell
+PO:0025545	anther wall tapetum cell
+PO:0025546	accessory paraclade
+PO:0025547	cauline paraclade
+PO:0025548	rosette paraclade
+PO:0025549	trichome tip
+PO:0025550	trichome apex
+PO:0025551	multicellular trichome apex
+PO:0025552	centarch protoxylem
+PO:0025553	mesarch protoxylem
+PO:0025554	exarch protoxylem
+PO:0025555	root system exarch protoxylem
+PO:0025556	shoot system exarch protoxylem
+PO:0025557	endarch protoxylem
+PO:0025558	monarch protoxylem
+PO:0025559	diarch protoxylem
+PO:0025560	triarch protoxylem
+PO:0025561	tetrarch protoxylem
+PO:0025562	pentarch protoxylem
+PO:0025563	polyarch protoxylem
+PO:0025564	megasporangium tapetum cell
+PO:0025565	shoot system xylem sap
+PO:0025566	shoot system phloem sap
+PO:0025567	root system phloem sap
+PO:0025568	root system xylem sap
+PO:0025569	free petal
+PO:0025575	protoxylem tracheary element
+PO:0025576	metaxylem tracheary element
+PO:0025577	epicalyx bract
+PO:0025578	collective phyllome structure development stage
+PO:0025579	phyllome development stage
+PO:0025580	fused perianth
+PO:0025581	fused corolla
+PO:0025582	fused calyx
+PO:0025583	fused petal
+PO:0025584	fused sepal
+PO:0025585	floral organ formation stage
+PO:0025587	free sepal
+PO:0025588	flower meristem transition stage
+PO:0028001	plant life cycle phase
+PO:0028002	sporophyte development stage
+PO:0028003	gametophyte development stage
+PO:0030001	chloronema cell
+PO:0030002	caulonema cell
+PO:0030003	protonema
+PO:0030004	chloronema
+PO:0030005	caulonema
+PO:0030006	protonema whole plant development stage
+PO:0030007	meristematic apical cell
+PO:0030008	root meristematic apical cell
+PO:0030009	shoot meristematic apical cell
+PO:0030010	shoot axis meristematic apical cell
+PO:0030011	leaf meristematic apical cell
+PO:0030012	vascular leaf meristematic apical cell
+PO:0030013	non-vascular leaf meristematic apical cell
+PO:0030014	gametophyte meristematic apical cell
+PO:0030015	sporophyte meristematic apical cell
+PO:0030016	seta meristematic apical cell
+PO:0030017	spore capsule mouth
+PO:0030018	gametophore
+PO:0030019	gametophore meristematic apical cell
+PO:0030020	gametophore axis
+PO:0030021	gametophore branch
+PO:0030022	gametophore stem
+PO:0030023	gametophore axis meristematic apical cell
+PO:0030024	vascular shoot axis meristematic apical cell
+PO:0030025	thallus meristematic apical cell
+PO:0030026	gametophore bud
+PO:0030027	thallus
+PO:0030028	perigonial bract
+PO:0030029	sporophyte foot
+PO:0030030	perichaetal bract
+PO:0030031	gametophyte perianth
+PO:0030032	seta
+PO:0030033	antheridiophore
+PO:0030034	archegoniophore
+PO:0030035	antheridium stalk
+PO:0030036	archegonium stalk
+PO:0030037	spore capsule calyptra
+PO:0030038	venter
+PO:0030039	archegonium neck
+PO:0030040	sporangium base
+PO:0030041	sporangium theca
+PO:0030042	peristome
+PO:0030043	peristome tooth
+PO:0030044	spore capsule operculum
+PO:0030045	stereid
+PO:0030046	protonema meristematic apical cell
+PO:0030047	hydrome
+PO:0030048	leptome
+PO:0030049	sporangium wall endothecium
+PO:0030050	stereome
+PO:0030051	central strand
+PO:0030052	antheridium jacket layer cell
+PO:0030053	antheridium jacket layer
+PO:0030054	epiphragm
+PO:0030055	pseudopodium
+PO:0030056	archesporial cell
+PO:0030057	alar cell
+PO:0030058	brachycyte
+PO:0030059	tmema cell
+PO:0030060	gametophore axillary hair
+PO:0030061	tmema
+PO:0030062	gametophore axillary hair terminal cell
+PO:0030063	gametophore axillary hair base
+PO:0030064	gametophore axillary hair basal cell
+PO:0030065	archegonium neck canal cell
+PO:0030066	archegonium neck canal
+PO:0030067	protonema side branch initial cell
+PO:0030068	epidermal rhizoid initial cell
+PO:0030069	paraphyllium
+PO:0030070	paraphysis
+PO:0030071	epidermal rhizoid
+PO:0030072	costa
+PO:0030073	exothecium
+PO:0030074	archesporium
+PO:0030075	antheridium head
+PO:0030076	archegonium head
+PO:0030077	protonemal side branch rhizoid initial cell
+PO:0030078	rhizoid
+PO:0030079	protonemal rhizoid
+PO:0030080	rhizoid meristematic apical cell
+PO:0030081	caulonema meristematic apical cell
+PO:0030082	chloronema meristematic apical cell
+PO:0030083	gametophore bud initial cell
+PO:0030084	amphithecium
+PO:0030085	protosporangium endothecium
+PO:0030086	protonema sub-apical initial cell
+PO:0030087	non-vascular leaf initial cell
