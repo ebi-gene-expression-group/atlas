@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.bioentity.go;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,11 +20,13 @@ public class PoTermTraderIT {
     @Inject
     PoTermTrader subject;
 
+    @Ignore
     @Test
     public void firstTerm() {
         assertThat(subject.getTerm("PO:0000001"), is("embryo proper"));
     }
 
+    @Ignore
     @Test
     public void lastTerm() {
         assertThat(subject.getTerm("PO:0030087"), is("non-vascular leaf initial cell"));
