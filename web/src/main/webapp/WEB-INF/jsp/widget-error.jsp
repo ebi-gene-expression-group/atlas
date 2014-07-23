@@ -24,7 +24,9 @@
   --%>
 
 <div id="content" class="block">
-    <c:if test="${not empty errorMessage}">
-        <span style="font-weight: bold;">An error occurred: </span><span>${errorMessage}</span>
-    </c:if>
+    <div class="error">
+        <c:if test="${not empty errorMessage}">
+            <span style="font-weight: bold;">An error occurred: </span><span>${errorMessage}</span>
+        </c:if>
+    </div>
 </div>

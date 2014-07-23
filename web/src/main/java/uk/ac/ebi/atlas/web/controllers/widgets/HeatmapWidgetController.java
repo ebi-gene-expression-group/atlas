@@ -87,7 +87,7 @@ public final class HeatmapWidgetController {
                 species = solrQueryService.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
             }
         } catch (Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("errorMessage", "No genes found matching query: " + bioEntityAccession);
             return "widget-error";
         }
 
