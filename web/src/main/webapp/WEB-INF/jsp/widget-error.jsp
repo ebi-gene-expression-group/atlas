@@ -26,7 +26,7 @@
 <div id="content" class="block">
     <div class="error">
         <c:if test="${not empty errorMessage}">
-            <span style="font-weight: bold;">An error occurred: </span><span>${errorMessage}</span>
+            <span style="font-weight: bold;"></span><span>${errorMessage}</span>
         </c:if>
     </div>
 </div>
