@@ -56,33 +56,56 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 return !(typeof(this.props.profiles.genes[0].designElement) === "undefined");
             },
 
+            componentDidMount: function() {
+                var $heatmapTable = $(this.refs.heatmapTableRow.getDOMNode()), $countAndLegend = $(this.refs.countAndLegend.getDOMNode()),
+                    stickyTopOffset = $countAndLegend.height();
+                $(this.refs.heatmapTable.getDOMNode()).stickyTableHeaders({fixedOffset: stickyTopOffset});
+
+
+                if ($heatmapTable.width() > $countAndLegend.width()) {
+                    //countAndLegend must be at least width of table so that we don't see the table cells scroll underneath
+                    var WIDTH_PADDING_OFFSET = 19;
+                    $countAndLegend.css('width', $heatmapTable.width() + WIDTH_PADDING_OFFSET);
+                }
+
+                $countAndLegend.sticky();
+
+                $(this.refs.downloadProfilesButton.getDOMNode()).sticky({topSpacing: stickyTopOffset});
+
+            },
+
             render: function () {
                 return (
-                    React.DOM.table(null, 
-                        React.DOM.tr(null, 
-                            React.DOM.td(null, 
-                                React.DOM.span( {id:"geneCount"}, "Showing ", this.state.profiles.genes.length, " of ", this.state.profiles.totalGeneCount, " ", this.state.showGeneSetProfiles ? 'gene sets' : 'genes',  " found: " ),
+                    React.DOM.div(null, 
+                        React.DOM.table( {ref:"countAndLegend", style:{"background-color": "white", zIndex: 1}}, 
+                            React.DOM.tr(null, 
+                                React.DOM.td(null, 
+                                    React.DOM.span( {id:"geneCount"}, "Showing ", this.state.profiles.genes.length, " of ", this.state.profiles.totalGeneCount, " ", this.state.showGeneSetProfiles ? 'gene sets' : 'genes',  " found: " ),
                                         this.props.geneSetProfiles ? React.DOM.a( {href:"javascript:void(0)", onClick:this.toggleGeneSets}, this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)') : ''
-                            ),
-                            React.DOM.td(null, 
+                                ),
+                                React.DOM.td(null, 
                                 type === TypeEnum.BASELINE ? LegendBaseline( {displayLevels:this.state.displayLevels, minExpressionLevel:this.state.profiles.minExpressionLevel, maxExpressionLevel:this.state.profiles.maxExpressionLevel})
-                                                            : LegendDifferential( {displayLevels:this.state.displayLevels, minDownLevel:this.state.profiles.minDownLevel, maxDownLevel:this.state.profiles.maxDownLevel, minUpLevel:this.state.profiles.minUpLevel, maxUpLevel:this.state.profiles.maxUpLevel})
+                                    : LegendDifferential( {displayLevels:this.state.displayLevels, minDownLevel:this.state.profiles.minDownLevel, maxDownLevel:this.state.profiles.maxDownLevel, minUpLevel:this.state.profiles.minUpLevel, maxUpLevel:this.state.profiles.maxUpLevel})
+                                )
                             )
                         ),
-                        React.DOM.tr(null, 
-                            React.DOM.td( {colSpan:"2"}, 
-                                React.DOM.div( {className:"block"}, 
-                                    React.DOM.table(null, 
-                                        React.DOM.tbody(null, 
-                                            React.DOM.tr(null, 
-                                                React.DOM.td(null, 
-                                                    React.DOM.table( {id:"heatmap-table", className:"table-grid"}, 
-                                                        HeatmapTableHeader( {isMicroarray:this.isMicroarray(), columnHeaders:this.props.columnHeaders, displayLevels:this.state.displayLevels, toggleDisplayLevels:this.toggleDisplayLevels, showGeneSetProfiles:this.state.showGeneSetProfiles}),
-                                                        HeatmapTableRows( {profiles:this.state.profiles.genes, displayLevels:this.state.displayLevels, showGeneSetProfiles:this.state.showGeneSetProfiles})
+
+                        React.DOM.table(null, 
+                            React.DOM.tr(null, 
+                                React.DOM.td(null, 
+                                    React.DOM.div( {className:"block"}, 
+                                        React.DOM.table( {style:{width: "100%"}}, 
+                                            React.DOM.tbody(null, 
+                                                React.DOM.tr( {ref:"heatmapTableRow"}, 
+                                                    React.DOM.td(null, 
+                                                        React.DOM.table( {ref:"heatmapTable", id:"heatmap-table", className:"table-grid"}, 
+                                                            HeatmapTableHeader( {isMicroarray:this.isMicroarray(), columnHeaders:this.props.columnHeaders, displayLevels:this.state.displayLevels, toggleDisplayLevels:this.toggleDisplayLevels, showGeneSetProfiles:this.state.showGeneSetProfiles}),
+                                                            HeatmapTableRows( {profiles:this.state.profiles.genes, displayLevels:this.state.displayLevels, showGeneSetProfiles:this.state.showGeneSetProfiles})
+                                                        )
+                                                    ),
+                                                    React.DOM.td( {style:{"vertical-align": "top"}}, 
+                                                        DownloadProfilesButton( {ref:"downloadProfilesButton"})
                                                     )
-                                                ),
-                                                React.DOM.td( {style:{"vertical-align": "top"}}, 
-                                                    DownloadProfilesButton(null )
                                                 )
                                             )
                                         )
@@ -744,7 +767,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     return (
                         React.DOM.td( {style:style, onClick:this.onClick}, 
                             React.DOM.div(
-                            {className:isUnknownExpression(this.props.value) || this.props.displayLevels ? "show_cell" : "hide_cell",
+                            {className:"heatmap_cell",
+                            style:{visibility: isUnknownExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"},
                             'data-svg-path-id':this.props.svgPathId}, 
                                 isUnknownExpression(this.props.value) ? unknownCell() : this.props.value
                             )
