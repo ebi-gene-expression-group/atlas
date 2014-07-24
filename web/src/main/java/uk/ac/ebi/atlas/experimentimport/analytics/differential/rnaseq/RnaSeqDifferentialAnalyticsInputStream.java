@@ -82,42 +82,42 @@ public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream
     }
 
     private ImmutableList<RnaSeqDifferentialAnalytics> readNextContrasts() {
-        String[] line = readCsvLine();
-        if (line == null) {
-            // EOF
-            return null;
-        }
-
-        String geneId = line[GENE_ID_INDEX];
-        String[] contrastAnalyticsArray = (String[]) ArrayUtils.subarray(line, FIRST_CONTRAST_INDEX, line.length);
-        ImmutableList<String> contrastAnalyticsList = ImmutableList.<String>builder().add(contrastAnalyticsArray).build();
-        UnmodifiableIterator<String> contrastAnalytics = contrastAnalyticsList.iterator();
-
-        ImmutableList.Builder<RnaSeqDifferentialAnalytics> builder = ImmutableList.builder();
-
-        for (String contrastId : contrastIds) {
-
-            checkState(contrastAnalytics.hasNext(), String.format("%s line %s: missing p-value for gene %s, contrast %s", name, lineNumber, geneId, contrastId));
-            String pValueString = contrastAnalytics.next();
-
-            checkState(contrastAnalytics.hasNext(), String.format("%s line %s: missing log2foldchange for gene %s, contrast %s", name, lineNumber,  geneId, contrastId));
-            String foldChangeString = contrastAnalytics.next();
-
-            if (!("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(foldChangeString))) {
-                double pValue = DifferentialTsvFileParsingUtil.parseDouble(pValueString);
-                double foldChange = DifferentialTsvFileParsingUtil.parseDouble(foldChangeString);
-                RnaSeqDifferentialAnalytics dto = new RnaSeqDifferentialAnalytics(geneId, contrastId, pValue, foldChange);
-                builder.add(dto);
+        ImmutableList<RnaSeqDifferentialAnalytics> analytics;
+        do {
+            String[] line = readCsvLine();
+            if (line == null) {
+                // EOF
+                return null;
             }
 
-        }
+            String geneId = line[GENE_ID_INDEX];
+            String[] contrastAnalyticsArray = (String[]) ArrayUtils.subarray(line, FIRST_CONTRAST_INDEX, line.length);
+            ImmutableList<String> contrastAnalyticsList = ImmutableList.<String>builder().add(contrastAnalyticsArray).build();
+            UnmodifiableIterator<String> contrastAnalytics = contrastAnalyticsList.iterator();
 
-        ImmutableList<RnaSeqDifferentialAnalytics> analytics = builder.build();
+            ImmutableList.Builder<RnaSeqDifferentialAnalytics> builder = ImmutableList.builder();
 
-        if (analytics.isEmpty()) {
-            // read next line if no analytics extracted from this line
-            return readNextContrasts();
-        }
+            for (String contrastId : contrastIds) {
+
+                checkState(contrastAnalytics.hasNext(), String.format("%s line %s: missing p-value for gene %s, contrast %s", name, lineNumber, geneId, contrastId));
+                String pValueString = contrastAnalytics.next();
+
+                checkState(contrastAnalytics.hasNext(), String.format("%s line %s: missing log2foldchange for gene %s, contrast %s", name, lineNumber, geneId, contrastId));
+                String foldChangeString = contrastAnalytics.next();
+
+                if (!("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(foldChangeString))) {
+                    double pValue = DifferentialTsvFileParsingUtil.parseDouble(pValueString);
+                    double foldChange = DifferentialTsvFileParsingUtil.parseDouble(foldChangeString);
+                    RnaSeqDifferentialAnalytics dto = new RnaSeqDifferentialAnalytics(geneId, contrastId, pValue, foldChange);
+                    builder.add(dto);
+                }
+
+            }
+
+            analytics = builder.build();
+
+        // loop while no analytics extracted from the current line
+        } while (analytics.isEmpty());
 
         return analytics;
     }
