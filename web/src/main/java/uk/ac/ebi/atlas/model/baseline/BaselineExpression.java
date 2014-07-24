@@ -64,7 +64,7 @@ public class BaselineExpression implements Expression {
         this.factorGroup = factorGroup;
     }
 
-    //ToDo: this method is only required by BitIndexBuilder and is just exposing internal data structure, maybe it should not be here.
+    //ToDo: this method is only required by BarChartTraderBuilder and is just exposing internal data structure, maybe it should not be here.
     public FactorGroup getFactorGroup() {
         return factorGroup;
     }

@@ -20,12 +20,11 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.trader.cache;
+package uk.ac.ebi.atlas.model.baseline.barcharts;
 
 import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;

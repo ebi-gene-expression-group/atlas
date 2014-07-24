@@ -37,11 +37,11 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
 
-@Named("bitIndexBuilder")
+@Named
 @Scope("prototype")
-public class BitIndexBuilder {
+public class BarChartTraderBuilder {
 
-    private static final Logger LOGGER = Logger.getLogger(BitIndexBuilder.class);
+    private static final Logger LOGGER = Logger.getLogger(BarChartTraderBuilder.class);
 
     private NavigableMap<Double, Map<FactorGroup, BitSet>> factorGroupGeneExpressionIndexes = new TreeMap<>();
 
@@ -51,13 +51,13 @@ public class BitIndexBuilder {
 
 
     @Inject
-    public BitIndexBuilder(BaselineExpressionsInputStreamFactory inputStreamFactory
+    public BarChartTraderBuilder(BaselineExpressionsInputStreamFactory inputStreamFactory
             , CutoffScale cutoffScale) {
         this.cutoffScale = cutoffScale;
         this.inputStreamFactory = inputStreamFactory;
     }
 
-    public BitIndexBuilder forExperiment(String experimentAccession) {
+    public BarChartTraderBuilder forExperiment(String experimentAccession) {
 
         try (ObjectInputStream<BaselineExpressions> inputStream =
                      inputStreamFactory.createGeneExpressionsInputStream(experimentAccession)) {

@@ -20,47 +20,50 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.trader.loader;
+package uk.ac.ebi.atlas.model.baseline.barcharts;
 
+import com.google.common.cache.LoadingCache;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTrader;
-import uk.ac.ebi.atlas.model.baseline.barcharts.BitIndexBuilder;
-import uk.ac.ebi.atlas.trader.loader.BarChartTradersCacheLoader;
+
+import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BarChartTradersCacheLoaderTest {
+public class BarChartTradersCacheTest {
 
     public static final String EXPERIMENT_ACCESSION = "experimentAccession";
 
+    private BarChartTradersCache subject;
+
     @Mock
-    private BitIndexBuilder bitIndexBuilderMock;
+    private LoadingCache<String, BarChartTrader> barChartTradersMock;
 
     @Mock
     private BarChartTrader barChartTraderMock;
 
-    @Mock
-    private BarChartTradersCacheLoader subject;
-
     @Before
     public void setUp() throws Exception {
-        when(subject.createBitIndexBuilder()).thenReturn(bitIndexBuilderMock);
-        when(bitIndexBuilderMock.forExperiment(EXPERIMENT_ACCESSION)).thenReturn(bitIndexBuilderMock);
-        when(bitIndexBuilderMock.create()).thenReturn(barChartTraderMock);
+        subject = new BarChartTradersCache(barChartTradersMock);
     }
 
     @Test
-    public void testLoad() throws Exception {
-        doCallRealMethod().when(subject).load(EXPERIMENT_ACCESSION);
+    public void testGetBarchartTrader() throws Exception {
+        when(barChartTradersMock.get(EXPERIMENT_ACCESSION)).thenReturn(barChartTraderMock);
 
-        assertThat(subject.load(EXPERIMENT_ACCESSION), is(barChartTraderMock));
+        assertThat(subject.getBarchartTrader(EXPERIMENT_ACCESSION), is(barChartTraderMock));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void throwException() throws Exception {
+        when(barChartTradersMock.get(EXPERIMENT_ACCESSION)).thenThrow(new ExecutionException(new Throwable("Testing error handling")));
+
+        subject.getBarchartTrader(EXPERIMENT_ACCESSION);
     }
 }
