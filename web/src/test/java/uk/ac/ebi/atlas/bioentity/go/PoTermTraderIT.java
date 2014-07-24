@@ -20,13 +20,11 @@ public class PoTermTraderIT {
     @Inject
     PoTermTrader subject;
 
-    @Ignore
     @Test
     public void firstTerm() {
         assertThat(subject.getTerm("PO:0000001"), is("embryo proper"));
     }
 
-    @Ignore
     @Test
     public void lastTerm() {
         assertThat(subject.getTerm("PO:0030087"), is("non-vascular leaf initial cell"));
