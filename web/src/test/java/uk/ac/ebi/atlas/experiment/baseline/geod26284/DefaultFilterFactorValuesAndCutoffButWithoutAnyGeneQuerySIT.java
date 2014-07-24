@@ -20,15 +20,14 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
+package uk.ac.ebi.atlas.experiment.baseline.geod26284;
 
 import uk.ac.ebi.atlas.acceptance.selenium.pages.Geod26284HeatmapTablePage;
 
-public class OneCellLineAndCutoff05NonSpecificSearchIT extends Geod26284HeatmapTableTests {
+public class DefaultFilterFactorValuesAndCutoffButWithoutAnyGeneQuerySIT extends Geod26284HeatmapTableTests {
 
     public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver,
-                "filterFactorValues=CELLULAR_COMPONENT%3Awhole+cell%C2RNA%3Atotal+RNA&queryFactorType=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=&queryFactorValues=CD34-positive+mobilized+cell+cell+line&_queryFactorValues=1&_specific=on&cutoff=0.5");
+        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=");
         subject.get();
     }
 
@@ -39,7 +38,7 @@ public class OneCellLineAndCutoff05NonSpecificSearchIT extends Geod26284HeatmapT
 
     @Override
     protected String[] getTop9Genes() {
-        return new String[]{"TMSB10", "PTBP3", "Y_RNA", "ARHGAP1", "THOC6", "THOC3", "BMI1", "AC111200.7", "CALU"};
+        return new String[]{"RP11-384J4.2", "TERF2", "GFI1", "SCN2A", "SLC10A1", "TRPM2", "GEMIN8P4", "RP11-368L12.1", "RP11-20I23.6"};
     }
 
     @Override
@@ -49,17 +48,16 @@ public class OneCellLineAndCutoff05NonSpecificSearchIT extends Geod26284HeatmapT
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"122", "287", "689", "1011", "486"};
+        return new String[]{"", "", "6", "", ""};
     }
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"6", "209", "223", "311", "123"};
+        return new String[]{"4", "", "1", "", "1"};
     }
 
     @Override
     protected String getGeneCount() {
-        return "24";
+        return "30";
     }
-
 }

@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
+package uk.ac.ebi.atlas.experiment.baseline.geod26284;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,7 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class DefaultFilterByMenuIT extends SinglePageSeleniumFixture {
+public class DefaultFilterByMenuSIT extends SinglePageSeleniumFixture {
 
     public static final String TOTAL_RNA = "total RNA";
     public static final String RNA_TYPE = "RNA";

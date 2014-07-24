@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
+package uk.ac.ebi.atlas.experiment.baseline.geod26284;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;

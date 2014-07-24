@@ -20,45 +20,46 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
+package uk.ac.ebi.atlas.experiment.baseline.geod26284;
 
 import uk.ac.ebi.atlas.acceptance.selenium.pages.Geod26284HeatmapTablePage;
 
-public class WholeCellAndA549AndCutoffButWithoutAnyGeneQueryIT extends Geod26284HeatmapTableTests {
+public class OneCellLineAndCutoff05NonSpecificSearchSIT extends Geod26284HeatmapTableTests {
 
     public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=CELLULAR_COMPONENT%3Awhole+cell%2CCELL_LINE%3AA549&queryFactorType=RNA");
+        subject = new Geod26284HeatmapTablePage(driver,
+                "filterFactorValues=CELLULAR_COMPONENT%3Awhole+cell%C2RNA%3Atotal+RNA&queryFactorType=&heatmapMatrixSize=50&displayLevels=false&displayGeneDistribution=false&geneQuery=&queryFactorValues=CD34-positive+mobilized+cell+cell+line&_queryFactorValues=1&_specific=on&cutoff=0.5");
         subject.get();
     }
 
     @Override
     protected String getQueryFactorLabel() {
-        return "RNA";
+        return "Cell line";
     }
 
     @Override
     protected String[] getTop9Genes() {
-        return new String[]{"AC011293.1", "RN7SKP271", "RP11-20I23.6", "RP5-961K14.1", "TRPM2", "RPS6P20", "RP11-90H3.1", "TMSB10", "CALU"};
+        return new String[]{"TMSB10", "PTBP3", "Y_RNA", "ARHGAP1", "THOC6", "THOC3", "BMI1", "AC111200.7", "CALU"};
     }
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"long non-polyA...", "long polyA RNA"};
+        return new String[]{"CD34-positive...", "HFDPC cell line", "HPC-PL cell line", "IMR-90", "hMSC-AT cell line"};
     }
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"294", ""};
+        return new String[]{"122", "287", "689", "1011", "486"};
     }
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"14", "105"};
+        return new String[]{"6", "209", "223", "311", "123"};
     }
 
     @Override
     protected String getGeneCount() {
-        return "31";
+        return "24";
     }
 
 }

@@ -20,11 +20,11 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
+package uk.ac.ebi.atlas.experiment.baseline.geod26284;
 
 import uk.ac.ebi.atlas.acceptance.selenium.pages.Geod26284HeatmapTablePage;
 
-public class OneCellLineAndCutoff05SpecificSearchIT extends Geod26284HeatmapTableTests {
+public class OneCellLineAndCutoff05SpecificSearchSIT extends Geod26284HeatmapTableTests {
 
     public void getStartingPage() {
         subject = new Geod26284HeatmapTablePage(driver,

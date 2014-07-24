@@ -20,44 +20,45 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.geod26284;
+package uk.ac.ebi.atlas.experiment.baseline.geod26284;
 
 import uk.ac.ebi.atlas.acceptance.selenium.pages.Geod26284HeatmapTablePage;
 
-public class DefaultFilterFactorValuesAndCutoffButWithoutAnyGeneQueryIT extends Geod26284HeatmapTableTests {
+public class WholeCellAndA549AndCutoffButWithoutAnyGeneQuerySIT extends Geod26284HeatmapTableTests {
 
     public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=");
+        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=CELLULAR_COMPONENT%3Awhole+cell%2CCELL_LINE%3AA549&queryFactorType=RNA");
         subject.get();
     }
 
     @Override
     protected String getQueryFactorLabel() {
-        return "Cell line";
+        return "RNA";
     }
 
     @Override
     protected String[] getTop9Genes() {
-        return new String[]{"RP11-384J4.2", "TERF2", "GFI1", "SCN2A", "SLC10A1", "TRPM2", "GEMIN8P4", "RP11-368L12.1", "RP11-20I23.6"};
+        return new String[]{"AC011293.1", "RN7SKP271", "RP11-20I23.6", "RP5-961K14.1", "TRPM2", "RPS6P20", "RP11-90H3.1", "TMSB10", "CALU"};
     }
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"CD34-positive...", "HFDPC cell line", "HPC-PL cell line", "IMR-90", "hMSC-AT cell line"};
+        return new String[]{"long non-polyA...", "long polyA RNA"};
     }
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"", "", "6", "", ""};
+        return new String[]{"294", ""};
     }
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"4", "", "1", "", "1"};
+        return new String[]{"14", "105"};
     }
 
     @Override
     protected String getGeneCount() {
-        return "30";
+        return "31";
     }
+
 }
