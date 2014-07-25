@@ -43,22 +43,22 @@ public class RnaSeqExperimentDesignMageTabParser extends MageTabParser<ScanNode>
     private static final String ENA_RUN = "ENA_RUN";
 
     @Override
-    protected Set<AssayNode<ScanNode>> getAssayNodes(SDRF sdrf) {
+    protected Set<NamedSdrfNode<ScanNode>> getAssayNodes(SDRF sdrf) {
 
-        Set<AssayNode<ScanNode>> assayNodes = Sets.newLinkedHashSet();
+        Set<NamedSdrfNode<ScanNode>> namedSdrfNodes = Sets.newLinkedHashSet();
         for (ScanNode scanNode : sdrf.getNodes(ScanNode.class)) {
-            assayNodes.add(new AssayNode(scanNode.comments.get(ENA_RUN).iterator().next(), scanNode));
+            namedSdrfNodes.add(new NamedSdrfNode(scanNode.comments.get(ENA_RUN).iterator().next(), scanNode));
         }
-        return assayNodes;
+        return namedSdrfNodes;
     }
 
     @Override
-    protected Collection<SourceNode> findUpstreamSourceNodes(AssayNode assayNode) {
-        return GraphUtils.findUpstreamNodes(assayNode.getSdrfNode(), SourceNode.class);
+    protected Collection<SourceNode> findUpstreamSourceNodes(NamedSdrfNode namedSdrfNode) {
+        return GraphUtils.findUpstreamNodes(namedSdrfNode.getSdrfNode(), SourceNode.class);
     }
 
     @Override
-    protected List<FactorValueAttribute> getFactorAttributes(AssayNode<ScanNode> namedSdrfNode) {
+    protected List<FactorValueAttribute> getFactorAttributes(NamedSdrfNode<ScanNode> namedSdrfNode) {
         ScanNode node = namedSdrfNode.getSdrfNode();
         Collection<uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode> assayNodes = GraphUtils.findUpstreamNodes(node, uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode.class);
         if (assayNodes.size() != 1) {
@@ -71,7 +71,7 @@ public class RnaSeqExperimentDesignMageTabParser extends MageTabParser<ScanNode>
     }
 
     @Override
-    protected void addArrays(ExperimentDesign experimentDesign, Set<AssayNode<ScanNode>> asseyNodes) {
+    protected void addArrays(ExperimentDesign experimentDesign, Set<NamedSdrfNode<ScanNode>> asseyNodes) {
 
     }
 }

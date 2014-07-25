@@ -44,8 +44,8 @@ import java.util.Set;
 public class TwoColourExperimentDesignMageTabParser extends MicroarrayExperimentDesignMageTabParser {
 
     @Override
-    protected Set<AssayNode<HybridizationNode>> getAssayNodes(SDRF sdrf) {
-        Set<AssayNode<HybridizationNode>> assayNodes = Sets.newLinkedHashSet();
+    protected Set<NamedSdrfNode<HybridizationNode>> getAssayNodes(SDRF sdrf) {
+        Set<NamedSdrfNode<HybridizationNode>> namedSdrfNodes = Sets.newLinkedHashSet();
 
         Collection<? extends HybridizationNode>  hybridizationNodes = sdrf.getNodes(HybridizationNode.class);
 
@@ -57,18 +57,18 @@ public class TwoColourExperimentDesignMageTabParser extends MicroarrayExperiment
         for (HybridizationNode node : hybridizationNodes) {
             // create separate node for each each channel
             for (int channelNo = 1; channelNo <= 2; channelNo++) {
-                assayNodes.add(new AssayNode<>(buildTwoColourExperimentAssayName(node.getNodeName(), sdrf.getLabelForChannel(channelNo)), node, channelNo));
+                namedSdrfNodes.add(new NamedSdrfNode<>(buildTwoColourExperimentAssayName(node.getNodeName(), sdrf.getLabelForChannel(channelNo)), node, channelNo));
             }
         }
-        return assayNodes;
+        return namedSdrfNodes;
     }
 
     @Override
-    protected Collection<SourceNode> findUpstreamSourceNodes(AssayNode assayNode) {
+    protected Collection<SourceNode> findUpstreamSourceNodes(NamedSdrfNode namedSdrfNode) {
         Collection<SourceNode> upstreamSources = null;
 
-        for (LabeledExtractNode labeledExtractNode : GraphUtils.findUpstreamNodes(assayNode.getSdrfNode(), LabeledExtractNode.class)) {
-            if (extractLabelFromAssayName(assayNode.getName()).equals(labeledExtractNode.label.getAttributeValue())) {
+        for (LabeledExtractNode labeledExtractNode : GraphUtils.findUpstreamNodes(namedSdrfNode.getSdrfNode(), LabeledExtractNode.class)) {
+            if (extractLabelFromAssayName(namedSdrfNode.getName()).equals(labeledExtractNode.label.getAttributeValue())) {
                 upstreamSources =
                         GraphUtils.findUpstreamNodes(labeledExtractNode, SourceNode.class);
             }
@@ -77,7 +77,7 @@ public class TwoColourExperimentDesignMageTabParser extends MicroarrayExperiment
     }
 
     @Override
-    protected List<FactorValueAttribute> getFactorAttributes(AssayNode<HybridizationNode> namedSdrfNode) {
+    protected List<FactorValueAttribute> getFactorAttributes(NamedSdrfNode<HybridizationNode> namedSdrfNode) {
         HybridizationNode node = namedSdrfNode.getSdrfNode();
 
         ImmutableList.Builder<FactorValueAttribute> builder = ImmutableList.builder();

@@ -29,7 +29,7 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class AssayNodeTest {
+public class NamedSdrfNodeTest {
     @Before
     public void setUp() throws Exception {
 
@@ -45,10 +45,10 @@ public class AssayNodeTest {
         hybridizationNode1.setNodeName("hybridizationNode1");
         HybridizationNode hybridizationNode2 = new HybridizationNode();
 
-        AssayNode assayNode1 = new AssayNode("name1", hybridizationNode1);
-        AssayNode assayNode2 = new AssayNode("name1", hybridizationNode2);
+        NamedSdrfNode namedSdrfNode1 = new NamedSdrfNode("name1", hybridizationNode1);
+        NamedSdrfNode namedSdrfNode2 = new NamedSdrfNode("name1", hybridizationNode2);
 
-        assertThat(assayNode1, is(assayNode2));
+        assertThat(namedSdrfNode1, is(namedSdrfNode2));
 
     }
 

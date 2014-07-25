@@ -25,16 +25,16 @@ package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 import com.google.common.base.Objects;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AbstractSDRFNode;
 
-public class AssayNode<T extends AbstractSDRFNode> {
+public class NamedSdrfNode<T extends AbstractSDRFNode> {
     private final int channel;
     private String name;
     private T sdrfNode;
 
-    public AssayNode(String name, T sdrfNode) {
+    public NamedSdrfNode(String name, T sdrfNode) {
         this(name, sdrfNode, 1);
     }
 
-    public AssayNode(String name, T sdrfNode, int channel) {
+    public NamedSdrfNode(String name, T sdrfNode, int channel) {
         this.name = name;
         this.sdrfNode = sdrfNode;
         this.channel = channel;
@@ -58,7 +58,7 @@ public class AssayNode<T extends AbstractSDRFNode> {
         if (other == null || getClass() != other.getClass()){
             return false;
         }
-        AssayNode otherSdrfNode = (AssayNode) other;
+        NamedSdrfNode otherSdrfNode = (NamedSdrfNode) other;
         return Objects.equal(name, otherSdrfNode.name);
     }
 
