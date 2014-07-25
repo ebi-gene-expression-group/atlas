@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -31,9 +32,11 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.LabeledExtractNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Named("twoColourExperimentDesignMageTabParser")
@@ -52,9 +55,9 @@ public class TwoColourExperimentDesignMageTabParser extends MicroarrayExperiment
         }
 
         for (HybridizationNode node : hybridizationNodes) {
-                    // Assemble assay accession for each channel separately
+            // create separate node for each each channel
             for (int channelNo = 1; channelNo <= 2; channelNo++) {
-                assayNodes.add(new AssayNode<HybridizationNode>(buildTwoColourExperimentAssayName(node.getNodeName(), sdrf.getLabelForChannel(channelNo)), node));
+                assayNodes.add(new AssayNode<>(buildTwoColourExperimentAssayName(node.getNodeName(), sdrf.getLabelForChannel(channelNo)), node, channelNo));
             }
         }
         return assayNodes;
@@ -71,6 +74,21 @@ public class TwoColourExperimentDesignMageTabParser extends MicroarrayExperiment
             }
         }
         return upstreamSources;
+    }
+
+    @Override
+    protected List<FactorValueAttribute> getFactorAttributes(AssayNode<HybridizationNode> namedSdrfNode) {
+        HybridizationNode node = namedSdrfNode.getSdrfNode();
+
+        ImmutableList.Builder<FactorValueAttribute> builder = ImmutableList.builder();
+
+        for (FactorValueAttribute factorValueAttribute : node.factorValues) {
+            // only extract factor values for the appropriate channel
+            if (factorValueAttribute.scannerChannel == namedSdrfNode.getChannel()) {
+                builder.add(factorValueAttribute);
+            }
+        }
+        return builder.build();
     }
 
     protected String buildTwoColourExperimentAssayName(String assayName, String label) {

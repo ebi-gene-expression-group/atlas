@@ -136,13 +136,13 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         return sourceNodes.iterator().next();
     }
 
-    protected void addFactorValues(ExperimentDesign experimentDesign, AssayNode<T> assayNode, ImmutableMap<String, String> factorNamesToType) {
+    protected void addFactorValues(ExperimentDesign experimentDesign, AssayNode<T> namedSdrfNode, ImmutableMap<String, String> factorNamesToType) {
 
         String compoundFactorValue = null;
         String compoundFactorName = null;
         String compoundFactorValueOntologyTerm = null;
 
-        for (FactorValueAttribute factorValueAttribute : getFactorAttributes(assayNode.getSdrfNode())) {
+        for (FactorValueAttribute factorValueAttribute : getFactorAttributes(namedSdrfNode)) {
 
             String factorName = factorValueAttribute.type; // the SDRF calls this type, but in the IDF the same value is actually factor name
             String factorValue = cleanValueAndUnitIfNeeded(factorValueAttribute.getNodeName(), factorValueAttribute.unit);
@@ -171,13 +171,13 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
             }
 
             String factorType = factorNamesToType.get(factorName);
-            experimentDesign.putFactor(assayNode.getName(), factorType, factorValue, factorValueOntologyTerm);
+            experimentDesign.putFactor(namedSdrfNode.getName(), factorType, factorValue, factorValueOntologyTerm);
         }
 
         //Add compound factor in a case there was no dose corresponding to it
         if (StringUtils.isNotEmpty(compoundFactorName) && StringUtils.isNotEmpty(compoundFactorValue)) {
             String compoundFactorType = factorNamesToType.get(compoundFactorName);
-            experimentDesign.putFactor(assayNode.getName(), compoundFactorType, compoundFactorValue, compoundFactorValueOntologyTerm);
+            experimentDesign.putFactor(namedSdrfNode.getName(), compoundFactorType, compoundFactorValue, compoundFactorValueOntologyTerm);
         }
     }
 
@@ -202,7 +202,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         return value;
     }
 
-    protected abstract List<FactorValueAttribute> getFactorAttributes(T sdrfNode);
+    protected abstract List<FactorValueAttribute> getFactorAttributes(AssayNode<T> sdrfNodeWrapper);
 
     protected abstract void addArrays(ExperimentDesign experimentDesign, Set<AssayNode<T>> assayNodes);
 

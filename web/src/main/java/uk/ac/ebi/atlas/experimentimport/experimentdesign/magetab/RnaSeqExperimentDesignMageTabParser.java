@@ -58,7 +58,8 @@ public class RnaSeqExperimentDesignMageTabParser extends MageTabParser<ScanNode>
     }
 
     @Override
-    protected List<FactorValueAttribute> getFactorAttributes(ScanNode node) {
+    protected List<FactorValueAttribute> getFactorAttributes(AssayNode<ScanNode> namedSdrfNode) {
+        ScanNode node = namedSdrfNode.getSdrfNode();
         Collection<uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode> assayNodes = GraphUtils.findUpstreamNodes(node, uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AssayNode.class);
         if (assayNodes.size() != 1) {
             throw new IllegalStateException("No assay corresponds to ENA run " + node.comments.get(ENA_RUN));

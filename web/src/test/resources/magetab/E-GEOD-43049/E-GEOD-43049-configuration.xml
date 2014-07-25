@@ -1,4 +1,4 @@
-<configuration experimentType="2color_microarray_mrna_differential">
+<configuration experimentType="microarray_2colour_mrna_differential">
 	<analytics>
 		<array_design>
 			A-AGIL-28
@@ -23,7 +23,7 @@
 		</assay_groups>
 		<contrasts>
 			<contrast id="g2_g1">
-				<name>growth condition: 'Apical anaerobic' vs. 'Conventional'</name>
+				<name>'Apical anaerobic' vs. 'Conventional'</name>
 				<reference_assay_group>g2</reference_assay_group>
 				<test_assay_group>g1</test_assay_group>
 			</contrast>

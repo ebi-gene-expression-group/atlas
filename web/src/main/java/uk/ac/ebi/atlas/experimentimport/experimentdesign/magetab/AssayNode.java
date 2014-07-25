@@ -26,12 +26,18 @@ import com.google.common.base.Objects;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.AbstractSDRFNode;
 
 public class AssayNode<T extends AbstractSDRFNode> {
+    private final int channel;
     private String name;
     private T sdrfNode;
 
     public AssayNode(String name, T sdrfNode) {
+        this(name, sdrfNode, 1);
+    }
+
+    public AssayNode(String name, T sdrfNode, int channel) {
         this.name = name;
         this.sdrfNode = sdrfNode;
+        this.channel = channel;
     }
 
     public String getName() {
@@ -40,6 +46,11 @@ public class AssayNode<T extends AbstractSDRFNode> {
 
     public T getSdrfNode() {
         return sdrfNode;
+    }
+
+    // used to determine factor value in multichannel (ie: Two Colour) experiments
+    public int getChannel() {
+        return channel;
     }
 
     @Override

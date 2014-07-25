@@ -64,8 +64,8 @@ public class MicroarrayExperimentDesignMageTabParser extends MageTabParser<Hybri
     }
 
     @Override
-    protected List<FactorValueAttribute> getFactorAttributes(HybridizationNode node) {
-        return node.factorValues;
+    protected List<FactorValueAttribute> getFactorAttributes(AssayNode<HybridizationNode> namedSdrfNode) {
+        return namedSdrfNode.getSdrfNode().factorValues;
     }
 
     @Override
