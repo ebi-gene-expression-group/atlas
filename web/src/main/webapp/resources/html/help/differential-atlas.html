@@ -4,7 +4,7 @@
 
 <h2>About the Differential Atlas</h2>
 
-<p>The Differential Atlas allows users to ask questions about which genes are
+<p>The Differential Atlas lets you ask questions about which genes are
 up&ndash; or down&ndash;regulated in different experimental conditions.  It is
 based on a set of highly curated differential expression RNA-Seq and microarray
 experiments from <a
@@ -205,7 +205,22 @@ currently displayed (rather than all genes returned by the query).</p>
 Click the gene name to see more information about that gene, including other
 Expression Atlas experiments in which it was found.</p>
 
-<p>An MA plot is also generated for each contrast. This plot displays the
+<h3>MA plots and gene set enrichment summaries</h3>
+
+<p>Two types of plots can be visualised by clicking one of the <img
+src="resources/images/help/histogram_btn.png" alt="histogram button"
+align="bottom" /> buttons in the header of the heatmap table. This brings up a
+menu like that shown below. Different numbers of plots may be available for
+different experiments.</p>
+
+<p><img src="resources/images/help/plots_menu.png" alt="plots menu"
+align="bottom" /></p>
+
+<p>An MA plot is also generated for each contrast in every experiment. To see
+it, select the <img
+src="resources/images/help/plots_menu_MA.png"
+alt="MA plot menu item" align="bottom" /> item from the menu. This plot displays
+the
 average expression level for each gene (normalized microarray intensity level or
 RNA-Seq log<sub>2</sub> counts-per-million) on the <i>x</i>-axis against
 log<sub>2</sub> fold-change on the <i>y</i>-axis. This plot gives an overview
@@ -213,7 +228,58 @@ of the relationship between expression level and fold-change, and can be used
 to assess any systematic biases in the data. Genes that were called as
 differentially expressed at FDR &lt; 0.05 are shown in red in the plot.</p>
 
+<p>Gene set enrichment analysis is performed using the <a
+href="http://www.bioconductor.org/packages/release/bioc/html/piano.html">Piano</a>
+package from <a href="http://www.bioconductor.org/">Bioconductor</a>. For each
+contrast, enrichment of terms from <a
+href="http://www.geneontology.org/">GO</a>, <a
+href="http://www.ebi.ac.uk/interpro/">InterPro</a>, and <a
+href="http://www.reactome.org/">Reactome</a> is tested for within the set of
+differentially expressed genes, using a variation on <a
+href="http://en.wikipedia.org/wiki/Fisher%27s_exact_test">Fisher's exact
+test</a>.  Gene set enrichment plots are only shown when statistically
+significant enrichment of terms was detected. This means that for some
+experiments, the menu will not display plots for all three of the
+aforementioned resources. To see a plot, select one of the following options
+from the menu:</p>
 
+<ul>
+	<li><img
+src="resources/images/help/plots_menu_GO.png"
+alt="GO plot menu item" align="bottom" /> to see <a href="http://www.geneontology.org/">GO</a> term enrichment,</li>
+	<li><img
+src="resources/images/help/plots_menu_iPro.png"
+alt="InterPro plot menu item" align="bottom" /> to see <a href="http://www.ebi.ac.uk/interpro">InterPro</a> term enrichment,</li>
+	<li><img
+src="resources/images/help/plots_menu_react.png"
+alt="Reactome plot menu item" align="bottom" /> to see <a href="http://www.reactome.org">Reaction</a> pathway term enrichment.</li>
+</ul>
+
+<p>Doing so will bring up a plot like the one below, showing nodes
+corresponding to enriched terms, linked by edges representing genes shared
+between nodes. The size of each node represents the proportion of
+differentially expressed genes annotated with each term. Please see the <a
+href="http://www.bioconductor.org/packages/release/bioc/html/piano.html">Piano</a>
+documentation for more details.</p>
+
+<p><img src="resources/images/help/go_plot.png" alt="GO term enrichment plot" align="bottom" /></p>
+
+<h3>Visualising differential expression at Ensembl</h3>
+
+<p>If you select a gene name and a contrast heading from the heatmap, the
+Ensembl Genome Browser <strong>Open</strong> button, to the left of the heatmap
+table, will become clickable.</p>
+
+<p><img src="resources/images/help/ensembl_gene_contrast_select.png" alt="screenshots showing how to visualise data in Ensembl" align="bottom" /></p>
+
+<p>Clicking the <strong>Open</strong> button will take you to the <a
+href="http://www.ensembl.org/index.html">Ensembl</a> or <a
+href="http://ensemblgenomes.org/">Ensembl Genomes</a> browser, which will
+display the log<sub>2</sub> fold-change for the contrast you selected in the
+context of the genomic location of the gene you selected. For more details
+about how to use the genome browsers, please see the relevant documentation for
+<a href="http://www.ensembl.org/info/index.html">Ensembl</a> or <a
+	href="http://ensemblgenomes.org/info/faqs">Ensembl Genomes</a>.</p>
 
 <h2>Downloading query results</h2>
 
@@ -244,11 +310,13 @@ href="help/r-data-objects.html">help page</a> about Expression Atlas data in R
 for more details.</p>
 
 
-<h2>Microarray QC reports</h2>
+<h2>QC reports</h2>
 
 <p>Click the <img alt="array QC report button"
 src="resources/images/help/qc_button.png" align="bottom" /> button to see the
-results of quality assessment for a microarray experiment. This report is
+results of quality assessment for the experiment data files.</p>
+
+<p>For microarray experiments, this report is
 generated by the <a
 href="http://www.bioconductor.org/packages/release/bioc/html/arrayQualityMetrics.html">arrayQualityMetrics</a>
 package from <a href="http://www.bioconductor.org">Bioconductor</a> in <a
@@ -257,6 +325,11 @@ href="http://www.bioconductor.org/packages/release/bioc/vignettes/arrayQualityMe
 for more details about the methods used. Breifly, outlier arrays are detected
 using distance measures, box plots, and MA plots. Any array that is found to be
 an outlier by all three of these methods is excluded from further analysis.</p>
+
+<p>For RNA-seq experiments, the QC report is generated by the <a
+href="https://code.google.com/p/irap/">iRAP</a> pipeline. Please see the iRAP
+<a href="http://biorxiv.org/content/early/2014/06/06/005991">documentation</a>
+for more details on the methods used.</p>
 
 
 <h2>Analysis methods page</h2>

@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Collections;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -56,10 +57,13 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
     private static final String TSV_LINE_2_NEGATIVE_INF = Joiner.on("\t").join(new String[]{GENE_ID_2, GENE_NAME_2,
             NEGATIVE_INF, ""+ FOLD_CHANGE_2});
 
+    private static final String TSV_MANY_NA_LINES = Joiner.on("\n").join(Collections.nCopies(5000, TSV_LINE_1_NA));
+
     private static String tsvContents1Contrast = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_LINE_1, TSV_LINE_2});
     private static String tsvContents2Contrasts = Joiner.on("\n").join(new String[]{TSV_HEADER_2_CONTRASTS, TSV_LINE_2_CONTRASTS});
     private static String tsvContents1ContrastNA = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_LINE_1_NA, TSV_LINE_2});
     private static String tsvContents1ContrastINF = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_LINE_1_INF, TSV_LINE_2_NEGATIVE_INF});
+    private static final String TSV_CONTENTS_MANY_NAS = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_MANY_NA_LINES, TSV_LINE_2});
 
 
     @Test
@@ -93,6 +97,18 @@ public class RnaSeqDifferentialAnalyticsInputStreamTest {
     @Test
     public void readContrastContainingNA() throws IOException {
         Reader tsvSource = new StringReader(tsvContents1ContrastNA);
+        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
+        RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test");
+
+        RnaSeqDifferentialAnalytics dto2 = new RnaSeqDifferentialAnalytics(GENE_ID_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2);
+
+        assertThat(subject.readNext(), is(dto2));
+        assertThat(subject.readNext(), is(nullValue()));
+    }
+
+    @Test
+    public void readContrastContainingManyNAsWithoutStackOverflow() throws IOException {
+        Reader tsvSource = new StringReader(TSV_CONTENTS_MANY_NAS);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
         RnaSeqDifferentialAnalyticsInputStream subject = new RnaSeqDifferentialAnalyticsInputStream(csvReader, "Test");
 

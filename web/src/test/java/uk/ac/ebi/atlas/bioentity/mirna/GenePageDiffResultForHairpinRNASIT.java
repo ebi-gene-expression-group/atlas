@@ -64,7 +64,7 @@ public class GenePageDiffResultForHairpinRNASIT extends SinglePageSeleniumFixtur
 
     @Test
     public void checkSelectedProfiles() throws UnknownHostException {
-        subject.clickDifferentialProfile();
+        subject.clickDifferentialPane();
         subject.clickDisplayLevelsButton();
         assertThat(subject.getContrastColumn(), contains("disease state: 'sepsis' vs 'control'"));
     }

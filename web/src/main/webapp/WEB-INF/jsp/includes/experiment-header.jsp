@@ -110,14 +110,24 @@
                                 </c:choose>
                             </td>
                         </c:if>
-                        <c:if test="${!type.isBaseline()}">
-                            <td>
-                                <a id="download-analytics" class="button-image"
-                                   title="Download all analytics for the experiment"
-                                   href="${analyticsDownloadUrl}${accessKeyQueryString}">
-                                    <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_analytics.png"/></a>
-                            </td>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${type.isBaseline()}">
+                                <td>
+                                    <a id="download-expressions" class="button-image"
+                                       title="Download all expressions for the experiment"
+                                       href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=0">
+                                        <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/></a>
+                                </td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>
+                                    <a id="download-analytics" class="button-image"
+                                       title="Download all analytics for the experiment"
+                                       href="${analyticsDownloadUrl}${accessKeyQueryString}">
+                                        <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_analytics.png"/></a>
+                                </td>
+                            </c:otherwise>
+                        </c:choose>
 
                     </tr>
                 </table>

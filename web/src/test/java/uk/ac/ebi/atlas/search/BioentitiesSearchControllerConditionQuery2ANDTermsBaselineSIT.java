@@ -48,7 +48,7 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsBaselineSIT exten
     @Test
     public void checkBaselineExperimentCounts() {
         //given
-        subject.clickBaselineProfile();
+        subject.clickBaselinePane();
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 

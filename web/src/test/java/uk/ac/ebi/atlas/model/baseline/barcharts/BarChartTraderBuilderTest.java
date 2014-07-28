@@ -33,9 +33,9 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsInputStream;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsInputStreamFactory;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsInputStream;
 
 import java.util.*;
 
@@ -48,7 +48,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class BarChartTraderBuilderTest {
 
-    private BitIndexBuilder subject;
+    private BarChartTraderBuilder subject;
 
     private static final String ORGANISM_PART_1 = "op1";
     private static final String ORGANISM_PART_2 = "op2";
@@ -121,7 +121,7 @@ public class BarChartTraderBuilderTest {
         //mock stream builder
         when(baselineExpressionsInputStreamFactory.createGeneExpressionsInputStream(anyString())).thenReturn(inputStream);
 
-        subject = new BitIndexBuilder(baselineExpressionsInputStreamFactory, cutoffScale);
+        subject = new BarChartTraderBuilder(baselineExpressionsInputStreamFactory, cutoffScale);
 
     }
 

@@ -20,6 +20,9 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery.toolbar.js"></script>
 
+<script src="${pageContext.request.contextPath}/resources/js/jquery.stickytableheaders.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.sticky.min.js"></script>
+
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.toolbars.css" />
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.icons.css" />
 

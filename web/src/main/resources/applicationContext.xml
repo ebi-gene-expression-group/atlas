@@ -53,8 +53,8 @@
         <lookup-method name="createExperimentalFactorsBuilder" bean="experimentalFactorsBuilder"/>
     </bean>
 
-    <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.trader.loader.BarChartTradersCacheLoader">
-        <lookup-method name="createBitIndexBuilder" bean="bitIndexBuilder"/>
+    <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTradersCacheLoader">
+        <lookup-method name="createBarChartTraderBuilder" bean="barChartTraderBuilder"/>
     </bean>
 
     <bean id="singleThreadExecutorService" class="java.util.concurrent.Executors" scope="prototype"

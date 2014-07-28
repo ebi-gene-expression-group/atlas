@@ -67,7 +67,7 @@ public class GenePageControllerMirbaseWith1EnsgeneResultSIT extends SinglePageSe
 
     @Test
     public void baselineHeatmapContains1Ensgene() {
-        subject.clickBaselineProfile();
+        subject.clickBaselinePane();
 
         FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
         wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));

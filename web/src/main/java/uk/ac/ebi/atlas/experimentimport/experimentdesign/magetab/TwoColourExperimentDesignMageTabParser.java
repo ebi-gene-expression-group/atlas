@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -31,9 +32,11 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.graph.utils.GraphUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.HybridizationNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.LabeledExtractNode;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.SourceNode;
+import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.FactorValueAttribute;
 
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Named("twoColourExperimentDesignMageTabParser")
@@ -41,8 +44,8 @@ import java.util.Set;
 public class TwoColourExperimentDesignMageTabParser extends MicroarrayExperimentDesignMageTabParser {
 
     @Override
-    protected Set<AssayNode<HybridizationNode>> getAssayNodes(SDRF sdrf) {
-        Set<AssayNode<HybridizationNode>> assayNodes = Sets.newLinkedHashSet();
+    protected Set<NamedSdrfNode<HybridizationNode>> getAssayNodes(SDRF sdrf) {
+        Set<NamedSdrfNode<HybridizationNode>> namedSdrfNodes = Sets.newLinkedHashSet();
 
         Collection<? extends HybridizationNode>  hybridizationNodes = sdrf.getNodes(HybridizationNode.class);
 
@@ -52,25 +55,40 @@ public class TwoColourExperimentDesignMageTabParser extends MicroarrayExperiment
         }
 
         for (HybridizationNode node : hybridizationNodes) {
-                    // Assemble assay accession for each channel separately
+            // create separate node for each each channel
             for (int channelNo = 1; channelNo <= 2; channelNo++) {
-                assayNodes.add(new AssayNode<HybridizationNode>(buildTwoColourExperimentAssayName(node.getNodeName(), sdrf.getLabelForChannel(channelNo)), node));
+                namedSdrfNodes.add(new NamedSdrfNode<>(buildTwoColourExperimentAssayName(node.getNodeName(), sdrf.getLabelForChannel(channelNo)), node, channelNo));
             }
         }
-        return assayNodes;
+        return namedSdrfNodes;
     }
 
     @Override
-    protected Collection<SourceNode> findUpstreamSourceNodes(AssayNode assayNode) {
+    protected Collection<SourceNode> findUpstreamSourceNodes(NamedSdrfNode namedSdrfNode) {
         Collection<SourceNode> upstreamSources = null;
 
-        for (LabeledExtractNode labeledExtractNode : GraphUtils.findUpstreamNodes(assayNode.getSdrfNode(), LabeledExtractNode.class)) {
-            if (extractLabelFromAssayName(assayNode.getName()).equals(labeledExtractNode.label.getAttributeValue())) {
+        for (LabeledExtractNode labeledExtractNode : GraphUtils.findUpstreamNodes(namedSdrfNode.getSdrfNode(), LabeledExtractNode.class)) {
+            if (extractLabelFromAssayName(namedSdrfNode.getName()).equals(labeledExtractNode.label.getAttributeValue())) {
                 upstreamSources =
                         GraphUtils.findUpstreamNodes(labeledExtractNode, SourceNode.class);
             }
         }
         return upstreamSources;
+    }
+
+    @Override
+    protected List<FactorValueAttribute> getFactorAttributes(NamedSdrfNode<HybridizationNode> namedSdrfNode) {
+        HybridizationNode node = namedSdrfNode.getSdrfNode();
+
+        ImmutableList.Builder<FactorValueAttribute> builder = ImmutableList.builder();
+
+        for (FactorValueAttribute factorValueAttribute : node.factorValues) {
+            // only extract factor values for the appropriate channel
+            if (factorValueAttribute.scannerChannel == namedSdrfNode.getChannel()) {
+                builder.add(factorValueAttribute);
+            }
+        }
+        return builder.build();
     }
 
     protected String buildTwoColourExperimentAssayName(String assayName, String label) {

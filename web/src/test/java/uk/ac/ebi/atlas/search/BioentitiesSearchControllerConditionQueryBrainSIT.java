@@ -48,7 +48,7 @@ public class BioentitiesSearchControllerConditionQueryBrainSIT extends SinglePag
     @Ignore
     public void checkBaselineExperimentCounts() {
         //given
-        subject.clickBaselineProfile();
+        subject.clickBaselinePane();
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 

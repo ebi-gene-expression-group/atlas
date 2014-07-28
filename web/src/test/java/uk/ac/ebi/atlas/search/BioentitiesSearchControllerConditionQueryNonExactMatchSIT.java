@@ -45,7 +45,7 @@ public class BioentitiesSearchControllerConditionQueryNonExactMatchSIT extends S
 
     @Test
     public void baselineResultsLinkIncludesExactMatchFalse() {
-        subject.clickBaselineProfile();
+        subject.clickBaselinePane();
 
         List<BaselineBioEntitiesSearchResult> baselineResults = subject.getBaselineCounts();
 

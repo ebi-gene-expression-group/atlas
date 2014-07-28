@@ -41,8 +41,8 @@ import java.util.Set;
 public class MicroarrayExperimentDesignMageTabParser extends MageTabParser<HybridizationNode> {
 
     @Override
-    protected Set<AssayNode<HybridizationNode>> getAssayNodes(SDRF sdrf) {
-        Set<AssayNode<HybridizationNode>> assayNodes = Sets.newLinkedHashSet();
+    protected Set<NamedSdrfNode<HybridizationNode>> getAssayNodes(SDRF sdrf) {
+        Set<NamedSdrfNode<HybridizationNode>> namedSdrfNodes = Sets.newLinkedHashSet();
 
         Collection<? extends HybridizationNode>  hybridizationNodes = sdrf.getNodes(HybridizationNode.class);
 
@@ -52,30 +52,30 @@ public class MicroarrayExperimentDesignMageTabParser extends MageTabParser<Hybri
         }
 
         for (HybridizationNode node : hybridizationNodes) {
-            assayNodes.add(new AssayNode<>(node.getNodeName(), node));
+            namedSdrfNodes.add(new NamedSdrfNode<>(node.getNodeName(), node));
         }
-        return assayNodes;
+        return namedSdrfNodes;
 
     }
 
     @Override
-    protected Collection<SourceNode> findUpstreamSourceNodes(AssayNode assayNode) {
-        return GraphUtils.findUpstreamNodes(assayNode.getSdrfNode(), SourceNode.class);
+    protected Collection<SourceNode> findUpstreamSourceNodes(NamedSdrfNode namedSdrfNode) {
+        return GraphUtils.findUpstreamNodes(namedSdrfNode.getSdrfNode(), SourceNode.class);
     }
 
     @Override
-    protected List<FactorValueAttribute> getFactorAttributes(HybridizationNode node) {
-        return node.factorValues;
+    protected List<FactorValueAttribute> getFactorAttributes(NamedSdrfNode<HybridizationNode> namedSdrfNode) {
+        return namedSdrfNode.getSdrfNode().factorValues;
     }
 
     @Override
-    protected void addArrays(ExperimentDesign experimentDesign, Set<AssayNode<HybridizationNode>> assayNodes) {
-        for (AssayNode<? extends HybridizationNode> assayNode : assayNodes) {
+    protected void addArrays(ExperimentDesign experimentDesign, Set<NamedSdrfNode<HybridizationNode>> namedSdrfNodes) {
+        for (NamedSdrfNode<? extends HybridizationNode> namedSdrfNode : namedSdrfNodes) {
 
-            if (assayNode.getSdrfNode().arrayDesigns.size() != 1) {
+            if (namedSdrfNode.getSdrfNode().arrayDesigns.size() != 1) {
                 throw new IllegalStateException("Assays with multiple array designs are not supported.");
             }
-            experimentDesign.putArrayDesign(assayNode.getName(), assayNode.getSdrfNode().arrayDesigns.get(0).getAttributeValue());
+            experimentDesign.putArrayDesign(namedSdrfNode.getName(), namedSdrfNode.getSdrfNode().arrayDesigns.get(0).getAttributeValue());
         }
     }
 
