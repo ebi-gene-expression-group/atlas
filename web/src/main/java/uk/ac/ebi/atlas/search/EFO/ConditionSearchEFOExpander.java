@@ -11,6 +11,8 @@ import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named
 @Scope("singleton")
@@ -27,17 +29,31 @@ public class ConditionSearchEFOExpander {
         this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
     }
 
-    public String fetchExpandedTermWithEFOChildren(String term) {
-        if (StringUtils.isBlank(term)) {
-            return term;
+    public String fetchExpandedTermWithEFOChildren(String queryTerms) {
+        if (StringUtils.isBlank(queryTerms)) {
+            return queryTerms;
+        }
+        List<String> terms = bioentityPropertyValueTokenizer.split(queryTerms);
+
+
+        List<String> EFOterms = new ArrayList<>();
+        String joinOn = " OR ";
+
+        if (terms.size() == 1) {
+            return termPlusEFOChildren(queryTerms);
+        }
+        else {   //TODO: implement AND, and fix test  BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT and BioentitiesSearchControllerConditionQuery2ANDTermsBaselineSIT
+            for (String term : terms) {
+                if (term.equalsIgnoreCase("AND")) {
+                    joinOn = " AND ";
+                } else {
+                    String escapedTerm = term.trim();
+                    EFOterms.add(escapedTerm);
+                }
+            }
         }
 
-        if (term.contains(" AND ")) {
-            //TODO: implement AND, and fix test  BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT and BioentitiesSearchControllerConditionQuery2ANDTermsBaselineSIT
-            throw new NotImplementedException("EFO expansion of terms containing AND not yet implemented");
-        }
-
-        return termPlusEFOChildren(term);
+        return Joiner.on(joinOn).join(EFOterms);
     }
 
     private String termPlusEFOChildren(String term) {
