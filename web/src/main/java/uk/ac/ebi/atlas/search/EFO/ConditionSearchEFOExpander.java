@@ -21,39 +21,22 @@ public class ConditionSearchEFOExpander {
     private static final Logger LOGGER = Logger.getLogger(ConditionSearchEFOExpander.class);
 
     private EFOChildrenClient efoChildrenClient;
-    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
     @Inject
-    public ConditionSearchEFOExpander(EFOChildrenClient efoChildrenClient, BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
+    public ConditionSearchEFOExpander(EFOChildrenClient efoChildrenClient) {
         this.efoChildrenClient = efoChildrenClient;
-        this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
     }
 
     public String fetchExpandedTermWithEFOChildren(String queryTerms) {
         if (StringUtils.isBlank(queryTerms)) {
             return queryTerms;
         }
-        List<String> terms = bioentityPropertyValueTokenizer.split(queryTerms);
 
-
-        List<String> EFOterms = new ArrayList<>();
-        String joinOn = " OR ";
-
-        if (terms.size() == 1) {
-            return termPlusEFOChildren(queryTerms);
-        }
-        else {   //TODO: implement AND, and fix test  BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT and BioentitiesSearchControllerConditionQuery2ANDTermsBaselineSIT
-            for (String term : terms) {
-                if (term.equalsIgnoreCase("AND")) {
-                    joinOn = " AND ";
-                } else {
-                    String escapedTerm = term.trim();
-                    EFOterms.add(escapedTerm);
-                }
-            }
+        if (queryTerms.contains(" AND ") || queryTerms.contains(" and ")) {
+            return queryTerms;
         }
 
-        return Joiner.on(joinOn).join(EFOterms);
+        return termPlusEFOChildren(queryTerms);
     }
 
     private String termPlusEFOChildren(String term) {
@@ -64,27 +47,5 @@ public class ConditionSearchEFOExpander {
         Iterable<String> topEfoChildren = Iterables.limit(efoChildren, 1023);
         return term + (efoChildren.isEmpty() ? "" : " " + Joiner.on(" ").join(topEfoChildren));
     }
-
-//
-//    String buildQueryString(String queryString){
-//        List<String> terms = bioentityPropertyValueTokenizer.split(queryString);
-//
-//        List<String> solrTerms = new ArrayList<>();
-//
-//        String joinOn = " OR ";
-//
-//        for (String term: terms) {
-//            if (term.equalsIgnoreCase("AND")) {
-//                joinOn = " AND ";
-//            } else {
-//                String escapedTerm = term.replace(":", "\\:");
-//                solrTerms.add(CONDITIONS_SEARCH_FIELD + ":" + escapedTerm);
-//            }
-//        }
-//
-//        return Joiner.on(joinOn).join(solrTerms);
-//    }
-//
-//
 
 }

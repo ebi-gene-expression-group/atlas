@@ -16,9 +16,7 @@ public class ConditionSearchEFOExpanderTest {
     @Mock
     private EFOChildrenClient efoChildrenClient;
 
-    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer = new BioentityPropertyValueTokenizer();
-
-    private ConditionSearchEFOExpander subject = new ConditionSearchEFOExpander(efoChildrenClient, bioentityPropertyValueTokenizer);
+    private ConditionSearchEFOExpander subject = new ConditionSearchEFOExpander(efoChildrenClient);
 
     @Test
     public void nullTerm() {
