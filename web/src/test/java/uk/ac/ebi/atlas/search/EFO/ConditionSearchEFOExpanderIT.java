@@ -9,6 +9,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.junit.Assert.assertThat;
 
@@ -26,7 +28,12 @@ public class ConditionSearchEFOExpanderIT {
         String expandedSearch = subject.fetchExpandedTermWithEFOChildren("cancer");
 
         String[] terms = StringUtils.split(expandedSearch);
+
         assertThat(terms, arrayWithSize(1024));
+        assertThat(terms[0], is("cancer"));
+        assertThat(terms[1], startsWith("EFO:"));
+
     }
+
 
 }
