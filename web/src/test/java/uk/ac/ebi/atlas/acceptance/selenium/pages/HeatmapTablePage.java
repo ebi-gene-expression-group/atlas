@@ -282,7 +282,7 @@ public class HeatmapTablePage extends TablePage {
         //we get the cell at index 1 because at index 0 we have the gene name
         WebElement firstExpressionLevelCell = getNonEmptyCellsFromFirstTableRow(getHeatmapTable()).get(getGeneExpressionStartingRowIndex());
         WebElement div = firstExpressionLevelCell.findElement(By.tagName("div"));
-        return div.getAttribute("class").contains("hide_cell");
+        return SeleniumUtil.isVisibilityHidden(div);
     }
 
     public double getAverageFpkm(int rowIndex) {

@@ -144,4 +144,7 @@ public class SeleniumUtil {
 
     }
 
+    public static Boolean isVisibilityHidden(WebElement element) {
+        return element.getAttribute("style").contains("visibility: hidden");
+    }
 }
