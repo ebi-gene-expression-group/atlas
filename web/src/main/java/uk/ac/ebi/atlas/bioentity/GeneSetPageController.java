@@ -37,6 +37,7 @@ import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
+import uk.ac.ebi.atlas.utils.ReactomeClient;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -53,7 +54,7 @@ public class GeneSetPageController extends BioEntityPageController {
 
     private BioEntityPropertyService bioEntityPropertyService;
 
-    private ReactomeBiomartClient reactomeBiomartClient;
+    private ReactomeClient reactomeClient;
 
     private GoTermTrader goTermTrader;
 
@@ -67,10 +68,10 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Inject
-    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeBiomartClient reactomeBiomartClient, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader) {
+    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeClient reactomeClient, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader) {
         this.solrQueryService = solrQueryService;
         this.bioEntityPropertyService = bioEntityPropertyService;
-        this.reactomeBiomartClient = reactomeBiomartClient;
+        this.reactomeClient = reactomeClient;
         this.goTermTrader = goTermTrader;
         this.interProTermTrader = interProTermTrader;
     }
@@ -108,7 +109,7 @@ public class GeneSetPageController extends BioEntityPageController {
 
         if (isReactome(identifier)) {
             propertyValuesByType.put("reactome", trimmedIdentifier.toUpperCase());
-            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeBiomartClient.fetchPathwayNameFailSafe(trimmedIdentifier));
+            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeClient.fetchPathwayNameFailSafe(trimmedIdentifier));
         } else if (isGeneOntology(identifier)) {
             String term = goTermTrader.getTerm(identifier);
             propertyValuesByType.put("go", identifier);

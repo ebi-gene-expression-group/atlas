@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
+import uk.ac.ebi.atlas.utils.ReactomeClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,6 +25,8 @@ public class BioEntityPropertyLinkBuilder {
 
     private ReactomeBiomartClient reactomeBiomartClient;
 
+    private ReactomeClient reactomeClient;
+
     private SolrQueryService solrQueryService;
 
     private GoTermTrader goTermTrader;
@@ -33,11 +36,11 @@ public class BioEntityPropertyLinkBuilder {
     private PoTermTrader poTermTrader;
 
     @Inject
-    public BioEntityPropertyLinkBuilder(BioEntityCardProperties bioEntityCardProperties, ReactomeBiomartClient reactomeBiomartClient,
+    public BioEntityPropertyLinkBuilder(BioEntityCardProperties bioEntityCardProperties, ReactomeClient reactomeClient,
                                         SolrQueryService solrQueryService, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader,
                                         PoTermTrader poTermTrader) {
         this.bioEntityCardProperties = bioEntityCardProperties;
-        this.reactomeBiomartClient = reactomeBiomartClient;
+        this.reactomeClient = reactomeClient;
         this.solrQueryService = solrQueryService;
         this.goTermTrader = goTermTrader;
         this.interProTermTrader = interProTermTrader;
@@ -72,7 +75,7 @@ public class BioEntityPropertyLinkBuilder {
                 displayName = transformOrthologToSymbol(displayName);
                 break;
             case "reactome":
-                displayName = reactomeBiomartClient.fetchPathwayNameFailSafe(propertyValue);
+                displayName = reactomeClient.fetchPathwayNameFailSafe(propertyValue);
                 break;
             case "go":
                 displayName = goTermTrader.getTerm(propertyValue);
