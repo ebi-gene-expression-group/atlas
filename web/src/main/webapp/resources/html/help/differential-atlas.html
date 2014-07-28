@@ -1,8 +1,9 @@
 <h1>Differential Expression Atlas help</h1>
 
+<!-- Beginning of main text section -->
+<section class="grid_18 alpha">
 
-
-<h2>About the Differential Atlas</h2>
+<h2><a name="about">About the Differential Atlas</a></h2>
 
 <p>The Differential Atlas lets you ask questions about which genes are
 up&ndash; or down&ndash;regulated in different experimental conditions.  It is
@@ -14,15 +15,15 @@ analysis pipeline.</p>
 
 
 
-<h2>Differential Atlas at&ndash;a&ndash;glance</h2>
+<h2><a name="at-a-glance">Differential Atlas at&ndash;a&ndash;glance</a></h2>
 
-<p><img src="resources/images/help/diffExptPageHelp.png" alt="Differential Atlas experiment page screenshot" align="bottom" /></p>
-
-
-<h2>Searching the Differential Atlas</h2>
+<p><a href="resources/images/help/differential-atlas-overview.pdf"><img src="resources/images/help/diffExptPageHelp.png" alt="Differential Atlas experiment page screenshot" align="bottom" /></a></p>
 
 
-<h3>Specifying the maximum adjusted <i>p</i>-value and minimum log<sub>2</sub> fold-change</h3>
+<h2><a name="searching">Searching the Differential Atlas</a></h2>
+
+
+<h3><a name="minPvalLogFC">Specifying the maximum adjusted <i>p</i>-value and minimum log<sub>2</sub> fold-change</a></h3>
 
 <p>By default, the maximum adjusted <i>p</i>-value is 0.05, and the minimum 
 log<sub>2</sub> fold-change is 1. This means only genes with an adjusted
@@ -49,7 +50,7 @@ genes with log<sub>2</sub> fold-change of greater than +2 <strong>or</strong>
 less than -2 are shown.</p>
 
 
-<h3>Searching with genes</h3>
+<h3><a name="geneSearch">Searching with genes</a></h3>
 
 <p>You can search with <a href="http://ensembl.org">Ensembl</a> gene symbols
 (e.g. desat1), identifiers (e.g. FBgn0086687) or <a title="Ensembl Glossary"
@@ -79,7 +80,7 @@ match" box, type "desaturase" and click search.</p>
 
 
 
-<h3>Searching with contrasts</h3>
+<h3><a name="contrastSearch">Searching with contrasts</a></h3>
 
 <p>Many experiments contain more than one comparison, or "contrast". If you do
 not select any contrasts, results for all contrasts in the experiment will be
@@ -170,7 +171,7 @@ results. In particular:</p>
 
 
 
-<h2>Heatmap results display</h2>
+<h2><a name="heatmap">Heatmap results display</a></h2>
 
 <p>Results for your query are shown in a heatmap table. The heatmap rows are
 labelled with gene symbols (and design elements in the case of microarray
@@ -205,7 +206,7 @@ currently displayed (rather than all genes returned by the query).</p>
 Click the gene name to see more information about that gene, including other
 Expression Atlas experiments in which it was found.</p>
 
-<h3>MA plots and gene set enrichment summaries</h3>
+<h3><a name="plots">MA plots and gene set enrichment summaries</a></h3>
 
 <p>Two types of plots can be visualised by clicking one of the <img
 src="resources/images/help/histogram_btn.png" alt="histogram button"
@@ -264,7 +265,7 @@ documentation for more details.</p>
 
 <p><img src="resources/images/help/go_plot.png" alt="GO term enrichment plot" align="bottom" /></p>
 
-<h3>Visualising differential expression at Ensembl</h3>
+<h3><a name="ensembl">Visualising differential expression at Ensembl</a></h3>
 
 <p>If you select a gene name and a contrast heading from the heatmap, the
 Ensembl Genome Browser <strong>Open</strong> button, to the left of the heatmap
@@ -281,7 +282,7 @@ about how to use the genome browsers, please see the relevant documentation for
 <a href="http://www.ensembl.org/info/index.html">Ensembl</a> or <a
 	href="http://ensemblgenomes.org/info/faqs">Ensembl Genomes</a>.</p>
 
-<h2>Downloading query results</h2>
+<h2><a name="downloadResults">Downloading query results</a></h2>
 
 <p>The <b>top 50</b> differentially expressed genes resulting from your search
 are displayed on the page. Click on the <img alt="Download button"
@@ -291,7 +292,7 @@ with no ordering.</p>
 
 
 
-<h2>Downloading other experimental data</h2>
+<h2><a name="downloadData">Downloading other experimental data</a></h2>
 
 <p>You can download RNA-seq raw
 counts (click the <img
@@ -310,7 +311,7 @@ href="help/r-data-objects.html">help page</a> about Expression Atlas data in R
 for more details.</p>
 
 
-<h2>QC reports</h2>
+<h2><a name="qc">QC reports</a></h2>
 
 <p>Click the <img alt="array QC report button"
 src="resources/images/help/qc_button.png" align="bottom" /> button to see the
@@ -332,7 +333,7 @@ href="https://code.google.com/p/irap/">iRAP</a> pipeline. Please see the iRAP
 for more details on the methods used.</p>
 
 
-<h2>Analysis methods page</h2>
+<h2><a name="anaMethods">Analysis methods page</a></h2>
 
 <p>The Analysis Methods page (e.g. for <a
 	href="experiments/E-MTAB-1066/analysis-methods"><i>D.
@@ -347,7 +348,7 @@ alt="Analysis Methods button" src="resources/images/help/am_btn.png"
 align="bottom" /> button.</p>
 
 
-<h2>Experiment design page</h2>
+<h2><a name="exptDesign">Experiment design page</a></h2>
 
 <p>The Experiment Design page (e.g. for <a
 	href="experiments/E-MTAB-1066/experiment-design"><i>D.
@@ -383,7 +384,7 @@ right&ndash;hand side to download the full results of the current query (with
 no ordering applied) in tab&ndash;delimited format.</p>
 
 
-<h2>Providing feedback</h2>
+<h2><a name="feedbackSection">Providing feedback</a></h2>
 
 <p>We value your feedback on what Expression Atlas is doing right, what does
 not work or what could be achieved more intuitively. We would also be grateful
@@ -396,3 +397,35 @@ validity of the data presented in the Differential Atlas.</p>
 the <i>Feedback</i> link in the top&ndash;right of the page:</p>
 
 <p><img alt="Feedback Pop-up" src="resources/images/help/feedback.png" align="bottom" /></p>
+
+</section>
+
+<aside class="grid_6 omega">
+
+<h3>Jump to...</h3>
+
+<ul>
+	<li><a href="help/differential-atlas.html#about">About the Differential Atlas</a></li>
+	<li><a href="help/differential-atlas.html#at-a-glance">Differential Atlas at&ndash;a&ndash;glance</a></li>
+	<li><a href="help/differential-atlas.html#searching">Searching the Differential Atlas</a>
+		<ul>
+			<li><a href="help/differential-atlas.html#minPvalLogFC">Specifying the maximum adjusted <i>p</i>-value and minimum log<sub>2</sub> fold-change</a></li>
+			<li><a href="help/differential-atlas.html#geneSearch">Searching with genes</a></li>
+			<li><a href="help/differential-atlas.html#contrastSearch">Searching with contrasts</a></li>
+		</ul>
+	</li>
+	<li><a href="help/differential-atlas.html#heatmap">Heatmap results display</a></li>
+		<ul>
+			<li><a href="help/differential-atlas.html#plots">MA plots and gene set enrichment summaries</a></li>
+			<li><a href="help/differential-atlas.html#ensembl">Visualising differential expression at Ensembl</a></li>
+		</ul>
+	</li>
+	<li><a href="help/differential-atlas.html#downloadResults">Downloading query results</a></li>
+	<li><a href="help/differential-atlas.html#downloadData">Downloading other experimental data</a></li>
+	<li><a href="help/differential-atlas.html#qc">QC reports</a></li>
+	<li><a href="help/differential-atlas.html#anaMethods">Analysis methods page</a></li>
+	<li><a href="help/differential-atlas.html#exptDesign">Experiment design page</a></li>
+	<li><a href="help/differential-atlas.html#feedbackSection">Providing feedback</a></li>
+</ul>
+</aside>
+

@@ -43,7 +43,7 @@ abstract class TablePage extends GlobalSearchPage {
     private static final String GENE_ANCHOR_XPATH_TEMPLATE = "tbody/tr[%d]/td[1]/a";
     private static final String SECOND_COLUMN_CELLS_XPATH = "tbody//td[2]";
     private static final String COLUMN_CELLS_XPATH = "tbody//td[%d]";
-    protected static final String TABLE_HEADERS_XPATH = "thead/tr/th";
+    protected static final String TABLE_HEADERS_XPATH = "thead[1]/tr/th";
 
     @FindBy(id = "experimentDescription")
     private WebElement experimentDescription;
