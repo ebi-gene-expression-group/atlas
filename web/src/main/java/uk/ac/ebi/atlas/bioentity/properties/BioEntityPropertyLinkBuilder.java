@@ -7,7 +7,6 @@ import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
 import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
-import uk.ac.ebi.atlas.utils.ReactomeBiomartClient;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
 import javax.inject.Inject;
@@ -22,8 +21,6 @@ import java.util.Set;
 public class BioEntityPropertyLinkBuilder {
 
     private BioEntityCardProperties bioEntityCardProperties;
-
-    private ReactomeBiomartClient reactomeBiomartClient;
 
     private ReactomeClient reactomeClient;
 
