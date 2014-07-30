@@ -47,14 +47,14 @@
     color: #222;
     font-size: 16px;
     top: 0px;
-    left: 45px;
+    left: 31px;
 }
 
 .item .specie_experiment ul {
     list-style: none;
     position: relative;
     top: -10px;
-    left: 25px;
+    left: 14px;
 }
 
 .item .specie_experiment {
@@ -63,7 +63,7 @@
 }
 
 .item ul li a {
-    font-size: 14px;
+    font-size: 13px;
     white-space: nowrap;
     float: left;
 }
