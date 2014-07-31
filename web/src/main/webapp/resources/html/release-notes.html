@@ -3,6 +3,23 @@
 <!-- Beginning of main text section -->
 <section class="grid_18 alpha">
 <h2><a name="latest_release">Latest release note</a></h2>
+
+<h3><img src="resources/images/help/atlas_release_icon.png" alt="Atlas release" align="bottom" />?th August 2014</h3></nobr>
+<ul>
+  <li>Ensembl 76 / Ensembl Genomes 22 gene annotations and array design probe set mappings;</li>
+  <li>? experiments, including ? RNA-seq experiments (? baseline, ? differential), studying samples in ? differential comparisons and ? organisms (see below for breakdown of comparisons per organism);</li>
+  <li>All Human RNA-seq experiments have been re-analysed against the new assembly (GRCh38), e.g. <a href="http://www.ebi.ac.uk/gxa/experiments/E-MTAB-1733">RNA-seq of coding RNA from tissue samples of 95 human individuals representing 27 different tissues</a>;</li>
+  <li>Average number of citations per experiment: ? (courtesy of <a href="http://europepmc.org/">Europe PubMed Central)</a>;</li>
+  <li>Baseline expression levels available for genes and transcripts in ? tissues, ? cell lines, ? cellular components, ? developmental stages and ? RNA types;</li>
+  <li><img src="resources/images/qc_v15.png" alt="Quality control report button" align="bottom" /> Quality control reports, e.g. <a href="http://www.ebi.ac.uk/gxa/experiments/E-MTAB-1733/fastqc/homo%20sapiens/qc.html">FASTQ QC</a> and <a href="http://www.ebi.ac.uk/gxa/experiments/E-MTAB-1733/fastqc/homo%20sapiens/mapping.html">Mapping</a>, are now available for all RNA-seq experiments;</li>
+  <li><a href="http://www.ebi.ac.uk/efo/">EFO</a>-based autocomplete for experimental conditions is now available on the main Atlas search page. Please see 'How to search' section of <a href="http://www.ebi.ac.uk/gxa/help/index.html">Atlas help page</a> for more details;</li>
+  <li>User queries in the main Atlas search interface are expanded using <a href="http://www.ebi.ac.uk/efo/">EFO</a>. This means that if you search for e.g. "cancer", you will also see results with terms such as "carcinoma", "malignant tumour", and other synonyms and children of the <a href="http://www.ebi.ac.uk/efo/EFO_0000311">cancer</a> entry in EFO; </li>
+  <li>Gene set enrichment analysis (GSEA) is performed using the Piano package from Bioconductor. In each differential experiment, for each contrast, enrichment of terms from GO, InterPro, and Reactome is tested for within the set of differentially expressed genes, using a variation on Fisher's exact test. Plots showing maximum top ten GO, Interpro and Reactome terms enriched within the differentially expressed genes for each contrast are now available for each differential experiment in Atlas. Please see <a href="http://www.ebi.ac.uk/gxa/help/differential-atlas.html#plots">Differential Atlas help</a> for more information. </li>
+  <li><img src="resources/images/r-button.png" alt="R object download button" align="bottom" /> For <a href="help/differential-atlas.html">differential expression</a> experiments in Expression Atlas, you can now download a file containing the expression data and meta-data that you can load into <a href="http://www.r-project.org/">R</a>. Please see <a href="http://www.ebi.ac.uk/gxa/help/r-data-objects.html">Expression Atlas data in R help</a> for more information;</li>
+  <li>Differential and Baseline Expression can now bve visualised on Ensmebl and Ensembl Genomes Genome Browser. Please see <a href="http://www.ebi.ac.uk/gxa/help/baseline-atlas.html#ensembl">Visualising baseline expression at Ensembl</a> and <a href="http://www.ebi.ac.uk/gxa/help/differential-atlas.html#ensembl">Visualising differential expression at Ensembl</a> for more information.</li>
+</ul>
+<img src="resources/images/help/differential_organisms_aug2014.png" alt="Number of differential comparisons per organism" align="middle" />
+
 <h3><img src="resources/images/help/atlas_release_icon.png" alt="Atlas release" align="bottom" />10th April 2014</h3></nobr>
 <ul>
   <li>Ensembl 75 / Ensembl Genomes 22 gene annotations and array design probe set mappings;</li>

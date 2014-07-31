@@ -24,7 +24,7 @@
     display: block;
     width: 406px;
     height: 410px;
-    margin-left: auto;
+    margin-left: 400px;
     margin-right: auto;
     margin-top: -410px;
 }
@@ -47,14 +47,14 @@
     color: #222;
     font-size: 16px;
     top: 0px;
-    left: 45px;
+    left: 41px;
 }
 
 .item .specie_experiment ul {
     list-style: none;
     position: relative;
     top: -10px;
-    left: 25px;
+    left: 24px;
 }
 
 .item .specie_experiment {
@@ -63,7 +63,7 @@
 }
 
 .item ul li a {
-    font-size: 14px;
+    font-size: 13px;
     white-space: nowrap;
     float: left;
 }
