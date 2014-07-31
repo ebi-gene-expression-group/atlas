@@ -27,7 +27,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.utils.FastQCReportUtil;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Set;
@@ -36,16 +40,43 @@ import java.util.Set;
 @Scope("request")
 public class BaselineDesignPageController extends ExperimentDesignPageRequestHandler<BaselineExperiment> {
 
+    private static final String SPECIES = "species";
+
+    private FastQCReportUtil fastQCReportUtil;
+
+    @Inject
+    public void setFastQCReportUtil(FastQCReportUtil fastQCReportUtil) {
+        this.fastQCReportUtil = fastQCReportUtil;
+    }
+
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=RNASEQ_MRNA_BASELINE"})
     public String showExperimentDesign(Model model, HttpServletRequest request) throws IOException {
-
         return handleRequest(model, request);
-
     }
 
     @Override
     protected void extendModel(Model model, BaselineExperiment experiment, String experimentAccession) {
-        //No need to add extra attributes to the model, parent template method does enough
+        //This is necessary for adding functionality to the QC button
+        Set<Factor> organisms = experiment.getExperimentalFactors().getDefaultFilterFactors();
+        String specie = null;
+
+        for(Factor factor : organisms) {
+            if(factor.getType().equals("ORGANISM")) {
+                specie = factor.getValue();
+            }
+            else {
+                specie = experiment.getFirstSpecies();
+            }
+        }
+
+        try {
+            if (fastQCReportUtil.hasFastQC(experimentAccession, specie)) {
+                fastQCReportUtil.buildFastQCIndexHtmlPath(experimentAccession, specie);
+                model.addAttribute(SPECIES, specie);
+            }
+        } catch (IOException e) {
+            throw new ResourceNotFoundException("Species could not be found");
+        }
     }
 
     @Override

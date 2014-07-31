@@ -34,12 +34,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Controller
 @Scope("request")
@@ -87,6 +89,9 @@ public class DifferentialDesignPageController extends ExperimentDesignPageReques
         //For showing the QC REPORTS button in the header
         if(experiment instanceof MicroarrayExperiment){
             model.addAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, ((MicroarrayExperiment)experiment).getArrayDesignAccessions());
+
+            SortedSet<String> arrayDesignNames = arrayDesignTrader.getArrayDesignNames(((MicroarrayExperiment)experiment).getArrayDesignAccessions());
+            model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, arrayDesignNames);
         }
 
     }
