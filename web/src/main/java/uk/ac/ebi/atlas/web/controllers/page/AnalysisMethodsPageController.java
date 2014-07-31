@@ -30,35 +30,78 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
+import uk.ac.ebi.atlas.utils.FastQCReportUtil;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Set;
+import java.util.SortedSet;
 
 @Controller
 @Scope("request")
-public class
-        AnalysisMethodsPageController {
+public class AnalysisMethodsPageController {
+
+    private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
+    private static final String SPECIES = "species";
+    protected static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
 
     private TsvReaderBuilder tsvReaderBuilder;
 
     private DownloadURLBuilder downloadURLBuilder;
-    private static final String QC_ARRAY_DESIGNS_ATTRIBUTE = "qcArrayDesigns";
+
+    protected ArrayDesignTrader arrayDesignTrader;
+
+    private FastQCReportUtil fastQCReportUtil;
+
+    @Inject
+    public void setFastQCReportUtil(FastQCReportUtil fastQCReportUtil) {
+        this.fastQCReportUtil = fastQCReportUtil;
+    }
 
     @Inject
     public AnalysisMethodsPageController(TsvReaderBuilder tsvReaderBuilder, DownloadURLBuilder downloadURLBuilder,
                                          @Value("#{configuration['experiment.analysis-method.path.template']}")
-                                         String pathTemplate) {
+                                         String pathTemplate, ArrayDesignTrader arrayDesignTrader) {
 
         this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
         this.downloadURLBuilder = downloadURLBuilder;
+        this.arrayDesignTrader = arrayDesignTrader;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = {"type=RNASEQ_MRNA_BASELINE"})
     public String baselineAnalysisMethods(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
+        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+        //This is necessary for adding functionality to the QC button
+        Set<Factor> organisms = experiment.getExperimentalFactors().getDefaultFilterFactors();
+        String specie = null;
+
+        if(!organisms.isEmpty()) {
+            for (Factor factor : organisms) {
+                if (factor.getType().equals("ORGANISM")) {
+                    specie = factor.getValue();
+                }
+            }
+        } else {
+            specie = experiment.getFirstSpecies();
+        }
+        try {
+            if (fastQCReportUtil.hasFastQC(experimentAccession, specie)) {
+                fastQCReportUtil.buildFastQCIndexHtmlPath(experimentAccession, specie);
+                model.addAttribute(SPECIES, specie);
+            }
+        } catch (IOException e) {
+            throw new ResourceNotFoundException("Species could not be found");
+        }
+
         return analysisMethods(experimentAccession, model, request);
     }
 
@@ -73,6 +116,9 @@ public class
         //For showing the QC REPORTS button in the header
         MicroarrayExperiment experiment = (MicroarrayExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
         request.setAttribute(QC_ARRAY_DESIGNS_ATTRIBUTE, experiment.getArrayDesignAccessions());
+
+        SortedSet<String> arrayDesignNames = arrayDesignTrader.getArrayDesignNames(experiment.getArrayDesignAccessions());
+        model.addAttribute(ALL_ARRAY_DESIGNS_ATTRIBUTE, arrayDesignNames);
 
         return analysisMethods(experimentAccession, model, request);
     }

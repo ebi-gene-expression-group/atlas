@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -38,9 +39,18 @@ public abstract class ExperimentDesignPageRequestHandler<T extends Experiment> {
 
     private DownloadURLBuilder downloadURLBuilder;
 
+    protected ArrayDesignTrader arrayDesignTrader;
+
+    protected static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
+
     @Inject
     void setDownloadURLBuilder(DownloadURLBuilder downloadURLBuilder) {
         this.downloadURLBuilder = downloadURLBuilder;
+    }
+
+    @Inject
+    public void setArrayDesignTrader(ArrayDesignTrader arrayDesignTrader) {
+        this.arrayDesignTrader = arrayDesignTrader;
     }
 
     public String handleRequest(Model model, HttpServletRequest request) {
