@@ -60,15 +60,15 @@ public class BaselineDesignPageController extends ExperimentDesignPageRequestHan
         Set<Factor> organisms = experiment.getExperimentalFactors().getDefaultFilterFactors();
         String specie = null;
 
-        for(Factor factor : organisms) {
-            if(factor.getType().equals("ORGANISM")) {
-                specie = factor.getValue();
+        if(!organisms.isEmpty()) {
+            for (Factor factor : organisms) {
+                if (factor.getType().equals("ORGANISM")) {
+                    specie = factor.getValue();
+                }
             }
-            else {
-                specie = experiment.getFirstSpecies();
-            }
+        } else {
+            specie = experiment.getFirstSpecies();
         }
-
         try {
             if (fastQCReportUtil.hasFastQC(experimentAccession, specie)) {
                 fastQCReportUtil.buildFastQCIndexHtmlPath(experimentAccession, specie);
