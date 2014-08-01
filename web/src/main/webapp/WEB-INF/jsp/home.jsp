@@ -99,6 +99,13 @@
             </tr>
         </table>
     </form>
+
+    <table style="margin-top: 10px;">
+        <tr>
+            <td><label>Still need the old Expression Atlas? </label></td>
+            <td><a href="http://www-test.ebi.ac.uk/gxa">Click here</a></td>
+        </tr>
+    </table>
 </section>
 
 <section class="grid_5 omega">
@@ -116,15 +123,22 @@
         </tr>
     </table>
     <br/>
-        <table class="form-grid" style="margin:0px 9px;">
-            <tr>
-                <td><label>Still need the old Expression Atlas?</label></td>
-            </tr>
-            <tr>
-                <td><a href="http://www-test.ebi.ac.uk/gxa"><img src="resources/images/old_gxa.png">
-                    Click here</a></td>
-            </tr>
-        </table>
+    <div class="form-grid" style="margin:0px 9px;" >
+        <div style="margin-bottom:5px;">
+            <div><label>Publications</label></div>
+        </div>
+        <div>
+            <div style="display:inline-block; max-width: 50%; vertical-align:top; margin-left:5px;"><img style="max-width:50px; max-height:50px;" src="resources/images/publications_cover.gif"></div>
+            <div style="display:inline-block; max-width:70%; vertical-align: middle;">Expression Atlas update - a database of gene and transcript expression from microarray and sequencing-based functional genomics experiments.</div>
+        </div>
+        <div>
+            <div style="display:inline-block; margin-left:5px;">
+                <span><a href="http://nar.oxfordjournals.org/content/42/D1/D926.full.pdf">PDF</a></span>
+                <span><a href="http://nar.oxfordjournals.org/content/42/D1/D926.full">HTML</a></span>
+            </div>
+        </div>
+    </div>
+
 </section>
 
 
