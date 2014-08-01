@@ -82,7 +82,7 @@ public class AnalysisMethodsPageController {
 
         //This is necessary for adding functionality to the QC button
         Set<Factor> organisms = experiment.getExperimentalFactors().getDefaultFilterFactors();
-        String specie = null;
+        String specie = experiment.getFirstSpecies();
 
         if(!organisms.isEmpty()) {
             for (Factor factor : organisms) {
@@ -90,9 +90,8 @@ public class AnalysisMethodsPageController {
                     specie = factor.getValue();
                 }
             }
-        } else {
-            specie = experiment.getFirstSpecies();
         }
+
         try {
             if (fastQCReportUtil.hasFastQC(experimentAccession, specie)) {
                 fastQCReportUtil.buildFastQCIndexHtmlPath(experimentAccession, specie);
