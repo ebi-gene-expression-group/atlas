@@ -1,6 +1,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/react/0.11.1/react.js"></script>
+
+<%-- to make React work with IE9 --%>
+<script type="text/javascript"> if (!window.console) console = {log: function() {}, warn: function() {}}; </script>
 
 <script src="${pageContext.request.contextPath}/resources/js/transcriptPopupModule.js"></script>
 <script language="JavaScript" type="text/javascript"
