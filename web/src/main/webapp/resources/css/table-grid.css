@@ -147,6 +147,8 @@
     white-space: nowrap;
     -moz-transform: rotate(-90deg);
     -moz-transform-origin: top left;
+    -ms-transform: rotate(-90deg);
+    -ms-transform-origin: top left;
     -webkit-transform: rotate(-90deg);
     -webkit-transform-origin: top left;
     -o-transform: rotate(-90deg);
