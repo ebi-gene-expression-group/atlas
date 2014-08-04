@@ -26,10 +26,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="eng"
-      class=" js flexbox canvas canvastext no-touch rgba hsla multiplebgs backgroundsize borderimage
-              borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections
-              csstransforms csstransforms3d csstransitions fontface generatedcontent applicationcache">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="eng" class="no-js">
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
