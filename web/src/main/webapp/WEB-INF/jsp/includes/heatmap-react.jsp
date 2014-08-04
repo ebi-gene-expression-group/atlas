@@ -123,6 +123,8 @@
     (function ($, React, heatmapModule, heatmapConfig, columnHeaders, profiles, geneSetProfiles) {
 
         $(document).ready(function () {
+            // call this inside ready() so all scripts load first in IE8
+
             var build = ${isDifferential ? 'heatmapModule.buildDifferential': 'heatmapModule.buildBaseline'};
             var heatmap = build(heatmapConfig, $('#displayLevels'));
 
