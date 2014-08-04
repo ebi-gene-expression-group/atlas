@@ -4,7 +4,7 @@
 /* Modules and parameters for their init methods are passed in here.
  Parameters that affect how the DOM is generated as passed in as props. */
 
-var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoTooltipModule, contrastInfoTooltipModule, helpTooltipsModule, TranscriptPopup, EventEmitter) {
+var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoTooltipModule, contrastInfoTooltipModule, helpTooltipsModule, TranscriptPopup, EventEmitter, Modernizr) {
 
     var TypeEnum = {
         BASELINE: "baseline",
@@ -292,7 +292,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         });
 
-        var FactorHeader = (function (contextRoot, accessKey, enableEnsemblLauncher) {
+        var FactorHeader = (function (contextRoot, accessKey, enableEnsemblLauncher, csstransforms) {
             return React.createClass({
 
                 getInitialState: function () {
@@ -316,16 +316,17 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 render: function () {
-                    var truncatedFactorName = restrictLabelSize(this.props.factorName, 17);
 
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}>  select</span> : null;
                     var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}> &#10004; </span>: null ;
-                    var className = (this.props.selected ? "rotated_cell hoverable-header vertical-header-cell-selected" : "rotated_cell hoverable-header vertical-header-cell") + (enableEnsemblLauncher ? " selectable-header" : "");
+                    var thClass = (csstransforms ? "rotated_cell " : "") + "hoverable-header " + (this.props.selected ? "vertical-header-cell-selected " : "vertical-header-cell ") + (enableEnsemblLauncher ? "selectable-header" : "");
+                    var divClass = (csstransforms ? "rotate_text " : "") + "factor-header";
+                    var factorName = csstransforms ? restrictLabelSize(this.props.factorName, 17) : this.props.factorName;
 
                     return (
-                        <th className={className} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined} rowSpan="2">
-                            <div data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text">
-                                {truncatedFactorName}
+                        <th className={thClass} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined} rowSpan="2">
+                            <div data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className={divClass}>
+                                {factorName}
                                 {showSelectTextOnHover}
                                 {showTickWhenSelected}
                             </div>
@@ -333,7 +334,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         );
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher);
+        })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
 
         var ContrastHeaders = React.createClass({
 
@@ -364,7 +365,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         });
 
-        var ContrastHeader = (function (contextRoot, accessKey, enableEnsemblLauncher) {
+        var ContrastHeader = (function (contextRoot, accessKey, enableEnsemblLauncher, csstransforms) {
             return React.createClass({
 
                 getInitialState: function () {
@@ -430,7 +431,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 render: function () {
-                    var truncatedName = restrictLabelSize(this.props.contrastName, 17);
                     var thStyle = this.showPlotsButton() ? {width: "60px"} : {};
                     var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
@@ -456,12 +456,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}>  select</span> : null;
                     var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}> &#10004; </span>: null ;
-                    var className = (this.props.selected ? "rotated_cell hoverable-header vertical-header-cell-selected" : "rotated_cell hoverable-header vertical-header-cell") + (enableEnsemblLauncher ? " selectable-header" : "");
+                    var thClass = (csstransforms ? "rotated_cell " : "") + "hoverable-header " + (this.props.selected ? "vertical-header-cell-selected " : "vertical-header-cell ") + (enableEnsemblLauncher ? "selectable-header" : "");
+                    var divClass = (csstransforms ? "rotate_text " : "") + "factor-header";
+                    var contrastName = csstransforms ? restrictLabelSize(this.props.contrastName, 17) : this.props.contrastName;
 
                     return (
-                        <th className={className} rowSpan="2" style={thStyle} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
-                            <div data-contrast-id={this.props.contrastId} data-experiment-accession={this.props.experimentAccession} className="factor-header rotate_text" style={textStyle}>
-                                {truncatedName}
+                        <th className={thClass} rowSpan="2" style={thStyle} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
+                            <div data-contrast-id={this.props.contrastId} data-experiment-accession={this.props.experimentAccession} className={divClass} style={textStyle}>
+                                {contrastName}
                                 {showSelectTextOnHover}
                                 {showTickWhenSelected}
                             </div>
@@ -471,7 +473,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         );
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher);
+        })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
 
 
         var EnsemblLauncher = (function (atlasHost, contextRoot, experimentAccession, accessKey, ensemblHost, ensemblSpecies, ensemblDB, columnType ) {
@@ -878,4 +880,4 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         buildDifferential: function (heatmapConfig, $prefFormDisplayLevelsInputElement) { return build(TypeEnum.DIFFERENTIAL, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement); }
     };
 
-})(jQuery, React, genePropertiesTooltipModule, factorInfoTooltipModule, contrastInfoTooltipModule, helpTooltipsModule, TranscriptPopup, EventEmitter);
+})(jQuery, React, genePropertiesTooltipModule, factorInfoTooltipModule, contrastInfoTooltipModule, helpTooltipsModule, TranscriptPopup, EventEmitter, Modernizr);
