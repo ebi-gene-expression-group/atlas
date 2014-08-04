@@ -330,6 +330,15 @@ a.help-icon {
     background: rgba(250, 250, 202, 0.28);
 }
 
+a.ext, a.ext:link {
+    padding-left: 13px;
+    background: url(../images/ico_ext_link.png) no-repeat 0 2px;
+}
+
+a.ext:hover, a.ext:active, a.ext:focus {
+    background: url(../images/ico_ext_link_on.png) no-repeat 0 2px;
+}
+
 .highlight {
     background-color: yellow
 }

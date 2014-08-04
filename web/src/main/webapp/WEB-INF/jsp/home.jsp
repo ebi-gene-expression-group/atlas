@@ -44,6 +44,9 @@
                     <label>Gene query</label>
                     <span data-help-loc="#geneSearch"/>
                 </td>
+                <%--<td>--%>
+                    <%--<label>Organisms</label>--%>
+                <%--</td>--%>
                 <td>
                     <label>Experimental conditions</label>
                     <span data-help-loc="#experimentalConditions"/>
@@ -82,6 +85,12 @@
                         </div>
                     </div>
                 </td>
+                <%--<td>--%>
+                    <%--<div style="display: inline-block">--%>
+                        <%--<select></select>--%>
+
+                    <%--</div>--%>
+                <%--</td>--%>
                 <td>
                     <div style="display:inline-block">
                         <textarea id="condition" name="condition" maxlength="900" rows="2" cols="36"
@@ -129,12 +138,13 @@
         </div>
         <div>
             <div style="display:inline-block; max-width: 50%; vertical-align:top; margin-left:5px;"><img style="max-width:50px; max-height:50px;" src="resources/images/publications_cover.gif"></div>
-            <div style="display:inline-block; max-width:70%; vertical-align: middle;">Expression Atlas update - a database of gene and transcript expression from microarray and sequencing-based functional genomics experiments.</div>
+            <div style="display:inline-block; max-width:70%; vertical-align: middle;"><a href="http://nar.oxfordjournals.org/content/42/D1/D926.full.pdf">Expression Atlas update - a database of gene and transcript expression from microarray and sequencing-based functional genomics experiments.</a>
+            (Nucleic Acids Research, 10.1093/nar/gkt1270)</div>
         </div>
         <div>
             <div style="display:inline-block; margin-left:5px;">
-                <span><a href="http://nar.oxfordjournals.org/content/42/D1/D926.full.pdf">PDF</a></span>
-                <span><a href="http://nar.oxfordjournals.org/content/42/D1/D926.full">HTML</a></span>
+                <span><a class="ext" href="http://nar.oxfordjournals.org/content/42/D1/D926.full">HTML</a></span>
+                <span><a class="ext" href="http://nar.oxfordjournals.org/content/42/D1/D926.full.pdf">PDF</a></span>
             </div>
         </div>
     </div>
