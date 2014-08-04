@@ -131,7 +131,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 componentDidMount: function () {
-                    $(this.refs.downloadProfilesLink.getDOMNode()).button().tooltip();
+                    var downloadProfilesLink = this.refs.downloadProfilesLink.getDOMNode();
+
+                    $(downloadProfilesLink).tooltip();
+
+                    $(document).ready(function () {
+                        // call this inside ready() otherwise IE8 will be stuck with a "1 item remaining" message
+                        $(downloadProfilesLink).button();
+                    });
                 }
             });
         })(heatmapConfig.contextRoot, heatmapConfig.downloadProfilesURL);
@@ -211,14 +218,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 var backgroundImage = BACKGROUND_IMAGE_TEMPLATE.replace(/\${lowValueColour}/g, this.props.lowValueColour).replace(/\${highValueColour}/g, this.props.highValueColour);
 
                 // for IE8 and 9
-                var IE9_FILTER_TEMPLATE = "progid:DXImageTransform.Microsoft.Gradient(GradientType =1,startColorstr=${lowValueColour},endColorstr=${highValueColour})";
-                var ie9_filter = IE9_FILTER_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
+                var LT_IE10_FILTER_TEMPLATE = "progid:DXImageTransform.Microsoft.Gradient(GradientType =1,startColorstr=${lowValueColour},endColorstr=${highValueColour})";
+                var lt_ie10_filter = LT_IE10_FILTER_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
 
                 return (
                     <div className="color-gradient" style={{
                         overflow: "auto",
                         "background-image": backgroundImage,
-                        filter: ie9_filter}}>
+                        filter: lt_ie10_filter}}>
                     &nbsp;
                     </div>
                     );
@@ -703,7 +710,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                 {showSelectTextOnHover}
                                 {showTickWhenSelected}
                             </td>
-                            {this.props.designElement ?  <td class="design-element">{this.props.designElement}</td> : null}
+                            {this.props.designElement ?  <td className="design-element">{this.props.designElement}</td> : null}
                             {this.cells(this.props.expressions)}
                         </tr>
                         );

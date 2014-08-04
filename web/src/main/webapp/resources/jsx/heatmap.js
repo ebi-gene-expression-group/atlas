@@ -131,7 +131,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 componentDidMount: function () {
-                    $(this.refs.downloadProfilesLink.getDOMNode()).button().tooltip();
+                    var downloadProfilesLink = this.refs.downloadProfilesLink.getDOMNode();
+
+                    $(downloadProfilesLink).tooltip();
+
+                    $(document).ready(function () {
+                        // call this inside ready() otherwise IE8 will be stuck with a "1 item remaining" message
+                        $(downloadProfilesLink).button();
+                    });
                 }
             });
         })(heatmapConfig.contextRoot, heatmapConfig.downloadProfilesURL);
@@ -208,16 +215,17 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             render: function () {
 
                 var BACKGROUND_IMAGE_TEMPLATE = "-webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});background-image: -ms-linear-gradient(left, ${lowValueColour}, ${highValueColour}); background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour})";
-                var FILTER_TEMPLATE = "progid:DXImageTransform.Microsoft.Gradient(GradientType =1,startColorstr=${lowValueColour},endColorstr=${highValueColour})";
-
                 var backgroundImage = BACKGROUND_IMAGE_TEMPLATE.replace(/\${lowValueColour}/g, this.props.lowValueColour).replace(/\${highValueColour}/g, this.props.highValueColour);
-                var filter = FILTER_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
+
+                // for IE8 and 9
+                var LT_IE10_FILTER_TEMPLATE = "progid:DXImageTransform.Microsoft.Gradient(GradientType =1,startColorstr=${lowValueColour},endColorstr=${highValueColour})";
+                var lt_ie10_filter = LT_IE10_FILTER_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
 
                 return (
                     React.DOM.div( {className:"color-gradient", style:{
                         overflow: "auto",
                         "background-image": backgroundImage,
-                        filter: filter}}, 
+                        filter: lt_ie10_filter}}, 
                     " "
                     )
                     );
@@ -702,7 +710,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                 showSelectTextOnHover,
                                 showTickWhenSelected
                             ),
-                            this.props.designElement ?  React.DOM.td( {class:"design-element"}, this.props.designElement) : null,
+                            this.props.designElement ?  React.DOM.td( {className:"design-element"}, this.props.designElement) : null,
                             this.cells(this.props.expressions)
                         )
                         );
