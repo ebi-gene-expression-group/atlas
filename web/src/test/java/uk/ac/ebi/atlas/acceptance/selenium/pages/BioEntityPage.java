@@ -99,6 +99,9 @@ public class BioEntityPage extends HeatmapTablePage {
     @FindBy(id = "heatmap-profilesAsGeneSets")
     private WebElement heatmapProfilesAsGeneSets;
 
+    @FindBy(id = "diffresults-display-levels")
+    private WebElement diffResultsDisplayLevelsButton;
+
     @FindBy(css = "#global-search-results > li > a")
     private List<WebElement> globalSearchPointers;
     private Iterable<? extends String> diffHeatmapHeaders;
@@ -134,6 +137,16 @@ public class BioEntityPage extends HeatmapTablePage {
     public boolean isGeneSetProfilesVisible() {
         return heatmapProfilesAsGeneSets.isDisplayed();
     }
+
+    public void clickDiffResultsDisplayLevelsButton() {
+        new FluentWait<>(driver)
+                .withTimeout(15, TimeUnit.SECONDS)
+                .pollingEvery(250, TimeUnit.MILLISECONDS)
+                .until(ExpectedConditions.visibilityOf(diffResultsDisplayLevelsButton));
+
+        diffResultsDisplayLevelsButton.click();
+    }
+
 
     public WebElement getDiffHeatmapTable() {
         return diffHeatmapTable;
