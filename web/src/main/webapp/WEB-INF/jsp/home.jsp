@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   ~ Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
   ~
@@ -85,11 +86,11 @@
                         </div>
                     </div>
                 </td>
-                <%--<td>--%>
-                    <%--<div style="display: inline-block">--%>
-                        <%--<select></select>--%>
 
-                    <%--</div>--%>
+                <%--<td>--%>
+                    <%--<form:select id="organism" name="organism" path="dummyPath">--%>
+                        <%--<form:options items="${organisms}" />--%>
+                    <%--</form:select>--%>
                 <%--</td>--%>
                 <td>
                     <div style="display:inline-block">
@@ -138,11 +139,11 @@
         </div>
         <div>
             <div style="display:inline-block; max-width: 50%; vertical-align:top; margin-left:5px;"><img style="max-width:50px; max-height:50px;" src="resources/images/publications_cover.gif"></div>
-            <div style="display:inline-block; max-width:70%; vertical-align: middle;"><a href="http://nar.oxfordjournals.org/content/42/D1/D926.full.pdf">Expression Atlas update - a database of gene and transcript expression from microarray and sequencing-based functional genomics experiments.</a>
+            <div style="display:inline-block; max-width:70%; vertical-align: middle;font-size: 93%;"><a href="http://nar.oxfordjournals.org/content/42/D1/D926.full.pdf">Expression Atlas update - a database of gene and transcript expression from microarray and sequencing-based functional genomics experiments.</a>
             (Nucleic Acids Research, 10.1093/nar/gkt1270)</div>
         </div>
         <div>
-            <div style="display:inline-block; margin-left:5px;">
+            <div style="display:inline-block; margin-left:5px;font-size: 93%;">
                 <span><a class="ext" href="http://nar.oxfordjournals.org/content/42/D1/D926.full">HTML</a></span>
                 <span><a class="ext" href="http://nar.oxfordjournals.org/content/42/D1/D926.full.pdf">PDF</a></span>
             </div>
