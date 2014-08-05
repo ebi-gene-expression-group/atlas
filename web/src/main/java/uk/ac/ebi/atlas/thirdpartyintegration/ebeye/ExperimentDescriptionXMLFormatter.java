@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import javax.inject.Named;
 import java.text.DateFormat;
 import java.text.MessageFormat;
@@ -42,6 +44,7 @@ public class ExperimentDescriptionXMLFormatter {
     }
 
     public String formatExperimentDescription(ExperimentDescription ed) {
-        return MessageFormat.format(ENTRY, ed.getAccession(), ed.getDescription());
+        String escapedDescription = StringEscapeUtils.escapeXml(ed.getDescription());
+        return MessageFormat.format(ENTRY, ed.getAccession(), escapedDescription);
     }
 }
