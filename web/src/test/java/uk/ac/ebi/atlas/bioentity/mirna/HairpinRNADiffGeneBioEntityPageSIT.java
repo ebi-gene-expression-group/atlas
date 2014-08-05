@@ -51,7 +51,7 @@ public class HairpinRNADiffGeneBioEntityPageSIT extends SinglePageSeleniumFixtur
     @Test
     @Ignore
     public void checkMatureRNADiffProfilesArePresentForHairpinRNA() {
-        subject.clickDisplayLevelsButton();
+        subject.clickDiffResultsDisplayLevelsButton();
         assertThat(subject.getContrastColumn(), contains("disease state: 'sepsis' vs 'control'",
                 "disease state: 'sepsis' vs 'control'",
                 "disease state: 'sepsis' vs 'control'"));

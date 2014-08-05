@@ -43,7 +43,7 @@ public class BioentitiesSearchControllerForFoldChangeOfInfinitySIT extends Singl
 
     @Test
     public void profileShowsInfinity() {
-        subject.clickDisplayLevelsButton();
+        subject.clickDiffResultsDisplayLevelsButton();
         assertThat(subject.getFoldChange(), hasItems("∞"));
     }
 
