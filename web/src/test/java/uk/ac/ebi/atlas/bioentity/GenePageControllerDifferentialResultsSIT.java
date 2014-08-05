@@ -48,7 +48,7 @@ public class GenePageControllerDifferentialResultsSIT extends SinglePageSelenium
 
     @Test
     public void checkSelectedProfiles() {
-        subject.clickDisplayLevelsButton();
+        subject.clickDiffResultsDisplayLevelsButton();
         assertThat(subject.getContrastColumn(), contains("idn2 mutant vs wild type",
                 "nrpe1 mutant vs wild type"));
         assertThat(subject.getFoldChange(), hasItems("3.28", "2.57"));

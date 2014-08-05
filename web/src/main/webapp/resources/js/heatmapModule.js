@@ -93,7 +93,7 @@ var heatmapModule = (function ($) {
             }
         }
 
-        $heatmap("#display-levels").button()
+        $heatmap("#display-levels, #diffresults-display-levels").button()
             .toggle(
             function (eventObject, syntheticEvent) {
                 $(this).button('option', 'label', $("#buttonText").attr('pressedtext'));
@@ -111,10 +111,10 @@ var heatmapModule = (function ($) {
             }
         );
 
-        $heatmap("#display-levels").button({ label:$("#buttonText").attr('unpressedtext') });
+        $heatmap("#display-levels, #diffresults-display-levels").button({ label:$("#buttonText").attr('unpressedtext') });
 
         if (prefFormDisplayLevelsInputElement.val() === "true") {
-            $heatmap("#display-levels").trigger("click", "syntheticEvent")
+            $heatmap("#display-levels, #diffresults-display-levels").trigger("click", "syntheticEvent")
         }
 
     }

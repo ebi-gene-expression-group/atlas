@@ -1,14 +1,25 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.js"></script>
+
+<%-- console polyfill to make the unminified React work with IE8/9 --%>
+<!--[if lt IE 10]>
+<script type="text/javascript"> if (!window.console) console = {log: function() {}, warn: function() {}}; </script>
+<![endif]-->
+
+<%-- polyfills to make React work with IE8 --%>
+<!--[if lt IE 9]>
+<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.1/es5-shim.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.1/es5-sham.min.js"></script>
+<![endif]-->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/react/0.11.1/react.js"></script>
+
 
 <script src="${pageContext.request.contextPath}/resources/js/transcriptPopupModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/highlight.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/genePropertiesTooltipModule.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/heatmapModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/contrastInfoTooltipModule.js"></script>
 <script language="JavaScript" type="text/javascript"
@@ -21,7 +32,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.toolbar.js"></script>
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery.stickytableheaders.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/jquery.sticky.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.sticky.js"></script>
 
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.toolbars.css" />
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.icons.css" />
@@ -110,18 +121,23 @@
 
 <script type="text/javascript">
     (function ($, React, heatmapModule, heatmapConfig, columnHeaders, profiles, geneSetProfiles) {
-        var build = ${isDifferential ? 'heatmapModule.buildDifferential': 'heatmapModule.buildBaseline'};
-        var heatmap = build(heatmapConfig, $('#displayLevels'));
 
-        React.renderComponent(heatmap.Heatmap( {columnHeaders:columnHeaders, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
-            document.getElementById('heatmap-react')
-        );
+        $(document).ready(function () {
+            // call this inside ready() so all scripts load first in IE8
 
-        if (heatmap.EnsemblLauncher) {
-            React.renderComponent(heatmap.EnsemblLauncher(),
-                    document.getElementById('${hasAnatomogram ? "anatomogram-ensembl-launcher" : "ensembl-launcher"}')
+            var build = ${isDifferential ? 'heatmapModule.buildDifferential': 'heatmapModule.buildBaseline'};
+            var heatmap = build(heatmapConfig, $('#displayLevels'));
+
+            React.renderComponent(heatmap.Heatmap({columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}),
+                    document.getElementById('heatmap-react')
             );
-        }
+
+            if (heatmap.EnsemblLauncher) {
+                React.renderComponent(heatmap.EnsemblLauncher(),
+                        document.getElementById('${hasAnatomogram ? "anatomogram-ensembl-launcher" : "ensembl-launcher"}')
+                );
+            }
+        });
 
     })(jQuery, React, heatmapModule, heatmapData.config,
             heatmapData.columnHeaders, heatmapData.profiles, heatmapData.geneSetProfiles);

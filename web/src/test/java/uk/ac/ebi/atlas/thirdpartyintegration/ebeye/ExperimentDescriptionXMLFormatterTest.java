@@ -59,4 +59,20 @@ public class ExperimentDescriptionXMLFormatterTest {
 
         assertThat(subject.formatExperimentDescription(ed), is(result));
     }
+
+    @Test
+    public void specialCharactersInDescriptionAreEscaped() {
+        String result = "<entry id=\"E-GEOD-31677\">\n" +
+                "<name>E-GEOD-31677</name>\n" +
+                "<description>Long-term Salt &amp; Water Stress in Grapes</description>\n" +
+                "<cross_references>\n" +
+                "<ref dbname=\"arrayexpress\" dbkey=\"E-GEOD-31677\"/>\n" +
+                "</cross_references>\n" +
+                "</entry>";
+
+        ExperimentDescription ed = new ExperimentDescription("E-GEOD-31677", "Long-term Salt & Water Stress in Grapes");
+
+        assertThat(subject.formatExperimentDescription(ed), is(result));
+    }
+
 }

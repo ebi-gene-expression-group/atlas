@@ -59,7 +59,7 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
 
     @Test
     public void checkDifferentialProfiles() {
-        subject.clickDisplayLevelsButton();
+        subject.clickDiffResultsDisplayLevelsButton();
         assertThat(subject.getContrastColumn(), hasItem(
                 "compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36"));
         assertThat(subject.getFoldChange(), hasItems("3.46", "1"));

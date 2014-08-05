@@ -48,7 +48,7 @@ public class GenePageControllerDifferentialResultsMultiFactorSIT extends SingleP
 
     @Test
     public void checkSelectedProfiles() {
-        subject.clickDisplayLevelsButton();
+        subject.clickDiffResultsDisplayLevelsButton();
         assertThat(subject.getContrastColumn(), contains(
                 "treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'"));
         assertThat(subject.getFoldChange(), hasItems("3.77"));

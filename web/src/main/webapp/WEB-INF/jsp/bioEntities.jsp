@@ -187,7 +187,7 @@
                                 <table style="margin-left:auto;margin-right:auto;">
                                     <tr>
                                         <td>
-                                            <button id='display-levels' data-pressedtext="hide" data-unpressedText='show' style="margin-top: 5px; margin-bottom: 5px">
+                                            <button id='diffresults-display-levels' data-pressedtext="hide" data-unpressedText='show' style="margin-top: 5px; margin-bottom: 5px">
                                                 <%--<label for='display-levels'>Display <i>p</i>-values</label>--%>
                                             </button>
                                             <span id='buttonText' pressedtext='Hide log<sub>2</sub>-fold change' unpressedText='Display log<sub>2</sub>-fold change'/>

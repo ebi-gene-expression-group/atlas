@@ -26,12 +26,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="eng"
-      class=" js flexbox canvas canvastext no-touch rgba hsla multiplebgs backgroundsize borderimage
-              borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections
-              csstransforms csstransforms3d csstransitions fontface generatedcontent applicationcache">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="eng" class="no-js">
 
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="en-GB" http-equiv="Content-Language">
+    <meta content="_top" http-equiv="Window-target">
+    <meta content="http://www.unspam.com/noemailcollection/" name="no-email-collection">
+
     <c:set var="baseUri" value="${requestScope['javax.servlet.forward.request_uri']}" />
     <c:set var="experimentAccession" value="${experimentAccession}"/>
     <c:set var="arrayDesign" value="${arrayDesign}"/>
@@ -40,7 +43,6 @@
 
     <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
 
-    <br>
     <c:set var="qcUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/qc/').concat(arrayDesign).concat('/index.html')}" />
     <c:set var="fastQCUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/fastqc/').concat(specie_s).concat('/qc.html')}" />
     <c:set var="fastQCMappingUri" value="${'/gxa/experiments/'.concat(experimentAccession).concat('/fastqc/').concat(specie_s).concat('/mapping/tophat2.html')}" />
@@ -48,12 +50,6 @@
     <c:if test="${!baseUri.equals(qcUri) && !baseUri.equals(fastQCUri) && !baseUri.equals(fastQCMappingUri) && !baseUri.endsWith('fastqc_report.html')}">
         <base href="//${pageContext.request.serverName}${serverPort}${pageContext.request.contextPath}/"/>
     </c:if>
-
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-    <meta content="en-GB" http-equiv="Content-Language">
-    <meta content="_top" http-equiv="Window-target">
-    <meta content="http://www.unspam.com/noemailcollection/" name="no-email-collection">
-    <meta content="IE=9" http-equiv="X-UA-Compatible"/>
 
     <!-- compliance style start -->
 
