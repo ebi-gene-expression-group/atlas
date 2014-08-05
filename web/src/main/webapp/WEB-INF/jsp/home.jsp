@@ -133,21 +133,19 @@
         </tr>
     </table>
     <br/>
-    <div class="form-grid" style="margin:0px 9px;" >
+    <div class="form-grid" style="margin:0px 9px;">
         <div style="margin-bottom:5px;">
-            <div><label>Publications</label></div>
+            <div style="margin:5px;"><label>Publications</label></div>
         </div>
-        <div>
-            <div style="display:inline-block; max-width: 50%; vertical-align:top; margin-left:5px;"><img style="max-width:50px; max-height:50px;" src="resources/images/publications_cover.gif"></div>
-            <div style="display:inline-block; max-width:70%; vertical-align: middle;font-size: 93%;"><a href="http://nar.oxfordjournals.org/content/42/D1/D926.full.pdf">Expression Atlas update - a database of gene and transcript expression from microarray and sequencing-based functional genomics experiments.</a>
-            (Nucleic Acids Research, 10.1093/nar/gkt1270)</div>
-        </div>
-        <div>
-            <div style="display:inline-block; margin-left:5px;font-size: 93%;">
-                <span><a class="ext" href="http://nar.oxfordjournals.org/content/42/D1/D926.full">HTML</a></span>
-                <span><a class="ext" href="http://nar.oxfordjournals.org/content/42/D1/D926.full.pdf">PDF</a></span>
-            </div>
-        </div>
+        <p align="justify" style="padding:0px;margin:5px;">
+            <img style="max-width:50px; max-height:50px;float:left; margin-right:5px;" src="resources/images/publications_cover.gif">
+            <a style="font-size: 93%; align-content:stretch;" href="http://nar.oxfordjournals.org/content/42/D1/D926.full.pdf">Expression Atlas update - a database of gene and transcript expression from microarray and sequencing-based functional genomics experiments.</a>
+            <br>
+        <nobr style="font-size: 93%;">Nucleic Acids Research,</nobr><br><nobr style="font-size: 93%;"> 10.1093/nar/gkt1270</nobr>
+        <br>
+        <a class="ext" href="http://nar.oxfordjournals.org/content/42/D1/D926.full">HTML</a>
+        <a class="ext" href="http://nar.oxfordjournals.org/content/42/D1/D926.full.pdf">PDF</a>
+        </p>
     </div>
 
 </section>
