@@ -67,7 +67,7 @@
             <tr>
                 <td>
                     <div style="display:inline-block">
-                        <textarea id="geneQuery" name="geneQuery" maxlength="900" rows="2" cols="36"
+                        <textarea id="geneQuery" name="geneQuery" rows="2" cols="36"
                                   placeholder="(all genes)" tabindex="1"></textarea>
 
                         <div>
