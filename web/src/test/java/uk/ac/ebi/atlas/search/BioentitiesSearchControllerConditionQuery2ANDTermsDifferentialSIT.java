@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.search;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
@@ -42,22 +41,16 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT e
         subject.get();
     }
 
-    //TODO: fix ConditionSearchEFOExpander
-    @Ignore
     @Test
     public void checkDifferentialProfilesCount() {
         assertThat(subject.diffExpressionResultCount(), is("316 search result(s) found"));
     }
 
-    //TODO: fix ConditionSearchEFOExpander
-    @Ignore
     @Test
     public void globalSearchTermIsIdentifiersSeparatedByAND() {
         assertThat(subject.getGlobalSearchTerm(), is(GLOBAL_SEARCH_TERM));
     }
 
-    //TODO: fix ConditionSearchEFOExpander
-    @Ignore
     @Test
     public void globalSearchWidgetShouldHaveResults(){
         subject.clickShowMoreDataWidget();

@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.search;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
@@ -45,25 +44,23 @@ public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePa
 
 
     @Test
-    @Ignore
     public void checkBaselineExperimentCounts() {
         //given
         subject.clickBaselinePane();
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(1));
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-513"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Illumina Body Map"));
-        assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-513?queryFactorType=ORGANISM_PART&queryFactorValues=adipose,brain,breast,colon,kidney,lymph%20node,ovary,thyroid&geneQuery="));
+        assertThat(baselineCounts, hasSize(16));
+        assertThat(baselineCounts.get(6).getExperimentAccession(), is("E-MTAB-513"));
+        assertThat(baselineCounts.get(6).getExperimentName(), is("Illumina Body Map"));
+        assertThat(baselineCounts.get(6).getSpecies(), is("Homo sapiens"));
+        assertThat(baselineCounts.get(6).getHref(), endsWith("E-MTAB-513?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=adipose,brain,breast,colon,kidney,lymph%20node,ovary,thyroid&geneQuery=&exactMatch=true"));
 
     }
 
     @Test
-    @Ignore
     public void checkDifferentialProfilesCount() {
-        assertThat(subject.diffExpressionResultCount(), is("4329 search result(s) found"));
+        assertThat(subject.diffExpressionResultCount(), is("451 search result(s) found"));
     }
 
 }

@@ -20,43 +20,42 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.search;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class GenePageControllerNoBaselineResultSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerBaselineResultsPaneSIT extends SinglePageSeleniumFixture {
+
+    private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
     }
 
     @Test
-    public void baselinePanelHasNoResultsAndNoWidgetForSpeciesWithReferenceExperimentButNoExpressions() {
-        BioEntityPage  subject = new BioEntityPage(driver, "ENSMUSG00000097341", "genes"); // mus musculus
+    public void baselinePaneResultsMessageWidget() {
+        subject = new BioEntitiesPage(driver, "geneQuery=ENSMUSG00000097801+ENSMUSG00000090429");
         subject.get();
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
-        assertThat(subject.getBaselinePaneContents(), is(""));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("1 results"));
     }
 
     @Test
-    public void baselinePanelHasNoResultsAndNoWidgetForSpeciesWithReferenceExperimentNoInDevDatabase() {
-        BioEntityPage  subject = new BioEntityPage(driver, "AT3G29644", "genes"); // arabidopsis thaliana
+    public void baselinePaneResultsMessageMultipleResults() {
+        subject = new BioEntitiesPage(driver, "geneQuery=ASPM");
         subject.get();
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
-        assertThat(subject.getBaselinePaneContents(), is(""));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("2 results"));
     }
 
     @Test
-    public void baselinePanelHasNoResultsAndNoWidgetForSpeciesWithNoSpecifiedReferenceExperiment() {
-        BioEntityPage  subject = new BioEntityPage(driver, "ENSGGOG00000005112", "genes"); // gorilla gorilla
+    public void baselinePaneResultsMessageNoResults() {
+        subject = new BioEntitiesPage(driver, "geneQuery=foobar");
         subject.get();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
-        assertThat(subject.getBaselinePaneContents(), is(""));
     }
 
 }

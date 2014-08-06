@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.search;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
@@ -43,8 +42,6 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsBaselineSIT exten
         subject.get();
     }
 
-    //TODO: fix ConditionSearchEFOExpander
-    @Ignore
     @Test
     public void checkBaselineExperimentCounts() {
         //given
