@@ -125,7 +125,7 @@
             </c:when>
             <c:otherwise>
             <c:choose>
-            <c:when test="${hasReferenceBaselineExperimentForSpecies && hasGeneProfiles}">
+            <c:when test="${hasReferenceBaselineExperimentForSpecies && widgetHasBaselineProfiles}">
                                         <span style="margin-left: 10px; margin-top:10px">
                                           Results in tissues
                                         </span>
@@ -144,7 +144,7 @@
                value="${hasReferenceBaselineExperimentForSpecies || not empty baselineCounts}"/>
 
         <div id="baselineProfileBody" class="bioEntityCard">
-            <c:if test="${hasBaselineResults && hasGeneProfiles}">
+            <c:if test="${hasBaselineResults && widgetHasBaselineProfiles}">
                 <div class="ui-corner-all bioEntityCardDifferentialSummary">
                     <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
                     <span style="float: right">Expression Level cut-off: 0.5</span>
@@ -153,7 +153,7 @@
 
             <c:choose>
                 <c:when test="${hasReferenceBaselineExperimentForSpecies || singleBaselineSearchResult}">
-                    <c:if test="${not empty baselineCounts || hasGeneProfiles}">
+                    <c:if test="${not empty baselineCounts || widgetHasBaselineProfiles}">
                         <div id="widgetBody"></div>
                     </c:if>
                 </c:when>

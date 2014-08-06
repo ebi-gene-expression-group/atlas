@@ -134,7 +134,7 @@ public abstract class BioEntityPageController {
         String referenceExperimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
 
         //to check if the widget contains the identifier or not and inform properly in the results gene pages
-        //TODO: check if this is needed, may just need hasGeneProfiles
+        //TODO: check if this is needed, may just need widgetHasBaselineProfiles
         model.addAttribute("hasReferenceBaselineExperimentForSpecies", StringUtils.isNotEmpty(referenceExperimentAccession));
 
         try {
@@ -143,9 +143,9 @@ public abstract class BioEntityPageController {
                 String ensemblIdentifiersForMiRNA = (String) model.asMap().get("ensemblIdentifiersForMiRNA");
                 ImmutableSet<String> identifiers = (ensemblIdentifiersForMiRNA == null) ? ImmutableSet.of(identifier) : ImmutableSet.<String>builder().add(identifier).addAll(Splitter.on("+").split(ensemblIdentifiersForMiRNA)).build();
 
-                model.addAttribute("hasGeneProfiles", hasGeneProfiles(referenceExperimentAccession, species, identifiers));
+                model.addAttribute("widgetHasBaselineProfiles", widgetHasBaselineProfiles(referenceExperimentAccession, species, identifiers));
             } else {
-                model.addAttribute("hasGeneProfiles", false);
+                model.addAttribute("widgetHasBaselineProfiles", false);
             }
 
         } catch (GenesNotFoundException e) {
@@ -189,7 +189,7 @@ public abstract class BioEntityPageController {
         bioEntityPropertyService.init(species, propertyValuesByType, entityNames, identifier);
     }
 
-    protected boolean hasGeneProfiles(String experimentAccession, String species, Set<String> identifiers) throws GenesNotFoundException {
+    protected boolean widgetHasBaselineProfiles(String experimentAccession, String species, Set<String> identifiers) throws GenesNotFoundException {
         BaselineExperiment experiment;
         try {
             experiment = (BaselineExperiment) experimentTrader.getExperiment(experimentAccession, null);
