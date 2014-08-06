@@ -42,7 +42,7 @@ public class BioentitiesSearchControllerGeneQuery2GenesSingleResultSIT extends S
 
     @Test
     public void baselinePaneResultsMessage() {
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("1 results"));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
     }
 
     @Test

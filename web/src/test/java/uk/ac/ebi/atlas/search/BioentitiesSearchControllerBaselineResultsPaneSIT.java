@@ -41,7 +41,7 @@ public class BioentitiesSearchControllerBaselineResultsPaneSIT extends SinglePag
     public void baselinePaneResultsMessageWidget() {
         subject = new BioEntitiesPage(driver, "geneQuery=ENSMUSG00000097801+ENSMUSG00000090429");
         subject.get();
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("1 results"));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
     }
 
     @Test

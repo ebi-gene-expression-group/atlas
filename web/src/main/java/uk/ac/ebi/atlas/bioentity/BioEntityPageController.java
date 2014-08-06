@@ -28,7 +28,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
@@ -133,11 +132,8 @@ public abstract class BioEntityPageController {
         String species = fetchSpecies(identifier);
         String referenceExperimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
 
-        //to check if the widget contains the identifier or not and inform properly in the results gene pages
-        //TODO: check if this is needed, may just need widgetHasBaselineProfiles
-        model.addAttribute("hasReferenceBaselineExperimentForSpecies", StringUtils.isNotEmpty(referenceExperimentAccession));
-
         try {
+            //to check if the widget contains the identifier or not and inform properly in the results gene pages
             if (referenceExperimentAccession != null) {
 
                 String ensemblIdentifiersForMiRNA = (String) model.asMap().get("ensemblIdentifiersForMiRNA");
