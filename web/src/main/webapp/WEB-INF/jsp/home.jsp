@@ -43,14 +43,14 @@
             <tr>
                 <td>
                     <label>Gene query</label>
-                    <span data-help-loc="#geneSearch"/>
+                    <span data-help-loc="#geneSearch"></span>
                 </td>
                 <%--<td>--%>
                     <%--<label>Organisms</label>--%>
                 <%--</td>--%>
                 <td>
                     <label>Experimental conditions</label>
-                    <span data-help-loc="#experimentalConditions"/>
+                    <span data-help-loc="#experimentalConditions"></span>
                 </td>
                 <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
                     <div class="actions">
