@@ -69,6 +69,9 @@ public class BioEntityPage extends HeatmapTablePage {
     @FindBy(id = "diffProfileHeader")
     private WebElement diffProfilePaneHeader;
 
+    @FindBy(css = "#diffProfileHeader span:nth-child(4)")
+    private WebElement diffPaneHeaderSpan;
+
     @FindBy(id = "infoBody")
     private WebElement infoPaneBody;
 
@@ -146,7 +149,6 @@ public class BioEntityPage extends HeatmapTablePage {
 
         diffResultsDisplayLevelsButton.click();
     }
-
 
     public WebElement getDiffHeatmapTable() {
         return diffHeatmapTable;
@@ -350,27 +352,16 @@ public class BioEntityPage extends HeatmapTablePage {
         return baselinePaneHeaderSpan.getText();
     }
 
+    public String getDiffPaneHeaderResultsMessage() {
+        return diffPaneHeaderSpan.getText();
+    }
+
     public List<String> getDiffHeatmapHeaders() {
         return getTableHeaders(diffHeatmapTable);
     }
 
     public List<String> getDiffHeatmapRow(int oneBasedRowIndex) {
         return getRowValues(diffHeatmapTable, oneBasedRowIndex);
-    }
-
-    // note - page may have baseline & differential heatmap display levels button
-    public void clickDifferentialDisplayLevelsButton() {
-        WebElement displayLevelsButton = getDifferentialDisplayLevelsButton();
-        displayLevelsButton.click();
-    }
-
-    public WebElement getDifferentialDisplayLevelsButton() {
-        new FluentWait<>(driver)
-                .withTimeout(4, TimeUnit.MINUTES)
-                .pollingEvery(500, TimeUnit.MILLISECONDS)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#diffProfileBody #display-levels")));
-
-        return driver.findElement(By.cssSelector("#diffProfileBody #display-levels"));
     }
 
 }

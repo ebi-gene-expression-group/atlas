@@ -56,7 +56,7 @@ public class ENSEMBLHairpinRNADiffGeneBioEntityPageSIT extends SinglePageSeleniu
 
         List<String> contrastColumn = subject.getContrastColumn();
         assertThat(contrastColumn, hasItem("disease state: 'sepsis' vs 'control'"));
-        subject.clickDifferentialDisplayLevelsButton();
+        subject.clickDiffResultsDisplayLevelsButton();
         assertThat(subject.getFoldChange(), hasItems("0.002", "0.008"));
     }
 

@@ -48,11 +48,11 @@ public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends Sin
 
     @Test
     public void checkBaselineExperimentCounts() {
-        subject.clickBaselinePane();
-
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(2));
+
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("2 results"));
 
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
@@ -65,6 +65,7 @@ public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends Sin
 
     @Test
     public void checkDifferentialDisplaysGeneAndOrganismColumnWithValuesForEachSpecies() {
+        subject.clickDifferentialPane();
         subject.clickDiffResultsDisplayLevelsButton();
         assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("SC5D", "Mtdh"));
         assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Homo sapiens", "Mus musculus"));

@@ -28,7 +28,7 @@
 <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
 <div id="preferencesFormBlock" class="block-max-width">
     <form:form method="get" commandName="preferences" id="prefForm">
-        <input type="hidden" name="accessKey" value="${param.accessKey}"></hidden>
+        <input type="hidden" name="accessKey" value="${param.accessKey}"/>
         <form:hidden path="serializedFilterFactors"/>
         <form:hidden path="queryFactorType"/>
         <form:hidden path="rootContext"/>
@@ -44,7 +44,7 @@
             <tr>
                 <td>
                     <form:label path="geneQuery">Gene query</form:label>
-                    <span data-help-loc="#geneSearch"/>
+                    <span data-help-loc="#geneSearch"></span>
                 </td>
 
                 <c:if test="${!type.isBaseline()}">
@@ -60,23 +60,23 @@
 
                 <td>
                     <form:label path="queryFactorValues">${queryFactorName}</form:label>
-                    <span data-help-loc="#factorSearch${type.isBaseline() ? '' : '-differential'}"/>
+                    <span data-help-loc="#factorSearch${type.isBaseline() ? '' : '-differential'}"></span>
                 </td>
                 <c:choose>
                     <c:when test="${type.isBaseline()}">
                         <td style="width:100%;display:block">
                             <form:label path="cutoff">Expression level cutoff</form:label>
-                            <span data-help-loc="#cutoff"/>
+                            <span data-help-loc="#cutoff"></span>
                         </td>
                     </c:when>
                     <c:otherwise>
                         <td>
                             <form:label path="cutoff">Adjusted <i>p</i>-value cutoff</form:label>
-                            <span data-help-loc="#cutoff-differential"/>
+                            <span data-help-loc="#cutoff-differential"></span>
                         </td>
                         <td>
                             <form:label path="foldChangeCutOff">Log<sub>2</sub>-fold change cutoff</form:label>
-                            <span data-help-loc="#foldChangeCutOff"/>
+                            <span data-help-loc="#foldChangeCutOff"></span>
                         </td>
                     </c:otherwise>
                 </c:choose>
@@ -94,8 +94,7 @@
             <tr>
                 <td>
                     <div style="display:inline-block">
-                        <form:textarea id="geneQuery" path="geneQuery" maxlenght="900" rows="2"
-                                       cols="36"></form:textarea>
+                        <form:textarea id="geneQuery" path="geneQuery" rows="2" cols="36"></form:textarea>
                         <div>
                             <span style="float:left">
                                 <form:checkbox id="exactMatch"
@@ -134,7 +133,7 @@
                                        disabled="${isSingleContrast ? true : false}"/>
                     </span>
                     <span data-help-loc="#specific${type.isBaseline() ? '' : '-differential'}"
-                          style="display:inline-block"/>
+                          style="display:inline-block"></span>
                 </td>
                 <td>
                     <div>
@@ -167,7 +166,7 @@
     </div>
 
     <div style="min-width: 955px;display:none;" id="sliderAndChart">
-        <span style="display:inline-block">
+        <div style="display:inline-block">
             <div id="gene-distribution-button" style="float:left">
                 <a id="display-chart" title="Display gene distribution" class="button-image" href="#">
                     <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
@@ -175,7 +174,7 @@
             </div>
             <div id="slider-range-max"
                  style="font-size:65%;width:910px;margin-left:27px;margin-right:0px; margin-top:10px"></div>
-        </span>
+        </div>
         <span id="slider-help" data-help-loc="#slider"></span>
     </div>
 </div>

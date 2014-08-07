@@ -30,7 +30,7 @@
 
 <c:choose>
     <c:when test="${empty geneProfiles}">
-        <c:if test="${not isPreferenceError && hasGeneProfiles}">
+        <c:if test="${not isPreferenceError && widgetHasBaselineProfiles}">
             <div id="heatmap-message">
                 No expressions found above the expression level cutoff for the query.
             </div>

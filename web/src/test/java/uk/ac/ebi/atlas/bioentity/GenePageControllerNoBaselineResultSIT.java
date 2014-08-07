@@ -36,16 +36,24 @@ public class GenePageControllerNoBaselineResultSIT extends SinglePageSeleniumFix
     }
 
     @Test
-    public void baselinePanelHasNoResultsAndNoWidgetForMusMusculus() {
-        BioEntityPage  subject = new BioEntityPage(driver, "ENSMUSG00000097341", "genes");
+    public void baselinePanelHasNoResultsAndNoWidgetForSpeciesWithReferenceExperimentButNoExpressions() {
+        BioEntityPage  subject = new BioEntityPage(driver, "ENSMUSG00000097341", "genes"); // mus musculus
         subject.get();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
         assertThat(subject.getBaselinePaneContents(), is(""));
     }
 
     @Test
-    public void baselinePanelHasNoResultsAndNoWidgetForArabidopsisThaliana() {
-        BioEntityPage  subject = new BioEntityPage(driver, "AT3G29644", "genes");
+    public void baselinePanelHasNoResultsAndNoWidgetForSpeciesWithReferenceExperimentNoInDevDatabase() {
+        BioEntityPage  subject = new BioEntityPage(driver, "AT3G29644", "genes"); // arabidopsis thaliana
+        subject.get();
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
+        assertThat(subject.getBaselinePaneContents(), is(""));
+    }
+
+    @Test
+    public void baselinePanelHasNoResultsAndNoWidgetForSpeciesWithNoSpecifiedReferenceExperiment() {
+        BioEntityPage  subject = new BioEntityPage(driver, "ENSGGOG00000005112", "genes"); // gorilla gorilla
         subject.get();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
         assertThat(subject.getBaselinePaneContents(), is(""));

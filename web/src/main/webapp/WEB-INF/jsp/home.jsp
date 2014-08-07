@@ -43,14 +43,14 @@
             <tr>
                 <td>
                     <label>Gene query</label>
-                    <span data-help-loc="#geneSearch"/>
+                    <span data-help-loc="#geneSearch"></span>
                 </td>
                 <%--<td>--%>
                     <%--<label>Organisms</label>--%>
                 <%--</td>--%>
                 <td>
                     <label>Experimental conditions</label>
-                    <span data-help-loc="#experimentalConditions"/>
+                    <span data-help-loc="#experimentalConditions"></span>
                 </td>
                 <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
                     <div class="actions">
@@ -67,7 +67,7 @@
             <tr>
                 <td>
                     <div style="display:inline-block">
-                        <textarea id="geneQuery" name="geneQuery" maxlength="900" rows="2" cols="36"
+                        <textarea id="geneQuery" name="geneQuery" rows="2" cols="36"
                                   placeholder="(all genes)" tabindex="1"></textarea>
 
                         <div>

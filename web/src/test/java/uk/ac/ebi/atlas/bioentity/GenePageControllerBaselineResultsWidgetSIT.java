@@ -37,7 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class GenePageControllerBaselineResultsSIT extends SinglePageSeleniumFixture {
+public class GenePageControllerBaselineResultsWidgetSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSG00000163331";
 
@@ -61,6 +61,8 @@ public class GenePageControllerBaselineResultsSIT extends SinglePageSeleniumFixt
         wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
 
         assertThat(subject.isBaselinePaneExpanded(), is(true));
+
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
 
         subject.clickDisplayLevelsButton();
 

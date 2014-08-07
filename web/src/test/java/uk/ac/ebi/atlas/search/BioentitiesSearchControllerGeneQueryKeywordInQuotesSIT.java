@@ -46,8 +46,6 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
 
     @Test
     public void baselineExperimentCountsAreCorrect() {
-        subject.clickBaselinePane();
-
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(3));
@@ -63,11 +61,13 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
 
     @Test
     public void differentialPaneHasResults() {
+        subject.clickDifferentialPane();
         assertThat(subject.diffExpressionResultCount(), is("2 search result(s) found"));
     }
 
     @Test
     public void differentialPaneHasCorrectGenesAndSpecies() {
+        subject.clickDifferentialPane();
         assertThat(subject.getDiffHeatmapTableGeneColumn(), hasItems("ATCAD1"));
         assertThat(subject.getDiffHeatmapTableOrganismColumn(), hasItems("Arabidopsis thaliana"));
     }

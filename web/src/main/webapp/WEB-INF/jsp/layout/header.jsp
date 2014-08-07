@@ -180,7 +180,7 @@
                         <label for="email">Your email address (optional)</label>
                     </div>
                     <div>
-                        <input type="input" size="50" maxlength="80" name="email" id="email" value=""
+                        <input type="text" size="50" maxlength="80" name="email" id="email" value=""
                                class="text ui-widget-content ui-corner-all"/>
                         <input type="hidden" name="sendemail" id="sendemail" value="true"/>
                     </div>

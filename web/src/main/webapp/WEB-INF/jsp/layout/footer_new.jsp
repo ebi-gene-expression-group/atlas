@@ -70,7 +70,7 @@
     </div>
 
 </footer>
-</div> <!--! end of #wrapper -->
+<!--! end of #wrapper -->
 
 
 <!-- JavaScript at the bottom for fast page loading -->

@@ -41,6 +41,11 @@ public class BioentitiesSearchControllerGeneQuery2GenesSingleResultSIT extends S
     }
 
     @Test
+    public void baselinePaneResultsMessage() {
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
+    }
+
+    @Test
     public void displaysWidget() {
         // wait for ajax widget to load
         SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");

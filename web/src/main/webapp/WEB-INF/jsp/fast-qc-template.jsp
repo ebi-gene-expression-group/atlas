@@ -14,7 +14,7 @@
 
         <form:form commandName="preferences" method="get" id="prefForm" >
             <c:if test="${not empty param.accessKey}">
-                <input id="accessKey" name="accessKey" type="hidden" value="${param.accessKey}"
+                <input id="accessKey" name="accessKey" type="hidden" value="${param.accessKey}"/>
             </c:if>
 
             <table cellpadding="0" cellspacing="0" border="0" style="margin-left: 10px" >
