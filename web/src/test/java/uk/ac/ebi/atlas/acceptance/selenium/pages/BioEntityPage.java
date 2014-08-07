@@ -150,7 +150,6 @@ public class BioEntityPage extends HeatmapTablePage {
         diffResultsDisplayLevelsButton.click();
     }
 
-
     public WebElement getDiffHeatmapTable() {
         return diffHeatmapTable;
     }

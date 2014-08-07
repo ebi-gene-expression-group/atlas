@@ -58,4 +58,23 @@ public class BioentitiesSearchControllerBaselineResultsPaneSIT extends SinglePag
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
     }
 
+    @Test
+    public void whenNoBaselinePaneResultsAndDiffResultsThenTheDifferentialPaneIsOpen() {
+        subject = new BioEntitiesPage(driver, "condition=cancer");
+        subject.get();
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
+        assertThat(subject.getDiffPaneHeaderResultsMessage(), is("2 results"));
+        assertThat(subject.isDifferentialPaneExpanded(), is(true));
+    }
+
+    @Test
+    public void whenNoBaselinePaneResultsAndNoDiffResultsThenNoPaneIsOpen() {
+        subject = new BioEntitiesPage(driver, "condition=foobar");
+        subject.get();
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
+        assertThat(subject.getDiffPaneHeaderResultsMessage(), is("No results"));
+        assertThat(subject.isBaselinePaneExpanded(), is(false));
+        assertThat(subject.isDifferentialPaneExpanded(), is(false));
+    }
+
 }

@@ -246,11 +246,25 @@
 <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
 <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmap.js"></script>
 
+<c:set var="hasBaselineResults" value="${showWidget || not empty baselineCounts}"/>
+
+<c:choose>
+    <c:when test="${showBioentityPropertiesPane}">
+        <c:set var="defaultPanelIndex" value="${hasBaselineResults ? 1 : (not empty bioentities ? 2 : 0)}"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="defaultPanelIndex" value="${hasBaselineResults ? 0 : (not empty bioentities ? 1 : false)}"/>
+    </c:otherwise>
+</c:choose>
+
+<%-- hide expand/collapse icons when accordion sections don't have enough results --%>
+<c:set var="hideIcons" value="${(showBioentityPropertiesPane && !hasBaselineResults && empty bioentities) || (!showBioentityPropertiesPane && !(hasBaselineResult && not empty bioentities))}"/>
+
 <script>
 
     window.onload = function () {
 
-        var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : singleBaselineSearchResult ? 0 : 1};
+        var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : defaultPanelIndex};
 
         $("#bioentity-info-image").tooltip();
         $("#differential-info-image").tooltip();
@@ -259,8 +273,14 @@
             collapsible: true,
             active: openPanelIndex,
             heightStyle: "content",
-            icons: { "header": "bioEntityCardIconPlus", "activeHeader": "bioEntityCardIconMinus" },
-            header: "ul"
+            icons: ${hideIcons ? "{ 'header': 'ui-icon-blank'}" : "{ 'header': 'bioEntityCardIconPlus', 'activeHeader': 'bioEntityCardIconMinus' }"},
+            header: "ul",
+            beforeActivate: function( event, ui ) {
+                // prevent empty panel from being opened
+                if($.trim($( ui.newPanel ).html()).length == 0) {
+                    event.preventDefault();
+                }
+            }
         });
 
         contrastInfoTooltipModule.init('${pageContext.request.contextPath}', '${param.accessKey}');

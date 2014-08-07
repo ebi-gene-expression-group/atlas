@@ -44,9 +44,6 @@ public class BioentitiesSearchControllerGeneQuery2GenesMultipleResultsSIT extend
 
     @Test
     public void checkBaselineCounts()  {
-        //given
-        subject.clickBaselinePane();
-
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(2));
