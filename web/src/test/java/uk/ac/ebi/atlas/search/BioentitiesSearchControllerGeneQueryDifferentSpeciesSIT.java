@@ -42,7 +42,7 @@ public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends Sin
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=" + GENE_QUERY_PARAM);
+        subject = BioEntitiesPage.search(driver, "geneQuery=" + GENE_QUERY_PARAM);
         subject.get();
     }
 

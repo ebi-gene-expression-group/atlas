@@ -38,7 +38,7 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=%22apoptotic+process%22&condition=%22wild+type%22");
+        subject = BioEntitiesPage.search(driver, "geneQuery=%22apoptotic+process%22&condition=%22wild+type%22");
         subject.get();
     }
 

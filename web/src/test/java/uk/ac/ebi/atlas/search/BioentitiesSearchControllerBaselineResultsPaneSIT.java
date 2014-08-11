@@ -39,28 +39,28 @@ public class BioentitiesSearchControllerBaselineResultsPaneSIT extends SinglePag
 
     @Test
     public void baselinePaneResultsMessageWidget() {
-        subject = new BioEntitiesPage(driver, "geneQuery=ENSMUSG00000097801+ENSMUSG00000090429");
+        subject = BioEntitiesPage.search(driver, "geneQuery=ENSMUSG00000097801+ENSMUSG00000090429");
         subject.get();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
     }
 
     @Test
     public void baselinePaneResultsMessageMultipleResults() {
-        subject = new BioEntitiesPage(driver, "geneQuery=ASPM");
+        subject = BioEntitiesPage.search(driver, "geneQuery=ASPM");
         subject.get();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("2 results"));
     }
 
     @Test
     public void baselinePaneResultsMessageNoResults() {
-        subject = new BioEntitiesPage(driver, "geneQuery=foobar");
+        subject = BioEntitiesPage.search(driver, "geneQuery=foobar");
         subject.get();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
     }
 
     @Test
     public void whenNoBaselinePaneResultsAndDiffResultsThenTheDifferentialPaneIsOpen() {
-        subject = new BioEntitiesPage(driver, "condition=cancer");
+        subject = BioEntitiesPage.search(driver, "condition=cancer");
         subject.get();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
         assertThat(subject.getDiffPaneHeaderResultsMessage(), is("2 results"));
@@ -69,7 +69,7 @@ public class BioentitiesSearchControllerBaselineResultsPaneSIT extends SinglePag
 
     @Test
     public void whenNoBaselinePaneResultsAndNoDiffResultsThenNoPaneIsOpen() {
-        subject = new BioEntitiesPage(driver, "condition=foobar");
+        subject = BioEntitiesPage.search(driver, "condition=foobar");
         subject.get();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
         assertThat(subject.getDiffPaneHeaderResultsMessage(), is("No results"));

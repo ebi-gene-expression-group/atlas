@@ -38,7 +38,7 @@ public class BioentitiesSearchControllerResultInMultiSpeciesExperimentSIT extend
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=tex33");
+        subject = BioEntitiesPage.search(driver, "geneQuery=tex33");
         subject.get();
     }
 

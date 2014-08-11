@@ -38,7 +38,7 @@ public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePa
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "condition=female");
+        subject = BioEntitiesPage.search(driver, "condition=female");
         subject.get();
     }
 

@@ -37,7 +37,7 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT e
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "condition=%22Mus%20musculus%22+and+%22wild%20type%22");
+        subject = BioEntitiesPage.search(driver, "condition=%22Mus%20musculus%22+and+%22wild%20type%22");
         subject.get();
     }
 
