@@ -60,7 +60,9 @@ public class GeneSetPageControllerGoTermSIT extends SinglePageSeleniumFixture {
         subject.clickDiffResultsDisplayLevelsButton();
         assertThat(subject.getDiffHeatmapHeaders(), contains("Gene", "Organism", "Contrast", "Log2-fold change"));
         assertThat(subject.getDiffHeatmapRow(1), contains("Uty", "Mus musculus", "sex:'male' vs 'female'", "10.46"));
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Uty", "Hop3", "ATHSP101", "BAG6", "ROF2", "ATHSFA2", "A37", "ATHSFA2", "ROF2", "DREB2A", "Cldn8", "ATHSP101", "CDC48D", "ROF1", "TPR10", "A37", "CDC48D", "SDG37", "AT1G26800", "AT1G07500", "GAI", "ATNFXL1", "TPR2", "TSA1", "BRH1", "Hop2", "AT3G28220", "Sftpd", "Lonrf3", "F15E12.17", "DML1", "F15E12.17", "FGR", "AT2G30610", "ATSRP30", "SR33", "AT1G23180", "Itgax", "ANAC019", "AT2G41170", "ATMKK9", "SYP111", "ERS1", "Lcn2", "TPR5", "RGLG1", "WRKY38", "AT1G26800", "F7A19.29", "F13F21.11"));
+
+        //System.out.println("\"" + Joiner.on("\", \"").join(subject.getDiffHeatmapTableGeneColumn()) + "\"");
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Uty", "IL12B", "Hop3", "IL6", "ATHSP101", "PTGS2", "IL6", "BAG6", "FN1", "CCL20", "FN1", "ROF2", "ATHSFA2", "CD9", "IL1A", "IL23A", "FCGR2B", "IL1A", "A37", "CD36", "CD36", "SAMHD1", "IL23A", "PTGS2", "TGFBI", "ATHSFA2", "CCL20", "SLAMF1", "F3", "ROF2", "INHBA", "IL1R2", "TNF", "DREB2A", "KCTD12", "SPINK1", "IL1R2", "Cldn8", "TIMP2", "ATHSP101", "RNASE1", "CDC48D", "TNF", "EBI3", "RNASE1", "CNKSR3", "CD9", "TIMP2", "CCL4", "CYBB"));
     }
 
 

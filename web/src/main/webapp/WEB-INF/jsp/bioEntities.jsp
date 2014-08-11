@@ -277,7 +277,15 @@
             header: "ul",
             beforeActivate: function( event, ui ) {
                 // prevent empty panel from being opened
-                if($.trim($( ui.newPanel ).html()).length == 0) {
+                function emptyPanel(panel) {
+                    return $.trim($(panel).html()).length == 0;
+                }
+
+                function collapsingCurrentlyOpenPanel(ui) {
+                    return (ui.newHeader.length == 0);
+                }
+
+                if(emptyPanel(ui.newPanel) && !collapsingCurrentlyOpenPanel(ui) ) {
                     event.preventDefault();
                 }
             }
