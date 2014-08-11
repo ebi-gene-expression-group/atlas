@@ -68,7 +68,7 @@ public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends Sin
         subject.clickDifferentialPane();
         subject.clickDiffResultsDisplayLevelsButton();
         assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("MTDH", "SC5D", "SC5D", "SC5D", "Mtdh"));
-        assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Homo sapiens", "Mus musculus"));
+        assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Homo sapiens", "Homo sapiens", "Homo sapiens", "Homo sapiens","Mus musculus"));
     }
 
     @Test
