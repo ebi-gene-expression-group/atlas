@@ -24,7 +24,10 @@ package uk.ac.ebi.atlas.bioentity.go;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
+
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -33,11 +36,11 @@ public class GeneSetPageControllerGoTermSIT extends SinglePageSeleniumFixture {
 
     private static final String IDENTIFIER = "GO:0005515";
 
-    private BioEntityPage subject;
+    private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntityPage(driver, IDENTIFIER, "genesets", "openPanelIndex=0");
+        subject = new BioEntitiesPage(driver, "genesets/" + IDENTIFIER + "?openPanelIndex=0");
         subject.get();
     }
 
@@ -52,6 +55,19 @@ public class GeneSetPageControllerGoTermSIT extends SinglePageSeleniumFixture {
         assertThat(subject.getPropertiesTableSize(), is(1));
         assertThat(subject.getPropertiesTableRow(0), hasItems("Gene Ontology", "protein binding"));
         assertThat(subject.getLinksInTableRow(0).get(0), is("http://amigo.geneontology.org/amigo/term/GO%3A0005515"));
+    }
+
+    @Test
+    public void baselineResults() {
+        subject.clickBaselinePane();
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("22 results"));
+
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+
+        assertThat(baselineCounts, hasSize(23));
+
+        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-GEOD-26284"));
+        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-GEOD-26284"));
     }
 
     @Test

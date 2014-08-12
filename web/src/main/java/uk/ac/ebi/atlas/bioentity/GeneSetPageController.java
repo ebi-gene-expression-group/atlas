@@ -35,6 +35,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchResult;
+import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchService;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -61,18 +64,21 @@ public class GeneSetPageController extends BioEntityPageController {
 
     private String[] geneSetPagePropertyTypes;
 
+    private BaselineExpressionSearchService baselineExpressionSearchService;
+
     @Value("#{configuration['index.property_names.genesetpage']}")
     void setGenePagePropertyTypes(String[] geneSetPagePropertyTypes) {
         this.geneSetPagePropertyTypes = geneSetPagePropertyTypes;
     }
 
     @Inject
-    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeClient reactomeClient, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader) {
+    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeClient reactomeClient, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader, BaselineExpressionSearchService baselineExpressionSearchService) {
         this.solrQueryService = solrQueryService;
         this.bioEntityPropertyService = bioEntityPropertyService;
         this.reactomeClient = reactomeClient;
         this.goTermTrader = goTermTrader;
         this.interProTermTrader = interProTermTrader;
+        this.baselineExpressionSearchService = baselineExpressionSearchService;
     }
 
     // identifier = Reactome, GO, or Interpro term
@@ -89,9 +95,24 @@ public class GeneSetPageController extends BioEntityPageController {
             throw new ResourceNotFoundException(identifier);
         }
 
+        addBaselineCounts(identifier, model);
+
         loadDifferentialResults(geneIdsResult.get(), model);
 
         return super.showBioentityPage(identifier, model, false);
+    }
+
+    private void addBaselineCounts(String identifier, Model model) {
+        try {
+            Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = baselineExpressionSearchService.query(identifier, null, true);
+            model.addAttribute("baselineCounts", baselineExpressionSearchResults);
+            if (baselineExpressionSearchResults.size() == 1) {
+                model.addAttribute("singleBaselineSearchResult", true);
+                model.addAttribute("species", baselineExpressionSearchResults.iterator().next().getSpecies());
+            }
+        } catch (GenesNotFoundException e) {
+            throw new ResourceNotFoundException(identifier);
+        }
     }
 
     @Override
