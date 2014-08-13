@@ -62,7 +62,6 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
     @Test
     public void differentialPaneHasResults() {
         subject.clickDifferentialPane();
-        assertThat(subject.diffExpressionResultCount(), is("31 search result(s) found"));
         assertThat(subject.diffExpressionResultCount(), is("Showing 31 results"));
     }
 
