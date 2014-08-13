@@ -45,9 +45,9 @@
                     <label>Gene query</label>
                     <span data-help-loc="#geneSearch"></span>
                 </td>
-                <%--<td>--%>
-                    <%--<label>Organisms</label>--%>
-                <%--</td>--%>
+                <td>
+                    <label>Organisms</label>
+                </td>
                 <td>
                     <label>Experimental conditions</label>
                     <span data-help-loc="#experimentalConditions"></span>
@@ -87,11 +87,11 @@
                     </div>
                 </td>
 
-                <%--<td>--%>
-                    <%--<form:select id="organism" name="organism" path="dummyPath">--%>
-                        <%--<form:options items="${organisms}" />--%>
-                    <%--</form:select>--%>
-                <%--</td>--%>
+                <td>
+                    <form:select id="organism" name="organism" path="dummyPath">
+                        <form:options items="${organisms}" />
+                    </form:select>
+                </td>
                 <td>
                     <div style="display:inline-block">
                         <textarea id="condition" name="condition" maxlength="900" rows="2" cols="36"

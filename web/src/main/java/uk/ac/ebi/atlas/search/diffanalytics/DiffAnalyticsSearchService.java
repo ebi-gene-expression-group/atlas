@@ -51,7 +51,8 @@ public class DiffAnalyticsSearchService {
     @Inject
     public DiffAnalyticsSearchService(DiffAnalyticsDao diffAnalyticsDao,
                                       DifferentialConditionsSearchService differentialConditionsSearchService,
-                                      SolrQueryService solrQueryService) {
+                                      SolrQueryService solrQueryService
+                                     ) {
         this.diffAnalyticsDao = diffAnalyticsDao;
         this.differentialConditionsSearchService = differentialConditionsSearchService;
         this.solrQueryService = solrQueryService;
@@ -61,7 +62,10 @@ public class DiffAnalyticsSearchService {
     public int visitEachExpression(String geneQuery, String condition, boolean isExactMatch, Visitor<DiffAnalytics> visitor) {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(condition);
-        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, isExactMatch);
+
+        String specie = "";
+
+        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, specie, isExactMatch);
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
                  || contrastsResult.isPresent() && contrastsResult.get().isEmpty()) {
@@ -80,7 +84,7 @@ public class DiffAnalyticsSearchService {
 
     public List<DiffAnalytics> fetchTopWithoutCount(String geneId) {
         Collection<String> geneIds = Lists.newArrayList(geneId);
-        return diffAnalyticsDao.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
+        return diffAnalyticsDao.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds), "");
     }
 
     public DiffAnalyticsList fetchTop(Collection<String> geneIdentifiers) {
@@ -88,7 +92,7 @@ public class DiffAnalyticsSearchService {
         if (CollectionUtils.isNotEmpty(geneIdentifiers)) {
 
             List<DiffAnalytics> expressions = diffAnalyticsDao.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(),
-                    Optional.of(geneIdentifiers));
+                    Optional.of(geneIdentifiers), "");
 
             int resultCount = diffAnalyticsDao.fetchResultCount(Optional.<Collection<IndexedAssayGroup>>absent(),
                     Optional.of(geneIdentifiers));
@@ -99,14 +103,12 @@ public class DiffAnalyticsSearchService {
         return new DiffAnalyticsList();
     }
 
-
-    public DiffAnalyticsList fetchTop(String geneQuery, String condition, boolean isExactMatch) throws GenesNotFoundException {
-
+    public DiffAnalyticsList fetchTop(String geneQuery, String condition, String specie, boolean isExactMatch) throws GenesNotFoundException {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(condition);
 
         //TODO: move outside into caller, because this is called twice, here and in BaselineExpressionSearchService
-        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, isExactMatch);
+        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, specie.toLowerCase(), isExactMatch);
 
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
@@ -116,7 +118,12 @@ public class DiffAnalyticsSearchService {
             return new DiffAnalyticsList();
         }
 
-        List<DiffAnalytics> expressions = diffAnalyticsDao.fetchTopExpressions(contrastsResult, geneIdsResult);
+        String species = "";
+        if(StringUtils.isNotBlank(specie)) {
+            species = specie;
+        }
+
+        List<DiffAnalytics> expressions = diffAnalyticsDao.fetchTopExpressions(contrastsResult, geneIdsResult, species);
         int resultCount = diffAnalyticsDao.fetchResultCount(contrastsResult, geneIdsResult);
 
         return new DiffAnalyticsList(expressions, resultCount);

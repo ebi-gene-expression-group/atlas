@@ -1,8 +1,10 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
 import oracle.sql.ARRAY;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.search.DatabaseQuery;
+import uk.ac.ebi.atlas.utils.StringUtil;
 
 import javax.inject.Named;
 
@@ -39,6 +41,7 @@ public class DiffAnalyticsQueryBuilder {
 
     private ARRAY experimentContrasts;
     private ARRAY geneIds;
+    private String species;
 
     public DiffAnalyticsQueryBuilder withExperimentContrasts(ARRAY experimentContrasts) {
         this.experimentContrasts = experimentContrasts;
@@ -47,6 +50,11 @@ public class DiffAnalyticsQueryBuilder {
 
     public DiffAnalyticsQueryBuilder withGeneIds(ARRAY geneIds) {
         this.geneIds = geneIds;
+        return this;
+    }
+
+    public DiffAnalyticsQueryBuilder withSpecies(String species) {
+        this.species = species;
         return this;
     }
 
@@ -70,6 +78,8 @@ public class DiffAnalyticsQueryBuilder {
 
         addContrasts(databaseQuery);
 
+        addSpecie(databaseQuery, species);
+
         databaseQuery.appendToQueryString(ORDER_BY_LOG2FOLD);
 
         return databaseQuery;
@@ -88,6 +98,12 @@ public class DiffAnalyticsQueryBuilder {
         if (geneIds != null) {
             databaseQuery.appendToQueryString("JOIN TABLE(?) identifiersTable ON IDENTIFIER = identifiersTable.column_value ");
             databaseQuery.addParameter(geneIds);
+        }
+    }
+
+    private void addSpecie(DatabaseQuery<Object> databaseQuery, String species) {
+       if (StringUtils.isNotBlank(species)) {
+            databaseQuery.appendToQueryString("WHERE VW_DIFFANALYTICS.ORGANISM= \'" + species + "\'");
         }
     }
 }

@@ -89,7 +89,8 @@ public class GeneSetPageController extends BioEntityPageController {
         model.addAttribute("isGeneSet", true);
 
         // load diff results in same way as BioentitiesSearchController
-        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(identifier, true);
+        String specie = "";
+        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(identifier, specie, true);
 
         if (!geneIdsResult.isPresent() || geneIdsResult.get().isEmpty()) {
             throw new ResourceNotFoundException(identifier);
@@ -104,7 +105,8 @@ public class GeneSetPageController extends BioEntityPageController {
 
     private void addBaselineCounts(String identifier, Model model) {
         try {
-            Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = baselineExpressionSearchService.query(identifier, null, true);
+            String specie = "";
+            Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = baselineExpressionSearchService.query(identifier, null, specie, true);
             model.addAttribute("baselineCounts", baselineExpressionSearchResults);
             if (baselineExpressionSearchResults.size() == 1) {
                 model.addAttribute("singleBaselineSearchResult", true);

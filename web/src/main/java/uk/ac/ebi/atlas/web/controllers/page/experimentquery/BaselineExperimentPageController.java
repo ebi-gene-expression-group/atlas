@@ -126,6 +126,17 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         return "heatmap-widget";
     }
 
+    @RequestMapping(value = "/widgets/heatmap/bioentity", params = {"type=RNASEQ_MRNA_BASELINE"})
+    public String showGeneProfilesWidgetBioentity(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
+            , @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request) {
+
+        prepareModel(preferences, result, model, request);
+
+        model.addAttribute("isWidget", true);
+        model.addAttribute("disableGeneLinks", disableGeneLinks);
+        return "heatmap-widget";
+    }
+
     private BaselineProfilesList fetchGeneProfilesAsGeneSets() {
         BaselineProfileStreamOptionsWrapperAsGeneSets options = new BaselineProfileStreamOptionsWrapperAsGeneSets(requestContext);
         return baselineProfilesHeatMap.fetch(options);

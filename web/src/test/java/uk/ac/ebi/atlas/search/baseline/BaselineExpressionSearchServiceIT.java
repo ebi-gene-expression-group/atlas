@@ -39,9 +39,10 @@ public class BaselineExpressionSearchServiceIT {
     public void geneQuery2IDsDifferentSpecies() throws GenesNotFoundException {
         String geneQuery = "ENSG00000161547 ENSMUSG00000030105";
         String condition = "";
+        String species = "";
         boolean isExactMatch = true;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-599", "E-MTAB-1733", "E-GEOD-30352"));
@@ -51,9 +52,10 @@ public class BaselineExpressionSearchServiceIT {
     public void geneQuery2IDsSameSpecies() throws GenesNotFoundException {
         String geneQuery = "ENSG00000161547 ENSG00000211855";
         String condition = "";
+        String species = "";
         boolean isExactMatch = true;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-1733"));
@@ -63,9 +65,10 @@ public class BaselineExpressionSearchServiceIT {
     public void geneQueryMiRNA() throws GenesNotFoundException {
         String geneQuery = "hsa-mir-636";
         String condition = "";
+        String species = "";
         boolean isExactMatch = true;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-1733"));
@@ -75,9 +78,10 @@ public class BaselineExpressionSearchServiceIT {
     public void geneQueryKeywordWithQuotesZincFinger() throws GenesNotFoundException {
         String geneQuery = "\"zinc finger\"";
         String condition = "";
+        String species = "";
         boolean isExactMatch = true;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-599", "E-MTAB-1733", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352"));
@@ -87,9 +91,10 @@ public class BaselineExpressionSearchServiceIT {
     public void geneQueryKeywordKinase() throws GenesNotFoundException {
         String geneQuery = "kinase";
         String condition = "";
+        String species = "";
         boolean isExactMatch = false;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains(  "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284",
@@ -101,9 +106,10 @@ public class BaselineExpressionSearchServiceIT {
     public void geneQueryKeywordProteinCoding() throws GenesNotFoundException {
         String geneQuery = "protein_coding";
         String condition = "";
+        String species = "";
         boolean isExactMatch = true;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, hasSize(22));
@@ -113,9 +119,10 @@ public class BaselineExpressionSearchServiceIT {
     public void conditionPregnant() throws GenesNotFoundException {
         String geneQuery = "";
         String condition = "pregnant";
+        String species = "";
         boolean isExactMatch = true;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
 
         assertThat(results, hasSize(0));
     }
@@ -124,9 +131,10 @@ public class BaselineExpressionSearchServiceIT {
     public void conditionSpecimen() throws GenesNotFoundException {
         String geneQuery = "";
         String condition = "frozen specimen";
+        String species = "";
         boolean isExactMatch = true;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         BaselineExpressionSearchResult eMtab1733 = results.iterator().next();
@@ -139,9 +147,10 @@ public class BaselineExpressionSearchServiceIT {
     public void conditionsOR() throws GenesNotFoundException {
         String geneQuery = "";
         String condition = "adipose thymus";
+        String species = "";
         boolean isExactMatch = true;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-GEOD-26284", "E-MTAB-513", "E-MTAB-599", "E-MTAB-1733"));
@@ -160,9 +169,10 @@ public class BaselineExpressionSearchServiceIT {
     public void conditionsAND() throws GenesNotFoundException {
         String geneQuery = "";
         String condition = "heart AND frozen specimen";
+        String species = "";
         boolean isExactMatch = true;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         BaselineExpressionSearchResult eMtab1733 = results.iterator().next();
@@ -176,9 +186,10 @@ public class BaselineExpressionSearchServiceIT {
     public void resultsInMoreThanOneSlice() throws GenesNotFoundException {
         String geneQuery = "AHI1";
         String condition = "";
+        String species = "";
         boolean isExactMatch = true;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         BaselineExpressionSearchResult first = results.iterator().next();
@@ -190,12 +201,30 @@ public class BaselineExpressionSearchServiceIT {
     }
 
     @Test
+    public void resultsInMoreThanOneSliceWithSelectedSpecie() throws GenesNotFoundException {
+        String geneQuery = "AHI1";
+        String condition = "";
+        String species = "homo sapiens";
+        boolean isExactMatch = true;
+
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
+        List<String> experimentAccessions = getExperimentAccessions(results);
+
+        BaselineExpressionSearchResult first = results.iterator().next();
+
+        assertThat(experimentAccessions, contains("E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284",
+                "E-MTAB-513", "E-MTAB-1733"));
+
+        assertThat(first.getFilterFactors(), contains(new Factor("RNA", "long non-polyA RNA"), new Factor("CELLULAR_COMPONENT", "cytosol")));
+    }
+
+    @Test
     public void buildResults_GEOD26284() {
         ImmutableSetMultimap<String, String> assayGroupsWithExpressionByExperiment = new ImmutableSetMultimap.Builder<String, String>()
                 .putAll("E-GEOD-26284", "g13", "g7", "g3")
                 .build();
-
-        Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = subject.buildResults(assayGroupsWithExpressionByExperiment, true);
+        String species = "";
+        Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = subject.buildResults(assayGroupsWithExpressionByExperiment, true, species);
 
         assertThat(baselineExpressionSearchResults, hasSize(2));
 
@@ -215,8 +244,8 @@ public class BaselineExpressionSearchServiceIT {
         ImmutableSetMultimap<String, String> assayGroupsWithExpressionByExperiment = new ImmutableSetMultimap.Builder<String, String>()
                 .putAll("E-MTAB-513", "g12", "g14", "g16", "g8", "g2", "g4", "g9")
                 .build();
-
-        Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = subject.buildResults(assayGroupsWithExpressionByExperiment, true);
+        String species = "";
+        Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = subject.buildResults(assayGroupsWithExpressionByExperiment, true, species);
         BaselineExpressionSearchResult searchResult = baselineExpressionSearchResults.iterator().next();
 
         assertThat(baselineExpressionSearchResults, hasSize(1));
@@ -228,9 +257,10 @@ public class BaselineExpressionSearchServiceIT {
     public void geneQueryGeneIDAndConditionHeart() throws GenesNotFoundException {
         String geneQuery = "ENSG00000129170";                       //expressed in ovary
         String condition = "heart";
+        String species = "";
         boolean isExactMatch = true;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
@@ -245,12 +275,32 @@ public class BaselineExpressionSearchServiceIT {
     }
 
     @Test
+    public void geneQueryGeneIDAndConditionHeartWithSelectedSpecie() throws GenesNotFoundException {
+        String geneQuery = "ENSG00000129170";                       //expressed in ovary
+        String condition = "heart";
+        String species = "mus musculus";
+        boolean isExactMatch = true;
+
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
+        List<String> experimentAccessions = getExperimentAccessions(results);
+
+        assertThat(experimentAccessions, contains("E-MTAB-599"));
+
+        BaselineExpressionSearchResult[] resultsArray = results.toArray(new BaselineExpressionSearchResult[results.size()]);
+
+        BaselineExpressionSearchResult eMtab599 = resultsArray[0];
+        assertThat(eMtab599.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "heart", "UBERON:0000948")));
+
+    }
+
+    @Test
     public void conditionWildType() throws GenesNotFoundException {
         String geneQuery = "";
         String condition = "wild type";
+        String species = "";
         boolean isExactMatch = true;
 
-        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, isExactMatch);
+        Set<BaselineExpressionSearchResult> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         BaselineExpressionSearchResult eMtab513 = results.iterator().next();

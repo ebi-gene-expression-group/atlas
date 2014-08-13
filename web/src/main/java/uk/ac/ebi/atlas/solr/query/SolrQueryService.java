@@ -212,7 +212,7 @@ public class SolrQueryService {
 
     }
 
-    public Optional<Set<String>> expandGeneQueryIntoGeneIds(String geneQuery, boolean isExactMatch) {
+    public Optional<Set<String>> expandGeneQueryIntoGeneIds(String geneQuery, String specie, boolean isExactMatch) {
         if (StringUtils.isBlank(geneQuery)) {
             return Optional.absent();
         }
@@ -222,8 +222,11 @@ public class SolrQueryService {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        // search across any species
+        // search across any species or passed by
         String species = "";
+        if(StringUtils.isNotBlank(specie)) {
+            species = specie;
+        }
 
         //resolve any gene keywords to identifiers
         Set<String> geneIds = findGeneIdsOrSets(geneQuery, isExactMatch, species);

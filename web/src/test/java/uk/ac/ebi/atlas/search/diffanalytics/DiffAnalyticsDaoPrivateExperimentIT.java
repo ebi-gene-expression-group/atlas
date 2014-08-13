@@ -62,7 +62,8 @@ public class DiffAnalyticsDaoPrivateExperimentIT {
     @Test
     public void getTopExpressionsDoesNotReturnResultsInPrivateExperiments() {
         Collection<String> geneIds = Collections.singleton("ENSMUSG00000050520");
-        List<DiffAnalytics> expressions = subject.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
+        String species = "";
+        List<DiffAnalytics> expressions = subject.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds), species);
         MatcherAssert.assertThat(expressions, Matchers.hasSize(0));
     }
 

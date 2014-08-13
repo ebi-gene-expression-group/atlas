@@ -72,19 +72,24 @@ public class BaselineExpressionSearchService {
         return (!coll.isPresent() || coll.get().isEmpty());
     }
 
-    public Set<BaselineExpressionSearchResult> query(String geneQuery, String condition, boolean isExactMatch) throws GenesNotFoundException {
+    public Set<BaselineExpressionSearchResult> query(String geneQuery, String condition, String specie, boolean isExactMatch) throws GenesNotFoundException {
         LOGGER.info(String.format("<query> geneQuery=%s, condition=%s", geneQuery, condition));
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
         Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups = fetchAssayGroupsForCondition(condition);
 
+        String species = "";
+        if(StringUtils.isNotBlank(specie)) {
+            species = specie;
+        }
+
         //TODO: move outside into caller, because this is called twice, here and in DiffAnalyticsSearchService
-        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, isExactMatch);
+        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
 
         SetMultimap<String, String> assayGroupsWithExpressionByExperiment = baselineExpressionsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, geneIds);
 
-        Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = buildResults(assayGroupsWithExpressionByExperiment, !isEmpty(indexedAssayGroups));
+        Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = buildResults(assayGroupsWithExpressionByExperiment, !isEmpty(indexedAssayGroups), species);
 
         stopWatch.stop();
         LOGGER.info(String.format("<query> %s results, took %s seconds", baselineExpressionSearchResults.size(), stopWatch.getTotalTimeSeconds()));
@@ -92,7 +97,7 @@ public class BaselineExpressionSearchService {
         return baselineExpressionSearchResults;
     }
 
-    SortedSet<BaselineExpressionSearchResult> buildResults(SetMultimap<String, String> assayGroupsWithExpressionByExperiment, boolean conditionSearch) {
+    SortedSet<BaselineExpressionSearchResult> buildResults(SetMultimap<String, String> assayGroupsWithExpressionByExperiment, boolean conditionSearch, String selectedSpecie) {
         SortedSet<BaselineExpressionSearchResult> results = Sets.newTreeSet();
 
         for (Map.Entry<String, Collection<String>> exprAssayGroups : assayGroupsWithExpressionByExperiment.asMap().entrySet()) {
@@ -106,12 +111,18 @@ public class BaselineExpressionSearchService {
 
             for (Map.Entry<FactorGroup, Collection<String>> assayGroupIdsAndFilterFactor : assayGroupIdsByFilterFactors.asMap().entrySet()) {
                 String species = experiment.getSpecies().size() > 1 ? "Multi-species" : experiment.getFirstSpecies();
-                BaselineExpressionSearchResult result = new BaselineExpressionSearchResult(experiment.getAccession(), experiment.getDisplayName(), species, experiment.getExperimentalFactors().getDefaultQueryFactorType());
-                result.setFilterFactors(assayGroupIdsAndFilterFactor.getKey());
-                if (conditionSearch) {
-                    result.setAssayGroupsWithCondition(ImmutableSet.copyOf(assayGroupIdsAndFilterFactor.getValue()), experiment);
+                //If the search has a selected specie, we need to find the experiments that match the same specie
+                if (StringUtils.isBlank(selectedSpecie) || (StringUtils.isNotBlank(selectedSpecie) && species.toLowerCase().equals(selectedSpecie)) ||
+                        (StringUtils.isNotBlank(selectedSpecie) && species.equals("Multi-species") && !assayGroupIdsAndFilterFactor.getKey().isEmpty()
+                                && assayGroupIdsAndFilterFactor.getKey().iterator().next().getValue().toLowerCase().equals(selectedSpecie))) {
+
+                    BaselineExpressionSearchResult result = new BaselineExpressionSearchResult(experiment.getAccession(), experiment.getDisplayName(), species, experiment.getExperimentalFactors().getDefaultQueryFactorType());
+                    result.setFilterFactors(assayGroupIdsAndFilterFactor.getKey());
+                    if (conditionSearch) {
+                        result.setAssayGroupsWithCondition(ImmutableSet.copyOf(assayGroupIdsAndFilterFactor.getValue()), experiment);
+                    }
+                    results.add(result);
                 }
-                results.add(result);
             }
 
         }
