@@ -1,0 +1,169 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+package uk.ac.ebi.atlas.experimentpage.differential;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.commands.context.DifferentialRequestContext;
+import uk.ac.ebi.atlas.commands.context.DifferentialRequestContextBuilder;
+import uk.ac.ebi.atlas.model.differential.*;
+import uk.ac.ebi.atlas.profiles.ProfilesHeatMap;
+import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModel;
+import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.tracks.TracksUtil;
+import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
+import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
+import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Set;
+
+public abstract class DifferentialExperimentPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences, P extends DifferentialProfile> {
+
+    private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
+    private final SpeciesEnsemblTrader speciesEnsemblTrader;
+    private final GseaPlotsBuilder gseaPlotsBuilder;
+    private DownloadURLBuilder downloadURLBuilder;
+    private DifferentialRequestContextBuilder differentialRequestContextBuilder;
+    private ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap;
+    private TracksUtil tracksUtil;
+
+
+    @SuppressWarnings("unchecked")
+    protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
+                                                   ProfilesHeatMap<P, ? extends DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap,
+                                                   DownloadURLBuilder downloadURLBuilder, DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
+                                                   SpeciesEnsemblTrader speciesEnsemblTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
+        this.differentialRequestContextBuilder = differentialRequestContextBuilder;
+        // cast here to avoid having to make a type parameter for DifferentialRequestContext
+        this.profilesHeatMap = (ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions>) profilesHeatMap;
+        this.downloadURLBuilder = downloadURLBuilder;
+        this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
+        this.speciesEnsemblTrader = speciesEnsemblTrader;
+        this.tracksUtil = tracksUtil;
+        this.gseaPlotsBuilder = gseaPlotsBuilder;
+    }
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(new DifferentialRequestPreferencesValidator());
+    }
+
+    // called from sub classes
+    public String showGeneProfiles(K requestPreferences, BindingResult result, Model model, HttpServletRequest request) {
+
+        T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+        initRequestPreferences(model, requestPreferences, experiment);
+
+        DifferentialRequestContext requestContext = initRequestContext(experiment, requestPreferences);
+
+        Set<Contrast> contrasts = experiment.getContrasts();
+
+        model.addAttribute("allQueryFactors", contrasts);
+
+        //required by autocomplete
+        model.addAttribute("species", requestContext.getFilteredBySpecies());
+
+        model.addAttribute("queryFactorName", "Contrast");
+
+        model.addAttribute("allQueryFactors", contrasts);
+
+        model.addAttribute("regulationValues", Regulation.values());
+
+        model.addAttribute("enableEnsemblLauncher", tracksUtil.hasDiffTracksPath(experiment.getAccession(), contrasts.iterator().next().getId()));
+
+        if (!result.hasErrors()) {
+
+            try {
+
+                ImmutableMap<String, GseaPlots> gseaPlots = gseaPlotsBuilder.createMapByContrastId(experiment.getAccession(), contrasts);
+
+                DifferentialProfilesList differentialProfiles = profilesHeatMap.fetch(requestContext);
+                addJsonForHeatMap(differentialProfiles, contrasts, gseaPlots, model);
+
+                //TODO: remove when widget converted to React
+                model.addAttribute("geneProfiles", differentialProfiles);
+
+                model.addAttribute("isDifferential", true);
+                downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
+
+                //required for genome track browser in ensembl
+                String ensemblDB = speciesEnsemblTrader.getEnsemblDb(requestContext.getFilteredBySpecies());
+                model.addAttribute("ensemblDB", ensemblDB);
+
+
+            } catch (GenesNotFoundException e) {
+                result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery() + "'"));
+            }
+
+        }
+
+        return "experiment-react";
+    }
+
+    private void addJsonForHeatMap(DifferentialProfilesList diffProfiles, Set<Contrast> contrasts, ImmutableMap<String, GseaPlots> gseaPlots, Model model) {
+        Gson gson = new GsonBuilder()
+                .serializeSpecialFloatingPointValues()
+                .create();
+
+        String jsonContrasts = gson.toJson(contrasts);
+        model.addAttribute("jsonColumnHeaders", jsonContrasts);
+
+        DifferentialProfilesViewModel profilesViewModel = differentialProfilesViewModelBuilder.build(diffProfiles, contrasts);
+
+        String jsonProfiles = gson.toJson(profilesViewModel);
+        model.addAttribute("jsonProfiles", jsonProfiles);
+
+        String jsonGseaPlots = gson.toJson(gseaPlots);
+        model.addAttribute("gseaPlots", jsonGseaPlots);
+
+    }
+
+    private void initRequestPreferences(Model model, K requestPreferences, T experiment) {
+        //if there is only one contrast we want to preselect it... from Robert feedback
+        if (experiment.getContrasts().size() == 1) {
+            requestPreferences.setQueryFactorValues(experiment.getContrastIds());
+        }
+        initExtraPageConfigurations(model, requestPreferences, experiment);
+
+    }
+
+    protected abstract void initExtraPageConfigurations(Model model, K requestPreferences, T experiment);
+
+    private DifferentialRequestContext initRequestContext(T experiment, DifferentialRequestPreferences requestPreferences) {
+        return differentialRequestContextBuilder.forExperiment(experiment)
+                .withPreferences(requestPreferences).build();
+
+    }
+
+}
