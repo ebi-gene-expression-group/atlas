@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BioEntitiesPage extends BioEntityPage {
 
-    private String queryParams;
+    private String url;
 
     @FindBy(xpath = "//*[@id=\"diffProfileBody\"]/div[1]/span[1]")
     private WebElement resultCountLine;
@@ -46,14 +46,18 @@ public class BioEntitiesPage extends BioEntityPage {
         super(driver);
     }
 
-    public BioEntitiesPage(WebDriver driver, String queryParams) {
+    public BioEntitiesPage(WebDriver driver, String url) {
         super(driver);
-        this.queryParams = queryParams;
+        this.url = url;
+    }
+
+    public static BioEntitiesPage search(WebDriver driver, String queryParams) {
+        return new BioEntitiesPage(driver, "query?" + queryParams);
     }
 
     @Override
     protected String getPageURI() {
-        return PAGE_LOCATION + "query?" + queryParams;
+        return PAGE_LOCATION + url;
     }
 
     @Override

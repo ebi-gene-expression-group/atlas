@@ -49,8 +49,6 @@ public class BaselineExpressionsDao {
 
     private static final Logger LOGGER = Logger.getLogger(BaselineExpressionsDao.class);
 
-    static final int RESULT_SIZE = 50;
-
     private final JdbcTemplate jdbcTemplate;
 
     private OracleObjectFactory oracleObjectFactory;

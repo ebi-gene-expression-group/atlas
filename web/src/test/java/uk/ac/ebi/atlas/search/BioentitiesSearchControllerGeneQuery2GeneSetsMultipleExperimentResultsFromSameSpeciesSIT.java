@@ -38,7 +38,7 @@ public class BioentitiesSearchControllerGeneQuery2GeneSetsMultipleExperimentResu
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=REACT_152+REACT_111102");
+        subject = BioEntitiesPage.search(driver, "geneQuery=REACT_152+REACT_111102");
         subject.get();
     }
 

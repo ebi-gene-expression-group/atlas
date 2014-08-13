@@ -94,9 +94,14 @@ public class BioentitiesSearchController {
 
         String geneQuery = requestParameters.getGeneQuery().trim();
 
+        String selectedSpecie = "";
+        if(requestParameters.hasOrganism()) {
+            selectedSpecie = requestParameters.getOrganism().trim();
+        }
+
         if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
             //If Query just for a single bioentityID
-            Optional<String> geneIdRedirectString = getGeneIdRedirectString(geneQuery, requestParameters.isExactMatch());
+            Optional<String> geneIdRedirectString = getGeneIdRedirectString(geneQuery, selectedSpecie, requestParameters.isExactMatch());
             if (geneIdRedirectString.isPresent()) {
                 return geneIdRedirectString.get();
             }
@@ -108,7 +113,8 @@ public class BioentitiesSearchController {
 
             String condition = efoExpander.fetchExpandedTermWithEFOChildren(requestParameters.getCondition());
 
-            Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = baselineExpressionSearchService.query(geneQuery, condition, requestParameters.isExactMatch());
+            Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = baselineExpressionSearchService.query(geneQuery, condition, selectedSpecie.toLowerCase(), requestParameters.isExactMatch());
+
             model.addAttribute("baselineCounts", baselineExpressionSearchResults);
             if (baselineExpressionSearchResults.size() == 1 & !requestParameters.hasCondition()) {
                 model.addAttribute("singleBaselineSearchResult", true);
@@ -116,7 +122,7 @@ public class BioentitiesSearchController {
             }
 
             // used to populate diff-heatmap-table
-            DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(geneQuery, condition, requestParameters.isExactMatch());
+            DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(geneQuery, condition, selectedSpecie, requestParameters.isExactMatch());
 
             model.addAttribute("bioentities", bioentityExpressions);
 
@@ -136,7 +142,7 @@ public class BioentitiesSearchController {
         return "bioEntities";
     }
 
-    private Optional<String> getGeneIdRedirectString(String geneQuery, boolean isExactMatch) {
+    private Optional<String> getGeneIdRedirectString(String geneQuery, String specie, boolean isExactMatch) {
 
         if (!StringUtils.containsWhitespace(geneQuery) && geneQuery.toUpperCase().startsWith("REACT_")) {
             return Optional.of("redirect:/genesets/" + geneQuery);
@@ -150,8 +156,11 @@ public class BioentitiesSearchController {
         }
 
         try {
-
-            Optional<Set<String>> geneIdsOrSets = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, isExactMatch);
+            String species = "";
+            if (StringUtils.isNotBlank(specie)) {
+               species = specie;
+            }
+            Optional<Set<String>> geneIdsOrSets = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
 
             if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
                 return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());

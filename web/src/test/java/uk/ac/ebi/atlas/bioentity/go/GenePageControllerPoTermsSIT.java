@@ -6,10 +6,9 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.is;
 
 
-public class GenePageControllerPoTermsIT extends SinglePageSeleniumFixture {
+public class GenePageControllerPoTermsSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "AT3G11340";
 

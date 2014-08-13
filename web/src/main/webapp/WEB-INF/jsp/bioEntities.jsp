@@ -178,7 +178,15 @@
 
                 <div id="diffProfileBody" class="bioEntityCard">
                     <div class="ui-corner-all bioEntityCardDifferentialSummary">
-                        <span>${bioentities.getTotalNumberOfResults()} search result(s) found</span>
+                        <c:choose>
+                            <c:when test="${bioentities.getTotalNumberOfResults() <= 50}">
+                                <span> Showing ${bioentities.getTotalNumberOfResults()} ${bioentities.getTotalNumberOfResults() == 1 ? "result" : "results"}</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span> Showing 50 of ${bioentities.getTotalNumberOfResults()} results</span>
+                            </c:otherwise>
+                        </c:choose>
+                        
                         <span style="float: right">cutoffs: adjusted <i>p</i>-value 0.05 &nbsp;&nbsp; log<sub>2</sub>-fold change 1.0</span>
                     </div>
 
@@ -277,7 +285,15 @@
             header: "ul",
             beforeActivate: function( event, ui ) {
                 // prevent empty panel from being opened
-                if($.trim($( ui.newPanel ).html()).length == 0) {
+                function emptyPanel(panel) {
+                    return $.trim($(panel).html()).length == 0;
+                }
+
+                function collapsingCurrentlyOpenPanel(ui) {
+                    return (ui.newHeader.length == 0);
+                }
+
+                if(emptyPanel(ui.newPanel) && !collapsingCurrentlyOpenPanel(ui) ) {
                     event.preventDefault();
                 }
             }
@@ -298,6 +314,11 @@
             featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}${disableGeneLinks ? "&disableGeneLinks=true" : ""}' + widgetParameters,
             target: "widgetBody"
         });
+
+        <%--new Biojs.AtlasHeatmap({--%>
+            <%--featuresUrl: '/gxa/widgets/heatmap/bioentity?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}${disableGeneLinks ? "&disableGeneLinks=true" : ""}' + widgetParameters,--%>
+            <%--target: "widgetBody"--%>
+        <%--});--%>
 
         </c:when>
         <c:otherwise>

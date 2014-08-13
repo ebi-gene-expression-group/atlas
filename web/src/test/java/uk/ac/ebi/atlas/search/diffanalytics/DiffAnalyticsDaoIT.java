@@ -57,7 +57,9 @@ public class DiffAnalyticsDaoIT {
         Collection<IndexedAssayGroup> contrasts = Lists.newArrayList(indexedContrast1);
         Collection<String> geneIds = new HashSet<>();
 
-        List<DiffAnalytics> expressions = subject.fetchTopExpressions(Optional.of(contrasts), Optional.of(geneIds));
+        String species = "";
+
+        List<DiffAnalytics> expressions = subject.fetchTopExpressions(Optional.of(contrasts), Optional.of(geneIds), species);
         assertThat(expressions.size(), is(6));
         assertThat(expressions.get(0).getBioentityId(), is("FBgn0040393"));
         assertThat(expressions.get(1).getBioentityId(), is("FBgn0030746"));
@@ -76,8 +78,9 @@ public class DiffAnalyticsDaoIT {
 
     @Test
     public void getTopExpressionsForGene() throws Exception {
+        String species = "";
         Collection<String> geneIds = Sets.newHashSet("AT1G02220");
-        List<DiffAnalytics> expressions = subject.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds));
+        List<DiffAnalytics> expressions = subject.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds), species);
         assertThat(expressions, Matchers.hasSize(1));
         assertThat(expressions.get(0).getBioentityId(), is("AT1G02220"));
         assertThat(expressions.get(0).getExperimentAccession(), is("E-GEOD-38400"));

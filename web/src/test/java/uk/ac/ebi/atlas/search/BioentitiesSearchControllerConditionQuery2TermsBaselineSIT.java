@@ -38,7 +38,7 @@ public class BioentitiesSearchControllerConditionQuery2TermsBaselineSIT extends 
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "condition=adipose+thymus");
+        subject = BioEntitiesPage.search(driver, "condition=adipose+thymus");
         subject.get();
     }
 

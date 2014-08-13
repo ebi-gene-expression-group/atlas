@@ -38,7 +38,7 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=%22apoptotic+process%22&condition=%22wild+type%22");
+        subject = BioEntitiesPage.search(driver, "geneQuery=%22apoptotic+process%22&condition=%22wild+type%22");
         subject.get();
     }
 
@@ -61,7 +61,7 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
     public void checkDifferentialProfiles() {
         subject.clickDifferentialPane();
         subject.clickDiffResultsDisplayLevelsButton();
-        assertThat(subject.diffExpressionResultCount(), is("14 search result(s) found"));
+        assertThat(subject.diffExpressionResultCount(), is("Showing 14 results"));
         assertThat(subject.getContrastColumn(), hasItem(
                 "compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36"));
         assertThat(subject.getFoldChange(), hasItems("3.46", "1"));

@@ -19,9 +19,13 @@ public class SeleniumUtil {
 
     public static final int TIMEOUT_DURATION = 15;
 
+    public static boolean elementExists(WebDriver driver, By by) {
+        return !driver.findElements(by).isEmpty();
+    }
+
     /*
-                Find an element by ID, but wait until the element is available first, ignoringNoSuchElementException errors.
-                */
+    Find an element by ID, but wait until the element is available first, ignoringNoSuchElementException errors.
+    */
     public static WebElement findElementByIdWaitingUntilAvailable(final WebDriver driver, final String id) {
         FluentWait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)

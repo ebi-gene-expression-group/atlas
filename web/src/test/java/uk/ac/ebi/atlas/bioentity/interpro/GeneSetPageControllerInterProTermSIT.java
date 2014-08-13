@@ -24,7 +24,10 @@ package uk.ac.ebi.atlas.bioentity.interpro;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
+
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -33,11 +36,11 @@ public class GeneSetPageControllerInterProTermSIT extends SinglePageSeleniumFixt
 
     private static final String IDENTIFIER = "IPR000003";
 
-    private BioEntityPage subject;
+    private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntityPage(driver, IDENTIFIER, "genesets", "openPanelIndex=0");
+        subject = new BioEntitiesPage(driver, "genesets/" + IDENTIFIER + "?openPanelIndex=0");
         subject.get();
     }
 
@@ -52,7 +55,26 @@ public class GeneSetPageControllerInterProTermSIT extends SinglePageSeleniumFixt
         assertThat(subject.getPropertiesTableSize(), is(1));
         assertThat(subject.getPropertiesTableRow(0), hasItems("InterPro", "Retinoid X receptor/HNF4 (family)"));
         assertThat(subject.getLinksInTableRow(0).get(0), is("http://www.ebi.ac.uk/interpro/entry/IPR000003"));
+    }
 
+    @Test
+    public void baselineResults() {
+        subject.clickBaselinePane();
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("2 results"));
+
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+
+        assertThat(baselineCounts, hasSize(3)); //including geneset description
+
+        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-599"));
+        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-MTAB-1733"));
+    }
+
+    @Test
+    public void diffResults() {
+        subject.clickDifferentialPane();
+        assertThat(subject.getDiffPaneHeaderResultsMessage(), is("1 result"));
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("RXRA"));
     }
 
 }

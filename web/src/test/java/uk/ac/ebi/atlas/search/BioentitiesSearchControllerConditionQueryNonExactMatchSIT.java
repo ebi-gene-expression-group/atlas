@@ -38,7 +38,7 @@ public class BioentitiesSearchControllerConditionQueryNonExactMatchSIT extends S
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=kinase&_exactMatch=on");
+        subject = BioEntitiesPage.search(driver, "geneQuery=kinase&_exactMatch=on");
         subject.get();
     }
 

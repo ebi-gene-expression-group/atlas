@@ -6,6 +6,8 @@ import org.apache.commons.lang.StringUtils;
 public class GeneQuerySearchRequestParameters extends SearchRequest {
     private String condition;
 
+    private String organism;
+
     public String getCondition() {
         return condition;
     }
@@ -18,6 +20,18 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
         return StringUtils.isNotBlank(condition);
     }
 
+    public String getOrganism() {
+        return organism;
+    }
+
+    public void setOrganism(String organism) {
+        this.organism = organism;
+    }
+
+    public boolean hasOrganism() {
+        return (StringUtils.isNotBlank(organism) && !organism.equals("Any"));
+    }
+
     public String getDescription() {
         StringBuilder stringBuilder = new StringBuilder();
         if (hasGeneQuery()) {
@@ -25,12 +39,23 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
 
             if (hasCondition()) {
                 stringBuilder.append(" AND ");
+                stringBuilder.append(getCondition());
+            }
+            if (hasOrganism()) {
+                stringBuilder.append(" AND ");
+                stringBuilder.append(getOrganism());
             }
         }
 
-        if (hasCondition()) {
+        else if (hasCondition()) {
             stringBuilder.append(getCondition());
+
+            if (hasOrganism()) {
+                stringBuilder.append(" AND ");
+                stringBuilder.append(getOrganism());
+            }
         }
+
         return stringBuilder.toString();
     }
 
@@ -40,6 +65,7 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
                 .add("geneQuery", getGeneQuery())
                 .add("exactMatch", isExactMatch())
                 .add("condition", condition)
+                .add("organism", organism)
                 .toString();
     }
 }

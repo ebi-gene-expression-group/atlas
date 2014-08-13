@@ -40,7 +40,7 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=" + GENE_QUERY_PARAM);
+        subject = BioEntitiesPage.search(driver, "geneQuery=" + GENE_QUERY_PARAM);
         subject.get();
     }
 
@@ -62,7 +62,8 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
     @Test
     public void differentialPaneHasResults() {
         subject.clickDifferentialPane();
-        assertThat(subject.diffExpressionResultCount(), is("2 search result(s) found"));
+        assertThat(subject.diffExpressionResultCount(), is("31 search result(s) found"));
+        assertThat(subject.diffExpressionResultCount(), is("Showing 31 results"));
     }
 
     @Test

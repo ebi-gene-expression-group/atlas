@@ -71,14 +71,14 @@ public class DiffAnalyticsDao {
         this.oracleObjectFactory = oracleObjectFactory;
     }
 
-    public List<DiffAnalytics> fetchTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
+    public List<DiffAnalytics> fetchTopExpressions(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, String species) {
         Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
 
         log("fetchTopExpressions", uniqueIndexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DatabaseQuery<Object> indexedContrastQuery = buildSelect(uniqueIndexedContrasts, geneIds);
+        DatabaseQuery<Object> indexedContrastQuery = buildSelect(uniqueIndexedContrasts, geneIds, species);
 
         jdbcTemplate.setMaxRows(RESULT_SIZE);
 
@@ -117,7 +117,8 @@ public class DiffAnalyticsDao {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DatabaseQuery<Object> indexedContrastQuery = buildSelect(uniqueIndexedContrasts, geneIds);
+        String species = "";
+        DatabaseQuery<Object> indexedContrastQuery = buildSelect(uniqueIndexedContrasts, geneIds, species);
 
         final MutableInt count = new MutableInt(0);
 
@@ -173,25 +174,28 @@ public class DiffAnalyticsDao {
     }
 
     DatabaseQuery<Object> buildCount(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
-        DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
+        DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds, "");
         return builder.buildCount();
     }
 
-    DatabaseQuery<Object> buildSelect(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
-        DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds);
+    DatabaseQuery<Object> buildSelect(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, String species) {
+        DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds, species);
         return builder.buildSelect();
     }
 
-    DiffAnalyticsQueryBuilder createDifferentialGeneQueryBuilder(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
+    DiffAnalyticsQueryBuilder createDifferentialGeneQueryBuilder(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds,
+                                                                 String species) {
 
         DiffAnalyticsQueryBuilder builder = new DiffAnalyticsQueryBuilder();
 
         if (indexedContrasts.isPresent() && !indexedContrasts.get().isEmpty()) {
-            builder.withExperimentContrasts(oracleObjectFactory.createOracleArrayForIndexedAssayGroup(indexedContrasts.get()));
+            builder.withExperimentContrasts(oracleObjectFactory.createOracleArrayForIndexedAssayGroup(indexedContrasts.get()))
+                    .withSpecies(species);
         }
 
         if (geneIds.isPresent() && !geneIds.get().isEmpty()) {
-            builder.withGeneIds(oracleObjectFactory.createOracleArrayForIdentifiers(geneIds.get()));
+            builder.withGeneIds(oracleObjectFactory.createOracleArrayForIdentifiers(geneIds.get()))
+                    .withSpecies(species);
         }
 
         return builder;

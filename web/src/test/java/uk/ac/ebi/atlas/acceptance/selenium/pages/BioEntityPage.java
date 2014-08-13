@@ -78,8 +78,7 @@ public class BioEntityPage extends HeatmapTablePage {
     @FindBy(id = "baselineProfileBody")
     private WebElement baselineProfilePaneBody;
 
-    @FindBy(id = "diffProfileBody")
-    private WebElement diffProfilePaneBody;
+    private final static String DIFF_PROFILE_BODY_ID = "diffProfileBody";
 
     @FindBy(id = "widgetBody")
     private WebElement widgetBody;
@@ -193,7 +192,11 @@ public class BioEntityPage extends HeatmapTablePage {
     }
 
     public boolean isDifferentialPaneExpanded() {
-        return diffProfilePaneBody.isDisplayed();
+        return SeleniumUtil.elementExists(driver, By.id(DIFF_PROFILE_BODY_ID)) && getDiffProfileBody().isDisplayed();
+    }
+
+    private WebElement getDiffProfileBody() {
+        return driver.findElement(By.id(DIFF_PROFILE_BODY_ID));
     }
 
     public void clickDifferentialPane() {

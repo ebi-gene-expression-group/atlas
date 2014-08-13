@@ -27,7 +27,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
 public class BioentitiesSearchControllerConditionQuery2TermsDifferentialSIT extends SinglePageSeleniumFixture {
@@ -37,14 +37,14 @@ public class BioentitiesSearchControllerConditionQuery2TermsDifferentialSIT exte
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "condition=nrpe1+cdk8");
+        subject = BioEntitiesPage.search(driver, "condition=nrpe1+cdk8");
         subject.get();
     }
 
 
     @Test
     public void checkDifferentialProfilesCount() {
-        assertThat(subject.diffExpressionResultCount(), is("25 search result(s) found"));
+        assertThat(subject.diffExpressionResultCount(), is("Showing 25 results"));
     }
 
     @Test

@@ -42,7 +42,7 @@ public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends Sin
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=" + GENE_QUERY_PARAM);
+        subject = BioEntitiesPage.search(driver, "geneQuery=" + GENE_QUERY_PARAM);
         subject.get();
     }
 
@@ -67,8 +67,8 @@ public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends Sin
     public void checkDifferentialDisplaysGeneAndOrganismColumnWithValuesForEachSpecies() {
         subject.clickDifferentialPane();
         subject.clickDiffResultsDisplayLevelsButton();
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("SC5D", "Mtdh"));
-        assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Homo sapiens", "Mus musculus"));
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("MTDH", "SC5D", "SC5D", "SC5D", "Mtdh"));
+        assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains("Homo sapiens", "Homo sapiens", "Homo sapiens", "Homo sapiens", "Mus musculus"));
     }
 
     @Test

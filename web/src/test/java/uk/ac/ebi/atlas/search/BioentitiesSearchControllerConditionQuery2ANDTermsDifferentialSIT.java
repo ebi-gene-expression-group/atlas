@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.search;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
@@ -38,13 +37,13 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT e
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "condition=%22Mus%20musculus%22+and+%22wild%20type%22");
+        subject = BioEntitiesPage.search(driver, "condition=%22Mus%20musculus%22+and+%22wild%20type%22");
         subject.get();
     }
 
     @Test
-    @Ignore
     public void checkDifferentialProfilesCount() {
+        subject.clickDifferentialPane();
         assertThat(subject.diffExpressionResultCount(), is("316 search result(s) found"));
     }
 

@@ -38,7 +38,7 @@ public class BioentitiesSearchControllerGeneQuery2GenesMultipleResultsSIT extend
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "geneQuery=ENSG00000161547%20ENSG00000211855");
+        subject = BioEntitiesPage.search(driver, "geneQuery=ENSG00000161547%20ENSG00000211855");
         subject.get();
     }
 

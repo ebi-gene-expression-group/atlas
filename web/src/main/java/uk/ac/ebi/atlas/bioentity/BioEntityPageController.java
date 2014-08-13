@@ -129,6 +129,13 @@ public abstract class BioEntityPageController {
         //toggle display of multi-gene columns (gene name, and organism) in the differential heatmap
         model.addAttribute("singleGeneDiffHeatmap", singleGeneDiffHeatmap);
 
+        //bioentity properties panel data
+        model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
+
+        return "bioEntities";
+    }
+
+    void addWidgetHasBaselineProfiles(String identifier, Model model) {
         String species = fetchSpecies(identifier);
         String referenceExperimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
 
@@ -147,11 +154,6 @@ public abstract class BioEntityPageController {
         } catch (GenesNotFoundException e) {
             throw new ResourceNotFoundException("No gene profiles with identifier " + identifier);
         }
-
-        //bioentity properties panel data
-        model.addAttribute("propertyNames", buildPropertyNamesByTypeMap());
-
-        return "bioEntities";
     }
 
     String fetchSpecies(String identifier) {

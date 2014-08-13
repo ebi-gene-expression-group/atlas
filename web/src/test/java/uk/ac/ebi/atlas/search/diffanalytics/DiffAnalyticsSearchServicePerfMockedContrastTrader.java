@@ -69,8 +69,8 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
     public void geneQueryKeywordProteinCoding() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
-
-        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
+        String species = "";
+        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), species, requestParameters.isExactMatch());
     }
 
 
@@ -95,8 +95,8 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
     public void conditionHomoSapiens() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("Homo sapiens");
-
-        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
+        String species = "";
+        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), species, requestParameters.isExactMatch());
     }
 
 
@@ -105,8 +105,8 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
         requestParameters.setCondition("Homo sapiens");
-
-        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch());
+        String species = "";
+        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), species, requestParameters.isExactMatch());
     }
 
 }
