@@ -255,11 +255,13 @@ public class SolrQueryService {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
+        //eg: {!lucene q.op=OR df=property_value_lower}(property_value_lower:Q9NHV9) AND (bioentity_type:"mirna" OR bioentity_type:"ensgene")
+        // fl=bioentity_identifier&group=true&group.field=bioentity_identifier&group.main=true
         SolrQuery solrQuery = solrQueryBuilderFactory.createGeneBioentityIdentifierQueryBuilder()
                 .forQueryString(geneQuery, true).withExactMatch(exactMatch)
                 .withSpecies(species).withBioentityTypes(GENE.getSolrAliases()).build();
 
-        Set<String> geneIds = solrServer.query(solrQuery, BIOENTITY_IDENTIFIER_FIELD, true);
+        Set<String> geneIds = solrServer.query(solrQuery, BIOENTITY_IDENTIFIER_FIELD, false);
 
         stopwatch.stop();
         LOGGER.debug(String.format("Fetched gene ids for %s: returned %s results in %s secs", geneQuery, geneIds.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));

@@ -188,7 +188,7 @@ public class DiffAnalyticsSearchServiceIT {
 
         final List<String> names = Lists.newArrayList();
 
-        int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch(), new Visitor<DiffAnalytics>() {
+        int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.getOrganism(), requestParameters.isExactMatch(), new Visitor<DiffAnalytics>() {
 
             @Override
             public void visit(DiffAnalytics value) {
@@ -212,7 +212,7 @@ public class DiffAnalyticsSearchServiceIT {
 
         final List<String> names = Lists.newArrayList();
 
-        diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.isExactMatch(), new Visitor<DiffAnalytics>() {
+        diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.getOrganism(), requestParameters.isExactMatch(), new Visitor<DiffAnalytics>() {
 
             @Override
             public void visit(DiffAnalytics value) {
@@ -250,6 +250,16 @@ public class DiffAnalyticsSearchServiceIT {
 
     }
 
+    @Test
+    public void conditionAdultOrganismHomosapiens() throws GenesNotFoundException {
+        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        requestParameters.setCondition("adult");
+        requestParameters.setOrganism("Homo sapiens");
+
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.getOrganism(), requestParameters.isExactMatch());
+
+        assertThat(bioentityExpressions, hasSize(50));
+    }
 
     @Test
     public void conditionAND() throws GenesNotFoundException {

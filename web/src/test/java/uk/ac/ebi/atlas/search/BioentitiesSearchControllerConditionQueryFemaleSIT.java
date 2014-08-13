@@ -58,7 +58,7 @@ public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePa
     @Test
     public void checkDifferentialProfilesCount() {
         subject.clickDifferentialPane();
-        assertThat(subject.diffExpressionResultCount(), is("1233 search result(s) found"));
+        assertThat(subject.diffExpressionResultCount(), is("Showing 50 of 1233 results"));
     }
 
 }
