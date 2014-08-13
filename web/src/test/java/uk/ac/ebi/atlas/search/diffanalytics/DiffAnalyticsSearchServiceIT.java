@@ -153,7 +153,7 @@ public class DiffAnalyticsSearchServiceIT {
         System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
         assertThat(bioentityExpressions, hasSize(50));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(1499));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(1547));
         assertThat(names, contains("IL12B", "IL6", "IL6", "IL23A", "CCL19", "CSF3", "CD36", "CD36", "IL23A", "F3", "TNF", "TNF", "CNKSR3", "CD14", "NKX3-1", "PDGFA", "CSF1R", "TNIP3", "CD14", "FCER1A", "IL1B", "CSF1R", "TNFSF15", "PYCARD", "PFK3", "F1O17.1", "IL1B", "Hsp89.1", "FYB", "SLAMF8", "IL1RN", "AKN2", "FYB", "TNIP3", "PKIB", "LRRK2", "NRG1", "LY96", "TLR7", "ITGB2", "CCL19", "PKIB", "TGFBR2", "IL12B", "IRAK2", "PYCARD", "LRRK2", "PDGFC", "PKIG", "TGFBR2"));
     }
 

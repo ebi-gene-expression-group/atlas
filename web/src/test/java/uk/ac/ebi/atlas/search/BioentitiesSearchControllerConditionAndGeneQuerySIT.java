@@ -61,10 +61,15 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
     public void checkDifferentialProfiles() {
         subject.clickDifferentialPane();
         subject.clickDiffResultsDisplayLevelsButton();
-        assertThat(subject.diffExpressionResultCount(), is("Showing 14 results"));
+        assertThat(subject.diffExpressionResultCount(), is("Showing 16 results"));
         assertThat(subject.getContrastColumn(), hasItem(
                 "compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36"));
         assertThat(subject.getFoldChange(), hasItems("3.46", "1"));
+
+        //System.out.println("\"" + Joiner.on("\", \"").join(subject.getDiffHeatmapTableGeneColumn()) + "\"");
+
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Lcn2", "Tnfrsf12a", "Trp53inp1", "Apip", "Tao", "Gja1", "Srgn", "Eif2ak3", "Mknk2", "Kras", "wgn", "Arf6", "Tgfbr1", "Sgms1", "Mef2a", "Dab2"));
+
     }
 
 }
