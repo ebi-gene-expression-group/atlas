@@ -34,7 +34,7 @@ import static org.junit.Assert.assertThat;
 
 public class GenePropertiesTooltipIT extends SinglePageSeleniumFixture {
 
-    private final String EXPERIMENT_ACCESSION = "E-MTAB-513";
+    private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
     private static final String HTTP_PARAMETERS = "geneQuery=%22actin-related+protein%22+bile+acid+protein&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
 

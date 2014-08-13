@@ -10,8 +10,8 @@ public final class ProfileStreamFilters {
     private ProfileStreamFilters() {
     }
 
-    public static <P extends Profile> Iterable<P> filterByGeneIds(Iterable<P> profiles, Set<String> uppercaseGeneIDs) {
-        return Iterables.filter(profiles, new IsGeneIdMatch(uppercaseGeneIDs));
+    public static <P extends Profile> Iterable<P> filterByGeneIds(Iterable<P> profiles, Set<String> geneIds) {
+        return Iterables.filter(profiles, new IsGeneIdMatch(geneIds));
     }
 
     public static <K, P extends Profile<K, ?>>Iterable<P> filterByQueryFactors(Iterable<P> profiles, Set<K> queryFactors) {

@@ -17,13 +17,13 @@ public class DifferentialProfileStreamPipelineBuilder<P extends DifferentialProf
     public Iterable<P> build(Iterable<P> profiles, DifferentialProfileStreamOptions options) {
         boolean isSpecific = options.isSpecific();
         Set<Contrast> queryFactors = options.getSelectedQueryFactors();
-        Set<String> uppercaseGeneIDs = options.getSelectedGeneIDs();
+        Set<String> selectedGeneIDs = options.getSelectedGeneIDs();
         Set<Contrast> allQueryFactors = options.getAllQueryFactors();
 
         Iterable<P> profilesPipeline = profiles;
 
-        if (!uppercaseGeneIDs.isEmpty()) {
-            profilesPipeline = ProfileStreamFilters.filterByGeneIds(profilesPipeline, uppercaseGeneIDs);
+        if (!selectedGeneIDs.isEmpty()) {
+            profilesPipeline = ProfileStreamFilters.filterByGeneIds(profilesPipeline, selectedGeneIDs);
         }
 
         if (!queryFactors.isEmpty()) {

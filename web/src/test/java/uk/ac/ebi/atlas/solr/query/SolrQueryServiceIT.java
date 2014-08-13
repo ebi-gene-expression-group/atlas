@@ -136,12 +136,12 @@ public class SolrQueryServiceIT {
     }
 
     @Test
-    public void resolveToFlyBaseGeneIdInCorrectCase() {
+    public void fetchCaseSensitiveGeneId() {
 
         Set<String> geneIds = subject.fetchGeneIds("CG11255", true, "");
 
         assertThat(geneIds, hasSize(1));
-        assertThat(geneIds.iterator().next(), is("FBgn0036337"));
+        assertThat(geneIds.iterator().next(), is("FBgn0036337")); //should be case sensitive, NOT all uppercase
     }
 
 }
