@@ -133,8 +133,15 @@ public class SolrQueryServiceIT {
 
         assertThat(ensemblIDs.size(), is(3));
         assertThat(ensemblIDs, hasItems("ENSG00000207556", "ENSG00000161547", "ENSG00000092931"));
+    }
 
+    @Test
+    public void resolveToFlyBaseGeneIdInCorrectCase() {
 
+        Set<String> geneIds = subject.fetchGeneIds("CG11255", true, "");
+
+        assertThat(geneIds, hasSize(1));
+        assertThat(geneIds.iterator().next(), is("FBgn0036337"));
     }
 
 }
