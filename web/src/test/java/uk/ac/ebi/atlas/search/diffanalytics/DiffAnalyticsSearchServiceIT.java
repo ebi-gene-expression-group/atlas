@@ -205,6 +205,28 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
+    public void visitEachExpressionConditionAdultOrganismHomosapiens() throws GenesNotFoundException {
+        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        requestParameters.setCondition("adult");
+        requestParameters.setOrganism("Homo sapiens");
+
+        final List<String> names = Lists.newArrayList();
+
+        int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.getOrganism(), requestParameters.isExactMatch(), new Visitor<DiffAnalytics>() {
+
+            @Override
+            public void visit(DiffAnalytics value) {
+                names.add(value.getBioentityName());
+            }
+        });
+
+        System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
+
+        assertThat(count, is(9859));
+        assertThat(names, hasSize(9859));
+    }
+
+    @Test
     @Ignore //TODO: re-enable when performance fixed
     public void visitEachExpressionGeneQueryKeywordProteinCoding() throws GenesNotFoundException {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();

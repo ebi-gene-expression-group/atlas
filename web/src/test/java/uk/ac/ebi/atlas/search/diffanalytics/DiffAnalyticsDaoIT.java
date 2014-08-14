@@ -72,7 +72,7 @@ public class DiffAnalyticsDaoIT {
 
         Collection<IndexedAssayGroup> indexedAssayGroups = Lists.newArrayList(indexedContrast1);
         Collection<String> strings = new HashSet<>();
-        int resultCount = subject.fetchResultCount(Optional.of(indexedAssayGroups), Optional.of(strings));
+        int resultCount = subject.fetchResultCount(Optional.of(indexedAssayGroups), Optional.of(strings), "");
         assertThat(resultCount, is(6));
     }
 
@@ -90,7 +90,20 @@ public class DiffAnalyticsDaoIT {
     public void getResultCountForGene() throws Exception {
         Collection<IndexedAssayGroup> assayGroups = new HashSet<>();
         Collection<String> geneIds = Sets.newHashSet("AT1G02220");
-        assertThat(subject.fetchResultCount(Optional.of(assayGroups), Optional.of(geneIds)), is(1));
+        assertThat(subject.fetchResultCount(Optional.of(assayGroups), Optional.of(geneIds),""), is(1));
+    }
+
+    @Test
+    public void getResultCountForAdultConditionAndOrganism() throws Exception {
+        Collection<IndexedAssayGroup> assayGroups = new HashSet<>();
+        IndexedAssayGroup assayGroup = new IndexedAssayGroup("E-GEOD-12108", "g3_g1");
+        assayGroups.add(assayGroup);
+        String species = "Homo sapiens";
+        Collection<String> geneIds = Sets.newHashSet();
+
+        int resultCount = subject.fetchResultCount(Optional.of(assayGroups), Optional.of(geneIds), species);
+
+        assertThat(resultCount, is(5266));
     }
 
 

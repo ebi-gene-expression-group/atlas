@@ -78,18 +78,21 @@ public class DiffAnalyticsSearchService {
 
         CountingVisitor<DiffAnalytics> counter = new CountingVisitor<>(visitor);
 
-        diffAnalyticsDao.visitEachExpression(contrastsResult, geneIdsResult, counter);
+        diffAnalyticsDao.visitEachExpression(contrastsResult, geneIdsResult, counter, species);
 
         return counter.getCount();
 
     }
 
-    public List<DiffAnalytics> fetchTopWithoutCount(String geneId) {
+    public List<DiffAnalytics> fetchTopWithoutCountAnySpecies(String geneId) {
         Collection<String> geneIds = Lists.newArrayList(geneId);
-        return diffAnalyticsDao.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds), "");
+
+        String species = "";
+
+        return diffAnalyticsDao.fetchTopExpressions(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.of(geneIds), species);
     }
 
-    public DiffAnalyticsList fetchTop(Collection<String> geneIdentifiers) {
+    public DiffAnalyticsList fetchTopAnySpecies(Collection<String> geneIdentifiers) {
 
         if (CollectionUtils.isNotEmpty(geneIdentifiers)) {
 
@@ -97,7 +100,7 @@ public class DiffAnalyticsSearchService {
                     Optional.of(geneIdentifiers), "");
 
             int resultCount = diffAnalyticsDao.fetchResultCount(Optional.<Collection<IndexedAssayGroup>>absent(),
-                    Optional.of(geneIdentifiers));
+                    Optional.of(geneIdentifiers), "");
 
             return new DiffAnalyticsList(expressions, resultCount);
 
@@ -126,7 +129,7 @@ public class DiffAnalyticsSearchService {
         }
 
         List<DiffAnalytics> expressions = diffAnalyticsDao.fetchTopExpressions(contrastsResult, geneIdsResult, species);
-        int resultCount = diffAnalyticsDao.fetchResultCount(contrastsResult, geneIdsResult);
+        int resultCount = diffAnalyticsDao.fetchResultCount(contrastsResult, geneIdsResult, species);
 
         return new DiffAnalyticsList(expressions, resultCount);
 

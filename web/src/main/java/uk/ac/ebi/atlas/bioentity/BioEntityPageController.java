@@ -107,7 +107,7 @@ public abstract class BioEntityPageController {
 
     void loadDifferentialResults(Collection<String> geneIdentifiers, Model model) {
         DiffAnalyticsList diffAnalyticsList =
-                diffAnalyticsSearchService.fetchTop(geneIdentifiers);
+                diffAnalyticsSearchService.fetchTopAnySpecies(geneIdentifiers);
 
         model.addAttribute("bioentities", diffAnalyticsList);
 

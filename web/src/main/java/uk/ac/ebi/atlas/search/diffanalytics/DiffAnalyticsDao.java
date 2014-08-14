@@ -26,6 +26,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.lang.mutable.MutableInt;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -110,7 +111,8 @@ public class DiffAnalyticsDao {
         return Optional.of(ImmutableSet.copyOf(indexedContrasts.get()));
     }
 
-    public void visitEachExpression(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, final Visitor<DiffAnalytics> visitor)  {
+    public void visitEachExpression(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, final Visitor<DiffAnalytics> visitor,
+                                    String specie)  {
         Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
 
         log("visitEachExpression", uniqueIndexedContrasts, geneIds);
@@ -118,6 +120,10 @@ public class DiffAnalyticsDao {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         String species = "";
+        if(StringUtils.isNotBlank(specie)) {
+            species = specie;
+        }
+
         DatabaseQuery<Object> indexedContrastQuery = buildSelect(uniqueIndexedContrasts, geneIds, species);
 
         final MutableInt count = new MutableInt(0);
@@ -158,14 +164,14 @@ public class DiffAnalyticsDao {
     }
 
 
-    public int fetchResultCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
+    public int fetchResultCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, String specie) {
         Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
 
         log("fetchResultCount", uniqueIndexedContrasts, geneIds);
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DatabaseQuery databaseQuery = buildCount(uniqueIndexedContrasts, geneIds);
+        DatabaseQuery databaseQuery = buildCount(uniqueIndexedContrasts, geneIds, specie);
 
         int count = jdbcTemplate.queryForObject(databaseQuery.getQuery(), Integer.class, databaseQuery.getParameters().toArray());
 
@@ -173,8 +179,8 @@ public class DiffAnalyticsDao {
         return count;
     }
 
-    DatabaseQuery<Object> buildCount(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
-        DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds, "");
+    DatabaseQuery<Object> buildCount(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, String species) {
+        DiffAnalyticsQueryBuilder builder = createDifferentialGeneQueryBuilder(indexedContrasts, geneIds, species);
         return builder.buildCount();
     }
 
