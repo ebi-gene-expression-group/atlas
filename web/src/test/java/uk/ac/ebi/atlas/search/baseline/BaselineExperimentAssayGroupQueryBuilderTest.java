@@ -35,13 +35,13 @@ import uk.ac.ebi.atlas.search.DatabaseQuery;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineExpressionsQueryBuilderTest {
+public class BaselineExperimentAssayGroupQueryBuilderTest {
 
-    private BaselineExpressionsQueryBuilder subject;
+    private BaselineExperimentAssayGroupQueryBuilder subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new BaselineExpressionsQueryBuilder();
+        subject = new BaselineExperimentAssayGroupQueryBuilder();
     }
 
 

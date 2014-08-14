@@ -37,7 +37,7 @@
 
         <table id="baselineCountsTable">
             <tbody>
-                <%--@elvariable id="baselineResult" type="uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchResult"--%>
+                <%--@elvariable id="baselineResult" type="uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup"--%>
                 <c:forEach var="baselineResult" items="${baselineCounts}">
                 
                     <tr>

@@ -45,16 +45,16 @@ import java.util.concurrent.TimeUnit;
 
 @Named
 @Scope("prototype")
-public class BaselineExpressionsDao {
+public class BaselineExperimentAssayGroupsDao {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineExpressionsDao.class);
+    private static final Logger LOGGER = Logger.getLogger(BaselineExperimentAssayGroupsDao.class);
 
     private final JdbcTemplate jdbcTemplate;
 
     private OracleObjectFactory oracleObjectFactory;
 
     @Inject
-    public BaselineExpressionsDao(JdbcTemplate jdbcTemplate, OracleObjectFactory oracleObjectFactory) {
+    public BaselineExperimentAssayGroupsDao(JdbcTemplate jdbcTemplate, OracleObjectFactory oracleObjectFactory) {
         this.jdbcTemplate = jdbcTemplate;
         this.oracleObjectFactory = oracleObjectFactory;
     }
@@ -120,13 +120,13 @@ public class BaselineExpressionsDao {
 
 
     DatabaseQuery<Object> buildSelect(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds) {
-        BaselineExpressionsQueryBuilder builder = createBaselineExpressionsQueryBuilder(indexedContrasts, geneIds);
+        BaselineExperimentAssayGroupQueryBuilder builder = createBaselineExpressionsQueryBuilder(indexedContrasts, geneIds);
         return builder.build();
     }
 
-    BaselineExpressionsQueryBuilder createBaselineExpressionsQueryBuilder(Optional<? extends Collection<IndexedAssayGroup>> indexedAssayGroups, Optional<? extends Collection<String>> geneIds) {
+    BaselineExperimentAssayGroupQueryBuilder createBaselineExpressionsQueryBuilder(Optional<? extends Collection<IndexedAssayGroup>> indexedAssayGroups, Optional<? extends Collection<String>> geneIds) {
 
-        BaselineExpressionsQueryBuilder builder = new BaselineExpressionsQueryBuilder();
+        BaselineExperimentAssayGroupQueryBuilder builder = new BaselineExperimentAssayGroupQueryBuilder();
 
         if (indexedAssayGroups.isPresent() && !indexedAssayGroups.get().isEmpty()) {
             builder.withExperimentAssayGroups(oracleObjectFactory.createOracleArrayForIndexedAssayGroup(indexedAssayGroups.get()));

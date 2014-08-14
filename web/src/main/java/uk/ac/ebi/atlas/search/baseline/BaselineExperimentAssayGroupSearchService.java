@@ -48,22 +48,22 @@ import java.util.SortedSet;
 
 @Named
 @Scope("request")
-public class BaselineExpressionSearchService {
+public class BaselineExperimentAssayGroupSearchService {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineExpressionSearchService.class);
+    private static final Logger LOGGER = Logger.getLogger(BaselineExperimentAssayGroupSearchService.class);
 
     private final BaselineExperimentsCache baselineExperimentsCache;
 
-    private BaselineExpressionsDao baselineExpressionsDao;
+    private BaselineExperimentAssayGroupsDao baselineExperimentAssayGroupsDao;
 
     private BaselineConditionsSearchService baselineConditionsSearchService;
 
     private SolrQueryService solrQueryService;
 
     @Inject
-    public BaselineExpressionSearchService(BaselineExpressionsDao baselineExpressionsDao, BaselineConditionsSearchService baselineConditionsSearchService, SolrQueryService solrQueryService, BaselineExperimentsCache baselineExperimentsCache) {
+    public BaselineExperimentAssayGroupSearchService(BaselineExperimentAssayGroupsDao baselineExperimentAssayGroupsDao, BaselineConditionsSearchService baselineConditionsSearchService, SolrQueryService solrQueryService, BaselineExperimentsCache baselineExperimentsCache) {
         this.baselineExperimentsCache = baselineExperimentsCache;
-        this.baselineExpressionsDao = baselineExpressionsDao;
+        this.baselineExperimentAssayGroupsDao = baselineExperimentAssayGroupsDao;
         this.baselineConditionsSearchService = baselineConditionsSearchService;
         this.solrQueryService = solrQueryService;
     }
@@ -72,7 +72,7 @@ public class BaselineExpressionSearchService {
         return (!coll.isPresent() || coll.get().isEmpty());
     }
 
-    public Set<BaselineExpressionSearchResult> query(String geneQuery, String condition, String specie, boolean isExactMatch) throws GenesNotFoundException {
+    public Set<BaselineExperimentAssayGroup> query(String geneQuery, String condition, String specie, boolean isExactMatch) throws GenesNotFoundException {
         LOGGER.info(String.format("<query> geneQuery=%s, condition=%s", geneQuery, condition));
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
@@ -87,18 +87,18 @@ public class BaselineExpressionSearchService {
         //TODO: move outside into caller, because this is called twice, here and in DiffAnalyticsSearchService
         Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
 
-        SetMultimap<String, String> assayGroupsWithExpressionByExperiment = baselineExpressionsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, geneIds);
+        SetMultimap<String, String> assayGroupsWithExpressionByExperiment = baselineExperimentAssayGroupsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, geneIds);
 
-        Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = buildResults(assayGroupsWithExpressionByExperiment, !isEmpty(indexedAssayGroups), species);
+        Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = buildResults(assayGroupsWithExpressionByExperiment, !isEmpty(indexedAssayGroups), species);
 
         stopWatch.stop();
-        LOGGER.info(String.format("<query> %s results, took %s seconds", baselineExpressionSearchResults.size(), stopWatch.getTotalTimeSeconds()));
+        LOGGER.info(String.format("<query> %s results, took %s seconds", baselineExperimentAssayGroups.size(), stopWatch.getTotalTimeSeconds()));
 
-        return baselineExpressionSearchResults;
+        return baselineExperimentAssayGroups;
     }
 
-    SortedSet<BaselineExpressionSearchResult> buildResults(SetMultimap<String, String> assayGroupsWithExpressionByExperiment, boolean conditionSearch, String selectedSpecie) {
-        SortedSet<BaselineExpressionSearchResult> results = Sets.newTreeSet();
+    SortedSet<BaselineExperimentAssayGroup> buildResults(SetMultimap<String, String> assayGroupsWithExpressionByExperiment, boolean conditionSearch, String selectedSpecie) {
+        SortedSet<BaselineExperimentAssayGroup> results = Sets.newTreeSet();
 
         for (Map.Entry<String, Collection<String>> exprAssayGroups : assayGroupsWithExpressionByExperiment.asMap().entrySet()) {
 
@@ -116,7 +116,7 @@ public class BaselineExpressionSearchService {
                         (StringUtils.isNotBlank(selectedSpecie) && species.equals("Multi-species") && !assayGroupIdsAndFilterFactor.getKey().isEmpty()
                                 && assayGroupIdsAndFilterFactor.getKey().iterator().next().getValue().toLowerCase().equals(selectedSpecie))) {
 
-                    BaselineExpressionSearchResult result = new BaselineExpressionSearchResult(experiment.getAccession(), experiment.getDisplayName(), species, experiment.getExperimentalFactors().getDefaultQueryFactorType());
+                    BaselineExperimentAssayGroup result = new BaselineExperimentAssayGroup(experiment.getAccession(), experiment.getDisplayName(), species, experiment.getExperimentalFactors().getDefaultQueryFactorType());
                     result.setFilterFactors(assayGroupIdsAndFilterFactor.getKey());
                     if (conditionSearch) {
                         result.setAssayGroupsWithCondition(ImmutableSet.copyOf(assayGroupIdsAndFilterFactor.getValue()), experiment);

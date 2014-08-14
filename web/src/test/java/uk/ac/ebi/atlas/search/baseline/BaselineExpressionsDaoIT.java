@@ -28,7 +28,7 @@ public class BaselineExpressionsDaoIT {
     private static final String E_MTAB_599 = "E-MTAB-599";
 
     @Inject
-    private BaselineExpressionsDao subject;
+    private BaselineExperimentAssayGroupsDao subject;
 
     @Test
     public void findsExpressionByExperimentAssayGroup() throws Exception {

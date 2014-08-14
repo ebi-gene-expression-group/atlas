@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class BaselineExpressionSearchResult implements Comparable<BaselineExpressionSearchResult> {
+public class BaselineExperimentAssayGroup implements Comparable<BaselineExperimentAssayGroup> {
     private String species;
 
     private String experimentName;
@@ -23,7 +23,7 @@ public class BaselineExpressionSearchResult implements Comparable<BaselineExpres
 
     private String defaultQueryFactorType;
 
-    public BaselineExpressionSearchResult(String experimentAccession, String experimentName, String species, String defaultQueryFactorType) {
+    public BaselineExperimentAssayGroup(String experimentAccession, String experimentName, String species, String defaultQueryFactorType) {
         this.experimentAccession = experimentAccession;
         this.experimentName = experimentName;
         this.species = species;
@@ -84,7 +84,7 @@ public class BaselineExpressionSearchResult implements Comparable<BaselineExpres
     }
 
     @Override
-    public int compareTo(BaselineExpressionSearchResult o) {
+    public int compareTo(BaselineExperimentAssayGroup o) {
         int c = this.getExperimentName().compareTo(o.getExperimentName());
         return (c != 0) ? c : this.filterFactors.compareTo(o.getFilterFactors());
     }
@@ -94,7 +94,7 @@ public class BaselineExpressionSearchResult implements Comparable<BaselineExpres
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BaselineExpressionSearchResult that = (BaselineExpressionSearchResult) o;
+        BaselineExperimentAssayGroup that = (BaselineExperimentAssayGroup) o;
 
         return experimentName.equals(that.experimentName) && filterFactors.equals(that.filterFactors);
     }
