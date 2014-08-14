@@ -3127,6 +3127,11 @@
            style="fill:none;stroke:none"
            sodipodi:nodetypes="csccssccccssssccssssscccssssscsssssssssscccccscssssscssssccscsscsscsccccc" />
       </g>
+
+	  <use xlink:href="#CL:0000738" id="UBERON:0000178" />
+
+	  <use xlink:href="#CL:0000738" id="UBERON:0001981" />
+
       <g
          transform="translate(-156.84166,-9.748873)"
          style="display:inline"
