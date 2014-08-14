@@ -10,7 +10,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class BaselineExpressionsQueryBuilder {
+public class BaselineExperimentAssayGroupQueryBuilder {
 
     static final String SELECT_QUERY = "SELECT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe ";
     static final String FOR_ASSAY_GROUPS = "JOIN TABLE(?) assayGroups on rbe.EXPERIMENT = assayGroups.EXPERIMENT and rbe.ASSAYGROUPID = assayGroups.CONTRASTID ";
@@ -20,12 +20,12 @@ public class BaselineExpressionsQueryBuilder {
     private ARRAY experimentAssayGroups;
     private ARRAY geneIds;
 
-    public BaselineExpressionsQueryBuilder withExperimentAssayGroups(ARRAY assayGroups) {
+    public BaselineExperimentAssayGroupQueryBuilder withExperimentAssayGroups(ARRAY assayGroups) {
         this.experimentAssayGroups = assayGroups;
         return this;
     }
 
-    public BaselineExpressionsQueryBuilder withGeneIds(ARRAY geneIds) {
+    public BaselineExperimentAssayGroupQueryBuilder withGeneIds(ARRAY geneIds) {
         this.geneIds = geneIds;
         return this;
     }

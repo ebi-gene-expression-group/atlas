@@ -39,8 +39,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.search.EFO.ConditionSearchEFOExpander;
-import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchResult;
-import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchService;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroupSearchService;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
@@ -63,7 +63,7 @@ public class BioentitiesSearchController {
     private static final Logger LOGGER = Logger.getLogger(BioentitiesSearchController.class);
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
-    private BaselineExpressionSearchService baselineExpressionSearchService;
+    private BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService;
 
     private EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder;
 
@@ -71,9 +71,9 @@ public class BioentitiesSearchController {
     private ConditionSearchEFOExpander efoExpander;
 
     @Inject
-    public BioentitiesSearchController(DiffAnalyticsSearchService diffAnalyticsSearchService, BaselineExpressionSearchService baselineExpressionSearchService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService, ConditionSearchEFOExpander efoExpander) {
+    public BioentitiesSearchController(DiffAnalyticsSearchService diffAnalyticsSearchService, BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService, EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, SolrQueryService solrQueryService, ConditionSearchEFOExpander efoExpander) {
         this.diffAnalyticsSearchService = diffAnalyticsSearchService;
-        this.baselineExpressionSearchService = baselineExpressionSearchService;
+        this.baselineExperimentAssayGroupSearchService = baselineExperimentAssayGroupSearchService;
         this.ebiGlobalSearchQueryBuilder = ebiGlobalSearchQueryBuilder;
         this.solrQueryService = solrQueryService;
         this.efoExpander = efoExpander;
@@ -115,12 +115,12 @@ public class BioentitiesSearchController {
 
             String condition = efoExpander.fetchExpandedTermWithEFOChildren(requestParameters.getCondition());
 
-            Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = baselineExpressionSearchService.query(geneQuery, condition, selectedSpecie.toLowerCase(), requestParameters.isExactMatch());
+            Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQuery, condition, selectedSpecie.toLowerCase(), requestParameters.isExactMatch());
 
-            model.addAttribute("baselineCounts", baselineExpressionSearchResults);
-            if (baselineExpressionSearchResults.size() == 1 & !requestParameters.hasCondition()) {
+            model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
+            if (baselineExperimentAssayGroups.size() == 1 & !requestParameters.hasCondition()) {
                 model.addAttribute("singleBaselineSearchResult", true);
-                model.addAttribute("species", baselineExpressionSearchResults.iterator().next().getSpecies());
+                model.addAttribute("species", baselineExperimentAssayGroups.iterator().next().getSpecies());
             }
 
             // used to populate diff-heatmap-table

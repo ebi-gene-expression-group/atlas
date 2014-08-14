@@ -36,8 +36,8 @@ import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchResult;
-import uk.ac.ebi.atlas.search.baseline.BaselineExpressionSearchService;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroupSearchService;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -64,7 +64,7 @@ public class GeneSetPageController extends BioEntityPageController {
 
     private String[] geneSetPagePropertyTypes;
 
-    private BaselineExpressionSearchService baselineExpressionSearchService;
+    private BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService;
 
     @Value("#{configuration['index.property_names.genesetpage']}")
     void setGenePagePropertyTypes(String[] geneSetPagePropertyTypes) {
@@ -72,13 +72,13 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Inject
-    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeClient reactomeClient, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader, BaselineExpressionSearchService baselineExpressionSearchService) {
+    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeClient reactomeClient, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader, BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService) {
         this.solrQueryService = solrQueryService;
         this.bioEntityPropertyService = bioEntityPropertyService;
         this.reactomeClient = reactomeClient;
         this.goTermTrader = goTermTrader;
         this.interProTermTrader = interProTermTrader;
-        this.baselineExpressionSearchService = baselineExpressionSearchService;
+        this.baselineExperimentAssayGroupSearchService = baselineExperimentAssayGroupSearchService;
     }
 
     // identifier = Reactome, GO, or Interpro term
@@ -108,11 +108,11 @@ public class GeneSetPageController extends BioEntityPageController {
     private void addBaselineCounts(String identifier, Model model) {
         try {
             String specie = "";
-            Set<BaselineExpressionSearchResult> baselineExpressionSearchResults = baselineExpressionSearchService.query(identifier, null, specie, true);
-            model.addAttribute("baselineCounts", baselineExpressionSearchResults);
-            if (baselineExpressionSearchResults.size() == 1) {
+            Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(identifier, null, specie, true);
+            model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
+            if (baselineExperimentAssayGroups.size() == 1) {
                 model.addAttribute("singleBaselineSearchResult", true);
-                model.addAttribute("species", baselineExpressionSearchResults.iterator().next().getSpecies());
+                model.addAttribute("species", baselineExperimentAssayGroups.iterator().next().getSpecies());
             }
         } catch (GenesNotFoundException e) {
             throw new ResourceNotFoundException(identifier);
@@ -172,7 +172,7 @@ public class GeneSetPageController extends BioEntityPageController {
         }
     }
 
-    static Pattern INTER_PRO_REGEX = Pattern.compile("IPR" + "(\\d)+");
+    static final Pattern INTER_PRO_REGEX = Pattern.compile("IPR" + "(\\d)+");
 
     private boolean isInterPro(String identifier) {
         Matcher m = INTER_PRO_REGEX.matcher(identifier);
