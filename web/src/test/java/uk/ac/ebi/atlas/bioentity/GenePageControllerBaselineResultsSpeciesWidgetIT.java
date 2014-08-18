@@ -4,6 +4,7 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -28,12 +29,11 @@ public class GenePageControllerBaselineResultsSpeciesWidgetIT extends SinglePage
     }
 
     @Test
-    public void checkPaneExpansion() {
+    public void baselineWidgetGenes() {
         assertThat(subject.isBaselinePaneExpanded(), is(true));
-    }
 
-    @Test
-    public void checkGeneProfiles() {
+        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
+
         assertThat(subject.getGeneNames(), contains("ASPM"));
         assertThat(subject.getGeneNames().size(), is(1));
     }
