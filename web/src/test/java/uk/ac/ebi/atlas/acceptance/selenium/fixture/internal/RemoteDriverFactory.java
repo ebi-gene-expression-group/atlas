@@ -33,7 +33,7 @@ import java.net.URL;
 
 public class RemoteDriverFactory implements DriverFactory {
 
-    private static final String SELENIUM_SERVER_URL = "http://lime:4444/wd/hub";
+    private static final String SELENIUM_SERVER_URL = "http://ma-selenium:4444/wd/hub";
     @Override
     public WebDriver create() {
         return initializeDriver();
