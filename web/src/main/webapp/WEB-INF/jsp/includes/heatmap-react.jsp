@@ -118,6 +118,7 @@
     })(genePropertiesTooltipModule);
 </script>
 
+<c:if test="${not empty geneProfiles}">
 <script type="text/javascript">
     (function ($, React, heatmapModule, heatmapConfig, columnHeaders, profiles, geneSetProfiles) {
 
@@ -141,4 +142,4 @@
     })(jQuery, React, heatmapModule, heatmapData.config,
             heatmapData.columnHeaders, heatmapData.profiles, heatmapData.geneSetProfiles);
 </script>
-
+</c:if>
