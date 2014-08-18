@@ -281,6 +281,7 @@ public class DiffAnalyticsSearchServiceIT {
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.getOrganism(), requestParameters.isExactMatch());
 
         assertThat(bioentityExpressions, hasSize(50));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(9859));
     }
 
     @Test
