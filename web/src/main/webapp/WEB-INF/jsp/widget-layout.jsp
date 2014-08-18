@@ -52,6 +52,8 @@
     <script language="JavaScript" type="text/javascript" src="${base}/resources/js/helpTooltipsModule.js"></script>
     <script language="JavaScript" type="text/javascript" src="${base}/resources/js/anatomogramModule.js"></script>
 
+    <script src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
+
     <!-- fancybox start -->
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css"
