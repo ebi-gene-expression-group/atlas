@@ -56,7 +56,7 @@ public class GenePageControllerBaselineResultsWidgetSIT extends SinglePageSeleni
     }
 
     @Test
-    public void checkSelectedProfiles() {
+    public void baselineWidgetGenes() {
         FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
         wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
 
@@ -71,7 +71,7 @@ public class GenePageControllerBaselineResultsWidgetSIT extends SinglePageSeleni
     }
 
     @Test
-    public void heatmapHasNoGeneLinks() {
+    public void baselineWidgetHasNoGeneLinks() {
         SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
         assertThat(subject.getGeneNames().size(), is(1));
         assertThat(subject.hasGeneLink(0), is(false));
