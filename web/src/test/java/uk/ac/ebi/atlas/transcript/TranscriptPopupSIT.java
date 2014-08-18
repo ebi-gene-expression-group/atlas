@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.transcript;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
@@ -67,7 +66,7 @@ public class TranscriptPopupSIT extends SeleniumFixture {
         assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000417459", "ENST00000370832"));
     }
 
-    @Ignore
+    // NB: this test will fail if plants.ensembl.org is down, which can happen during an Ensembl release
     @Test
     public void verifyEnsemblPlantsLinkOnTranscriptPopup() {
         HeatmapTableWithTranscriptBreakdownPage subject = new HeatmapTableWithTranscriptBreakdownPage(driver, "E-MTAB-2039", "geneQuery=");
