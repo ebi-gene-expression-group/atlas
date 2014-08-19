@@ -164,7 +164,7 @@ public class DiffAnalyticsDao {
     }
 
 
-    public int fetchResultCount(Optional<Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, String specie) {
+    public int  fetchResultCount(Optional<? extends Collection<IndexedAssayGroup>> indexedContrasts, Optional<? extends Collection<String>> geneIds, String specie) {
         Optional<ImmutableSet<IndexedAssayGroup>> uniqueIndexedContrasts = uniqueIndexedContrasts(indexedContrasts);
 
         log("fetchResultCount", uniqueIndexedContrasts, geneIds);

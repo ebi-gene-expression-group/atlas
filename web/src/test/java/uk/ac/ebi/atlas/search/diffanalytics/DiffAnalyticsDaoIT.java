@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.hamcrest.Matchers;
@@ -94,14 +95,13 @@ public class DiffAnalyticsDaoIT {
     }
 
     @Test
-    public void getResultCountForAdultConditionAndOrganism() throws Exception {
-        Collection<IndexedAssayGroup> assayGroups = new HashSet<>();
-        IndexedAssayGroup assayGroup = new IndexedAssayGroup("E-GEOD-12108", "g3_g1");
-        assayGroups.add(assayGroup);
+    public void getResultCountForContrastsAndOrganism() throws Exception {
+        IndexedAssayGroup assayGroup1 = new IndexedAssayGroup("E-GEOD-12108", "g3_g1");     //homo sapiens
+        IndexedAssayGroup assayGroup2 = new IndexedAssayGroup("E-GEOD-21860", "g1_g2");     //mus musculus
         String species = "Homo sapiens";
         Collection<String> geneIds = Sets.newHashSet();
 
-        int resultCount = subject.fetchResultCount(Optional.of(assayGroups), Optional.of(geneIds), species);
+        int resultCount = subject.fetchResultCount(Optional.of(ImmutableSet.of(assayGroup1, assayGroup2)), Optional.of(geneIds), species);
 
         assertThat(resultCount, is(5266));
     }
