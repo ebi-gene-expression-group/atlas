@@ -124,6 +124,8 @@ public abstract class BioEntityPageController {
 
         model.addAttribute("entityIdentifier", identifier);
 
+        model.addAttribute("exactMatch", true);
+
         model.addAttribute("showBioentityPropertiesPane", true);
 
         //toggle display of multi-gene columns (gene name, and organism) in the differential heatmap
