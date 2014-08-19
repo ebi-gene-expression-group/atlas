@@ -45,8 +45,6 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Controller
 @Scope("request")
@@ -127,18 +125,18 @@ public class GeneSetPageController extends BioEntityPageController {
     @Override
     protected void initBioentityPropertyService(String identifier) {
         String trimmedIdentifier = identifier.replaceAll("\"", "");
-        String species = isReactome(identifier) ? solrQueryService.getSpeciesForPropertyValue(trimmedIdentifier): "";
+        String species = GeneSetUtil.isReactome(identifier) ? solrQueryService.getSpeciesForPropertyValue(trimmedIdentifier): "";
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
 
-        if (isReactome(identifier)) {
+        if (GeneSetUtil.isReactome(identifier)) {
             propertyValuesByType.put("reactome", trimmedIdentifier.toUpperCase());
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeClient.fetchPathwayNameFailSafe(trimmedIdentifier));
-        } else if (isGeneOntology(identifier)) {
+        } else if (GeneSetUtil.isGeneOntology(identifier)) {
             String term = goTermTrader.getTerm(identifier);
             propertyValuesByType.put("go", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
-        } else if (isInterPro(identifier)) {
+        } else if (GeneSetUtil.isInterPro(identifier)) {
             String term = interProTermTrader.getTerm(identifier);
             propertyValuesByType.put("interpro", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
@@ -167,24 +165,10 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     private void checkIdentifierIsGeneSet(String identifier) {
-        if (!isReactome(identifier) && !isGeneOntology(identifier) && !isInterPro(identifier)) {
+        if (!GeneSetUtil.isGeneSet(identifier)) {
             throw new ResourceNotFoundException("Resource not found");
         }
     }
 
-    static final Pattern INTER_PRO_REGEX = Pattern.compile("IPR" + "(\\d)+");
-
-    private boolean isInterPro(String identifier) {
-        Matcher m = INTER_PRO_REGEX.matcher(identifier);
-        return m.matches();
-    }
-
-    private boolean isGeneOntology(String identifier) {
-        return identifier.startsWith("GO:");
-    }
-
-    private boolean isReactome(String identifier) {
-        return identifier.startsWith("REACT_");
-    }
 
 }

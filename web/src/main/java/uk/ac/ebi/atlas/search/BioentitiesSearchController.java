@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.search.EFO.ConditionSearchEFOExpander;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup;
@@ -146,7 +147,8 @@ public class BioentitiesSearchController {
 
     private Optional<String> getGeneIdRedirectString(String geneQuery, String specie, boolean isExactMatch) {
 
-        if (!StringUtils.containsWhitespace(geneQuery) && geneQuery.toUpperCase().startsWith("REACT_")) {
+        boolean singleTerm = !StringUtils.containsWhitespace(geneQuery);
+        if (singleTerm && GeneSetUtil.isGeneSet(geneQuery.toUpperCase())) {
             return Optional.of("redirect:/genesets/" + geneQuery);
         }
 
