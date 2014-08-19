@@ -133,6 +133,8 @@ public class BioentitiesSearchController {
 
             model.addAttribute("requestParameters", requestParameters);
 
+            model.addAttribute("exactMatch", requestParameters.isExactMatch());
+
             String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery, requestParameters.getCondition());
 
             model.addAttribute("globalSearchTerm", globalSearchTerm);
