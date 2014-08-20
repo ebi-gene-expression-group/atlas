@@ -2,24 +2,29 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSortedSet;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.SortedSet;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,14 +47,18 @@ public class BaselineExperimentProfileSearchServiceIT {
     @Inject
     private RnaSeqBslnExpressionDao rnaSeqBslnExpressionDao;
 
+    @Inject
+    private BaselineExperimentsCache baselineExperimentsCache;
+
     @Test
     public void singleGeneInMultipleExperiments() {
-        BaselineProfilesList baselineProfilesList = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of("ENSG00000228278")));
+        BaselineTissueExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of("ENSG00000228278")));
+
+        BaselineProfilesList baselineProfilesList = result.experimentProfiles;
 
         assertThat(baselineProfilesList, hasSize(2));
 
         BaselineProfile baselineProfile = baselineProfilesList.get(0);
-
         assertThat(baselineProfile.getId(), is("E-GEOD-30352"));
         assertThat(baselineProfile.getName(), is("Vertebrate tissues"));
         assertThat(baselineProfile.getConditions(), hasSize(1));
@@ -69,24 +78,51 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(baselineProfile2.getKnownExpressionLevel(LIVER), is(1670D));
         assertThat(baselineProfile2.getKnownExpressionLevel(PROSTATE), is(8D));
         assertThat(baselineProfile2.getKnownExpressionLevel(STOMACH), is(10D));
+
+        SortedSet<Factor> factors = result.supersetOfFactorsAcrossAllExperiments;
+        ImmutableSortedSet<Factor> allFactors = getOrganismPartFactors("E-GEOD-30352", "E-MTAB-1733");
+        assertThat(factors, contains(allFactors.toArray()));
+
+    }
+
+    private ImmutableSortedSet<Factor> getOrganismPartFactors(String experimentAccession) {
+        BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
+        return experiment.getExperimentalFactors().getFactorsByType("ORGANISM_PART");
+    }
+
+    private ImmutableSortedSet<Factor> getOrganismPartFactors(String ... experimentAccessions) {
+        ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
+        for (String experimentAccession : experimentAccessions) {
+            builder.addAll((getOrganismPartFactors(experimentAccession)));
+        }
+        return builder.build();
     }
 
     private static final String GENE_IN_CELL_LINES_EXPERIMENT = "ENSG00000258081";
 
     @Test
     public void onlyTissueExperimentsReturned() {
+        // test gene has expression in cell lines experiment (E-GEOD-26284)
         List<RnaSeqBslnExpression> expressions = rnaSeqBslnExpressionDao.fetchNonSpecificExpression(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT));
 
         Matcher cellLinesExperimentExpression = hasProperty("experimentAccession", is("E-GEOD-26284"));
         assertThat(expressions,  hasItem(cellLinesExperimentExpression));
 
-        BaselineProfilesList baselineProfilesList = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT)));
+        // test that cell lines experiment is not returned
+        BaselineTissueExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT)));
+
+        BaselineProfilesList baselineProfilesList = result.experimentProfiles;
 
         Matcher cellLinesExperimentProfile = hasProperty("id", is("E-GEOD-26284"));
         Matcher illuminaBodyMapExperimentProfile = hasProperty("id", is("E-MTAB-513"));
 
         assertThat(baselineProfilesList, hasItem(illuminaBodyMapExperimentProfile));
         assertThat(baselineProfilesList, not(hasItem(cellLinesExperimentProfile)));
+
+        SortedSet<Factor> factors = result.supersetOfFactorsAcrossAllExperiments;
+        ImmutableSortedSet<Factor> allFactors = getOrganismPartFactors("E-MTAB-513");
+        assertThat(factors, contains(allFactors.toArray()));
+
     }
 
 }

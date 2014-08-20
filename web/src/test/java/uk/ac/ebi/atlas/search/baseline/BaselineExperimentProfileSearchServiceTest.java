@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.primitives.Doubles;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,9 +14,12 @@ import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
+import java.util.SortedSet;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -37,6 +41,7 @@ public class BaselineExperimentProfileSearchServiceTest {
     private static final Factor SPLEEN = new Factor(ORGANISM_PART, "spleen");
     private static final Factor THYMUS = new Factor(ORGANISM_PART, "thymus");
 
+    private static final ImmutableSortedSet<Factor> ALL_FACTORS = ImmutableSortedSet.of(LUNG, SPLEEN, THYMUS);
 
     @Mock
     private RnaSeqBslnExpressionDao rnaSeqBslnExpressionDao;
@@ -62,7 +67,7 @@ public class BaselineExperimentProfileSearchServiceTest {
         when(experimentalFactors.getFactorGroupByAssayGroupId("g3")).thenReturn(new FactorSet(THYMUS));
         when(experimentalFactors.getFactorGroupByAssayGroupId("g5")).thenReturn(new FactorSet(LUNG));
         when(experimentalFactors.getFactorGroupByAssayGroupId("g6")).thenReturn(new FactorSet(SPLEEN));
-        //when(experimentalFactors.getFactorsByType("ORGANISM_PART")).thenReturn(ImmutableSortedSet.of(LUNG, SPLEEN, THYMUS));
+        when(experimentalFactors.getFactorsByType("ORGANISM_PART")).thenReturn(ALL_FACTORS);
 
         subject = new BaselineExperimentProfileSearchService(rnaSeqBslnExpressionDao, solrQueryService, baselineExperimentsCache);
     }
@@ -71,11 +76,16 @@ public class BaselineExperimentProfileSearchServiceTest {
     public void buildProfiles() {
         ImmutableList<RnaSeqBslnExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen);
 
-        BaselineProfilesList baselineProfilesList = subject.buildProfilesForTissueExperiments(expressions);
+        BaselineTissueExperimentSearchResult result = subject.buildProfilesForTissueExperiments(expressions);
 
-        assertThat(baselineProfilesList, hasSize(1));
+        BaselineProfilesList profiles = result.experimentProfiles;
+        SortedSet<Factor> factors = result.supersetOfFactorsAcrossAllExperiments;
 
-        BaselineProfile baselineProfile = baselineProfilesList.get(0);
+        assertThat(factors, contains(ALL_FACTORS.toArray()));
+
+        assertThat(profiles, hasSize(1));
+
+        BaselineProfile baselineProfile = profiles.get(0);
 
         assertThat(baselineProfile.getId(), is(E_MTAB_599));
         assertThat(baselineProfile.getName(), is(EXPERIMENT_DISPLAY_NAME));
