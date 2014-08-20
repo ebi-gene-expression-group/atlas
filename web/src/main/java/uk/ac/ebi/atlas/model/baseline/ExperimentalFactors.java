@@ -104,7 +104,7 @@ public class ExperimentalFactors implements Serializable {
         return coOccurringFactors.get(factor);
     }
 
-    public SortedSet<Factor> getFactorsByType(String type) {
+    public ImmutableSortedSet<Factor> getFactorsByType(String type) {
 
         return ImmutableSortedSet.copyOf(factorsByType.get(type));
 

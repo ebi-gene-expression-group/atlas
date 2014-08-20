@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.commands.download;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
@@ -117,7 +118,7 @@ public class BaselineProfilesTSVWriterTest {
                 .thenReturn(baselineProfile2)
                 .thenReturn(null);
 
-        when(experimentalFactorsMock.getFactorsByType(anyString())).thenReturn(Sets.newTreeSet(organismParts));
+        when(experimentalFactorsMock.getFactorsByType(anyString())).thenReturn(ImmutableSortedSet.copyOf(organismParts));
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
     }
 
