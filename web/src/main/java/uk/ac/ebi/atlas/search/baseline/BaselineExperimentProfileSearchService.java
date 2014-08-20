@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.search.baseline;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Multimaps;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -66,7 +67,7 @@ public class BaselineExperimentProfileSearchService {
         return (!coll.isPresent() || coll.get().isEmpty());
     }
 
-    public BaselineProfilesList query(String geneQuery, String species, boolean isExactMatch) throws GenesNotFoundException {
+    public BaselineTissueExperimentSearchResult query(String geneQuery, String species, boolean isExactMatch) throws GenesNotFoundException {
         LOGGER.info(String.format("<query> geneQuery=%s", geneQuery));
 
         checkArgument(StringUtils.isNotBlank(species), "Species must be specified");
@@ -77,18 +78,18 @@ public class BaselineExperimentProfileSearchService {
         //TODO: here or by caller?
         Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
 
-        BaselineProfilesList baselineProfilesList = fetchTissueExperimentProfiles(geneIds);
+        BaselineTissueExperimentSearchResult result = fetchTissueExperimentProfiles(geneIds);
 
         stopWatch.stop();
-        LOGGER.info(String.format("<query> %s results, took %s seconds", baselineProfilesList.size(), stopWatch.getTotalTimeSeconds()));
+        LOGGER.info(String.format("<query> %s results, took %s seconds", result.experimentProfiles.size(), stopWatch.getTotalTimeSeconds()));
 
-        return baselineProfilesList;
+        return result;
     }
 
-    BaselineProfilesList fetchTissueExperimentProfiles(Optional<? extends Set<String>> geneIds) {
+    BaselineTissueExperimentSearchResult fetchTissueExperimentProfiles(Optional<? extends Set<String>> geneIds) {
 
         if (isEmpty(geneIds)) {
-            return new BaselineProfilesList();
+            return new BaselineTissueExperimentSearchResult();
         }
 
         List<RnaSeqBslnExpression> expressions = rnaSeqBslnExpressionDao.fetchNonSpecificExpression(geneIds.get());
@@ -96,17 +97,21 @@ public class BaselineExperimentProfileSearchService {
         return buildProfilesForTissueExperiments(expressions);
     }
 
-    BaselineProfilesList buildProfilesForTissueExperiments(List<RnaSeqBslnExpression> expressions) {
+    BaselineTissueExperimentSearchResult buildProfilesForTissueExperiments(List<RnaSeqBslnExpression> expressions) {
 
         ImmutableListMultimap<String, RnaSeqBslnExpression> expressionsByExperiment = groupByExperimentAccession(expressions);
 
         BaselineProfilesList profiles = new BaselineProfilesList();
+
+        ImmutableSortedSet.Builder<Factor> factors = ImmutableSortedSet.naturalOrder();
 
         for (String experimentAccession : expressionsByExperiment.keySet()) {
 
             BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
             if (experiment.isTissueExperiment()) {
+                factors.addAll(experiment.getExperimentalFactors().getFactorsByType("ORGANISM_PART"));
+
                 BaselineProfile profile = new BaselineProfile(experimentAccession, experiment.getDisplayName());
 
                 for (RnaSeqBslnExpression rnaSeqBslnExpression : expressionsByExperiment.get(experimentAccession)) {
@@ -118,8 +123,9 @@ public class BaselineExperimentProfileSearchService {
             }
         }
 
-        return profiles;
+        return new BaselineTissueExperimentSearchResult(profiles, factors.build());
     }
+
 
     private ImmutableListMultimap<String, RnaSeqBslnExpression> groupByExperimentAccession(List<RnaSeqBslnExpression> expressions) {
         Function<RnaSeqBslnExpression, String> getExperimentAccession = new Function<RnaSeqBslnExpression, String>() {
