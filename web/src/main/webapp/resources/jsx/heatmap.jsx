@@ -14,6 +14,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
     var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLevelsInputElement) {
 
         // ensemblSpecies is the first two words only, with underscores instead of spaces, and all lower case except for the first character
+        // used for transcripts and to launch the ensembl genome browser for tracks
         var ensemblSpecies = (function toEnsemblSpecies(species) {
             function capitaliseFirstLetter(string)
             {
