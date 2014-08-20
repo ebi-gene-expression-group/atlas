@@ -70,6 +70,11 @@ public class ExperimentalFactorsIT {
     }
 
     @Test
+    public void getNonExistentFactor() {
+        assertThat(subject.getFactorsByType("FOOBAR").size(), is(0));
+    }
+
+    @Test
     public void getCellLineFilteredFactorsTest() {
         Factor filterFactor1 = new Factor("RNA", "total RNA");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");

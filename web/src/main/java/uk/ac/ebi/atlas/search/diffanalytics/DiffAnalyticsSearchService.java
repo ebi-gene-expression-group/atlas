@@ -63,10 +63,8 @@ public class DiffAnalyticsSearchService {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(condition);
 
-        String species = "";
-        if(StringUtils.isNotBlank(specie)) {
-            species = specie;
-        }
+        String species = StringUtils.isNotBlank(specie) ? specie : "";
+
         Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
 
         if (geneIdsResult.isPresent() && geneIdsResult.get().isEmpty()
