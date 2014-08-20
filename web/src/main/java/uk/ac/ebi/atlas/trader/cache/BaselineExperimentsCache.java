@@ -46,6 +46,10 @@ public class BaselineExperimentsCache implements ExperimentsCache<BaselineExperi
         this.experiments = experiments;
     }
 
+    /*
+     * @throws IllegalStateException if an error was thrown while loading the experiment, or the experiment
+     * doesn't exist
+     */
     @Override
     public BaselineExperiment getExperiment(String experimentAccession) {
         try {

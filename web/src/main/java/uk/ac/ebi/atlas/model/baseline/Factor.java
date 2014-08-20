@@ -41,8 +41,8 @@ public class Factor implements Comparable<Factor>, Serializable {
 
     private final String valueOntologyTerm;
 
-    public Factor(String type, String value) {
-        this(type, value, null);
+    public Factor(String header, String value) {
+        this(header, value, null);
     }
 
     public Factor(String header, String value, String valueOntologyTerm) {

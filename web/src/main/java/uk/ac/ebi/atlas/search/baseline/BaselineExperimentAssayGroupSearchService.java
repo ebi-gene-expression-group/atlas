@@ -79,10 +79,7 @@ public class BaselineExperimentAssayGroupSearchService {
 
         Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups = fetchAssayGroupsForCondition(condition);
 
-        String species = "";
-        if(StringUtils.isNotBlank(specie)) {
-            species = specie;
-        }
+        String species = StringUtils.isNotBlank(specie) ? specie : "";
 
         //TODO: move outside into caller, because this is called twice, here and in DiffAnalyticsSearchService
         Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
