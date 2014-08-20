@@ -63,5 +63,8 @@ public class BaselineExperiment extends Experiment {
         return getExperimentalFactors().getFactorsForAssayGroupsByType(assayGroupIds, factorType);
     }
 
+    public boolean isTissueExperiment() {
+        return !getExperimentalFactors().getFactorsByType("ORGANISM_PART").isEmpty();
+    }
 
 }

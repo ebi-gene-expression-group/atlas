@@ -44,6 +44,10 @@ public class FactorSet implements FactorGroup {
         addAll(factors);
     }
 
+    public FactorSet(Factor factor) {
+        add(factor);
+    }
+
     public FactorSet add(Factor factor) {
         factorsByType.put(factor.getType(), factor);
         return this;

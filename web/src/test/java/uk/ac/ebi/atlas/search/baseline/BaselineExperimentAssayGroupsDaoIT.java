@@ -23,7 +23,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 
-public class BaselineExpressionsDaoIT {
+public class BaselineExperimentAssayGroupsDaoIT {
 
     private static final String E_MTAB_599 = "E-MTAB-599";
 
@@ -39,7 +39,7 @@ public class BaselineExpressionsDaoIT {
     }
 
     @Test
-    public void doesNotFindNonExistantExperimentAssayGroup() throws Exception {
+    public void doesNotFindNonExistentExperimentAssayGroup() throws Exception {
         IndexedAssayGroup E_MTAB_599_g6 = new IndexedAssayGroup(E_MTAB_599, "DOES_NOT_EXIST");
         SetMultimap<String, String> multimap = subject.fetchExperimentAssayGroupsWithNonSpecificExpression(Optional.of(ImmutableList.of(E_MTAB_599_g6)), Optional.<Collection<String>>absent());
         assertThat(multimap.entries(), is(empty()));
