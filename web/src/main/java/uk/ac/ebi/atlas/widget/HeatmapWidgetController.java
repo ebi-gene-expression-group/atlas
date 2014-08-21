@@ -106,6 +106,10 @@ public final class HeatmapWidgetController {
         prepareModelForTranscripts(model, species, experiment);
 
         // forward to /widgets/heatmap/protein?type=RNASEQ_MRNA_BASELINE in BaselineExperimentPageController
+        // eg: forward:/widgets/heatmap/protein?type=RNASEQ_MRNA_BASELINE&serializedFilterFactors=ORGANISM:Monodelphis domestica&disableGeneLinks=true
+        // existing request parameters to this method (ie: geneQuery, propertyType, rootContext) are also passed along by the forward,
+        // plus type and serializedFilterFactors
+        // the model attributes are also preserved by a forward
         return "forward:" + getRequestURL(request) + buildQueryString(species, experiment, disableGeneLinks);
     }
 
@@ -114,11 +118,34 @@ public final class HeatmapWidgetController {
                                  @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
                                  @RequestParam(value = "species", required = false) String species,
-                                 @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks,
-                                 @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
+                                 @RequestParam(value = "rootContext", required = false) String rootContext,
                                  Model model) {
 
-        return dispatchWidget(request, bioEntityAccession, propertyType, species, disableGeneLinks, preferences, model);
+        try {
+            if (StringUtils.isBlank(species)) {
+                species = solrQueryService.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
+            }
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "No genes found matching query: " + bioEntityAccession);
+            return "widget-error";
+        }
+
+        String experimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
+
+        if (StringUtils.isEmpty(experimentAccession)) {
+            model.addAttribute("errorMessage", "No baseline experiment for species " + species);
+            model.addAttribute("identifier", bioEntityAccession);
+            return "widget-error";
+        }
+
+        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+
+        prepareModel(request, model, experiment);
+
+        prepareModelForTranscripts(model, species, experiment);
+
+        // forward to /widgets/heatmap/protein?type=RNASEQ_MRNA_BASELINE in BaselineExperimentPageController
+        return "forward:" + getRequestURL(request) + buildQueryString(species, experiment, false);
     }
 
     private void prepareModelForTranscripts(Model model, String species, Experiment experiment) {
