@@ -63,19 +63,21 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 var $heatmapTable = $(this.refs.heatmapTableRow.getDOMNode()), $countAndLegend = $(this.refs.countAndLegend.getDOMNode()),
                     stickyTopOffset = $countAndLegend.height();
 
-                $(this.refs.heatmapTable.getDOMNode()).stickyTableHeaders({fixedOffset: stickyTopOffset});
-
-
-                if ($heatmapTable.width() > $countAndLegend.width()) {
-                    //countAndLegend must be at least width of table so that we don't see the table cells scroll underneath
-                    var WIDTH_PADDING_OFFSET = 19;
-                    $countAndLegend.css('width', $heatmapTable.width() + WIDTH_PADDING_OFFSET);
+                if ($.fn.stickyTableHeaders) {
+                    $(this.refs.heatmapTable.getDOMNode()).stickyTableHeaders({fixedOffset: stickyTopOffset});
                 }
 
-                $countAndLegend.sticky();
+                if ($.fn.sticky) {
+                    if ($heatmapTable.width() > $countAndLegend.width()) {
+                        //countAndLegend must be at least width of table so that we don't see the table cells scroll underneath
+                        var WIDTH_PADDING_OFFSET = 19;
+                        $countAndLegend.css('width', $heatmapTable.width() + WIDTH_PADDING_OFFSET);
+                    }
 
-                $(this.refs.downloadProfilesButton.getDOMNode()).sticky({topSpacing: stickyTopOffset});
+                    $countAndLegend.sticky();
 
+                    $(this.refs.downloadProfilesButton.getDOMNode()).sticky({topSpacing: stickyTopOffset});
+                }
             },
 
             legendType: function () {

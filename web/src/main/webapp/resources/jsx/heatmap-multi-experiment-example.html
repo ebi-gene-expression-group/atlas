@@ -353,9 +353,11 @@
             document.getElementById('heatmap-react-multiexperiment')
         );
 
-        React.renderComponent(heatmap.EnsemblLauncher(),
-            document.getElementById('ensembl-launcher')
-        );
+        if (heatmap.EnsemblLauncher) {
+            React.renderComponent(heatmap.EnsemblLauncher(),
+                document.getElementById('ensembl-launcher')
+            );
+        }
 
     })(jQuery, React, heatmapModule, baseline.heatmapConfig,
             baseline.assayGroupFactors, baseline.profiles, baseline.geneSetProfiles);
