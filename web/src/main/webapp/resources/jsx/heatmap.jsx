@@ -243,7 +243,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         var HeatmapTableHeader = React.createClass({
 
             legendType: function () {
-                debugger;
                 if (type == TypeEnum.BASELINE) {
                     return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} experimentAccession={heatmapConfig.experimentAccession}/> );
                 }
@@ -303,16 +302,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 });
             },
 
-            factorHeaderType: function (factor) {
-                return (type == TypeEnum.BASELINE || type == TypeEnum.DIFFERENTIAL ?
-                    <FactorHeader factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={factor.assayGroupId} experimentAccession={this.props.experimentAccession}
-                    selectColumn={this.selectColumn} selected={factor.assayGroupId === this.state.selectedColumnId} />
-                    : <FactorHeader factorName={factor.value} assayGroupId={factor.assayGroupId} /> );
-            },
-
             render: function () {
                 var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
-                    return this.factorHeaderType(assayGroupFactor.factor);
+                    var factor = assayGroupFactor.factor;
+                    return <FactorHeader factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={this.props.experimentAccession}
+                            selectColumn={this.selectColumn} selected={assayGroupFactor.assayGroupId === this.state.selectedColumnId} />;
                 }.bind(this));
 
                 return (
@@ -752,7 +746,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 cells: function (expressions) {
-                    debugger;
                     return expressions.map(function (expression) {
                         return this.cellType(expression);
                     }.bind(this));
@@ -825,7 +818,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 render: function () {
-                    debugger;
                     if (noExpression(this.props.value)) {
                         return (<td></td>);
                     }
@@ -874,7 +866,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             return React.createClass({
                 render: function () {
-                    debugger;
                     if (noExpression(this.props.value)) {
                         return (<td></td>);
                     }
