@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.acceptance.selenium.tests.widget;
+package uk.ac.ebi.atlas.widget;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +8,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWidgetPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
 
-public class WidgetDownloadSIT extends SeleniumFixture {
+public class HeatmapWidgetControllerDownloadSIT extends SeleniumFixture {
 
     private static final String GENESET = "REACT_1619";
 

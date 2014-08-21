@@ -30,7 +30,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-public class GenePageControllerGlobalSearchWidgetSIT extends SinglePageSeleniumFixture {
+public class GenePageControllerEBIGlobalSearchSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSMUSG00000029816";
 

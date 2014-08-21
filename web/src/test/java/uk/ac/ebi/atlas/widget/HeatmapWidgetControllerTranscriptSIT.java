@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.baseline.geod30352;
+package uk.ac.ebi.atlas.widget;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
  * Created with IntelliJ IDEA.
  * User: barrera
  */
-public class TranscriptBreakdownPlotWidgetIT extends SeleniumFixture {
+public class HeatmapWidgetControllerTranscriptSIT extends SeleniumFixture {
 
     protected HeatmapTableWidgetPage subject;
 
