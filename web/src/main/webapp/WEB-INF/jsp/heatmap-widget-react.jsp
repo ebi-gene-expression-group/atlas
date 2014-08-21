@@ -7,14 +7,6 @@
 </c:if>
 
 <div id="atlas-content" class="block">
-    <table width="100%">
-        <tbody>
-        <tr>
-            <%@ include file="includes/experiment-description.jsp" %>
-        </tr>
-        </tbody>
-    </table>
-
     <%@ include file="includes/anatomogram-and-heatmap-react.jsp" %>
 
     <%@ include file="includes/heatmap-react.jsp" %>
