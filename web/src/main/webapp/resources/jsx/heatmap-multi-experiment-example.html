@@ -113,7 +113,7 @@
 
                 <div id="ensembl-launcher" class="aside stickem" style="display:inline"></div>
 
-                <div id="heatmap-react-baseline" class="heatmap-position"></div>
+                <div id="heatmap-react-multiexperiment" class="heatmap-position"></div>
 
             </div>
         </section>
@@ -128,7 +128,8 @@
             return {
                 atlasHost: 'wwwdev.ebi.ac.uk',
                 contextRoot: '/gxa',
-                experimentAccession: 'E-GEOD-26284',
+                geneId: 'ENSG00000163631',
+//                experimentAccession: 'E-GEOD-26284',
                 accessKey: '',
                 species: 'homo sapiens',
                 ensemblDB: 'ensembl',
@@ -136,7 +137,7 @@
                 queryFactorType: 'ORGANISM_PART',
                 isExactMatch: true,
                 enableGeneLinks: true,
-                enableEnsemblLauncher: true,
+                enableEnsemblLauncher: false,
                 selectedFilterFactorsJson: [],
                 toolTipHighlightedWords: genePropertiesTooltipModule.splitIntoWords('CCNT2 POLR2B'),
                 downloadProfilesURL: '/gxa/experiments/E-MTAB-1733.tsv?accessKey=&amp;serializedFilterFactors=&amp;queryFactorType=ORGANISM_PART&amp;rootContext=&amp;heatmapMatrixSize=50&amp;displayLevels=false&amp;displayGeneDistribution=false&amp;geneQuery=ids&amp;exactMatch=true&amp;_exactMatch=on&amp;_queryFactorValues=1&amp;specific=true&amp;_specific=on&amp;cutoff=0.5'
@@ -166,7 +167,7 @@
                 "factor": {
                     "header": "ORGANISM_PART",
                     "type": "ORGANISM_PART",
-                    "value": "brain"
+                    "value": "liver"
                 }
             },
             {
@@ -174,10 +175,123 @@
                 "factor": {
                     "header": "ORGANISM_PART",
                     "type": "ORGANISM_PART",
+                    "value": "lung"
+                }
+            },
+            {
+                "assayGroupId": "g5",
+                "factor": {
+                    "header": "ORGANISM_PART",
+                    "type": "ORGANISM_PART",
                     "value": "breast"
                 }
             }
         ];
+
+        var profiles = {
+            minExpressionLevel: 10,
+            maxExpressionLevel: 40,
+            searchResultTotal: 3,    //searchResultTotal
+            rows: [        //rows
+                {
+                    "identifier": "E-MTAB-513",   //identifier
+                    "name": "Six Tissues",       //name
+                    "expressions": [
+                        {
+                            "factorName": "adipose",
+                            "color": "#B3B3C0",
+                            "value": "10",
+                            "svgPathId": "ontologyTerm"
+                        },
+                        {
+                            "factorName": "adrenal",
+                            "color": "",
+                            "value": ""
+                        },
+                        {
+                            "factorName": "liver",
+                            "color": "UNKNOWN",
+                            "value": "UNKNOWN"
+                        },
+                        {
+                            "factorName": "lung",
+                            "color": "#A9AAC0",
+                            "value": "20"
+                        },
+                        {
+                            "factorName": "breast",
+                            "color": "#8D8DC0",
+                            "value": "13"
+                        }
+                    ]
+                },
+                {
+                    "identifier": "E-MTAB-1733",
+                    "name": "Twenty Seven Tissues",
+                    "expressions": [
+                        {
+                            "factorName": "adipose",
+                            "color": "#B3B3C0",
+                            "value": "3",
+                            "svgPathId": "ontologyTerm"
+                        },
+                        {
+                            "factorName": "adrenal",
+                            "color": "#9697C0",
+                            "value": "9"
+                        },
+                        {
+                            "factorName": "liver",
+                            "color": "#9697C0",
+                            "value": "9"
+                        },
+                        {
+                            "factorName": "lung",
+                            "color": "#A9AAC0",
+                            "value": "5"
+                        },
+                        {
+                            "factorName": "breast",
+                            "color": "#8D8DC0",
+                            "value": "11"
+                        }
+                    ]
+                },
+                {
+                    "identifier": "E-GEOD-30352",
+                    "name": "Mamalian Tissues",
+                    "expressions": [
+                        {
+                            "factorName": "adipose",
+                            "color": "UNKNOWN",
+                            "value": "UNKNOWN",
+                            "svgPathId": "ontologyTerm"
+                        },
+                        {
+                            "factorName": "adrenal",
+                            "color": "#0000FF",
+                            "value": "47"
+                        },
+                        {
+                            "factorName": "liver",
+                            "color": "#UNKNOWN",
+                            "value": "UNKNOWN"
+                        },
+                        {
+                            "factorName": "lung",
+                            "color": "",
+                            "value": ""
+                        },
+                        {
+                            "factorName": "breast",
+                            "color": "#4A4AC0",
+                            "value": "25"
+                        }
+                    ]
+                }
+            ]
+        };
+
 
         var geneSetProfiles = {
             minExpressionLevel: 10,
@@ -214,68 +328,6 @@
             ]
         };
 
-        var profiles = {
-            minExpressionLevel: 3,
-            maxExpressionLevel: 47,
-            totalGeneCount: 20,
-            genes:[
-                {
-                    "geneId": "ENSG00000082258",
-                    "geneName": "CCNT2",
-                    "expressions": [
-                        {
-                            "factorName": "adipose",
-                            "color": "#B3B3C0",
-                            "value": "3",
-                            "svgPathId": "ontologyTerm"
-                        },
-                        {
-                            "factorName": "adrenal",
-                            "color": "#9697C0",
-                            "value": "9"
-                        },
-                        {
-                            "factorName": "brain",
-                            "color": "#A9AAC0",
-                            "value": "5"
-                        },
-                        {
-                            "factorName": "breast",
-                            "color": "#8D8DC0",
-                            "value": "11"
-                        }
-                    ]
-                },
-                {
-                    "geneId": "ENSG00000047315",
-                    "geneName": "POLR2B",
-                    "expressions": [
-                        {
-                            "factorName": "adipose",
-                            "color": "UNKNOWN",
-                            "value": "UNKNOWN",
-                            "svgPathId": "ontologyTerm"
-                        },
-                        {
-                            "factorName": "adrenal",
-                            "color": "#0000FF",
-                            "value": "47"
-                        },
-                        {
-                            "factorName": "brain",
-                            "color": "",
-                            "value": ""
-                        },
-                        {
-                            "factorName": "breast",
-                            "color": "#4A4AC0",
-                            "value": "25"
-                        }
-                    ]
-                }
-            ]
-        };
-
         return {
             heatmapConfig: heatmapConfig,
             assayGroupFactors: assayGroupFactors,
@@ -295,10 +347,10 @@
 
     (function ($, React, heatmapModule, heatmapConfig, assayGroupFactors, profiles, geneSetProfiles) {
 
-        var heatmap = heatmapModule.buildBaseline(heatmapConfig, $('#displayLevels'));
+        var heatmap = heatmapModule.buildMultiExperiment(heatmapConfig, $('#displayLevels'));
 
         React.renderComponent(heatmap.Heatmap( {columnHeaders:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
-            document.getElementById('heatmap-react-baseline')
+            document.getElementById('heatmap-react-multiexperiment')
         );
 
         React.renderComponent(heatmap.EnsemblLauncher(),

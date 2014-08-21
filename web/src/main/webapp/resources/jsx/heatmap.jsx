@@ -8,7 +8,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
     var TypeEnum = {
         BASELINE: "baseline",
-        DIFFERENTIAL: "diff"
+        DIFFERENTIAL: "diff",
+        MULTIEXPERIMENT: "multiexperiment"
     };
 
     var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLevelsInputElement) {
@@ -34,7 +35,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             getInitialState: function () {
                 var displayLevels = ($prefFormDisplayLevelsInputElement.val() === "true");
-                return { showGeneSetProfiles: false,
+                return {
+                    showGeneSetProfiles: false,
                     displayLevels: displayLevels,
                     profiles: this.props.profiles,
                     selectedColumnId: null,
@@ -53,7 +55,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             },
 
             isMicroarray: function () {
-                return !(typeof(this.props.profiles.genes[0].designElement) === "undefined");
+                return !(typeof(this.props.profiles.rows[0].designElement) === "undefined");
             },
 
             componentDidMount: function() {
@@ -74,18 +76,26 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             },
 
+            legendType: function () {
+                return (type == TypeEnum.BASELINE || type == TypeEnum.MULTIEXPERIMENT ? <LegendBaseline displayLevels={this.state.displayLevels} minExpressionLevel={this.state.profiles.minExpressionLevel} maxExpressionLevel={this.state.profiles.maxExpressionLevel}/>
+                    : <LegendDifferential displayLevels={this.state.displayLevels} minDownLevel={this.state.profiles.minDownLevel} maxDownLevel={this.state.profiles.maxDownLevel} minUpLevel={this.state.profiles.minUpLevel} maxUpLevel={this.state.profiles.maxUpLevel}/>);
+            },
+
             render: function () {
+                var downloadProfilesButton = type != TypeEnum.MULTIEXPERIMENT ? <td style={{"vertical-align": "top"}}><DownloadProfilesButton ref="downloadProfilesButton"/> </td> : '';
+
                 return (
                     <div>
                         <table ref="countAndLegend" style={{"background-color": "white", zIndex: 1}}>
                             <tr>
                                 <td>
-                                    <span id="geneCount">Showing {this.state.profiles.genes.length} of {this.state.profiles.totalGeneCount} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span>
-                                        {this.props.geneSetProfiles ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
+                                    { type === TypeEnum.MULTIEXPERIMENT ? <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} experiments found: </span> :
+                                        <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span> }
+
+                                    {this.props.geneSetProfiles && type != TypeEnum.MULTIEXPERIMENT ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
                                 </td>
                                 <td>
-                                {type === TypeEnum.BASELINE ? <LegendBaseline displayLevels={this.state.displayLevels} minExpressionLevel={this.state.profiles.minExpressionLevel} maxExpressionLevel={this.state.profiles.maxExpressionLevel}/>
-                                    : <LegendDifferential displayLevels={this.state.displayLevels} minDownLevel={this.state.profiles.minDownLevel} maxDownLevel={this.state.profiles.maxDownLevel} minUpLevel={this.state.profiles.minUpLevel} maxUpLevel={this.state.profiles.maxUpLevel}/>}
+                                    { this.legendType() }
                                 </td>
                             </tr>
                         </table>
@@ -100,12 +110,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                                     <td>
                                                         <table ref="heatmapTable" id="heatmap-table" className="table-grid">
                                                             <HeatmapTableHeader isMicroarray={this.isMicroarray()} columnHeaders={this.props.columnHeaders} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
-                                                            <HeatmapTableRows profiles={this.state.profiles.genes} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
+                                                            <HeatmapTableRows profiles={this.state.profiles.rows} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
                                                         </table>
                                                     </td>
-                                                    <td style={{"vertical-align": "top"}}>
-                                                        <DownloadProfilesButton ref="downloadProfilesButton"/>
-                                                    </td>
+                                                    {downloadProfilesButton}
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -234,16 +242,34 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         var HeatmapTableHeader = React.createClass({
 
+            legendType: function () {
+                debugger;
+                if (type == TypeEnum.BASELINE) {
+                    return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} experimentAccession={heatmapConfig.experimentAccession}/> );
+                }
+                else if (type == TypeEnum.DIFFERENTIAL) {
+                    return (<ContrastHeaders contrasts={this.props.columnHeaders} experimentAccession={heatmapConfig.experimentAccession} showMaPlotButton={heatmapConfig.showMaPlotButton} gseaPlots={heatmapConfig.gseaPlots}/>);
+                }
+                else if (type == TypeEnum.MULTIEXPERIMENT) {
+                     return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} /> );
+                }
+
+            },
+
             render: function () {
+                var showGeneProfile = this.props.showGeneSetProfiles ? 'Gene set' : 'Gene';
+                var showExperimentProfile = type == TypeEnum.MULTIEXPERIMENT ? "Experiment" : showGeneProfile;
+
                 return (
                     <thead>
                         <th className="horizontal-header-cell" colSpan={this.props.isMicroarray ? 2 : undefined}>
                             <TopLeftCorner displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels}/>
                         </th>
-                        {type === TypeEnum.BASELINE ? <FactorHeaders assayGroupFactors={this.props.columnHeaders} experimentAccession={heatmapConfig.experimentAccession}/>
-                                                    : <ContrastHeaders contrasts={this.props.columnHeaders} experimentAccession={heatmapConfig.experimentAccession} showMaPlotButton={heatmapConfig.showMaPlotButton} gseaPlots={heatmapConfig.gseaPlots}/>}
+
+                        { this.legendType() }
+
                         <tr>
-                            <td className="horizontal-header-cell" style={ this.props.isMicroarray ? {width:"166px"} : undefined}>{this.props.showGeneSetProfiles ? 'Gene set' : 'Gene'}</td>
+                            <td className="horizontal-header-cell" style={ this.props.isMicroarray ? {width:"166px"} : undefined}>{ showExperimentProfile }</td>
                             { this.props.isMicroarray ? <td className="horizontal-header-cell">Design Element</td> : null}
                         </tr>
                     </thead>
@@ -277,12 +303,16 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 });
             },
 
+            factorHeaderType: function (factor) {
+                return (type == TypeEnum.BASELINE || type == TypeEnum.DIFFERENTIAL ?
+                    <FactorHeader factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={factor.assayGroupId} experimentAccession={this.props.experimentAccession}
+                    selectColumn={this.selectColumn} selected={factor.assayGroupId === this.state.selectedColumnId} />
+                    : <FactorHeader factorName={factor.value} assayGroupId={factor.assayGroupId} /> );
+            },
+
             render: function () {
-                var props = this.props;
                 var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
-                    var factor = assayGroupFactor.factor;
-                    return <FactorHeader factorName={factor.value} svgPathId={factor.valueOntologyTerm} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={props.experimentAccession}
-                            selectColumn={this.selectColumn} selected={assayGroupFactor.assayGroupId === this.state.selectedColumnId} />;
+                    return this.factorHeaderType(assayGroupFactor.factor);
                 }.bind(this));
 
                 return (
@@ -312,7 +342,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 componentDidMount: function () {
-                    factorInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
+                    if(type != TypeEnum.MULTIEXPERIMENT) {
+                        factorInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
+                    }
                 },
 
                 render: function () {
@@ -638,9 +670,15 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             },
 
+            profileRowType: function (profile)  {
+                return (type == TypeEnum.MULTIEXPERIMENT ? <GeneProfileRow identifier={profile.identifier} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} />
+                    : <GeneProfileRow selected={profile.identifier === this.state.selectedGeneId} selectGene={this.selectGene} designElement={profile.designElement} identifier={profile.identifier} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/> );
+
+            },
+
             render: function () {
                 var geneProfilesRows = this.props.profiles.map(function (profile) {
-                    return <GeneProfileRow selected={profile.geneId === this.state.selectedGeneId} selectGene={this.selectGene} designElement={profile.designElement} geneId={profile.geneId} geneName={profile.geneName} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>;
+                    return this.profileRowType(profile);
                 }.bind(this));
 
                 return (
@@ -668,15 +706,18 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 onClick: function () {
-                    this.props.selectGene(this.props.geneId);
+                    this.props.selectGene(this.props.identifier);
                 },
 
                 geneNameLinked: function () {
-                    var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.geneName + '&exactMatch=' + isExactMatch : '/genes/' + this.props.geneId;
+                    var experimentURL = '/experiments/' + this.props.identifier;
+                    var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + isExactMatch : '/genes/' + this.props.identifier;
+
+                    url = (type == TypeEnum.MULTIEXPERIMENT ? experimentURL : geneURL);
 
                     // don't render id for gene sets to prevent tooltips
                     return (
-                        <a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.geneId} href={contextRoot + geneURL} onClick={this.geneNameLinkClicked}>{this.props.geneName}</a>
+                        <a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.identifier} href={contextRoot + url} onClick={this.geneNameLinkClicked}>{this.props.name}</a>
                         );
                 },
 
@@ -688,14 +729,32 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 geneNameNotLinked: function () {
                     // don't render id for gene sets to prevent tooltips
                     return (
-                        <div ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.geneId}>{this.props.geneName}</div>
+                        <div ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.identifier}>{this.props.name}</div>
                         );
                 },
 
+                cellType: function (expression) {
+                    if (type == TypeEnum.BASELINE) {
+                        return (
+                            <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={this.props.showGeneSetProfiles} identifier={this.props.identifier} name={this.props.name}/>
+                            );
+                    }
+                    else if (type == TypeEnum.DIFFERENTIAL) {
+                        return (
+                            <CellDifferential color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={this.props.displayLevels} identifier={this.props.identifier} name={this.props.name}/>
+                            );
+                    }
+                    else if (type == TypeEnum.MULTIEXPERIMENT) {
+                        return (
+                            <CellMultiExperiment factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} identifier={this.props.identifier} name={this.props.name}/>
+                            );
+                    }
+                },
+
                 cells: function (expressions) {
+                    debugger;
                     return expressions.map(function (expression) {
-                        return (type == TypeEnum.BASELINE ? <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={this.props.showGeneSetProfiles} geneId={this.props.geneId} geneName={this.props.geneName}/>
-                                                          : <CellDifferential color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={this.props.displayLevels} geneId={this.props.geneId} geneName={this.props.geneName}/>);
+                        return this.cellType(expression);
                     }.bind(this));
                 },
 
@@ -719,7 +778,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 componentDidMount: function () {
-                    genePropertiesTooltipModule.init(contextRoot, toolTipHighlightedWords, this.refs.geneName.getDOMNode());
+                    if(type != TypeEnum.MULTIEXPERIMENT) {
+                        genePropertiesTooltipModule.init(contextRoot, toolTipHighlightedWords, this.refs.geneName.getDOMNode());
+                    }
                 }
             });
         })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher);
@@ -756,14 +817,15 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     if (hasTranscriptTooltip(this.props)) {
 
                         var factorValue = this.props.factorName,
-                            geneId = this.props.geneId,
-                            geneName = this.props.geneName;
+                            identifier = this.props.identifier,
+                            name = this.props.name;
 
-                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, queryFactorType, factorValue, selectedFilterFactorsJson, ensemblHost, ensemblSpecies);
+                        TranscriptPopup.display(contextRoot, experimentAccession, identifier, name, queryFactorType, factorValue, selectedFilterFactorsJson, ensemblHost, ensemblSpecies);
                     }
                 },
 
                 render: function () {
+                    debugger;
                     if (noExpression(this.props.value)) {
                         return (<td></td>);
                     }
@@ -790,6 +852,45 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     if (isUnknownExpression(this.props.value)) {
                         helpTooltipsModule.init('experiment', contextRoot, this.refs.unknownCell.getDOMNode());
                     }
+                }
+            });
+        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
+
+        var CellMultiExperiment = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, selectedFilterFactorsJson, queryFactorType) {
+
+            function isUnknownExpression(value) {
+                return (value === "UNKNOWN")
+            }
+
+            function noExpression(value) {
+                return !value;
+            }
+
+            function unknownCell() {
+                return (
+                    <span id='unknownCell' ref='unknownCell'></span>
+                    );
+            }
+
+            return React.createClass({
+                render: function () {
+                    debugger;
+                    if (noExpression(this.props.value)) {
+                        return (<td></td>);
+                    }
+
+                    var style = {"background-color": this.props.color};
+
+                    return (
+                        <td style={style}>
+                            <div
+                            className="heatmap_cell"
+                            style={{visibility: isUnknownExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
+                            data-svg-path-id={this.props.svgPathId}>
+                                {isUnknownExpression(this.props.value) ? unknownCell() : this.props.value}
+                            </div>
+                        </td>
+                        );
                 }
             });
         })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
@@ -877,7 +978,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
     return {
         buildBaseline: function (heatmapConfig, $prefFormDisplayLevelsInputElement) { return build(TypeEnum.BASELINE, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement); },
-        buildDifferential: function (heatmapConfig, $prefFormDisplayLevelsInputElement) { return build(TypeEnum.DIFFERENTIAL, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement); }
+        buildDifferential: function (heatmapConfig, $prefFormDisplayLevelsInputElement) { return build(TypeEnum.DIFFERENTIAL, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement); },
+        buildMultiExperiment: function (heatmapConfig, $prefFormDisplayLevelsInputElement) { return build(TypeEnum.MULTIEXPERIMENT, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement); }
     };
 
 })(jQuery, React, genePropertiesTooltipModule, factorInfoTooltipModule, contrastInfoTooltipModule, helpTooltipsModule, TranscriptPopup, EventEmitter, Modernizr);
