@@ -24,4 +24,12 @@ public class BaselineTissueExperimentSearchResult {
     public boolean isEmpty() {
         return experimentProfiles.isEmpty();
     }
+
+    public BaselineProfilesList getExperimentProfiles() {
+        return experimentProfiles;
+    }
+
+    public SortedSet<Factor> getSupersetOfFactorsAcrossAllExperiments() {
+        return supersetOfFactorsAcrossAllExperiments;
+    }
 }

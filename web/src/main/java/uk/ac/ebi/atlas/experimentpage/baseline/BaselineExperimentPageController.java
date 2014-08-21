@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,8 @@ import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
+import uk.ac.ebi.atlas.search.baseline.BaselineTissueExperimentSearchResult;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -61,6 +64,8 @@ import java.util.SortedSet;
 public class BaselineExperimentPageController extends BaselineExperimentController {
 
     private final TracksUtil tracksUtil;
+
+    private final BaselineExperimentProfileSearchService baselineExperimentProfileSearchService;
 
     private final BaselineProfilesHeatMap baselineProfilesHeatMap;
 
@@ -84,7 +89,8 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
                                             FilterFactorMenuBuilder filterFactorMenuBuilder,
                                             BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                             SpeciesEnsemblTrader speciesEnsemblTrader,
-                                            TracksUtil tracksUtil) {
+                                            TracksUtil tracksUtil,
+                                            BaselineExperimentProfileSearchService baselineExperimentProfileSearchService) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
@@ -93,6 +99,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
         this.speciesEnsemblTrader = speciesEnsemblTrader;
         this.tracksUtil = tracksUtil;
+        this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
     }
 
     @InitBinder
@@ -128,7 +135,42 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
     public String showGeneProfilesWidgetBioentity(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request) {
 
-        return showGeneProfilesWidget(preferences, disableGeneLinks, result, model, request);
+        prepareModel(preferences, result, model, request);
+
+        model.addAttribute("isWidget", true);
+        model.addAttribute("disableGeneLinks", disableGeneLinks);
+
+        String geneQuery = preferences.getGeneQuery();
+        String species = requestContext.getFilteredBySpecies();
+        BaselineTissueExperimentSearchResult searchResult;
+
+        try {
+            searchResult = baselineExperimentProfileSearchService.query(geneQuery, species, true);
+        } catch (GenesNotFoundException e) {
+            model.addAttribute("errorMessage", "No genes found matching query: '" + geneQuery + "'");
+            model.addAttribute("identifier", geneQuery);
+            return "widget-error";
+        }
+
+
+        SortedSet<Factor> orderedFactors = searchResult.getSupersetOfFactorsAcrossAllExperiments();
+        SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
+
+        BaselineProfilesList experimentProfiles = searchResult.getExperimentProfiles();
+        addJsonForHeatMap(experimentProfiles, null, filteredAssayGroupFactors, orderedFactors, model);
+
+        return "heatmap-widget-react";
+    }
+
+    private SortedSet<AssayGroupFactor> convert(SortedSet<Factor> orderedFactors) {
+        ImmutableSortedSet.Builder<AssayGroupFactor> builder = ImmutableSortedSet.naturalOrder();
+
+        for (Factor factor : orderedFactors) {
+            AssayGroupFactor assayGropuFactor = new AssayGroupFactor("none",factor);
+            builder.add(assayGropuFactor);
+        }
+
+        return builder.build();
     }
 
     private BaselineProfilesList fetchGeneProfilesAsGeneSets() {
