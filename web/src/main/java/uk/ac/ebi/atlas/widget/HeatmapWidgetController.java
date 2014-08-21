@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.widgets;
+package uk.ac.ebi.atlas.widget;
 
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;

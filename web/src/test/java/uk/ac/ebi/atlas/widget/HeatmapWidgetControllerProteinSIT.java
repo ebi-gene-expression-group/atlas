@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.widget;
+package uk.ac.ebi.atlas.widget;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,7 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.StringContains.containsString;
 
-public class ProteinWidgetIT extends SeleniumFixture {
+public class HeatmapWidgetControllerProteinSIT extends SeleniumFixture {
 
     private static final String PROTEIN_ACCESSION = "Q9Y615";
 

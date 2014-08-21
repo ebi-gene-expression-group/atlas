@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.bioentity.widget;
 
 import org.junit.Test;
 import org.openqa.selenium.By;

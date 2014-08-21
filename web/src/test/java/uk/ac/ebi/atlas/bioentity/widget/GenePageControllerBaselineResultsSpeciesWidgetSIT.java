@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.bioentity.widget;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
 
-public class GenePageControllerBaselineResultsSpeciesWidgetIT extends SinglePageSeleniumFixture {
+public class GenePageControllerBaselineResultsSpeciesWidgetSIT extends SinglePageSeleniumFixture {
 
     private BioEntityPage subject;
 

@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.search;
+package uk.ac.ebi.atlas.search.widget;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
@@ -28,9 +28,10 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class BioentitiesSearchControllerGeneQuery2GenesSingleResultSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerGeneQuery2GenesWidgetSIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
@@ -42,6 +43,7 @@ public class BioentitiesSearchControllerGeneQuery2GenesSingleResultSIT extends S
 
     @Test
     public void baselinePaneResultsMessage() {
+        assertThat(subject.isBaselinePaneExpanded(), is(true));
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
     }
 
@@ -51,6 +53,10 @@ public class BioentitiesSearchControllerGeneQuery2GenesSingleResultSIT extends S
         SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
 
         assertThat(subject.isIndividualGenesVisible(), is(true));
+
+        assertThat(subject.getGeneNames(), contains("Gm17271", "AC163282.1"));
+        assertThat(subject.hasGeneLink(0), is(true));
+        assertThat(subject.hasGeneLink(1), is(true));
     }
 
 }
