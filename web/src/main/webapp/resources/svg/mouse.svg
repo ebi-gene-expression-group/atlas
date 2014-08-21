@@ -485,7 +485,9 @@
    inkscape:current-layer="LAYER_EFO"
    inkscape:window-maximized="0"
    showborder="true" />
+<g id="group_all">
 <switch
+   style="fill:none"
    id="switch3878"
    transform="matrix(0.42843424,0,0,0.67931375,3.5547623,27.608074)">
 	<foreignObject
@@ -691,7 +693,6 @@
 	</g>
 </switch>
 
-<g id="group_all">
 <g
    inkscape:groupmode="layer"
    id="LAYER_EFO"
