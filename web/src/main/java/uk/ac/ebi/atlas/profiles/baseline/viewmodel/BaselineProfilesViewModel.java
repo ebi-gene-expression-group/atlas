@@ -6,14 +6,14 @@ public class BaselineProfilesViewModel {
 
     private final double minExpressionLevel;
     private final double maxExpressionLevel;
-    private final int totalGeneCount;
-    private final BaselineGeneViewModel[] genes;
+    private final int searchResultTotal;
+    private final BaselineProfileRowViewModel[] rows;
 
-    public BaselineProfilesViewModel(NumberUtils numberUtils, double minExpressionLevel, double maxExpressionLevel, int totalGeneCount, BaselineGeneViewModel[] genes) {
+    public BaselineProfilesViewModel(NumberUtils numberUtils, double minExpressionLevel, double maxExpressionLevel, int searchResultTotal, BaselineProfileRowViewModel[] rows) {
         this.minExpressionLevel = numberUtils.round(minExpressionLevel);
         this.maxExpressionLevel = numberUtils.round(maxExpressionLevel);
-        this.totalGeneCount = totalGeneCount;
-        this.genes = genes;
+        this.searchResultTotal = searchResultTotal;
+        this.rows = rows;
     }
 
     public double getMinExpressionLevel() {
@@ -24,11 +24,11 @@ public class BaselineProfilesViewModel {
         return maxExpressionLevel;
     }
 
-    public int getTotalGeneCount() {
-        return totalGeneCount;
+    public int getSearchResultTotal() {
+        return searchResultTotal;
     }
 
-    public BaselineGeneViewModel[] getGenes() {
-        return genes;
+    public BaselineProfileRowViewModel[] getRows() {
+        return rows;
     }
 }

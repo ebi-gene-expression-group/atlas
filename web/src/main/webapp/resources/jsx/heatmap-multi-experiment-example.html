@@ -128,7 +128,7 @@
             return {
                 atlasHost: 'wwwdev.ebi.ac.uk',
                 contextRoot: '/gxa',
-                geneId: 'ENSG00000163631',
+                id: 'ENSG00000163631',
 //                experimentAccession: 'E-GEOD-26284',
                 accessKey: '',
                 species: 'homo sapiens',
@@ -191,11 +191,11 @@
         var profiles = {
             minExpressionLevel: 10,
             maxExpressionLevel: 40,
-            searchResultTotal: 3,    //searchResultTotal
-            rows: [        //rows
+            searchResultTotal: 3,
+            rows: [
                 {
-                    "identifier": "E-MTAB-513",   //identifier
-                    "name": "Six Tissues",       //name
+                    "id": "E-MTAB-513",
+                    "name": "Six Tissues",
                     "expressions": [
                         {
                             "factorName": "adipose",
@@ -226,7 +226,7 @@
                     ]
                 },
                 {
-                    "identifier": "E-MTAB-1733",
+                    "id": "E-MTAB-1733",
                     "name": "Twenty Seven Tissues",
                     "expressions": [
                         {
@@ -258,7 +258,7 @@
                     ]
                 },
                 {
-                    "identifier": "E-GEOD-30352",
+                    "id": "E-GEOD-30352",
                     "name": "Mamalian Tissues",
                     "expressions": [
                         {
@@ -296,11 +296,11 @@
         var geneSetProfiles = {
             minExpressionLevel: 10,
             maxExpressionLevel: 40,
-            totalGeneCount: 1,
-            genes: [
+            searchResultTotal: 1,
+            rows: [
                 {
-                    "geneId": "protein_coding",
-                    "geneName": "protein_coding",
+                    "id": "protein_coding",
+                    "name": "protein_coding",
                     "expressions": [
                         {
                             "factorName": "adipose",

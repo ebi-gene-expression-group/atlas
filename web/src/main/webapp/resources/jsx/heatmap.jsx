@@ -62,6 +62,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             componentDidMount: function() {
                 var $heatmapTable = $(this.refs.heatmapTableRow.getDOMNode()), $countAndLegend = $(this.refs.countAndLegend.getDOMNode()),
                     stickyTopOffset = $countAndLegend.height();
+
                 $(this.refs.heatmapTable.getDOMNode()).stickyTableHeaders({fixedOffset: stickyTopOffset});
 
 
@@ -666,8 +667,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             },
 
             profileRowType: function (profile)  {
-                return (type == TypeEnum.MULTIEXPERIMENT ? <GeneProfileRow identifier={profile.identifier} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} />
-                    : <GeneProfileRow selected={profile.identifier === this.state.selectedGeneId} selectGene={this.selectGene} designElement={profile.designElement} identifier={profile.identifier} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/> );
+                return (type == TypeEnum.MULTIEXPERIMENT ? <GeneProfileRow id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} />
+                    : <GeneProfileRow selected={profile.id === this.state.selectedGeneId} selectGene={this.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/> );
 
             },
 
@@ -701,18 +702,18 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 onClick: function () {
-                    this.props.selectGene(this.props.identifier);
+                    this.props.selectGene(this.props.id);
                 },
 
                 geneNameLinked: function () {
-                    var experimentURL = '/experiments/' + this.props.identifier;
-                    var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + isExactMatch : '/genes/' + this.props.identifier;
+                    var experimentURL = '/experiments/' + this.props.id;
+                    var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + isExactMatch : '/genes/' + this.props.id;
 
                     url = (type == TypeEnum.MULTIEXPERIMENT ? experimentURL : geneURL);
 
                     // don't render id for gene sets to prevent tooltips
                     return (
-                        <a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.identifier} href={contextRoot + url} onClick={this.geneNameLinkClicked}>{this.props.name}</a>
+                        <a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked}>{this.props.name}</a>
                         );
                 },
 
@@ -724,24 +725,24 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 geneNameNotLinked: function () {
                     // don't render id for gene sets to prevent tooltips
                     return (
-                        <div ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.identifier}>{this.props.name}</div>
+                        <div ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.id}>{this.props.name}</div>
                         );
                 },
 
                 cellType: function (expression) {
                     if (type == TypeEnum.BASELINE) {
                         return (
-                            <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={this.props.showGeneSetProfiles} identifier={this.props.identifier} name={this.props.name}/>
+                            <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
                             );
                     }
                     else if (type == TypeEnum.DIFFERENTIAL) {
                         return (
-                            <CellDifferential color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={this.props.displayLevels} identifier={this.props.identifier} name={this.props.name}/>
+                            <CellDifferential color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={this.props.displayLevels} id={this.props.id} name={this.props.name}/>
                             );
                     }
                     else if (type == TypeEnum.MULTIEXPERIMENT) {
                         return (
-                            <CellMultiExperiment factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} identifier={this.props.identifier} name={this.props.name}/>
+                            <CellMultiExperiment factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} id={this.props.id} name={this.props.name}/>
                             );
                     }
                 },
@@ -811,10 +812,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     if (hasTranscriptTooltip(this.props)) {
 
                         var factorValue = this.props.factorName,
-                            identifier = this.props.identifier,
+                            id = this.props.id,
                             name = this.props.name;
 
-                        TranscriptPopup.display(contextRoot, experimentAccession, identifier, name, queryFactorType, factorValue, selectedFilterFactorsJson, ensemblHost, ensemblSpecies);
+                        TranscriptPopup.display(contextRoot, experimentAccession, id, name, queryFactorType, factorValue, selectedFilterFactorsJson, ensemblHost, ensemblSpecies);
                     }
                 },
 

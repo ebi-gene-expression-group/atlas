@@ -54,7 +54,7 @@ public class DifferentialProfilesViewModelBuilderTest {
 
     @Test
     public void buildProfilesViewModel() {
-        DifferentialGeneViewModel[] genes = subject.buildGenes(diffProfiles, orderedContrasts);
+        DifferentialProfileRowViewModel[] genes = subject.buildGenes(diffProfiles, orderedContrasts);
 
         DifferentialProfilesViewModel profiles = new DifferentialProfilesViewModel(diffProfiles.getMinUpRegulatedExpressionLevel(), diffProfiles.getMaxUpRegulatedExpressionLevel(), diffProfiles.getMinDownRegulatedExpressionLevel(), diffProfiles.getMaxDownRegulatedExpressionLevel(), 50, genes);
 
@@ -66,11 +66,11 @@ public class DifferentialProfilesViewModelBuilderTest {
         String expected = "{\n" +
                 "  \"minUpLevel\": 1.33,\n" +
                 "  \"maxUpLevel\": 1.33,\n" +
-                "  \"totalGeneCount\": 50,\n" +
-                "  \"genes\": [\n" +
+                "  \"searchResultTotal\": 50,\n" +
+                "  \"rows\": [\n" +
                 "    {\n" +
-                "      \"geneId\": \"FBgn0051624\",\n" +
-                "      \"geneName\": \"CG31624\",\n" +
+                "      \"id\": \"FBgn0051624\",\n" +
+                "      \"name\": \"CG31624\",\n" +
                 "      \"designElement\": \"1630811_at\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
@@ -90,8 +90,8 @@ public class DifferentialProfilesViewModelBuilderTest {
                 "      ]\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"geneId\": \"FBgn0053459\",\n" +
-                "      \"geneName\": \"CG33459\",\n" +
+                "      \"id\": \"FBgn0053459\",\n" +
+                "      \"name\": \"CG33459\",\n" +
                 "      \"designElement\": \"1640410_at\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
