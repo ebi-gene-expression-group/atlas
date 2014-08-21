@@ -128,7 +128,11 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
     public String showGeneProfilesWidgetBioentity(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request) {
 
-        return showGeneProfilesWidget(preferences, disableGeneLinks, result, model, request);
+        prepareModel(preferences, result, model, request);
+
+        model.addAttribute("isWidget", true);
+        model.addAttribute("disableGeneLinks", disableGeneLinks);
+        return "heatmap-widget-react";
     }
 
     private BaselineProfilesList fetchGeneProfilesAsGeneSets() {

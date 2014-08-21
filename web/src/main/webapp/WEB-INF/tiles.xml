@@ -125,6 +125,10 @@
         <put-attribute name="body" value="/WEB-INF/jsp/heatmap-widget.jsp"/>
     </definition>
 
+    <definition name="heatmap-widget-react" extends="widget.base.definition">
+        <put-attribute name="body" value="/WEB-INF/jsp/heatmap-widget-react.jsp"/>
+    </definition>
+
     <definition name="widget-error" extends="widget.base.definition">
         <put-attribute name="body" value="/WEB-INF/jsp/widget-error.jsp"/>
     </definition>
