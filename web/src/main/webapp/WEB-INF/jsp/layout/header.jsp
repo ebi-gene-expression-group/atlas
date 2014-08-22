@@ -80,7 +80,7 @@
                         <!-- Include some example searchterms - keep them short and few! -->
                         <span class="examples">Examples:
                                         <a href="${pageContext.request.contextPath}/query?geneQuery=ASPM">ASPM</a>,
-                                        <a href="${pageContext.request.contextPath}/query?geneQuery=REACT_1619">REACT_1619</a>,
+                                        <a href="${pageContext.request.contextPath}/query?geneQuery=REACT_200624">REACT_200624</a>,
                                         <a href="${pageContext.request.contextPath}/query?geneQuery=ENSMUSG00000021789">ENSMUSG00000021789</a>,
                                         <a href="${pageContext.request.contextPath}/query?geneQuery=%22zinc+finger%22">"zinc finger"</a></span>
                     </div>
