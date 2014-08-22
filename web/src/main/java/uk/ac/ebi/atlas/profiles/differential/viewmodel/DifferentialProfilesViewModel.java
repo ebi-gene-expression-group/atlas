@@ -6,18 +6,18 @@ public class DifferentialProfilesViewModel {
 
     private final double minUpLevel;
     private final double maxUpLevel;
-    private final int totalGeneCount;
-    private final DifferentialGeneViewModel[] genes;
+    private final int searchResultTotal;
+    private final DifferentialProfileRowViewModel[] rows;
     private final double minDownLevel;
     private final double maxDownLevel;
 
-    public DifferentialProfilesViewModel(double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel, int totalGeneCount, DifferentialGeneViewModel[] genes) {
+    public DifferentialProfilesViewModel(double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel, int searchResultTotal, DifferentialProfileRowViewModel[] rows) {
         this.minUpLevel = MathUtils.round(minUpLevel, 2);
         this.maxUpLevel = MathUtils.round(maxUpLevel, 2);
         this.minDownLevel = MathUtils.round(minDownLevel, 2);
         this.maxDownLevel = MathUtils.round(maxDownLevel, 2);
-        this.totalGeneCount = totalGeneCount;
-        this.genes = genes;
+        this.searchResultTotal = searchResultTotal;
+        this.rows = rows;
     }
 
     public double getMinUpLevel() {
@@ -36,11 +36,11 @@ public class DifferentialProfilesViewModel {
         return maxDownLevel;
     }
 
-    public int getTotalGeneCount() {
-        return totalGeneCount;
+    public int getSearchResultTotal() {
+        return searchResultTotal;
     }
 
-    public DifferentialGeneViewModel[] getGenes() {
-        return genes;
+    public DifferentialProfileRowViewModel[] getRows() {
+        return rows;
     }
 }

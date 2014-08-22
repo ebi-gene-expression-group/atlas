@@ -27,11 +27,10 @@
     <script src="/gxa/resources/js/highlight.js"></script>
     <script src="/gxa/resources/js/heatmapModule.js"></script>
     <script src="/gxa/resources/js/transcriptPopupModule.js"></script>
-    <script src="/gxa/resources/js/anatomogramModule.js"></script>
-    <script src="/gxa/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
     <script src="/gxa/resources/js/EventEmitter-4.2.7.js"></script>
 
     <script src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
+
 
     <!-- for transcripts start -->
         <!--[if lte IE 8]>
@@ -112,33 +111,11 @@
 
             <div id="heatmap" class="row stickem-container">
 
-                <div id="anatomogram" class="aside stickem double-click-noselection" style="display:inline">
-                    <table>
-                        <tr>
-                            <td style="padding-top: 15px; vertical-align:top">
-                            <span id="sex-toggle">
-                                <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
-                                     style="width:20px;height:38px;padding:2px"
-                                     src="/gxa/resources/images/male_selected.png"/>
-                            </span>
-                                <!--
-                                <span data-help-loc="#anatomogram"/>
-                                -->
-                            </td>
-                            <td>
-                                <div id="anatomogramBody" style="display:inline-block;width: 230px; height:360px;">
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                    <div id="anatomogram-ensembl-launcher"></div>
-                </div>
                 <div id="ensembl-launcher" class="aside stickem" style="display:inline"></div>
 
-                <div id="heatmap-react-baseline" class="heatmap-position"></div>
+                <div id="heatmap-react-multiexperiment" class="heatmap-position"></div>
 
             </div>
-
         </section>
     </div>
 </div>
@@ -151,7 +128,8 @@
             return {
                 atlasHost: 'wwwdev.ebi.ac.uk',
                 contextRoot: '/gxa',
-                experimentAccession: 'E-GEOD-26284',
+                id: 'ENSG00000163631',
+//                experimentAccession: 'E-GEOD-26284',
                 accessKey: '',
                 species: 'homo sapiens',
                 ensemblDB: 'ensembl',
@@ -159,7 +137,7 @@
                 queryFactorType: 'ORGANISM_PART',
                 isExactMatch: true,
                 enableGeneLinks: true,
-                enableEnsemblLauncher: true,
+                enableEnsemblLauncher: false,
                 selectedFilterFactorsJson: [],
                 toolTipHighlightedWords: genePropertiesTooltipModule.splitIntoWords('CCNT2 POLR2B'),
                 downloadProfilesURL: '/gxa/experiments/E-MTAB-1733.tsv?accessKey=&amp;serializedFilterFactors=&amp;queryFactorType=ORGANISM_PART&amp;rootContext=&amp;heatmapMatrixSize=50&amp;displayLevels=false&amp;displayGeneDistribution=false&amp;geneQuery=ids&amp;exactMatch=true&amp;_exactMatch=on&amp;_queryFactorValues=1&amp;specific=true&amp;_specific=on&amp;cutoff=0.5'
@@ -173,7 +151,7 @@
                     "header": "ORGANISM_PART",
                     "type": "ORGANISM_PART",
                     "value": "adipose",
-                    "valueOntologyTerm": "UBERON:0001013"
+                    "valueOntologyTerm": "ontologyTerm"
                 }
             },
             {
@@ -181,8 +159,7 @@
                 "factor": {
                     "header": "ORGANISM_PART",
                     "type": "ORGANISM_PART",
-                    "value": "adrenal",
-                    "valueOntologyTerm": "CL:0000336"
+                    "value": "adrenal"
                 }
             },
             {
@@ -190,8 +167,7 @@
                 "factor": {
                     "header": "ORGANISM_PART",
                     "type": "ORGANISM_PART",
-                    "value": "brain",
-                    "valueOntologyTerm": "UBERON:0000955"
+                    "value": "liver"
                 }
             },
             {
@@ -199,11 +175,123 @@
                 "factor": {
                     "header": "ORGANISM_PART",
                     "type": "ORGANISM_PART",
-                    "value": "breast",
-                    "valueOntologyTerm": "UBERON:0000310"
+                    "value": "lung"
+                }
+            },
+            {
+                "assayGroupId": "g5",
+                "factor": {
+                    "header": "ORGANISM_PART",
+                    "type": "ORGANISM_PART",
+                    "value": "breast"
                 }
             }
         ];
+
+        var profiles = {
+            minExpressionLevel: 10,
+            maxExpressionLevel: 40,
+            searchResultTotal: 3,
+            rows: [
+                {
+                    "id": "E-MTAB-513",
+                    "name": "Six Tissues",
+                    "expressions": [
+                        {
+                            "factorName": "adipose",
+                            "color": "#B3B3C0",
+                            "value": "10",
+                            "svgPathId": "ontologyTerm"
+                        },
+                        {
+                            "factorName": "adrenal",
+                            "color": "",
+                            "value": ""
+                        },
+                        {
+                            "factorName": "liver",
+                            "color": "UNKNOWN",
+                            "value": "UNKNOWN"
+                        },
+                        {
+                            "factorName": "lung",
+                            "color": "#A9AAC0",
+                            "value": "20"
+                        },
+                        {
+                            "factorName": "breast",
+                            "color": "#8D8DC0",
+                            "value": "13"
+                        }
+                    ]
+                },
+                {
+                    "id": "E-MTAB-1733",
+                    "name": "Twenty Seven Tissues",
+                    "expressions": [
+                        {
+                            "factorName": "adipose",
+                            "color": "#B3B3C0",
+                            "value": "3",
+                            "svgPathId": "ontologyTerm"
+                        },
+                        {
+                            "factorName": "adrenal",
+                            "color": "#9697C0",
+                            "value": "9"
+                        },
+                        {
+                            "factorName": "liver",
+                            "color": "#9697C0",
+                            "value": "9"
+                        },
+                        {
+                            "factorName": "lung",
+                            "color": "#A9AAC0",
+                            "value": "5"
+                        },
+                        {
+                            "factorName": "breast",
+                            "color": "#8D8DC0",
+                            "value": "11"
+                        }
+                    ]
+                },
+                {
+                    "id": "E-GEOD-30352",
+                    "name": "Mamalian Tissues",
+                    "expressions": [
+                        {
+                            "factorName": "adipose",
+                            "color": "UNKNOWN",
+                            "value": "UNKNOWN",
+                            "svgPathId": "ontologyTerm"
+                        },
+                        {
+                            "factorName": "adrenal",
+                            "color": "#0000FF",
+                            "value": "47"
+                        },
+                        {
+                            "factorName": "liver",
+                            "color": "#UNKNOWN",
+                            "value": "UNKNOWN"
+                        },
+                        {
+                            "factorName": "lung",
+                            "color": "",
+                            "value": ""
+                        },
+                        {
+                            "factorName": "breast",
+                            "color": "#4A4AC0",
+                            "value": "25"
+                        }
+                    ]
+                }
+            ]
+        };
+
 
         var geneSetProfiles = {
             minExpressionLevel: 10,
@@ -218,93 +306,22 @@
                             "factorName": "adipose",
                             "color": "#B3B3C0",
                             "value": "10",
-                            "svgPathId": "UBERON:0001013"
+                            "svgPathId": "ontologyTerm"
                         },
                         {
                             "factorName": "adrenal",
                             "color": "#9697C0",
-                            "value": "20",
-                            "svgPathId": "CL:0000336"
+                            "value": "20"
                         },
                         {
                             "factorName": "brain",
                             "color": "#A9AAC0",
-                            "value": "30",
-                            "svgPathId": "UBERON:0000955"
+                            "value": "30"
                         },
                         {
                             "factorName": "breast",
                             "color": "#8D8DC0",
-                            "value": "40",
-                            "svgPathId": "UBERON:0000310"
-                        }
-                    ]
-                }
-            ]
-        };
-
-        var profiles = {
-            minExpressionLevel: 3,
-            maxExpressionLevel: 47,
-            searchResultTotal: 20,
-            rows:[
-                {
-                    "id": "ENSG00000082258",
-                    "name": "CCNT2",
-                    "expressions": [
-                        {
-                            "factorName": "adipose",
-                            "color": "#B3B3C0",
-                            "value": "3",
-                            "svgPathId": "UBERON:0001013"
-                        },
-                        {
-                            "factorName": "adrenal",
-                            "color": "#9697C0",
-                            "value": "9",
-                            "svgPathId": "CL:0000336"
-                        },
-                        {
-                            "factorName": "brain",
-                            "color": "#A9AAC0",
-                            "value": "5",
-                            "svgPathId": "UBERON:0000955"
-                        },
-                        {
-                            "factorName": "breast",
-                            "color": "#8D8DC0",
-                            "value": "11",
-                            "svgPathId": "UBERON:0000310"
-                        }
-                    ]
-                },
-                {
-                    "id": "ENSG00000047315",
-                    "name": "POLR2B",
-                    "expressions": [
-                        {
-                            "factorName": "adipose",
-                            "color": "UNKNOWN",
-                            "value": "UNKNOWN",
-                            "svgPathId": "UBERON:0001013"
-                        },
-                        {
-                            "factorName": "adrenal",
-                            "color": "#0000FF",
-                            "value": "47",
-                            "svgPathId": "CL:0000336"
-                        },
-                        {
-                            "factorName": "brain",
-                            "color": "",
-                            "value": "",
-                            "svgPathId": "UBERON:0000955"
-                        },
-                        {
-                            "factorName": "breast",
-                            "color": "#4A4AC0",
-                            "value": "25",
-                            "svgPathId": "UBERON:0000310"
+                            "value": "40"
                         }
                     ]
                 }
@@ -328,40 +345,21 @@
 
     /*global React */
 
-    (function ($, React, heatmapModule, anatomogramModule, heatmapConfig, assayGroupFactors, profiles, geneSetProfiles) {
+    (function ($, React, heatmapModule, heatmapConfig, assayGroupFactors, profiles, geneSetProfiles) {
 
-        var heatmap = heatmapModule.buildBaseline(heatmapConfig, $('#displayLevels'));
+        var heatmap = heatmapModule.buildMultiExperiment(heatmapConfig, $('#displayLevels'));
 
         React.renderComponent(heatmap.Heatmap( {columnHeaders:assayGroupFactors, profiles:profiles, geneSetProfiles: geneSetProfiles} ),
-            document.getElementById('heatmap-react-baseline')
+            document.getElementById('heatmap-react-multiexperiment')
         );
 
-        React.renderComponent(heatmap.EnsemblLauncher(),
-            document.getElementById('anatomogram-ensembl-launcher')
-        );
+        if (heatmap.EnsemblLauncher) {
+            React.renderComponent(heatmap.EnsemblLauncher(),
+                document.getElementById('ensembl-launcher')
+            );
+        }
 
-        var allQueryFactorValues = [16];
-
-        allQueryFactorValues[0] = "UBERON:0001013";
-        allQueryFactorValues[1] = "CL:0000336";
-        allQueryFactorValues[2] = "UBERON:0000955";
-        allQueryFactorValues[3] = "UBERON:0000310";
-        allQueryFactorValues[4] = "UBERON:0001155";
-        allQueryFactorValues[5] = "UBERON:0000948";
-        allQueryFactorValues[6] = "UBERON:0002113";
-        allQueryFactorValues[7] = "CL:0000738";
-        allQueryFactorValues[8] = "UBERON:0002107";
-        allQueryFactorValues[9] = "UBERON:0002048";
-        allQueryFactorValues[10] = "UBERON:0000029";
-        allQueryFactorValues[11] = "EFO:0000973";
-        allQueryFactorValues[12] = "UBERON:0002367";
-        allQueryFactorValues[13] = "CL:0000188";
-        allQueryFactorValues[14] = "UBERON:0000473";
-        allQueryFactorValues[15] = "UBERON:0002046";
-
-        anatomogramModule.init(allQueryFactorValues, 'human_male.svg', 'human_female.svg', '/gxa');
-
-    })(jQuery, React, heatmapModule, anatomogramModule, baseline.heatmapConfig,
+    })(jQuery, React, heatmapModule, baseline.heatmapConfig,
             baseline.assayGroupFactors, baseline.profiles, baseline.geneSetProfiles);
 
 </script>

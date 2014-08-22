@@ -1,25 +1,25 @@
 package uk.ac.ebi.atlas.profiles.differential.viewmodel;
 
-public class DifferentialGeneViewModel {
+public class DifferentialProfileRowViewModel {
 
-    private final String geneId;
-    private final String geneName;
+    private final String id;
+    private final String name;
     private final String designElement;
     private final DifferentialExpressionViewModel[] expressions;
 
-    public DifferentialGeneViewModel(String geneId, String geneName, String designElement,DifferentialExpressionViewModel[] expressions) {
-        this.geneId = geneId;
-        this.geneName = geneName;
+    public DifferentialProfileRowViewModel(String id, String name, String designElement, DifferentialExpressionViewModel[] expressions) {
+        this.id = id;
+        this.name = name;
         this.designElement = designElement;
         this.expressions = expressions;
     }
 
-    public String getGeneId() {
-        return geneId;
+    public String getId() {
+        return id;
     }
 
-    public String getGeneName() {
-        return geneName;
+    public String getName() {
+        return name;
     }
 
     public String getDesignElement() {

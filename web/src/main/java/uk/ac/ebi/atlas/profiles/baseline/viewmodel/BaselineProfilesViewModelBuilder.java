@@ -28,27 +28,27 @@ public class BaselineProfilesViewModelBuilder {
     }
 
     public BaselineProfilesViewModel build(BaselineProfilesList profiles, SortedSet<Factor> orderedFactors) {
-        BaselineGeneViewModel[] genes = buildGenes(profiles, orderedFactors, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel());
+        BaselineProfileRowViewModel[] genes = buildGenes(profiles, orderedFactors, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel());
         return new BaselineProfilesViewModel(numberUtils, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel(), profiles.getTotalResultCount(), genes);
     }
 
-    public BaselineGeneViewModel[] buildGenes(List<BaselineProfile> baselineProfiles, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
-        BaselineGeneViewModel[] viewModels = new BaselineGeneViewModel[baselineProfiles.size()];
+    public BaselineProfileRowViewModel[] buildGenes(List<BaselineProfile> baselineProfiles, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+        BaselineProfileRowViewModel[] viewModels = new BaselineProfileRowViewModel[baselineProfiles.size()];
 
         int i = 0;
         for (BaselineProfile baselineProfile : baselineProfiles) {
-            BaselineGeneViewModel profileViewModel = build(baselineProfile, orderedFactors, minExpressionLevel, maxExpressionLevel);
+            BaselineProfileRowViewModel profileViewModel = build(baselineProfile, orderedFactors, minExpressionLevel, maxExpressionLevel);
             viewModels[i++] = profileViewModel;
         }
 
         return viewModels;
     }
 
-    public BaselineGeneViewModel build(Profile<Factor, BaselineExpression> profile, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+    public BaselineProfileRowViewModel build(Profile<Factor, BaselineExpression> profile, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
         String geneId = profile.getId();
         String geneName = profile.getName();
         BaselineExpressionViewModel[] expressions = buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);
-        return new BaselineGeneViewModel(geneId, geneName, expressions);
+        return new BaselineProfileRowViewModel(geneId, geneName, expressions);
     }
 
     private BaselineExpressionViewModel[] buildExpressions(Profile<Factor, BaselineExpression> profile, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {

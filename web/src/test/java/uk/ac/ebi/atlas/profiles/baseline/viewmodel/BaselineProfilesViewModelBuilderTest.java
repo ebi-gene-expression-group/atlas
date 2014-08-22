@@ -53,7 +53,7 @@ public class BaselineProfilesViewModelBuilderTest {
 
     @Test
     public void buildProfilesViewModel() {
-        BaselineGeneViewModel[] genes = subject.buildGenes(baselineProfiles, orderedFactors, minExpressionLevel, maxExpressionLevel);
+        BaselineProfileRowViewModel[] genes = subject.buildGenes(baselineProfiles, orderedFactors, minExpressionLevel, maxExpressionLevel);
 
         BaselineProfilesViewModel profiles = new BaselineProfilesViewModel(new NumberUtils(), 1.1, 2.2, 50, genes);
 
@@ -63,11 +63,11 @@ public class BaselineProfilesViewModelBuilderTest {
         String expected = "{\n" +
                 "  \"minExpressionLevel\": 1.0,\n" +
                 "  \"maxExpressionLevel\": 2.0,\n" +
-                "  \"totalGeneCount\": 50,\n" +
-                "  \"genes\": [\n" +
+                "  \"searchResultTotal\": 50,\n" +
+                "  \"rows\": [\n" +
                 "    {\n" +
-                "      \"geneId\": \"ENSG00000082258\",\n" +
-                "      \"geneName\": \"CCNT2\",\n" +
+                "      \"id\": \"ENSG00000082258\",\n" +
+                "      \"name\": \"CCNT2\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
@@ -93,8 +93,8 @@ public class BaselineProfilesViewModelBuilderTest {
                 "      ]\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"geneId\": \"ENSG00000047315\",\n" +
-                "      \"geneName\": \"POLR2B\",\n" +
+                "      \"id\": \"ENSG00000047315\",\n" +
+                "      \"name\": \"POLR2B\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +

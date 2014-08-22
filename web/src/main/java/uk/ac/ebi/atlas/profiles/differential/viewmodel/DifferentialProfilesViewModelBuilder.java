@@ -34,33 +34,33 @@ public class DifferentialProfilesViewModelBuilder {
     }
 
     public DifferentialProfilesViewModel build(DifferentialProfilesList<? extends DifferentialProfile<? extends DifferentialExpression>> diffProfiles, Set<Contrast> orderedContrasts) {
-        DifferentialGeneViewModel[] genes = buildGenes(diffProfiles, orderedContrasts);
+        DifferentialProfileRowViewModel[] genes = buildGenes(diffProfiles, orderedContrasts);
 
         return new DifferentialProfilesViewModel(diffProfiles.getMinUpRegulatedExpressionLevel(), diffProfiles.getMaxUpRegulatedExpressionLevel(), diffProfiles.getMinDownRegulatedExpressionLevel(), diffProfiles.getMaxDownRegulatedExpressionLevel(), diffProfiles.getTotalResultCount(), genes);
     }
 
-    public DifferentialGeneViewModel[] buildGenes(DifferentialProfilesList<? extends DifferentialProfile<? extends DifferentialExpression>> profiles, Set<Contrast> orderedContrasts) {
+    public DifferentialProfileRowViewModel[] buildGenes(DifferentialProfilesList<? extends DifferentialProfile<? extends DifferentialExpression>> profiles, Set<Contrast> orderedContrasts) {
         return build(profiles, orderedContrasts, profiles.getMinUpRegulatedExpressionLevel(), profiles.getMaxUpRegulatedExpressionLevel(), profiles.getMinDownRegulatedExpressionLevel(), profiles.getMaxDownRegulatedExpressionLevel());
     }
 
-    private DifferentialGeneViewModel[] build(List<? extends DifferentialProfile<? extends DifferentialExpression>> profiles, Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
-        DifferentialGeneViewModel[] viewModels = new DifferentialGeneViewModel[profiles.size()];
+    private DifferentialProfileRowViewModel[] build(List<? extends DifferentialProfile<? extends DifferentialExpression>> profiles, Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
+        DifferentialProfileRowViewModel[] viewModels = new DifferentialProfileRowViewModel[profiles.size()];
 
         int i = 0;
         for (DifferentialProfile<? extends DifferentialExpression> profile : profiles) {
-            DifferentialGeneViewModel profileViewModel = build(profile, orderedContrasts, minUpLevel, maxUpLevel, minDownLevel, maxDownLevel);
+            DifferentialProfileRowViewModel profileViewModel = build(profile, orderedContrasts, minUpLevel, maxUpLevel, minDownLevel, maxDownLevel);
             viewModels[i++] = profileViewModel;
         }
 
         return viewModels;
     }
 
-    private DifferentialGeneViewModel build(DifferentialProfile<? extends DifferentialExpression> profile, Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
+    private DifferentialProfileRowViewModel build(DifferentialProfile<? extends DifferentialExpression> profile, Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {
         String geneId = profile.getId();
         String geneName = profile.getName();
         String designElement = (profile instanceof MicroarrayProfile) ? ((MicroarrayProfile)profile).getDesignElementName() : null;
         DifferentialExpressionViewModel[] expressions = buildExpressions(profile, orderedContrasts, minUpLevel, maxUpLevel, minDownLevel, maxDownLevel);
-        return new DifferentialGeneViewModel(geneId, geneName, designElement, expressions);
+        return new DifferentialProfileRowViewModel(geneId, geneName, designElement, expressions);
     }
 
     private DifferentialExpressionViewModel[] buildExpressions(DifferentialProfile<? extends DifferentialExpression> profile, Set<Contrast> orderedContrasts, double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel) {

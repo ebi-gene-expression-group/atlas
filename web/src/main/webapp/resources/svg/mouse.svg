@@ -690,6 +690,8 @@
    inkscape:connector-curvature="0" />
 	</g>
 </switch>
+
+<g id="group_all">
 <g
    inkscape:groupmode="layer"
    id="LAYER_EFO"
@@ -3469,4 +3471,7 @@
    style="fill:#cfd6d3;fill-opacity:1"
    d="m 130.62467,153.70866 c -0.24599,-0.24566 -0.66555,-0.62802 -0.98134,-0.89439 -0.15001,-0.12651 -0.26845,-0.23561 -0.2632,-0.24241 0.0127,-0.0163 0.34274,0.25891 0.89676,0.74801 0.63041,0.55657 0.60446,0.53112 0.55785,0.54687 -0.0276,0.01 -0.0881,-0.0364 -0.21007,-0.15808 z"
    id="path5211"
-   inkscape:connector-curvature="0" /></svg>
+   inkscape:connector-curvature="0" />
+</g>   
+
+   </svg>
