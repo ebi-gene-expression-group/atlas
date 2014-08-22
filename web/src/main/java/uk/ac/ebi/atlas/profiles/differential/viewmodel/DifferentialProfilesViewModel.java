@@ -7,11 +7,11 @@ public class DifferentialProfilesViewModel {
     private final double minUpLevel;
     private final double maxUpLevel;
     private final int searchResultTotal;
-    private final DifferentialProfileRowViewModel[] rows;
+    private final DifferentialProfileRowViewModel2[] rows;
     private final double minDownLevel;
     private final double maxDownLevel;
 
-    public DifferentialProfilesViewModel(double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel, int searchResultTotal, DifferentialProfileRowViewModel[] rows) {
+    public DifferentialProfilesViewModel(double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel, int searchResultTotal, DifferentialProfileRowViewModel2[] rows) {
         this.minUpLevel = MathUtils.round(minUpLevel, 2);
         this.maxUpLevel = MathUtils.round(maxUpLevel, 2);
         this.minDownLevel = MathUtils.round(minDownLevel, 2);
@@ -40,7 +40,7 @@ public class DifferentialProfilesViewModel {
         return searchResultTotal;
     }
 
-    public DifferentialProfileRowViewModel[] getRows() {
+    public DifferentialProfileRowViewModel2[] getRows() {
         return rows;
     }
 }

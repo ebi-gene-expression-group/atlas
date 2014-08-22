@@ -1,13 +1,13 @@
 package uk.ac.ebi.atlas.profiles.differential.viewmodel;
 
-public class DifferentialProfileRowViewModel {
+public class DifferentialProfileRowViewModel2 {
 
     private final String id;
     private final String name;
     private final String designElement;
     private final DifferentialExpressionViewModel[] expressions;
 
-    public DifferentialProfileRowViewModel(String id, String name, String designElement, DifferentialExpressionViewModel[] expressions) {
+    public DifferentialProfileRowViewModel2(String id, String name, String designElement, DifferentialExpressionViewModel[] expressions) {
         this.id = id;
         this.name = name;
         this.designElement = designElement;

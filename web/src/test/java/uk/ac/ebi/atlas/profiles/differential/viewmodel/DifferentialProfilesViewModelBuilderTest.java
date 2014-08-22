@@ -54,7 +54,7 @@ public class DifferentialProfilesViewModelBuilderTest {
 
     @Test
     public void buildProfilesViewModel() {
-        DifferentialProfileRowViewModel[] genes = subject.buildGenes(diffProfiles, orderedContrasts);
+        DifferentialProfileRowViewModel2[] genes = subject.buildGenes(diffProfiles, orderedContrasts);
 
         DifferentialProfilesViewModel profiles = new DifferentialProfilesViewModel(diffProfiles.getMinUpRegulatedExpressionLevel(), diffProfiles.getMaxUpRegulatedExpressionLevel(), diffProfiles.getMinDownRegulatedExpressionLevel(), diffProfiles.getMaxDownRegulatedExpressionLevel(), 50, genes);
 
