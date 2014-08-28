@@ -60,23 +60,24 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             },
 
             componentDidMount: function() {
-                var $heatmapTable = $(this.refs.heatmapTableRow.getDOMNode()), $countAndLegend = $(this.refs.countAndLegend.getDOMNode()),
-                    stickyTopOffset = $countAndLegend.height();
 
-                if ($.fn.stickyTableHeaders) {
-                    $(this.refs.heatmapTable.getDOMNode()).stickyTableHeaders({fixedOffset: stickyTopOffset});
+                if (type != TypeEnum.MULTIEXPERIMENT) {
+                    makeTableHeaderSticky.call(this);
                 }
 
-                if ($.fn.sticky) {
-                    if ($heatmapTable.width() > $countAndLegend.width()) {
-                        //countAndLegend must be at least width of table so that we don't see the table cells scroll underneath
-                        var WIDTH_PADDING_OFFSET = 19;
-                        $countAndLegend.css('width', $heatmapTable.width() + WIDTH_PADDING_OFFSET);
+                function makeTableHeaderSticky() {
+                    var $heatmapTable = $(this.refs.heatmapTableRow.getDOMNode()), $countAndLegend = $(this.refs.countAndLegend.getDOMNode()),
+                        stickyTopOffset = $countAndLegend.height();
+                    if ($.fn.stickyTableHeaders) {
+                        $(this.refs.heatmapTable.getDOMNode()).stickyTableHeaders({fixedOffset: stickyTopOffset});
                     }
-
-                    $countAndLegend.sticky();
-
-                    if(type != TypeEnum.MULTIEXPERIMENT) {
+                    if ($.fn.sticky) {
+                        if ($heatmapTable.width() > $countAndLegend.width()) {
+                            //countAndLegend must be at least width of table so that we don't see the table cells scroll underneath
+                            var WIDTH_PADDING_OFFSET = 19;
+                            $countAndLegend.css('width', $heatmapTable.width() + WIDTH_PADDING_OFFSET);
+                        }
+                        $countAndLegend.sticky();
                         $(this.refs.downloadProfilesButton.getDOMNode()).sticky({topSpacing: stickyTopOffset});
                     }
                 }
