@@ -87,6 +87,7 @@
                 atlasHost: '${atlasHost}',
                 contextRoot: '${pageContext.request.contextPath}',
                 experimentAccession: '${experimentAccession}',
+                id: '${geneId}',
                 accessKey: '${param.accessKey}',
                 species: '${species}',
                 ensemblDB: '${ensemblDB}',

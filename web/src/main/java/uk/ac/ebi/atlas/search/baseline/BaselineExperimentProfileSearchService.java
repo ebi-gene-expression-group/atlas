@@ -105,6 +105,8 @@ public class BaselineExperimentProfileSearchService {
 
         ImmutableSortedSet.Builder<Factor> factors = ImmutableSortedSet.naturalOrder();
 
+        int count = 0;
+
         for (String experimentAccession : expressionsByExperiment.keySet()) {
 
             BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
@@ -119,9 +121,13 @@ public class BaselineExperimentProfileSearchService {
                     profile.add("ORGANISM_PART", expression);
                 }
 
+                count++;
+
                 profiles.add(profile);
             }
         }
+
+        profiles.setTotalResultCount(count);
 
         return new BaselineTissueExperimentSearchResult(profiles, factors.build());
     }

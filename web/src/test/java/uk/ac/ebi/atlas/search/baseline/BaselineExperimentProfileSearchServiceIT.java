@@ -58,6 +58,8 @@ public class BaselineExperimentProfileSearchServiceIT {
 
         assertThat(baselineProfilesList, hasSize(2));
 
+        assertThat(baselineProfilesList.getTotalResultCount(), is(2));
+
         BaselineProfile baselineProfile = baselineProfilesList.get(0);
         assertThat(baselineProfile.getId(), is("E-GEOD-30352"));
         assertThat(baselineProfile.getName(), is("Vertebrate tissues"));

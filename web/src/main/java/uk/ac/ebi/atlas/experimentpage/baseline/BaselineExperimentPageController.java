@@ -144,6 +144,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         String geneQuery = preferences.getGeneQuery();
         String species = requestContext.getFilteredBySpecies();
         BaselineTissueExperimentSearchResult searchResult;
+        model.addAttribute("geneId", geneQuery);
 
         try {
             searchResult = baselineExperimentProfileSearchService.query(geneQuery, species, true);
