@@ -65,6 +65,7 @@ public class GenePageController extends BioEntityPageController {
             model.addAttribute("originalSearchTerm", identifier);
             identifier = ensemblIDs.iterator().next();
         } else if (ensemblIDs.size() > 0) {
+            //TODO: remove this - if not required by new multi-experiment widget, may also be able to remove from JSP
             // if identifer is mirbase ID with more than one ensgene result,
             // then add all the ensembl IDs for the widget to display all ensembl gene IDs in the baseline results heatmap
             model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
