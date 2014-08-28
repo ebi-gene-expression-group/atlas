@@ -76,7 +76,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     $countAndLegend.sticky();
 
-                    $(this.refs.downloadProfilesButton.getDOMNode()).sticky({topSpacing: stickyTopOffset});
+                    if(type != TypeEnum.MULTIEXPERIMENT) {
+                        $(this.refs.downloadProfilesButton.getDOMNode()).sticky({topSpacing: stickyTopOffset});
+                    }
                 }
             },
 
@@ -687,7 +689,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
         });
 
-        var GeneProfileRow = (function (contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks, enableEnsemblLauncher) {
+        var GeneProfileRow = (function (contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks, enableEnsemblLauncher, id) {
 
             return React.createClass({
 
@@ -708,7 +710,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 geneNameLinked: function () {
-                    var experimentURL = '/experiments/' + this.props.id;
+                    var experimentURL = '/experiments/' + this.props.id + '?geneQuery=' + id;
                     var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + isExactMatch : '/genes/' + this.props.id;
 
                     url = (type == TypeEnum.MULTIEXPERIMENT ? experimentURL : geneURL);
@@ -780,7 +782,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     }
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher);
+        })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.id);
 
 
         var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, selectedFilterFactorsJson, queryFactorType) {

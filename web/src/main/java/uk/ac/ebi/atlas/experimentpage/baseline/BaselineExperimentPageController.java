@@ -139,6 +139,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         model.addAttribute("isWidget", true);
         model.addAttribute("disableGeneLinks", disableGeneLinks);
+        model.addAttribute("isMultiExperiment", true);
 
         String geneQuery = preferences.getGeneQuery();
         String species = requestContext.getFilteredBySpecies();

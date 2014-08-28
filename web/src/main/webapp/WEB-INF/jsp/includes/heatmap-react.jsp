@@ -124,8 +124,9 @@
 
         $(document).ready(function () {
             // call this inside ready() so all scripts load first in IE8
+            debugger;
+            var build = ${isMultiExperiment ? 'heatmapModule.buildMultiExperiment': (isDifferential ? 'heatmapModule.buildDifferential' : 'heatmapModule.buildBaseline')};
 
-            var build = ${isDifferential ? 'heatmapModule.buildDifferential': 'heatmapModule.buildBaseline'};
             var heatmap = build(heatmapConfig, $('#displayLevels'));
 
             React.renderComponent(heatmap.Heatmap({columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}),
