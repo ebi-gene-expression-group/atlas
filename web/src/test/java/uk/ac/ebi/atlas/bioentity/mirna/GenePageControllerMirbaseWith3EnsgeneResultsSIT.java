@@ -71,8 +71,8 @@ public class GenePageControllerMirbaseWith3EnsgeneResultsSIT extends SinglePageS
 
         assertThat(subject.isBaselinePaneExpanded(), is(true));
 
-        assertThat(subject.getGeneNames().size(), is(3));
-        assertThat(subject.getGeneNames(), contains("MFSD11","SRSF2","MIR636"));
+        assertThat(subject.getGeneNames().size(), is(2));
+        assertThat(subject.getGeneNames(), contains("Twenty seven tissues","Illumina Body Map"));
     }
 
     @Test

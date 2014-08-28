@@ -66,8 +66,8 @@ public class GenePageControllerBaselineResultsWidgetSIT extends SinglePageSeleni
 
         subject.clickDisplayLevelsButton();
 
-        assertThat(subject.getGeneNames(), contains("DAPL1"));
-        assertThat(subject.getGeneNames().size(), is(1));
+        assertThat(subject.getGeneNames().size(), is(3));
+        assertThat(subject.getGeneNames(), contains("Vertebrate tissues","Twenty seven tissues","Illumina Body Map"));
     }
 
     @Test

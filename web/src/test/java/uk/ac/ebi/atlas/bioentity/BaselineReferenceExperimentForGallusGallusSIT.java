@@ -59,7 +59,7 @@ public class BaselineReferenceExperimentForGallusGallusSIT extends SinglePageSel
         assertThat(subject.isBaselinePaneExpanded(), is(true));
 
         assertThat(subject.getGeneNames().size(), is(1));
-        assertThat(subject.getGeneNames(), contains("TNNI2"));
+        assertThat(subject.getGeneNames(), contains("Vertebrate tissues"));
 
     }
 
