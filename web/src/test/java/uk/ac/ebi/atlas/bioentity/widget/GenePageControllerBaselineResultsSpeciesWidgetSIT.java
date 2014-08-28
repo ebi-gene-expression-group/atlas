@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.bioentity.widget;
 
+import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
@@ -7,7 +8,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 
 
@@ -32,10 +33,13 @@ public class GenePageControllerBaselineResultsSpeciesWidgetSIT extends SinglePag
     public void baselineWidgetGenes() {
         assertThat(subject.isBaselinePaneExpanded(), is(true));
 
-        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
+        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-react");
 
-        assertThat(subject.getGeneNames(), contains("ASPM"));
-        assertThat(subject.getGeneNames().size(), is(1));
+        assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
+        assertThat(subject.getGeneColumnHeader(), is("Experiment"));
+
+        assertThat(subject.getGeneNames(), IsIterableContainingInOrder.contains("Twenty seven tissues"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=ASPM"));
     }
 
 }

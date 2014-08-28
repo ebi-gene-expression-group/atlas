@@ -95,6 +95,7 @@ public class BioEntityPage extends HeatmapTablePage {
     @FindBy(id = "showGeneSetProfiles")
     private WebElement showGeneSetProfiles;
 
+    //TODO: remove when old non-react heatmap is removed
     @FindBy(id = "heatmap-div")
     private WebElement heatmap;
 

@@ -28,8 +28,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class BioentitiesSearchControllerGeneQuery2GenesWidgetSIT extends SinglePageSeleniumFixture {
 
@@ -50,13 +49,10 @@ public class BioentitiesSearchControllerGeneQuery2GenesWidgetSIT extends SingleP
     @Test
     public void displaysWidget() {
         // wait for ajax widget to load
-        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
+        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-react");
 
-        assertThat(subject.isIndividualGenesVisible(), is(true));
-
-        assertThat(subject.getGeneNames(), contains("Gm17271", "AC163282.1"));
-        assertThat(subject.hasGeneLink(0), is(true));
-        assertThat(subject.hasGeneLink(1), is(true));
+        assertThat(subject.getGeneNames(), contains("Six tissues"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-599?geneQuery=ENSMUSG00000097801%20ENSMUSG00000090429"));
     }
 
 }

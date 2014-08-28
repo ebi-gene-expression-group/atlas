@@ -22,16 +22,14 @@
 
 package uk.ac.ebi.atlas.bioentity.go;
 
+import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 public class GeneSetPageControllerGoTermWidgetSIT extends SinglePageSeleniumFixture {
 
@@ -63,11 +61,13 @@ public class GeneSetPageControllerGoTermWidgetSIT extends SinglePageSeleniumFixt
         subject.clickBaselinePane();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
 
-        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
+        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-react");
 
-        List<String> geneNames = subject.getGeneNames();
+        assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
+        assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
-        assertThat(geneNames, contains("FKBP1A"));
+        assertThat(subject.getGeneNames(), IsIterableContainingInOrder.contains("Twenty seven tissues"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=GO:0005527"));
     }
 
     @Test

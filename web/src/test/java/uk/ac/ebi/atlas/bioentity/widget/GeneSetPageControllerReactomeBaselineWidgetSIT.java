@@ -27,11 +27,8 @@ import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 public class GeneSetPageControllerReactomeBaselineWidgetSIT extends SinglePageSeleniumFixture {
@@ -42,55 +39,36 @@ public class GeneSetPageControllerReactomeBaselineWidgetSIT extends SinglePageSe
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntityPage(driver, IDENTIFIER, "genesets", "openPanelIndex=0");
+        subject = new BioEntityPage(driver, IDENTIFIER, "genesets");
         subject.get();
-    }
-
-    @Test
-    public void checkGeneCardTitle() {
-        assertThat(subject.getBioEntityCardTitle(), is("REACT_1698 Homo sapiens Metabolism of nucleotides"));
     }
 
     //This will fail with PhantomJS
     @Test
     public void checkCardExpansion() {
-        assertThat(subject.isInfoCardExpanded(), is(true));
-        subject.clickInfoCard(false);
         assertThat(subject.isInfoCardExpanded(), is(false));
+        subject.clickInfoCard(true);
+        assertThat(subject.isInfoCardExpanded(), is(true));
     }
 
     @Test
-    public void checkTableSize() {
+    public void checkInfoCard() {
+        assertThat(subject.getBioEntityCardTitle(), is("REACT_1698 Homo sapiens Metabolism of nucleotides"));
         assertThat(subject.getPropertiesTableSize(), is(1));
-    }
-
-    @Test
-    public void checkTableRows() {
         assertThat(subject.getPropertiesTableRow(0), hasItems("Reactome", "Metabolism of nucleotides"));
-    }
-
-    @Test
-    public void checkLinksInTable() {
         assertThat(subject.getLinksInTableRow(0).get(0), is("http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_1698"));
     }
 
     @Test
     public void checkWidget() {
-        subject.clickBaselinePane();
-
         // wait for ajax widget to load
-        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
+        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-react");
 
-        assertThat(subject.isIndividualGenesVisible(), is(true));
-        assertThat(subject.isGeneSetProfilesVisible(), is(false));
-        List<String> geneNames = subject.getGeneNames();
+        assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
+        assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
-        assertThat(geneNames, contains("NT5C1B", "GART", "UPB1", "UPP2", "AGXT2", "NT5C1A", "NME2", "DPYS", "XDH", "AMPD1", "GDA", "TYMS", "ADA", "GMPR2", "CDA", "AK5", "NT5E", "NT5M", "RRM2", "TK1", "GPX1P1", "NUDT18", "TXN", "GUK1", "CAT", "CMPK1", "IMPDH2", "GLRX", "AK2", "DUT", "APRT", "AK1", "DCTD", "PNP", "ADK", "TXNRD1", "ATIC", "DGUOK", "PAICS", "NT5C2", "GSR", "TYMP", "NUDT9", "HPRT1", "AMPD2", "ADSS", "NT5C", "NT5C3A", "ITPA", "GMPS"));
-
-        subject.clickShowGeneSetProfiles();
-
-        assertThat(subject.isIndividualGenesVisible(), is(false));
-        assertThat(subject.isGeneSetProfilesVisible(), is(true));
+        assertThat(subject.getGeneNames(), contains("Twenty seven tissues"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=REACT_1698"));
 
         //System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
         //assertThat(geneNames, contains("REACT_1698"));

@@ -29,13 +29,11 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
-import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class GenePageControllerBaselineResultsWidgetSIT extends SinglePageSeleniumFixture {
 
@@ -68,13 +66,8 @@ public class GenePageControllerBaselineResultsWidgetSIT extends SinglePageSeleni
 
         assertThat(subject.getGeneNames().size(), is(3));
         assertThat(subject.getGeneNames(), contains("Vertebrate tissues","Twenty seven tissues","Illumina Body Map"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSG00000163331"));
     }
 
-    @Test
-    public void baselineWidgetHasNoGeneLinks() {
-        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
-        assertThat(subject.getGeneNames().size(), is(1));
-        assertThat(subject.hasGeneLink(0), is(false));
-    }
 
 }

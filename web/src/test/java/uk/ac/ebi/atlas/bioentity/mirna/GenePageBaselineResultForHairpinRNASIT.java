@@ -63,12 +63,16 @@ public class GenePageBaselineResultForHairpinRNASIT extends SinglePageSeleniumFi
 
     @Test
     public void baselineProfilePaneIsOpenAndContainsGenes() {
-        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-div");
+        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-react");
 
         assertThat(subject.isBaselinePaneExpanded(), is(true));
         assertThat(subject.isInfoCardExpanded(), is(false));
 
-        assertThat(subject.getGeneNames(), contains("MFSD11", "SRSF2", "MIR636"));
+        assertThat(subject.getGeneCount(), is("Showing 2 of 2 experiments found:"));
+        assertThat(subject.getGeneColumnHeader(), is("Experiment"));
+
+        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Illumina Body Map"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=hsa-miR-636%20ENSG00000161547%20ENSG00000207556%20ENSG00000092931"));
     }
 
 }
