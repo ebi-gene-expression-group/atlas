@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.bioentity.widget;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
-import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -62,8 +61,7 @@ public class GeneSetPageControllerReactomeBaselineWidgetSIT extends SinglePageSe
     @Test
     public void checkWidget() {
         // wait for ajax widget to load
-        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-react");
-
+        subject.waitForHeatmapToBeVisible();
         assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 

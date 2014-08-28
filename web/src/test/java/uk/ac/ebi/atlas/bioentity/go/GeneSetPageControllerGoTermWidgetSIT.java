@@ -26,7 +26,6 @@ import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
-import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -61,7 +60,7 @@ public class GeneSetPageControllerGoTermWidgetSIT extends SinglePageSeleniumFixt
         subject.clickBaselinePane();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
 
-        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-react");
+        subject.waitForHeatmapToBeVisible();
 
         assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));

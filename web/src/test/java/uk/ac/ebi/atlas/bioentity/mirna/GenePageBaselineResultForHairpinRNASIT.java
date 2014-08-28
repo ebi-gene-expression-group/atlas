@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.bioentity.mirna;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
-import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -63,8 +62,7 @@ public class GenePageBaselineResultForHairpinRNASIT extends SinglePageSeleniumFi
 
     @Test
     public void baselineProfilePaneIsOpenAndContainsGenes() {
-        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-react");
-
+        subject.waitForHeatmapToBeVisible();
         assertThat(subject.isBaselinePaneExpanded(), is(true));
         assertThat(subject.isInfoCardExpanded(), is(false));
 

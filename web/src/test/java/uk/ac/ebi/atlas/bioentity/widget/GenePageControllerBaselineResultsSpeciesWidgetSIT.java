@@ -5,7 +5,6 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
-import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
@@ -33,8 +32,7 @@ public class GenePageControllerBaselineResultsSpeciesWidgetSIT extends SinglePag
     public void baselineWidgetGenes() {
         assertThat(subject.isBaselinePaneExpanded(), is(true));
 
-        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-react");
-
+        subject.waitForHeatmapToBeVisible();
         assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 

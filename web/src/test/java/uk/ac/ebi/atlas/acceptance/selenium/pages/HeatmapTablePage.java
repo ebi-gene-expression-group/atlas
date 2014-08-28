@@ -268,6 +268,10 @@ public class HeatmapTablePage extends TablePage {
         displayLevelsButton.click();
     }
 
+    public void waitForHeatmapToBeVisible() {
+        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-react");
+    }
+
     public String getDisplayLevelsButtonValue() {
         return getDisplayLevelsButton().getText();
     }

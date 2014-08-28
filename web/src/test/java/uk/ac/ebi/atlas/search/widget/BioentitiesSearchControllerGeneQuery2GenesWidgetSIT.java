@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.search.widget;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
-import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -49,8 +48,7 @@ public class BioentitiesSearchControllerGeneQuery2GenesWidgetSIT extends SingleP
     @Test
     public void displaysWidget() {
         // wait for ajax widget to load
-        SeleniumUtil.waitForElementByIdUntilVisible(driver, "heatmap-react");
-
+        subject.waitForHeatmapToBeVisible();
         assertThat(subject.getGeneNames(), contains("Six tissues"));
         assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-599?geneQuery=ENSMUSG00000097801%20ENSMUSG00000090429"));
     }

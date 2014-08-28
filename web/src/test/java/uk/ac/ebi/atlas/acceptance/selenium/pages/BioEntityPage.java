@@ -95,10 +95,6 @@ public class BioEntityPage extends HeatmapTablePage {
     @FindBy(id = "showGeneSetProfiles")
     private WebElement showGeneSetProfiles;
 
-    //TODO: remove when old non-react heatmap is removed
-    @FindBy(id = "heatmap-div")
-    private WebElement heatmap;
-
     @FindBy(id = "heatmap-profilesAsGeneSets")
     private WebElement heatmapProfilesAsGeneSets;
 
@@ -125,22 +121,6 @@ public class BioEntityPage extends HeatmapTablePage {
         this.type = type;
     }
 
-    public void clickShowIndividualGeneProfiles() {
-        showIndividualGenes.click();
-    }
-
-    public void clickShowGeneSetProfiles() {
-        showGeneSetProfiles.click();
-    }
-
-    public boolean isIndividualGenesVisible() {
-        return heatmap.isDisplayed();
-    }
-
-    public boolean isGeneSetProfilesVisible() {
-        return heatmapProfilesAsGeneSets.isDisplayed();
-    }
-
     public void clickDiffResultsDisplayLevelsButton() {
         new FluentWait<>(driver)
                 .withTimeout(15, TimeUnit.SECONDS)
@@ -150,17 +130,9 @@ public class BioEntityPage extends HeatmapTablePage {
         diffResultsDisplayLevelsButton.click();
     }
 
-    public WebElement getDiffHeatmapTable() {
-        return diffHeatmapTable;
-    }
-
     @Override
     protected String getPageURI() {
         return PAGE_LOCATION + type + "/" + bioEntityIdentifier;
-    }
-
-    protected String getBioEntityIdentifier() {
-        return bioEntityIdentifier;
     }
 
     public String getBioEntityCardTitle() {
