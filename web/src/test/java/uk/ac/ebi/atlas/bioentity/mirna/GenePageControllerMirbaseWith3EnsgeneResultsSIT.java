@@ -37,7 +37,7 @@ import static org.hamcrest.Matchers.*;
 
 public class GenePageControllerMirbaseWith3EnsgeneResultsSIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "hsa-mir-636";
+    private static final String GENE_IDENTIFIER = "hsa-mir-636";        // for wwwdev an equivalent example is http://wwwdev/gxa/genes/hsa-mir-1302-2
 
     private BioEntityPage subject;
 
