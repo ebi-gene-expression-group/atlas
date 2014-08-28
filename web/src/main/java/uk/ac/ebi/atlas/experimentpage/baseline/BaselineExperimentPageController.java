@@ -161,6 +161,9 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         BaselineProfilesList experimentProfiles = searchResult.getExperimentProfiles();
         addJsonForHeatMap(experimentProfiles, null, filteredAssayGroupFactors, orderedFactors, model);
 
+        //TODO: refactor this whole method into HeatmapWidgetController, and then remove this line as it won't be needed
+        model.addAttribute("geneProfiles", experimentProfiles);
+
         return "heatmap-widget-react";
     }
 

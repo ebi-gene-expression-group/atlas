@@ -27,13 +27,22 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class HeatmapTableWidgetPage extends HeatmapTableWithTranscriptBreakdownPage {
-    private static final String PAGE_LOCATION = "/gxa/widgets/heatmap/protein";
-
     @FindBy(id = "download-profiles-link")
     private WebElement downloadProfiles;
 
+    private final String pageLocation;
+
     public HeatmapTableWidgetPage(WebDriver driver, String httpParameters) {
+        this(driver, "/gxa/widgets/heatmap/protein", httpParameters);
+    }
+
+    private HeatmapTableWidgetPage(WebDriver driver, String pageLocation, String httpParameters) {
         super(driver, null, httpParameters);
+        this.pageLocation = pageLocation;
+    }
+
+    public static HeatmapTableWidgetPage create(WebDriver driver, String httpParameters) {
+        return new HeatmapTableWidgetPage(driver, "/gxa/widgets/heatmap/bioentity", httpParameters);
     }
 
     public String downloadProfilesLink() {
@@ -43,6 +52,6 @@ public class HeatmapTableWidgetPage extends HeatmapTableWithTranscriptBreakdownP
 
     @Override
     protected String getPageURI() {
-        return PAGE_LOCATION;
+        return pageLocation;
     }
 }

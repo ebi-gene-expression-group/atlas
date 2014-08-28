@@ -112,6 +112,9 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "anatomogram-ensembl-launcher")
     private WebElement anatomogramEnsemblLauncher;
 
+    @FindBy(id = "heatmap-message")
+    private WebElement heatmapMessage;
+
     private String experimentAccession;
 
     public HeatmapTablePage(WebDriver driver, String experimentAccession) {
@@ -144,6 +147,10 @@ public class HeatmapTablePage extends TablePage {
         List<String> queryFactorValues = getTableHeaders(getHeatmapTable());
         //and we need to remove the last header value, because is related to the organism part column
         return queryFactorValues.subList(getGeneExpressionStartingRowIndex(), queryFactorValues.size());
+    }
+
+    public String getHeatmapMessage() {
+        return heatmapMessage.getText();
     }
 
     public List<String> getHeatmapHeaders() {
