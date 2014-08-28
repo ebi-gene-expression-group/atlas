@@ -95,7 +95,7 @@
                 queryFactorType: '${preferences.queryFactorType}',
                 isExactMatch: ${preferences.exactMatch},
                 enableGeneLinks: true,
-                enableEnsemblLauncher: ${empty enableEnsemblLauncher ? true : enableEnsemblLauncher},
+                enableEnsemblLauncher: ${isMultiExperiment ? false : (empty enableEnsemblLauncher ? true : enableEnsemblLauncher)},
                 showMaPlotButton: true,
                 gseaPlots: ${empty gseaPlots ? 'undefined' : gseaPlots},
                 selectedFilterFactorsJson: ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"},
@@ -125,7 +125,6 @@
 
         $(document).ready(function () {
             // call this inside ready() so all scripts load first in IE8
-            debugger;
             var build = ${isMultiExperiment ? 'heatmapModule.buildMultiExperiment': (isDifferential ? 'heatmapModule.buildDifferential' : 'heatmapModule.buildBaseline')};
 
             var heatmap = build(heatmapConfig, $('#displayLevels'));
