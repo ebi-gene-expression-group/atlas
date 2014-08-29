@@ -52,6 +52,7 @@ public class GeneSetPageControllerReactomeBaselineWidgetSIT extends SinglePageSe
 
     @Test
     public void checkInfoCard() {
+        subject.clickInfoCard(true);
         assertThat(subject.getBioEntityCardTitle(), is("REACT_1698 Homo sapiens Metabolism of nucleotides"));
         assertThat(subject.getPropertiesTableSize(), is(1));
         assertThat(subject.getPropertiesTableRow(0), hasItems("Reactome", "Metabolism of nucleotides"));
