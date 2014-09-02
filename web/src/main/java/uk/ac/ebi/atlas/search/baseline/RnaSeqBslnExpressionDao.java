@@ -79,7 +79,7 @@ public class RnaSeqBslnExpressionDao {
                             String experimentAccession = rs.getString(RnaSeqBslnQueryBuilder.EXPERIMENT);
                             String assayGroupId = rs.getString(RnaSeqBslnQueryBuilder.ASSAY_GROUP_ID);
                             double expression = rs.getDouble(RnaSeqBslnQueryBuilder.EXPRESSION);
-                            return new RnaSeqBslnExpression(geneId, experimentAccession, assayGroupId, expression);
+                            return RnaSeqBslnExpression.create(geneId, experimentAccession, assayGroupId, expression);
                         }
                     },
                     baselineExpressionQuery.getParameters().toArray());

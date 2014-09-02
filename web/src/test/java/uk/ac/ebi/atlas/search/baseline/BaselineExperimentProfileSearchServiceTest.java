@@ -32,9 +32,9 @@ public class BaselineExperimentProfileSearchServiceTest {
     public static final String E_MTAB_599 = "E-MTAB-599";
     BaselineExperimentProfileSearchService subject;
 
-    RnaSeqBslnExpression g3_thymus = new RnaSeqBslnExpression("ENSMUSG00000093014", E_MTAB_599, "g3", THYMUS_LEVEL);
-    RnaSeqBslnExpression g5_lung = new RnaSeqBslnExpression("ENSMUSG00000093014", E_MTAB_599, "g5", LUNG_LEVEL);
-    RnaSeqBslnExpression g6_spleen = new RnaSeqBslnExpression("ENSMUSG00000093014", E_MTAB_599, "g6", SPLEEN_LEVEL);
+    RnaSeqBslnExpression g3_thymus = RnaSeqBslnExpression.create("ENSMUSG00000093014", E_MTAB_599, "g3", THYMUS_LEVEL);
+    RnaSeqBslnExpression g5_lung = RnaSeqBslnExpression.create("ENSMUSG00000093014", E_MTAB_599, "g5", LUNG_LEVEL);
+    RnaSeqBslnExpression g6_spleen = RnaSeqBslnExpression.create("ENSMUSG00000093014", E_MTAB_599, "g6", SPLEEN_LEVEL);
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
     private static final Factor LUNG = new Factor(ORGANISM_PART, "lung");
@@ -58,16 +58,20 @@ public class BaselineExperimentProfileSearchServiceTest {
     @Mock
     private ExperimentalFactors experimentalFactors;
 
+    private static final FactorSet EMPTY_FACTOR_SET = new FactorSet();
+
     @Before
     public void before() {
         when(baselineExperimentsCache.getExperiment(Mockito.anyString())).thenReturn(baselineExperiment);
         when(baselineExperiment.getExperimentalFactors()).thenReturn(experimentalFactors);
         when(baselineExperiment.isTissueExperiment()).thenReturn(true);
+        when(baselineExperiment.getAccession()).thenReturn(E_MTAB_599);
         when(baselineExperiment.getDisplayName()).thenReturn(EXPERIMENT_DISPLAY_NAME);
         when(experimentalFactors.getFactorGroupByAssayGroupId("g3")).thenReturn(new FactorSet(THYMUS));
         when(experimentalFactors.getFactorGroupByAssayGroupId("g5")).thenReturn(new FactorSet(LUNG));
         when(experimentalFactors.getFactorGroupByAssayGroupId("g6")).thenReturn(new FactorSet(SPLEEN));
-        when(experimentalFactors.getFactorsByType("ORGANISM_PART")).thenReturn(ALL_FACTORS);
+        when(experimentalFactors.getFilteredFactors(Mockito.any(FactorGroup.class))).thenReturn(ALL_FACTORS);
+        when(experimentalFactors.getNonDefaultFactors(Mockito.anyString())).thenReturn(EMPTY_FACTOR_SET);
 
         subject = new BaselineExperimentProfileSearchService(rnaSeqBslnExpressionDao, solrQueryService, baselineExperimentsCache);
     }
@@ -78,8 +82,8 @@ public class BaselineExperimentProfileSearchServiceTest {
 
         BaselineTissueExperimentSearchResult result = subject.buildProfilesForTissueExperiments(expressions);
 
-        BaselineProfilesList profiles = result.experimentProfiles;
-        SortedSet<Factor> factors = result.supersetOfFactorsAcrossAllExperiments;
+        BaselineExperimentProfilesList profiles = result.experimentProfiles;
+        SortedSet<Factor> factors = result.tissueFactorsAcrossAllExperiments;
 
         assertThat(factors, contains(ALL_FACTORS.toArray()));
 

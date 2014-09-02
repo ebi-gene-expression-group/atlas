@@ -31,9 +31,9 @@ public class RnaSeqBslnExpressionDaoIT {
         assertThat(results, hasSize(3));
 
 
-        RnaSeqBslnExpression g3 = new RnaSeqBslnExpression("ENSMUSG00000093014", "E-MTAB-599", "g3", 54922);
-        RnaSeqBslnExpression g5 = new RnaSeqBslnExpression("ENSMUSG00000093014", "E-MTAB-599", "g5", 48948);
-        RnaSeqBslnExpression g6 = new RnaSeqBslnExpression("ENSMUSG00000093014", "E-MTAB-599", "g6", 387123);
+        RnaSeqBslnExpression g3 = RnaSeqBslnExpression.create("ENSMUSG00000093014", "E-MTAB-599", "g3", 54922);
+        RnaSeqBslnExpression g5 = RnaSeqBslnExpression.create("ENSMUSG00000093014", "E-MTAB-599", "g5", 48948);
+        RnaSeqBslnExpression g6 = RnaSeqBslnExpression.create("ENSMUSG00000093014", "E-MTAB-599", "g6", 387123);
 
         assertThat(results, containsInAnyOrder(g3, g5, g6));
     }

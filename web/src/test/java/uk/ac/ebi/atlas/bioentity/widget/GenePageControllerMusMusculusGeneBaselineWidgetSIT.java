@@ -23,21 +23,17 @@
 package uk.ac.ebi.atlas.bioentity.widget;
 
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GenePageControllerBaselineResultsWidgetSIT extends SinglePageSeleniumFixture {
+public class GenePageControllerMusMusculusGeneBaselineWidgetSIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "ENSG00000163331";
+    private static final String GENE_IDENTIFIER = "ENSMUSG00000040505";
 
     private BioEntityPage subject;
 
@@ -55,18 +51,21 @@ public class GenePageControllerBaselineResultsWidgetSIT extends SinglePageSeleni
 
     @Test
     public void baselineWidgetGenes() {
-        FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
-        wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Expression Level cut-off:"));
-
-        assertThat(subject.isBaselinePaneExpanded(), is(true));
-
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
 
-        subject.clickDisplayLevelsButton();
+        subject.waitForHeatmapToBeVisible();
 
-        assertThat(subject.getGeneNames().size(), is(3));
-        assertThat(subject.getGeneNames(), contains("Vertebrate tissues","Twenty seven tissues","Illumina Body Map"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSG00000163331"));
+        assertThat(subject.getGeneCount(), is("Showing 2 of 2 experiments found:"));
+        assertThat(subject.getGeneColumnHeader(), is("Experiment"));
+
+        List<String> factorValueHeaders = subject.getFactorValueHeaders();
+        //System.out.println("\"" + Joiner.on("\", \"").join(factorValueHeaders) + "\"");
+        assertThat(factorValueHeaders, contains("brain", "cerebellum", "heart", "hippocampus", "kidney", "liver", "lung", "spleen", "testis", "thymus"));
+
+        assertThat(subject.getGeneNames().size(), is(2));
+        assertThat(subject.getGeneNames(), contains("Vertebrate tissues","Six tissues"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSMUSG00000040505&serializedFilterFactors=ORGANISM%3AMus%20musculus"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-599?geneQuery=ENSMUSG00000040505"));
     }
 
 

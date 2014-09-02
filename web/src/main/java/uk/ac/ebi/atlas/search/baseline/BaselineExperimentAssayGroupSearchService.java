@@ -104,7 +104,7 @@ public class BaselineExperimentAssayGroupSearchService {
 
             BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
-            Multimap<FactorGroup,String> assayGroupIdsByFilterFactors = experiment.getExperimentalFactors().groupAssayGroupIdsByNonDefaultFilterFactor(assayGroupIds);
+            Multimap<FactorGroup,String> assayGroupIdsByFilterFactors = experiment.getExperimentalFactors().groupAssayGroupIdsByNonDefaultFactor(assayGroupIds);
 
             for (Map.Entry<FactorGroup, Collection<String>> assayGroupIdsAndFilterFactor : assayGroupIdsByFilterFactors.asMap().entrySet()) {
                 String species = experiment.getSpecies().size() > 1 ? "Multi-species" : experiment.getFirstSpecies();

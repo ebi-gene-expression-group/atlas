@@ -32,7 +32,10 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
@@ -99,24 +102,24 @@ public class BaselineExperimentProfileSearchService {
 
     BaselineTissueExperimentSearchResult buildProfilesForTissueExperiments(List<RnaSeqBslnExpression> expressions) {
 
-        ImmutableListMultimap<String, RnaSeqBslnExpression> expressionsByExperiment = groupByExperimentAccession(expressions);
+        ImmutableListMultimap<BaselineExperimentSlice, RnaSeqBslnExpression> expressionsByExperimentSlice = groupByExperimentSlice(expressions);
 
-        BaselineProfilesList profiles = new BaselineProfilesList();
+        BaselineExperimentProfilesList profiles = new BaselineExperimentProfilesList();
 
         ImmutableSortedSet.Builder<Factor> factors = ImmutableSortedSet.naturalOrder();
 
         int count = 0;
 
-        for (String experimentAccession : expressionsByExperiment.keySet()) {
+        for (BaselineExperimentSlice experimentSlice : expressionsByExperimentSlice.keySet()) {
 
-            BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
+            if (experimentSlice.isTissueExperiment()) {
+                BaselineExperiment experiment = experimentSlice.experiment();
 
-            if (experiment.isTissueExperiment()) {
-                factors.addAll(experiment.getExperimentalFactors().getFactorsByType("ORGANISM_PART"));
+                factors.addAll(experimentSlice.nonFilterFactors());
 
-                BaselineProfile profile = new BaselineProfile(experimentAccession, experiment.getDisplayName());
+                BaselineExperimentProfile profile = new BaselineExperimentProfile(experimentSlice);
 
-                for (RnaSeqBslnExpression rnaSeqBslnExpression : expressionsByExperiment.get(experimentAccession)) {
+                for (RnaSeqBslnExpression rnaSeqBslnExpression : expressionsByExperimentSlice.get(experimentSlice)) {
                     BaselineExpression expression = createBaselineExpression(experiment, rnaSeqBslnExpression);
                     profile.add("ORGANISM_PART", expression);
                 }
@@ -133,20 +136,26 @@ public class BaselineExperimentProfileSearchService {
     }
 
 
-    private ImmutableListMultimap<String, RnaSeqBslnExpression> groupByExperimentAccession(List<RnaSeqBslnExpression> expressions) {
-        Function<RnaSeqBslnExpression, String> getExperimentAccession = new Function<RnaSeqBslnExpression, String>() {
-            public String apply(RnaSeqBslnExpression input) {
-                return input.getExperimentAccession();
+    private ImmutableListMultimap<BaselineExperimentSlice, RnaSeqBslnExpression> groupByExperimentSlice(List<RnaSeqBslnExpression> expressions) {
+        Function<RnaSeqBslnExpression, BaselineExperimentSlice> createExperimentSlice = new Function<RnaSeqBslnExpression, BaselineExperimentSlice>() {
+            public BaselineExperimentSlice apply(RnaSeqBslnExpression input) {
+                String experimentAccession = input.experimentAccession();
+                String assayGroupId = input.assayGroupId();
+
+                BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
+                FactorGroup filterFactors = experiment.getExperimentalFactors().getNonDefaultFactors(assayGroupId);
+
+                return BaselineExperimentSlice.create(experiment, filterFactors);
             }
         };
 
-        return Multimaps.index(expressions, getExperimentAccession);
+        return Multimaps.index(expressions, createExperimentSlice);
     }
 
     private BaselineExpression createBaselineExpression(BaselineExperiment experiment, RnaSeqBslnExpression rnaSeqBslnExpression) {
-        double level = rnaSeqBslnExpression.getExpressionLevel();
+        double level = rnaSeqBslnExpression.expressionLevel();
 
-        String assayGroupId = rnaSeqBslnExpression.getAssayGroupId();
+        String assayGroupId = rnaSeqBslnExpression.assayGroupId();
         FactorGroup factorGroup = experiment.getExperimentalFactors().getFactorGroupByAssayGroupId(assayGroupId);
 
         return new BaselineExpression(level, factorGroup);
