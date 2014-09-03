@@ -33,7 +33,7 @@
     <div style="float:left">
         <table style="font-size:10px;" id="diff-heatmap-legend">
             <c:if test="${((preferences.regulation eq 'DOWN') or (preferences.regulation eq 'UP_DOWN'))
-                            and geneProfiles.getMinDownRegulatedExpressionLevel() != 'NaN'}">
+                            and geneProfiles.getMinDownRegulatedExpressionLevel() != '0.0'}">
 
                 <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
                                       highValueColour="${colourGradient.getHexByColourName('blue')}"
@@ -42,7 +42,7 @@
 
             </c:if>
             <c:if test="${((preferences.regulation eq 'UP') or (preferences.regulation eq 'UP_DOWN'))
-                            and geneProfiles.getMinUpRegulatedExpressionLevel() != 'NaN'}">
+                            and geneProfiles.getMinUpRegulatedExpressionLevel() != '0.0'}">
 
                 <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('pink')}"
                                       highValueColour="${colourGradient.getHexByColourName('red')}"

@@ -101,6 +101,10 @@ public class BioEntityPage extends HeatmapTablePage {
     @FindBy(id = "diffresults-display-levels")
     private WebElement diffResultsDisplayLevelsButton;
 
+    private final By firstColorGradientBar = By.xpath("//div[contains(@class, 'color-gradient')]");
+
+    private final By secondColorGradientBar = By.xpath("//table[@id='diff-heatmap-legend']//tbody//tr[2]//td[2]//div[@class='color-gradient']");
+
     @FindBy(css = "#global-search-results > li > a")
     private List<WebElement> globalSearchPointers;
     private Iterable<? extends String> diffHeatmapHeaders;
@@ -166,6 +170,22 @@ public class BioEntityPage extends HeatmapTablePage {
 
     public boolean isDifferentialPaneExpanded() {
         return SeleniumUtil.elementExists(driver, By.id(DIFF_PROFILE_BODY_ID)) && getDiffProfileBody().isDisplayed();
+    }
+
+    public boolean isFirstColorGradientBarPresent() {
+        return SeleniumUtil.elementExists(driver, firstColorGradientBar);
+    }
+
+    public boolean isSecondColorGradientBarPresent() {
+        return SeleniumUtil.elementExists(driver, secondColorGradientBar);
+    }
+
+    public String getFirstColorGradientBar() {
+        return driver.findElement(firstColorGradientBar).getCssValue("background-image");
+    }
+
+    public String getSecondColorGradientBar() {
+        return driver.findElement(secondColorGradientBar).getCssValue("background-image");
     }
 
     private WebElement getDiffProfileBody() {
