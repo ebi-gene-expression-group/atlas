@@ -65,6 +65,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     makeTableHeaderSticky.call(this);
                 }
 
+                //TODO: use Stickem instead of Sticky.js - we only need one sticky library
                 function makeTableHeaderSticky() {
                     var $heatmapTable = $(this.refs.heatmapTableRow.getDOMNode()), $countAndLegend = $(this.refs.countAndLegend.getDOMNode()),
                         stickyTopOffset = $countAndLegend.height();

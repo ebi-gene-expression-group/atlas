@@ -39,6 +39,7 @@ public class DifferentialProfilesList<T extends DifferentialProfile> extends Gen
         super(collection);
     }
 
+    //TODO: memoize min and max levels, because they are called multiple times from the JSP and recalculated each time
     public double getMaxUpRegulatedExpressionLevel(){
         double maxUpRegulatedExpressionLevel = -Double.MAX_VALUE;
         for (DifferentialProfile differentialProfile : this) {
