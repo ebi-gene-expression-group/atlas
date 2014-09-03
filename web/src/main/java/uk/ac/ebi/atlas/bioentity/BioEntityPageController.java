@@ -122,6 +122,8 @@ public abstract class BioEntityPageController {
 
         initBioentityPropertyService(identifier);
 
+        model.addAttribute("searchTerm", identifier);
+
         model.addAttribute("entityIdentifier", identifier);
 
         model.addAttribute("exactMatch", true);

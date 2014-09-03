@@ -86,8 +86,6 @@ public class GeneSetPageController extends BioEntityPageController {
 
         model.addAttribute("isGeneSet", true);
 
-        model.addAttribute("entityIdentifierParams", identifier);
-
         // load diff results in same way as BioentitiesSearchController
         String specie = "";
         Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(identifier, specie, true);

@@ -112,7 +112,7 @@ public class BioentitiesSearchController {
 
             model.addAttribute("entityIdentifier", requestParameters.getGeneQuery());
 
-            model.addAttribute("entityIdentifierParams", requestParameters.getDescription());
+            model.addAttribute("searchTerm", requestParameters.getDescription());
 
             String condition = efoExpander.fetchExpandedTermWithEFOChildren(requestParameters.getCondition());
 
