@@ -152,8 +152,6 @@ public class BaselineExperimentProfileSearchServiceIT {
     public void onlyTissueExperimentsReturned() {
         // test gene has expression in cell lines experiment (E-GEOD-26284)
         List<RnaSeqBslnExpression> expressions = rnaSeqBslnExpressionDao.fetchNonSpecificExpression(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT));
-
-        //Matcher cellLinesExperimentExpression = Matchers.<RnaSeqBslnExpression>hasProperty("experimentAccession", is("E-GEOD-26284"));
         assertThat(expressions,  hasItem(hasExperimentAccession("E-GEOD-26284")));
 
         // test that cell lines experiment is not returned
