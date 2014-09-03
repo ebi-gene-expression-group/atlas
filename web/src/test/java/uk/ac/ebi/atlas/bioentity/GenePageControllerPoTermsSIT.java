@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.bioentity.go;
+package uk.ac.ebi.atlas.bioentity;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
