@@ -3,7 +3,10 @@ package uk.ac.ebi.atlas.search.baseline;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,7 +25,6 @@ import java.util.SortedSet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
@@ -151,16 +153,16 @@ public class BaselineExperimentProfileSearchServiceIT {
         // test gene has expression in cell lines experiment (E-GEOD-26284)
         List<RnaSeqBslnExpression> expressions = rnaSeqBslnExpressionDao.fetchNonSpecificExpression(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT));
 
-        Matcher cellLinesExperimentExpression = hasProperty("experimentAccession", is("E-GEOD-26284"));
-        assertThat(expressions,  hasItem(cellLinesExperimentExpression));
+        //Matcher cellLinesExperimentExpression = Matchers.<RnaSeqBslnExpression>hasProperty("experimentAccession", is("E-GEOD-26284"));
+        assertThat(expressions,  hasItem(hasExperimentAccession("E-GEOD-26284")));
 
         // test that cell lines experiment is not returned
         BaselineTissueExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT)));
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
-        Matcher cellLinesExperimentProfile = hasProperty("id", is("E-GEOD-26284"));
-        Matcher illuminaBodyMapExperimentProfile = hasProperty("id", is("E-MTAB-513"));
+        Matcher cellLinesExperimentProfile = Matchers.<BaselineExperimentProfile>hasProperty("id", is("E-GEOD-26284"));
+        Matcher illuminaBodyMapExperimentProfile = Matchers.<BaselineExperimentProfile>hasProperty("id", is("E-MTAB-513"));
 
         assertThat(baselineProfilesList, hasItem(illuminaBodyMapExperimentProfile));
         assertThat(baselineProfilesList, not(hasItem(cellLinesExperimentProfile)));
@@ -169,6 +171,21 @@ public class BaselineExperimentProfileSearchServiceIT {
         ImmutableSortedSet<Factor> allFactors = getOrganismPartFactors("E-MTAB-513");
         assertThat(factors, contains(allFactors.toArray()));
 
+    }
+
+    private Matcher<RnaSeqBslnExpression> hasExperimentAccession(final String expectedExperimentAccession) {
+        return new BaseMatcher<RnaSeqBslnExpression>() {
+            @Override
+            public boolean matches(Object o) {
+                String actualExperimentAccession = ((RnaSeqBslnExpression)o).experimentAccession();
+                return expectedExperimentAccession.equals(actualExperimentAccession);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("experiment accession ").appendValue(expectedExperimentAccession);
+            }
+        };
     }
 
 }
