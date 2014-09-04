@@ -67,7 +67,7 @@ public class BaselineExperimentProfileSearchServiceIT {
 
         assertThat(baselineProfilesList.getTotalResultCount(), is(2));
 
-        BaselineExperimentProfile baselineProfile = baselineProfilesList.get(0);
+        BaselineExperimentProfile baselineProfile = baselineProfilesList.get(1);
         assertThat(baselineProfile.getId(), is("E-GEOD-30352"));
         assertThat(baselineProfile.getName(), is("Vertebrate tissues"));
         assertThat(baselineProfile.getFilterFactors(), is(ORGANISM_HOMO_SAPIENS));
@@ -76,7 +76,7 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(baselineProfile.getMaxExpressionLevel(), is(1802D));
         assertThat(baselineProfile.getKnownExpressionLevel(LIVER), is(1802D));
 
-        BaselineExperimentProfile baselineProfile2 = baselineProfilesList.get(1);
+        BaselineExperimentProfile baselineProfile2 = baselineProfilesList.get(0);
         assertThat(baselineProfile2.getId(), is("E-MTAB-1733"));
         assertThat(baselineProfile2.getName(), is("Twenty seven tissues"));
         assertThat(baselineProfile2.getFilterFactors(), is(EMPTY_FACTOR_SET));
@@ -185,5 +185,31 @@ public class BaselineExperimentProfileSearchServiceIT {
             }
         };
     }
+
+
+    @Test
+    public void sortExperimentsByNonFilterFactors() {
+        BaselineTissueExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of("ENSG00000187003")));
+
+        BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
+
+        assertThat(baselineProfilesList, hasSize(3));
+
+        assertThat(baselineProfilesList.getTotalResultCount(), is(3));
+
+        BaselineExperimentProfile baselineProfile1 = baselineProfilesList.get(0);
+        assertThat(baselineProfile1.getName(), is("Twenty seven tissues"));
+        assertThat(baselineProfile1.getId(), is("E-MTAB-1733"));
+
+        BaselineExperimentProfile baselineProfile2 = baselineProfilesList.get(1);
+        assertThat(baselineProfile2.getName(), is("Illumina Body Map"));
+        assertThat(baselineProfile2.getId(), is("E-MTAB-513"));
+
+        BaselineExperimentProfile baselineProfile3 = baselineProfilesList.get(2);
+        assertThat(baselineProfile3.getName(), is("Vertebrate tissues"));
+        assertThat(baselineProfile3.getId(), is("E-GEOD-30352"));
+
+    }
+
 
 }
