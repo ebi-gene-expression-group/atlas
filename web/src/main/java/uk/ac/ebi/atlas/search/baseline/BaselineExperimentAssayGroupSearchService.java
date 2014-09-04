@@ -111,7 +111,7 @@ public class BaselineExperimentAssayGroupSearchService {
                 //If the search has a selected specie, we need to find the experiments that match the same specie
                 if (StringUtils.isBlank(selectedSpecie) || (StringUtils.isNotBlank(selectedSpecie) && species.toLowerCase().equals(selectedSpecie)) ||
                         (StringUtils.isNotBlank(selectedSpecie) && species.equals("Multi-species") && !assayGroupIdsAndFilterFactor.getKey().isEmpty()
-                                && assayGroupIdsAndFilterFactor.getKey().iterator().next().getValue().toLowerCase().equals(selectedSpecie))) {
+                                && assayGroupIdsAndFilterFactor.getKey().getFactorByType("ORGANISM").getValue().toLowerCase().equals(selectedSpecie))) {
 
                     BaselineExperimentAssayGroup result = new BaselineExperimentAssayGroup(experiment.getAccession(), experiment.getDisplayName(), species, experiment.getExperimentalFactors().getDefaultQueryFactorType());
                     result.setFilterFactors(assayGroupIdsAndFilterFactor.getKey());
