@@ -65,6 +65,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     makeTableHeaderSticky.call(this);
                 }
 
+                //TODO: use Stickem instead of Sticky.js - we only need one sticky library
                 function makeTableHeaderSticky() {
                     var $heatmapTable = $(this.refs.heatmapTableRow.getDOMNode()), $countAndLegend = $(this.refs.countAndLegend.getDOMNode()),
                         stickyTopOffset = $countAndLegend.height();
@@ -672,7 +673,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             },
 
             profileRowType: function (profile)  {
-                return (type == TypeEnum.MULTIEXPERIMENT ? <GeneProfileRow id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} />
+                return (type == TypeEnum.MULTIEXPERIMENT ? <GeneProfileRow id={profile.id} name={profile.name} expressions={profile.expressions} serializedFilterFactors = {profile.serializedFilterFactors} displayLevels={this.props.displayLevels} />
                     : <GeneProfileRow selected={profile.id === this.state.selectedGeneId} selectGene={this.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/> );
 
             },
@@ -690,7 +691,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
         });
 
-        var GeneProfileRow = (function (contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks, enableEnsemblLauncher, id) {
+        var GeneProfileRow = (function (contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks, enableEnsemblLauncher, geneQuery) {
 
             return React.createClass({
 
@@ -711,10 +712,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 geneNameLinked: function () {
-                    var experimentURL = '/experiments/' + this.props.id + '?geneQuery=' + id;
+                    var experimentURL = '/experiments/' + this.props.id + '?geneQuery=' + geneQuery + (this.props.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(this.props.serializedFilterFactors) : "");
                     var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + isExactMatch : '/genes/' + this.props.id;
 
-                    url = (type == TypeEnum.MULTIEXPERIMENT ? experimentURL : geneURL);
+                    var url = (type == TypeEnum.MULTIEXPERIMENT ? experimentURL : geneURL);
 
                     // don't render id for gene sets to prevent tooltips
                     return (
@@ -783,7 +784,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     }
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.id);
+        })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
 
 
         var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, selectedFilterFactorsJson, queryFactorType) {

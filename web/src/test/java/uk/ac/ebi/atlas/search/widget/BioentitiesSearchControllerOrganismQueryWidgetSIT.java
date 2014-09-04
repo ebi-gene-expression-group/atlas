@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.bioentity.widget;
+package uk.ac.ebi.atlas.search.widget;
 
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 
 
-public class GenePageControllerBaselineResultsSpeciesWidgetSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerOrganismQueryWidgetSIT extends SinglePageSeleniumFixture {
 
     private BioEntityPage subject;
 

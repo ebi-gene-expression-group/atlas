@@ -40,9 +40,11 @@ import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.commands.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineExperimentProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineTissueExperimentSearchResult;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
@@ -79,6 +81,8 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
     private final BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
 
+    private final BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder;
+
     private final SpeciesEnsemblTrader speciesEnsemblTrader;
 
     @Inject
@@ -90,7 +94,8 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
                                             BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                             SpeciesEnsemblTrader speciesEnsemblTrader,
                                             TracksUtil tracksUtil,
-                                            BaselineExperimentProfileSearchService baselineExperimentProfileSearchService) {
+                                            BaselineExperimentProfileSearchService baselineExperimentProfileSearchService,
+                                            BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder) {
 
         super(requestContextBuilder, filterFactorsConverter);
         this.applicationProperties = applicationProperties;
@@ -100,6 +105,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         this.speciesEnsemblTrader = speciesEnsemblTrader;
         this.tracksUtil = tracksUtil;
         this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
+        this.baselineExperimentProfilesViewModelBuilder = baselineExperimentProfilesViewModelBuilder;
     }
 
     @InitBinder
@@ -144,7 +150,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         String geneQuery = preferences.getGeneQuery();
         String species = requestContext.getFilteredBySpecies();
         BaselineTissueExperimentSearchResult searchResult;
-        model.addAttribute("geneId", geneQuery);
+        model.addAttribute("geneQuery", geneQuery);
 
         try {
             searchResult = baselineExperimentProfileSearchService.query(geneQuery, species, true);
@@ -155,11 +161,11 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         }
 
 
-        SortedSet<Factor> orderedFactors = searchResult.getSupersetOfFactorsAcrossAllExperiments();
+        SortedSet<Factor> orderedFactors = searchResult.getTissueFactorsAcrossAllExperiments();
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
 
-        BaselineProfilesList experimentProfiles = searchResult.getExperimentProfiles();
-        addJsonForHeatMap(experimentProfiles, null, filteredAssayGroupFactors, orderedFactors, model);
+        BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
+        addJsonForHeatMap(experimentProfiles, filteredAssayGroupFactors, orderedFactors, model);
 
         //TODO: refactor this whole method into HeatmapWidgetController, and then remove this line as it won't be needed
         model.addAttribute("geneProfiles", experimentProfiles);
@@ -245,6 +251,18 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
             }
 
         }
+    }
+
+    private void addJsonForHeatMap(BaselineExperimentProfilesList baselineProfiles, SortedSet<AssayGroupFactor> filteredAssayGroupFactors, SortedSet<Factor> orderedFactors, Model model) {
+        Gson gson = new Gson();
+
+        String jsonAssayGroupFactors = gson.toJson(filteredAssayGroupFactors);
+        model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
+
+        BaselineProfilesViewModel profilesViewModel = baselineExperimentProfilesViewModelBuilder.build(baselineProfiles, orderedFactors);
+
+        String jsonProfiles = gson.toJson(profilesViewModel);
+        model.addAttribute("jsonProfiles", jsonProfiles);
     }
 
     private void addJsonForHeatMap(BaselineProfilesList baselineProfiles, BaselineProfilesList geneSetProfiles, SortedSet<AssayGroupFactor> filteredAssayGroupFactors, SortedSet<Factor> orderedFactors, Model model) {

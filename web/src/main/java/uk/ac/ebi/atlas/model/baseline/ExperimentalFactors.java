@@ -110,6 +110,12 @@ public class ExperimentalFactors implements Serializable {
 
     }
 
+    // return factors for the slice specified
+    public SortedSet<Factor> getFilteredFactors(final FactorGroup slice) {
+        TreeSet<Factor> factors = Sets.newTreeSet(slice);
+        return getFilteredFactors(factors);
+    }
+
     public SortedSet<Factor> getFilteredFactors(final Set<Factor> filterFactors) {
 
         if (CollectionUtils.isEmpty(filterFactors)) {
@@ -130,17 +136,17 @@ public class ExperimentalFactors implements Serializable {
 
     }
 
-    public FactorGroup getNonDefaultFilterFactors(String assayGroupId) {
+    public FactorGroup getNonDefaultFactors(String assayGroupId) {
         FactorGroup factorGroup = orderedFactorGroupsByAssayGroupId.get(assayGroupId);
         return factorGroup.removeType(getDefaultQueryFactorType());
     }
 
-    public Multimap<FactorGroup, String> groupAssayGroupIdsByNonDefaultFilterFactor(Iterable<String> assayGroupIds) {
+    public Multimap<FactorGroup, String> groupAssayGroupIdsByNonDefaultFactor(Iterable<String> assayGroupIds) {
         Function<String, FactorGroup> groupByFunction = new Function<String, FactorGroup>() {
             @Nullable
             @Override
             public FactorGroup apply(@Nullable String assayGroupId) {
-                return getNonDefaultFilterFactors(assayGroupId);
+                return getNonDefaultFactors(assayGroupId);
             }
         };
         return Multimaps.index(assayGroupIds, groupByFunction);

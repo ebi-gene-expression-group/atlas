@@ -46,7 +46,7 @@
 <section class="grid_17 alpha extra-padding">
     <h2 class="strapline">
         Expression Atlas results for <span
-            class="searchterm">${not empty originalSearchTerm ? originalSearchTerm : entityIdentifierParams}</span>
+            class="searchterm">${not empty originalSearchTerm ? originalSearchTerm : searchTerm}</span>
     </h2>
 </section>
 <aside id="search-extras" class="grid_6 omega shortcuts expander">

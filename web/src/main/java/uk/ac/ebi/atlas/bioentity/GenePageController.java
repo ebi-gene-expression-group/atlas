@@ -71,8 +71,6 @@ public class GenePageController extends BioEntityPageController {
             model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
         }
 
-        model.addAttribute("entityIdentifierParams", identifier);
-
         model.addAttribute("disableGeneLinks", true);
 
         addWidgetHasBaselineProfiles(identifier, model);

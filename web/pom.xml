@@ -215,6 +215,15 @@
             <scope>test</scope>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.google.auto.value</groupId>
+            <artifactId>auto-value</artifactId>
+            <version>1.0-rc1</version>
+            <scope>provided</scope>
+        </dependency>
+
+
         <!--limpopo MAGET-Tab investigation-->
         <dependency>
             <groupId>uk.ac.ebi.arrayexpress2</groupId>
@@ -387,6 +396,13 @@
                     <groupId>org.apache.httpcomponents</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId> selenium-server</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <!--
