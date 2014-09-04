@@ -29,15 +29,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -103,7 +103,7 @@ public class ExperimentInfoListBuilderTest {
         when(microarrayExperimentMock.getExperimentDesign()).thenReturn(experimentDesignMock);
         when(microarrayExperimentMock.getType()).thenReturn(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
 
-        when(baselineExperimentMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIES));
+        when(baselineExperimentMock.getOrganisms()).thenReturn(Sets.newHashSet(SPECIES));
         when(baselineExperimentMock.getAccession()).thenReturn(ACCESSION);
         when(baselineExperimentMock.getLastUpdate()).thenReturn(lastUpdateStub);
         when(baselineExperimentMock.getDescription()).thenReturn(DESCRIPTION);

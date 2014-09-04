@@ -111,7 +111,7 @@ public class QCReportController {
     private void prepareModel(HttpServletRequest request, Model model, MicroarrayExperiment experiment) {
         request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
 
-        Set<String> allSpecies = experiment.getSpecies();
+        Set<String> allSpecies = experiment.getOrganisms();
 
         model.addAttribute(EXPERIMENT_TYPE_ATTRIBUTE, experiment.getType());
 

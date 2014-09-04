@@ -31,7 +31,6 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.trader.loader.DifferentialExperimentsCacheLoader;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -56,7 +55,7 @@ public class DifferentialExperimentsCacheLoaderIT {
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 
         //then
-        assertThat(experiment.getSpecies(), contains("Mus musculus"));
+        assertThat(experiment.getOrganisms(), contains("Mus musculus"));
     }
 
     @Test

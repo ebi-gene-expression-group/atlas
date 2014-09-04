@@ -29,9 +29,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import java.util.SortedSet;
@@ -66,7 +64,7 @@ public class DifferentialRequestContextBuilderTest {
     public void setUp() throws Exception {
         subject = new MicroarrayRequestContextBuilder(new MicroarrayRequestContext());
 
-        when(experimentMock.getFirstSpecies()).thenReturn(ORGANISM);
+        when(experimentMock.getFirstOrganism()).thenReturn(ORGANISM);
 
         when(contrastMock1.getDisplayName()).thenReturn(CONTRAST_NAME1);
         when(contrastMock2.getDisplayName()).thenReturn(CONTRAST_NAME2);

@@ -49,7 +49,7 @@ public class RnaSeqRequestContextBuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        when(experimentMock.getFirstSpecies()).thenReturn(SPECIES);
+        when(experimentMock.getFirstOrganism()).thenReturn(SPECIES);
         subject = new RnaSeqRequestContextBuilder(new RnaSeqRequestContext());
     }
 

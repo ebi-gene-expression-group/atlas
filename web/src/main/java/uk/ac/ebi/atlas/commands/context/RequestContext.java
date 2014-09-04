@@ -69,6 +69,8 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
         return selectedQueryFactors;
     }
 
+    // the species for the current slice. Note: this is the mapped Ensembl species, ie: not the SDRF sample organism,
+    // but the mapped Ensembl species for the sample (usually this is the same however)
     public String getFilteredBySpecies() {
         return filteredBySpecies;
     }

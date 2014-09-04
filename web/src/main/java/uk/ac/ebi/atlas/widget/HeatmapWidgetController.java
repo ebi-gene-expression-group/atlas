@@ -159,7 +159,7 @@ public final class HeatmapWidgetController {
     private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) {
         request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
 
-        Set<String> allSpecies = experiment.getSpecies();
+        Set<String> allSpecies = experiment.getOrganisms();
 
         model.addAttribute(EXPERIMENT_TYPE_ATTRIBUTE, experiment.getType());
 

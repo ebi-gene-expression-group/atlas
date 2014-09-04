@@ -50,7 +50,7 @@ public class MicroarrayRequestContextBuilderTest {
     @Before
     public void setUp() throws Exception {
         when(preferencesMock.getArrayDesignAccession()).thenReturn(ACCESSION);
-        when(experimentMock.getFirstSpecies()).thenReturn(SPECIES);
+        when(experimentMock.getFirstOrganism()).thenReturn(SPECIES);
         subject = new MicroarrayRequestContextBuilder(new MicroarrayRequestContext());
     }
 

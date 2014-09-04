@@ -33,7 +33,7 @@ public class Experiment implements Serializable {
 
     private ExperimentType type;
     private ExperimentDesign experimentDesign;
-    private SortedSet<String> species;
+    private SortedSet<String> organisms;
     private SortedSet<String> pubMedIds;
     private Map<String, String> speciesMapping;
     private String accession;
@@ -43,7 +43,7 @@ public class Experiment implements Serializable {
     private Date lastUpdate;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      boolean hasExtraInfoFile, Set<String> species, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
+                      boolean hasExtraInfoFile, Set<String> organisms, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
@@ -51,14 +51,14 @@ public class Experiment implements Serializable {
         this.displayName = displayName;
         this.description = description;
         this.hasExtraInfoFile = hasExtraInfoFile;
-        this.species = new TreeSet<>(species);
+        this.organisms = new TreeSet<>(organisms);
         this.speciesMapping = speciesMapping;
         this.pubMedIds = Sets.newTreeSet(pubMedIds);
     }
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String description, boolean hasExtraInfoFile,
-                      Set<String> species, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
-        this(type, accession, lastUpdate, null, description, hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);
+                      Set<String> organisms, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
+        this(type, accession, lastUpdate, null, description, hasExtraInfoFile, organisms, speciesMapping, pubMedIds, experimentDesign);
     }
 
     public ExperimentType getType() {
@@ -92,24 +92,33 @@ public class Experiment implements Serializable {
         return accession;
     }
 
-    public Set<String> getSpecies() {
-        return Collections.unmodifiableSet(species);
+    public Set<String> getOrganisms() {
+        return Collections.unmodifiableSet(organisms);
     }
 
     public List<String> getPubMedIds() {
         return Lists.newArrayList(pubMedIds);
     }
 
-    public String getFirstSpecies() {
-        return species.iterator().next();
+    //TODO: deprecate this in favor of a method that will return the organism actually needed, rather than just the first
+    public String getFirstOrganism() {
+        return organisms.iterator().next();
     }
 
-    public Map<String, String> getSpeciesMapping() {
+    /*
+        Maps an organism value used in the SDRF to an Ensembl species. Loaded from the <speciesMapping> section in factors.xml
+        Usually this is the same, however for some experiments there are no corresponding sample species in Ensembl,
+        so the mapping points to a similar species,
+        eg: for E-GEOD-30352 the SDRF/sample species pongo pygmaeus is mapped to the closely related Ensembl species
+        pongo abelii.
+        The Ensembl species is what is used to look up genes in Solr
+     */
+    public Map<String, String> getOrganismToEnsemblSpeciesMapping() {
         return Collections.unmodifiableMap(speciesMapping);
     }
 
-    public String getRequestSpeciesName(String species) {
-        String speciesName = speciesMapping.get(species);
+    public String getRequestSpeciesName(String organism) {
+        String speciesName = speciesMapping.get(organism);
         if (speciesName != null) {
             return Character.toUpperCase(speciesName.charAt(0)) + speciesName.substring(1);
         }
