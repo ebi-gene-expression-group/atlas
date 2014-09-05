@@ -10,10 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.util.StringUtils;
-import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
@@ -57,9 +54,12 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
 
     private static final FactorGroup EMPTY_FACTOR_SET = new FactorSet();
 
+
     @Mock
     private BaselineExperiment experiment1;
     private FactorGroup experiment1FilterFactors = new FactorSet(new Factor("ORGANISM", "Homo sapiens"));
+    private SortedSet<Factor> experiment1nonFilterFactors = ImmutableSortedSet.of(ADIPOSE, BRAIN);
+    private SortedSet<Factor> nonFilterFactors_EMPTY = ImmutableSortedSet.of();
 
     @Mock
     private BaselineExperiment experiment2;
@@ -67,15 +67,25 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
     private BaselineExperimentProfile profile1;
     private BaselineExperimentProfile profile2;
 
+    @Mock
+    private BaselineExperimentSlice experimentSlice1;
+
+    @Mock
+    private BaselineExperimentSlice experimentSlice2;
+
     @Before
     public void before() {
-        when(experiment1.getAccession()).thenReturn("EXP1");
-        when(experiment1.getDisplayName()).thenReturn("EXP1NAME");
-        when(experiment2.getAccession()).thenReturn("EXP2");
-        when(experiment2.getDisplayName()).thenReturn("EXP2NAME");
+        when(experimentSlice1.experiment()).thenReturn(experiment1);
+        when(experimentSlice1.filterFactors()).thenReturn(experiment1FilterFactors);
+        when(experimentSlice1.nonFilterFactors()).thenReturn(experiment1nonFilterFactors);
+        when(experimentSlice1.experimentAccession()).thenReturn("EXP1");
+        when(experimentSlice1.experimentDisplayName()).thenReturn("EXP1NAME");
 
-        BaselineExperimentSlice experimentSlice1 = BaselineExperimentSlice.create(experiment1, experiment1FilterFactors);
-        BaselineExperimentSlice experimentSlice2 = BaselineExperimentSlice.create(experiment2, EMPTY_FACTOR_SET);
+        when(experimentSlice2.experiment()).thenReturn(experiment2);
+        when(experimentSlice2.filterFactors()).thenReturn(EMPTY_FACTOR_SET);
+        when(experimentSlice2.nonFilterFactors()).thenReturn(nonFilterFactors_EMPTY);
+        when(experimentSlice2.experimentAccession()).thenReturn("EXP2");
+        when(experimentSlice2.experimentDisplayName()).thenReturn("EXP2NAME");
 
         profile1 = new BaselineExperimentProfile(experimentSlice1);
         profile2 = new BaselineExperimentProfile(experimentSlice2);
