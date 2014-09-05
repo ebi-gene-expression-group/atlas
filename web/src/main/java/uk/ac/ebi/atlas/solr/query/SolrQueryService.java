@@ -36,7 +36,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
-import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -57,11 +56,9 @@ public class SolrQueryService {
 
     public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     public static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
-    public static final String SPECIES_FIELD = "species";
     public static final String PROPERTY_NAME_FIELD = "property_name";
     private static final String PROPERTY_VALUE_FIELD = "property_value";
 
-    public static final String PROPERTY_LOWER_FIELD = "property_value_lower";
     public static final String PROPERTY_EDGENGRAM_FIELD = "property_value_edgengram";
 
     private static final String BIOENTITY_TYPE_QUERY =
@@ -130,27 +127,6 @@ public class SolrQueryService {
                 .withPropertyNames(propertyNames).build();
 
         return solrServer.query(solrQuery, BIOENTITY_IDENTIFIER_FIELD, toUppercase);
-    }
-
-    public String findSpeciesForBioentityId(String identifier) {
-
-        return getSpeciesForPropertyValue(identifier, BIOENTITY_IDENTIFIER_FIELD);
-
-    }
-
-    public String getSpeciesForPropertyValue(String propertyValue) {
-        return getSpeciesForPropertyValue(propertyValue, null);
-    }
-
-    public String getSpeciesForPropertyValue(String propertyValue, String propertyName) {
-        List<String> propertyValueTokens = bioentityPropertyValueTokenizer.split(propertyValue);
-        for (String propertyValueToken : propertyValueTokens) {
-            Collection<String> species = executeSpeciesQuery(propertyValueToken, propertyName);
-            if (!species.isEmpty()) {
-                return species.iterator().next();
-            }
-        }
-        throw new ResourceNotFoundException("Species can't be determined for propertyValue: " + propertyValue + " and propertyName: " + propertyName);
     }
 
     public Set<String> findMatureRNAIds(Set<String> geneIdentifiers) {
@@ -290,20 +266,6 @@ public class SolrQueryService {
 
         return solrServer.queryForProperties(solrQuery);
 
-    }
-
-    Collection<String> executeSpeciesQuery(String propertyValue, String propertyName) {
-        SolrQuery query;
-        if (StringUtils.isBlank(propertyName)) {
-            query = new SolrQuery(PROPERTY_LOWER_FIELD + ":\"" + propertyValue + "\"");
-        } else {
-            query = new SolrQuery(propertyName + ":" + propertyValue);
-        }
-
-        query.setFields(SPECIES_FIELD);
-        query.setRows(100);
-
-        return solrServer.query(query, SPECIES_FIELD, false);
     }
 
 }

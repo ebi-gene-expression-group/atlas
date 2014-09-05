@@ -7,6 +7,7 @@ import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
 import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
 import javax.inject.Inject;
@@ -26,6 +27,8 @@ public class BioEntityPropertyLinkBuilder {
 
     private SolrQueryService solrQueryService;
 
+    private SpeciesLookupService speciesLookupService;
+
     private GoTermTrader goTermTrader;
 
     private InterProTermTrader interProTermTrader;
@@ -34,11 +37,12 @@ public class BioEntityPropertyLinkBuilder {
 
     @Inject
     public BioEntityPropertyLinkBuilder(BioEntityCardProperties bioEntityCardProperties, ReactomeClient reactomeClient,
-                                        SolrQueryService solrQueryService, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader,
+                                        SolrQueryService solrQueryService, SpeciesLookupService speciesLookupService, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader,
                                         PoTermTrader poTermTrader) {
         this.bioEntityCardProperties = bioEntityCardProperties;
         this.reactomeClient = reactomeClient;
         this.solrQueryService = solrQueryService;
+        this.speciesLookupService = speciesLookupService;
         this.goTermTrader = goTermTrader;
         this.interProTermTrader = interProTermTrader;
         this.poTermTrader = poTermTrader;
@@ -90,7 +94,7 @@ public class BioEntityPropertyLinkBuilder {
 
     String transformOrthologToSymbol(String identifier) {
         try {
-            String species = solrQueryService.findSpeciesForBioentityId(identifier);
+            String species = speciesLookupService.fetchSpeciesByBioentityId(identifier);
 
             String speciesToken = " (" + StringUtils.capitalize(species) + ")";
 

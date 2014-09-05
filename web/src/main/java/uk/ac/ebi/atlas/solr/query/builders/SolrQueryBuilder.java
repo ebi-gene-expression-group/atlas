@@ -46,11 +46,13 @@ public abstract class SolrQueryBuilder<T extends SolrQueryBuilder<T>> {
 
     public static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
 
+    public static final String SPECIES_FIELD = "species";
+
     protected StringBuilder queryStringBuilder = new StringBuilder();
 
     public T withSpecies(String species){
         if (StringUtils.isNotBlank(species)){
-            queryStringBuilder.append(" AND species:\"").append(species).append("\"");
+            queryStringBuilder.append(" AND " + SPECIES_FIELD + ":\"").append(species).append("\"");
         }
         return getThis();
     }

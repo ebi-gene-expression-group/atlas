@@ -34,7 +34,7 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
@@ -59,16 +59,16 @@ public final class HeatmapWidgetController {
 
     private ApplicationProperties applicationProperties;
 
-    private SolrQueryService solrQueryService;
+    private SpeciesLookupService speciesLookupService;
 
     private ExperimentTrader experimentTrader;
 
     @Inject
     private HeatmapWidgetController(ExperimentTrader experimentTrader,
-                                    ApplicationProperties applicationProperties, SolrQueryService solrQueryService) {
+                                    ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService) {
         this.experimentTrader = experimentTrader;
         this.applicationProperties = applicationProperties;
-        this.solrQueryService = solrQueryService;
+        this.speciesLookupService = speciesLookupService;
     }
 
     // similar to ExperimentDispatcher but for the widget, ie: loads baseline experiment into model and request
@@ -84,7 +84,7 @@ public final class HeatmapWidgetController {
 
         try {
             if (StringUtils.isBlank(species)) {
-                species = solrQueryService.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
+                species = speciesLookupService.fetchSpeciesByField(propertyType, bioEntityAccession);
             }
         } catch (Exception e) {
             model.addAttribute("errorMessage", "No genes found matching query: " + bioEntityAccession);
@@ -123,7 +123,7 @@ public final class HeatmapWidgetController {
 
         try {
             if (StringUtils.isBlank(species)) {
-                species = solrQueryService.getSpeciesForPropertyValue(bioEntityAccession, propertyType);
+                species = speciesLookupService.fetchSpeciesByField(propertyType, bioEntityAccession);
             }
         } catch (Exception e) {
             model.addAttribute("errorMessage", "No genes found matching query: " + bioEntityAccession);

@@ -122,7 +122,7 @@ public class GeneSetPageController extends BioEntityPageController {
     @Override
     protected void initBioentityPropertyService(String identifier) {
         String trimmedIdentifier = identifier.replaceAll("\"", "");
-        String species = GeneSetUtil.isReactome(identifier) ? solrQueryService.getSpeciesForPropertyValue(trimmedIdentifier): "";
+        String species = GeneSetUtil.isReactome(identifier) ? speciesLookupService.fetchSpeciesByPropertyValue(trimmedIdentifier): "";
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
 
@@ -148,7 +148,7 @@ public class GeneSetPageController extends BioEntityPageController {
     @Override
     String fetchSpecies(String identifier){
         String trimmedIdentifier = identifier.replaceAll("\"", "");
-        return solrQueryService.getSpeciesForPropertyValue(trimmedIdentifier);
+        return speciesLookupService.fetchSpeciesByPropertyValue(trimmedIdentifier);
     }
 
     @Override
