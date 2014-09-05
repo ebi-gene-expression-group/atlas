@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
@@ -37,11 +36,11 @@ import java.util.List;
 @Scope("singleton")
 //can be singleton because HttpSolrServer is documented to be thread safe, please be careful not to add any other non thread safe state!
 public class SpeciesLookupService {
+
     private static final Logger LOGGER = Logger.getLogger(SpeciesLookupService.class);
 
-    public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     public static final String SPECIES_FIELD = "species";
-
+    public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     public static final String PROPERTY_LOWER_FIELD = "property_value_lower";
 
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
@@ -55,33 +54,38 @@ public class SpeciesLookupService {
         this.solrServer = solrServer;
     }
 
-    public String fetchSpeciesByBioentityId(String identifier) {
+    // used for looking up species for a gene/protein/transcript/mirna/etc. id
+    public String fetchSpeciesForBioentityId(String identifier) {
+        // eg: bioentity_identifier:ENSMUSG00000021789
         return fetchSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, identifier);
     }
 
-    public String fetchSpeciesByPropertyValue(String propertyValue) {
-        return fetchSpeciesByField(null, propertyValue);
+    // used for looking up species for gene sets (goterm, interpro, react etc.)
+    public String fetchSpeciesForGeneSet(String propertyValue) {
+        // eg: property_value_lower:"IPR027417"
+        return fetchSpeciesByField(PROPERTY_LOWER_FIELD, propertyValue);
     }
 
-    public String fetchSpeciesByField(String fieldName, String fieldValue) {
-        List<String> propertyValueTokens = bioentityPropertyValueTokenizer.split(fieldValue);
-        for (String propertyValueToken : propertyValueTokens) {
-            Collection<String> species = executeSpeciesQuery(propertyValueToken, fieldName);
+    public String fetchSpeciesByField(String fieldName, String query) {
+        List<String> queryTokens = bioentityPropertyValueTokenizer.split(query);
+        for (String queryToken : queryTokens) {
+            Collection<String> species = executeSpeciesQuery(fieldName, encloseInQuotes(queryToken));
             if (!species.isEmpty()) {
                 return species.iterator().next();
             }
         }
-        throw new ResourceNotFoundException("Species can't be determined for " + fieldName + ":" + fieldValue);
+        throw new ResourceNotFoundException("Species can't be determined for " + fieldName + ":" + query);
     }
 
-    Collection<String> executeSpeciesQuery(String propertyValue, String propertyName) {
-        SolrQuery query;
-        if (StringUtils.isBlank(propertyName)) {
-            // eg: property_value_lower:"IPR027417"
-            query = new SolrQuery(PROPERTY_LOWER_FIELD + ":\"" + propertyValue + "\"");
-        } else {
-            query = new SolrQuery(propertyName + ":" + propertyValue);
-        }
+    // surround in quotes, so queries with special chars work, eg: "GO:0003674"
+    private String encloseInQuotes(String queryToken) {
+        return "\"" + queryToken + "\"";
+    }
+
+    Collection<String> executeSpeciesQuery(String fieldName, String queryToken) {
+        LOGGER.debug("lookup species for " + fieldName + ":" + queryToken);
+
+        SolrQuery query = new SolrQuery(fieldName + ":" + queryToken);
 
         //fields to be returned, ie: fl=species
         query.setFields(SPECIES_FIELD);
