@@ -63,10 +63,10 @@ public class GenePageControllerHomoSapiensGeneBaselineWidgetSIT extends SinglePa
         assertThat(factorValueHeaders, contains("adipose", "adipose tissue", "adrenal gland", "animal ovary", "appendix", "bladder", "bone marrow", "brain", "breast", "cerebellum", "cerebral cortex", "colon", "duodenum", "endometrium", "esophagus", "frontal lobe", "gall bladder", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "pancreas", "placenta", "prefrontal cortex", "prostate", "salivary gland", "skeletal muscle", "skin", "small intestine", "spleen", "stomach", "temporal lobe", "testis", "thyroid"));
 
         assertThat(subject.getGeneNames().size(), is(3));
-        assertThat(subject.getGeneNames(), contains("Vertebrate tissues","Twenty seven tissues","Illumina Body Map"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSG00000163331&serializedFilterFactors=ORGANISM%3AHomo%20sapiens"));
-        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-1733?geneQuery=ENSG00000163331"));
-        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-MTAB-513?geneQuery=ENSG00000163331"));
+        assertThat(subject.getGeneNames(), contains("Twenty seven tissues","Illumina Body Map","Vertebrate tissues"));
+        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSG00000163331&serializedFilterFactors=ORGANISM%3AHomo%20sapiens"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=ENSG00000163331"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-513?geneQuery=ENSG00000163331"));
     }
 
 
