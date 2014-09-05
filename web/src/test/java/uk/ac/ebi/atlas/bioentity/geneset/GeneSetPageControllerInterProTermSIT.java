@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity.go;
+package uk.ac.ebi.atlas.bioentity.geneset;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
@@ -32,9 +32,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GeneSetPageControllerGoTermSIT extends SinglePageSeleniumFixture {
+public class GeneSetPageControllerInterProTermSIT extends SinglePageSeleniumFixture {
 
-    private static final String IDENTIFIER = "GO:0005515";
+    private static final String IDENTIFIER = "IPR000003";
 
     private BioEntitiesPage subject;
 
@@ -51,37 +51,30 @@ public class GeneSetPageControllerGoTermSIT extends SinglePageSeleniumFixture {
 
     @Test
     public void infoCard() {
-        assertThat(subject.getBioEntityCardTitle(), is("GO:0005515 protein binding"));
+        assertThat(subject.getBioEntityCardTitle(), is("IPR000003 Retinoid X receptor/HNF4 (family)"));
         assertThat(subject.getPropertiesTableSize(), is(1));
-        assertThat(subject.getPropertiesTableRow(0), hasItems("Gene Ontology", "protein binding"));
-        assertThat(subject.getLinksInTableRow(0).get(0), is("http://amigo.geneontology.org/amigo/term/GO%3A0005515"));
+        assertThat(subject.getPropertiesTableRow(0), hasItems("InterPro", "Retinoid X receptor/HNF4 (family)"));
+        assertThat(subject.getLinksInTableRow(0).get(0), is("http://www.ebi.ac.uk/interpro/entry/IPR000003"));
     }
 
     @Test
     public void baselineResults() {
         subject.clickBaselinePane();
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("22 results"));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("2 results"));
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(23));
+        assertThat(baselineCounts, hasSize(3)); //including geneset description
 
-        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-GEOD-26284"));
-        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-GEOD-26284"));
+        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-599"));
+        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-MTAB-1733"));
     }
 
     @Test
-    public void hasDifferentialResults() {
+    public void diffResults() {
         subject.clickDifferentialPane();
-        subject.clickDiffResultsDisplayLevelsButton();
-        assertThat(subject.getDiffPaneHeaderResultsMessage(), is("5797 results"));
-
-        assertThat(subject.getDiffHeatmapHeaders(), contains("Gene", "Organism", "Contrast", "Log2-fold change"));
-        assertThat(subject.getDiffHeatmapRow(1), contains("Uty", "Mus musculus", "sex:'male' vs 'female'", "10.46"));
-
-        //System.out.println("\"" + Joiner.on("\", \"").join(subject.getDiffHeatmapTableGeneColumn()) + "\"");
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Uty", "IL12B", "Hop3", "IL6", "ATHSP101", "PTGS2", "IL6", "BAG6", "FN1", "CCL20", "FN1", "ROF2", "ATHSFA2", "CD9", "IL1A", "IL23A", "FCGR2B", "IL1A", "A37", "CD36", "CD36", "SAMHD1", "IL23A", "PTGS2", "TGFBI", "ATHSFA2", "CCL20", "SLAMF1", "F3", "ROF2", "INHBA", "IL1R2", "TNF", "DREB2A", "KCTD12", "SPINK1", "IL1R2", "Cldn8", "TIMP2", "fs(1)Ya", "ATHSP101", "RNASE1", "CDC48D", "TNF", "EBI3", "RNASE1", "CNKSR3", "CD9", "TIMP2", "CCL4"));
+        assertThat(subject.getDiffPaneHeaderResultsMessage(), is("1 result"));
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("RXRA"));
     }
-
 
 }

@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity.go;
+package uk.ac.ebi.atlas.bioentity.geneset;
 
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Test;

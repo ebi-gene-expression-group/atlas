@@ -116,9 +116,9 @@ public class BaselineExperimentBuilderTest {
         assertThat(experiment.getDescription(), is(DESCRIPTION));
         assertThat(experiment.getDisplayName(), is(DISPLAY_NAME));
         assertThat(experiment.hasExtraInfoFile(), is(false));
-        assertThat(experiment.getSpecies(), hasItem(SPECIES));
-        assertThat(experiment.getFirstSpecies(), is(SPECIES));
-        assertThat(experiment.getSpeciesMapping(), is(speciesMap));
+        assertThat(experiment.getOrganisms(), hasItem(SPECIES));
+        assertThat(experiment.getFirstOrganism(), is(SPECIES));
+        assertThat(experiment.getOrganismToEnsemblSpeciesMapping(), is(speciesMap));
         assertThat(experiment.getType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(experiment.getPubMedIds(), contains(PUBMEDID));
         assertThat(experiment.getExperimentDesign(), is(experimentDesignMock));

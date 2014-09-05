@@ -112,7 +112,7 @@ public class BaselineExperimentBuilderTest2 {
 
     @Test
     public void testSpecies() {
-        assertThat(subject.getFirstSpecies(), is(SPECIE));
+        assertThat(subject.getFirstOrganism(), is(SPECIE));
     }
 
     @Test
@@ -127,7 +127,7 @@ public class BaselineExperimentBuilderTest2 {
 
     @Test
     public void testSpeciesMapping() {
-        assertThat(subject.getSpeciesMapping(), is(Collections.EMPTY_MAP));
+        assertThat(subject.getOrganismToEnsemblSpeciesMapping(), is(Collections.EMPTY_MAP));
     }
 
     @Test

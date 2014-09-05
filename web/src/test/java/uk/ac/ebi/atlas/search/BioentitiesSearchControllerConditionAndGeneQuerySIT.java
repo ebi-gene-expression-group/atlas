@@ -44,9 +44,6 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
 
     @Test
     public void checkBaselineExperimentCounts() {
-        //given
-        subject.clickBaselinePane();
-
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(1));

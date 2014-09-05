@@ -26,21 +26,20 @@ import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
+import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.SortedSet;
 
 @Named
 @Scope("prototype")
@@ -139,7 +138,7 @@ public class ExperimentInfoListBuilder {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         experimentInfo.setLastUpdate(dateFormat.format(experiment.getLastUpdate()));
         experimentInfo.setExperimentDescription(experiment.getDescription());
-        experimentInfo.setSpecies(experiment.getSpecies());
+        experimentInfo.setSpecies(experiment.getOrganisms());
         //ToDo: there are only types (RNASEQ_MRNA_BASELINE, RNASEQ_MRNA_DIFFERENTIAL, MICROARRAY_ANY)
         experimentInfo.setExperimentType(experiment.getType().getParent());
         experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());

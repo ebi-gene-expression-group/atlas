@@ -59,7 +59,7 @@ public class BaselineExperimentsCacheLoaderIT {
         //given
         BaselineExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
         //then
-        Set<String> species = experiment.getSpecies();
+        Set<String> species = experiment.getOrganisms();
         assertThat(species, hasItems("Monodelphis domestica", "Gallus gallus", "Homo sapiens"));
         assertThat(species, not(hasItem("Ornithorhynchus anatinus")));
     }

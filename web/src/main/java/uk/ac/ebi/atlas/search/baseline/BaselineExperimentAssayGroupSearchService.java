@@ -107,7 +107,7 @@ public class BaselineExperimentAssayGroupSearchService {
             Multimap<FactorGroup,String> assayGroupIdsByFilterFactors = experiment.getExperimentalFactors().groupAssayGroupIdsByNonDefaultFactor(assayGroupIds);
 
             for (Map.Entry<FactorGroup, Collection<String>> assayGroupIdsAndFilterFactor : assayGroupIdsByFilterFactors.asMap().entrySet()) {
-                String species = experiment.getSpecies().size() > 1 ? "Multi-species" : experiment.getFirstSpecies();
+                String species = experiment.getOrganisms().size() > 1 ? "Multi-species" : experiment.getFirstOrganism();
                 //If the search has a selected specie, we need to find the experiments that match the same specie
                 if (StringUtils.isBlank(selectedSpecie) || (StringUtils.isNotBlank(selectedSpecie) && species.toLowerCase().equals(selectedSpecie)) ||
                         (StringUtils.isNotBlank(selectedSpecie) && species.equals("Multi-species") && !assayGroupIdsAndFilterFactor.getKey().isEmpty()

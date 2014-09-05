@@ -82,7 +82,7 @@ public class AnalysisMethodsPageController {
 
         //This is necessary for adding functionality to the QC button
         Set<Factor> organisms = experiment.getExperimentalFactors().getDefaultFilterFactors();
-        String specie = experiment.getFirstSpecies();
+        String specie = experiment.getFirstOrganism();
 
         if(!organisms.isEmpty()) {
             for (Factor factor : organisms) {

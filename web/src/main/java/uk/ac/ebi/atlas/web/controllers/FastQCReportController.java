@@ -7,12 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.FastQCReportUtil;
 import uk.ac.ebi.atlas.web.FastQCReportRequestPreferences;
-import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -226,7 +223,7 @@ public class FastQCReportController {
     private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) {
         request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
 
-        Set<String> allSpecies = experiment.getSpecies();
+        Set<String> allSpecies = experiment.getOrganisms();
 
         model.addAttribute(EXPERIMENT_TYPE_ATTRIBUTE, experiment.getType());
 

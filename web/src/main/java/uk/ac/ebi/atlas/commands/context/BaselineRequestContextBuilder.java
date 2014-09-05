@@ -106,9 +106,9 @@ public class BaselineRequestContextBuilder {
             }
         }
         if (filteredBySpecie == null) {
-            filteredBySpecie = experiment.getFirstSpecies().toLowerCase();
+            filteredBySpecie = experiment.getFirstOrganism().toLowerCase();
         }
-        Map<String, String> speciesMapping = experiment.getSpeciesMapping();
+        Map<String, String> speciesMapping = experiment.getOrganismToEnsemblSpeciesMapping();
         if (speciesMapping.containsKey(filteredBySpecie)) {
             filteredBySpecie = speciesMapping.get(filteredBySpecie);
         }

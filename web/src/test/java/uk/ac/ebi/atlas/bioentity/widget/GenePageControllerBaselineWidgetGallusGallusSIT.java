@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.bioentity.widget;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -36,7 +36,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class BaselineReferenceExperimentForGallusGallusSIT extends SinglePageSeleniumFixture {
+public class GenePageControllerBaselineWidgetGallusGallusSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSGALG00000006591";
 

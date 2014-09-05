@@ -29,8 +29,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.annotation.PostConstruct;
@@ -110,9 +110,9 @@ public class BaselineExperimentsController {
             try {
                 BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
 
-                for (String specie : experiment.getSpecies()) {
+                for (String specie : experiment.getOrganisms()) {
                     experimentAccessionsBySpecies.put(specie, experimentAccession);
-                    if (experiment.getSpecies().size() > 1) {
+                    if (experiment.getOrganisms().size() > 1) {
                         experimentLinks.put(experimentAccession + specie, "?serializedFilterFactors=ORGANISM:" + specie);
                     } else {
                         experimentLinks.put(experimentAccession + specie, "");

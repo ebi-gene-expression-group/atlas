@@ -86,6 +86,8 @@ public class GeneSetPageController extends BioEntityPageController {
 
         model.addAttribute("isGeneSet", true);
 
+        addBaselineCounts(identifier, model);
+
         // load diff results in same way as BioentitiesSearchController
         String specie = "";
         Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(identifier, specie, true);
@@ -93,9 +95,6 @@ public class GeneSetPageController extends BioEntityPageController {
         if (!geneIdsResult.isPresent() || geneIdsResult.get().isEmpty()) {
             throw new ResourceNotFoundException(identifier);
         }
-
-        addBaselineCounts(identifier, model);
-
         loadDifferentialResults(geneIdsResult.get(), model);
 
         return super.showBioentityPage(identifier, model, false);

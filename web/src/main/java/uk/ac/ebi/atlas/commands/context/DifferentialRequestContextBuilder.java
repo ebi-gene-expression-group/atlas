@@ -60,7 +60,7 @@ public class DifferentialRequestContextBuilder<T extends DifferentialRequestCont
 
         getRequestContext().setSelectedQueryFactors(getSelectedQueryContrasts(experiment));
 
-        getRequestContext().setFilteredBySpecies(experiment.getFirstSpecies().toLowerCase());
+        getRequestContext().setFilteredBySpecies(experiment.getFirstOrganism().toLowerCase());
 
         getRequestContext().setAllQueryFactors(experiment.getContrasts());
 
