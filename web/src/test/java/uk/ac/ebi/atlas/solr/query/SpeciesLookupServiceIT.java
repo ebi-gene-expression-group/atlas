@@ -20,6 +20,16 @@ public class SpeciesLookupServiceIT {
     SpeciesLookupService speciesLookupService;
 
     @Test
+    public void widget_lookupSingleSpeciesGeneSet() {
+        assertThat(speciesLookupService.fetchFirstSpeciesByField(null, "Q9Y615"), is("homo sapiens"));
+    }
+
+    @Test
+    public void widget_lookupProtein() {
+        assertThat(speciesLookupService.fetchFirstSpeciesByField(null, "REACT_1619"), is("homo sapiens"));
+    }
+
+    @Test
     public void reactome_singleSpeciesGeneSet() {
         // REACT pathway ids are always for a single species
         SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("REACT_1619");

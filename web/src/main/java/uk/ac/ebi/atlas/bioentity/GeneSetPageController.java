@@ -123,7 +123,7 @@ public class GeneSetPageController extends BioEntityPageController {
     @Override
     protected void initBioentityPropertyService(String identifier) {
         SpeciesLookupService.Result speciesResult = speciesLookupService.fetchSpeciesForGeneSet(identifier);
-        String species = speciesResult.isEmpty() ? "" : speciesResult.firstSpecies();
+        String species = speciesResult.isSingleSpecies() ? speciesResult.firstSpecies() : "";
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
 

@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -66,6 +67,10 @@ public class SpeciesLookupService {
     }
 
     public String fetchFirstSpeciesByField(String fieldName, String multiTermQuery) {
+        if (StringUtils.isBlank(fieldName)) {
+            fieldName = PROPERTY_LOWER_FIELD;
+        }
+
         List<String> queryTokens = bioentityPropertyValueTokenizer.split(multiTermQuery);
         for (String queryToken : queryTokens) {
             Optional<String> species = fetchFirstSpecies(fieldName, encloseInQuotes(queryToken));
@@ -128,6 +133,10 @@ public class SpeciesLookupService {
 
         public boolean isMultiSpecies() {
             return species.size() > 1;
+        }
+
+        public boolean isSingleSpecies() {
+            return species.size() == 1;
         }
 
         public String firstSpecies() {
