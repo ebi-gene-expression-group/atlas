@@ -59,6 +59,7 @@ public class SpeciesLookupService {
     }
 
     // used for looking up species for a gene/protein/transcript/mirna/etc. id
+    // they will only have a single species
     public String fetchSpeciesForBioentityId(String identifier) {
         // eg: bioentity_identifier:ENSMUSG00000021789
         return fetchFirstSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, identifier);
@@ -107,6 +108,8 @@ public class SpeciesLookupService {
         query.addFacetField(SPECIES_FIELD);
         query.setRows(0);
         query.setFacet(true);
+
+        // just get first 2 species for performance reasons, we only need to know if multi-species exist, not what they are
         query.setFacetLimit(2);
         query.setFacetMinCount(1);
 
@@ -135,8 +138,5 @@ public class SpeciesLookupService {
             return species.isEmpty();
         }
     }
-
-
-
 
 }
