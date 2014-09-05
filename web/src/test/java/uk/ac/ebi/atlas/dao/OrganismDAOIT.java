@@ -7,7 +7,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
-
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,7 +16,7 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class OrganismDAOTest {
+public class OrganismDAOIT {
 
     @Inject
     private OrganismDAO subject;

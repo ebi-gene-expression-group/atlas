@@ -7,7 +7,7 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.endsWith;
 
-public class BioentitiesSearchControllerRedirects extends RestAssuredFixture {
+public class BioentitiesSearchControllerRedirectsSIT extends RestAssuredFixture {
 
 
     void assertRedirect(String from, String to) {
