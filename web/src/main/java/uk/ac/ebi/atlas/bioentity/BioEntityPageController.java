@@ -39,6 +39,7 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWidgetQuery
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
@@ -53,6 +54,8 @@ public abstract class BioEntityPageController {
 
     protected SolrQueryService solrQueryService;
 
+    protected SpeciesLookupService speciesLookupService;
+
     private BioEntityCardProperties bioEntityCardProperties;
 
     private BioEntityPropertyService bioEntityPropertyService;
@@ -65,6 +68,10 @@ public abstract class BioEntityPageController {
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
 
+    @Inject
+    public void setSpeciesLookupService(SpeciesLookupService speciesLookupService) {
+        this.speciesLookupService = speciesLookupService;
+    }
 
     @Inject
     public void setExperimentTrader(ExperimentTrader experimentTrader) {
@@ -161,7 +168,7 @@ public abstract class BioEntityPageController {
     }
 
     String fetchSpecies(String identifier) {
-        return solrQueryService.findSpeciesForBioentityId(identifier);
+        return speciesLookupService.fetchSpeciesByBioentityId(identifier);
     }
 
     protected Map<String, String> buildPropertyNamesByTypeMap() {
@@ -181,7 +188,7 @@ public abstract class BioEntityPageController {
     abstract String getBioentityPropertyName();
 
     protected void initBioentityPropertyService(String identifier) {
-        String species = solrQueryService.findSpeciesForBioentityId(identifier);
+        String species = speciesLookupService.fetchSpeciesByBioentityId(identifier);
 
         SortedSetMultimap<String, String> propertyValuesByType = solrQueryService.fetchGenePageProperties(identifier, getPagePropertyTypes());
         SortedSet<String> entityNames = propertyValuesByType.get(getBioentityPropertyName());

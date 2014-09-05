@@ -27,6 +27,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.solr.query.builders.FacetedPropertyValueQueryBuilder;
+import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilder;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -48,7 +49,7 @@ public class PropertyValueQueryBuilderTest {
 
         // then
         assertThat(solrQuery.getQuery(), is(SolrQueryService.PROPERTY_EDGENGRAM_FIELD + ":\"geneX\" AND " +
-                SolrQueryService.SPECIES_FIELD + ":\"species\" AND (" +
+                SolrQueryBuilder.SPECIES_FIELD + ":\"species\" AND (" +
                 SolrQueryService.BIOENTITY_TYPE_FIELD + ":\"ensgene\") AND (" +
                 SolrQueryService.PROPERTY_NAME_FIELD + ":\"prototype1\" OR " +
                 SolrQueryService.PROPERTY_NAME_FIELD + ":\"prototype2\")"));
