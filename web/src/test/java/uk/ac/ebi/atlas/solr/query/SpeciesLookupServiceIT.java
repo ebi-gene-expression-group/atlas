@@ -19,21 +19,30 @@ public class SpeciesLookupServiceIT {
     @Inject
     SpeciesLookupService speciesLookupService;
 
-
     @Test
-    public void singleSpeciesGeneSet_React() {
+    public void reactome_singleSpeciesGeneSet() {
+        // REACT ids are always for a single species
         assertThat(speciesLookupService.fetchSpeciesForGeneSet("REACT_1619"), is("homo sapiens"));
     }
 
     @Test
-    public void multiSpeciesGeneSet_Interpro() {
+    public void interPro_multiSpeciesGeneSet() {
         //assertThat(speciesLookupService.fetchSpeciesForGeneSet("IPR027417"), is("homo sapiens"));
-
     }
 
     @Test
-    public void multiSpeciesGeneSet_GO() {
+    public void interPro_singleSpeciesGeneSet() {
+        assertThat(speciesLookupService.fetchSpeciesForGeneSet("IPR016938"), is("schizosaccharomyces pombe"));
+    }
+
+    @Test
+    public void GO_multiSpeciesGeneSet() {
         //assertThat(speciesLookupService.fetchSpeciesForGeneSet("GO:0003674"), is("homo sapiens"));
+    }
+
+    @Test
+    public void GO_singleSpeciesGeneSet() {
+        assertThat(speciesLookupService.fetchSpeciesForGeneSet("GO:0001962"), is("rattus norvegicus"));
     }
 
     @Test

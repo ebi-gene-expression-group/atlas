@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
+import com.google.common.base.Optional;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.context.annotation.Scope;
@@ -69,9 +70,9 @@ public class SpeciesLookupService {
     public String fetchSpeciesByField(String fieldName, String query) {
         List<String> queryTokens = bioentityPropertyValueTokenizer.split(query);
         for (String queryToken : queryTokens) {
-            Collection<String> species = executeSpeciesQuery(fieldName, encloseInQuotes(queryToken));
-            if (!species.isEmpty()) {
-                return species.iterator().next();
+            Optional<String> species = fetchFirstSpecies(fieldName, encloseInQuotes(queryToken));
+            if (species.isPresent()) {
+                return species.get();
             }
         }
         throw new ResourceNotFoundException("Species can't be determined for " + fieldName + ":" + query);
@@ -82,16 +83,19 @@ public class SpeciesLookupService {
         return "\"" + queryToken + "\"";
     }
 
-    Collection<String> executeSpeciesQuery(String fieldName, String queryToken) {
+    Optional<String> fetchFirstSpecies(String fieldName, String queryToken) {
         LOGGER.debug("lookup species for " + fieldName + ":" + queryToken);
 
         SolrQuery query = new SolrQuery(fieldName + ":" + queryToken);
 
         //fields to be returned, ie: fl=species
         query.setFields(SPECIES_FIELD);
-        query.setRows(100);
+        query.setRows(1);
 
-        return solrServer.query(query, SPECIES_FIELD, false);
+        Collection<String> species = solrServer.query(query, SPECIES_FIELD, false);
+
+        return species.isEmpty() ? Optional.<String>absent() : Optional.of(species.iterator().next());
     }
+
 
 }
