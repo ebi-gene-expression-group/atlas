@@ -84,6 +84,7 @@ public class GeneIdSuggestionService {
         return fetchFacetedResults(solrQuery);
     }
 
+    //TODO: replace with SolrUtil.extractFirstFacetValues
     List<String> fetchFacetedResults(SolrQuery solrQuery) {
 
         QueryResponse solrResponse = solrServer.query(solrQuery);

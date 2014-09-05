@@ -23,9 +23,12 @@
 package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.solr.SolrUtil;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -58,24 +61,18 @@ public class SpeciesLookupService {
     // used for looking up species for a gene/protein/transcript/mirna/etc. id
     public String fetchSpeciesForBioentityId(String identifier) {
         // eg: bioentity_identifier:ENSMUSG00000021789
-        return fetchSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, identifier);
+        return fetchFirstSpeciesByField(BIOENTITY_IDENTIFIER_FIELD, identifier);
     }
 
-    // used for looking up species for gene sets (goterm, interpro, react etc.)
-    public String fetchSpeciesForGeneSet(String propertyValue) {
-        // eg: property_value_lower:"IPR027417"
-        return fetchSpeciesByField(PROPERTY_LOWER_FIELD, propertyValue);
-    }
-
-    public String fetchSpeciesByField(String fieldName, String query) {
-        List<String> queryTokens = bioentityPropertyValueTokenizer.split(query);
+    public String fetchFirstSpeciesByField(String fieldName, String multiTermQuery) {
+        List<String> queryTokens = bioentityPropertyValueTokenizer.split(multiTermQuery);
         for (String queryToken : queryTokens) {
             Optional<String> species = fetchFirstSpecies(fieldName, encloseInQuotes(queryToken));
             if (species.isPresent()) {
                 return species.get();
             }
         }
-        throw new ResourceNotFoundException("Species can't be determined for " + fieldName + ":" + query);
+        throw new ResourceNotFoundException("Species can't be determined for " + fieldName + ":" + multiTermQuery);
     }
 
     // surround in quotes, so queries with special chars work, eg: "GO:0003674"
@@ -83,8 +80,9 @@ public class SpeciesLookupService {
         return "\"" + queryToken + "\"";
     }
 
+    // this is faster than fetchSpeciesForGeneSet because it doesn't facet
     Optional<String> fetchFirstSpecies(String fieldName, String queryToken) {
-        LOGGER.debug("lookup species for " + fieldName + ":" + queryToken);
+        LOGGER.debug("fetch first species for " + fieldName + ":" + queryToken);
 
         SolrQuery query = new SolrQuery(fieldName + ":" + queryToken);
 
@@ -96,6 +94,49 @@ public class SpeciesLookupService {
 
         return species.isEmpty() ? Optional.<String>absent() : Optional.of(species.iterator().next());
     }
+
+    // used for looking up species for gene sets (go, interpro, react etc.)
+    // react are always single species, by go and interpro gene sets can be multi-species
+    public Result fetchSpeciesForGeneSet(String term) {
+        // eg: property_value_lower:"IPR027417"
+        String queryText = PROPERTY_LOWER_FIELD + ":" + encloseInQuotes(term);
+        LOGGER.debug("fetch species for geneset " + queryText);
+
+        SolrQuery query = new SolrQuery(queryText);
+
+        query.addFacetField(SPECIES_FIELD);
+        query.setRows(0);
+        query.setFacet(true);
+        query.setFacetLimit(2);
+        query.setFacetMinCount(1);
+
+        QueryResponse solrResponse = solrServer.query(query);
+        ImmutableSet<String> species = SolrUtil.extractFirstFacetValues(solrResponse);
+
+        return new Result(species);
+    }
+
+    public class Result {
+        public final ImmutableSet<String> species;
+
+        public Result(ImmutableSet<String> species) {
+            this.species = species;
+        }
+
+        public boolean isMultiSpecies() {
+            return species.size() > 1;
+        }
+
+        public String firstSpecies() {
+            return species.iterator().next();
+        }
+
+        public boolean isEmpty() {
+            return species.isEmpty();
+        }
+    }
+
+
 
 
 }

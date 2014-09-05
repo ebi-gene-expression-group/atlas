@@ -39,6 +39,7 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroupSearchService;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -121,16 +122,14 @@ public class GeneSetPageController extends BioEntityPageController {
 
     @Override
     protected void initBioentityPropertyService(String identifier) {
-        String trimmedIdentifier = identifier.replaceAll("\"", "");
-
-        // reactome are singe species, other genesets can be multi-species so don't look them up
-        String species = GeneSetUtil.isReactome(identifier) ? speciesLookupService.fetchSpeciesForGeneSet(trimmedIdentifier): "";
+        SpeciesLookupService.Result speciesResult = speciesLookupService.fetchSpeciesForGeneSet(identifier);
+        String species = speciesResult.isEmpty() ? "" : speciesResult.firstSpecies();
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
 
         if (GeneSetUtil.isReactome(identifier)) {
-            propertyValuesByType.put("reactome", trimmedIdentifier.toUpperCase());
-            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeClient.fetchPathwayNameFailSafe(trimmedIdentifier));
+            propertyValuesByType.put("reactome", identifier.toUpperCase());
+            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeClient.fetchPathwayNameFailSafe(identifier));
         } else if (GeneSetUtil.isGeneOntology(identifier)) {
             String term = goTermTrader.getTerm(identifier);
             propertyValuesByType.put("go", identifier);
@@ -142,15 +141,18 @@ public class GeneSetPageController extends BioEntityPageController {
         }
 
         SortedSet<String> names = Sets.newTreeSet();
-        names.add(trimmedIdentifier);
+        names.add(identifier);
 
-        bioEntityPropertyService.init(species, propertyValuesByType, names, trimmedIdentifier);
+        bioEntityPropertyService.init(species, propertyValuesByType, names, identifier);
     }
 
     @Override
     String fetchSpecies(String identifier){
-        String trimmedIdentifier = identifier.replaceAll("\"", "");
-        return speciesLookupService.fetchSpeciesForGeneSet(trimmedIdentifier);
+        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet(identifier);
+        if (result.isEmpty()) {
+            throw new ResourceNotFoundException("Species can't be determined for " + identifier);
+        }
+        return result.firstSpecies();
     }
 
     @Override

@@ -21,28 +21,38 @@ public class SpeciesLookupServiceIT {
 
     @Test
     public void reactome_singleSpeciesGeneSet() {
-        // REACT ids are always for a single species
-        assertThat(speciesLookupService.fetchSpeciesForGeneSet("REACT_1619"), is("homo sapiens"));
+        // REACT pathway ids are always for a single species
+        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("REACT_1619");
+        assertThat(result.isMultiSpecies(), is(false));
+        assertThat(result.firstSpecies(), is("homo sapiens"));
     }
 
     @Test
     public void interPro_multiSpeciesGeneSet() {
-        //assertThat(speciesLookupService.fetchSpeciesForGeneSet("IPR027417"), is("homo sapiens"));
+        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("IPR027417");
+        assertThat(result.isMultiSpecies(), is(true));
+        assertThat(result.firstSpecies(), is("homo sapiens"));
     }
 
     @Test
     public void interPro_singleSpeciesGeneSet() {
-        assertThat(speciesLookupService.fetchSpeciesForGeneSet("IPR016938"), is("schizosaccharomyces pombe"));
+        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("IPR016938");
+        assertThat(result.isMultiSpecies(), is(false));
+        assertThat(result.firstSpecies(), is("schizosaccharomyces pombe"));
     }
 
     @Test
     public void GO_multiSpeciesGeneSet() {
-        //assertThat(speciesLookupService.fetchSpeciesForGeneSet("GO:0003674"), is("homo sapiens"));
+        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("GO:0003674");
+        assertThat(result.isMultiSpecies(), is(true));
+        assertThat(result.firstSpecies(), is("arabidopsis thaliana"));
     }
 
     @Test
     public void GO_singleSpeciesGeneSet() {
-        assertThat(speciesLookupService.fetchSpeciesForGeneSet("GO:0001962"), is("rattus norvegicus"));
+        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("GO:0001962");
+        assertThat(result.isMultiSpecies(), is(false));
+        assertThat(result.firstSpecies(), is("rattus norvegicus"));
     }
 
     @Test
