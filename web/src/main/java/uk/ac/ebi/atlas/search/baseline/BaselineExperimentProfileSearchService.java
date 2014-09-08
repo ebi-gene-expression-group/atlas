@@ -27,7 +27,6 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Multimaps;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
@@ -45,8 +44,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 @Named
 @Scope("request")
@@ -73,8 +70,6 @@ public class BaselineExperimentProfileSearchService {
 
     public BaselineTissueExperimentSearchResult query(String geneQuery, String species, boolean isExactMatch) throws GenesNotFoundException {
         LOGGER.info(String.format("<query> geneQuery=%s", geneQuery));
-
-        checkArgument(StringUtils.isNotBlank(species), "Species must be specified");
 
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();

@@ -110,7 +110,7 @@
 
         </c:if>
 
-        <c:set var="showWidget" value="${singleBaselineSearchResult || widgetHasBaselineProfiles}"/>
+        <c:set var="showWidget" value="${widgetHasBaselineProfiles}"/>
 
         <ul id="baselineProfileHeader" class="bioEntityCardHeader">
             <img id="baseline-info-image" title="Baseline Expression"
@@ -319,11 +319,11 @@
         helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
 
-        var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${singleBaselineSearchResult ? "&species=".concat(species) : ""}";
+        var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
 
         <c:choose>
 
-        <c:when test="${widgetHasBaselineProfiles || singleBaselineSearchResult}">
+        <c:when test="${widgetHasBaselineProfiles}">
 
         new Biojs.AtlasHeatmap({
             featuresUrl: '/gxa/widgets/heatmap/bioentity?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}${disableGeneLinks ? "&disableGeneLinks=true" : ""}' + widgetParameters,

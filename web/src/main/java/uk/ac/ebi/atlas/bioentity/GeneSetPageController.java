@@ -38,6 +38,8 @@ import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroupSearchService;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
+import uk.ac.ebi.atlas.search.baseline.BaselineTissueExperimentSearchResult;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
@@ -51,19 +53,23 @@ import java.util.SortedSet;
 @Scope("request")
 public class GeneSetPageController extends BioEntityPageController {
 
-    private SolrQueryService solrQueryService;
+    private final SolrQueryService solrQueryService;
 
-    private BioEntityPropertyService bioEntityPropertyService;
+    private final BioEntityPropertyService bioEntityPropertyService;
 
-    private ReactomeClient reactomeClient;
+    private final ReactomeClient reactomeClient;
 
-    private GoTermTrader goTermTrader;
+    private final GoTermTrader goTermTrader;
 
-    private InterProTermTrader interProTermTrader;
+    private final InterProTermTrader interProTermTrader;
 
     private String[] geneSetPagePropertyTypes;
 
-    private BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService;
+    private final BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService;
+
+    private final BaselineExperimentProfileSearchService baselineExperimentProfileSearchService;
+
+    private SpeciesLookupService.Result speciesResult;
 
     @Value("#{configuration['index.property_names.genesetpage']}")
     void setGenePagePropertyTypes(String[] geneSetPagePropertyTypes) {
@@ -71,13 +77,14 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Inject
-    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeClient reactomeClient, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader, BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService) {
+    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeClient reactomeClient, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader, BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService, BaselineExperimentProfileSearchService baselineExperimentProfileSearchService) {
         this.solrQueryService = solrQueryService;
         this.bioEntityPropertyService = bioEntityPropertyService;
         this.reactomeClient = reactomeClient;
         this.goTermTrader = goTermTrader;
         this.interProTermTrader = interProTermTrader;
         this.baselineExperimentAssayGroupSearchService = baselineExperimentAssayGroupSearchService;
+        this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
     }
 
     // identifier = Reactome, GO, or Interpro term
@@ -87,7 +94,9 @@ public class GeneSetPageController extends BioEntityPageController {
 
         model.addAttribute("isGeneSet", true);
 
-        addBaselineCounts(identifier, model);
+        speciesResult = speciesLookupService.fetchSpeciesForGeneSet(identifier);
+
+        addBaselineResults(identifier, model);
 
         // load diff results in same way as BioentitiesSearchController
         String specie = "";
@@ -99,6 +108,33 @@ public class GeneSetPageController extends BioEntityPageController {
         loadDifferentialResults(geneIdsResult.get(), model);
 
         return super.showBioentityPage(identifier, model, false);
+    }
+
+    private void addBaselineResults(String identifier, Model model) {
+        if (speciesResult.isMultiSpecies()) {
+            addBaselineCounts(identifier, model);
+        } else {
+            String species = speciesResult.firstSpecies();
+
+            BaselineTissueExperimentSearchResult tissueResults;
+            try {
+                 tissueResults = baselineExperimentProfileSearchService.query(identifier, species, true);
+            } catch (GenesNotFoundException e) {
+                throw new ResourceNotFoundException(identifier);
+            }
+
+            if (tissueResults.isEmpty()) {
+                addBaselineCounts(identifier, model);
+            } else {
+                addWidget(model, species);
+            }
+
+        }
+    }
+
+    private void addWidget(Model model, String species) {
+        model.addAttribute("widgetHasBaselineProfiles", true);
+        model.addAttribute("species", species);
     }
 
     private void addBaselineCounts(String identifier, Model model) {
@@ -122,7 +158,6 @@ public class GeneSetPageController extends BioEntityPageController {
 
     @Override
     protected void initBioentityPropertyService(String identifier) {
-        SpeciesLookupService.Result speciesResult = speciesLookupService.fetchSpeciesForGeneSet(identifier);
         String species = speciesResult.isSingleSpecies() ? speciesResult.firstSpecies() : "";
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
