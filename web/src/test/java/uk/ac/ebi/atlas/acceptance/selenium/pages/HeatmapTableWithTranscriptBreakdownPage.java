@@ -28,7 +28,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -36,10 +35,7 @@ import java.util.List;
 
 public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
 
-    private static String TRANSCRIPT_COLOR_CELLS = "#transcripts-pie .legendColorBox";
-
-    @FindBy(id = "heatmap-table")
-    private WebElement heatmapTable;
+    private static final String TRANSCRIPT_COLOR_CELLS = "#transcripts-pie .legendColorBox";
 
     public HeatmapTableWithTranscriptBreakdownPage(WebDriver driver, String experimentAccession) {
         super(driver, experimentAccession);

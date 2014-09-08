@@ -33,16 +33,20 @@ public class HeatmapTableWidgetPage extends HeatmapTableWithTranscriptBreakdownP
     private final String pageLocation;
 
     public HeatmapTableWidgetPage(WebDriver driver, String httpParameters) {
-        this(driver, "/gxa/widgets/heatmap/protein", httpParameters);
+        this(driver, "/widgets/heatmap/protein", httpParameters);
     }
 
     private HeatmapTableWidgetPage(WebDriver driver, String pageLocation, String httpParameters) {
         super(driver, null, httpParameters);
-        this.pageLocation = pageLocation;
+        this.pageLocation = "/gxa" + pageLocation;
     }
 
     public static HeatmapTableWidgetPage create(WebDriver driver, String httpParameters) {
-        return new HeatmapTableWidgetPage(driver, "/gxa/widgets/heatmap/bioentity", httpParameters);
+        return new HeatmapTableWidgetPage(driver, "/widgets/heatmap/bioentity", httpParameters);
+    }
+
+    public static HeatmapTableWidgetPage createGenePage(WebDriver driver, String geneId) {
+        return new HeatmapTableWidgetPage(driver, "/genes/" + geneId, "");
     }
 
     public String downloadProfilesLink() {
