@@ -63,8 +63,9 @@ var TranscriptPopup = (function ($) {
         );
     }
 
+    //TODO: remove selectedFilterFactors param
     //NB: ensemblSpecies is the first two words only, with underscores instead of spaces, and all lower case except for the first character
-    var display = function display(contextRoot, experimentAccession, geneId, geneName, factorType, factorValue, selectedFilterFactorsJson, ensemblHost, ensemblSpecies) {
+    var display = function display(contextRoot, experimentAccession, geneId, geneName, factorType, factorValue, selectedFilterFactorsJson, serializedFilterFactors, ensemblHost, ensemblSpecies) {
         $.ajax({
             url: contextRoot + "/json/transcripts/" + experimentAccession,
             type: "GET",
@@ -72,7 +73,8 @@ var TranscriptPopup = (function ($) {
                 'geneId': geneId,
                 'factorType': factorType,
                 'factorValue': factorValue,
-                'selectedFilterFactorsJson': JSON.stringify(selectedFilterFactorsJson)
+                'selectedFilterFactorsJson': JSON.stringify(selectedFilterFactorsJson),
+                'serializedFilterFactors': serializedFilterFactors ? serializedFilterFactors : undefined
             },
             datatype: 'json',
             success: function (data) {

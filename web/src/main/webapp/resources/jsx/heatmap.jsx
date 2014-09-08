@@ -748,7 +748,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     }
                     else if (type == TypeEnum.MULTIEXPERIMENT) {
                         return (
-                            <CellMultiExperiment factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} id={this.props.id} name={this.props.name}/>
+                            <CellMultiExperiment factorName={expression.factorName} serializedFilterFactors={this.props.serializedFilterFactors} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} id={this.props.id} name={this.props.name}/>
                             );
                     }
                 },
@@ -804,7 +804,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             function unknownCell() {
                 return (
-                    <span id='unknownCell' ref='unknownCell' data-help-loc='#heatMapTableUnknownCell'></span>
+                    <span ref='unknownCell' data-help-loc='#heatMapTableUnknownCell'></span>
                     );
             }
 
@@ -821,7 +821,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             id = this.props.id,
                             name = this.props.name;
 
-                        TranscriptPopup.display(contextRoot, experimentAccession, id, name, queryFactorType, factorValue, selectedFilterFactorsJson, ensemblHost, ensemblSpecies);
+                        TranscriptPopup.display(contextRoot, experimentAccession, id, name, queryFactorType, factorValue, selectedFilterFactorsJson, undefined, ensemblHost, ensemblSpecies);
                     }
                 },
 
@@ -856,23 +856,39 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             });
         })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
 
-        var CellMultiExperiment = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, selectedFilterFactorsJson, queryFactorType) {
 
+        var CellMultiExperiment = (function (contextRoot, ensemblHost, ensemblSpecies, queryFactorType, isGeneSetQuery, geneId, geneName) {
+            
             function isNAExpression(value) {
                 return (value === "NA")
             }
-
+            
             function noExpression(value) {
                 return !value;
             }
 
-            function unknownCell() {
+            function tissueNotStudiedInExperiment() {
                 return (
-                    <span id='unknownCell' ref='unknownCell'>X</span>
+                    <span>X</span>
                     );
             }
 
+            function hasTranscriptTooltip(props) {
+                return (!isGeneSetQuery && props.value && !isNAExpression(props.value));
+            }
+
             return React.createClass({
+
+                onClick: function () {
+                    if (hasTranscriptTooltip(this.props)) {
+                        var factorValue = this.props.factorName,
+                            serializedFilterFactors = this.props.serializedFilterFactors,
+                            experimentAccession = this.props.id;
+
+                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, queryFactorType, factorValue, undefined, serializedFilterFactors, ensemblHost, ensemblSpecies);
+                    }
+                },
+
                 render: function () {
                     if (noExpression(this.props.value)) {
                         return (<td></td>);
@@ -880,19 +896,23 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                     var style = {"background-color": this.props.color};
 
+                    if (hasTranscriptTooltip(this.props)) {
+                        style.cursor = "pointer";
+                    }
+
                     return (
-                        <td style={style}>
+                        <td style={style} onClick={this.onClick}>
                             <div
                             className="heatmap_cell"
                             style={{visibility: isNAExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
                             data-svg-path-id={this.props.svgPathId}>
-                                {isNAExpression(this.props.value) ? unknownCell() : this.props.value}
+                                {isNAExpression(this.props.value) ? tissueNotStudiedInExperiment() : this.props.value}
                             </div>
                         </td>
                         );
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
+        })(heatmapConfig.contextRoot, ensemblHost, ensemblSpecies, heatmapConfig.queryFactorType, heatmapConfig.isGeneSetQuery, heatmapConfig.geneQuery, heatmapConfig.geneQuery);
 
         var CellDifferential = (function () {
 

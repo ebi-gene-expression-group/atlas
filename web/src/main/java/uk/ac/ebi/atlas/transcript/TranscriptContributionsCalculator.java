@@ -56,7 +56,7 @@ public class TranscriptContributionsCalculator {
 
         List<TranscriptProfile> transcriptProfiles = Lists.newArrayList(transcriptProfileDao.findTranscriptProfiles(experimentAccession, geneId));
 
-        LOGGER.debug("<getTranscriptContributions> transcriptProfiles:" + transcriptProfiles);
+        //LOGGER.debug("<getTranscriptContributions> transcriptProfiles:" + transcriptProfiles);
 
         int factorIndex = getFactorIndex(experimentAccession, factorGroup);
 

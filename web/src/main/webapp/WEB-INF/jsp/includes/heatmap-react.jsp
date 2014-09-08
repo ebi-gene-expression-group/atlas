@@ -88,6 +88,7 @@
                 contextRoot: '${pageContext.request.contextPath}',
                 experimentAccession: '${experimentAccession}',
                 geneQuery: '${geneQuery}',
+                isGeneSetQuery: ${not empty isGeneSetQuery ? isGeneSetQuery : 'undefined'},
                 accessKey: '${param.accessKey}',
                 species: '${species}',
                 ensemblDB: '${ensemblDB}',
