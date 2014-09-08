@@ -858,8 +858,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
         var CellMultiExperiment = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, selectedFilterFactorsJson, queryFactorType) {
 
-            function isUnknownExpression(value) {
-                return (value === "UNKNOWN")
+            function isNAExpression(value) {
+                return (value === "NA")
             }
 
             function noExpression(value) {
@@ -868,7 +868,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
             function unknownCell() {
                 return (
-                    <span id='unknownCell' ref='unknownCell'></span>
+                    <span id='unknownCell' ref='unknownCell'>X</span>
                     );
             }
 
@@ -884,9 +884,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         <td style={style}>
                             <div
                             className="heatmap_cell"
-                            style={{visibility: isUnknownExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
+                            style={{visibility: isNAExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
                             data-svg-path-id={this.props.svgPathId}>
-                                {isUnknownExpression(this.props.value) ? unknownCell() : this.props.value}
+                                {isNAExpression(this.props.value) ? unknownCell() : this.props.value}
                             </div>
                         </td>
                         );
