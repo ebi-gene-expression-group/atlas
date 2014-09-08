@@ -12,14 +12,13 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class RnaSeqBslnQueryBuilder {
 
-    static final String IDENTIFIER = "IDENTIFIER";
     static final String EXPERIMENT = "EXPERIMENT";
     static final String ASSAY_GROUP_ID = "ASSAYGROUPID";
-    static final String EXPRESSION = "EXPRESSION";
+    static final String EXPRESSION = "SUM(RBE.EXPRESSION)";
 
     //TODO - should fetch public experiments only
-    static final String SELECT_QUERY = "SELECT rbe.identifier, rbe.experiment, rbe.assaygroupid, rbe.expression from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe ";
-    static final String FOR_GENES = "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value ";
+    static final String SELECT_QUERY = "SELECT rbe.experiment, rbe.assaygroupid, SUM(rbe.expression) from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe ";
+    static final String FOR_GENES = "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value GROUP BY rbe.experiment, rbe.assaygroupid";
 
     private ARRAY geneIds;
 

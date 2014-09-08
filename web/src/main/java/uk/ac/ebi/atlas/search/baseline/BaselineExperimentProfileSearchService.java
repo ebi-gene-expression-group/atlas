@@ -32,7 +32,10 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
@@ -93,7 +96,7 @@ public class BaselineExperimentProfileSearchService {
             return new BaselineTissueExperimentSearchResult();
         }
 
-        List<RnaSeqBslnExpression> expressions = rnaSeqBslnExpressionDao.fetchNonSpecificExpression(geneIds.get());
+        List<RnaSeqBslnExpression> expressions = rnaSeqBslnExpressionDao.fetchAverageExpressionByExperimentAssayGroup(geneIds.get());
 
         return buildProfilesForTissueExperiments(expressions);
     }
