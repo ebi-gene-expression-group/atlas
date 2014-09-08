@@ -68,7 +68,7 @@ public class GeneSetPageControllerSingleSpeciesGeneSetBaselineWidgetSIT extends 
 
         assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Vertebrate tissues"));
         assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=REACT_1619"));
-        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-GEOD-30352?geneQuery=REACT_1619&serializedFilterFactors=ORGANISM:Homo%20sapiens"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-GEOD-30352?geneQuery=REACT_1619&serializedFilterFactors=ORGANISM%3AHomo%20sapiens"));
 
         //System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
         //assertThat(geneNames, contains("REACT_1698"));
