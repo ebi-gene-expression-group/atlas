@@ -27,20 +27,20 @@ public class RnaSeqBslnExpressionDaoIT {
 
     @Test
     public void findsExpressionByGeneId() throws Exception {
-        List<RnaSeqBslnExpression> results = subject.fetchNonSpecificExpression(ImmutableList.of("ENSMUSG00000093014"));
+        List<RnaSeqBslnExpression> results = subject.fetchAverageExpressionByExperimentAssayGroup(ImmutableList.of("ENSMUSG00000093014"));
         assertThat(results, hasSize(3));
 
 
-        RnaSeqBslnExpression g3 = RnaSeqBslnExpression.create("ENSMUSG00000093014", "E-MTAB-599", "g3", 54922);
-        RnaSeqBslnExpression g5 = RnaSeqBslnExpression.create("ENSMUSG00000093014", "E-MTAB-599", "g5", 48948);
-        RnaSeqBslnExpression g6 = RnaSeqBslnExpression.create("ENSMUSG00000093014", "E-MTAB-599", "g6", 387123);
+        RnaSeqBslnExpression g3 = RnaSeqBslnExpression.create("E-MTAB-599", "g3", 54922);
+        RnaSeqBslnExpression g5 = RnaSeqBslnExpression.create("E-MTAB-599", "g5", 48948);
+        RnaSeqBslnExpression g6 = RnaSeqBslnExpression.create("E-MTAB-599", "g6", 387123);
 
         assertThat(results, containsInAnyOrder(g3, g5, g6));
     }
 
     @Test
     public void doesNotFindNonExistentGenes() throws Exception {
-        List<RnaSeqBslnExpression> results = subject.fetchNonSpecificExpression(ImmutableList.of("DOES_NOT_EXIST"));
+        List<RnaSeqBslnExpression> results = subject.fetchAverageExpressionByExperimentAssayGroup(ImmutableList.of("DOES_NOT_EXIST"));
         assertThat(results, is(empty()));
     }
 

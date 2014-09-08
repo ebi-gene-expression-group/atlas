@@ -125,4 +125,9 @@ public class Experiment implements Serializable {
         return "";
     }
 
+    public boolean isMultiOrganismExperiment() {
+        return getOrganisms().size() > 1;
+    }
+
+
 }

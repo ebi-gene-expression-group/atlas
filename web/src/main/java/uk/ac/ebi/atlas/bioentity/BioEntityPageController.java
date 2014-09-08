@@ -168,7 +168,7 @@ public abstract class BioEntityPageController {
     }
 
     String fetchSpecies(String identifier) {
-        return speciesLookupService.fetchSpeciesByBioentityId(identifier);
+        return speciesLookupService.fetchSpeciesForBioentityId(identifier);
     }
 
     protected Map<String, String> buildPropertyNamesByTypeMap() {
@@ -188,7 +188,7 @@ public abstract class BioEntityPageController {
     abstract String getBioentityPropertyName();
 
     protected void initBioentityPropertyService(String identifier) {
-        String species = speciesLookupService.fetchSpeciesByBioentityId(identifier);
+        String species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
 
         SortedSetMultimap<String, String> propertyValuesByType = solrQueryService.fetchGenePageProperties(identifier, getPagePropertyTypes());
         SortedSet<String> entityNames = propertyValuesByType.get(getBioentityPropertyName());

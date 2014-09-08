@@ -120,7 +120,7 @@ public class BioentitiesSearchController {
 
             model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
             if (baselineExperimentAssayGroups.size() == 1 & !requestParameters.hasCondition()) {
-                model.addAttribute("singleBaselineSearchResult", true);
+                model.addAttribute("widgetHasBaselineProfiles", true);
                 model.addAttribute("species", baselineExperimentAssayGroups.iterator().next().getSpecies());
             }
 

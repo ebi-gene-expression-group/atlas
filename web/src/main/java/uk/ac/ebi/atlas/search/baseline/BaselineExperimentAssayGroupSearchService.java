@@ -48,6 +48,7 @@ import java.util.SortedSet;
 
 @Named
 @Scope("request")
+//TODO: merge this class with BaselineExperimentProfileSearchService
 public class BaselineExperimentAssayGroupSearchService {
 
     private static final Logger LOGGER = Logger.getLogger(BaselineExperimentAssayGroupSearchService.class);

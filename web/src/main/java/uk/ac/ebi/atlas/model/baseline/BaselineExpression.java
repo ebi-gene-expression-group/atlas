@@ -126,5 +126,11 @@ public class BaselineExpression implements Expression {
         return format.format(value);
     }
 
-
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("levelString", levelString)
+                .add("factorGroup", factorGroup)
+                .toString();
+    }
 }

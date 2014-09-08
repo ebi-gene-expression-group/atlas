@@ -30,9 +30,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
-public class GeneSetPageControllerReactomeBaselineWidgetSIT extends SinglePageSeleniumFixture {
+public class GeneSetPageControllerSingleSpeciesGeneSetBaselineWidgetSIT extends SinglePageSeleniumFixture {
 
-    private static final String IDENTIFIER = "REACT_1698";
+    private static final String IDENTIFIER = "REACT_1619";
 
     private BioEntityPage subject;
 
@@ -53,21 +53,22 @@ public class GeneSetPageControllerReactomeBaselineWidgetSIT extends SinglePageSe
     @Test
     public void checkInfoCard() {
         subject.clickInfoCard(true);
-        assertThat(subject.getBioEntityCardTitle(), is("REACT_1698 Homo sapiens Metabolism of nucleotides"));
+        assertThat(subject.getBioEntityCardTitle(), is("REACT_1619 Homo sapiens Death Receptor Signalling"));
         assertThat(subject.getPropertiesTableSize(), is(1));
-        assertThat(subject.getPropertiesTableRow(0), hasItems("Reactome", "Metabolism of nucleotides"));
-        assertThat(subject.getLinksInTableRow(0).get(0), is("http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_1698"));
+        assertThat(subject.getPropertiesTableRow(0), hasItems("Reactome", "Death Receptor Signalling"));
+        assertThat(subject.getLinksInTableRow(0).get(0), is("http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_1619"));
     }
 
     @Test
     public void checkWidget() {
         // wait for ajax widget to load
         subject.waitForHeatmapToBeVisible();
-        assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
+        assertThat(subject.getGeneCount(), is("Showing 2 of 2 experiments found:"));
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
-        assertThat(subject.getGeneNames(), contains("Twenty seven tissues"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=REACT_1698"));
+        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Vertebrate tissues"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=REACT_1619"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-GEOD-30352?geneQuery=REACT_1619&serializedFilterFactors=ORGANISM:Homo%20sapiens"));
 
         //System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
         //assertThat(geneNames, contains("REACT_1698"));

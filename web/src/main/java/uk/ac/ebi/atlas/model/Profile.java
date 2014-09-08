@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -99,5 +100,14 @@ public abstract class Profile<K, T extends Expression> {
             return id;
         }
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("expressionsByCondition", expressionsByCondition.values())
+                .add("id", id)
+                .add("name", name)
+                .toString();
     }
 }

@@ -30,6 +30,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import uk.ac.ebi.atlas.search.DatabaseQuery;
 import uk.ac.ebi.atlas.search.OracleObjectFactory;
+import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,26 +48,28 @@ public class RnaSeqBslnExpressionDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private OracleObjectFactory oracleObjectFactory;
+    private final OracleObjectFactory oracleObjectFactory;
+
+    private final NumberUtils numberUtils;
 
     @Inject
-    public RnaSeqBslnExpressionDao(JdbcTemplate jdbcTemplate, OracleObjectFactory oracleObjectFactory) {
+    public RnaSeqBslnExpressionDao(JdbcTemplate jdbcTemplate, OracleObjectFactory oracleObjectFactory, NumberUtils numberUtils) {
         this.jdbcTemplate = jdbcTemplate;
         this.oracleObjectFactory = oracleObjectFactory;
+        this.numberUtils = numberUtils;
     }
 
     //TODO: allow fetching by species
-    public List<RnaSeqBslnExpression> fetchNonSpecificExpression(Collection<String> geneIds) {
+    public List<RnaSeqBslnExpression> fetchAverageExpressionByExperimentAssayGroup(final Collection<String> geneIds) {
         if (geneIds.isEmpty()) {
             return ImmutableList.of();
         }
 
-        LOGGER.debug(String.format("fetchNonSpecificExpression for %s genes", geneIds.size()));
+        LOGGER.debug(String.format("fetchAverageExpressionByExperimentAssayGroup for %s genes", geneIds.size()));
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         DatabaseQuery<Object> baselineExpressionQuery = buildSelect(geneIds);
-
 
         List<RnaSeqBslnExpression> results;
 
@@ -75,18 +78,17 @@ public class RnaSeqBslnExpressionDao {
                     new RowMapper<RnaSeqBslnExpression>() {
                         @Override
                         public RnaSeqBslnExpression mapRow(ResultSet rs, int rowNum) throws SQLException {
-                            String geneId = rs.getString(RnaSeqBslnQueryBuilder.IDENTIFIER);
                             String experimentAccession = rs.getString(RnaSeqBslnQueryBuilder.EXPERIMENT);
                             String assayGroupId = rs.getString(RnaSeqBslnQueryBuilder.ASSAY_GROUP_ID);
-                            double expression = rs.getDouble(RnaSeqBslnQueryBuilder.EXPRESSION);
-                            return RnaSeqBslnExpression.create(geneId, experimentAccession, assayGroupId, expression);
+                            double expression = numberUtils.round(rs.getDouble(RnaSeqBslnQueryBuilder.EXPRESSION) / geneIds.size());
+                            return RnaSeqBslnExpression.create(experimentAccession, assayGroupId, expression);
                         }
                     },
                     baselineExpressionQuery.getParameters().toArray());
 
             stopwatch.stop();
 
-            LOGGER.debug(String.format("fetchNonSpecificExpression returned %s results in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+            LOGGER.debug(String.format("fetchAverageExpressionByExperimentAssayGroup returned %s results in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);

@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.bioentity.geneset;
 
-import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
@@ -30,7 +29,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GeneSetPageControllerGoTermWidgetSIT extends SinglePageSeleniumFixture {
+public class GeneSetPageControllerGoTermResultsBaselineCountsSingleSpeciesSIT extends SinglePageSeleniumFixture {
 
     private static final String IDENTIFIER = "GO:0005527";
 
@@ -55,19 +54,7 @@ public class GeneSetPageControllerGoTermWidgetSIT extends SinglePageSeleniumFixt
         assertThat(subject.getLinksInTableRow(0).get(0), is("http://amigo.geneontology.org/amigo/term/GO%3A0005527"));
     }
 
-    @Test
-    public void baselinePaneShowsWidget() {
-        subject.clickBaselinePane();
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
-
-        subject.waitForHeatmapToBeVisible();
-
-        assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
-        assertThat(subject.getGeneColumnHeader(), is("Experiment"));
-
-        assertThat(subject.getGeneNames(), IsIterableContainingInOrder.contains("Twenty seven tissues"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=GO:0005527"));
-    }
+    //TODO: add a method to check the baseline result counts
 
     @Test
     public void noDifferentialResults() {

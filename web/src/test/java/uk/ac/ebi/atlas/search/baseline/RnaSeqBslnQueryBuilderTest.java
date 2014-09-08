@@ -44,15 +44,14 @@ public class RnaSeqBslnQueryBuilderTest {
         subject = new RnaSeqBslnQueryBuilder();
     }
 
-
     @Test
     public void selectWhereGeneIds()  {
         ARRAY geneIds = Mockito.mock(ARRAY.class);
 
         DatabaseQuery<Object> databaseQuery = subject.withGeneIds(geneIds).build();
 
-        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT rbe.identifier, rbe.experiment, rbe.assaygroupid, rbe.expression from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
-                "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value "));
+        MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT rbe.experiment, rbe.assaygroupid, SUM(rbe.expression) from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
+                "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value GROUP BY rbe.experiment, rbe.assaygroupid"));
         MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains((Object) geneIds));
 
     }

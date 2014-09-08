@@ -32,9 +32,9 @@ public class BaselineExperimentProfileSearchServiceTest {
     public static final String E_MTAB_599 = "E-MTAB-599";
     BaselineExperimentProfileSearchService subject;
 
-    RnaSeqBslnExpression g3_thymus = RnaSeqBslnExpression.create("ENSMUSG00000093014", E_MTAB_599, "g3", THYMUS_LEVEL);
-    RnaSeqBslnExpression g5_lung = RnaSeqBslnExpression.create("ENSMUSG00000093014", E_MTAB_599, "g5", LUNG_LEVEL);
-    RnaSeqBslnExpression g6_spleen = RnaSeqBslnExpression.create("ENSMUSG00000093014", E_MTAB_599, "g6", SPLEEN_LEVEL);
+    RnaSeqBslnExpression g3_thymus = RnaSeqBslnExpression.create(E_MTAB_599, "g3", THYMUS_LEVEL);
+    RnaSeqBslnExpression g5_lung = RnaSeqBslnExpression.create(E_MTAB_599, "g5", LUNG_LEVEL);
+    RnaSeqBslnExpression g6_spleen = RnaSeqBslnExpression.create(E_MTAB_599, "g6", SPLEEN_LEVEL);
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
     private static final Factor LUNG = new Factor(ORGANISM_PART, "lung");

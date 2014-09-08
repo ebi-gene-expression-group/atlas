@@ -84,7 +84,7 @@ public final class HeatmapWidgetController {
 
         try {
             if (StringUtils.isBlank(species)) {
-                species = speciesLookupService.fetchSpeciesByField(propertyType, bioEntityAccession);
+                species = speciesLookupService.fetchFirstSpeciesByField(propertyType, bioEntityAccession);
             }
         } catch (Exception e) {
             model.addAttribute("errorMessage", "No genes found matching query: " + bioEntityAccession);
@@ -123,7 +123,7 @@ public final class HeatmapWidgetController {
 
         try {
             if (StringUtils.isBlank(species)) {
-                species = speciesLookupService.fetchSpeciesByField(propertyType, bioEntityAccession);
+                species = speciesLookupService.fetchFirstSpeciesByField(propertyType, bioEntityAccession);
             }
         } catch (Exception e) {
             model.addAttribute("errorMessage", "No genes found matching query: " + bioEntityAccession);

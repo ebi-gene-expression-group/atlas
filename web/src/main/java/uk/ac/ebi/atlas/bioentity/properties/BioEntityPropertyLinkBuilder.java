@@ -73,7 +73,7 @@ public class BioEntityPropertyLinkBuilder {
         String displayName = propertyValue;
         switch (propertyType) {
             case "ortholog":
-                displayName = transformOrthologToSymbol(displayName);
+                displayName = fetchSymbolAndSpeciesForOrtholog(displayName);
                 break;
             case "reactome":
                 displayName = reactomeClient.fetchPathwayNameFailSafe(propertyValue);
@@ -92,9 +92,9 @@ public class BioEntityPropertyLinkBuilder {
         return displayName;
     }
 
-    String transformOrthologToSymbol(String identifier) {
+    String fetchSymbolAndSpeciesForOrtholog(String identifier) {
         try {
-            String species = speciesLookupService.fetchSpeciesByBioentityId(identifier);
+            String species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
 
             String speciesToken = " (" + StringUtils.capitalize(species) + ")";
 

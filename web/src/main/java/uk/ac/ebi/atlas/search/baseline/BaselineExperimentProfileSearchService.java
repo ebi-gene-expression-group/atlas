@@ -27,12 +27,14 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Multimaps;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
@@ -42,8 +44,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 @Named
 @Scope("request")
@@ -71,8 +71,6 @@ public class BaselineExperimentProfileSearchService {
     public BaselineTissueExperimentSearchResult query(String geneQuery, String species, boolean isExactMatch) throws GenesNotFoundException {
         LOGGER.info(String.format("<query> geneQuery=%s", geneQuery));
 
-        checkArgument(StringUtils.isNotBlank(species), "Species must be specified");
-
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
@@ -93,7 +91,7 @@ public class BaselineExperimentProfileSearchService {
             return new BaselineTissueExperimentSearchResult();
         }
 
-        List<RnaSeqBslnExpression> expressions = rnaSeqBslnExpressionDao.fetchNonSpecificExpression(geneIds.get());
+        List<RnaSeqBslnExpression> expressions = rnaSeqBslnExpressionDao.fetchAverageExpressionByExperimentAssayGroup(geneIds.get());
 
         return buildProfilesForTissueExperiments(expressions);
     }
