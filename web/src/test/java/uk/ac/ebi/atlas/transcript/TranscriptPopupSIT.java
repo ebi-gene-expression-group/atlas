@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.transcript;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWidgetPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithTranscriptBreakdownPage;
 import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
@@ -85,6 +86,26 @@ public class TranscriptPopupSIT extends SeleniumFixture {
         SeleniumUtil.waitForPageTitle(driver);
 
         assertThat(driver.getTitle(), containsString("Transcript: OS12T0515800-01"));
+    }
+
+    @Test
+    public void multiExperimentWidget() {
+        HeatmapTableWidgetPage subject = HeatmapTableWidgetPage.createGenePage(driver, "ENSG00000228278");
+        subject.get();
+
+        subject.waitForHeatmapToBeVisible();
+
+        assertThat(subject.getGeneCount(), is("Showing 2 of 2 experiments found:"));
+        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Vertebrate tissues"));
+
+        // no slice experiment
+        HeatmapTableWithTranscriptBreakdownPage page1 = subject.clickOnCell(0, 3);
+        assertThat(page1.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ENSG00000228278 in appendix\n(1 out of 2 transcripts are expressed):"));
+        assertThat(page1.getTranscriptBreakdownLegendLabels(), contains("ENST00000431067"));
+
+        // single slice experiment
+        HeatmapTableWithTranscriptBreakdownPage page2 = subject.clickOnCell(1, 16);
+        assertThat(page2.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ENSG00000228278 in liver\n(0 out of 0 transcript is expressed):"));
     }
 
 }

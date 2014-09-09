@@ -65,7 +65,7 @@ public class GenePageController extends BioEntityPageController {
             model.addAttribute("originalSearchTerm", identifier);
             identifier = ensemblIDs.iterator().next();
         } else if (ensemblIDs.size() > 0) {
-            //TODO: remove this - if not required by new multi-experiment widget, may also be able to remove from JSP
+            //TODO: remove this - if not required by new multi-experiment widget, or https://www.pivotaltracker.com/story/show/77866504 may also be able to remove from JSP
             // if identifer is mirbase ID with more than one ensgene result,
             // then add all the ensembl IDs for the widget to display all ensembl gene IDs in the baseline results heatmap
             model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
@@ -73,7 +73,9 @@ public class GenePageController extends BioEntityPageController {
 
         model.addAttribute("disableGeneLinks", true);
 
-        addWidgetHasBaselineProfiles(identifier, model);
+        // gene identifier will only ever be for one species, so don't need to restrict it
+        String species = "";
+        addBaselineResults(identifier, model, species);
 
         loadDifferentialResults(identifier, model);
 

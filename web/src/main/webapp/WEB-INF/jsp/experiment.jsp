@@ -41,7 +41,7 @@
         <c:set var="isPreferenceError" value="true"/>
     </spring:hasBindErrors>
 
-    <%@ include file="includes/anatomogram-and-heatmap.jsp" %>
+    <%@ include file="includes/anatomogram-and-heatmap-react.jsp" %>
 
     <br/>
 
@@ -69,6 +69,7 @@
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/sliderAndBarChart.js"></script>
 
+<%@ include file="includes/heatmap-react.jsp" %>
 
 <script type="text/javascript">
 
@@ -111,14 +112,10 @@
                 //configurations required for any browser excepted IE version 8 or lower
                 initBarChartButton();
 
-                //ToDo: this should be replaced with a JSON array directly sent from backend layer
-                var allQueryFactorValues = [${allQueryFactors.size()}];
-            <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
-                allQueryFactorValues[${i.index}] = "${type.isBaseline() ? queryFactor.valueOntologyTerm : queryFactor.displayName}";
-            </c:forEach>
+                var allSvgPathIds = ${allSvgPathIds};
 
                 if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
-                    anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${pageContext.request.contextPath}');
+                    anatomogramModule.init(allSvgPathIds, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${pageContext.request.contextPath}');
                 }
             }
 
@@ -132,7 +129,7 @@
 
             searchFormModule.init($('#queryFactorValues').attr('data-placeholder'), '${species}', '${preferences.defaultCutoff}', '${type.isBaseline() ? '' : preferences.defaultFoldChangeCutOff}');
 
-            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
+            helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', $('[data-help-loc]').not('#heatmap-react [data-help-loc]'));
 
             $('#stickem-container').stickem();
         });

@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
@@ -123,7 +124,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         model.addAttribute("isWidget", false);
 
-        return "experiment-react";
+        return "experiment";
     }
 
     @RequestMapping(value = "/widgets/heatmap/protein", params = {"type=RNASEQ_MRNA_BASELINE"})
@@ -204,7 +205,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = experimentalFactors.getFilteredAssayGroupFactors(selectedFilterFactors);
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
-        // and to generate the heatmap. It is in order.
+        // It is in order.
         model.addAttribute("allQueryFactors", filteredAssayGroupFactors);
 
         String species = requestContext.getFilteredBySpecies();
@@ -233,15 +234,10 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
                 addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, experimentalFactors.getFilteredFactors(selectedFilterFactors), model);
 
-                //ToDo: check if this can be externalized in the view with a cutom EL or tag function
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
-                    String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, true);
-                    model.addAttribute("maleAnatomogramFile", maleAnatomogramFileName);
+                    ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);
+                    addAnatomogram(allSvgPathIds, model, species);
 
-                    String femaleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, false);
-                    model.addAttribute("femaleAnatomogramFile", femaleAnatomogramFileName);
-
-                    model.addAttribute("hasAnatomogram", maleAnatomogramFileName != null || femaleAnatomogramFileName != null);
                 } else {
                     model.addAttribute("hasAnatomogram", false);
                 }
@@ -252,6 +248,31 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         }
     }
+
+    private ImmutableSet<String> extractOntologyTerm(SortedSet<AssayGroupFactor> filteredAssayGroupFactors) {
+        ImmutableSet.Builder<String> builder = ImmutableSet.builder();
+
+        for (AssayGroupFactor assayGroupFactor : filteredAssayGroupFactors) {
+            builder.add(assayGroupFactor.getValueOntologyTerm());
+        }
+        return builder.build();
+    }
+
+
+    private void addAnatomogram(ImmutableSet<String> allSvgPathIds, Model model, String species) {
+        //ToDo: check if this can be externalized in the view with a cutom EL or tag function
+        String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, true);
+        model.addAttribute("maleAnatomogramFile", maleAnatomogramFileName);
+
+        String femaleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, false);
+        model.addAttribute("femaleAnatomogramFile", femaleAnatomogramFileName);
+
+        model.addAttribute("hasAnatomogram", maleAnatomogramFileName != null || femaleAnatomogramFileName != null);
+
+        String jsonAllSvgPathIds = new Gson().toJson(allSvgPathIds);
+        model.addAttribute("allSvgPathIds", jsonAllSvgPathIds);
+    }
+
 
     private void addJsonForHeatMap(BaselineExperimentProfilesList baselineProfiles, SortedSet<AssayGroupFactor> filteredAssayGroupFactors, SortedSet<Factor> orderedFactors, Model model) {
         Gson gson = new Gson();

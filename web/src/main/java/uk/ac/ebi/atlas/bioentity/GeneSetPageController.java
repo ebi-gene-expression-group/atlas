@@ -35,11 +35,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroupSearchService;
-import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
-import uk.ac.ebi.atlas.search.baseline.BaselineTissueExperimentSearchResult;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
@@ -65,10 +60,6 @@ public class GeneSetPageController extends BioEntityPageController {
 
     private String[] geneSetPagePropertyTypes;
 
-    private final BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService;
-
-    private final BaselineExperimentProfileSearchService baselineExperimentProfileSearchService;
-
     private SpeciesLookupService.Result speciesResult;
 
     @Value("#{configuration['index.property_names.genesetpage']}")
@@ -77,14 +68,12 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Inject
-    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeClient reactomeClient, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader, BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService, BaselineExperimentProfileSearchService baselineExperimentProfileSearchService) {
+    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeClient reactomeClient, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader) {
         this.solrQueryService = solrQueryService;
         this.bioEntityPropertyService = bioEntityPropertyService;
         this.reactomeClient = reactomeClient;
         this.goTermTrader = goTermTrader;
         this.interProTermTrader = interProTermTrader;
-        this.baselineExperimentAssayGroupSearchService = baselineExperimentAssayGroupSearchService;
-        this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
     }
 
     // identifier = Reactome, GO, or Interpro term
@@ -116,38 +105,8 @@ public class GeneSetPageController extends BioEntityPageController {
         } else {
             String species = speciesResult.firstSpecies();
 
-            BaselineTissueExperimentSearchResult tissueResults;
-            try {
-                 tissueResults = baselineExperimentProfileSearchService.query(identifier, species, true);
-            } catch (GenesNotFoundException e) {
-                throw new ResourceNotFoundException(identifier);
-            }
+            addBaselineResults(identifier, model, species);
 
-            if (tissueResults.isEmpty()) {
-                addBaselineCounts(identifier, model);
-            } else {
-                addWidget(model, species);
-            }
-
-        }
-    }
-
-    private void addWidget(Model model, String species) {
-        model.addAttribute("widgetHasBaselineProfiles", true);
-        model.addAttribute("species", species);
-    }
-
-    private void addBaselineCounts(String identifier, Model model) {
-        try {
-            String specie = "";
-            Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(identifier, null, specie, true);
-            model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
-            if (baselineExperimentAssayGroups.size() == 1) {
-                model.addAttribute("singleBaselineSearchResult", true);
-                model.addAttribute("species", baselineExperimentAssayGroups.iterator().next().getSpecies());
-            }
-        } catch (GenesNotFoundException e) {
-            throw new ResourceNotFoundException(identifier);
         }
     }
 

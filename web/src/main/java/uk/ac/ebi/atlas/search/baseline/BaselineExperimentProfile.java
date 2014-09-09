@@ -3,8 +3,6 @@ package uk.ac.ebi.atlas.search.baseline;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 
-import java.util.Comparator;
-
 public class BaselineExperimentProfile extends BaselineProfile implements Comparable<BaselineExperimentProfile> {
 
     private final FactorGroup filterFactors;
@@ -23,7 +21,8 @@ public class BaselineExperimentProfile extends BaselineProfile implements Compar
 
     @Override
     public int compareTo(BaselineExperimentProfile other) {
-        return (other.nonFilterFactorsSize).compareTo(this.nonFilterFactorsSize);
+        int comparison = (other.nonFilterFactorsSize).compareTo(this.nonFilterFactorsSize);
+        return (comparison != 0) ? comparison : (this.getName().compareTo(other.getName()));
     }
 
 }

@@ -128,7 +128,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
 
         }
 
-        return "experiment-react";
+        return "experiment";
     }
 
     private void addJsonForHeatMap(DifferentialProfilesList diffProfiles, Set<Contrast> contrasts, ImmutableMap<String, GseaPlots> gseaPlots, Model model) {

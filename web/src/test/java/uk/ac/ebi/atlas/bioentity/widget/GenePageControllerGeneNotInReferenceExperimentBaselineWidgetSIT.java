@@ -31,9 +31,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GenePageControllerMusMusculusGeneBaselineWidgetSIT extends SinglePageSeleniumFixture {
+public class GenePageControllerGeneNotInReferenceExperimentBaselineWidgetSIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "ENSMUSG00000040505";
+    private static final String GENE_IDENTIFIER = "ENSMUSG00000062154";
 
     private BioEntityPage subject;
 
@@ -55,17 +55,16 @@ public class GenePageControllerMusMusculusGeneBaselineWidgetSIT extends SinglePa
 
         subject.waitForHeatmapToBeVisible();
 
-        assertThat(subject.getGeneCount(), is("Showing 2 of 2 experiments found:"));
+        assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
         List<String> factorValueHeaders = subject.getFactorValueHeaders();
         //System.out.println("\"" + Joiner.on("\", \"").join(factorValueHeaders) + "\"");
-        assertThat(factorValueHeaders, contains("brain", "cerebellum", "heart", "hippocampus", "kidney", "liver", "lung", "spleen", "testis", "thymus"));
+        assertThat(factorValueHeaders, contains("brain", "cerebellum", "heart", "kidney", "liver", "testis"));
 
-        assertThat(subject.getGeneNames().size(), is(2));
-        assertThat(subject.getGeneNames(), contains("Six tissues","Vertebrate tissues"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-599?geneQuery=ENSMUSG00000040505"));
-        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSMUSG00000040505&serializedFilterFactors=ORGANISM%3AMus%20musculus"));
+        assertThat(subject.getGeneNames().size(), is(1));
+        assertThat(subject.getGeneNames(), contains("Vertebrate tissues"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSMUSG00000062154&serializedFilterFactors=ORGANISM%3AMus%20musculus"));
     }
 
 
