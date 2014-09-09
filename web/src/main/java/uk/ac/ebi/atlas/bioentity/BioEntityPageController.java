@@ -36,6 +36,10 @@ import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWidgetQuery;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroupSearchService;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
+import uk.ac.ebi.atlas.search.baseline.BaselineTissueExperimentSearchResult;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -67,6 +71,20 @@ public abstract class BioEntityPageController {
     private ExperimentTrader experimentTrader;
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
+
+    private BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService;
+
+    private BaselineExperimentProfileSearchService baselineExperimentProfileSearchService;
+
+    @Inject
+    public void setBaselineExperimentProfileSearchService(BaselineExperimentProfileSearchService baselineExperimentProfileSearchService) {
+        this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
+    }
+
+    @Inject
+    public void setBaselineExperimentAssayGroupSearchService(BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService) {
+        this.baselineExperimentAssayGroupSearchService = baselineExperimentAssayGroupSearchService;
+    }
 
     @Inject
     public void setSpeciesLookupService(SpeciesLookupService speciesLookupService) {
@@ -166,6 +184,37 @@ public abstract class BioEntityPageController {
             throw new ResourceNotFoundException("No gene profiles with identifier " + identifier);
         }
     }
+
+    void addBaselineResults(String identifier, Model model, String species) {
+        BaselineTissueExperimentSearchResult tissueResults;
+        try {
+            tissueResults = baselineExperimentProfileSearchService.query(identifier, species, true);
+        } catch (GenesNotFoundException e) {
+            throw new ResourceNotFoundException(identifier);
+        }
+
+        if (tissueResults.isEmpty()) {
+            addBaselineCounts(identifier, model);
+        } else {
+            addWidget(model, species);
+        }
+    }
+
+    void addWidget(Model model, String species) {
+        model.addAttribute("widgetHasBaselineProfiles", true);
+        model.addAttribute("species", species);
+    }
+
+    void addBaselineCounts(String identifier, Model model) {
+        try {
+            String specie = "";
+            Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(identifier, null, specie, true);
+            model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
+        } catch (GenesNotFoundException e) {
+            throw new ResourceNotFoundException(identifier);
+        }
+    }
+
 
     String fetchSpecies(String identifier) {
         return speciesLookupService.fetchSpeciesForBioentityId(identifier);
