@@ -139,6 +139,17 @@
                         document.getElementById('${hasAnatomogram ? "anatomogram-ensembl-launcher" : "ensembl-launcher"}')
                 );
             }
+
+            // load anatomogram after heatmap is rendered so wiring works
+
+            var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}";
+            var allSvgPathIds = ${empty allSvgPathIds ? 'undefined' : allSvgPathIds};
+
+            if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
+                anatomogramModule.init(allSvgPathIds, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${pageContext.request.contextPath}');
+            } else {
+                $("#anatomogram").remove();//remove the anatomogram
+            }
         });
 
     })(jQuery, React, heatmapModule, heatmapData.config,
