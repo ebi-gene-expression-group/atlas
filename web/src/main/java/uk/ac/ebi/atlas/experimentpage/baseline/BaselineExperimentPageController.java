@@ -124,7 +124,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         model.addAttribute("isWidget", false);
 
-        return "experiment-react";
+        return "experiment";
     }
 
     @RequestMapping(value = "/widgets/heatmap/protein", params = {"type=RNASEQ_MRNA_BASELINE"})
