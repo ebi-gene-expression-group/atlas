@@ -112,14 +112,10 @@
                 //configurations required for any browser excepted IE version 8 or lower
                 initBarChartButton();
 
-                //ToDo: this should be replaced with a JSON array directly sent from backend layer
-                var allQueryFactorValues = [${allQueryFactors.size()}];
-            <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
-                allQueryFactorValues[${i.index}] = "${type.isBaseline() ? queryFactor.valueOntologyTerm : queryFactor.displayName}";
-            </c:forEach>
+                var allSvgPathIds = ${allSvgPathIds};
 
                 if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
-                    anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${pageContext.request.contextPath}');
+                    anatomogramModule.init(allSvgPathIds, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${pageContext.request.contextPath}');
                 }
             }
 
