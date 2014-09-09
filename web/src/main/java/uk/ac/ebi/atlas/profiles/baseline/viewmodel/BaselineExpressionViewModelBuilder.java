@@ -40,8 +40,9 @@ public class BaselineExpressionViewModelBuilder {
         String factorName = factor.getValue();
         BaselineExpression expression = profile.getExpression(factor);
 
-        String value = (expression == null) ? "" : (!expression.isKnown() ? "UNKNOWN" : numberUtils.baselineExpressionLevelAsString(expression.getLevel()));
-        String color = (expression == null) ? "" : (expression.isKnown() ? colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel) : "UNKNOWN");
+        String value = (expression == null) ? "" : (!expression.isKnown() ? "UNKNOWN" :  (expression.getLevelAsString().equals("NT")) ? "NT" : numberUtils.baselineExpressionLevelAsString(expression.getLevel()));
+        String color = (expression == null) ? "" : (expression.isKnown() && !expression.getLevelAsString().equals("NT") ?
+                colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel) : (expression.getLevelAsString().equals("NT")  ? "" : "UNKNOWN"));
 
         String svgPathId = factor.getValueOntologyTerm();
 

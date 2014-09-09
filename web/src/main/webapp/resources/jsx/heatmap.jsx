@@ -860,7 +860,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         var CellMultiExperiment = (function (contextRoot, ensemblHost, ensemblSpecies, queryFactorType, isGeneSetQuery, geneId, geneName) {
             
             function isNAExpression(value) {
-                return (value === "NA")
+                return (value === "NT")
             }
             
             function noExpression(value) {

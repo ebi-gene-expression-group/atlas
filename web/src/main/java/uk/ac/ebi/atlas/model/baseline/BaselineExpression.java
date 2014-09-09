@@ -56,6 +56,10 @@ public class BaselineExpression implements Expression {
                 level = 0;
                 known = true;
                 break;
+            case "NT": //Non-Tissue
+                level = 0;
+                known = true;
+                break;
             default:
                 level = Double.parseDouble(expressionLevelString);
                 known = true;

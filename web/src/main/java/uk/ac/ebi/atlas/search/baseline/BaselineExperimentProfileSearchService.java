@@ -27,6 +27,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Multimaps;
+import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
@@ -35,15 +36,13 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Named
 @Scope("request")
@@ -106,18 +105,34 @@ public class BaselineExperimentProfileSearchService {
 
         int count = 0;
 
+        for(BaselineExperimentSlice experimentSlice : expressionsByExperimentSlice.keySet()) {
+            if(experimentSlice.isTissueExperiment()) {
+                factors.addAll(experimentSlice.nonFilterFactors());
+            }
+        }
+
+        SortedSet<Factor> tissueFactorsAcrossAllExperiments = factors.build();
+
         for (BaselineExperimentSlice experimentSlice : expressionsByExperimentSlice.keySet()) {
 
             if (experimentSlice.isTissueExperiment()) {
                 BaselineExperiment experiment = experimentSlice.experiment();
 
-                factors.addAll(experimentSlice.nonFilterFactors());
+                Set<Factor> factorDifference = Sets.difference(tissueFactorsAcrossAllExperiments, experimentSlice.nonFilterFactors());
 
                 BaselineExperimentProfile profile = new BaselineExperimentProfile(experimentSlice);
 
                 for (RnaSeqBslnExpression rnaSeqBslnExpression : expressionsByExperimentSlice.get(experimentSlice)) {
                     BaselineExpression expression = createBaselineExpression(experiment, rnaSeqBslnExpression);
+                    //check expression level string if the factor
                     profile.add("ORGANISM_PART", expression);
+                }
+
+                //For the nonFilterFactors which don't have expression, create new expression with NT level
+                for (Factor factor : factorDifference) {
+                    FactorGroup factorGroup = new FactorSet(factor);
+                    BaselineExpression baselineExpression = new BaselineExpression("NT", factorGroup);
+                    profile.add("ORGANISM_PART", baselineExpression);
                 }
 
                 count++;
@@ -130,7 +145,7 @@ public class BaselineExperimentProfileSearchService {
 
         profiles.setTotalResultCount(count);
 
-        return new BaselineTissueExperimentSearchResult(profiles, factors.build());
+        return new BaselineTissueExperimentSearchResult(profiles, tissueFactorsAcrossAllExperiments);
     }
 
 
