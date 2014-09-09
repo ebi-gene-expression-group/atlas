@@ -55,7 +55,7 @@
                         </td>
                         <td>
                             <c:set var="height" value="250px"/>
-                            <c:if test="${species.equalsIgnoreCase(\"Homo sapiens\")}">
+                            <c:if test="${fn:contains(maleAnatomogramFile,\"human\")}">
                                 <c:set var="height" value="360px"/>
                             </c:if>
 
