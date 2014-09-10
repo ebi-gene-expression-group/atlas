@@ -27,30 +27,10 @@
 
         $(document).ready(function () {
 
-            var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}";
-
-            //ToDo: this should be replaced with a JSON array directly sent from backend layer
-            var allQueryFactorValues = [${allQueryFactors.size()}];
-            <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
-            allQueryFactorValues[${i.index}] = "${type.isBaseline() ? queryFactor.valueOntologyTerm : queryFactor.displayName}";
-            </c:forEach>
-
-            if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
-                anatomogramModule.init(allQueryFactorValues, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${base}');
-            }
-
             $("#goto-ae").tooltip();
             $("#goto-experiment").tooltip();
             $("#goto-experiment-name").tooltip();
             $('.pubmed-id').tooltip();
-
-            //configurations required for any browser...
-
-            if (!anyAnatomogramFile || 0 === anyAnatomogramFile.length) {
-                $("#anatomogram").remove();//remove the anatomogram
-                $("#heatmap-div").removeClass();
-                $("#heatmap-profilesAsGeneSets").removeClass();
-            }
 
         });
 

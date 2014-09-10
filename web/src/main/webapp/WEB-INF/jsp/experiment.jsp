@@ -90,13 +90,8 @@
                 $("#slider-help").hide();//hide the slider help
             }
 
-            var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}";
 
             if (${!type.isBaseline()}) {
-
-                $("#anatomogram").remove();
-                $("#heatmap-div").removeClass();
-                $("#heatmap-profilesAsGeneSets").removeClass();
                 $("#gene-distribution-button").hide();//hide the bar chart button
                 $("#gene-distribution-panel").hide();//hide the bar chart
                 $("#slider-range-max").hide();//hide the cutoff slider
@@ -112,20 +107,9 @@
                 //configurations required for any browser excepted IE version 8 or lower
                 initBarChartButton();
 
-                var allSvgPathIds = ${allSvgPathIds};
-
-                if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
-                    anatomogramModule.init(allSvgPathIds, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${pageContext.request.contextPath}');
-                }
             }
 
             //configurations required for any browser...
-
-            if (!anyAnatomogramFile || 0 === anyAnatomogramFile.length) {
-                $("#anatomogram").remove();//remove the anatomogram
-                $("#heatmap-div").removeClass();
-                $("#heatmap-profilesAsGeneSets").removeClass();
-            }
 
             searchFormModule.init($('#queryFactorValues').attr('data-placeholder'), '${species}', '${preferences.defaultCutoff}', '${type.isBaseline() ? '' : preferences.defaultFoldChangeCutOff}');
 
