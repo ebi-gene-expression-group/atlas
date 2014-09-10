@@ -217,7 +217,11 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         String ensemblDB = speciesEnsemblTrader.getEnsemblDb(species);
         model.addAttribute("ensemblDB", ensemblDB);
 
-        model.addAttribute("enableEnsemblLauncher", tracksUtil.hasBaselineTracksPath(experiment.getAccession(), filteredAssayGroupFactors.iterator().next().getAssayGroupId()));
+        if(!filteredAssayGroupFactors.isEmpty()) {
+            model.addAttribute("enableEnsemblLauncher", tracksUtil.hasBaselineTracksPath(experiment.getAccession(), filteredAssayGroupFactors.iterator().next().getAssayGroupId()));
+        } else {
+            model.addAttribute("enableEnsemblLauncher", false);
+        }
 
         if (!result.hasErrors()) {
 
