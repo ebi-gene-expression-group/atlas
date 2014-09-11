@@ -42,7 +42,9 @@ public class GeneQueryResponse {
 
     public GeneQueryResponse addGeneIds(String queryTerm, Set<String> geneIds){
         checkArgument(StringUtils.isNotBlank(queryTerm));
-        checkArgument(!geneIdsByQueryTerm.containsKey(queryTerm));
+        if(!geneIdsByQueryTerm.containsKey(queryTerm)) {
+            checkArgument(!geneIdsByQueryTerm.containsKey(queryTerm));
+        }
 
         if (!geneIds.isEmpty()) {
             geneIdsByQueryTerm.putAll(queryTerm, geneIds);
