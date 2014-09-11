@@ -52,7 +52,7 @@ public class GeneQueryResponseTest {
         assertThat(subject.getQueryTerms(), containsInAnyOrder("A QUERY TERM", "ANOTHER TERM"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void addGeneIdsShouldNotAddSameTerm() throws Exception {
         subject.addGeneIds(A_QUERY_TERM, Sets.newHashSet("G6"));
     }

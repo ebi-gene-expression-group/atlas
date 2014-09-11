@@ -44,14 +44,14 @@ public class GeneQueryResponse {
         checkArgument(StringUtils.isNotBlank(queryTerm));
         if(!geneIdsByQueryTerm.containsKey(queryTerm)) {
             checkArgument(!geneIdsByQueryTerm.containsKey(queryTerm));
-        }
 
-        if (!geneIds.isEmpty()) {
-            geneIdsByQueryTerm.putAll(queryTerm, geneIds);
-        }
+            if (!geneIds.isEmpty()) {
+                geneIdsByQueryTerm.putAll(queryTerm, geneIds);
+            }
 
-        if (geneIds.size() > 1) {
-            containsGeneSets = true;
+            if (geneIds.size() > 1) {
+                containsGeneSets = true;
+            }
         }
         return this;
     }
