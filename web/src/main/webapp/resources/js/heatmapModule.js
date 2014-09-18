@@ -321,7 +321,7 @@ var heatmapModule = (function ($) {
 
             maPlotURL = 'external-resources/' + experimentAccession + '/' + (arrayDesignAccession ? arrayDesignAccession + '/' : '' ) + contrastId + '/ma-plot.png';
             //append a button div now
-            $(this).append("<div style='text-align:right;padding-right:3px'><a href='" + maPlotURL + "' class='ma-button button-image' title='Click to view MA plot for the contrast across all genes'><img src='resources/images/maplot-button.png'/></a></div>");
+            $(this).append("<div style='text-align:right;padding-right:3px'><a href='" + maPlotURL + "' class='ma-button button-image' title='Click to view MA plot for the comparison across all genes'><img src='resources/images/maplot-button.png'/></a></div>");
 
         });
 

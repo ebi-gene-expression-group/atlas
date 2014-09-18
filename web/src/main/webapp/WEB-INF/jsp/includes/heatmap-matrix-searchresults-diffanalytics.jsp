@@ -53,7 +53,7 @@
                     </th>
                 </c:if>
                     <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
-                        <div>Contrast</div>
+                        <div>Comparison</div>
                     </th>
                     <th class="horizontal-header-cell" style="padding: 5px;">
                         <div class='factor-header' data-organism-part=''>Log<sub>2</sub>-fold change</div>

@@ -163,7 +163,7 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, type, full);
                     } },
-                { "sTitle":"Contrasts", "mData":"numberOfContrasts", "sClass":"center bb", "sType":"title-numeric",
+                { "sTitle":"Comparisons", "mData":"numberOfContrasts", "sClass":"center bb", "sType":"title-numeric",
                     "mRender":function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, type, full);
                     } },

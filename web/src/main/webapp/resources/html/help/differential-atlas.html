@@ -80,17 +80,17 @@ match" box, type "desaturase" and click search.</p>
 
 
 
-<h3><a name="contrastSearch">Searching with contrasts</a></h3>
+<h3><a name="comparisonSearch">Searching with comparisons</a></h3>
 
-<p>Many experiments contain more than one comparison, or "contrast". If you do
-not select any contrasts, results for all contrasts in the experiment will be
-displayed. To see the results for specific contrast(s) select the ones you wish
-to see from the Contrast box:</p>
+<p>Many experiments contain more than one comparison. If you do
+not select any comparisons, results for all comparisons in the experiment will be
+displayed. To see the results for specific comparison(s) select the ones you wish
+to see from the Comparison box:</p>
 
-<p><img src="resources/images/help/selectContrast.png" alt="contrast selection dropdown" align="bottom" /></p>
+<p><img src="resources/images/help/selectContrast.png" alt="Comparison selection dropdown" align="bottom" /></p>
 
-<p>Select one or more contrasts to search with, or start typing to see
-suggestions. To see details of the groups of samples used in each contrast,
+<p>Select one or more comparisons to search with, or start typing to see
+suggestions. To see details of the groups of samples used in each comparison,
 click the <img alt="Experiment Design button"
 src="resources/images/help/expDes_btn.png" align="bottom" /> button.</p>
 
@@ -98,21 +98,21 @@ src="resources/images/help/expDes_btn.png" align="bottom" /> button.</p>
 
 <h4><i>Specific</i> vs. <i>non-specific</i> search</h4>
 
-<p>If there is more than one contrast in an experiment, the default
+<p>If there is more than one comparison in an experiment, the default
 Differential Atlas search reports genes with more "specific" differential
 expression (with the <i>Specific</i> option selected by default). What we mean
 by this is outlined below.<p>
 
 
 
-<h5> If no contrasts are selected&hellip;</h5>
+<h5> If no comparisons are selected&hellip;</h5>
 
-<p>If <b>no contrasts</b> are selected, the <i>Specific</i> search will rank
+<p>If <b>no comparisons</b> are selected, the <i>Specific</i> search will rank
 genes so that genes that are differentially expressed in just <b>one</b>
-contrast come first, followed by genes differentially expressed in <b>two</b>
-contrasts, then three and so on, reporting genes that are differentially
-expressed in all available contrasts at the end of the list of results. Within
-each group of N contrasts, genes are ordered by largest average absolute (i.e.
+    comparison come first, followed by genes differentially expressed in <b>two</b>
+    comparisons, then three and so on, reporting genes that are differentially
+expressed in all available comparisons at the end of the list of results. Within
+each group of N comparisons, genes are ordered by largest average absolute (i.e.
 ignoring positive or negative status) log<sub>2</sub> fold-change.</p>
 
 <p>Only log<sub>2</sub> fold-changes for differential expression in the
@@ -123,31 +123,31 @@ used in the calculations for specificity.</p>
 
 
 
-<h5>If at least one contrast is selected&hellip;</h5>
+<h5>If at least one comparison is selected&hellip;</h5>
 
-<p>If at least one contrast is selected, the <i>Specific</i> search will
+<p>If at least one comparison is selected, the <i>Specific</i> search will
 promote genes with <b>larger average absolute log<sub>2</sub> fold-change</b> in the
-<b>selected</b> contrast(s), and at the same time penalize genes with the same
-or larger log<sub>2</sub> fold-change in the <b>un&ndash;selected</b> contrast(s).
+<b>selected</b> comparison(s), and at the same time penalize genes with the same
+or larger log<sub>2</sub> fold-change in the <b>un&ndash;selected</b> comparison(s).
 This is done using the "fold difference" between the selected and
 un&ndash;selected absolute log<sub>2</sub> fold-changes:</p>
 
 <ul>
 	<li>Fold difference is calculated by dividing the <b>average
-		absolute log<sub>2</sub> fold-change</b> of the selected contrast(s) by the
+		absolute log<sub>2</sub> fold-change</b> of the selected comparison(s) by the
 	largest absolute log<sub>2</sub> fold-change of the un&ndash;selected
-	contrasts.</li>
+        comparisons.</li>
 	
-	<li>If <b>none</b> of the un&ndash;selected contrasts' absolute log<sub>2</sub>
+	<li>If <b>none</b> of the un&ndash;selected comparisons' absolute log<sub>2</sub>
 	fold-changes are at or above the selected log<sub>2</sub> fold-change
-	cutoff, the average of the selected contrasts' absolute log<sub>2</sub> fold-changes
+	cutoff, the average of the selected comparisons' absolute log<sub>2</sub> fold-changes
 	is divided by the cutoff instead.</li>
 </ul>
 
 <p>Genes with the <b>greatest fold difference</b> in absolute log<sub>2</sub> fold-changes
-between selected and un&ndash;selected contrasts will be pushed towards the top
+between selected and un&ndash;selected comparisons will be pushed towards the top
 of the list. Genes that have a larger absolute log<sub>2</sub> fold-change in the
-un&ndash;selected contrasts are not shown.</p>
+un&ndash;selected comparisons are not shown.</p>
 
 
 
@@ -159,12 +159,12 @@ results. In particular:</p>
 
 <ul>
 	
-	<li>If no contrasts are selected, genes with largest absolute
-	log<sub>2</sub> fold-changes in <b>all</b> contrasts will be reported first.</li>
+	<li>If no comparisons are selected, genes with largest absolute
+	log<sub>2</sub> fold-changes in <b>all</b> comparisons will be reported first.</li>
 
-	<li>If at least one contrast is selected, genes with larger
-	absolute log<sub>2</sub> fold-changes across the <b>selected</b> contrasts are reported first.
-	Log<sub>2</sub> fold-changes in the un&ndash;selected contrasts are ignored in
+	<li>If at least one comparison is selected, genes with larger
+	absolute log<sub>2</sub> fold-changes across the <b>selected</b> comparisons are reported first.
+	Log<sub>2</sub> fold-changes in the un&ndash;selected comparisons are ignored in
 	the ordering of results.</li>
 
 </ul>
@@ -175,7 +175,7 @@ results. In particular:</p>
 
 <p>Results for your query are shown in a heatmap table. The heatmap rows are
 labelled with gene symbols (and design elements in the case of microarray
-data). The columns are labelled with contrast descriptions. Mouseover the
+data). The columns are labelled with comparison descriptions. Mouseover the
 column headings to see the full description.</p>
 
 <p>The heatmap ranks genes by absolute (i.e. ignoring up- or down-regulated
@@ -217,7 +217,7 @@ different experiments.</p>
 <p><img src="resources/images/help/plots_menu.png" alt="plots menu"
 align="bottom" /></p>
 
-<p>An MA plot is generated for each contrast in every experiment. To see
+<p>An MA plot is generated for each comparison in every experiment. To see
 it, select the <img
 src="resources/images/help/plots_menu_MA.png"
 alt="MA plot menu item" align="bottom" /> item from the menu. This plot displays
@@ -232,7 +232,7 @@ differentially expressed at FDR &lt; 0.05 are shown in red in the plot.</p>
 <p>Gene set enrichment analysis is performed using the <a
 href="http://www.bioconductor.org/packages/release/bioc/html/piano.html">Piano</a>
 package from <a href="http://www.bioconductor.org/">Bioconductor</a>. For each
-contrast, enrichment of terms from <a
+    comparison, enrichment of terms from <a
 href="http://www.geneontology.org/">GO</a>, <a
 href="http://www.ebi.ac.uk/interpro/">InterPro</a>, and <a
 href="http://www.reactome.org/">Reactome</a> is tested for within the set of
@@ -267,7 +267,7 @@ documentation for more details.</p>
 
 <h3><a name="ensembl">Visualising differential expression at Ensembl</a></h3>
 
-<p>If you select a gene name and a contrast heading from the heatmap, the
+<p>If you select a gene name and a comparison heading from the heatmap, the
 Ensembl Genome Browser <strong>Open</strong> button, to the left of the heatmap
 table, will become clickable.</p>
 
@@ -276,7 +276,7 @@ table, will become clickable.</p>
 <p>Clicking the <strong>Open</strong> button will take you to the <a
 href="http://www.ensembl.org/index.html">Ensembl</a> or <a
 href="http://ensemblgenomes.org/">Ensembl Genomes</a> browser, which will
-display the log<sub>2</sub> fold-change for the contrast you selected in the
+display the log<sub>2</sub> fold-change for the comparison you selected in the
 context of the genomic location of the gene you selected. For more details
 about how to use the genome browsers, please see the relevant documentation for
 <a href="http://www.ensembl.org/info/index.html">Ensembl</a> or <a
@@ -300,7 +300,7 @@ src="resources/images/help/dlRawCounts_btn.png"
 alt="raw counts download button" align="bottom" /> button), normalized microarray intensity data (click the <img
 src="resources/images/help/dlNorm_btn.png"
 alt="normalized data download button" align="bottom" /> button), and all statistical
-analytics results for all contrasts in the experiment (click the <img
+analytics results for all comparisons in the experiment (click the <img
 src="resources/images/help/dlAna_btn.png"
 alt="analytics download button" align="bottom" /> button). All data is
 provided as tab-delimited text files. You can also download data for each
@@ -357,9 +357,9 @@ alt="Experiment Design" src="resources/images/help/expDes_btn.png"
 align="bottom" /> button. Here you can see RNA-Seq processing run accessions
 (from <a href="http://www.ebi.ac.uk/ena/">ENA</a>) or microarray assay
 accessions, along with their corresponding biological sample characteristics
-and experimental factor values. If you select a contrast from the "Contrast"
-dropdown menu, the runs/assays used in that contrast will be highlighted in the
-table. Runs/assays not used in the selected contrast are not highlighted.
+and experimental factor values. If you select a comparison from the "Comparison"
+dropdown menu, the runs/assays used in that comparison will be highlighted in the
+table. Runs/assays not used in the selected comparison are not highlighted.
 Runs/assays assigned to the "Reference" group are highlighted one colour, and
 those assigned to the "Test" group are highlighted in another. The up&ndash; or
 down&ndash;regulated expression calls shown in the heatmap are always from the
@@ -413,7 +413,7 @@ the <i>Feedback</i> link in the top&ndash;right of the page:</p>
 		<ul>
 			<li><a href="help/differential-atlas.html#minPvalLogFC">Specifying the maximum adjusted <i>p</i>-value and minimum log<sub>2</sub> fold-change</a></li>
 			<li><a href="help/differential-atlas.html#geneSearch">Searching with genes</a></li>
-			<li><a href="help/differential-atlas.html#contrastSearch">Searching with contrasts</a></li>
+			<li><a href="help/differential-atlas.html#comparisonSearch">Searching with comparisons</a></li>
 		</ul>
 	</li>
 	<li><a href="help/differential-atlas.html#heatmap">Heatmap results display</a></li>

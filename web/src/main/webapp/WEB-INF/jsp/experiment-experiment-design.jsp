@@ -52,7 +52,7 @@
                    style="float: right; padding: 0px 3px 10px 0px; margin-bottom: 0.2em;">
                 <tr>
                     <td style="vertical-align: middle; padding: 0px 10px 0px 0px; white-space: nowrap;">
-                        <form:label path="selectedContrast" cssStyle="vertical-align: middle;">Contrast: </form:label>
+                        <form:label path="selectedContrast" cssStyle="vertical-align: middle;">Comparison: </form:label>
                         <input type="hidden" name="accessKey" value="${param.accessKey}"/>
                         <form:select path="selectedContrast" items="${contrasts}" itemValue="id"
                                      itemLabel="displayName"/>
