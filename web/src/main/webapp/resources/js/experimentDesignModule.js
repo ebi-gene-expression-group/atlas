@@ -99,7 +99,7 @@ var experimentDesignTableModule = (function ($) {
 
         $("<tr><th id='assaysHeader' class='header-cell br bt bl'></th>" +
             "<th id='samplesHeader' class='samples header-cell  br bt'>Sample Characteristics<span class='doc-span' data-help-loc='#sampleChars'></span></th>" +
-            "<th id='factorsHeader' class='factors header-cell br bt'>Factor Values<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>")
+            "<th id='factorsHeader' class='factors header-cell br bt'>Experimental Variables<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>")
             .insertBefore(tableHeaderRow);
 
         /* Set colspan for each category */

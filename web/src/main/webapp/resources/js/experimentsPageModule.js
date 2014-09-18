@@ -171,7 +171,7 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return withLineBreaks(data, type, full);
                     } },
-                { "sTitle":"Experimental Factors", "mData":"experimentalFactors", "sClass":"center bb",
+                { "sTitle":"Experimental Variables", "mData":"experimentalFactors", "sClass":"center bb",
                     "mRender":function (data, type, full) {
                         return withLineBreaks(data, type, full);
                     } },

@@ -128,7 +128,7 @@ function initBarChartButton() {
 function buildLegendaText(isAnyQueryFactorValueSelected) {
     "use strict";
     return "Y = number of genes expressed above the given FPKM cutoff " +
-        (isAnyQueryFactorValueSelected ? "for the selected experimental factors" : "in any experimental factor");
+        (isAnyQueryFactorValueSelected ? "for the selected experimental variables" : "in any experimental variable");
 }
 
 function plotCutoffBarChart(selectedQueryFactorValues, data, magnifiedScaledCutoffs) {

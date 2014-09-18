@@ -30,13 +30,13 @@ highly curated RNA&ndash;seq experiments from <a
 
 <p>The above experiments have been re&ndash;analyzed using an in&ndash;house RNA&ndash;seq
 processing pipeline. The resulting data matrix stores gene
-expression profiles across the analyzed experimental factor values as a set of
+expression profiles across the analyzed experimental variables as a set of
 normalized expression levels (<a
 	class="externallink"
 	title="FPKMs"
 	href="http://www.nature.com/nbt/journal/v28/n5/full/nbt.1621.html">FPKMs</a>).
 You can search the data by a combination of genes attributes, experimental
-factor values, and a minimum FPKM cutoff. See below for more details on searching.</p>
+    variables, and a minimum FPKM cutoff. See below for more details on searching.</p>
 
 
 
@@ -51,7 +51,7 @@ factor values, and a minimum FPKM cutoff. See below for more details on searchin
 <h2><a name="filtering">Filtering Baseline Atlas data</a></h2>
 
 <p><img alt="filtering" src="resources/images/help/filtering.png" align="bottom" /></p>
-<p>Some experiments have <b>more than one</b> experimental variable (factor). For example, in experiment
+<p>Some experiments have <b>more than one</b> experimental variable type. For example, in experiment
 <a href="http://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-26284">E-GEOD-26284</a>,
 three different <b>types of RNA</b> were extracted from <b>six cellular components</b> from <b>23
 human cell lines</b>. Results for these experiments are limited to a certain
@@ -74,7 +74,7 @@ data is available.</p>
 <p>You can specify a minimum expression level to act as a <b>cutoff</b>, and only genes expressed <b>above</b> this level are displayed. This is to aid distinction between "background noise" and "real" gene expression. Our default FPKM cutoff is 0.5. To change it, enter a new value into the "Expression level cutoff" input box, or drag the slider until the "Expression level cutoff" input box shows your desired cutoff value. A histogram showing the number of genes expressed above a range of cutoffs is also available. This lets you see how many genes you are excluding by selecting a given cutoff. If you see that you're excluding a lot of genes, you may wish to <b>decrease</b> the cutoff. Clicking on the <img alt="Histogram enable/disable button" src="resources/images/help/histogram_btn.png" align="bottom" /> button toggles display of the histogram.</p>
 
 <ul>
-	<li>If you have not selected any experimental factors, the histogram shows the number of genes expressed in <b>any</b> factor value for each of the shown cutoffs.</li>
+	<li>If you have not selected any experimental variables, the histogram shows the number of genes expressed in <b>any</b> experimental variable for each of the shown cutoffs.</li>
 	<li>If you have selected <b>at least one</b> factor value, the histogram shows the number of genes expressed in <b>at least one of the selected factor values</b>, for each of the shown cutoffs.</li>
 </ul>
 
@@ -99,9 +99,9 @@ data is available.</p>
 <p>Click "show individual genes" to return to the original view.</p>
 
 
-<h3><a name="efvSearch">Searching with experimental factor values</a></h3>
+<h3><a name="efvSearch">Searching with experimental variables</a></h3>
 
-<p>Use the factor value input box to search for experimental factor (e.g. <i>organism part</i> or <i>cell line</i>) values, or leave it blank to search in all. You can search:</p>
+<p>Use the experimental variable input box to search for e.g. <i>organism part</i> or <i>cell line</i> values, or leave it blank to search in all. You can search:</p>
 	
 <ul>
 	<li>within a <b>single&ndash;factor</b> experiment, e.g. <a href="experiments/E-MTAB-513" title="E-MTAB-513">Illumina Body Map</a><a title="E-MTAB-513" href="experiments/E-MTAB-513">,</a> or</li>
@@ -121,10 +121,10 @@ data is available.</p>
 	
 <h5>If the query contains no factor values&hellip;</h5>	
 
-<p>If the query contains <b>no experimental factor values</b>, the <i>Specific</i> search will report genes expressed in just <b>one</b> experimental factor value, then genes expressed in just <b>two</b> factor values, then three and so on, reporting any genes expressed in all the available factor values at the end of the list of results. Within each group of genes expressed in N factor values only, genes are sorted by the highest average FPKM across the N factor values in which they are expressed.</p>
+<p>If the query contains <b>no experimental variables</b>, the <i>Specific</i> search will report genes expressed in just <b>one</b> experimental variable, then genes expressed in just <b>two</b> factor values, then three and so on, reporting any genes expressed in all the available factor values at the end of the list of results. Within each group of genes expressed in N factor values only, genes are sorted by the highest average FPKM across the N factor values in which they are expressed.</p>
 
 <h5>If the query contains at least one factor value&hellip;</h5>
-<p>If the query contains <b>at least one</b> experimental factor value, the <i>Specific</i> search will promote genes with <b>higher average FPKM</b> in the <b>queried</b> factor value(s), and at the same time penalize genes with higher FPKMs in the <b>non&ndash;queried</b> factor values. This is done using the "fold difference" between the query and non-query FPKMs:</p>
+<p>If the query contains <b>at least one</b> experimental variable, the <i>Specific</i> search will promote genes with <b>higher average FPKM</b> in the <b>queried</b> factor value(s), and at the same time penalize genes with higher FPKMs in the <b>non&ndash;queried</b> factor values. This is done using the "fold difference" between the query and non-query FPKMs:</p>
 
 <ul>
 	<li>Fold difference is calculated by dividing the <b>average FPKM</b> of the queried factor values by the <b>highest FPKM</b> of the non-query factor values.</li>
@@ -138,8 +138,8 @@ data is available.</p>
   <p>If the <i>Specific</i> option is not selected, the Baseline Atlas search will <b>ignore</b> specificity of expression when ordering the results. In particular:</p>
  
   <ul>
-	  <li>If the query contains <b>no experimental factor values</b>, genes with the highest expression across <b>all</b> factor values will be reported first.</li>
-	  <li>If the query contains <b>at least one</b> experimental factor value, genes with higher FPKM across the <b>selected</b> factor values are reported first. Expression levels across the non&ndash;selected factor values are <b>ignored</b> in the ordering of results.</li>
+	  <li>If the query contains <b>no experimental variables</b>, genes with the highest expression across <b>all</b> factor values will be reported first.</li>
+	  <li>If the query contains <b>at least one</b> experimental variable, genes with higher FPKM across the <b>selected</b> factor values are reported first. Expression levels across the non&ndash;selected factor values are <b>ignored</b> in the ordering of results.</li>
   </ul>
 
 
@@ -147,7 +147,7 @@ data is available.</p>
 
 <h2><a name="heatmap">Heatmap results display</a></h2>
 
-<p>Results for your query are shown in a heatmap table. The heatmap rows and columns are labelled with gene symbols and experimental factor values, respectively. The heatmap shows expressions by <b>colour intensity</b>, according to the gradient bar,<img alt="heatmap colour gradient" src="resources/images/help/gradient.png" align="bottom" />, displayed above the heatmap. Greater colour intensity means higher relative gene expression. To see the exact FPKM for all genes, click on the <img alt="Display levels" src="resources/images/help/display_levels.png" align="bottom" /> button. This also reveals minimum and maximum FPKMs on each side of the gradient bar. The gradient shows intensities corresponding to expression levels for the <b>top 50</b> genes currently displayed (rather than all FPKM values for all genes returned by the query).</p>
+<p>Results for your query are shown in a heatmap table. The heatmap rows and columns are labelled with gene symbols and experimental variables, respectively. The heatmap shows expressions by <b>colour intensity</b>, according to the gradient bar,<img alt="heatmap colour gradient" src="resources/images/help/gradient.png" align="bottom" />, displayed above the heatmap. Greater colour intensity means higher relative gene expression. To see the exact FPKM for all genes, click on the <img alt="Display levels" src="resources/images/help/display_levels.png" align="bottom" /> button. This also reveals minimum and maximum FPKMs on each side of the gradient bar. The gradient shows intensities corresponding to expression levels for the <b>top 50</b> genes currently displayed (rather than all FPKM values for all genes returned by the query).</p>
 
 <p>The Baseline Atlas also includes information about transcript-level expression. To see this for a given gene, click the corresponding filled box in the heatmap. This brings up a pie chart detailing the proportion of expression contributed by each transcript. A maximum of three top contributing transcripts are shown, and the remaining ones are aggregated as "Others". Transcripts that are not expressed above the selected minimum expression level are not shown. White portions of the pie chart indicate that the data for that transcript is of low confidence. Please refer to the <a href="http://cufflinks.cbcb.umd.edu/manual.html#fpkm_tracking_format">Cufflinks documentation</a> for more details.</p>
 
@@ -260,7 +260,7 @@ button" src="resources/images/help/am_btn.png" align="bottom" /> button.</p>
 		<ul>
 			<li><a href="help/baseline-atlas.html#minExprLevel">Specifying the minimum expression level</a></li>
 			<li><a href="help/baseline-atlas.html#geneSearch">Searching with genes</a></li>
-			<li><a href="help/baseline-atlas.html#efvSearch">Searching with experimental factor values</a></li>
+			<li><a href="help/baseline-atlas.html#efvSearch">Searching with experimental variables</a></li>
 		</ul>
 	</li>
 	<li><a href="help/baseline-atlas.html#heatmap">Heatmap results display</a>
