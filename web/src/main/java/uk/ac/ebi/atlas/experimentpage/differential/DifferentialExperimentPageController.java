@@ -94,7 +94,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         //required by autocomplete
         model.addAttribute("species", requestContext.getFilteredBySpecies());
 
-        model.addAttribute("queryFactorName", "Contrast");
+        model.addAttribute("queryFactorName", "Comparison");
 
         model.addAttribute("allQueryFactors", contrasts);
 
