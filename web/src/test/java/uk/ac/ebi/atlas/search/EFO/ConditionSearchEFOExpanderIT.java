@@ -1,9 +1,6 @@
 package uk.ac.ebi.atlas.search.EFO;
 
 import org.apache.commons.lang.StringUtils;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -12,11 +9,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
 
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.Matchers.arrayWithSize;
-import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,6 +32,20 @@ public class ConditionSearchEFOExpanderIT {
         assertThat(terms, arrayWithSize(1024));
         assertThat(terms[0], is("cancer"));
         assertThat(terms[1], startsWith("EFO:"));
+
+    }
+
+    @Test
+    public void inflammatoryBowelDisease() throws Exception {
+        String expandedSearch = subject.fetchExpandedTermWithEFOChildren("Inflammatory Bowel Disease");
+
+        String[] terms = StringUtils.split(expandedSearch);
+
+        assertThat(terms, arrayWithSize(1024));
+        assertThat(terms[0], is("Inflammatory"));
+        assertThat(terms[1], startsWith("Bowel"));
+        assertThat(terms[2], startsWith("Disease"));
+        assertThat(terms[3], startsWith("EFO:"));
 
     }
 
