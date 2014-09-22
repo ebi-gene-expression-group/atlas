@@ -43,12 +43,6 @@
 
     <%@ include file="includes/anatomogram-and-heatmap-react.jsp" %>
 
-    <br/>
-
-    <div id="help-placeholder" style="display: none"></div>
-
-    <%@ include file="includes/transcript-breakdown-popup.jsp" %>
-
 </section>
 
 <script language="JavaScript" type="text/javascript"
@@ -68,6 +62,9 @@
         src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/sliderAndBarChart.js"></script>
+
+
+<%@ include file="includes/flot.jsp" %>
 
 <%@ include file="includes/heatmap-react.jsp" %>
 
