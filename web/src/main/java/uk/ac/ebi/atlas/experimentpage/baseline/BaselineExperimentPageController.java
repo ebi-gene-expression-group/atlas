@@ -234,6 +234,9 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
                 BaselineProfilesList profilesAsGeneSets = requestContext.geneQueryResponseContainsGeneSets() ? fetchGeneProfilesAsGeneSets() : null;
                 if (profilesAsGeneSets != null) {
                     model.addAttribute("profilesAsGeneSets", profilesAsGeneSets);
+                    model.addAttribute("isGeneSetQuery", true);
+                } else {
+                    model.addAttribute("isGeneSetQuery", false);
                 }
 
                 addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, experimentalFactors.getFilteredFactors(selectedFilterFactors), model);
