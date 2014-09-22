@@ -2,22 +2,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:set var="base" value="${pageContext.request.contextPath}"/>
-<c:if test="${not empty preferences.rootContext}">
-    <c:set var="base" value="${preferences.rootContext}"/>
+<%-- TODO: remove rootContext when BioJs no longer uses HTML insert --%>
+<c:if test="${not empty param.rootContext}">
+    <c:set var="base" value="${param.rootContext}"/>
 </c:if>
 
 <div id="atlas-content" class="block">
     <%@ include file="includes/anatomogram-and-heatmap-react.jsp" %>
 
+    <%@ include file="includes/flot.jsp" %>
+
     <%@ include file="includes/heatmap-react.jsp" %>
-
-    <br/>
-
-    <div id="help-placeholder" style="display: none"></div>
-
-    <div id="queryFactorType" data-value="${queryFactorType}"></div>
-
-    <%@ include file="includes/transcript-breakdown-popup.jsp" %>
 
 </div>
 

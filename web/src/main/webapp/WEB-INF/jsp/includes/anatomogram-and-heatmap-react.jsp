@@ -24,53 +24,44 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
 <c:set var="base" value="${pageContext.request.contextPath}"/>
+<%-- TODO: remove rootContext when BioJs no longer uses HTML insert --%>
 <c:if test="${not empty preferences.rootContext}">
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
-<c:choose>
-    <c:when test="${empty geneProfiles}">
-        <c:if test="${not isPreferenceError}">
-            <div id="heatmap-message">
-                No expressions found
-            </div>
-        </c:if>
-    </c:when>
-    <c:otherwise><%--@elvariable id="geneProfiles" type="uk.ac.ebi.atlas.model.GeneProfilesList"--%>
+<c:if test="${not empty jsonProfiles}">
+    <div id="heatmap" class="row stickem-container">
 
-        <div id="heatmap" class="row stickem-container">
+        <div id="anatomogram" class="aside stickem double-click-noselection" style="display:inline">
+            <table>
+                <tr>
+                    <td style="padding-top: 15px; vertical-align:top">
+            <span id="sex-toggle">
+                <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
+                     style="width:20px;height:38px;padding:2px"
+                     src="${base}/resources/images/male_selected.png"/>
+            </span>
+                        <!--
+                        <span data-help-loc="#anatomogram"/>
+                        -->
+                    </td>
+                    <td>
+                        <c:set var="height" value="250px"/>
+                        <c:if test="${fn:contains(maleAnatomogramFile,\"human\")}">
+                            <c:set var="height" value="360px"/>
+                        </c:if>
 
-            <div id="anatomogram" class="aside stickem double-click-noselection" style="display:inline">
-                <table>
-                    <tr>
-                        <td style="padding-top: 15px; vertical-align:top">
-                <span id="sex-toggle">
-                    <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
-                         style="width:20px;height:38px;padding:2px"
-                         src="${base}/resources/images/male_selected.png"/>
-                </span>
-                            <!--
-                            <span data-help-loc="#anatomogram"/>
-                            -->
-                        </td>
-                        <td>
-                            <c:set var="height" value="250px"/>
-                            <c:if test="${fn:contains(maleAnatomogramFile,\"human\")}">
-                                <c:set var="height" value="360px"/>
-                            </c:if>
-
-                            <div id="anatomogramBody" style="display:inline-block;width: 230px; height:${height}">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <div id="anatomogram-ensembl-launcher"></div>
-            </div>
-
-            <div id="ensembl-launcher" class="aside stickem" style="display:inline"></div>
-
-            <div id="heatmap-react" class="heatmap-position"></div>
-
+                        <div id="anatomogramBody" style="display:inline-block;width: 230px; height:${height}">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div id="anatomogram-ensembl-launcher"></div>
         </div>
-    </c:otherwise>
-</c:choose>
+
+        <div id="ensembl-launcher" class="aside stickem" style="display:inline"></div>
+
+        <div id="heatmap-react" class="heatmap-position"></div>
+
+    </div>
+</c:if>

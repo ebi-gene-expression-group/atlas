@@ -51,7 +51,7 @@ public class RnaSeqHeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT e
         subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "regulation=UP&displayLevels=true");
         subject.get();
 
-        assertThat(subject.getQueryFactorLabel(), is("Contrast"));
+        assertThat(subject.getQueryFactorLabel(), is("Comparison"));
 
         assertThat(subject.getFactorValueHeaders().size(), is(1));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("genotype"));

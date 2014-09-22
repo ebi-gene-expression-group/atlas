@@ -29,7 +29,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
         List<String> header = subject.getRowValues(3);
 
         assertThat(header,
-                contains("Gene", "Organism", "Experiment Accession", "Contrast", "p-value", "log2foldchange", "t-statistic")
+                contains("Gene", "Organism", "Experiment Accession", "Comparison", "p-value", "log2foldchange", "t-statistic")
         );
 
     }
