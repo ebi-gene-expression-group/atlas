@@ -89,7 +89,7 @@ public class BioentityIndex {
 
     void indexFile(Path filePath, boolean isReactome) throws IOException, SolrServerException {
 
-        if (filePath.toString().endsWith(".tsv") && !filePath.toString().equals("goIDToTerm.tsv") && !filePath.toString().equals("interproIDToTypeTerm.tsv")) {
+        if (filePath.toString().endsWith(".tsv") && !filePath.toString().endsWith("goIDToTerm.tsv") && !filePath.toString().endsWith("interproIDToTypeTerm.tsv")) {
 
             bioentityPropertiesStreamBuilder.forPath(filePath).isForReactome(isReactome);
 
