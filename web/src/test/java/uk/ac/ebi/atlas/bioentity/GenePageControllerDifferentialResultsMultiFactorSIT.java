@@ -56,7 +56,7 @@ public class GenePageControllerDifferentialResultsMultiFactorSIT extends SingleP
 
     @Test
     public void checkHeatmap() {
-        assertThat(subject.getDiffHeatmapHeaders(), contains("Contrast", "Log2-fold change"));
+        assertThat(subject.getDiffHeatmapHeaders(), contains("Comparison", "Log2-fold change"));
         assertThat(subject.getDiffHeatmapRow(1), contains("treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'", ""));
     }
 
