@@ -96,10 +96,12 @@
         <script type="text/javascript">
             var heatmapData = (function (genePropertiesTooltipModule) {
 
+                <%--
                 //TODO: extract ensemlb genome launcher config parameters (ensemblDB, columnType etc.) out into separate object
                 //TODO: extract transcript parameters (queryFactorType, selectedFilterFactorsJson) out into separate object
                 //TODO: remove enableGeneLinks parameter
                 //TODO: investigate why showMaPlotButton is always true
+                --%>
                 var config = (function (genePropertiesTooltipModule) {
                     return {
                         atlasHost: '${atlasHost}',
@@ -137,12 +139,26 @@
                 }
             })(genePropertiesTooltipModule);
 
-            (function ($, React, heatmapModule, heatmapConfig, columnHeaders, profiles, geneSetProfiles) {
+            <c:choose>
+                <c:when test="${hasAnatomogram}">
+                    var anatomogramData = {
+                        maleAnatomogramFile: '${maleAnatomogramFile}',
+                        femaleAnatomogramFile:  '${femaleAnatomogramFile}',
+                        allSvgPathIds: ${empty allSvgPathIds ? 'undefined' : allSvgPathIds},
+                        contextRoot: '${pageContext.request.contextPath}'
+                    };
+                </c:when>
+            <c:otherwise>
+                var anatomogramData = undefined;
+            </c:otherwise>
+            </c:choose>
+
+            var heatmapModuleBuild = ${isMultiExperiment ? 'heatmapModule.buildMultiExperiment': (isDifferential ? 'heatmapModule.buildDifferential' : 'heatmapModule.buildBaseline')};
+
+            (function ($, React, build, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData) {
 
                 $(document).ready(function () {
                     // call this inside ready() so all scripts load first in IE8
-                    var build = ${isMultiExperiment ? 'heatmapModule.buildMultiExperiment': (isDifferential ? 'heatmapModule.buildDifferential' : 'heatmapModule.buildBaseline')};
-
                     var heatmap = build(heatmapConfig, $('#displayLevels'));
 
                     React.renderComponent(heatmap.Heatmap({columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}),
@@ -151,24 +167,19 @@
 
                     if (heatmap.EnsemblLauncher) {
                         React.renderComponent(heatmap.EnsemblLauncher(),
-                                document.getElementById('${hasAnatomogram ? "anatomogram-ensembl-launcher" : "ensembl-launcher"}')
-                        );
+                                document.getElementById(anatomogramData ? "anatomogram-ensembl-launcher" : "ensembl-launcher"));
                     }
 
                     // load anatomogram after heatmap is rendered so wiring works
-
-                    var anyAnatomogramFile = "${maleAnatomogramFile}" + "${femaleAnatomogramFile}";
-                    var allSvgPathIds = ${empty allSvgPathIds ? 'undefined' : allSvgPathIds};
-
-                    if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {
-                        anatomogramModule.init(allSvgPathIds, '${maleAnatomogramFile}', '${femaleAnatomogramFile}', '${pageContext.request.contextPath}');
+                    if (anatomogramData) {
+                        anatomogramModule.init(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile, anatomogramData.contextRoot);
                     } else {
-                        $("#anatomogram").remove();//remove the anatomogram
+                        $("#anatomogram").remove();
                     }
                 });
 
-            })(jQuery, React, heatmapModule, heatmapData.config,
-                    heatmapData.columnHeaders, heatmapData.profiles, heatmapData.geneSetProfiles);
+            })(jQuery, React, heatmapModuleBuild, heatmapData.config,
+                    heatmapData.columnHeaders, heatmapData.profiles, heatmapData.geneSetProfiles, anatomogramData);
         </script>
     </c:otherwise>
 </c:choose>
