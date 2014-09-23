@@ -128,7 +128,7 @@
                         <c:when test="${not empty baselineCounts}">
                             <c:set var="resultsCount" value="${baselineCounts.size()}"/>
                             <span style="margin-left: 10px; margin-top:10px">
-                                ${resultsCount} results
+                                ${resultsCount} ${resultsCount == 1 ? "result" : "results"}
                             </span>
                         </c:when>
                         <c:otherwise>
