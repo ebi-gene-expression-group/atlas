@@ -40,7 +40,7 @@ public class SpecificNoContrastSelectedIT extends SeleniumFixture {
         subject = new HeatmapTablePage(driver, E_E_GEOD_38400_ACCESSION, "regulation=UP&displayLevels=true");
         subject.get();
 
-        assertThat(subject.getQueryFactorLabel(), is("Contrast"));
+        assertThat(subject.getQueryFactorLabel(), is("Comparison"));
 
         assertThat(subject.getFactorValueHeaders().size(), is(3));
         assertThat(subject.getFactorValueHeaders().get(0), startsWith("nrpe1"));

@@ -32,6 +32,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
 import uk.ac.ebi.atlas.commands.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
@@ -157,6 +158,7 @@ public final class HeatmapWidgetController {
         model.addAttribute("isWidget", true);
         model.addAttribute("isMultiExperiment", true);
         model.addAttribute("geneQuery", bioEntityAccession);
+        model.addAttribute("isGeneSetQuery", GeneSetUtil.isGeneSet(bioEntityAccession));
 
         BaselineTissueExperimentSearchResult searchResult;
 

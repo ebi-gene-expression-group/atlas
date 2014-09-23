@@ -17,6 +17,8 @@
 
     <%@ include file="includes/anatomogram-and-heatmap.jsp" %>
 
+    <%@ include file="includes/flot.jsp" %>
+
     <br/>
 
     <div id="help-placeholder" style="display: none"></div>
