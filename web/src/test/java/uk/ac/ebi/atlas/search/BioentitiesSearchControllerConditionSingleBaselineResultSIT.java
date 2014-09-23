@@ -48,7 +48,7 @@ public class BioentitiesSearchControllerConditionSingleBaselineResultSIT extends
 
         assertThat(baselineCounts, hasSize(1));
 
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("1 results"));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("1 result"));
 
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
         assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
