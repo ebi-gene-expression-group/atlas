@@ -198,14 +198,11 @@ public class SolrQueryService {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        // search across any species or passed by
-        String species = "";
-        if(StringUtils.isNotBlank(specie)) {
-            species = specie;
-        }
+        // empty string will search across all species. Species must be lower case.
+        String solrSpecies = StringUtils.isNotBlank(specie) ? specie.toLowerCase() : "";
 
         //resolve any gene keywords to identifiers
-        Set<String> geneIds = findGeneIdsOrSets(geneQuery, isExactMatch, species);
+        Set<String> geneIds = findGeneIdsOrSets(geneQuery, isExactMatch, solrSpecies);
 
         Set<String> matureRNAIds = findMatureRNAIds(geneQuery);
         geneIds.addAll(matureRNAIds);

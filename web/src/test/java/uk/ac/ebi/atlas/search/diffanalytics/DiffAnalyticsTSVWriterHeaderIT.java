@@ -6,14 +6,11 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsTSVWriter;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -74,6 +71,26 @@ public class DiffAnalyticsTSVWriterHeaderIT {
         assertThat(headerRows[1], is("# Query: specifically up/down differentially expressed in condition matching 'LIVER', given the False Discovery Rate cutoff: 0.05"));
     }
 
+    @Test
+    public void queryDescriptionWithOrganism(){
+        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        requestParameters.setOrganism("Mus musculus");
+
+        String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
+
+        assertThat(headerRows[1], is("# Query: specifically up/down differentially expressed in organism 'Mus musculus', given the False Discovery Rate cutoff: 0.05"));
+    }
+
+    @Test
+    public void queryDescriptionWithOrganismAndCondition(){
+        GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
+        requestParameters.setCondition("LIVER");
+        requestParameters.setOrganism("Mus musculus");
+
+        String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
+
+        assertThat(headerRows[1], is("# Query: specifically up/down differentially expressed in condition matching 'LIVER' and in organism 'Mus musculus', given the False Discovery Rate cutoff: 0.05"));
+    }
 
     @Test
     public void queryDescriptionWithGeneQueryAndCondition(){

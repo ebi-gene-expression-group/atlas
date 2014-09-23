@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
 
 import java.util.List;
 
+import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -60,6 +61,40 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
 
         String[] lines = response.body().asString().split("\n");
         assertThat(lines.length, is(5));
+    }
+
+
+    @Test
+    public void downloadGeneQueryWithOrganism() {
+        String url = "/gxa/query.tsv?geneQuery=Cyba&exactMatch=true&_exactMatch=on&organism=Homo%20sapiens&condition=";
+
+        Response response = given().urlEncodingEnabled(false).get(url);
+
+        response.then().assertThat().contentType(ContentType.TEXT);
+
+        String[] lines = response.body().asString().split("\n");
+        assertThat(lines.length, is(5));
+
+        String firstGene = lines[4];
+        assertThat(firstGene,
+                is("CYBA\tHomo sapiens\tE-GEOD-12108\t'Francisella tularensis Schu S4' vs 'uninfected'\t7.29020235742829E-4\t-2.153295\t-6.11401975251878"));
+    }
+
+
+    @Test
+    public void downloadConditionWithOrganism() {
+        String url = "/gxa/query.tsv?geneQuery=&exactMatch=true&_exactMatch=on&organism=Arabidopsis+thaliana&condition=%22wild+type%22";
+
+        Response response = given().urlEncodingEnabled(false).get(url);
+
+        response.then().assertThat().contentType(ContentType.TEXT);
+
+        String[] lines = response.body().asString().split("\n");
+        assertThat(lines.length, is(54));
+
+        String firstGene = lines[4];
+        assertThat(firstGene,
+                is("AT3G48131\tArabidopsis thaliana\tE-GEOD-38400\tnrpe1 mutant vs wild type\t4.2479998366313E-5\t6.89620951324986\tNA"));
     }
 
 }
