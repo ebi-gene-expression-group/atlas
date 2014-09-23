@@ -25,7 +25,9 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
     }
 
     public void setOrganism(String organism) {
-        this.organism = organism;
+        if (!"Any".equals(organism)) {
+            this.organism = organism;
+        }
     }
 
     public boolean hasOrganism() {

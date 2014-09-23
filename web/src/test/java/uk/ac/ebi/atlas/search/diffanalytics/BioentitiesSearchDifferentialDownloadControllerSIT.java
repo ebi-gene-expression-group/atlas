@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.is;
 
 public class BioentitiesSearchDifferentialDownloadControllerSIT {
 
-    private EndPoint subject = new EndPoint("/gxa/query.tsv?geneQuery=Cyba");
+    private EndPoint subject = new EndPoint("/gxa/query.tsv?geneQuery=Cyba&exactMatch=true&_exactMatch=on&organism=Any&condition=");
 
     @Test
     public void verifyLengthOfDocument() {
