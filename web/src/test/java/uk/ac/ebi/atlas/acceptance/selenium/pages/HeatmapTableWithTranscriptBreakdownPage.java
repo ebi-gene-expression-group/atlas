@@ -135,4 +135,8 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
         });
     }
 
+    public boolean isTranscriptPopupPresent() {
+        return StringUtils.isNotEmpty(driver.findElement(By.id("transcript-breakdown-title")).getText());
+    }
+
 }

@@ -32,7 +32,9 @@ import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class TranscriptPopupSIT extends SeleniumFixture {
 
@@ -97,7 +99,7 @@ public class TranscriptPopupSIT extends SeleniumFixture {
         assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Illumina Body Map", "Vertebrate tissues"));
 
         HeatmapTableWithTranscriptBreakdownPage page1 = subject.clickOnCell(0, 5);
-        assertThat(page1.getTitle(), is(""));
+        assertFalse(page1.isTranscriptPopupPresent());
     }
 
     @Test
@@ -114,6 +116,7 @@ public class TranscriptPopupSIT extends SeleniumFixture {
         HeatmapTableWithTranscriptBreakdownPage page1 = subject.clickOnCell(0, 3);
         assertThat(page1.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ENSG00000228278 in appendix\n(1 out of 2 transcripts are expressed):"));
         assertThat(page1.getTranscriptBreakdownLegendLabels(), contains("ENST00000431067"));
+        assertTrue(page1.isTranscriptPopupPresent());
 
         // single slice experiment
         HeatmapTableWithTranscriptBreakdownPage page2 = subject.clickOnCell(1, 16);
