@@ -125,20 +125,21 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalyt
 
     private String[] buildCsvRow(DiffAnalytics dbExpression) {
         DifferentialExpression expression = dbExpression.getExpression();
-        double tstatistic = (expression instanceof MicroarrayExpression) ? ((MicroarrayExpression)expression).getTstatistic() : Double.POSITIVE_INFINITY;
         return new String[] {dbExpression.getBioentityName(),
                 dbExpression.getSpecies(),
                 dbExpression.getExperimentAccession(),
                 dbExpression.getContrastDisplayName(),
                 expressionValueAsString(expression.getPValue()),
                 expressionValueAsString(expression.getFoldChange()),
-                expressionValueAsString(tstatistic)
+                (expression instanceof MicroarrayExpression) ? expressionValueAsString(((MicroarrayExpression)expression).getTstatistic()) : "NA"
         };
     }
 
     private String expressionValueAsString(double expressionValue) {
-        if (Double.isInfinite(expressionValue)) {
-            return "NA";
+        if (expressionValue == Double.POSITIVE_INFINITY) {
+            return "Inf";
+        } else if (expressionValue == Double.NEGATIVE_INFINITY) {
+            return "-Inf";
         }
         return Double.toString(expressionValue);
     }

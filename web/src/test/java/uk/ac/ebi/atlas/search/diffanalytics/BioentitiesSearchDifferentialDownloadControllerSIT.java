@@ -132,5 +132,19 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
     }
 
 
+    @Test
+    public void downloadWithLogFoldChangeOfInfinity() {
+        String url = "/genes/ENSMUSG00000070368.tsv";
 
+        Response response = given().urlEncodingEnabled(false).get(url);
+
+        response.then().assertThat().statusCode(200).contentType(ContentType.TEXT);
+
+        String[] lines = response.body().asString().split("\n");
+        assertThat(lines.length, is(5));
+
+        String firstGene = lines[4];
+        assertThat(firstGene,
+                is("Prok1\tMus musculus\tE-GEOD-21860\tclinical information:'non-pregnant' vs 'pregnant'\t0.00148726343533448\tInf\tNA"));
+    }
 }

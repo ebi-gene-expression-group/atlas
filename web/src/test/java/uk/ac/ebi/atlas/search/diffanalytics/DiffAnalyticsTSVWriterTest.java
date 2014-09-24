@@ -8,11 +8,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalytics;
-import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
-import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsTSVWriter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -79,6 +76,40 @@ public class DiffAnalyticsTSVWriterTest {
         subject.write(dbExpressions);
 
         String expectedRow = BIOENTITY_NAME + "\t" + SPECIES + "\t" + EXPERIMENT_ACCESSION + "\t" + CONTRAST_NAME + "\t" + pvalue + "\t" + foldChange + "\t" + tstatistic + "\n" ;
+        verify(responseWriterMock).write(eq(expectedRow), any(Integer.class), any(Integer.class));
+    }
+
+    @Test
+    public void testWritePositiveInfinity() throws IOException {
+        double pvalue = 0.001;
+        double foldChange = Double.POSITIVE_INFINITY;
+        DifferentialExpression diffExpression = new DifferentialExpression(pvalue, foldChange, contrastMock);
+
+        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES);
+
+        List<DiffAnalytics> dbExpressionList = Lists.newArrayList(dbExpression);
+        DiffAnalyticsList dbExpressions = new DiffAnalyticsList(dbExpressionList, dbExpressionList.size());
+
+        subject.write(dbExpressions);
+
+        String expectedRow = BIOENTITY_NAME + "\t" + SPECIES + "\t" + EXPERIMENT_ACCESSION + "\t" + CONTRAST_NAME + "\t" + pvalue + "\tInf\tNA\n" ;
+        verify(responseWriterMock).write(eq(expectedRow), any(Integer.class), any(Integer.class));
+    }
+
+    @Test
+    public void testWriteNegativeInfinity() throws IOException {
+        double pvalue = 0.001;
+        double foldChange = Double.NEGATIVE_INFINITY;
+        DifferentialExpression diffExpression = new DifferentialExpression(pvalue, foldChange, contrastMock);
+
+        DiffAnalytics dbExpression = new DiffAnalytics(BIOENTITY_ID, BIOENTITY_NAME, EXPERIMENT_ACCESSION, diffExpression, SPECIES);
+
+        List<DiffAnalytics> dbExpressionList = Lists.newArrayList(dbExpression);
+        DiffAnalyticsList dbExpressions = new DiffAnalyticsList(dbExpressionList, dbExpressionList.size());
+
+        subject.write(dbExpressions);
+
+        String expectedRow = BIOENTITY_NAME + "\t" + SPECIES + "\t" + EXPERIMENT_ACCESSION + "\t" + CONTRAST_NAME + "\t" + pvalue + "\t-Inf\tNA\n" ;
         verify(responseWriterMock).write(eq(expectedRow), any(Integer.class), any(Integer.class));
     }
 
