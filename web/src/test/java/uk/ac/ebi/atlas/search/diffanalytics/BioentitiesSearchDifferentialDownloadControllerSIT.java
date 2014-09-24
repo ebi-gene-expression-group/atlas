@@ -5,6 +5,7 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
+import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class BioentitiesSearchDifferentialDownloadControllerSIT {
+public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssuredFixture {
 
     private EndPoint subject = new EndPoint("/gxa/query.tsv?geneQuery=Cyba&exactMatch=true&_exactMatch=on&organism=Any&condition=");
 
@@ -57,7 +58,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
     public void downloadGeneDifferentialExpressions() {
         Response response = new EndPoint("/gxa/genes/ENSMUSG00000050520.tsv").getResponse();
 
-        response.then().assertThat().contentType(ContentType.TEXT);
+        response.then().assertThat().statusCode(200).contentType(ContentType.TEXT);
 
         String[] lines = response.body().asString().split("\n");
         assertThat(lines.length, is(5));
@@ -65,8 +66,8 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
 
 
     @Test
-    public void downloadGeneQueryWithOrganism() {
-        String url = "/gxa/query.tsv?geneQuery=Cyba&exactMatch=true&_exactMatch=on&organism=Homo%20sapiens&condition=";
+    public void downloadSearchGeneQueryWithOrganism() {
+        String url = "/query.tsv?geneQuery=Cyba&exactMatch=true&_exactMatch=on&organism=Homo%20sapiens&condition=";
 
         Response response = given().urlEncodingEnabled(false).get(url);
 
@@ -82,12 +83,12 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
 
 
     @Test
-    public void downloadConditionWithOrganism() {
-        String url = "/gxa/query.tsv?geneQuery=&exactMatch=true&_exactMatch=on&organism=Arabidopsis+thaliana&condition=%22wild+type%22";
+    public void downloadSearchConditionWithOrganism() {
+        String url = "/query.tsv?geneQuery=&exactMatch=true&_exactMatch=on&organism=Arabidopsis+thaliana&condition=%22wild+type%22";
 
         Response response = given().urlEncodingEnabled(false).get(url);
 
-        response.then().assertThat().contentType(ContentType.TEXT);
+        response.then().assertThat().statusCode(200).contentType(ContentType.TEXT);
 
         String[] lines = response.body().asString().split("\n");
         assertThat(lines.length, is(54));
@@ -95,6 +96,39 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT {
         String firstGene = lines[4];
         assertThat(firstGene,
                 is("AT3G48131\tArabidopsis thaliana\tE-GEOD-38400\tnrpe1 mutant vs wild type\t4.2479998366313E-5\t6.89620951324986\tNA"));
+    }
+
+    @Test
+    public void downloadGene() {
+        String url = "/genes/ENSG00000026103.tsv";
+
+        Response response = given().urlEncodingEnabled(false).log().all().get(url);
+
+        response.then().assertThat().statusCode(200).contentType(ContentType.TEXT);
+
+        String[] lines = response.body().asString().split("\n");
+        assertThat(lines.length, is(5));
+
+        String firstGene = lines[4];
+        assertThat(firstGene,
+                is("FAS\tHomo sapiens\tE-GEOD-12108\t'Francisella tularensis novicida' vs 'uninfected'\t0.00141996014524383\t3.02983011666667\t6.21178806331197"));
+    }
+
+
+    @Test
+    public void downloadGeneSet() {
+        String url = "/genesets/REACT_1619.tsv";
+
+        Response response = given().urlEncodingEnabled(false).get(url);
+
+        response.then().assertThat().statusCode(200).contentType(ContentType.TEXT);
+
+        String[] lines = response.body().asString().split("\n");
+        assertThat(lines.length, is(15));
+
+        String firstGene = lines[4];
+        assertThat(firstGene,
+                is("FAS\tHomo sapiens\tE-GEOD-12108\t'Francisella tularensis novicida' vs 'uninfected'\t0.00141996014524383\t3.02983011666667\t6.21178806331197"));
     }
 
 }
