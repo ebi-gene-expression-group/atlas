@@ -4,7 +4,7 @@
     <rule>
         <note>Remove trailing slash from all experiments</note>
         <from>/experiments/(.*)/$</from>
-        <to>/experiments/$1</to>
+        <to type="permanent-redirect">/gxa/experiments/$1</to>
     </rule>
     <rule>
         <note>Redirect all HTTPS to HTTP. In particular, this is for curators following https://www.ebi.ac.uk/gxa/* links from ArrayExpress</note>
