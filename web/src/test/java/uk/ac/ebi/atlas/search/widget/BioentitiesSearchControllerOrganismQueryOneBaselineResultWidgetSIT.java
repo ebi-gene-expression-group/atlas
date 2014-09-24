@@ -11,19 +11,19 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 
 
-public class BioentitiesSearchControllerOrganismQueryWidgetSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerOrganismQueryOneBaselineResultWidgetSIT extends SinglePageSeleniumFixture {
 
     private BioEntityPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "geneQuery=ASPM&exactMatch=true&_exactMatch=on&organism=Homo+sapiens&condition=");
+        subject = BioEntitiesPage.search(driver, "geneQuery=%22zinc+finger%22&exactMatch=true&_exactMatch=on&organism=Mus+musculus&condition=");
         subject.get();
     }
 
     @Test
-    public void checkBaselinePaneHeader() {
-        assertThat(subject.getSearchResultsHeader(), is("Expression Atlas results for ASPM AND Homo sapiens"));
+    public void headers() {
+        assertThat(subject.getSearchResultsHeader(), is("Expression Atlas results for \"zinc finger\" AND Mus musculus"));
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
         assertThat(subject.getDiffPaneHeaderResultsMessage(), is("No results"));
     }
@@ -36,8 +36,8 @@ public class BioentitiesSearchControllerOrganismQueryWidgetSIT extends SinglePag
         assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
-        assertThat(subject.getGeneNames(), IsIterableContainingInOrder.contains("Twenty seven tissues"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=ASPM"));
+        assertThat(subject.getGeneNames(), IsIterableContainingInOrder.contains("Six tissues"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-599?geneQuery=%22zinc%20finger%22"));
     }
 
 }
