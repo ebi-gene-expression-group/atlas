@@ -89,6 +89,18 @@ public class TranscriptPopupSIT extends SeleniumFixture {
     }
 
     @Test
+    public void verifyNoTranscriptPopUpForGeneSetQuery() {
+        HeatmapTableWidgetPage subject = HeatmapTableWidgetPage.create(driver, "geneQuery=REACT_6900&species=homo%20sapiens&rootContext=");
+        subject.get();
+
+        assertThat(subject.getGeneCount(), is("Showing 3 of 3 experiments found:"));
+        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Illumina Body Map", "Vertebrate tissues"));
+
+        HeatmapTableWithTranscriptBreakdownPage page1 = subject.clickOnCell(0, 5);
+        assertThat(page1.getTitle(), is(""));
+    }
+
+    @Test
     public void multiExperimentWidget() {
         HeatmapTableWidgetPage subject = HeatmapTableWidgetPage.createGenePage(driver, "ENSG00000228278");
         subject.get();
