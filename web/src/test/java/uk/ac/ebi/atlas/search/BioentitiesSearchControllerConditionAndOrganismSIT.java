@@ -27,33 +27,39 @@ import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class BioentitiesSearchControllerConditionSingleBaselineResultSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerConditionAndOrganismSIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "geneQuery=REACT_77799%20REACT_115202&condition=DBA%2F2J+x+C57BL%2F6J");
+        subject = BioEntitiesPage.search(driver, "organism=Homo+sapiens&condition=adult");
         subject.get();
     }
 
     @Test
-    public void displaysResultsTableBecauseThereIsACondition() {
+    public void checkBaselineExperimentCounts() {
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(1));
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-1733"));
+        assertThat(baselineCounts.get(0).getExperimentName(), is("Twenty seven tissues"));
+        assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=&exactMatch=true"));
+    }
 
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("1 result"));
+    @Test
+    public void checkDifferentialProfiles() {
+        subject.clickDifferentialPane();
+        assertThat(subject.diffExpressionResultCount(), is("Showing 50 of 9859 results"));
+        assertThat(subject.getDiffHeatmapTableOrganismColumn(), contains(Collections.nCopies(50, "Homo sapiens").toArray()));
 
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
-        assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=REACT_77799+REACT_115202&exactMatch=true"));
     }
 
 }

@@ -58,7 +58,7 @@ public class BioentitiesSearchDifferentialDownloadController {
     }
 
 
-    @RequestMapping(value = "/genes/{identifier:.*}.tsv")
+    @RequestMapping(value = {"/genes/{identifier:.*}.tsv", "/genesets/{identifier:.*}.tsv"})
     public void downloadGeneDifferentialExpressions(@PathVariable String identifier, HttpServletResponse response) throws IOException {
 
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
@@ -68,6 +68,7 @@ public class BioentitiesSearchDifferentialDownloadController {
 
         downloadExpressions(response, requestParameters);
     }
+
 
     private void downloadExpressions(HttpServletResponse response, GeneQuerySearchRequestParameters requestParameters) throws IOException {
 

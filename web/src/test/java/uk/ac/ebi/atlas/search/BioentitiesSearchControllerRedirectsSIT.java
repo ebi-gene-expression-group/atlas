@@ -64,5 +64,8 @@ public class BioentitiesSearchControllerRedirectsSIT extends RestAssuredFixture 
         assertRedirect("/query?geneQuery=Q01130","genes/ENSG00000161547");
     }
 
-
+    @Test
+    public void geneNameAndOrganism() {
+        assertRedirect("/query?geneQuery=ASPM&exactMatch=true&_exactMatch=on&organism=Homo sapiens&condition=", "genes/ENSG00000066279");
+    }
 }

@@ -125,20 +125,21 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalyt
 
     private String[] buildCsvRow(DiffAnalytics dbExpression) {
         DifferentialExpression expression = dbExpression.getExpression();
-        double tstatistic = (expression instanceof MicroarrayExpression) ? ((MicroarrayExpression)expression).getTstatistic() : Double.POSITIVE_INFINITY;
         return new String[] {dbExpression.getBioentityName(),
                 dbExpression.getSpecies(),
                 dbExpression.getExperimentAccession(),
                 dbExpression.getContrastDisplayName(),
                 expressionValueAsString(expression.getPValue()),
                 expressionValueAsString(expression.getFoldChange()),
-                expressionValueAsString(tstatistic)
+                (expression instanceof MicroarrayExpression) ? expressionValueAsString(((MicroarrayExpression)expression).getTstatistic()) : "NA"
         };
     }
 
     private String expressionValueAsString(double expressionValue) {
-        if (Double.isInfinite(expressionValue)) {
-            return "NA";
+        if (expressionValue == Double.POSITIVE_INFINITY) {
+            return "Inf";
+        } else if (expressionValue == Double.NEGATIVE_INFINITY) {
+            return "-Inf";
         }
         return Double.toString(expressionValue);
     }
@@ -147,9 +148,12 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalyt
         String geneQuery = StringUtils.isNotEmpty(requestParameters.getGeneQuery()) ? "Genes matching: '" + requestParameters.getGeneQuery() + "'" : "";
         String exactMatch = StringUtils.isNotEmpty(requestParameters.getGeneQuery()) && requestParameters.isExactMatch() ? " exactly" : "";
         String comma = StringUtils.isNotEmpty(requestParameters.getGeneQuery()) ? ", " : "";
-        String condition = StringUtils.isNotEmpty(requestParameters.getCondition()) ? " in condition matching '" + requestParameters.getCondition() + "'": "";
+
+        boolean hasCondition = StringUtils.isNotEmpty(requestParameters.getCondition());
+        String condition = hasCondition ? " in condition matching '" + requestParameters.getCondition() + "'": "";
+        String organism = StringUtils.isNotEmpty(requestParameters.getOrganism()) ? (hasCondition ? " and" : "")  + " in organism '" + requestParameters.getOrganism() + "'": "";
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
-        return MessageFormat.format(tsvFileMastheadTemplate, geneQuery, exactMatch, comma, condition, timeStamp);
+        return MessageFormat.format(tsvFileMastheadTemplate, geneQuery, exactMatch, comma, condition, organism, timeStamp);
     }
 
     @Override
