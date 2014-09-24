@@ -102,7 +102,8 @@ public class SpeciesLookupService {
     }
 
     // used for looking up species for gene sets (go, interpro, react etc.)
-    // react are always single species, by go and interpro gene sets can be multi-species
+    // REACT are always single species, by go and interpro gene sets can be multi-species
+    // if results are empty, then term does not exist in Solr
     public Result fetchSpeciesForGeneSet(String term) {
         // eg: property_value_lower:"IPR027417"
         String queryText = PROPERTY_LOWER_FIELD + ":" + encloseInQuotes(term);
