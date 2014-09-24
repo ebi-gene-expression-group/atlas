@@ -85,6 +85,10 @@ public class GeneSetPageController extends BioEntityPageController {
 
         speciesResult = speciesLookupService.fetchSpeciesForGeneSet(identifier);
 
+        if (speciesResult.isEmpty()) {
+            throw new ResourceNotFoundException("Bioentity " + identifier + " does not exist in Solr");
+        }
+
         addBaselineResults(identifier, model);
 
         // load diff results in same way as BioentitiesSearchController
