@@ -155,21 +155,21 @@ public class BaselineProfilesTSVWriterIT {
 
     @Test
     public void secondHeaderLineShouldDescribeExactMatchQueryAlsoForTwodimensionalExperiments(){
-        BaselineExperiment multidimensionalExperiment = baselineExperimentsCache.getExperiment(MULTIDIMENSIONAL_EXPERIMENT_ACCESSION);
+        BaselineExperiment experiment = baselineExperimentsCache.getExperiment("E-GEOD-41338");
 
-        requestPreferences.setSerializedFilterFactors("CELL_LINE:HPC-PL cell line");
+        requestPreferences.setSerializedFilterFactors("ORGANISM:Gallus gallus");
 
-        requestPreferences.setQueryFactorType("RNA");
-        requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("Mickey Mouse")));
+        requestPreferences.setQueryFactorType("ORGANISM_PART");
+        requestPreferences.setQueryFactorValues(Sets.newTreeSet(Sets.newHashSet("brain")));
 
-        baselineRequestContextBuilder.forExperiment(multidimensionalExperiment)
+        baselineRequestContextBuilder.forExperiment(experiment)
                                                               .withPreferences(requestPreferences).build();
 
         String[] headerRows = subject.getTsvFileMasthead(requestContext).split("\n");
 
         assertThat(headerRows[1], is("# Query: Genes matching: 'protein_coding' exactly, specifically expressed " +
-                "in RNA: 'Mickey Mouse' above the expression level cutoff: 0.5 " +
-                "in experiment E-GEOD-26284, filtered by Cell line: HPC-PL cell line"));
+                "in Organism part: 'brain' above the expression level cutoff: 0.5 " +
+                "in experiment E-GEOD-41338, filtered by Organism: Gallus gallus"));
 
     }
 }
