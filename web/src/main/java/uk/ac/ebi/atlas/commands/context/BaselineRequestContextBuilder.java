@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.commands.context;
 
-import com.google.common.base.Preconditions;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -33,6 +32,8 @@ import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
+
+import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
@@ -74,7 +75,7 @@ public class BaselineRequestContextBuilder {
     }
 
     public BaselineRequestContext build() {
-        Preconditions.checkState(experiment != null, "Please invoke forExperiment before build");
+        checkState(experiment != null, "Please invoke forExperiment before build");
 
         requestContext.setExperiment(experiment);
 
@@ -86,13 +87,14 @@ public class BaselineRequestContextBuilder {
         String filteredBySpecie = getFilteredBySpecie(selectedFilterFactors);
         requestContext.setFilteredBySpecies(filteredBySpecie);
 
-        Set<Factor> queryFactors = new HashSet<Factor>();
+        Set<Factor> queryFactors = new HashSet<>();
         for (String queryFactorValues : getQueryFactorValues()) {
             queryFactors.add(new Factor(requestContext.getQueryFactorType(), queryFactorValues));
         }
         requestContext.setSelectedQueryFactors(queryFactors);
 
         SortedSet<Factor> allQueryFactors = experiment.getExperimentalFactors().getFilteredFactors(selectedFilterFactors);
+        checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
         requestContext.setAllQueryFactors(allQueryFactors);
 
         return requestContext;
