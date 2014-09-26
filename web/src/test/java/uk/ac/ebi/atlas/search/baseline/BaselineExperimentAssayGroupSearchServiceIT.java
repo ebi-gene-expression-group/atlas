@@ -323,7 +323,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void GeneQueryASPMWithResults() throws GenesNotFoundException {
+    public void geneQueryASPMWithResults() throws GenesNotFoundException {
         String geneQuery = "ASPM";
         String condition = "";
         String species = "";
@@ -338,7 +338,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void GeneQueryASPMAndConditionRenalGlomerulusWithNoResults() throws GenesNotFoundException {
+    public void geneQueryASPMAndConditionRenalGlomerulusWithNoResults() throws GenesNotFoundException {
         String geneQuery = "ASPM";
         String condition = "renal glomerulus";
         String species = "";
@@ -365,7 +365,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void GeneQueryASPMAndConditionAdultsWithResults() throws GenesNotFoundException {
+    public void geneQueryASPMAndConditionAdultsWithResults() throws GenesNotFoundException {
         String geneQuery = "ASPM";
         String condition = "adult";
         String species = "";
@@ -379,7 +379,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void GeneQueryASPMAndConditionAdultAndSpeciesHomoSapiensWithResults() throws GenesNotFoundException {
+    public void geneQueryASPMAndConditionAdultAndSpeciesHomoSapiensWithResults() throws GenesNotFoundException {
         String geneQuery = "ASPM";
         String condition = "adult";
         String species = "homo sapiens";

@@ -38,6 +38,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.BaselineConditionsSearchService;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.utils.StringUtil;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -90,9 +91,8 @@ public class BaselineExperimentAssayGroupSearchService {
         boolean conditionSearch = !isEmpty(indexedAssayGroups);
 
         SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = Sets.newTreeSet();
-        if(StringUtils.isNotEmpty(geneQuery) && StringUtils.isEmpty(condition) ||
-                StringUtils.isNotEmpty(geneQuery) && conditionSearch && StringUtils.isNotEmpty(condition)||
-                StringUtils.isEmpty(geneQuery) && conditionSearch && StringUtils.isNotEmpty(condition)) {
+        if(conditionSearch ||
+                StringUtils.isNotEmpty(geneQuery) && StringUtils.isEmpty(condition)) {
 
             baselineExperimentAssayGroups = buildResults(assayGroupsWithExpressionByExperiment, conditionSearch, species);
         }
