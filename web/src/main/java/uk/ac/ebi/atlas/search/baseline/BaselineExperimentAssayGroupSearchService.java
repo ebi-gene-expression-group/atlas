@@ -87,7 +87,18 @@ public class BaselineExperimentAssayGroupSearchService {
 
         SetMultimap<String, String> assayGroupsWithExpressionByExperiment = baselineExperimentAssayGroupsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, geneIds);
 
-        Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = buildResults(assayGroupsWithExpressionByExperiment, !isEmpty(indexedAssayGroups), species);
+        boolean conditionSearch = !isEmpty(indexedAssayGroups);
+
+        //1 - if geneQuery provided && condition="". I want to pass.
+        //2 - if geneQuery provided && condition provided && conditionSearch=true. I want to pass
+        //3 - if geneQuery="" && condition provided && conditionSearch=true. I want to pass
+        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = Sets.newTreeSet();
+        if(StringUtils.isNotEmpty(geneQuery) && StringUtils.isEmpty(condition) ||
+                StringUtils.isNotEmpty(geneQuery) && conditionSearch && StringUtils.isNotEmpty(condition)||
+                StringUtils.isEmpty(geneQuery) && conditionSearch && StringUtils.isNotEmpty(condition)) {
+
+            baselineExperimentAssayGroups = buildResults(assayGroupsWithExpressionByExperiment, conditionSearch, species);
+        }
 
         stopWatch.stop();
         LOGGER.info(String.format("<query> %s results, took %s seconds", baselineExperimentAssayGroups.size(), stopWatch.getTotalTimeSeconds()));
@@ -105,7 +116,7 @@ public class BaselineExperimentAssayGroupSearchService {
 
             BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
 
-            Multimap<FactorGroup,String> assayGroupIdsByFilterFactors = experiment.getExperimentalFactors().groupAssayGroupIdsByNonDefaultFactor(assayGroupIds);
+            Multimap<FactorGroup, String> assayGroupIdsByFilterFactors = experiment.getExperimentalFactors().groupAssayGroupIdsByNonDefaultFactor(assayGroupIds);
 
             for (Map.Entry<FactorGroup, Collection<String>> assayGroupIdsAndFilterFactor : assayGroupIdsByFilterFactors.asMap().entrySet()) {
                 String species = experiment.getOrganisms().size() > 1 ? "Multi-species" : experiment.getFirstOrganism();
@@ -124,7 +135,6 @@ public class BaselineExperimentAssayGroupSearchService {
             }
 
         }
-
         return results;
     }
 

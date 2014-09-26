@@ -22,7 +22,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class BaselineExpressionSearchServiceIT {
+public class BaselineExperimentAssayGroupSearchServiceIT {
 
     @Inject
     BaselineExperimentAssayGroupSearchService subject;
@@ -308,6 +308,88 @@ public class BaselineExpressionSearchServiceIT {
         assertThat(experimentAccessions, contains("E-MTAB-599", "E-GEOD-30352"));
 
         assertThat(eMtab513.getDefaultFactorsForSpecificAssayGroupsWithCondition(), hasSize(0));
+    }
+
+    @Test
+    public void conditionRenalGlomerulusQueryWithNoResults() throws GenesNotFoundException {
+        String geneQuery = "";
+        String condition = "renal glomerulus";
+        String species = "";
+        boolean isExactMatch = true;
+
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
+
+        assertThat(results.size(), is(0));
+    }
+
+    @Test
+    public void GeneQueryASPMWithResults() throws GenesNotFoundException {
+        String geneQuery = "ASPM";
+        String condition = "";
+        String species = "";
+        boolean isExactMatch = true;
+
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
+        List<String> experimentAccessions = getExperimentAccessions(results);
+
+        assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
+
+        assertThat(results.size(), is(2));
+    }
+
+    @Test
+    public void GeneQueryASPMAndConditionRenalGlomerulusWithNoResults() throws GenesNotFoundException {
+        String geneQuery = "ASPM";
+        String condition = "renal glomerulus";
+        String species = "";
+        boolean isExactMatch = true;
+
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
+
+        assertThat(results.size(), is(0));
+    }
+
+    @Test
+    public void conditionAdultQueryWithResults() throws GenesNotFoundException {
+        String geneQuery = "";
+        String condition = "adult";
+        String species = "";
+        boolean isExactMatch = true;
+
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
+        List<String> experimentAccessions = getExperimentAccessions(results);
+
+        assertThat(results.size(), is(4));
+
+        assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733", "E-GEOD-30352", "E-GEOD-30352"));
+    }
+
+    @Test
+    public void GeneQueryASPMAndConditionAdultsWithResults() throws GenesNotFoundException {
+        String geneQuery = "ASPM";
+        String condition = "adult";
+        String species = "";
+        boolean isExactMatch = true;
+
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
+        List<String> experimentAccessions = getExperimentAccessions(results);
+
+        assertThat(results.size(), is(2));
+        assertThat(experimentAccessions, contains("E-MTAB-599", "E-MTAB-1733"));
+    }
+
+    @Test
+    public void GeneQueryASPMAndConditionAdultAndSpeciesHomoSapiensWithResults() throws GenesNotFoundException {
+        String geneQuery = "ASPM";
+        String condition = "adult";
+        String species = "homo sapiens";
+        boolean isExactMatch = true;
+
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
+        List<String> experimentAccessions = getExperimentAccessions(results);
+
+        assertThat(results.size(), is(1));
+        assertThat(experimentAccessions, contains("E-MTAB-1733"));
     }
 
 }
