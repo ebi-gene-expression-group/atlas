@@ -89,9 +89,6 @@ public class BaselineExperimentAssayGroupSearchService {
 
         boolean conditionSearch = !isEmpty(indexedAssayGroups);
 
-        //1 - if geneQuery provided && condition="". I want to pass.
-        //2 - if geneQuery provided && condition provided && conditionSearch=true. I want to pass
-        //3 - if geneQuery="" && condition provided && conditionSearch=true. I want to pass
         SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = Sets.newTreeSet();
         if(StringUtils.isNotEmpty(geneQuery) && StringUtils.isEmpty(condition) ||
                 StringUtils.isNotEmpty(geneQuery) && conditionSearch && StringUtils.isNotEmpty(condition)||
