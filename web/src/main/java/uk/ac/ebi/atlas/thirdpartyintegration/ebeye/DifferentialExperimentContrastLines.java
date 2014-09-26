@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import com.google.common.collect.ImmutableList;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
@@ -40,11 +42,12 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
     }
 
     private void populateFactors(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value){
-        for (Map.Entry<String, String> factor : experiment.getExperimentDesign().getFactorValues(assayAccession).entrySet()) {
+        for (Factor factor : experiment.getExperimentDesign().getFactors(assayAccession)) {
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "factor",
-                    factor.getKey(), factor.getValue());
+                    factor.getHeader(), factor.getValue(), factor.getValueOntologyTerm() != null ? factor.getValueOntologyTerm() : "");
             result.add(line);
         }
+
     }
 
     @Override

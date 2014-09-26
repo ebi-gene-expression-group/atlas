@@ -62,11 +62,11 @@ public class DifferentialExperimentContrastLinesTest {
         Iterator<String[]> lines = subject.iterator();
 
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE2}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, FACTOR, FACTOR_HEADER, FACTOR_VALUE1}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, FACTOR, FACTOR_HEADER, FACTOR_VALUE1, ""}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE1}));
 
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE4}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, FACTOR, FACTOR_HEADER, FACTOR_VALUE2}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, FACTOR, FACTOR_HEADER, FACTOR_VALUE2, ""}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3}));
     }
 
@@ -100,10 +100,10 @@ public class DifferentialExperimentContrastLinesTest {
         Iterator<String[]> lines = subject.iterator();
 
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE1}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, FACTOR, FACTOR_HEADER, FACTOR_VALUE1}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, FACTOR, FACTOR_HEADER, FACTOR_VALUE1, ""}));
 
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE4}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, FACTOR, FACTOR_HEADER, FACTOR_VALUE2}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, FACTOR, FACTOR_HEADER, FACTOR_VALUE2, ""}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3}));
     }
 
@@ -137,11 +137,11 @@ public class DifferentialExperimentContrastLinesTest {
         Iterator<String[]> lines = subject.iterator();
 
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE2}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, FACTOR, FACTOR_HEADER, FACTOR_VALUE1}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, FACTOR, FACTOR_HEADER, FACTOR_VALUE1, ""}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, ""}));
 
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE4}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, FACTOR, FACTOR_HEADER, FACTOR_VALUE2}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, FACTOR, FACTOR_HEADER, FACTOR_VALUE2, ""}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3}));
     }
 }

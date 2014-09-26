@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 
 import javax.inject.Inject;
-import java.util.List;
 import java.util.Map;
 
 @Controller
