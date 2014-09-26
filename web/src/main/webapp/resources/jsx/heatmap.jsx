@@ -171,7 +171,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                     </tbody>
                                 </table>
                             </div>
-                            <div ref="legendHelp" data-help-loc="#gradient-base" style={{float: "left;"}}></div>
+                            <div ref="legendHelp" data-help-loc="#gradient-base-crossexp" style={{float: "left;"}}></div>
                         </div>
                         );
                 },
@@ -196,7 +196,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                                     </tbody>
                                 </table>
                             </div>
-                            <div ref="legendHelp" data-help-loc="#gradient-differential" style={{float: "left;"}}></div>
+                            <div ref="legendHelp" data-help-loc="#gradient-differential-crossexp" style={{float: "left;"}}></div>
                         </div>
                         );
                 },
