@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -41,9 +42,9 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
     }
 
     private void populateFactors(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup){
-        for (Map.Entry<String, String> factor : experiment.getExperimentDesign().getFactorValues(assayAccession).entrySet()) {
+        for (Factor factor : experiment.getExperimentDesign().getFactors(assayAccession)) {
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), assayGroup.getId(), "factor",
-                    factor.getKey(), factor.getValue());
+                    factor.getHeader(), factor.getValue(), factor.getValueOntologyTerm() != null ? factor.getValueOntologyTerm() : "");
             result.add(line);
         }
     }
