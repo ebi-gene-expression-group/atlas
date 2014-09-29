@@ -24,10 +24,11 @@ package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import uk.ac.ebi.atlas.search.DatabaseQuery;
 import uk.ac.ebi.atlas.search.OracleObjectFactory;
 import uk.ac.ebi.atlas.utils.NumberUtils;
@@ -37,7 +38,6 @@ import javax.inject.Named;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Named
@@ -60,7 +60,7 @@ public class RnaSeqBslnExpressionDao {
     }
 
     //TODO: allow fetching by species
-    public List<RnaSeqBslnExpression> fetchAverageExpressionByExperimentAssayGroup(final Collection<String> geneIds) {
+    public ImmutableList<RnaSeqBslnExpression> fetchAverageExpressionByExperimentAssayGroup(final Collection<String> geneIds) {
         if (geneIds.isEmpty()) {
             return ImmutableList.of();
         }
@@ -71,31 +71,44 @@ public class RnaSeqBslnExpressionDao {
 
         DatabaseQuery<Object> baselineExpressionQuery = buildSelect(geneIds);
 
-        List<RnaSeqBslnExpression> results;
+        final ImmutableList.Builder<RnaSeqBslnExpression> builder = ImmutableList.builder();
+
+        final MutableInt numberOfGenesExpressedInCurrentExperiment = new MutableInt(0);
 
         try {
-            results = jdbcTemplate.query(baselineExpressionQuery.getQuery(),
-                    new RowMapper<RnaSeqBslnExpression>() {
+            jdbcTemplate.query(baselineExpressionQuery.getQuery(),
+                    new RowCallbackHandler() {
                         @Override
-                        public RnaSeqBslnExpression mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        public void processRow(ResultSet rs) throws SQLException {
                             String experimentAccession = rs.getString(RnaSeqBslnQueryBuilder.EXPERIMENT);
                             String assayGroupId = rs.getString(RnaSeqBslnQueryBuilder.ASSAY_GROUP_ID);
-                            double expression = numberUtils.round(rs.getDouble(RnaSeqBslnQueryBuilder.EXPRESSION) / geneIds.size());
-                            return RnaSeqBslnExpression.create(experimentAccession, assayGroupId, expression);
+
+                            if (assayGroupId == null) {
+                                // every-time we see a null assaygroupid, this is the beginning of rows for another experiment
+                                // and this row will contain the experiment level totals
+                                double numberOfGenesExpressed = rs.getInt(RnaSeqBslnQueryBuilder.NUMBER_GENES_EXPRESSED);
+                                numberOfGenesExpressedInCurrentExperiment.setValue(numberOfGenesExpressed);
+                                return;
+                            }
+
+                            double expression = numberUtils.round(rs.getDouble(RnaSeqBslnQueryBuilder.EXPRESSION) / numberOfGenesExpressedInCurrentExperiment.intValue());
+                            RnaSeqBslnExpression bslnExpression = RnaSeqBslnExpression.create(experimentAccession, assayGroupId, expression);
+
+                            builder.add(bslnExpression);
                         }
                     },
                     baselineExpressionQuery.getParameters().toArray());
 
-            stopwatch.stop();
+            ImmutableList<RnaSeqBslnExpression> results = builder.build();
 
+            stopwatch.stop();
             LOGGER.debug(String.format("fetchAverageExpressionByExperimentAssayGroup returned %s results in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+            return results;
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             throw e;
         }
-
-        return results;
 
     }
 

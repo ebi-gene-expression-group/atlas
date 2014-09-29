@@ -15,10 +15,13 @@ public class RnaSeqBslnQueryBuilder {
     static final String EXPERIMENT = "EXPERIMENT";
     static final String ASSAY_GROUP_ID = "ASSAYGROUPID";
     static final String EXPRESSION = "SUM(RBE.EXPRESSION)";
+    static final String NUMBER_GENES_EXPRESSED = "NumberOfGenesExpressed";
 
     //TODO - should fetch public experiments only
-    static final String SELECT_QUERY = "SELECT rbe.experiment, rbe.assaygroupid, SUM(rbe.expression) from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe ";
-    static final String FOR_GENES = "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value GROUP BY rbe.experiment, rbe.assaygroupid";
+    static final String SELECT_QUERY = "SELECT rbe.experiment, rbe.assaygroupid, SUM(rbe.expression), count(distinct IDENTIFIER) as NumberOfGenesExpressed from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe ";
+    static final String FOR_GENES = "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value ";
+    static final String GROUP_BY = "GROUP BY GROUPING SETS (rbe.experiment, (rbe.experiment, rbe.assaygroupid)) ";
+    static final String ORDER_BY = "ORDER BY rbe.experiment, rbe.assaygroupid desc";
 
     private ARRAY geneIds;
 
@@ -37,14 +40,15 @@ public class RnaSeqBslnQueryBuilder {
 
         addGeneIds(databaseQuery);
 
+        databaseQuery.appendToQueryString(GROUP_BY);
+        databaseQuery.appendToQueryString(ORDER_BY);
+
         return databaseQuery;
     }
 
     // "JOIN TABLE(IDENTIFIERS_TABLE('A', 'B', 'C', 'D', 'E')) identifiersTable ON IDENTIFIER = identifiersTable.column_value"
     protected void addGeneIds(DatabaseQuery<Object> databaseQuery) {
-        if (geneIds != null) {
-            databaseQuery.appendToQueryString(FOR_GENES);
-            databaseQuery.addParameter(geneIds);
-        }
+        databaseQuery.appendToQueryString(FOR_GENES);
+        databaseQuery.addParameter(geneIds);
     }
 }
