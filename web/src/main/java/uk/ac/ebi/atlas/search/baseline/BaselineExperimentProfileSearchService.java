@@ -31,7 +31,6 @@ import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -67,7 +66,7 @@ public class BaselineExperimentProfileSearchService {
         return (!coll.isPresent() || coll.get().isEmpty());
     }
 
-    public BaselineTissueExperimentSearchResult query(String geneQuery, String species, boolean isExactMatch) throws GenesNotFoundException {
+    public BaselineTissueExperimentSearchResult query(String geneQuery, String species, boolean isExactMatch)  {
         LOGGER.info(String.format("<query> geneQuery=%s", geneQuery));
 
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());

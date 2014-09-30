@@ -27,13 +27,12 @@ import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -48,6 +47,7 @@ import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -132,43 +132,17 @@ public final class HeatmapWidgetController {
 
     //TODO: remove rootContext when BioJS no longer uses HTML insert
     @RequestMapping(value = "/widgets/heatmap/bioentity")
-    public String dispatchWidgetBioentity(
+    public String heatmapWidgetPage(
                                  @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
                                  @RequestParam(value = "species", required = false) String species,
                                  @RequestParam(value = "rootContext", required = false) String rootContext,
                                  Model model) {
 
-        String solrSpecies;
+        String solrSpecies = StringUtils.isBlank(species) ?
+                speciesLookupService.fetchFirstSpeciesByField(propertyType, bioEntityAccession) : species.toLowerCase();
 
-        try {
-            if (StringUtils.isBlank(species)) {
-                solrSpecies = speciesLookupService.fetchFirstSpeciesByField(propertyType, bioEntityAccession);
-            } else {
-                solrSpecies = species.toLowerCase();
-            }
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "No genes found matching query: " + bioEntityAccession);
-            return "widget-error";
-        }
-
-        //required by heatmap
-        model.addAttribute("species", solrSpecies);
-
-        model.addAttribute("isWidget", true);
-        model.addAttribute("isMultiExperiment", true);
-        model.addAttribute("geneQuery", bioEntityAccession);
-        model.addAttribute("isGeneSetQuery", GeneSetUtil.isGeneSet(bioEntityAccession));
-
-        BaselineTissueExperimentSearchResult searchResult;
-
-        try {
-            searchResult = baselineExperimentProfileSearchService.query(bioEntityAccession, solrSpecies, true);
-        } catch (GenesNotFoundException e) {
-            model.addAttribute("errorMessage", "No genes found matching query: '" + bioEntityAccession + "'");
-            model.addAttribute("identifier", bioEntityAccession);
-            return "widget-error";
-        }
+        BaselineTissueExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(bioEntityAccession, solrSpecies, true);
 
         SortedSet<Factor> orderedFactors = searchResult.getTissueFactorsAcrossAllExperiments();
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
@@ -178,6 +152,12 @@ public final class HeatmapWidgetController {
 
         BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
         addJsonForHeatMap(experimentProfiles, filteredAssayGroupFactors, orderedFactors, model);
+
+        model.addAttribute("species", solrSpecies);
+        model.addAttribute("isWidget", true);
+        model.addAttribute("isMultiExperiment", true);
+        model.addAttribute("geneQuery", bioEntityAccession);
+        model.addAttribute("isGeneSetQuery", GeneSetUtil.isGeneSet(bioEntityAccession));
 
         return "heatmap-widget-react";
     }
@@ -284,6 +264,15 @@ public final class HeatmapWidgetController {
             factors.add(factor);
         }
         model.addAttribute("selectedFilterFactorsJson", new Gson().toJson(factors));
+    }
+
+    @ExceptionHandler(value = {ResourceNotFoundException.class})
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ModelAndView widgetSpecific404(Exception e) {
+        ModelAndView mav = new ModelAndView("widget-error");
+        mav.addObject("errorMessage", e.getMessage());
+
+        return mav;
     }
 
 }

@@ -186,12 +186,7 @@ public abstract class BioEntityPageController {
     }
 
     void addBaselineResults(String identifier, Model model, String species) {
-        BaselineTissueExperimentSearchResult tissueResults;
-        try {
-            tissueResults = baselineExperimentProfileSearchService.query(identifier, species, true);
-        } catch (GenesNotFoundException e) {
-            throw new ResourceNotFoundException(identifier);
-        }
+        BaselineTissueExperimentSearchResult tissueResults = baselineExperimentProfileSearchService.query(identifier, species, true);
 
         if (tissueResults.isEmpty()) {
             addBaselineCounts(identifier, model);
