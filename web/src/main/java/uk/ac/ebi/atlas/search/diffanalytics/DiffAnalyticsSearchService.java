@@ -27,7 +27,6 @@ import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
@@ -106,7 +105,7 @@ public class DiffAnalyticsSearchService {
         return new DiffAnalyticsList();
     }
 
-    public DiffAnalyticsList fetchTop(String geneQuery, String condition, String specie, boolean isExactMatch) throws GenesNotFoundException {
+    public DiffAnalyticsList fetchTop(String geneQuery, String condition, String specie, boolean isExactMatch) {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(condition);
 

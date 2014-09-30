@@ -31,14 +31,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.search.EFO.ConditionSearchEFOExpander;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroupSearchService;
@@ -108,41 +106,35 @@ public class BioentitiesSearchController {
             }
         }
 
-        try {
 
-            model.addAttribute("entityIdentifier", requestParameters.getGeneQuery());
+        model.addAttribute("entityIdentifier", requestParameters.getGeneQuery());
 
-            model.addAttribute("searchTerm", requestParameters.getDescription());
+        model.addAttribute("searchTerm", requestParameters.getDescription());
 
-            String condition = efoExpander.fetchExpandedTermWithEFOChildren(requestParameters.getCondition());
+        String condition = efoExpander.fetchExpandedTermWithEFOChildren(requestParameters.getCondition());
 
-            Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQuery, condition, selectedSpecie.toLowerCase(), requestParameters.isExactMatch());
+        Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQuery, condition, selectedSpecie.toLowerCase(), requestParameters.isExactMatch());
 
-            model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
-            if (baselineExperimentAssayGroups.size() == 1 & !requestParameters.hasCondition()) {
-                model.addAttribute("widgetHasBaselineProfiles", true);
-                model.addAttribute("species", baselineExperimentAssayGroups.iterator().next().getSpecies());
-            }
-
-            // used to populate diff-heatmap-table
-            DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(geneQuery, condition, selectedSpecie, requestParameters.isExactMatch());
-
-            model.addAttribute("bioentities", bioentityExpressions);
-
-            model.addAttribute("preferences", new DifferentialRequestPreferences());
-
-            model.addAttribute("requestParameters", requestParameters);
-
-            model.addAttribute("exactMatch", requestParameters.isExactMatch());
-
-            String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery, requestParameters.getCondition());
-
-            model.addAttribute("globalSearchTerm", globalSearchTerm);
-
-
-        } catch (GenesNotFoundException e) {
-            result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + geneQuery + "'"));
+        model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
+        if (baselineExperimentAssayGroups.size() == 1 & !requestParameters.hasCondition()) {
+            model.addAttribute("widgetHasBaselineProfiles", true);
+            model.addAttribute("species", baselineExperimentAssayGroups.iterator().next().getSpecies());
         }
+
+        // used to populate diff-heatmap-table
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(geneQuery, condition, selectedSpecie, requestParameters.isExactMatch());
+
+        model.addAttribute("bioentities", bioentityExpressions);
+
+        model.addAttribute("preferences", new DifferentialRequestPreferences());
+
+        model.addAttribute("requestParameters", requestParameters);
+
+        model.addAttribute("exactMatch", requestParameters.isExactMatch());
+
+        String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery, requestParameters.getCondition());
+
+        model.addAttribute("globalSearchTerm", globalSearchTerm);
 
         return "bioEntities";
     }
