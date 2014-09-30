@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -130,7 +130,7 @@ public final class HeatmapWidgetController {
         return "forward:" + getRequestURL(request) + buildQueryString(species, experiment, disableGeneLinks);
     }
 
-    //TODO: remove rootContext with BioJS no longer uses HTML insert
+    //TODO: remove rootContext when BioJS no longer uses HTML insert
     @RequestMapping(value = "/widgets/heatmap/bioentity")
     public String dispatchWidgetBioentity(
                                  @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,

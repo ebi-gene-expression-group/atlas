@@ -1,0 +1,231 @@
+/*
+ * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+package uk.ac.ebi.atlas.profiles.writer;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSortedSet;
+import com.google.common.collect.Sets;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.core.io.Resource;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+
+import java.io.*;
+import java.util.Collections;
+import java.util.SortedSet;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
+public class BaselineProfilesTSVWriterTest {
+
+    @Mock
+    private ObjectInputStream<BaselineProfile> inputStreamMock;
+    @Mock
+    private BaselineRequestContext requestContextMock;
+    @Mock
+    private PrintWriter printWriterMock;
+
+    @Mock
+    private BaselineExperiment experimentMock;
+    @Mock
+    private ExperimentalFactors experimentalFactorsMock;
+
+    @Mock
+    private Resource tsvFileMastheadTemplateResourceMock;
+
+    private BaselineProfilesTSVWriter subject;
+
+    private SortedSet<Factor> organismParts;
+
+    @Before
+    public void initMocks() {
+        organismParts = Sets.newTreeSet(Sets.newHashSet(
+                createFactorValue("adipose"),
+                createFactorValue("brain"),
+                createFactorValue("breast"),
+                createFactorValue("liver"),
+                createFactorValue("lung")));
+
+        when(requestContextMock.getExperiment()).thenReturn(experimentMock);
+        when(requestContextMock.getAllQueryFactors()).thenReturn(organismParts);
+        when(requestContextMock.getGeneQuery()).thenReturn("geneQuery");
+        when(requestContextMock.getSelectedQueryFactors()).thenReturn(
+                Sets.newHashSet(new Factor("type1", "value1"), new Factor("type2", "value2")));
+        when(requestContextMock.getCutoff()).thenReturn(0.5D);
+
+        FactorGroup fgAdipose = FactorSet.create(ImmutableMap.of("ORG", "adipose"));
+        FactorGroup fgBrain = FactorSet.create(ImmutableMap.of("ORG", "brain"));
+        FactorGroup fgBreast = FactorSet.create(ImmutableMap.of("ORG", "breast"));
+        FactorGroup fgLiver = FactorSet.create(ImmutableMap.of("ORG", "liver"));
+        FactorGroup fgLung = FactorSet.create(ImmutableMap.of("ORG", "lung"));
+
+        BaselineExpression expressionAdipose0 = new BaselineExpression(0d, fgAdipose);
+        BaselineExpression expressionBrain0 = new BaselineExpression(0d, fgBrain);
+        BaselineExpression expressionBreast0 = new BaselineExpression(0d, fgBreast);
+        BaselineExpression expressionLiver0 = new BaselineExpression(0d, fgLiver);
+        BaselineExpression expressionLung0 = new BaselineExpression(0d, fgLung);
+
+        BaselineExpression expressionBrain = new BaselineExpression(0.11d, fgBrain);
+        BaselineExpression expressionLung = new BaselineExpression(9d, fgLung);
+        BaselineExpression expressionLiver = new BaselineExpression(21.12d, fgLiver);
+
+        BaselineProfile baselineProfile1 = new BaselineProfile("GI1", "GN1");
+        baselineProfile1.add("ORG", expressionAdipose0);
+        baselineProfile1.add("ORG", expressionBrain);
+        baselineProfile1.add("ORG", expressionBreast0);
+        baselineProfile1.add("ORG", expressionLiver0);
+        baselineProfile1.add("ORG", expressionLung);
+
+        BaselineProfile baselineProfile2 = new BaselineProfile("GI2", "GN2");
+        baselineProfile2.add("ORG", expressionAdipose0);
+        baselineProfile2.add("ORG", expressionBrain0);
+        baselineProfile2.add("ORG", expressionBreast0);
+        baselineProfile2.add("ORG", expressionLiver);
+        baselineProfile2.add("ORG", expressionLung0);
+
+        when(inputStreamMock.readNext()).thenReturn(baselineProfile1)
+                .thenReturn(baselineProfile2)
+                .thenReturn(null);
+
+        when(experimentalFactorsMock.getFactorsByType(anyString())).thenReturn(ImmutableSortedSet.copyOf(organismParts));
+        when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
+    }
+
+    @Before
+    public void initSubject() throws Exception {
+        subject = new BaselineProfilesTSVWriter(new CsvWriterFactory());
+        subject.setResponseWriter(printWriterMock);
+        subject.setRequestContext(requestContextMock);
+
+        InputStream inputStream = new ByteArrayInputStream("{0} {1} {2} {3} {4} {5}".getBytes());
+        when(tsvFileMastheadTemplateResourceMock.getInputStream()).thenReturn(inputStream);
+        subject.setTsvFileMastheadTemplateResource(tsvFileMastheadTemplateResourceMock);
+        subject.initTsvFileMastheadTemplate();
+    }
+
+    @Test
+    public void expressionLevels() throws Exception {
+
+        long count = subject.write(inputStreamMock, organismParts, requestContextMock);
+
+        verify(printWriterMock).write("Gene ID\tGene Name\tadipose\tbrain\tbreast\tliver\tlung\n", 0, 50);
+
+        verify(printWriterMock).write("GI1\tGN1\t0\t0.11\t0\t0\t9\n", 0, 21);
+
+        verify(printWriterMock).write("GI2\tGN2\t0\t0\t0\t21.12\t0\n", 0, 22);
+
+        assertThat(count, is(2L));
+
+    }
+
+    @Test
+    public void buildCsvHeadersTest() {
+        String[] headers = subject.buildCsvColumnHeaders(organismParts, requestContextMock);
+        assertThat(headers, is(new String[]{"Gene ID", "Gene Name", "adipose", "brain", "breast", "liver", "lung"}));
+    }
+
+    @Test
+    public void buildCsvRowTest() {
+        String[] headers = subject.buildCsvRow(new String[]{"A", "B"}, new String[]{"C", "D"});
+        assertThat(headers, is(new String[]{"A", "B", "C", "D"}));
+    }
+
+    private Factor createFactorValue(String value) {
+        return new Factor("ORG", value);
+    }
+
+
+    private static final String FACTOR_TYPE = "FACTOR_TYPE";
+    private static final String GENE_ID = "GENE ID";
+    private static final String GENE_NAME = "GENE NAME";
+    private static final String FACTOR_VALUE = "FACTOR_VALUE";
+    private static final String FAIL = "FAIL";
+    private static final String LOWDATA = "LOWDATA";
+
+    private static final FactorGroup factorGroup = FactorSet.create(ImmutableMap.of(FACTOR_TYPE, FACTOR_VALUE));
+    private static final Factor factor = new Factor(FACTOR_TYPE, FACTOR_VALUE);
+
+    @Test
+    public void failExpression() throws IOException {
+        StringWriter output = new StringWriter();
+        subject.setResponseWriter(output);
+
+        BaselineProfile profile1 = new BaselineProfile(GENE_ID, GENE_NAME);
+        BaselineExpression expression = new BaselineExpression(FAIL, factorGroup);
+        profile1.add(FACTOR_TYPE, expression);
+
+        BaselineProfilesList profilesList = new BaselineProfilesList(Collections.singleton(profile1));
+
+        subject.write(profilesList, Collections.singleton(factor), requestContextMock);
+
+        String[] lines = output.toString().split("\n");
+        String[] columnHeaders = lines[1].split("\t");
+        String[] profileLine1 = lines[2].split("\t");
+
+        assertThat(columnHeaders[0], is("Gene ID"));
+        assertThat(columnHeaders[1], is("Gene Name"));
+        assertThat(columnHeaders[2], is(FACTOR_VALUE));
+
+        assertThat(profileLine1[0], is(GENE_ID));
+        assertThat(profileLine1[1], is(GENE_NAME));
+        assertThat(profileLine1[2], is(FAIL));
+    }
+
+    @Test
+    public void lowDataExpression() throws IOException {
+        StringWriter output = new StringWriter();
+        subject.setResponseWriter(output);
+
+        BaselineProfile profile1 = new BaselineProfile(GENE_ID, GENE_NAME);
+        BaselineExpression expression = new BaselineExpression(LOWDATA, factorGroup);
+        profile1.add(FACTOR_TYPE, expression);
+
+        BaselineProfilesList profilesList = new BaselineProfilesList(Collections.singleton(profile1));
+
+        subject.write(profilesList, Collections.singleton(factor), requestContextMock);
+
+        String[] lines = output.toString().split("\n");
+        String[] columnHeaders = lines[1].split("\t");
+        String[] profileLine1 = lines[2].split("\t");
+
+        assertThat(columnHeaders[0], is("Gene ID"));
+        assertThat(columnHeaders[1], is("Gene Name"));
+        assertThat(columnHeaders[2], is(FACTOR_VALUE));
+
+        assertThat(profileLine1[0], is(GENE_ID));
+        assertThat(profileLine1[1], is(GENE_NAME));
+        assertThat(profileLine1[2], is(LOWDATA));
+    }
+
+}

@@ -7,8 +7,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commands.BaselineProfilesHeatMap;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesEMTab513React71;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesHeatMap;
+import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.*;
 

@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.collect.ImmutableSetMultimap;
-import uk.ac.ebi.atlas.commands.context.BaselineRequestContext;
+import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.Set;
