@@ -98,7 +98,7 @@ public class FastQCReportController {
 
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
     public String forwardToQcResource(String experimentAccession, String species, String resource) throws IOException {
-        String specie_s = species.replaceAll(" ", "_").toLowerCase();
+        String specie_s = splitSpecies(species).toLowerCase();
         String path = MessageFormat.format("/expdata/{0}/qc/{1}/{2}/", experimentAccession, specie_s, resource);
 
         return "forward:" + path;
@@ -155,7 +155,7 @@ public class FastQCReportController {
 
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
     public String forwardToMappingQcResource(String experimentAccession, String species, String resource) throws IOException {
-        String specie_s = species.replaceAll(" ", "_").toLowerCase();
+        String specie_s = splitSpecies(species).toLowerCase();
         String path = MessageFormat.format("/expdata/{0}/qc/{1}/mapping/{2}", experimentAccession, specie_s, resource);
 
         return "forward:" + path;
@@ -214,7 +214,7 @@ public class FastQCReportController {
 
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
     public String forwardToFastQCReportMappingResources(String experimentAccession, String species, String resource) throws IOException {
-        String specie_s = species.replaceAll(" ", "_").toLowerCase();
+        String specie_s = splitSpecies(species).toLowerCase();
         String path = MessageFormat.format("/expdata/{0}/qc/{1}/riq/{2}", experimentAccession, specie_s, resource);
 
         return "forward:" + path;
@@ -234,6 +234,12 @@ public class FastQCReportController {
         model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
 
         model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
+    }
+
+    private String splitSpecies(String species) {
+        String[] splitStr = species.split("\\s+");
+
+        return splitStr.length > 1 ? splitStr[0] + "_" + splitStr[1] : species;
     }
 
 }

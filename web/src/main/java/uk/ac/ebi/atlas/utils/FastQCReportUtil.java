@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -40,7 +39,7 @@ public class FastQCReportUtil {
     }
 
     public String buildFastQCIndexHtmlPath(String experimentAccession, String species)  {
-        String specie_s = species.replaceAll(" ", "_").toLowerCase();
+        String specie_s = splitSpecies(species).toLowerCase();
         return MessageFormat.format(qcFilePathTemplate, experimentAccession, specie_s, "qc.html");
     }
 
@@ -51,14 +50,24 @@ public class FastQCReportUtil {
     }
 
     public String buildMappingQCIndexHtmlPath(String experimentAccession, String species)  {
-        String specie_s = species.replaceAll(" ", "_").toLowerCase();
+        String specie_s = splitSpecies(species).toLowerCase();
         return MessageFormat.format(mappingQCFilePathTemplate, experimentAccession, specie_s, "tophat2.html");
     }
 
     /***** FAST QC Report index (sub-folder of FAST QC) ****/
     public String buildFastQCReportIndexHtmlPath(String experimentAccession, String species)  {
-        String specie_s = species.replaceAll(" ", "_").toLowerCase();
+        String specie_s = splitSpecies(species).toLowerCase();
         return MessageFormat.format(fastQCFilePathTemplate, experimentAccession, specie_s);
+    }
+
+    /**
+     * Replace white space for "_" from species if it has more than one word
+     * and if species has more than 2 words, it keeps only the first 2.
+     */
+    private String splitSpecies(String species) {
+        String[] splitStr = species.split("\\s+");
+
+        return splitStr.length > 1 ? splitStr[0] + "_" + splitStr[1] : species;
     }
 
 }
