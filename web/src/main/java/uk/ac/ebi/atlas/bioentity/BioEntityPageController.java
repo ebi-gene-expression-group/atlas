@@ -31,8 +31,8 @@ import com.google.common.collect.SortedSetMultimap;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
-import uk.ac.ebi.atlas.commands.BaselineProfilesHeatMap;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesHeatMap;
+import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWidgetQuery;
@@ -186,12 +186,7 @@ public abstract class BioEntityPageController {
     }
 
     void addBaselineResults(String identifier, Model model, String species) {
-        BaselineTissueExperimentSearchResult tissueResults;
-        try {
-            tissueResults = baselineExperimentProfileSearchService.query(identifier, species, true);
-        } catch (GenesNotFoundException e) {
-            throw new ResourceNotFoundException(identifier);
-        }
+        BaselineTissueExperimentSearchResult tissueResults = baselineExperimentProfileSearchService.query(identifier, species, true);
 
         if (tissueResults.isEmpty()) {
             addBaselineCounts(identifier, model);

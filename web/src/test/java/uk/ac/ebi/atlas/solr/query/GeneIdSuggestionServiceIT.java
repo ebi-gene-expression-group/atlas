@@ -23,13 +23,12 @@
 package uk.ac.ebi.atlas.solr.query;
 
 import org.apache.solr.client.solrj.SolrServerException;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.commands.GenesNotFoundException;
+import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 
 import javax.inject.Inject;
 import java.util.List;
