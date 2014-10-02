@@ -78,7 +78,7 @@ public class EFOChildrenClient {
 
         ImmutableList.Builder<String> builder = ImmutableList.builder();
         for (JsonElement element : root.getAsJsonArray("tree")) {
-            String id = element.getAsJsonObject().get("id").getAsString().replace("EFO_", "EFO:");
+            String id = element.getAsJsonObject().get("id").getAsString();
             builder.add(id);
         }
 
