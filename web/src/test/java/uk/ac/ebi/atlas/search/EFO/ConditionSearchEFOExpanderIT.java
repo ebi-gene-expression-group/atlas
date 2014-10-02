@@ -31,7 +31,7 @@ public class ConditionSearchEFOExpanderIT {
 
         assertThat(terms, arrayWithSize(1024));
         assertThat(terms[0], is("cancer"));
-        assertThat(terms[1], startsWith("EFO:"));
+        assertThat(terms[1], startsWith("EFO_"));
 
     }
 
@@ -45,7 +45,7 @@ public class ConditionSearchEFOExpanderIT {
         assertThat(terms[0], is("Inflammatory"));
         assertThat(terms[1], startsWith("Bowel"));
         assertThat(terms[2], startsWith("Disease"));
-        assertThat(terms[3], startsWith("EFO:"));
+        assertThat(terms[3], startsWith("EFO_"));
 
     }
 
@@ -59,7 +59,7 @@ public class ConditionSearchEFOExpanderIT {
         assertThat(terms[0], is("heart"));
         assertThat(terms[1], is("UBERON_0000948"));
 
-        assertThat(terms[2], startsWith("EFO:"));
+        assertThat(terms[2], startsWith("EFO_"));
         assertThat(terms[4], startsWith("BTO_"));
     }
 
