@@ -318,34 +318,16 @@
 
         helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
+        <c:if test="${widgetHasBaselineProfiles}">
 
         var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
 
-        <c:choose>
-
-        <c:when test="${widgetHasBaselineProfiles}">
-
         new Biojs.AtlasHeatmap({
-            featuresUrl: '/gxa/widgets/heatmap/bioentity?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}${disableGeneLinks ? "&disableGeneLinks=true" : ""}' + widgetParameters,
+            featuresUrl: '/gxa/widgets/heatmap/bioentity?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}' + widgetParameters,
             target: "widgetBody"
         });
 
-        <%--new Biojs.AtlasHeatmap({--%>
-            <%--featuresUrl: '/gxa/widgets/heatmap/bioentity?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}${disableGeneLinks ? "&disableGeneLinks=true" : ""}' + widgetParameters,--%>
-            <%--target: "widgetBody"--%>
-        <%--});--%>
-
-        </c:when>
-        <c:otherwise>
-
-
-        <%--new Biojs.AtlasHeatmap({--%>
-        <%--featuresUrl: '/gxa/widgets/baselinecounts?condition=${param.condition}&geneQuery=${param.geneQuery}',--%>
-        <%--target: "widgetBody"--%>
-        <%--});--%>
-
-        </c:otherwise>
-        </c:choose>
+        </c:if>
 
     };
 </script>

@@ -130,13 +130,11 @@ public final class HeatmapWidgetController {
         return "forward:" + getRequestURL(request) + buildQueryString(species, experiment, disableGeneLinks);
     }
 
-    //TODO: remove rootContext when BioJS no longer uses HTML insert
     @RequestMapping(value = "/widgets/heatmap/bioentity")
     public String heatmapWidgetPage(
                                  @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
-                                 @RequestParam(value = "propertyType", required = false) String propertyType,
                                  @RequestParam(value = "species", required = false) String species,
-                                 @RequestParam(value = "rootContext", required = false) String rootContext,
+                                 @RequestParam(value = "propertyType", required = false) String propertyType,
                                  Model model) {
 
         String solrSpecies = StringUtils.isBlank(species) ?
