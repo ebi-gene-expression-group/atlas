@@ -201,13 +201,9 @@ public abstract class BioEntityPageController {
     }
 
     void addBaselineCounts(String identifier, Model model) {
-        try {
-            String specie = "";
-            Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(identifier, null, specie, true);
-            model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
-        } catch (GenesNotFoundException e) {
-            throw new ResourceNotFoundException(identifier);
-        }
+        String specie = "";
+        Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(identifier, null, specie, true);
+        model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
     }
 
 

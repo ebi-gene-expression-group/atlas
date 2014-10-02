@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.search.OracleObjectFactory;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -66,7 +65,7 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
     }
 
     @Test
-    public void geneQueryKeywordProteinCoding() throws GenesNotFoundException {
+    public void geneQueryKeywordProteinCoding()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
         String species = "";
@@ -76,7 +75,7 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
 
     @Test
     @Ignore //TODO: re-enable when performance fixed
-    public void visitEachExpressionGeneQueryKeywordProteinCoding() throws GenesNotFoundException {
+    public void visitEachExpressionGeneQueryKeywordProteinCoding()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
 
@@ -92,7 +91,7 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
     }
 
     @Test
-    public void conditionHomoSapiens() throws GenesNotFoundException {
+    public void conditionHomoSapiens()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("Homo sapiens");
         String species = "";
@@ -101,7 +100,7 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
 
 
     @Test
-    public void geneQueryKeywordProteinCodingAndConditionHomoSapiens() throws GenesNotFoundException {
+    public void geneQueryKeywordProteinCodingAndConditionHomoSapiens()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
         requestParameters.setCondition("Homo sapiens");

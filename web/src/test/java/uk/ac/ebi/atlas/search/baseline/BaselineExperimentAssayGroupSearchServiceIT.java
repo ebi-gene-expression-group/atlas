@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Inject;
@@ -36,7 +35,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void geneQuery2IDsDifferentSpecies() throws GenesNotFoundException {
+    public void geneQuery2IDsDifferentSpecies()  {
         String geneQuery = "ENSG00000161547 ENSMUSG00000030105";
         String condition = "";
         String species = "";
@@ -49,7 +48,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void geneQuery2IDsSameSpecies() throws GenesNotFoundException {
+    public void geneQuery2IDsSameSpecies()  {
         String geneQuery = "ENSG00000161547 ENSG00000211855";
         String condition = "";
         String species = "";
@@ -62,7 +61,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void geneQueryMiRNA() throws GenesNotFoundException {
+    public void geneQueryMiRNA()  {
         String geneQuery = "hsa-mir-636";
         String condition = "";
         String species = "";
@@ -75,7 +74,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void geneQueryKeywordWithQuotesZincFinger() throws GenesNotFoundException {
+    public void geneQueryKeywordWithQuotesZincFinger() {
         String geneQuery = "\"zinc finger\"";
         String condition = "";
         String species = "";
@@ -88,7 +87,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void geneQueryKeywordKinase() throws GenesNotFoundException {
+    public void geneQueryKeywordKinase()  {
         String geneQuery = "kinase";
         String condition = "";
         String species = "";
@@ -103,7 +102,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void geneQueryKeywordProteinCoding() throws GenesNotFoundException {
+    public void geneQueryKeywordProteinCoding() {
         String geneQuery = "protein_coding";
         String condition = "";
         String species = "";
@@ -116,7 +115,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void conditionPregnant() throws GenesNotFoundException {
+    public void conditionPregnant()  {
         String geneQuery = "";
         String condition = "pregnant";
         String species = "";
@@ -128,7 +127,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void conditionSpecimen() throws GenesNotFoundException {
+    public void conditionSpecimen()  {
         String geneQuery = "";
         String condition = "frozen specimen";
         String species = "";
@@ -144,7 +143,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void conditionsOR() throws GenesNotFoundException {
+    public void conditionsOR() {
         String geneQuery = "";
         String condition = "adipose thymus";
         String species = "";
@@ -166,7 +165,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void conditionsAND() throws GenesNotFoundException {
+    public void conditionsAND()  {
         String geneQuery = "";
         String condition = "heart AND frozen specimen";
         String species = "";
@@ -183,7 +182,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void resultsInMoreThanOneSlice() throws GenesNotFoundException {
+    public void resultsInMoreThanOneSlice()  {
         String geneQuery = "AHI1";
         String condition = "";
         String species = "";
@@ -201,7 +200,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void resultsInMoreThanOneSliceWithSelectedSpecie() throws GenesNotFoundException {
+    public void resultsInMoreThanOneSliceWithSelectedSpecie()  {
         String geneQuery = "AHI1";
         String condition = "";
         String species = "homo sapiens";
@@ -254,7 +253,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void geneQueryGeneIDAndConditionHeart() throws GenesNotFoundException {
+    public void geneQueryGeneIDAndConditionHeart()  {
         String geneQuery = "ENSG00000129170";                       //expressed in ovary
         String condition = "heart";
         String species = "";
@@ -275,7 +274,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void geneQueryGeneIDAndConditionHeartWithSelectedSpecie() throws GenesNotFoundException {
+    public void geneQueryGeneIDAndConditionHeartWithSelectedSpecie()  {
         String geneQuery = "ENSG00000129170";                       //expressed in ovary
         String condition = "heart";
         String species = "mus musculus";
@@ -294,7 +293,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void conditionWildType() throws GenesNotFoundException {
+    public void conditionWildType() {
         String geneQuery = "";
         String condition = "wild type";
         String species = "";
@@ -311,7 +310,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void conditionRenalGlomerulusQueryWithNoResults() throws GenesNotFoundException {
+    public void conditionRenalGlomerulusQueryWithNoResults()  {
         String geneQuery = "";
         String condition = "renal glomerulus";
         String species = "";
@@ -323,7 +322,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void geneQueryASPMWithResults() throws GenesNotFoundException {
+    public void geneQueryASPMWithResults() {
         String geneQuery = "ASPM";
         String condition = "";
         String species = "";
@@ -338,7 +337,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void geneQueryASPMAndConditionRenalGlomerulusWithNoResults() throws GenesNotFoundException {
+    public void geneQueryASPMAndConditionRenalGlomerulusWithNoResults()  {
         String geneQuery = "ASPM";
         String condition = "renal glomerulus";
         String species = "";
@@ -350,7 +349,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void conditionAdultQueryWithResults() throws GenesNotFoundException {
+    public void conditionAdultQueryWithResults()  {
         String geneQuery = "";
         String condition = "adult";
         String species = "";
@@ -365,7 +364,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void geneQueryASPMAndConditionAdultsWithResults() throws GenesNotFoundException {
+    public void geneQueryASPMAndConditionAdultsWithResults()  {
         String geneQuery = "ASPM";
         String condition = "adult";
         String species = "";
@@ -379,7 +378,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
     }
 
     @Test
-    public void geneQueryASPMAndConditionAdultAndSpeciesHomoSapiensWithResults() throws GenesNotFoundException {
+    public void geneQueryASPMAndConditionAdultAndSpeciesHomoSapiensWithResults()  {
         String geneQuery = "ASPM";
         String condition = "adult";
         String species = "homo sapiens";

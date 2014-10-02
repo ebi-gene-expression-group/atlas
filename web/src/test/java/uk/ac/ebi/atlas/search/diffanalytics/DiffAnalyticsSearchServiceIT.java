@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.search.OracleObjectFactory;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -79,7 +78,7 @@ public class DiffAnalyticsSearchServiceIT {
 
 
     @Test
-    public void geneQuery2IDsDifferentSpecies() throws GenesNotFoundException {
+    public void geneQuery2IDsDifferentSpecies()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("ENSMUSG00000091366 AT5G26220");
 
@@ -94,7 +93,7 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
-    public void geneQuery2IDsSameSpecies() throws GenesNotFoundException {
+    public void geneQuery2IDsSameSpecies()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("ENSMUSG00000000278 ENSMUSG00000002985");
 
@@ -110,7 +109,7 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
-    public void geneQueryMiRNA() throws GenesNotFoundException {
+    public void geneQueryMiRNA()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("hsa-mir-136");
 
@@ -125,7 +124,7 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
-    public void geneQueryKeywordWithQuotesApoptoticProcess() throws GenesNotFoundException {
+    public void geneQueryKeywordWithQuotesApoptoticProcess()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("\"apoptotic process\"");
 
@@ -141,7 +140,7 @@ public class DiffAnalyticsSearchServiceIT {
 
 
     @Test
-    public void geneQueryKeywordKinase() throws GenesNotFoundException {
+    public void geneQueryKeywordKinase()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("kinase");
         requestParameters.setExactMatch(false);
@@ -159,7 +158,7 @@ public class DiffAnalyticsSearchServiceIT {
 
 
     @Test
-    public void geneQueryKeywordProteinCoding() throws GenesNotFoundException {
+    public void geneQueryKeywordProteinCoding()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
 
@@ -182,7 +181,7 @@ public class DiffAnalyticsSearchServiceIT {
 
 
     @Test
-    public void visitEachExpressionGeneQueryMiRNA() throws GenesNotFoundException {
+    public void visitEachExpressionGeneQueryMiRNA()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("hsa-mir-136");
 
@@ -205,7 +204,7 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
-    public void visitEachExpressionConditionAdultOrganismHomosapiens() throws GenesNotFoundException {
+    public void visitEachExpressionConditionAdultOrganismHomosapiens()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("adult");
         requestParameters.setOrganism("Homo sapiens");
@@ -228,7 +227,7 @@ public class DiffAnalyticsSearchServiceIT {
 
     @Test
     @Ignore //TODO: re-enable when performance fixed
-    public void visitEachExpressionGeneQueryKeywordProteinCoding() throws GenesNotFoundException {
+    public void visitEachExpressionGeneQueryKeywordProteinCoding()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("protein_coding");
 
@@ -251,7 +250,7 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
-    public void conditionPregnant() throws GenesNotFoundException {
+    public void conditionPregnant()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("pregnant");
 
@@ -273,7 +272,7 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
-    public void conditionAdultOrganismHomosapiens() throws GenesNotFoundException {
+    public void conditionAdultOrganismHomosapiens()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("adult");
         requestParameters.setOrganism("Homo sapiens");
@@ -285,7 +284,7 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
-    public void conditionAND() throws GenesNotFoundException {
+    public void conditionAND()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("\"Mus musculus\" AND \"wild type\"");
 
@@ -296,7 +295,7 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
-    public void geneQueryKinaseAndConditionPregnant() throws GenesNotFoundException {
+    public void geneQueryKinaseAndConditionPregnant()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("kinase");
         requestParameters.setExactMatch(false);
@@ -313,7 +312,7 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
-    public void onlyShowTopGeneContrastCombination() throws GenesNotFoundException {
+    public void onlyShowTopGeneContrastCombination()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery("Cct4");
 
