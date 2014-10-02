@@ -45,7 +45,7 @@
 .item .specie_experiment h2 {
     position: relative;
     color: #222;
-    font-size: 16px;
+    font-size: 14px;
     top: 0px;
     left: 41px;
 }
@@ -63,7 +63,7 @@
 }
 
 .item ul li a {
-    font-size: 13px;
+    font-size: 11px;
     white-space: nowrap;
     float: left;
 }

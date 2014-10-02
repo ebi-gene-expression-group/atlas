@@ -92,7 +92,7 @@
 
     $(document).ready(function () {
         // x and y offset is vice versa!
-        drawEllipse('.item', 210, 350, 220, 420, 0);
+        drawEllipse('.item', 240, 350, 250, 440, 0);
 
     });
 
