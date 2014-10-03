@@ -4,16 +4,20 @@ import com.jayway.restassured.response.Response;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 
-import static com.jayway.restassured.RestAssured.get;
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.endsWith;
 
 public class GenePageControllerIT extends RestAssuredFixture {
 
     @Test
-    public void genePageRedirectQueryController(){
-        Response response = get("/query?geneQuery=MGI:3A108498");
+    public void mgiRedirects(){
+        String from = "/genes/MGI:88495";
+        String to = "/genes/ENSMUSG00000063889";
 
-        response.then().assertThat().statusCode(200);
-        response.then().assertThat().contentType("text/html");
+        Response response = given().redirects().follow(false).get(from);
+
+        response.then().assertThat().statusCode(302);
+        response.then().assertThat().header("Location", endsWith(to));
     }
 
 }
