@@ -23,7 +23,6 @@
   ~ http://gxa.github.com/gxa
   --%>
 <%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
-<%--@elvariable id="filterFactorsConverter" type="uk.ac.ebi.atlas.web.FilterFactorsConverter"--%>
 <%--@elvariable id="preferences" type="uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences"--%>
 <%--@elvariable id="requestParameters" type="uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters"--%>
 
@@ -46,7 +45,7 @@
                             <a class="bioEntityCardLink"
                                    href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${applicationProperties.urlParamEncode(entityIdentifier)}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
                                title="experiment">
-                                    ${baselineResult.species} - ${baselineResult.experimentName}${baselineResult.filterFactors.isEmpty() ? "" : " - ".concat(filterFactorsConverter.prettyPrint(baselineResult.filterFactors))}
+                                    ${baselineResult}
                             </a>
                         </td>
                         <%-- We don't show counts for now --%>

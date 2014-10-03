@@ -54,13 +54,13 @@ public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends Sin
 
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("2 results"));
 
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
-        assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
+        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-599"));
+        assertThat(baselineCounts.get(1).getExperimentName(), is("Six tissues"));
+        assertThat(baselineCounts.get(1).getSpecies(), is("Mus musculus"));
 
-        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-1733"));
-        assertThat(baselineCounts.get(1).getExperimentName(), is("Twenty seven tissues"));
-        assertThat(baselineCounts.get(1).getSpecies(), is("Homo sapiens"));
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-1733"));
+        assertThat(baselineCounts.get(0).getExperimentName(), is("Twenty seven tissues"));
+        assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
     }
 
     @Test

@@ -111,18 +111,19 @@ public class BaselineExperimentAssayGroupSearchService {
 
             Multimap<FactorGroup, String> assayGroupIdsByFilterFactors = experiment.getExperimentalFactors().groupAssayGroupIdsByNonDefaultFactor(assayGroupIds);
 
-            for (Map.Entry<FactorGroup, Collection<String>> assayGroupIdsAndFilterFactor : assayGroupIdsByFilterFactors.asMap().entrySet()) {
-                String experimentSpecies = experiment.isMultiOrganismExperiment() ? "Multi-species" : experiment.getFirstOrganism();
+            for (Map.Entry<FactorGroup, Collection<String>> filterFactorAssayGroupIds : assayGroupIdsByFilterFactors.asMap().entrySet()) {
+                FactorGroup filterFactor = filterFactorAssayGroupIds.getKey();
+                Collection<String> assayGroupIdsForFilterFactor = filterFactorAssayGroupIds.getValue();
 
-                //If the search has a selected specie, we need to find the experiments that match the same specie
-                if (StringUtils.isBlank(searchSpecies) || experimentSpecies.toLowerCase().equals(searchSpecies) ||
-                        (experimentSpecies.equals("Multi-species") && !assayGroupIdsAndFilterFactor.getKey().isEmpty()
-                                && assayGroupIdsAndFilterFactor.getKey().getFactorByType("ORGANISM").getValue().toLowerCase().equals(searchSpecies))) {
+                String experimentSpecies = experiment.isMultiOrganismExperiment() ? filterFactor.getOrganismFactorValue() : experiment.getFirstOrganism();
 
-                    BaselineExperimentAssayGroup result = new BaselineExperimentAssayGroup(experiment.getAccession(), experiment.getDisplayName(), experimentSpecies, experiment.getExperimentalFactors().getDefaultQueryFactorType());
-                    result.setFilterFactors(assayGroupIdsAndFilterFactor.getKey());
+                //filter by searchSpecies
+                if (StringUtils.isBlank(searchSpecies) || experimentSpecies.equalsIgnoreCase(searchSpecies)) {
+                    BaselineExperimentAssayGroup result = new BaselineExperimentAssayGroup(experiment.getAccession(), experiment.getDisplayName(),
+                            experimentSpecies, experiment.getExperimentalFactors().getDefaultQueryFactorType());
+                    result.setFilterFactors(filterFactor);
                     if (conditionSearch) {
-                        result.setAssayGroupsWithCondition(ImmutableSet.copyOf(assayGroupIdsAndFilterFactor.getValue()), experiment);
+                        result.setAssayGroupsWithCondition(ImmutableSet.copyOf(assayGroupIdsForFilterFactor), experiment);
                     }
                     results.add(result);
                 }

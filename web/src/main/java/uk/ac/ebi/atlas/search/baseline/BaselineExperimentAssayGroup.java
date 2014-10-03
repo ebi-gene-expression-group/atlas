@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +23,8 @@ public class BaselineExperimentAssayGroup implements Comparable<BaselineExperime
     private FactorGroup filterFactors;
 
     private String defaultQueryFactorType;
+
+    private FilterFactorsConverter filterFactorsConverter = new FilterFactorsConverter();
 
     public BaselineExperimentAssayGroup(String experimentAccession, String experimentName, String species, String defaultQueryFactorType) {
         this.experimentAccession = experimentAccession;
@@ -85,8 +88,7 @@ public class BaselineExperimentAssayGroup implements Comparable<BaselineExperime
 
     @Override
     public int compareTo(BaselineExperimentAssayGroup o) {
-        int c = this.getExperimentName().compareTo(o.getExperimentName());
-        return (c != 0) ? c : this.filterFactors.compareTo(o.getFilterFactors());
+        return this.toString().compareTo(o.toString());
     }
 
     @Override
@@ -104,5 +106,19 @@ public class BaselineExperimentAssayGroup implements Comparable<BaselineExperime
         int result = experimentName.hashCode();
         result = 31 * result + filterFactors.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(species).append(" - ").append(experimentName);
+        if (!filterFactors.isEmpty() && !containsOnlyOrganism(filterFactors)) {
+            sb.append(" - ").append(filterFactorsConverter.prettyPrint(filterFactors));
+        }
+        return sb.toString();
+    }
+
+    private boolean containsOnlyOrganism(FactorGroup filterFactors) {
+        return filterFactors.size() == 1 && filterFactors.getFactorByType("ORGANISM") != null;
     }
 }

@@ -48,10 +48,10 @@ public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePa
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(16));
-        assertThat(baselineCounts.get(6).getExperimentAccession(), is("E-MTAB-513"));
-        assertThat(baselineCounts.get(6).getExperimentName(), is("Illumina Body Map"));
-        assertThat(baselineCounts.get(6).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(6).getHref(), endsWith("E-MTAB-513?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=adipose,brain,breast,colon,kidney,lymph%20node,ovary,thyroid&geneQuery=&exactMatch=true"));
+        assertThat(baselineCounts.get(8).getExperimentAccession(), is("E-MTAB-513"));
+        assertThat(baselineCounts.get(8).getExperimentName(), is("Illumina Body Map"));
+        assertThat(baselineCounts.get(8).getSpecies(), is("Homo sapiens"));
+        assertThat(baselineCounts.get(8).getHref(), endsWith("E-MTAB-513?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=adipose,brain,breast,colon,kidney,lymph%20node,ovary,thyroid&geneQuery=&exactMatch=true"));
 
     }
 
