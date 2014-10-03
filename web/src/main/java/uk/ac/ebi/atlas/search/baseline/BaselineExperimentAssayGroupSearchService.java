@@ -72,7 +72,7 @@ public class BaselineExperimentAssayGroupSearchService {
         return (!coll.isPresent() || coll.get().isEmpty());
     }
 
-    public Set<BaselineExperimentAssayGroup> query(String geneQuery, String condition, String specie, boolean isExactMatch) {
+    public SortedSet<BaselineExperimentAssayGroup> query(String geneQuery, String condition, String specie, boolean isExactMatch) {
         LOGGER.info(String.format("<query> geneQuery=%s, condition=%s", geneQuery, condition));
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
@@ -89,9 +89,7 @@ public class BaselineExperimentAssayGroupSearchService {
         boolean conditionSearch = !isEmpty(indexedAssayGroups);
 
         SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = Sets.newTreeSet();
-        if(conditionSearch ||
-                StringUtils.isNotEmpty(geneQuery) && StringUtils.isEmpty(condition)) {
-
+        if (conditionSearch || StringUtils.isNotEmpty(geneQuery) && StringUtils.isEmpty(condition)) {
             baselineExperimentAssayGroups = buildResults(assayGroupsWithExpressionByExperiment, conditionSearch, species);
         }
 
@@ -101,7 +99,7 @@ public class BaselineExperimentAssayGroupSearchService {
         return baselineExperimentAssayGroups;
     }
 
-    SortedSet<BaselineExperimentAssayGroup> buildResults(SetMultimap<String, String> assayGroupsWithExpressionByExperiment, boolean conditionSearch, String selectedSpecie) {
+    SortedSet<BaselineExperimentAssayGroup> buildResults(SetMultimap<String, String> assayGroupsWithExpressionByExperiment, boolean conditionSearch, String searchSpecies) {
         SortedSet<BaselineExperimentAssayGroup> results = Sets.newTreeSet();
 
         for (Map.Entry<String, Collection<String>> exprAssayGroups : assayGroupsWithExpressionByExperiment.asMap().entrySet()) {
@@ -114,13 +112,14 @@ public class BaselineExperimentAssayGroupSearchService {
             Multimap<FactorGroup, String> assayGroupIdsByFilterFactors = experiment.getExperimentalFactors().groupAssayGroupIdsByNonDefaultFactor(assayGroupIds);
 
             for (Map.Entry<FactorGroup, Collection<String>> assayGroupIdsAndFilterFactor : assayGroupIdsByFilterFactors.asMap().entrySet()) {
-                String species = experiment.getOrganisms().size() > 1 ? "Multi-species" : experiment.getFirstOrganism();
-                //If the search has a selected specie, we need to find the experiments that match the same specie
-                if (StringUtils.isBlank(selectedSpecie) || (StringUtils.isNotBlank(selectedSpecie) && species.toLowerCase().equals(selectedSpecie)) ||
-                        (StringUtils.isNotBlank(selectedSpecie) && species.equals("Multi-species") && !assayGroupIdsAndFilterFactor.getKey().isEmpty()
-                                && assayGroupIdsAndFilterFactor.getKey().getFactorByType("ORGANISM").getValue().toLowerCase().equals(selectedSpecie))) {
+                String experimentSpecies = experiment.isMultiOrganismExperiment() ? "Multi-species" : experiment.getFirstOrganism();
 
-                    BaselineExperimentAssayGroup result = new BaselineExperimentAssayGroup(experiment.getAccession(), experiment.getDisplayName(), species, experiment.getExperimentalFactors().getDefaultQueryFactorType());
+                //If the search has a selected specie, we need to find the experiments that match the same specie
+                if (StringUtils.isBlank(searchSpecies) || experimentSpecies.toLowerCase().equals(searchSpecies) ||
+                        (experimentSpecies.equals("Multi-species") && !assayGroupIdsAndFilterFactor.getKey().isEmpty()
+                                && assayGroupIdsAndFilterFactor.getKey().getFactorByType("ORGANISM").getValue().toLowerCase().equals(searchSpecies))) {
+
+                    BaselineExperimentAssayGroup result = new BaselineExperimentAssayGroup(experiment.getAccession(), experiment.getDisplayName(), experimentSpecies, experiment.getExperimentalFactors().getDefaultQueryFactorType());
                     result.setFilterFactors(assayGroupIdsAndFilterFactor.getKey());
                     if (conditionSearch) {
                         result.setAssayGroupsWithCondition(ImmutableSet.copyOf(assayGroupIdsAndFilterFactor.getValue()), experiment);

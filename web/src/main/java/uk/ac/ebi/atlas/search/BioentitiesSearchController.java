@@ -52,6 +52,7 @@ import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.Set;
+import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -113,7 +114,7 @@ public class BioentitiesSearchController {
 
         String condition = efoExpander.fetchExpandedTermWithEFOChildren(requestParameters.getCondition());
 
-        Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQuery, condition, selectedSpecie.toLowerCase(), requestParameters.isExactMatch());
+        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQuery, condition, selectedSpecie.toLowerCase(), requestParameters.isExactMatch());
 
         model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
         if (baselineExperimentAssayGroups.size() == 1 & !requestParameters.hasCondition()) {

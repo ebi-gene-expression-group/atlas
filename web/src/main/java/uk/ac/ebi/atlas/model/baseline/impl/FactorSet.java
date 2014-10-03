@@ -30,6 +30,8 @@ import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 public class FactorSet implements FactorGroup {
 
     private Map<String, Factor> factorsByType = new HashMap<>();
@@ -167,6 +169,13 @@ public class FactorSet implements FactorGroup {
     @Override
     public boolean isEmpty() {
         return size() == 0;
+    }
+
+    @Override
+    public String getOrganismFactorValue() {
+        Factor organism = getFactorByType("ORGANISM");
+        checkNotNull(organism, "Could not determine organism for " + this);
+        return organism.getValue();
     }
 
 }

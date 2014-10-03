@@ -7,8 +7,6 @@ import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 
 import java.util.SortedSet;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 @AutoValue
 public abstract class BaselineExperimentSlice {
 
@@ -29,12 +27,7 @@ public abstract class BaselineExperimentSlice {
     }
 
     public String organism() {
-        if (experiment().isMultiOrganismExperiment()) {
-            Factor organism = filterFactors().getFactorByType("ORGANISM");
-            checkNotNull(organism, "Could not determine organism for " + this);
-            return organism.getValue();
-        }
-        return experiment().getFirstOrganism();
+        return experiment().isMultiOrganismExperiment() ? filterFactors().getOrganismFactorValue() : experiment().getFirstOrganism();
     }
 
     public String experimentAccession() {

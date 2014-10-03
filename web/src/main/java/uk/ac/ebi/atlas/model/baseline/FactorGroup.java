@@ -48,4 +48,6 @@ public interface FactorGroup extends Iterable<Factor>, Serializable, Comparable<
     int size();
 
     boolean isEmpty();
+
+    String getOrganismFactorValue();
 }
