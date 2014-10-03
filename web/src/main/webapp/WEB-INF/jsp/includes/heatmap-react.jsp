@@ -9,7 +9,7 @@
             </div>
         </c:if>
     </c:when>
-    <c:otherwise>
+    <c:otherwise><%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
         <%-- console polyfill to make the unminified React work with IE8/9 --%>
         <!--[if lt IE 10]>
         <script type="text/javascript"> if (!window.console) console = {log: function() {}, warn: function() {}}; </script>

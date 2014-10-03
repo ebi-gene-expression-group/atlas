@@ -90,7 +90,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             },
 
             render: function () {
-                var downloadProfilesButton = type != TypeEnum.MULTIEXPERIMENT ? React.DOM.td( {style:{"vertical-align": "top"}}, DownloadProfilesButton( {ref:"downloadProfilesButton"}), " " ) : '';
+                var downloadProfilesButton = React.DOM.td( {style:{"vertical-align": "top"}}, DownloadProfilesButton( {ref:"downloadProfilesButton"}), " " );
 
                 return (
                     React.DOM.div(null, 
