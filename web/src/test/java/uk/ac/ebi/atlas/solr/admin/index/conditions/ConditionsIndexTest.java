@@ -22,7 +22,10 @@
 
 package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.SetMultimap;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.solr.client.solrj.SolrServer;
 import org.junit.Before;
@@ -98,7 +101,7 @@ public class ConditionsIndexTest {
         given(baselineExperimentMock.getAssayGroups()).willReturn(new AssayGroups(Collections.singleton(new AssayGroup("g1","a1"))));
         given(baselineExperimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
         given(experimentDesignMock.getFactorValues("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
-        given(experimentDesignMock.getSamples("a1")).willReturn(ImmutableMap.of("sex", "female"));
+        given(experimentDesignMock.getSampleCharacteristics("a1")).willReturn(ImmutableMap.of("sex", "female"));
 
         BaselineConditionsIndex subject = new BaselineConditionsIndex(solrServerMock, new BaselineConditionsBuilder());
 
@@ -120,7 +123,7 @@ public class ConditionsIndexTest {
         given(baselineExperimentMock.getAssayGroups()).willReturn(new AssayGroups(Collections.singleton(new AssayGroup("g1","a1"))));
         given(baselineExperimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
         given(experimentDesignMock.getFactorValues("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
-        given(experimentDesignMock.getSamples("a1")).willReturn(ImmutableMap.of("sex", "female"));
+        given(experimentDesignMock.getSampleCharacteristics("a1")).willReturn(ImmutableMap.of("sex", "female"));
 
         SetMultimap<String, String> ontologyTerms =
                 new ImmutableSetMultimap.Builder<String, String>()

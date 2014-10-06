@@ -35,8 +35,8 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
     }
 
     private void populateSamples(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value){
-        for (Map.Entry<String, String> sample : experiment.getExperimentDesign().getSamples(assayAccession).entrySet()) {
-            ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "characteristic",
+        for (Map.Entry<String, String> sample : experiment.getExperimentDesign().getSampleCharacteristics(assayAccession).entrySet()) {
+            ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "value",
                     sample.getKey(), sample.getValue());
             result.add(line);
         }

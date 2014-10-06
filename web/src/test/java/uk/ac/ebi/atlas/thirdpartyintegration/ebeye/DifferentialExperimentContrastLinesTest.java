@@ -6,7 +6,10 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -30,7 +33,7 @@ public class DifferentialExperimentContrastLinesTest {
     private static final String SAMPLE_VALUE3 = "SAMPLE_VALUE3";
     private static final String SAMPLE_VALUE4 = "SAMPLE_VALUE4";
     private static final String REFERENCE = "reference";
-    private static final String CHARACTERISTIC = "characteristic";
+    private static final String CHARACTERISTIC = "value";
     private static final String FACTOR = "factor";
     private static final String TEST = "test";
 

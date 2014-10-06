@@ -22,7 +22,7 @@ public abstract class ConditionsBuilder<T extends Experiment> {
     protected Set<String> collectAssayProperties(ExperimentDesign experimentDesign, String assayAccession, SetMultimap<String, String> ontologyTerms) {
 
         Map<String, String> factors = experimentDesign.getFactorValues(assayAccession);
-        Map<String, String> samples = experimentDesign.getSamples(assayAccession);
+        Map<String, String> samples = experimentDesign.getSampleCharacteristics(assayAccession);
         Set<String> terms = ontologyTerms.get(assayAccession);
 
         checkNotNull(factors, ERROR_MESSAGE_TEMPLATE, "factors", assayAccession);

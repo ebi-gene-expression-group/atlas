@@ -42,7 +42,7 @@ public class BaselineExperimentAssayGroupsLinesIT {
         assertThat(result.length, is(5));
         assertThat(result[0], is("E-GEOD-30352"));
         assertThat(result[1], is("g37"));
-        assertThat(result[2], is("characteristic"));
+        assertThat(result[2], is("value"));
         assertThat(result[3], is("biosource provider"));
         assertThat(result[4], is("Opossum colonies from the Museum of Natural History, Berlin, Germany"));
     }

@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -53,7 +54,7 @@ public class ExperimentDesign implements Serializable {
 
     private SortedSet<String> factorHeaders = Sets.newTreeSet();
 
-    private Map<String, ExperimentDesignValues> samples = Maps.newHashMap();
+    private Map<String, SampleCharacteristics> samples = Maps.newHashMap();
 
     private Map<String, FactorSet> factorSetMap = Maps.newHashMap();
 
@@ -62,10 +63,15 @@ public class ExperimentDesign implements Serializable {
     private List<String> assayHeaders = Lists.newArrayList();
 
     public void putSample(String runOrAssay, String sampleHeader, String sampleValue) {
+        putSample(runOrAssay, sampleHeader, sampleValue, Optional.<OntologyTerm>absent());
+    }
+
+    public void putSample(String runOrAssay, String sampleHeader, String sampleValue, Optional<OntologyTerm> sampleOntologyTerm) {
         if (!samples.containsKey(runOrAssay)) {
-            samples.put(runOrAssay, new ExperimentDesignValues());
+            samples.put(runOrAssay, new SampleCharacteristics());
         }
-        samples.get(runOrAssay).put(sampleHeader, sampleValue);
+        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleValue);
+        samples.get(runOrAssay).put(sampleHeader, sampleCharacteristic);
         sampleHeaders.add(sampleHeader);
     }
 
@@ -109,9 +115,9 @@ public class ExperimentDesign implements Serializable {
 
 
     public String getSampleValue(String runOrAssay, String sampleHeader) {
-        ExperimentDesignValues experimentDesignValues = samples.get(runOrAssay);
-        if (experimentDesignValues != null) {
-            return experimentDesignValues.get(sampleHeader);
+        SampleCharacteristics sampleCharacteristics = this.samples.get(runOrAssay);
+        if (sampleCharacteristics != null) {
+            return sampleCharacteristics.get(sampleHeader).value();
         }
         return null;
     }
@@ -161,8 +167,18 @@ public class ExperimentDesign implements Serializable {
         return null;
     }
 
-    public Map<String, String> getSamples(String runOrAssay) {
-        return samples.get(runOrAssay);
+    public Map<String, String> getSampleCharacteristics(String runOrAssay) {
+        SampleCharacteristics sampleCharacteristics = this.samples.get(runOrAssay);
+
+        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
+
+        for (Map.Entry<String, SampleCharacteristic> sampleCharacteristic : sampleCharacteristics.entrySet()) {
+            String header = sampleCharacteristic.getKey();
+            String value = sampleCharacteristic.getValue().value();
+            builder.put(header, value);
+        }
+
+        return builder.build();
     }
 
     public SortedSet<String> getAllRunOrAssay() {
@@ -230,7 +246,7 @@ public class ExperimentDesign implements Serializable {
     public Set<String> getSpeciesForAssays(Set<String> assayAccessions) {
         Set<String> species = Sets.newHashSet();
         for (String assayAccession: assayAccessions){
-            Map<String, String> assaySamples = getSamples(assayAccession);
+            Map<String, String> assaySamples = getSampleCharacteristics(assayAccession);
 
             checkNotNull(assaySamples, String.format("Assay accession %s does not exist or has no samples", assayAccession));
 
@@ -244,7 +260,7 @@ public class ExperimentDesign implements Serializable {
     }
 
     // header, value
-    private class ExperimentDesignValues extends HashMap<String, String> {
+    private class SampleCharacteristics extends HashMap<String, SampleCharacteristic> {
 
     }
 
