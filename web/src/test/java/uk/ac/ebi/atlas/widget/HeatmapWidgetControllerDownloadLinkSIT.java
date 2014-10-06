@@ -8,7 +8,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWidgetPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.endsWith;
 
-public class HeatmapWidgetControllerDownloadSIT extends SeleniumFixture {
+public class HeatmapWidgetControllerDownloadLinkSIT extends SeleniumFixture {
 
     private static final String GENESET = "REACT_1619";
 

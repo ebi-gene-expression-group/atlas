@@ -16,7 +16,7 @@ public class HeatmapWidgetDownloadControllerIT extends RestAssuredFixture {
 
         response.then().assertThat().statusCode(200);
         response.then().assertThat().contentType("text/tab-separated-values");
-        response.then().assertThat().header("Content-Disposition", containsString("attachment; filename=\"ENSG00000026103 baseline.tsv\""));
+        response.then().assertThat().header("Content-Disposition", containsString("attachment; filename=\"ENSG00000026103_baseline.tsv\""));
 
         response.then().assertThat().body(containsString("# Query: Experiments with expression for ENSG00000026103 exactly, given the False Discovery Rate cutoff: 0.05"));
         response.then().assertThat().body(containsString("Twenty seven tissues"));

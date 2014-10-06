@@ -68,7 +68,7 @@ public final class HeatmapWidgetDownloadController {
         BaselineTissueExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(bioEntityAccession, species, true);
 
         if (!searchResult.isEmpty()) {
-            setHttpHeaders(response, bioEntityAccession + " baseline.tsv");
+            setHttpHeaders(response, bioEntityAccession + "_baseline.tsv");
             PrintWriter writer = response.getWriter();
             writer.write(formatFileHeader(bioEntityAccession));
             writeTsv(searchResult, writer);
