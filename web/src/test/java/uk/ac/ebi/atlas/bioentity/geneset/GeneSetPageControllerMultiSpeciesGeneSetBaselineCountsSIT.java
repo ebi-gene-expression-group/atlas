@@ -35,34 +35,34 @@ public class GeneSetPageControllerMultiSpeciesGeneSetBaselineCountsSIT extends S
         assertThat(baselineCounts.get(1).getSpecies(), is("Homo sapiens"));
         assertThat(baselineCounts.get(1).getHref(), endsWith("E-MTAB-513?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=IPR027417&exactMatch=true"));
 
-        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(baselineCounts.get(2).getExperimentName(), is("Six tissues"));
-        assertThat(baselineCounts.get(2).getSpecies(), is("Mus musculus"));
-        assertThat(baselineCounts.get(2).getHref(), endsWith("E-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=IPR027417&exactMatch=true"));
+        assertThat(baselineCounts.get(4).getExperimentAccession(), is("E-MTAB-599"));
+        assertThat(baselineCounts.get(4).getExperimentName(), is("Six tissues"));
+        assertThat(baselineCounts.get(4).getSpecies(), is("Mus musculus"));
+        assertThat(baselineCounts.get(4).getHref(), endsWith("E-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=IPR027417&exactMatch=true"));
 
-        assertThat(baselineCounts.get(3).getExperimentAccession(), is("E-MTAB-1733"));
-        assertThat(baselineCounts.get(3).getExperimentName(), is("Twenty seven tissues"));
+        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-MTAB-1733"));
+        assertThat(baselineCounts.get(2).getExperimentName(), is("Twenty seven tissues"));
+        assertThat(baselineCounts.get(2).getSpecies(), is("Homo sapiens"));
+        assertThat(baselineCounts.get(2).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=IPR027417&exactMatch=true"));
+
+        assertThat(baselineCounts.get(3).getExperimentAccession(), is("E-GEOD-30352"));
+        assertThat(baselineCounts.get(3).getExperimentName(), is("Vertebrate tissues"));
         assertThat(baselineCounts.get(3).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(3).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=IPR027417&exactMatch=true"));
-
-        assertThat(baselineCounts.get(4).getExperimentAccession(), is("E-GEOD-30352"));
-        assertThat(baselineCounts.get(4).getExperimentName(), is("Vertebrate tissues - Homo sapiens"));
-        assertThat(baselineCounts.get(4).getSpecies(), is("Multi-species"));
-        assertThat(baselineCounts.get(4).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=IPR027417&exactMatch=true&serializedFilterFactors=ORGANISM:Homo%20sapiens"));
+        assertThat(baselineCounts.get(3).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=IPR027417&exactMatch=true&serializedFilterFactors=ORGANISM:Homo%20sapiens"));
 
         assertThat(baselineCounts.get(5).getExperimentAccession(), is("E-GEOD-30352"));
-        assertThat(baselineCounts.get(5).getExperimentName(), is("Vertebrate tissues - Mus musculus"));
-        assertThat(baselineCounts.get(5).getSpecies(), is("Multi-species"));
+        assertThat(baselineCounts.get(5).getExperimentName(), is("Vertebrate tissues"));
+        assertThat(baselineCounts.get(5).getSpecies(), is("Mus musculus"));
         assertThat(baselineCounts.get(5).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=IPR027417&exactMatch=true&serializedFilterFactors=ORGANISM:Mus%20musculus"));
 
         assertThat(baselineCounts.get(6).getExperimentAccession(), is("E-GEOD-30352"));
-        assertThat(baselineCounts.get(6).getExperimentName(), is("Vertebrate tissues - Pan paniscus"));
-        assertThat(baselineCounts.get(6).getSpecies(), is("Multi-species"));
+        assertThat(baselineCounts.get(6).getExperimentName(), is("Vertebrate tissues"));
+        assertThat(baselineCounts.get(6).getSpecies(), is("Pan paniscus"));
         assertThat(baselineCounts.get(6).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=IPR027417&exactMatch=true&serializedFilterFactors=ORGANISM:Pan%20paniscus"));
 
         assertThat(baselineCounts.get(7).getExperimentAccession(), is("E-GEOD-30352"));
-        assertThat(baselineCounts.get(7).getExperimentName(), is("Vertebrate tissues - Pan troglodytes"));
-        assertThat(baselineCounts.get(7).getSpecies(), is("Multi-species"));
+        assertThat(baselineCounts.get(7).getExperimentName(), is("Vertebrate tissues"));
+        assertThat(baselineCounts.get(7).getSpecies(), is("Pan troglodytes"));
         assertThat(baselineCounts.get(7).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=IPR027417&exactMatch=true&serializedFilterFactors=ORGANISM:Pan%20troglodytes"));
     }
 

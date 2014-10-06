@@ -66,8 +66,8 @@ public class GeneSetPageControllerGoTermSIT extends SinglePageSeleniumFixture {
 
         assertThat(baselineCounts, hasSize(23));
 
-        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-GEOD-26284"));
-        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-GEOD-26284"));
+        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-GEOD-30352"));
+        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-GEOD-30352"));
     }
 
     @Test
