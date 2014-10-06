@@ -25,11 +25,12 @@ public class OLSClient {
     @Value("#{configuration['ols.query.url']}")
     private String olsServiceURL;
 
+
     private RestTemplate restTemplate;
 
     @Inject
-    public OLSClient(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public OLSClient(RestTemplate restTemplateLongTimeout) {
+        this.restTemplate = restTemplateLongTimeout;
     }
 
     public boolean isValid(String ontologyTerm) {
