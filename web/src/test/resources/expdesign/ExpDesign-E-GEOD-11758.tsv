@@ -1,4 +1,4 @@
-"Assay"	"Array"	"Sample Characteristics[age]"	"Sample Characteristics[ecotype]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Factor Values[compound]"	"Factor Values[temperature]"	"Factor Value Ontology Terms[compound]"	"Factor Value Ontology Terms[temperature]"
+"Assay"	"Array"	"Sample Characteristics[age]"	"Sample Characteristics[ecotype]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Factor Values[compound]"	"Factor Values[temperature]"	"Factor Value Ontology Term ID[compound]"	"Factor Value Ontology Term ID[temperature]"
 "AZC_rep1"	"A-AFFY-2"	"5 weeks"	"Col-0"	"Arabidopsis thaliana"	"leaf"	"L-azetidine-2-carboxylic acid"			
 "AZC_rep2"	"A-AFFY-2"	"5 weeks"	"Col-0"	"Arabidopsis thaliana"	"leaf"	"L-azetidine-2-carboxylic acid"			
 "AZC_rep3"	"A-AFFY-2"	"5 weeks"	"Col-0"	"Arabidopsis thaliana"	"leaf"	"L-azetidine-2-carboxylic acid"			

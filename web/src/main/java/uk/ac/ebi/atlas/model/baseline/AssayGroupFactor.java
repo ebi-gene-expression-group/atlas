@@ -28,8 +28,8 @@ public class AssayGroupFactor implements Comparable<AssayGroupFactor>{
     }
 
     //used in heatmap.tag
-    public String getValueOntologyTerm() {
-        return factor.getValueOntologyTerm();
+    public String getValueOntologyTermId() {
+        return factor.getValueOntologyTermId();
     }
 
     @Override

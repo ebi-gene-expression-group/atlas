@@ -44,7 +44,7 @@ public class BaselineExpressionViewModelBuilder {
         String color = (expression == null) ? "" : (expression.isKnown() && !expression.getLevelAsString().equals("NT") ?
                 colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel) : (expression.getLevelAsString().equals("NT")  ? "" : "UNKNOWN"));
 
-        String svgPathId = factor.getValueOntologyTerm();
+        String svgPathId = factor.getValueOntologyTermId();
 
         return new BaselineExpressionViewModel(factorName, color, value, svgPathId);
     }

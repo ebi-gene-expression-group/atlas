@@ -2,11 +2,12 @@ package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Map;
 
 public class DifferentialExperimentContrastLines implements Iterable<String[]> {
 
@@ -44,7 +45,7 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
     private void populateFactors(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value){
         for (Factor factor : experiment.getExperimentDesign().getFactors(assayAccession)) {
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "factor",
-                    factor.getHeader(), factor.getValue(), factor.getValueOntologyTerm() != null ? factor.getValueOntologyTerm() : "");
+                    factor.getHeader(), factor.getValue(), factor.getValueOntologyTermId() != null ? factor.getValueOntologyTermId() : "");
             result.add(line);
         }
 

@@ -39,17 +39,17 @@ public class Factor implements Comparable<Factor>, Serializable {
 
     private final String value;
 
-    private final String valueOntologyTerm;
+    private final String valueOntologyTermId;
 
     public Factor(String header, String value) {
         this(header, value, null);
     }
 
-    public Factor(String header, String value, String valueOntologyTerm) {
+    public Factor(String header, String value, String valueOntologyTermId) {
         this.header = header;
         this.type = normalize(checkNotNull(header));
         this.value = checkNotNull(value);
-        this.valueOntologyTerm = valueOntologyTerm;
+        this.valueOntologyTermId = valueOntologyTermId;
     }
 
 
@@ -71,8 +71,8 @@ public class Factor implements Comparable<Factor>, Serializable {
         return type;
     }
 
-    public String getValueOntologyTerm() {
-        return valueOntologyTerm;
+    public String getValueOntologyTermId() {
+        return valueOntologyTermId;
     }
 
         @Override
@@ -94,7 +94,7 @@ public class Factor implements Comparable<Factor>, Serializable {
         return Objects.toStringHelper(this)
                 .add("type", type)
                 .add("value", value)
-                .add("valueOntologyTerm", valueOntologyTerm)
+                .add("valueOntologyTermId", valueOntologyTermId)
                 .toString();
     }
 

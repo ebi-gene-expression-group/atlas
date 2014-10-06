@@ -1,4 +1,4 @@
-"Run"	"Sample Characteristics[Organism]"	"Sample Characteristics[biosource provider]"	"Sample Characteristics[developmental stage]"	"Sample Characteristics[genotype]"	"Sample Characteristics[individual]"	"Sample Characteristics[organism part]"	"Sample Characteristics[strain or line]"	"Factor Values[organism part]"	"Factor Value Ontology Terms[organism part]"
+"Run"	"Sample Characteristics[Organism]"	"Sample Characteristics[biosource provider]"	"Sample Characteristics[developmental stage]"	"Sample Characteristics[genotype]"	"Sample Characteristics[individual]"	"Sample Characteristics[organism part]"	"Sample Characteristics[strain or line]"	"Factor Values[organism part]"	"Factor Value Ontology Term ID[organism part]"
 "ERR032203"	"Mus musculus"	"Jackson laboratory"	"adult"	"wild type"	"mouse 1"	"liver"	"DBA/2J x C57BL/6J"	"liver"	"UBERON:0002107"
 "ERR032204"	"Mus musculus"	"Jackson laboratory"	"adult"	"wild type"	"mouse 2"	"liver"	"DBA/2J x C57BL/6J"	"liver"	"UBERON:0002107"
 "ERR032205"	"Mus musculus"	"Jackson laboratory"	"adult"	"wild type"	"mouse 3"	"liver"	"DBA/2J x C57BL/6J"	"liver"	"UBERON:0002107"

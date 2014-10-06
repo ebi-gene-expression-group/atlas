@@ -1,4 +1,4 @@
-"Assay"	"Array"	"Sample Characteristics[cell type]"	"Sample Characteristics[developmental stage]"	"Sample Characteristics[genetic modification]"	"Sample Characteristics[genotype]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Factor Values[genotype]"	"Factor Value Ontology Terms[genotype]"
+"Assay"	"Array"	"Sample Characteristics[cell type]"	"Sample Characteristics[developmental stage]"	"Sample Characteristics[genetic modification]"	"Sample Characteristics[genotype]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Factor Values[genotype]"	"Factor Value Ontology Term ID[genotype]"
 "9447-4 -/-, chip MOE430A"	"A-AFFY-23"	"neurosphere"	"embryonic day 13.5"	"gene_knock_out"	"p107 -/-"	"Mus musculus"	"brain germinal zone"	"p107 -/-"	
 "9447-4 -/-, chip MOE430B"	"A-AFFY-24"	"neurosphere"	"embryonic day 13.5"	"gene_knock_out"	"p107 -/-"	"Mus musculus"	"brain germinal zone"	"p107 -/-"	
 "9619-3 p107 -/-, chip MOE430A"	"A-AFFY-23"	"neurosphere"	"embryonic day 13.5"	"gene_knock_out"	"p107 -/-"	"Mus musculus"	"brain germinal zone"	"p107 -/-"	

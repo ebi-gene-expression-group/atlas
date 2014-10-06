@@ -139,7 +139,7 @@ public class BaselineProfilesViewModelBuilderTest {
                 "      \"header\": \"ORGANISM_PART\",\n" +
                 "      \"type\": \"ORGANISM_PART\",\n" +
                 "      \"value\": \"adipose\",\n" +
-                "      \"valueOntologyTerm\": \"ontologyTerm\"\n" +
+                "      \"valueOntologyTermId\": \"ontologyTerm\"\n" +
                 "    }\n" +
                 "  },\n" +
                 "  {\n" +

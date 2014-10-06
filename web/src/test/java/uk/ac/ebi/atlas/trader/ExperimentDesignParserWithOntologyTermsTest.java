@@ -67,7 +67,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     private static final String ONTOLOGY_TERM_1 = "ONTOLOGY TERM 1";
     private static final String ONTOLOGY_TERM_2 = "ONTOLOGY TERM 2";
 
-    private static final String[] HEADER_LINE = new String[]{ASSAY, ARRAY, "Sample Characteristics[DevelopmentalStage]", "Sample Characteristics[Genotype]", "Sample Characteristics[Organism]", "Sample Characteristics[StrainOrLine]", "Factor Values[GENOTYPE]", "Factor Value Ontology Terms[GENOTYPE]"};
+    private static final String[] HEADER_LINE = new String[]{ASSAY, ARRAY, "Sample Characteristics[DevelopmentalStage]", "Sample Characteristics[Genotype]", "Sample Characteristics[Organism]", "Sample Characteristics[StrainOrLine]", "Factor Values[GENOTYPE]", "Factor Value Ontology Term ID[GENOTYPE]"};
     private static final String[] FIRST_LINE = new String[]{ASSAY_ACCESSION_1, A_AFFY_35, RD_INSTAR_LARVA, "w1118; +; cycCY5", SPECIES_1, "", CYC_C_MUTANT, ONTOLOGY_TERM_1};
     private static final String[] LAST_LINE = new String[]{ASSAY_ACCESSION_2, A_AFFY_35, RD_INSTAR_LARVA, "wild_type", SPECIES_2, OREGON_R, "wild_type", ONTOLOGY_TERM_2};
     private static final List<String[]> DATA = Lists.newArrayList(HEADER_LINE, FIRST_LINE, LAST_LINE);

@@ -44,7 +44,7 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
     private void populateFactors(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup){
         for (Factor factor : experiment.getExperimentDesign().getFactors(assayAccession)) {
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), assayGroup.getId(), "factor",
-                    factor.getHeader(), factor.getValue(), factor.getValueOntologyTerm() != null ? factor.getValueOntologyTerm() : "");
+                    factor.getHeader(), factor.getValue(), factor.getValueOntologyTermId() != null ? factor.getValueOntologyTermId() : "");
             result.add(line);
         }
     }

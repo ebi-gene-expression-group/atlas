@@ -58,7 +58,7 @@ public class MTAB513ExperimentDesignDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("Run", "Sample Characteristics[Organism]", "Sample Characteristics[age]", "Sample Characteristics[ethnic group]", "Sample Characteristics[organism part]", "Sample Characteristics[sex]", "Factor Values[organism part]", "Factor Value Ontology Terms[organism part]", "Analysed")
+                contains("Run", "Sample Characteristics[Organism]", "Sample Characteristics[age]", "Sample Characteristics[ethnic group]", "Sample Characteristics[organism part]", "Sample Characteristics[sex]", "Factor Values[organism part]", "Factor Value Ontology Term ID[organism part]", "Analysed")
         );
 
     }

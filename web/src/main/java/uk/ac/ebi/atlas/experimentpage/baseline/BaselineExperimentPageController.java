@@ -199,7 +199,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         ImmutableSet.Builder<String> builder = ImmutableSet.builder();
 
         for (AssayGroupFactor assayGroupFactor : filteredAssayGroupFactors) {
-            builder.add(assayGroupFactor.getValueOntologyTerm());
+            builder.add(assayGroupFactor.getValueOntologyTermId());
         }
         return builder.build();
     }

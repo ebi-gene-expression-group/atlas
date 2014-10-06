@@ -10,7 +10,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.util.StringUtils;
-import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
@@ -180,7 +183,7 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "      \"header\": \"ORGANISM_PART\",\n" +
                 "      \"type\": \"ORGANISM_PART\",\n" +
                 "      \"value\": \"adipose\",\n" +
-                "      \"valueOntologyTerm\": \"ontologyTerm\"\n" +
+                "      \"valueOntologyTermId\": \"ontologyTerm\"\n" +
                 "    }\n" +
                 "  },\n" +
                 "  {\n" +

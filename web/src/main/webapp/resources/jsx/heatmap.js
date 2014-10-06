@@ -313,7 +313,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             render: function () {
                 var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
                     var factor = assayGroupFactor.factor;
-                    return FactorHeader( {factorName:factor.value, svgPathId:factor.valueOntologyTerm, assayGroupId:assayGroupFactor.assayGroupId, experimentAccession:this.props.experimentAccession,
+                    return FactorHeader( {factorName:factor.value, svgPathId:factor.valueOntologyTermId, assayGroupId:assayGroupFactor.assayGroupId, experimentAccession:this.props.experimentAccession,
                             selectColumn:this.selectColumn, selected:assayGroupFactor.assayGroupId === this.state.selectedColumnId} );
                 }.bind(this));
 

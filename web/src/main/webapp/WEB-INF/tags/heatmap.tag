@@ -131,7 +131,7 @@
 
                         <display:column
                                 title="<div data-organism-part=\"${columnHeader}\"
-                                    ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTerm).concat('\"') : ''}
+                                    ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTermId).concat('\"') : ''}
                                     ${type.isMicroarray() ? 'data-array-design=\"'.concat(queryFactor.arrayDesignAccession).concat('\"') : ''}
                                     ${type.isBaseline() ? 'data-assay-group-id=\"'.concat(factorHolder.assayGroupId).concat('\"') : ''}
                                     ${!type.isBaseline() ? 'data-contrast-id=\"'.concat(queryFactor.id).concat('\"') : ''}
@@ -168,7 +168,7 @@
                                 <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
                                     ${!type.isBaseline() ? 'data-pValue="'.concat(pValue).concat('"'):""}
                                      data-organism-part="${columnHeader}" data-color="${cellColour}"
-                                     ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTerm).concat('\"') : ''}>
+                                     ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTermId).concat('\"') : ''}>
                                         ${!type.isBaseline() ? foldChange : roundedExpressionLevel}
                                 </div>
                             </c:when>
@@ -178,7 +178,7 @@
                                     <div style="text-align: center" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
                                         ${!type.isBaseline() ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
                                             data-organism-part="${columnHeader}"
-                                        ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTerm).concat('\"') : ''}>
+                                        ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTermId).concat('\"') : ''}>
 
                                         <span id='unknownCell' data-help-loc='#heatMapTableUnknownCell'></span>
                                     </div>

@@ -1,4 +1,4 @@
-"Run"	"Sample Characteristics[developmental stage]"	"Sample Characteristics[individual]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Sample Characteristics[specimen with known storage state]"	"Factor Values[organism part]"	"Factor Value Ontology Terms[organism part]"
+"Run"	"Sample Characteristics[developmental stage]"	"Sample Characteristics[individual]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Sample Characteristics[specimen with known storage state]"	"Factor Values[organism part]"	"Factor Value Ontology Term ID[organism part]"
 "ERR315325"	"adult"	"V238"	"Homo sapiens"	"salivary gland"	"frozen specimen"	"salivary gland"	"UBERON:0001044"
 "ERR315326"	"adult"	"V130"	"Homo sapiens"	"lung"	"frozen specimen"	"lung"	"UBERON:0002048"
 "ERR315327"	"adult"	"V110"	"Homo sapiens"	"liver"	"frozen specimen"	"liver"	"UBERON:0002107"

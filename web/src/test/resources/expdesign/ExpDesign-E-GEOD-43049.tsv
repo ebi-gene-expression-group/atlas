@@ -1,4 +1,4 @@
-"Assay"	"Array"	"Sample Characteristics[Organism]"	"Sample Characteristics[cell line]"	"Sample Characteristics[culture condition]"	"Factor Values[culture condition]"	"Factor Value Ontology Terms[culture condition]"
+"Assay"	"Array"	"Sample Characteristics[Organism]"	"Sample Characteristics[cell line]"	"Sample Characteristics[culture condition]"	"Factor Values[culture condition]"	"Factor Value Ontology Term ID[culture condition]"
 "GSM1055612.Cy3"	"A-AGIL-28"	"Homo sapiens"	"Caco-2"	"Conventional"	"Conventional"	
 "GSM1055612.Cy5"	"A-AGIL-28"	"Homo sapiens"	"Caco-2"	"Apical anaerobic"	"Apical anaerobic"	
 "GSM1055613.Cy3"	"A-AGIL-28"	"Homo sapiens"	"Caco-2"	"Apical anaerobic"	"Apical anaerobic"	

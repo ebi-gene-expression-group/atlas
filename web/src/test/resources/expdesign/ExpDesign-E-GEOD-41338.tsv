@@ -1,4 +1,4 @@
-"Run"	"Sample Characteristics[age]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Sample Characteristics[sex]"	"Sample Characteristics[strain]"	"Factor Values[organism]"	"Factor Values[organism part]"	"Factor Value Ontology Terms[organism]"	"Factor Value Ontology Terms[organism part]"
+"Run"	"Sample Characteristics[age]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Sample Characteristics[sex]"	"Sample Characteristics[strain]"	"Factor Values[organism]"	"Factor Values[organism part]"	"Factor Value Ontology Term ID[organism]"	"Factor Value Ontology Term ID[organism part]"
 "SRR579545"	"adult"	"Mus musculus"	"brain"	"mixed"	"C57BL/6"	"Mus musculus"	"brain"	"NCBITaxon:10090"	"UBERON:0000955"
 "SRR579546"	"adult"	"Mus musculus"	"brain"	"mixed"	"C57BL/6"	"Mus musculus"	"brain"	"NCBITaxon:10090"	"UBERON:0000955"
 "SRR579547"	"adult"	"Mus musculus"	"liver"	"mixed"	"C57BL/6"	"Mus musculus"	"liver"	"NCBITaxon:10090"	"UBERON:0002107"

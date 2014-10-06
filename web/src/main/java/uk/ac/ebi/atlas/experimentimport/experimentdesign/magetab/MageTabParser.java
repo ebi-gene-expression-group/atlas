@@ -146,20 +146,20 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
             String factorName = factorValueAttribute.type; // the SDRF calls this type, but in the IDF the same value is actually factor name
             String factorValue = cleanValueAndUnitIfNeeded(factorValueAttribute.getNodeName(), factorValueAttribute.unit);
-            String factorValueOntologyTerm = factorValueAttribute.termAccessionNumber;
+            String factorValueOntologyTermId = factorValueAttribute.termAccessionNumber;
 
             if (isFactorThatHasADose(factorValueAttribute)) {
 
                 compoundFactorName = factorName;
                 compoundFactorValue = factorValue;
-                compoundFactorValueOntologyTerm = factorValueOntologyTerm;
+                compoundFactorValueOntologyTerm = factorValueOntologyTermId;
 
             } else if (isDoseFactor(factorValueAttribute)) {
 
                 if (StringUtils.isNotEmpty(compoundFactorValue)) {
                     factorValue = Joiner.on(" ").join(compoundFactorValue, factorValue);
                     factorName = compoundFactorName;
-                    factorValueOntologyTerm = compoundFactorValueOntologyTerm;
+                    factorValueOntologyTermId = compoundFactorValueOntologyTerm;
 
                     compoundFactorName = null;
                     compoundFactorValue = null;
@@ -171,7 +171,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
             }
 
             String factorType = factorNamesToType.get(factorName);
-            experimentDesign.putFactor(namedSdrfNode.getName(), factorType, factorValue, factorValueOntologyTerm);
+            experimentDesign.putFactor(namedSdrfNode.getName(), factorType, factorValue, factorValueOntologyTermId);
         }
 
         //Add compound factor in a case there was no dose corresponding to it

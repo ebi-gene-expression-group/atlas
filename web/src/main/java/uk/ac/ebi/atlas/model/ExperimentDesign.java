@@ -152,11 +152,11 @@ public class ExperimentDesign implements Serializable {
         return null;
     }
 
-    private String getFactorValueOntologyTerm(String runOrAssay, String factorHeader){
+    private String getFactorValueOntologyTermId(String runOrAssay, String factorHeader){
         FactorSet factorSet = factorSetMap.get(runOrAssay);
         if(factorSet != null){
             Factor factor = factorSet.getFactorByType(Factor.normalize(factorHeader));
-            return factor == null ? null : factor.getValueOntologyTerm();
+            return factor == null ? null : factor.getValueOntologyTermId();
         }
         return null;
     }
@@ -221,7 +221,7 @@ public class ExperimentDesign implements Serializable {
         }
 
         for (String factorHeader: getFactorHeaders()) {
-            row.add(getFactorValueOntologyTerm(runOrAssay, factorHeader));
+            row.add(getFactorValueOntologyTermId(runOrAssay, factorHeader));
         }
 
         return row.toArray(new String[row.size()]);

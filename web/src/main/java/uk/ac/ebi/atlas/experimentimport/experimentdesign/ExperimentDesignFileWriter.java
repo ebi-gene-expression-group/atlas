@@ -37,7 +37,7 @@ public class ExperimentDesignFileWriter {
 
     private static final String SAMPLE_NAME_HEADER_TEMPLATE = "Sample Characteristics[{0}]";
     private static final String FACTOR_NAME_HEADER_TEMPLATE = "Factor Values[{0}]";
-    private static final String FACTOR_VALUE_ONTOLOGY_TERM_TEMPLATE = "Factor Value Ontology Terms[{0}]";
+    private static final String FACTOR_VALUE_ONTOLOGY_TERM_TEMPLATE = "Factor Value Ontology Term ID[{0}]";
 
     private CSVWriter csvWriter;
     private ExperimentType experimentType;

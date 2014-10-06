@@ -1,4 +1,4 @@
-"Assay"	"Array"	"Sample Characteristics[biosource type]"	"Sample Characteristics[disease]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Factor Values[disease]"	"Factor Value Ontology Terms[disease]"
+"Assay"	"Array"	"Sample Characteristics[biosource type]"	"Sample Characteristics[disease]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Factor Values[disease]"	"Factor Value Ontology Term ID[disease]"
 "H_R1"	"A-AFFY-44"	"fresh specimen"	"normal"	"Homo sapiens"	"bone"	"normal"	"EFO:0000761"
 "H_R2"	"A-AFFY-44"	"fresh specimen"	"normal"	"Homo sapiens"	"bone"	"normal"	"EFO:0000761"
 "H_R3"	"A-AFFY-44"	"fresh specimen"	"normal"	"Homo sapiens"	"bone"	"normal"	"EFO:0000761"

@@ -1,4 +1,4 @@
-"Assay"	"Array"	"Sample Characteristics[age]"	"Sample Characteristics[genotype]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Factor Values[compound]"	"Factor Values[genotype]"	"Factor Value Ontology Terms[compound]"	"Factor Value Ontology Terms[genotype]"
+"Assay"	"Array"	"Sample Characteristics[age]"	"Sample Characteristics[genotype]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Factor Values[compound]"	"Factor Values[genotype]"	"Factor Value Ontology Term ID[compound]"	"Factor Value Ontology Term ID[genotype]"
 "Arabidopsis plant (Col-0), 4h_control_rep1"	"A-AFFY-2"	"10 days"	"Col-0"	"Arabidopsis thaliana"	"whole organism"	"none"	"Col-0"		
 "Arabidopsis plant (Col-0), 4h_control_rep2"	"A-AFFY-2"	"10 days"	"Col-0"	"Arabidopsis thaliana"	"whole organism"	"none"	"Col-0"		
 "Arabidopsis plant (Col-0), 4h_control_rep3"	"A-AFFY-2"	"10 days"	"Col-0"	"Arabidopsis thaliana"	"whole organism"	"none"	"Col-0"		

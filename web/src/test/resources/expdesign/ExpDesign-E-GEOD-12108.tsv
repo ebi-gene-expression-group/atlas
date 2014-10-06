@@ -1,4 +1,4 @@
-"Assay"	"Array"	"Sample Characteristics[cell type]"	"Sample Characteristics[developmental stage]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Factor Values[infect]"	"Factor Value Ontology Terms[infect]"
+"Assay"	"Array"	"Sample Characteristics[cell type]"	"Sample Characteristics[developmental stage]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Factor Values[infect]"	"Factor Value Ontology Term ID[infect]"
 "F. novicida infected D1_FN"	"A-AFFY-44"	"mononuclear cell"	"adult"	"Homo sapiens"	"peripheral blood"	"Francisella tularensis novicida"	
 "F. novicida infected D2_FN"	"A-AFFY-44"	"mononuclear cell"	"adult"	"Homo sapiens"	"peripheral blood"	"Francisella tularensis novicida"	
 "F. novicida infected D3_FN"	"A-AFFY-44"	"mononuclear cell"	"adult"	"Homo sapiens"	"peripheral blood"	"Francisella tularensis novicida"	

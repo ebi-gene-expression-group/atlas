@@ -40,7 +40,7 @@
             //ToDo: this should be replaced with a JSON array directly sent from backend layer
             var allQueryFactorValues = [${allQueryFactors.size()}];
             <c:forEach varStatus="i" var="queryFactor" items="${allQueryFactors}">
-            allQueryFactorValues[${i.index}] = "${type.isBaseline() ? queryFactor.valueOntologyTerm : queryFactor.displayName}";
+            allQueryFactorValues[${i.index}] = "${type.isBaseline() ? queryFactor.valueOntologyTermId : queryFactor.displayName}";
             </c:forEach>
 
             if (anyAnatomogramFile && 0 < anyAnatomogramFile.length) {

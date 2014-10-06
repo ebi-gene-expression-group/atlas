@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
 public class ExperimentDesignParser {
 
     static final Pattern SAMPLE_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristics\\[(.*?)\\]\\s*");
-    static final Pattern FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value Ontology Terms\\[(.*?)\\]\\s*");
+    static final Pattern FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value Ontology Term ID\\[(.*?)\\]\\s*");
     static final Pattern FACTOR_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Values\\[(.*?)\\]\\s*");
 
     @Value("#{configuration['experiment.experiment-design.path.template']}")
