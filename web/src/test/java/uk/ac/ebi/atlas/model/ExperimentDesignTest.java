@@ -1,11 +1,13 @@
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.base.Optional;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,17 +18,17 @@ public class ExperimentDesignTest {
     private static final String ASSAY1 = "ASSAY1";
     private static final String FACTOR_HEADER = "FACTOR_HEADER";
     private static final String FACTOR_VALUE = "FACTOR_VALUE";
-    private static final String FACTOR_ONTOLOGYTERM = "FACTOR_ONTOLOGYTERM";
+    private static final Optional<OntologyTerm> FACTOR_ONTOLOGYTERM = Optional.of(OntologyTerm.create("FACTOR_ONTOLOGYTERM"));
 
     private static final String FACTOR_HEADER2 = "FACTOR_HEADER2";
     private static final String FACTOR_VALUE2 = "FACTOR_VALUE2";
-    private static final String FACTOR_ONTOLOGYTERM2 = "FACTOR_ONTOLOGYTERM2";
+    private static final Optional<OntologyTerm> FACTOR_ONTOLOGYTERM2 = Optional.of(OntologyTerm.create("FACTOR_ONTOLOGYTERM2"));
 
     private static final String ASSAY2 = "ASSAY2";
 
     private static final String FACTOR_HEADER3 = "FACTOR_HEADER3";
     private static final String FACTOR_VALUE3 = "FACTOR_VALUE3";
-    private static final String FACTOR_ONTOLOGYTERM3 = "FACTOR_ONTOLOGYTERM3";
+    private static final Optional<OntologyTerm> FACTOR_ONTOLOGYTERM3 = Optional.of(OntologyTerm.create("FACTOR_ONTOLOGYTERM3"));
 
     public ExperimentDesign subject;
 

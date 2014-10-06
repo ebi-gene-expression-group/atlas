@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
@@ -39,6 +40,8 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
@@ -76,6 +79,8 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
     private final SpeciesEnsemblTrader speciesEnsemblTrader;
 
+    private final AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
+
     @Inject
     public BaselineExperimentPageController(BaselineProfilesHeatMap baselineProfilesHeatMap,
                                             ApplicationProperties applicationProperties,
@@ -83,6 +88,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
                                             FilterFactorsConverter filterFactorsConverter,
                                             FilterFactorMenuBuilder filterFactorMenuBuilder,
                                             BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
+                                            AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
                                             SpeciesEnsemblTrader speciesEnsemblTrader,
                                             TracksUtil tracksUtil) {
 
@@ -91,6 +97,7 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         this.baselineProfilesHeatMap = baselineProfilesHeatMap;
         this.filterFactorMenuBuilder = filterFactorMenuBuilder;
         this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
+        this.assayGroupFactorViewModelBuilder = assayGroupFactorViewModelBuilder;
         this.speciesEnsemblTrader = speciesEnsemblTrader;
         this.tracksUtil = tracksUtil;
     }
@@ -226,7 +233,8 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         }
         Gson gson = new Gson();
 
-        String jsonAssayGroupFactors = gson.toJson(filteredAssayGroupFactors);
+        ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = assayGroupFactorViewModelBuilder.build(filteredAssayGroupFactors);
+        String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
         model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
 
         BaselineProfilesViewModel profilesViewModel = baselineProfilesViewModelBuilder.build(baselineProfiles, orderedFactors);

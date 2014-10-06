@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.widget;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
@@ -38,6 +39,8 @@ import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
+import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineExperimentProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
@@ -78,14 +81,17 @@ public final class HeatmapWidgetController {
 
     private final BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder;
 
+    private AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
+
     @Inject
     private HeatmapWidgetController(ExperimentTrader experimentTrader,
-                                    ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService, BaselineExperimentProfileSearchService baselineExperimentProfileSearchService, BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder) {
+                                    ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService, BaselineExperimentProfileSearchService baselineExperimentProfileSearchService, BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder, AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder) {
         this.experimentTrader = experimentTrader;
         this.applicationProperties = applicationProperties;
         this.speciesLookupService = speciesLookupService;
         this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
         this.baselineExperimentProfilesViewModelBuilder = baselineExperimentProfilesViewModelBuilder;
+        this.assayGroupFactorViewModelBuilder = assayGroupFactorViewModelBuilder;
     }
 
     // similar to ExperimentDispatcher but for the widget, ie: loads baseline experiment into model and request
@@ -205,7 +211,8 @@ public final class HeatmapWidgetController {
 
         Gson gson = new Gson();
 
-        String jsonAssayGroupFactors = gson.toJson(filteredAssayGroupFactors);
+        ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = assayGroupFactorViewModelBuilder.build(filteredAssayGroupFactors);
+        String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
         model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
 
         BaselineProfilesViewModel profilesViewModel = baselineExperimentProfilesViewModelBuilder.build(baselineProfiles, orderedFactors);

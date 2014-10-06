@@ -22,13 +22,13 @@
 
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
-import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.*;
 
@@ -70,10 +70,10 @@ public class ExperimentDesign implements Serializable {
     }
 
     public void putFactor(String runOrAssay, String factorHeader, String factorValue) {
-        putFactor(runOrAssay, factorHeader, factorValue, null);
+        putFactor(runOrAssay, factorHeader, factorValue, Optional.<OntologyTerm>absent());
     }
 
-    public void putFactor(String runOrAssay, String factorHeader, String factorValue, @Nullable String factorOntologyTerm) {
+    public void putFactor(String runOrAssay, String factorHeader, String factorValue, Optional<OntologyTerm> factorOntologyTerm) {
         Factor factor = new Factor(factorHeader, factorValue, factorOntologyTerm);
         if(!factorSetMap.containsKey(runOrAssay)){
             factorSetMap.put(runOrAssay, new FactorSet());

@@ -4,7 +4,11 @@ import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.Test;
-import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.OntologyTerm;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 import uk.ac.ebi.atlas.utils.NumberUtils;
@@ -18,7 +22,7 @@ import static org.hamcrest.Matchers.is;
 public class BaselineExpressionViewModelBuilderTest {
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
-    private static final Factor ADIPOSE = new Factor(ORGANISM_PART, "adipose", "ontologyTerm");
+    private static final Factor ADIPOSE = new Factor(ORGANISM_PART, "adipose", OntologyTerm.create("ontologyTerm"));
     private static final Factor ADRENAL = new Factor(ORGANISM_PART, "adrenal");
     private static final Factor BRAIN = new Factor(ORGANISM_PART, "brain");
     private static final Factor BREAST = new Factor(ORGANISM_PART, "breast");

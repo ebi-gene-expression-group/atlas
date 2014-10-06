@@ -23,6 +23,8 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Optional;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -39,19 +41,22 @@ public class Factor implements Comparable<Factor>, Serializable {
 
     private final String value;
 
-    private final String valueOntologyTermId;
+    private final Optional<OntologyTerm> valueOntologyTerm;
 
     public Factor(String header, String value) {
-        this(header, value, null);
+        this(header, value, Optional.<OntologyTerm>absent());
     }
 
-    public Factor(String header, String value, String valueOntologyTermId) {
+    public Factor(String header, String value, OntologyTerm valueOntologyTerm) {
+        this(header, value, Optional.of(valueOntologyTerm));
+    }
+
+    public Factor(String header, String value, Optional<OntologyTerm> valueOntologyTerm) {
         this.header = header;
         this.type = normalize(checkNotNull(header));
         this.value = checkNotNull(value);
-        this.valueOntologyTermId = valueOntologyTermId;
+        this.valueOntologyTerm = valueOntologyTerm;
     }
-
 
     public static String normalize(String type) {
         return type.replaceAll(" ", "_").toUpperCase();
@@ -72,7 +77,7 @@ public class Factor implements Comparable<Factor>, Serializable {
     }
 
     public String getValueOntologyTermId() {
-        return valueOntologyTermId;
+        return valueOntologyTerm.isPresent() ? valueOntologyTerm.get().id() : null;
     }
 
         @Override
@@ -94,7 +99,7 @@ public class Factor implements Comparable<Factor>, Serializable {
         return Objects.toStringHelper(this)
                 .add("type", type)
                 .add("value", value)
-                .add("valueOntologyTermId", valueOntologyTermId)
+                .add("valueOntologyTermId", valueOntologyTerm)
                 .toString();
     }
 

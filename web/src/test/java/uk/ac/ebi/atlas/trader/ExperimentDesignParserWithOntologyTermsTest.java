@@ -33,6 +33,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.List;
@@ -71,8 +72,8 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     private static final String[] FIRST_LINE = new String[]{ASSAY_ACCESSION_1, A_AFFY_35, RD_INSTAR_LARVA, "w1118; +; cycCY5", SPECIES_1, "", CYC_C_MUTANT, ONTOLOGY_TERM_1};
     private static final String[] LAST_LINE = new String[]{ASSAY_ACCESSION_2, A_AFFY_35, RD_INSTAR_LARVA, "wild_type", SPECIES_2, OREGON_R, "wild_type", ONTOLOGY_TERM_2};
     private static final List<String[]> DATA = Lists.newArrayList(HEADER_LINE, FIRST_LINE, LAST_LINE);
-    private static final Factor FACTOR1 = new Factor(GENOTYPE, CYC_C_MUTANT, ONTOLOGY_TERM_1);
-    private static final Factor FACTOR2 = new Factor(GENOTYPE, "wild_type", ONTOLOGY_TERM_2);
+    private static final Factor FACTOR1 = new Factor(GENOTYPE, CYC_C_MUTANT, OntologyTerm.create(ONTOLOGY_TERM_1));
+    private static final Factor FACTOR2 = new Factor(GENOTYPE, "wild_type", OntologyTerm.create(ONTOLOGY_TERM_2));
 
     @Mock
     private TsvReaderBuilder tsvReaderBuilderMock;

@@ -32,6 +32,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Inject;
@@ -97,7 +98,7 @@ public class RnaSeqExperimentDesignMageTabParserIT {
     public void testGetFactors() throws IOException {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513).getExperimentDesign();
 
-        Factor factor = new Factor("organism part", "adipose", "UBERON:0001013");
+        Factor factor = new Factor("organism part", "adipose", OntologyTerm.create("UBERON:0001013"));
 
         assertThat(experimentDesign.getFactors("ERR030880"), contains(factor));
 

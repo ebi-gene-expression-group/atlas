@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMap;
@@ -40,6 +41,7 @@ import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.UnitAttribu
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -171,13 +173,13 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
             }
 
             String factorType = factorNamesToType.get(factorName);
-            experimentDesign.putFactor(namedSdrfNode.getName(), factorType, factorValue, factorValueOntologyTermId);
+            experimentDesign.putFactor(namedSdrfNode.getName(), factorType, factorValue, Optional.of(OntologyTerm.create(factorValueOntologyTermId)));
         }
 
         //Add compound factor in a case there was no dose corresponding to it
         if (StringUtils.isNotEmpty(compoundFactorName) && StringUtils.isNotEmpty(compoundFactorValue)) {
             String compoundFactorType = factorNamesToType.get(compoundFactorName);
-            experimentDesign.putFactor(namedSdrfNode.getName(), compoundFactorType, compoundFactorValue, compoundFactorValueOntologyTerm);
+            experimentDesign.putFactor(namedSdrfNode.getName(), compoundFactorType, compoundFactorValue, Optional.of(OntologyTerm.create(compoundFactorValueOntologyTerm)));
         }
     }
 

@@ -22,11 +22,13 @@
 
 package uk.ac.ebi.atlas.trader;
 
+import com.google.common.base.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -97,7 +99,7 @@ public class ExperimentDesignParser {
                 String factorValue = line[factorHeaderIndexes.get(factorHeader)];
 
                 Integer factorValueOntologyTermIndex = factorValueOntologyTermHeaderIndexes.get(factorHeader);
-                String factorValueOntologyTerm =  factorValueOntologyTermIndex == null ? null : line[factorValueOntologyTermIndex];
+                Optional<OntologyTerm> factorValueOntologyTerm =  factorValueOntologyTermIndex == null ? Optional.<OntologyTerm>absent() : Optional.of(OntologyTerm.create(line[factorValueOntologyTermIndex]));
 
                 experimentDesign.putFactor(runOrAssay, factorHeader, factorValue, factorValueOntologyTerm);
             }

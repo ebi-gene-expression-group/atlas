@@ -9,8 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.util.StringUtils;
-import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
@@ -34,17 +33,10 @@ import static org.mockito.Mockito.when;
 public class BaselineExperimentProfilesViewModelBuilderTest {
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
-    private static final Factor ADIPOSE = new Factor(ORGANISM_PART, "adipose", "ontologyTerm");
+    private static final Factor ADIPOSE = new Factor(ORGANISM_PART, "adipose", OntologyTerm.create("ontologyTerm"));
     private static final Factor ADRENAL = new Factor(ORGANISM_PART, "adrenal");
     private static final Factor BRAIN = new Factor(ORGANISM_PART, "brain");
     private static final Factor BREAST = new Factor(ORGANISM_PART, "breast");
-
-    private static final AssayGroupFactor G1_ADIPOSE = new AssayGroupFactor("g1", ADIPOSE);
-    private static final AssayGroupFactor G2_ADRENAL = new AssayGroupFactor("g2", ADRENAL);
-    private static final AssayGroupFactor G3_BRAIN = new AssayGroupFactor("g3", BRAIN);
-    private static final AssayGroupFactor G4_BREAST = new AssayGroupFactor("g4", BREAST);
-
-    private static final ImmutableSortedSet<AssayGroupFactor> ASSAY_GROUP_FACTORS = ImmutableSortedSet.of(G1_ADIPOSE, G2_ADRENAL, G3_BRAIN, G4_BREAST);
 
     private Color startColour = Color.LIGHT_GRAY;
     private Color endColour = Color.BLUE;
@@ -56,7 +48,6 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
     private SortedSet<Factor> orderedFactors = ImmutableSortedSet.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
 
     private static final FactorGroup EMPTY_FACTOR_SET = new FactorSet();
-
 
     @Mock
     private BaselineExperiment experiment1;
@@ -168,51 +159,6 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "}";
 
         assertThat(json, is(expected));
-
-    }
-
-    @Test
-    public void buildAssayGroupFactorsViewModel() {
-        Gson gson = new Gson();
-        String json = gson.toJson(ASSAY_GROUP_FACTORS);
-
-        String expected = "[\n" +
-                "  {\n" +
-                "    \"assayGroupId\": \"g1\",\n" +
-                "    \"factor\": {\n" +
-                "      \"header\": \"ORGANISM_PART\",\n" +
-                "      \"type\": \"ORGANISM_PART\",\n" +
-                "      \"value\": \"adipose\",\n" +
-                "      \"valueOntologyTermId\": \"ontologyTerm\"\n" +
-                "    }\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"assayGroupId\": \"g2\",\n" +
-                "    \"factor\": {\n" +
-                "      \"header\": \"ORGANISM_PART\",\n" +
-                "      \"type\": \"ORGANISM_PART\",\n" +
-                "      \"value\": \"adrenal\"\n" +
-                "    }\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"assayGroupId\": \"g3\",\n" +
-                "    \"factor\": {\n" +
-                "      \"header\": \"ORGANISM_PART\",\n" +
-                "      \"type\": \"ORGANISM_PART\",\n" +
-                "      \"value\": \"brain\"\n" +
-                "    }\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"assayGroupId\": \"g4\",\n" +
-                "    \"factor\": {\n" +
-                "      \"header\": \"ORGANISM_PART\",\n" +
-                "      \"type\": \"ORGANISM_PART\",\n" +
-                "      \"value\": \"breast\"\n" +
-                "    }\n" +
-                "  }\n" +
-                "]";
-
-        assertThat(json, is(StringUtils.trimAllWhitespace(expected)));
 
     }
 

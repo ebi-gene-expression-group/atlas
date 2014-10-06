@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
@@ -42,8 +43,8 @@ public class BaselineExpressionSearchResultIT {
 
         SortedSet<Factor> factors = subject.getDefaultFactorsForSpecificAssayGroupsWithCondition();
 
-        Factor factor1 = new Factor("ORGANISM_PART", "leukocyte", "CL:0000738");
-        Factor factor2 = new Factor("ORGANISM_PART", "skeletal muscle", "CL:0000188");
+        Factor factor1 = new Factor("ORGANISM_PART", "leukocyte", OntologyTerm.create("CL:0000738"));
+        Factor factor2 = new Factor("ORGANISM_PART", "skeletal muscle", OntologyTerm.create("CL:0000188"));
 
         assertThat(factors, hasSize(2));
         assertThat(factors, containsInAnyOrder(factor1, factor2));
