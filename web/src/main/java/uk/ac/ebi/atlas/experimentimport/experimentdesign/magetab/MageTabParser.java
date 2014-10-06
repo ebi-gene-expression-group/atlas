@@ -42,6 +42,7 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
+import uk.ac.ebi.atlas.model.SampleCharacteristic;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -94,7 +95,10 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
             SourceNode sourceNode = findFirstUpstreamSourceNode(namedSdrfNode);
 
             for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
-                addCharacteristicToExperimentDesign(experimentDesign, namedSdrfNode.getName(), characteristicsAttribute);
+                Optional<OntologyTerm> characteristicOntologyTerm = Strings.isNullOrEmpty(characteristicsAttribute.termAccessionNumber) ? Optional.<OntologyTerm>absent() : Optional.of(OntologyTerm.create(characteristicsAttribute.termAccessionNumber));
+
+                addCharacteristicToExperimentDesign(experimentDesign, namedSdrfNode.getName(), characteristicsAttribute, characteristicOntologyTerm);
+
                 if (!Strings.isNullOrEmpty(characteristicsAttribute.termAccessionNumber)) {
                     characteristicsOntologyTerms.put(namedSdrfNode.getName(), characteristicsAttribute.termAccessionNumber);
                 }
@@ -123,9 +127,10 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         return builder.build();
     }
 
-    private void addCharacteristicToExperimentDesign(ExperimentDesign experimentDesign, String name, CharacteristicsAttribute characteristicsAttribute) {
+    private void addCharacteristicToExperimentDesign(ExperimentDesign experimentDesign, String name, CharacteristicsAttribute characteristicsAttribute, Optional<OntologyTerm> characteristicOntologyTerm) {
         String value = cleanValueAndUnitIfNeeded(characteristicsAttribute.getNodeName(), characteristicsAttribute.unit);
-        experimentDesign.putSample(name, characteristicsAttribute.type, value);
+        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(value, characteristicOntologyTerm);
+        experimentDesign.putSampleCharacteristic(name, characteristicsAttribute.type, sampleCharacteristic);
     }
 
     private SourceNode findFirstUpstreamSourceNode(NamedSdrfNode<T> namedSdrfNode) {

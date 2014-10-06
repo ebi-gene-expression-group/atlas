@@ -92,7 +92,7 @@ public class ExperimentDesignParser {
 
             for (String sampleHeader : sampleHeaderIndexes.keySet()) {
                 String sampleValue = line[sampleHeaderIndexes.get(sampleHeader)];
-                experimentDesign.putSample(runOrAssay, sampleHeader, sampleValue);
+                experimentDesign.putSampleCharacteristic(runOrAssay, sampleHeader, sampleValue);
             }
 
             for (String factorHeader : factorHeaderIndexes.keySet()) {

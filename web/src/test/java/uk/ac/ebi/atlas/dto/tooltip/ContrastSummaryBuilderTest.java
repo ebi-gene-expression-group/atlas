@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.dto.tooltip;
 
-import org.hamcrest.Matcher;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -10,7 +9,6 @@ import java.util.Iterator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 public class ContrastSummaryBuilderTest {
 
@@ -44,8 +42,8 @@ public class ContrastSummaryBuilderTest {
         experimentDesign.putFactor(TEST_ASSAY, FACTOR_HEADER, FACTOR_VALUE3);
         experimentDesign.putFactor(TEST_ASSAY, FACTOR_HEADER2, FACTOR_VALUE4);
 
-        experimentDesign.putSample(REF_ASSAY, SAMPLE_HEADER, SAMPLE_VALUE1);
-        experimentDesign.putSample(TEST_ASSAY, SAMPLE_HEADER, SAMPLE_VALUE2);
+        experimentDesign.putSampleCharacteristic(REF_ASSAY, SAMPLE_HEADER, SAMPLE_VALUE1);
+        experimentDesign.putSampleCharacteristic(TEST_ASSAY, SAMPLE_HEADER, SAMPLE_VALUE2);
 
         ContrastSummaryBuilder subject = new ContrastSummaryBuilder().
                 withExperimentDescription(EXPERIMENT_DESCRIPTION).forContrast(CONTRAST).

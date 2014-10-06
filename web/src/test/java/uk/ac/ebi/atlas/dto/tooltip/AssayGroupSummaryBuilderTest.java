@@ -31,8 +31,8 @@ public class AssayGroupSummaryBuilderTest {
         experimentDesign.putFactor(ASSAY2, FACTOR_HEADER, FACTOR_VALUE);
         experimentDesign.putFactor(ASSAY2, FACTOR_HEADER2, FACTOR_VALUE2);
 
-        experimentDesign.putSample(ASSAY1, SAMPLE_HEADER, SAMPLE_VALUE1);
-        experimentDesign.putSample(ASSAY2, SAMPLE_HEADER, SAMPLE_VALUE2);
+        experimentDesign.putSampleCharacteristic(ASSAY1, SAMPLE_HEADER, SAMPLE_VALUE1);
+        experimentDesign.putSampleCharacteristic(ASSAY2, SAMPLE_HEADER, SAMPLE_VALUE2);
 
         AssayGroupSummaryBuilder subject = new AssayGroupSummaryBuilder().
                 forAssayGroup(ASSAY_GROUP).

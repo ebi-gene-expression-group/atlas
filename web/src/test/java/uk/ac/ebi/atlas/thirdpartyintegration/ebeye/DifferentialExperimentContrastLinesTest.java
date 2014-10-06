@@ -47,14 +47,14 @@ public class DifferentialExperimentContrastLinesTest {
 
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
-        experimentDesign.putSample(ASSAY1, SAMPLE_HEADER, SAMPLE_VALUE1);
+        experimentDesign.putSampleCharacteristic(ASSAY1, SAMPLE_HEADER, SAMPLE_VALUE1);
         experimentDesign.putFactor(ASSAY1, FACTOR_HEADER, FACTOR_VALUE1);
-        experimentDesign.putSample(ASSAY2, SAMPLE_HEADER, SAMPLE_VALUE2);
+        experimentDesign.putSampleCharacteristic(ASSAY2, SAMPLE_HEADER, SAMPLE_VALUE2);
         experimentDesign.putFactor(ASSAY2, FACTOR_HEADER, FACTOR_VALUE1);
 
-        experimentDesign.putSample(ASSAY3, SAMPLE_HEADER, SAMPLE_VALUE3);
+        experimentDesign.putSampleCharacteristic(ASSAY3, SAMPLE_HEADER, SAMPLE_VALUE3);
         experimentDesign.putFactor(ASSAY3, FACTOR_HEADER, FACTOR_VALUE2);
-        experimentDesign.putSample(ASSAY4, SAMPLE_HEADER, SAMPLE_VALUE4);
+        experimentDesign.putSampleCharacteristic(ASSAY4, SAMPLE_HEADER, SAMPLE_VALUE4);
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2);
 
         Set<Contrast> contrasts = Collections.singleton(contrast1);
@@ -81,16 +81,16 @@ public class DifferentialExperimentContrastLinesTest {
 
         ExperimentDesign experimentDesign = new ExperimentDesign();
         //This group is for Reference Assay (added two same assay to the group)
-        experimentDesign.putSample(ASSAY1, SAMPLE_HEADER, SAMPLE_VALUE1);
+        experimentDesign.putSampleCharacteristic(ASSAY1, SAMPLE_HEADER, SAMPLE_VALUE1);
         experimentDesign.putFactor(ASSAY1, FACTOR_HEADER, FACTOR_VALUE1);
 
-        experimentDesign.putSample(ASSAY2, SAMPLE_HEADER, SAMPLE_VALUE1);
+        experimentDesign.putSampleCharacteristic(ASSAY2, SAMPLE_HEADER, SAMPLE_VALUE1);
         experimentDesign.putFactor(ASSAY2, FACTOR_HEADER, FACTOR_VALUE1);
 
         //This group is for Test Assay
-        experimentDesign.putSample(ASSAY3, SAMPLE_HEADER, SAMPLE_VALUE3);
+        experimentDesign.putSampleCharacteristic(ASSAY3, SAMPLE_HEADER, SAMPLE_VALUE3);
         experimentDesign.putFactor(ASSAY3, FACTOR_HEADER, FACTOR_VALUE2);
-        experimentDesign.putSample(ASSAY4, SAMPLE_HEADER, SAMPLE_VALUE4);
+        experimentDesign.putSampleCharacteristic(ASSAY4, SAMPLE_HEADER, SAMPLE_VALUE4);
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2);
 
         //Adding the contrasts
@@ -118,16 +118,16 @@ public class DifferentialExperimentContrastLinesTest {
 
         ExperimentDesign experimentDesign = new ExperimentDesign();
         //This group is for Reference Assay (added two same assay to the group)
-        experimentDesign.putSample(ASSAY1, SAMPLE_HEADER, "");
+        experimentDesign.putSampleCharacteristic(ASSAY1, SAMPLE_HEADER, "");
         experimentDesign.putFactor(ASSAY1, FACTOR_HEADER, FACTOR_VALUE1);
 
-        experimentDesign.putSample(ASSAY2, SAMPLE_HEADER, SAMPLE_VALUE2);
+        experimentDesign.putSampleCharacteristic(ASSAY2, SAMPLE_HEADER, SAMPLE_VALUE2);
         experimentDesign.putFactor(ASSAY2, FACTOR_HEADER, FACTOR_VALUE1);
 
         //This group is for Test Assay
-        experimentDesign.putSample(ASSAY3, SAMPLE_HEADER, SAMPLE_VALUE3);
+        experimentDesign.putSampleCharacteristic(ASSAY3, SAMPLE_HEADER, SAMPLE_VALUE3);
         experimentDesign.putFactor(ASSAY3, FACTOR_HEADER, FACTOR_VALUE2);
-        experimentDesign.putSample(ASSAY4, SAMPLE_HEADER, SAMPLE_VALUE4);
+        experimentDesign.putSampleCharacteristic(ASSAY4, SAMPLE_HEADER, SAMPLE_VALUE4);
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2);
 
         //Adding the contrasts

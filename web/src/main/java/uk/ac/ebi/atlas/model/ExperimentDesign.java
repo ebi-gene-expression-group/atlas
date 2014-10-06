@@ -62,15 +62,15 @@ public class ExperimentDesign implements Serializable {
 
     private List<String> assayHeaders = Lists.newArrayList();
 
-    public void putSample(String runOrAssay, String sampleHeader, String sampleValue) {
-        putSample(runOrAssay, sampleHeader, sampleValue, Optional.<OntologyTerm>absent());
+    public void putSampleCharacteristic(String runOrAssay, String sampleCharacteristicHeader, String sampleCharacteristicValue) {
+        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleCharacteristicValue, Optional.<OntologyTerm>absent());
+        putSampleCharacteristic(runOrAssay, sampleCharacteristicHeader, sampleCharacteristic);
     }
 
-    public void putSample(String runOrAssay, String sampleHeader, String sampleValue, Optional<OntologyTerm> sampleOntologyTerm) {
+    public void putSampleCharacteristic(String runOrAssay, String sampleHeader, SampleCharacteristic sampleCharacteristic) {
         if (!samples.containsKey(runOrAssay)) {
             samples.put(runOrAssay, new SampleCharacteristics());
         }
-        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleValue);
         samples.get(runOrAssay).put(sampleHeader, sampleCharacteristic);
         sampleHeaders.add(sampleHeader);
     }
@@ -117,7 +117,8 @@ public class ExperimentDesign implements Serializable {
     public String getSampleValue(String runOrAssay, String sampleHeader) {
         SampleCharacteristics sampleCharacteristics = this.samples.get(runOrAssay);
         if (sampleCharacteristics != null) {
-            return sampleCharacteristics.get(sampleHeader).value();
+            SampleCharacteristic sampleCharacteristic = sampleCharacteristics.get(sampleHeader);
+            return sampleCharacteristic == null ? null : sampleCharacteristic.value();
         }
         return null;
     }
