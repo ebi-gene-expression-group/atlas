@@ -29,6 +29,7 @@ import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
+import uk.ac.ebi.atlas.model.SampleCharacteristic;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -46,8 +47,10 @@ import java.util.regex.Pattern;
 public class ExperimentDesignParser {
 
     static final Pattern SAMPLE_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristics\\[(.*?)\\]\\s*");
-    static final Pattern FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value Ontology Term ID\\[(.*?)\\]\\s*");
+    static final Pattern SAMPLE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristics Ontology Term\\[(.*?)\\]\\s*");
+
     static final Pattern FACTOR_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Values\\[(.*?)\\]\\s*");
+    static final Pattern FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Factor Value Ontology Term\\[(.*?)\\]\\s*");
 
     @Value("#{configuration['experiment.experiment-design.path.template']}")
     private String pathTemplate;
@@ -75,9 +78,12 @@ public class ExperimentDesignParser {
         String[] headerLine = csvLines.remove(0);
 
         Map<String, Integer> sampleHeaderIndexes = extractHeaderIndexes(headerLine, SAMPLE_COLUMN_HEADER_PATTERN);
+        Map<String, Integer> sampleValueOntologyTermHeaderIndexes = extractHeaderIndexes(headerLine, SAMPLE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN);
+
         Map<String, Integer> factorHeaderIndexes = extractHeaderIndexes(headerLine, FACTOR_COLUMN_HEADER_PATTERN);
         Map<String, Integer> factorValueOntologyTermHeaderIndexes = extractHeaderIndexes(headerLine, FACTOR_VALUE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN);
-        int headersStartIndex = headerLine.length - (sampleHeaderIndexes.size() + factorHeaderIndexes.size() + factorValueOntologyTermHeaderIndexes.size());
+
+        int headersStartIndex = headerLine.length - (sampleHeaderIndexes.size() + sampleValueOntologyTermHeaderIndexes.size() + factorHeaderIndexes.size() + factorValueOntologyTermHeaderIndexes.size());
 
         ExperimentDesign experimentDesign = new ExperimentDesign();
         for (int i = 0; i < headersStartIndex; i++) {
@@ -92,20 +98,29 @@ public class ExperimentDesignParser {
 
             for (String sampleHeader : sampleHeaderIndexes.keySet()) {
                 String sampleValue = line[sampleHeaderIndexes.get(sampleHeader)];
-                experimentDesign.putSampleCharacteristic(runOrAssay, sampleHeader, sampleValue);
+
+                Integer sampleValueOntologyTermIndex = sampleValueOntologyTermHeaderIndexes.get(sampleHeader);
+                Optional<OntologyTerm> sampleValueOntologyTerm = createOntologyTermOptional(line, sampleValueOntologyTermIndex);
+                SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleValue, sampleValueOntologyTerm);
+
+                experimentDesign.putSampleCharacteristic(runOrAssay, sampleHeader, sampleCharacteristic);
             }
 
             for (String factorHeader : factorHeaderIndexes.keySet()) {
                 String factorValue = line[factorHeaderIndexes.get(factorHeader)];
 
                 Integer factorValueOntologyTermIndex = factorValueOntologyTermHeaderIndexes.get(factorHeader);
-                Optional<OntologyTerm> factorValueOntologyTerm =  factorValueOntologyTermIndex == null ? Optional.<OntologyTerm>absent() : Optional.of(OntologyTerm.create(line[factorValueOntologyTermIndex]));
+                Optional<OntologyTerm> factorValueOntologyTerm = createOntologyTermOptional(line, factorValueOntologyTermIndex);
 
                 experimentDesign.putFactor(runOrAssay, factorHeader, factorValue, factorValueOntologyTerm);
             }
         }
 
         return experimentDesign;
+    }
+
+    private Optional<OntologyTerm> createOntologyTermOptional(String[] line, Integer ontologyTermIndex) {
+        return ontologyTermIndex == null ? Optional.<OntologyTerm>absent() : Optional.of(OntologyTerm.createFromSourceAndId(line[ontologyTermIndex]));
     }
 
     protected Map<String, Integer> extractHeaderIndexes(String[] columnHeaders, Pattern columnHeaderPattern) {

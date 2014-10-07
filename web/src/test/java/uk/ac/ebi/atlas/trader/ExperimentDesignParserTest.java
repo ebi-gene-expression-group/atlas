@@ -109,12 +109,12 @@ public class ExperimentDesignParserTest {
     @Test
     public void testParseSamples() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getSampleValue(ASSAY_ACCESSION_1, SAMPLE_NAME_1), is(RD_INSTAR_LARVA));
-        assertThat(experimentDesign.getSampleValue(ASSAY_ACCESSION_2, SAMPLE_NAME_1), is(RD_INSTAR_LARVA));
-        assertThat(experimentDesign.getSampleValue(ASSAY_ACCESSION_1, SAMPLE_NAME_2), is(""));
-        assertThat(experimentDesign.getSampleValue(ASSAY_ACCESSION_2, SAMPLE_NAME_2), is(OREGON_R));
-        assertThat(experimentDesign.getSampleValue(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
-        assertThat(experimentDesign.getSampleValue(DUMMY, SAMPLE_NAME_1), is(nullValue()));
+        assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, SAMPLE_NAME_1), is(RD_INSTAR_LARVA));
+        assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_2, SAMPLE_NAME_1), is(RD_INSTAR_LARVA));
+        assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, SAMPLE_NAME_2), is(""));
+        assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_2, SAMPLE_NAME_2), is(OREGON_R));
+        assertThat(experimentDesign.getSampleCharacteristicValue(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
+        assertThat(experimentDesign.getSampleCharacteristicValue(DUMMY, SAMPLE_NAME_1), is(nullValue()));
     }
 
     @Test

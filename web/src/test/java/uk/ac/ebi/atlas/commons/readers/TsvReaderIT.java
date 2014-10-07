@@ -89,7 +89,7 @@ public class TsvReaderIT {
         String[] lastLine = result.get(result.size() - 1);
 
         // then
-        assertThat(firstLine, arrayContaining("Run", "Sample Characteristics[Organism]", "Sample Characteristics[age]", "Sample Characteristics[ethnic group]", "Sample Characteristics[organism part]", "Sample Characteristics[sex]", "Factor Values[organism part]", "Factor Value Ontology Term ID[organism part]"));
-        assertThat(lastLine, arrayContaining("ERR030903", "Homo sapiens", "60 years", "Caucasian", "thyroid", "female", "thyroid", "UBERON:0002046"));
+        assertThat(firstLine, arrayContaining("Run", "Sample Characteristics[Organism]", "Sample Characteristics Ontology Term[Organism]", "Sample Characteristics[age]", "Sample Characteristics Ontology Term[age]", "Sample Characteristics[ethnic group]", "Sample Characteristics Ontology Term[ethnic group]", "Sample Characteristics[organism part]", "Sample Characteristics Ontology Term[organism part]", "Sample Characteristics[sex]", "Sample Characteristics Ontology Term[sex]", "Factor Values[organism part]", "Factor Value Ontology Term[organism part]"));
+        assertThat(lastLine, arrayContaining("ERR030903", "Homo sapiens", "NCBITaxon/NCBITaxon:9606", "60 years", "", "Caucasian", "EFO/EFO:0003156", "thyroid", "UBERON/UBERON:0002046", "female", "EFO/EFO:0001265", "thyroid", "UBERON/UBERON:0002046"));
     }
 }

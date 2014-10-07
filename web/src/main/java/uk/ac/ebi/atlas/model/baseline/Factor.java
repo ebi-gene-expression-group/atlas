@@ -26,6 +26,7 @@ import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.SortedSet;
@@ -76,11 +77,15 @@ public class Factor implements Comparable<Factor>, Serializable {
         return type;
     }
 
-    public String getValueOntologyTermId() {
+    public @Nullable String getValueOntologyTermId() {
         return valueOntologyTerm.isPresent() ? valueOntologyTerm.get().id() : null;
     }
 
-        @Override
+    public @Nullable String getValueOntologyTermSourceAndId() {
+        return valueOntologyTerm.isPresent() ? valueOntologyTerm.get().sourceAndId() : null;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hashCode(type, value);
     }
@@ -120,4 +125,7 @@ public class Factor implements Comparable<Factor>, Serializable {
         return result;
     }
 
+    public Optional<OntologyTerm> getValueOntologyTerm() {
+        return valueOntologyTerm;
+    }
 }

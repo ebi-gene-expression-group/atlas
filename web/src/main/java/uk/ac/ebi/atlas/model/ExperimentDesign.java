@@ -30,6 +30,7 @@ import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.*;
 
@@ -55,6 +56,9 @@ public class ExperimentDesign implements Serializable {
     private SortedSet<String> factorHeaders = Sets.newTreeSet();
 
     private Map<String, SampleCharacteristics> samples = Maps.newHashMap();
+
+    // header, value
+    private class SampleCharacteristics extends HashMap<String, SampleCharacteristic> { }
 
     private Map<String, FactorSet> factorSetMap = Maps.newHashMap();
 
@@ -113,17 +117,25 @@ public class ExperimentDesign implements Serializable {
         return Collections.unmodifiableSortedSet(factorHeaders);
     }
 
-
-    public String getSampleValue(String runOrAssay, String sampleHeader) {
-        SampleCharacteristics sampleCharacteristics = this.samples.get(runOrAssay);
-        if (sampleCharacteristics != null) {
-            SampleCharacteristic sampleCharacteristic = sampleCharacteristics.get(sampleHeader);
-            return sampleCharacteristic == null ? null : sampleCharacteristic.value();
-        }
-        return null;
+    public @Nullable String getSampleCharacteristicValue(String runOrAssay, String sampleHeader) {
+        SampleCharacteristic sampleCharacteristic = getSampleCharacteristic(runOrAssay, sampleHeader);
+        return sampleCharacteristic == null ? null : sampleCharacteristic.value();
     }
 
-    public String getFactorValue(String runOrAssay, String factorHeader) {
+    public @Nullable SampleCharacteristic getSampleCharacteristic(String runOrAssay, String sampleHeader) {
+        SampleCharacteristics sampleCharacteristics = this.samples.get(runOrAssay);
+        return (sampleCharacteristics == null) ? null :  sampleCharacteristics.get(sampleHeader);
+    }
+
+    public @Nullable Factor getFactor(String runOrAssay, String factorHeader) {
+        FactorSet factorSet = factorSetMap.get(runOrAssay);
+        if (factorSet == null) {
+            return null;
+        }
+        return factorSet.getFactorByType(Factor.normalize(factorHeader));
+    }
+
+    public @Nullable String getFactorValue(String runOrAssay, String factorHeader) {
         FactorSet factorSet = factorSetMap.get(runOrAssay);
         if (factorSet != null) {
 
@@ -155,15 +167,6 @@ public class ExperimentDesign implements Serializable {
     public FactorSet getFactors(String runOrAssay){
         if(factorSetMap.containsKey(runOrAssay)){
             return factorSetMap.get(runOrAssay);
-        }
-        return null;
-    }
-
-    private String getFactorValueOntologyTermId(String runOrAssay, String factorHeader){
-        FactorSet factorSet = factorSetMap.get(runOrAssay);
-        if(factorSet != null){
-            Factor factor = factorSet.getFactorByType(Factor.normalize(factorHeader));
-            return factor == null ? null : factor.getValueOntologyTermId();
         }
         return null;
     }
@@ -203,42 +206,11 @@ public class ExperimentDesign implements Serializable {
         }
 
         for (String sampleHeader : getSampleHeaders()) {
-            row.add(getSampleValue(runOrAssay, sampleHeader));
+            row.add(getSampleCharacteristicValue(runOrAssay, sampleHeader));
         }
 
         for (String factorHeader : getFactorHeaders()) {
             row.add(getFactorValue(runOrAssay, factorHeader));
-        }
-
-        return row.toArray(new String[row.size()]);
-    }
-
-    public List<String[]> asTableOntologyTermsData() {
-        List<String[]> tableData = Lists.newArrayList();
-        for (String runOrAssay : getAllRunOrAssay()) {
-            tableData.add(composeTableRowWithOntologyTerms(runOrAssay));
-        }
-        return tableData;
-    }
-
-    protected String[] composeTableRowWithOntologyTerms(String runOrAssay) {
-        List<String> row = Lists.newArrayList(runOrAssay);
-
-        String arrayDesign = getArrayDesign(runOrAssay);
-        if (arrayDesign != null) {
-            row.add(arrayDesign);
-        }
-
-        for (String sampleHeader : getSampleHeaders()) {
-            row.add(getSampleValue(runOrAssay, sampleHeader));
-        }
-
-        for (String factorHeader : getFactorHeaders()) {
-            row.add(getFactorValue(runOrAssay, factorHeader));
-        }
-
-        for (String factorHeader: getFactorHeaders()) {
-            row.add(getFactorValueOntologyTermId(runOrAssay, factorHeader));
         }
 
         return row.toArray(new String[row.size()]);
@@ -258,11 +230,6 @@ public class ExperimentDesign implements Serializable {
             }
         }
         return species;
-    }
-
-    // header, value
-    private class SampleCharacteristics extends HashMap<String, SampleCharacteristic> {
-
     }
 
 }

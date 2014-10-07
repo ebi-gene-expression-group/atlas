@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -33,7 +34,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
+import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -79,6 +82,22 @@ public class RnaSeqExperimentDesignMageTabParserIT {
     }
 
     @Test
+    public void characteristicOntologyTerm() throws IOException {
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_GEOD_26284).getExperimentDesign();
+
+        SampleCharacteristic sampleCharacteristic = experimentDesign.getSampleCharacteristic("SRR089334", "karyotype");
+        assert sampleCharacteristic != null;
+
+        assertThat(sampleCharacteristic.value(), is("cancer"));
+        Optional<OntologyTerm> ontologyTermOptional = sampleCharacteristic.ontologyTerm();
+
+        assertThat(ontologyTermOptional.isPresent(), is(true));
+        assertThat(ontologyTermOptional.get().id(), is("EFO_0000616"));
+        assertThat(ontologyTermOptional.get().source(), is("EFO"));
+    }
+
+
+    @Test
     public void testGetSpeciesForAssays() throws IOException {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513).getExperimentDesign();
         Set<String> species = experimentDesign.getSpeciesForAssays(Sets.newHashSet("ERR030886", "ERR030883"));
@@ -98,10 +117,16 @@ public class RnaSeqExperimentDesignMageTabParserIT {
     public void testGetFactors() throws IOException {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513).getExperimentDesign();
 
-        Factor factor = new Factor("organism part", "adipose", OntologyTerm.create("UBERON:0001013"));
+        Factor factor = new Factor("organism part", "adipose");
 
-        assertThat(experimentDesign.getFactors("ERR030880"), contains(factor));
+        FactorSet err030880 = experimentDesign.getFactors("ERR030880");
+        assertThat(err030880, contains(factor));
 
+        Factor organismPart = err030880.iterator().next();
+        Optional<OntologyTerm> valueOntologyTerm = organismPart.getValueOntologyTerm();
+        assertThat(valueOntologyTerm.isPresent(), is(true));
+        assertThat(valueOntologyTerm.get().id(), is("UBERON:0001013"));
+        assertThat(valueOntologyTerm.get().source(), is("UBERON"));
     }
 
     @Test

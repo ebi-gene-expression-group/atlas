@@ -1,4 +1,4 @@
-"Run"	"Sample Characteristics[Organism]"	"Sample Characteristics[age]"	"Sample Characteristics[ethnic group]"	"Sample Characteristics[organism part]"	"Sample Characteristics[sex]"	"Factor Values[organism part]"	"Factor Value Ontology Term ID[organism part]"
+"Run"	"Sample Characteristics[Organism]"	"Sample Characteristics[age]"	"Sample Characteristics[ethnic group]"	"Sample Characteristics[organism part]"	"Sample Characteristics[sex]"	"Factor Values[organism part]"	"Factor Value Ontology Term[organism part]"
 "ERR030856"	"Homo sapiens"			"16 tissues mixture"		"16 tissues mixture"	
 "ERR030857"	"Homo sapiens"			"16 tissues mixture"		"16 tissues mixture"	
 "ERR030858"	"Homo sapiens"			"16 tissues mixture"		"16 tissues mixture"	
