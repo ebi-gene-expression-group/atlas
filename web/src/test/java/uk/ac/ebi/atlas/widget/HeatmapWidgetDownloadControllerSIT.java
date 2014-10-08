@@ -8,7 +8,7 @@ import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.Is.is;
 
-public class HeatmapWidgetDownloadControllerIT extends RestAssuredFixture {
+public class HeatmapWidgetDownloadControllerSIT extends RestAssuredFixture {
 
     @Test
     public void contrastLinesExperiments(){

@@ -98,7 +98,7 @@
 
                 <%--
                 //TODO: extract ensemlb genome launcher config parameters (ensemblDB, columnType etc.) out into separate object
-                //TODO: extract transcript parameters (queryFactorType, selectedFilterFactorsJson) out into separate object
+                //TODO: extract transcript parameters (queryFactorType, serializedFilterFactors) out into separate object
                 //TODO: remove enableGeneLinks parameter
                 //TODO: investigate why showMaPlotButton is always true
                 --%>
@@ -119,7 +119,7 @@
                         enableEnsemblLauncher: ${isMultiExperiment ? false : (empty enableEnsemblLauncher ? true : enableEnsemblLauncher)},
                         showMaPlotButton: true,
                         gseaPlots: ${empty gseaPlots ? 'undefined' : gseaPlots},
-                        selectedFilterFactorsJson: ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"},
+                        serializedFilterFactors: '${serializedFilterFactors != null ? serializedFilterFactors : ""}',
                         toolTipHighlightedWords: genePropertiesTooltipModule.splitIntoWords('${preferences.geneQuery}'),
                         downloadProfilesURL: '${applicationProperties.buildDownloadURL(pageContext.request)}'
                     };

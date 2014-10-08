@@ -22,10 +22,13 @@
 
 package uk.ac.ebi.atlas.widget;
 
+import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWidgetPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithTranscriptBreakdownPage;
 
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
@@ -38,32 +41,38 @@ public class HeatmapWidgetControllerMultiSpeciesExperimentSIT extends SeleniumFi
 
     private static final String GENE_IN_MULTI_SPECIES_EXPERIMENT = "ENSGALG00000006591";
 
-    private HeatmapTableWidgetPage heatmapTablePage;
+    private HeatmapTableWidgetPage subject;
 
     @Before
     public void initPage(){
-        heatmapTablePage = new HeatmapTableWidgetPage(driver, "geneQuery=" + GENE_IN_MULTI_SPECIES_EXPERIMENT + "&propertyType=bioentity_identifier");
-        heatmapTablePage.get();
+        subject = new HeatmapTableWidgetPage(driver, "geneQuery=" + GENE_IN_MULTI_SPECIES_EXPERIMENT + "&propertyType=bioentity_identifier");
+        subject.get();
     }
 
     @Test
     public void header() {
-        assertThat(heatmapTablePage.getAnatomogram().isDisplayed(), is(true));
-        assertThat(heatmapTablePage.getGeneCount(), containsString("of 1"));
+        assertThat(subject.getAnatomogram().isDisplayed(), is(true));
+        assertThat(subject.getGeneCount(), containsString("of 1"));
 
-        String experimentDescription = heatmapTablePage.getExperimentDescription();
+        String experimentDescription = subject.getExperimentDescription();
         assertThat(experimentDescription, startsWith("RNA-seq of poly-A enriched total RNA of brain, liver, kidney, heart and skeletal muscle samples from 5 vertebrate species: mouse, chicken, frog, lizard and pufferfish"));
 
-        String experimentDescriptionLink = heatmapTablePage.getExperimentDescriptionLink();
+        String experimentDescriptionLink = subject.getExperimentDescriptionLink();
         assertThat(experimentDescriptionLink, endsWith("/experiments/E-GEOD-41338?geneQuery=ENSGALG00000006591&serializedFilterFactors=ORGANISM:Gallus%20gallus"));
     }
 
     @Test
     public void heatmap() {
-        assertThat(heatmapTablePage.getGeneNames(), hasSize(1));
+        assertThat(subject.getGeneNames(), hasSize(1));
 
-        String firstGeneName = heatmapTablePage.getGeneNames().get(0);
+        String firstGeneName = subject.getGeneNames().get(0);
         assertThat(firstGeneName, is("TNNI2"));
+    }
+
+    @Test
+    public void transcriptPopup() {
+        HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(0, 4);
+        Assert.assertThat(page.getTranscriptBreakdownTitle(), Matchers.is("Expression Level Breakdown for TNNI2 in skeletal muscle\n(0 out of 0 transcript is expressed):"));
     }
 
 }

@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.transcript;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -34,7 +33,6 @@ import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Inject;
-import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -53,7 +51,6 @@ public class RankedGeneTranscriptsController {
     }
 
 
-    //TODO: remove selectedFilterFactorsJson and only have serializedFilterFactors param
     @RequestMapping(value = "/json/transcripts/{experimentAccession}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -61,13 +58,12 @@ public class RankedGeneTranscriptsController {
                                        @RequestParam("geneId") String geneId,
                                        @RequestParam("factorType") String factorType,
                                        @RequestParam("factorValue") String factorValue,
-                                       @RequestParam(value = "selectedFilterFactorsJson", required=false) String selectedFilterFactorsJson,
                                        @RequestParam(value = "serializedFilterFactors", required=false) String serializedFilterFactors) {
 
         Factor selectedQueryFactor = new Factor(factorType, factorValue);
         FactorSet selectedFactorGroup = new FactorSet().add(selectedQueryFactor);
 
-        Collection<Factor> selectedFilterFactors = extractFilterFactors(selectedFilterFactorsJson, serializedFilterFactors);
+        Collection<Factor> selectedFilterFactors = extractFilterFactors(serializedFilterFactors);
 
         selectedFactorGroup.addAll(selectedFilterFactors);
 
@@ -77,18 +73,13 @@ public class RankedGeneTranscriptsController {
 
     }
 
-    private Collection<Factor> extractFilterFactors(String selectedFilterFactorsJson, String serializedFilterFactors)  {
+    Collection<Factor> extractFilterFactors(String serializedFilterFactors)  {
 
-        if (StringUtils.isEmpty(selectedFilterFactorsJson) && StringUtils.isEmpty(serializedFilterFactors)) {
+        if (StringUtils.isEmpty(serializedFilterFactors)) {
             return Collections.emptyList();
         }
 
-        if (StringUtils.isNotEmpty(serializedFilterFactors)) {
-            return filterFactorsConverter.deserialize(serializedFilterFactors);
-        }
-
-        Type factorsCollectionType = new TypeToken<Collection<Factor>>() {}.getType();
-        return new Gson().fromJson(selectedFilterFactorsJson, factorsCollectionType);
+        return filterFactorsConverter.deserialize(serializedFilterFactors);
     }
 
 }

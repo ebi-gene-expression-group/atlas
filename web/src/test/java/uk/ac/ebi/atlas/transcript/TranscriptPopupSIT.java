@@ -32,9 +32,7 @@ import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TranscriptPopupSIT extends SeleniumFixture {
 
@@ -43,7 +41,7 @@ public class TranscriptPopupSIT extends SeleniumFixture {
     private static final String E_MTAB_513_ACCESSION = "E-MTAB-513";
 
     @Test
-    public void verifyButtonClickFirstProfile_E_MTAB_26284() {
+    public void popupOnExperimentPageWithFilterFactors() {
         HeatmapTableWithTranscriptBreakdownPage subject = new HeatmapTableWithTranscriptBreakdownPage(driver, E_GEOD_26284_ACCESSION);
         subject.get();
         HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(9, 3);
@@ -52,7 +50,7 @@ public class TranscriptPopupSIT extends SeleniumFixture {
     }
 
     @Test
-    public void verifyButtonClickOnProfileExpression_E_MTAB_599() {
+    public void popupOnExperimentPage_E_MTAB_599() {
         HeatmapTableWithTranscriptBreakdownPage subject = new HeatmapTableWithTranscriptBreakdownPage(driver, E_MTAB_599_ACCESSION);
         subject.get();
         HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(2, 3);
@@ -61,7 +59,7 @@ public class TranscriptPopupSIT extends SeleniumFixture {
     }
 
     @Test
-    public void verifyButtonClickOnProfileExpression_E_MTAB_513() {
+    public void popupOnExperimentPage_E_MTAB_513() {
         HeatmapTableWithTranscriptBreakdownPage subject = new HeatmapTableWithTranscriptBreakdownPage(driver, E_MTAB_513_ACCESSION);
         subject.get();
         HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(11, 14);

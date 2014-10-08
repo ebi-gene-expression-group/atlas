@@ -31,7 +31,10 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
+import java.util.Collection;
+
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.mockito.Mockito.when;
 
@@ -45,7 +48,7 @@ public class RankedGeneTranscriptsControllerTest {
     public static final String TRANSCRIPT_1 = "transcript1";
     public static final String TRANSCRIPT_2 = "transcript2";
     public static final String TRANSCRIPT_3 = "transcript3";
-    private static final String SELECTED_FILTER_FACTORS_JSON = "[]";
+    private static final String SERIALIZED_FILTER_FACTORS = "";
 
     @Mock
     private TranscriptContributionsCalculator transcriptContributionsCalculatorMock;
@@ -73,10 +76,21 @@ public class RankedGeneTranscriptsControllerTest {
 
         when(transcriptContributionsCalculatorMock.getTranscriptsContribution(GENE_ID, EXPERIMENT_ACCESSION, factorSet)).thenReturn(transcriptContributions);
 
-        String rankedTranscripts = subject.getRankedTranscripts(EXPERIMENT_ACCESSION, GENE_ID, FACTOR_TYPE, FACTOR_VALUE, SELECTED_FILTER_FACTORS_JSON, "");
+        String rankedTranscripts = subject.getRankedTranscripts(EXPERIMENT_ACCESSION, GENE_ID, FACTOR_TYPE, FACTOR_VALUE, SERIALIZED_FILTER_FACTORS);
         assertThat(rankedTranscripts, containsString("7"));
         assertThat(rankedTranscripts, containsString(TRANSCRIPT_1));
         assertThat(rankedTranscripts, containsString(TRANSCRIPT_2));
         assertThat(rankedTranscripts, containsString(TRANSCRIPT_3));
     }
+
+    @Test
+    public void extractFilterFactors() {
+        String serializedFilterFactors = "RNA:long polyA RNA,CELLULAR_COMPONENT:whole cell";
+        Collection<Factor> factors = subject.extractFilterFactors(serializedFilterFactors);
+
+        Factor factor1 = new Factor("RNA", "long polyA RNA");
+        Factor factor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
+        assertThat(factors, contains(factor1, factor2));
+    }
+
 }

@@ -281,9 +281,9 @@
 
             if (${type.isBaseline()}) {
 
-                var selectedFilterFactorsJson = ${selectedFilterFactorsJson != null ? selectedFilterFactorsJson : "''"};
+                var serializedFilterFactors = '${serializedFilterFactors != null ? serializedFilterFactors : ""}';
 
-                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', selectedFilterFactorsJson, ${geneSet != null ? geneSet : 'false'}, '${base}', '${elementId}', ${hidden != null ? hidden : 'false'});
+                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', serializedFilterFactors, ${geneSet != null ? geneSet : 'false'}, '${base}', '${elementId}', ${hidden != null ? hidden : 'false'});
 
             } else if (${type.isMicroarray()}) {
 

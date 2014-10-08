@@ -146,6 +146,8 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
 
         model.addAttribute("queryFactorName", experimentalFactors.getFactorDisplayName(preferences.getQueryFactorType()));
 
+        model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
+
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = experimentalFactors.getFilteredAssayGroupFactors(selectedFilterFactors);
@@ -281,7 +283,6 @@ public class BaselineExperimentPageController extends BaselineExperimentControll
         }
         model.addAttribute("selectedFilterFactorNamesAndValues", selectedFilterFactorNamesAndValues);
 
-        model.addAttribute("selectedFilterFactorsJson", new Gson().toJson(requestContext.getSelectedFilterFactors()));
     }
 
 }

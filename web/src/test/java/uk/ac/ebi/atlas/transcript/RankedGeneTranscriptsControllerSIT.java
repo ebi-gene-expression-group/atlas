@@ -38,7 +38,7 @@ public class RankedGeneTranscriptsControllerSIT {
 
     @Test
     public void testEMTAB513RankedGeneTranscriptsOneTranscript() {
-        EndPoint subject = new EndPoint(E_MTAB_513_URL_TEMPLATE, "geneId=ENSG00000211855&factorType=ORGANISM_PART&factorValue=leukocyte&selectedFilterFactorsJson=[]");
+        EndPoint subject = new EndPoint(E_MTAB_513_URL_TEMPLATE, "geneId=ENSG00000211855&factorType=ORGANISM_PART&factorValue=leukocyte&serializedFilterFactors=");
 
         ResponseBody responseBody = responseAssertions(subject);
 
@@ -48,8 +48,18 @@ public class RankedGeneTranscriptsControllerSIT {
     }
 
     @Test
+    public void transcriptInMultiFactorExperiment() {
+        EndPoint subject = new EndPoint("/gxa/json/transcripts/E-GEOD-30352", "geneId=ENSMODG00000013804&factorType=ORGANISM_PART&factorValue=liver&serializedFilterFactors=ORGANISM:Monodelphis domestica");
+
+        ResponseBody responseBody = responseAssertions(subject);
+
+        assertThat(responseBody.asString(), is("{\"totalTranscriptsCount\":1,\"expressedTranscriptsCount\":1,\"transcriptExpressions\":{\"ENSMODT00000017575\":91.0}}"));
+
+    }
+
+    @Test
     public void testEMTAB513RankedGeneTranscriptsTwoTranscripts() {
-        EndPoint subject = new EndPoint(E_MTAB_513_URL_TEMPLATE, "geneId=ENSG00000134588&factorType=ORGANISM_PART&factorValue=testis&selectedFilterFactorsJson=[]");
+        EndPoint subject = new EndPoint(E_MTAB_513_URL_TEMPLATE, "geneId=ENSG00000134588&factorType=ORGANISM_PART&factorValue=testis&serializedFilterFactors=");
 
         ResponseBody responseBody = responseAssertions(subject);
 
@@ -60,7 +70,7 @@ public class RankedGeneTranscriptsControllerSIT {
 
     @Test
     public void testEMTAB599RankedGeneTranscriptsOneTranscript() {
-        EndPoint subject = new EndPoint(E_MTAB_599_URL_TEMPLATE, "geneId=ENSMUSG00000064356&factorType=ORGANISM_PART&factorValue=liver&selectedFilterFactorsJson=[]");
+        EndPoint subject = new EndPoint(E_MTAB_599_URL_TEMPLATE, "geneId=ENSMUSG00000064356&factorType=ORGANISM_PART&factorValue=liver");
 
         ResponseBody responseBody = responseAssertions(subject);
 
@@ -71,7 +81,7 @@ public class RankedGeneTranscriptsControllerSIT {
 
     @Test
     public void testEMTAB599RankedGeneTranscriptsTwoTranscripts() {
-        EndPoint subject = new EndPoint(E_MTAB_599_URL_TEMPLATE, "geneId=ENSMUSG00000021789&factorType=ORGANISM_PART&factorValue=lung&selectedFilterFactorsJson=[]");
+        EndPoint subject = new EndPoint(E_MTAB_599_URL_TEMPLATE, "geneId=ENSMUSG00000021789&factorType=ORGANISM_PART&factorValue=lung");
 
         ResponseBody responseBody = responseAssertions(subject);
 

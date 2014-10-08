@@ -119,7 +119,7 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initTranscriptPopupOnHeatMapCellClick(contextRoot, experimentAccession, species, selectedFilterFactorsJson, heatmapCells) {
+    function initTranscriptPopupOnHeatMapCellClick(contextRoot, experimentAccession, species, serializedFilterFactors, heatmapCells) {
         var $transcript = $('#transcript-breakdown');
 
         function buildPlotData(transcriptRates) {
@@ -181,7 +181,7 @@ var heatmapModule = (function ($) {
                     'geneId':geneId,
                     'factorType':factorType,
                     'factorValue':factorValue,
-                    'selectedFilterFactorsJson':JSON.stringify(selectedFilterFactorsJson)
+                    'serializedFilterFactors':serializedFilterFactors
                 },
                 datatype:'json',
                 success:function (data) {
@@ -335,8 +335,8 @@ var heatmapModule = (function ($) {
 
     }
 
-    function initTranscriptBreakdownFancyBox(contextRoot, experimentAccession, species, selectedFilterFactorsJson, heatmapCells) {
-        initTranscriptPopupOnHeatMapCellClick(contextRoot, experimentAccession, species, selectedFilterFactorsJson, heatmapCells);
+    function initTranscriptBreakdownFancyBox(contextRoot, experimentAccession, species, serializedFilterFactors, heatmapCells) {
+        initTranscriptPopupOnHeatMapCellClick(contextRoot, experimentAccession, species, serializedFilterFactors, heatmapCells);
 
         // init tooltips on the actual popup itself
         $('#transcript-breakdown-geneid').tooltip();
@@ -361,7 +361,7 @@ var heatmapModule = (function ($) {
 
         if (experimentAccession !== undefined && parameters.species && !parameters.asGeneSets) {
             var heatmapCells = $heatmap("#heatmap-table").find("td:has(div[data-color])");
-            initTranscriptBreakdownFancyBox(_contextRoot, experimentAccession, parameters.species, parameters.selectedFilterFactorsJson, heatmapCells);
+            initTranscriptBreakdownFancyBox(_contextRoot, experimentAccession, parameters.species, parameters.serializedFilterFactors, heatmapCells);
         }
 
         initDifferentialHeatmapCellsTooltip();
@@ -382,12 +382,12 @@ var heatmapModule = (function ($) {
         }
     }
 
-    function initBaselineHeatmap(experimentAccession, species, selectedFilterFactorsJson, asGeneSets, contextRoot, heatmapElementId, isHidden) {
+    function initBaselineHeatmap(experimentAccession, species, serializedFilterFactors, asGeneSets, contextRoot, heatmapElementId, isHidden) {
         _contextRoot = contextRoot;
         
         initHeatmap(experimentAccession, {
             species:species,
-            selectedFilterFactorsJson:selectedFilterFactorsJson,
+            serializedFilterFactors:serializedFilterFactors,
             asGeneSets:asGeneSets
         }, heatmapElementId, isHidden);
     }

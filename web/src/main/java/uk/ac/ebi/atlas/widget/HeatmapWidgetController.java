@@ -50,6 +50,7 @@ import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -82,6 +83,8 @@ public final class HeatmapWidgetController {
     private final BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder;
 
     private AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
+
+    FilterFactorsConverter filterFactorsConverter = new FilterFactorsConverter();
 
     @Inject
     private HeatmapWidgetController(ExperimentTrader experimentTrader,
@@ -228,7 +231,7 @@ public final class HeatmapWidgetController {
 
         model.addAttribute("queryFactorType", experimentalFactors.getDefaultQueryFactorType());
 
-        loadJSONFilterFactors(species, experiment, model);
+        addFilterFactors(species, experiment, model);
     }
 
     private void prepareModel(HttpServletRequest request, Model model, Experiment experiment) {
@@ -260,7 +263,7 @@ public final class HeatmapWidgetController {
         return "?type=" + experiment.getType().getParent() + organismParameters + (disableGeneLinks ? "&disableGeneLinks=true" : "");
     }
 
-    private void loadJSONFilterFactors(String species, Experiment experiment, Model model) {
+    private void addFilterFactors(String species, Experiment experiment, Model model) {
         String mappedSpecies = experiment.getRequestSpeciesName(species);
         Set<Factor> factors = new HashSet<>();
 
@@ -268,7 +271,8 @@ public final class HeatmapWidgetController {
             Factor factor = new Factor("ORGANISM", mappedSpecies);
             factors.add(factor);
         }
-        model.addAttribute("selectedFilterFactorsJson", new Gson().toJson(factors));
+
+        model.addAttribute("serializedFilterFactors", filterFactorsConverter.serialize(factors));
     }
 
     @ExceptionHandler(value = {ResourceNotFoundException.class})

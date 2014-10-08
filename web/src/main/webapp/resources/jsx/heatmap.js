@@ -786,7 +786,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
 
 
-        var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, selectedFilterFactorsJson, queryFactorType) {
+        var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, serializedFilterFactors, queryFactorType) {
 
             function hasKnownExpression(value) {
                 // true if not blank or UNKNOWN, ie: has a expression with a known value
@@ -820,7 +820,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             id = this.props.id,
                             name = this.props.name;
 
-                        TranscriptPopup.display(contextRoot, experimentAccession, id, name, queryFactorType, factorValue, selectedFilterFactorsJson, undefined, ensemblHost, ensemblSpecies);
+                        TranscriptPopup.display(contextRoot, experimentAccession, id, name, queryFactorType, factorValue, serializedFilterFactors, ensemblHost, ensemblSpecies);
                     }
                 },
 
@@ -853,7 +853,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     }
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.selectedFilterFactorsJson, heatmapConfig.queryFactorType);
+        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.serializedFilterFactors, heatmapConfig.queryFactorType);
 
 
         var CellMultiExperiment = (function (contextRoot, ensemblHost, ensemblSpecies, queryFactorType, isGeneSetQuery, geneId, geneName) {
