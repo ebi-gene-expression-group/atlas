@@ -89,7 +89,7 @@ public class TsvReaderIT {
         String[] lastLine = result.get(result.size() - 1);
 
         // then
-        assertThat(firstLine, arrayContaining("Run", "Sample Characteristics[Organism]", "Sample Characteristics Ontology Term[Organism]", "Sample Characteristics[age]", "Sample Characteristics Ontology Term[age]", "Sample Characteristics[ethnic group]", "Sample Characteristics Ontology Term[ethnic group]", "Sample Characteristics[organism part]", "Sample Characteristics Ontology Term[organism part]", "Sample Characteristics[sex]", "Sample Characteristics Ontology Term[sex]", "Factor Values[organism part]", "Factor Value Ontology Term[organism part]"));
+        assertThat(firstLine, arrayContaining("Run", "Sample Characteristic[Organism]", "Sample Characteristic Ontology Term[Organism]", "Sample Characteristic[age]", "Sample Characteristic Ontology Term[age]", "Sample Characteristic[ethnic group]", "Sample Characteristic Ontology Term[ethnic group]", "Sample Characteristic[organism part]", "Sample Characteristic Ontology Term[organism part]", "Sample Characteristic[sex]", "Sample Characteristic Ontology Term[sex]", "Factor Value[organism part]", "Factor Value Ontology Term[organism part]"));
         assertThat(lastLine, arrayContaining("ERR030903", "Homo sapiens", "NCBITaxon/NCBITaxon:9606", "60 years", "", "Caucasian", "EFO/EFO:0003156", "thyroid", "UBERON/UBERON:0002046", "female", "EFO/EFO:0001265", "thyroid", "UBERON/UBERON:0002046"));
     }
 }

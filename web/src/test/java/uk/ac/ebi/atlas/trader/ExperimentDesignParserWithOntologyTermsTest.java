@@ -82,7 +82,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     private static final String UBERON_0002107 = "UBERON:0002107";
     private static final String ONTOLOGY_TERM_2 = "http://purl.obolibrary.org/obo/" + UBERON_0002107;
 
-    private static final String[] HEADER_LINE = new String[]{ASSAY, ARRAY, "Sample Characteristics[DevelopmentalStage]", "Sample Characteristics[Genotype]", "Sample Characteristics[Organism]", "Sample Characteristics Ontology Term[Organism]", "Sample Characteristics[StrainOrLine]", "Factor Values[GENOTYPE]", "Factor Value Ontology Term[GENOTYPE]"};
+    private static final String[] HEADER_LINE = new String[]{ASSAY, ARRAY, "Sample Characteristic[DevelopmentalStage]", "Sample Characteristic[Genotype]", "Sample Characteristic[Organism]", "Sample Characteristic Ontology Term[Organism]", "Sample Characteristic[StrainOrLine]", "Factor Value[GENOTYPE]", "Factor Value Ontology Term[GENOTYPE]"};
     private static final String[] FIRST_LINE = new String[]{ASSAY_ACCESSION_1, A_AFFY_35, RD_INSTAR_LARVA, "w1118; +; cycCY5", SPECIES_1, SPECIES_1_ONTOLOGY_TERM_SOURCEID, "", CYC_C_MUTANT, ONTOLOGY_TERM_1};
     private static final String[] LAST_LINE = new String[]{ASSAY_ACCESSION_2, A_AFFY_35, RD_INSTAR_LARVA, "wild_type", SPECIES_2, SPECIES_2_ONTOLOGY_TERM_SOURCEID, OREGON_R, "wild_type", ONTOLOGY_TERM_2};
     private static final List<String[]> DATA = Lists.newArrayList(HEADER_LINE, FIRST_LINE, LAST_LINE);

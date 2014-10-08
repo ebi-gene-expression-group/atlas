@@ -1,4 +1,4 @@
-"Assay"	"Array"	"Sample Characteristics[DiseaseState]"	"Sample Characteristics Ontology Term[DiseaseState]"	"Sample Characteristics[Organism]"	"Sample Characteristics Ontology Term[Organism]"	"Sample Characteristics[organism part]"	"Sample Characteristics Ontology Term[organism part]"	"Factor Values[disease state]"	"Factor Value Ontology Term[disease state]"
+"Assay"	"Array"	"Sample Characteristic[DiseaseState]"	"Sample Characteristic Ontology Term[DiseaseState]"	"Sample Characteristic[Organism]"	"Sample Characteristic Ontology Term[Organism]"	"Sample Characteristic[organism part]"	"Sample Characteristic Ontology Term[organism part]"	"Factor Value[disease state]"	"Factor Value Ontology Term[disease state]"
 "Hybridization 1"	"A-MEXP-1551"	"control"		"Homo sapiens"		"blood"		"control"	
 "Hybridization 10"	"A-MEXP-1551"	"sepsis"		"Homo sapiens"		"blood"		"sepsis"	
 "Hybridization 11"	"A-MEXP-1551"	"sepsis"		"Homo sapiens"		"blood"		"sepsis"	

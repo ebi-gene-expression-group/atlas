@@ -66,7 +66,7 @@ public class ExperimentDesignParserTest {
     private static final String SPECIES_1 = "Drosophila melanogaster";
     private static final String SPECIES_2 = "Rabbit";
 
-    private static final String[] HEADER_LINE = new String[]{ASSAY, ARRAY, "Sample Characteristics[DevelopmentalStage]", "Sample Characteristics[Genotype]", "Sample Characteristics[Organism]", "Sample Characteristics[StrainOrLine]", "Factor Values[GENOTYPE]"};
+    private static final String[] HEADER_LINE = new String[]{ASSAY, ARRAY, "Sample Characteristic[DevelopmentalStage]", "Sample Characteristic[Genotype]", "Sample Characteristic[Organism]", "Sample Characteristic[StrainOrLine]", "Factor Value[GENOTYPE]"};
     private static final String[] FIRST_LINE = new String[]{ASSAY_ACCESSION_1, A_AFFY_35, RD_INSTAR_LARVA, "w1118; +; cycCY5", SPECIES_1, "", CYC_C_MUTANT};
     private static final String[] LAST_LINE = new String[]{ASSAY_ACCESSION_2, A_AFFY_35, RD_INSTAR_LARVA, "wild_type", SPECIES_2, OREGON_R, "wild_type"};
     private static final List<String[]> DATA = Lists.newArrayList(HEADER_LINE, FIRST_LINE, LAST_LINE);
@@ -151,13 +151,13 @@ public class ExperimentDesignParserTest {
         matchingString = extractMatchingContent("Assay Bello[assai]", SAMPLE_COLUMN_HEADER_PATTERN);
         MatcherAssertionErrors.assertThat(matchingString, is(nullValue()));
 
-        matchingString = extractMatchingContent(" Sample Characteristics[bello assai] ", SAMPLE_COLUMN_HEADER_PATTERN);
+        matchingString = extractMatchingContent("Sample Characteristic[bello assai] ", SAMPLE_COLUMN_HEADER_PATTERN);
         MatcherAssertionErrors.assertThat(matchingString, is("bello assai"));
 
-        matchingString = extractMatchingContent("Sample Characteristics[bello assai]", SAMPLE_COLUMN_HEADER_PATTERN);
+        matchingString = extractMatchingContent("Sample Characteristic[bello assai]", SAMPLE_COLUMN_HEADER_PATTERN);
         MatcherAssertionErrors.assertThat(matchingString, is("bello assai"));
 
-        matchingString = extractMatchingContent("Sample  Characteristics[bello assai]", SAMPLE_COLUMN_HEADER_PATTERN);
+        matchingString = extractMatchingContent("Sample  Characteristic[bello assai]", SAMPLE_COLUMN_HEADER_PATTERN);
         MatcherAssertionErrors.assertThat(matchingString, is(nullValue()));
     }
 }

@@ -1,4 +1,4 @@
-"Run"	"Sample Characteristics[Organism]"	"Sample Characteristics[age]"	"Sample Characteristics[developmental stage]"	"Sample Characteristics[ecotype]"	"Sample Characteristics[genotype]"	"Factor Values[genotype]"	"Factor Value Ontology Term[genotype]"
+"Run"	"Sample Characteristic[Organism]"	"Sample Characteristic[age]"	"Sample Characteristic[developmental stage]"	"Sample Characteristic[ecotype]"	"Sample Characteristic[genotype]"	"Factor Value[genotype]"	"Factor Value Ontology Term[genotype]"
 "SRR504179"	"Arabidopsis thaliana"	"2-3 weeks"	"seedling"	"Col-0"	"wild type"	"wild type"	
 "SRR504180"	"Arabidopsis thaliana"	"2-3 weeks"	"seedling"	"Col-0"	"wild type"	"wild type"	
 "SRR504181"	"Arabidopsis thaliana"	"2-3 weeks"	"seedling"	"Col-0"	"wild type"	"wild type"	

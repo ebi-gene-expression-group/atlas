@@ -1,8 +1,10 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
+import com.google.common.base.Optional;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
@@ -36,6 +38,12 @@ public class DifferentialExperimentContrastLinesTest {
     private static final String CHARACTERISTIC = "value";
     private static final String FACTOR = "factor";
     private static final String TEST = "test";
+    private static final String HTTP_OBO = "http://purl.obolibrary.org/obo/";
+    private static final String FACTOR_ONTOLOGY_ID1 = "ID:1";
+    public static final Optional<OntologyTerm> FACTOR_ONTOLOGY_TERM1 = OntologyTerm.createOptional(FACTOR_ONTOLOGY_ID1, HTTP_OBO);
+    private static final String FACTOR_ONTOLOGY_ID2 = "ID:2";
+    public static final Optional<OntologyTerm> FACTOR_ONTOLOGY_TERM2 = OntologyTerm.createOptional(FACTOR_ONTOLOGY_ID2, null);
+
 
     private DifferentialExperimentContrastLines subject;
 
@@ -48,14 +56,14 @@ public class DifferentialExperimentContrastLinesTest {
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
         experimentDesign.putSampleCharacteristic(ASSAY1, SAMPLE_HEADER, SAMPLE_VALUE1);
-        experimentDesign.putFactor(ASSAY1, FACTOR_HEADER, FACTOR_VALUE1);
+        experimentDesign.putFactor(ASSAY1, FACTOR_HEADER, FACTOR_VALUE1, FACTOR_ONTOLOGY_TERM1);
         experimentDesign.putSampleCharacteristic(ASSAY2, SAMPLE_HEADER, SAMPLE_VALUE2);
-        experimentDesign.putFactor(ASSAY2, FACTOR_HEADER, FACTOR_VALUE1);
+        experimentDesign.putFactor(ASSAY2, FACTOR_HEADER, FACTOR_VALUE1, FACTOR_ONTOLOGY_TERM1);
 
         experimentDesign.putSampleCharacteristic(ASSAY3, SAMPLE_HEADER, SAMPLE_VALUE3);
-        experimentDesign.putFactor(ASSAY3, FACTOR_HEADER, FACTOR_VALUE2);
+        experimentDesign.putFactor(ASSAY3, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
         experimentDesign.putSampleCharacteristic(ASSAY4, SAMPLE_HEADER, SAMPLE_VALUE4);
-        experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2);
+        experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
 
         Set<Contrast> contrasts = Collections.singleton(contrast1);
         DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", false, Collections.EMPTY_SET, Collections.EMPTY_SET, experimentDesign);
@@ -65,11 +73,11 @@ public class DifferentialExperimentContrastLinesTest {
         Iterator<String[]> lines = subject.iterator();
 
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE2}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, FACTOR, FACTOR_HEADER, FACTOR_VALUE1, ""}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, FACTOR, FACTOR_HEADER, FACTOR_VALUE1, HTTP_OBO + FACTOR_ONTOLOGY_ID1}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE1}));
 
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE4}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, FACTOR, FACTOR_HEADER, FACTOR_VALUE2, ""}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, FACTOR, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_ID2}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3}));
     }
 

@@ -58,7 +58,7 @@ public class MTAB1066ExperimentDesignDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("Assay", "Array", "Sample Characteristics[DevelopmentalStage]", "Sample Characteristics Ontology Term[DevelopmentalStage]", "Sample Characteristics[Genotype]", "Sample Characteristics Ontology Term[Genotype]", "Sample Characteristics[Organism]", "Sample Characteristics Ontology Term[Organism]", "Sample Characteristics[StrainOrLine]", "Sample Characteristics Ontology Term[StrainOrLine]", "Factor Values[genotype]", "Factor Value Ontology Term[genotype]", "Analysed")
+                contains("Assay", "Array", "Sample Characteristic[DevelopmentalStage]", "Sample Characteristic Ontology Term[DevelopmentalStage]", "Sample Characteristic[Genotype]", "Sample Characteristic Ontology Term[Genotype]", "Sample Characteristic[Organism]", "Sample Characteristic Ontology Term[Organism]", "Sample Characteristic[StrainOrLine]", "Sample Characteristic Ontology Term[StrainOrLine]", "Factor Value[genotype]", "Factor Value Ontology Term[genotype]", "Analysed")
         );
 
     }

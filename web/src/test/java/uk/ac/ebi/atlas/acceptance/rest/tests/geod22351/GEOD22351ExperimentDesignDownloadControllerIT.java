@@ -58,7 +58,7 @@ public class GEOD22351ExperimentDesignDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("Run", "Sample Characteristics[Organism]", "Sample Characteristics[age]", "Sample Characteristics[genotype]", "Sample Characteristics[organism part]", "Sample Characteristics[strain]", "Factor Values[genotype]", "Analysed")
+                contains("Run", "Sample Characteristic[Organism]", "Sample Characteristic Ontology Term[Organism]", "Sample Characteristic[age]", "Sample Characteristic Ontology Term[age]", "Sample Characteristic[genotype]", "Sample Characteristic Ontology Term[genotype]", "Sample Characteristic[organism part]", "Sample Characteristic Ontology Term[organism part]", "Sample Characteristic[strain]", "Sample Characteristic Ontology Term[strain]", "Factor Value[genotype]", "Factor Value Ontology Term[genotype]", "Analysed")
         );
 
     }
@@ -70,7 +70,7 @@ public class GEOD22351ExperimentDesignDownloadControllerIT {
         List<String> secondLine = subject.getRowValues(1);
 
         assertThat(secondLine,
-                contains("SRR057596", "Mus musculus", "21 days", "non transgenic", "spinal cord", "C57BL/6;SJL", "non transgenic", "Yes")
+                contains("SRR057596", "Mus musculus", "EFO/http://purl.org/obo/owl/NCBITaxon#NCBITaxon_10090", "21 days", "", "non transgenic", "", "spinal cord", "", "C57BL/6;SJL", "", "non transgenic", "", "Yes")
         );
 
     }
