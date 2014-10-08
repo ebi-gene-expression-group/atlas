@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.acceptance.rest.tests;
 
-import static com.jayway.restassured.RestAssured.get;
 import com.jayway.restassured.response.Response;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 
+import static com.jayway.restassured.RestAssured.get;
 import static org.hamcrest.Matchers.containsString;
 
 public class DifferentialExperimentContrastLinesControllerIT extends RestAssuredFixture {
@@ -17,5 +17,6 @@ public class DifferentialExperimentContrastLinesControllerIT extends RestAssured
         response.then().assertThat().contentType("text/tab-separated-values");
         response.then().assertThat().body(containsString("E-MTAB-698"));
         response.then().assertThat().body(containsString("vomeronasal organ"));
+        response.then().assertThat().body(containsString("EFO/EFO_0001265"));
     }
 }

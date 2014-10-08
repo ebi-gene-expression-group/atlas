@@ -76,7 +76,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     private static final String SPECIES_2_ONTOLOGY_TERM_SOURCEID = HTTP_OBO + SPECIES_2_ONTOLOGY_ID;
     private static final OntologyTerm SPECIES_1_ONTOLOGY_TERM = OntologyTerm.createFromSourceAndId(SPECIES_1_ONTOLOGY_TERM_SOURCEID);
 
-    private static final SampleCharacteristic ASSAY_1_SAMPLE_CHARACTERISTIC_3 = SampleCharacteristic.create(SPECIES_1, Optional.of(SPECIES_1_ONTOLOGY_TERM));
+    private static final SampleCharacteristic ASSAY_1_SAMPLE_CHARACTERISTIC_3 = SampleCharacteristic.create("Organism", SPECIES_1, Optional.of(SPECIES_1_ONTOLOGY_TERM));
 
     private static final String ONTOLOGY_TERM_1 = "ONTOLOGY TERM 1";
     private static final String UBERON_0002107 = "UBERON:0002107";

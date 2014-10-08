@@ -5,6 +5,7 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
+import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
@@ -38,12 +39,17 @@ public class DifferentialExperimentContrastLinesTest {
     private static final String CHARACTERISTIC = "value";
     private static final String FACTOR = "factor";
     private static final String TEST = "test";
-    private static final String HTTP_OBO = "http://purl.obolibrary.org/obo/";
-    private static final String FACTOR_ONTOLOGY_ID1 = "ID:1";
-    public static final Optional<OntologyTerm> FACTOR_ONTOLOGY_TERM1 = OntologyTerm.createOptional(FACTOR_ONTOLOGY_ID1, HTTP_OBO);
-    private static final String FACTOR_ONTOLOGY_ID2 = "ID:2";
-    public static final Optional<OntologyTerm> FACTOR_ONTOLOGY_TERM2 = OntologyTerm.createOptional(FACTOR_ONTOLOGY_ID2, null);
 
+    private static final String HTTP_OBO = "http://purl.obolibrary.org/obo/";
+    private static final String FACTOR_ONTOLOGY_ID1 = "F:1";
+    private static final Optional<OntologyTerm> FACTOR_ONTOLOGY_TERM1 = OntologyTerm.createOptional(FACTOR_ONTOLOGY_ID1, HTTP_OBO);
+    private static final String FACTOR_ONTOLOGY_ID2 = "F:2";
+    private static final Optional<OntologyTerm> FACTOR_ONTOLOGY_TERM2 = OntologyTerm.createOptional(FACTOR_ONTOLOGY_ID2, null);
+
+    private static final String SAMPLE_ONTOLOGY_ID1 = "S:1";
+    private static final Optional<OntologyTerm> SAMPLE_ONTOLOGY_TERM1 = OntologyTerm.createOptional(SAMPLE_ONTOLOGY_ID1, HTTP_OBO);
+    private static final String SAMPLE_ONTOLOGY_ID2 = "S:2";
+    private static final Optional<OntologyTerm> SAMPLE_ONTOLOGY_TERM2 = OntologyTerm.createOptional(SAMPLE_ONTOLOGY_ID2, null);
 
     private DifferentialExperimentContrastLines subject;
 
@@ -55,9 +61,13 @@ public class DifferentialExperimentContrastLinesTest {
 
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
-        experimentDesign.putSampleCharacteristic(ASSAY1, SAMPLE_HEADER, SAMPLE_VALUE1);
+        SampleCharacteristic sampleCharacteristic1 = SampleCharacteristic.create(SAMPLE_HEADER, SAMPLE_VALUE1, SAMPLE_ONTOLOGY_TERM1);
+        SampleCharacteristic sampleCharacteristic2 = SampleCharacteristic.create(SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_ONTOLOGY_TERM2);
+
+
+        experimentDesign.putSampleCharacteristic(ASSAY1, SAMPLE_HEADER, sampleCharacteristic1);
         experimentDesign.putFactor(ASSAY1, FACTOR_HEADER, FACTOR_VALUE1, FACTOR_ONTOLOGY_TERM1);
-        experimentDesign.putSampleCharacteristic(ASSAY2, SAMPLE_HEADER, SAMPLE_VALUE2);
+        experimentDesign.putSampleCharacteristic(ASSAY2, SAMPLE_HEADER, sampleCharacteristic2);
         experimentDesign.putFactor(ASSAY2, FACTOR_HEADER, FACTOR_VALUE1, FACTOR_ONTOLOGY_TERM1);
 
         experimentDesign.putSampleCharacteristic(ASSAY3, SAMPLE_HEADER, SAMPLE_VALUE3);
@@ -72,13 +82,13 @@ public class DifferentialExperimentContrastLinesTest {
 
         Iterator<String[]> lines = subject.iterator();
 
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE2}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_ONTOLOGY_ID2}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, FACTOR, FACTOR_HEADER, FACTOR_VALUE1, HTTP_OBO + FACTOR_ONTOLOGY_ID1}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE1}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE1, HTTP_OBO + SAMPLE_ONTOLOGY_ID1}));
 
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE4}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE4, ""}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, FACTOR, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_ID2}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3, ""}));
     }
 
     @Test
@@ -110,12 +120,12 @@ public class DifferentialExperimentContrastLinesTest {
 
         Iterator<String[]> lines = subject.iterator();
 
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE1}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE1, ""}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, FACTOR, FACTOR_HEADER, FACTOR_VALUE1, ""}));
 
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE4}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE4, ""}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, FACTOR, FACTOR_HEADER, FACTOR_VALUE2, ""}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3, ""}));
     }
 
     @Test
@@ -147,12 +157,12 @@ public class DifferentialExperimentContrastLinesTest {
 
         Iterator<String[]> lines = subject.iterator();
 
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE2}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE2, ""}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, FACTOR, FACTOR_HEADER, FACTOR_VALUE1, ""}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, ""}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, REFERENCE, CHARACTERISTIC, SAMPLE_HEADER, "", ""}));
 
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE4}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE4, ""}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, FACTOR, FACTOR_HEADER, FACTOR_VALUE2, ""}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, CONTRAST_ID, TEST, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3, ""}));
     }
 }

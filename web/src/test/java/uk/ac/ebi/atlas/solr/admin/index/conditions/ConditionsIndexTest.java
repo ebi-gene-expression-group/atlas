@@ -101,7 +101,7 @@ public class ConditionsIndexTest {
         given(baselineExperimentMock.getAssayGroups()).willReturn(new AssayGroups(Collections.singleton(new AssayGroup("g1","a1"))));
         given(baselineExperimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
         given(experimentDesignMock.getFactorValues("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
-        given(experimentDesignMock.getSampleCharacteristics("a1")).willReturn(ImmutableMap.of("sex", "female"));
+        given(experimentDesignMock.getSampleCharacteristicsValues("a1")).willReturn(ImmutableMap.of("sex", "female"));
 
         BaselineConditionsIndex subject = new BaselineConditionsIndex(solrServerMock, new BaselineConditionsBuilder());
 
@@ -123,7 +123,7 @@ public class ConditionsIndexTest {
         given(baselineExperimentMock.getAssayGroups()).willReturn(new AssayGroups(Collections.singleton(new AssayGroup("g1","a1"))));
         given(baselineExperimentMock.getExperimentDesign()).willReturn(experimentDesignMock);
         given(experimentDesignMock.getFactorValues("a1")).willReturn(ImmutableMap.of("ORGANISM_PART", "brain"));
-        given(experimentDesignMock.getSampleCharacteristics("a1")).willReturn(ImmutableMap.of("sex", "female"));
+        given(experimentDesignMock.getSampleCharacteristicsValues("a1")).willReturn(ImmutableMap.of("sex", "female"));
 
         SetMultimap<String, String> ontologyTerms =
                 new ImmutableSetMultimap.Builder<String, String>()

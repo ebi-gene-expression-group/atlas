@@ -101,7 +101,7 @@ public class ExperimentDesignParser {
 
                 Integer sampleValueOntologyTermIndex = sampleValueOntologyTermHeaderIndexes.get(sampleHeader);
                 Optional<OntologyTerm> sampleValueOntologyTerm = createOntologyTermOptional(line, sampleValueOntologyTermIndex);
-                SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleValue, sampleValueOntologyTerm);
+                SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleHeader, sampleValue, sampleValueOntologyTerm);
 
                 experimentDesign.putSampleCharacteristic(runOrAssay, sampleHeader, sampleCharacteristic);
             }

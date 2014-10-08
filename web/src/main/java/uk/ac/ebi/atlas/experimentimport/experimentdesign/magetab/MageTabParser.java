@@ -128,7 +128,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
     private void addCharacteristicToExperimentDesign(ExperimentDesign experimentDesign, String name, CharacteristicsAttribute characteristicsAttribute) {
         String value = cleanValueAndUnitIfNeeded(characteristicsAttribute.getNodeName(), characteristicsAttribute.unit);
         Optional<OntologyTerm> characteristicOntologyTerm = OntologyTerm.createOptional(characteristicsAttribute.termAccessionNumber, characteristicsAttribute.termSourceREF);
-        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(value, characteristicOntologyTerm);
+        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(name, value, characteristicOntologyTerm);
         experimentDesign.putSampleCharacteristic(name, characteristicsAttribute.type, sampleCharacteristic);
     }
 

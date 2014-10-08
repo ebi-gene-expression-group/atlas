@@ -1,13 +1,13 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import com.google.common.collect.ImmutableList;
+import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.Map;
 
 public class DifferentialExperimentContrastLines implements Iterable<String[]> {
 
@@ -35,17 +35,19 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
     }
 
     private void populateSamples(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value){
-        for (Map.Entry<String, String> sample : experiment.getExperimentDesign().getSampleCharacteristics(assayAccession).entrySet()) {
+        for (SampleCharacteristic sample : experiment.getExperimentDesign().getSampleCharacteristics(assayAccession)) {
+            String ontologyTermSourceAndId = sample.getOntologyTermSourceAndId();
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "value",
-                    sample.getKey(), sample.getValue());
+                    sample.header(), sample.value(), ontologyTermSourceAndId != null ? ontologyTermSourceAndId : "");
             result.add(line);
         }
     }
 
     private void populateFactors(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value){
         for (Factor factor : experiment.getExperimentDesign().getFactors(assayAccession)) {
+            String valueOntologyTermSourceAndId = factor.getValueOntologyTermSourceAndId();
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "factor",
-                    factor.getHeader(), factor.getValue(), factor.getValueOntologyTermId() != null ? factor.getValueOntologyTermId() : "");
+                    factor.getHeader(), factor.getValue(), valueOntologyTermSourceAndId != null ? valueOntologyTermSourceAndId : "");
             result.add(line);
         }
 

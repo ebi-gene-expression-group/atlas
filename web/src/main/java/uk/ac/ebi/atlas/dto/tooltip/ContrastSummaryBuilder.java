@@ -46,7 +46,7 @@ public class ContrastSummaryBuilder {
         Multimap<String, String> allRefSampleValues = HashMultimap.create();
         for (String assay : contrast.getReferenceAssayGroup()) {
             extractAllValues(experimentDesign.getFactorValues(assay), allRefFactorValues);
-            extractAllValues(experimentDesign.getSampleCharacteristics(assay), allRefSampleValues);
+            extractAllValues(experimentDesign.getSampleCharacteristicsValues(assay), allRefSampleValues);
             allRefSampleValues.put(ARRAY_DESIGN, experimentDesign.getArrayDesign(assay));
         }
 
@@ -55,7 +55,7 @@ public class ContrastSummaryBuilder {
         Multimap<String, String> allTestSampleValues = HashMultimap.create();
         for (String assay : contrast.getTestAssayGroup()) {
             extractAllValues(experimentDesign.getFactorValues(assay), allTestFactorValues);
-            extractAllValues(experimentDesign.getSampleCharacteristics(assay), allTestSampleValues);
+            extractAllValues(experimentDesign.getSampleCharacteristicsValues(assay), allTestSampleValues);
             allTestSampleValues.put(ARRAY_DESIGN, experimentDesign.getArrayDesign(assay));
 
         }

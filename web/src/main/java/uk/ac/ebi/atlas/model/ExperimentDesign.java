@@ -67,7 +67,7 @@ public class ExperimentDesign implements Serializable {
     private List<String> assayHeaders = Lists.newArrayList();
 
     public void putSampleCharacteristic(String runOrAssay, String sampleCharacteristicHeader, String sampleCharacteristicValue) {
-        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleCharacteristicValue, Optional.<OntologyTerm>absent());
+        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleCharacteristicHeader, sampleCharacteristicValue, Optional.<OntologyTerm>absent());
         putSampleCharacteristic(runOrAssay, sampleCharacteristicHeader, sampleCharacteristic);
     }
 
@@ -171,7 +171,13 @@ public class ExperimentDesign implements Serializable {
         return null;
     }
 
-    public Map<String, String> getSampleCharacteristics(String runOrAssay) {
+    public Collection<SampleCharacteristic> getSampleCharacteristics(String runOrAssay) {
+        return this.samples.get(runOrAssay).values();
+    }
+
+
+    // returns header, value
+    public Map<String, String> getSampleCharacteristicsValues(String runOrAssay) {
         SampleCharacteristics sampleCharacteristics = this.samples.get(runOrAssay);
 
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
@@ -219,7 +225,7 @@ public class ExperimentDesign implements Serializable {
     public Set<String> getSpeciesForAssays(Set<String> assayAccessions) {
         Set<String> species = Sets.newHashSet();
         for (String assayAccession: assayAccessions){
-            Map<String, String> assaySamples = getSampleCharacteristics(assayAccession);
+            Map<String, String> assaySamples = getSampleCharacteristicsValues(assayAccession);
 
             checkNotNull(assaySamples, String.format("Assay accession %s does not exist or has no samples", assayAccession));
 
