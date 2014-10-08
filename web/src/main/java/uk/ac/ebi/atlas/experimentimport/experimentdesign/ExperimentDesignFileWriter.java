@@ -37,9 +37,9 @@ import java.util.SortedSet;
 
 public class ExperimentDesignFileWriter {
 
-    private static final String SAMPLE_CHARACTERISTICS_NAME_HEADER_TEMPLATE = "Sample Characteristics[{0}]";
-    private static final String SAMPLE_CHARACTERISTICS_ONTOLOGY_TERM_HEADER_TEMPLATE = "Sample Characteristics Ontology Term[{0}]";
-    private static final String FACTOR_NAME_HEADER_TEMPLATE = "Factor Values[{0}]";
+    private static final String SAMPLE_CHARACTERISTICS_NAME_HEADER_TEMPLATE = "Sample Characteristic[{0}]";
+    private static final String SAMPLE_CHARACTERISTICS_ONTOLOGY_TERM_HEADER_TEMPLATE = "Sample Characteristic Ontology Term[{0}]";
+    private static final String FACTOR_NAME_HEADER_TEMPLATE = "Factor Value[{0}]";
     private static final String FACTOR_VALUE_ONTOLOGY_TERM_TEMPLATE = "Factor Value Ontology Term[{0}]";
 
     private CSVWriter csvWriter;

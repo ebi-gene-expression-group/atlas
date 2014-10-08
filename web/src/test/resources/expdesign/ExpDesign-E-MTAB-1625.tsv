@@ -1,4 +1,4 @@
-"Run"	"Sample Characteristics[age]"	"Sample Characteristics[cultivar]"	"Sample Characteristics[developmental stage]"	"Sample Characteristics[organism]"	"Sample Characteristics[organism part]"	"Factor Values[growth condition]"	"Factor Values[sampling time]"
+"Run"	"Sample Characteristic[age]"	"Sample Characteristic[cultivar]"	"Sample Characteristic[developmental stage]"	"Sample Characteristic[organism]"	"Sample Characteristic[organism part]"	"Factor Value[growth condition]"	"Factor Value[sampling time]"
 "ERR266221"	"2 weeks"	"Nipponbare"	"seedling, two leaves visible, three leaves visible"	"Oryza sativa Japonica Group"	"shoot axis, vascular leaf"	"300 millimolar sodium chloride"	"5 hours"
 "ERR266222"	"2 weeks"	"Nipponbare"	"seedling, two leaves visible, three leaves visible"	"Oryza sativa Japonica Group"	"shoot axis, vascular leaf"	"normal watering"	"5 hours"
 "ERR266223"	"2 weeks"	"Nipponbare"	"seedling, two leaves visible, three leaves visible"	"Oryza sativa Japonica Group"	"shoot axis, vascular leaf"	"normal watering"	"5 hours"

@@ -87,7 +87,7 @@ public class ExperimentDesignFileWriterTest {
         String[] headers = subject.buildColumnHeaders(ExperimentType.RNASEQ_MRNA_BASELINE, experimentDesign);
 
         print(headers);
-        assertThat(headers, is(new String[]{"Run","Sample Characteristics[CHARACTERISTIC_1]","Sample Characteristics Ontology Term[CHARACTERISTIC_1]","Sample Characteristics[CHARACTERISTIC_2]","Sample Characteristics Ontology Term[CHARACTERISTIC_2]","Sample Characteristics[CHARACTERISTIC_3]","Sample Characteristics Ontology Term[CHARACTERISTIC_3]","Factor Values[FACTOR_1]","Factor Value Ontology Term[FACTOR_1]","Factor Values[FACTOR_2]","Factor Value Ontology Term[FACTOR_2]"}));
+        assertThat(headers, is(new String[]{"Run","Sample Characteristic[CHARACTERISTIC_1]","Sample Characteristic Ontology Term[CHARACTERISTIC_1]","Sample Characteristic[CHARACTERISTIC_2]","Sample Characteristic Ontology Term[CHARACTERISTIC_2]","Sample Characteristic[CHARACTERISTIC_3]","Sample Characteristic Ontology Term[CHARACTERISTIC_3]","Factor Value[FACTOR_1]","Factor Value Ontology Term[FACTOR_1]","Factor Value[FACTOR_2]","Factor Value Ontology Term[FACTOR_2]"}));
     }
 
     @Test
