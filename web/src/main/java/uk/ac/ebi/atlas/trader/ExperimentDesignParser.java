@@ -120,7 +120,7 @@ public class ExperimentDesignParser {
     }
 
     private Optional<OntologyTerm> createOntologyTermOptional(String[] line, Integer ontologyTermIndex) {
-        return ontologyTermIndex == null ? Optional.<OntologyTerm>absent() : Optional.of(OntologyTerm.createFromSourceAndId(line[ontologyTermIndex]));
+        return ontologyTermIndex == null ? Optional.<OntologyTerm>absent() : Optional.of(OntologyTerm.createFromUri(line[ontologyTermIndex]));
     }
 
     protected Map<String, Integer> extractHeaderIndexes(String[] columnHeaders, Pattern columnHeaderPattern) {

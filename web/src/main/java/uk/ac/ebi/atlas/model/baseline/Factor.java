@@ -81,8 +81,8 @@ public class Factor implements Comparable<Factor>, Serializable {
         return valueOntologyTerm.isPresent() ? valueOntologyTerm.get().id() : null;
     }
 
-    public @Nullable String getValueOntologyTermSourceAndId() {
-        return valueOntologyTerm.isPresent() ? valueOntologyTerm.get().sourceAndId() : null;
+    public @Nullable String getValueOntologyTermUri() {
+        return valueOntologyTerm.isPresent() ? valueOntologyTerm.get().uri() : null;
     }
 
     @Override

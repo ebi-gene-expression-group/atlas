@@ -58,8 +58,8 @@ public class ExperimentDesignFileWriterTest {
         subject = new ExperimentDesignFileWriter(csvWriter, ExperimentType.RNASEQ_MRNA_BASELINE);
         experimentDesign = new ExperimentDesign();
 
-        SampleCharacteristic sampleCharacteristic1 = SampleCharacteristic.create("C1", CHAR_1, OntologyTerm.createFromSourceAndId(HTTP_OBO_UBERON_1));
-        SampleCharacteristic sampleCharacteristic2 = SampleCharacteristic.create("C2", CHAR_2, OntologyTerm.createFromSourceAndId(UBERON_2));
+        SampleCharacteristic sampleCharacteristic1 = SampleCharacteristic.create("C1", CHAR_1, OntologyTerm.createFromUri(HTTP_OBO_UBERON_1));
+        SampleCharacteristic sampleCharacteristic2 = SampleCharacteristic.create("C2", CHAR_2, OntologyTerm.createFromUri(UBERON_2));
         SampleCharacteristic sampleCharacteristic3 = SampleCharacteristic.create("C3", CHAR_3);
 
         Optional<OntologyTerm> factorValueOntologyTerm = OntologyTerm.createOptional(F_1, HTTP_OBO);

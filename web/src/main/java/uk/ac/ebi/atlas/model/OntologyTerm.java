@@ -17,19 +17,19 @@ public abstract class OntologyTerm {
         return new AutoValue_OntologyTerm(id, source);
     }
 
-    public static OntologyTerm createFromSourceAndId(String sourceAndId) {
-        String[] sourceAndIdSplit = splitAtFinalSlash(sourceAndId);
-        return create(sourceAndIdSplit[1], sourceAndIdSplit[0]);
+    public static OntologyTerm createFromUri(String uri) {
+        String[] uriSplit = splitAtFinalSlash(uri);
+        return create(uriSplit[1], uriSplit[0]);
     }
 
-    static String[] splitAtFinalSlash(String sourceAndId) {
-        int finalSlash = sourceAndId.lastIndexOf('/');
+    static String[] splitAtFinalSlash(String uri) {
+        int finalSlash = uri.lastIndexOf('/');
 
         if (finalSlash == -1) {
-            return new String[] {null, sourceAndId};
+            return new String[] {null, uri};
         }
 
-        return new String[] {sourceAndId.substring(0, finalSlash + 1), sourceAndId.substring(finalSlash + 1)};
+        return new String[] {uri.substring(0, finalSlash + 1), uri.substring(finalSlash + 1)};
     }
 
     public static Optional<OntologyTerm> createOptional(String id, String source) {
@@ -41,7 +41,7 @@ public abstract class OntologyTerm {
     @Nullable
     public abstract String source();
 
-    public String sourceAndId() {
+    public String uri() {
         return (source() == null) ? id() : addTrailingSlashIfAbsent(source()) + id();
     }
 

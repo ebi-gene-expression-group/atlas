@@ -130,7 +130,7 @@ public class ExperimentDesignFileWriter {
     }
 
     private void addFactorValueOntologyTerm(List<String> row, Factor factor) {
-        String factorValueOntologyTermId = (factor == null) ? null : factor.getValueOntologyTermSourceAndId();
+        String factorValueOntologyTermId = (factor == null) ? null : factor.getValueOntologyTermUri();
         row.add(factorValueOntologyTermId);
     }
 
@@ -140,7 +140,7 @@ public class ExperimentDesignFileWriter {
     }
 
     private void addSampleCharacteristicOntologyTerm(List<String> row, SampleCharacteristic sampleCharacteristic) {
-        String ontologyTermId = (sampleCharacteristic == null) ? null : sampleCharacteristic.getOntologyTermSourceAndId();
+        String ontologyTermId = (sampleCharacteristic == null) ? null : sampleCharacteristic.getOntologyTermUri();
         row.add(ontologyTermId);
     }
 

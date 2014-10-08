@@ -29,8 +29,8 @@ public abstract class SampleCharacteristic {
         return ontologyTerm().isPresent() ? ontologyTerm().get().id() : null;
     }
 
-    public @Nullable String getOntologyTermSourceAndId() {
-        return ontologyTerm().isPresent() ? ontologyTerm().get().sourceAndId() : null;
+    public @Nullable String getOntologyTermUri() {
+        return ontologyTerm().isPresent() ? ontologyTerm().get().uri() : null;
     }
 
 }
