@@ -67,13 +67,13 @@ public class GenePageControllerDifferentialResultsSIT extends SinglePageSelenium
     public void checkContrastSummaryTooltipTableFirstRow() {
         assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 0), is("genotype"));
         assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 1), is("idn2-1"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 2), is("wild type"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 2), is("wild type genotype"));
     }
 
     //This is not working with PhantomJS browser :((
     @Test
     public void checkContrastSummaryTooltipTableLastRow() {
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 4, 0), is("Organism"));
+        assertThat(subject.getContrastSummaryTooltipTableData(0, 4, 0), is("organism"));
         assertThat(subject.getContrastSummaryTooltipTableData(0, 4, 1), is("Arabidopsis thaliana"));
         assertThat(subject.getContrastSummaryTooltipTableData(0, 4, 2), is("Arabidopsis thaliana"));
     }
