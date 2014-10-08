@@ -172,11 +172,11 @@ public class DiffAnalyticsSearchServiceIT {
         assertThat(bioentityExpressions.getTotalNumberOfResults(), is(9790));
 
         // match in any order because order differs between ATLAS3DEV and ATLAS3IT.
-        // order is unpredictable in Oracle when rows have the same order by value.
-        assertThat(Iterables.limit(names, 4), containsInAnyOrder("Lactbl1", "Prok1", "Kdm5d", "Eif2s3y"));
+        // order is unpredictable in Oracle when rows have the same orderby value.
+        assertThat(Iterables.limit(names, 5), containsInAnyOrder("Lactbl1", "Prok1", "Kdm5d", "Ddx3y", "Eif2s3y"));
 
         // match the remaining in order, which will be the same in both ATLAS3DEV and ATLAS3IT
-        assertThat(Iterables.skip(names, 4), contains("Ddx3y", "Uty", "MMP1", "IL12B", "IL6", "PTGS2", "MMP10", "IL6", "FN1", "CCR2", "RNASE6", "CCR2", "CCL20", "TFPI2", "FN1", "CD9", "FCN1", "FGL2", "PI3", "IL1A", "FPR3", "IL23A", "FCGR2B", "CCL19", "IL1A", "CSF3", "Gpr26", "IL36G", "FGL2", "FUCA1", "CXCL13", "CD36", "CD36", "FUCA1", "SAMHD1", "PI3", "IL23A", "PTGS2", "Lrrc55", "TGFBI", "LYZ", "TM4SF1", "MNDA", "Tph1", "CCL20", "SLAMF1"));
+        assertThat(Iterables.skip(names, 5), contains("Uty", "MMP1", "IL12B", "IL6", "PTGS2", "MMP10", "IL6", "FN1", "CCR2", "RNASE6", "CCR2", "CCL20", "TFPI2", "FN1", "CD9", "FCN1", "FGL2", "PI3", "IL1A", "FPR3", "IL23A", "FCGR2B", "CCL19", "IL1A", "CSF3", "Gpr26", "IL36G", "FGL2", "FUCA1", "CXCL13", "CD36", "CD36", "FUCA1", "SAMHD1", "PI3", "IL23A", "PTGS2", "Lrrc55", "TGFBI", "LYZ", "TM4SF1", "MNDA", "Tph1", "CCL20", "SLAMF1"));
     }
 
 
