@@ -140,7 +140,7 @@ public class ExperimentDesignFileWriter {
     }
 
     private void addSampleCharacteristicOntologyTerm(List<String> row, SampleCharacteristic sampleCharacteristic) {
-        String ontologyTermId = (sampleCharacteristic == null) ? null : sampleCharacteristic.getOntologyTermUri();
+        String ontologyTermId = (sampleCharacteristic == null) ? null : sampleCharacteristic.getValueOntologyTermUri();
         row.add(ontologyTermId);
     }
 

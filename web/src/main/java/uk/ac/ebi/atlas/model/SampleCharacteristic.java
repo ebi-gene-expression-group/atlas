@@ -25,11 +25,11 @@ public abstract class SampleCharacteristic {
     public abstract String value();
     public abstract Optional<OntologyTerm> ontologyTerm();
 
-    public @Nullable String getOntologyTermId() {
+    public @Nullable String getValueOntologyTermId() {
         return ontologyTerm().isPresent() ? ontologyTerm().get().id() : null;
     }
 
-    public @Nullable String getOntologyTermUri() {
+    public @Nullable String getValueOntologyTermUri() {
         return ontologyTerm().isPresent() ? ontologyTerm().get().uri() : null;
     }
 

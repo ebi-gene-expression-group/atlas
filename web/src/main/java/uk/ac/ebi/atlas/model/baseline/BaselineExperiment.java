@@ -36,10 +36,10 @@ public class BaselineExperiment extends Experiment {
     private AssayGroups assayGroups;
 
     BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
-                       String description,
-                       String displayName, Set<String> species, Map<String, String> speciesMapping,
-                       boolean hasExtraInfoFile,
-                       Set<String> pubMedIds, ExperimentDesign experimentDesign, AssayGroups assayGroups) {
+                       String description, String displayName,
+                       Set<String> species, Map<String, String> speciesMapping,
+                       boolean hasExtraInfoFile, Set<String> pubMedIds,
+                       ExperimentDesign experimentDesign, AssayGroups assayGroups) {
 
         super(ExperimentType.RNASEQ_MRNA_BASELINE, accession, lastUpdate, displayName, description,
                 hasExtraInfoFile, species, speciesMapping, pubMedIds, experimentDesign);

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web.controllers.rest.api;
+package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import com.google.common.base.Joiner;
 import org.springframework.context.annotation.Scope;
@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.thirdpartyintegration.ebeye.DifferentialExperimentContrastLines;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
@@ -25,12 +24,12 @@ import java.util.*;
  */
 @Controller
 @Scope("request")
-public class DifferentialExperimentContrastLinesController {
+public class DifferentialExperimentContrastsTsvController {
 
     private ExperimentTrader experimentTrader;
 
     @Inject
-    public DifferentialExperimentContrastLinesController(ExperimentTrader experimentTrader) {
+    public DifferentialExperimentContrastsTsvController(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
     }
 

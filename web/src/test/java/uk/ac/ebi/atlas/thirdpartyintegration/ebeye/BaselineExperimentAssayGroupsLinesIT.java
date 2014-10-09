@@ -36,15 +36,27 @@ public class BaselineExperimentAssayGroupsLinesIT {
 
         Iterator<String[]> lines = subject.iterator();
 
-        String[] result = lines.next();
+        String[] line1 = lines.next();
 
         assertThat(lines.hasNext(), is(true));
-        assertThat(result.length, is(5));
-        assertThat(result[0], is("E-GEOD-30352"));
-        assertThat(result[1], is("g37"));
-        assertThat(result[2], is("value"));
-        assertThat(result[3], is("biosource provider"));
-        assertThat(result[4], is("Opossum colonies from the Museum of Natural History, Berlin, Germany"));
+        assertThat(line1.length, is(6));
+        assertThat(line1[0], is("E-GEOD-30352"));
+        assertThat(line1[1], is("g37"));
+        assertThat(line1[2], is("value"));
+        assertThat(line1[3], is("biosource provider"));
+        assertThat(line1[4], is("Opossum colonies from the Museum of Natural History, Berlin, Germany"));
+        assertThat(line1[5], is(""));
+
+        String[] line2 = lines.next();
+
+        assertThat(lines.hasNext(), is(true));
+        assertThat(line2.length, is(6));
+        assertThat(line2[0], is("E-GEOD-30352"));
+        assertThat(line2[1], is("g37"));
+        assertThat(line2[2], is("value"));
+        assertThat(line2[3], is("sex"));
+        assertThat(line2[4], is("female"));
+        assertThat(line2[5], is("NCBITaxon/NCBITaxon:13616"));
     }
 
 }

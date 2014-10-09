@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.acceptance.rest.tests;
+package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import com.jayway.restassured.response.Response;
 import org.junit.Test;
@@ -7,7 +7,7 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import static com.jayway.restassured.RestAssured.get;
 import static org.hamcrest.Matchers.containsString;
 
-public class DifferentialExperimentContrastLinesControllerIT extends RestAssuredFixture {
+public class DifferentialExperimentContrastsTsvControllerSIT extends RestAssuredFixture {
 
     @Test
     public void contrastLinesExperiments(){

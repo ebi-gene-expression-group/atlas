@@ -4,12 +4,12 @@ package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
+import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.Map;
 
 public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
 
@@ -34,9 +34,9 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
     }
 
     private void populateSamples(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup){
-        for (Map.Entry<String, String> sample : experiment.getExperimentDesign().getSampleCharacteristicsValues(assayAccession).entrySet()) {
+        for (SampleCharacteristic sample : experiment.getExperimentDesign().getSampleCharacteristics(assayAccession)) {
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), assayGroup.getId(), "value",
-                    sample.getKey(), sample.getValue());
+                    sample.header(), sample.value(), sample.getValueOntologyTermUri() != null ? sample.getValueOntologyTermUri() : "");
             result.add(line);
         }
     }
@@ -44,7 +44,7 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
     private void populateFactors(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup){
         for (Factor factor : experiment.getExperimentDesign().getFactors(assayAccession)) {
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), assayGroup.getId(), "factor",
-                    factor.getHeader(), factor.getValue(), factor.getValueOntologyTermId() != null ? factor.getValueOntologyTermId() : "");
+                    factor.getHeader(), factor.getValue(), factor.getValueOntologyTermUri() != null ? factor.getValueOntologyTermUri() : "");
             result.add(line);
         }
     }

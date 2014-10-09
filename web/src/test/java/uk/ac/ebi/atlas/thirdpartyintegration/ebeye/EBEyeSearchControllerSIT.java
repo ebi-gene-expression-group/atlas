@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.rest.tests;
+package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
@@ -31,7 +31,7 @@ import uk.ac.ebi.atlas.experiments.NumberOfExperiments;
 import static com.jayway.restassured.RestAssured.get;
 import static org.hamcrest.Matchers.*;
 
-public class EBEyeSearchControllerIT extends RestAssuredFixture {
+public class EBEyeSearchControllerSIT extends RestAssuredFixture {
 
     @Test
     public void experiments() {
