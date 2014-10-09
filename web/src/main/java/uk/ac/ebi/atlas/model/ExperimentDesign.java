@@ -23,10 +23,7 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
@@ -55,11 +52,13 @@ public class ExperimentDesign implements Serializable {
 
     private SortedSet<String> factorHeaders = Sets.newTreeSet();
 
+    // assay, SampleCharacteristics
     private Map<String, SampleCharacteristics> samples = Maps.newHashMap();
 
     // header, value
     private class SampleCharacteristics extends HashMap<String, SampleCharacteristic> { }
 
+    // assay, factors
     private Map<String, FactorSet> factorSetMap = Maps.newHashMap();
 
     private Map<String, String> arrayDesigns = Maps.newHashMap();
@@ -143,6 +142,45 @@ public class ExperimentDesign implements Serializable {
             return factor == null ? null : factor.getValue();
         }
         return null;
+    }
+
+
+    public ImmutableSetMultimap<String, String> getAllOntologyTermIdsByAssayAccession() {
+        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
+
+        addFactorOntologyTerms(builder);
+        addCharacteristicOntologyTerms(builder);
+
+        return builder.build();
+    }
+
+    private void addCharacteristicOntologyTerms(ImmutableSetMultimap.Builder<String, String> builder) {
+        for (Map.Entry<String, SampleCharacteristics> sampleEntry : samples.entrySet()) {
+            String runOrAssay = sampleEntry.getKey();
+            SampleCharacteristics sampleCharacteristics = sampleEntry.getValue();
+
+            for (SampleCharacteristic sampleCharacteristic : sampleCharacteristics.values()) {
+                Optional<OntologyTerm> valueOntologyTerm = sampleCharacteristic.valueOntologyTerm();
+                if (valueOntologyTerm.isPresent()) {
+                    builder.put(runOrAssay, valueOntologyTerm.get().id());
+                }
+            }
+
+        }
+    }
+
+    private void addFactorOntologyTerms(ImmutableSetMultimap.Builder<String, String> builder) {
+        for (Map.Entry<String, FactorSet> factorSetEntry : factorSetMap.entrySet()) {
+            String runOrAssay = factorSetEntry.getKey();
+            FactorSet factorSet = factorSetEntry.getValue();
+
+            for (Factor factor : factorSet) {
+                Optional<OntologyTerm> valueOntologyTerm = factor.getValueOntologyTerm();
+                if (valueOntologyTerm.isPresent()) {
+                    builder.put(runOrAssay, valueOntologyTerm.get().id());
+                }
+            }
+        }
     }
 
     /**

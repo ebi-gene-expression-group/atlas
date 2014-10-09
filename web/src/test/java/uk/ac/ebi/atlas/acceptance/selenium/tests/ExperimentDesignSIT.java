@@ -30,7 +30,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignTablePage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class ExperimentDesignIT extends SinglePageSeleniumFixture {
+public class ExperimentDesignSIT extends SinglePageSeleniumFixture {
 
     private ExperimentDesignTablePage subject;
 

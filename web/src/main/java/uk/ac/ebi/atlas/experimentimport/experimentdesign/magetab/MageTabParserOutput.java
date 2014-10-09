@@ -3,23 +3,24 @@ package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 import com.google.common.collect.SetMultimap;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
+//TODO: remove this class, because we can get OntologyTermsByAssayAccession from experimentDesign
 public class MageTabParserOutput {
 
-    private final SetMultimap<String, String> characteristicsOntologyTerms;
+    private final SetMultimap<String, String> ontologyTermIdsByAssayAccession;
     private ExperimentDesign experimentDesign;
 
-    MageTabParserOutput(ExperimentDesign experimentDesign, SetMultimap<String, String> characteristicsOntologyTerms) {
+    MageTabParserOutput(ExperimentDesign experimentDesign, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
         this.experimentDesign = experimentDesign;
-        this.characteristicsOntologyTerms = characteristicsOntologyTerms;
+        this.ontologyTermIdsByAssayAccession = ontologyTermIdsByAssayAccession;
     }
 
     public ExperimentDesign getExperimentDesign() {
         return experimentDesign;
     }
 
-    // ontology terms by assay group ID
-    public SetMultimap<String, String> getCharacteristicsOntologyTerms() {
-        return characteristicsOntologyTerms;
+
+    public SetMultimap<String, String> getOntologyTermIdsByAssayAccession() {
+        return ontologyTermIdsByAssayAccession;
     }
 
 }

@@ -142,7 +142,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
         assertThat(experimentDesign.getSampleCharacteristicValue(DUMMY, CHARACTERISTIC_1), is(nullValue()));
 
         SampleCharacteristic sampleCharacteristic = experimentDesign.getSampleCharacteristic(ASSAY_ACCESSION_1, CHARACTERISTIC_3);
-        Optional<OntologyTerm> ontologyTermOptional = sampleCharacteristic.ontologyTerm();
+        Optional<OntologyTerm> ontologyTermOptional = sampleCharacteristic.valueOntologyTerm();
         assertThat(sampleCharacteristic, is(ASSAY_1_SAMPLE_CHARACTERISTIC_3));
         assertThat(ontologyTermOptional.isPresent(), is(true));
         assertThat(ontologyTermOptional.get().id(), is(SPECIES_1_ONTOLOGY_ID));

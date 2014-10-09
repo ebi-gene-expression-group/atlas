@@ -89,7 +89,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
-        SetMultimap<String, String> characteristicsOntologyTerms = HashMultimap.create();
+        SetMultimap<String, String> ontologyTermIdsByAssayAccession = HashMultimap.create();
 
         for (NamedSdrfNode<T> namedSdrfNode : namedSdrfNodes) {
             SourceNode sourceNode = findFirstUpstreamSourceNode(namedSdrfNode);
@@ -98,7 +98,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
                 addCharacteristicToExperimentDesign(experimentDesign, namedSdrfNode.getName(), characteristicsAttribute);
 
                 if (!Strings.isNullOrEmpty(characteristicsAttribute.termAccessionNumber)) {
-                    characteristicsOntologyTerms.put(namedSdrfNode.getName(), characteristicsAttribute.termAccessionNumber);
+                    ontologyTermIdsByAssayAccession.put(namedSdrfNode.getName(), characteristicsAttribute.termAccessionNumber);
                 }
             }
 
@@ -107,7 +107,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
         addArrays(experimentDesign, namedSdrfNodes);
 
-        return new MageTabParserOutput(experimentDesign, characteristicsOntologyTerms);
+        return new MageTabParserOutput(experimentDesign, ontologyTermIdsByAssayAccession);
     }
 
     private ImmutableMap<String, String> buildFactorNameToTypeMap(IDF idf) {
@@ -125,11 +125,11 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         return builder.build();
     }
 
-    private void addCharacteristicToExperimentDesign(ExperimentDesign experimentDesign, String name, CharacteristicsAttribute characteristicsAttribute) {
+    private void addCharacteristicToExperimentDesign(ExperimentDesign experimentDesign, String runOrAssay, CharacteristicsAttribute characteristicsAttribute) {
         String value = cleanValueAndUnitIfNeeded(characteristicsAttribute.getNodeName(), characteristicsAttribute.unit);
         Optional<OntologyTerm> characteristicOntologyTerm = OntologyTerm.createOptional(characteristicsAttribute.termAccessionNumber, characteristicsAttribute.termSourceREF);
-        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(name, value, characteristicOntologyTerm);
-        experimentDesign.putSampleCharacteristic(name, characteristicsAttribute.type, sampleCharacteristic);
+        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(runOrAssay, value, characteristicOntologyTerm);
+        experimentDesign.putSampleCharacteristic(runOrAssay, characteristicsAttribute.type, sampleCharacteristic);
     }
 
     private SourceNode findFirstUpstreamSourceNode(NamedSdrfNode<T> namedSdrfNode) {
@@ -148,6 +148,8 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
         String compoundFactorName = null;
         String compoundFactorValueOntologyTermAccessionNumber = null;
         String compoundFactorValueOntologyTermSourceRef = null;
+
+        String runOrAssay = namedSdrfNode.getName();
 
         for (FactorValueAttribute factorValueAttribute : getFactorAttributes(namedSdrfNode)) {
 
@@ -183,14 +185,14 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
             String factorType = factorNamesToType.get(factorName);
             Optional<OntologyTerm> ontologyTerm = OntologyTerm.createOptional(factorValueOntologyTermAccessionNumber, factorValueOntologyTermSourceRef);
-            experimentDesign.putFactor(namedSdrfNode.getName(), factorType, factorValue, ontologyTerm);
+            experimentDesign.putFactor(runOrAssay, factorType, factorValue, ontologyTerm);
         }
 
         //Add compound factor in a case there was no dose corresponding to it
         if (StringUtils.isNotEmpty(compoundFactorName) && StringUtils.isNotEmpty(compoundFactorValue)) {
             String compoundFactorType = factorNamesToType.get(compoundFactorName);
             Optional<OntologyTerm> ontologyTerm = OntologyTerm.createOptional(compoundFactorValueOntologyTermAccessionNumber, compoundFactorValueOntologyTermSourceRef);
-            experimentDesign.putFactor(namedSdrfNode.getName(), compoundFactorType, compoundFactorValue, ontologyTerm);
+            experimentDesign.putFactor(runOrAssay, compoundFactorType, compoundFactorValue, ontologyTerm);
         }
     }
 

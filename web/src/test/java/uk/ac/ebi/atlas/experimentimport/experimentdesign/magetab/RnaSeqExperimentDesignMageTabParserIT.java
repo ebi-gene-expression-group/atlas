@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -89,11 +90,24 @@ public class RnaSeqExperimentDesignMageTabParserIT {
         assert sampleCharacteristic != null;
 
         assertThat(sampleCharacteristic.value(), is("cancer"));
-        Optional<OntologyTerm> ontologyTermOptional = sampleCharacteristic.ontologyTerm();
+        Optional<OntologyTerm> ontologyTermOptional = sampleCharacteristic.valueOntologyTerm();
 
         assertThat(ontologyTermOptional.isPresent(), is(true));
         assertThat(ontologyTermOptional.get().id(), is("EFO_0000616"));
         assertThat(ontologyTermOptional.get().source(), is("EFO"));
+    }
+
+    @Test
+    public void allOntologyTerms() throws IOException {
+        ExperimentDesign experimentDesign = subject.parse("E-GEOD-30352").getExperimentDesign();
+
+        ImmutableSetMultimap<String, String> allOntologyTermIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
+        String characteristicOntologyTermIdSex = "NCBITaxon:13616";
+        String characteristicOntologyTermIdOrganismPart = "EFO:0001265";
+        String factorOntologyTermIdOrganismPart = "UBERON:0000948";
+
+        assertThat(allOntologyTermIdsByAssayAccession.get("SRR306747"), containsInAnyOrder(characteristicOntologyTermIdSex, characteristicOntologyTermIdOrganismPart, factorOntologyTermIdOrganismPart));
+
     }
 
 
@@ -133,7 +147,7 @@ public class RnaSeqExperimentDesignMageTabParserIT {
     public void asTableDataShouldReturnTheRightStuff() throws IOException {
         MageTabParserOutput mageTabParserOutput = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513);
         ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
-        SetMultimap<String, String> ontologyTerms = mageTabParserOutput.getCharacteristicsOntologyTerms();
+        SetMultimap<String, String> ontologyTerms = mageTabParserOutput.getOntologyTermIdsByAssayAccession();
 
         assertThat(experimentDesign.asTableData().size(), is(48));
         assertThat(experimentDesign.asTableData().get(0), arrayContaining("ERR030856","Homo sapiens",null,null,"16 tissues mixture",null,"16 tissues mixture"));

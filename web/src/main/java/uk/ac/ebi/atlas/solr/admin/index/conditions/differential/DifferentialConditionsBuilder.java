@@ -40,14 +40,14 @@ import java.util.Set;
 @Scope("singleton")
 public class DifferentialConditionsBuilder extends ConditionsBuilder<DifferentialExperiment> {
 
-    public Collection<DifferentialCondition> buildProperties(DifferentialExperiment experiment, SetMultimap<String, String> ontologyTerms) {
+    public Collection<DifferentialCondition> buildProperties(DifferentialExperiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
 
         Collection<DifferentialCondition> conditions = Lists.newLinkedList();
 
         Set<Contrast> contrasts = experiment.getContrasts();
         for (Contrast contrast : contrasts) {
-            conditions.addAll(buildPropertiesForAssayGroup(experiment, contrast.getId(), contrast.getReferenceAssayGroup(), ontologyTerms));
-            conditions.addAll(buildPropertiesForAssayGroup(experiment, contrast.getId(), contrast.getTestAssayGroup(), ontologyTerms));
+            conditions.addAll(buildPropertiesForAssayGroup(experiment, contrast.getId(), contrast.getReferenceAssayGroup(), ontologyTermIdsByAssayAccession));
+            conditions.addAll(buildPropertiesForAssayGroup(experiment, contrast.getId(), contrast.getTestAssayGroup(), ontologyTermIdsByAssayAccession));
         }
 
         return conditions;
@@ -55,12 +55,12 @@ public class DifferentialConditionsBuilder extends ConditionsBuilder<Differentia
 
     protected Collection<DifferentialCondition> buildPropertiesForAssayGroup(DifferentialExperiment experiment,
                                                                              String contrastId,
-                                                                             AssayGroup assayGroup, SetMultimap<String, String> ontologyTerms) {
+                                                                             AssayGroup assayGroup, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
 
         Collection<DifferentialCondition> conditions = Sets.newHashSet();
 
         for (String assayAccession : assayGroup) {
-            Set<String> values = collectAssayProperties(experiment.getExperimentDesign(), assayAccession, ontologyTerms);
+            Set<String> values = collectAssayProperties(experiment.getExperimentDesign(), assayAccession, ontologyTermIdsByAssayAccession);
 
             DifferentialCondition differentialCondition = new DifferentialCondition(experiment.getAccession(),
                     assayGroup.getId(), contrastId, values);

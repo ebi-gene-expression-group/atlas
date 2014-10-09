@@ -17,13 +17,13 @@ public abstract class ConditionsBuilder<T extends Experiment> {
 
     public static final String ERROR_MESSAGE_TEMPLATE = "No %s found for assay accession '%s'. Check assays defined in configuration.xml match Assay Name/Scan Name in the SDRF.";
 
-    public abstract Collection buildProperties(T experiment, SetMultimap<String, String> ontologyTerms);
+    public abstract Collection buildProperties(T experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession);
 
-    protected Set<String> collectAssayProperties(ExperimentDesign experimentDesign, String assayAccession, SetMultimap<String, String> ontologyTerms) {
+    protected Set<String> collectAssayProperties(ExperimentDesign experimentDesign, String assayAccession, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
 
         Map<String, String> factors = experimentDesign.getFactorValues(assayAccession);
         Map<String, String> samples = experimentDesign.getSampleCharacteristicsValues(assayAccession);
-        Set<String> terms = ontologyTerms.get(assayAccession);
+        Set<String> terms = ontologyTermIdsByAssayAccession.get(assayAccession);
 
         checkNotNull(factors, ERROR_MESSAGE_TEMPLATE, "factors", assayAccession);
         checkNotNull(samples, ERROR_MESSAGE_TEMPLATE, "samples", assayAccession);

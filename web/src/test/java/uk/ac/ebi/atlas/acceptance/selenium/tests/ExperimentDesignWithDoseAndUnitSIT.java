@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignTablePage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
-public class ExperimentDesignWithDoseAndUnitIT extends SinglePageSeleniumFixture {
+public class ExperimentDesignWithDoseAndUnitSIT extends SinglePageSeleniumFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MEXP-1276";
 
