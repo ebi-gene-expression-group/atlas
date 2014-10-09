@@ -174,6 +174,22 @@ about how to use the genome browsers, please see the relevant documentation for
 <a href="http://www.ensembl.org/info/index.html">Ensembl</a> or <a
 	href="http://ensemblgenomes.org/info/faqs">Ensembl Genomes</a>.</p>
 
+
+<h2><a name="clustering">Hierarchical clustering visualisation</a></h2>
+
+<p>Click the <img src="resources/images/help/cluster_button_4help.png"
+alt="hierarchical clustering" /> button to see the results of hierarchical
+clustering using the top 100 most variable genes across all conditions (e.g.
+tissues, strains, developmental stages, etc) in the experiment. Clustering is
+performed using the <a
+href="http://cran.r-project.org/web/packages/gplots/gplots.pdf#page.21">heatmap.2</a>
+function from the <a
+href="http://cran.r-project.org/web/packages/gplots/">gplots</a> package in <a
+href="http://cran.r-project.org">R</a>. For more information about this method,
+please refer to the <a
+href="http://cran.r-project.org/web/packages/gplots/gplots.pdf">package
+documentation</a>.
+
 <h2><a name="anatomogram">Anatomogram</a></h2>
 
 <p>The anatomogram provides a visualisation of the tissues studied in a given experiment. Mouseover a tissue in the anatomogram to highlight the corresponding column in the heatmap table.</p>
@@ -268,6 +284,7 @@ button" src="resources/images/help/am_btn.png" align="bottom" /> button.</p>
 			<li><a href="help/baseline-atlas.html#ensembl">Visualising baseline expression at Ensembl</a></li>
 		</ul>
 	</li>
+	<li><a href="help/baseline-atlas.html#clustering">Hierarchical clustering visualisation</a></li>
 	<li><a href="help/baseline-atlas.html#anatomogram">Anatomogram</a></li>
 	<li><a href="help/baseline-atlas.html#download">Downloading query results</a></li>
 	<li><a href="help/baseline-atlas.html#exptDesign">Experiment design page</a>
