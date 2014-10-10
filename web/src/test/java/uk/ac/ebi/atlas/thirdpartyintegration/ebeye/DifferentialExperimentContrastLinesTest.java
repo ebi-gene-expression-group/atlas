@@ -36,7 +36,7 @@ public class DifferentialExperimentContrastLinesTest {
     private static final String SAMPLE_VALUE3 = "SAMPLE_VALUE3";
     private static final String SAMPLE_VALUE4 = "SAMPLE_VALUE4";
     private static final String REFERENCE = "reference";
-    private static final String CHARACTERISTIC = "value";
+    private static final String CHARACTERISTIC = "characteristic";
     private static final String FACTOR = "factor";
     private static final String TEST = "test";
 

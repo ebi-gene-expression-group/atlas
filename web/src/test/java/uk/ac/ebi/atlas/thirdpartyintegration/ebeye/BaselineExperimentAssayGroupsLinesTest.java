@@ -33,7 +33,7 @@ public class BaselineExperimentAssayGroupsLinesTest {
     private static final String SAMPLE_VALUE1 = "SAMPLE_VALUE1";
     private static final String SAMPLE_VALUE2 = "SAMPLE_VALUE2";
     private static final String SAMPLE_VALUE3 = "SAMPLE_VALUE3";
-    private static final String CHARACTERISTIC = "value";
+    private static final String CHARACTERISTIC = "characteristic";
     private static final String FACTOR = "factor";
 
     private static final String HTTP_OBO = "http://purl.obolibrary.org/obo/";

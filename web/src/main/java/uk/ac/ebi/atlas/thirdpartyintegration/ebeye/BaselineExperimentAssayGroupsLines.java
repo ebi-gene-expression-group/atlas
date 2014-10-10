@@ -35,7 +35,7 @@ public class BaselineExperimentAssayGroupsLines implements Iterable<String[]> {
 
     private void populateSamples(BaselineExperiment experiment, String assayAccession, AssayGroup assayGroup){
         for (SampleCharacteristic sample : experiment.getExperimentDesign().getSampleCharacteristics(assayAccession)) {
-            ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), assayGroup.getId(), "value",
+            ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), assayGroup.getId(), "characteristic",
                     sample.header(), sample.value(), sample.getValueOntologyTermUri() != null ? sample.getValueOntologyTermUri() : "");
             result.add(line);
         }
