@@ -6,8 +6,6 @@ import java.text.MessageFormat;
 
 public class QCReportPage extends TablePage {
 
-    public static String DEFAULT_EXPERIMENT_ACCESSION = "E-MTAB-1066";
-
     private static final String PAGE_URI_TEMPLATE = "/gxa/experiments/{0}/qc/{1}/index.html";
 
     private final String experimentAccession;

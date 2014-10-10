@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web;
+package uk.ac.ebi.atlas.experimentpage.fastqc;
 
 
 import java.util.ArrayList;

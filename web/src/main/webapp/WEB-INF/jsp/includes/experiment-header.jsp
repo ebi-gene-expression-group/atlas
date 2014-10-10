@@ -44,7 +44,7 @@
                             <c:forEach items="${qcArrayDesigns}" var="arrayDesign" varStatus="loop">
 
                                 <c:if test="${loop.first}">
-                                    <%--@elvariable id="qcReportUtil" type="uk.ac.ebi.atlas.utils.QCReportUtil"--%>
+                                    <%--@elvariable id="qcReportUtil" type="uk.ac.ebi.atlas.experimentpage.qc.QCReportUtil"--%>
                                     <c:set var="hasQcReport" value="${qcReportUtil.hasQCReport(experimentAccession, arrayDesign)}"/>
 
                                     <c:if test="${hasQcReport}">
@@ -62,7 +62,7 @@
                         </c:if>
 
 
-                        <%--@elvariable id="fastQReportUtil" type="uk.ac.ebi.atlas.utils.FastQCReportUtil"--%>
+                        <%--@elvariable id="fastQReportUtil" type="uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil"--%>
                         <c:set var="hasFastQcReport" value="${fastQReportUtil.hasFastQC(experimentAccession, species)}"/>
                         <c:if test="${hasFastQcReport && qcArrayDesigns==null}" >
                             <td>

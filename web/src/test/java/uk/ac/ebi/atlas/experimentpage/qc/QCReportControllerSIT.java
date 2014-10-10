@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.acceptance.rest.tests;
+package uk.ac.ebi.atlas.experimentpage.qc;
 
 
 import com.jayway.restassured.response.Response;

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.utils;
+package uk.ac.ebi.atlas.experimentpage.fastqc;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;

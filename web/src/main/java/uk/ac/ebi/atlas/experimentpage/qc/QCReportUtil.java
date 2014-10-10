@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.utils;
+package uk.ac.ebi.atlas.experimentpage.qc;
 
 
 import org.springframework.beans.factory.annotation.Value;
