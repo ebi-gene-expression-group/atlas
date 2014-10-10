@@ -28,6 +28,7 @@ function initExperimentPageButtonsAndTooltips() {
     $('#display-experiment').button().tooltip();
     $('#display-qc-report').button().tooltip();
     $('#display-fastqc-report').button().tooltip();
+    $('#clustering-pdf').button().tooltip();
     if (undefined !== $('#download-raw')) $('#download-raw').button().tooltip();
     if (undefined !== $('#download-normalized')) $('#download-normalized').button().tooltip();
     if (undefined !== $('#download-logFold')) $('#download-logFold').button().tooltip();

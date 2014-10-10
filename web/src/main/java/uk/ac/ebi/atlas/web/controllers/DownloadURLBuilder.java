@@ -53,6 +53,8 @@ public class DownloadURLBuilder {
         model.addAttribute("analyticsDownloadUrl", buildDownloadAllAnalyticsUrl(request));
 
         model.addAttribute("rDownloadUrl", buildDownloadRFileUrl(request));
+
+        model.addAttribute("clusteringPdfUrl", buildDownloadClusteringPdfFileUrl(request));
     }
 
     private String buildDownloadRawUrl(HttpServletRequest request) {
@@ -73,8 +75,14 @@ public class DownloadURLBuilder {
 
     private String buildDownloadRFileUrl(HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        String last = requestURI.substring(requestURI.lastIndexOf("/"));
-        return requestURI + last + R_FILE_EXTENSION;
+        String slashExperimentAccession = requestURI.substring(requestURI.lastIndexOf("/"));
+        return requestURI + slashExperimentAccession + R_FILE_EXTENSION;
+    }
+
+    private String buildDownloadClusteringPdfFileUrl(HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        String slashExperimentAccession = requestURI.substring(requestURI.lastIndexOf("/"));
+        return requestURI + slashExperimentAccession + R_FILE_EXTENSION;
     }
 
     private String extractBaseURL(HttpServletRequest request) {

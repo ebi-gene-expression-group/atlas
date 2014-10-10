@@ -32,7 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
-public class BaselineExperimentsControllerIT extends SinglePageSeleniumFixture {
+public class BaselineExperimentsControllerSIT extends SinglePageSeleniumFixture {
 
     public static final int NUMBER_OF_BASELINE_EXPERIMENTS = 13;
     private BaselineExperimentsPage subject;

@@ -61,7 +61,6 @@
                             </c:forEach>
                         </c:if>
 
-
                         <%--@elvariable id="fastQReportUtil" type="uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil"--%>
                         <c:set var="hasFastQcReport" value="${fastQReportUtil.hasFastQC(experimentAccession, species)}"/>
                         <c:if test="${hasFastQcReport && qcArrayDesigns==null}" >
@@ -69,6 +68,16 @@
                                 <a id="display-fastqc-report" class="button-image" title="Quality Metrics Report"
                                    href="${pageContext.request.contextPath}/experiments/${experimentAccession}/fastqc/${species}/qc.html${accessKeyQueryString}">
                                     <img src="${pageContext.request.contextPath}/resources/images/qc_v15.png"/>
+                                </a>
+                            </td>
+                        </c:if>
+
+                        <%--@elvariable id="hierarchicalClusteringPdfViewHelper" type="uk.ac.ebi.atlas.experimentpage.HierarchicalClusteringPdfViewHelper"--%>
+                        <c:if test="${experiment.multiOrganismExperiment ? hierarchicalClusteringPdfViewHelper.hasPdf(experimentAccession, species) : hierarchicalClusteringPdfViewHelper.hasSingleSpeciesPdf(experimentAccession)}" >
+                            <td>
+                                <a id="clustering-pdf" class="button-image" title="Explore hierarchical clustering between experimental conditions and the top 100 most variable genes in the experiment"
+                                   href="${pageContext.request.contextPath}${experiment.multiOrganismExperiment ? hierarchicalClusteringPdfViewHelper.generateUrl(experimentAccession, species) : hierarchicalClusteringPdfViewHelper.generateSingleSpeciesUrl(experimentAccession)}${accessKeyQueryString}">
+                                    <img src="${pageContext.request.contextPath}/resources/images/cluster_button.png"/>
                                 </a>
                             </td>
                         </c:if>

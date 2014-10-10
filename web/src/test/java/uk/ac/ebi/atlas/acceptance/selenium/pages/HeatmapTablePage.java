@@ -79,6 +79,9 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "display-qc-report")
     private WebElement qcReportLink;
 
+    @FindBy(id = "clustering-pdf")
+    private WebElement clusteringPdfButton;
+
     @FindBy(id = "download-logFold")
     private WebElement downloadLogFoldLink;
 
@@ -225,6 +228,10 @@ public class HeatmapTablePage extends TablePage {
 
     public String getQCReportLink() {
         return qcReportLink.getAttribute("href");
+    }
+
+    public String clickClusteringPdfButtonLink() {
+        return clusteringPdfButton.getAttribute("href");
     }
 
     public String getDownloadLogFoldLink() {

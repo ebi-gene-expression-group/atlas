@@ -18,4 +18,8 @@ public final class Species {
         return species;
     }
 
+    public static String convertSpacesToUnderscore(String species) {
+        return species.replaceAll(" ", "_");
+    }
+
 }

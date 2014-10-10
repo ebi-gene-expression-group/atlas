@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
 import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
@@ -49,7 +50,7 @@ public class BioEntityPropertyLinkBuilder {
     }
 
     public Optional<PropertyLink> createLink(String identifier, String propertyType, String propertyValue, String species) {
-        final String linkSpecies = species.replaceAll(" ", "_");
+        final String linkSpecies = Species.convertSpacesToUnderscore(species);
 
         String linkText = fetchLinkText(propertyType, propertyValue);
 
