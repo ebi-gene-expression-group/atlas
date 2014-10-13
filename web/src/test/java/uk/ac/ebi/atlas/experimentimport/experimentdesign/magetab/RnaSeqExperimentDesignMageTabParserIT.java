@@ -83,13 +83,24 @@ public class RnaSeqExperimentDesignMageTabParserIT {
     }
 
     @Test
+    public void characteristicHeaderAndValueTerm() throws IOException {
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_GEOD_26284).getExperimentDesign();
+
+        SampleCharacteristic sampleCharacteristic = experimentDesign.getSampleCharacteristic("SRR089334", "karyotype");
+        assert sampleCharacteristic != null;
+
+        assertThat(sampleCharacteristic.header(), is("karyotype"));
+        assertThat(sampleCharacteristic.value(), is("cancer"));
+
+    }
+
+    @Test
     public void characteristicOntologyTerm() throws IOException {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_GEOD_26284).getExperimentDesign();
 
         SampleCharacteristic sampleCharacteristic = experimentDesign.getSampleCharacteristic("SRR089334", "karyotype");
         assert sampleCharacteristic != null;
 
-        assertThat(sampleCharacteristic.value(), is("cancer"));
         Optional<OntologyTerm> ontologyTermOptional = sampleCharacteristic.valueOntologyTerm();
 
         assertThat(ontologyTermOptional.isPresent(), is(true));
