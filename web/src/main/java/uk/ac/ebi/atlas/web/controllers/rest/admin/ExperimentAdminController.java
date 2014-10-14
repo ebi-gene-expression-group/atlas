@@ -121,7 +121,7 @@ public class ExperimentAdminController {
 
     @RequestMapping("/updateExperimentDesign")
     @ResponseBody
-    public String updateAllExperimentDesigns(@RequestParam("accession") String experimentAccession) {
+    public String updateExperimentDesign(@RequestParam("accession") String experimentAccession) {
         experimentMetadataCRUD.updateExperimentDesign(experimentAccession);
         return "Experiment design was updated for " + experimentAccession;
     }
@@ -129,7 +129,7 @@ public class ExperimentAdminController {
 
     @RequestMapping("/invalidateExperimentCache")
     @ResponseBody
-    public String emptyExperimentCache() throws IOException {
+    public String invalidateExperimentCache() throws IOException {
         trader.removeAllExperimentsFromCache();
         return "All experiments removed from cache";
     }

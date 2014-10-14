@@ -64,6 +64,10 @@ public class ConfigurationTrader {
         return getExperimentConfiguration(experimentAccession, false);
     }
 
+    public MicroarrayExperimentConfiguration getMicroarrayExperimentConfiguration(String experimentAccession) {
+        return (MicroarrayExperimentConfiguration) getExperimentConfiguration(experimentAccession, true);
+    }
+
     private ExperimentConfiguration getExperimentConfiguration(String experimentAccession, boolean isMicroarray) {
 
         XMLConfiguration xmlConfiguration = getXmlConfiguration(configurationPathTemplate, experimentAccession, false);
@@ -75,10 +79,6 @@ public class ConfigurationTrader {
         return new ExperimentConfiguration(xmlConfiguration, document);
     }
 
-
-    public MicroarrayExperimentConfiguration getMicroarrayExperimentConfiguration(String experimentAccession) {
-        return (MicroarrayExperimentConfiguration) getExperimentConfiguration(experimentAccession, true);
-    }
 
     private Document parseConfigurationXml(String experimentAccession) {
         Path path = Paths.get(MessageFormat.format(configurationPathTemplate, experimentAccession));

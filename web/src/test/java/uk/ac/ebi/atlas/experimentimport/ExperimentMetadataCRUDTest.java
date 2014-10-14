@@ -46,7 +46,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndex;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
-import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDao;
 
@@ -60,9 +59,7 @@ import static org.mockito.Mockito.*;
 public class ExperimentMetadataCRUDTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
-    private static final String TEST_EXCEPTION = "TEST_EXCEPTION";
     private static final String ARRAY_DESIGN = "ARRAY_DESIGN";
-    private static final String ACCESS_KEY = "AN_UUID";
 
     @Mock
     private ExperimentDesignFileWriter experimentDesignFileWriterMock;
@@ -72,9 +69,6 @@ public class ExperimentMetadataCRUDTest {
 
     @Mock
     private ArrayDesignDao arrayDesignDaoMock;
-
-    @Mock
-    private ConfigurationTrader configurationTraderMock;
 
     @Mock
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
@@ -123,8 +117,6 @@ public class ExperimentMetadataCRUDTest {
     @Before
     public void setUp() throws Exception {
 
-        when(configurationTraderMock.getMicroarrayExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
-        when(configurationTraderMock.getExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(microarrayExperimentConfigurationMock);
         when(microarrayExperimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
         when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
 
@@ -148,7 +140,7 @@ public class ExperimentMetadataCRUDTest {
         given(experimentDTOBuilderMock.withTitle(anyString())).willReturn(experimentDTOBuilderMock);
 
 
-        subject = new ExperimentMetadataCRUD(configurationTraderMock, experimentDAOMock,
+        subject = new ExperimentMetadataCRUD(experimentDAOMock,
                 experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock, mageTabParserFactory, conditionsIndexTrader);
     }
 

@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
+import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -20,10 +21,16 @@ public class ExperimentCRUD {
     private ExperimentMetadataCRUD experimentMetadataCRUD;
     private AnalyticsLoaderFactory analyticsLoaderFactory;
     private AnalyticsDao analyticsDao;
+    private ConfigurationTrader configurationTrader;
 
     // requires no-arg constructor for @Transactional proxying, hence setter injection
     // of dependencies
     public ExperimentCRUD() {
+    }
+
+    @Inject
+    public void setConfigurationTrader(ConfigurationTrader configurationTrader) {
+        this.configurationTrader = configurationTrader;
     }
 
     @Inject
@@ -88,7 +95,7 @@ public class ExperimentCRUD {
 
     private ExperimentConfiguration loadExperimentConfiguration(String experimentAccession) {
         experimentChecker.checkConfigurationFilePermissions(experimentAccession);
-        return experimentMetadataCRUD.loadExperimentConfiguration(experimentAccession);
+        return configurationTrader.getExperimentConfiguration(experimentAccession);
     }
 
     public void deleteInactiveAnalytics() {

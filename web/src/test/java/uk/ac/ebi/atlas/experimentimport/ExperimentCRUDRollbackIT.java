@@ -15,7 +15,6 @@ import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWri
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParserFactory;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
-import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
@@ -42,8 +41,6 @@ public class ExperimentCRUDRollbackIT {
     private JdbcTemplate jdbcTemplate;
 
     @Inject
-    ConfigurationTrader configurationTrader;
-    @Inject
     ExperimentDAO experimentDAO;
     @Inject
     ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
@@ -66,7 +63,7 @@ public class ExperimentCRUDRollbackIT {
         MockitoAnnotations.initMocks(this);
 
         when(conditionsIndexTrader.getIndex(any(Experiment.class))).thenThrow(new IllegalStateException("die!"));
-        ExperimentMetadataCRUD experimentMetadataCRUDmock = new ExperimentMetadataCRUD(configurationTrader, experimentDAO,
+        ExperimentMetadataCRUD experimentMetadataCRUDmock = new ExperimentMetadataCRUD(experimentDAO,
                 experimentDesignFileWriterBuilder, experimentTrader, experimentDTOBuilder,
                 mageTabParserFactory, conditionsIndexTrader);
         subject.setExperimentMetadataCRUD(experimentMetadataCRUDmock);

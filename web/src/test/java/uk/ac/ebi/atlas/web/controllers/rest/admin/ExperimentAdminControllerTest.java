@@ -82,7 +82,6 @@ public class ExperimentAdminControllerTest {
 
 
         when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
-        when(experimentMetadataCRUDMock.loadExperimentConfiguration(EXPERIMENT_ACCESSION)).thenReturn(experimentConfiguration);
 
         given(experimentDAOMock.findPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(null);
         given(experimentDAOMock.findAllExperiments()).willReturn(

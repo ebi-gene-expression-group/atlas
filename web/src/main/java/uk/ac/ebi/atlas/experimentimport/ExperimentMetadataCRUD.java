@@ -35,7 +35,6 @@ import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
-import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
@@ -47,6 +46,7 @@ import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+// Experiment metadata is sourced from SDRF/IDF files, and stored in experiment design files, the database, and the Solr conditions Index
 @Named
 @Scope("prototype")
 public class ExperimentMetadataCRUD {
@@ -54,7 +54,6 @@ public class ExperimentMetadataCRUD {
     private static final Logger LOGGER = Logger.getLogger(ExperimentMetadataCRUD.class);
     private final MageTabParserFactory mageTabParserFactory;
     private final ConditionsIndexTrader conditionsIndexTrader;
-    private ConfigurationTrader configurationTrader;
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
     private ExperimentDAO experimentDAO;
     private ExperimentTrader experimentTrader;
@@ -63,25 +62,18 @@ public class ExperimentMetadataCRUD {
 
     //TODO: refactor this class - it has too many collaborators
     @Inject
-    public ExperimentMetadataCRUD(ConfigurationTrader configurationTrader,
-                                  ExperimentDAO experimentDAO,
+    public ExperimentMetadataCRUD(ExperimentDAO experimentDAO,
                                   ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
                                   ExperimentTrader experimentTrader,
                                   ExperimentDTOBuilder experimentDTOBuilder,
                                   MageTabParserFactory mageTabParserFactory,
                                   ConditionsIndexTrader conditionsIndexTrader) {
-
-        this.configurationTrader = configurationTrader;
         this.experimentDAO = experimentDAO;
         this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;
         this.experimentDTOBuilder = experimentDTOBuilder;
         this.mageTabParserFactory = mageTabParserFactory;
         this.conditionsIndexTrader = conditionsIndexTrader;
-    }
-
-    public ExperimentConfiguration loadExperimentConfiguration(String accession) {
-        return configurationTrader.getExperimentConfiguration(accession);
     }
 
     public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate, Optional<String> accessKey) throws IOException {
