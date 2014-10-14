@@ -127,13 +127,6 @@ public class ExperimentAdminController {
     }
 
 
-    @RequestMapping("/updateAllExperiments")
-    @ResponseBody
-    public String updateAllExperiments() throws IOException {
-        int updatedExperimentsCount = experimentMetadataCRUD.updateAllExperiments();
-        return "Experiment design was updated for " + updatedExperimentsCount + " experiments";
-    }
-
     @RequestMapping("/invalidateExperimentCache")
     @ResponseBody
     public String emptyExperimentCache() throws IOException {

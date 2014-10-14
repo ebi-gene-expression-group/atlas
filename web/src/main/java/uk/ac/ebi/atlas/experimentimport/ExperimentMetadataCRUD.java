@@ -92,17 +92,12 @@ public class ExperimentMetadataCRUD {
         MageTabParserOutput mageTabParserOutput = readMageTab(accession, experimentType);
 
         ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
-        generateExperimentDesignFile(accession, experimentType, experimentDesign);
+        writeExperimentDesignFile(accession, experimentType, experimentDesign);
 
-        Set<String> assayAccessions = configurationTrader.getExperimentConfiguration(accession).getAssayAccessions();
+        Set<String> assayAccessions = experimentConfiguration.getAssayAccessions();
         Set<String> species = experimentDesign.getSpeciesForAssays(assayAccessions);
 
-        ExperimentDTO experimentDTO = experimentDTOBuilder.forExperimentAccession(accession)
-                .withExperimentType(experimentType).withPrivate(isPrivate).withSpecies(species)
-                .withTitle(mageTabParserOutput.getTitle())
-                .withPubMedIds(mageTabParserOutput.getPubmedIds())
-                .build();
-
+        ExperimentDTO experimentDTO = buildExperimentDTO(accession, experimentType, mageTabParserOutput, species, isPrivate);
         UUID uuid = experimentDAO.addExperiment(experimentDTO, accessKey);
 
         //experiment can be indexed only after it's been added to the DB, since fetching experiment
@@ -113,7 +108,14 @@ public class ExperimentMetadataCRUD {
         }
 
         return uuid;
+    }
 
+    private ExperimentDTO buildExperimentDTO(String accession, ExperimentType experimentType, MageTabParserOutput mageTabParserOutput, Set<String> species, boolean isPrivate) {
+        return experimentDTOBuilder.forExperimentAccession(accession)
+                    .withExperimentType(experimentType).withPrivate(isPrivate).withSpecies(species)
+                    .withTitle(mageTabParserOutput.getTitle())
+                    .withPubMedIds(mageTabParserOutput.getPubmedIds())
+                    .build();
     }
 
     MageTabParserOutput readMageTab(String accession, ExperimentType experimentType) throws IOException {
@@ -121,7 +123,7 @@ public class ExperimentMetadataCRUD {
         return mageTabParser.parse(accession);
     }
 
-    void generateExperimentDesignFile(String accession, ExperimentType experimentType, ExperimentDesign experimentDesign) throws IOException {
+    void writeExperimentDesignFile(String accession, ExperimentType experimentType, ExperimentDesign experimentDesign) throws IOException {
         ExperimentDesignFileWriter experimentDesignFileWriter =
                 experimentDesignFileWriterBuilder.forExperimentAccession(accession)
                         .withExperimentType(experimentType)
@@ -171,16 +173,6 @@ public class ExperimentMetadataCRUD {
         return experiments.size();
     }
 
-    public int updateAllExperiments() throws IOException {
-        List<ExperimentDTO> experiments = experimentDAO.findAllExperiments();
-        for (ExperimentDTO experiment : experiments) {
-            String accession = experiment.getExperimentAccession();
-            deleteExperiment(experiment);
-            importExperiment(accession, loadExperimentConfiguration(accession), experiment.isPrivate(), Optional.of(experiment.getAccessKey()));
-        }
-        return experiments.size();
-    }
-
     public void updateExperimentDesign(String experimentAccession) {
         ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
         updateExperimentDesign(experimentDTO);
@@ -196,7 +188,7 @@ public class ExperimentMetadataCRUD {
             MageTabParserOutput mageTabParserOutput = readMageTab(accession, type);
             ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
 
-            generateExperimentDesignFile(accession, type, experimentDesign);
+            writeExperimentDesignFile(accession, type, experimentDesign);
 
             LOGGER.info("updated design for experiment " + accession);
 
@@ -206,7 +198,7 @@ public class ExperimentMetadataCRUD {
             }
 
         } catch (IOException e) {
-            throw new IllegalStateException("<updateExperimentDesign> error generateExperimentDesignFile : ", e);
+            throw new IllegalStateException("<updateExperimentDesign> error writeExperimentDesignFile : ", e);
         }
     }
 

@@ -106,7 +106,7 @@ public class ExperimentDAO {
             return accessKeyUUID;
 
         } catch (DuplicateKeyException e) {
-            throw new IllegalStateException("Experiment with experimentAccession " + experimentDTO.getExperimentAccession() + " has been already imported.");
+            throw new IllegalStateException("Experiment with experimentAccession " + experimentDTO.getExperimentAccession() + " has been already imported.", e);
         }
     }
 

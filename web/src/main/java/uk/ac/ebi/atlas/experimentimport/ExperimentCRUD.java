@@ -73,26 +73,13 @@ public class ExperimentCRUD {
         }
     }
 
-    private boolean experimentAccessionExists(String experimentAccession) {
-        try {
-            experimentMetadataCRUD.findExperiment(experimentAccession);
-            return true;
-        } catch (ResourceNotFoundException e) {
-            return false;
-        }
-    }
-
     // returns access key, so it can be reused during a reload
     @Transactional
     public String deleteExperiment(String experimentAccession) {
         ExperimentDTO experimentDTO = experimentMetadataCRUD.findExperiment(experimentAccession);
 
         AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(experimentDTO.getExperimentType());
-
-        //TODO: remove
-        if (analyticsLoader != null) {
-            analyticsLoader.deleteAnalytics(experimentAccession);
-        }
+        analyticsLoader.deleteAnalytics(experimentAccession);
 
         experimentMetadataCRUD.deleteExperiment(experimentDTO);
 
