@@ -1,26 +1,29 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
-import com.google.common.collect.SetMultimap;
+import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
-//TODO: remove this class, because we can get OntologyTermsByAssayAccession from experimentDesign
 public class MageTabParserOutput {
 
-    private final SetMultimap<String, String> ontologyTermIdsByAssayAccession;
+    private String title;
+    ImmutableSet<String> pubmedIds;
     private ExperimentDesign experimentDesign;
 
-    MageTabParserOutput(ExperimentDesign experimentDesign, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
+    MageTabParserOutput(String title, ImmutableSet<String> pubmedIds, ExperimentDesign experimentDesign) {
+        this.title = title;
+        this.pubmedIds = pubmedIds;
         this.experimentDesign = experimentDesign;
-        this.ontologyTermIdsByAssayAccession = ontologyTermIdsByAssayAccession;
     }
 
     public ExperimentDesign getExperimentDesign() {
         return experimentDesign;
     }
 
-
-    public SetMultimap<String, String> getOntologyTermIdsByAssayAccession() {
-        return ontologyTermIdsByAssayAccession;
+    public String getTitle() {
+        return title;
     }
 
+    public ImmutableSet<String> getPubmedIds() {
+        return pubmedIds;
+    }
 }

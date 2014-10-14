@@ -158,7 +158,7 @@ public class RnaSeqExperimentDesignMageTabParserIT {
     public void asTableDataShouldReturnTheRightStuff() throws IOException {
         MageTabParserOutput mageTabParserOutput = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513);
         ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
-        SetMultimap<String, String> ontologyTerms = mageTabParserOutput.getOntologyTermIdsByAssayAccession();
+        SetMultimap<String, String> ontologyTerms = experimentDesign.getAllOntologyTermIdsByAssayAccession();
 
         assertThat(experimentDesign.asTableData().size(), is(48));
         assertThat(experimentDesign.asTableData().get(0), arrayContaining("ERR030856","Homo sapiens",null,null,"16 tissues mixture",null,"16 tissues mixture"));

@@ -89,20 +89,19 @@ public class ExperimentMetadataCRUD {
         checkNotNull(experimentConfiguration);
 
         ExperimentType experimentType = experimentConfiguration.getExperimentType();
-
         MageTabParserOutput mageTabParserOutput = readMageTab(accession, experimentType);
 
         ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
-
         generateExperimentDesignFile(accession, experimentType, experimentDesign);
 
         Set<String> assayAccessions = configurationTrader.getExperimentConfiguration(accession).getAssayAccessions();
-
         Set<String> species = experimentDesign.getSpeciesForAssays(assayAccessions);
 
-        //TODO: inefficient - this re-reads the magetab, but we've already done this above
         ExperimentDTO experimentDTO = experimentDTOBuilder.forExperimentAccession(accession)
-                .withExperimentType(experimentType).withPrivate(isPrivate).withSpecies(species).build();
+                .withExperimentType(experimentType).withPrivate(isPrivate).withSpecies(species)
+                .withTitle(mageTabParserOutput.getTitle())
+                .withPubMedIds(mageTabParserOutput.getPubmedIds())
+                .build();
 
         UUID uuid = experimentDAO.addExperiment(experimentDTO, accessKey);
 
@@ -110,7 +109,7 @@ public class ExperimentMetadataCRUD {
         //from cache gets this experiment from the DB first
         if (!isPrivate) {
             Experiment experiment = experimentTrader.getPublicExperiment(accession);
-            conditionsIndexTrader.getIndex(experiment).addConditions(experiment, mageTabParserOutput.getOntologyTermIdsByAssayAccession());
+            conditionsIndexTrader.getIndex(experiment).addConditions(experiment, experimentDesign.getAllOntologyTermIdsByAssayAccession());
         }
 
         return uuid;
@@ -203,7 +202,7 @@ public class ExperimentMetadataCRUD {
 
             if (!experimentDTO.isPrivate()) {
                 Experiment experiment = experimentTrader.getPublicExperiment(accession);
-                conditionsIndexTrader.getIndex(experiment).updateConditions(experiment, mageTabParserOutput.getOntologyTermIdsByAssayAccession());
+                conditionsIndexTrader.getIndex(experiment).updateConditions(experiment, experimentDesign.getAllOntologyTermIdsByAssayAccession());
             }
 
         } catch (IOException e) {

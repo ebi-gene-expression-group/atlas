@@ -22,36 +22,22 @@
 
 package uk.ac.ebi.atlas.experimentimport;
 
-import com.google.common.collect.Sets;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
-import javax.inject.Inject;
 import javax.inject.Named;
-import java.net.MalformedURLException;
 import java.util.Set;
 
 @Named
 @Scope("prototype")
 public class ExperimentDTOBuilder {
-    private static final Logger LOGGER = Logger.getLogger(ExperimentDTOBuilder.class);
-
-    private MageTabLimpopoUtils mageTabLimpopoUtils;
     private String experimentAccession;
     private ExperimentType experimentType;
     private boolean isPrivate;
 
     private Set<String> species;
-
-    @Inject
-    public ExperimentDTOBuilder(MageTabLimpopoUtils mageTabLimpopoUtils){
-
-        this.mageTabLimpopoUtils = mageTabLimpopoUtils;
-    }
+    private String title;
+    private Set<String> pubmedIds;
 
     public ExperimentDTOBuilder forExperimentAccession(String experimentAccession){
         this.experimentAccession = experimentAccession;
@@ -73,24 +59,17 @@ public class ExperimentDTOBuilder {
         return this;
     }
 
+    public ExperimentDTOBuilder withTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public ExperimentDTOBuilder withPubMedIds(Set<String> pubmedIds) {
+        this.pubmedIds = pubmedIds;
+        return this;
+    }
+
     public ExperimentDTO build(){
-
-        try {
-
-            LOGGER.debug(String.format("parsing %s: begin",experimentAccession));
-
-            MAGETABInvestigation magetabInvestigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
-            String title = mageTabLimpopoUtils.extractInvestigationTitle(magetabInvestigation);
-            Set<String> pubmedIds = Sets.newHashSet(mageTabLimpopoUtils.extractPubMedIdsFromIDF(magetabInvestigation));
-
-            LOGGER.debug(String.format("parsing %s: done",experimentAccession));
-
-            return new ExperimentDTO(experimentAccession, experimentType, species, pubmedIds, title, isPrivate);
-
-        } catch (ParseException | MalformedURLException  e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(e.getMessage());
-        }
-
+        return new ExperimentDTO(experimentAccession, experimentType, species, pubmedIds, title, isPrivate);
     }
 }

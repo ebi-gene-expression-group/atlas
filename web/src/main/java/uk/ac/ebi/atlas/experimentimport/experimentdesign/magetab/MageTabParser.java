@@ -24,10 +24,8 @@ package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
-import com.google.common.base.Strings;
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.SetMultimap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.arrayexpress2.magetab.datamodel.IDF;
@@ -76,30 +74,18 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
     public MageTabParserOutput parse(String experimentAccession)  throws IOException{
 
-        Set<NamedSdrfNode<T>> namedSdrfNodes;
-        ImmutableMap<String, String> factorNamesToType;
+        MAGETABInvestigation investigation = readMageTabFiles(experimentAccession);
 
-        try {
-            MAGETABInvestigation investigation = mageTabLimpopoUtils.parseInvestigation(experimentAccession);
-            namedSdrfNodes = getAssayNodes(investigation.SDRF);
-            factorNamesToType = buildFactorNameToTypeMap(investigation.IDF);
-        } catch (ParseException | MalformedURLException e) {
-            throw new IOException("Cannot read or parse SDRF file: ", e);
-        }
+        Set<NamedSdrfNode<T>> namedSdrfNodes = getAssayNodes(investigation.SDRF);
+        ImmutableMap<String, String> factorNamesToType = buildFactorNameToTypeMap(investigation.IDF);
 
         ExperimentDesign experimentDesign = new ExperimentDesign();
-
-        SetMultimap<String, String> ontologyTermIdsByAssayAccession = HashMultimap.create();
 
         for (NamedSdrfNode<T> namedSdrfNode : namedSdrfNodes) {
             SourceNode sourceNode = findFirstUpstreamSourceNode(namedSdrfNode);
 
             for (CharacteristicsAttribute characteristicsAttribute : sourceNode.characteristics) {
                 addCharacteristicToExperimentDesign(experimentDesign, namedSdrfNode.getName(), characteristicsAttribute);
-
-                if (!Strings.isNullOrEmpty(characteristicsAttribute.termAccessionNumber)) {
-                    ontologyTermIdsByAssayAccession.put(namedSdrfNode.getName(), characteristicsAttribute.termAccessionNumber);
-                }
             }
 
             addFactorValues(experimentDesign, namedSdrfNode, factorNamesToType);
@@ -107,7 +93,18 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
         addArrays(experimentDesign, namedSdrfNodes);
 
-        return new MageTabParserOutput(experimentDesign, ontologyTermIdsByAssayAccession);
+        String title = mageTabLimpopoUtils.extractInvestigationTitle(investigation);
+        ImmutableSet<String> pubmedIds = ImmutableSet.copyOf(mageTabLimpopoUtils.extractPubMedIdsFromIDF(investigation));
+
+        return new MageTabParserOutput(title, pubmedIds, experimentDesign);
+    }
+
+    private MAGETABInvestigation readMageTabFiles(String experimentAccession) throws IOException {
+        try {
+            return mageTabLimpopoUtils.parseInvestigation(experimentAccession);
+        } catch (ParseException | MalformedURLException e) {
+            throw new IOException("Cannot read or parse SDRF file: ", e);
+        }
     }
 
     private ImmutableMap<String, String> buildFactorNameToTypeMap(IDF idf) {

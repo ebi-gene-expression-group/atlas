@@ -103,7 +103,7 @@ public class ExperimentMetadataCRUDTest {
     private ConditionsIndex conditionsIndex;
 
     @Mock
-    private ExperimentDTOBuilder exparimentDTOBuilderMock;
+    private ExperimentDTOBuilder experimentDTOBuilderMock;
 
     @Mock
     private ExperimentDesign experimentDesignMock;
@@ -140,14 +140,16 @@ public class ExperimentMetadataCRUDTest {
         given(conditionsIndexTrader.getIndex(any(Experiment.class))).willReturn(conditionsIndex);
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
 
-        given(exparimentDTOBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(exparimentDTOBuilderMock);
-        given(exparimentDTOBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE)).willReturn(exparimentDTOBuilderMock);
-        given(exparimentDTOBuilderMock.withPrivate(false)).willReturn(exparimentDTOBuilderMock);
-        given(exparimentDTOBuilderMock.withSpecies(anySet())).willReturn(exparimentDTOBuilderMock);
+        given(experimentDTOBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDTOBuilderMock);
+        given(experimentDTOBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE)).willReturn(experimentDTOBuilderMock);
+        given(experimentDTOBuilderMock.withPrivate(false)).willReturn(experimentDTOBuilderMock);
+        given(experimentDTOBuilderMock.withSpecies(anySet())).willReturn(experimentDTOBuilderMock);
+        given(experimentDTOBuilderMock.withPubMedIds(anySet())).willReturn(experimentDTOBuilderMock);
+        given(experimentDTOBuilderMock.withTitle(anyString())).willReturn(experimentDTOBuilderMock);
 
 
         subject = new ExperimentMetadataCRUD(configurationTraderMock, experimentDAOMock,
-                experimentDesignFileWriterBuilderMock, experimentTraderMock, exparimentDTOBuilderMock, mageTabParserFactory, conditionsIndexTrader);
+                experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock, mageTabParserFactory, conditionsIndexTrader);
     }
 
     @Test
