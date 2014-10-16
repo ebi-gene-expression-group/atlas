@@ -55,16 +55,16 @@ public class AnatomogramSIT extends SeleniumFixture {
         assertThat(isAnatomogramElementFound(E_GEOD_30352_ACCESSION), is(true));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void testAnatomogramIsNotThereForMultiSpeciesExpForMacacaMulatta() {
-        String gallusParams = "serializedFilterFactors=ORGANISM:Macaca+mulatta&queryFactorType=ORGANISM_PART&geneQuery=";
-        isAnatomogramElementFound(E_GEOD_30352_ACCESSION, gallusParams);
+    @Test
+    public void testAnatomogramIsThereForMultiSpeciesExpForMacacaMulatta() {
+        String params = "serializedFilterFactors=ORGANISM:Macaca+mulatta&queryFactorType=ORGANISM_PART&geneQuery=";
+        assertThat(isAnatomogramElementFound(E_GEOD_30352_ACCESSION, params), is(true));
     }
 
     @Test
     public void testAnatomogramIsThereForMultiSpeciesExpForChicken() {
-        String gallusParams = "serializedFilterFactors=ORGANISM:Gallus+gallus&queryFactorType=ORGANISM_PART&geneQuery=";
-        assertThat(isAnatomogramElementFound(E_GEOD_30352_ACCESSION, gallusParams), is(true));
+        String params = "serializedFilterFactors=ORGANISM:Gallus+gallus&queryFactorType=ORGANISM_PART&geneQuery=";
+        assertThat(isAnatomogramElementFound(E_GEOD_30352_ACCESSION, params), is(true));
     }
 
     @Test
