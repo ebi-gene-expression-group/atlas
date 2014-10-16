@@ -52,7 +52,7 @@ public class URLBuilder {
 
         String portNumber = System.getProperty(SELENIUM_TEST_PORTNUMBER_PROPERTY_KEY);
         if (StringUtils.isBlank(portNumber)) {
-            portNumber = "9090";
+            portNumber = "8080";
         }
         StringBuilder stringBuilder = new StringBuilder("http://")
                 .append(hostname)

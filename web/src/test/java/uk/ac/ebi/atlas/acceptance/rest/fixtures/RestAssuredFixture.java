@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.acceptance.rest.fixtures;
 
 import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.authentication.BasicAuthScheme;
 import com.jayway.restassured.builder.RequestSpecBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.BeforeClass;
@@ -45,7 +44,7 @@ public class RestAssuredFixture {
 
         String portNumber = System.getProperty(SELENIUM_TEST_PORTNUMBER_PROPERTY_KEY);
         if (StringUtils.isBlank(portNumber)) {
-            portNumber = "9090";
+            portNumber = "8080";
         }
 
         RestAssured.port = new Integer(portNumber);
