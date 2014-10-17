@@ -94,13 +94,14 @@ public class ExperimentCRUDBaselineProteomicsIT {
     @Mock
     private ExperimentDesignFileWriter experimentDesignFileWriter;
 
-    @Before
-    public void mockOutDatabaseAndSolr() throws IOException {
-        MockitoAnnotations.initMocks(this);
+    private static final ExperimentDTO E_PROT_1_DTO = new ExperimentDTO(E_PROT_1,
+                                                   ExperimentType.PROTEOMICS_BASELINE,
+                                                   Collections.<String>emptySet(),
+                                                   "title", new Date(), false, UUID.randomUUID().toString());
 
-        ExperimentDTO experimentDTO = new ExperimentDTO(E_PROT_1, ExperimentType.PROTEOMICS_BASELINE, Collections.<String>emptySet(), "title", new Date(), false, UUID.randomUUID().toString());
-        when(experimentDao.findExperiment(E_PROT_1, true)).thenThrow(new ResourceNotFoundException("")).thenReturn(experimentDTO);
-        when(experimentDao.findPublicExperiment(E_PROT_1)).thenReturn(experimentDTO);
+    @Before
+    public void mockOutDatabaseAndSolrAndArrayExpress() throws IOException {
+        MockitoAnnotations.initMocks(this);
 
         ConditionsIndexTrader conditionsIndexTrader = conditionsIndexTraderFactory.create(solrServer);
 
@@ -118,8 +119,14 @@ public class ExperimentCRUDBaselineProteomicsIT {
         subject.setExperimentMetadataCRUD(experimentMetadataCRUD);
     }
 
+    private void setupDao() {
+        when(experimentDao.findExperiment(E_PROT_1, true)).thenThrow(new ResourceNotFoundException("")).thenReturn(E_PROT_1_DTO);
+        when(experimentDao.findPublicExperiment(E_PROT_1)).thenReturn(E_PROT_1_DTO);
+    }
+
     @Test
     public void importExperiment_AddsConditionsToSolr() throws IOException, SolrServerException {
+        setupDao();
         subject.importExperiment(E_PROT_1, false);
 
         verify(solrServer).addBeans(collectionArgumentCaptor.capture());
@@ -134,6 +141,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
 
     @Test
     public void importExperiment_AddsToDatabase() throws IOException, SolrServerException {
+        setupDao();
         subject.importExperiment(E_PROT_1, false);
 
         verify(experimentDao).addExperiment(experimentDTOArgumentCaptor.capture(), any(Optional.class));
@@ -150,6 +158,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
 
     @Test
     public void importExperiment_WritesExpDesignFile() throws IOException, SolrServerException {
+        setupDao();
         subject.importExperiment(E_PROT_1, false);
 
         verify(experimentDesignFileWriter).write(experimentDesignArgumentCaptor.capture());
@@ -163,6 +172,17 @@ public class ExperimentCRUDBaselineProteomicsIT {
                 SampleCharacteristic.create(ORGANISM_PART, "ovary"),
                 SampleCharacteristic.create(ORGANISM, "Homo sapiens"),
                 SampleCharacteristic.create(DEVELOPMENTAL_STAGE, "adult")));
+    }
+
+    @Test
+    public void deleteExperiment_DeletesFromSolrAndDatabase() throws IOException, SolrServerException {
+        when(experimentDao.findExperiment(E_PROT_1, true)).thenReturn(E_PROT_1_DTO);
+
+        subject.deleteExperiment(E_PROT_1);
+
+        verify(solrServer).deleteByQuery("experiment_accession:" + E_PROT_1);
+        verify(experimentDao).deleteExperiment(E_PROT_1);
+
     }
 
 }

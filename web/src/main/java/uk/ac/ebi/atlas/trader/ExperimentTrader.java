@@ -95,7 +95,9 @@ public class ExperimentTrader {
             case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
                 microarrayExperimentsCache.evictExperiment(experimentAccession);
                 break;
-            //TODO: remove proteomics baseline, need test first
+            case PROTEOMICS_BASELINE:
+                proteomicsBaselineExperimentsCache.evictExperiment(experimentAccession);
+                break;
             default:
                 throw new IllegalStateException("invalid enum value: " + type);
         }

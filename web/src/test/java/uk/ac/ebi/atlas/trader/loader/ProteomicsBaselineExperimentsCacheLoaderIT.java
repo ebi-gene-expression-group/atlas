@@ -45,6 +45,7 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -74,8 +75,11 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     @Mock
     private ExperimentDAO experimentDao;
 
+    @Mock
+    private ArrayExpressClient arrayExpressClient;
+
     @Before
-    public void mockOutDatabase() {
+    public void mockOutDatabaseAndArrayExpress() {
         MockitoAnnotations.initMocks(this);
 
         Set<String> pubMedIds = Collections.emptySet();
@@ -83,7 +87,10 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
                 ImmutableSet.of("Homo sapiens"), pubMedIds, "title", new Date(), false, UUID.randomUUID().toString());
         when(experimentDao.findExperiment(E_PROT_1, true)).thenReturn(experimentDTO);
 
+        when(arrayExpressClient.fetchExperimentName(E_PROT_1)).thenReturn("title");
+
         subject.setExperimentDAO(experimentDao);
+        subject.setArrayExpressClient(arrayExpressClient);
     }
 
     @Test
