@@ -114,7 +114,7 @@
                                 <%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
 
                                 <fmt:formatNumber type="number"
-                                                  maxFractionDigits="2"
+                                                  maxFractionDigits="1"
                                                   value="${expression.foldChange}"
                                                   groupingUsed="false"
                                                   var="foldChange"/>

@@ -64,8 +64,8 @@ public class DifferentialProfilesViewModelBuilderTest {
         String json = gson.toJson(profiles);
 
         String expected = "{\n" +
-                "  \"minUpLevel\": 1.33,\n" +
-                "  \"maxUpLevel\": 1.33,\n" +
+                "  \"minUpLevel\": 1.3,\n" +
+                "  \"maxUpLevel\": 1.3,\n" +
                 "  \"searchResultTotal\": 50,\n" +
                 "  \"rows\": [\n" +
                 "    {\n" +
@@ -76,14 +76,14 @@ public class DifferentialProfilesViewModelBuilderTest {
                 "        {\n" +
                 "          \"contrastName\": \"cdk8\",\n" +
                 "          \"color\": \"#C0C0C0\",\n" +
-                "          \"foldChange\": \"-0.76\",\n" +
+                "          \"foldChange\": \"-0.8\",\n" +
                 "          \"pValue\": \"0.002\",\n" +
                 "          \"tStat\": \"-6.45\"\n" +
                 "        },\n" +
                 "        {\n" +
                 "          \"contrastName\": \"cycC\",\n" +
                 "          \"color\": \"#0000FF\",\n" +
-                "          \"foldChange\": \"-8.79\",\n" +
+                "          \"foldChange\": \"-8.8\",\n" +
                 "          \"pValue\": \"3.24E-4\",\n" +
                 "          \"tStat\": \"-3.37\"\n" +
                 "        }\n" +
@@ -97,7 +97,7 @@ public class DifferentialProfilesViewModelBuilderTest {
                 "        {\n" +
                 "          \"contrastName\": \"cdk8\",\n" +
                 "          \"color\": \"#FF0000\",\n" +
-                "          \"foldChange\": \"1.33\",\n" +
+                "          \"foldChange\": \"1.3\",\n" +
                 "          \"pValue\": \"2.16E-4\",\n" +
                 "          \"tStat\": \"10.71\"\n" +
                 "        },\n" +
@@ -107,8 +107,8 @@ public class DifferentialProfilesViewModelBuilderTest {
                 "      ]\n" +
                 "    }\n" +
                 "  ],\n" +
-                "  \"minDownLevel\": -0.76,\n" +
-                "  \"maxDownLevel\": -8.79\n" +
+                "  \"minDownLevel\": -0.8,\n" +
+                "  \"maxDownLevel\": -8.8\n" +
                 "}";
 
         assertThat(json, is(expected));

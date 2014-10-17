@@ -23,6 +23,7 @@ public class DifferentialProfilesViewModelBuilder {
     private final ColourGradient colourGradient;
     private final NumberUtils numberUtils;
     private final NumberFormat format2Dp = NumberFormat.getNumberInstance();
+    private final NumberFormat format1Dp = NumberFormat.getNumberInstance();
 
     @Inject
     public DifferentialProfilesViewModelBuilder(ColourGradient colourGradient, NumberUtils numberUtils) {
@@ -31,6 +32,9 @@ public class DifferentialProfilesViewModelBuilder {
 
         format2Dp.setGroupingUsed(false);
         format2Dp.setMaximumFractionDigits(2);
+
+        format1Dp.setGroupingUsed(false);
+        format1Dp.setMaximumFractionDigits(1);
     }
 
     public DifferentialProfilesViewModel build(DifferentialProfilesList<? extends DifferentialProfile<? extends DifferentialExpression>> diffProfiles, Set<Contrast> orderedContrasts) {
