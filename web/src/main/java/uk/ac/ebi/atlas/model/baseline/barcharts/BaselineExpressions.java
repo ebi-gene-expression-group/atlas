@@ -20,7 +20,9 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline;
+package uk.ac.ebi.atlas.model.baseline.barcharts;
+
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 
 import java.util.HashSet;
 import java.util.Iterator;

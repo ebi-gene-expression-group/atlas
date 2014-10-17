@@ -20,12 +20,12 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.profiles.baseline;
+package uk.ac.ebi.atlas.model.baseline.barcharts;
 
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.profiles.TsvInputStream;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsQueueBuilder;
 
 public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpressions, BaselineExpression> {
 

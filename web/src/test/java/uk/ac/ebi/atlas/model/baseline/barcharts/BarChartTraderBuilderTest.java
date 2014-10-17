@@ -29,12 +29,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsInputStream;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsInputStreamFactory;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import java.util.*;
