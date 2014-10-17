@@ -50,4 +50,6 @@ public interface FactorGroup extends Iterable<Factor>, Serializable, Comparable<
     boolean isEmpty();
 
     String getOrganismFactorValue();
+
+    public boolean containsOnlyOrganism();
 }

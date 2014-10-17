@@ -41,10 +41,13 @@ public class FilterFactorsConverter {
     private static final String SEPARATOR = ":";
 
     public String prettyPrint(Iterable<Factor> factors) {
+        if (!factors.iterator().hasNext()) {
+            return "";
+        }
+
         StringBuilder sb = new StringBuilder();
 
         for (Factor factor : factors) {
-            //sb.append(factor.getHeader()).append(": ");
             sb.append(factor.getValue()).append(", ");
         }
 

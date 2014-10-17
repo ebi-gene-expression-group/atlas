@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import java.util.HashSet;
@@ -112,13 +113,9 @@ public class BaselineExperimentAssayGroup implements Comparable<BaselineExperime
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(species).append(" - ").append(experimentName);
-        if (!filterFactors.isEmpty() && !containsOnlyOrganism(filterFactors)) {
+        if (!filterFactors.isEmpty() && !filterFactors.containsOnlyOrganism()) {
             sb.append(" - ").append(filterFactorsConverter.prettyPrint(filterFactors));
         }
         return sb.toString();
-    }
-
-    private boolean containsOnlyOrganism(FactorGroup filterFactors) {
-        return filterFactors.size() == 1 && filterFactors.getFactorByType("ORGANISM") != null;
     }
 }

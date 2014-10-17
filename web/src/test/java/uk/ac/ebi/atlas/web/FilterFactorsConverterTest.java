@@ -55,10 +55,18 @@ public class FilterFactorsConverterTest {
     @Test
     public void prettyPrint() {
         FactorSet factors = new FactorSet();
+
         factors.add(factor1);
         factors.add(factor2);
 
         assertThat(subject.prettyPrint(factors), is("value2, value1"));
+    }
+
+    @Test
+    public void testPrettyPrintWithEmptyFactors() {
+        FactorSet factors = new FactorSet();
+
+        assertThat(subject.prettyPrint(factors), is(""));
     }
 
     @Test

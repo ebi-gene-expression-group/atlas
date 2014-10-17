@@ -178,4 +178,7 @@ public class FactorSet implements FactorGroup {
         return organism.getValue();
     }
 
+    public boolean containsOnlyOrganism() {
+        return size() == 1 && getFactorByType("ORGANISM") != null;
+    }
 }
