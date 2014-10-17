@@ -53,6 +53,11 @@
         <lookup-method name="createExperimentalFactorsBuilder" bean="experimentalFactorsBuilder"/>
     </bean>
 
+    <bean id="proteomicsbaselineExperimentLoader" class="uk.ac.ebi.atlas.trader.loader.ProteomicsBaselineExperimentsCacheLoader">
+        <lookup-method name="createExperimentBuilder" bean="baselineExperimentBuilder"/>
+        <lookup-method name="createExperimentalFactorsBuilder" bean="experimentalFactorsBuilder"/>
+    </bean>
+
     <bean id="barChartTraderLoader" class="uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTradersCacheLoader">
         <lookup-method name="createBarChartTraderBuilder" bean="barChartTraderBuilder"/>
     </bean>

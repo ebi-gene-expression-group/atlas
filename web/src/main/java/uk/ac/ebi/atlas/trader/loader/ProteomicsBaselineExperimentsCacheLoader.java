@@ -47,21 +47,22 @@ import static com.google.common.base.Preconditions.checkNotNull;
 //of BaselineExperimentsCacheLoader, hence BaselineExperimentsCacheLoader is a singleton. However BaselineExperimentsCacheLoader uses ExperimentBuilder and ExperimentalFactorsBuilder
 //which have a prototype scope. To get around this BaselineExperimentsCacheLoader uses lookup-method injection to get a new prototypical instance of
 //ExperimentBuilder/ExperimentalFactorsBuilder every time the load method is invoked
-public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
+//TODO - why don't we just use new here instead of getting a prototypical instance?
+public abstract class ProteomicsBaselineExperimentsCacheLoader extends ExperimentsCacheLoader<ProteomicsBaselineExperiment> {
 
-    private final BaselineExperimentExpressionLevelFile expressionLevelFile;
+    private final ProteomicsBaselineExperimentExpressionLevelFile expressionLevelFile;
     private final ConfigurationTrader configurationTrader;
 
     @Inject
-    protected BaselineExperimentsCacheLoader(BaselineExperimentExpressionLevelFile expressionLevelFile,
-                                             ConfigurationTrader configurationTrader) {
+    protected ProteomicsBaselineExperimentsCacheLoader(ProteomicsBaselineExperimentExpressionLevelFile expressionLevelFile,
+                                                       ConfigurationTrader configurationTrader) {
 
         this.configurationTrader = configurationTrader;
         this.expressionLevelFile = expressionLevelFile;
     }
 
     @Override
-    protected BaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
+    protected ProteomicsBaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
                                       boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
@@ -85,10 +86,11 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withAssayGroups(assayGroups)
                 .withExperimentDesign(experimentDesign)
                 .withExperimentalFactors(experimentalFactors)
-                .create();
+                .createProteomics();
 
     }
 
+    //TODO: move this elsewhere, it is duplication of the same method in BaselineExperimentsCacheLoader
     private ExperimentalFactors createExperimentalFactors(ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig, AssayGroups assayGroups, String[] orderedAssayGroupIds) {
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
         Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();

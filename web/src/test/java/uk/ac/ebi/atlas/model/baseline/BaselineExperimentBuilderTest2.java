@@ -88,7 +88,7 @@ public class BaselineExperimentBuilderTest2 {
         when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newHashSet("g1", "g2"));
 
         subject = new BaselineExperimentBuilder()
-                .forSpecies(Sets.newHashSet(SPECIE))
+                .forOrganisms(Sets.newHashSet(SPECIE))
                 .withDescription(DESCRIPTION)
                 .withSpeciesMapping(Collections.EMPTY_MAP)
                 .withDisplayName(DISPLAY_NAME)

@@ -156,6 +156,7 @@ public class ExperimentDAO {
 
     }
 
+    //TODO: replace this with a one parameter method findExperimentIncludingPrivate
     public ExperimentDTO findExperiment(String experimentAccession, boolean includePrivates) {
 
         String findExperimentQuery = includePrivates ? SELECT_EXPERIMENT_BY_ACCESSION : SELECT_PUBLIC_EXPERIMENT_BY_ACCESSION;

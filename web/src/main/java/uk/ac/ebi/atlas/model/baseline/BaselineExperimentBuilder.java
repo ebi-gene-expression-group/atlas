@@ -40,7 +40,7 @@ import static com.google.common.base.Preconditions.checkState;
 @Scope("prototype")
 public class BaselineExperimentBuilder {
 
-    private Set<String> species;
+    private Set<String> organisms;
     private String description;
     private String displayName;
     private boolean hasExtraInfoFile;
@@ -52,8 +52,8 @@ public class BaselineExperimentBuilder {
     private AssayGroups assayGroups;
     private ExperimentalFactors experimentalFactors;
 
-    public BaselineExperimentBuilder forSpecies(Set<String> species) {
-        this.species = species;
+    public BaselineExperimentBuilder forOrganisms(Set<String> organisms) {
+        this.organisms = organisms;
         return this;
     }
 
@@ -97,7 +97,33 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
+    public BaselineExperimentBuilder withAccession(String experimentAccession) {
+        this.experimentAccession = experimentAccession;
+        return this;
+    }
+
+    public BaselineExperimentBuilder withLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+        return this;
+    }
+
     public BaselineExperiment create() {
+        validate();
+
+        return new BaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
+                displayName, organisms, speciesMapping, hasExtraInfoFile,
+                pubMedIds, experimentDesign, assayGroups);
+    }
+
+    public ProteomicsBaselineExperiment createProteomics() {
+        validate();
+
+        return new ProteomicsBaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
+                displayName, organisms, speciesMapping, hasExtraInfoFile,
+                pubMedIds, experimentDesign, assayGroups);
+    }
+
+    void validate() {
         checkNotNull(assayGroups, "Please provide a non empty set of AssayGroup objects");
         checkState(CollectionUtils.isNotEmpty(assayGroups.getAssayGroupIds()), "Please provide a non empty set of AssayGroup objects");
         checkState(speciesMapping != null, "Please provide a map of species mappings");
@@ -107,21 +133,6 @@ public class BaselineExperimentBuilder {
         if (StringUtils.isBlank(displayName)) {
             displayName = experimentAccession;
         }
-
-        return new BaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
-                displayName, species, speciesMapping, hasExtraInfoFile,
-                pubMedIds, experimentDesign, assayGroups);
-    }
-
-
-    public BaselineExperimentBuilder withAccession(String experimentAccession) {
-        this.experimentAccession = experimentAccession;
-        return this;
-    }
-
-    public BaselineExperimentBuilder withLastUpdate(Date lastUpdate) {
-        this.lastUpdate = lastUpdate;
-        return this;
     }
 
 }

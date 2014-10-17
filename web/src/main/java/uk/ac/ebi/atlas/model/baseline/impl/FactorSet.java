@@ -46,6 +46,10 @@ public class FactorSet implements FactorGroup {
         addAll(factors);
     }
 
+    public FactorSet(Factor... factors) {
+        addAll(Arrays.asList(factors));
+    }
+
     public FactorSet(Factor factor) {
         add(factor);
     }
@@ -55,7 +59,7 @@ public class FactorSet implements FactorGroup {
         return this;
     }
 
-    public FactorSet addAll(Collection<Factor> factors) {
+    public FactorSet addAll(Iterable<Factor> factors) {
         for (Factor factor : factors){
             add(factor);
         }

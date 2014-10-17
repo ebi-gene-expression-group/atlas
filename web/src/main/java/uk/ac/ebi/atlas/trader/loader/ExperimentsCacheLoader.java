@@ -42,7 +42,6 @@ import java.text.MessageFormat;
 public abstract class ExperimentsCacheLoader<T extends Experiment> extends CacheLoader<String, T> {
     private static final Logger LOGGER = Logger.getLogger(ExperimentsCacheLoader.class);
 
-    @Value("#{configuration['experiment.extra-info-image.path.template']}")
     private String extraInfoPathTemplate;
 
     private ArrayExpressClient arrayExpressClient;
@@ -52,6 +51,11 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
     private ExperimentDAO experimentDAO;
 
     protected ExperimentsCacheLoader() {
+    }
+
+    @Value("#{configuration['experiment.extra-info-image.path.template']}")
+    public void setExtraInfoPathTemplate(String extraInfoPathTemplate) {
+        this.extraInfoPathTemplate = extraInfoPathTemplate;
     }
 
     @Inject
@@ -74,24 +78,27 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
 
         LOGGER.info("loading experiment with accession: " + experimentAccession);
 
-        String extraInfoFileLocation = MessageFormat.format(extraInfoPathTemplate, experimentAccession);
-
-        boolean hasExtraInfoFile = Files.exists(Paths.get(extraInfoFileLocation));
+        boolean hasExtraInfoFile = extraInfoFileExists(experimentAccession);
 
         ExperimentDesign experimentDesign = experimentDesignParser.parse(experimentAccession);
 
         ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
 
-        String experimentDescription = fetchExperimentDescriptionFromArrayExpress(experimentAccession, experimentDTO);
+        String experimentDescription = fetchExperimentNameFromArrayExpress(experimentAccession, experimentDTO);
 
         return load(experimentDTO, experimentDescription, hasExtraInfoFile, experimentDesign);
 
     }
 
+    private boolean extraInfoFileExists(String experimentAccession) {
+        String extraInfoFileLocation = MessageFormat.format(extraInfoPathTemplate, experimentAccession);
+        return Files.exists(Paths.get(extraInfoFileLocation));
+    }
+
     protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription,
                               boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
 
-    final String fetchExperimentDescriptionFromArrayExpress(String experimentAccession, ExperimentDTO experimentDTO) {
+    final String fetchExperimentNameFromArrayExpress(String experimentAccession, ExperimentDTO experimentDTO) {
         try {
             return arrayExpressClient.fetchExperimentName(experimentAccession);
         } catch (Exception e) {

@@ -53,6 +53,11 @@ public class ExperimentDTO {
         this(experimentAccession, experimentType, species, pubmedIds, title, null, isPrivate, UUID.randomUUID().toString());
     }
 
+    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Set<String> pubmedIds,
+                         String title, Date lastUpdate, boolean aPrivate, String accessKey) {
+        this(experimentAccession, experimentType, new HashSet(), pubmedIds, title, lastUpdate, aPrivate, accessKey);
+    }
+
     public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Set<String> species, Set<String> pubmedIds,
                          String title, Date lastUpdate, boolean isPrivate, String accessKey) {
         this.experimentAccession = experimentAccession;
@@ -65,16 +70,6 @@ public class ExperimentDTO {
         this.accessKey = accessKey;
     }
 
-    public ExperimentDTO(String experimentAccession, ExperimentType experimentType, Set<String> pubmedIds, String title, Date lastUpdate, boolean aPrivate, String accessKey) {
-        this.accessKey = accessKey;
-        this.experimentAccession = experimentAccession;
-        this.experimentType = experimentType;
-        this.lastUpdate = lastUpdate;
-        isPrivate = aPrivate;
-        this.pubmedIds = pubmedIds;
-        this.title = title;
-        species = new HashSet();
-    }
 
     public String getExperimentAccession() {
         return experimentAccession;

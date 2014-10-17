@@ -31,6 +31,7 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 
 import javax.inject.Inject;
@@ -45,17 +46,20 @@ public class ExperimentTrader {
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
     private MicroarrayExperimentsCache microarrayExperimentsCache;
     private ExperimentDAO experimentDAO;
+    private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache;
 
     @Inject
     public ExperimentTrader(ExperimentDAO experimentDAO,
                             BaselineExperimentsCache baselineExperimentsCache,
                             RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
-                            MicroarrayExperimentsCache microarrayExperimentsCache) {
+                            MicroarrayExperimentsCache microarrayExperimentsCache,
+                            ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache) {
 
         this.experimentDAO = experimentDAO;
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
+        this.proteomicsBaselineExperimentsCache = proteomicsBaselineExperimentsCache;
     }
 
     public Experiment getPublicExperiment(String experimentAccession) {
@@ -91,6 +95,7 @@ public class ExperimentTrader {
             case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
                 microarrayExperimentsCache.evictExperiment(experimentAccession);
                 break;
+            //TODO: remove proteomics baseline, need test first
             default:
                 throw new IllegalStateException("invalid enum value: " + type);
         }
@@ -114,6 +119,8 @@ public class ExperimentTrader {
             case MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL:
             case MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL:
                 return microarrayExperimentsCache.getExperiment(experimentAccession);
+            case PROTEOMICS_BASELINE:
+                return proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
             default:
                 throw new IllegalStateException("invalid enum value: " + experimentType);
         }

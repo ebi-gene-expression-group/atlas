@@ -87,6 +87,7 @@ public class ExperimentDesignFileWriter {
                 return Lists.newArrayList("Assay", "Array");
             case RNASEQ_MRNA_BASELINE:
             case RNASEQ_MRNA_DIFFERENTIAL:
+            case PROTEOMICS_BASELINE:
                 return Lists.newArrayList("Run");
             default:
                 throw new IllegalStateException("Invalid parent type: " + experimentType.getParent());

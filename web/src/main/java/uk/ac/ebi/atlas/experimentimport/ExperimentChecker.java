@@ -24,9 +24,9 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
+import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -63,6 +63,9 @@ public class ExperimentChecker {
             case RNASEQ_MRNA_BASELINE:
                 checkBaselineFiles(experimentAccession);
                 break;
+            case PROTEOMICS_BASELINE:
+                checkProteomicsBaselineFiles(experimentAccession);
+                break;
             case RNASEQ_MRNA_DIFFERENTIAL:
                 checkDifferentialFiles(experimentAccession);
                 break;
@@ -82,6 +85,13 @@ public class ExperimentChecker {
     void checkBaselineFiles(String experimentAccession) {
         Set<String> baselineExperimentPathTemplates =
                 Sets.newHashSet("experiment.magetab.path.template", "experiment.transcripts.path.template", "experiment.factors.path.template");
+
+        checkFilesPermissions(baselineExperimentPathTemplates, experimentAccession);
+    }
+
+    void checkProteomicsBaselineFiles(String experimentAccession) {
+        Set<String> baselineExperimentPathTemplates =
+                Sets.newHashSet("experiment.magetab.path.template", "experiment.factors.path.template");
 
         checkFilesPermissions(baselineExperimentPathTemplates, experimentAccession);
     }
