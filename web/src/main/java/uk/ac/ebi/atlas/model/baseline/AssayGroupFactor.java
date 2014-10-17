@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.model.baseline;
 
+import javax.annotation.Nullable;
+
 public class AssayGroupFactor implements Comparable<AssayGroupFactor>{
 
     private String assayGroupId;
@@ -28,7 +30,7 @@ public class AssayGroupFactor implements Comparable<AssayGroupFactor>{
     }
 
     //used in heatmap.tag
-    public String getValueOntologyTermId() {
+    public @Nullable String getValueOntologyTermId() {
         return factor.getValueOntologyTermId();
     }
 
