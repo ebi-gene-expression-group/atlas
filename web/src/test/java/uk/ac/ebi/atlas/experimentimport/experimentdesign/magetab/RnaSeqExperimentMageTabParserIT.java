@@ -49,7 +49,7 @@ import static org.hamcrest.Matchers.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class RnaSeqExperimentDesignMageTabParserIT {
+public class RnaSeqExperimentMageTabParserIT {
 
     private static final String EXPERIMENT_ACCESSION_E_MTAB_513 = "E-MTAB-513";
 
@@ -61,11 +61,11 @@ public class RnaSeqExperimentDesignMageTabParserIT {
     @Inject
     private ValueAndUnitJoiner valueAndUnitJoiner;
 
-    private RnaSeqExperimentDesignMageTabParser subject;
+    private RnaSeqExperimentMageTabParser subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new RnaSeqExperimentDesignMageTabParser();
+        subject = new RnaSeqExperimentMageTabParser();
         subject.setMageTabLimpopoUtils(mageTabLimpopoUtils);
         subject.setValueAndUnitJoiner(valueAndUnitJoiner);
     }

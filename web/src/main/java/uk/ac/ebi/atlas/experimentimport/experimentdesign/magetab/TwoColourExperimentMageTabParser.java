@@ -39,9 +39,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-@Named("twoColourExperimentDesignMageTabParser")
+@Named
 @Scope("prototype")
-public class TwoColourExperimentDesignMageTabParser extends MicroarrayExperimentDesignMageTabParser {
+public class TwoColourExperimentMageTabParser extends MicroarrayExperimentMageTabParser {
 
     @Override
     protected Set<NamedSdrfNode<HybridizationNode>> getAssayNodes(SDRF sdrf) {

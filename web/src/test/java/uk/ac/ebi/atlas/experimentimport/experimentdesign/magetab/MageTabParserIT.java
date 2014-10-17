@@ -26,8 +26,8 @@ public class MageTabParserIT {
     private static final String EXPERIMENT_WITH_FACTOR_TYPE_DIFFERENT_FROM_NAME = "E-TABM-713";
     private static final String EXPERIMENT_WITH_COMPOUND_FACTOR_TYPE_DIFFERENT_FROM_NAME = "E-GEOD-10732";
 
-    @Resource(name = "microarrayExperimentDesignMageTabParser")
-    private MicroarrayExperimentDesignMageTabParser subject;
+    @Resource(name = "microarrayExperimentMageTabParser")
+    private MicroarrayExperimentMageTabParser subject;
 
     @Test
     public void factorIsDescribedByFactorTypeAndNotName() throws IOException {

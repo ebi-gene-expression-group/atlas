@@ -33,16 +33,16 @@ import javax.inject.Named;
 public class MageTabParserFactory {
 
 
-    private MicroarrayExperimentDesignMageTabParser microarrayMageTabParser;
-    private RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser;
-    private TwoColourExperimentDesignMageTabParser twoColourMageTabParser;
+    private MicroarrayExperimentMageTabParser microarrayMageTabParser;
+    private RnaSeqExperimentMageTabParser rnaSeqMageTabParser;
+    private MicroarrayExperimentMageTabParser twoColourMageTabParser;
     private ProteomicsBaselineExperimentMageTabParser proteomicsBaselineMageTabParser;
 
     @Inject
-    public MageTabParserFactory(@Named("microarrayExperimentDesignMageTabParser") MicroarrayExperimentDesignMageTabParser microarrayMageTabParser,
-                                RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser,
+    public MageTabParserFactory(@Named("microarrayExperimentMageTabParser") MicroarrayExperimentMageTabParser microarrayMageTabParser,
+                                RnaSeqExperimentMageTabParser rnaSeqMageTabParser,
                                 ProteomicsBaselineExperimentMageTabParser proteomicsBaselineMageTabParser,
-                                @Named("twoColourExperimentDesignMageTabParser") TwoColourExperimentDesignMageTabParser twoColourMageTabParser) {
+                                @Named("twoColourExperimentMageTabParser") MicroarrayExperimentMageTabParser twoColourMageTabParser) {
         this.microarrayMageTabParser = microarrayMageTabParser;
         this.rnaSeqMageTabParser = rnaSeqMageTabParser;
         this.twoColourMageTabParser = twoColourMageTabParser;
