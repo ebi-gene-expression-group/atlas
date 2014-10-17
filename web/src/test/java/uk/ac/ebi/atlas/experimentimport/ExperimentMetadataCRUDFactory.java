@@ -22,9 +22,6 @@ public class ExperimentMetadataCRUDFactory {
     ConfigurationTrader configurationTrader;
 
     @Inject
-    ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
-
-    @Inject
     BaselineExperimentsCache baselineExperimentsCache;
 
     @Inject
@@ -45,7 +42,7 @@ public class ExperimentMetadataCRUDFactory {
     @Inject
     CacheConfiguration cacheConfiguration;
 
-    public ExperimentMetadataCRUD create(ExperimentDAO experimentDao, ConditionsIndexTrader conditionsIndexTrader) {
+    public ExperimentMetadataCRUD create(ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder, ExperimentDAO experimentDao, ConditionsIndexTrader conditionsIndexTrader) {
         ProteomicsBaselineExperimentsCacheLoader loader = loaderFactory.create(experimentDao);
         LoadingCache<String, ProteomicsBaselineExperiment> loadingCache = CacheBuilder.newBuilder().maximumSize(1).build(loader);
         ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache = new ProteomicsBaselineExperimentsCache(loadingCache);

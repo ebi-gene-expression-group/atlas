@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.SolrServer;
@@ -18,7 +17,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.*;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
+import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTraderFactory;
@@ -38,6 +39,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -48,6 +50,9 @@ public class ExperimentCRUDBaselineProteomicsIT {
 
 
     public static final String E_PROT_1 = "E-PROT-1";
+    private static final String DEVELOPMENTAL_STAGE = "developmental stage";
+    private static final String ORGANISM_PART = "organism part";
+    public static final String ORGANISM = "organism";
 
     @Inject
     private ExperimentChecker experimentChecker;
@@ -76,27 +81,40 @@ public class ExperimentCRUDBaselineProteomicsIT {
     private ConfigurationTrader configurationTrader;
 
     @Captor
-    ArgumentCaptor<Collection<Condition>> beansCaptor;
+    ArgumentCaptor<Collection<Condition>> collectionArgumentCaptor;
 
     @Captor
-    ArgumentCaptor<ExperimentDTO> experimentDTOCaptor;
+    ArgumentCaptor<ExperimentDTO> experimentDTOArgumentCaptor;
+
+    @Captor
+    ArgumentCaptor<ExperimentDesign> experimentDesignArgumentCaptor;
+
+    @Mock
+    private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
+    @Mock
+    private ExperimentDesignFileWriter experimentDesignFileWriter;
 
     @Before
-    public void mockOutDatabaseAndSolr() {
+    public void mockOutDatabaseAndSolr() throws IOException {
         MockitoAnnotations.initMocks(this);
 
         ExperimentDTO experimentDTO = new ExperimentDTO(E_PROT_1, ExperimentType.PROTEOMICS_BASELINE, Collections.<String>emptySet(), "title", new Date(), false, UUID.randomUUID().toString());
         when(experimentDao.findExperiment(E_PROT_1, true)).thenThrow(new ResourceNotFoundException("")).thenReturn(experimentDTO);
         when(experimentDao.findPublicExperiment(E_PROT_1)).thenReturn(experimentDTO);
 
+        ConditionsIndexTrader conditionsIndexTrader = conditionsIndexTraderFactory.create(solrServer);
+
+        when(experimentDesignFileWriterBuilder.forExperimentAccession(anyString())).thenReturn(experimentDesignFileWriterBuilder);
+        when(experimentDesignFileWriterBuilder.withExperimentType(any(ExperimentType.class))).thenReturn(experimentDesignFileWriterBuilder);
+        when(experimentDesignFileWriterBuilder.build()).thenReturn(experimentDesignFileWriter);
+
+        ExperimentMetadataCRUD experimentMetadataCRUD = experimentMetadataCRUDFactory.create(experimentDesignFileWriterBuilder, experimentDao, conditionsIndexTrader);
+
         subject = new ExperimentCRUD();
         subject.setAnalyticsDao(analyticsDao);
         subject.setAnalyticsLoaderFactory(analyticsLoaderFactory);
         subject.setExperimentChecker(experimentChecker);
         subject.setConfigurationTrader(configurationTrader);
-
-        ConditionsIndexTrader conditionsIndexTrader = conditionsIndexTraderFactory.create(solrServer);
-        ExperimentMetadataCRUD experimentMetadataCRUD = experimentMetadataCRUDFactory.create(experimentDao, conditionsIndexTrader);
         subject.setExperimentMetadataCRUD(experimentMetadataCRUD);
     }
 
@@ -104,11 +122,11 @@ public class ExperimentCRUDBaselineProteomicsIT {
     public void importExperiment_AddsConditionsToSolr() throws IOException, SolrServerException {
         subject.importExperiment(E_PROT_1, false);
 
-        verify(solrServer).addBeans(beansCaptor.capture());
+        verify(solrServer).addBeans(collectionArgumentCaptor.capture());
 
-        Collection<Condition> beans = beansCaptor.getValue();
+        Collection<Condition> beans = collectionArgumentCaptor.getValue();
 
-        System.out.println(Joiner.on(", ").join(beans));
+        //System.out.println(Joiner.on(", ").join(beans));
 
         assertThat(beans, hasSize(30));
         assertThat(beans, hasItem(new Condition(E_PROT_1,"g10", ImmutableList.of("Homo sapiens", "adult", "kidney"))));
@@ -118,11 +136,9 @@ public class ExperimentCRUDBaselineProteomicsIT {
     public void importExperiment_AddsToDatabase() throws IOException, SolrServerException {
         subject.importExperiment(E_PROT_1, false);
 
-        verify(experimentDao).addExperiment(experimentDTOCaptor.capture(), any(Optional.class));
+        verify(experimentDao).addExperiment(experimentDTOArgumentCaptor.capture(), any(Optional.class));
 
-        ExperimentDTO experimentDTO = experimentDTOCaptor.getValue();
-
-        //System.out.println(experimentDTO);
+        ExperimentDTO experimentDTO = experimentDTOArgumentCaptor.getValue();
 
         assertThat(experimentDTO.getExperimentAccession(), is(E_PROT_1));
         assertThat(experimentDTO.getExperimentType(), is(ExperimentType.PROTEOMICS_BASELINE));
@@ -130,11 +146,23 @@ public class ExperimentCRUDBaselineProteomicsIT {
         assertThat(experimentDTO.getPubmedIds(), contains("24669763", "24870542"));
         assertThat(experimentDTO.getTitle(), is("A draft map of the human proteome"));
         assertThat(experimentDTO.isPrivate(), is(false));
-
     }
 
     @Test
     public void importExperiment_WritesExpDesignFile() throws IOException, SolrServerException {
+        subject.importExperiment(E_PROT_1, false);
+
+        verify(experimentDesignFileWriter).write(experimentDesignArgumentCaptor.capture());
+
+        ExperimentDesign experimentDesign = experimentDesignArgumentCaptor.getValue();
+
+        assertThat(experimentDesign.getFactorHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM_PART));
+        assertThat(experimentDesign.getSampleHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM, ORGANISM_PART));
+
+        assertThat(experimentDesign.getSampleCharacteristics("Adult_Ovary"), contains(
+                SampleCharacteristic.create(ORGANISM_PART, "ovary"),
+                SampleCharacteristic.create(ORGANISM, "Homo sapiens"),
+                SampleCharacteristic.create(DEVELOPMENTAL_STAGE, "adult")));
     }
 
 }
