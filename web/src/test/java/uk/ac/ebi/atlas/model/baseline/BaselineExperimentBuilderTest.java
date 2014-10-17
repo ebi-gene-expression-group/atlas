@@ -99,7 +99,7 @@ public class BaselineExperimentBuilderTest {
     @Test
     public void testCreate() throws Exception {
 
-        BaselineExperiment experiment = subject.forSpecies(Sets.newHashSet(SPECIES))
+        BaselineExperiment experiment = subject.forOrganisms(Sets.newHashSet(SPECIES))
                 .withAccession(EXPERIMENT_ACCESSION)
                 .withDescription(DESCRIPTION)
                 .withDisplayName(DISPLAY_NAME)

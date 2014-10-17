@@ -55,7 +55,7 @@ public class BaselineExperimentsCacheLoaderIT {
 
 
     @Test
-    public void firstRunIsCorrect() throws Exception {
+    public void correctSpeciesReadFromDatabase() throws Exception {
         //given
         BaselineExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
         //then

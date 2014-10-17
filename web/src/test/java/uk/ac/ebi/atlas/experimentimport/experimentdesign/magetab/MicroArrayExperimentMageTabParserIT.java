@@ -40,12 +40,12 @@ import static org.hamcrest.Matchers.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class MicroArrayExperimentDesignMageTabParserIT {
+public class MicroArrayExperimentMageTabParserIT {
 
     private static final String MICROARRAY_EXPERIMENT_ACCESSION = "E-MEXP-1276";
 
-    @Resource(name = "microarrayExperimentDesignMageTabParser")
-    private MicroarrayExperimentDesignMageTabParser subject;
+    @Resource(name = "microarrayExperimentMageTabParser")
+    private MicroarrayExperimentMageTabParser subject;
 
     @Test
     public void asTableDataShouldReturnTheRightStuff() throws IOException {

@@ -218,6 +218,8 @@ public class ExperimentDesign implements Serializable {
     public Map<String, String> getSampleCharacteristicsValues(String runOrAssay) {
         SampleCharacteristics sampleCharacteristics = this.samples.get(runOrAssay);
 
+        checkNotNull(sampleCharacteristics, "No sample characteristics for run or assay " + runOrAssay + ". Check configuration.xml matches ExpDesign/SDRF.");
+
         ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
 
         for (Map.Entry<String, SampleCharacteristic> sampleCharacteristic : sampleCharacteristics.entrySet()) {

@@ -30,7 +30,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -40,13 +39,12 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class TwoColourExperimentDesignMageTabParserIT {
+public class TwoColourExperimentMageTabParserIT {
 
     private static final String TWO_COLOUR_EXPERIMENT_ACCESSION = "E-GEOD-43049";
 
-    @Named("twoColourExperimentDesignMageTabParser")
     @Inject
-    private TwoColourExperimentDesignMageTabParser subject;
+    private TwoColourExperimentMageTabParser subject;
 
     @Test
     public void cultureConditionFactorValuesAreSelectedForTheCorrectChannel() throws IOException {

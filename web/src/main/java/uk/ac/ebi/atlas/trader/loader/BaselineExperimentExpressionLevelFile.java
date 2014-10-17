@@ -14,6 +14,7 @@ import javax.inject.Named;
 public class BaselineExperimentExpressionLevelFile {
 
     private static final int HEADER_LINE_INDEX = 0;
+    private static final int ASSAY_GROUP_HEADER_START_INDEX = 2;
 
     private final TsvReaderBuilder tsvReaderBuilder;
 
@@ -29,6 +30,6 @@ public class BaselineExperimentExpressionLevelFile {
 
         String[] experimentRunHeaders = experimentDataTsvReader.readLine(HEADER_LINE_INDEX);
 
-        return ArrayUtils.subarray(experimentRunHeaders, BaselineExperimentsCacheLoader.ASSAY_GROUP_HEADER_START_INDEX, experimentRunHeaders.length);
+        return ArrayUtils.subarray(experimentRunHeaders, ASSAY_GROUP_HEADER_START_INDEX, experimentRunHeaders.length);
     }
 }

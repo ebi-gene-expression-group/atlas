@@ -34,7 +34,8 @@ public enum ExperimentType {
     ,MICROARRAY_ANY("microarray parent type")
     ,MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_mrna_differential")
     ,MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_2colour_mrna_differential")
-    ,MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_microrna_differential");
+    ,MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL(MICROARRAY_ANY, "microarray_1colour_microrna_differential")
+    ,PROTEOMICS_BASELINE("proteomics_baseline");
 
     private ExperimentType parent;
     private String description;
@@ -53,7 +54,7 @@ public enum ExperimentType {
     }
 
     public boolean isBaseline() {
-        return equals(RNASEQ_MRNA_BASELINE);
+        return equals(RNASEQ_MRNA_BASELINE) || equals(PROTEOMICS_BASELINE);
     }
 
     public boolean isMicroRna() {

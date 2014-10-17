@@ -80,6 +80,7 @@ public class ExperimentMetadataCRUD {
         checkNotNull(accession);
         checkNotNull(experimentConfiguration);
 
+        //TODO push accession and experimentType into MageTabParserOutput
         ExperimentType experimentType = experimentConfiguration.getExperimentType();
         MageTabParserOutput mageTabParserOutput = readMageTab(accession, experimentType);
 
@@ -94,6 +95,7 @@ public class ExperimentMetadataCRUD {
 
         //experiment can be indexed only after it's been added to the DB, since fetching experiment
         //from cache gets this experiment from the DB first
+        //TODO: change this so it uses experimentconfiguration, experiment design, and accession rather than experiment
         if (!isPrivate) {
             Experiment experiment = experimentTrader.getPublicExperiment(accession);
             conditionsIndexTrader.getIndex(experiment).addConditions(experiment, experimentDesign.getAllOntologyTermIdsByAssayAccession());

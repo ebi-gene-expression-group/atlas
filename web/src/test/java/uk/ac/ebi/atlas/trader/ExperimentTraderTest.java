@@ -32,8 +32,9 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -66,7 +67,11 @@ public class ExperimentTraderTest {
     @Mock
     private MicroarrayExperimentsCache microarrayExperimentsCacheMock;
     @Mock
+    private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCacheMock;
+
+    @Mock
     ExperimentDTO experimentDTOMock;
+
 
 
     @Before
@@ -84,7 +89,7 @@ public class ExperimentTraderTest {
         subject = new ExperimentTrader(experimentDAOMock,
                                         baselineExperimentsCacheMock,
                                         rnaSeqDiffExperimentsCacheMock,
-                                        microarrayExperimentsCacheMock);
+                                        microarrayExperimentsCacheMock, proteomicsBaselineExperimentsCacheMock);
     }
 
     @Test

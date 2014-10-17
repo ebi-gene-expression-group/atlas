@@ -20,14 +20,12 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.profiles.baseline;
+package uk.ac.ebi.atlas.model.baseline.barcharts;
 
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpressions;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsInputStream;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsQueueBuilder;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 

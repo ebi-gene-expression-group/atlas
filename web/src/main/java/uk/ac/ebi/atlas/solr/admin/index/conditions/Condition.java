@@ -82,4 +82,13 @@ public class Condition {
         final Condition other = (Condition) obj;
         return Objects.equals(this.experimentAccession, other.experimentAccession) && Objects.equals(this.assayGroupId, other.assayGroupId) && Iterables.elementsEqual(this.values, other.values);
     }
+
+    @Override
+    public String toString() {
+        return com.google.common.base.Objects.toStringHelper(this)
+                .add("experimentAccession", experimentAccession)
+                .add("assayGroupId", assayGroupId)
+                .add("values", values)
+                .toString();
+    }
 }

@@ -29,25 +29,24 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@Scope("prototype")
+@Scope("singleton")
 public class MageTabParserFactory {
 
 
-    private MicroarrayExperimentDesignMageTabParser microarrayMageTabParser;
-    private RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser;
-    private TwoColourExperimentDesignMageTabParser twoColourMageTabParser;
+    private MicroarrayExperimentMageTabParser microarrayMageTabParser;
+    private RnaSeqExperimentMageTabParser rnaSeqMageTabParser;
+    private MicroarrayExperimentMageTabParser twoColourMageTabParser;
+    private ProteomicsBaselineExperimentMageTabParser proteomicsBaselineMageTabParser;
 
-    // TODO: (OM) This is a little bit inefficient because each time we instantiate we end up creating every type of parser,
-    // even though we will only use one. Probably better to have the experiment-type specific behaviour in a
-    // strategy class that has no dependencies, then they can be easily created with new (), OR change this factory
-    // to a singleton which requires making MageTabParser stateless.
     @Inject
-    public MageTabParserFactory(@Named("microarrayExperimentDesignMageTabParser") MicroarrayExperimentDesignMageTabParser microarrayMageTabParser,
-                                             RnaSeqExperimentDesignMageTabParser rnaSeqMageTabParser,
-                                             @Named("twoColourExperimentDesignMageTabParser") TwoColourExperimentDesignMageTabParser twoColourMageTabParser) {
+    public MageTabParserFactory(@Named("microarrayExperimentMageTabParser") MicroarrayExperimentMageTabParser microarrayMageTabParser,
+                                RnaSeqExperimentMageTabParser rnaSeqMageTabParser,
+                                ProteomicsBaselineExperimentMageTabParser proteomicsBaselineMageTabParser,
+                                @Named("twoColourExperimentMageTabParser") MicroarrayExperimentMageTabParser twoColourMageTabParser) {
         this.microarrayMageTabParser = microarrayMageTabParser;
         this.rnaSeqMageTabParser = rnaSeqMageTabParser;
         this.twoColourMageTabParser = twoColourMageTabParser;
+        this.proteomicsBaselineMageTabParser = proteomicsBaselineMageTabParser;
     }
 
     public MageTabParser create(ExperimentType experimentType)  {
@@ -60,6 +59,8 @@ public class MageTabParserFactory {
             case RNASEQ_MRNA_BASELINE:
             case RNASEQ_MRNA_DIFFERENTIAL:
                 return rnaSeqMageTabParser;
+            case PROTEOMICS_BASELINE:
+                return proteomicsBaselineMageTabParser;
             default:
                 throw new IllegalStateException("Unknown experimentType: " + experimentType);
         }

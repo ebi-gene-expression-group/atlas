@@ -30,9 +30,9 @@ import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
-import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -43,21 +43,21 @@ import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-//Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of ExperimentBuilder every time the load method is invoked
-//The reason to do so is that Guava CacheBuilder, that is the one only client of this class, is not spring managed.
+//This class is wired into CacheConfiguration. Guava CacheBuilder, that is the one only client of this class, is not spring managed and only accepts an initial instance
+//of BaselineExperimentsCacheLoader, hence BaselineExperimentsCacheLoader is a singleton. However BaselineExperimentsCacheLoader uses ExperimentBuilder and ExperimentalFactorsBuilder
+//which have a prototype scope. To get around this BaselineExperimentsCacheLoader uses lookup-method injection to get a new prototypical instance of
+//ExperimentBuilder/ExperimentalFactorsBuilder every time the load method is invoked
 public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoader<BaselineExperiment> {
 
-    public static final int ASSAY_GROUP_HEADER_START_INDEX = 2;
-    private final BaselineExperimentExpressionLevelFile baselineExperimentExpressionLevelFile;
-
-    private ConfigurationTrader configurationTrader;
+    private final BaselineExperimentExpressionLevelFile expressionLevelFile;
+    private final ConfigurationTrader configurationTrader;
 
     @Inject
-    protected BaselineExperimentsCacheLoader(BaselineExperimentExpressionLevelFile baselineExperimentExpressionLevelFile,
+    protected BaselineExperimentsCacheLoader(BaselineExperimentExpressionLevelFile expressionLevelFile,
                                              ConfigurationTrader configurationTrader) {
 
         this.configurationTrader = configurationTrader;
-        this.baselineExperimentExpressionLevelFile = baselineExperimentExpressionLevelFile;
+        this.expressionLevelFile = expressionLevelFile;
     }
 
     @Override
@@ -70,11 +70,11 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 
-        String[] orderedAssayGroupIds = baselineExperimentExpressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
+        String[] orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
 
         ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
 
-        return createExperimentBuilder().forSpecies(experimentDTO.getSpecies())
+        return createExperimentBuilder().forOrganisms(experimentDTO.getSpecies())
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)
