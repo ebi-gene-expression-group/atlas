@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.trader;
 
 import com.google.common.base.Optional;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
@@ -120,7 +121,11 @@ public class ExperimentDesignParser {
     }
 
     private Optional<OntologyTerm> createOntologyTermOptional(String[] line, Integer ontologyTermIndex) {
-        return ontologyTermIndex == null ? Optional.<OntologyTerm>absent() : Optional.of(OntologyTerm.createFromUri(line[ontologyTermIndex]));
+        if (ontologyTermIndex == null) {
+            return Optional.absent();
+        }
+        String uri = line[ontologyTermIndex];
+        return StringUtils.isEmpty(uri) ? Optional.<OntologyTerm>absent() : Optional.of(OntologyTerm.createFromUri(uri));
     }
 
     protected Map<String, Integer> extractHeaderIndexes(String[] columnHeaders, Pattern columnHeaderPattern) {

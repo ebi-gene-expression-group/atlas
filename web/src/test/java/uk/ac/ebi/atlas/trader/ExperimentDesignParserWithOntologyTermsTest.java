@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.trader;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -54,8 +55,9 @@ public class ExperimentDesignParserWithOntologyTermsTest {
 
     private static final String EXPERIMENT_ACCESSION = "ACCESSION";
     private static final String ASSAY_ACCESSION_1 = "C1";
-    private static final String RD_INSTAR_LARVA = "3rd instar larva";
     private static final String ASSAY_ACCESSION_2 = "WT3";
+    private static final String ASSAY_ACCESSION_3 = "A3";
+    private static final String RD_INSTAR_LARVA = "3rd instar larva";
     private static final String DUMMY = "dummy";
     private static final String CHARACTERISTIC_1 = "DevelopmentalStage";
     private static final String CHARACTERISTIC_2 = "StrainOrLine";
@@ -84,10 +86,15 @@ public class ExperimentDesignParserWithOntologyTermsTest {
 
     private static final String[] HEADER_LINE = new String[]{ASSAY, ARRAY, "Sample Characteristic[DevelopmentalStage]", "Sample Characteristic[Genotype]", "Sample Characteristic[Organism]", "Sample Characteristic Ontology Term[Organism]", "Sample Characteristic[StrainOrLine]", "Factor Value[GENOTYPE]", "Factor Value Ontology Term[GENOTYPE]"};
     private static final String[] FIRST_LINE = new String[]{ASSAY_ACCESSION_1, A_AFFY_35, RD_INSTAR_LARVA, "w1118; +; cycCY5", SPECIES_1, SPECIES_1_ONTOLOGY_TERM_SOURCEID, "", CYC_C_MUTANT, ONTOLOGY_TERM_1};
+    public static final String CYC = "cyc";
+    private static final String[] EMPTY_ONTOLOGY_TERM = new String[]{ASSAY_ACCESSION_3, A_AFFY_35, RD_INSTAR_LARVA, CYC, SPECIES_2, "", OREGON_R, CYC, ""};
     private static final String[] LAST_LINE = new String[]{ASSAY_ACCESSION_2, A_AFFY_35, RD_INSTAR_LARVA, "wild_type", SPECIES_2, SPECIES_2_ONTOLOGY_TERM_SOURCEID, OREGON_R, "wild_type", ONTOLOGY_TERM_2};
-    private static final List<String[]> DATA = Lists.newArrayList(HEADER_LINE, FIRST_LINE, LAST_LINE);
+    private static final List<String[]> DATA = Lists.newArrayList(HEADER_LINE, FIRST_LINE, EMPTY_ONTOLOGY_TERM, LAST_LINE);
     private static final Factor FACTOR1 = new Factor(GENOTYPE, CYC_C_MUTANT, OntologyTerm.create(ONTOLOGY_TERM_1));
     private static final Factor FACTOR2 = new Factor(GENOTYPE, "wild_type", OntologyTerm.create(ONTOLOGY_TERM_2));
+    private static final String ORGANISM = "Organism";
+    private static final SampleCharacteristic SC_RABBIT = SampleCharacteristic.create(ORGANISM, SPECIES_2);
+    private static final Factor FACTOR_GENOTYPE = new Factor(GENOTYPE, CYC);
 
     @Mock
     private TsvReaderBuilder tsvReaderBuilderMock;
@@ -150,6 +157,26 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     }
 
     @Test
+    public void parseEmptyOntologyTermInSample() {
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
+
+        System.out.println("\"" + Joiner.on("\", \"").join(experimentDesign.getSampleCharacteristics(ASSAY_ACCESSION_3)));
+        assertThat(experimentDesign.getSampleCharacteristic(ASSAY_ACCESSION_3, ORGANISM), is(SC_RABBIT));
+    }
+
+
+    @Test
+    public void parseEmptyOntologyTermInFactor() {
+        ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
+
+        System.out.println("\"" + Joiner.on("\", \"").join(experimentDesign.getFactors(ASSAY_ACCESSION_3)));
+        Factor factor = experimentDesign.getFactor(ASSAY_ACCESSION_3, GENOTYPE);
+        assertThat(factor, is(FACTOR_GENOTYPE));
+        assertThat(factor.getValueOntologyTerm(), is(Optional.<OntologyTerm>absent()));
+
+    }
+
+    @Test
     public void testAssays() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
         assertThat(experimentDesign.getArrayDesign(ASSAY_ACCESSION_1), is(A_AFFY_35));
@@ -165,7 +192,7 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     @Test
     public void testGetAllRunOrAssay() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION);
-        assertThat(experimentDesign.getAllRunOrAssay(), contains(ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
+        assertThat(experimentDesign.getAllRunOrAssay(), contains(ASSAY_ACCESSION_3, ASSAY_ACCESSION_1, ASSAY_ACCESSION_2));
     }
 
     @Test
