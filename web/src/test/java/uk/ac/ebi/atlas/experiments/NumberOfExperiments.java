@@ -2,5 +2,5 @@ package uk.ac.ebi.atlas.experiments;
 
 public class NumberOfExperiments {
 
-    public static final int ALL = 23;
+    public static final int ALL = 24;
 }

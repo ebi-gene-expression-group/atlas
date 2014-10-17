@@ -37,6 +37,7 @@ import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 
 import java.util.Date;
@@ -51,7 +52,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentInfoListBuilderTest {
 
-    private static final String FACTOR_TYPE = "FACTOR_TYPE";
     private static final String FACTOR_NAME = "FACTOR_NAME";
     private static final String SPECIES = "SPECIES";
     private static final String ACCESSION = "ACCESSION";
@@ -79,6 +79,9 @@ public class ExperimentInfoListBuilderTest {
     private BaselineExperiment baselineExperimentMock;
 
     @Mock
+    private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCacheMock;
+
+    @Mock
     private DifferentialExperiment differentialExperimentMock;
 
     @Mock
@@ -91,6 +94,7 @@ public class ExperimentInfoListBuilderTest {
     private ExperimentDesign experimentDesignMock;
 
     private ExperimentInfoListBuilder subject;
+
 
     @Before
     public void setUp() throws Exception {
@@ -134,13 +138,13 @@ public class ExperimentInfoListBuilderTest {
 
         subject = new ExperimentInfoListBuilder(experimentTraderMock,
                 baselineExperimentsCacheMock,
-                rnaSeqDiffExperimentsCacheMock,
+                proteomicsBaselineExperimentsCacheMock, rnaSeqDiffExperimentsCacheMock,
                 microarrayExperimentsCacheMock,
                 arrayDesignTraderMock);
     }
 
     @Test
-    public void testBuild() throws Exception {
+    public void testBuild()  {
         List<ExperimentInfo> experimentInfos = subject.build();
         assertThat(experimentInfos.size(), is(3));
         assertThat(experimentInfos.get(0).getExperimentAccession(), is(ACCESSION));
@@ -149,7 +153,7 @@ public class ExperimentInfoListBuilderTest {
     }
 
     @Test
-    public void testExtractMicrorarryExperiments() throws Exception {
+    public void testExtractMicroarrayExperiments()  {
         List<ExperimentInfo> experimentInfos = subject.extractMicrorarryExperiments();
         assertThat(experimentInfos.size(), is(1));
         ExperimentInfo experimentInfo = experimentInfos.get(0);
@@ -159,7 +163,7 @@ public class ExperimentInfoListBuilderTest {
     }
 
     @Test
-    public void testExtractRnaSeqDiffExperiments() throws Exception {
+    public void testExtractRnaSeqDiffExperiments()  {
         List<ExperimentInfo> experimentInfos = subject.extractRnaSeqDiffExperiments();
         assertThat(experimentInfos.size(), is(1));
         ExperimentInfo experimentInfo = experimentInfos.get(0);
@@ -168,7 +172,7 @@ public class ExperimentInfoListBuilderTest {
     }
 
     @Test
-    public void testExtractBaselineExperiments() throws Exception {
+    public void testExtractBaselineExperiments() {
         List<ExperimentInfo> experimentInfos = subject.extractBaselineExperiments();
         assertThat(experimentInfos.size(), is(1));
         ExperimentInfo experimentInfo = experimentInfos.get(0);
@@ -177,7 +181,7 @@ public class ExperimentInfoListBuilderTest {
     }
 
     @Test
-    public void testExtractBasicExperimentInfo() throws Exception {
+    public void testExtractBasicExperimentInfo()   {
         ExperimentInfo experimentInfo = subject.extractBasicExperimentInfo(baselineExperimentMock);
         assertThat(experimentInfo.getExperimentAccession(), is(ACCESSION));
         assertThat(experimentInfo.getLastUpdate(), is("12-01-1940"));

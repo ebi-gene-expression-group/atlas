@@ -135,6 +135,10 @@ public class ExperimentTrader {
         return getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE);
     }
 
+    public Set<String> getProteomicsBaselineExperimentAccessions() {
+        return getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE);
+    }
+
     public Set<String> getRnaSeqDifferentialExperimentAccessions() {
         return getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
     }

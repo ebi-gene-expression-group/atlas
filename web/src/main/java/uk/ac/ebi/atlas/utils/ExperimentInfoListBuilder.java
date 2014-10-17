@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 
 import javax.inject.Inject;
@@ -47,6 +48,8 @@ public class ExperimentInfoListBuilder {
 
     private BaselineExperimentsCache baselineExperimentsCache;
 
+    private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache;
+
     private RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache;
 
     private MicroarrayExperimentsCache microarrayExperimentsCache;
@@ -55,14 +58,17 @@ public class ExperimentInfoListBuilder {
 
     private ArrayDesignTrader arrayDesignTrader;
 
+
     @Inject
     public ExperimentInfoListBuilder(ExperimentTrader experimentTrader,
                                      BaselineExperimentsCache baselineExperimentsCache,
+                                     ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache,
                                      RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                                      MicroarrayExperimentsCache microarrayExperimentsCache,
                                      ArrayDesignTrader arrayDesignTrader) {
         this.experimentTrader = experimentTrader;
         this.baselineExperimentsCache = baselineExperimentsCache;
+        this.proteomicsBaselineExperimentsCache = proteomicsBaselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
         this.arrayDesignTrader = arrayDesignTrader;
@@ -72,6 +78,7 @@ public class ExperimentInfoListBuilder {
 
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
         experimentInfos.addAll(extractBaselineExperiments());
+        experimentInfos.addAll(extractProteomicsBaselineExperiments());
         experimentInfos.addAll(extractRnaSeqDiffExperiments());
         experimentInfos.addAll(extractMicrorarryExperiments());
 
@@ -120,6 +127,22 @@ public class ExperimentInfoListBuilder {
 
         for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
             BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
+
+            ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
+            experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());
+
+            experimentInfos.add(experimentInfo);
+        }
+
+        return experimentInfos;
+    }
+
+    protected List<ExperimentInfo> extractProteomicsBaselineExperiments() {
+
+        List<ExperimentInfo> experimentInfos = Lists.newArrayList();
+
+        for (String experimentAccession : experimentTrader.getProteomicsBaselineExperimentAccessions()) {
+            BaselineExperiment experiment = proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
 
             ExperimentInfo experimentInfo = extractBasicExperimentInfo(experiment);
             experimentInfo.setNumberOfAssays(experiment.getExperimentRunAccessions().size());

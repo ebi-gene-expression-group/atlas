@@ -33,7 +33,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentsTablePage;
 import uk.ac.ebi.atlas.acceptance.utils.URLBuilder;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.utils.ExperimentInfo;
 import uk.ac.ebi.atlas.web.controllers.rest.ExperimentsListController;
 
@@ -41,7 +40,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -100,7 +98,7 @@ public class ExperimentsTablePageSIT extends SinglePageSeleniumFixture {
             Gson gson = new Gson();
             experimentInfoWrapper = gson.fromJson(json, ExperimentsListController.ExperimentInfoWrapper.class);
             for (ExperimentInfo experimentInfo : experimentInfoWrapper.getAaData()) {
-                if (experimentInfo.getExperimentType() == ExperimentType.RNASEQ_MRNA_BASELINE) {
+                if (experimentInfo.getExperimentType().isBaseline()) {
                     baselineInfos.add(experimentInfo);
                 } else {
                     differentialInfos.add(experimentInfo);
@@ -117,8 +115,6 @@ public class ExperimentsTablePageSIT extends SinglePageSeleniumFixture {
                 defaultLastDescription = baselineInfos.get(9).getExperimentDescription();
             }
             numberResults = totalExperiments < 10 ? totalExperiments : 10;
-        } catch (MalformedURLException e) {
-            LOGGER.error(e);
         } catch (IOException e) {
             LOGGER.error(e);
         }
