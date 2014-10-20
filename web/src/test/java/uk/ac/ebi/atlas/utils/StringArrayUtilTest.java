@@ -16,4 +16,20 @@ public class StringArrayUtilTest {
     public void substringBefore() {
         assertThat(StringArrayUtil.substringBefore(new String[]{"foo", "g1.one", "g2.two", "bar"}, "."), is(new String[] {"foo", "g1", "g2", "bar"}));
     }
+
+    @Test
+    public void indicesOf() {
+        assertThat(StringArrayUtil.indicesOf(new String[]{"foo", "g1.one", "g2.two", "bar"}, "."), is(new int[]{1, 2}));
+    }
+
+    @Test
+    public void indicesOfNoMatch() {
+        assertThat(StringArrayUtil.indicesOf(new String[]{"foo", "g1.one", "g2.two", "bar"}, "z"), is(new int[] {}));
+    }
+
+    @Test
+    public void filterByIndices() {
+        assertThat(StringArrayUtil.filterByIndices(new String[]{"foo", "g1.one", "g2.two", "bar"}, new int[] {0,2,3}),
+                is(new String[] {"foo", "g2.two", "bar"}));
+    }
 }

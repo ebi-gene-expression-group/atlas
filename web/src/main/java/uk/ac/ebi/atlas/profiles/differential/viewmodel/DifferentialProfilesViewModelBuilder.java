@@ -75,7 +75,7 @@ public class DifferentialProfilesViewModelBuilder {
             String contrastName = contrast.getDisplayName();
             DifferentialExpression expression = profile.getExpression(contrast);
 
-            String foldChange = (expression == null) ? null : format2Dp.format(expression.getFoldChange());
+            String foldChange = (expression == null) ? null : format1Dp.format(expression.getFoldChange());
             String color = (expression == null) ? null : expression.isOverExpressed() ? colourGradient.getGradientColour(expression.getFoldChange(), minUpLevel, maxUpLevel, "pink", "red") : colourGradient.getGradientColour(expression.getFoldChange(), minDownLevel, maxDownLevel, "lightGray", "blue");
             String pValue = (expression == null) ? null : numberUtils.formatDouble(expression.getPValue());
             String tStat = !(expression instanceof MicroarrayExpression) ? null : format2Dp.format(((MicroarrayExpression) expression).getTstatistic());

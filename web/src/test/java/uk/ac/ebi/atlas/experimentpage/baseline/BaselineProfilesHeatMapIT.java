@@ -19,6 +19,7 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGe
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import java.util.Collections;
 
@@ -34,7 +35,7 @@ public class BaselineProfilesHeatMapIT {
     public static final String E_MTAB_513 = "E-MTAB-513";
     private static final Factor FACTOR_LEUKOCYTE = new Factor("ORGANISM_PART", "leukocyte");
 
-    @Inject
+    @Resource(name = "baselineProfilesHeatMap")
     private BaselineProfilesHeatMap subject;
 
     @Inject

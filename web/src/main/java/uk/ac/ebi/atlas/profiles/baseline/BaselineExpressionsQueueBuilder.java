@@ -41,26 +41,25 @@ public class BaselineExpressionsQueueBuilder implements TsvRowQueueBuilder<Basel
 
     private BaselineExperimentsCache experimentsCache;
 
+    public BaselineExpressionsQueueBuilder() {
+        //for subclassing
+    }
+
     @Inject
     public BaselineExpressionsQueueBuilder(BaselineExperimentsCache experimentsCache) {
-
         this.experimentsCache = experimentsCache;
-
     }
 
     @Override
     public BaselineExpressionsQueueBuilder forExperiment(String experimentAccession) {
-
         this.experimentAccession = experimentAccession;
-
         return this;
-
     }
 
     @Override
     public BaselineExpressionsQueueBuilder withHeaders(String... tsvFileHeaders) {
         //We don't need to process the headers for Baseline
-        //because orderedFactorGroups is already available from BaselineExperiment
+        //we use orderedFactorGroups from BaselineExperiment instead
         return this;
     }
 
@@ -70,9 +69,8 @@ public class BaselineExpressionsQueueBuilder implements TsvRowQueueBuilder<Basel
 
         BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
-        //TODO: maybe we should use what we get from withHeaders - then we can remove dependency on experimentsCache
+        //TODO: ordered factor groups should be passed in from the top, not looked up here
         return new BaselineExpressionsQueue(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups());
-
     }
 
 }

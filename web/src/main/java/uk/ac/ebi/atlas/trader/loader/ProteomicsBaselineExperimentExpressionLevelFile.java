@@ -8,8 +8,7 @@ import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import static uk.ac.ebi.atlas.utils.StringArrayUtil.contains;
-import static uk.ac.ebi.atlas.utils.StringArrayUtil.substringBefore;
+import static uk.ac.ebi.atlas.utils.StringArrayUtil.*;
 
 @Named
 @Scope("prototype")
@@ -36,9 +35,13 @@ public class ProteomicsBaselineExperimentExpressionLevelFile {
 
     }
 
-    String[] extractAssayGroupIds(String[] tsvFileHeader) {
+    public static String[] extractAssayGroupIds(String[] tsvFileHeader) {
         String[] filtered = contains(tsvFileHeader, WITH_IN_SAMPLE_ABUNDANCE);
         return substringBefore(filtered, ".");
+    }
+
+    public static int[] indicesOfAssayGroups(String[] tsvFileHeader) {
+        return indicesOf(tsvFileHeader, WITH_IN_SAMPLE_ABUNDANCE);
     }
 
 }

@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class StringArrayUtil {
 
@@ -29,4 +30,31 @@ public class StringArrayUtil {
 
         return result;
     }
+
+
+    public static int[] indicesOf(String[] strings, String substring) {
+        int[] result = new int[strings.length];
+
+        int count = 0;
+        for (int i = 0; i < strings.length; i++) {
+            String s = strings[i];
+            if (s.contains(substring)) {
+                result[count++] = i;
+            }
+        }
+
+        return Arrays.copyOf(result, count);
+    }
+
+    public static String[] filterByIndices(String[] strings, int[] indices) {
+        String[] result = new String[indices.length];
+
+        for (int i = 0; i < indices.length; i++) {
+            result[i] = strings[indices[i]];
+        }
+
+        return result;
+    }
+
+
 }
