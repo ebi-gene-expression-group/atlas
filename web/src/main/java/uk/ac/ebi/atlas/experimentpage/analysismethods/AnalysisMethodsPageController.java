@@ -122,6 +122,11 @@ public class AnalysisMethodsPageController {
         return analysisMethods(experimentAccession, model, request);
     }
 
+    @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = {"type=PROTEOMICS_BASELINE"})
+    public String proteomicsAnalysisMethods(@PathVariable String experimentAccession, Model model, HttpServletRequest request) throws IOException {
+        return analysisMethods(experimentAccession, model, request);
+    }
+
     public String analysisMethods(String experimentAccession, Model model, HttpServletRequest request) throws IOException {
 
         TsvReader tsvReader = tsvReaderBuilder.withExperimentAccession(experimentAccession).build();

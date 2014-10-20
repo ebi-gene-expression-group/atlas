@@ -50,7 +50,12 @@ public class BaselineDesignPageController extends ExperimentDesignPageRequestHan
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=RNASEQ_MRNA_BASELINE"})
-    public String showExperimentDesign(Model model, HttpServletRequest request) throws IOException {
+    public String showRnaSeqExperimentDesign(Model model, HttpServletRequest request) throws IOException {
+        return handleRequest(model, request);
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design", params = {"type=PROTEOMICS_BASELINE"})
+    public String showProteomicsExperimentDesign(Model model, HttpServletRequest request) throws IOException {
         return handleRequest(model, request);
     }
 
