@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.genesetmatch;
+package uk.ac.ebi.atlas.experimentpage.heatmap.genesetmatch;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.assertThat;
 
-public class GeneSetExpressionLevelsIT extends SeleniumFixture {
+public class GeneSetExpressionLevelsSIT extends SeleniumFixture {
 
     private static final String E_E_GEOD_30352_ACCESSION = "E-GEOD-30352";
     protected HeatmapTableWithSearchFormPageAsGeneSets subject;

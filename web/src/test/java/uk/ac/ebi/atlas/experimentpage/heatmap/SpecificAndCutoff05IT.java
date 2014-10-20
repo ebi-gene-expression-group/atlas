@@ -20,47 +20,49 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.heatmaptable;
+package uk.ac.ebi.atlas.experimentpage.heatmap;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
-import java.util.List;
-
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class TwoOrganismPartsAndCutoff9IT extends SinglePageSeleniumFixture {
+public class SpecificAndCutoff05IT extends SinglePageSeleniumFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private HeatmapTablePage subject;
+    private static final String HTTP_PARAMETERS = "cutoff=0.5"
+            + "&specific=true";
+
+    private static final String HIGHER_RANKING_GENE = "ACTL7A";
+    private static final String LOWER_RANKING_GENE = "TEX33";
+    protected HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION,
-                "heatmapMatrixSize=5&queryFactorValues=adipose&geneQuery=&queryFactorValues=heart&_queryFactorValues=2&cutoff=9");
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, HTTP_PARAMETERS);
         subject.get();
     }
 
     @Test
-    public void verifySelectedGenes() {
-        List<String> selectedGenes = subject.getGeneNames();
-        assertThat(selectedGenes.size(), is(5));
-        assertThat(selectedGenes, contains("AL031284.1", "AL162853.1", "ENSG00000244656", "NEBL", "ENSG00000228964"));
-    }
+    public void specificityShouldDetermineRanking() {
 
-    @Test
-    public void verifyFirstGeneProfile() {
+        //given
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("225", "", "", "", "", "581", "", ""
-                , "", "", "", "", "", "", "", ""));
-    }
 
-    @Test
-    public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("5"), is(true));
+        double higherRankingGeneFpkm = subject.getMaxExpressionLevel(1);
+        double lowerRankingGeneFpkm = subject.getMaxExpressionLevel(2);
+
+        //then
+        assertThat(higherRankingGeneFpkm, is(69D));
+        assertThat(higherRankingGeneFpkm, is(greaterThan(lowerRankingGeneFpkm)));
+
+        //gene at row 11 follows gene at row 10
+        assertThat(subject.getGeneThatRanksAt(1), is(HIGHER_RANKING_GENE));
+        assertThat(subject.getGeneThatRanksAt(2), is(LOWER_RANKING_GENE));
+
     }
 
 }

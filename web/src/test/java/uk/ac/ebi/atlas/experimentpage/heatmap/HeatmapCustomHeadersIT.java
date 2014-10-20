@@ -20,49 +20,50 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.heatmaptable;
+package uk.ac.ebi.atlas.experimentpage.heatmap;
 
 import org.junit.Test;
+import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class SpecificAndCutoff05IT extends SinglePageSeleniumFixture {
+public class HeatmapCustomHeadersIT extends SinglePageSeleniumFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final String HTTP_PARAMETERS = "cutoff=0.5"
-            + "&specific=true";
-
-    private static final String HIGHER_RANKING_GENE = "ACTL7A";
-    private static final String LOWER_RANKING_GENE = "TEX33";
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, HTTP_PARAMETERS);
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION);
         subject.get();
     }
 
     @Test
-    public void specificityShouldDetermineRanking() {
+    public void shouldHaveAGeneHeader() {
 
-        //given
-        subject.clickDisplayLevelsButton();
-
-        double higherRankingGeneFpkm = subject.getMaxExpressionLevel(1);
-        double lowerRankingGeneFpkm = subject.getMaxExpressionLevel(2);
-
-        //then
-        assertThat(higherRankingGeneFpkm, is(69D));
-        assertThat(higherRankingGeneFpkm, is(greaterThan(lowerRankingGeneFpkm)));
-
-        //gene at row 11 follows gene at row 10
-        assertThat(subject.getGeneThatRanksAt(1), is(HIGHER_RANKING_GENE));
-        assertThat(subject.getGeneThatRanksAt(2), is(LOWER_RANKING_GENE));
+        assertThat(subject.getGeneColumnHeader(), is("Gene"));
 
     }
 
+    @Test
+    public void shouldHaveTooltip() {
+
+        assertThat(subject.getFactorTooltipContent(1, 0, 0), is("organism part"));
+        assertThat(subject.getFactorTooltipContent(1, 0, 1), is("adipose"));
+        assertThat(subject.getFactorTooltipContent(1, 1, 0), is("age"));
+        assertThat(subject.getFactorTooltipContent(1, 1, 1), is("73 years"));
+        assertThat(subject.getFactorTooltipContent(1, 4, 0), is("sex"));
+        assertThat(subject.getFactorTooltipContent(1, 4, 1), is("female"));
+
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void shouldNotHaveADesignElement() {
+
+        subject.getDesignElementHeader();
+
+    }
 }

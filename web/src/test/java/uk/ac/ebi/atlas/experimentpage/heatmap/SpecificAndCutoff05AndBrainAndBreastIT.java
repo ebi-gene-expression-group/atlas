@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.heatmaptable;
+package uk.ac.ebi.atlas.experimentpage.heatmap;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
@@ -32,14 +32,13 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class NonSpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniumFixture {
+public class SpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniumFixture {
 
-    private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
+    private final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
     private static final String HTTP_PARAMETERS = "geneQuery=&cutoff=0.5"
             + "&queryFactorValues=brain&queryFactorValues=breast"
-            + "&specific=false";
-
+            + "&specific=true";
 
     protected HeatmapTablePage subject;
 
@@ -51,21 +50,28 @@ public class NonSpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniu
     @Test
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getGeneNames();
-        assertThat(selectedGenes.size(), is(50));
-        assertThat(selectedGenes.get(0), is("TMSB10"));
-        assertThat(selectedGenes.get(1), is("RTN4"));
-        assertThat(selectedGenes.get(2), is("AC005702.4"));
+        assertThat(selectedGenes.size(), is(15));
+        assertThat(selectedGenes.get(0), is("MIR215"));
+        assertThat(selectedGenes.get(1), is("PRMT8"));
+        assertThat(selectedGenes.get(2), is("AC073479.1"));
     }
 
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("1728", "2286", "704", "1344", "1633", "326", "793", "2380", "156", "1825", "1265", "1206", "807", "129", "1040", "425"));
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "109", "", "", "", "", "", "", "", "", "", "", "", "", ""));
+    }
+
+    @Test
+    public void verifyLastGeneProfile() {
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getLastGeneProfile(), contains("", "", "0.6", "", "", "", "", "", ""
+                , "", "", "", "", "", "", ""));
     }
 
     @Test
     public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("188"), is(true));
+        assertThat(subject.getGeneCount().contains("15"), is(true));
     }
 
 }

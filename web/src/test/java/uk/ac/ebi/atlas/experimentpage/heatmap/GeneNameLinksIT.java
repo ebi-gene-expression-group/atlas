@@ -20,17 +20,17 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.heatmaptable;
+package uk.ac.ebi.atlas.experimentpage.heatmap;
 
 import org.junit.Test;
-import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class HeatmapCustomHeadersIT extends SinglePageSeleniumFixture {
+public class GeneNameLinksIT extends SinglePageSeleniumFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
@@ -42,28 +42,11 @@ public class HeatmapCustomHeadersIT extends SinglePageSeleniumFixture {
     }
 
     @Test
-    public void shouldHaveAGeneHeader() {
+    public void clickingOnGeneNameShouldTakeToTheGenePage() {
+        BioEntityPage bioEntityPage = subject.clickGeneName(1);
 
-        assertThat(subject.getGeneColumnHeader(), is("Gene"));
-
-    }
-
-    @Test
-    public void shouldHaveTooltip() {
-
-        assertThat(subject.getFactorTooltipContent(1, 0, 0), is("organism part"));
-        assertThat(subject.getFactorTooltipContent(1, 0, 1), is("adipose"));
-        assertThat(subject.getFactorTooltipContent(1, 1, 0), is("age"));
-        assertThat(subject.getFactorTooltipContent(1, 1, 1), is("73 years"));
-        assertThat(subject.getFactorTooltipContent(1, 4, 0), is("sex"));
-        assertThat(subject.getFactorTooltipContent(1, 4, 1), is("female"));
+        assertThat(bioEntityPage.getBioEntityCardTitle(), is("TEX33 Homo sapiens testis expressed 33"));
 
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void shouldNotHaveADesignElement() {
-
-        subject.getDesignElementHeader();
-
-    }
 }

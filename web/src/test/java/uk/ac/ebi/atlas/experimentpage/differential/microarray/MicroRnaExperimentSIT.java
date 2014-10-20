@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests.mirna;
+package uk.ac.ebi.atlas.experimentpage.differential.microarray;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
-public class SpecificNoContrastSelectedIT extends SeleniumFixture {
+public class MicroRnaExperimentSIT extends SeleniumFixture {
 
     private static final String ACCESSION = "E-TABM-713";
     protected HeatmapTablePage subject;
