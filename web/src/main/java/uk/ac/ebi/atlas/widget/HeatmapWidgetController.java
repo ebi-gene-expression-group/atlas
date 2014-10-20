@@ -164,7 +164,7 @@ public final class HeatmapWidgetController {
         model.addAttribute("isWidget", true);
         model.addAttribute("isMultiExperiment", true);
         model.addAttribute("geneQuery", bioEntityAccession);
-        model.addAttribute("isGeneSetQuery", GeneSetUtil.isGeneSet(bioEntityAccession));
+        model.addAttribute("disableTranscriptPopups", GeneSetUtil.isGeneSet(bioEntityAccession));
 
         return "heatmap-widget-react";
     }

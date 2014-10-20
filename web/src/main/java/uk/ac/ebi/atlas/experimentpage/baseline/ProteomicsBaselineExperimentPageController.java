@@ -70,6 +70,8 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
 
         model.addAttribute("isWidget", false);
 
+        model.addAttribute("disableTranscriptPopups", true);
+
         return "experiment";
     }
 

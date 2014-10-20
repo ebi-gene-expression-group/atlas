@@ -672,8 +672,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             },
 
             profileRowType: function (profile)  {
-                return (type == TypeEnum.MULTIEXPERIMENT ? <GeneProfileRow id={profile.id} name={profile.name} expressions={profile.expressions} serializedFilterFactors = {profile.serializedFilterFactors} displayLevels={this.props.displayLevels} />
-                    : <GeneProfileRow selected={profile.id === this.state.selectedGeneId} selectGene={this.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/> );
+                return (type == TypeEnum.MULTIEXPERIMENT ?
+                    <GeneProfileRow id={profile.id} name={profile.name} expressions={profile.expressions} serializedFilterFactors={profile.serializedFilterFactors} displayLevels={this.props.displayLevels} />
+                    :
+                    <GeneProfileRow selected={profile.id === this.state.selectedGeneId} selectGene={this.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
+                );
 
             },
 
@@ -737,7 +740,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 cellType: function (expression) {
                     if (type == TypeEnum.BASELINE) {
                         return (
-                            <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} showGeneSetProfiles={this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
+                            <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} showTranscriptPopup={!this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
                             );
                     }
                     else if (type == TypeEnum.DIFFERENTIAL) {
@@ -786,7 +789,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
 
 
-        var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, serializedFilterFactors, queryFactorType) {
+        var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, transcriptConfig) {
 
             function hasKnownExpression(value) {
                 // true if not blank or UNKNOWN, ie: has a expression with a known value
@@ -808,7 +811,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
 
             function hasTranscriptTooltip(props) {
-                return (!props.showGeneSetProfiles && hasKnownExpression(props.value));
+                return (!props.disableTranscriptPopup && transcriptConfig && hasKnownExpression(props.value));
             }
 
             return React.createClass({
@@ -820,7 +823,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             id = this.props.id,
                             name = this.props.name;
 
-                        TranscriptPopup.display(contextRoot, experimentAccession, id, name, queryFactorType, factorValue, serializedFilterFactors, ensemblHost, ensemblSpecies);
+                        TranscriptPopup.display(contextRoot, experimentAccession, id, name, transcriptConfig.queryFactorType, factorValue, transcriptConfig.serializedFilterFactors, ensemblHost, ensemblSpecies);
                     }
                 },
 
@@ -853,10 +856,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                     }
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.serializedFilterFactors, heatmapConfig.queryFactorType);
+        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.transcripts);
 
 
-        var CellMultiExperiment = (function (contextRoot, ensemblHost, ensemblSpecies, queryFactorType, isGeneSetQuery, geneId, geneName) {
+        var CellMultiExperiment = (function (contextRoot, ensemblHost, ensemblSpecies, transcriptConfig, geneId, geneName) {
             
             function isNAExpression(value) {
                 return (value === "NT")
@@ -873,7 +876,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
             }
 
             function hasTranscriptTooltip(props) {
-                return (!isGeneSetQuery && props.value && !isNAExpression(props.value));
+                return (transcriptConfig && props.value && !isNAExpression(props.value));
             }
 
             return React.createClass({
@@ -884,7 +887,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                             serializedFilterFactors = this.props.serializedFilterFactors,
                             experimentAccession = this.props.id;
 
-                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, queryFactorType, factorValue, undefined, serializedFilterFactors, ensemblHost, ensemblSpecies);
+                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, transcriptConfig.queryFactorType, factorValue, undefined, serializedFilterFactors, ensemblHost, ensemblSpecies);
                     }
                 },
 
@@ -911,7 +914,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                         );
                 }
             });
-        })(heatmapConfig.contextRoot, ensemblHost, ensemblSpecies, heatmapConfig.queryFactorType, heatmapConfig.isGeneSetQuery, heatmapConfig.geneQuery, heatmapConfig.geneQuery);
+        })(heatmapConfig.contextRoot, ensemblHost, ensemblSpecies, heatmapConfig.transcripts, heatmapConfig.geneQuery, heatmapConfig.geneQuery);
 
         var CellDifferential = (function () {
 

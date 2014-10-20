@@ -67,6 +67,14 @@ public class TranscriptPopupSIT extends SeleniumFixture {
         assertThat(page.getTranscriptBreakdownLegendLabels(), contains("ENST00000417459", "ENST00000370832"));
     }
 
+    @Test
+    public void no_popupOnExperimentPage_Proteomics() {
+        HeatmapTableWithTranscriptBreakdownPage subject = new HeatmapTableWithTranscriptBreakdownPage(driver, "E-PROT-1");
+        subject.get();
+        HeatmapTableWithTranscriptBreakdownPage page1 = subject.clickOnCell(2, 1);
+        assertFalse(page1.isTranscriptPopupPresent());
+    }
+
     // NB: this test will fail if plants.ensembl.org is down, which can happen during an Ensembl release
     @Test
     public void verifyEnsemblPlantsLinkOnTranscriptPopup() {
@@ -89,7 +97,7 @@ public class TranscriptPopupSIT extends SeleniumFixture {
     }
 
     @Test
-    public void verifyNoTranscriptPopUpForGeneSetQuery() {
+    public void multiExperimentWidget_GeneSetQuery_NoPopup() {
         HeatmapTableWidgetPage subject = HeatmapTableWidgetPage.create(driver, "geneQuery=REACT_6900&species=homo%20sapiens&rootContext=");
         subject.get();
 
