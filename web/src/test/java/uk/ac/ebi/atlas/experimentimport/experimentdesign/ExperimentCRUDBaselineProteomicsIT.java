@@ -19,6 +19,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
@@ -136,7 +137,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
         //System.out.println(Joiner.on(", ").join(beans));
 
         assertThat(beans, hasSize(30));
-        assertThat(beans, hasItem(new Condition(E_PROT_1,"g10", ImmutableList.of("Homo sapiens", "adult", "kidney"))));
+        assertThat(beans, hasItem(new Condition(E_PROT_1,"g10", ImmutableList.of("Homo sapiens", "EFO_0001272", "UBERON_0002113", "adult", "kidney", "NCBITaxon_9606"))));
     }
 
     @Test
@@ -169,9 +170,9 @@ public class ExperimentCRUDBaselineProteomicsIT {
         assertThat(experimentDesign.getSampleHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM, ORGANISM_PART));
 
         assertThat(experimentDesign.getSampleCharacteristics("Adult_Ovary"), contains(
-                SampleCharacteristic.create(ORGANISM_PART, "ovary"),
-                SampleCharacteristic.create(ORGANISM, "Homo sapiens"),
-                SampleCharacteristic.create(DEVELOPMENTAL_STAGE, "adult")));
+                SampleCharacteristic.create(ORGANISM_PART, "ovary", OntologyTerm.createFromUri("http://www.ebi.ac.uk/efo/EFO_0000973")),
+                SampleCharacteristic.create(ORGANISM, "Homo sapiens", OntologyTerm.createFromUri("http://purl.obolibrary.org/obo/NCBITaxon_9606")),
+                SampleCharacteristic.create(DEVELOPMENTAL_STAGE, "adult", OntologyTerm.createFromUri("http://www.ebi.ac.uk/efo/EFO_0001272"))));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
@@ -24,7 +25,7 @@ public class BaselineProfilesWriter extends ProfilesWriter<BaselineProfile, Fact
     @Inject
     public BaselineProfilesWriter(BaselineProfileStreamPipelineBuilder pipelineBuilder,
                                   BaselineProfilesTSVWriter tsvWriter,
-                                  BaselineProfileInputStreamFactory inputStreamFactory,
+                                  @Qualifier("baselineProfileInputStreamFactory") BaselineProfileInputStreamFactory inputStreamFactory,
                                   LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext) {
         super(pipelineBuilder, tsvWriter);
         this.inputStreamFactory = inputStreamFactory;

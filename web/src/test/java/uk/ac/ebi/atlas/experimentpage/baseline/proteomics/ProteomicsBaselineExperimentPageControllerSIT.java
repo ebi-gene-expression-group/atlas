@@ -29,32 +29,43 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import java.util.List;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixture {
 
     private static final String E_PROT_1 = "E-PROT-1";
+    public static final int SPAST = 1;
+    public static final int BRAIN = 0;
+    public static final int ITGA3 = 1;
+    public static final int RETINA = 19;
     protected HeatmapTablePage subject;
 
     @Test
     public void first5Genes() {
-        subject = new HeatmapTablePage(driver, E_PROT_1);
+        subject = new HeatmapTablePage(driver, E_PROT_1, "displayLevels=true");
         subject.get();
 
-        List<String> first5Genes = subject.getGeneNames().subList(0, 5);
+        assertThat(subject.getFactorValueHeaders(), contains("B cell", "CD4-positive T...", "CD8-positive T...", "adrenal gland", "colon", "esophagus", "frontal cortex", "gallbladder", "heart", "kidney", "liver", "lung", "monocyte", "natural killer...", "ovary", "pancreas", "platelet", "prostate", "rectum", "retina", "spinal cord", "testis", "urinary bladder"));
 
+        List<String> first5Genes = subject.getGeneNames().subList(0, 5);
         assertThat(first5Genes, contains("ITGA3","CD6", "LAS1L", "MRC2", "PSMC4"));
+
+        assertThat(subject.getGeneProfile(ITGA3).get(RETINA), is("9910000"));
     }
 
     @Test
     public void first5Genes_Fetus() {
-        subject = new HeatmapTablePage(driver, E_PROT_1,"serializedFilterFactors=DEVELOPMENTAL_STAGE%3Afetus");
+        subject = new HeatmapTablePage(driver, E_PROT_1, "serializedFilterFactors=DEVELOPMENTAL_STAGE%3Afetus&displayLevels=true");
         subject.get();
 
+        //System.out.println(Joiner.on("\", \"").join(subject.getFactorValueHeaders()));
+        assertThat(subject.getFactorValueHeaders(), contains("brain", "gut", "heart", "liver", "ovary", "placenta", "testis"));
+
         List<String> first5Genes = subject.getGeneNames().subList(0, 5);
-
         assertThat(first5Genes, contains("SPAST","CFH", "RNASET2", "HSPB6", "LIG3"));
-    }
 
+        assertThat(subject.getGeneProfile(SPAST).get(BRAIN), is("9790000"));
+    }
 
 }

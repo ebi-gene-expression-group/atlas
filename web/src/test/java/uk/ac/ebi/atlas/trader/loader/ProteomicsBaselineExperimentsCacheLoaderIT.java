@@ -39,6 +39,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -152,9 +153,9 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         assertThat(experimentDesign.getSampleHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM, ORGANISM_PART));
 
         assertThat(experimentDesign.getSampleCharacteristics("Adult_Ovary"), contains(
-                SampleCharacteristic.create(ORGANISM_PART, "ovary"),
-                SampleCharacteristic.create(ORGANISM, "Homo sapiens"),
-                SampleCharacteristic.create(DEVELOPMENTAL_STAGE, "adult")));
+                SampleCharacteristic.create(ORGANISM_PART, "ovary", OntologyTerm.createFromUri("http://www.ebi.ac.uk/efo/EFO_0000973")),
+                SampleCharacteristic.create(ORGANISM, "Homo sapiens", OntologyTerm.createFromUri("http://purl.obolibrary.org/obo/NCBITaxon_9606")),
+                SampleCharacteristic.create(DEVELOPMENTAL_STAGE, "adult", OntologyTerm.createFromUri("http://www.ebi.ac.uk/efo/EFO_0001272"))));
 
         assertThat(experimentDesign.asTableData(), hasSize(30));
         assertThat(experimentDesign.asTableData(), contains(
