@@ -32,7 +32,7 @@ import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
-import javax.inject.Inject;
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
@@ -52,7 +52,7 @@ public class BaselineProfilesInputStreamIT {
     private static final String GENE_ID_3 = "ENSG00000224440";
     private static final String GENE_ID_6 = "ENSG00000266468";
 
-    @Inject
+    @Resource(name = "baselineProfileInputStreamFactory")
     private BaselineProfileInputStreamFactory inputStreamFactory;
 
     private ObjectInputStream<BaselineProfile> subject;

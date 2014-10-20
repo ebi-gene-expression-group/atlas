@@ -86,8 +86,8 @@ public abstract class Profile<K, T extends Expression> {
     }
 
     protected Profile addExpression(K condition, T expression) {
-        addExpression(expression);
         expressionsByCondition.put(condition, expression);
+        addExpression(expression);
         return this;
     }
 

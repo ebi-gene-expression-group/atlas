@@ -20,6 +20,7 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGe
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -63,7 +64,7 @@ public class BaselineProfilesHeatMapEMTab1733IT {
     public static final Factor ADRENAL_GLAND = new Factor(ORGANISM_PART, "adrenal gland");
     public static final Factor ADIPOSE = new Factor(ORGANISM_PART, "adipose tissue");
 
-    @Inject
+    @Resource(name = "baselineProfilesHeatMap")
     private BaselineProfilesHeatMap subject;
 
     @Inject

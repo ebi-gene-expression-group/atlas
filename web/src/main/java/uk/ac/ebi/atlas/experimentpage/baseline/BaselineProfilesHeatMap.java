@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import com.google.common.base.Stopwatch;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
@@ -31,7 +32,7 @@ public class BaselineProfilesHeatMap extends ProfilesHeatMap<BaselineProfile, Ba
     @Inject
     public BaselineProfilesHeatMap(BaselineProfileStreamPipelineBuilder pipelineBuilder,
                                    RankBaselineProfilesFactory rankProfilesFactory,
-                                   BaselineProfileInputStreamFactory inputStreamFactory,
+                                   @Qualifier("baselineProfileInputStreamFactory") BaselineProfileInputStreamFactory inputStreamFactory,
                                    LoadGeneIdsIntoRequestContext loadGeneIdsIntoRequestContext) {
         super(pipelineBuilder, rankProfilesFactory);
         this.inputStreamFactory = inputStreamFactory;

@@ -24,9 +24,8 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.profiles.TsvRowQueueBuilder;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.loader.ProteomicsBaselineExperimentExpressionLevelFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,31 +34,26 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class BaselineExpressionsQueueBuilder implements TsvRowQueueBuilder<BaselineExpression> {
+public class ProteomicsBaselineExpressionsQueueBuilder extends BaselineExpressionsQueueBuilder {
 
     private String experimentAccession;
-
-    private BaselineExperimentsCache experimentsCache;
-
-    public BaselineExpressionsQueueBuilder() {
-        //for subclassing
-    }
+    private ProteomicsBaselineExperimentsCache experimentsCache;
+    private int[] indicesOfAssayGroups;
 
     @Inject
-    public BaselineExpressionsQueueBuilder(BaselineExperimentsCache experimentsCache) {
+    public ProteomicsBaselineExpressionsQueueBuilder(ProteomicsBaselineExperimentsCache experimentsCache) {
         this.experimentsCache = experimentsCache;
     }
 
     @Override
-    public BaselineExpressionsQueueBuilder forExperiment(String experimentAccession) {
+    public ProteomicsBaselineExpressionsQueueBuilder forExperiment(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
     }
 
     @Override
-    public BaselineExpressionsQueueBuilder withHeaders(String... tsvFileHeaders) {
-        //We don't need to process the headers for Baseline
-        //we use orderedFactorGroups from BaselineExperiment instead
+    public ProteomicsBaselineExpressionsQueueBuilder withHeaders(String... tsvFileHeaders) {
+        this.indicesOfAssayGroups = ProteomicsBaselineExperimentExpressionLevelFile.indicesOfAssayGroups(tsvFileHeaders);
         return this;
     }
 
@@ -70,7 +64,8 @@ public class BaselineExpressionsQueueBuilder implements TsvRowQueueBuilder<Basel
         BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
         //TODO: ordered factor groups should be passed in from the top, not looked up here
-        return new BaselineExpressionsQueue(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups());
+        return new ProteomicsBaselineExpressionsQueue(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups(), indicesOfAssayGroups);
+
     }
 
 }
