@@ -69,11 +69,11 @@ public class SpecificNoContrastSelectedIT extends SeleniumFixture {
         assertThat(subject.getGeneNames().subList(0, 3), contains("NRPD1B", "ATMG00510", "PSBE"));
 
         assertThat(subject.getGeneProfile(1).size(), is(3));
-        assertThat(subject.getGeneProfile(1).get(0), is("-2.26"));
+        assertThat(subject.getGeneProfile(1).get(0), is("-2.3"));
 
         assertThat(subject.getLastGeneProfile().size(), is(3));
-        assertThat(subject.getLastGeneProfile().get(0), is("-3.05"));
-        assertThat(subject.getLastGeneProfile().get(2), is("-3.68"));
+        assertThat(subject.getLastGeneProfile().get(0), is("-3.1"));
+        assertThat(subject.getLastGeneProfile().get(2), is("-3.7"));
     }
 
     @Test
@@ -89,8 +89,8 @@ public class SpecificNoContrastSelectedIT extends SeleniumFixture {
         assertThat(subject.getGeneProfile(1).get(0), is("6.9"));
 
         assertThat(subject.getLastGeneProfile().size(), is(3));
-        assertThat(subject.getLastGeneProfile().get(0), is("-3.05"));
-        assertThat(subject.getLastGeneProfile().get(2), is("-3.68"));
+        assertThat(subject.getLastGeneProfile().get(0), is("-3.1"));
+        assertThat(subject.getLastGeneProfile().get(2), is("-3.7"));
     }
 
 }

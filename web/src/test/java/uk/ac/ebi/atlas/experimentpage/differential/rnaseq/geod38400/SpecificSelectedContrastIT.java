@@ -58,11 +58,11 @@ public class SpecificSelectedContrastIT extends SeleniumFixture {
         assertThat(subject.getGeneNames().get(33), is("DML1"));
 
         assertThat(subject.getGeneProfile(1).size(), is(3));
-        assertThat(subject.getGeneProfile(1).get(2), is("3.55"));
+        assertThat(subject.getGeneProfile(1).get(2), is("3.6"));
 
         assertThat(subject.getGeneProfile(34).size(), is(3));
-        assertThat(subject.getGeneProfile(34).get(0), is("-3.05"));
-        assertThat(subject.getGeneProfile(34).get(2), is("-3.68"));
+        assertThat(subject.getGeneProfile(34).get(0), is("-3.1"));
+        assertThat(subject.getGeneProfile(34).get(2), is("-3.7"));
     }
 
 }

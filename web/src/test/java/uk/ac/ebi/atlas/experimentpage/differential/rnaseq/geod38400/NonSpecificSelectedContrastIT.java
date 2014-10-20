@@ -44,14 +44,14 @@ public class NonSpecificSelectedContrastIT extends SeleniumFixture {
         assertThat(subject.getGeneNames().subList(0, 3), contains("DML1", "T5N23_130", "AT3G29644"));
 
         assertThat(subject.getGeneProfile(1).size(), is(3));
-        assertThat(subject.getGeneProfile(1).get(2), is("-3.68"));
+        assertThat(subject.getGeneProfile(1).get(2), is("-3.7"));
 
         assertThat(subject.getGeneProfile(2).size(), is(3));
-        assertThat(subject.getGeneProfile(2).get(2), is("3.55"));
+        assertThat(subject.getGeneProfile(2).get(2), is("3.6"));
 
         assertThat(subject.getGeneProfile(3).size(), is(3));
-        assertThat(subject.getGeneProfile(3).get(0), is("2.57"));
-        assertThat(subject.getGeneProfile(3).get(2), is("3.28"));
+        assertThat(subject.getGeneProfile(3).get(0), is("2.6"));
+        assertThat(subject.getGeneProfile(3).get(2), is("3.3"));
     }
 
 }

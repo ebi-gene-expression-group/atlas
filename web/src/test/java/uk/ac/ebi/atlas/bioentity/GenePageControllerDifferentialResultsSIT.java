@@ -51,7 +51,7 @@ public class GenePageControllerDifferentialResultsSIT extends SinglePageSelenium
         subject.clickDiffResultsDisplayLevelsButton();
         assertThat(subject.getContrastColumn(), contains("idn2 mutant vs wild type",
                 "nrpe1 mutant vs wild type"));
-        assertThat(subject.getFoldChange(), hasItems("3.28", "2.57"));
+        assertThat(subject.getFoldChange(), hasItems("3.3", "2.6"));
     }
 
     //This is not working with PhantomJS browser :((

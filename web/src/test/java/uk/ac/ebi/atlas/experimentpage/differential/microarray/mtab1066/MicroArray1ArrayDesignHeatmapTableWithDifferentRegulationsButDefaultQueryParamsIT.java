@@ -46,12 +46,12 @@ public class MicroArray1ArrayDesignHeatmapTableWithDifferentRegulationsButDefaul
         assertThat(subject.getGeneNames().subList(0, 3), contains("Cda5", "CG33459", "CG11147"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is("1.43"));
+        assertThat(subject.getGeneProfile(1).get(0), is("1.4"));
         assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is("1.33"));
-        assertThat(subject.getLastGeneProfile().get(1), is("1.06"));
+        assertThat(subject.getLastGeneProfile().get(0), is("1.3"));
+        assertThat(subject.getLastGeneProfile().get(1), is("1.1"));
     }
 
     @Test
@@ -64,11 +64,11 @@ public class MicroArray1ArrayDesignHeatmapTableWithDifferentRegulationsButDefaul
         assertThat(subject.getGeneNames().subList(0, 3), contains("CG31624", "CG4669", "Mst84Db"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is("-3.37"));
+        assertThat(subject.getGeneProfile(1).get(0), is("-3.4"));
         assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is("-1.15"));
+        assertThat(subject.getLastGeneProfile().get(0), is("-1.2"));
         assertThat(subject.getLastGeneProfile().get(1), is("-1.1"));
     }
 
@@ -82,12 +82,12 @@ public class MicroArray1ArrayDesignHeatmapTableWithDifferentRegulationsButDefaul
         assertThat(subject.getGeneNames().subList(0, 3), contains("CG31624", "CG4669", "Mst84Db"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is("-3.37"));
+        assertThat(subject.getGeneProfile(1).get(0), is("-3.4"));
         assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
-        assertThat(subject.getLastGeneProfile().get(0), is("1.51"));
-        assertThat(subject.getLastGeneProfile().get(1), is("1.44"));
+        assertThat(subject.getLastGeneProfile().get(0), is("1.5"));
+        assertThat(subject.getLastGeneProfile().get(1), is("1.4"));
     }
 
     //This will fail with PhantomJS
@@ -102,7 +102,7 @@ public class MicroArray1ArrayDesignHeatmapTableWithDifferentRegulationsButDefaul
 
         assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 0, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("3.24 × 10-4"));
         assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 1, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("-8.79"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 2, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("-3.37"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 2, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("-3.4"));
     }
 
 }

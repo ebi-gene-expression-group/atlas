@@ -61,7 +61,7 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
         assertThat(subject.diffExpressionResultCount(), is("Showing 16 results"));
         assertThat(subject.getContrastColumn(), hasItem(
                 "compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36"));
-        assertThat(subject.getFoldChange(), hasItems("3.46", "1"));
+        assertThat(subject.getFoldChange(), hasItems("3.5", "1"));
 
         //System.out.println("\"" + Joiner.on("\", \"").join(subject.getDiffHeatmapTableGeneColumn()) + "\"");
 

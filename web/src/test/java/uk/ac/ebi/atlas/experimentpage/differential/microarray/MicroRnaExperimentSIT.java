@@ -46,7 +46,7 @@ public class MicroRnaExperimentSIT extends SeleniumFixture {
         assertThat(subject.getGeneNames().subList(0, 3), contains("MIMAT0002177", "MIMAT0002177", "MIMAT0000259"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
-        assertThat(subject.getGeneProfile(1).get(0), is("2.67"));
+        assertThat(subject.getGeneProfile(1).get(0), is("2.7"));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class MicroRnaExperimentSIT extends SeleniumFixture {
         assertThat(subject.getGeneNames().subList(0, 3), contains("MIMAT0002809", "MIMAT0002809", "MIMAT0000449"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
-        assertThat(subject.getGeneProfile(1).get(0), is("-1.35"));
+        assertThat(subject.getGeneProfile(1).get(0), is("-1.3"));
 
     }
 

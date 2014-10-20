@@ -67,10 +67,10 @@ public class RnaSeqHeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT e
         assertThat(subject.getGeneNames().subList(0, 4), contains("Gm13886", "Cst7", "Itgax", "Ccl4"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
-        assertThat(subject.getGeneProfile(1).get(0), is("4.08"));
+        assertThat(subject.getGeneProfile(1).get(0), is("4.1"));
 
         assertThat(subject.getGeneProfile(2).size(), is(1));
-        assertThat(subject.getGeneProfile(2).get(0), is("3.76"));
+        assertThat(subject.getGeneProfile(2).get(0), is("3.8"));
 
         assertThat(subject.getLastGeneProfile().size(), is(1));
         assertThat(subject.getLastGeneProfile().get(0), is("1.2"));
@@ -89,7 +89,7 @@ public class RnaSeqHeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT e
         assertThat(subject.getGeneProfile(1).get(0), is("-2.7"));
 
         assertThat(subject.getLastGeneProfile().size(), is(1));
-        assertThat(subject.getLastGeneProfile().get(0), is("-1.01"));
+        assertThat(subject.getLastGeneProfile().get(0), is("-1"));
     }
 
     @Test
@@ -102,12 +102,12 @@ public class RnaSeqHeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT e
         assertThat(subject.getGeneNames().subList(0, 4), contains("Gm13886", "Cst7", "Itgax", "Ccl4"));
 
         assertThat(subject.getGeneProfile(1).size(), is(1));
-        assertThat(subject.getGeneProfile(1).get(0), is("4.08"));
+        assertThat(subject.getGeneProfile(1).get(0), is("4.1"));
         assertThat(subject.getGeneProfile(2).size(), is(1));
-        assertThat(subject.getGeneProfile(2).get(0), is("3.76"));
+        assertThat(subject.getGeneProfile(2).get(0), is("3.8"));
 
         assertThat(subject.getLastGeneProfile().size(), is(1));
-        assertThat(subject.getLastGeneProfile().get(0), is("-1.01"));
+        assertThat(subject.getLastGeneProfile().get(0), is("-1"));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class RnaSeqHeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT e
         assertThat(subject.getDifferentialExperimentTooltipTableHeader(0, 0, 1, ExperimentType.RNASEQ_MRNA_DIFFERENTIAL), startsWith("Log2-fold"));
 
         assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 0, ExperimentType.RNASEQ_MRNA_DIFFERENTIAL), is("0.002"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 1, ExperimentType.RNASEQ_MRNA_DIFFERENTIAL), is("4.08"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 1, ExperimentType.RNASEQ_MRNA_DIFFERENTIAL), is("4.1"));
     }
 
 }

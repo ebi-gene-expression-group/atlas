@@ -46,7 +46,7 @@ public class MicroArray2ArrayDesignsHeatmapTableWithDifferentRegulationsButDefau
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
         assertThat(subject.getGeneProfile(1).get(0), is(""));
-        assertThat(subject.getGeneProfile(1).get(1), is("0.21"));
+        assertThat(subject.getGeneProfile(1).get(1), is("0.2"));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
         assertThat(subject.getLastGeneProfile().get(0), is(""));
@@ -63,7 +63,7 @@ public class MicroArray2ArrayDesignsHeatmapTableWithDifferentRegulationsButDefau
         assertThat(subject.getGeneNames().subList(0, 3), contains("Ikzf5", "Mapre1", "Tdrd7"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is("-0.46"));
+        assertThat(subject.getGeneProfile(1).get(0), is("-0.5"));
         assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
@@ -81,12 +81,12 @@ public class MicroArray2ArrayDesignsHeatmapTableWithDifferentRegulationsButDefau
         assertThat(subject.getGeneNames().subList(0, 3), contains("Ikzf5", "Mapre1", "Tdrd7"));
 
         assertThat(subject.getGeneProfile(1).size(), is(2));
-        assertThat(subject.getGeneProfile(1).get(0), is("-0.46"));
+        assertThat(subject.getGeneProfile(1).get(0), is("-0.5"));
         assertThat(subject.getGeneProfile(1).get(1), is(""));
 
         assertThat(subject.getLastGeneProfile().size(), is(2));
         assertThat(subject.getLastGeneProfile().get(0), is(""));
-        assertThat(subject.getLastGeneProfile().get(1), is("-0.02"));
+        assertThat(subject.getLastGeneProfile().get(1), is("-0"));
     }
 
     @Test
@@ -103,7 +103,7 @@ public class MicroArray2ArrayDesignsHeatmapTableWithDifferentRegulationsButDefau
 
         assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 0, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("0.914"));
         assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 1, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("-1.26"));
-        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 2, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("-0.46"));
+        assertThat(subject.getDifferentialExperimentTooltipTableCell(0, 0, 2, ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL), is("-0.5"));
     }
 
 }
