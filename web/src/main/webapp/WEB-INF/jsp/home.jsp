@@ -49,7 +49,7 @@
                     <label>Organism</label>
                 </td>
                 <td>
-                    <label>Experimental conditions</label>
+                    <label>Sample properties</label>
                     <span data-help-loc="#experimentalConditions"></span>
                 </td>
                 <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
@@ -100,7 +100,7 @@
                         <div>
 							<span class="examples">E.g.
 								<a href="query?condition=leaf">leaf</a>,
-								<a href="query?condition=Mus+musculus">"Mus musculus"</a>,
+								<a href="query?condition=&quot;valproic+acid&quot;">"valproic acid"</a>,
 								<a href="query?condition=cancer">cancer</a>
 							</span>
                         </div>
