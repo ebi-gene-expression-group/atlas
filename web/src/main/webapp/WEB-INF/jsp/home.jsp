@@ -46,7 +46,7 @@
                     <span data-help-loc="#geneSearch"></span>
                 </td>
                 <td>
-                    <label>Organisms</label>
+                    <label>Organism</label>
                 </td>
                 <td>
                     <label>Experimental conditions</label>
