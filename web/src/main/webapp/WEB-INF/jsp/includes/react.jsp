@@ -5,8 +5,8 @@
 
 <%-- polyfills to make React work with IE8 --%>
 <!--[if lt IE 9]>
-<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.1/es5-shim.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.1/es5-sham.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/react/es5-shim-4.0.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/react/es5-sham-4.0.1.min.js"></script>
 <![endif]-->
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/react/0.11.1/react.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/react/react-0.11.1.js"></script>
