@@ -59,7 +59,10 @@ public class ProteinPageControllerSIT extends SinglePageSeleniumFixture {
         assertThat(subject.getPropertiesTableRow(1), hasItems("Ensembl Transcript"));
         assertThat(subject.getPropertiesTableRow(1).get(1), containsString("ENST00000366478"));
         assertThat(subject.getPropertiesTableRow(3), hasItems("UniProt", "Q8N349"));
+
+        // this will fail if there was a timeout when fetching reactome ids from UniProt, see UniProtClient.fetchReactomeIds
         assertThat(subject.getPropertiesTableRow(5), hasItems("Reactome", "Olfactory Signaling Pathway"));
+
         assertThat(subject.getLinksInTableRow(1).get(0), containsString("http://www.ensemblgenomes.org/id/ENST00000366478"));
         assertThat(subject.getLinksInTableRow(2).get(0), startsWith("http://www.ensemblgenomes.org/id-gene/ENSG00000196071"));
         assertThat(subject.getLinksInTableRow(3).get(0), startsWith("http://www.uniprot.org/uniprot/Q8N349"));

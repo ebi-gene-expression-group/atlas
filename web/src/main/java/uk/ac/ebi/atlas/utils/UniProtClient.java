@@ -27,7 +27,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
@@ -56,7 +56,7 @@ public class UniProtClient {
         try {
             String result = restTemplate.getForObject(url, String.class);
             return parseResult(result);
-        } catch (HttpServerErrorException e) {
+        } catch (RestClientException e) {
             LOGGER.error(e);
             return Lists.newArrayList();
         }

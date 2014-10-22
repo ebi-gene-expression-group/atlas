@@ -76,8 +76,8 @@
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
         <constructor-arg>
             <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory"
-                  p:readTimeout="3500"
-                  p:connectTimeout="3500" />
+                  p:readTimeout="6000"
+                  p:connectTimeout="6000" />
         </constructor-arg>
         <!--<property name="messageConverters">-->
         <!--<list>-->
