@@ -83,7 +83,6 @@ public class BaselineExperimentProfileSearchServiceIT {
 
     private static final FactorGroup ORGANISM_HOMO_SAPIENS = new FactorSet(new Factor("ORGANISM", "Homo sapiens"));
 
-
     @Test
     public void singleGeneInMultipleExperiments() {
         BaselineTissueExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of("ENSG00000228278")));
@@ -307,5 +306,28 @@ public class BaselineExperimentProfileSearchServiceIT {
 
     }
 
+    @Test
+    public void experimentComponentsAreAppendedToExperimentNames() {
+        // This should only be done when there are other factors other than organism, so the other case is
+        // implicitly tested in singleGeneInMultipleExperiments or sortExperimentsByNonFilterFactors§w
+        BaselineTissueExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of("ENSRNOG00000015557")));
 
+        BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
+
+        assertThat(baselineProfilesList, hasSize(3));
+
+        assertThat(baselineProfilesList.getTotalResultCount(), is(3));
+
+        BaselineExperimentProfile baselineProfile = baselineProfilesList.get(0);
+        assertThat(baselineProfile.getId(), is("E-MTAB-2800"));
+        assertThat(baselineProfile.getName(), is("Nine rat tissues - BN/SsNHsd"));
+
+        BaselineExperimentProfile baselineProfile2 = baselineProfilesList.get(1);
+        assertThat(baselineProfile2.getId(), is("E-MTAB-2800"));
+        assertThat(baselineProfile2.getName(), is("Nine rat tissues - F344/Cr1"));
+
+        BaselineExperimentProfile baselineProfile3 = baselineProfilesList.get(2);
+        assertThat(baselineProfile3.getId(), is("E-MTAB-2800"));
+        assertThat(baselineProfile3.getName(), is("Nine rat tissues - Sprague Dawley"));
+    }
 }

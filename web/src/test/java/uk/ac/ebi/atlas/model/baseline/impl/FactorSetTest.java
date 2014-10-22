@@ -38,9 +38,9 @@ public class FactorSetTest {
 
     private FactorSet subject;
 
-    private Factor factorOne = new Factor("type1","value1");
-    private Factor factorTwo = new Factor("type2","value2");
-    private Factor factorThree = new Factor("type3","value3");
+    private Factor factorOne = new Factor("type1", "value1");
+    private Factor factorTwo = new Factor("type2", "value2");
+    private Factor factorThree = new Factor("type3", "value3");
 
     @Before
     public void setUp() throws Exception {
@@ -75,7 +75,7 @@ public class FactorSetTest {
     }
 
     @Test
-    public void equalsShouldSucceed(){
+    public void equalsShouldSucceed() {
 
         FactorSet equalsToSubject = new FactorSet().add(factorTwo).add(factorOne).add(factorThree);
 
@@ -92,9 +92,9 @@ public class FactorSetTest {
     }
 
     @Test
-    public void equalsShouldFail(){
+    public void equalsShouldFail() {
 
-        FactorSet differentFactors = new FactorSet().add(new Factor("typeX","valueX")).add(factorThree);
+        FactorSet differentFactors = new FactorSet().add(new Factor("typeX", "valueX")).add(factorThree);
 
         assertThat(subject.equals(differentFactors), is(false));
 
@@ -102,7 +102,7 @@ public class FactorSetTest {
 
         assertThat(subject.equals(subsetOfSubject), is(false));
 
-        FactorSet supersetOfSubject = new FactorSet().add(factorTwo).add(factorThree).add(factorOne).add(new Factor("typeX","valueX"));
+        FactorSet supersetOfSubject = new FactorSet().add(factorTwo).add(factorThree).add(factorOne).add(new Factor("typeX", "valueX"));
 
         assertThat(subject.equals(supersetOfSubject), is(false));
     }
@@ -110,7 +110,7 @@ public class FactorSetTest {
     @Test
     public void overlapShouldSucceed() throws Exception {
 
-        List<Factor> overlappingFactors = Lists.newArrayList(factorTwo, new Factor("typeX","valueX"));
+        List<Factor> overlappingFactors = Lists.newArrayList(factorTwo, new Factor("typeX", "valueX"));
 
         assertThat(subject.overlapsWith(overlappingFactors), is(true));
 
@@ -119,7 +119,7 @@ public class FactorSetTest {
         assertThat(subject.overlapsWith(overlappingFactors), is(true));
 
         overlappingFactors = Lists.newArrayList(factorTwo, factorOne, factorThree,
-                                                factorTwo, new Factor("typeX", "valueX"));
+                factorTwo, new Factor("typeX", "valueX"));
 
         assertThat(subject.overlapsWith(overlappingFactors), is(true));
 
@@ -154,4 +154,22 @@ public class FactorSetTest {
         assertThat(subject.contains(new Factor("typeX", "valueX")), is(false));
     }
 
+    @Test
+    public void testDoesNotContainAnyOrganism() {
+        assertThat(subject.containsOnlyOrganism(), is(false));
+    }
+
+    @Test
+    public void testContainsOnlyOrganism() {
+        FactorSet subjectContainsOnlyOrganism = new FactorSet();
+        assertThat(subjectContainsOnlyOrganism.containsOnlyOrganism(), is(false));
+
+        subjectContainsOnlyOrganism.add(new Factor("ORGANISM", "Homo sapiens"));
+
+        assertThat(subjectContainsOnlyOrganism.containsOnlyOrganism(), is(true));
+
+        subjectContainsOnlyOrganism.add(new Factor("type1", "value1"));
+
+        assertThat(subjectContainsOnlyOrganism.containsOnlyOrganism(), is(false));
+    }
 }
