@@ -153,7 +153,7 @@ public class BioEntityPage extends HeatmapTablePage {
 
         if (!expectToOpen) {
             By infoCardBodyId = By.id("infoBody");
-            WebDriverWait wait = new WebDriverWait(driver, 4L);
+            WebDriverWait wait = new WebDriverWait(driver, 10L);
             wait.until(ExpectedConditions.invisibilityOfElementLocated(infoCardBodyId));
         }
     }
