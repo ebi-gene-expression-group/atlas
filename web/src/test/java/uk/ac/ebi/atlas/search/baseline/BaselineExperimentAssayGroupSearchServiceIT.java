@@ -95,7 +95,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
         System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
 
-        assertThat(experimentAccessions, contains(  "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-MTAB-513", "E-MTAB-1733", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352"));
+        assertThat(experimentAccessions, contains(  "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-MTAB-513", "E-MTAB-1733", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-MTAB-2800", "E-MTAB-2800", "E-MTAB-2800"));
     }
 
     @Test

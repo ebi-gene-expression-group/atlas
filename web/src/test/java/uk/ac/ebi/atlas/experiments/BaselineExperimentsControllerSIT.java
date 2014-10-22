@@ -34,7 +34,7 @@ import static org.hamcrest.Matchers.is;
 
 public class BaselineExperimentsControllerSIT extends SinglePageSeleniumFixture {
 
-    public static final int NUMBER_OF_BASELINE_EXPERIMENTS = 13;
+    public static final int NUMBER_OF_BASELINE_EXPERIMENTS = 14;
     private BaselineExperimentsPage subject;
 
     public void getStartingPage() {

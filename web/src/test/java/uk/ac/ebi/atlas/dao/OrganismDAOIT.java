@@ -30,6 +30,6 @@ public class OrganismDAOIT {
     @Test
     public void testGetOrganismsSize() throws Exception {
         List<String> organisms = subject.getOrganisms();
-        assertThat(organisms.size(), is(16));
+        assertThat(organisms.size(), is(17));
     }
 }
