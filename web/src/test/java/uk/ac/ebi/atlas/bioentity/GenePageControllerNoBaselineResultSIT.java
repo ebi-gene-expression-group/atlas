@@ -51,5 +51,13 @@ public class GenePageControllerNoBaselineResultSIT extends SinglePageSeleniumFix
         assertThat(subject.getBaselinePaneContents(), is(""));
     }
 
+    @Test
+    public void baselinePanelHasNoResultsAndNoWidgetForGeneWithOrthologsAndNoExpressions() {
+        BioEntityPage  subject = new BioEntityPage(driver, "ENSDARG00000053979", "genes"); // arabidopsis thaliana
+        subject.get();
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
+        assertThat(subject.getBaselinePaneContents(), is(""));
+    }
+
 
 }
