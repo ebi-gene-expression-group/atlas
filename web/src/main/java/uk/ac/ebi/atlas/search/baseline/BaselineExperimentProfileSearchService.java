@@ -72,7 +72,8 @@ public class BaselineExperimentProfileSearchService {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        //TODO: here or by caller?
+        //TODO: here or by caller? more efficient to have the caller do this, otherwise we are repeating this query
+        //for both baseline and differential
         Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
 
         BaselineTissueExperimentSearchResult result = fetchTissueExperimentProfiles(geneIds);

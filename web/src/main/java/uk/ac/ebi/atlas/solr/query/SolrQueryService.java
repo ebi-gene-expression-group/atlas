@@ -188,6 +188,10 @@ public class SolrQueryService {
 
     }
 
+    /**
+     *
+     * @param specie empty string will search across all species, and return orthologs
+     */
     public Optional<Set<String>> expandGeneQueryIntoGeneIds(String geneQuery, String specie, boolean isExactMatch) {
         if (StringUtils.isBlank(geneQuery)) {
             return Optional.absent();
@@ -198,7 +202,6 @@ public class SolrQueryService {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        // empty string will search across all species. Species must be lower case.
         String solrSpecies = StringUtils.isNotBlank(specie) ? specie.toLowerCase() : "";
 
         //resolve any gene keywords to identifiers
