@@ -105,11 +105,19 @@ public class GeneSetPageController extends BioEntityPageController {
 
     private void addBaselineResults(String identifier, Model model) {
         if (speciesResult.isMultiSpecies()) {
-            addBaselineCounts(identifier, model);
+            Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryExactMatchIntoGeneIdsAnySpecies(identifier);
+
+            if (geneIds.isPresent()) {
+                addBaselineCounts(geneIds.get(), model);
+            }
         } else {
             String species = speciesResult.firstSpecies();
 
-            addBaselineResults(identifier, model, species);
+            Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryExactMatchIntoGeneIds(identifier, species);
+
+            if (geneIds.isPresent()) {
+                addBaselineResults(geneIds.get(), model);
+            }
 
         }
     }

@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
@@ -185,24 +186,22 @@ public abstract class BioEntityPageController {
         }
     }
 
-    void addBaselineResults(String identifier, Model model, String species) {
-        BaselineTissueExperimentSearchResult tissueResults = baselineExperimentProfileSearchService.query(identifier, species, true);
+    void addBaselineResults(Set<String> geneIds, Model model) {
+        BaselineTissueExperimentSearchResult tissueResults = baselineExperimentProfileSearchService.query(geneIds);
 
         if (tissueResults.isEmpty()) {
-            addBaselineCounts(identifier, model);
+            addBaselineCounts(geneIds, model);
         } else {
-            addWidget(model, species);
+            addWidget(model);
         }
     }
 
-    void addWidget(Model model, String species) {
+    void addWidget(Model model) {
         model.addAttribute("widgetHasBaselineProfiles", true);
-        model.addAttribute("species", species);
     }
 
-    void addBaselineCounts(String identifier, Model model) {
-        String specie = "";
-        Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(identifier, null, specie, true);
+    void addBaselineCounts(Set<String> geneIds, Model model) {
+        Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.queryAnySpecies(geneIds, Optional.<String>absent());
         model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
     }
 

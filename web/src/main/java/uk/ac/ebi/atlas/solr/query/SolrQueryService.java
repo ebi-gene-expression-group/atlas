@@ -188,9 +188,18 @@ public class SolrQueryService {
 
     }
 
+    public Optional<Set<String>> expandGeneQueryExactMatchIntoGeneIdsAnySpecies(String geneQuery) {
+        return expandGeneQueryIntoGeneIds(geneQuery, "", true);
+    }
+
+    public Optional<Set<String>> expandGeneQueryExactMatchIntoGeneIds(String geneQuery, String species) {
+        return expandGeneQueryIntoGeneIds(geneQuery, species, true);
+    }
+
     /**
      *
      * @param specie empty string will search across all species, and return orthologs
+     * @return Optional.absent if geneQuery is blank, empty Set if no genes found, otherwise Set of geneids found
      */
     public Optional<Set<String>> expandGeneQueryIntoGeneIds(String geneQuery, String specie, boolean isExactMatch) {
         if (StringUtils.isBlank(geneQuery)) {

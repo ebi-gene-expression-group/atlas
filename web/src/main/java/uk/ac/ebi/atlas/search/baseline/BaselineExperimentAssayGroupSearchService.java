@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.search.baseline;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
@@ -72,6 +73,42 @@ public class BaselineExperimentAssayGroupSearchService {
         return (!coll.isPresent() || coll.get().isEmpty());
     }
 
+    public SortedSet<BaselineExperimentAssayGroup> queryAnySpecies(Set<String> geneIds, Optional<String> condition) {
+        return query(geneIds, condition, Optional.<String>absent());
+    }
+
+    public SortedSet<BaselineExperimentAssayGroup> query(Set<String> geneIds, Optional<String> condition, Optional<String> species) {
+        LOGGER.info(String.format("<query> geneIds=%s, condition=%s", Joiner.on(", ").join(geneIds), condition));
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+        stopWatch.start();
+
+        String conditionString = condition.isPresent() ? condition.get() : "";
+        String speciesString = species.isPresent() ? species.get() : "";
+
+        Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups = fetchAssayGroupsForCondition(conditionString);
+
+        SetMultimap<String, String> assayGroupsWithExpressionByExperiment = baselineExperimentAssayGroupsDao.fetchExperimentAssayGroupsWithNonSpecificExpression(indexedAssayGroups, Optional.of(geneIds));
+
+        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups =
+                searchedForConditionButGotNoResults(conditionString, indexedAssayGroups) ? emptySortedSet()
+                : buildResults(assayGroupsWithExpressionByExperiment, !StringUtils.isBlank(conditionString), speciesString);
+
+        stopWatch.stop();
+        LOGGER.info(String.format("<query> %s results, took %s seconds", baselineExperimentAssayGroups.size(), stopWatch.getTotalTimeSeconds()));
+
+        return baselineExperimentAssayGroups;
+    }
+
+    private boolean searchedForConditionButGotNoResults(String condition, Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups) {
+        return (!StringUtils.isBlank(condition) && isEmpty(indexedAssayGroups));
+    }
+
+    public static SortedSet<BaselineExperimentAssayGroup> emptySortedSet() {
+        return Sets.newTreeSet();
+    }
+
+    // use above query instead, see TODO below
+    @Deprecated
     public SortedSet<BaselineExperimentAssayGroup> query(String geneQuery, String condition, String specie, boolean isExactMatch) {
         LOGGER.info(String.format("<query> geneQuery=%s, condition=%s", geneQuery, condition));
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
