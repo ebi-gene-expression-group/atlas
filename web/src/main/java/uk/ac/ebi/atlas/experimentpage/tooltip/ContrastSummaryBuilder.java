@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.dto.tooltip;
+package uk.ac.ebi.atlas.experimentpage.tooltip;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultimap;

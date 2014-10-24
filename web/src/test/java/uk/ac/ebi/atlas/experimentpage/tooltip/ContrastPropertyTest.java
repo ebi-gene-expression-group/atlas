@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.dto.tooltip;
+package uk.ac.ebi.atlas.experimentpage.tooltip;
 
 import com.google.common.collect.Sets;
 import org.junit.Test;

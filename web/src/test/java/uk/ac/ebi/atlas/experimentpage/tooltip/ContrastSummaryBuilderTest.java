@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.dto.tooltip;
+package uk.ac.ebi.atlas.experimentpage.tooltip;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.AssayGroup;

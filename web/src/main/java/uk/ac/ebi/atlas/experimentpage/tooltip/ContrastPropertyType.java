@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.dto.tooltip;
+package uk.ac.ebi.atlas.experimentpage.tooltip;
 
 public enum ContrastPropertyType {
     FACTOR, SAMPLE;

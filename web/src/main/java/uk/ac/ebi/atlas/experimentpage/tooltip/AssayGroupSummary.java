@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.dto.tooltip;
+package uk.ac.ebi.atlas.experimentpage.tooltip;
 
 import java.util.Iterator;
 import java.util.SortedSet;
