@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.bioentity.mirna;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -62,6 +63,7 @@ public class GenePageControllerMirbaseWith3EnsgeneResultsSIT extends SinglePageS
         assertThat(subject.getPropertiesTableRow(2), hasItems("Sequence", "UGGCGGCCUGGGCGGGAGCGCGCGGGCGGGGCCGGCCCCGCUGCCUGGAAUUAACCCCGCUGUGCUUGCUCGUCCCGCCCGCAGCCCUAGGCGGCGUCG"));
     }
 
+    @Ignore // to be fixed by https://www.pivotaltracker.com/story/show/81361962
     @Test
     public void baselineHeatmapContains3EnsgeneResults() {
         subject.clickBaselinePane();
