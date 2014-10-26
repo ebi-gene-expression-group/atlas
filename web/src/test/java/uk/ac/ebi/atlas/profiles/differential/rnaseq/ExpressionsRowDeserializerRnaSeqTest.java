@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.profiles.differential.microarray;
+package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 
 import com.google.common.collect.Lists;
 import org.hamcrest.CoreMatchers;
@@ -31,26 +31,24 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MicroarrayExpressionsBufferTest {
+public class ExpressionsRowDeserializerRnaSeqTest {
 
     public static final String P_VAL_1 = "1";
-    public static final String T_VAL_1 = "0.5";
     public static final String FOLD_CHANGE_1 = "0.474360080385946";
 
     public static final String P_VAL_2 = "1";
-    public static final String T_VAL_2 = "-0.5";
     public static final String FOLD_CHANGE_2 = "-Inf";
 
-    private static final String[] TWO_CONTRASTS = new String[]{P_VAL_1, T_VAL_1, FOLD_CHANGE_1, P_VAL_2, T_VAL_2, FOLD_CHANGE_2};
+    private static final String[] TWO_CONTRASTS = new String[]{P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2};
 
-    private MicroarrayExpressionsQueue subject;
+    private ExpressionsRowDeserializerRnaSeq subject;
 
     @Mock
     private Contrast contrast1Mock;
@@ -59,7 +57,7 @@ public class MicroarrayExpressionsBufferTest {
 
     @Before
     public void initializeSubject() {
-        subject = new MicroarrayExpressionsQueue(Lists.newArrayList(contrast1Mock, contrast2Mock));
+        subject = new ExpressionsRowDeserializerRnaSeq(Lists.newArrayList(contrast1Mock, contrast2Mock));
 
     }
 
@@ -69,22 +67,20 @@ public class MicroarrayExpressionsBufferTest {
         subject.reload(TWO_CONTRASTS);
 
         //when
-        MicroarrayExpression expression = subject.poll();
+        DifferentialExpression expression = subject.next();
         //then we expect first expression
         assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_1)));
-        assertThat(expression.getTstatistic(), is(Double.valueOf(T_VAL_1)));
         assertThat(expression.getFoldChange(), is(Double.valueOf(FOLD_CHANGE_1)));
         assertThat(expression.getContrast(), is(contrast1Mock));
 
-        //given we poll again
-        expression = subject.poll();
+        //given we next again
+        expression = subject.next();
         assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_2)));
-        assertThat(expression.getTstatistic(), is(Double.valueOf(T_VAL_2)));
         assertThat(expression.getFoldChange(), is(Double.NEGATIVE_INFINITY));
         assertThat(expression.getContrast(), is(contrast2Mock));
 
 
-        assertThat(subject.poll(), is(nullValue()));
+        assertThat(subject.next(), is(nullValue()));
     }
 
     @Test
@@ -93,11 +89,11 @@ public class MicroarrayExpressionsBufferTest {
         subject.reload(TWO_CONTRASTS);
 
         //when
-        subject.poll();
-        subject.poll();
-        subject.poll();
-        //then we expect next poll to return null
-        assertThat(subject.poll(), Matchers.is(nullValue()));
+        subject.next();
+        subject.next();
+        subject.next();
+        //then we expect next next to return null
+        assertThat(subject.next(), Matchers.is(nullValue()));
     }
 
     @Test
@@ -105,26 +101,25 @@ public class MicroarrayExpressionsBufferTest {
         //given we load the buffer with three expressions
         subject.reload(TWO_CONTRASTS);
 
-        //when we poll until exhaustion
-        MicroarrayExpression run;
+        //when we next until exhaustion
+        DifferentialExpression run;
         do {
-            run = subject.poll();
+            run = subject.next();
         } while (run != null);
         //and we reload again with new values
-        subject.reload("1", "0.5", "2");
-        //and we poll
-        MicroarrayExpression expression = subject.poll();
+        subject.reload("1", "2");
+        //and we next
+        DifferentialExpression expression = subject.next();
         //then we expect to find the new values
         assertThat(expression.getPValue(), is(1d));
-        assertThat(expression.getTstatistic(), is(0.5d));
     }
 
     @Test(expected = IllegalStateException.class)
     public void reloadShouldThrowExceptionIfBufferIsNotEmpty() throws Exception {
         //given we load the buffer with three expressions
         subject.reload(TWO_CONTRASTS);
-        //and we poll only a single expression
-        subject.poll();
+        //and we next only a single expression
+        subject.next();
 
         //when we reload again
         subject.reload(TWO_CONTRASTS);
@@ -135,21 +130,21 @@ public class MicroarrayExpressionsBufferTest {
     @Test
     public void skipNALines() {
 
-        subject.reload("NA", "NA", "NA");
+        subject.reload("NA", "NA");
 
-        MicroarrayExpression expression = subject.poll();
-
-        assertThat(expression, is(CoreMatchers.nullValue()));
-
-        subject.reload("1", "NA", "NA");
-
-        expression = subject.poll();
+        DifferentialExpression expression = subject.next();
 
         assertThat(expression, is(CoreMatchers.nullValue()));
 
-        subject.reload("NA", "1", "NA");
+        subject.reload("1", "NA");
 
-        expression = subject.poll();
+        expression = subject.next();
+
+        assertThat(expression, is(CoreMatchers.nullValue()));
+
+        subject.reload("NA", "1");
+
+        expression = subject.next();
 
         assertThat(expression, is(CoreMatchers.nullValue()));
     }
@@ -157,12 +152,11 @@ public class MicroarrayExpressionsBufferTest {
     @Test
     public void skipNALinesKeepsCorrespondingContrasts() {
 
-        subject.reload("NA", "NA", "1", P_VAL_2, T_VAL_2, "-Inf");
+        subject.reload("NA", "1", P_VAL_2, "-Inf");
 
-        MicroarrayExpression expression = subject.poll();
+        DifferentialExpression expression = subject.next();
 
         assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_2)));
-        assertThat(expression.getTstatistic(), is(Double.valueOf(T_VAL_2)));
         assertThat(expression.getFoldChange(), is(Double.NEGATIVE_INFINITY));
         assertThat(expression.getContrast(), is(contrast2Mock));
     }

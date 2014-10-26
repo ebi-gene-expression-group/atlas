@@ -3,9 +3,9 @@ package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
+import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
@@ -19,14 +19,14 @@ public class RnaSeqProfileStreamFactory {
     @Value("#{configuration['diff.experiment.data.path.template']}")
     private String experimentDataFileUrlTemplate;
 
-    private RnaSeqExpressionsQueueBuilder expressionsQueueBuilder;
+    private ExpressionsRowDeserializerRnaSeqBuilder expressionsRowDeserializerRnaSeqBuilder;
 
     private CsvReaderFactory csvReaderFactory;
 
     @Inject
-    public RnaSeqProfileStreamFactory(RnaSeqExpressionsQueueBuilder expressionsQueueBuilder,
+    public RnaSeqProfileStreamFactory(ExpressionsRowDeserializerRnaSeqBuilder expressionsRowDeserializerRnaSeqBuilder,
                                       CsvReaderFactory csvReaderFactory) {
-        this.expressionsQueueBuilder = expressionsQueueBuilder;
+        this.expressionsRowDeserializerRnaSeqBuilder = expressionsRowDeserializerRnaSeqBuilder;
         this.csvReaderFactory = csvReaderFactory;
     }
 
@@ -50,7 +50,7 @@ public class RnaSeqProfileStreamFactory {
 
         RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder = new RnaSeqProfileReusableBuilder(expressionFilter);
 
-        return new RnaSeqProfileStream(csvReader, experimentAccession, expressionsQueueBuilder, rnaSeqProfileReusableBuilder);
+        return new RnaSeqProfileStream(csvReader, experimentAccession, expressionsRowDeserializerRnaSeqBuilder, rnaSeqProfileReusableBuilder);
     }
 
 }

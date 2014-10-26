@@ -14,14 +14,14 @@ import java.util.Set;
 @Scope("prototype")
 public class ProteomicsBaselineProfileInputStreamFactory extends BaselineProfileInputStreamFactory {
 
-    private ProteomicsBaselineExpressionsQueueBuilder proteomicsBaselineExpressionsQueueBuilder;
+    private ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder;
     private CsvReaderFactory csvReaderFactory;
 
     @Inject
-    public ProteomicsBaselineProfileInputStreamFactory(ProteomicsBaselineExpressionsQueueBuilder proteomicsBaselineExpressionsQueueBuilder,
+    public ProteomicsBaselineProfileInputStreamFactory(ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder,
                                                        CsvReaderFactory csvReaderFactory) {
         this.csvReaderFactory = csvReaderFactory;
-        this.proteomicsBaselineExpressionsQueueBuilder = proteomicsBaselineExpressionsQueueBuilder;
+        this.expressionsRowDeserializerProteomicsBaselineBuilder = expressionsRowDeserializerProteomicsBaselineBuilder;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ProteomicsBaselineProfileInputStreamFactory extends BaselineProfile
 
         BaselineProfileReusableBuilder baselineProfileReusableBuilder = new BaselineProfileReusableBuilder(baselineExpressionFilter, queryFactorType);
 
-        return new BaselineProfilesInputStream(csvReader, experimentAccession, proteomicsBaselineExpressionsQueueBuilder, baselineProfileReusableBuilder);
+        return new BaselineProfilesInputStream(csvReader, experimentAccession, expressionsRowDeserializerProteomicsBaselineBuilder, baselineProfileReusableBuilder);
     }
 
     @Override

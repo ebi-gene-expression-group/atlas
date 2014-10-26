@@ -25,11 +25,11 @@ package uk.ac.ebi.atlas.model.baseline.barcharts;
 import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.profiles.TsvInputStream;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsQueueBuilder;
+import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowDeserializerBaselineBuilder;
 
 public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpressions, BaselineExpression> {
 
-    public BaselineExpressionsInputStream(CSVReader csvReader, String experimentAccession, BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder) {
+    public BaselineExpressionsInputStream(CSVReader csvReader, String experimentAccession, ExpressionsRowDeserializerBaselineBuilder baselineExpressionsQueueBuilder) {
         super(csvReader, experimentAccession, baselineExpressionsQueueBuilder);
     }
 
@@ -38,11 +38,11 @@ public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpre
 
         BaselineExpressions baselineExpressions = new BaselineExpressions();
         //we need to reload because the first line can only be used to extract the gene ID
-        getTsvRowQueue().reload(removeGeneIDAndNameColumns(values));
+        getExpressionsRowDeserializer().reload(removeGeneIDAndNameColumns(values));
 
         BaselineExpression expression;
 
-        while ((expression = getTsvRowQueue().poll()) != null) {
+        while ((expression = getExpressionsRowDeserializer().next()) != null) {
 
             baselineExpressions.addExpression(expression);
         }

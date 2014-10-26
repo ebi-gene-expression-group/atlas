@@ -27,8 +27,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsQueueBuilder;
-import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineExpressionsQueueBuilder;
+import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowDeserializerBaselineBuilder;
+import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowDeserializerProteomicsBaselineBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
@@ -43,18 +43,18 @@ public class BaselineExpressionsInputStreamFactory {
     @Value("#{configuration['experiment.magetab.path.template']}")
     private String baselineExperimentDataFileUrlTemplate;
 
-    private BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder;
-    private ProteomicsBaselineExpressionsQueueBuilder proteomicsBaselineExpressionsQueueBuilder;
+    private ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder;
+    private ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder;
     private CsvReaderFactory csvReaderFactory;
     private ExperimentTrader experimentTrader;
 
     @Inject
-    public BaselineExpressionsInputStreamFactory(BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder,
-                                                 ProteomicsBaselineExpressionsQueueBuilder proteomicsBaselineExpressionsQueueBuilder,
+    public BaselineExpressionsInputStreamFactory(ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
+                                                 ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder,
                                                  CsvReaderFactory csvReaderFactory,
                                                  ExperimentTrader experimentTrader) {
-        this.baselineExpressionsQueueBuilder = baselineExpressionsQueueBuilder;
-        this.proteomicsBaselineExpressionsQueueBuilder = proteomicsBaselineExpressionsQueueBuilder;
+        this.expressionsRowDeserializerBaselineBuilder = expressionsRowDeserializerBaselineBuilder;
+        this.expressionsRowDeserializerProteomicsBaselineBuilder = expressionsRowDeserializerProteomicsBaselineBuilder;
         this.csvReaderFactory = csvReaderFactory;
         this.experimentTrader = experimentTrader;
     }
@@ -67,9 +67,9 @@ public class BaselineExpressionsInputStreamFactory {
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
 
         if(experiment.getType().getDescription().equals("proteomics_baseline")) {
-            return new BaselineExpressionsInputStream(csvReader, experimentAccession, proteomicsBaselineExpressionsQueueBuilder);
+            return new BaselineExpressionsInputStream(csvReader, experimentAccession, expressionsRowDeserializerProteomicsBaselineBuilder);
         } else {
-            return new BaselineExpressionsInputStream(csvReader, experimentAccession, baselineExpressionsQueueBuilder);
+            return new BaselineExpressionsInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
         }
     }
 

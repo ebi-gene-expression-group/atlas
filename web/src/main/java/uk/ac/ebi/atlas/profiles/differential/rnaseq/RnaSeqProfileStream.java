@@ -33,10 +33,10 @@ public class RnaSeqProfileStream extends TsvInputStream<RnaSeqProfile, Different
     private RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder;
 
     public RnaSeqProfileStream(CSVReader csvReader, String experimentAccession
-            , RnaSeqExpressionsQueueBuilder expressionsBufferBuilder
+            , ExpressionsRowDeserializerRnaSeqBuilder expressionsRowDeserializerRnaSeqBuilder
             , RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder) {
 
-        super(csvReader, experimentAccession, expressionsBufferBuilder);
+        super(csvReader, experimentAccession, expressionsRowDeserializerRnaSeqBuilder);
         this.rnaSeqProfileReusableBuilder = rnaSeqProfileReusableBuilder;
     }
 

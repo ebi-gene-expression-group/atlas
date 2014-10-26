@@ -18,7 +18,7 @@ public class BaselineProfileInputStreamFactory {
     @Value("#{configuration['experiment.magetab.path.template']}")
     protected String baselineExperimentDataFileUrlTemplate;
 
-    private BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder;
+    private ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder;
 
     private CsvReaderFactory csvReaderFactory;
 
@@ -26,9 +26,9 @@ public class BaselineProfileInputStreamFactory {
     }
 
     @Inject
-    public BaselineProfileInputStreamFactory(BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder,
+    public BaselineProfileInputStreamFactory(ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
                               CsvReaderFactory csvReaderFactory) {
-        this.baselineExpressionsQueueBuilder = baselineExpressionsQueueBuilder;
+        this.expressionsRowDeserializerBaselineBuilder = expressionsRowDeserializerBaselineBuilder;
         this.csvReaderFactory = csvReaderFactory;
     }
 
@@ -42,7 +42,7 @@ public class BaselineProfileInputStreamFactory {
 
         BaselineProfileReusableBuilder baselineProfileReusableBuilder = new BaselineProfileReusableBuilder(baselineExpressionFilter, queryFactorType);
 
-        return new BaselineProfilesInputStream(csvReader, experimentAccession, baselineExpressionsQueueBuilder, baselineProfileReusableBuilder);
+        return new BaselineProfilesInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
     }
 
     public BaselineProfilesInputStream create(BaselineProfileStreamOptions options) {

@@ -26,11 +26,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.profiles.TsvRowQueue;
-import uk.ac.ebi.atlas.profiles.TsvRowQueueBuilder;
+import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializerBuilder;
+import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -38,19 +38,19 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public abstract class DifferentialExpressionsQueueBuilder<T extends Expression, K extends DifferentialExperiment> implements TsvRowQueueBuilder<T> {
+public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Expression, K extends DifferentialExperiment> implements ExpressionsRowDeserializerBuilder<T> {
 
-    private static final Logger LOGGER = Logger.getLogger(DifferentialExpressionsQueueBuilder.class);
+    private static final Logger LOGGER = Logger.getLogger(ExpressionsRowDeserializerDifferentialBuilder.class);
     private ExperimentsCache<K> experimentsCache;
     private String experimentAccession;
     private List<Contrast> orderedContrasts;
 
-    public DifferentialExpressionsQueueBuilder(ExperimentsCache<K> experimentsCache) {
+    public ExpressionsRowDeserializerDifferentialBuilder(ExperimentsCache<K> experimentsCache) {
         this.experimentsCache = experimentsCache;
     }
 
     @Override
-    public DifferentialExpressionsQueueBuilder forExperiment(String experimentAccession) {
+    public ExpressionsRowDeserializerDifferentialBuilder forExperiment(String experimentAccession) {
 
         this.experimentAccession = experimentAccession;
 
@@ -59,7 +59,7 @@ public abstract class DifferentialExpressionsQueueBuilder<T extends Expression, 
     }
 
     @Override
-    public DifferentialExpressionsQueueBuilder withHeaders(String... tsvFileHeaders) {
+    public ExpressionsRowDeserializerDifferentialBuilder withHeaders(String... tsvFileHeaders) {
 
         LOGGER.debug("<withHeaders> data file headers: " + Arrays.toString(tsvFileHeaders));
 
@@ -81,7 +81,7 @@ public abstract class DifferentialExpressionsQueueBuilder<T extends Expression, 
     }
 
     @Override
-    public TsvRowQueue<T> build() {
+    public ExpressionsRowDeserializer<T> build() {
 
         checkState(!CollectionUtils.isEmpty(orderedContrasts), "Builder state not ready for creating the ExpressionBuffer");
 
@@ -89,5 +89,5 @@ public abstract class DifferentialExpressionsQueueBuilder<T extends Expression, 
 
     }
 
-    protected abstract TsvRowQueue<T> getBufferInstance(List<Contrast> orderedContrasts);
+    protected abstract ExpressionsRowDeserializer<T> getBufferInstance(List<Contrast> orderedContrasts);
 }

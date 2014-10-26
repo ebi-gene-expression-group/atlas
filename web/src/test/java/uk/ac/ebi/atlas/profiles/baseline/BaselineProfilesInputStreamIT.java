@@ -74,7 +74,7 @@ public class BaselineProfilesInputStreamIT {
         assertThat(baselineProfile.getId(), is(GENE_ID_1));
         assertThat(baselineProfile.getSpecificity(), is(1));
 
-        //given we poll twice more
+        //given we next twice more
         baselineProfile = subject.readNext();
         //then
         assertThat(baselineProfile.getId(), is(GENE_ID_2));

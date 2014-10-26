@@ -34,37 +34,37 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class ProteomicsBaselineExpressionsQueueBuilder extends BaselineExpressionsQueueBuilder {
+public class ExpressionsRowDeserializerProteomicsBaselineBuilder extends ExpressionsRowDeserializerBaselineBuilder {
 
     private String experimentAccession;
     private ProteomicsBaselineExperimentsCache experimentsCache;
     private int[] indicesOfAssayGroups;
 
     @Inject
-    public ProteomicsBaselineExpressionsQueueBuilder(ProteomicsBaselineExperimentsCache experimentsCache) {
+    public ExpressionsRowDeserializerProteomicsBaselineBuilder(ProteomicsBaselineExperimentsCache experimentsCache) {
         this.experimentsCache = experimentsCache;
     }
 
     @Override
-    public ProteomicsBaselineExpressionsQueueBuilder forExperiment(String experimentAccession) {
+    public ExpressionsRowDeserializerProteomicsBaselineBuilder forExperiment(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
     }
 
     @Override
-    public ProteomicsBaselineExpressionsQueueBuilder withHeaders(String... tsvFileHeaders) {
+    public ExpressionsRowDeserializerProteomicsBaselineBuilder withHeaders(String... tsvFileHeaders) {
         this.indicesOfAssayGroups = ProteomicsBaselineExperimentExpressionLevelFile.indicesOfAssayGroups(tsvFileHeaders);
         return this;
     }
 
     @Override
-    public BaselineExpressionsQueue build() {
+    public ExpressionsRowDeserializerBaseline build() {
         checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
 
         BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
         //TODO: ordered factor groups should be passed in from the top, not looked up here
-        return new ProteomicsBaselineExpressionsQueue(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups(), indicesOfAssayGroups);
+        return new ExpressionsRowDeserializerProteomicsBaseline(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups(), indicesOfAssayGroups);
 
     }
 

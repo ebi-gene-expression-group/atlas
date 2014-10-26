@@ -24,12 +24,12 @@ package uk.ac.ebi.atlas.profiles;
 
 import uk.ac.ebi.atlas.model.Expression;
 
-public interface TsvRowQueueBuilder<T extends Expression> {
+public interface ExpressionsRowDeserializerBuilder<T extends Expression> {
 
-    TsvRowQueueBuilder forExperiment(String experimentAccession);
+    ExpressionsRowDeserializerBuilder forExperiment(String experimentAccession);
 
-    TsvRowQueueBuilder withHeaders(String... tsvFileHeaders);
+    ExpressionsRowDeserializerBuilder withHeaders(String... tsvFileHeaders);
 
-    TsvRowQueue<T> build();
+    ExpressionsRowDeserializer<T> build();
 
 }

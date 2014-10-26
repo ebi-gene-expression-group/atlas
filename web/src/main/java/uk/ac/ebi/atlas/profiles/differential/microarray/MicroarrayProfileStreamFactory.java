@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.commons.streams.SequenceObjectInputStream;
-import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
+import uk.ac.ebi.atlas.profiles.differential.IsDifferentialExpressionAboveCutOff;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
@@ -22,14 +22,14 @@ public class MicroarrayProfileStreamFactory {
     @Value("#{configuration['microarray.experiment.data.path.template']}")
     private String experimentDataFileUrlTemplate;
 
-    private MicroarrayExpressionsQueueBuilder expressionsQueueBuilder;
+    private ExpressionsRowDeserializerMicroarrayBuilder expressionsRowDeserializerMicroarrayBuilder;
 
     private CsvReaderFactory csvReaderFactory;
 
     @Inject
-    public MicroarrayProfileStreamFactory(MicroarrayExpressionsQueueBuilder expressionsQueueBuilder,
+    public MicroarrayProfileStreamFactory(ExpressionsRowDeserializerMicroarrayBuilder expressionsRowDeserializerMicroarrayBuilder,
                                           CsvReaderFactory csvReaderFactory) {
-        this.expressionsQueueBuilder = expressionsQueueBuilder;
+        this.expressionsRowDeserializerMicroarrayBuilder = expressionsRowDeserializerMicroarrayBuilder;
         this.csvReaderFactory = csvReaderFactory;
     }
 
@@ -67,7 +67,7 @@ public class MicroarrayProfileStreamFactory {
         MicroarrayProfileReusableBuilder profileBuilder = createProfileBuilder(pValueCutOff, foldChangeCutOff, regulation);
         CSVReader csvReader = createCsvReader(experimentAccession, arrayDesignAccession);
 
-        return new MicroarrayProfileStream(csvReader, experimentAccession, expressionsQueueBuilder, profileBuilder);
+        return new MicroarrayProfileStream(csvReader, experimentAccession, expressionsRowDeserializerMicroarrayBuilder, profileBuilder);
     }
 
 

@@ -24,24 +24,24 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.base.Joiner;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.profiles.TsvRowQueue;
+import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializer;
 import uk.ac.ebi.atlas.utils.StringArrayUtil;
 
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class ProteomicsBaselineExpressionsQueue extends BaselineExpressionsQueue {
+public class ExpressionsRowDeserializerProteomicsBaseline extends ExpressionsRowDeserializerBaseline {
 
     private final int[] orderedAssayGroupIndices;
 
-    public ProteomicsBaselineExpressionsQueue(List<FactorGroup> orderedFactorGroups, int[] orderedAssayGroupIndices) {
+    public ExpressionsRowDeserializerProteomicsBaseline(List<FactorGroup> orderedFactorGroups, int[] orderedAssayGroupIndices) {
         super(orderedFactorGroups);
         this.orderedAssayGroupIndices = orderedAssayGroupIndices;
     }
 
     @Override
-    public TsvRowQueue reload(String... values) {
+    public ExpressionsRowDeserializer reload(String... values) {
         checkArgument(values.length >= orderedAssayGroupIndices.length, String.format("Expected at least %s values but got [%s]", orderedAssayGroupIndices.length, Joiner.on(",").join(values)));
         String[] filtered = StringArrayUtil.filterByIndices(values, orderedAssayGroupIndices);
         return super.reload(filtered);

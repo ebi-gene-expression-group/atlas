@@ -34,10 +34,10 @@ public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile,
 
 
     public BaselineProfilesInputStream(CSVReader csvReader, String experimentAccession
-            , BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder
+            , ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder
             , BaselineProfileReusableBuilder baselineProfileReusableBuilder) {
 
-        super(csvReader, experimentAccession, baselineExpressionsQueueBuilder);
+        super(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
         this.baselineProfileReusableBuilder = baselineProfileReusableBuilder;
     }
 

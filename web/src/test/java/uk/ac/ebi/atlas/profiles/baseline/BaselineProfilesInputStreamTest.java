@@ -55,10 +55,10 @@ public class BaselineProfilesInputStreamTest {
     private CSVReader csvReaderMock;
 
     @Mock
-    private BaselineExpressionsQueueBuilder expressionsBufferBuilderMock;
+    private ExpressionsRowDeserializerBaselineBuilder expressionsBufferBuilderMock;
 
     @Mock
-    private BaselineExpressionsQueue expressionsBufferMock;
+    private ExpressionsRowDeserializerBaseline expressionsBufferMock;
 
     private String[] expressionLevels = new String[]{"A GENE ID", "A GENE NAME", "2.22222", "0.11111"};
     private String[] expressionLevelsWithoutGeneIdColumn = new String[]{"2.22222", "0.11111"};
@@ -106,35 +106,35 @@ public class BaselineProfilesInputStreamTest {
         BaselineExpression expression = mock(BaselineExpression.class);
 
         //given
-        given(expressionsBufferMock.poll())
+        given(expressionsBufferMock.next())
                 .willReturn(expression)
                 .willReturn(null);
         //when
         subject.readNext();
-        //then poll will be invoked three times
+        //then next will be invoked three times
 
-        verify(expressionsBufferMock, times(2)).poll();
+        verify(expressionsBufferMock, times(2)).next();
     }
 
     @Test
     public void givenBufferIsEmptyReadNextShouldReadANewLineAndReloadTheBuffer() throws Exception {
         InOrder inOrder = inOrder(expressionsBufferMock);
         //given
-        given(expressionsBufferMock.poll()).willReturn(null);
+        given(expressionsBufferMock.next()).willReturn(null);
         //when
         subject.readNext();
         //then
         verify(csvReaderMock, times(3)).readNext();
         //and
         inOrder.verify(expressionsBufferMock).reload(expressionLevelsWithoutGeneIdColumn);
-        inOrder.verify(expressionsBufferMock).poll();
+        inOrder.verify(expressionsBufferMock).next();
     }
 
 
     @Test
     public void givenAllDataHasBeenRead_ReadNextShouldReturnNull() throws Exception {
         //given
-        given(expressionsBufferMock.poll()).willReturn(null);
+        given(expressionsBufferMock.next()).willReturn(null);
         //and
         given(csvReaderMock.readNext()).willReturn(null);
         //when

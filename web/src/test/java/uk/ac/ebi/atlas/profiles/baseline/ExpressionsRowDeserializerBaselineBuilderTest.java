@@ -28,7 +28,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.model.baseline.*;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
+import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -37,7 +40,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineExpressionsQueueBuilderTest {
+public class ExpressionsRowDeserializerBaselineBuilderTest {
 
     private static final String MOCK_EXPERIMENT_ACCESSION = "MOCK_EXPERIMENT_ACCESSION";
 
@@ -62,7 +65,7 @@ public class BaselineExpressionsQueueBuilderTest {
     @Mock
     FactorGroup factorGroup;
 
-    private BaselineExpressionsQueueBuilder subject;
+    private ExpressionsRowDeserializerBaselineBuilder subject;
 
 
 
@@ -82,7 +85,7 @@ public class BaselineExpressionsQueueBuilderTest {
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
         when(experimentalFactorsMock.getOrderedFactorGroups()).thenReturn(ImmutableList.of(factorGroup));
 
-        subject = new BaselineExpressionsQueueBuilder(experimentsCacheMock);
+        subject = new ExpressionsRowDeserializerBaselineBuilder(experimentsCacheMock);
     }
 
     @Test(expected = IllegalStateException.class)

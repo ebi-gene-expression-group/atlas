@@ -22,9 +22,13 @@
 
 package uk.ac.ebi.atlas.profiles.baseline;
 
+import com.google.common.collect.ImmutableList;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
@@ -37,7 +41,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class BaselineExpressionBufferTest {
+@RunWith(MockitoJUnitRunner.class)
+public class ExpressionsRowDeserializerBaselineTest {
 
     public static final String EXPRESSION_LEVEL_1 = "0";
 
@@ -45,7 +50,7 @@ public class BaselineExpressionBufferTest {
     public static final String EXPRESSION_LEVEL_3 = "0.0001";
     private static final String[] THREE_EXPRESSION_LEVELS = new String[]{EXPRESSION_LEVEL_1, EXPRESSION_LEVEL_2, EXPRESSION_LEVEL_3};
 
-    private BaselineExpressionsQueue subject;
+    private ExpressionsRowDeserializerBaseline subject;
 
 
     @Before
@@ -61,7 +66,7 @@ public class BaselineExpressionBufferTest {
         orderedAllFactorValues.add(new FactorSet().add(factor2));
         orderedAllFactorValues.add(new FactorSet().add(factor3));
 
-        subject = new BaselineExpressionsQueue(orderedAllFactorValues);
+        subject = new ExpressionsRowDeserializerBaseline(orderedAllFactorValues);
 
     }
 
@@ -71,17 +76,17 @@ public class BaselineExpressionBufferTest {
         subject.reload(THREE_EXPRESSION_LEVELS);
 
         //when
-        BaselineExpression expression = subject.poll();
+        BaselineExpression expression = subject.next();
         //then we expect first expression
         assertThat(expression.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_1)));
 
-        //given we poll again
-        expression = subject.poll();
+        //given we next again
+        expression = subject.next();
         //then we expect second BaselineExpression
         assertThat(expression.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_2)));
 
-        //given we poll again
-        expression = subject.poll();
+        //given we next again
+        expression = subject.next();
         //then we expect second BaselineExpression
         assertThat(expression.getLevel(), is(Double.valueOf(EXPRESSION_LEVEL_3)));
 
@@ -93,11 +98,11 @@ public class BaselineExpressionBufferTest {
         subject.reload(THREE_EXPRESSION_LEVELS);
 
         //when
-        subject.poll();
-        subject.poll();
-        subject.poll();
-        //then we expect next poll to return null
-        assertThat(subject.poll(), Matchers.is(nullValue()));
+        subject.next();
+        subject.next();
+        subject.next();
+        //then we expect next to return null
+        assertThat(subject.next(), Matchers.is(nullValue()));
     }
 
     @Test
@@ -105,15 +110,15 @@ public class BaselineExpressionBufferTest {
         //given we load the buffer with three expressions
         subject.reload(THREE_EXPRESSION_LEVELS);
 
-        //when we poll until exhaustion
+        //when we next until exhaustion
         BaselineExpression run;
         do {
-            run = subject.poll();
+            run = subject.next();
         } while (run != null);
         //and we reload again with new values
         subject.reload("1", "2", "3");
-        //and we poll
-        BaselineExpression expression = subject.poll();
+        //and we next
+        BaselineExpression expression = subject.next();
         //then we expect to find the new values
         assertThat(expression.getLevel(), is(1d));
     }
@@ -122,13 +127,26 @@ public class BaselineExpressionBufferTest {
     public void reloadShouldThrowExceptionIfBufferIsNotEmpty() throws Exception {
         //given we load the buffer with three expressions
         subject.reload(THREE_EXPRESSION_LEVELS);
-        //and we poll only a single expression
-        subject.poll();
+        //and we next only a single expression
+        subject.next();
 
         //when we reload again
         subject.reload(THREE_EXPRESSION_LEVELS);
 
         //then we expect an IllegalArgumentException
+    }
+
+    @Mock
+    FactorGroup factorGroup;
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkValuesLengthEqualsHeaderLength() {
+        ImmutableList<FactorGroup> factorGroups = ImmutableList.of(factorGroup, factorGroup);
+
+        ExpressionsRowDeserializerBaseline baselineExpressionsQueue = new ExpressionsRowDeserializerBaseline(factorGroups);
+
+        baselineExpressionsQueue.reload("1");
     }
 
 

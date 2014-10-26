@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,12 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.profiles.differential.microarray;
+package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
-import uk.ac.ebi.atlas.profiles.TsvRowQueue;
+import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializer;
 
 import java.util.Iterator;
 import java.util.List;
@@ -33,47 +33,30 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkState;
 
-//ToDo: duplicate code with RnaSeqDiffExpressionsQueue
-public class MicroarrayExpressionsQueue extends TsvRowQueue<MicroarrayExpression> {
-
+public class ExpressionsRowDeserializerRnaSeq extends ExpressionsRowDeserializer<DifferentialExpression> {
 
     private Iterator<Contrast> expectedContrasts;
 
-    private List<Contrast> orderedContrasts;
-
-    MicroarrayExpressionsQueue(List<Contrast> orderedContrasts) {
+    ExpressionsRowDeserializerRnaSeq(List<Contrast> orderedContrasts) {
         this.expectedContrasts = Iterables.cycle(orderedContrasts).iterator();
-        this.orderedContrasts = orderedContrasts;
     }
 
-    public List<Contrast> getOrderedContrasts() {
-        return orderedContrasts;
-    }
-
-    public MicroarrayExpression pollExpression(Queue<String> tsvRow) {
+    public DifferentialExpression nextExpression(Queue<String> tsvRow) {
         String pValueString = tsvRow.poll();
         if (pValueString == null) {
             return null;
         }
-
-        String tStatisticString = tsvRow.poll();
-        checkState(tStatisticString != null, "missing tStatistic column in the analytics file");
-
         String foldChangeString = tsvRow.poll();
         checkState(foldChangeString != null, "missing fold change column in the analytics file");
-
-
-        if ("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(tStatisticString) || "NA".equalsIgnoreCase(foldChangeString)) {
+        if ("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(foldChangeString)) {
             expectedContrasts.next();
-            return pollExpression(tsvRow);
+            return nextExpression(tsvRow);
         }
-
         double pValue = parseDouble(pValueString);
-        double tStatistic = parseDouble(tStatisticString);
         double foldChange = parseDouble(foldChangeString);
 
         Contrast contrast = expectedContrasts.next();
-        return new MicroarrayExpression(pValue, foldChange, tStatistic, contrast);
+        return new DifferentialExpression(pValue, foldChange, contrast);
     }
 
     double parseDouble(String value) {
@@ -85,5 +68,6 @@ public class MicroarrayExpressionsQueue extends TsvRowQueue<MicroarrayExpression
         }
         return Double.parseDouble(value);
     }
+
 
 }

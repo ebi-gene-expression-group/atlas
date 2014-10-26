@@ -37,16 +37,16 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
 
     private CSVReader csvReader;
 
-    private TsvRowQueue<K> tsvRowQueue;
+    private ExpressionsRowDeserializer<K> expressionsRowDeserializer;
 
     protected TsvInputStream(CSVReader csvReader, String experimentAccession
-            , TsvRowQueueBuilder tsvRowQueueBuilder) {
+            , ExpressionsRowDeserializerBuilder expressionsRowDeserializerBuilder) {
 
         this.csvReader = csvReader;
 
         String[] firstCsvLine = readCsvLine();
         String[] headersWithoutGeneIdColumn = removeGeneIDAndNameColumns(firstCsvLine);
-        tsvRowQueue = tsvRowQueueBuilder.forExperiment(experimentAccession)
+        expressionsRowDeserializer = expressionsRowDeserializerBuilder.forExperiment(experimentAccession)
                 .withHeaders(headersWithoutGeneIdColumn).build();
     }
 
@@ -84,11 +84,11 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
         addGeneInfoValueToBuilder(values);
 
         //we need to reload because the first line can only be used to extract the gene ID
-        getTsvRowQueue().reload(removeGeneIDAndNameColumns(values));
+        getExpressionsRowDeserializer().reload(removeGeneIDAndNameColumns(values));
 
         K expression;
 
-        while ((expression = getTsvRowQueue().poll()) != null) {
+        while ((expression = getExpressionsRowDeserializer().next()) != null) {
 
             addExpressionToBuilder(expression);
 
@@ -105,8 +105,8 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
 
     protected abstract void addGeneInfoValueToBuilder(String[] values);
 
-    protected TsvRowQueue<K> getTsvRowQueue() {
-        return tsvRowQueue;
+    protected ExpressionsRowDeserializer<K> getExpressionsRowDeserializer() {
+        return expressionsRowDeserializer;
     }
 
     @Override
