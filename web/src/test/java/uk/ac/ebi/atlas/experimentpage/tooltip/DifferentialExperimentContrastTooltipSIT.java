@@ -44,8 +44,8 @@ public class DifferentialExperimentContrastTooltipSIT extends SinglePageSelenium
     @Test
     public void checkContrastSummaryTooltipTableHeader() {
         assertThat(subject.getContrastTooltipTableHeader(0), is("Property"));
-        assertThat(subject.getContrastTooltipTableHeader(1), is("Test value (N=3)"));
-        assertThat(subject.getContrastTooltipTableHeader(2), is("Reference value (N=3)"));
+        assertThat(subject.getContrastTooltipTableHeader(1), is("Test value (N=5)"));
+        assertThat(subject.getContrastTooltipTableHeader(2), is("Reference value (N=5)"));
     }
 
     //This is not working with PhantomJS browser :((
