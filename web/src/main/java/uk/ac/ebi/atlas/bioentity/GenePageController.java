@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableSet;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -73,9 +74,7 @@ public class GenePageController extends BioEntityPageController {
 
         model.addAttribute("disableGeneLinks", true);
 
-        // gene identifier will only ever be for one species, so don't need to restrict it
-        String species = "";
-        addBaselineResults(identifier, model, species);
+        addBaselineResults(ImmutableSet.of(identifier), model);
 
         loadDifferentialResults(identifier, model);
 

@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Function;
+import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableSortedSet;
@@ -66,16 +67,33 @@ public class BaselineExperimentProfileSearchService {
         return (!coll.isPresent() || coll.get().isEmpty());
     }
 
+    // query(Set<String> geneIds) to be used going forward, see TODO below
+    @Deprecated
     public BaselineTissueExperimentSearchResult query(String geneQuery, String species, boolean isExactMatch)  {
         LOGGER.info(String.format("<query> geneQuery=%s", geneQuery));
 
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        //TODO: here or by caller?
+        //TODO: more efficient to have the caller do this, otherwise we are repeating this query
+        //for both baseline and differential.
         Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
 
         BaselineTissueExperimentSearchResult result = fetchTissueExperimentProfiles(geneIds);
+
+        stopWatch.stop();
+        LOGGER.info(String.format("<query> %s results, took %s seconds", result.experimentProfiles.size(), stopWatch.getTotalTimeSeconds()));
+
+        return result;
+    }
+
+    public BaselineTissueExperimentSearchResult query(Set<String> geneIds)  {
+        LOGGER.info(String.format("<query> geneIds=%s", Joiner.on(",").join(geneIds)));
+
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+        stopWatch.start();
+
+        BaselineTissueExperimentSearchResult result = fetchTissueExperimentProfiles(Optional.of(geneIds));
 
         stopWatch.stop();
         LOGGER.info(String.format("<query> %s results, took %s seconds", result.experimentProfiles.size(), stopWatch.getTotalTimeSeconds()));

@@ -307,9 +307,7 @@ public class BaselineExperimentProfileSearchServiceIT {
     }
 
     @Test
-    public void experimentComponentsAreAppendedToExperimentNames() {
-        // This should only be done when there are other factors other than organism, so the other case is
-        // implicitly tested in singleGeneInMultipleExperiments or sortExperimentsByNonFilterFactors§w
+    public void nonOrganismFactorsAppendedToExperimentName() {
         BaselineTissueExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of("ENSRNOG00000015557")));
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;

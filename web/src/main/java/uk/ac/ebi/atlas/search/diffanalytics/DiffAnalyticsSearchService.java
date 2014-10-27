@@ -109,7 +109,8 @@ public class DiffAnalyticsSearchService {
 
         Optional<Collection<IndexedAssayGroup>> contrastsResult = findContrasts(condition);
 
-        //TODO: move outside into caller, because this is called twice, here and in BaselineExpressionSearchService
+        //TODO: move outside into caller, because this is called twice, here and in BaselineExperimentAssayGroupSearchService, and
+        // BaselineExperimentProfileSearchService
         Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, specie.toLowerCase(), isExactMatch);
 
 

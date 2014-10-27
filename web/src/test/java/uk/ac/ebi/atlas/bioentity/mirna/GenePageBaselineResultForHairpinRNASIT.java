@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.bioentity.mirna;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
@@ -46,6 +47,7 @@ public class GenePageBaselineResultForHairpinRNASIT extends SinglePageSeleniumFi
         assertThat(subject.getSearchResultsHeader(), endsWith("results for " + GENE_IDENTIFIER));
     }
 
+    @Ignore // to be fixed by https://www.pivotaltracker.com/story/show/81361962
     @Test
     public void infoCard() {
         assertThat(subject.isInfoCardExpanded(), is(false));
@@ -60,6 +62,7 @@ public class GenePageBaselineResultForHairpinRNASIT extends SinglePageSeleniumFi
         assertThat(subject.getPropertiesTableRow(3), hasItems("Design Element", "A_25_P00010661, A_25_P00010662, A_25_P00010663, A_25_P00010664, A_25_P00012828, A_25_P00012829, A_25_P00012830, A_25_P00012831"));
     }
 
+    @Ignore // to be fixed by https://www.pivotaltracker.com/story/show/81361962
     @Test
     public void baselineProfilePaneIsOpenAndContainsGenes() {
         subject.waitForHeatmapToBeVisible();
@@ -71,6 +74,7 @@ public class GenePageBaselineResultForHairpinRNASIT extends SinglePageSeleniumFi
 
         assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Illumina Body Map"));
         assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=hsa-miR-636%20ENSG00000161547%20ENSG00000207556%20ENSG00000092931"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-513?geneQuery=hsa-miR-636%20ENSG00000161547%20ENSG00000207556%20ENSG00000092931"));
     }
 
 }
