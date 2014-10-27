@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.page.experimentdesign;
+package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;

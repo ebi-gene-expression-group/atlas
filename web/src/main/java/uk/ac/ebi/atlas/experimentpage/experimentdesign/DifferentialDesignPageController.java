@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.page.experimentdesign;
+package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.web.DifferentialDesignRequestPreferences;
 
 import javax.servlet.http.HttpServletRequest;

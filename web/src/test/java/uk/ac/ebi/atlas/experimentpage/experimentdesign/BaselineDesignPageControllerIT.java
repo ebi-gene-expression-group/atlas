@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.web.controllers.page.experimentdesign;
+package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
@@ -11,8 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
-import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
-import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
@@ -34,18 +34,15 @@ import static org.mockito.Mockito.when;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class BaselineDesignPageControllerIT {
+    private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final String EXPERIMENT_ACCESSION = "E-PROT-1";
-
-    private static final Set<String> RUNS = Sets.newHashSet("Adult_Bcells","Fetal_Heart","Adult_Monocytes","Adult_Adrenalgland","Adult_Liver","Adult_Platelets","Adult_Heart","Adult_Urinarybladder","Adult_Pancreas","Fetal_Brain",
-            "Fetal_Placenta","Adult_Lung","Adult_Spinalcord","Fetal_Ovary","Fetal_Liver","Adult_Colon","Adult_Gallbladder","Adult_Rectum","Fetal_Gut","Adult_Retina","Adult_Testis","Adult_NKcells","Adult_Prostate","Adult_CD4Tcells",
-            "Adult_Ovary","Fetal_Testis","Adult_Frontalcortex","Adult_CD8Tcells","Adult_Esophagus","Adult_Kidney");
+    private static final Set<String> RUNS = Sets.newHashSet("ERR030887","ERR030879","ERR030886","ERR030885","ERR030878","ERR030884", "ERR030877","ERR030883","ERR030882","ERR030881","ERR030880","ERR030872","ERR030875","ERR030876","ERR030873","ERR030874");
 
     @Inject
     private BaselineDesignPageController subject;
 
     @Inject
-    private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache;
+    private BaselineExperimentsCache baselineExperimentsCache;
 
     private HttpServletRequest requestMock;
 
@@ -54,17 +51,16 @@ public class BaselineDesignPageControllerIT {
     @Before
     public void initSubject() throws Exception {
         requestMock = mock(HttpServletRequest.class);
-        ProteomicsBaselineExperiment proteomicsBaselineExperiment = proteomicsBaselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
+        BaselineExperiment proteomicsBaselineExperiment = baselineExperimentsCache.getExperiment(EXPERIMENT_ACCESSION);
         when(requestMock.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE)).thenReturn(proteomicsBaselineExperiment);
         when(requestMock.getRequestURI()).thenReturn("/gxa/experiments/" + EXPERIMENT_ACCESSION + "/experiment-design");
 
     }
 
     @Test
-    public void testExtractProteomicsExperimentDesign() throws IOException {
-
+    public void testExtractBaselineExperimentDesign() throws IOException {
         //given
-        subject.showProteomicsExperimentDesign(model, requestMock);
+        subject.showRnaSeqExperimentDesign(model, requestMock);
 
         Gson gson = new Gson();
 
@@ -80,15 +76,16 @@ public class BaselineDesignPageControllerIT {
 
         // and
         String[] samples = gson.fromJson((String) map.get("sampleHeaders"), String[].class);
-        assertThat(samples, arrayContaining("developmental stage", "organism", "organism part"));
+        assertThat(samples, arrayContaining("Organism", "age", "ethnic group", "organism part", "sex"));
         String[] factors = gson.fromJson((String) map.get("factorHeaders"), String[].class);
-        assertThat(factors, arrayContaining("developmental stage", "organism part"));
+        assertThat(factors, arrayContaining("organism part"));
 
         // and
         Type listStringArrayType = new TypeToken<List<String[]>>() {
         }.getType();
         List<String[]> data = gson.fromJson((String) map.get("tableData"), listStringArrayType);
-        assertThat(data.get(0), hasItemInArray("Adult_Adrenalgland"));
-        assertThat(data.get(data.size() - 1), hasItemInArray("Fetal_Testis"));
+        assertThat(data.get(0), hasItemInArray("Homo sapiens"));
+        assertThat(data.get(data.size() - 1), hasItemInArray("thyroid"));
     }
+
 }
