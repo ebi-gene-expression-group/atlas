@@ -20,10 +20,10 @@
  * http://gxa.github.com/gxa
  */
 
-/*global $,jQuery,console,loadSliderAndPlot: false */
+/*global $,jQuery,console,React,loadSliderAndPlot: false */
 /*jslint browser:true */
 /*jslint nomen: true*/
-var factorInfoTooltipModule = (function ($) {
+var contrastTooltipModule = (function ($, React, ContrastTooltip) {
     "use strict";
 
     function initTooltip(contextRoot, accessKey, elements) {
@@ -35,49 +35,28 @@ var factorInfoTooltipModule = (function ($) {
             tooltipClass:"help-tooltip pvalue-tooltip-styling",
             content:function (callback) {
 
-                //TODO: get this via a function parameter instead of the DOM
+                //TODO: get this via parameter instead of from the DOM
                 var experimentAccession = $(this).attr("data-experiment-accession"),
-                    assayGroupId = $(this).attr("data-assay-group-id");
+                    contrastId = $(this).attr("data-contrast-id");
                 if (experimentAccession === undefined) {
                     experimentAccession = $(this).find(":nth-child(1)").attr("data-experiment-accession");
-                    assayGroupId = $(this).find(":nth-child(1)").attr("data-assay-group-id");
+                    contrastId = $(this).find(":nth-child(1)").attr("data-contrast-id");
                 }
-                //callback($("#contrastInfo").html());
 
                 $.ajax({
-                    url:contextRoot + "/rest/assayGroup-summary",
+                    url:contextRoot + "/rest/contrast-summary",
                     data:{
                         experimentAccession:experimentAccession,
-                        assayGroupId: assayGroupId,
+                        contrastId: contrastId,
                         accessKey: accessKey
                     },
                     type:"GET",
                     success:function (data) {
-//                        var contrastDescription = data.contrastDescription;
-
-//                        $('#factorDescription').text(contrastDescription);
-
-                        //TODO: build this in React instead of by string concatenation here
-                        $("#factorInfo tbody").html("");
-
-                        for (var i = 0; i < data.properties.length; i++) {
-                            var property = data.properties[i];
-                            var propertyName = property.propertyName;
-                            var testValue = property.testValue !== undefined ? property.testValue : "";
-                            if (testValue === "") {
-                                continue;
-                            }
-                            var tableRow = $("<tr><td>" + propertyName + "</td><td>" + testValue + "</td></tr>");
-                            if (property.contrastPropertyType === 'FACTOR') {
-                                tableRow.find("td").css("font-weight", "bold");
-                            } else {
-                                tableRow.find("td").css("color", "gray");
-                            }
-                            tableRow.find("td").css("white-space", "normal");
-                            $("#factorInfo tbody").append(tableRow);
-                        }
-                        callback($("#factorInfo").html());
-
+                        var html = React.renderComponentToString(ContrastTooltip({
+                                                experimentDescription: data.experimentDescription,
+                                                contrastDescription: data.contrastDescription,
+                                                properties: data.properties}));
+                        callback(html);
                     }
                 }).fail(function (data) {
                         //"Sorry but there was an error: " + xhr.status + " " + xhr.statusText
@@ -90,7 +69,7 @@ var factorInfoTooltipModule = (function ($) {
 
     return {
         init:function (contextRoot, accessKey, elements) {
-            initTooltip(contextRoot, accessKey, elements || ".factorNameCell");
+            initTooltip(contextRoot, accessKey, elements || ".contrastNameCell");
         }
     };
-}(jQuery));
+}(jQuery, React, ContrastTooltip));

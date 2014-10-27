@@ -18,10 +18,12 @@
                 src="${pageContext.request.contextPath}/resources/js/highlight.js"></script>
         <script language="JavaScript" type="text/javascript"
                 src="${pageContext.request.contextPath}/resources/js/genePropertiesTooltipModule.js"></script>
-        <script language="JavaScript" type="text/javascript"
-                src="${pageContext.request.contextPath}/resources/js/contrastInfoTooltipModule.js"></script>
-        <script language="JavaScript" type="text/javascript"
-                src="${pageContext.request.contextPath}/resources/js/factorInfoTooltipModule.js"></script>
+
+        <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/jsx/contrastTooltip.js"></script>
+        <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/contrastTooltipModule.js"></script>
+
+        <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/jsx/factorTooltip.js"></script>
+        <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/factorTooltipModule.js"></script>
 
         <script src="${pageContext.request.contextPath}/resources/js/EventEmitter-4.2.7.min.js" type="text/javascript"></script>
 
@@ -35,44 +37,6 @@
 
 
         <div id="genenametooltip-content" style="display: none"></div>
-
-        <section id="contrastInfo" style="display:none">
-            <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
-            <div id="contrastDescription" style="text-align: center"></div>
-            <table class='table-grid' style="padding: 0px; margin: 0px;">
-                <thead>
-                <tr>
-                    <th class='header-cell'>
-                        Property
-                    </th>
-                    <th class='header-cell'>
-                        Test value
-                    </th>
-                    <th class='header-cell'>
-                        Reference value
-                    </th>
-                </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </section>
-
-        <section id="factorInfo" style="display:none">
-            <div id="factorDescription" style="text-align: center"></div>
-            <table class='table-grid' style="padding: 0px; margin: 0px;">
-                <thead>
-                <tr>
-                    <th class='header-cell'>
-                        Property
-                    </th>
-                    <th class='header-cell'>
-                        Value
-                    </th>
-                </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </section>
 
         <%-- used by helpTooltipsModule --%>
         <div id="help-placeholder" style="display: none"></div>

@@ -267,9 +267,9 @@
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/heatmapModule.js"></script>
 <script language="JavaScript" type="text/javascript"
-        src="${base}/resources/js/contrastInfoTooltipModule.js"></script>
+        src="${base}/resources/js/deprecated/contrastInfoTooltipModule.js"></script>
 <script language="JavaScript" type="text/javascript"
-        src="${base}/resources/js/factorInfoTooltipModule.js"></script>
+        src="${base}/resources/js/deprecated/factorInfoTooltipModule.js"></script>
 
 <script type="text/javascript">
     (function ($, heatmapModule) { //self invoking wrapper function that prevents $ namespace conflicts

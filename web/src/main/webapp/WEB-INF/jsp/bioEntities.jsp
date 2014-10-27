@@ -220,36 +220,12 @@
     </div>
 </section>
 
-<section id="contrastInfo" style="display:none">
-    <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
-    <div id="contrastDescription" style="text-align: center"></div>
-    <table class='table-grid' style="padding: 0px; margin: 0px;">
-        <thead>
-        <tr>
-            <th class='header-cell'>
-                Property
-            </th>
-            <th class='header-cell'>
-                Test value
-            </th>
-            <th class='header-cell'>
-                Reference value
-            </th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</section>
-
-
 <br/>
 
 <div id="help-placeholder" style="display: none"></div>
 
-<script src="${pageContext.request.contextPath}/resources/js/contrastInfoTooltipModule.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/ebi-global-search-run.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/ebi-global-search.js"></script>
-
 
 <c:if test="${showWidget}">
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
@@ -302,8 +278,6 @@
                 }
             }
         });
-
-        contrastInfoTooltipModule.init('${pageContext.request.contextPath}', '${param.accessKey}');
 
         helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 

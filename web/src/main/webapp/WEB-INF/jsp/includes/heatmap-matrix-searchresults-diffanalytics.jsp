@@ -147,13 +147,20 @@
     </tr>
     </tbody>
 </table>
+
+<%@ include file="react.jsp" %>
+
 <script language="JavaScript" type="text/javascript" src="${base}/resources/js/heatmapModule.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jsx/contrastTooltip.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/contrastTooltipModule.js"></script>
 
 <script type="text/javascript">
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
         $(document).ready(function () {
 
             heatmapModule.initRnaSeqHeatmap(undefined, ${preferences.cutoff}, undefined, 'heatmap-div');
+
+            contrastTooltipModule.init('${pageContext.request.contextPath}', '${param.accessKey}');
 
             $("#injected-header").remove();
             $("#heatmap-table th").attr("rowspan", "1");

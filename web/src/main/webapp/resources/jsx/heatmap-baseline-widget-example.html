@@ -20,8 +20,10 @@
             src="/gxa/resources/js/jquery-ui-1.10.3.fix-8740.0520a49/dist/jquery-ui.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="/gxa/resources/js/jquery-migrate-1.2.0.min.js"></script>
-    <script src="/gxa/resources/js/factorInfoTooltipModule.js"></script>
-    <script src="/gxa/resources/js/contrastInfoTooltipModule.js"></script>
+    <script src="/gxa/resources/jsx/factorTooltip.js"></script>
+    <script src="/gxa/resources/js/factorTooltipModule.js"></script>
+    <script src="/gxa/resources/jsx/contrastTooltip.js"></script>
+    <script src="/gxa/resources/js/contrastTooltipModule.js"></script>
     <script src="/gxa/resources/js/helpTooltipsModule.js"></script>
     <script src="/gxa/resources/js/genePropertiesTooltipModule.js"></script>
     <script src="/gxa/resources/js/highlight.js"></script>
@@ -82,24 +84,6 @@
 
 <!-- for gene name tooltips -->
 <div id="genenametooltip-content" style="display: none"></div>
-
-<!-- for factor header tool tips -->
-<section id="factorInfo" style="display:none">
-    <div id="factorDescription" style="text-align: center"></div>
-    <table class='table-grid' style="padding: 0px; margin: 0px;">
-        <thead>
-        <tr>
-            <th class='header-cell'>
-                Property
-            </th>
-            <th class='header-cell'>
-                Value
-            </th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</section>
 
 <!-- for display levels button -->
 <input id="displayLevels" name="displayLevels" type="hidden" value="false">

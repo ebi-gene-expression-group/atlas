@@ -4,7 +4,7 @@
 /* Modules and parameters for their init methods are passed in here.
  Parameters that affect how the DOM is generated as passed in as props. */
 
-var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoTooltipModule, contrastInfoTooltipModule, helpTooltipsModule, TranscriptPopup, EventEmitter, Modernizr) {
+var heatmapModule = (function($, React, genePropertiesTooltipModule, factorTooltipModule, contrastTooltipModule, helpTooltipsModule, TranscriptPopup, EventEmitter, Modernizr) {
 
     var TypeEnum = {
         BASELINE: "baseline",
@@ -344,7 +344,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
 
                 componentDidMount: function () {
                     if(type != TypeEnum.MULTIEXPERIMENT) {
-                        factorInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
+                        factorTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
                     }
                 },
 
@@ -418,7 +418,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
                 },
 
                 componentDidMount: function () {
-                    contrastInfoTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
+                    contrastTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
 
                     function enableButton(ref) {
                         if (ref) {
@@ -1003,4 +1003,4 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorInfoT
         buildMultiExperiment: function (heatmapConfig, $prefFormDisplayLevelsInputElement) { return build(TypeEnum.MULTIEXPERIMENT, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement); }
     };
 
-})(jQuery, React, genePropertiesTooltipModule, factorInfoTooltipModule, contrastInfoTooltipModule, helpTooltipsModule, TranscriptPopup, EventEmitter, Modernizr);
+})(jQuery, React, genePropertiesTooltipModule, factorTooltipModule, contrastTooltipModule, helpTooltipsModule, TranscriptPopup, EventEmitter, Modernizr);

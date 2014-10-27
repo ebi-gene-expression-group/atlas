@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css"
           href="/gxa/resources/css/heatmap-and-anatomogram.css">
     <link type="text/css" rel="stylesheet" href="/gxa/resources/css/jquery.toolbars.css" />
-    <link type="text/css" rel="stylesheet" href="/gxa/resources/css/bootstrap.icons.css" />
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/JSXTransformer.js"></script>
@@ -22,8 +21,10 @@
             src="/gxa/resources/js/jquery-ui-1.10.3.fix-8740.0520a49/dist/jquery-ui.min.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="/gxa/resources/js/jquery-migrate-1.2.0.min.js"></script>
-    <script src="/gxa/resources/js/factorInfoTooltipModule.js"></script>
-    <script src="/gxa/resources/js/contrastInfoTooltipModule.js"></script>
+    <script src="/gxa/resources/jsx/factorTooltip.js"></script>
+    <script src="/gxa/resources/js/factorTooltipModule.js"></script>
+    <script src="/gxa/resources/jsx/contrastTooltip.js"></script>
+    <script src="/gxa/resources/js/contrastTooltipModule.js"></script>
     <script src="/gxa/resources/js/helpTooltipsModule.js"></script>
     <script src="/gxa/resources/js/genePropertiesTooltipModule.js"></script>
     <script src="/gxa/resources/js/highlight.js"></script>
@@ -86,28 +87,6 @@
 
 <!-- for gene name tooltips -->
 <div id="genenametooltip-content" style="display: none"></div>
-
-<!-- for contrast header tool tips -->
-<section id="contrastInfo" style="display:none">
-    <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
-    <div id="contrastDescription" style="text-align: center"></div>
-    <table class='table-grid' style="padding: 0px; margin: 0px;">
-        <thead>
-        <tr>
-            <th class='header-cell'>
-                Property
-            </th>
-            <th class='header-cell'>
-                Test value
-            </th>
-            <th class='header-cell'>
-                Reference value
-            </th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</section>
 
 <!-- for display levels button -->
 <input id="displayLevels" name="displayLevels" type="hidden" value="false">
