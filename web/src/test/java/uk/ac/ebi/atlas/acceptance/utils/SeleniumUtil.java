@@ -27,6 +27,10 @@ public class SeleniumUtil {
     Find an element by ID, but wait until the element is available first, ignoringNoSuchElementException errors.
     */
     public static WebElement findElementByIdWaitingUntilAvailable(final WebDriver driver, final String id) {
+        return findElementWaitingUntilAvailable(driver, By.id(id));
+    }
+
+    public static WebElement findElementWaitingUntilAvailable(final WebDriver driver, final By locator) {
         FluentWait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
@@ -34,18 +38,22 @@ public class SeleniumUtil {
 
         return wait.until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver webDriver) {
-                return driver.findElement(By.id(id));
+                return driver.findElement(locator);
             }
         });
     }
 
     public static void waitForElementByIdUntilVisible(final WebDriver driver, final String id) {
+        waitUntilElementVisible(driver, By.id(id));
+    }
+
+    public static void waitUntilElementVisible(final WebDriver driver, final By locator) {
         FluentWait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     public static WebElement findElementByCssWaitingUntilAvailable(final WebDriver driver, final String css) {
@@ -57,19 +65,6 @@ public class SeleniumUtil {
         return wait.until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver webDriver) {
                 return driver.findElement(By.cssSelector(css));
-            }
-        });
-    }
-
-    public static WebElement findElementWaitingUntilAvailable(final WebDriver driver, final By by) {
-        FluentWait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
-                .pollingEvery(250, TimeUnit.MILLISECONDS)
-                .ignoring(NoSuchElementException.class);
-
-        return wait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver webDriver) {
-                return driver.findElement(by);
             }
         });
     }

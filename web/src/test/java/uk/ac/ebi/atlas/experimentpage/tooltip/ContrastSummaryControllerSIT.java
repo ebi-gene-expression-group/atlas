@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import static com.jayway.restassured.RestAssured.get;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.core.Is.is;
 
 public class ContrastSummaryControllerSIT extends RestAssuredFixture {
 
@@ -18,7 +19,7 @@ public class ContrastSummaryControllerSIT extends RestAssuredFixture {
         response.then().assertThat().statusCode(200);
         response.then().assertThat().contentType(ContentType.JSON);
 
-        //System.out.println(response.asString());
+        System.out.println(response.asString());
 
         response.then().assertThat().body("properties[1]", allOf(
                 hasEntry("referenceValue", "20 degrees celsius"),
@@ -33,5 +34,9 @@ public class ContrastSummaryControllerSIT extends RestAssuredFixture {
                 hasEntry("testValue", "leaf"),
                 hasEntry("contrastPropertyType", "SAMPLE")
         ));
+
+        response.then().assertThat().body("testReplicates", is(3));
+        response.then().assertThat().body("referenceReplicates", is(3));
+
     }
 }

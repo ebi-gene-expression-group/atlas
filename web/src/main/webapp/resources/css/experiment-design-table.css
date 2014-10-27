@@ -56,6 +56,11 @@
     padding-right: 5px;
 }
 
+/* needed for span inside header-cell that is added by React */
+.header-cell span {
+    font-weight: bold;
+}
+
 .header-cell:hover {
     background-color: #deebeb !important;
     cursor: pointer;

@@ -52,7 +52,7 @@ var factorTooltipModule = (function ($, React, FactorTooltip) {
                     },
                     type:"GET",
                     success:function (data) {
-                        var html = React.renderComponentToString(FactorTooltip({properties: data.properties}));
+                        var html = React.renderComponentToString(FactorTooltip({properties: data.properties, replicates: data.replicates}));
                         callback(html);
                     }
                 }).fail(function (data) {

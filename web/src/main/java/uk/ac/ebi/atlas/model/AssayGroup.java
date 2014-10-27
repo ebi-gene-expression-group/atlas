@@ -37,10 +37,17 @@ public class AssayGroup implements Iterable<String>{
 
     private Set<String> assayAccessions;
 
+    private int replicates;
+
     public AssayGroup(String id, String... assayAccessions) {
+        this(id, assayAccessions.length, assayAccessions);
+    }
+
+    public AssayGroup(String id, int replicates, String... assayAccessions) {
         checkArgument(StringUtils.isNotBlank(id));
 
         this.id = id;
+        this.replicates = replicates;
         this.assayAccessions = Sets.newHashSet(assayAccessions);
     }
 
@@ -51,6 +58,10 @@ public class AssayGroup implements Iterable<String>{
 
     public String getId() {
         return id;
+    }
+
+    public int getReplicates() {
+        return replicates;
     }
 
     public String getFirstAssayAccession() {

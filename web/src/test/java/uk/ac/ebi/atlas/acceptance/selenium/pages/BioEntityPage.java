@@ -216,48 +216,36 @@ public class BioEntityPage extends HeatmapTablePage {
         return getColumnValues(this.diffHeatmapTable, 2);
     }
 
-    public String getContrastSummaryTooltipTableHeader(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableHeaderIndex) {
-        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, getContrastColumnIndex());
-        hoverOnElement(firstContrastDescriptionCell);
+    public String getDiffHeatmapContrastSummaryTooltipTableHeader(int zeroBasedTooltipTableHeaderIndex) {
+        hoverOnFirstContrastDescriptionCell();
+        return tooltipHeader(zeroBasedTooltipTableHeaderIndex);
+    }
 
+    String tooltipHeader(int zeroBasedTooltipTableHeaderIndex) {
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
-        WebDriverWait wait = new WebDriverWait(driver, 10L);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
-        return driver.findElement(byTooltipClass).getText();
+        return SeleniumUtil.findElementWaitingUntilAvailable(driver, byTooltipClass).getText();
     }
 
     //This is not working with PhantomJS browser :((
-    public String getContrastSummaryTooltipTableData(int zeroBasedExpressionLevelIndex, int zeroBasedTooltipTableRowIndex,
-                                                     int zeroBasedTooltipTableColumnIndex) {
-        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, getContrastColumnIndex());
-        hoverOnElement(firstContrastDescriptionCell);
-
-        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//tr[" + (zeroBasedTooltipTableRowIndex + 1)
-                + "]//td[" + (zeroBasedTooltipTableColumnIndex + 1) + "]");
-        FluentWait wait = new WebDriverWait(driver, 10L)
-                .pollingEvery(50, TimeUnit.MILLISECONDS);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
-        return driver.findElement(byTooltipClass).getText();
+    public String getDiffHeatmapContrastSummaryTooltipTableCell(int zeroBasedTooltipTableRowIndex,
+                                                                int zeroBasedTooltipTableColumnIndex) {
+        hoverOnFirstContrastDescriptionCell();
+        return tooltipCell(zeroBasedTooltipTableRowIndex, zeroBasedTooltipTableColumnIndex);
     }
 
-    public String getContrastSummaryTooltipExperimentDescription(int zeroBasedExpressionLevelIndex) {
+    private void hoverOnFirstContrastDescriptionCell() {
         WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, getContrastColumnIndex());
         hoverOnElement(firstContrastDescriptionCell);
-
-        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastExperimentDescription']");
-        FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(50, TimeUnit.MILLISECONDS);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
-        return driver.findElement(byTooltipClass).getText();
     }
 
-    public String getContrastSummaryTooltipContrastDescription(int zeroBasedExpressionLevelIndex) {
-        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, 1, getContrastColumnIndex());
-        hoverOnElement(firstContrastDescriptionCell);
+    public String getDiffHeatmapContrastSummaryTooltipExperimentDescription() {
+        hoverOnFirstContrastDescriptionCell();
+        return tooltipContrastExperimentDescription();
+    }
 
-        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastDescription']");
-        WebDriverWait wait = new WebDriverWait(driver, 10L);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
-        return driver.findElement(byTooltipClass).getText();
+    public String getContrastSummaryTooltipContrastDescription() {
+        hoverOnFirstContrastDescriptionCell();
+        return tooltipContrastDescription();
     }
 
     public String getLinkInDiffTableRow(int oneBasedExpressionLevelIndex) {

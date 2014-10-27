@@ -37,7 +37,7 @@ var FactorTooltip = (function(React) {
                         <thead>
                             <tr>
                                 <th className="header-cell">Property</th>
-                                <th className="header-cell">Value</th>
+                                <th className="header-cell">Value (N={this.props.replicates})</th>
                             </tr>
                         </thead>
                         <tbody>
