@@ -20,37 +20,34 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.experimentpage.heatmap;
 
 import org.junit.Test;
+import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
-public class GenePageControllerDifferentialResultsSIT extends SinglePageSeleniumFixture {
+public class BaselineExperimentHeatmapHeadersSIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "AT3G29644";
+    private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private BioEntityPage subject;
+    protected HeatmapTablePage subject;
 
-    @Override
-    protected void getStartingPage() {
-        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes", "cutoff=0.5&openPanelIndex=2");
+    public void getStartingPage() {
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION);
         subject.get();
     }
 
     @Test
-    public void checkPaneExpansion() {
-        assertThat(subject.isDifferentialPaneExpanded(), is(true));
+    public void shouldHaveAGeneHeader() {
+        assertThat(subject.getGeneColumnHeader(), is("Gene"));
     }
 
-    @Test
-    public void checkSelectedProfiles() {
-        subject.clickDiffResultsDisplayLevelsButton();
-        assertThat(subject.getContrastColumn(), contains("idn2 mutant vs wild type",
-                "nrpe1 mutant vs wild type"));
-        assertThat(subject.getFoldChange(), hasItems("3.3", "2.6"));
+    @Test(expected = NoSuchElementException.class)
+    public void shouldNotHaveADesignElement() {
+        subject.getDesignElementHeader();
     }
 }

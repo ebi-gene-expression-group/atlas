@@ -49,9 +49,7 @@ public class AssayGroupSummaryBuilder {
         addAssayProperties(allFactorValues, ContrastPropertyType.FACTOR);
         addAssayProperties(allSampleValues, ContrastPropertyType.SAMPLE);
 
-        AssayGroupSummary assayGroupSummary = new AssayGroupSummary(Sets.newTreeSet(properties));
-
-        return assayGroupSummary;
+        return new AssayGroupSummary(assayGroup.getReplicates(), Sets.newTreeSet(properties));
 
     }
 

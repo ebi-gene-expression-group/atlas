@@ -49,14 +49,21 @@ public class ExperimentConfigurationTest {
     private static final String TEST_ASSAY_GROUP = "test_assay_group";
     private static final String NAME = "name";
     private static final String XML_CONTENT =
-            "<configuration experimentType=\"RNASEQ_MRNA_BASELINE\">" +
+            "<configuration experimentType=\"microarray_1colour_mrna_differential\">" +
                     "    <analytics>" +
                     "        <assay_groups>" +
                     "            <assay_group id=\"" + REFERENCE_ASSAY_GROUP + "\">" +
-                    "                <assay>" + REFERENCE_ASSAY_GROUP + "</assay>" +
+                    "<assay technical_replicate_id=\"t29\">ERR315431</assay>\n" +
+                    "<assay technical_replicate_id=\"t28\">ERR315343</assay>\n" +
+                    "<assay technical_replicate_id=\"t28\">ERR315342</assay>\n" +
+                    "<assay technical_replicate_id=\"t27\">ERR315332</assay>\n" +
+                    "<assay technical_replicate_id=\"t29\">ERR315378</assay>\n" +
                     "            </assay_group>" +
                     "            <assay_group id=\"" + TEST_ASSAY_GROUP + "\">" +
-                    "                <assay>" + TEST_ASSAY_GROUP + "</assay>" +
+                    "<assay>SRR057599</assay>\n" +
+                    "<assay>SRR057600</assay>\n" +
+                    "<assay>SRR057601</assay>\n" +
+                    "<assay>SRR057602</assay>\n" +
                     "            </assay_group>" +
                     "        </assay_groups>" +
                     "        <contrasts>" +
@@ -96,24 +103,36 @@ public class ExperimentConfigurationTest {
     }
 
     @Test
-    public void testGetContrasts() throws Exception {
+    public void testGetContrasts()  {
         Set<Contrast> contrasts = subject.getContrasts();
         assertThat(contrasts.size(), is(1));
         Contrast contrast = contrasts.iterator().next();
         assertThat(contrast.getId(), is(CONTRAST_ID));
         assertThat(contrast.getDisplayName(), is(NAME));
-        assertThat(contrast.getReferenceAssayGroup(), hasItem(REFERENCE_ASSAY_GROUP));
-        assertThat(contrast.getTestAssayGroup(), hasItem(TEST_ASSAY_GROUP));
+        assertThat(contrast.getReferenceAssayGroup(), contains("ERR315378", "ERR315332", "ERR315342", "ERR315343", "ERR315431"));
+        assertThat(contrast.getTestAssayGroup(), contains("SRR057601", "SRR057602", "SRR057600", "SRR057599"));
     }
 
     @Test
-    public void testGetAssayGroups() throws Exception {
+    public void testGetAssayGroups()  {
         AssayGroups assayGroups = subject.getAssayGroups();
         assertThat(assayGroups.getAssayGroupIds(), hasSize(2));
     }
 
     @Test
+    public void replicatesIsNumberOfUniqueTechnicalReplicates() {
+        AssayGroups assayGroups = subject.getAssayGroups();
+        assertThat(assayGroups.getAssayGroup(REFERENCE_ASSAY_GROUP).getReplicates(), is(3));
+    }
+
+    @Test
+    public void replicatesIsNumberOfAssays() {
+        AssayGroups assayGroups = subject.getAssayGroups();
+        assertThat(assayGroups.getAssayGroup(TEST_ASSAY_GROUP).getReplicates(), is(4));
+    }
+
+    @Test
     public void testGetExperimentType() {
-        assertThat(subject.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
+        assertThat(subject.getExperimentType(), is(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL));
     }
 }

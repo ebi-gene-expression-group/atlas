@@ -23,11 +23,15 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.lang3.StringUtils;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.xml.xpath.*;
@@ -90,17 +94,31 @@ public class ExperimentConfiguration {
 
             NodeList nl = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
             String[] assayAccessions = new String[nl.getLength()];
+
+            ImmutableSet.Builder<String> builder = ImmutableSet.builder();
             for (int i = 0; i < nl.getLength(); i++) {
                 Node node = nl.item(i);
+                String technicalReplicateId = getAttribute(node, "technical_replicate_id");
+                if (technicalReplicateId != null) {
+                    builder.add(technicalReplicateId);
+                }
                 assayAccessions[i] = node.getTextContent();
             }
 
-            return new AssayGroup(id, assayAccessions);
+            int technicalReplicates = builder.build().size();
+            int biologicalReplicates = (technicalReplicates == 0) ? assayAccessions.length : technicalReplicates;
+            return new AssayGroup(id, biologicalReplicates, assayAccessions);
 
         } catch (XPathExpressionException e) {
             throw new IllegalStateException("Problem parsing configuration file.", e);
         }
     }
+
+    private String getAttribute(Node node, String name) {
+        Node attribute = node.getAttributes().getNamedItem(name);
+        return (attribute == null) ? null : attribute.getNodeValue();
+    }
+
 
     public Set<String> getAssayAccessions(){
         try {

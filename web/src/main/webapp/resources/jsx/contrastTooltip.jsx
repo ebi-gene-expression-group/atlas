@@ -44,10 +44,10 @@ var ContrastTooltip = (function(React) {
                                 Property
                                 </th>
                                 <th className='header-cell'>
-                                Test value
+                                Test value (N={this.props.testReplicates})
                                 </th>
                                 <th className='header-cell'>
-                                Reference value
+                                Reference value (N={this.props.referenceReplicates})
                                 </th>
                             </tr>
                         </thead>

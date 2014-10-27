@@ -37,7 +37,7 @@ var FactorTooltip = (function(React) {
                         React.DOM.thead(null, 
                             React.DOM.tr(null, 
                                 React.DOM.th( {className:"header-cell"}, "Property"),
-                                React.DOM.th( {className:"header-cell"}, "Value")
+                                React.DOM.th( {className:"header-cell"}, "Value (N=",this.props.replicates,")")
                             )
                         ),
                         React.DOM.tbody(null, 

@@ -74,9 +74,9 @@ public class ContrastSummaryBuilder {
             properties.add(property);
         }
 
-        ContrastSummary contrastSummary = new ContrastSummary(experimentDescription, contrast.getDisplayName(), Sets.newTreeSet(properties));
-
-        return contrastSummary;
+        int testReplicates = contrast.getTestAssayGroup().getReplicates();
+        int referenceReplicates = contrast.getReferenceAssayGroup().getReplicates();
+        return new ContrastSummary(experimentDescription, contrast.getDisplayName(), testReplicates, referenceReplicates, Sets.newTreeSet(properties));
     }
 
     private void extractAllValues(Map<String, String> samples, Multimap<String, String> allValues) {
@@ -90,10 +90,9 @@ public class ContrastSummaryBuilder {
                                                      String header, ContrastPropertyType contrastPropertyType) {
         Collection<String> testValues = allTestValues.get(header);
         Collection<String> referenceValues = allReferenceValues.get(header);
-        ContrastProperty property = new ContrastProperty(header,
+        return new ContrastProperty(header,
                 Joiner.on(", ").skipNulls().join(testValues),
                 Joiner.on(", ").skipNulls().join(referenceValues),
                 contrastPropertyType);
-        return property;
     }
 }

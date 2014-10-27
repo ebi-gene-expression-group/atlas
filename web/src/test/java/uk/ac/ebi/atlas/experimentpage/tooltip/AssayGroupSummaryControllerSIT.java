@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import static com.jayway.restassured.RestAssured.get;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.core.Is.is;
 
 public class AssayGroupSummaryControllerSIT extends RestAssuredFixture {
 
@@ -18,7 +19,7 @@ public class AssayGroupSummaryControllerSIT extends RestAssuredFixture {
         response.then().assertThat().statusCode(200);
         response.then().assertThat().contentType(ContentType.JSON);
 
-        //System.out.println(response.asString());
+        System.out.println(response.asString());
 
         response.then().assertThat().body("properties[0]", allOf(
                 hasEntry("propertyName", "organism part"),
@@ -31,5 +32,7 @@ public class AssayGroupSummaryControllerSIT extends RestAssuredFixture {
                 hasEntry("testValue", "female"),
                 hasEntry("contrastPropertyType", "SAMPLE")
         ));
+
+        response.then().assertThat().body("replicates", is(1));
     }
 }

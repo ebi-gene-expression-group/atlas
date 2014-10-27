@@ -383,13 +383,18 @@ public class HeatmapTablePage extends TablePage {
         return driver.findElement(byTooltipClass).getText();
     }
 
-    public String getFactorTooltipContent(int zeroBasedHeaderIndex,  int zeroBasedTooltipTableRowIndex,
+    public String getFactorTooltipHeader(int zeroBasedTooltipTableHeaderIndex) {
+        hoverOnHeaderColumn(1);
+
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
+        WebDriverWait wait = new WebDriverWait(driver, 10L);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
+        return driver.findElement(byTooltipClass).getText();
+    }
+
+    public String getFactorTooltipContent(int oneBasedHeaderColumn,  int zeroBasedTooltipTableRowIndex,
                                                          int zeroBasedTooltipTableColumnIndex) {
-
-        List<WebElement> tableHeaders = getHeatmapTable().findElements(By.xpath(TABLE_HEADERS_XPATH));
-        WebElement headerCell = tableHeaders.get(zeroBasedHeaderIndex);
-        hoverOnElement(headerCell);
-
+        hoverOnHeaderColumn(oneBasedHeaderColumn);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//tr[" + (zeroBasedTooltipTableRowIndex + 1)
                 + "]//td[" + (zeroBasedTooltipTableColumnIndex + 1) + "]");
@@ -398,6 +403,55 @@ public class HeatmapTablePage extends TablePage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
 
+    }
+
+    public String getContrastTooltipTableHeader(int zeroBasedTooltipTableHeaderIndex) {
+        hoverOnHeaderColumn(1);
+        return tooltipHeader(zeroBasedTooltipTableHeaderIndex);
+    }
+
+    String tooltipHeader(int zeroBasedTooltipTableHeaderIndex) {
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
+        return SeleniumUtil.findElementWaitingUntilAvailable(driver, byTooltipClass).getText();
+    }
+
+    //This is not working with PhantomJS browser :((
+    public String getContrastTooltipContent(int oneBasedHeaderColumn, int zeroBasedTooltipTableRowIndex,
+                                                                int zeroBasedTooltipTableColumnIndex) {
+        hoverOnHeaderColumn(oneBasedHeaderColumn);
+        return tooltipCell(zeroBasedTooltipTableRowIndex, zeroBasedTooltipTableColumnIndex);
+    }
+
+    String tooltipCell(int zeroBasedTooltipTableRowIndex, int zeroBasedTooltipTableColumnIndex) {
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//tr[" + (zeroBasedTooltipTableRowIndex + 1)
+                + "]//td[" + (zeroBasedTooltipTableColumnIndex + 1) + "]");
+        return SeleniumUtil.findElementWaitingUntilAvailable(driver, byTooltipClass).getText();
+    }
+
+    public String getContrastTooltipExperimentDescription() {
+        hoverOnHeaderColumn(1);
+        return tooltipContrastExperimentDescription();
+    }
+
+    String tooltipContrastExperimentDescription() {
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastExperimentDescription']");
+        return SeleniumUtil.findElementWaitingUntilAvailable(driver, byTooltipClass).getText();
+    }
+
+    public String getContrastTooltipContrastDescription() {
+        hoverOnHeaderColumn(1);
+        return tooltipContrastDescription();
+    }
+
+    String tooltipContrastDescription() {
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//div[@id='contrastDescription']");
+        return SeleniumUtil.findElementWaitingUntilAvailable(driver, byTooltipClass).getText();
+    }
+
+    private void hoverOnHeaderColumn(int oneBasedHeaderIndex) {
+        List<WebElement> tableHeaders = getHeatmapTable().findElements(By.xpath(TABLE_HEADERS_XPATH));
+        WebElement headerCell = tableHeaders.get(oneBasedHeaderIndex);
+        hoverOnElement(headerCell);
     }
 
     public List<String> getGenePropertyTooltipHighlightedTerms(int zeroBasedProfileIndex) {

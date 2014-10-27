@@ -59,48 +59,4 @@ public class GenePageControllerDifferentialResultsMultiFactorSIT extends SingleP
         assertThat(subject.getDiffHeatmapHeaders(), contains("Comparison", "Log2-fold change"));
         assertThat(subject.getDiffHeatmapRow(1), contains("treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'", ""));
     }
-
-
-    //This will fail with PhantomJS
-    @Test
-    public void checkContrastSummaryTooltipTableHeader() {
-        assertThat(subject.getContrastSummaryTooltipTableHeader(0, 0), is("Property"));
-        assertThat(subject.getContrastSummaryTooltipTableHeader(0, 1), is("Test value"));
-        assertThat(subject.getContrastSummaryTooltipTableHeader(0, 2), is("Reference value"));
-    }
-
-    @Test
-    public void checkContrastSummaryTooltipTableFirstRow() {
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 0), is("ecotype"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 1), is("Col-0"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 0, 2), is("Col-0"));
-    }
-
-    @Test
-    public void checkContrastSummaryTooltipTableSecondRow() {
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 1, 0), is("growth condition"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 1, 1), is("0.3 millimolar salicylic acid"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 1, 2), is("0.02 percent Silwet"));
-    }
-
-    @Test
-    public void checkContrastSummaryTooltipTableThirdRow() {
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 2, 0), is("time"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 2, 1), is("4 hours"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 2, 2), is("4 hours"));
-    }
-
-    @Test
-    public void checkContrastSummaryTooltipTableFourthRow() {
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 3, 0), is("age"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 3, 1), is("6-7 weeks"));
-        assertThat(subject.getContrastSummaryTooltipTableData(0, 3, 2), is("6-7 weeks"));
-    }
-
-    @Test
-    public void checkContrastSummaryTooltipExperimentAndContrastDescription() {
-        assertThat(subject.getContrastSummaryTooltipExperimentDescription(0), is("Transcription profiling by array of seven ecotypes of Arabidopsis thaliana after time course treatment with salicylic acid."));
-        assertThat(subject.getContrastSummaryTooltipContrastDescription(0), is("treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'"));
-    }
-
 }

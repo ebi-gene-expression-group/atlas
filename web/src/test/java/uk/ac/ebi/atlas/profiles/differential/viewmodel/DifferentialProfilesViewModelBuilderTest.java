@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableSortedSet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.Test;
-import org.springframework.util.StringUtils;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
@@ -117,7 +116,7 @@ public class DifferentialProfilesViewModelBuilderTest {
 
     @Test
     public void buildContrastsViewModel() {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(CONTRASTS);
 
         String expected = "[\n" +
@@ -130,7 +129,8 @@ public class DifferentialProfilesViewModelBuilderTest {
                 "        \"WT3\",\n" +
                 "        \"WT1\",\n" +
                 "        \"WT2\"\n" +
-                "      ]\n" +
+                "      ],\n" +
+                "      \"replicates\": 3\n" +
                 "    },\n" +
                 "    \"testAssayGroup\": {\n" +
                 "      \"id\": \"g1\",\n" +
@@ -138,7 +138,8 @@ public class DifferentialProfilesViewModelBuilderTest {
                 "        \"K1\",\n" +
                 "        \"K2\",\n" +
                 "        \"K3\"\n" +
-                "      ]\n" +
+                "      ],\n" +
+                "      \"replicates\": 3\n" +
                 "    },\n" +
                 "    \"displayName\": \"cdk8\"\n" +
                 "  },\n" +
@@ -151,7 +152,8 @@ public class DifferentialProfilesViewModelBuilderTest {
                 "        \"WT3\",\n" +
                 "        \"WT1\",\n" +
                 "        \"WT2\"\n" +
-                "      ]\n" +
+                "      ],\n" +
+                "      \"replicates\": 3\n" +
                 "    },\n" +
                 "    \"testAssayGroup\": {\n" +
                 "      \"id\": \"g1\",\n" +
@@ -159,13 +161,13 @@ public class DifferentialProfilesViewModelBuilderTest {
                 "        \"C3\",\n" +
                 "        \"C1\",\n" +
                 "        \"C2\"\n" +
-                "      ]\n" +
+                "      ],\n" +
+                "      \"replicates\": 3\n" +
                 "    },\n" +
                 "    \"displayName\": \"cycC\"\n" +
                 "  }\n" +
                 "]";
-
-        assertThat(json, is(StringUtils.trimAllWhitespace(expected)));
+        assertThat(json, is(expected));
 
     }
 

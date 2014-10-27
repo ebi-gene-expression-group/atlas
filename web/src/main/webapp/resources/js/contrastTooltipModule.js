@@ -55,6 +55,8 @@ var contrastTooltipModule = (function ($, React, ContrastTooltip) {
                         var html = React.renderComponentToString(ContrastTooltip({
                                                 experimentDescription: data.experimentDescription,
                                                 contrastDescription: data.contrastDescription,
+                                                testReplicates: data.testReplicates,
+                                                referenceReplicates: data.referenceReplicates,
                                                 properties: data.properties}));
                         callback(html);
                     }
