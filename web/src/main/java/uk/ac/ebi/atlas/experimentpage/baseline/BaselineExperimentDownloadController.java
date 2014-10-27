@@ -56,11 +56,7 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
         this.baselineProfilesWriter = baselineProfilesWriter;
     }
 
-    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=RNASEQ_MRNA_BASELINE")
-    public void downloadGeneProfiles(HttpServletRequest request
-            , @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
-            , HttpServletResponse response) throws IOException {
-
+    protected void geneProfilesHandler(HttpServletRequest request, BaselineRequestPreferences preferences, HttpServletResponse response) throws IOException {
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
         setPreferenceDefaults(preferences, experiment);
@@ -75,7 +71,6 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
 
         try {
 
-
             long genesCount = baselineProfilesWriter.write(response.getWriter(), requestContext);
 
             LOGGER.info("<downloadGeneProfiles> streamed " + genesCount + "gene expression profiles");
@@ -84,6 +79,14 @@ public class BaselineExperimentDownloadController extends BaselineExperimentCont
             LOGGER.info("<downloadGeneProfiles> no genes found");
         }
 
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}.tsv", params = "type=RNASEQ_MRNA_BASELINE")
+    public void downloadGeneProfiles(HttpServletRequest request
+            , @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
+            , HttpServletResponse response) throws IOException {
+
+        geneProfilesHandler(request, preferences, response);
 
     }
 
