@@ -16,11 +16,14 @@ import java.util.Set;
 public class BaselineProfileInputStreamFactory {
 
     @Value("#{configuration['experiment.magetab.path.template']}")
-    private String baselineExperimentDataFileUrlTemplate;
+    protected String baselineExperimentDataFileUrlTemplate;
 
     private BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder;
 
     private CsvReaderFactory csvReaderFactory;
+
+    public BaselineProfileInputStreamFactory() {
+    }
 
     @Inject
     public BaselineProfileInputStreamFactory(BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder,

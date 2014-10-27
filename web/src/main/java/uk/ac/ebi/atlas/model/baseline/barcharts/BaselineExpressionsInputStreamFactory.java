@@ -26,7 +26,10 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionsQueueBuilder;
+import uk.ac.ebi.atlas.profiles.baseline.ProteomicsBaselineExpressionsQueueBuilder;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
@@ -41,20 +44,33 @@ public class BaselineExpressionsInputStreamFactory {
     private String baselineExperimentDataFileUrlTemplate;
 
     private BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder;
-
+    private ProteomicsBaselineExpressionsQueueBuilder proteomicsBaselineExpressionsQueueBuilder;
     private CsvReaderFactory csvReaderFactory;
+    private ExperimentTrader experimentTrader;
 
     @Inject
     public BaselineExpressionsInputStreamFactory(BaselineExpressionsQueueBuilder baselineExpressionsQueueBuilder,
-                                                 CsvReaderFactory csvReaderFactory) {
+                                                 ProteomicsBaselineExpressionsQueueBuilder proteomicsBaselineExpressionsQueueBuilder,
+                                                 CsvReaderFactory csvReaderFactory,
+                                                 ExperimentTrader experimentTrader) {
         this.baselineExpressionsQueueBuilder = baselineExpressionsQueueBuilder;
+        this.proteomicsBaselineExpressionsQueueBuilder = proteomicsBaselineExpressionsQueueBuilder;
         this.csvReaderFactory = csvReaderFactory;
+        this.experimentTrader = experimentTrader;
     }
 
     public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(String experimentAccession) {
+
+        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
-        return new BaselineExpressionsInputStream(csvReader, experimentAccession, baselineExpressionsQueueBuilder);
+
+        if(experiment.getType().getDescription().equals("proteomics_baseline")) {
+            return new BaselineExpressionsInputStream(csvReader, experimentAccession, proteomicsBaselineExpressionsQueueBuilder);
+        } else {
+            return new BaselineExpressionsInputStream(csvReader, experimentAccession, baselineExpressionsQueueBuilder);
+        }
     }
 
 }

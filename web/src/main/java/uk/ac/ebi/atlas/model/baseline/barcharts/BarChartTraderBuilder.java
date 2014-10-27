@@ -47,7 +47,6 @@ public class BarChartTraderBuilder {
 
     private BaselineExpressionsInputStreamFactory inputStreamFactory;
 
-
     @Inject
     public BarChartTraderBuilder(BaselineExpressionsInputStreamFactory inputStreamFactory
             , CutoffScale cutoffScale) {
