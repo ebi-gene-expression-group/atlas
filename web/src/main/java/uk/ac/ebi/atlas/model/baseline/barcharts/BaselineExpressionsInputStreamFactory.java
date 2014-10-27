@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowDeserializerBaselineBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowDeserializerProteomicsBaselineBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -66,7 +67,7 @@ public class BaselineExpressionsInputStreamFactory {
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
 
-        if(experiment.getType().getDescription().equals("proteomics_baseline")) {
+        if(experiment.getType().equals(ExperimentType.PROTEOMICS_BASELINE)) {
             return new BaselineExpressionsInputStream(csvReader, experimentAccession, expressionsRowDeserializerProteomicsBaselineBuilder);
         } else {
             return new BaselineExpressionsInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
