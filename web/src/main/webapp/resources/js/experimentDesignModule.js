@@ -60,6 +60,21 @@ var experimentDesignTableModule = (function ($) {
         return aoColumnDefs;
     }
 
+    function generateIndicesOfExperimentFactors() {
+        function range(from, to) {
+            var values = [];
+
+            for(var i = from; i <= to; i++) {
+                values.push(i);
+            }
+
+            return values;
+        }
+
+        var indexOfFirstExperimentFactor = _assayHeaders.length + _sampleHeaders.length;
+        return range(indexOfFirstExperimentFactor, indexOfFirstExperimentFactor + _factorHeaders.length - 1);
+    }
+
     function _initExperimentDesignTable() {
 
         /* Custom filtering function which will filter analysed runs */
@@ -74,6 +89,9 @@ var experimentDesignTableModule = (function ($) {
             }
         );
 
+        var indicesOfExperimentFactors = generateIndicesOfExperimentFactors();
+        var aaSorting = indicesOfExperimentFactors.map(function (i) {return [i, 'asc']});
+
         _oTable = $('#experiment-design-table').dataTable({
             "aaData":_dataSet,
             "aoColumnDefs":initColumnDefs(),
@@ -81,7 +99,8 @@ var experimentDesignTableModule = (function ($) {
             "bScrollCollapse":true,
             "sScrollY":calcDataTableHeight(),
             "sScrollX":calcDataTableWidth(),
-            "sDom":'i<"download">f<"clear">t'
+            "sDom":'i<"download">f<"clear">t',
+            "aaSorting": aaSorting
         });
 
         $('#showOnlyAnalysedRuns').click(function () {
