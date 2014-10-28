@@ -125,7 +125,6 @@ public class FactorSet implements FactorGroup {
     public String toString() {
         return Objects.toStringHelper(this.getClass())
                 .add("factors", factorsByType.values())
-                .add("hasCode", hashCode())
                 .toString();
     }
 

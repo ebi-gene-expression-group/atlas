@@ -887,7 +887,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                             serializedFilterFactors = this.props.serializedFilterFactors,
                             experimentAccession = this.props.id;
 
-                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, transcriptConfig.queryFactorType, factorValue, undefined, serializedFilterFactors, ensemblHost, ensemblSpecies);
+                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, transcriptConfig.queryFactorType, factorValue, serializedFilterFactors, ensemblHost, ensemblSpecies);
                     }
                 },
 
