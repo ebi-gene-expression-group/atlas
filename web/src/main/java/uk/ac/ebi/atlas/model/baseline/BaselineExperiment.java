@@ -75,7 +75,7 @@ public class BaselineExperiment extends Experiment {
     }
 
     public boolean isTissueExperiment() {
-        return !getExperimentalFactors().getFactorsByType("ORGANISM_PART").isEmpty();
+        return getExperimentalFactors().getDefaultQueryFactorType().equals("ORGANISM_PART");
     }
 
 }

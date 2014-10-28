@@ -16,10 +16,12 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -82,6 +84,9 @@ public class BaselineExperimentProfileSearchServiceIT {
     private static final FactorGroup EMPTY_FACTOR_SET = new FactorSet();
 
     private static final FactorGroup ORGANISM_HOMO_SAPIENS = new FactorSet(new Factor("ORGANISM", "Homo sapiens"));
+
+    @Inject
+    private SolrQueryService solrQueryService;
 
     @Test
     public void singleGeneInMultipleExperiments() {
@@ -172,9 +177,13 @@ public class BaselineExperimentProfileSearchServiceIT {
         return builder.build();
     }
 
+
     @Test
     public void singleSpeciesGeneSet() {
-        BaselineTissueExperimentSearchResult result = subject.query("REACT_1619", "homo sapiens", true);
+
+        Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds("REACT_1619", "homo sapiens", true);
+
+        BaselineTissueExperimentSearchResult result = subject.query(geneIds.get());
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
@@ -239,7 +248,6 @@ public class BaselineExperimentProfileSearchServiceIT {
         ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab1733Tissues()).addAll(getEMtab30352Tissues()).build();
         assertThat(factors, contains(allFactors.toArray()));
     }
-
 
     private static final String GENE_IN_CELL_LINES_EXPERIMENT = "ENSG00000258081";
 
@@ -328,4 +336,12 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(baselineProfile3.getId(), is("E-MTAB-2800"));
         assertThat(baselineProfile3.getName(), is("Nine rat tissues - Sprague Dawley"));
     }
+
+    @Test
+    public void ignoreGeneInExperimentWithOrganismPartButOrganismPartIsNotDefaultQueryType() {
+        BaselineTissueExperimentSearchResult result = subject.query(ImmutableSet.of("WBGene00194914"));
+
+        assertThat(result.isEmpty(), is(true));
+    }
+
 }
