@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.differential.rnaseq.geod38400;
+package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +30,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.DifferentialExperimentDesignTab
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class DifferentialExperimentDesignPageIT extends SeleniumFixture {
+public class DifferentialExperimentDesignPageSIT extends SeleniumFixture {
 
     public static final String NRPE1_MUTANT_VS_WILD_TYPE = "nrpe1 mutant vs wild type";
     private DifferentialExperimentDesignTablePage subject;
@@ -49,13 +49,13 @@ public class DifferentialExperimentDesignPageIT extends SeleniumFixture {
 
         // then
         assertThat(subject.getExperimentDesignTableHeader().size(), is(10));
-        assertThat(subject.getFirstExperimentDesignTableLine(), contains("SRR504179", "2 to 3 weeks", "seedling", "Col-0", "wild type genotype", "Arabidopsis thaliana", "wild type genotype"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), contains("SRR576327", "2 to 3 weeks", "seedling", "Col-0", "idn2-1", "Arabidopsis thaliana", "idn2-1"));
         assertThat(subject.getDownloadExperimentDesignLink(), endsWith(DifferentialExperimentDesignTablePage.EXPERIMENT_ACCESSION + "/experiment-design.tsv"));
 
         // and
-        assertThat(subject.getLineColor(1), is("rgba(255, 194, 102, 1)"));
+        assertThat(subject.getLineColor(1), isOneOf("transparent","rgba(0, 0, 0, 0)"));
         assertThat(subject.getLineColor(4), is("rgba(130, 205, 205, 1)"));
-        assertThat(subject.getLineColor(10), isOneOf("transparent","rgba(0, 0, 0, 0)"));
+        assertThat(subject.getLineColor(10), is("rgba(255, 194, 102, 1)"));
 
     }
 
@@ -68,12 +68,12 @@ public class DifferentialExperimentDesignPageIT extends SeleniumFixture {
         // then
         assertThat(subject.getSelectedContrast(), is(NRPE1_MUTANT_VS_WILD_TYPE));
         assertThat(subject.getExperimentDesignTableHeader().size(), is(10));
-        assertThat(subject.getFirstExperimentDesignTableLine(), contains("SRR504179", "2 to 3 weeks", "seedling", "Col-0", "wild type genotype", "Arabidopsis thaliana", "wild type genotype"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), contains("SRR576327", "2 to 3 weeks", "seedling", "Col-0", "idn2-1", "Arabidopsis thaliana", "idn2-1"));
 
         // and
-        assertThat(subject.getLineColor(1), is("rgba(255, 194, 102, 1)"));
+        assertThat(subject.getLineColor(1), isOneOf("transparent","rgba(0, 0, 0, 0)"));
         assertThat(subject.getLineColor(4), is("rgba(130, 205, 205, 1)"));
-        assertThat(subject.getLineColor(10), isOneOf("transparent","rgba(0, 0, 0, 0)"));
+        assertThat(subject.getLineColor(10), is("rgba(255, 194, 102, 1)"));
 
     }
 
