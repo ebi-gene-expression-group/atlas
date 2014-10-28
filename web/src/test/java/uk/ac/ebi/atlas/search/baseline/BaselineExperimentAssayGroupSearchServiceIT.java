@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.search.baseline;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -300,11 +301,15 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        BaselineExperimentAssayGroup eMtab513 = results.iterator().next();
+        BaselineExperimentAssayGroup eMtab2812_hermaphroditeNSM = results.iterator().next();
 
-        assertThat(experimentAccessions, contains("E-MTAB-599", "E-GEOD-30352"));
+        assertThat(experimentAccessions, contains("E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-599", "E-GEOD-30352"));
 
-        assertThat(eMtab513.getDefaultFactorsForSpecificAssayGroupsWithCondition(), hasSize(0));
+        assertThat(eMtab2812_hermaphroditeNSM.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("DEVELOPMENTAL_STAGE", "L1 larva Ce")));
+
+        BaselineExperimentAssayGroup eMtab599 = Iterables.skip(results, 7).iterator().next();
+
+        assertThat(eMtab599.getDefaultFactorsForSpecificAssayGroupsWithCondition(), hasSize(0));
     }
 
     @Test
@@ -356,8 +361,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(results.size(), is(4));
-        assertThat(experimentAccessions, contains("E-GEOD-30352", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352"));
+        assertThat(results.size(), is(6));
+        assertThat(experimentAccessions, contains("E-MTAB-2812", "E-MTAB-2812", "E-GEOD-30352", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352"));
     }
 
     @Test
