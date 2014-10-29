@@ -70,9 +70,14 @@ public class AnalysisMethodsPageControllerIT {
         String[] lastLine = result.get(result.size() - 1);
 
         assertThat(result.size(), is(10));
-        assertThat(firstLine, arrayContaining("Pipeline ", "Please see <a href=\"HumanDataAnalysisFigure.pdf\">Workflow</a> and <a href=\"HumanDataAnalysisMethods.pdf\">Methods</a> for more information."));
+        assertThat(firstLine, arrayContaining("Pipeline ", "Please see <a href=\"experiments/E-PROT-1/analysis-methods/HumanDataAnalysisFigure.pdf\">Workflow</a> and <a href=\"experiments/E-PROT-1/analysis-methods/HumanDataAnalysisMethods.pdf\">Methods</a> for more information."));
         assertThat(lastLine, arrayContaining("Normalized Counts per Gene", "Obtained from the <a href=\"http://cufflinks.cbcb.umd.edu/manual.html#fpkm_tracking_format\">genes.fpkm_tracking files</a>, then averaged for all biological replicates (if any)"));
 
+    }
+
+    @Test
+    public void testExtractPdfURL() throws IOException {
+        assertThat(subject.generatePDFPath(EXPERIMENT_ACCESSION, "HumanDataAnalysisFigure"), is("/expdata/E-PROT-1/HumanDataAnalysisFigure.pdf"));
     }
 
 }

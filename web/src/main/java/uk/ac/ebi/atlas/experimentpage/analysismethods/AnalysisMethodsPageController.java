@@ -28,6 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil;
@@ -42,6 +43,9 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -61,6 +65,8 @@ public class AnalysisMethodsPageController {
 
     private FastQCReportUtil fastQCReportUtil;
 
+    private String pdfFileTemplate;
+
     @Inject
     public void setFastQCReportUtil(FastQCReportUtil fastQCReportUtil) {
         this.fastQCReportUtil = fastQCReportUtil;
@@ -69,11 +75,13 @@ public class AnalysisMethodsPageController {
     @Inject
     public AnalysisMethodsPageController(TsvReaderBuilder tsvReaderBuilder, DownloadURLBuilder downloadURLBuilder,
                                          @Value("#{configuration['experiment.analysis-method.path.template']}")
-                                         String pathTemplate, ArrayDesignTrader arrayDesignTrader) {
+                                         String pathTemplate, ArrayDesignTrader arrayDesignTrader,
+                                         @Value("#{configuration['analysis-methods.pdf.path.template']}") String pdfFileTemplate) {
 
         this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
         this.downloadURLBuilder = downloadURLBuilder;
         this.arrayDesignTrader = arrayDesignTrader;
+        this.pdfFileTemplate = pdfFileTemplate;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods", params = {"type=RNASEQ_MRNA_BASELINE"})
@@ -138,6 +146,31 @@ public class AnalysisMethodsPageController {
         downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
 
         return "experiment-analysis-methods";
+    }
+
+    @RequestMapping(value = "/experiments/{experimentAccession}/analysis-methods/{resource}.pdf", method = RequestMethod.GET)
+    public String getAnalysisMethodsPdf(@PathVariable String experimentAccession,
+                                        @PathVariable String resource) throws IOException {
+        if(!hasPDF(experimentAccession, resource)) {
+            throw new ResourceNotFoundException("No pdf for " + resource);
+        }
+
+        String path = generatePDFPath(experimentAccession, resource);
+        return "forward:" + path;
+    }
+
+    /***** analysis-methods pdf path ****/
+    public boolean hasPDF(String experimentAccession, String resource) throws IOException {
+        String path = buildPDFPath(experimentAccession, resource);
+        return Files.exists(FileSystems.getDefault().getPath(path));
+    }
+
+    private String buildPDFPath(String experimentAccession, String resource)  {
+        return MessageFormat.format(pdfFileTemplate, experimentAccession, resource);
+    }
+
+    public String generatePDFPath(String experimentAccession, String resource) {
+        return MessageFormat.format("/expdata/{0}/{1}.pdf", experimentAccession, resource);
     }
 
 }
