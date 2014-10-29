@@ -111,13 +111,7 @@
                         <td style="${style}">
 
                             <c:if test="${not empty expressionLevel}">
-                                <%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
-
-                                <fmt:formatNumber type="number"
-                                                  maxFractionDigits="1"
-                                                  value="${expression.foldChange}"
-                                                  groupingUsed="false"
-                                                  var="foldChange"/>
+                                <c:set var="foldChange" value="${foldChangeRounder.format(expression.foldChange)}"/>
 
                                 <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
                                     ${'data-fold-change="'.concat(foldChange).concat('"')}

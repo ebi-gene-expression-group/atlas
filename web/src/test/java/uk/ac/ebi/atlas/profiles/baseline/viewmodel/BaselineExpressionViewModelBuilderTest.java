@@ -10,8 +10,8 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.utils.ColourGradient;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.awt.*;
 import java.util.SortedSet;
@@ -37,7 +37,7 @@ public class BaselineExpressionViewModelBuilderTest {
     private double colourScale = 1;
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
 
-    private BaselineExpressionViewModelBuilder subject = new BaselineExpressionViewModelBuilder(colorGradient, new NumberUtils());
+    private BaselineExpressionViewModelBuilder subject = new BaselineExpressionViewModelBuilder(colorGradient, new BaselineExpressionLevelRounder());
     private SortedSet<Factor> orderedFactors = ImmutableSortedSet.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
 
 

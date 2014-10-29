@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.utils.NumberUtils;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -38,7 +38,7 @@ public class ExperimentPageRequestPreferencesTest {
     private ExperimentPageRequestPreferences subject;
 
     @Mock
-    private NumberUtils numberUtilsMock;
+    private BaselineExpressionLevelRounder baselineExpressionLevelRounderMock;
 
     @Before
     public void setUp() throws Exception {

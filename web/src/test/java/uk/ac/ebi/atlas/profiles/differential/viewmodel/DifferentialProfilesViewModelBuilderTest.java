@@ -11,7 +11,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.utils.ColourGradient;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.awt.*;
 import java.util.SortedSet;
@@ -48,7 +47,8 @@ public class DifferentialProfilesViewModelBuilderTest {
     private Color blankColour = Color.WHITE;
     private double colourScale = 1;
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
-    private DifferentialProfilesViewModelBuilder subject = new DifferentialProfilesViewModelBuilder(colorGradient, new NumberUtils());
+    private PValueFormatter pValueFormatter = new PValueFormatter();
+    private DifferentialProfilesViewModelBuilder subject = new DifferentialProfilesViewModelBuilder(colorGradient, pValueFormatter);
     private SortedSet<Contrast> orderedContrasts = ImmutableSortedSet.of(G2_G1, G2_G3);
 
     @Test

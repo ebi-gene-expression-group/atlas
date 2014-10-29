@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.profiles.differential.viewmodel;
 
-import org.apache.commons.math.util.MathUtils;
-
 public class DifferentialProfilesViewModel {
 
     private final double minUpLevel;
@@ -11,11 +9,13 @@ public class DifferentialProfilesViewModel {
     private final double minDownLevel;
     private final double maxDownLevel;
 
+    private transient final FoldChangeRounder foldChangeRounder = new FoldChangeRounder();
+
     public DifferentialProfilesViewModel(double minUpLevel, double maxUpLevel, double minDownLevel, double maxDownLevel, int searchResultTotal, DifferentialProfileRowViewModel[] rows) {
-        this.minUpLevel = MathUtils.round(minUpLevel, 1);
-        this.maxUpLevel = MathUtils.round(maxUpLevel, 1);
-        this.minDownLevel = MathUtils.round(minDownLevel, 1);
-        this.maxDownLevel = MathUtils.round(maxDownLevel, 1);
+        this.minUpLevel = foldChangeRounder.round(minUpLevel);
+        this.maxUpLevel = foldChangeRounder.round(maxUpLevel);
+        this.minDownLevel = foldChangeRounder.round(minDownLevel);
+        this.maxDownLevel = foldChangeRounder.round(maxDownLevel);
         this.searchResultTotal = searchResultTotal;
         this.rows = rows;
     }

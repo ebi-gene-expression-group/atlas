@@ -6,7 +6,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.utils.NumberUtils;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,17 +18,17 @@ import java.util.SortedSet;
 public class BaselineProfilesViewModelBuilder {
 
     private final BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder;
-    private final NumberUtils numberUtils;
+    private final BaselineExpressionLevelRounder baselineExpressionLevelRounder;
 
     @Inject
-    public BaselineProfilesViewModelBuilder(BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder, NumberUtils numberUtils) {
+    public BaselineProfilesViewModelBuilder(BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder, BaselineExpressionLevelRounder baselineExpressionLevelRounder) {
         this.baselineExpressionViewModelBuilder = baselineExpressionViewModelBuilder;
-        this.numberUtils = numberUtils;
+        this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
     }
 
     public BaselineProfilesViewModel build(BaselineProfilesList profiles, SortedSet<Factor> orderedFactors) {
         BaselineProfileRowViewModel[] genes = buildGenes(profiles, orderedFactors, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel());
-        return new BaselineProfilesViewModel<>(numberUtils, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel(), profiles.getTotalResultCount(), genes);
+        return new BaselineProfilesViewModel<>(baselineExpressionLevelRounder, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel(), profiles.getTotalResultCount(), genes);
     }
 
     public BaselineProfileRowViewModel[] buildGenes(List<BaselineProfile> baselineProfiles, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {

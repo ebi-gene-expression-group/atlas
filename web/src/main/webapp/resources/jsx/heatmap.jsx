@@ -946,15 +946,16 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                 initTooltip: function(element) {
 
-                    //there must be a cleaner way to do this!
+                    //TODO - build this from a React component, like we do for FactorTooltip
                     function buildHeatmapCellTooltip (pValue, tstatistic, foldChange) {
 
-                        function pValueAsHtml(pValue) {
+                        // expects number in the format #E# and displays exponent in superscript
+                        function formatScientificNotationAsHtml(doubleInScientificNotation) {
 
-                            var formatParts = pValue.split('E');
+                            var formatParts = doubleInScientificNotation.split('E');
 
                             if (formatParts.length == 1) {
-                                return pValue;
+                                return doubleInScientificNotation;
                             }
 
                             var mantissa = formatParts[0];
@@ -966,7 +967,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         return "<table class='table-grid' style='margin: 0px; padding: 0px;'><thead><th class='header-cell'>Adjusted <i>p</i>-value</th>" +
                             (tstatistic !== undefined ? "<th class='header-cell'><i>t</i>-statistic</th>" : "") +
                             "<th class='header-cell'>Log<sub>2</sub>-fold change</th></thead>" +
-                            "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + pValueAsHtml(pValue) + "</span></td>" +
+                            "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + formatScientificNotationAsHtml(pValue) + "</span></td>" +
                             (tstatistic !== undefined ? "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
                             "<td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
                             "</table>";
