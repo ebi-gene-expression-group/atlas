@@ -109,7 +109,7 @@ public class TranscriptPopupSIT extends SeleniumFixture {
     }
 
     @Test
-    public void multiExperimentWidget() {
+    public void multiExperimentWidget_SingleFactorExperimentResult() {
         HeatmapTableWidgetPage subject = HeatmapTableWidgetPage.createGenePage(driver, "ENSG00000228278");
         subject.get();
 
@@ -118,15 +118,24 @@ public class TranscriptPopupSIT extends SeleniumFixture {
         assertThat(subject.getGeneCount(), is("Showing 2 of 2 experiments found:"));
         assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Vertebrate tissues"));
 
-        // no slice experiment
         HeatmapTableWithTranscriptBreakdownPage page1 = subject.clickOnCell(0, 3);
         assertThat(page1.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ENSG00000228278 in appendix\n(1 out of 2 transcripts are expressed):"));
         assertThat(page1.getTranscriptBreakdownLegendLabels(), contains("ENST00000431067"));
         assertTrue(page1.isTranscriptPopupPresent());
+    }
 
-        // single slice experiment
-        HeatmapTableWithTranscriptBreakdownPage page2 = subject.clickOnCell(1, 16);
-        assertThat(page2.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ENSG00000228278 in liver\n(0 out of 0 transcript is expressed):"));
+    @Test
+    public void multiExperimentWidget_MultiFactorExperimentResult() {
+        HeatmapTableWidgetPage subject = HeatmapTableWidgetPage.createGenePage(driver, "ENSGALG00000006835");
+        subject.get();
+
+        subject.waitForHeatmapToBeVisible();
+
+        assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
+        assertThat(subject.getGeneNames(), contains("Vertebrate tissues"));
+
+        HeatmapTableWithTranscriptBreakdownPage page2 = subject.clickOnCell(0, 4);
+        assertThat(page2.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for ENSGALG00000006835 in skeletal muscle\n(1 out of 1 transcript is expressed):"));
     }
 
 }

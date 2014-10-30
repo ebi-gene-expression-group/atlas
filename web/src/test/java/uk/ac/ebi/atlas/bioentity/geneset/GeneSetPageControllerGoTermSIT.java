@@ -29,6 +29,8 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
 import java.util.List;
 
+import static ch.lambdaj.Lambda.extract;
+import static ch.lambdaj.Lambda.on;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -60,14 +62,13 @@ public class GeneSetPageControllerGoTermSIT extends SinglePageSeleniumFixture {
     @Test
     public void baselineResults() {
         subject.clickBaselinePane();
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("25 results"));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("27 results"));
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+        assertThat(baselineCounts, hasSize(28));
 
-        assertThat(baselineCounts, hasSize(26));
-
-        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-GEOD-30352"));
-        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-GEOD-30352"));
+        List<String> accessions = extract(baselineCounts, on(BaselineBioEntitiesSearchResult.class).getExperimentAccession());
+        assertThat(accessions, hasItems("E-GEOD-30352", "E-PROT-1"));
     }
 
     @Test

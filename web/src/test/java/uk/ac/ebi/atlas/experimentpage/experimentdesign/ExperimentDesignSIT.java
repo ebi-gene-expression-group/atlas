@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.selenium.tests;
+package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,7 +35,7 @@ public class ExperimentDesignSIT extends SinglePageSeleniumFixture {
     private ExperimentDesignTablePage subject;
 
     public void getStartingPage() {
-        subject = new ExperimentDesignTablePage(driver);
+        subject = new ExperimentDesignTablePage(driver, "E-MTAB-513");
         subject.get();
     }
 
@@ -43,8 +43,8 @@ public class ExperimentDesignSIT extends SinglePageSeleniumFixture {
     public void defaultExperimentDesignPage() {
         assertThat(subject.getExperimentDesignTableHeader().size(), is(10));
         assertThat(subject.getExperimentDesignTableInfo(), is("Showing 1 to 16 of 16 entries (filtered from 48 total entries)"));
-        assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030872"));
-        assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030887"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("adipose"));
+        assertThat(subject.getLastExperimentDesignTableLine(), hasItem("thyroid"));
         assertThat(subject.isSelectedOnlyAnalysedBox(), is(true));
         assertThat(subject.isTextInBoldFace(), is(false));
     }
@@ -71,32 +71,32 @@ public class ExperimentDesignSIT extends SinglePageSeleniumFixture {
 
     @Test
     public void sortOnFirstColumn() {
+        assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030880"));
+        assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030872"));
+        subject.clickFirstColumnHeader();
         assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030872"));
         assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030887"));
         subject.clickFirstColumnHeader();
         assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030887"));
         assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030872"));
-        subject.clickFirstColumnHeader();
-        assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030872"));
-        assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030887"));
     }
 
     @Test
     public void sortOnSecondColumn() {
-        assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030872"));
-        assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030887"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030880"));
+        assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030872"));
         subject.clickSecondColumnHeader();
-        assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030872"));
-        assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030887"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030880"));
+        assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030872"));
         subject.clickSecondColumnHeader();
-        assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030872"));
-        assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030887"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030880"));
+        assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030872"));
     }
 
     @Test
     public void sortOnThirdColumn() {
-        assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030872"));
-        assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030887"));
+        assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030880"));
+        assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030872"));
         subject.clickThirdColumnHeader();
         assertThat(subject.getFirstExperimentDesignTableLine(), hasItem("ERR030873"));
         assertThat(subject.getLastExperimentDesignTableLine(), hasItem("ERR030878"));

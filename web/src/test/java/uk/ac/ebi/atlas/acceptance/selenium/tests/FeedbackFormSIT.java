@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.FeedbackHomePage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class ExperimentDesignFeedbackIT extends SinglePageSeleniumFixture {
+public class FeedbackFormSIT extends SinglePageSeleniumFixture {
 
     private FeedbackHomePage subject;
 

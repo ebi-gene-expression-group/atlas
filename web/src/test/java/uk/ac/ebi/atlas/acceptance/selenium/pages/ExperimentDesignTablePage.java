@@ -32,7 +32,7 @@ import java.util.List;
 
 public class ExperimentDesignTablePage extends TablePage {
 
-    public static String DEFAULT_EXPERIMENT_ACCESSION = "E-MTAB-513";
+    public static final String DEFAULT_EXPERIMENT_ACCESSION = "E-MTAB-513";
 
     private static final String PAGE_URI_TEMPLATE = "/gxa/experiments/{0}/experiment-design";
 

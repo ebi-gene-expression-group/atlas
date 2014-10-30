@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.differential.microarray.geod3779;
+package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +30,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.MicroarrayExperimentDesignTable
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
+public class MicroarrayExperimentDesignPageEGeod3779SIT extends SeleniumFixture {
 
     public static final String DEFAULT = "genotype:'p107 -/-' vs 'wild type' on A-AFFY-24";
     public static final String OTHER = "genotype:'p107 -/-' vs 'wild type' on A-AFFY-23";
@@ -54,7 +54,7 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         assertThat(subject.getExperimentDesignTableHeader().size(), is(12));
         assertThat(subject.getFirstExperimentDesignTableLine(), contains("9447-4 -/-, chip MOE430A", "A-AFFY-23", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
         assertThat(subject.getDownloadExperimentDesignLink(), endsWith(E_GEOD_3779 + "/experiment-design.tsv"));
-        assertThat(subject.getLastExperimentDesignTableLine(), contains("9887-6 p107 -/-, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
+        assertThat(subject.getLastExperimentDesignTableLine(), contains("9887-4, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "", "wild type", "Mus musculus", "brain germinal zone", "wild type"));
 
         // and
         assertThat(subject.getLineColor(1), isOneOf("transparent","rgba(0, 0, 0, 0)"));
@@ -73,7 +73,7 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         assertThat(subject.getSelectedContrast(), is(DEFAULT));
         assertThat(subject.getExperimentDesignTableHeader().size(), is(12));
         assertThat(subject.getFirstExperimentDesignTableLine(), contains("9447-4 -/-, chip MOE430A", "A-AFFY-23", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
-        assertThat(subject.getLastExperimentDesignTableLine(), contains("9887-6 p107 -/-, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
+        assertThat(subject.getLastExperimentDesignTableLine(), contains("9887-4, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "", "wild type", "Mus musculus", "brain germinal zone", "wild type"));
 
         // and
         assertThat(subject.getLineColor(1), isOneOf("transparent","rgba(0, 0, 0, 0)"));
@@ -92,12 +92,12 @@ public class MicroarrayExperimentDesignPageIT extends SeleniumFixture {
         assertThat(subject.getSelectedContrast(), is(OTHER));
         assertThat(subject.getExperimentDesignTableHeader().size(), is(12));
         assertThat(subject.getFirstExperimentDesignTableLine(), contains("9447-4 -/-, chip MOE430A", "A-AFFY-23", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
-        assertThat(subject.getLastExperimentDesignTableLine(), contains("9887-6 p107 -/-, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "gene_knock_out", "p107 -/-", "Mus musculus", "brain germinal zone", "p107 -/-"));
+        assertThat(subject.getLastExperimentDesignTableLine(), contains("9887-4, chip MOE430B", "A-AFFY-24", "neurosphere", "embryonic day 13.5", "", "wild type", "Mus musculus", "brain germinal zone", "wild type"));
 
         // and
         assertThat(subject.getLineColor(1), is("rgba(130, 205, 205, 1)"));
         assertThat(subject.getLineColor(4), isOneOf("transparent","rgba(0, 0, 0, 0)"));
-        assertThat(subject.getLineColor(9), is("rgba(130, 205, 205, 1)"));
+        assertThat(subject.getLineColor(9), is("rgba(255, 194, 102, 1)"));
 
     }
 

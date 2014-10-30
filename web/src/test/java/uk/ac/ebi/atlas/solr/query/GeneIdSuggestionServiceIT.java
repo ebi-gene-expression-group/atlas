@@ -111,11 +111,11 @@ public class GeneIdSuggestionServiceIT {
         List<String> properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties, hasItems("Hs2Affx.1.41.S1_3p_s_at", "Hs2Affx.1.43.S1_3p_x_at", "Hs2Affx.1.52.S1_3p_at"));
+        assertThat(properties, hasItems("Hs2Affx.1.106.S1_3p_at", "Hs2Affx.1.11.S1_3p_s_at", "Hs2Affx.1.137.S1_3p_at"));
 
         properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx.1.41", HOMO_SAPIENS_SPECIES);
 
-        assertThat(properties.size(), is(6));
+        assertThat(properties.size(), is(5));
         assertThat(properties, hasItems("Hs2Affx.1.413.S1_3p_at", "Hs2Affx.1.414.S1_3p_at", "Hs2Affx.1.415.S1_3p_at"));
 
     }

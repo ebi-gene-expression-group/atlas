@@ -47,7 +47,7 @@
             <a id="extra-info"
                href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">
                 <img alt="more information"
-                     src="${applicationProperties.buildServerURL(pageContext.request)}/resources/images/balloon-ellipsis-icon-left.png">
+                     src="${applicationProperties.buildServerURL(pageContext.request)}/resources/images/overview_button.png">
             </a>
         </c:if>
     </div>

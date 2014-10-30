@@ -34,7 +34,6 @@ import static org.hamcrest.Matchers.is;
 
 public class BaselineExperimentsControllerSIT extends SinglePageSeleniumFixture {
 
-    public static final int NUMBER_OF_BASELINE_EXPERIMENTS = 14;
     private BaselineExperimentsPage subject;
 
     public void getStartingPage() {
@@ -44,8 +43,7 @@ public class BaselineExperimentsControllerSIT extends SinglePageSeleniumFixture 
 
     @Test
     public void countNumberOfSpecies() {
-        assertThat(subject.getAllSpeciesItems().size(), is(NUMBER_OF_BASELINE_EXPERIMENTS));
-
+        assertThat(subject.getAllSpeciesItems().size(), is(NumberOfExperiments.NUMBER_OF_BASELINE_EXPERIMENTS));
     }
 
     @Test
@@ -55,28 +53,28 @@ public class BaselineExperimentsControllerSIT extends SinglePageSeleniumFixture 
 
     @Test
     public void checkSecondSpecieName() {
-        assertThat(subject.getNameOfSpecies(1), is("Gallus gallus"));
+        assertThat(subject.getNameOfSpecies(1), is("Caenorhabditis elegans"));
     }
 
     @Test
     public void homoSapiensTotal() {
-        assertThat(subject.getAllExperimentsOfSpecies(3).size(), is(4));
+        assertThat(subject.getAllExperimentsOfSpecies(4).size(), is(4));
     }
 
     @Test
     public void mouseTotal() {
-        assertThat(subject.getAllExperimentsOfSpecies(6).size(), is(2));
+        assertThat(subject.getAllExperimentsOfSpecies(7).size(), is(2));
     }
 
     @Test
     public void gorillaGorillaLink() {
-        List<String> allExperimentLinksOfSpecies = subject.getAllExperimentLinksOfSpecies(2);
+        List<String> allExperimentLinksOfSpecies = subject.getAllExperimentLinksOfSpecies(3);
         assertThat(allExperimentLinksOfSpecies.get(0), containsString("experiments/E-GEOD-30352?serializedFilterFactors=ORGANISM:Gorilla%20gorilla"));
     }
 
     @Test
     public void mouseLinks() {
-        List<String> allExperimentLinksOfSpecies = subject.getAllExperimentLinksOfSpecies(6);
+        List<String> allExperimentLinksOfSpecies = subject.getAllExperimentLinksOfSpecies(7);
         assertThat(allExperimentLinksOfSpecies.get(0), containsString("experiments/E-MTAB-599"));
         assertThat(allExperimentLinksOfSpecies.get(1), containsString("experiments/E-GEOD-41338?serializedFilterFactors=ORGANISM:Mus%20musculus"));
     }

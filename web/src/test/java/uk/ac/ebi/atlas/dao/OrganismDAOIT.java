@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.experiments.NumberOfExperiments;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -30,6 +31,6 @@ public class OrganismDAOIT {
     @Test
     public void testGetOrganismsSize() throws Exception {
         List<String> organisms = subject.getOrganisms();
-        assertThat(organisms.size(), is(17));
+        assertThat(organisms.size(), is(NumberOfExperiments.DISTINCT_ORGANISMS));
     }
 }

@@ -36,6 +36,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkState;
+
 @Named
 public class TranscriptContributionsCalculator {
     private static final Logger LOGGER = Logger.getLogger(TranscriptContributionsCalculator.class);
@@ -59,6 +61,8 @@ public class TranscriptContributionsCalculator {
         //LOGGER.debug("<getTranscriptContributions> transcriptProfiles:" + transcriptProfiles);
 
         int factorIndex = getFactorIndex(experimentAccession, factorGroup);
+
+        checkState(factorIndex != -1, "Cannot locate factors " + factorGroup);
 
         return createTranscriptContributions(transcriptProfiles, factorIndex);
     }

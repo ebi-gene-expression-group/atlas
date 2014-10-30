@@ -37,7 +37,7 @@ import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.BaselineConditionsSearchService;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -53,7 +53,7 @@ public class BaselineExperimentAssayGroupSearchService {
 
     private static final Logger LOGGER = Logger.getLogger(BaselineExperimentAssayGroupSearchService.class);
 
-    private final BaselineExperimentsCache baselineExperimentsCache;
+    private final ExperimentTrader experimentTrader;
 
     private BaselineExperimentAssayGroupsDao baselineExperimentAssayGroupsDao;
 
@@ -62,8 +62,8 @@ public class BaselineExperimentAssayGroupSearchService {
     private SolrQueryService solrQueryService;
 
     @Inject
-    public BaselineExperimentAssayGroupSearchService(BaselineExperimentAssayGroupsDao baselineExperimentAssayGroupsDao, BaselineConditionsSearchService baselineConditionsSearchService, SolrQueryService solrQueryService, BaselineExperimentsCache baselineExperimentsCache) {
-        this.baselineExperimentsCache = baselineExperimentsCache;
+    public BaselineExperimentAssayGroupSearchService(BaselineExperimentAssayGroupsDao baselineExperimentAssayGroupsDao, BaselineConditionsSearchService baselineConditionsSearchService, SolrQueryService solrQueryService, ExperimentTrader experimentTrader) {
+        this.experimentTrader = experimentTrader;
         this.baselineExperimentAssayGroupsDao = baselineExperimentAssayGroupsDao;
         this.baselineConditionsSearchService = baselineConditionsSearchService;
         this.solrQueryService = solrQueryService;
@@ -144,7 +144,7 @@ public class BaselineExperimentAssayGroupSearchService {
             String experimentAccession = exprAssayGroups.getKey();
             Collection<String> assayGroupIds = exprAssayGroups.getValue();
 
-            BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
+            BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
 
             Multimap<FactorGroup, String> assayGroupIdsByFilterFactors = experiment.getExperimentalFactors().groupAssayGroupIdsByNonDefaultFactor(assayGroupIds);
 
