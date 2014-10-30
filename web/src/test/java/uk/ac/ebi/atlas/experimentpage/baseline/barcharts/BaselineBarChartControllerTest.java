@@ -31,7 +31,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.NavigableMap;
 
@@ -50,9 +49,6 @@ public class BaselineBarChartControllerTest {
 
     @Mock
     private FilterFactorsConverter filterFactorsConverterMock;
-
-    @Mock
-    private HttpServletRequest requestMock;
 
     @Mock
     private BarChartTrader barChartTraderMock;
@@ -76,7 +72,7 @@ public class BaselineBarChartControllerTest {
         when(filterFactorsConverterMock.deserialize(SERIALIZED_FILTER_FACTORS)).thenReturn(new HashSet<Factor>());
         when(barChartTraderMock.getChart(anySet(), anySet())).thenReturn(chartData);
 
-        String json = subject.getMap(requestMock, EXPERIMENT_ACCESSION, null, "queryFactorType", SERIALIZED_FILTER_FACTORS);
+        String json = subject.getMap(EXPERIMENT_ACCESSION, null, "queryFactorType", SERIALIZED_FILTER_FACTORS);
         assertThat(json, is("{\"0.1\":1,\"0.2\":2,\"0.3\":3}"));
 
     }
