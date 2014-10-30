@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.model.baseline.barcharts;
+package uk.ac.ebi.atlas.experimentpage.baseline.barcharts;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;

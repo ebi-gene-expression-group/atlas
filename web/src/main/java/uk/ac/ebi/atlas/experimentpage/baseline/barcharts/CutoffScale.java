@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline.barcharts;
+package uk.ac.ebi.atlas.experimentpage.baseline.barcharts;
 
 import org.springframework.context.annotation.Scope;
 

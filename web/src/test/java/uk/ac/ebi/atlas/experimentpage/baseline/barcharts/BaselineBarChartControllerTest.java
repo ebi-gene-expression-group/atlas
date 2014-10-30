@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest;
+package uk.ac.ebi.atlas.experimentpage.baseline.barcharts;
 
 import com.google.common.collect.Maps;
 import org.junit.Before;
@@ -29,8 +29,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTrader;
-import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTradersCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.servlet.http.HttpServletRequest;
