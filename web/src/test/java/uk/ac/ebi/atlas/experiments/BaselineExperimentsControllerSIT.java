@@ -58,7 +58,7 @@ public class BaselineExperimentsControllerSIT extends SinglePageSeleniumFixture 
 
     @Test
     public void homoSapiensTotal() {
-        assertThat(subject.getAllExperimentsOfSpecies(4).size(), is(4));
+        assertThat(subject.getAllExperimentsOfSpecies(4).size(), is(5));
     }
 
     @Test
