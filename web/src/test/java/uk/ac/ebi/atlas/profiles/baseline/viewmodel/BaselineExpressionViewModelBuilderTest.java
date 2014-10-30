@@ -8,7 +8,6 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.utils.ColourGradient;
@@ -27,7 +26,7 @@ public class BaselineExpressionViewModelBuilderTest {
     private static final Factor BRAIN = new Factor(ORGANISM_PART, "brain");
     private static final Factor BREAST = new Factor(ORGANISM_PART, "breast");
 
-    private static final String expressionLevel1 = "NT";
+    private static final String NT = "NT";
     private static final double minExpressionLevel = 0.3;
     private static final double maxExpressionLevel = 47;
 
@@ -43,19 +42,15 @@ public class BaselineExpressionViewModelBuilderTest {
 
     @Test
     public void buildExpressionViewModel () {
-        FactorGroup factorGroup = new FactorSet(ADIPOSE);
-
-        BaselineExpression baselineExpression = new BaselineExpression(expressionLevel1, factorGroup);
-
         BaselineProfile profile = new BaselineProfile("Factor_ID", "Factor_NAME");
-        profile.add("ORGANISM_PART", baselineExpression);
-        profile.getExpression(ADIPOSE);
+        profile.add("ORGANISM_PART", new BaselineExpression(NT, new FactorSet(ADIPOSE)));
+        profile.add("ORGANISM_PART", new BaselineExpression(0.3, new FactorSet(ADRENAL)));
+
 
         BaselineExpressionViewModel[] expressions = subject.buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(expressions);
-
 
         String expected = "[\n"  +
             "  {\n" +
@@ -66,8 +61,8 @@ public class BaselineExpressionViewModelBuilderTest {
             "  },\n" +
             "  {\n" +
             "    \"factorName\": \"adrenal\",\n" +
-            "    \"color\": \"\",\n" +
-            "    \"value\": \"\"\n" +
+            "    \"color\": \"#C0C0C0\",\n" +
+            "    \"value\": \"0.3\"\n" +
             "  },\n" +
             "  {\n" +
             "    \"factorName\": \"brain\",\n" +

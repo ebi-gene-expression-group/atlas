@@ -789,7 +789,46 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
         })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
 
 
-        var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, transcriptConfig) {
+        // TODO: callers should use formatScientificNotation instead of formatScientificNotationAsHtmlString
+        function formatScientificNotationAsHtmlString(scientificNotationString) {
+
+            var formatParts = scientificNotationString.split(/[Ee]/);
+
+            if (formatParts.length == 1) {
+                return scientificNotationString;
+            }
+
+            var mantissa = formatParts[0];
+            var exponent = formatParts[1];
+
+            return (mantissa !== "1" ? mantissa + " \u00D7 " : '') + "10<span style='vertical-align: super;'>" + exponent + "</span>";
+        }
+
+        // expects number in the format #E# and displays exponent in superscript
+        function formatScientificNotation(scientificNotationString) {
+
+            var formatParts = scientificNotationString.split(/[Ee]/);
+
+            if (formatParts.length == 1) {
+                return scientificNotationString;
+            }
+
+            var mantissa = formatParts[0];
+            var exponent = formatParts[1];
+
+            return (
+                <span>
+                {(mantissa !== "1") ? mantissa + " \u00D7 " : ''}10<span style={{'vertical-align': 'super'}}>{exponent}</span>
+                </span>
+            );
+        }
+
+        function formatBaselineExpression(expressionLevel) {
+            var numberExpressionLevel = +expressionLevel;
+            return (numberExpressionLevel >= 100000) ? formatScientificNotation(numberExpressionLevel.toExponential().replace('+','')) : '' + numberExpressionLevel;
+        }
+
+        var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, transcriptConfig, formatBaselineExpression) {
 
             function hasKnownExpression(value) {
                 // true if not blank or UNKNOWN, ie: has a expression with a known value
@@ -844,7 +883,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                             className="heatmap_cell"
                             style={{visibility: isUnknownExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
                             data-svg-path-id={this.props.svgPathId}>
-                                {isUnknownExpression(this.props.value) ? unknownCell() : this.props.value}
+                                {isUnknownExpression(this.props.value) ? unknownCell() : formatBaselineExpression(this.props.value)}
                             </div>
                         </td>
                         );
@@ -856,7 +895,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     }
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.transcripts);
+        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.transcripts, formatBaselineExpression);
 
 
         var CellMultiExperiment = (function (contextRoot, ensemblHost, ensemblSpecies, transcriptConfig, geneId, geneName) {
@@ -946,28 +985,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                 initTooltip: function(element) {
 
-                    //TODO - build this from a React component, like we do for FactorTooltip
+                    //TODO - build this from a React component, like we do for FactorTooltip, using formatScientificNotation instead of formatScientificNotationAsHtmlString
                     function buildHeatmapCellTooltip (pValue, tstatistic, foldChange) {
-
-                        // expects number in the format #E# and displays exponent in superscript
-                        function formatScientificNotationAsHtml(doubleInScientificNotation) {
-
-                            var formatParts = doubleInScientificNotation.split('E');
-
-                            if (formatParts.length == 1) {
-                                return doubleInScientificNotation;
-                            }
-
-                            var mantissa = formatParts[0];
-                            var exponent = formatParts[1];
-
-                            return (mantissa !== "1" ? mantissa + " \u00D7 " : '') + "10<span style='vertical-align: super;'>" + exponent + "</span>";
-                        }
 
                         return "<table class='table-grid' style='margin: 0px; padding: 0px;'><thead><th class='header-cell'>Adjusted <i>p</i>-value</th>" +
                             (tstatistic !== undefined ? "<th class='header-cell'><i>t</i>-statistic</th>" : "") +
                             "<th class='header-cell'>Log<sub>2</sub>-fold change</th></thead>" +
-                            "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + formatScientificNotationAsHtml(pValue) + "</span></td>" +
+                            "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + formatScientificNotationAsHtmlString(pValue) + "</span></td>" +
                             (tstatistic !== undefined ? "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
                             "<td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
                             "</table>";

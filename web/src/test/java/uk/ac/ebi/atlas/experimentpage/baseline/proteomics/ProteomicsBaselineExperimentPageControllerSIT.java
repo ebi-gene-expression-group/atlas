@@ -65,7 +65,7 @@ public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixtu
         List<String> first5Genes = subject.getGeneNames().subList(0, 5);
         assertThat(first5Genes, contains("SPAST","CFH", "RNASET2", "HSPB6", "LIG3"));
 
-        assertThat(subject.getGeneProfile(SPAST).get(BRAIN), is("9790000"));
+        assertThat(subject.getGeneProfile(SPAST).get(BRAIN), is("9.79 × 106"));
     }
 
 }
