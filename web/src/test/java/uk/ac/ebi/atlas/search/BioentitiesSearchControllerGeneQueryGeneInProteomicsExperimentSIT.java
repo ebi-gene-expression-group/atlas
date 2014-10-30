@@ -24,29 +24,31 @@ package uk.ac.ebi.atlas.search;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 
-public class BioentitiesSearchControllerGeneQuery2GeneSetsMultipleExperimentResultsFromSameSpeciesSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerGeneQueryGeneInProteomicsExperimentSIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "geneQuery=REACT_152+REACT_111102");
+        subject = BioEntitiesPage.search(driver, "geneQuery=ITGA3");
         subject.get();
     }
 
     @Test
-    public void baselineResults() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+    public void baselinePaneResultsMessage() {
+        assertThat(subject.isBaselinePaneExpanded(), is(true));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("4 results"));
+    }
 
-        assertThat(baselineCounts, hasSize(14));
+    @Test
+    public void baselinePaneResultsIncludeProteomicsExperiments() {
+        assertThat(subject.getBaselinePaneContents(), containsString("Human Proteome Map - adult"));
+        assertThat(subject.getBaselinePaneContents(), containsString("Human Proteome Map - fetus"));
     }
 
 }

@@ -31,9 +31,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GenePageControllerHomoSapiensGeneBaselineWidgetSIT extends SinglePageSeleniumFixture {
+public class GenePageControllerGeneInProteomicsExperimentBaselineWidgetSIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "ENSG00000163331";
+    private static final String GENE_IDENTIFIER = "ENSG00000005884";
 
     private BioEntityPage subject;
 
@@ -59,13 +59,12 @@ public class GenePageControllerHomoSapiensGeneBaselineWidgetSIT extends SinglePa
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
         List<String> factorValueHeaders = subject.getFactorValueHeaders();
-        assertThat(factorValueHeaders, contains("adipose", "adipose tissue", "adrenal gland", "animal ovary", "appendix", "bladder", "bone marrow", "brain", "breast", "cerebellum", "cerebral cortex", "colon", "duodenum", "endometrium", "esophagus", "frontal lobe", "gall bladder", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "pancreas", "placenta", "prefrontal cortex", "prostate", "salivary gland", "skeletal muscle", "skin", "small intestine", "spleen", "stomach", "temporal lobe", "testis", "thyroid"));
+        assertThat(factorValueHeaders, contains("B cell", "CD4-positive T...", "CD8-positive T...", "adipose tissue", "adrenal gland", "animal ovary", "appendix", "bladder", "bone marrow", "brain", "cerebral cortex", "colon", "duodenum", "endometrium", "esophagus", "frontal cortex", "gall bladder", "gallbladder", "gut", "heart", "kidney", "liver", "lung", "lymph node", "monocyte", "natural killer...", "ovary", "pancreas", "placenta", "platelet", "prostate", "rectum", "retina", "salivary gland", "skin", "small intestine", "spinal cord", "spleen", "stomach", "testis", "thyroid", "urinary bladder"));
 
         assertThat(subject.getGeneNames().size(), is(3));
-        assertThat(subject.getGeneNames(), contains("Twenty seven tissues","Illumina Body Map","Vertebrate tissues"));
-        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSG00000163331&serializedFilterFactors=ORGANISM%3AHomo%20sapiens"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=ENSG00000163331"));
-        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-513?geneQuery=ENSG00000163331"));
+        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Human Proteome Map - adult", "Human Proteome Map - fetus"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-PROT-1?geneQuery=ENSG00000005884&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Aadult"));
+        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-PROT-1?geneQuery=ENSG00000005884&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Afetus"));
     }
 
 

@@ -32,12 +32,14 @@ import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import javax.inject.Inject;
@@ -54,13 +56,13 @@ public class BaselineExperimentProfileSearchService {
 
     private SolrQueryService solrQueryService;
 
-    private BaselineExperimentsCache baselineExperimentsCache;
+    private ExperimentTrader experimentTrader;
 
     @Inject
-    public BaselineExperimentProfileSearchService(RnaSeqBslnExpressionDao rnaSeqBslnExpressionDao, SolrQueryService solrQueryService, BaselineExperimentsCache baselineExperimentsCache) {
+    public BaselineExperimentProfileSearchService(RnaSeqBslnExpressionDao rnaSeqBslnExpressionDao, SolrQueryService solrQueryService, ExperimentTrader experimentTrader) {
         this.rnaSeqBslnExpressionDao = rnaSeqBslnExpressionDao;
         this.solrQueryService = solrQueryService;
-        this.baselineExperimentsCache = baselineExperimentsCache;
+        this.experimentTrader = experimentTrader;
     }
 
     boolean isEmpty(Optional<? extends Collection<?>> coll) {
@@ -172,7 +174,7 @@ public class BaselineExperimentProfileSearchService {
                 String experimentAccession = input.experimentAccession();
                 String assayGroupId = input.assayGroupId();
 
-                BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
+                BaselineExperiment experiment = (BaselineExperiment)(experimentTrader.getPublicExperiment(experimentAccession));
                 FactorGroup filterFactors = experiment.getExperimentalFactors().getNonDefaultFactors(assayGroupId);
 
                 return BaselineExperimentSlice.create(experiment, filterFactors);

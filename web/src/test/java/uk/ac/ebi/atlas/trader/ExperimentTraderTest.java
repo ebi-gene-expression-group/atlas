@@ -53,6 +53,7 @@ public class ExperimentTraderTest {
     private static final String E_GEOD_22351 = "E-GEOD-22351";
     private static final String E_GEOD_38400 = "E-GEOD-38400";
     private static final String E_GEOD_21860 = "E-GEOD-21860";
+    private static final String E_PROT_1 = "E-PROT-1";
 
     private ExperimentTrader subject;
 
@@ -86,10 +87,13 @@ public class ExperimentTraderTest {
 
         when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL)).thenReturn(Sets.newHashSet(E_TABM_713));
 
+        when(experimentDAOMock.findPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE)).thenReturn(Sets.newHashSet(E_PROT_1));
+
         subject = new ExperimentTrader(experimentDAOMock,
                                         baselineExperimentsCacheMock,
                                         rnaSeqDiffExperimentsCacheMock,
-                                        microarrayExperimentsCacheMock, proteomicsBaselineExperimentsCacheMock);
+                                        microarrayExperimentsCacheMock,
+                                        proteomicsBaselineExperimentsCacheMock);
     }
 
     @Test
@@ -115,6 +119,11 @@ public class ExperimentTraderTest {
         verify(baselineExperimentsCacheMock,times(0)).getExperiment(E_GEOD_21860);
         verify(rnaSeqDiffExperimentsCacheMock, times(0)).getExperiment(E_GEOD_21860);
         verify(microarrayExperimentsCacheMock).getExperiment(E_GEOD_21860);
+    }
+
+    @Test
+    public void getAllBaselineExperiments() {
+        assertThat(subject.getAllBaselineExperimentAccessions(), containsInAnyOrder(E_MTAB_513, E_MTAB_599, E_PROT_1));
     }
 
 }

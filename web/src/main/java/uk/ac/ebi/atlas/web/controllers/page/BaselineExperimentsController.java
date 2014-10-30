@@ -77,10 +77,11 @@ public class BaselineExperimentsController {
     @PostConstruct
     private void loadExperimentAccessionsBySpecie() {
 
-        for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
+        for (String experimentAccession : experimentTrader.getAllBaselineExperimentAccessions()) {
             String displayName = null;
             try {
-                displayName = experimentsCache.getExperiment(experimentAccession).getDisplayName();
+                displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
+                //displayName = experimentsCache.getExperiment(experimentAccession).getDisplayName();
             } catch (RuntimeException e) {
                 // we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
@@ -105,10 +106,10 @@ public class BaselineExperimentsController {
         };
         experimentAccessionsBySpecies = TreeMultimap.create(keyComparator, valueComparator);
 
-        for (String experimentAccession : experimentTrader.getBaselineExperimentAccessions()) {
+        for (String experimentAccession : experimentTrader.getAllBaselineExperimentAccessions()) {
 
             try {
-                BaselineExperiment experiment = experimentsCache.getExperiment(experimentAccession);
+                BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
 
                 for (String specie : experiment.getOrganisms()) {
                     experimentAccessionsBySpecies.put(specie, experimentAccession);

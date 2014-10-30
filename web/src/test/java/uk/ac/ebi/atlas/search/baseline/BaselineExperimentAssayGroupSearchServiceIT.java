@@ -80,8 +80,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         List<String> experimentAccessions = getExperimentAccessions(results);
         ImmutableList<String> descriptions = toStrings(results);
 
-        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352"));
-        assertThat(descriptions, contains("Homo sapiens - Illumina Body Map", "Homo sapiens - Twenty seven tissues", "Mus musculus - Six tissues", "Pan paniscus - Vertebrate tissues", "Pan troglodytes - Vertebrate tissues", "Pongo pygmaeus - Vertebrate tissues"));
+        assertThat(experimentAccessions, contains("E-PROT-1", "E-MTAB-513", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352"));
+        assertThat(descriptions, contains("Homo sapiens - Human Proteome Map - adult", "Homo sapiens - Illumina Body Map", "Homo sapiens - Twenty seven tissues", "Mus musculus - Six tissues", "Pan paniscus - Vertebrate tissues", "Pan troglodytes - Vertebrate tissues", "Pongo pygmaeus - Vertebrate tissues"));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
         System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
 
-        assertThat(experimentAccessions, contains(  "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-MTAB-513", "E-MTAB-1733", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-MTAB-2800", "E-MTAB-2800", "E-MTAB-2800"));
+        assertThat(experimentAccessions, contains("E-GEOD-30352", "E-GEOD-30352", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-PROT-1", "E-PROT-1", "E-MTAB-513", "E-MTAB-1733", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-MTAB-2800", "E-MTAB-2800", "E-MTAB-2800"));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, hasSize(22));
+        assertThat(experimentAccessions, hasSize(24));
     }
 
     @Test
@@ -361,8 +361,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(results.size(), is(6));
-        assertThat(experimentAccessions, contains("E-MTAB-2812", "E-MTAB-2812", "E-GEOD-30352", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352"));
+        assertThat(results.size(), is(7));
+        assertThat(experimentAccessions, contains("E-MTAB-2812", "E-MTAB-2812", "E-GEOD-30352", "E-PROT-1", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352"));
     }
 
     @Test

@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.trader;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
@@ -137,6 +138,14 @@ public class ExperimentTrader {
 
     public Set<String> getProteomicsBaselineExperimentAccessions() {
         return getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE);
+    }
+
+    public Set<String> getAllBaselineExperimentAccessions() {
+        return ImmutableSet.<String>builder().
+                addAll(getBaselineExperimentAccessions()).
+                addAll(getProteomicsBaselineExperimentAccessions()).
+                build();
+
     }
 
     public Set<String> getRnaSeqDifferentialExperimentAccessions() {
