@@ -383,6 +383,12 @@
             <artifactId>selenium-firefox-driver</artifactId>
             <version>${selenium.version}</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>cglib</groupId>
+                    <artifactId>cglib-nodep</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
