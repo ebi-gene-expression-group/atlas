@@ -84,9 +84,9 @@ public class TranscriptPopupSIT extends SeleniumFixture {
         assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for OS12G0515800 in leaf\n(1 out of 1 transcript is expressed):"));
         assertThat(page.getTranscriptBreakdownLegendLabels(), contains("OS12T0515800-01"));
         assertThat(page.getTranscriptBreakdownLegendLinks(), contains("http://plants.ensembl.org/Oryza_sativa/Transcript/Summary?g=OS12G0515800;t=OS12T0515800-01"));
-        assertThat(page.getGeneLink(), is("http://plants.ensembl.org/Oryza_sativa/Gene/Summary?g=OS12G0515800"));
+        assertThat(page.getTranscriptBreakdownGeneLink(), is("http://plants.ensembl.org/Oryza_sativa/Gene/Summary?g=OS12G0515800"));
 
-        List<WebElement> legendElements = page.getLegendElements();
+        List<WebElement> legendElements = page.getTranscriptBreakdownLegendElements();
         legendElements.get(0).click();
 
         SeleniumUtil.switchToOpenedWindow(driver);

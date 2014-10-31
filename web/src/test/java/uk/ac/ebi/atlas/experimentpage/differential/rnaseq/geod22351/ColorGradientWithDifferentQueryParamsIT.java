@@ -45,8 +45,8 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
         assertThat(subject.areExpressionLevelsHidden(), is(false));
         assertThat(subject.areGradientLevelsHidden(), is(false));
 
-        List<String> gradientMinLabels = subject.getDiffGradientMinLabels();
-        List<String> gradientMaxLabels = subject.getDiffGradientMaxLabels();
+        List<String> gradientMinLabels = subject.getHeatmapLegendMinLevels();
+        List<String> gradientMaxLabels = subject.getHeatmapLegendMaxLevels();
 
         assertThat(gradientMinLabels, contains("1.2"));
         assertThat(gradientMaxLabels, contains("4.1"));
@@ -70,8 +70,8 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
         assertThat(subject.areExpressionLevelsHidden(), is(false));
         assertThat(subject.areGradientLevelsHidden(), is(false));
 
-        List<String> gradientMinLabels = subject.getDiffGradientMinLabels();
-        List<String> gradientMaxLabels = subject.getDiffGradientMaxLabels();
+        List<String> gradientMinLabels = subject.getHeatmapLegendMinLevels();
+        List<String> gradientMaxLabels = subject.getHeatmapLegendMaxLevels();
 
         assertThat(gradientMinLabels, contains("-1"));
         assertThat(gradientMaxLabels, contains("-2.7"));
@@ -95,8 +95,8 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
         assertThat(subject.areExpressionLevelsHidden(), is(false));
         assertThat(subject.areGradientLevelsHidden(), is(false));
 
-        List<String> gradientMinLabels = subject.getDiffGradientMinLabels();
-        List<String> gradientMaxLabels = subject.getDiffGradientMaxLabels();
+        List<String> gradientMinLabels = subject.getHeatmapLegendMinLevels();
+        List<String> gradientMaxLabels = subject.getHeatmapLegendMaxLevels();
 
         assertThat(gradientMinLabels, contains("-1", "1.2"));
         assertThat(gradientMaxLabels, contains("-2.7", "4.1"));
@@ -118,8 +118,8 @@ public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
         subject = new HeatmapTablePage(driver, E_GEOD_22351_ACCESSION, "heatmapMatrixSize=50&displayLevels=true&displayGeneDistribution=false&regulation=UP_DOWN&cutoff=1.0E-5");
         subject.get();
 
-        List<String> gradientMinLabels = subject.getDiffGradientMinLabels();
-        List<String> gradientMaxLabels = subject.getDiffGradientMaxLabels();
+        List<String> gradientMinLabels = subject.getHeatmapLegendMinLevels();
+        List<String> gradientMaxLabels = subject.getHeatmapLegendMaxLevels();
 
         assertThat(gradientMinLabels, contains("1.6"));
         assertThat(gradientMaxLabels, contains("3.8"));

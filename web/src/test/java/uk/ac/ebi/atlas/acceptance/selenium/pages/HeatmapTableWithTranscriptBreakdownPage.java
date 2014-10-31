@@ -102,13 +102,13 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
 
         List<String> results = Lists.newArrayList();
 
-        for (WebElement element : getLegendElements()) {
+        for (WebElement element : getTranscriptBreakdownLegendElements()) {
             results.add(element.getAttribute("href"));
         }
         return results;
     }
 
-    public List<WebElement> getLegendElements() {
+    public List<WebElement> getTranscriptBreakdownLegendElements() {
         waitForTranscriptPopup();
 
         WebElement transcriptPie = driver.findElement(By.id("transcripts-pie"));
@@ -117,7 +117,7 @@ public class HeatmapTableWithTranscriptBreakdownPage extends HeatmapTablePage {
         return legend.findElements(By.className("transcriptid"));
     }
 
-    public String getGeneLink() {
+    public String getTranscriptBreakdownGeneLink() {
         waitForTranscriptPopup();
 
         WebElement geneId = driver.findElement(By.id("transcript-breakdown-geneid"));
