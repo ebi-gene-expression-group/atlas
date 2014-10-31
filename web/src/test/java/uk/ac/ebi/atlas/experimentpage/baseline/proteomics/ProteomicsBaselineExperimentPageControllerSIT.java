@@ -51,7 +51,7 @@ public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixtu
         List<String> first5Genes = subject.getGeneNames().subList(0, 5);
         assertThat(first5Genes, contains("ITGA3","CD6", "LAS1L", "MRC2", "PSMC4"));
 
-        assertThat(subject.getGeneProfile(ITGA3).get(RETINA), is("9910000"));
+        assertThat(subject.getGeneProfile(ITGA3).get(RETINA), is("9.91 × 106"));
     }
 
     @Test
