@@ -31,7 +31,7 @@ public class MultiTermSuggestionService {
     @Value("#{configuration['index.server.gxa.url']}")
     private String serverURL;
 
-    private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w ]|_");
+    private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w -]|_");
 
     private static final String SOLR_SPELLING_SUGGESTER_TEMPLATE = "suggest_properties?spellcheck.q={0}&wt=json&omitHeader=true&rows=0&json.nl=arrarr";
 
