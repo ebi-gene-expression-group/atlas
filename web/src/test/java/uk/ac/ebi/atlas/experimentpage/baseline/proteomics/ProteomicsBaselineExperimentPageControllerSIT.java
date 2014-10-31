@@ -52,6 +52,9 @@ public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixtu
         assertThat(first5Genes, contains("ITGA3","CD6", "LAS1L", "MRC2", "PSMC4"));
 
         assertThat(subject.getGeneProfile(ITGA3).get(RETINA), is("9.91 × 106"));
+
+        assertThat(subject.getHeatmapLegendMinLevels(), contains("4.7 × 106"));
+        assertThat(subject.getHeatmapLegendMaxLevels(), contains("9.91 × 106"));
     }
 
     @Test

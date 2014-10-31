@@ -159,7 +159,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             });
         })(heatmapConfig.contextRoot, heatmapConfig.downloadProfilesURL);
 
-        var LegendBaseline = (function (contextRoot) {
+        var LegendBaseline = (function (contextRoot, formatBaselineExpression) {
             return React.createClass({
                 render: function () {
                     return (
@@ -167,7 +167,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                             React.DOM.div( {style:{float: "left"}}, 
                                 React.DOM.table( {style:{"font-size": "10px"}}, 
                                     React.DOM.tbody(null, 
-                                        LegendRow( {displayLevels:this.props.displayLevels, lowExpressionLevel:this.props.minExpressionLevel, highExpressionLevel:this.props.maxExpressionLevel, lowValueColour:"#C0C0C0", highValueColour:"#0000FF"})
+                                        LegendRow( {displayLevels:this.props.displayLevels, lowExpressionLevel:formatBaselineExpression(this.props.minExpressionLevel), highExpressionLevel:formatBaselineExpression(this.props.maxExpressionLevel), lowValueColour:"#C0C0C0", highValueColour:"#0000FF"})
                                     )
                                 )
                             ),
@@ -180,7 +180,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     helpTooltipsModule.init('experiment', contextRoot, this.refs.legendHelp.getDOMNode());
                 }
             });
-        })(heatmapConfig.contextRoot);
+        })(heatmapConfig.contextRoot, formatBaselineExpression);
 
 
         var LegendDifferential = (function (contextRoot) {
