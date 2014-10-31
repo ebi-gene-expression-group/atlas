@@ -898,7 +898,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
         })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.transcripts, formatBaselineExpression);
 
 
-        var CellMultiExperiment = (function (contextRoot, ensemblHost, ensemblSpecies, transcriptConfig, geneId, geneName) {
+        var CellMultiExperiment = (function (contextRoot, ensemblHost, ensemblSpecies, transcriptConfig, geneId, geneName, formatBaselineExpression) {
             
             function isNAExpression(value) {
                 return (value === "NT")
@@ -947,13 +947,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                             className="heatmap_cell"
                             style={{visibility: isNAExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
                             data-svg-path-id={this.props.svgPathId}>
-                                {isNAExpression(this.props.value) ? tissueNotStudiedInExperiment() : this.props.value}
+                                {isNAExpression(this.props.value) ? tissueNotStudiedInExperiment() : formatBaselineExpression(this.props.value)}
                             </div>
                         </td>
                         );
                 }
             });
-        })(heatmapConfig.contextRoot, ensemblHost, ensemblSpecies, heatmapConfig.transcripts, heatmapConfig.geneQuery, heatmapConfig.geneQuery);
+        })(heatmapConfig.contextRoot, ensemblHost, ensemblSpecies, heatmapConfig.transcripts, heatmapConfig.geneQuery, heatmapConfig.geneQuery, formatBaselineExpression);
 
         var CellDifferential = (function () {
 

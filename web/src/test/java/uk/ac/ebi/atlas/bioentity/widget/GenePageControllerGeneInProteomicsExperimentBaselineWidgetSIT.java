@@ -22,8 +22,9 @@
 
 package uk.ac.ebi.atlas.bioentity.widget;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SingleDriverSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
 import java.util.List;
@@ -31,15 +32,16 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GenePageControllerGeneInProteomicsExperimentBaselineWidgetSIT extends SinglePageSeleniumFixture {
+public class GenePageControllerGeneInProteomicsExperimentBaselineWidgetSIT extends SingleDriverSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSG00000005884";
+    private static final int RETINA = 32;
 
-    private BioEntityPage subject;
+    private static BioEntityPage subject;
 
-    @Override
-    protected void getStartingPage() {
-        subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
+    @BeforeClass
+    public static void getStartingPage() {
+        subject = new BioEntityPage(SingleDriverSeleniumFixture.create(), GENE_IDENTIFIER, "genes");
         subject.get();
     }
 
@@ -67,5 +69,10 @@ public class GenePageControllerGeneInProteomicsExperimentBaselineWidgetSIT exten
         assertThat(subject.getGeneLink(2), endsWith("/experiments/E-PROT-1?geneQuery=ENSG00000005884&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Afetus"));
     }
 
+    @Test
+    public void expressionLevelDisplayedInScientificNotation() {
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getGeneProfile(2).get(RETINA), is("9.91 × 106"));
+    }
 
 }
