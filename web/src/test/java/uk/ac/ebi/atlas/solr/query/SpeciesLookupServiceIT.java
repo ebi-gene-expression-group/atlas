@@ -46,9 +46,9 @@ public class SpeciesLookupServiceIT {
 
     @Test
     public void interPro_singleSpeciesGeneSet() {
-        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("IPR016938");
+        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("IPR016970");
         assertThat(result.isMultiSpecies(), is(false));
-        assertThat(result.firstSpecies(), is("schizosaccharomyces pombe"));
+        assertThat(result.firstSpecies(), is("arabidopsis thaliana"));
     }
 
     @Test
