@@ -61,7 +61,7 @@
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/sliderAndBarChart.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/geneDistribution.js"></script>
 
 
 <%@ include file="includes/flot.jsp" %>
@@ -95,14 +95,14 @@
                 $("#slider-help").hide();//hide the slider help
             } else {
 
-                loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', '${preferences.queryFactorType}', '${preferences.serializedFilterFactors}');
+                geneDistribution.loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', '${preferences.queryFactorType}', '${preferences.serializedFilterFactors}');
 
                 $("#queryFactorValues").change(function () {
-                    loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', '${preferences.queryFactorType}', '${preferences.serializedFilterFactors}');
+                    geneDistribution.loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', '${preferences.queryFactorType}', '${preferences.serializedFilterFactors}');
                 });
 
                 //configurations required for any browser excepted IE version 8 or lower
-                initBarChartButton();
+                geneDistribution.initBarChartButton();
 
             }
 

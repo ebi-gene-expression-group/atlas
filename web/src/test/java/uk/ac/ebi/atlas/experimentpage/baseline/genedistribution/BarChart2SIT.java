@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.baseline;
+package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 
 import org.junit.Before;
@@ -31,7 +31,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormAndBa
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class BarChartAxisForDifferentOrganismPartsSelectedIT extends SinglePageSeleniumFixture {
+public class BarChart2SIT extends SinglePageSeleniumFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 

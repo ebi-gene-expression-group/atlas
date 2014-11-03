@@ -20,24 +20,21 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.baseline.barcharts;
+package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import com.google.common.cache.CacheLoader;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-public class BaselineExpressions implements Iterable<BaselineExpression> {
-
-    private Set<BaselineExpression> expressions = new HashSet<>();
+//Be aware that this is a spring managed singleton object and uses the lookup-method injection to get a new instance of BarChartTraderBuilder everytime the load method is invoked
+//The reason to do so is that Guava CacheBuilder, that is the one using this class, is not spring managed.
+public abstract class BarChartTradersCacheLoader extends CacheLoader<String, BarChartTrader> {
 
     @Override
-    public Iterator<BaselineExpression> iterator() {
-        return expressions.iterator();
+    public BarChartTrader load(String experimentAccession) {
+
+        return createBarChartTraderBuilder().forExperiment(experimentAccession).create();
+
     }
 
-    public void addExpression(BaselineExpression expression) {
-        expressions.add(expression);
-    }
+    public abstract BarChartTraderBuilder createBarChartTraderBuilder();
+
 }

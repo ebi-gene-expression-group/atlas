@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.baseline.geod26284;
+package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 
 import org.junit.Before;
@@ -31,7 +31,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormAndBa
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class BarChartAxisForDifferentOrganismPartsSelectedSIT extends SinglePageSeleniumFixture {
+public class BarChartSIT extends SinglePageSeleniumFixture {
 
     private static final String E_GEOD_26284_ACCESSION = "E-GEOD-26284";
     private HeatmapTableWithSearchFormAndBarChartPage subject;
@@ -59,7 +59,7 @@ public class BarChartAxisForDifferentOrganismPartsSelectedSIT extends SinglePage
     }
 
     @Test
-    public void checkBarChartAxisForSkeletalMuscle() {
+    public void checkBarChartAxisForCellLine() {
         subject.selectQueryFactorValue("HFDPC cell line");
         assertThat(subject.getYAxisValue(0), is("0"));
         assertThat(subject.getYAxisValue(1), is("10"));

@@ -11,7 +11,7 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentAnalysisMethodsPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignTablePage;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormAndBarChartPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.QCReportPage;
 
 import java.text.MessageFormat;
@@ -26,7 +26,7 @@ public class PrivateMicroarrayExperimentWithAccessKeyIT extends SeleniumFixture 
     private static final String EXPERIMENT_ACCESSION = "E-GEOD-3779";
     public static final String ARRAY_DESIGN = "A-AFFY-23";
 
-    private HeatmapTableWithSearchFormAndBarChartPage subject;
+    private HeatmapTablePage subject;
 
     private String accessKey;
 
@@ -45,7 +45,7 @@ public class PrivateMicroarrayExperimentWithAccessKeyIT extends SeleniumFixture 
 
         accessKey = from(jsonResponse).get("accessKey[0]");
 
-        subject = new HeatmapTableWithSearchFormAndBarChartPage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
         subject.get();
     }
 
@@ -57,7 +57,7 @@ public class PrivateMicroarrayExperimentWithAccessKeyIT extends SeleniumFixture 
 
     @Test(expected = NoSuchElementException.class)
     public void pageShouldNotBeAvailableWithoutAccessKey() {
-        HeatmapTableWithSearchFormAndBarChartPage page = new HeatmapTableWithSearchFormAndBarChartPage(driver, EXPERIMENT_ACCESSION);
+        HeatmapTablePage page = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION);
         page.get();
         page.getExperimentDescription();
     }

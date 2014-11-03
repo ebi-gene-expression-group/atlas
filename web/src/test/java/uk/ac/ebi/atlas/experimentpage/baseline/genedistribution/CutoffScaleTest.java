@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.baseline.barcharts;
+package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
