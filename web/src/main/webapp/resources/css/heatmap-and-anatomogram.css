@@ -22,7 +22,7 @@
 }
 
 .heatmap-position {
-    position: relative;
+    position: fixed;
     margin-left: 270px;
 }
 
