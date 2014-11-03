@@ -52,5 +52,5 @@
             </c:if>
         </table>
     </div>
-    <div id="gradient-help-diff" data-help-loc="#gradient-differential" style="float:left;"></div>
+    <div id="gradient-help-diff" data-help-loc="#gradient-differential-crossexp" style="float:left;"></div>
 </div>

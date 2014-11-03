@@ -66,7 +66,7 @@
                     <c:when test="${type.isBaseline()}">
                         <td style="width:100%;display:block">
                             <form:label path="cutoff">Expression level cutoff</form:label>
-                            <span data-help-loc="#cutoff"></span>
+                            <span data-help-loc="#cutoff${type.isProteomicsBaseline() ? '' : '-proteomics'}"></span>
                         </td>
                     </c:when>
                     <c:otherwise>

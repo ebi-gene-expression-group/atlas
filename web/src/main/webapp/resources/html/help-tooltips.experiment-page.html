@@ -52,8 +52,10 @@
 <div id="factorSearch-differential">Select comparison(s). A comparison compares two groups of assays: the test to the reference. Each group is described by a set of properties/values that are constant across all assays in that group.
 </div>
 
-<div id="cutoff">Enter a minimum expression level (FPKM). Only genes expressed
-	above this are displayed. Set to 0 to retrieve all genes.
+<div id="cutoff">Enter a minimum expression level (FPKM). Only genes expressed above this are displayed. Set to 0 to retrieve all genes.
+</div>
+
+<div id="cutoff-proteomics">Enter a minimum expression level. Only genes expressed above this are displayed. Set to 0 to retrieve all genes.
 </div>
 
 <div id="cutoff-differential">Enter value from 0 to 1 to use as the maximum <i>p</i>-value cutoff.
@@ -79,7 +81,7 @@
 </div>
 
 <div id="gradient-base-crossexp">Expression level: greater colour saturation means higher expression.
-  Please note that expression values (FPKMs) are not directly comparable across experiments.
+  Please note that expression values are not directly comparable across experiments.
 </div>
 
 <div id="gradient-differential-crossexp">Greater colour saturation means higher absolute log<sub>2</sub>-fold change value.
@@ -93,7 +95,13 @@
 </div>
 
 <div id="heatMapTableCellInfo">Filled boxes indicate genes expressed. Click a box to see transcript breakdown. Click "Display levels" to show expression levels.
+</div>
+
+<div id="heatMapTableCellInfo-multiexp">Filled boxes indicate genes expressed. Click a box to see transcript breakdown. Click "Display levels" to show expression levels.
     An 'x' in a box means that the experimental variable has not been studied in the corresponding experiment.
+</div>
+
+<div id="heatMapTableCellInfo-proteomics">Filled boxes indicate genes expressed. Click "Display levels" to show expression levels.
 </div>
 
 <div id="heatMapTableCellInfo-differential">Filled boxes indicate genes differentially expressed. Mouseover a box to see adjusted <i>p</i>-value and log<sub>2</sub> fold-change. Click "Display log<sub>2</sub> fold-change" to show exact log<sub>2</sub> fold-changes.

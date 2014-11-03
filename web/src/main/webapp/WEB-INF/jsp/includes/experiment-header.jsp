@@ -83,7 +83,8 @@
                         </c:if>
 
                         <!-- download-r button section -->
-                        <c:if test="${type.isMicroarray() || type.isDifferential()}">
+                        <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
+                        <c:if test="${type.differential}">
                             <td>
                                 <a id="download-r" class="button-image"
                                    title="Download experiment data ready to load into R"
@@ -93,7 +94,7 @@
                             </td>
                         </c:if>
 
-                        <c:if test="${type.isDifferential()}">
+                        <c:if test="${type.rnaSeqDifferential}">
                             <td>
                                 <a id="download-raw" class="button-image"
                                    title="Download all raw counts for the experiment"
@@ -101,7 +102,7 @@
                                     <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_raw.png"/></a>
                             </td>
                         </c:if>
-                        <c:if test="${type.isMicroarray()}">
+                        <c:if test="${type.microarray}">
                             <td>
                                 <c:choose>
                                     <c:when test="${type.isTwoColour()}">
@@ -120,7 +121,7 @@
                             </td>
                         </c:if>
                         <c:choose>
-                            <c:when test="${type.isBaseline()}">
+                            <c:when test="${type.baseline}">
                                 <td>
                                     <a id="download-expressions" class="button-image"
                                        title="Download all expressions for the experiment"

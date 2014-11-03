@@ -9,7 +9,9 @@
             </div>
         </c:if>
     </c:when>
-    <c:otherwise><%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
+    <c:otherwise>
+    <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
+    <%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
 
         <%@ include file="react.jsp" %>
 
@@ -108,7 +110,7 @@
             </c:otherwise>
             </c:choose>
 
-            var heatmapModuleBuild = ${isMultiExperiment ? 'heatmapModule.buildMultiExperiment': (isDifferential ? 'heatmapModule.buildDifferential' : 'heatmapModule.buildBaseline')};
+            var heatmapModuleBuild = ${isMultiExperiment ? 'heatmapModule.buildMultiExperiment': (type.differential ? 'heatmapModule.buildDifferential' : (type.proteomicsBaseline ? 'heatmapModule.buildProteomicsBaseline' : 'heatmapModule.buildBaseline'))};
 
             (function ($, React, build, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData) {
 

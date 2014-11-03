@@ -114,7 +114,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
                 //TODO: remove when widget converted to React
                 model.addAttribute("geneProfiles", differentialProfiles);
 
-                model.addAttribute("isDifferential", true);
                 downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
 
                 //required for genome track browser in ensembl

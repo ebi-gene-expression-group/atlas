@@ -65,8 +65,12 @@ public enum ExperimentType {
         return equals(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
     }
 
-    public boolean isDifferential() {
+    public boolean isRnaSeqDifferential() {
         return equals(RNASEQ_MRNA_DIFFERENTIAL);
+    }
+
+    public boolean isDifferential() {
+        return equals(RNASEQ_MRNA_DIFFERENTIAL) || isMicroarray();
     }
 
     public boolean isTwoColour() {
