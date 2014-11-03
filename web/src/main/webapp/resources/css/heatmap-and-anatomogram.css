@@ -22,6 +22,11 @@
 }
 
 .heatmap-position {
+    position: relative;
+    margin-left: 270px;
+}
+
+.heatmap-position-widget {
     position: fixed;
     margin-left: 270px;
 }
