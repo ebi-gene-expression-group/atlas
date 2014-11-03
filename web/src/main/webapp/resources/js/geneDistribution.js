@@ -133,14 +133,20 @@ var geneDistribution = (function ($) {
             (isAnyQueryFactorValueSelected ? "for the selected experimental variables" : "in any experimental variable");
     }
 
-    function plotCutoffBarChart(selectedQueryFactorValues, data, magnifiedScaledCutoffs) {
+    function buildProteomicsLegendText(isAnyQueryFactorValueSelected) {
+        "use strict";
+        return "Y = number of genes expressed above the given expression level cutoff " +
+            (isAnyQueryFactorValueSelected ? "for the selected experimental variables" : "in any experimental variable");
+    }
+
+    function plotCutoffBarChart(label, data, magnifiedScaledCutoffs) {
         "use strict";
 
         return $.plot($("#gene-distribution"), [ data ], {
             series: {
                 //highlightColor : "rgb(240,205,95)",
 
-                label: buildLegendText(selectedQueryFactorValues),
+                label: label,
 
                 bars: {
                     show: true,
@@ -172,10 +178,8 @@ var geneDistribution = (function ($) {
         });
     }
 
-    function loadSliderAndPlot(cutoff, experimentAccession, queryFactorType, serializeFilterFactors) {
+    function loadSliderAndPlot(cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors, buildLegendText) {
         "use strict";
-
-        var selectedQueryFactorValues = $("#queryFactorValues").val();
 
         $.ajax({
             url: "json/barchart/" + experimentAccession,
@@ -215,7 +219,7 @@ var geneDistribution = (function ($) {
                     }
                 );
 
-                var genesByCutoffPlot = plotCutoffBarChart(selectedQueryFactorValues, dataArray, ticksMap);
+                var genesByCutoffPlot = plotCutoffBarChart(buildLegendText(selectedQueryFactorValues), dataArray, ticksMap);
 
                 hideOrDisplayGeneDistribution(true);
 
@@ -281,7 +285,12 @@ var geneDistribution = (function ($) {
     }
 
     return {
-        loadSliderAndPlot: loadSliderAndPlot,
+        loadSliderAndPlot: function (cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors) {
+            loadSliderAndPlot(cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors, buildLegendText);
+        },
+        loadProteomicsSliderAndPlot: function (cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors) {
+            loadSliderAndPlot(cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors, buildProteomicsLegendText);
+        },
         initBarChartButton: initBarChartButton
     }
 })(jQuery);

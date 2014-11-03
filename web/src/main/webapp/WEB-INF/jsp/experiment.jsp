@@ -95,10 +95,19 @@
                 $("#slider-help").hide();//hide the slider help
             } else {
 
-                geneDistribution.loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', '${preferences.queryFactorType}', '${preferences.serializedFilterFactors}');
+                <c:choose>
+                <c:when test="${type.isProteomicsBaseline()}">
+                    var loadSliderAndPlot = geneDistribution.loadProteomicsSliderAndPlot;
+                </c:when>
+                <c:otherwise>
+                    var loadSliderAndPlot = geneDistribution.loadSliderAndPlot;
+                </c:otherwise>
+                </c:choose>
+
+                loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', $("#queryFactorValues").val(), '${preferences.queryFactorType}', '${preferences.serializedFilterFactors}');
 
                 $("#queryFactorValues").change(function () {
-                    geneDistribution.loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', '${preferences.queryFactorType}', '${preferences.serializedFilterFactors}');
+                    loadSliderAndPlot(${preferences.cutoff}, '${experimentAccession}', $("#queryFactorValues").val(), '${preferences.queryFactorType}', '${preferences.serializedFilterFactors}');
                 });
 
                 //configurations required for any browser excepted IE version 8 or lower
