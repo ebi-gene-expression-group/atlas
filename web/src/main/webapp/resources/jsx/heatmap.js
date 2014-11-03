@@ -7,9 +7,10 @@
 var heatmapModule = (function($, React, genePropertiesTooltipModule, factorTooltipModule, contrastTooltipModule, helpTooltipsModule, TranscriptPopup, EventEmitter, Modernizr) {
 
     var TypeEnum = {
-        BASELINE: { isBaseline: true },
-        DIFFERENTIAL: { isDifferential: false },
-        MULTIEXPERIMENT: { isMultiExperiment: true }
+        BASELINE: { isBaseline: true, heatmapTooltip: '#heatMapTableCellInfo', legendTooltip: '#gradient-base' },
+        PROTEOMICS_BASELINE: { isBaseline: true, isProteomics: true, heatmapTooltip: '#heatMapTableCellInfo-proteomics', legendTooltip: '#gradient-base' },
+        DIFFERENTIAL: { isDifferential: true, heatmapTooltip: '#heatMapTableCellInfo-differential' },
+        MULTIEXPERIMENT: { isMultiExperiment: true, heatmapTooltip: '#heatMapTableCellInfo-multiexp', legendTooltip: '#gradient-base-crossexp' }
     };
 
     var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLevelsInputElement) {
@@ -171,7 +172,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                                     )
                                 )
                             ),
-                            React.DOM.div( {ref:"legendHelp", 'data-help-loc':"#gradient-base-crossexp", style:{float: "left;"}})
+                            React.DOM.div( {ref:"legendHelp", 'data-help-loc':type.legendTooltip, style:{float: "left;"}})
                         )
                         );
                 },
@@ -196,7 +197,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                                     )
                                 )
                             ),
-                            React.DOM.div( {ref:"legendHelp", 'data-help-loc':"#gradient-differential-crossexp", style:{float: "left;"}})
+                            React.DOM.div( {ref:"legendHelp", 'data-help-loc':"#gradient-differential", style:{float: "left;"}})
                         )
                         );
                 },
@@ -609,10 +610,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
 
                 render: function () {
-                    var displayLevelsButton = (type.isDifferential) ? DisplayLevelsButtonDifferential : DisplayLevelsButtonBaseline;
+                    var displayLevelsButton = type.isDifferential ? DisplayLevelsButtonDifferential : DisplayLevelsButtonBaseline;
                     return (
                             React.DOM.div( {className:"heatmap-matrix-top-left-corner"}, 
-                                React.DOM.span( {id:"tooltip-span", 'data-help-loc':"#heatMapTableCellInfo", ref:"tooltipSpan"}),
+                                React.DOM.span( {id:"tooltip-span", 'data-help-loc':type.heatmapTooltip, ref:"tooltipSpan"}),
                                 displayLevelsButton( {displayLevels:this.props.displayLevels, toggleDisplayLevels:this.props.toggleDisplayLevels})
                             )
                         );
@@ -1024,6 +1025,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
     return {
         buildBaseline: function (heatmapConfig, $prefFormDisplayLevelsInputElement) { return build(TypeEnum.BASELINE, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement); },
+        buildProteomicsBaseline: function (heatmapConfig, $prefFormDisplayLevelsInputElement) { return build(TypeEnum.PROTEOMICS_BASELINE, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement); },
         buildDifferential: function (heatmapConfig, $prefFormDisplayLevelsInputElement) { return build(TypeEnum.DIFFERENTIAL, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement); },
         buildMultiExperiment: function (heatmapConfig, $prefFormDisplayLevelsInputElement) { return build(TypeEnum.MULTIEXPERIMENT, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement); }
     };
