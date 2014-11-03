@@ -132,6 +132,9 @@ var searchFormModule = (function($) {
                 select: function( event, ui ) {
                     var selectedValue = quoteTextThatContainsMoreThanOneWord(ui.item.value.trim()),
                         lastItem = extractLast(this.value);
+                    if(startsWith(this.value, "\"")) {
+                        this.value = remoteExtraQuotesFromStart(this.value);
+                    }
                     this.value = this.value.substr(0, this.value.length - lastItem.length).concat(selectedValue) + " ";
                     return false;
                 },
@@ -154,6 +157,15 @@ var searchFormModule = (function($) {
                 }
             });
     }
+
+    function startsWith (str, prefix) {
+        return str.lastIndexOf(prefix, 0) === 0;
+    }
+
+    function remoteExtraQuotesFromStart (str) {
+        return str.substring(1, str.length);
+    }
+
 
     function disableCarriageReturn(selector) {
         $(selector).keypress(function(event) {

@@ -43,8 +43,8 @@ var autocompleteModule = (function($) {
                 select: function( event, ui ) {
                     var selectedValue = quoteTextThatContainsMoreThanOneWord(ui.item.value.trim()),
                         lastItem = extractLast(this.value);
-                    if(this.value.startsWith("\"")) {
-                        this.value = this.value.substr(1, this.value.length); //remove the single quotes at the beginning of the String
+                    if(startsWith(this.value, "\"")) {
+                        this.value = remoteExtraQuotesFromStart(this.value);
                     }
                     this.value = this.value.substr(0, this.value.length - lastItem.length).concat(selectedValue) + " ";
                     return false;
@@ -69,10 +69,12 @@ var autocompleteModule = (function($) {
             });
     }
 
-    if ( typeof String.prototype.startsWith != 'function' ) {
-        String.prototype.startsWith = function (str) {
-            return this.substring(0, str.length) === str;
-        }
+    function startsWith (str, prefix) {
+        return str.lastIndexOf(prefix, 0) === 0;
+    }
+
+    function remoteExtraQuotesFromStart (str) {
+        return str.substring(1, str.length);
     }
 
     function quoteTextThatContainsMoreThanOneWord (text) {
