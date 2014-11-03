@@ -487,8 +487,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         )
                     );
 
-                    var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.DOM.span( {style:{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}},   "  select") : null;
-                    var showTickWhenSelected = this.props.selected ? React.DOM.span( {className:"rotate_tick", style:{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}},  " ✔ " ): null ;
+                    var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.DOM.span( {className:"", style:{position: "absolute", width:"10px", right:"0px", left:"95px", bottom:"-35px", color:"green"}},   "  select") : null;
+                    var showTickWhenSelected = this.props.selected ? React.DOM.span( {className:"rotate_tick", style:{position:"absolute", width:"5px", right:"0px", left:"125px", bottom:"-35px", color:"green"}},  " ✔ " ): null ;
                     var thClass = "rotated_cell hoverable-header " + (this.props.selected ? "vertical-header-cell-selected " : "vertical-header-cell ") + (enableEnsemblLauncher ? "selectable-header" : "");
                     var divClass = "rotate_text factor-header";
                     var contrastName = csstransforms ? restrictLabelSize(this.props.contrastName, 17) : this.props.contrastName;
@@ -500,8 +500,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                                 showSelectTextOnHover,
                                 showTickWhenSelected
                             ),
-                            this.showPlotsButton() ? plotsButton : null,
-                            this.showPlotsButton() ? plotsToolbar : null
+                                this.showPlotsButton() ? plotsButton : null,
+                                this.showPlotsButton() ? plotsToolbar : null
                         )
                         );
                 }
