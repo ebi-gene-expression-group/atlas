@@ -61,7 +61,7 @@
 
         <div id="ensembl-launcher" class="aside stickem" style="display:inline"></div>
 
-        <div id="heatmap-react" class="heatmap-position"></div>
+        <div id="heatmap-react" class="heatmap-position${isWidget ? '-widget' : ''}"></div>
 
     </div>
 </c:if>

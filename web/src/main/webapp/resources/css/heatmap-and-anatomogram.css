@@ -26,6 +26,11 @@
     margin-left: 270px;
 }
 
+.heatmap-position-widget {
+    position: fixed;
+    margin-left: 270px;
+}
+
 .aside {
     float: left;
     /*padding: 0 20px;*/

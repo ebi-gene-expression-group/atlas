@@ -66,7 +66,7 @@
                 </table>
             </div>
 
-            <div id="heatmap-div" class="heatmap-position" style="display:none" style="display:inline">
+            <div id="heatmap-div" class="heatmap-position${isWidget ? '-widget' : ''}">
 
                 <table>
                     <tr>
@@ -91,7 +91,7 @@
             </div>
 
             <c:if test="${not empty profilesAsGeneSets}">
-                <div id="heatmap-profilesAsGeneSets" class="heatmap-position" style="display:none">
+                <div id="heatmap-profilesAsGeneSets" class="heatmap-position${isWidget ? '-widget' : ''}" style="display:none">
 
                     <table>
                         <tr>
