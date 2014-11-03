@@ -12,6 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import java.util.SortedSet;
@@ -50,7 +51,7 @@ public class BaselineExperimentProfileSearchServiceTest {
     private SolrQueryService solrQueryService;
 
     @Mock
-    private BaselineExperimentsCache baselineExperimentsCache;
+    private ExperimentTrader experimentTrader;
 
     @Mock
     private BaselineExperiment baselineExperiment;
@@ -62,7 +63,7 @@ public class BaselineExperimentProfileSearchServiceTest {
 
     @Before
     public void before() {
-        when(baselineExperimentsCache.getExperiment(Mockito.anyString())).thenReturn(baselineExperiment);
+        when(experimentTrader.getPublicExperiment(Mockito.anyString())).thenReturn(baselineExperiment);
         when(baselineExperiment.getExperimentalFactors()).thenReturn(experimentalFactors);
         when(baselineExperiment.isTissueExperiment()).thenReturn(true);
         when(baselineExperiment.getAccession()).thenReturn(E_MTAB_599);
@@ -73,7 +74,7 @@ public class BaselineExperimentProfileSearchServiceTest {
         when(experimentalFactors.getFilteredFactors(Mockito.any(FactorGroup.class))).thenReturn(ALL_FACTORS);
         when(experimentalFactors.getNonDefaultFactors(Mockito.anyString())).thenReturn(EMPTY_FACTOR_SET);
 
-        subject = new BaselineExperimentProfileSearchService(rnaSeqBslnExpressionDao, solrQueryService, baselineExperimentsCache);
+        subject = new BaselineExperimentProfileSearchService(rnaSeqBslnExpressionDao, solrQueryService, experimentTrader);
     }
 
     @Test

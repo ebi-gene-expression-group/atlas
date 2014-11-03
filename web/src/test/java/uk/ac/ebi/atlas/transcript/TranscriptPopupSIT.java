@@ -84,9 +84,9 @@ public class TranscriptPopupSIT extends SeleniumFixture {
         assertThat(page.getTranscriptBreakdownTitle(), is("Expression Level Breakdown for OS12G0515800 in leaf\n(1 out of 1 transcript is expressed):"));
         assertThat(page.getTranscriptBreakdownLegendLabels(), contains("OS12T0515800-01"));
         assertThat(page.getTranscriptBreakdownLegendLinks(), contains("http://plants.ensembl.org/Oryza_sativa/Transcript/Summary?g=OS12G0515800;t=OS12T0515800-01"));
-        assertThat(page.getGeneLink(), is("http://plants.ensembl.org/Oryza_sativa/Gene/Summary?g=OS12G0515800"));
+        assertThat(page.getTranscriptBreakdownGeneLink(), is("http://plants.ensembl.org/Oryza_sativa/Gene/Summary?g=OS12G0515800"));
 
-        List<WebElement> legendElements = page.getLegendElements();
+        List<WebElement> legendElements = page.getTranscriptBreakdownLegendElements();
         legendElements.get(0).click();
 
         SeleniumUtil.switchToOpenedWindow(driver);
@@ -101,8 +101,8 @@ public class TranscriptPopupSIT extends SeleniumFixture {
         HeatmapTableWidgetPage subject = HeatmapTableWidgetPage.create(driver, "geneQuery=REACT_6900&species=homo%20sapiens&rootContext=");
         subject.get();
 
-        assertThat(subject.getGeneCount(), is("Showing 3 of 3 experiments found:"));
-        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Illumina Body Map", "Vertebrate tissues"));
+        assertThat(subject.getGeneCount(), is("Showing 5 of 5 experiments found:"));
+        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Human Proteome Map - adult", "Illumina Body Map", "Vertebrate tissues", "Human Proteome Map - fetus"));
 
         HeatmapTableWithTranscriptBreakdownPage page1 = subject.clickOnCell(0, 5);
         assertFalse(page1.isTranscriptPopupPresent());

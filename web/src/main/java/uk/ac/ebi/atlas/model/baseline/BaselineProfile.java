@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import org.apache.commons.collections.CollectionUtils;
 import uk.ac.ebi.atlas.model.Profile;
-import uk.ac.ebi.atlas.utils.NumberUtils;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 
 import java.util.Set;
 
@@ -121,7 +121,7 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     }
 
     private static double fold(double value, int foldFactor) {
-        return new NumberUtils().round(value / foldFactor);
+        return new BaselineExpressionLevelRounder().round(value / foldFactor);
     }
 
     private void resetMaxMin() {

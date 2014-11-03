@@ -24,7 +24,6 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
 <%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
 
 <%@ attribute name="geneProfiles" required="true" type="uk.ac.ebi.atlas.model.baseline.BaselineProfilesList"%>
@@ -33,16 +32,9 @@
     <div style="float:left">
         <table style="font-size:10px;" id="baseline-heatmap-legend">
 
-            <c:set var="minExpressionLevel" value="${geneProfiles.getMinExpressionLevel()}"/>
-            <c:set var="maxExpressionLevel" value="${geneProfiles.getMaxExpressionLevel()}"/>
-            <fmt:formatNumber type="number"
-                              maxFractionDigits="${minExpressionLevel >= 1 ? 0 : 1}"
-                              value="${minExpressionLevel}" groupingUsed="false"
-                              var="minExpressionLevel"/>
-            <fmt:formatNumber type="number"
-                              maxFractionDigits="${maxExpressionLevel >= 1 ? 0 : 1}"
-                              value="${maxExpressionLevel}" groupingUsed="false"
-                              var="maxExpressionLevel"/>
+            <%--@elvariable id="baselineExpressionLevelRounder" type="uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder"--%>
+            <c:set var="minExpressionLevel" value="${baselineExpressionLevelRounder.format(geneProfiles.getMinExpressionLevel())}"/>
+            <c:set var="maxExpressionLevel" value="${baselineExpressionLevelRounder.format(geneProfiles.getMaxExpressionLevel())}"/>
 
             <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
                                   highValueColour="${colourGradient.getHexByColourName('blue')}"

@@ -12,7 +12,4 @@ public class StringUtil {
     public String lowerCaseIfNotAllUpperCase(String s) {
         return StringUtils.isAllUpperCase(s) ? s : StringUtils.lowerCase(s);
     }
-
-
-
 }

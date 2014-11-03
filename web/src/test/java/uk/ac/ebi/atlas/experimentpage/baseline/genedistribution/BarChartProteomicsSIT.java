@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.baseline.geod26284;
+package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 
 import org.junit.Before;
@@ -31,14 +31,15 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormAndBa
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class BarChartAxisForDifferentOrganismPartsSelectedSIT extends SinglePageSeleniumFixture {
+public class BarChartProteomicsSIT extends SinglePageSeleniumFixture {
 
-    private static final String E_GEOD_26284_ACCESSION = "E-GEOD-26284";
+    private static final String EXPERIMENT_ACCESSION = "E-PROT-1";
+
     private HeatmapTableWithSearchFormAndBarChartPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = new HeatmapTableWithSearchFormAndBarChartPage(driver, E_GEOD_26284_ACCESSION, null);
+        subject = new HeatmapTableWithSearchFormAndBarChartPage(driver, EXPERIMENT_ACCESSION);
         subject.get();
     }
 
@@ -48,22 +49,8 @@ public class BarChartAxisForDifferentOrganismPartsSelectedSIT extends SinglePage
     }
 
     @Test
-    public void checkBarChartAxisForAllOrganismParts() {
-        assertThat(subject.getXAxisValue(0), is("0"));
-        assertThat(subject.getXAxisValue(1), is("0.2"));
-        assertThat(subject.getMaxXAxisValue(), is("1"));
-
-        assertThat(subject.getYAxisValue(0), is("0"));
-        assertThat(subject.getYAxisValue(1), is("10"));
-        assertThat(subject.getMaxYAxisValue(), is("50"));
-    }
-
-    @Test
-    public void checkBarChartAxisForSkeletalMuscle() {
-        subject.selectQueryFactorValue("HFDPC cell line");
-        assertThat(subject.getYAxisValue(0), is("0"));
-        assertThat(subject.getYAxisValue(1), is("10"));
-        assertThat(subject.getMaxYAxisValue(), is("40"));
+    public void legendLabel() {
+        assertThat(subject.getLegendLabel(), is("Y = number of genes expressed above the given expression level cutoff in any experimental variable"));
     }
 
 }

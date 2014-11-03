@@ -51,7 +51,10 @@ public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixtu
         List<String> first5Genes = subject.getGeneNames().subList(0, 5);
         assertThat(first5Genes, contains("ITGA3","CD6", "LAS1L", "MRC2", "PSMC4"));
 
-        assertThat(subject.getGeneProfile(ITGA3).get(RETINA), is("9910000"));
+        assertThat(subject.getGeneProfile(ITGA3).get(RETINA), is("9.91 × 106"));
+
+        assertThat(subject.getHeatmapLegendMinLevels(), contains("4.7 × 106"));
+        assertThat(subject.getHeatmapLegendMaxLevels(), contains("9.91 × 106"));
     }
 
     @Test
@@ -65,7 +68,7 @@ public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixtu
         List<String> first5Genes = subject.getGeneNames().subList(0, 5);
         assertThat(first5Genes, contains("SPAST","CFH", "RNASET2", "HSPB6", "LIG3"));
 
-        assertThat(subject.getGeneProfile(SPAST).get(BRAIN), is("9790000"));
+        assertThat(subject.getGeneProfile(SPAST).get(BRAIN), is("9.79 × 106"));
     }
 
 }

@@ -29,9 +29,9 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.search.DatabaseQuery;
 import uk.ac.ebi.atlas.search.OracleObjectFactory;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -50,13 +50,13 @@ public class RnaSeqBslnExpressionDao {
 
     private final OracleObjectFactory oracleObjectFactory;
 
-    private final NumberUtils numberUtils;
+    private final BaselineExpressionLevelRounder baselineExpressionLevelRounder;
 
     @Inject
-    public RnaSeqBslnExpressionDao(JdbcTemplate jdbcTemplate, OracleObjectFactory oracleObjectFactory, NumberUtils numberUtils) {
+    public RnaSeqBslnExpressionDao(JdbcTemplate jdbcTemplate, OracleObjectFactory oracleObjectFactory, BaselineExpressionLevelRounder baselineExpressionLevelRounder) {
         this.jdbcTemplate = jdbcTemplate;
         this.oracleObjectFactory = oracleObjectFactory;
-        this.numberUtils = numberUtils;
+        this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
     }
 
     //TODO: allow fetching by species
@@ -91,7 +91,7 @@ public class RnaSeqBslnExpressionDao {
                                 return;
                             }
 
-                            double expression = numberUtils.round(rs.getDouble(RnaSeqBslnQueryBuilder.EXPRESSION) / numberOfGenesExpressedInCurrentExperiment.intValue());
+                            double expression = baselineExpressionLevelRounder.round(rs.getDouble(RnaSeqBslnQueryBuilder.EXPRESSION) / numberOfGenesExpressedInCurrentExperiment.intValue());
                             RnaSeqBslnExpression bslnExpression = RnaSeqBslnExpression.create(experimentAccession, assayGroupId, expression);
 
                             builder.add(bslnExpression);

@@ -24,9 +24,6 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
-<%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
-
 <%@ attribute name="geneProfiles" required="true" type="java.util.ArrayList"%>
 <%@ attribute name="type" required="true"%>
 

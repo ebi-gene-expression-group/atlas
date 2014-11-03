@@ -11,33 +11,31 @@ import java.io.IOException;
 public class BaselineProteomicsAnalyticsLoader implements AnalyticsLoader {
 
     private final BaselineAnalyticsDao baselineAnalyticsDao;
-    private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
+    private final BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory;
 
     @Inject
     public BaselineProteomicsAnalyticsLoader(BaselineAnalyticsDao baselineAnalyticsDao,
-                                             BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory) {
+                                             BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory) {
         this.baselineAnalyticsDao = baselineAnalyticsDao;
-        this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
+        this.baselineProteomicsAnalyticsInputStreamFactory = baselineProteomicsAnalyticsInputStreamFactory;
     }
 
     @Override
     @Transactional
     public void loadAnalytics(String accession) throws IOException {
-        //TODO: load into database
-        //loadBaselineExpressions(accession);
+        loadBaselineExpressions(accession);
     }
 
     private void loadBaselineExpressions(String accession) {
-        BaselineAnalyticsInputStream baselineAnalyticsInputStream =
-                baselineAnalyticsInputStreamFactory.create(accession);
-        baselineAnalyticsDao.loadAnalytics(accession, baselineAnalyticsInputStream);
+        BaselineProteomicsAnalyticsInputStream baselineProteomicsAnalyticsInputStream =
+                baselineProteomicsAnalyticsInputStreamFactory.create(accession);
+        baselineAnalyticsDao.loadAnalytics(accession, baselineProteomicsAnalyticsInputStream);
     }
 
     @Override
     @Transactional
     public void deleteAnalytics(String accession) {
-        //TODO:
-        //baselineAnalyticsDao.deleteAnalytics(accession);
+        baselineAnalyticsDao.deleteAnalytics(accession);
     }
 
 }

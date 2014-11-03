@@ -2,9 +2,9 @@ package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Inject;
@@ -17,19 +17,19 @@ import java.util.SortedSet;
 public class BaselineExperimentProfilesViewModelBuilder {
 
     private final BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder;
-    private final NumberUtils numberUtils;
+    private final BaselineExpressionLevelRounder baselineExpressionLevelRounder;
     private final FilterFactorsConverter filterFactorsConverter;
 
     @Inject
-    public BaselineExperimentProfilesViewModelBuilder(BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder, NumberUtils numberUtils, FilterFactorsConverter filterFactorsConverter) {
+    public BaselineExperimentProfilesViewModelBuilder(BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder, BaselineExpressionLevelRounder baselineExpressionLevelRounder, FilterFactorsConverter filterFactorsConverter) {
         this.baselineExpressionViewModelBuilder = baselineExpressionViewModelBuilder;
-        this.numberUtils = numberUtils;
+        this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
         this.filterFactorsConverter = filterFactorsConverter;
     }
 
     public BaselineProfilesViewModel build(BaselineExperimentProfilesList profiles, SortedSet<Factor> orderedFactors) {
         BaselineExperimentProfileRowViewModel[] genes = buildExperiments(profiles, orderedFactors, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel());
-        return new BaselineProfilesViewModel<>(numberUtils, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel(), profiles.getTotalResultCount(), genes);
+        return new BaselineProfilesViewModel<>(baselineExpressionLevelRounder, profiles.getMinExpressionLevel(), profiles.getMaxExpressionLevel(), profiles.getTotalResultCount(), genes);
     }
 
     public BaselineExperimentProfileRowViewModel[] buildExperiments(List<BaselineExperimentProfile> baselineProfiles, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {

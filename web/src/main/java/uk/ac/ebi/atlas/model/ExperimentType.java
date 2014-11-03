@@ -57,6 +57,10 @@ public enum ExperimentType {
         return equals(RNASEQ_MRNA_BASELINE) || equals(PROTEOMICS_BASELINE);
     }
 
+    public boolean isProteomicsBaseline() {
+        return equals(PROTEOMICS_BASELINE);
+    }
+
     public boolean isMicroRna() {
         return equals(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
     }

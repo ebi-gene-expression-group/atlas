@@ -67,4 +67,11 @@ public class MultiTermSuggestionServiceIT {
         assertThat(properties.size(), is(0));
     }
 
+    @Test
+    public void searchTermContainingHyphen() {
+        List<String> properties = subject.fetchMultiTermSuggestions("G-protein");
+        assertThat(properties.size(), is(30));
+        assertThat(properties, hasItem("G-protein coupled receptor signaling pathway"));
+    }
+
 }

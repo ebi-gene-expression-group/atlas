@@ -132,6 +132,10 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     }
 
     private void addJsonForHeatMap(DifferentialProfilesList diffProfiles, Set<Contrast> contrasts, ImmutableMap<String, GseaPlots> gseaPlots, Model model) {
+        if (diffProfiles.isEmpty()) {
+            return;
+        }
+
         Gson gson = new GsonBuilder()
                 .serializeSpecialFloatingPointValues()
                 .create();

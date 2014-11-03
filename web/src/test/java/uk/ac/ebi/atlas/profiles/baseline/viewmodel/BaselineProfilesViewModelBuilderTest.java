@@ -8,9 +8,9 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileDeserializer;
 import uk.ac.ebi.atlas.utils.ColourGradient;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import java.awt.*;
 import java.util.SortedSet;
@@ -40,15 +40,15 @@ public class BaselineProfilesViewModelBuilderTest {
     private Color blankColour = Color.WHITE;
     private double colourScale = 1;
     private ColourGradient colorGradient = new ColourGradient(startColour, endColour, blankColour, colourScale);
-    private BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder = new BaselineExpressionViewModelBuilder(colorGradient, new NumberUtils());
-    private BaselineProfilesViewModelBuilder subject = new BaselineProfilesViewModelBuilder(baselineExpressionViewModelBuilder, new NumberUtils());
+    private BaselineExpressionViewModelBuilder baselineExpressionViewModelBuilder = new BaselineExpressionViewModelBuilder(colorGradient, new BaselineExpressionLevelRounder());
+    private BaselineProfilesViewModelBuilder subject = new BaselineProfilesViewModelBuilder(baselineExpressionViewModelBuilder, new BaselineExpressionLevelRounder());
     private SortedSet<Factor> orderedFactors = ImmutableSortedSet.of(ADIPOSE, ADRENAL, BRAIN, BREAST);
 
     @Test
     public void buildProfilesViewModel() {
         BaselineProfileRowViewModel[] genes = subject.buildGenes(baselineProfiles, orderedFactors, minExpressionLevel, maxExpressionLevel);
 
-        BaselineProfilesViewModel profiles = new BaselineProfilesViewModel<>(new NumberUtils(), 1.1, 2.2, 50, genes);
+        BaselineProfilesViewModel profiles = new BaselineProfilesViewModel<>(new BaselineExpressionLevelRounder(), 1.1, 2.2, 50, genes);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(profiles);

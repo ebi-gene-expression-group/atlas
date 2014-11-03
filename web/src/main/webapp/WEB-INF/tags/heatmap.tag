@@ -86,7 +86,7 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <%--@elvariable id="expression" type="uk.ac.ebi.atlas.model.DifferentialExpression"--%>
+                        <%--@elvariable id="expression" type="uk.ac.ebi.atlas.model.differential.DifferentialExpression"--%>
                         <c:set var="expression" value="${geneProfile.getExpression(queryFactor)}" />
 
                         <c:set var="hasExpression" value="${not empty expression}" />
@@ -140,21 +140,17 @@
                                 headerClass="rotated_cell vertical-header-cell ${!type.isBaseline() ? 'contrastNameCell' : 'factorNameCell'}"
                                 style="${style}">
                             <c:choose>
-                            <c:when test="${isKnownLevel}"><%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
+                            <c:when test="${isKnownLevel}">
                                 <c:choose>
                                     <c:when test="${type.isBaseline()}">
-                                        <fmt:formatNumber type="number"
-                                                          maxFractionDigits="${expressionLevel >= 1 ? 0 : 1}"
-                                                          value="${expressionLevel}" groupingUsed="false"
-                                                          var="roundedExpressionLevel"/>
+                                        <%--@elvariable id="baselineExpressionLevelRounder" type="uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder"--%>
+                                        <c:set var="roundedExpressionLevel" value="${baselineExpressionLevelRounder.format(expressionLevel)}"/>
                                     </c:when>
                                     <c:when test="${!type.isBaseline()}">
-                                        <c:set var="pValue" value="${numberUtils.htmlFormatDoubleEncoded(expression.getPValue())}"/>
-                                        <fmt:formatNumber type="number"
-                                                          maxFractionDigits="2"
-                                                          value="${expression.foldChange}"
-                                                          groupingUsed="false"
-                                                          var="foldChange"/>
+                                        <%--@elvariable id="pValueFormatter" type="uk.ac.ebi.atlas.profiles.differential.viewmodel.PValueFormatter"--%>
+                                        <%--@elvariable id="foldChangeRounder" type="uk.ac.ebi.atlas.profiles.differential.viewmodel.FoldChangeRounder"--%>
+                                        <c:set var="pValue" value="${pValueFormatter.formatPValueAsScientificNotationHtmlEscaped(expression.getPValue())}"/>
+                                        <c:set var="foldChange" value="${foldChangeRounder.format(expression.foldChange)}"/>
                                         <c:if test="${type.isMicroarray()}">
                                             <fmt:formatNumber type="number"
                                                               maxFractionDigits="2"

@@ -47,11 +47,16 @@ public class BioentitiesSearchControllerConditionAndOrganismSIT extends SinglePa
     public void checkBaselineExperimentCounts() {
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(1));
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-1733"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Twenty seven tissues"));
+        assertThat(baselineCounts, hasSize(2));
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-PROT-1"));
+        assertThat(baselineCounts.get(0).getExperimentName(), is("Human Proteome Map - adult"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=&exactMatch=true"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-PROT-1?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=B%20cell,CD4-positive%20T%20cell,CD8-positive%20T%20cell,adrenal%20gland,colon,esophagus,frontal%20cortex,gallbladder,kidney,liver,lung,monocyte,natural%20killer%20cell,ovary,pancreas,platelet,prostate,rectum,retina,spinal%20cord,testis,urinary%20bladder&geneQuery=&exactMatch=true&serializedFilterFactors=DEVELOPMENTAL_STAGE:adult"));
+
+        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-1733"));
+        assertThat(baselineCounts.get(1).getExperimentName(), is("Twenty seven tissues"));
+        assertThat(baselineCounts.get(1).getSpecies(), is("Homo sapiens"));
+        assertThat(baselineCounts.get(1).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=&exactMatch=true"));
     }
 
     @Test

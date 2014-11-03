@@ -80,7 +80,7 @@ public class ExperimentCRUDBaselineIT {
     }
 
     @Test(expected = ResourceNotFoundException.class)
-    public void deleteNonExistantExperimentThrowsResourceNotFoundException() throws Exception {
+    public void deleteNonExistentExperimentThrowsResourceNotFoundException() throws Exception {
         subject.deleteExperiment("FOOBAR");
     }
 

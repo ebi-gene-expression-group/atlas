@@ -172,7 +172,7 @@ public class HeatmapTablePage extends TablePage {
         return queryFactorLabel.getText();
     }
 
-    public List<String> getDiffGradientMinLabels() {
+    public List<String> getHeatmapLegendMinLevels() {
         List<String> result = new ArrayList<>();
         for (WebElement element : diffHeatmapTableLegend.findElements(By.className("gradient-level-min"))) {
             result.add(element.getText());
@@ -180,7 +180,7 @@ public class HeatmapTablePage extends TablePage {
         return result;
     }
 
-    public List<String> getDiffGradientMaxLabels() {
+    public List<String> getHeatmapLegendMaxLevels() {
         List<String> result = new ArrayList<>();
         for (WebElement element : diffHeatmapTableLegend.findElements(By.className("gradient-level-max"))) {
             result.add(element.getText());

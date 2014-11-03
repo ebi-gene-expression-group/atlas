@@ -30,7 +30,7 @@ import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignTablePage;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormAndBarChartPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
 import static com.jayway.restassured.RestAssured.expect;
 import static com.jayway.restassured.RestAssured.given;
@@ -42,7 +42,7 @@ public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-698";
 
-    private HeatmapTableWithSearchFormAndBarChartPage subject;
+    private HeatmapTablePage subject;
 
     private String accessKey;
 
@@ -61,7 +61,7 @@ public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
 
         accessKey = from(jsonResponse).get("accessKey[0]");
 
-        subject = new HeatmapTableWithSearchFormAndBarChartPage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
         subject.get();
     }
 
@@ -73,7 +73,7 @@ public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
 
     @Test(expected = NoSuchElementException.class)
     public void pageShouldNotBeAvailableWithoutAccessKey() {
-        HeatmapTableWithSearchFormAndBarChartPage page = new HeatmapTableWithSearchFormAndBarChartPage(driver, EXPERIMENT_ACCESSION);
+        HeatmapTablePage page = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION);
         page.get();
         page.getExperimentDescription();
     }

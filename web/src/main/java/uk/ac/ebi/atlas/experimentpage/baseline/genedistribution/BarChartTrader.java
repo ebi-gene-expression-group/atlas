@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline.barcharts;
+package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
@@ -59,6 +59,7 @@ public class BarChartTrader {
     protected int countGenesAboveCutoff(Map<FactorGroup, BitSet> geneBitSets, Set<Factor> filterFactors, Set<Factor> selectedFactors) {
         BitSet expressedGenesBitSet = new BitSet(AVERAGE_GENES_IN_EXPERIMENT);
 
+        // get the union of genes expressed for all FactorGroups that are in the slice and have been selected
         for (FactorGroup factorGroup : geneBitSets.keySet()) {
 
             boolean factorGroupContainsAllFilterFactors = CollectionUtils.isEmpty(filterFactors) || factorGroup.containsAll(filterFactors);

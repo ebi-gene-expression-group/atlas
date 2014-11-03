@@ -20,24 +20,29 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.model.baseline.barcharts;
+package uk.ac.ebi.atlas.acceptance.selenium.fixture;
 
-import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import org.junit.AfterClass;
+import org.openqa.selenium.WebDriver;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.internal.RemoteDriverFactory;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+//creates only a single driver for the whole test
+public abstract class SingleDriverSeleniumFixture {
 
-public class BaselineExpressions implements Iterable<BaselineExpression> {
+    static WebDriver driver;
 
-    private Set<BaselineExpression> expressions = new HashSet<>();
-
-    @Override
-    public Iterator<BaselineExpression> iterator() {
-        return expressions.iterator();
+    public static WebDriver create() {
+        // change the factory to FirefoxDriverFactory or PhantomJSDriverFactory
+        // if you want to use a local browser
+        //driver = new FirefoxDriverFactory().create();
+        //driver = new PhantomJSDriverFactory().create();
+        driver = new RemoteDriverFactory().create();
+        return driver;
     }
 
-    public void addExpression(BaselineExpression expression) {
-        expressions.add(expression);
+    @AfterClass
+    public static void quitDriver() {
+        driver.quit();
     }
+
 }

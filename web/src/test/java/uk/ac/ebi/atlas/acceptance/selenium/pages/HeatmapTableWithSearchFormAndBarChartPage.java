@@ -51,6 +51,9 @@ public class HeatmapTableWithSearchFormAndBarChartPage extends HeatmapTableWithS
     @FindBy(id = "display-chart")
     private WebElement displayChartButton;
 
+    @FindBy(className = "legendLabel")
+    private WebElement legendLabel;
+
     public HeatmapTableWithSearchFormAndBarChartPage(WebDriver driver, String experimentAccession){
         super(driver, experimentAccession);
     }
@@ -62,6 +65,10 @@ public class HeatmapTableWithSearchFormAndBarChartPage extends HeatmapTableWithS
     public void clickDisplayChartButton(){
         displayChartButton.click();
         waitForAjaxDataToLoad();
+    }
+
+    public String getLegendLabel() {
+        return legendLabel.getText();
     }
 
     private void waitForAjaxDataToLoad(){

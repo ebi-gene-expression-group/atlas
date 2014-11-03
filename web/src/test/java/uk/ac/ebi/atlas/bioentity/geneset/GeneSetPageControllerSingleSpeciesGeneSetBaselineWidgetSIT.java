@@ -63,12 +63,13 @@ public class GeneSetPageControllerSingleSpeciesGeneSetBaselineWidgetSIT extends 
     public void checkWidget() {
         // wait for ajax widget to load
         subject.waitForHeatmapToBeVisible();
-        assertThat(subject.getGeneCount(), is("Showing 2 of 2 experiments found:"));
+        assertThat(subject.getGeneCount(), is("Showing 3 of 3 experiments found:"));
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
-        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Vertebrate tissues"));
+        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Human Proteome Map - adult", "Vertebrate tissues"));
         assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=REACT_1619"));
-        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-GEOD-30352?geneQuery=REACT_1619&serializedFilterFactors=ORGANISM%3AHomo%20sapiens"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-PROT-1?geneQuery=REACT_1619&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Aadult"));
+        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-GEOD-30352?geneQuery=REACT_1619&serializedFilterFactors=ORGANISM%3AHomo%20sapiens"));
 
         //System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
         //assertThat(geneNames, contains("REACT_1698"));

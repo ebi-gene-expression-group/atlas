@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.web.controllers.rest;
+package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
@@ -28,12 +28,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTrader;
-import uk.ac.ebi.atlas.model.baseline.barcharts.BarChartTradersCache;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.NavigableMap;
@@ -56,7 +53,7 @@ public class BaselineBarChartController {
     @RequestMapping(value = "/json/barchart/{experimentAccession}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String getMap(HttpServletRequest request, @PathVariable String experimentAccession,
+    public String getMap(@PathVariable String experimentAccession,
                          @RequestParam(value = "queryFactorValues[]", required = false) Set<String> queryFactorValues,
                          @RequestParam String queryFactorType, @RequestParam(required = false) String serializedFilterFactors) {
 
@@ -73,11 +70,7 @@ public class BaselineBarChartController {
 
         NavigableMap<Double, Integer> chartData = barchartTrader.getChart(filterFactors, queryFactors);
 
-        Gson gson = new Gson();
-
-        // changed to more generic Map interface as per Sonar recommendation
-        return gson.toJson(chartData, Map.class);
-
+        return new Gson().toJson(chartData, Map.class);
     }
 
 }

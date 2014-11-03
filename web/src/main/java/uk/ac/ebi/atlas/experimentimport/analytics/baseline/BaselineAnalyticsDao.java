@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.AbstractInterruptibleBatchPreparedStatementSetter;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,11 +31,11 @@ public class BaselineAnalyticsDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void loadAnalytics(final String experimentAccession, BaselineAnalyticsInputStream analyticsInputStream)  {
+    public void loadAnalytics(final String experimentAccession, ObjectInputStream<BaselineAnalytics> analyticsInputStream)  {
         LOGGER.info(String.format("loadAnalytics for experiment %s begin", experimentAccession));
 
         // will autoclose if DataAccessException thrown by jdbcTemplate
-        try (BaselineAnalyticsInputStream source = analyticsInputStream) {
+        try (ObjectInputStream<BaselineAnalytics> source = analyticsInputStream) {
 
             jdbcTemplate.batchUpdate(ANALYTICS_INSERT, new AbstractInterruptibleBatchPreparedStatementSetter() {
 

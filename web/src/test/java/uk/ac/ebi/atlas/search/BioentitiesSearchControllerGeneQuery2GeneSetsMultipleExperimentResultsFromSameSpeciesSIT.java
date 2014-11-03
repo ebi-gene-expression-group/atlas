@@ -46,7 +46,7 @@ public class BioentitiesSearchControllerGeneQuery2GeneSetsMultipleExperimentResu
     public void baselineResults() {
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(12));
+        assertThat(baselineCounts, hasSize(14));
     }
 
 }

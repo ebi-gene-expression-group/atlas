@@ -22,7 +22,7 @@
 
 package uk.ac.ebi.atlas.web;
 
-import uk.ac.ebi.atlas.utils.NumberUtils;
+import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 
 
 public class BaselineRequestPreferences extends ExperimentPageRequestPreferences {
@@ -30,7 +30,7 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
     public static final double DEFAULT_CUTOFF = 0.5d;
     private static final String DEFAULT_GENE_QUERY = "protein_coding";
 
-    private NumberUtils numberUtils = new NumberUtils();
+    private BaselineExpressionLevelRounder baselineExpressionLevelRounder = new BaselineExpressionLevelRounder();
 
     @Override
     protected String getDefaultGeneQuery() {
@@ -45,7 +45,7 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
     @Override
     public void setCutoff(Double cutoff) {
         if (cutoff != null) {
-            super.setCutoff(numberUtils.round(cutoff));
+            super.setCutoff(baselineExpressionLevelRounder.round(cutoff));
         } else {
             super.setCutoff(cutoff);
         }

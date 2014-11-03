@@ -8,7 +8,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialProfilesList;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.utils.ColourGradient;
-import uk.ac.ebi.atlas.utils.NumberUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,20 +20,17 @@ import java.util.Set;
 public class DifferentialProfilesViewModelBuilder {
 
     private final ColourGradient colourGradient;
-    private final NumberUtils numberUtils;
+    private final PValueFormatter pValueFormatter;
     private final NumberFormat format2Dp = NumberFormat.getNumberInstance();
-    private final NumberFormat format1Dp = NumberFormat.getNumberInstance();
+    private final FoldChangeRounder foldChangeRounder = new FoldChangeRounder();
 
     @Inject
-    public DifferentialProfilesViewModelBuilder(ColourGradient colourGradient, NumberUtils numberUtils) {
+    public DifferentialProfilesViewModelBuilder(ColourGradient colourGradient, PValueFormatter pValueFormatter) {
         this.colourGradient = colourGradient;
-        this.numberUtils = numberUtils;
+        this.pValueFormatter = pValueFormatter;
 
         format2Dp.setGroupingUsed(false);
         format2Dp.setMaximumFractionDigits(2);
-
-        format1Dp.setGroupingUsed(false);
-        format1Dp.setMaximumFractionDigits(1);
     }
 
     public DifferentialProfilesViewModel build(DifferentialProfilesList<? extends DifferentialProfile<? extends DifferentialExpression>> diffProfiles, Set<Contrast> orderedContrasts) {
@@ -75,9 +71,9 @@ public class DifferentialProfilesViewModelBuilder {
             String contrastName = contrast.getDisplayName();
             DifferentialExpression expression = profile.getExpression(contrast);
 
-            String foldChange = (expression == null) ? null : format1Dp.format(expression.getFoldChange());
+            String foldChange = (expression == null) ? null : foldChangeRounder.format(expression.getFoldChange());
             String color = (expression == null) ? null : expression.isOverExpressed() ? colourGradient.getGradientColour(expression.getFoldChange(), minUpLevel, maxUpLevel, "pink", "red") : colourGradient.getGradientColour(expression.getFoldChange(), minDownLevel, maxDownLevel, "lightGray", "blue");
-            String pValue = (expression == null) ? null : numberUtils.formatDouble(expression.getPValue());
+            String pValue = (expression == null) ? null : pValueFormatter.formatPValueAsScientificNotation(expression.getPValue());
             String tStat = !(expression instanceof MicroarrayExpression) ? null : format2Dp.format(((MicroarrayExpression) expression).getTstatistic());
 
             DifferentialExpressionViewModel expressionViewModel = new DifferentialExpressionViewModel(contrastName, color, foldChange, pValue, tStat);

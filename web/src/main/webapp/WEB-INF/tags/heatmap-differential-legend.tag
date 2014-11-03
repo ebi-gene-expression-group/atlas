@@ -24,7 +24,7 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<%--@elvariable id="numberUtils" type="uk.ac.ebi.atlas.utils.NumberUtils"--%>
+<%--@elvariable id="foldChangeRounder" type="uk.ac.ebi.atlas.profiles.differential.viewmodel.FoldChangeRounder"--%>
 <%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
 
 <%@ attribute name="geneProfiles" required="true" type="uk.ac.ebi.atlas.model.differential.DifferentialExpressionLimits"%>
@@ -37,8 +37,8 @@
 
                 <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
                                       highValueColour="${colourGradient.getHexByColourName('blue')}"
-                                      highValueColorExpressionLevel="${numberUtils.round(geneProfiles.getMaxDownRegulatedExpressionLevel(), 1)}"
-                                      lowValueColorExpressionLevel="${numberUtils.round(geneProfiles.getMinDownRegulatedExpressionLevel(), 1)}"/>
+                                      highValueColorExpressionLevel="${foldChangeRounder.round(geneProfiles.getMaxDownRegulatedExpressionLevel())}"
+                                      lowValueColorExpressionLevel="${foldChangeRounder.round(geneProfiles.getMinDownRegulatedExpressionLevel())}"/>
 
             </c:if>
             <c:if test="${((preferences.regulation eq 'UP') or (preferences.regulation eq 'UP_DOWN'))
@@ -46,8 +46,8 @@
 
                 <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('pink')}"
                                       highValueColour="${colourGradient.getHexByColourName('red')}"
-                                      highValueColorExpressionLevel="${numberUtils.round(geneProfiles.getMaxUpRegulatedExpressionLevel(), 1)}"
-                                      lowValueColorExpressionLevel="${numberUtils.round(geneProfiles.getMinUpRegulatedExpressionLevel(), 1)}"/>
+                                      highValueColorExpressionLevel="${foldChangeRounder.round(geneProfiles.getMaxUpRegulatedExpressionLevel())}"
+                                      lowValueColorExpressionLevel="${foldChangeRounder.round(geneProfiles.getMinUpRegulatedExpressionLevel())}"/>
 
             </c:if>
         </table>
