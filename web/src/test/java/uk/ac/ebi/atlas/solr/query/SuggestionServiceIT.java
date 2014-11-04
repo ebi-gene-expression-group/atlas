@@ -10,16 +10,15 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import javax.inject.Inject;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class SuggestionServiceIT {
-
-    public static final String[] G_PROTEIN_SUGGESTIONS = new String[]{"bone Gla protein", "G protein-coupled receptor", "Gla-Rich Protein 1", "Gla-Rich Protein 2", "Ras GTPase-activating protein III", "lacrimal gland protein", "leptin receptor gene-related protein", "myeloid granule protein", "neuroendocrine-specific Golgi protein p55 isoform 1", "G-protein coupled receptor signaling pathway", "G-protein coupled receptor activity", "G protein-coupled receptor, rhodopsin-like", "G-protein beta WD-40 repeat", "G-protein beta/gamma-subunit complex binding", "G-protein gamma-like domain"};
 
     @Inject
     private SuggestionService suggestionService;
@@ -32,17 +31,25 @@ public class SuggestionServiceIT {
     }
 
     @Test
-    public void gSpaceProtein() {
+    public void multiTermAutoComplete_ReturnedPhrasesMustStartWithSearchTerm() {
         List<String> suggestions = suggestionService.fetchTopSuggestions("G protein", null);
         //System.out.println(Joiner.on("\", \"").join(suggestions));
-        assertThat(suggestions, contains(G_PROTEIN_SUGGESTIONS));
+        assertThat(suggestions, everyItem(anyOf(startsWith("G protein"), startsWith("G-protein"))));
+
+        suggestions = suggestionService.fetchTopSuggestions("G prot 1", null);
+        assertThat(suggestions, not(hasItem("Gla-Rich Protein 1")));
     }
 
     @Test
-    public void gHyphenProtein() {
-        List<String> suggestions = suggestionService.fetchTopSuggestions("G-protein", null);
-        //System.out.println(Joiner.on(",\n").join(suggestions));
-        assertThat(suggestions, hasItem("G-protein coupled receptor signaling pathway"));
+    public void multiTermAutoComplete_HyphenIsTreatedSameAsWhiteSpace() {
+        List<String> gSpaceProtein = suggestionService.fetchTopSuggestions("G protein", null);
+        System.out.println(Joiner.on(",\n").join(gSpaceProtein));
+
+        List<String> gHyphenProtein = suggestionService.fetchTopSuggestions("G-protein", null);
+        System.out.println(Joiner.on(",\n").join(gHyphenProtein));
+
+        assertThat(gHyphenProtein, contains(gSpaceProtein.toArray()));
     }
+
 
 }

@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.solr.query;
 
 
+import com.google.common.base.CharMatcher;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
@@ -59,16 +60,16 @@ public class SuggestionService {
 
         species = StringUtils.lowerCase(species);
 
-        if (!StringUtils.containsWhitespace(query)) {
+        if (!CharMatcher.WHITESPACE.or(CharMatcher.is('-')).matchesAnyOf(query)) {
             suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInName(query, species));
-        }
 
-        if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInSynonym(query, species));
-        }
+            if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
+                suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInSynonym(query, species));
+            }
 
-        if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInIdentifier(query, species));
+            if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
+                suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInIdentifier(query, species));
+            }
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
