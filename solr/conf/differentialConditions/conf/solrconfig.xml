@@ -106,9 +106,9 @@
     -->
     <!--
     you need to specify this as a JVM property: -Dsolr.data.dir=...
+    
+    <dataDir>${...}</dataDir>
     -->
-    <dataDir>${solr.data.dir}conditions/</dataDir>
-
 
     <!-- The DirectoryFactory to use for indexes.
        

@@ -148,8 +148,8 @@ http://wiki.apache.org/solr/SchemaXml
              ]]> -->
 
         <field name="experiment_accession" type="string" indexed="true" stored="true"/>
-
-        <field name="assay_group_id" type="string" stored="true"/>
+        
+        <field name="assay_group_id" type="string" indexed="true" stored="true"/>
 
         <field name="conditions" type="string" indexed="true" stored="true" multiValued="true"/>
 
