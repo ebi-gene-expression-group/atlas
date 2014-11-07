@@ -33,7 +33,6 @@ public class BioentitiesSearchControllerRedirectsSIT extends RestAssuredFixture 
         response.then().assertThat().header("Location", endsWith(to));
     }
 
-
     @Test
     public void proteinId() {
         assertRedirect("/query?geneQuery=ENSP00000355434", "proteins/ENSP00000355434");

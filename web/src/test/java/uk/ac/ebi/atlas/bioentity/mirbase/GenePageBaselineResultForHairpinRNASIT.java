@@ -20,20 +20,19 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity.mirna;
+package uk.ac.ebi.atlas.bioentity.mirbase;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
-import java.net.UnknownHostException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class GenePageDiffResultForHairpinRNASIT extends SinglePageSeleniumFixture {
+public class GenePageBaselineResultForHairpinRNASIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "hsa-miR-486-5p";
+    private static final String GENE_IDENTIFIER = "hsa-miR-636";
 
     private BioEntityPage subject;
 
@@ -48,25 +47,34 @@ public class GenePageDiffResultForHairpinRNASIT extends SinglePageSeleniumFixtur
         assertThat(subject.getSearchResultsHeader(), endsWith("results for " + GENE_IDENTIFIER));
     }
 
+    @Ignore // to be fixed by https://www.pivotaltracker.com/story/show/81361962
     @Test
     public void infoCard() {
         assertThat(subject.isInfoCardExpanded(), is(false));
         subject.clickInfoCard(true);
         assertThat(subject.isInfoCardExpanded(), is(true));
 
-        assertThat(subject.getBioEntityCardTitle(), is("MIMAT0002177 Homo sapiens"));
+        assertThat(subject.getBioEntityCardTitle(), is("MIMAT0003306 Homo sapiens"));
         assertThat(subject.getPropertiesTableSize(), is(4));
         assertThat(subject.getPropertiesTableRow(0), hasItems("Gene Biotype", "miRNA"));
-        assertThat(subject.getPropertiesTableRow(1), hasItems("miRBase", "MIMAT0002177"));
-        assertThat(subject.getPropertiesTableRow(2), hasItems("Sequence", "UCCUGUACUGAGCUGCCCCGAG"));
-        assertThat(subject.getPropertiesTableRow(3), hasItems("Design Element", "A_25_P00010644, A_25_P00010645"));
+        assertThat(subject.getPropertiesTableRow(1), hasItems("miRBase", "MIMAT0003306"));
+        assertThat(subject.getPropertiesTableRow(2), hasItems("Sequence", "UGUGCUUGCUCGUCCCGCCCGCA"));
+        assertThat(subject.getPropertiesTableRow(3), hasItems("Design Element", "A_25_P00010661, A_25_P00010662, A_25_P00010663, A_25_P00010664, A_25_P00012828, A_25_P00012829, A_25_P00012830, A_25_P00012831"));
     }
 
+    @Ignore // to be fixed by https://www.pivotaltracker.com/story/show/81361962
     @Test
-    public void checkSelectedProfiles() throws UnknownHostException {
-        subject.clickDiffResultsDisplayLevelsButton();
-        assertThat(subject.getContrastColumn(), contains("disease state: 'sepsis' vs 'control'"));
-    }
+    public void baselineProfilePaneIsOpenAndContainsGenes() {
+        subject.waitForHeatmapToBeVisible();
+        assertThat(subject.isBaselinePaneExpanded(), is(true));
+        assertThat(subject.isInfoCardExpanded(), is(false));
 
+        assertThat(subject.getGeneCount(), is("Showing 2 of 2 experiments found:"));
+        assertThat(subject.getGeneColumnHeader(), is("Experiment"));
+
+        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Illumina Body Map"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=hsa-miR-636%20ENSG00000161547%20ENSG00000207556%20ENSG00000092931"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-513?geneQuery=hsa-miR-636%20ENSG00000161547%20ENSG00000207556%20ENSG00000092931"));
+    }
 
 }

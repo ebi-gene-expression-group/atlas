@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity.mirna;
+package uk.ac.ebi.atlas.bioentity.mirbase;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
