@@ -49,7 +49,7 @@ public class LoadGeneIdsIntoRequestContextIT {
         subject.load(baselineRequestContext, "homo sapiens");
 
         //System.out.println("\"" + Joiner.on("\", \"").join(baselineRequestContext.getSelectedGeneIDs()) + "\"" );
-        assertThat(baselineRequestContext.getSelectedGeneIDs(), contains("hsa-miR-636", "hsa-mir-636", "ENSG00000161547", "ENSG00000207556", "ENSG00000092931"));
+        assertThat(baselineRequestContext.getSelectedGeneIDs(), contains("ENSG00000207556", "MIMAT0003306"));
     }
 
 

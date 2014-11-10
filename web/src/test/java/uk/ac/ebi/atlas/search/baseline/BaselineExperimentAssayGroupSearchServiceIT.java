@@ -66,7 +66,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-1733"));
+        assertThat(experimentAccessions, hasSize(0));
     }
 
     @Test
