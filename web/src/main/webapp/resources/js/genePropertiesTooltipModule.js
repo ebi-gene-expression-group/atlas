@@ -81,12 +81,8 @@ var genePropertiesTooltipModule = (function($) {
         });
     }
     return {
-        splitIntoWords: splitIntoWords,
         init:  function(contextRoot, highlightedWords, element) {
-            initTooltip(contextRoot, highlightedWords, element);
-        },
-        initUsingGeneQuery:  function(contextRoot, geneQuery) {
-            initTooltip(contextRoot, splitIntoWords(geneQuery), ".genename");
+            initTooltip(contextRoot, splitIntoWords(highlightedWords), element || ".genename");
         }
     };
 }(jQuery));

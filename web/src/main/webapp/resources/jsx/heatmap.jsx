@@ -787,7 +787,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     }
                 }
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.toolTipHighlightedWords, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
+        })(heatmapConfig.contextRoot, heatmapConfig.geneQuery, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
 
 
         // TODO: callers should use formatScientificNotation instead of formatScientificNotationAsHtmlString
