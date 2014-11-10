@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.bioentity;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSet;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -30,9 +29,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
-
-import java.util.Set;
 
 @Controller
 @Scope("request")
@@ -57,20 +55,12 @@ public class GenePageController extends BioEntityPageController {
             return "forward:/query?geneQuery=" + identifier;
         }
 
+        if (!isSingleGene(identifier)) {
+            throw new ResourceNotFoundException("No gene matching " + identifier);
+        }
+
         // throw ResourceNotFoundException, so we don't get a Solr SyntaxException later on
         checkIdentifierDoesNotContainColon(identifier);
-
-        Set<String> ensemblIDs = solrQueryService.fetchGeneIdentifiersFromSolr(identifier, "ensgene", true, "mirbase_id");
-        if (ensemblIDs.size() == 1) {
-            // if identifer is mirbase ID with one ensgene result, then use the ensgene identifier which has more info
-            model.addAttribute("originalSearchTerm", identifier);
-            identifier = ensemblIDs.iterator().next();
-        } else if (ensemblIDs.size() > 0) {
-            //TODO: remove this - if not required by new multi-experiment widget, or https://www.pivotaltracker.com/story/show/77866504 may also be able to remove from JSP
-            // if identifer is mirbase ID with more than one ensgene result,
-            // then add all the ensembl IDs for the widget to display all ensembl gene IDs in the baseline results heatmap
-            model.addAttribute("ensemblIdentifiersForMiRNA", "+" + Joiner.on("+").join(ensemblIDs));
-        }
 
         model.addAttribute("disableGeneLinks", true);
 
@@ -79,6 +69,12 @@ public class GenePageController extends BioEntityPageController {
         loadDifferentialResults(identifier, model);
 
         return showBioentityPage(identifier, model, true);
+    }
+
+    private boolean isSingleGene(String identifier) {
+        BioentityProperty bioentityProperty = solrQueryService.findBioentityIdentifierProperty(identifier);
+
+        return bioentityProperty != null;
     }
 
     private void checkIdentifierDoesNotContainColon(String identifier) {

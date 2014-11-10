@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
-import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -172,11 +171,7 @@ public abstract class BioEntityPageController {
         try {
             //to check if the widget contains the identifier or not and inform properly in the results gene pages
             if (referenceExperimentAccession != null) {
-
-                String ensemblIdentifiersForMiRNA = (String) model.asMap().get("ensemblIdentifiersForMiRNA");
-                ImmutableSet<String> identifiers = (ensemblIdentifiersForMiRNA == null) ? ImmutableSet.of(identifier) : ImmutableSet.<String>builder().add(identifier).addAll(Splitter.on("+").split(ensemblIdentifiersForMiRNA)).build();
-
-                model.addAttribute("widgetHasBaselineProfiles", widgetHasBaselineProfiles(referenceExperimentAccession, species, identifiers));
+                model.addAttribute("widgetHasBaselineProfiles", widgetHasBaselineProfiles(referenceExperimentAccession, species, ImmutableSet.of(identifier)));
             } else {
                 model.addAttribute("widgetHasBaselineProfiles", false);
             }

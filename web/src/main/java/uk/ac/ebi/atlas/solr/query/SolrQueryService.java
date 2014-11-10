@@ -86,6 +86,7 @@ public class SolrQueryService {
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
     }
 
+    //(property_name:"ensgene"OR property_name:"mirna" OR property_name:"ensprotein" OR property_name:"enstranscript") AND property_value_lower: "hsa-mir-6717"
     public BioentityProperty findBioentityIdentifierProperty(String bioentityId) {
         String query = MessageFormat.format(BIOENTITY_TYPE_QUERY, bioentityId);
         SolrQuery solrQuery = new SolrQuery(query);

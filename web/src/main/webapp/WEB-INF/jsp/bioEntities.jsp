@@ -286,7 +286,7 @@
         var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
 
         new Biojs.AtlasHeatmap({
-            featuresUrl: '/gxa/widgets/heatmap/bioentity?geneQuery=${entityIdentifier}${ensemblIdentifiersForMiRNA}' + widgetParameters,
+            featuresUrl: '/gxa/widgets/heatmap/bioentity?geneQuery=${entityIdentifier}' + widgetParameters,
             target: "widgetBody"
         });
 

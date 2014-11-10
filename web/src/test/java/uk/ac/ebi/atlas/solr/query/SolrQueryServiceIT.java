@@ -68,15 +68,6 @@ public class SolrQueryServiceIT {
     }
 
     @Test
-    public void shouldReturnTheRightBioentityType() throws SolrServerException {
-
-        assertThat(subject.findBioentityIdentifierProperty("ENSG00000179218").getBioentityType(), is("ensgene"));
-        assertThat(subject.findBioentityIdentifierProperty("ENSP00000355434").getBioentityType(), is("ensprotein"));
-        assertThat(subject.findBioentityIdentifierProperty("ENST00000559981").getBioentityType(), is("enstranscript"));
-
-    }
-
-    @Test
     public void shouldFindCaseInsentiveIdButReturnABioentityPropertyWithRightCase() throws SolrServerException {
 
         BioentityProperty bioentityProperty = subject.findBioentityIdentifierProperty("enSG00000179218");
@@ -91,6 +82,54 @@ public class SolrQueryServiceIT {
         assertThat(bioentityProperty.getBioentityType(), is("enstranscript"));
         assertThat(bioentityProperty.getBioentityIdentifier(), is("ENST00000559981"));
 
+    }
+
+
+    @Test
+    public void shouldReturnNullForNonExistingId() throws SolrServerException {
+
+        assertThat(subject.findBioentityIdentifierProperty("XYZEMC2"), is(nullValue()));
+        assertThat(subject.findBioentityIdentifierProperty("Map2k7"), is(nullValue()));
+
+    }
+
+
+    @Test
+    public void shouldReturnTheRightBioentityType() throws SolrServerException {
+
+        assertThat(subject.findBioentityIdentifierProperty("ENSG00000179218").getBioentityType(), is("ensgene"));
+        assertThat(subject.findBioentityIdentifierProperty("ENSP00000355434").getBioentityType(), is("ensprotein"));
+        assertThat(subject.findBioentityIdentifierProperty("ENST00000559981").getBioentityType(), is("enstranscript"));
+
+    }
+
+    @Test
+    public void mirbaseHairpinIdForSingleGene() {
+        assertThat(subject.findBioentityIdentifierProperty("hsa-mir-15a"), is(nullValue()));
+        assertThat(subject.findBioentityIdentifierProperty("hsa-mir-767"), is(nullValue()));
+        assertThat(subject.findBioentityIdentifierProperty("hsa-mir-98"), is(nullValue()));
+    }
+
+    @Test
+    public void mirbaseHairpinIdForSingleGene_ThatAlsoHasMature() {
+        assertThat(subject.findBioentityIdentifierProperty("hsa-mir-636"), is(nullValue()));
+    }
+
+    @Test
+    public void mirbaseHairpinIdForMultipleGenes() {
+        assertThat(subject.findBioentityIdentifierProperty("hsa-mir-8072"), is(nullValue()));
+        assertThat(subject.findBioentityIdentifierProperty("hsa-mir-1302-10"), is(nullValue()));
+        assertThat(subject.findBioentityIdentifierProperty("hsa-mir-4646"), is(nullValue()));
+    }
+
+    @Test
+    public void mirbaseMatureIdForSingleGene() {
+        assertThat(subject.findBioentityIdentifierProperty("hsa-miR-486-5p"), is(nullValue()));
+    }
+
+    @Test
+    public void mirbaseMatureIdForSingleGene_ThatAlsoHasHairpain() {
+        assertThat(subject.findBioentityIdentifierProperty("hsa-miR-636"), is(nullValue()));
     }
 
     @Test
@@ -116,13 +155,6 @@ public class SolrQueryServiceIT {
 
     }
 
-    @Test
-    public void shouldReturnNullForNonExistingId() throws SolrServerException {
-
-        assertThat(subject.findBioentityIdentifierProperty("XYZEMC2"), is(nullValue()));
-        assertThat(subject.findBioentityIdentifierProperty("Map2k7"), is(nullValue()));
-
-    }
 
     @Test
     public void findGenesFromMirBaseIDs()  {
@@ -131,8 +163,7 @@ public class SolrQueryServiceIT {
 
         Set<String> ensemblIDs = subject.findGenesFromMirBaseIDs(identifiers);
 
-        assertThat(ensemblIDs.size(), is(3));
-        assertThat(ensemblIDs, hasItems("ENSG00000207556", "ENSG00000161547", "ENSG00000092931"));
+        assertThat(ensemblIDs, contains("ENSG00000207556"));
     }
 
     @Test
