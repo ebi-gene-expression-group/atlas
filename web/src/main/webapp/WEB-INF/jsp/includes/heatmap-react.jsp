@@ -1,6 +1,3 @@
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-
 <c:choose>
     <c:when test="${empty jsonProfiles}">
         <c:if test="${not isPreferenceError}">
