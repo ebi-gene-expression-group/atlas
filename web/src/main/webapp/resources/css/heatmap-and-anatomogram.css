@@ -27,7 +27,7 @@
 }
 
 .heatmap-position-widget {
-    position: fixed;
+    position: absolute;
     margin-left: 270px;
 }
 
