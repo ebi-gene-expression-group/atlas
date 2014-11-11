@@ -115,6 +115,9 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "anatomogram-ensembl-launcher")
     private WebElement anatomogramEnsemblLauncher;
 
+    @FindBy(id = "ensembl-launcher-box-gramene")
+    private WebElement grameneLauncher;
+
     @FindBy(id = "heatmap-message")
     private WebElement heatmapMessage;
 
@@ -499,4 +502,9 @@ public class HeatmapTablePage extends TablePage {
     public boolean hasEnsemblLauncher() {
         return (hasAnatomogram() && SeleniumUtil.findChildElements(anatomogramEnsemblLauncher).size() > 0) || SeleniumUtil.findChildElements(ensemblLauncher).size() > 0;
     }
+
+    public boolean hasGrameneLauncher() {
+        return hasEnsemblLauncher() && SeleniumUtil.findChildElements(grameneLauncher).size() > 0;
+    }
+
 }

@@ -32,6 +32,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
         })(heatmapConfig.species);
 
         var ensemblHost = "http://" + ((heatmapConfig.ensemblDB == "ensembl") ? "www" : heatmapConfig.ensemblDB) + ".ensembl.org/";
+        var grameneHost = "http://ensembl.gramene.org/";
 
         var Heatmap = React.createClass({
 
@@ -534,7 +535,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 },
 
                 componentDidMount: function () {
-                    $(this.refs.button.getDOMNode()).button({icons: {primary: "ui-icon-newwin"}});
+                    $(this.refs.ensemblButton.getDOMNode()).button({icons: {primary: "ui-icon-newwin"}});
+                    if (heatmapConfig.ensemblDB == "plants") {
+                        $(this.refs.grameneButton.getDOMNode()).button({icons: {primary: "ui-icon-newwin"}});
+                    }
                     this.updateButton();
                     eventEmitter.addListener('onColumnSelectionChange', this.onColumnSelectionChange);
                     eventEmitter.addListener('onGeneSelectionChange', this.onGeneSelectionChange);
@@ -555,7 +559,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                 updateButton: function() {
                     var buttonEnabled = this.state.selectedColumnId && this.state.selectedGeneId ? true : false;
-                    $(this.refs.button.getDOMNode()).button("option", "disabled", !buttonEnabled);
+                    $(this.refs.ensemblButton.getDOMNode()).button("option", "disabled", !buttonEnabled);
+                    if (heatmapConfig.ensemblDB == "plants") {
+                        $(this.refs.grameneButton.getDOMNode()).button("option", "disabled", !buttonEnabled);
+                    }
                 },
 
                 helpMessage: function (selectedColumnId, selectedGeneId) {
@@ -590,14 +597,41 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     );
                 },
 
+                openGrameneWindow: function () {
+                    if (!this.state.selectedColumnId || !this.state.selectedGeneId) {
+                        return;
+                    }
+
+                    var trackFileHeader = experimentAccession + "." + this.state.selectedColumnId;
+                    var atlasTrackBaseUrl = "http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession + "/tracks/";
+                    var contigviewbottom = "contigviewbottom=url:" + atlasTrackBaseUrl + trackFileHeader + (type.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
+                    var tiling = (type.isBaseline || ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseUrl + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
+                    var url =  grameneHost + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigviewbottom + tiling + ";format=BEDGRAPH";
+
+                    window.open(
+                        url,
+                        '_blank'
+                    );
+                },
+
                 render: function () {
                     //console.log("selected gene id " + this.state.selectedGeneId + " selected column: " + this.state.selectedColumnId);
                     return (
                         <div id="ensembl-launcher-box" style={{width: "245px"}}>
-                            <label>Ensembl Genome Browser</label>
-                            <img src="/gxa/resources/images/ensembl.gif" style={{padding: "0px 5px"}}></img>
-                            <div style={{"font-size": "x-small", height: "30px"}}>{this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)}</div>
-                            <button ref="button" onClick={this.openEnsemblWindow}>Open</button>
+                            <div id="ensembl-launcher-box-ensembl">
+                                <label>Ensembl Genome Browser</label>
+                                <img src="/gxa/resources/images/ensembl.gif" style={{padding: "0px 5px"}}></img>
+                                <button ref="ensemblButton" onClick={this.openEnsemblWindow}>Open</button>
+                            </div>
+                            { heatmapConfig.ensemblDB == "plants" ?
+                                <div id="ensembl-launcher-box-gramene" >
+                                    <label>Gramene Genome Browser</label>
+                                    <img src="/gxa/resources/images/gramene.png" style={{padding: "0px 5px"}}></img>
+                                    <button ref="grameneButton" onClick={this.openGrameneWindow}>Open</button>
+                                </div>
+                                : null
+                            }
+                            <div style={{"font-size": "x-small", height: "30px", padding: "9px 9px"}}>{this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)}</div>
                         </div>
                         );
 

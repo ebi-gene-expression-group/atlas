@@ -87,17 +87,18 @@
 
 #ensembl-launcher-box {
     border: 1px solid #cdcdcd;
-    padding: 9px 9px;
 }
 
-#ensembl-launcher-box label {
+#ensembl-launcher-box-ensembl, #ensembl-launcher-box-gramene {
+    padding: 4px 9px;
+}
+
+#ensembl-launcher-box-ensembl label, #ensembl-launcher-box-gramene label {
     font-weight: bold;
     font-family: Helvetica, sans-serif;
 }
 
-#ensembl-launcher-box button {
+#ensembl-launcher-box-ensembl button, #ensembl-launcher-box-gramene button {
     display: table;
     margin: 0 auto;
 }
-
-
