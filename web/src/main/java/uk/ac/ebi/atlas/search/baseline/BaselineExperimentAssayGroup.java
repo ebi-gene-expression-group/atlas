@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import java.util.HashSet;
@@ -27,11 +26,18 @@ public class BaselineExperimentAssayGroup implements Comparable<BaselineExperime
 
     private FilterFactorsConverter filterFactorsConverter = new FilterFactorsConverter();
 
-    public BaselineExperimentAssayGroup(String experimentAccession, String experimentName, String species, String defaultQueryFactorType) {
+    private boolean tissueExperiment;
+
+    public BaselineExperimentAssayGroup(String experimentAccession, String experimentName, String species, String defaultQueryFactorType, boolean tissueExperiment) {
         this.experimentAccession = experimentAccession;
         this.experimentName = experimentName;
         this.species = species;
         this.defaultQueryFactorType = defaultQueryFactorType;
+        this.tissueExperiment = tissueExperiment;
+    }
+
+    public boolean isTissueExperiment() {
+        return tissueExperiment;
     }
 
     public String getExperimentAccession() {

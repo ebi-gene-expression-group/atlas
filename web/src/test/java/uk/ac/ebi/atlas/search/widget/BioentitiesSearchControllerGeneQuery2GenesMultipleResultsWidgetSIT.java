@@ -20,33 +20,35 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.search;
+package uk.ac.ebi.atlas.search.widget;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 
-public class BioentitiesSearchControllerGeneQuery2GeneSetsMultipleExperimentResultsFromSameSpeciesSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerGeneQuery2GenesMultipleResultsWidgetSIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "geneQuery=REACT_152+REACT_111102");
+        subject = BioEntitiesPage.search(driver, "geneQuery=ENSG00000161547%20ENSG00000211855");
         subject.get();
     }
 
     @Test
-    public void baselineResults() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+    public void displaysWidget() {
+        assertThat(subject.isBaselinePaneExpanded(), is(true));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
 
-        assertThat(baselineCounts, hasSize(14));
+        // wait for ajax widget to load
+        subject.waitForHeatmapToBeVisible();
+        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Illumina Body Map"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=ENSG00000161547%20ENSG00000211855"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-513?geneQuery=ENSG00000161547%20ENSG00000211855"));
     }
 
 }

@@ -55,6 +55,8 @@ import java.util.Set;
 import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroups.hasAllSameSpecies;
+import static uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroups.hasAnyTissueExperiment;
 
 @Controller
 @Scope("prototype")
@@ -117,7 +119,7 @@ public class BioentitiesSearchController {
         SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQuery, condition, selectedSpecie.toLowerCase(), requestParameters.isExactMatch());
 
         model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
-        if (baselineExperimentAssayGroups.size() == 1 & !requestParameters.hasCondition()) {
+        if (hasAllSameSpecies(baselineExperimentAssayGroups) && hasAnyTissueExperiment(baselineExperimentAssayGroups) & !requestParameters.hasCondition()) {
             model.addAttribute("widgetHasBaselineProfiles", true);
             model.addAttribute("species", baselineExperimentAssayGroups.iterator().next().getSpecies());
         }

@@ -48,7 +48,7 @@ import java.util.SortedSet;
 
 @Named
 @Scope("request")
-//TODO: merge this class with BaselineExperimentProfileSearchService
+//TODO: merge this class with BaselineExperimentProfileSearchService, by adding the ability to search conditions to BaselineExperimentProfileSearchService
 public class BaselineExperimentAssayGroupSearchService {
 
     private static final Logger LOGGER = Logger.getLogger(BaselineExperimentAssayGroupSearchService.class);
@@ -157,7 +157,7 @@ public class BaselineExperimentAssayGroupSearchService {
                 //filter by searchSpecies
                 if (StringUtils.isBlank(searchSpecies) || experimentSpecies.equalsIgnoreCase(searchSpecies)) {
                     BaselineExperimentAssayGroup result = new BaselineExperimentAssayGroup(experiment.getAccession(), experiment.getDisplayName(),
-                            experimentSpecies, experiment.getExperimentalFactors().getDefaultQueryFactorType());
+                            experimentSpecies, experiment.getExperimentalFactors().getDefaultQueryFactorType(), experiment.isTissueExperiment());
                     result.setFilterFactors(filterFactor);
                     if (conditionSearch) {
                         result.setAssayGroupsWithCondition(ImmutableSet.copyOf(assayGroupIdsForFilterFactor), experiment);
