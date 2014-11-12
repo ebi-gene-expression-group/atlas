@@ -210,8 +210,10 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         String jsonProfiles = gson.toJson(profilesViewModel);
         model.addAttribute("jsonProfiles", jsonProfiles);
 
-        String jsonGeneSetProfiles = (geneSetProfiles != null) ? gson.toJson(baselineProfilesViewModelBuilder.build(geneSetProfiles, orderedFactors)) : "undefined";
-        model.addAttribute("jsonGeneSetProfiles", jsonGeneSetProfiles);
+        if (geneSetProfiles != null) {
+            String jsonGeneSetProfiles = gson.toJson(baselineProfilesViewModelBuilder.build(geneSetProfiles, orderedFactors));
+            model.addAttribute("jsonGeneSetProfiles", jsonGeneSetProfiles);
+        }
     }
 
     private void initializeContext(BaselineRequestPreferences preferences, HttpServletRequest request) {

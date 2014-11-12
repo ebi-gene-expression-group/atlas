@@ -48,20 +48,6 @@
         <script type="text/javascript">
             var heatmapData = <%@ include file="heatmap-data.jsp" %>;
 
-            <c:choose>
-                <c:when test="${hasAnatomogram}">
-                    var anatomogramData = {
-                        maleAnatomogramFile: '${maleAnatomogramFile}',
-                        femaleAnatomogramFile:  '${femaleAnatomogramFile}',
-                        allSvgPathIds: ${empty allSvgPathIds ? 'undefined' : allSvgPathIds},
-                        contextRoot: '${pageContext.request.contextPath}'
-                    };
-                </c:when>
-            <c:otherwise>
-                var anatomogramData = undefined;
-            </c:otherwise>
-            </c:choose>
-
             var heatmapModuleBuild = ${isMultiExperiment ? 'heatmapModule.buildMultiExperiment': (type.differential ? 'heatmapModule.buildDifferential' : (type.proteomicsBaseline ? 'heatmapModule.buildProteomicsBaseline' : 'heatmapModule.buildBaseline'))};
 
             (function ($, React, build, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData) {
@@ -88,7 +74,7 @@
                 });
 
             })(jQuery, React, heatmapModuleBuild, heatmapData.config,
-                    heatmapData.columnHeaders, heatmapData.profiles, heatmapData.geneSetProfiles, anatomogramData);
+                    heatmapData.columnHeaders, heatmapData.profiles, heatmapData.geneSetProfiles, heatmapData.anatomogram);
         </script>
     </c:otherwise>
 </c:choose>

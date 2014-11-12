@@ -1,4 +1,3 @@
-<%@ page contentType="application/json" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -32,5 +31,20 @@
     },
     "columnHeaders": ${jsonColumnHeaders},
     "profiles": ${jsonProfiles},
-    "geneSetProfiles": ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : "null"}
+    "geneSetProfiles": ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : "null"},
+    "anatomogram" :
+<c:choose>
+    <c:when test="${hasAnatomogram}">
+        {
+            "maleAnatomogramFile": "${maleAnatomogramFile}",
+            "femaleAnatomogramFile":  "${femaleAnatomogramFile}",
+            "allSvgPathIds": ${empty allSvgPathIds ? "null" : allSvgPathIds},
+            "contextRoot": "${pageContext.request.contextPath}"
+        }
+    </c:when>
+    <c:otherwise>
+        null
+    </c:otherwise>
+</c:choose>
+
 }
