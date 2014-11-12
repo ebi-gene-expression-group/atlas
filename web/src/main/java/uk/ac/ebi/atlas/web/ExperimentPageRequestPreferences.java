@@ -26,6 +26,7 @@ import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.Set;
 
 
@@ -43,7 +44,7 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
 
     private String queryFactorType;
 
-    private Set<String> queryFactorValues;
+    private Set<String> queryFactorValues = Collections.emptySet();
 
     @NotNull
     @Range(min = HEATMAP_SIZE_MIN, max = HEATMAP_SIZE_MAX)
@@ -66,7 +67,7 @@ public abstract class ExperimentPageRequestPreferences extends SearchRequest {
     }
 
     public void setQueryFactorValues(Set<String> queryFactorValues) {
-        this.queryFactorValues = queryFactorValues;
+        this.queryFactorValues = (queryFactorValues == null) ? Collections.<String>emptySet() : queryFactorValues;
     }
 
     public String getQueryFactorType() {

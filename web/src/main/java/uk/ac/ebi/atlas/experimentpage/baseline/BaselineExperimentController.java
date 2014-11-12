@@ -22,13 +22,16 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
+
+import java.util.Set;
+import java.util.SortedSet;
 
 public abstract class BaselineExperimentController {
 
@@ -46,15 +49,23 @@ public abstract class BaselineExperimentController {
         if (StringUtils.isBlank(preferences.getQueryFactorType())) {
             preferences.setQueryFactorType(baselineExperiment.getExperimentalFactors().getDefaultQueryFactorType());
         }
+
         if (StringUtils.isBlank(preferences.getSerializedFilterFactors())) {
             preferences.setSerializedFilterFactors(filterFactorsConverter.serialize(baselineExperiment.getExperimentalFactors().getDefaultFilterFactors()));
         }
 
-        if(CollectionUtils.isNotEmpty(preferences.getQueryFactorValues()) && CollectionUtils.isNotEmpty(baselineExperiment.getAssayGroups().getAssayGroupIds())) {
-            if (preferences.getQueryFactorValues().size() == baselineExperiment.getAssayGroups().getAssayGroupIds().size()) {
-                preferences.setSpecific(false);
-            }
+        if (allFactorsInSliceSelected(preferences, baselineExperiment)) {
+            preferences.setSpecific(false);
         }
+
+    }
+
+    private boolean allFactorsInSliceSelected(BaselineRequestPreferences preferences, BaselineExperiment experiment) {
+
+        Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
+        SortedSet<Factor> allFactorsInSlice = experiment.getExperimentalFactors().getFilteredFactors(selectedFilterFactors);
+
+        return (preferences.getQueryFactorValues().size() == allFactorsInSlice.size());
     }
 
     protected BaselineRequestContext buildRequestContext(BaselineExperiment experiment, BaselineRequestPreferences preferences) {

@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.experimentpage.context;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -31,7 +30,10 @@ import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -68,10 +70,7 @@ public class BaselineRequestContextBuilder {
     }
 
     Set<String> getQueryFactorValues() {
-        if (CollectionUtils.isNotEmpty(preferences.getQueryFactorValues())) {
-            return preferences.getQueryFactorValues();
-        }
-        return Collections.EMPTY_SET;
+        return preferences.getQueryFactorValues();
     }
 
     public BaselineRequestContext build() {
