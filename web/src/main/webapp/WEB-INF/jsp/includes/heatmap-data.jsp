@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<c:set var="geneQuery" value="${empty preferences ? geneQuery : preferences.geneQuery}" />
 {
     <%--
     //TODO: extract ensemlb genome launcher config parameters (ensemblDB, columnType etc.) out into separate object
@@ -11,7 +12,7 @@
         "atlasHost": "${atlasHost}",
         "contextRoot": "${pageContext.request.contextPath}",
         "experimentAccession": "${experimentAccession}",
-        "geneQuery": "${empty preferences ? geneQuery : preferences.geneQuery}",
+        "geneQuery": "${fn:replace(geneQuery, '\"', '\\\"')}",
         "accessKey": "${param.accessKey}",
         "species": "${species}",
         "ensemblDB": "${ensemblDB}",
