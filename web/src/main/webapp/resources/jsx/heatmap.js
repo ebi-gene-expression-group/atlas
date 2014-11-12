@@ -580,33 +580,15 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     this.updateButton();
                 },
 
-                openEnsemblWindow: function () {
+                openEnsemblWindow: function (baseURL) {
                     if (!this.state.selectedColumnId || !this.state.selectedGeneId) {
                         return;
                     }
-
                     var trackFileHeader = experimentAccession + "." + this.state.selectedColumnId;
                     var atlasTrackBaseUrl = "http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession + "/tracks/";
                     var contigviewbottom = "contigviewbottom=url:" + atlasTrackBaseUrl + trackFileHeader + (type.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
                     var tiling = (type.isBaseline || ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseUrl + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
-                    var url =  ensemblHost + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigviewbottom + tiling + ";format=BEDGRAPH";
-
-                    window.open(
-                        url,
-                        '_blank'
-                    );
-                },
-
-                openGrameneWindow: function () {
-                    if (!this.state.selectedColumnId || !this.state.selectedGeneId) {
-                        return;
-                    }
-
-                    var trackFileHeader = experimentAccession + "." + this.state.selectedColumnId;
-                    var atlasTrackBaseUrl = "http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession + "/tracks/";
-                    var contigviewbottom = "contigviewbottom=url:" + atlasTrackBaseUrl + trackFileHeader + (type.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
-                    var tiling = (type.isBaseline || ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseUrl + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
-                    var url =  grameneHost + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigviewbottom + tiling + ";format=BEDGRAPH";
+                    var url =  baseURL + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigviewbottom + tiling + ";format=BEDGRAPH";
 
                     window.open(
                         url,
@@ -615,26 +597,24 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 },
 
                 render: function () {
-                    //console.log("selected gene id " + this.state.selectedGeneId + " selected column: " + this.state.selectedColumnId);
                     return (
                         React.DOM.div({id: "ensembl-launcher-box", style: {width: "245px"}}, 
                             React.DOM.div({id: "ensembl-launcher-box-ensembl"}, 
                                 React.DOM.label(null, "Ensembl Genome Browser"), 
                                 React.DOM.img({src: "/gxa/resources/images/ensembl.gif", style: {padding: "0px 5px"}}), 
-                                React.DOM.button({ref: "ensemblButton", onClick: this.openEnsemblWindow}, "Open")
+                                React.DOM.button({ref: "ensemblButton", onClick: this.openEnsemblWindow.bind(this, ensemblHost)}, "Open")
                             ), 
                              heatmapConfig.ensemblDB == "plants" ?
                                 React.DOM.div({id: "ensembl-launcher-box-gramene"}, 
                                     React.DOM.label(null, "Gramene Genome Browser"), 
                                     React.DOM.img({src: "/gxa/resources/images/gramene.png", style: {padding: "0px 5px"}}), 
-                                    React.DOM.button({ref: "grameneButton", onClick: this.openGrameneWindow}, "Open")
+                                    React.DOM.button({ref: "grameneButton", onClick: this.openEnsemblWindow.bind(this, grameneHost)}, "Open")
                                 )
                                 : null, 
                             
                             React.DOM.div({style: {"font-size": "x-small", height: "30px", padding: "9px 9px"}}, this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId))
                         )
                         );
-
                 }
             });
         })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, ensemblHost, ensemblSpecies, heatmapConfig.ensemblDB, heatmapConfig.columnType);

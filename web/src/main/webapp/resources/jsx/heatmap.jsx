@@ -580,33 +580,15 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     this.updateButton();
                 },
 
-                openEnsemblWindow: function () {
+                openEnsemblWindow: function (baseURL) {
                     if (!this.state.selectedColumnId || !this.state.selectedGeneId) {
                         return;
                     }
-
                     var trackFileHeader = experimentAccession + "." + this.state.selectedColumnId;
                     var atlasTrackBaseUrl = "http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession + "/tracks/";
                     var contigviewbottom = "contigviewbottom=url:" + atlasTrackBaseUrl + trackFileHeader + (type.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
                     var tiling = (type.isBaseline || ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseUrl + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
-                    var url =  ensemblHost + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigviewbottom + tiling + ";format=BEDGRAPH";
-
-                    window.open(
-                        url,
-                        '_blank'
-                    );
-                },
-
-                openGrameneWindow: function () {
-                    if (!this.state.selectedColumnId || !this.state.selectedGeneId) {
-                        return;
-                    }
-
-                    var trackFileHeader = experimentAccession + "." + this.state.selectedColumnId;
-                    var atlasTrackBaseUrl = "http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession + "/tracks/";
-                    var contigviewbottom = "contigviewbottom=url:" + atlasTrackBaseUrl + trackFileHeader + (type.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
-                    var tiling = (type.isBaseline || ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseUrl + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
-                    var url =  grameneHost + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigviewbottom + tiling + ";format=BEDGRAPH";
+                    var url =  baseURL + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigviewbottom + tiling + ";format=BEDGRAPH";
 
                     window.open(
                         url,
@@ -615,26 +597,24 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 },
 
                 render: function () {
-                    //console.log("selected gene id " + this.state.selectedGeneId + " selected column: " + this.state.selectedColumnId);
                     return (
                         <div id="ensembl-launcher-box" style={{width: "245px"}}>
                             <div id="ensembl-launcher-box-ensembl">
                                 <label>Ensembl Genome Browser</label>
                                 <img src="/gxa/resources/images/ensembl.gif" style={{padding: "0px 5px"}}></img>
-                                <button ref="ensemblButton" onClick={this.openEnsemblWindow}>Open</button>
+                                <button ref="ensemblButton" onClick={this.openEnsemblWindow.bind(this, ensemblHost)}>Open</button>
                             </div>
                             { heatmapConfig.ensemblDB == "plants" ?
                                 <div id="ensembl-launcher-box-gramene" >
                                     <label>Gramene Genome Browser</label>
                                     <img src="/gxa/resources/images/gramene.png" style={{padding: "0px 5px"}}></img>
-                                    <button ref="grameneButton" onClick={this.openGrameneWindow}>Open</button>
+                                    <button ref="grameneButton" onClick={this.openEnsemblWindow.bind(this, grameneHost)}>Open</button>
                                 </div>
                                 : null
                             }
                             <div style={{"font-size": "x-small", height: "30px", padding: "9px 9px"}}>{this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)}</div>
                         </div>
                         );
-
                 }
             });
         })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, ensemblHost, ensemblSpecies, heatmapConfig.ensemblDB, heatmapConfig.columnType);
