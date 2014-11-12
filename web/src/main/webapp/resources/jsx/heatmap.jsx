@@ -37,7 +37,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
         var Heatmap = React.createClass({
 
             getInitialState: function () {
-                var displayLevels = ($prefFormDisplayLevelsInputElement.val() === "true");
+                var displayLevels = $prefFormDisplayLevelsInputElement ? ($prefFormDisplayLevelsInputElement.val() === "true") : false;
                 return {
                     showGeneSetProfiles: false,
                     displayLevels: displayLevels,
@@ -54,7 +54,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             toggleDisplayLevels: function () {
                 var newDisplayLevels = !this.state.displayLevels;
                 this.setState({displayLevels: newDisplayLevels});
-                $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
+                if ($prefFormDisplayLevelsInputElement) {
+                    $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
+                }
             },
 
             isMicroarray: function () {
