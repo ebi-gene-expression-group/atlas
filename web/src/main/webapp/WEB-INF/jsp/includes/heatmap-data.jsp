@@ -27,7 +27,7 @@
                 "queryFactorType": "${isMultiExperiment ? "ORGANISM_PART" : preferences.queryFactorType}"
             },
         </c:if>
-        "downloadProfilesURL": "${applicationProperties.buildDownloadURL(pageContext.request)}"
+        "downloadProfilesURL": "${not empty downloadURL ? downloadURL : applicationProperties.buildDownloadURL(pageContext.request)}"
     },
     "columnHeaders": ${jsonColumnHeaders},
     "profiles": ${jsonProfiles},

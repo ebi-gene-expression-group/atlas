@@ -99,7 +99,7 @@ public final class HeatmapWidgetController {
 
     // similar to ExperimentDispatcher but for the widget, ie: loads baseline experiment into model and request
     //ToDo: (OMannion) deprecate protein in favour of bioentity
-    @RequestMapping(value = "/widgets/heatmap/protein")
+    @RequestMapping(value = {"/widgets/heatmap/protein", "/widgets/heatmap/referenceExperiment"})
     public String dispatchWidget(HttpServletRequest request,
                                  @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
                                  @RequestParam(value = "propertyType", required = false) String propertyType,

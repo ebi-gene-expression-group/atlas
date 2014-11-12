@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentpage.baseline;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
@@ -37,14 +39,18 @@ import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
+import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
 @Scope("request")
 public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPageController {
+
+    private final ApplicationProperties applicationProperties;
 
     @Inject
     public RnaSeqBaselineExperimentPageController(BaselineProfilesHeatMap baselineProfilesHeatMap,
@@ -56,9 +62,9 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
                                                   AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
                                                   SpeciesEnsemblTrader speciesEnsemblTrader,
                                                   TracksUtil tracksUtil) {
-
         super(baselineProfilesHeatMap, applicationProperties, requestContextBuilder, filterFactorsConverter, filterFactorMenuBuilder,
                 baselineProfilesViewModelBuilder, assayGroupFactorViewModelBuilder, speciesEnsemblTrader, tracksUtil);
+        this.applicationProperties = applicationProperties;
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=RNASEQ_MRNA_BASELINE")
@@ -83,6 +89,24 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
         model.addAttribute("isWidget", true);
         model.addAttribute("disableGeneLinks", disableGeneLinks);
         return "heatmap-widget";
+    }
+
+    @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE")
+    public String fetchReferenceExperimentProfilesJson(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
+            , @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request,
+                                                       HttpServletResponse response) {
+
+        prepareModel(preferences, result, model, request);
+
+        BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
+
+        model.addAttribute("isWidget", true);
+        model.addAttribute("disableGeneLinks", disableGeneLinks);
+        model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
+
+        // set here instead of in JSP, because the JSP may be included elsewhere
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        return "heatmap-data";
     }
 
 }

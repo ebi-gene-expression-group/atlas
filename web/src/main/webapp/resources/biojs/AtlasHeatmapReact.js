@@ -65,28 +65,49 @@ Biojs.AtlasHeatmap = Biojs.extend({
         var containerDiv = jQuery("#" + self.opt.target);
         containerDiv.empty();
 
-        var options = self.opt;
+        var opt = self.opt;
         var httpRequest = {
-            url:options.featuresUrl,
-            data:{rootContext:options.rootContext},
+            url: opt.sourceUrl,
+            dataType: "json",
             method:"GET",
             beforeSend:function () {
                 // TODO: nasty workaround for http://youtrack.jetbrains.com/issue/IDEA-25934 (still not fixed)
                 var resource_host = ("${resources.host}" === "\${resources.host}") ? "wwwdev.ebi.ac.uk" : "${resources.host}";
                 containerDiv.html("<img src='http://" + resource_host + "/gxa/resources/images/loading.gif' />");
-            },
-            success:function (htmlResponse) {
-                Biojs.console.log("SUCCESS: data received");
-                Biojs.console.log(htmlResponse);
-                containerDiv.html(htmlResponse);
-            },
-            error:function (xhr, ajaxOptions, thrownError) {
-                Biojs.console.log("ERROR: " + xhr.status);
-                containerDiv.html("An error occurred while retrieving the data: " + xhr.status + " - " + xhr.statusText);
             }
         };
 
-        jQuery.ajax(httpRequest);
+        jQuery.ajax(httpRequest).done(function (data) {
+            self.drawHeatmap(data, opt.target);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            Biojs.console.log("ERROR: " + jqXHR.status);
+            containerDiv.html("An error occurred while retrieving the data: " + xhr.status + " - " + xhr.statusText);
+        });
+
+    },
+
+    drawHeatmap:function (data, target) {
+
+        (function ($, React, HeatmapContainer, heatmapBuilder, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData) {
+
+            $(document).ready(function () {
+                // call this inside ready() so all scripts load first in IE8
+                var Heatmap = heatmapBuilder(heatmapConfig).Heatmap;
+
+                React.renderComponent(HeatmapContainer({Heatmap: Heatmap, isWidget: true, anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}),
+                    document.getElementById(target)
+                );
+
+                // load anatomogram after heatmap is rendered so wiring works
+                if (anatomogramData) {
+                    anatomogramModule.init(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile, anatomogramData.contextRoot);
+                } else {
+                    $("#anatomogram").remove();
+                }
+            });
+
+        })(jQuery, React, HeatmapContainer, heatmapModule.buildBaseline, data.config,
+            data.columnHeaders, data.profiles, data.geneSetProfiles, data.anatomogram);
 
     },
 
@@ -100,17 +121,11 @@ Biojs.AtlasHeatmap = Biojs.extend({
          For multiple identifiers of the same species please use:
          geneQuery=ENSG00000187003+ENSG00000185264&propertyType=identifier
          */
-        featuresUrl:'/gxa/widgets/heatmap/protein?geneQuery=P00846',
+        sourceUrl:'/gxa/widgets/heatmap/referenceExperiment?geneQuery=CCNT2&POLR2B',
         /* Target DIV
          This mandatory parameter is the identifier of the DIV tag where the
          component should be displayed. Use this value to draw your
          component into. */
-        target:"YourOwnDivId",
-        /* Root context
-         This is an optional parameter to specify the root context path to
-         be used by the widget content, i.e. this is pointing to the
-         content proxy where required.
-         */
-        rootContext:''
+        target:"YourOwnDivId"
     }
 });
