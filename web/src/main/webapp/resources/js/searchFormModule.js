@@ -92,14 +92,6 @@ var searchFormModule = (function($) {
         return term.replace(/^\s+/, '').replace(/\s+$/, ' ');
     }
 
-    function quoteTextThatContainsMoreThanOneWord (text) {
-        return hasMoreThanOneWord(text) ? "\"" + text + "\"" : text;
-    }
-
-    function hasMoreThanOneWord(text) {
-        return /\s/.test(text.trim());
-    }
-
     function extractLast( term ) {
 
         var splitByDoubleQuotes = term.split( /\s*"/),
@@ -113,6 +105,7 @@ var searchFormModule = (function($) {
     }
 
     function geneQuerySearchBoxInitAutocomplete(){
+        var $buttons = $('#submit-button, #reset-button')
         $("#geneQuery")
             // don't navigate away from the field on tab when selecting an item
             .bind( "keydown", function( event ) {
@@ -121,41 +114,85 @@ var searchFormModule = (function($) {
                     event.preventDefault();
                 }
             })
-            .autocomplete({
-                delay:500,
-                minLength: 1,
-                autoFocus:true,
-                focus: function() {
-                    // prevent value inserted on focus
-                    return false;
-                },
-                select: function( event, ui ) {
-                    var selectedValue = quoteTextThatContainsMoreThanOneWord(ui.item.value.trim()),
-                        lastItem = extractLast(this.value);
-                    if(startsWith(this.value, "\"")) {
-                        this.value = remoteExtraQuotesFromStart(this.value);
-                    }
-                    this.value = this.value.substr(0, this.value.length - lastItem.length).concat(selectedValue) + " ";
-                    return false;
-                },
-                source:function (request, response) {
-                    var lastItem = extractLast( request.term );
+            .tagEditor({
+                initialTags:[],
+                maxLength: 50,
+                autocomplete: {
+                    delay: 500,
+                    minLength: 1,
+                    autoFocus: true,
+                    focus: function() {
+                        // prevent value inserted on focus
+                        return false;
+                    },
+                    source: function (request, response) {
+                        var lastItem = extractLast(request.term);
 
-                    $.ajax({
-                        url:'json/suggestions',
-                        data:{
-                            'query': lastItem,
-                            'species': _species
-                        },
-                        success:function (data) {
-                            response(data);
-                        },
-                        error:function (jqXHR, textStatus, errorThrown) {
-                            console.log("Error. Status: " + textStatus + ", errorThrown: " + errorThrown);
-                        }
-                    });
-                }
+                        $.ajax({
+                            url: 'json/suggestions',
+                            data: {
+                                'query': lastItem,
+                                'species': _species
+                            },
+                            success: function (data) {
+                                response(data);
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log("Error. Status: " + textStatus + ", errorThrown: " + errorThrown);
+                            }
+                        });
+                    }
+                },
+                onChange: function(field, editor, tags) {
+                    $buttons.button("option", "disabled", tags.length == 0);
+                    console.log(tags);
+                },
+                placeholder: 'Start typing ...',
+                forceLowercase: false
             });
+
+        $("#submit-button").click(function() {
+            var geneQuery = $("#geneQuery").val();
+            console.log(geneQuery);
+
+            var array_commaSeparated = geneQuery.split(",");
+            console.log(array_commaSeparated);
+
+            console.log(array_commaSeparated.length);
+
+            if(array_commaSeparated.length > 1) {   //we have multiple terms comma-separated
+                var new_query = "";
+                for(var i = 0; i < array_commaSeparated.length; i++) {
+                    var array_words = array_commaSeparated[i].match(/\S+/g); //split by whitespace
+                    if(array_words.length > 1) {
+                        var new_word = "\"" + array_commaSeparated[i] + "\"";
+                        console.log(new_word);
+                        new_query = new_query.concat(new_word, " ");
+                    }
+                    else {
+                        new_query = new_query.concat(array_words, " ");
+                    }
+                }
+                $("#geneQuery").val(new_query);
+            }
+            else { //single term but could be a multiple-word term or single.
+                var array_words = array_commaSeparated[0].match(/\S+/g);
+                if(array_words.length > 1) {
+                    var newword = quoteTextThatContainsMoreThanOneWord(geneQuery) //"\"" + geneQuery + "\"";
+                    console.log(newword);
+                    $("#geneQuery").val(newword);
+                }
+            }
+        });
+
+    }
+
+    function quoteTextThatContainsMoreThanOneWord (text) {
+        return hasMoreThanOneWord(text) ? "\"" + text + "\"" : text;
+    }
+
+    function hasMoreThanOneWord(text) {
+        return /\s/.test(text.trim());
     }
 
     function startsWith (str, prefix) {

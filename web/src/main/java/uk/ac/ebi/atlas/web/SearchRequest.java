@@ -47,6 +47,10 @@ public class SearchRequest {
         }
     }
 
+    public String getGeneQueryTagEditor() {
+        return this.geneQuery+ "hello";
+    }
+
     boolean areQuotesMatching(String searchText) {
         int numberOfDoubleQuotes = StringUtils.countMatches(searchText, "\"");
         return numberOfDoubleQuotes % 2 == 0;

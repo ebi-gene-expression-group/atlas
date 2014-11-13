@@ -104,6 +104,7 @@
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/css/heatmap-and-anatomogram.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/chosen/chosen.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-tagEditor/jquery.tag-editor.css">
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/resources/css/experiment-design-table.css">
     <link media="screen" type="text/css" href="${pageContext.request.contextPath}/resources/css/home.css"
@@ -137,6 +138,8 @@
             src="${pageContext.request.contextPath}/resources/js/jquery.arrayExpress-autocomplete-1.1.0.130305.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/conditionAutocompleteModule.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/lib/jquery-tagEditor/jquery.tag-editor.js"></script>
 
 
     <!-- fancybox start -->
