@@ -90,17 +90,21 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
     // add the expression levels of another profile to this one
     public BaselineProfile sumProfile(BaselineProfile otherProfile) {
         for (Factor factor : otherProfile.getConditions()) {
-            Double otherExpressionLevel = otherProfile.getKnownExpressionLevel(factor);
+            BaselineExpression otherExpression = otherProfile.getExpression(factor);
+            BaselineExpression thisExpression = getExpression(factor);
 
-            if (otherExpressionLevel != null) {
-                double totalExpressionLevel = otherExpressionLevel;
-                Double thisExpressionLevel = getKnownExpressionLevel(factor);
-                if (thisExpressionLevel != null) {
-                    totalExpressionLevel += thisExpressionLevel;
-                }
-                FactorGroup factorGroup = otherProfile.getExpression(factor).getFactorGroup();
-                BaselineExpression totalExpression =
-                        new BaselineExpression(totalExpressionLevel, factorGroup);
+            if (thisExpression == null) {
+                add(factor.getType(), otherExpression);
+            } else if (thisExpression.isKnown()) {
+                FactorGroup otherFactorGroup = otherExpression.getFactorGroup();
+                FactorGroup thisFactorGroup = thisExpression.getFactorGroup();
+
+                checkArgument(thisFactorGroup.equals(otherFactorGroup), "%s != %s", thisFactorGroup, otherFactorGroup);
+
+                BaselineExpression totalExpression = otherExpression.isKnown() ?
+                        new BaselineExpression(thisExpression.getLevel() + otherExpression.getLevel(), thisFactorGroup)
+                        : new BaselineExpression(otherExpression.getLevelAsString(), thisFactorGroup);
+
                 add(factor.getType(), totalExpression);
             }
         }
@@ -112,10 +116,12 @@ public class BaselineProfile extends Profile<Factor, BaselineExpression> {
         resetMaxMin();
         for (Factor factor : getConditions()) {
             BaselineExpression expression = getExpression(factor);
-            double foldLevel = fold(expression.getLevel(), foldFactor);
-            BaselineExpression foldedExpression =
-                    new BaselineExpression(foldLevel, expression.getFactorGroup());
-            add(factor.getType(), foldedExpression);
+            if (expression.isKnown()) {
+                double foldLevel = fold(expression.getLevel(), foldFactor);
+                BaselineExpression foldedExpression =
+                        new BaselineExpression(foldLevel, expression.getFactorGroup());
+                add(factor.getType(), foldedExpression);
+            }
         }
         return this;
     }

@@ -99,19 +99,16 @@ public class BaselineProfileTest {
 
     @Test
     public void testSumProfile(){
-
         subject.sumProfile(buildOtherProfile());
         assertThat(subject.getId(), is(subject.getId()));
         assertThat(subject.getKnownExpressionLevel(factor1), is(2.2D + 1D));
         assertThat(subject.getKnownExpressionLevel(factor2), is(3D + 2D));
         assertThat(subject.getKnownExpressionLevel(factor3), is(3.001D + 3D));
         assertThat(subject.getKnownExpressionLevel(factor4), is(300D));
-
     }
 
     @Test
     public void sumProfileShouldPreserveLevelsThatAreNotExpressedInOtherProfile(){
-
         BaselineProfile otherProfile = new BaselineProfile("other profile", "other name").add(QUERY_FACTOR_TYPE, expression_2);
 
         subject.sumProfile(otherProfile);
@@ -120,23 +117,47 @@ public class BaselineProfileTest {
         assertThat(subject.getKnownExpressionLevel(factor2), is(6D));
         assertThat(subject.getKnownExpressionLevel(factor3), is(subject.getKnownExpressionLevel(factor3)));
         assertThat(subject.getKnownExpressionLevel(factor4), is(nullValue()));
+    }
 
+    @Test
+    public void sumOfUnknownExpressionAndKnownExpressionIsUnknownExpression() {
+
+        BaselineProfile profileWithUnknownExpression = buildProfileWithUnknownExpression();
+
+        assertThat(subject.getExpression(factor1).isKnown(), is(true));
+        assertThat(subject.getExpression(factor2).isKnown(), is(true));
+        subject.sumProfile(profileWithUnknownExpression);
+        assertThat(subject.getExpression(factor1).isKnown(), is(false));
+        assertThat(subject.getExpression(factor2).isKnown(), is(true));
+
+    }
+
+    private BaselineProfile buildProfileWithUnknownExpression() {
+        BaselineExpression unknownExpression1 = new BaselineExpression("FAIL", new FactorSet().add(factor1));
+        BaselineProfile profileWithUnknownExpression = new BaselineProfile("OTHER_ID", "OTHER_NAME");
+        profileWithUnknownExpression.add(QUERY_FACTOR_TYPE, unknownExpression1);
+        return profileWithUnknownExpression;
     }
 
     @Test
     public void testFold(){
-
         BaselineProfile sumProfile = subject.foldProfile(3);
         assertThat(sumProfile.getId(), is(subject.getId()));
         assertThat(sumProfile.getKnownExpressionLevel(factor1), is(0.7D));
         assertThat(sumProfile.getKnownExpressionLevel(factor2), is(1.0D));
         assertThat(sumProfile.getKnownExpressionLevel(factor3), is(1.0D));
         assertThat(sumProfile.getKnownExpressionLevel(factor4), is(nullValue()));
+    }
 
+    @Test
+    public void foldUnknownExpressionIsUnknownExpression(){
+        BaselineProfile profileWithUnknownExpression = buildProfileWithUnknownExpression();
+
+        BaselineProfile sumProfile = profileWithUnknownExpression.foldProfile(3);
+        assertThat(sumProfile.getExpression(factor1).isKnown(), is(false));
     }
 
     BaselineProfile buildOtherProfile(){
-
         BaselineExpression expression_1 = new BaselineExpression(1D, new FactorSet().add(factor1));
         BaselineExpression expression_2 = new BaselineExpression(2D, new FactorSet().add(factor2));
         BaselineExpression expression_3 = new BaselineExpression(3D, new FactorSet().add(factor3));
