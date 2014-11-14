@@ -757,7 +757,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 cellType: function (expression) {
                     if (type.isBaseline) {
                         return (
-                            <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} showTranscriptPopup={!this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
+                            <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} showTranscriptPopup={!this.props.showGeneSetProfiles} geneSetProfiles={this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
                             );
                     }
                     else if (type.isDifferential) {
@@ -860,9 +860,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 return !value;
             }
 
-            function unknownCell() {
+            function unknownCell(geneSetProfiles) {
                 return (
-                    <span ref='unknownCell' data-help-loc='#heatMapTableUnknownCell'></span>
+                    <span ref='unknownCell' data-help-loc={geneSetProfiles ? '#heatMapTableGeneSetUnknownCell' : '#heatMapTableUnknownCell'}></span>
                     );
             }
 
@@ -888,7 +888,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         return (<td></td>);
                     }
 
-                    var style = {"background-color": this.props.color};
+
+                    var style = {"background-color": isUnknownExpression(this.props.value) ? "white" : this.props.color};
+
 
                     if (hasTranscriptTooltip(this.props)) {
                         style.cursor = "pointer";
@@ -900,17 +902,32 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                             className="heatmap_cell"
                             style={{visibility: isUnknownExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
                             data-svg-path-id={this.props.svgPathId}>
-                                {isUnknownExpression(this.props.value) ? unknownCell() : formatBaselineExpression(this.props.value)}
+                                {isUnknownExpression(this.props.value) ? unknownCell(this.props.geneSetProfiles) : formatBaselineExpression(this.props.value)}
                             </div>
                         </td>
                         );
                 },
 
                 componentDidMount: function () {
-                    if (isUnknownExpression(this.props.value)) {
+                    this.addQuestionMarkTooltip();
+                },
+
+                // need this so that we re-add question mark tooltip, if it doesn't exist, when switching between
+                // individual genes and gene sets
+                componentDidUpdate: function () {
+                    this.addQuestionMarkTooltip();
+                },
+
+                addQuestionMarkTooltip: function() {
+                    function hasQuestionMark(unknownElement) {
+                        return unknownElement.children.length;
+                    }
+
+                    if (isUnknownExpression(this.props.value) && !hasQuestionMark(this.refs.unknownCell.getDOMNode())) {
                         helpTooltipsModule.init('experiment', contextRoot, this.refs.unknownCell.getDOMNode());
                     }
                 }
+
             });
         })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.transcripts, formatBaselineExpression);
 
