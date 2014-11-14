@@ -81,29 +81,6 @@ var searchFormModule = (function($) {
 
     }
 
-    function isEven(value) {
-        if (value%2 === 0){
-            return true;
-        }
-        return false;
-    }
-
-    function normalizeSpaces( term ){
-        return term.replace(/^\s+/, '').replace(/\s+$/, ' ');
-    }
-
-    function extractLast( term ) {
-
-        var splitByDoubleQuotes = term.split( /\s*"/),
-            numberOfDoubleQuotes = splitByDoubleQuotes.length - 1,
-            lastItem = splitByDoubleQuotes.pop();
-
-        if (!isEven(numberOfDoubleQuotes)){
-            return lastItem;
-        }
-        return lastItem.split( /\s+/).pop();
-    }
-
     function geneQuerySearchBoxInitAutocomplete(){
         var $buttons = $('#submit-button, #reset-button')
         $("#geneQuery")
@@ -115,7 +92,7 @@ var searchFormModule = (function($) {
                 }
             })
             .tagEditor({
-                initialTags:[],
+                delimiter:",",
                 maxLength: 50,
                 autocomplete: {
                     delay: 500,
@@ -126,12 +103,10 @@ var searchFormModule = (function($) {
                         return false;
                     },
                     source: function (request, response) {
-                        var lastItem = extractLast(request.term);
-
                         $.ajax({
                             url: 'json/suggestions',
                             data: {
-                                'query': lastItem,
+                                'query': request.term,
                                 'species': _species
                             },
                             success: function (data) {
@@ -145,64 +120,13 @@ var searchFormModule = (function($) {
                 },
                 onChange: function(field, editor, tags) {
                     $buttons.button("option", "disabled", tags.length == 0);
-                    console.log(tags);
                 },
+
                 placeholder: 'Start typing ...',
                 forceLowercase: false
             });
 
-        $("#submit-button").click(function() {
-            var geneQuery = $("#geneQuery").val();
-            console.log(geneQuery);
-
-            var array_commaSeparated = geneQuery.split(",");
-            console.log(array_commaSeparated);
-
-            console.log(array_commaSeparated.length);
-
-            if(array_commaSeparated.length > 1) {   //we have multiple terms comma-separated
-                var new_query = "";
-                for(var i = 0; i < array_commaSeparated.length; i++) {
-                    var array_words = array_commaSeparated[i].match(/\S+/g); //split by whitespace
-                    if(array_words.length > 1) {
-                        var new_word = "\"" + array_commaSeparated[i] + "\"";
-                        console.log(new_word);
-                        new_query = new_query.concat(new_word, " ");
-                    }
-                    else {
-                        new_query = new_query.concat(array_words, " ");
-                    }
-                }
-                $("#geneQuery").val(new_query);
-            }
-            else { //single term but could be a multiple-word term or single.
-                var array_words = array_commaSeparated[0].match(/\S+/g);
-                if(array_words.length > 1) {
-                    var newword = quoteTextThatContainsMoreThanOneWord(geneQuery) //"\"" + geneQuery + "\"";
-                    console.log(newword);
-                    $("#geneQuery").val(newword);
-                }
-            }
-        });
-
     }
-
-    function quoteTextThatContainsMoreThanOneWord (text) {
-        return hasMoreThanOneWord(text) ? "\"" + text + "\"" : text;
-    }
-
-    function hasMoreThanOneWord(text) {
-        return /\s/.test(text.trim());
-    }
-
-    function startsWith (str, prefix) {
-        return str.lastIndexOf(prefix, 0) === 0;
-    }
-
-    function remoteExtraQuotesFromStart (str) {
-        return str.substring(1, str.length);
-    }
-
 
     function disableCarriageReturn(selector) {
         $(selector).keypress(function(event) {

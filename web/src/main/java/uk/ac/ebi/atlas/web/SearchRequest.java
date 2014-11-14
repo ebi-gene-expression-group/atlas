@@ -40,15 +40,15 @@ public class SearchRequest {
     }
 
     public void setGeneQuery(String geneQuery) {
-        if (!areQuotesMatching(geneQuery)) {
-            this.geneQuery = geneQuery + "\"";
+        if (!areQuotesMatching(geneQuery) || StringUtils.countMatches(geneQuery, ",") > 0) {
+            this.geneQuery = parseTagsTextWithQuotes(geneQuery);
         } else {
             this.geneQuery = geneQuery;
         }
     }
 
     public String getGeneQueryTagEditor() {
-        return this.geneQuery+ "hello";
+        return parseStringToTags(this.geneQuery);
     }
 
     boolean areQuotesMatching(String searchText) {
@@ -73,5 +73,62 @@ public class SearchRequest {
 
     public boolean hasGeneQuery() {
         return StringUtils.isNotBlank(getGeneQuery());
+    }
+
+    public String parseTagsTextWithQuotes (String geneQuery) {
+        String[] tags = geneQuery.split(",");
+        String resQuery = "";
+        for (String tag : tags) { //for any tag find single word or multiple words
+            String[] words = tag.trim().split(" ");
+
+            if (words.length > 1) {  //multi-term
+                String res = "\"";
+                for (String word : words) {
+                    res = res + word + " ";
+                }
+                res = res.trim() + "\" ";
+                resQuery = resQuery + res;
+            } else {  //single term
+                resQuery = resQuery + tag.trim() + " ";
+            }
+        }
+
+        return resQuery.trim();
+    }
+
+    public String parseStringToTags (String geneQuery) {
+        String tags= "";
+
+        String word= ""; int countTag = 0;
+        for(int i=0; i<geneQuery.length(); i++) {
+            char val = geneQuery.charAt(i);
+            if(val == '\"'){
+                countTag++;
+                word = word.trim();
+                if(word.length()>0){
+                    tags = tags.concat(word).concat(",");
+                }
+                word= "";
+            }
+            else {
+                if (val != ' ' || countTag %2 != 0) {
+                    word = word + val;
+                }
+                else {
+                    word = word.trim();
+                    if(word.length()>0) {
+                        tags = tags.concat(word).concat(",");
+                    }
+                    word="";
+                }
+            }
+        }
+
+        word = word.trim();
+        if(word.length()>0) {
+            tags = tags.concat(word);
+        }
+
+        return tags;
     }
 }
