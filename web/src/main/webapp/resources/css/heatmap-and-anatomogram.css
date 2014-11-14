@@ -1,5 +1,13 @@
 /* start of sticky things */
 
+.svg #anatomogram {
+    display:inline
+}
+
+.no-svg #anatomogram {
+    display:none
+}
+
 .container {
     margin: 20px auto;
     /*width: 960px;*/
@@ -37,7 +45,7 @@
 }
 
 .stickit {
-    margin-right: 600;
+    margin-right: 600px;
     position: fixed;
     top: 0;
 }

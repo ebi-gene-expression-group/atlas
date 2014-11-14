@@ -32,7 +32,7 @@
 <c:if test="${not empty jsonProfiles}">
     <div id="heatmap" class="row stickem-container">
 
-        <div id="anatomogram" class="aside stickem double-click-noselection" style="display:inline">
+        <div id="anatomogram" class="aside stickem double-click-noselection">
             <table>
                 <tr>
                     <td style="padding-top: 15px; vertical-align:top">

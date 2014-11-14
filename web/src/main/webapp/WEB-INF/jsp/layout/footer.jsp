@@ -22,6 +22,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <footer>
+    <%--
     <!-- Optional local footer (insert citation / project-specific copyright / etc here -->
     <!--
     <div id="local-footer" class="grid_24 clearfix">
@@ -29,7 +30,7 @@
     </div>
     -->
     <!-- End optional local footer -->
-
+      --%>
     <div id="global-footer" class="grid_24">
         <nav id="global-nav-expanded">
             <div class="grid_4 alpha">
@@ -70,26 +71,9 @@
     </div>
 
 </footer>
-<!--! end of #wrapper -->
 
-
-<!-- JavaScript at the bottom for fast page loading -->
-
-<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-<!--
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../js/libs/jquery-1.6.2.min.js"><\/script>')</script>
--->
-
-
-<!-- Your custom JavaScript file scan go here... change names accordingly -->
-<!--
-<script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/plugins.js"></script>
-<script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/script.js"></script>
--->
 <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/cookiebanner.js"></script>
 <script defer="defer" src="//www.ebi.ac.uk/web_guidelines/js/foot.js"></script>
-<!-- end scripts-->
 
 <script type="text/javascript">
 
@@ -107,10 +91,14 @@
 
 </script>
 
-
-<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
-chromium.org/developers/how-tos/chrome-frame-getting-started -->
-<!--[if lt IE 7 ]>
-<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
-<script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
-<![endif]-->
+<%--notify users of old browsers to upgrade--%>
+<script>
+    var $buoop = {c:2};
+    function $buo_f(){
+        var e = document.createElement("script");
+        e.src = "//browser-update.org/update.js";
+        document.body.appendChild(e);
+    };
+    try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
+    catch(e){window.attachEvent("onload", $buo_f)}
+</script>
