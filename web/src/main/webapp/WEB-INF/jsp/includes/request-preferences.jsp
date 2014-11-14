@@ -94,7 +94,7 @@
             <tr>
                 <td>
                     <div style="display:inline-block">
-                        <form:textarea id="geneQuery" path="geneQuery" rows="2" cols="36"></form:textarea>
+                        <textarea id="geneQuery" name="geneQuery" rows="2" cols="36" >${preferences.geneQueryTagEditor}</textarea>
                         <div>
                             <span style="float:left">
                                 <form:checkbox id="exactMatch"
