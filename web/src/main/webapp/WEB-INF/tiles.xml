@@ -30,7 +30,7 @@
         <put-attribute name="header" value="/WEB-INF/jsp/layout/header.jsp"/>
         <put-attribute name="menu" value="/WEB-INF/jsp/includes/experiment-header.jsp"/>
         <put-attribute name="body" value=""/>
-        <put-attribute name="footer" value="/WEB-INF/jsp/layout/footer_new.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/layout/footer.jsp"/>
     </definition>
 
     <definition name="experiment" extends="base.definition">
