@@ -41,14 +41,14 @@ public class SearchRequest {
 
     public void setGeneQuery(String geneQuery) {
         if (!areQuotesMatching(geneQuery) || StringUtils.countMatches(geneQuery, ",") > 0) {
-            this.geneQuery = parseTagsTextWithQuotes(geneQuery);
+            this.geneQuery = tagsToQueryString(geneQuery);
         } else {
             this.geneQuery = geneQuery;
         }
     }
 
     public String getGeneQueryTagEditor() {
-        return parseStringToTags(this.geneQuery);
+        return queryStringToTags(this.geneQuery);
     }
 
     boolean areQuotesMatching(String searchText) {
@@ -75,7 +75,7 @@ public class SearchRequest {
         return StringUtils.isNotBlank(getGeneQuery());
     }
 
-    public String parseTagsTextWithQuotes (String geneQuery) {
+    public String tagsToQueryString(String geneQuery) {
         String[] tags = geneQuery.split(",");
         String resQuery = "";
         for (String tag : tags) { //for any tag find single word or multiple words
@@ -96,7 +96,7 @@ public class SearchRequest {
         return resQuery.trim();
     }
 
-    public String parseStringToTags (String geneQuery) {
+    public String queryStringToTags(String geneQuery) {
         String tags= "";
 
         String word= ""; int countTag = 0;
