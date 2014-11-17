@@ -31,6 +31,7 @@ import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrException;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
@@ -59,7 +60,10 @@ public class GxaSolrServer {
             return queryResponse;
         } catch (SolrServerException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
+            throw new SolrException(SolrException.ErrorCode.UNKNOWN, e);
+        } catch (SolrException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw e;
         }
     }
 

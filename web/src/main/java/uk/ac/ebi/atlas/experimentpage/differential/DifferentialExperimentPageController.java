@@ -25,11 +25,16 @@ package uk.ac.ebi.atlas.experimentpage.differential;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.solr.common.SolrException;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.DifferentialRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
@@ -167,6 +172,15 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
         return differentialRequestContextBuilder.forExperiment(experiment)
                 .withPreferences(requestPreferences).build();
 
+    }
+
+    @ExceptionHandler(value = {SolrException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ModelAndView InternalServerHandleException(Exception e) {
+        ModelAndView mav = new ModelAndView("query-error-page");
+        mav.addObject("exceptionMessage", e.getMessage());
+
+        return mav;
     }
 
 }

@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.search;
 import com.google.common.base.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.common.SolrException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -156,27 +156,21 @@ public class BioentitiesSearchController {
             return Optional.of("redirect:/" + bioentityPageName + "/" + geneQuery);
         }
 
-        try {
-            String species = "";
-            if (StringUtils.isNotBlank(specie)) {
-               species = specie;
-            }
-            Optional<Set<String>> geneIdsOrSets = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
+        String species = "";
+        if (StringUtils.isNotBlank(specie)) {
+           species = specie;
+        }
+        Optional<Set<String>> geneIdsOrSets = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
 
-            if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
-                return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());
-            }
-
-        } catch (HttpSolrServer.RemoteSolrException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new HttpSolrServer.RemoteSolrException(e.code(), geneQuery, e);
+        if (geneIdsOrSets.isPresent() && geneIdsOrSets.get().size() == 1) {
+            return Optional.of("redirect:/" + BioentityType.GENE.getBioentityPageName() + "/" + geneIdsOrSets.get().iterator().next());
         }
 
         return Optional.absent();
 
     }
 
-    @ExceptionHandler(value = {HttpSolrServer.RemoteSolrException.class})
+    @ExceptionHandler(value = {SolrException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView InternalServerHandleException(Exception e) {
         ModelAndView mav = new ModelAndView("query-error-page");
