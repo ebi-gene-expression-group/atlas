@@ -944,7 +944,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
             function tissueNotStudiedInExperiment() {
                 return (
-                    React.DOM.span(null, "X")
+                    React.DOM.span(null, "NA")
                     );
             }
 
