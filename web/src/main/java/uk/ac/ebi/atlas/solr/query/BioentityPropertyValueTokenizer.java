@@ -34,10 +34,33 @@ import java.util.regex.Pattern;
 @Scope("singleton")
 public class BioentityPropertyValueTokenizer {
 
-    public static final String SPLIT_BY_SPACE_PRESERVING_DOUBLE_QUOTES_REGEXP = "\"([^\"]*)\"|(\\S+)";
+    private static final String SPLIT_BY_SPACE_PRESERVING_DOUBLE_QUOTES_REGEXP = "\"([^\"]*)\"|(\\S+)";
 
     private static final Pattern SPLITTING_PATTERN = Pattern.compile(SPLIT_BY_SPACE_PRESERVING_DOUBLE_QUOTES_REGEXP);
 
+    public static List<String> splitBySpacePreservingQuotes(String geneQuery) {
+        List<String> results = Lists.newArrayList();
+
+        if (geneQuery == null) {
+            return results;
+        }
+
+        Matcher m = SPLITTING_PATTERN.matcher(geneQuery);
+        while (m.find()) {
+            if (m.group(1) != null) {
+                // quoted
+                results.add("\"" + m.group(1) + "\"");
+            } else {
+                // plain
+                results.add(m.group(2));
+            }
+        }
+
+        return results;
+    }
+
+    //use static method instead
+    @Deprecated
     public List<String> split(String geneQuery) {
 
         List<String> results = Lists.newArrayList();

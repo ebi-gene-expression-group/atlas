@@ -22,8 +22,13 @@
 
 package uk.ac.ebi.atlas.web;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.StringUtils;
+import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
+
+import java.util.List;
 
 public class SearchRequest {
 
@@ -40,11 +45,7 @@ public class SearchRequest {
     }
 
     public void setGeneQuery(String geneQuery) {
-        if (!areQuotesMatching(geneQuery) || StringUtils.countMatches(geneQuery, ",") > 0) {
-            this.geneQuery = tagsToQueryString(geneQuery);
-        } else {
-            this.geneQuery = geneQuery;
-        }
+        this.geneQuery = tagsToQueryString(geneQuery);
     }
 
     public String getGeneQueryTagEditor() {
@@ -76,8 +77,14 @@ public class SearchRequest {
     }
 
     public String tagsToQueryString(String geneQuery) {
-        String[] tags = geneQuery.split(",");
+
+        String[] tags = geneQuery.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
         String resQuery = "";
+
+        if (tags.length == 1) {
+            return geneQuery;
+        }
+
         for (String tag : tags) { //for any tag find single word or multiple words
             String[] words = tag.trim().split(" ");
 
@@ -97,38 +104,18 @@ public class SearchRequest {
     }
 
     public String queryStringToTags(String geneQuery) {
-        String tags= "";
+        List<String> tags = BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(geneQuery);
 
-        String word= ""; int countTag = 0;
-        for(int i=0; i<geneQuery.length(); i++) {
-            char val = geneQuery.charAt(i);
-            if(val == '\"'){
-                countTag++;
-                word = word.trim();
-                if(word.length()>0){
-                    tags = tags.concat(word).concat(",");
-                }
-                word= "";
-            }
-            else {
-                if (val != ' ' || countTag %2 != 0) {
-                    word = word + val;
-                }
-                else {
-                    word = word.trim();
-                    if(word.length()>0) {
-                        tags = tags.concat(word).concat(",");
-                    }
-                    word="";
-                }
+        ImmutableList.Builder<String> builder = ImmutableList.builder();
+        for (String tag : tags) {
+            if (tag.contains("\"")) {
+                String newTag = tag.contains(",") ? tag : tag.replace("\"", "");
+                builder.add(newTag);
+            } else {
+                builder.add(tag);
             }
         }
 
-        word = word.trim();
-        if(word.length()>0) {
-            tags = tags.concat(word);
-        }
-
-        return tags;
+        return Joiner.on(",").join(builder.build());
     }
 }
