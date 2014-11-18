@@ -27,6 +27,16 @@
                         </form:select>
                     </td>
 
+                    <c:set var="hasMultipleOrganism" value="${fastQReportUtil.hasMultiOrganism(experimentAccession,param.accessKey)}" />
+                    <c:if test="${hasMultipleOrganism}">
+                        <td style="margin-left: 20px;"> Selected organism: </td>
+                        <td>
+                            <form:select path="selectedSpecie">
+                                <form:options items="${allSpecies}"/>
+                            </form:select>
+                        </td>
+                    </c:if>
+
                 </tr>
             </table>
 
@@ -55,6 +65,10 @@
         $(document).ready(function () {
 
             $('#selectedReport').change(function () {
+                $('#prefForm').submit();
+            });
+
+            $('#selectedSpecie').change(function () {
                 $('#prefForm').submit();
             });
 

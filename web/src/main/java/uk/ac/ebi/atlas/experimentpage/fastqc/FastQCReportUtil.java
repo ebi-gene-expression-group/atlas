@@ -2,6 +2,8 @@ package uk.ac.ebi.atlas.experimentpage.fastqc;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,14 +24,17 @@ public class FastQCReportUtil {
     private String qcFilePathTemplate;
     private String mappingQCFilePathTemplate;
     private String fastQCFilePathTemplate;
+    private ExperimentTrader experimentTrader;
 
     @Inject
     public FastQCReportUtil(@Value("#{configuration['rnaseq.mrna.fast.qc.path.template']}") String qcFilePathTemplate,
                             @Value("#{configuration['rnaseq.mrna.fast.mapping.qc.path.template']}") String mappingQCFilePathTemplate,
-                            @Value("#{configuration['rnaseq.mrna.fastqreport.path.template']}") String fastQCFilePathTemplate) {
+                            @Value("#{configuration['rnaseq.mrna.fastqreport.path.template']}") String fastQCFilePathTemplate,
+                            ExperimentTrader experimentTrader) {
         this.qcFilePathTemplate = qcFilePathTemplate;
         this.mappingQCFilePathTemplate = mappingQCFilePathTemplate;
         this.fastQCFilePathTemplate = fastQCFilePathTemplate;
+        this.experimentTrader = experimentTrader;
     }
 
     /***** FAST QC index ****/
@@ -59,6 +64,13 @@ public class FastQCReportUtil {
         String specie_s = splitSpecies(species).toLowerCase();
         return MessageFormat.format(fastQCFilePathTemplate, experimentAccession, specie_s);
     }
+
+    /***** Species selection ****/
+    public boolean hasMultiOrganism(String experimentAccession, String accessKey) {
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        return experiment.getOrganisms().size() > 1;
+    }
+
 
     /**
      * Replace white space for "_" from species if it has more than one word

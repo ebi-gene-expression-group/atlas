@@ -37,6 +37,7 @@ public class FastQCReportController {
     private final FastQCReportUtil fastQCReportUtil;
     private ExperimentTrader experimentTrader;
     private String reportSelected;
+    private String specieSelected;
 
 
     @Inject
@@ -67,6 +68,8 @@ public class FastQCReportController {
 
         model.addAttribute("fastQCReports", preferences.fastQCReportsList());
 
+        model.addAttribute("allSpecies", experiment.getOrganisms());
+
         reportSelected = preferences.getSelectedReport();
 
         if (StringUtils.isBlank(reportSelected)) {
@@ -84,6 +87,21 @@ public class FastQCReportController {
         //When changing the selection in the combo, we need to set the new selection in the preferences
         //otherwise the combo is not being updated.
         preferences.setSelectedReport(reportSelected);
+
+        //Specie selection
+        specieSelected = preferences.getSelectedSpecie();
+        if(StringUtils.isBlank(specieSelected)) {
+            specieSelected = species;
+        }
+
+        if(specieSelected != null) {
+            if(!specieSelected.equals(species)){
+                String parsedSelectedSpecie = splitSpecies(specieSelected).toLowerCase();
+                String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/{2}", experimentAccession, parsedSelectedSpecie, "qc.html");
+                return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
+            }
+        }
+        preferences.setSelectedSpecie(specieSelected);
 
         if(!fastQCReportUtil.hasFastQC(experimentAccession, species)) {
             throw new ResourceNotFoundException("No fast qc report for " + experimentAccession);
@@ -123,6 +141,8 @@ public class FastQCReportController {
 
         model.addAttribute("fastQCReports", preferences.fastQCReportsList());
 
+        model.addAttribute("allSpecies", experiment.getOrganisms());
+
         reportSelected = preferences.getSelectedReport();
 
         if (StringUtils.isBlank(reportSelected)) {
@@ -140,6 +160,21 @@ public class FastQCReportController {
         //When changing the selection in the combo, we need to set the new selection in the preferences
         //otherwise the combo is not being updated.
         preferences.setSelectedReport(reportSelected);
+
+        //Specie selection
+        specieSelected = preferences.getSelectedSpecie();
+        if(StringUtils.isBlank(specieSelected)) {
+            specieSelected = species;
+        }
+
+        if(specieSelected != null) {
+            if(!specieSelected.equals(species)){
+                String parsedSelectedSpecie = splitSpecies(specieSelected).toLowerCase();
+                String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/mapping/{2}", experimentAccession, parsedSelectedSpecie, "tophat2.html");
+                return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
+            }
+        }
+        preferences.setSelectedSpecie(specieSelected);
 
         if(!fastQCReportUtil.hasMappingQC(experimentAccession, species)) {
             throw new ResourceNotFoundException("No fast qc report for " + experimentAccession);
@@ -172,6 +207,7 @@ public class FastQCReportController {
 
         model.addAttribute("fastQCReports", preferences.fastQCReportsList());
 
+        model.addAttribute("allSpecies", experiment.getOrganisms());
 
         reportSelected = preferences.getSelectedReport();
 
@@ -190,6 +226,21 @@ public class FastQCReportController {
         //When changing the selection in the combo, we need to set the new selection in the preferences
         //otherwise the combo is not being updated.
         preferences.setSelectedReport(reportSelected);
+
+        //Specie selection
+        specieSelected = preferences.getSelectedSpecie();
+        if(StringUtils.isBlank(specieSelected)) {
+            specieSelected = species;
+        }
+
+        if(specieSelected != null) {
+            if(!specieSelected.equals(species)){
+                String parsedSelectedSpecie = splitSpecies(specieSelected).toLowerCase();
+                String path = MessageFormat.format("/experiments/{0}/fastqc/{1}/{2}", experimentAccession, parsedSelectedSpecie, "qc.html");
+                return "redirect:" + path + (StringUtils.isNotBlank(accessKey) ? "?accessKey=" + accessKey : "");
+            }
+        }
+        preferences.setSelectedSpecie(specieSelected);
 
         String beginPath = fastQCReportUtil.buildFastQCReportIndexHtmlPath(experimentAccession, species);
 
