@@ -22,7 +22,7 @@ public abstract class OntologyTerm {
         return create(uriSplit[1], uriSplit[0]);
     }
 
-    static String[] splitAtFinalSlash(String uri) {
+    public static String[] splitAtFinalSlash(String uri) {
         int finalSlash = uri.lastIndexOf('/');
 
         if (finalSlash == -1) {

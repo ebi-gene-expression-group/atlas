@@ -24,15 +24,19 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
+import uk.ac.ebi.atlas.dao.EFOTreeDAO;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParser;
@@ -50,16 +54,29 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.transcript.TranscriptProfileDao;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.*;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+
 @RunWith(MockitoJUnitRunner.class)
 public class ExperimentMetadataCRUDTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXPERIMENT_ACCESSION";
+    private static final String EXPERIMENT_ASSAY = "EXPERIMENT_ASSAY";
     private static final String ARRAY_DESIGN = "ARRAY_DESIGN";
+
+    private static final String EFO_0000761 = "EFO_0000761";
+    private static final String EFO_0000001 = "EFO_0000001";
+    private static final String EFO_0001443 = "snap#SpecificallyDependentContinuant";
+    private static final String EFO_0001438 = "snap#Disposition";
+    private static final Set<String> EXPANDED_EFO_TERMS = new HashSet<>(Arrays.asList(EFO_0001438, EFO_0001443, EFO_0000001));
 
     @Mock
     private ExperimentDesignFileWriter experimentDesignFileWriterMock;
@@ -114,6 +131,12 @@ public class ExperimentMetadataCRUDTest {
     @Mock
     private MageTabParser mageTabParser;
 
+    @Mock
+    private EFOTreeDAO efoTreeDAOMock;
+
+    @Captor
+    ArgumentCaptor<ImmutableSetMultimap<String, String>> termIdsByAssayAccessionCaptor;
+
     @Before
     public void setUp() throws Exception {
 
@@ -139,9 +162,13 @@ public class ExperimentMetadataCRUDTest {
         given(experimentDTOBuilderMock.withPubMedIds(anySet())).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withTitle(anyString())).willReturn(experimentDTOBuilderMock);
 
+        ImmutableSetMultimap.Builder<String, String> builder = new ImmutableSetMultimap.Builder<>();
+        builder.put(EXPERIMENT_ASSAY, EFO_0000761);
+        when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(builder.build());
+        when(efoTreeDAOMock.getAllParents(anySet())).thenReturn(EXPANDED_EFO_TERMS);
 
         subject = new ExperimentMetadataCRUD(experimentDAOMock,
-                experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock, mageTabParserFactory, conditionsIndexTrader);
+                experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock, mageTabParserFactory, conditionsIndexTrader, efoTreeDAOMock);
     }
 
     @Test
@@ -179,4 +206,24 @@ public class ExperimentMetadataCRUDTest {
         subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false, Optional.<String>absent());
         verify(conditionsIndex).addConditions(any(Experiment.class), any(SetMultimap.class));
     }
+
+    @Test
+    public void importExperimentExpandsOntologyTerms() throws Exception {
+        subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false, Optional.<String>absent());
+        verify(conditionsIndex).addConditions(any(Experiment.class), termIdsByAssayAccessionCaptor.capture());
+
+        ImmutableSetMultimap<String, String> termIdsByAssayAccession =  termIdsByAssayAccessionCaptor.getValue();
+        assertThat(termIdsByAssayAccession.get(EXPERIMENT_ASSAY), containsInAnyOrder(EFO_0000001, EFO_0000761, EFO_0001438, EFO_0001443));
+    }
+
+    @Test
+    public void updateExperimentExpandsOntologyTerms() throws Exception {
+        //subject.updateExperiment(EXPERIMENT_ACCESSION, false);
+        subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
+        verify(conditionsIndex).updateConditions(any(Experiment.class), termIdsByAssayAccessionCaptor.capture());
+
+        ImmutableSetMultimap<String, String> termIdsByAssayAccession =  termIdsByAssayAccessionCaptor.getValue();
+        assertThat(termIdsByAssayAccession.get(EXPERIMENT_ASSAY), containsInAnyOrder(EFO_0000001, EFO_0000761, EFO_0001438, EFO_0001443));
+    }
+
 }

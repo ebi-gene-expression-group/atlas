@@ -466,6 +466,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>uk.ac.ebi.fg</groupId>
+            <artifactId>ae-efo-loader</artifactId>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 
     <repositories>
@@ -497,6 +502,13 @@
                 <enabled>true</enabled>
             </releases>
             <snapshots/>
+        </repository>
+        <repository>
+            <id>artifactory-repo</id>
+            <url>http://bar.ebi.ac.uk:8081/artifactory/repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
