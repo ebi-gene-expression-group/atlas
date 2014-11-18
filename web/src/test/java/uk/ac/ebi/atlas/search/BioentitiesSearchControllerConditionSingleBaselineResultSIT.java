@@ -38,7 +38,7 @@ public class BioentitiesSearchControllerConditionSingleBaselineResultSIT extends
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "geneQuery=REACT_77799%20REACT_115202&condition=DBA%2F2J+x+C57BL%2F6J");
+        subject = BioEntitiesPage.search(driver, "geneQuery=REACT_77799%09REACT_115202&condition=DBA%2F2J+x+C57BL%2F6J");
         subject.get();
     }
 

@@ -33,7 +33,7 @@ import static org.junit.Assert.assertThat;
 
 public class GeneQueryExactMatchSIT extends SeleniumFixture {
 
-    private static final String E_MTAB_513_HTTP_PARAMETERS_WITH_EXACT_MATCH = "geneQuery=binding%20%22mRNA%20splicing,%20via%20spliceosome%22&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
+    private static final String E_MTAB_513_HTTP_PARAMETERS_WITH_EXACT_MATCH = "geneQuery=binding%09%22mRNA%20splicing,%20via%20spliceosome%22&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
     private static final String E_MTAB_599_HTTP_PARAMETERS_WITH_EXACT_MATCH = "geneQuery=%22mitochondrially+encoded+ATP+synthase+8%22&exactMatch=true&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=true&displayGeneDistribution=false&queryFactorValues=liver&_queryFactorValues=1&specific=true&cutoff=0.5";
     private static final String E_MTAB_599_HTTP_PARAMETERS_WITH_EXACT_MATCH_WITH_UNQUOTED_TERMS = "geneQuery=mitochondrially+encoded+ATP+8&exactMatch=true&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&displayLevels=true&displayGeneDistribution=false&queryFactorValues=liver&_queryFactorValues=1&specific=true&cutoff=0.5";
 

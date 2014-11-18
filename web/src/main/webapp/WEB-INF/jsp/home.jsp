@@ -74,7 +74,7 @@
 								<span>E.g. 
 									<a href="query?geneQuery=ASPM">ASPM</a>,
 									<a href="query?geneQuery=REACT_200624">REACT_200624</a>,
-									<a href="query?geneQuery=%22zinc+finger%22">"zinc finger"</a>
+									<a href="query?geneQuery=%22zinc+finger%22">zinc finger</a>
 								</span>
 								
 								<span style="float:left">

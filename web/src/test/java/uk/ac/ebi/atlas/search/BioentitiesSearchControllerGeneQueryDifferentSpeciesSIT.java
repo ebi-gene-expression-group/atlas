@@ -34,7 +34,7 @@ import static org.hamcrest.Matchers.*;
 
 public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends SinglePageSeleniumFixture {
 
-    public static final String GENE_QUERY_PARAM = "ENSMUSG00000022255+ENSG00000109929";
+    public static final String GENE_QUERY_PARAM = "ENSMUSG00000022255%09ENSG00000109929";
     public static final String GLOBAL_SEARCH_TERM = "ENSMUSG00000022255+OR+ENSG00000109929";
 
 

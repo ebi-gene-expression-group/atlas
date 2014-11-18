@@ -78,30 +78,49 @@ public class SearchRequest {
     }
 
     public String tagsToQueryString(String geneQuery) {
+        String trimmedQuery = geneQuery.trim();
 
-        String[] tags = geneQuery.split(TAG_DELIMETER);
+        String[] tags = trimmedQuery.split(TAG_DELIMETER);
         String resQuery = "";
 
         if (tags.length == 1) {
-            return geneQuery;
+            if (StringUtils.startsWith(trimmedQuery, "\"") || onlyOneWord(trimmedQuery)) {
+                return trimmedQuery;
+            } else {
+                return "\"" + trimmedQuery + "\"";
+            }
         }
 
         for (String tag : tags) { //for any tag find single word or multiple words
             String[] words = tag.trim().split(" ");
 
             if (words.length > 1) {  //multi-term
-                String res = "\"";
+                String res = "";
+
                 for (String word : words) {
                     res = res + word + " ";
                 }
-                res = res.trim() + "\" ";
-                resQuery = resQuery + res;
+                res = res.trim();
+
+                if (!StringUtils.startsWith(res, "\"")) {
+                    res = "\"" + res;
+                }
+
+                if (!StringUtils.endsWith(res, "\"")) {
+                    res = res + "\"";
+                }
+
+                resQuery = resQuery + res + " ";
             } else {  //single term
                 resQuery = resQuery + tag.trim() + " ";
             }
         }
 
         return resQuery.trim();
+    }
+
+    private boolean onlyOneWord(String geneQuery) {
+        return StringUtils.countMatches(geneQuery, " ") == 0;
     }
 
     public String queryStringToTags(String geneQuery) {

@@ -80,7 +80,7 @@ public class DiffAnalyticsSearchServiceIT {
     @Test
     public void geneQuery2IDsDifferentSpecies()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("ENSMUSG00000091366 AT5G26220");
+        requestParameters.setGeneQuery("ENSMUSG00000091366\tAT5G26220");
 
         String species = "";
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), species, requestParameters.isExactMatch());
@@ -95,7 +95,7 @@ public class DiffAnalyticsSearchServiceIT {
     @Test
     public void geneQuery2IDsSameSpecies()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("ENSMUSG00000000278 ENSMUSG00000002985");
+        requestParameters.setGeneQuery("ENSMUSG00000000278\tENSMUSG00000002985");
 
         String species = "";
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getCondition(), species, requestParameters.isExactMatch());
