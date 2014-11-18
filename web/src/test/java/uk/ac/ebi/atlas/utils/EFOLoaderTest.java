@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.EFO;
+package uk.ac.ebi.atlas.utils;
 
 import org.junit.Before;
 import org.junit.Test;
