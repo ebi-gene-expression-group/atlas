@@ -5,7 +5,7 @@
  */
 (function($) {
 	$.extend($.fn, {
-		caret: function (start, end) {
+		caretRange: function (start, end) {
 			var elem = this[0];
 
 			if (elem) {

@@ -92,7 +92,7 @@ var searchFormModule = (function($) {
                 }
             })
             .tagEditor({
-                delimiter:",",
+                delimiter:"\t",
                 maxLength: 50,
                 autocomplete: {
                     delay: 500,
@@ -131,7 +131,7 @@ var searchFormModule = (function($) {
             var geneQuery = $("#geneQuery").val();
 
             function onlyOneTag(geneQuery) {
-                return geneQuery.indexOf(',') == -1;
+                return geneQuery.indexOf('\t') == -1;
             }
 
             if (onlyOneTag(geneQuery)) {

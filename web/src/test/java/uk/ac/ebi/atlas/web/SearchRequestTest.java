@@ -35,10 +35,10 @@ public class SearchRequestTest {
 
     @Test
     public void tagsToQueryString_multipleTags() {
-        String parseString = subject.tagsToQueryString("zinc finger protein, ASPM");
+        String parseString = subject.tagsToQueryString("zinc finger protein\tASPM");
         assertThat(parseString, is("\"zinc finger protein\" ASPM"));
 
-        String parseString2 = subject.tagsToQueryString("zinc finger protein,ASPM,LPHN2 ");
+        String parseString2 = subject.tagsToQueryString("zinc finger protein\tASPM\tLPHN2 ");
         assertThat(parseString2, is("\"zinc finger protein\" ASPM LPHN2"));
     }
 
@@ -49,20 +49,25 @@ public class SearchRequestTest {
     }
 
     @Test
-    public void tagsToQueryString_doNotSplitOnCommaInsideQuotes() {
+    public void queryStringWithAComma_doNotSplitOnCommaInsideQuotes() {
         assertThat(subject.tagsToQueryString("binding \"mRNA splicing, via spliceosome\""), is("binding \"mRNA splicing, via spliceosome\""));
     }
 
     @Test
     public void queryStringToTags_multipleWords() {
         String parseString = subject.queryStringToTags("one two three");
-        assertThat(parseString, is("one,two,three"));
+        assertThat(parseString, is("one\ttwo\tthree"));
     }
 
     @Test
     public void queryStringToTags_wordsInQuotes() {
         String parseString = subject.queryStringToTags("\"zinc finger protein\" ASPM");
-        assertThat(parseString, is("zinc finger protein,ASPM"));
+        assertThat(parseString, is("zinc finger protein\tASPM"));
+    }
+
+    @Test
+    public void queryStringToTags_wordsInQuotesWithComma() {
+        assertThat(subject.queryStringToTags("binding \"mRNA splicing, via spliceosome\""), is("binding\tmRNA splicing, via spliceosome"));
     }
 
     @Test
@@ -75,11 +80,6 @@ public class SearchRequestTest {
     public void queryStringToTags_emptyString() {
         String parseString = subject.queryStringToTags("");
         assertThat(parseString, is(""));
-    }
-
-    @Test
-    public void queryStringToTags_CommaInsideQuotes() {
-        assertThat(subject.queryStringToTags("binding \"mRNA splicing, via spliceosome\""), is("binding,\"mRNA splicing, via spliceosome\""));
     }
 
 }

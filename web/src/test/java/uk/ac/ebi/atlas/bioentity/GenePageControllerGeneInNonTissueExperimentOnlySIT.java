@@ -26,12 +26,12 @@ public class GenePageControllerGeneInNonTissueExperimentOnlySIT extends Selenium
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(2)); //including geneset description
+        assertThat(baselineCounts, hasSize(3)); //including geneset description
 
-        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-GEOD-26284"));
-        assertThat(baselineCounts.get(1).getExperimentName(), is("ENCODE cell lines - long polyA RNA, whole cell"));
-        assertThat(baselineCounts.get(1).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(1).getHref(), endsWith("/experiments/E-GEOD-26284?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=&geneQuery=ENSG00000236118&exactMatch=true&serializedFilterFactors=RNA:long%20polyA%20RNA,CELLULAR_COMPONENT:whole%20cell"));
+        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-GEOD-26284"));
+        assertThat(baselineCounts.get(2).getExperimentName(), is("ENCODE cell lines - long polyA RNA, whole cell"));
+        assertThat(baselineCounts.get(2).getSpecies(), is("Homo sapiens"));
+        assertThat(baselineCounts.get(2).getHref(), endsWith("/experiments/E-GEOD-26284?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=&geneQuery=ENSG00000236118&exactMatch=true&serializedFilterFactors=RNA:long%20polyA%20RNA,CELLULAR_COMPONENT:whole%20cell"));
     }
 
 }

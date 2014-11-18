@@ -24,13 +24,14 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.StringUtils;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
 import java.util.List;
 
 public class SearchRequest {
+
+    private static String TAG_DELIMETER = "\t";
 
     private String geneQuery = getDefaultGeneQuery();
 
@@ -78,7 +79,7 @@ public class SearchRequest {
 
     public String tagsToQueryString(String geneQuery) {
 
-        String[] tags = geneQuery.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+        String[] tags = geneQuery.split(TAG_DELIMETER);
         String resQuery = "";
 
         if (tags.length == 1) {
@@ -105,17 +106,6 @@ public class SearchRequest {
 
     public String queryStringToTags(String geneQuery) {
         List<String> tags = BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(geneQuery);
-
-        ImmutableList.Builder<String> builder = ImmutableList.builder();
-        for (String tag : tags) {
-            if (tag.contains("\"")) {
-                String newTag = tag.contains(",") ? tag : tag.replace("\"", "");
-                builder.add(newTag);
-            } else {
-                builder.add(tag);
-            }
-        }
-
-        return Joiner.on(",").join(builder.build());
+        return Joiner.on(TAG_DELIMETER).join(tags).replace("\"", "");
     }
 }

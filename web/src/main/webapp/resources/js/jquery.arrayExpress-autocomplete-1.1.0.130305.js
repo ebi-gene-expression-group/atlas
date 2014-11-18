@@ -232,7 +232,7 @@ $.Autocompleter = function(input, options) {
         var newTerm = replaceTermText(term, v);
         var pos = 0;
         var lastPos = 0;
-        var cursorPos = $input.caret().start;
+        var cursorPos = $input.caretRange().start;
         var shouldAppendSuffix = cursorPos == value.length;
 
         do {
@@ -333,7 +333,7 @@ $.Autocompleter = function(input, options) {
 
     function currentTerm(value, position)
     {
-        var cursorPosition = $(input).caret().start;
+        var cursorPosition = $(input).caretRange().start;
         var beforeCursor = cursorPosition > 0 ? value.substring(0, cursorPosition) : "";
         var afterCursor = value.substring(cursorPosition);
         debugLog("[currentTerm] beforeCursor: [" + beforeCursor + "]");
