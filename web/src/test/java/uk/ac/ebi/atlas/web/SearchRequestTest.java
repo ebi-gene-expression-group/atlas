@@ -22,9 +22,21 @@ public class SearchRequestTest {
     }
 
     @Test
+    public void tagsToQueryString_singleSingleTermTagWithLeadingAndTrailingSpaces() {
+        String parseString = subject.tagsToQueryString(" ASPM ");
+        assertThat(parseString, is("ASPM"));
+    }
+
+    @Test
+    public void tagsToQueryString_multipleTagsSingleTerms() {
+        String parseString = subject.tagsToQueryString("ENTPD1\tBRCA1");
+        assertThat(parseString, is("ENTPD1 BRCA1"));
+    }
+
+    @Test
     public void tagsToQueryString_singleMultiTermTagWithoutQuotes() {
         String parseString = subject.tagsToQueryString("zinc finger protein");
-        assertThat(parseString, is("zinc finger protein"));
+        assertThat(parseString, is("\"zinc finger protein\""));
     }
 
     @Test
@@ -50,7 +62,7 @@ public class SearchRequestTest {
 
     @Test
     public void queryStringWithAComma_doNotSplitOnCommaInsideQuotes() {
-        assertThat(subject.tagsToQueryString("binding \"mRNA splicing, via spliceosome\""), is("binding \"mRNA splicing, via spliceosome\""));
+        assertThat(subject.tagsToQueryString("binding\t\"mRNA splicing, via spliceosome\""), is("binding \"mRNA splicing, via spliceosome\""));
     }
 
     @Test

@@ -125,20 +125,6 @@ var searchFormModule = (function($) {
                 placeholder: 'Start typing ...',
                 forceLowercase: false
             });
-
-
-        $("#submit-button").click(function() {
-            var geneQuery = $("#geneQuery").val();
-
-            function onlyOneTag(geneQuery) {
-                return geneQuery.indexOf('\t') == -1;
-            }
-
-            if (onlyOneTag(geneQuery)) {
-                $("#geneQuery").val("\"" + geneQuery + "\"");
-            }
-        });
-
     }
 
     function disableCarriageReturn(selector) {

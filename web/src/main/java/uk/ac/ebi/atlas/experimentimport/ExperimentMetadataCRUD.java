@@ -23,8 +23,11 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableSetMultimap;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.dao.EFOTreeDAO;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParser;
@@ -40,6 +43,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -57,6 +61,7 @@ public class ExperimentMetadataCRUD {
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
     private ExperimentDAO experimentDAO;
     private ExperimentTrader experimentTrader;
+    private EFOTreeDAO efoTreeDAO;
 
     private ExperimentDTOBuilder experimentDTOBuilder;
 
@@ -67,13 +72,15 @@ public class ExperimentMetadataCRUD {
                                   ExperimentTrader experimentTrader,
                                   ExperimentDTOBuilder experimentDTOBuilder,
                                   MageTabParserFactory mageTabParserFactory,
-                                  ConditionsIndexTrader conditionsIndexTrader) {
+                                  ConditionsIndexTrader conditionsIndexTrader,
+                                  EFOTreeDAO efoTreeDAO) {
         this.experimentDAO = experimentDAO;
         this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;
         this.experimentDTOBuilder = experimentDTOBuilder;
         this.mageTabParserFactory = mageTabParserFactory;
         this.conditionsIndexTrader = conditionsIndexTrader;
+        this.efoTreeDAO = efoTreeDAO;
     }
 
     public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate, Optional<String> accessKey) throws IOException {
@@ -98,10 +105,26 @@ public class ExperimentMetadataCRUD {
         //TODO: change this so it uses experimentconfiguration, experiment design, and accession rather than experiment
         if (!isPrivate) {
             Experiment experiment = experimentTrader.getPublicExperiment(accession);
-            conditionsIndexTrader.getIndex(experiment).addConditions(experiment, experimentDesign.getAllOntologyTermIdsByAssayAccession());
+            ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
+            conditionsIndexTrader.getIndex(experiment).addConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
         }
 
         return uuid;
+    }
+
+    private ImmutableSetMultimap<String, String> expandOntologyTerms(ImmutableSetMultimap<String, String> termIdsByAssayAccession) {
+
+        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
+        for (String assayAccession : termIdsByAssayAccession.keys()) {
+            Set<String> expandedOntologyTerms = new HashSet<>();
+
+            expandedOntologyTerms.addAll(efoTreeDAO.getAllParents(termIdsByAssayAccession.get(assayAccession)));
+            expandedOntologyTerms.addAll(termIdsByAssayAccession.get(assayAccession));
+
+            builder.putAll(assayAccession, expandedOntologyTerms);
+        }
+
+        return builder.build();
     }
 
     private ExperimentDTO buildExperimentDTO(String accession, ExperimentType experimentType, MageTabParserOutput mageTabParserOutput, Set<String> species, boolean isPrivate) {
@@ -188,7 +211,8 @@ public class ExperimentMetadataCRUD {
 
             if (!experimentDTO.isPrivate()) {
                 Experiment experiment = experimentTrader.getPublicExperiment(accession);
-                conditionsIndexTrader.getIndex(experiment).updateConditions(experiment, experimentDesign.getAllOntologyTermIdsByAssayAccession());
+                ImmutableSetMultimap<String, String> termIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
+                conditionsIndexTrader.getIndex(experiment).updateConditions(experiment, expandOntologyTerms(termIdsByAssayAccession));
             }
 
         } catch (IOException e) {

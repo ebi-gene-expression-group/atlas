@@ -35,7 +35,7 @@ public class BioentitiesSearchControllerGeneQuery2GenesWidgetSIT extends SingleP
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "geneQuery=ENSMUSG00000097801+ENSMUSG00000090429");
+        subject = BioEntitiesPage.search(driver, "geneQuery=ENSMUSG00000097801%09ENSMUSG00000090429");
         subject.get();
     }
 

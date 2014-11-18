@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.dao.EFOTreeDAO;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
 import static org.hamcrest.Matchers.is;
@@ -14,9 +15,9 @@ import static org.junit.Assert.assertThat;
 public class ConditionSearchEFOExpanderTest {
 
     @Mock
-    private EFOChildrenClient efoChildrenClient;
+    private EFOTreeDAO efoTreeDAOMock;
 
-    private ConditionSearchEFOExpander subject = new ConditionSearchEFOExpander(efoChildrenClient);
+    private ConditionSearchEFOExpander subject = new ConditionSearchEFOExpander(efoTreeDAOMock);
 
     @Test
     public void nullTerm() {
