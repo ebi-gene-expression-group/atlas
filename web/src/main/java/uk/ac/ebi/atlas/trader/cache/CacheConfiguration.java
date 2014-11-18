@@ -42,15 +42,11 @@ import javax.inject.Inject;
 @Configuration
 public class CacheConfiguration {
 
-    private static final int BASELINE_EXPERIMENTS_CACHE_MAX_SIZE = 50;
-    private static final int RNASEQ_DIFF_EXPERIMENTS_CACHE_MAX_SIZE = 100;
-    private static final int MICROARRAY_EXPERIMENTS_CACHE_MAX_SIZE = 2000;
-
     @Bean(name="baselineExperimentsLoadingCache")
     @Inject
     public LoadingCache<String, BaselineExperiment> baselineExperimentsCache(BaselineExperimentsCacheLoader cacheLoader){
 
-        return CacheBuilder.newBuilder().maximumSize(BASELINE_EXPERIMENTS_CACHE_MAX_SIZE).build(cacheLoader);
+        return CacheBuilder.newBuilder().build(cacheLoader);
 
     }
 
@@ -58,7 +54,7 @@ public class CacheConfiguration {
     @Inject
     public LoadingCache<String, ProteomicsBaselineExperiment> proteomicsBaselineExperimentsCache(ProteomicsBaselineExperimentsCacheLoader cacheLoader){
 
-        return CacheBuilder.newBuilder().maximumSize(BASELINE_EXPERIMENTS_CACHE_MAX_SIZE).build(cacheLoader);
+        return CacheBuilder.newBuilder().build(cacheLoader);
 
     }
 
@@ -67,7 +63,7 @@ public class CacheConfiguration {
     @Inject
     public LoadingCache<String, DifferentialExperiment> differentialExperimentsCache(DifferentialExperimentsCacheLoader cacheLoader){
 
-        return CacheBuilder.newBuilder().maximumSize(RNASEQ_DIFF_EXPERIMENTS_CACHE_MAX_SIZE).build(cacheLoader);
+        return CacheBuilder.newBuilder().build(cacheLoader);
 
     }
 
@@ -75,7 +71,7 @@ public class CacheConfiguration {
     @Inject
     public LoadingCache<String, MicroarrayExperiment> microarrayExperimentsCache(MicroarrayExperimentsCacheLoader cacheLoader){
 
-        return CacheBuilder.newBuilder().maximumSize(MICROARRAY_EXPERIMENTS_CACHE_MAX_SIZE).build(cacheLoader);
+        return CacheBuilder.newBuilder().build(cacheLoader);
 
     }
 
@@ -83,7 +79,7 @@ public class CacheConfiguration {
     @Inject
     public LoadingCache<String, BarChartTrader> barChartTradersCache(BarChartTradersCacheLoader barChartTradersCacheLoader) {
 
-        return CacheBuilder.newBuilder().maximumSize(BASELINE_EXPERIMENTS_CACHE_MAX_SIZE).build(barChartTradersCacheLoader);
+        return CacheBuilder.newBuilder().build(barChartTradersCacheLoader);
 
     }
 
