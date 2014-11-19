@@ -72,6 +72,6 @@ public class EFOTreeDAO {
     }
 
     public String getIdFromTerm(String term) {
-        return efoTermIdMap.get(term);
+        return (efoTermIdMap.get(term) == null) ? "" : efoTermIdMap.get(term);
     }
 }

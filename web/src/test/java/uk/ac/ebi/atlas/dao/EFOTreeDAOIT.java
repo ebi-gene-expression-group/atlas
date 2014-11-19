@@ -27,6 +27,7 @@ public class EFOTreeDAOIT {
 
     private static final String BRAIN = "brain";
     private static final String EFO_0000311 = "EFO_0000311";
+    private static final String UBERON_0000955 = "UBERON_0000955";
 
     @Test
     public void allParents() {
@@ -54,6 +55,6 @@ public class EFOTreeDAOIT {
 
     @Test
     public void getIdByTerm() {
-        assertThat(subject.getIdFromTerm(BRAIN), is(EFO_0000311));
+        assertThat(subject.getIdFromTerm(BRAIN), is(UBERON_0000955));
     }
 }
