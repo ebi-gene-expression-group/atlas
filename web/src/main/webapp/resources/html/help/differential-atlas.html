@@ -236,9 +236,9 @@ package from <a href="http://www.bioconductor.org/">Bioconductor</a>. For each
 href="http://www.geneontology.org/">GO</a>, <a
 href="http://www.ebi.ac.uk/interpro/">InterPro</a>, and <a
 href="http://www.reactome.org/">Reactome</a> and the set of
-differentially expressed genes, using <a
+differentially expressed genes is performed, using <a
 href="http://en.wikipedia.org/wiki/Fisher%27s_exact_test">Fisher's exact
-test</a> with multiple testing correction (FDR < 0.1). Gene set overlap plots, are available
+test</a> with multiple testing correction (FDR &lt; 0.1). Gene set overlap plots, are available
     only when statistically significant overlap of terms was detected. This means that for some experiments, the menu will not display plots for all three of the
 aforementioned resources. To see a plot, select one of the following options from the menu:</p>
 
@@ -255,9 +255,10 @@ alt="Reactome plot menu item" align="bottom" /> to see <a href="http://www.react
 </ul>
 
 <p>Doing so will bring up a plot like the one below, showing a maximum of top 10 overlapping terms (nodes) from a list sorted by the
-    effect size (i.e. the number of differentially expressed genes annotated
-    with a given term divided by the number of expected genes annotated with that term). The terms are linked by edges representing genes shared
-between them. The size of each node represents the proportion of
+    effect size (i.e. the number of observed divided by the number of expected genes annotated with a given term
+    within the differentially expressed set of genes).
+    The terms are linked by edges representing genes shared between them - the more more genes shared between the two terms, the thicker the edge.
+    The size of each node represents the proportion of
 differentially expressed genes annotated with each term. Please see the <a
 href="http://www.bioconductor.org/packages/release/bioc/html/piano.html">Piano</a>
 documentation for more details.</p>
