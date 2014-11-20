@@ -185,7 +185,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
         Collection<Condition> beans = collectionArgumentCaptor.getValue();
 
             assertThat(beans, hasSize(30));
-        assertThat(beans, hasItem(new Condition(E_PROT_1,"g10", ImmutableList.of("Homo sapiens", "EFO_0001272", "UBERON_0002113", "adult", "kidney", "NCBITaxon_9606"))));
+        assertThat(beans, hasItem(new Condition(E_PROT_1,"g10", ImmutableList.of("EFO_0000399", "EFO_0000635", "EFO_0000001", "EFO_0001272", "adult", "UBERON_0002113", "OBI_0100026", "snap#MaterialEntity", "NCBITaxon_9606", "EFO_0000786", "EFO_0000787", "NCBITaxon_2759", "Homo sapiens", "kidney", "span#ProcessualEntity"))));
     }
 
     @Test

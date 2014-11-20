@@ -38,8 +38,8 @@ public class ConditionSearchEFOExpander {
     }
 
     private String termPlusEFOTerms(String term) {
-        String efoTerm = efoTreeDAO.getIdFromTerm(term);
-        return term + (efoTerm.isEmpty() ? "" : " " + efoTerm);
+        Set<String> efoTerms = efoTreeDAO.getIdsFromTerm(term);
+        return term + (efoTerms.isEmpty() ? "" : " " + Joiner.on(" ").join(efoTerms));
     }
 
 }

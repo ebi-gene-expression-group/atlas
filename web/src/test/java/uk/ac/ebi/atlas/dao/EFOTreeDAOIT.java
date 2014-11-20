@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
 
@@ -26,8 +27,14 @@ public class EFOTreeDAOIT {
     private static final String GO_0023014 = "GO_0023014";
 
     private static final String BRAIN = "brain";
-    private static final String EFO_0000311 = "EFO_0000311";
     private static final String UBERON_0000955 = "UBERON_0000955";
+
+    private static final String EFO_0000311 = "EFO_0000311"; // cancer
+    private static final String EFO_0001639 = "EFO_0001639"; // cancer cell line
+    private static final String EFO_0005127 = "EFO_0005127"; // cancer biomarker measurement
+    private static final String EFO_0000312 = "EFO_0000312"; // cancer site
+    private static final String EFO_0000196 = "EFO_0000196"; // metastatic prostate cancer
+
 
     @Test
     public void allParents() {
@@ -54,7 +61,8 @@ public class EFOTreeDAOIT {
     }
 
     @Test
-    public void getIdByTerm() {
-        assertThat(subject.getIdFromTerm(BRAIN), is(UBERON_0000955));
+    public void getIdsFromTerm() {
+        System.out.println(subject.getIdsFromTerm("cancer").size());
+        assertThat(subject.getIdsFromTerm("cancer").size(), is(34));
     }
 }

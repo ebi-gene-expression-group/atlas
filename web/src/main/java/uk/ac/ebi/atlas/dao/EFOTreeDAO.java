@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.dao;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress.utils.efo.EFOLoader;
@@ -71,7 +72,14 @@ public class EFOTreeDAO {
         return efoNodeShortIdSet;
     }
 
-    public String getIdFromTerm(String term) {
-        return (efoTermIdMap.get(term) == null) ? "" : efoTermIdMap.get(term);
+    public Set<String> getIdsFromTerm(String term) {
+        Set<String> efoIds = new HashSet<>();
+        for (String efoTerm : efoTermIdMap.keySet()) {
+            if (StringUtils.containsIgnoreCase(efoTerm, term)) {
+                efoIds.add(efoTermIdMap.get(efoTerm));
+            }
+        }
+
+        return efoIds;
     }
 }

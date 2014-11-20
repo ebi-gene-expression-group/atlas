@@ -29,7 +29,7 @@ public class ConditionSearchEFOExpanderIT {
 
         String[] terms = StringUtils.split(expandedSearch);
 
-        assertThat(terms, arrayWithSize(1024));
+        assertThat(terms, arrayWithSize(35));
         assertThat(terms[0], is("cancer"));
         assertThat(terms[1], startsWith("EFO_"));
 
@@ -41,11 +41,11 @@ public class ConditionSearchEFOExpanderIT {
 
         String[] terms = StringUtils.split(expandedSearch);
 
-        assertThat(terms, arrayWithSize(1024));
+        assertThat(terms, arrayWithSize(5));
         assertThat(terms[0], is("Inflammatory"));
         assertThat(terms[1], startsWith("Bowel"));
         assertThat(terms[2], startsWith("Disease"));
-        assertThat(terms[3], startsWith("EFO_"));
+        assertThat(terms[3], startsWith("Orphanet_"));
 
     }
 
@@ -55,12 +55,12 @@ public class ConditionSearchEFOExpanderIT {
         String expandedSearch = subject.fetchExpandedTermWithEFOChildren("heart");
 
         String[] terms = StringUtils.split(expandedSearch);
-        assertThat(terms, arrayWithSize(90));
+        assertThat(terms, arrayWithSize(49));
         assertThat(terms[0], is("heart"));
-        assertThat(terms[1], is("UBERON_0000948"));
+        assertThat(terms[1], is("EFO_0003777"));
 
-        assertThat(terms[2], startsWith("EFO_"));
-        assertThat(terms[4], startsWith("BTO_"));
+        assertThat(terms[2], startsWith("Orphanet_"));
+        assertThat(terms[4], startsWith("Orphanet_"));
     }
 
     @Test
