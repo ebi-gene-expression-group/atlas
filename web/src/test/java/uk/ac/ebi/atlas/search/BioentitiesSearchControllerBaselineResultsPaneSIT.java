@@ -60,7 +60,7 @@ public class BioentitiesSearchControllerBaselineResultsPaneSIT extends SinglePag
 
     @Test
     public void whenNoBaselinePaneResultsAndDiffResultsThenTheDifferentialPaneIsOpen() {
-        subject = BioEntitiesPage.search(driver, "condition=cancer");
+        subject = BioEntitiesPage.search(driver, "condition=%22Apical%20anaerobic%22");
         subject.get();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
         assertThat(subject.getDiffPaneHeaderResultsMessage(), is("2 results"));
