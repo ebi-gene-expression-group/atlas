@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.acceptance.rest.tests;
+package uk.ac.ebi.atlas.bioentity;
 
 import com.jayway.restassured.response.Response;
 import org.junit.Test;
@@ -7,7 +7,7 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.endsWith;
 
-public class GenePageControllerIT extends RestAssuredFixture {
+public class GenePageControllerMgiSIT extends RestAssuredFixture {
 
     @Test
     public void mgiRedirects(){
