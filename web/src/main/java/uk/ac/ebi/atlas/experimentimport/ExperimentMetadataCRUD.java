@@ -23,11 +23,9 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSetMultimap;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.dao.EFOTreeDAO;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParser;
@@ -61,7 +59,7 @@ public class ExperimentMetadataCRUD {
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
     private ExperimentDAO experimentDAO;
     private ExperimentTrader experimentTrader;
-    private EFOTreeDAO efoTreeDAO;
+    private EFOParentsLookupService efoParentsLookupService;
 
     private ExperimentDTOBuilder experimentDTOBuilder;
 
@@ -73,14 +71,14 @@ public class ExperimentMetadataCRUD {
                                   ExperimentDTOBuilder experimentDTOBuilder,
                                   MageTabParserFactory mageTabParserFactory,
                                   ConditionsIndexTrader conditionsIndexTrader,
-                                  EFOTreeDAO efoTreeDAO) {
+                                  EFOParentsLookupService efoParentsLookupService) {
         this.experimentDAO = experimentDAO;
         this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;
         this.experimentDTOBuilder = experimentDTOBuilder;
         this.mageTabParserFactory = mageTabParserFactory;
         this.conditionsIndexTrader = conditionsIndexTrader;
-        this.efoTreeDAO = efoTreeDAO;
+        this.efoParentsLookupService = efoParentsLookupService;
     }
 
     public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate, Optional<String> accessKey) throws IOException {
@@ -118,7 +116,7 @@ public class ExperimentMetadataCRUD {
         for (String assayAccession : termIdsByAssayAccession.keys()) {
             Set<String> expandedOntologyTerms = new HashSet<>();
 
-            expandedOntologyTerms.addAll(efoTreeDAO.getAllParents(termIdsByAssayAccession.get(assayAccession)));
+            expandedOntologyTerms.addAll(efoParentsLookupService.getAllParents(termIdsByAssayAccession.get(assayAccession)));
             expandedOntologyTerms.addAll(termIdsByAssayAccession.get(assayAccession));
 
             builder.putAll(assayAccession, expandedOntologyTerms);

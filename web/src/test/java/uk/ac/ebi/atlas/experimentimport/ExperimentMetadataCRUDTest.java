@@ -36,7 +36,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
-import uk.ac.ebi.atlas.dao.EFOTreeDAO;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParser;
@@ -132,7 +131,7 @@ public class ExperimentMetadataCRUDTest {
     private MageTabParser mageTabParser;
 
     @Mock
-    private EFOTreeDAO efoTreeDAOMock;
+    private EFOParentsLookupService efoParentsLookupServiceMock;
 
     @Captor
     ArgumentCaptor<ImmutableSetMultimap<String, String>> termIdsByAssayAccessionCaptor;
@@ -165,10 +164,10 @@ public class ExperimentMetadataCRUDTest {
         ImmutableSetMultimap.Builder<String, String> builder = new ImmutableSetMultimap.Builder<>();
         builder.put(EXPERIMENT_ASSAY, EFO_0000761);
         when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(builder.build());
-        when(efoTreeDAOMock.getAllParents(anySet())).thenReturn(EXPANDED_EFO_TERMS);
+        when(efoParentsLookupServiceMock.getAllParents(anySet())).thenReturn(EXPANDED_EFO_TERMS);
 
         subject = new ExperimentMetadataCRUD(experimentDAOMock,
-                experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock, mageTabParserFactory, conditionsIndexTrader, efoTreeDAOMock);
+                experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock, mageTabParserFactory, conditionsIndexTrader, efoParentsLookupServiceMock);
     }
 
     @Test
@@ -218,7 +217,6 @@ public class ExperimentMetadataCRUDTest {
 
     @Test
     public void updateExperimentExpandsOntologyTerms() throws Exception {
-        //subject.updateExperiment(EXPERIMENT_ACCESSION, false);
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(conditionsIndex).updateConditions(any(Experiment.class), termIdsByAssayAccessionCaptor.capture());
 

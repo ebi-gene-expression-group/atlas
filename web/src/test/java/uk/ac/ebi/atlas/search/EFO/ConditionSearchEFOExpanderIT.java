@@ -59,7 +59,7 @@ public class ConditionSearchEFOExpanderIT {
         assertThat(terms[0], is("heart"));
         assertThat(terms[1], is("EFO_0003777"));
 
-        assertThat(terms[2], startsWith("Orphanet_"));
+        assertThat(terms[2], startsWith("EFO_"));
         assertThat(terms[4], startsWith("Orphanet_"));
     }
 
@@ -85,5 +85,11 @@ public class ConditionSearchEFOExpanderIT {
         assertThat(terms, arrayWithSize(3));
     }
 
+    @Test
+    public void quotes() {
+        String expandedSearchWithoutQuotes = subject.fetchExpandedTermWithEFOChildren("anatomy basic component");
+        String expandedSearchWithQuotes = subject.fetchExpandedTermWithEFOChildren("\"anatomy basic component\"");
 
+        assertThat(expandedSearchWithQuotes.equals(expandedSearchWithoutQuotes), is(true));
+    }
 }

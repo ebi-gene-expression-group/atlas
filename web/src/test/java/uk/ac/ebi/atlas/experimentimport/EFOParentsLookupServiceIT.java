@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.dao;
+package uk.ac.ebi.atlas.experimentimport;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,29 +11,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class EFOTreeDAOIT {
-
-    @Inject
-    private EFOTreeDAO subject;
+public class EFOParentsLookupServiceIT {
 
     private static final String BTO_0002690 = "BTO_0002690";
     private static final String GO_0023014 = "GO_0023014";
 
-    private static final String BRAIN = "brain";
-    private static final String UBERON_0000955 = "UBERON_0000955";
-
-    private static final String EFO_0000311 = "EFO_0000311"; // cancer
-    private static final String EFO_0001639 = "EFO_0001639"; // cancer cell line
-    private static final String EFO_0005127 = "EFO_0005127"; // cancer biomarker measurement
-    private static final String EFO_0000312 = "EFO_0000312"; // cancer site
-    private static final String EFO_0000196 = "EFO_0000196"; // metastatic prostate cancer
+    @Inject
+    private EFOParentsLookupService subject;
 
 
     @Test
@@ -60,9 +49,4 @@ public class EFOTreeDAOIT {
         assertThat(subject.getAllParents("Blah").isEmpty(), is(true));
     }
 
-    @Test
-    public void getIdsFromTerm() {
-        System.out.println(subject.getIdsFromTerm("cancer").size());
-        assertThat(subject.getIdsFromTerm("cancer").size(), is(34));
-    }
 }

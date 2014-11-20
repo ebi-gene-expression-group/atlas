@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
-import uk.ac.ebi.atlas.dao.EFOTreeDAO;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParserFactory;
 import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
@@ -44,7 +43,7 @@ public class ExperimentMetadataCRUDFactory {
     CacheConfiguration cacheConfiguration;
 
     @Inject
-    EFOTreeDAO efoTreeDAO;
+    EFOParentsLookupService efoParentsLookupService;
 
     public ExperimentMetadataCRUD create(ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder, ExperimentDAO experimentDao, ConditionsIndexTrader conditionsIndexTrader) {
         ProteomicsBaselineExperimentsCacheLoader loader = loaderFactory.create(experimentDao);
@@ -52,6 +51,6 @@ public class ExperimentMetadataCRUDFactory {
         ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache = new ProteomicsBaselineExperimentsCache(loadingCache);
         ExperimentTrader experimentTrader = new ExperimentTrader(experimentDao, baselineExperimentsCache, rnaSeqDiffExperimentsCache, microarrayExperimentsCache, proteomicsBaselineExperimentsCache);
         return new ExperimentMetadataCRUD(experimentDao, experimentDesignFileWriterBuilder,
-                experimentTrader, experimentDTOBuilder, mageTabParserFactory, conditionsIndexTrader, efoTreeDAO);
+                experimentTrader, experimentDTOBuilder, mageTabParserFactory, conditionsIndexTrader, efoParentsLookupService);
     }
 }

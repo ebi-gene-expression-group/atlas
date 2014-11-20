@@ -34,7 +34,7 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
-public class BioentitiesSearchConditionQueryParentEFOTerm extends SinglePageSeleniumFixture {
+public class BioentitiesSearchConditionQueryParentEFOTermSIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
