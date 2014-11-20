@@ -122,7 +122,7 @@ public class BaselineProfilesHeatMapIT {
     @Test
     public void eMTab513_NotSpecific_MultipleGeneSets_Order() throws GenesNotFoundException {
         setNotSpecific();
-        setGeneQuery("react_14797 react_19184 react_604 react_111102 react_111217 react_6900 react_71 react_116125 react_75774 react_6802 react_17015 react_22258 react_15518 react_115566 react_12627");
+        setGeneQuery("react_14797\treact_19184\treact_604\treact_111102\treact_111217\treact_6900\treact_71\treact_116125\treact_75774\treact_6802\treact_17015\treact_22258\treact_15518\treact_115566\treact_12627");
 
         BaselineProfilesList profiles = subject.fetch(asGeneSet(baselineRequestContext));
         //System.out.println(Joiner.on("\", \"").join(profiles.extractGeneNames()));
@@ -140,7 +140,7 @@ public class BaselineProfilesHeatMapIT {
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true&geneQuery=react_14797+react_19184+react_604+react_111102+react_111217+react_6900+react_71+react_116125+react_75774+react_6802+react_17015+react_22258+react_15518+react_115566+react_12627&geneSetMatch=true
     @Test
     public void eMTab513_Specific_MultipleGeneSets_Order() throws GenesNotFoundException {
-        setGeneQuery("react_14797 react_19184 react_604 react_111102 react_111217 react_6900 react_71 react_116125 react_75774 react_6802 react_17015 react_22258 react_15518 react_115566 react_12627");
+        setGeneQuery("react_14797\treact_19184\treact_604\treact_111102\treact_111217\treact_6900\treact_71\treact_116125\treact_75774\treact_6802\treact_17015\treact_22258\treact_15518\treact_115566\treact_12627");
 
         BaselineProfilesList profiles = subject.fetch(asGeneSet(baselineRequestContext));
         //System.out.println(Joiner.on("\", \"").join(profiles.extractGeneNames()));
