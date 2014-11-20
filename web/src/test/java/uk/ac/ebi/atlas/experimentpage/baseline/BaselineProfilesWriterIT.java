@@ -208,7 +208,7 @@ public class BaselineProfilesWriterIT {
     // http://localhost:8080/gxa/experiments/E-MTAB-513?displayLevels=true&specific=true&geneQuery=react_14797+react_19184+react_604+react_111102+react_111217+react_6900+react_71+react_116125+react_75774+react_6802+react_17015+react_22258+react_15518+react_115566+react_12627&geneSetMatch=true
     @Test
     public void eMTab513_Specific_MultipleGeneSets() throws GenesNotFoundException {
-        String geneSets = "react_14797 react_19184 react_604 react_111102 react_111217 react_6900 react_71 react_116125 react_75774 react_6802 react_17015 react_22258 react_15518 react_115566 react_12627";
+        String geneSets = "react_14797\treact_19184\treact_604\treact_111102\treact_111217\treact_6900\treact_71\treact_116125\treact_75774\treact_6802\treact_17015\treact_22258\treact_15518\treact_115566\treact_12627";
         setGeneQuery(geneSets);
 
         BaselineRequestContext requestContext = populateRequestContext(E_MTAB_513);
@@ -229,7 +229,7 @@ public class BaselineProfilesWriterIT {
         String[] react_111217 = geneNameToLine.get("react_111217");
         String[] react_12627 = geneNameToLine.get("react_12627");
 
-        assertThat(geneNames, containsInAnyOrder(geneSets.split(" ")));
+        assertThat(geneNames, containsInAnyOrder(geneSets.split("\t")));
         assertThat(react_111217, is(new String[]{"react_111217", "8", "677", "17", "9", "8", "9", "10", "270", "11", "439", "497", "430", "10", "7", "15", "551"}));
         assertThat(react_12627, is(new String[] {"react_12627", "2", "3", "4", "3", "2", "2", "4", "4", "2", "2", "3", "5", "4", "1", "6", "4"}));
     }
