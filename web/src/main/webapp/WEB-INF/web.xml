@@ -63,6 +63,21 @@
         <filter-name>encoding-filter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <filter>
+        <filter-name>cors-headers</filter-name>
+        <filter-class>
+            uk.ac.ebi.atlas.web.filters.CORSHeaders
+        </filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>cors-headers</filter-name>
+        <url-pattern>/resources/*</url-pattern>
+        <url-pattern>/rest/*</url-pattern>
+        <url-pattern>/widgets/*</url-pattern>
+    </filter-mapping>
+
     <listener>
         <listener-class>uk.ac.ebi.atlas.web.JdbcDriverUnregisteringListener</listener-class>
     </listener>
