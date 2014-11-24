@@ -2,6 +2,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:set var="geneQuery" value="${empty preferences ? geneQuery : preferences.geneQuery}" />
+<c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
+<c:set var="atlasHost" value="${pageContext.request.serverName == 'localhost' ? 'wwwdev' : pageContext.request.serverName.concat(serverPort)}"/>
+
 {
     <%--
     //TODO: extract ensemlb genome launcher config parameters (ensemblDB, columnType etc.) out into separate object

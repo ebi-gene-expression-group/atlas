@@ -42,9 +42,6 @@
 
         <%@ include file="transcript-breakdown-popup.jsp" %>
 
-        <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
-        <c:set var="atlasHost" value="${pageContext.request.serverName == 'localhost' ? 'wwwdev' : pageContext.request.serverName.concat(serverPort)}"/>
-
         <script type="text/javascript">
             var heatmapData = <%@ include file="heatmap-data.jsp" %>;
 
