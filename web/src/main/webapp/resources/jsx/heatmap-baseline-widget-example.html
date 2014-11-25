@@ -61,7 +61,8 @@
 <script src="heatmapContainer.jsx" type="text/jsx"></script>
 <script type="text/javascript">
         new Biojs.AtlasHeatmap({
-            sourceUrl: '/gxa/widgets/heatmap/referenceExperiment?geneQuery=CCNT2&POLR2B',
+            gxaBaseUrl: 'http://localhost:8080/gxa/',
+            params: 'geneQuery=CCNT2&POLR2B',
             target: "heatmapContainer"
         });
 </script>

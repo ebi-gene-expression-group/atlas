@@ -66,8 +66,11 @@ Biojs.AtlasHeatmap = Biojs.extend({
         containerDiv.empty();
 
         var opt = self.opt;
+
+        var url = opt.gxaBaseUrl + '/widgets/heatmap/referenceExperiment?' + opt.params;
+
         var httpRequest = {
-            url: opt.sourceUrl,
+            url: url,
             dataType: "json",
             method:"GET",
             beforeSend:function () {
@@ -78,6 +81,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
         };
 
         jQuery.ajax(httpRequest).done(function (data) {
+            data.config.contextRoot = opt.gxaBaseUrl;
             self.drawHeatmap(data, opt.target);
         }).fail(function (jqXHR, textStatus, errorThrown) {
             Biojs.console.log("ERROR: " + jqXHR.status);
@@ -112,7 +116,8 @@ Biojs.AtlasHeatmap = Biojs.extend({
     },
 
     opt:{
-        /* Features URL
+        gxaBaseUrl: 'http://www.ebi.ac.uk/gxa',
+        /* params
          This mandatory parameter consists of the query for a particular
          gene or genes by given their properties. For a single gene query,
          please use a unique accession (e.g. ENSEMBL gene id or UniProt id).
@@ -121,7 +126,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
          For multiple identifiers of the same species please use:
          geneQuery=ENSG00000187003+ENSG00000185264&propertyType=identifier
          */
-        sourceUrl:'/gxa/widgets/heatmap/referenceExperiment?geneQuery=CCNT2&POLR2B',
+        params:'geneQuery=CCNT2&POLR2B',
         /* Target DIV
          This mandatory parameter is the identifier of the DIV tag where the
          component should be displayed. Use this value to draw your
