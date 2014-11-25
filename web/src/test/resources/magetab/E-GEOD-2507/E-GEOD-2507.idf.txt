@@ -1,0 +1,52 @@
+Investigation Title	Transcription profiling of skeletal and cardiac muscles in dysferlin-deficient SJL/J mice and wild type mice to understand the protective mechanisms against dysferlin deficiency in cardiac muscles.
+Comment[Submitted Name]	Cardiac and skeletal muscle gene expression profiles in dysferlin deficient mice
+Experimental Design	individual_genetic_characteristics_design	organism_part_comparison_design	co-expression_design
+Experimental Design Term Source REF		mo	mo
+Comment[AEExperimentType]	transcription profiling by array
+Comment[AEExperimentDisplayName]	Transcription profiling by array of skeletal and cardiac muscle from dysferlin-deficient mice
+Comment[ArrayExpressReleaseDate]	2007-09-04
+Comment[AEMIAMESCORE]	5
+Comment[SecondaryAccession]	GDS1247	GSE2507
+Comment[ArrayExpressAccession]	E-GEOD-2507
+Comment[MAGETAB TimeStamp_Version]	2010-08-04 16:37:56 Last Changed Rev: 13058
+Experimental Factor Name	genotype	organism part
+Experimental Factor Type	genotype	organism part
+Experimental Factor Term Source REF	
+Person Last Name	Hummel
+Person First Name	Oliver
+Person Mid Initials	
+Person Email	o.hummel@mdc-berlin.de
+Person Phone	
+Person Fax	
+Person Address	Prof. Hubner, Experimental Genetics of Cardiovascular Diseases, Max-DelbrÃÂ¼ck-Center,  , Berlin, 13125, Germany
+Person Affiliation	Max-Delbruck-Center
+Person Roles	submitter
+Person Roles Term Source REF	The MGED Ontology
+Quality Control Type	
+Quality Control Term Source REF	
+Replicate Type	
+Replicate Term Source REF	
+Normalization Type	
+Normalization Term Source REF	
+Public Release Date	2007-09-04
+PubMed ID	16237120
+Publication DOI	10.4049/jimmunol.175.9.6219
+Publication Author List	Katrin Wenzel, Joanna Zabojszcza, Miriam Carl, Semjon Taubert, Antje Lass, Claire L Harris, Mengfatt Ho, Herbert Schulz, Oliver Hummel, Norbert Hubner, Karl Josef Osterziel, Simone Spuler
+Publication Title	Increased susceptibility to complement attack due to down-regulation of decay-accelerating factor/CD55 in dysferlin-deficient muscular dystrophy.
+Publication Status	published
+Publication Status Term Source REF	EFO
+Experiment Description	Dysferlin is expressed in skeletal and cardiac muscle. However, dysferlin deficiency, namely limb girdle muscular dystrophy 2B (LGMD2B) and Myoshi myopathy, results in skeletal muscle weakness and spares the heart. This dichotomy could be caused by differential regulation of protective mechanisms. Therefore, we compared intraindividual mRNA expression profiles between cardiac and skeletal muscle in dysferlin-deficient SJL/J mice  and normal C57BL/6 mice. Experiment Overall Design: 20 chips were analyzed. They represent 4 groups of 5 replicates each. Experiment Overall Design: The 4 groups are cardiac (LV) and skeletal muscle of normal and dysferlin deficient mice. Experiment Overall Design: Tissues from normal mice are the controls in comparison to tissues of dysferlin deficient mice.
+Protocol Name	P-G2507-3	P-G2507-1	P-G2507-2	P-G2507-4	Affymetrix:Protocol:Hybridization-FlexGE-WS2	P-AFFY-6
+Protocol Type	grow	grow	grow	grow	hybridization	feature_extraction
+Protocol Description	Female SJL/J mice were purchased from Charles River Laboratories (Sulzfeld, Germany) at age 4-6 weeks and kept in a pathogen free environment. The microarray experiments were performed in mice 32 - 34 weeks of age. The SJL/J mouse strain has been derived from non-inbred Swiss Websterstock by brother-sister mating for 30 generations (Murphy, ED. Proc Am Assoc Cancer Res 4:46, 1963) and is a naturally occurring model for autosomal recessive muscular dystrophy (Bittner, RE et al. Nature Genet 23, 141-142, 1999). The SJL/J mice develop a spontaneously occurring myopathy resulting in muscle weakness (Weller, AH et al. Muscle Nerve 20, 72-82, 1997). This is due to a 171-bp deletion in the dysferlin gene of SJL mice resulting in an in-frame deletion and removal of 57amino acids (Bittner, RE et al. Nature Genet 23, 141-142, 1999). RNA was extracted from the left ventricle of heart of 5 SJL/J mice using TRIzol reagent (Invitrogen, Life Technologies, Carlsbad, USA). Total RNA was purified following the TRIzol standard protocol. Total RNA was treated by deoxyribonuclease I (Invitrogen) and purified using the RNeasy Mini Kit (Qiagen GmbH, Hilden, Germany) according to the manufacture's protocol. RNA integrity was checked by denaturating agarose gel electrophoresis, and only RNA with absorbance ratios 260 nm/280 nm between 1.9 and 2.1 was used. 8 Ã&#956;g RNA were transcribed in double-stranded cDNA by cDNA Synthesis System (Roche Diagnostics GmbH, Mannheim, Germany). cRNA was produced by MEGAscript TM High Yield Transcription Kit (Ambion, Austin, USA) and labelled with biotin-11-CTP and biotin-16-UTP nucleotides (Perkin Elmer Life Sciences, Boston, USA). 5 left ventricle biological replicates were analyzed using standard Affymetrix procedures. Keywords = Mus musculus,  SJL/J, skeletal muscle, quadriceps, effect of deleted gene dysferlin	Female C57BL/6 mice were purchased from Charles River Laboratories (Sulzfeld, Germany) at age 4-6 weeks and kept in a pathogen free environment. The microarray experiments were performed in mice 32 - 34 weeks of age. RNA was extracted from the left ventricle of heart of 5 C57BL/6 mice using TRIzol reagent (Invitrogen, Life Technologies, Carlsbad, USA). Total RNA was purified following the TRIzol standard protocol. Total RNA was treated by deoxyribonuclease I (Invitrogen) and purified using the RNeasy Mini Kit (Qiagen GmbH, Hilden, Germany) according to the manufacture's protocol. RNA integrity was checked by denaturating agarose gel electrophoresis, and only RNA with absorbance ratios 260 nm/280 nm between 1.9 and 2.1 was used. 8 Ã&#956;g RNA were transcribed in double-stranded cDNA by cDNA Synthesis System (Roche Diagnostics GmbH, Mannheim, Germany). cRNA was produced by MEGAscript TM High Yield Transcription Kit (Ambion, Austin, USA) and labelled with biotin-11-CTP and biotin-16-UTP nucleotides (Perkin Elmer Life Sciences, Boston, USA). 5 left ventricle biological replicates were analyzed using standard Affymetrix procedures. Keywords = Mus musculus,  C57BL/6, cardiac muscle, left ventricle, effect of deleted gene dysferlin	Female SJL/J mice were purchased from Charles River Laboratories (Sulzfeld, Germany) at age 4-6 weeks and kept in a pathogen free environment. The microarray experiments were performed in mice 32 - 34 weeks of age. The SJL/J mouse strain has been derived from non-inbred Swiss Websterstock by brother-sister mating for 30 generations (Murphy, ED. Proc Am Assoc Cancer Res 4:46, 1963) and is a naturally occurring model for autosomal recessive muscular dystrophy (Bittner, RE et al. Nature Genet 23, 141-142, 1999). The SJL/J mice develop a spontaneously occurring myopathy resulting in muscle weakness (Weller, AH et al. Muscle Nerve 20, 72-82, 1997). This is due to a 171-bp deletion in the dysferlin gene of SJL mice resulting in an in-frame deletion and removal of 57amino acids (Bittner, RE et al. Nature Genet 23, 141-142, 1999). RNA was extracted from the left ventricle of heart of 5 SJL/J mice using TRIzol reagent (Invitrogen, Life Technologies, Carlsbad, USA). Total RNA was purified following the TRIzol standard protocol. Total RNA was treated by deoxyribonuclease I (Invitrogen) and purified using the RNeasy Mini Kit (Qiagen GmbH, Hilden, Germany) according to the manufacture's protocol. RNA integrity was checked by denaturating agarose gel electrophoresis, and only RNA with absorbance ratios 260 nm/280 nm between 1.9 and 2.1 was used. 8 Ã&#956;g RNA were transcribed in double-stranded cDNA by cDNA Synthesis System (Roche Diagnostics GmbH, Mannheim, Germany). cRNA was produced by MEGAscript TM High Yield Transcription Kit (Ambion, Austin, USA) and labelled with biotin-11-CTP and biotin-16-UTP nucleotides (Perkin Elmer Life Sciences, Boston, USA). 5 left ventricle biological replicates were analyzed using standard Affymetrix procedures. Keywords = Mus musculus,  SJL/J, cardiac muscle, left ventricle, effect of deleted gene dysferlin	Female C57BL/6 mice were purchased from Charles River Laboratories (Sulzfeld, Germany) at age 4-6 weeks and kept in a pathogen free environment. The microarray experiments were performed in mice 32 - 34 weeks of age. RNA was extracted from the right quadriceps muscle of 5 C57BL/6 mice using TRIzol reagent (Invitrogen, Life Technologies, Carlsbad, USA). Total RNA was purified following the TRIzol standard protocol. Total RNA was treated by deoxyribonuclease I (Invitrogen) and purified using the RNeasy Mini Kit (Qiagen GmbH, Hilden, Germany) according to the manufacture's protocol. RNA integrity was checked by denaturating agarose gel electrophoresis, and only RNA with absorbance ratios 260 nm/280 nm between 1.9 and 2.1 was used. 8 Ã&#956;g RNA were transcribed in double-stranded cDNA by cDNA Synthesis System (Roche Diagnostics GmbH, Mannheim, Germany). cRNA was produced by MEGAscript TM High Yield Transcription Kit (Ambion, Austin, USA) and labelled with biotin-11-CTP and biotin-16-UTP nucleotides (Perkin Elmer Life Sciences, Boston, USA). 5 quardiceps biological replicates were analyzed using standard Affymetrix procedures. Keywords = Mus musculus,  C57BL/6, skeletal muscle, quardiceps, effect of deleted gene dysferlin	Title: Affymetrix FlexGE-WS2 Hybridization. Description:	Title: Affymetrix CEL analysis. Description:
+Protocol Parameters	
+Protocol Hardware	
+Protocol Software					MicroArraySuite 5.0	MicroArraySuite 5.0
+Protocol Contact	
+Protocol Term Source REF					mo
+SDRF File	E-GEOD-2507.sdrf.txt
+Term Source Name	EFO	mo	ncbitax	NCI_thesaurus	The MGED Ontology	ArrayExpress			The MGED Ontology
+Term Source File	http://www.ebi.ac.uk/efo/	http://mged.sourceforge.net/ontologies/MGEDontology.php	http://www.ncbi.nlm.nih.gov/Taxonomy/taxonomyhome.html	ncithesaurus.obo.alt	http://mged.sourceforge.net/ontologies/MGEDontology.php	http://www.ebi.ac.uk/arrayexpress			http://mged.sourceforge.net/ontologies/MGEDontology.php
+Term Source Version	
+
+MAGE-TAB Version	1.1

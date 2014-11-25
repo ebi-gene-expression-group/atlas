@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.experimentdesign;
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,7 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -46,6 +48,8 @@ public class ExperimentDesignFileWriterTest {
     public static final String F_1 = "F:1";
     public static final String F_2 = "F:2";
 
+    public static final OntologyTerm[] ABSENT_ONTOLOGY_TERMS = {};
+
     @Mock
     private CSVWriter csvWriter;
 
@@ -62,21 +66,20 @@ public class ExperimentDesignFileWriterTest {
         SampleCharacteristic sampleCharacteristic2 = SampleCharacteristic.create("C2", CHAR_2, OntologyTerm.createFromUri(UBERON_2));
         SampleCharacteristic sampleCharacteristic3 = SampleCharacteristic.create("C3", CHAR_3);
 
-        Optional<OntologyTerm> factorValueOntologyTerm = OntologyTerm.createOptional(F_1, HTTP_OBO);
-        experimentDesign.putFactor(ASSAY_1, FACTOR_HEADER, ASSAY_1_FACTOR_VALUE, factorValueOntologyTerm);
-        experimentDesign.putFactor(ASSAY_1, FACTOR2_HEADER, ASSAY_1_FACTOR2_VALUE, Optional.<OntologyTerm>absent());
+        experimentDesign.putFactor(ASSAY_1, FACTOR_HEADER, ASSAY_1_FACTOR_VALUE, new OntologyTerm(F_1, HTTP_OBO));
+        experimentDesign.putFactor(ASSAY_1, FACTOR2_HEADER, ASSAY_1_FACTOR2_VALUE, ABSENT_ONTOLOGY_TERMS);
         experimentDesign.putSampleCharacteristic(ASSAY_1, CHARACTERISTIC_1_HEADER, sampleCharacteristic1);
         experimentDesign.putSampleCharacteristic(ASSAY_1, CHARACTERISTIC_2_HEADER, sampleCharacteristic2);
         experimentDesign.putSampleCharacteristic(ASSAY_1, CHARACTERISTIC_3_HEADER, sampleCharacteristic3);
 
-        experimentDesign.putFactor(ASSAY_2, FACTOR_HEADER, ASSAY_2_FACTOR_VALUE, OntologyTerm.createOptional(F_2, null));
-        experimentDesign.putFactor(ASSAY_2, FACTOR2_HEADER, ASSAY_2_FACTOR2_VALUE, Optional.<OntologyTerm>absent());
+        experimentDesign.putFactor(ASSAY_2, FACTOR_HEADER, ASSAY_2_FACTOR_VALUE, new OntologyTerm(F_2, null));
+        experimentDesign.putFactor(ASSAY_2, FACTOR2_HEADER, ASSAY_2_FACTOR2_VALUE, ABSENT_ONTOLOGY_TERMS);
         experimentDesign.putSampleCharacteristic(ASSAY_2, CHARACTERISTIC_1_HEADER, sampleCharacteristic1);
         experimentDesign.putSampleCharacteristic(ASSAY_2, CHARACTERISTIC_2_HEADER, sampleCharacteristic2);
         experimentDesign.putSampleCharacteristic(ASSAY_2, CHARACTERISTIC_3_HEADER, sampleCharacteristic3);
 
-        experimentDesign.putFactor(ASSAY_3, FACTOR_HEADER, ASSAY_3_FACTOR_VALUE, Optional.<OntologyTerm>absent());
-        experimentDesign.putFactor(ASSAY_3, FACTOR2_HEADER, ASSAY_3_FACTOR2_VALUE, Optional.<OntologyTerm>absent());
+        experimentDesign.putFactor(ASSAY_3, FACTOR_HEADER, ASSAY_3_FACTOR_VALUE, ABSENT_ONTOLOGY_TERMS);
+        experimentDesign.putFactor(ASSAY_3, FACTOR2_HEADER, ASSAY_3_FACTOR2_VALUE, ABSENT_ONTOLOGY_TERMS);
         experimentDesign.putSampleCharacteristic(ASSAY_3, CHARACTERISTIC_1_HEADER, sampleCharacteristic1);
         experimentDesign.putSampleCharacteristic(ASSAY_3, CHARACTERISTIC_2_HEADER, sampleCharacteristic2);
         experimentDesign.putSampleCharacteristic(ASSAY_3, CHARACTERISTIC_3_HEADER, sampleCharacteristic3);

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration experimentType="microarray_1colour_mrna_differential">
+    <analytics>
+        <array_design>A-AFFY-6</array_design>
+        <assay_groups>
+            <assay_group id="g1" label="dysferlin mutant; left ventricle cardiac muscle">
+                <assay>S/LV2</assay>
+                <assay>S/LV3</assay>
+                <assay>S/LV5</assay>
+                <assay>S/LV1</assay>
+                <assay>S/LV4</assay>
+            </assay_group>
+            <assay_group id="g2" label="dysferlin mutant; skeletal muscle">
+                <assay>S/SM4</assay>
+                <assay>S/SM5</assay>
+                <assay>S/SM3</assay>
+                <assay>S/SM2</assay>
+                <assay>S/SM1</assay>
+            </assay_group>
+            <assay_group id="g3" label="wild type; skeletal muscle">
+                <assay>N/SM4</assay>
+                <assay>N/SM3</assay>
+                <assay>N/SM2</assay>
+                <assay>N/SM1</assay>
+                <assay>N/SM5</assay>
+            </assay_group>
+            <assay_group id="g4" label="wild type; left ventricle cardiac muscle">
+                <assay>N/LV3</assay>
+                <assay>N/LV1</assay>
+                <assay>N/LV5</assay>
+                <assay>N/LV2</assay>
+                <assay>N/LV4</assay>
+            </assay_group>
+        </assay_groups>
+        <contrasts>
+            <contrast id="g4_g1">
+                <name>'dysferlin mutant' vs 'wild type' in 'left ventricle cardiac muscle'</name>
+                <reference_assay_group>g4</reference_assay_group>
+                <test_assay_group>g1</test_assay_group>
+            </contrast>
+            <contrast id="g3_g2">
+                <name>'dysferlin mutant' vs 'wild type' in 'skeletal muscle'</name>
+                <reference_assay_group>g3</reference_assay_group>
+                <test_assay_group>g2</test_assay_group>
+            </contrast>
+        </contrasts>
+    </analytics>
+</configuration>

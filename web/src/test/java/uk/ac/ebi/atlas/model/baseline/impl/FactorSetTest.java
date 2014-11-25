@@ -172,4 +172,9 @@ public class FactorSetTest {
 
         assertThat(subjectContainsOnlyOrganism.containsOnlyOrganism(), is(false));
     }
+
+    @Test
+    public void testFactorWithMultipleOntologyTerms() {
+
+    }
 }

@@ -19,13 +19,13 @@ public class OntologyTermTest {
 
     @Test
     public void termWithSource() {
-        OntologyTerm ontologyTerm = OntologyTerm.create("UBERON:0002107", "http://purl.obolibrary.org/obo/");
+        OntologyTerm ontologyTerm = new OntologyTerm("UBERON:0002107", "http://purl.obolibrary.org/obo/");
         assertThat(ontologyTerm.uri(), is("http://purl.obolibrary.org/obo/UBERON:0002107"));
     }
 
     @Test
     public void termWithSourceNoEndingInSlash() {
-        OntologyTerm ontologyTerm = OntologyTerm.create("UBERON:0002107", "UBERON");
+        OntologyTerm ontologyTerm = new OntologyTerm("UBERON:0002107", "UBERON");
         assertThat(ontologyTerm.uri(), is("UBERON/UBERON:0002107"));
     }
 

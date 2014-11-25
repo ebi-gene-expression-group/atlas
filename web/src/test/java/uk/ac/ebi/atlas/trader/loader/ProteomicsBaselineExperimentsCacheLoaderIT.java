@@ -39,7 +39,6 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -47,13 +46,11 @@ import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
+import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -152,10 +149,22 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
         assertThat(experimentDesign.getFactorHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM_PART));
         assertThat(experimentDesign.getSampleHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM, ORGANISM_PART));
 
-        assertThat(experimentDesign.getSampleCharacteristics("Adult_Ovary"), contains(
-                SampleCharacteristic.create(ORGANISM_PART, "ovary", OntologyTerm.createFromUri("http://www.ebi.ac.uk/efo/EFO_0000973")),
-                SampleCharacteristic.create(ORGANISM, "Homo sapiens", OntologyTerm.createFromUri("http://purl.obolibrary.org/obo/NCBITaxon_9606")),
-                SampleCharacteristic.create(DEVELOPMENTAL_STAGE, "adult", OntologyTerm.createFromUri("http://www.ebi.ac.uk/efo/EFO_0001272"))));
+        Iterator<SampleCharacteristic> sampleCharacteristicIterator = experimentDesign.getSampleCharacteristics("Adult_Ovary").iterator();
+
+        SampleCharacteristic sampleCharacteristic = sampleCharacteristicIterator.next();
+        assertThat(sampleCharacteristic.header(), is(ORGANISM_PART));
+        assertThat(sampleCharacteristic.value(), is("ovary"));
+        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), is("http://www.ebi.ac.uk/efo/EFO_0000973"));
+
+        sampleCharacteristic = sampleCharacteristicIterator.next();
+        assertThat(sampleCharacteristic.header(), is(ORGANISM));
+        assertThat(sampleCharacteristic.value(), is("Homo sapiens"));
+        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
+
+        sampleCharacteristic = sampleCharacteristicIterator.next();
+        assertThat(sampleCharacteristic.header(), is(DEVELOPMENTAL_STAGE));
+        assertThat(sampleCharacteristic.value(), is("adult"));
+        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), is("http://www.ebi.ac.uk/efo/EFO_0001272"));
 
         assertThat(experimentDesign.asTableData(), hasSize(30));
         assertThat(experimentDesign.asTableData(), contains(

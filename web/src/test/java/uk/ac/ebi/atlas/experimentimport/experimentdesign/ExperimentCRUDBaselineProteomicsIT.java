@@ -4,6 +4,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,14 +27,12 @@ import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTraderFactory;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -184,7 +183,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
 
         Collection<Condition> beans = collectionArgumentCaptor.getValue();
 
-            assertThat(beans, hasSize(30));
+        assertThat(beans, hasSize(30));
         assertThat(beans, hasItem(new Condition(E_PROT_1,"g10", ImmutableList.of("EFO_0000399", "EFO_0000635", "EFO_0000001", "EFO_0001272", "adult", "UBERON_0002113", "OBI_0100026", "snap#MaterialEntity", "NCBITaxon_9606", "EFO_0000786", "EFO_0000787", "NCBITaxon_2759", "Homo sapiens", "kidney", "span#ProcessualEntity"))));
     }
 
@@ -392,10 +391,22 @@ public class ExperimentCRUDBaselineProteomicsIT {
         assertThat(experimentDesign.getFactorHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM_PART));
         assertThat(experimentDesign.getSampleHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM, ORGANISM_PART));
 
-        assertThat(experimentDesign.getSampleCharacteristics("Adult_Ovary"), contains(
-                SampleCharacteristic.create(ORGANISM_PART, "ovary", OntologyTerm.createFromUri("http://www.ebi.ac.uk/efo/EFO_0000973")),
-                SampleCharacteristic.create(ORGANISM, "Homo sapiens", OntologyTerm.createFromUri("http://purl.obolibrary.org/obo/NCBITaxon_9606")),
-                SampleCharacteristic.create(DEVELOPMENTAL_STAGE, "adult", OntologyTerm.createFromUri("http://www.ebi.ac.uk/efo/EFO_0001272"))));
+        Iterator<SampleCharacteristic> sampleCharacteristicIterator = experimentDesign.getSampleCharacteristics("Adult_Ovary").iterator();
+
+        SampleCharacteristic sampleCharacteristic = sampleCharacteristicIterator.next();
+        assertThat(sampleCharacteristic.header(), Matchers.is(ORGANISM_PART));
+        assertThat(sampleCharacteristic.value(), Matchers.is("ovary"));
+        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0000973"));
+
+        sampleCharacteristic = sampleCharacteristicIterator.next();
+        assertThat(sampleCharacteristic.header(), Matchers.is(ORGANISM));
+        assertThat(sampleCharacteristic.value(), Matchers.is("Homo sapiens"));
+        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), Matchers.is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
+
+        sampleCharacteristic = sampleCharacteristicIterator.next();
+        assertThat(sampleCharacteristic.header(), Matchers.is(DEVELOPMENTAL_STAGE));
+        assertThat(sampleCharacteristic.value(), Matchers.is("adult"));
+        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0001272"));
     }
 
     @Test

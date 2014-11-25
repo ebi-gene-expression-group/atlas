@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.is;
 public class BaselineExpressionViewModelBuilderTest {
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
-    private static final Factor ADIPOSE = new Factor(ORGANISM_PART, "adipose", OntologyTerm.create("ontologyTerm"));
+    private static final Factor ADIPOSE = new Factor(ORGANISM_PART, "adipose", new OntologyTerm("ontologyTerm"));
     private static final Factor ADRENAL = new Factor(ORGANISM_PART, "adrenal");
     private static final Factor BRAIN = new Factor(ORGANISM_PART, "brain");
     private static final Factor BREAST = new Factor(ORGANISM_PART, "breast");
@@ -45,7 +45,6 @@ public class BaselineExpressionViewModelBuilderTest {
         BaselineProfile profile = new BaselineProfile("Factor_ID", "Factor_NAME");
         profile.add("ORGANISM_PART", new BaselineExpression(NT, new FactorSet(ADIPOSE)));
         profile.add("ORGANISM_PART", new BaselineExpression(0.3, new FactorSet(ADRENAL)));
-
 
         BaselineExpressionViewModel[] expressions = subject.buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);
 

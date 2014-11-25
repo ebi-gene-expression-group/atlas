@@ -23,17 +23,19 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.base.Joiner;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
+import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -58,15 +60,24 @@ public class ProteomicsBaselineExperimentMageTabParserIT {
     public void experimentDesign() throws IOException {
         ExperimentDesign experimentDesign = subject.parse(E_PROT_1).getExperimentDesign();
 
-        //print(experimentDesign.asTableData());
-
         assertThat(experimentDesign.getFactorHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM_PART));
         assertThat(experimentDesign.getSampleHeaders(), contains(DEVELOPMENTAL_STAGE, ORGANISM, ORGANISM_PART));
+        Iterator<SampleCharacteristic> sampleCharacteristicIterator = experimentDesign.getSampleCharacteristics("Adult_Ovary").iterator();
 
-        assertThat(experimentDesign.getSampleCharacteristics("Adult_Ovary"), contains(
-                SampleCharacteristic.create(ORGANISM_PART, "ovary", OntologyTerm.createFromUri("http://www.ebi.ac.uk/efo/EFO_0000973")),
-                SampleCharacteristic.create(ORGANISM, "Homo sapiens", OntologyTerm.createFromUri("http://purl.obolibrary.org/obo/NCBITaxon_9606")),
-                SampleCharacteristic.create(DEVELOPMENTAL_STAGE, "adult", OntologyTerm.createFromUri("http://www.ebi.ac.uk/efo/EFO_0001272"))));
+        SampleCharacteristic sampleCharacteristic = sampleCharacteristicIterator.next();
+        assertThat(sampleCharacteristic.header(), Matchers.is(ORGANISM_PART));
+        assertThat(sampleCharacteristic.value(), Matchers.is("ovary"));
+        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0000973"));
+
+        sampleCharacteristic = sampleCharacteristicIterator.next();
+        assertThat(sampleCharacteristic.header(), Matchers.is(ORGANISM));
+        assertThat(sampleCharacteristic.value(), Matchers.is("Homo sapiens"));
+        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), Matchers.is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
+
+        sampleCharacteristic = sampleCharacteristicIterator.next();
+        assertThat(sampleCharacteristic.header(), Matchers.is(DEVELOPMENTAL_STAGE));
+        assertThat(sampleCharacteristic.value(), Matchers.is("adult"));
+        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0001272"));
 
         assertThat(experimentDesign.asTableData(), hasSize(30));
         assertThat(experimentDesign.asTableData(), contains(
@@ -101,11 +112,5 @@ public class ProteomicsBaselineExperimentMageTabParserIT {
                 arrayContaining("Fetal_Placenta", "fetus", "Homo sapiens", "placenta", "fetus", "placenta"),
                 arrayContaining("Fetal_Testis", "fetus", "Homo sapiens", "testis", "fetus", "testis"))
         );
-    }
-
-    private static void print(List<String[]> strings) {
-        for (String[] row : strings) {
-            System.out.println("\"" + Joiner.on("\", \"").join(row) + "\"");
-        }
     }
 }

@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
@@ -38,6 +37,7 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -101,11 +101,11 @@ public class RnaSeqExperimentMageTabParserIT {
         SampleCharacteristic sampleCharacteristic = experimentDesign.getSampleCharacteristic("SRR089334", "karyotype");
         assert sampleCharacteristic != null;
 
-        Optional<OntologyTerm> ontologyTermOptional = sampleCharacteristic.valueOntologyTerm();
+        Set<OntologyTerm> ontologyTermOptional = sampleCharacteristic.valueOntologyTerms();
 
-        assertThat(ontologyTermOptional.isPresent(), is(true));
-        assertThat(ontologyTermOptional.get().id(), is("EFO_0000616"));
-        assertThat(ontologyTermOptional.get().source(), is("EFO"));
+        assertThat(ontologyTermOptional.isEmpty(), is(false));
+        assertThat(OntologyTermUtils.joinIds(ontologyTermOptional), is("EFO_0000616"));
+        assertThat(OntologyTermUtils.joinSources(ontologyTermOptional), is("EFO"));
     }
 
     @Test
@@ -148,10 +148,10 @@ public class RnaSeqExperimentMageTabParserIT {
         assertThat(err030880, contains(factor));
 
         Factor organismPart = err030880.iterator().next();
-        Optional<OntologyTerm> valueOntologyTerm = organismPart.getValueOntologyTerm();
-        assertThat(valueOntologyTerm.isPresent(), is(true));
-        assertThat(valueOntologyTerm.get().id(), is("UBERON:0001013"));
-        assertThat(valueOntologyTerm.get().source(), is("UBERON"));
+        Set<OntologyTerm> valueOntologyTerm = organismPart.getValueOntologyTerms();
+        assertThat(valueOntologyTerm.isEmpty(), is(false));
+        assertThat(OntologyTermUtils.joinIds(valueOntologyTerm), is("UBERON:0001013"));
+        assertThat(OntologyTermUtils.joinSources(valueOntologyTerm), is("UBERON"));
     }
 
     @Test

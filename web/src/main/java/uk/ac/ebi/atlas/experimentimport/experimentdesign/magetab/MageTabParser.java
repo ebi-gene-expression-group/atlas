@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
@@ -57,6 +56,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
     private static final Set<String> FACTORS_NEEDING_DOSE = Sets.newHashSet("compound", "irradiate");
 
     private static final String DOSE = "dose";
+    private static final String ONTOLOGY_TERM_DELIMITER = "\\|";
 
     private MageTabLimpopoUtils mageTabLimpopoUtils;
 
@@ -125,9 +125,9 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
     private void addCharacteristicToExperimentDesign(ExperimentDesign experimentDesign, String runOrAssay, CharacteristicsAttribute characteristicsAttribute) {
         String header = characteristicsAttribute.type;
         String value = cleanValueAndUnitIfNeeded(characteristicsAttribute.getNodeName(), characteristicsAttribute.unit);
-        Optional<OntologyTerm> characteristicOntologyTerm = OntologyTerm.createOptional(characteristicsAttribute.termAccessionNumber, characteristicsAttribute.termSourceREF);
+        OntologyTerm[] characteristicOntologyTerms = parseOntologyTerms(characteristicsAttribute.termAccessionNumber, characteristicsAttribute.termSourceREF);
 
-        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(header, value, characteristicOntologyTerm);
+        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(header, value, characteristicOntologyTerms);
         experimentDesign.putSampleCharacteristic(runOrAssay, header, sampleCharacteristic);
     }
 
@@ -145,8 +145,8 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
         String compoundFactorValue = null;
         String compoundFactorName = null;
-        String compoundFactorValueOntologyTermAccessionNumber = null;
-        String compoundFactorValueOntologyTermSourceRef = null;
+        String compoundFactorValueOntologyTermAccessionNumbers = null;
+        String compoundFactorValueOntologyTermSourceRefs = null;
 
         String runOrAssay = namedSdrfNode.getName();
 
@@ -154,28 +154,28 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
             String factorName = factorValueAttribute.type; // the SDRF calls this type, but in the IDF the same value is actually factor name
             String factorValue = cleanValueAndUnitIfNeeded(factorValueAttribute.getNodeName(), factorValueAttribute.unit);
-            String factorValueOntologyTermAccessionNumber = factorValueAttribute.termAccessionNumber;
-            String factorValueOntologyTermSourceRef = factorValueAttribute.termSourceREF;
+            String factorValueOntologyTermAccessionNumbers = factorValueAttribute.termAccessionNumber;
+            String factorValueOntologyTermSourceRefs = factorValueAttribute.termSourceREF;
 
             if (isFactorThatHasADose(factorValueAttribute)) {
 
                 compoundFactorName = factorName;
                 compoundFactorValue = factorValue;
-                compoundFactorValueOntologyTermAccessionNumber = factorValueOntologyTermAccessionNumber;
-                compoundFactorValueOntologyTermSourceRef = factorValueOntologyTermSourceRef;
+                compoundFactorValueOntologyTermAccessionNumbers = factorValueOntologyTermAccessionNumbers;
+                compoundFactorValueOntologyTermSourceRefs = factorValueOntologyTermSourceRefs;
 
             } else if (isDoseFactor(factorValueAttribute)) {
 
                 if (StringUtils.isNotEmpty(compoundFactorValue)) {
                     factorValue = Joiner.on(" ").join(compoundFactorValue, factorValue);
                     factorName = compoundFactorName;
-                    factorValueOntologyTermAccessionNumber = compoundFactorValueOntologyTermAccessionNumber;
-                    factorValueOntologyTermSourceRef = compoundFactorValueOntologyTermSourceRef;
+                    factorValueOntologyTermAccessionNumbers = compoundFactorValueOntologyTermAccessionNumbers;
+                    factorValueOntologyTermSourceRefs = compoundFactorValueOntologyTermSourceRefs;
 
                     compoundFactorName = null;
                     compoundFactorValue = null;
-                    compoundFactorValueOntologyTermAccessionNumber = null;
-                    compoundFactorValueOntologyTermSourceRef = null;
+                    compoundFactorValueOntologyTermAccessionNumbers = null;
+                    compoundFactorValueOntologyTermSourceRefs = null;
                 } else {
                     throw new IllegalStateException(DOSE + " : " + factorValue + " has no corresponding value for any of the following factors: " + FACTORS_NEEDING_DOSE);
                 }
@@ -183,15 +183,13 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
             }
 
             String factorType = factorNamesToType.get(factorName);
-            Optional<OntologyTerm> ontologyTerm = OntologyTerm.createOptional(factorValueOntologyTermAccessionNumber, factorValueOntologyTermSourceRef);
-            experimentDesign.putFactor(runOrAssay, factorType, factorValue, ontologyTerm);
+            experimentDesign.putFactor(runOrAssay, factorType, factorValue, parseOntologyTerms(factorValueOntologyTermAccessionNumbers, factorValueOntologyTermSourceRefs));
         }
 
         //Add compound factor in a case there was no dose corresponding to it
         if (StringUtils.isNotEmpty(compoundFactorName) && StringUtils.isNotEmpty(compoundFactorValue)) {
             String compoundFactorType = factorNamesToType.get(compoundFactorName);
-            Optional<OntologyTerm> ontologyTerm = OntologyTerm.createOptional(compoundFactorValueOntologyTermAccessionNumber, compoundFactorValueOntologyTermSourceRef);
-            experimentDesign.putFactor(runOrAssay, compoundFactorType, compoundFactorValue, ontologyTerm);
+            experimentDesign.putFactor(runOrAssay, compoundFactorType, compoundFactorValue, parseOntologyTerms(compoundFactorValueOntologyTermAccessionNumbers, compoundFactorValueOntologyTermSourceRefs));
         }
     }
 
@@ -214,6 +212,24 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
             }
         }
         return value;
+    }
+
+    private OntologyTerm[] parseOntologyTerms(String accessionNumberField, String sourceRefField) {
+        ImmutableSet.Builder<OntologyTerm> ontologyTermsBuilder = new ImmutableSet.Builder<>();
+
+        if (accessionNumberField == null) {
+            return ontologyTermsBuilder.build().toArray(new OntologyTerm[0]);
+        }
+
+        String[] accessionNumbers = accessionNumberField.split(ONTOLOGY_TERM_DELIMITER);
+        String[] sourceRefs = sourceRefField.split(ONTOLOGY_TERM_DELIMITER);
+
+        for (int i = 0 ; i < accessionNumbers.length ; i++) {
+            if (!accessionNumbers[i].isEmpty()) {
+                ontologyTermsBuilder.add(new OntologyTerm(accessionNumbers[i], sourceRefs[i]));
+            }
+        }
+        return ontologyTermsBuilder.build().toArray(new OntologyTerm[0]);
     }
 
     protected abstract List<FactorValueAttribute> getFactorAttributes(NamedSdrfNode<T> sdrfNodeWrapper);

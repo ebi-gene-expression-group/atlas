@@ -22,10 +22,10 @@
 
 package uk.ac.ebi.atlas.model;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.*;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;
@@ -66,7 +66,7 @@ public class ExperimentDesign implements Serializable {
     private List<String> assayHeaders = Lists.newArrayList();
 
     public void putSampleCharacteristic(String runOrAssay, String sampleCharacteristicHeader, String sampleCharacteristicValue) {
-        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleCharacteristicHeader, sampleCharacteristicValue, Optional.<OntologyTerm>absent());
+        SampleCharacteristic sampleCharacteristic = SampleCharacteristic.create(sampleCharacteristicHeader, sampleCharacteristicValue);
         putSampleCharacteristic(runOrAssay, sampleCharacteristicHeader, sampleCharacteristic);
     }
 
@@ -79,11 +79,11 @@ public class ExperimentDesign implements Serializable {
     }
 
     public void putFactor(String runOrAssay, String factorHeader, String factorValue) {
-        putFactor(runOrAssay, factorHeader, factorValue, Optional.<OntologyTerm>absent());
+        putFactor(runOrAssay, factorHeader, factorValue, new OntologyTerm[0]);
     }
 
-    public void putFactor(String runOrAssay, String factorHeader, String factorValue, Optional<OntologyTerm> factorOntologyTerm) {
-        Factor factor = new Factor(factorHeader, factorValue, factorOntologyTerm);
+    public void putFactor(String runOrAssay, String factorHeader, String factorValue, OntologyTerm ... factorOntologyTerms) {
+        Factor factor = new Factor(factorHeader, factorValue, factorOntologyTerms);
         if(!factorSetMap.containsKey(runOrAssay)){
             factorSetMap.put(runOrAssay, new FactorSet());
         }
@@ -160,9 +160,9 @@ public class ExperimentDesign implements Serializable {
             SampleCharacteristics sampleCharacteristics = sampleEntry.getValue();
 
             for (SampleCharacteristic sampleCharacteristic : sampleCharacteristics.values()) {
-                Optional<OntologyTerm> valueOntologyTerm = sampleCharacteristic.valueOntologyTerm();
-                if (valueOntologyTerm.isPresent()) {
-                    builder.put(runOrAssay, valueOntologyTerm.get().id());
+                Set<OntologyTerm> valueOntologyTerms = sampleCharacteristic.valueOntologyTerms();
+                if (!valueOntologyTerms.isEmpty()) {
+                    builder.put(runOrAssay, OntologyTermUtils.joinIds(valueOntologyTerms));
                 }
             }
 
@@ -175,9 +175,9 @@ public class ExperimentDesign implements Serializable {
             FactorSet factorSet = factorSetEntry.getValue();
 
             for (Factor factor : factorSet) {
-                Optional<OntologyTerm> valueOntologyTerm = factor.getValueOntologyTerm();
-                if (valueOntologyTerm.isPresent()) {
-                    builder.put(runOrAssay, valueOntologyTerm.get().id());
+                Set<OntologyTerm> valueOntologyTerms = factor.getValueOntologyTerms();
+                if (!valueOntologyTerms.isEmpty()) {
+                    builder.put(runOrAssay, OntologyTermUtils.joinIds(valueOntologyTerms));
                 }
             }
         }
