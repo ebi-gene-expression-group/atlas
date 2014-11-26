@@ -9,13 +9,13 @@ import java.util.List;
 
 import static com.jayway.restassured.RestAssured.get;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasSize;
 
 public class ExperimentsSIT extends RestAssuredFixture {
 
     @Test
-    public void numberOfExperiments(){
+    public void experimentSet(){
         Response response = get("/json/experiments");
 
         response.then().assertThat().statusCode(200);
@@ -23,7 +23,7 @@ public class ExperimentsSIT extends RestAssuredFixture {
 
         List<String> accessions = response.jsonPath().get("aaData.experimentAccession");
 
-        assertThat(accessions, hasSize(NumberOfExperiments.ALL));
+        assertThat(accessions, containsInAnyOrder("E-GEOD-10732","E-GEOD-11758","E-GEOD-12108","E-GEOD-21860","E-GEOD-22351","E-GEOD-26284","E-GEOD-30352","E-GEOD-3779","E-GEOD-38400","E-GEOD-41338","E-GEOD-43049","E-GEOD-8122","E-MEXP-1099","E-MEXP-1276","E-MEXP-3628","E-MTAB-1066","E-MTAB-1733","E-MTAB-2039","E-MTAB-2800","E-MTAB-2809","E-MTAB-2812","E-MTAB-513","E-MTAB-599","E-MTAB-698","E-PROT-1","E-TABM-51","E-TABM-713"));
     }
 
     @Test
