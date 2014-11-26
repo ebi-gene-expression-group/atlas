@@ -9,6 +9,7 @@ import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 
 import java.util.List;
 
+import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -17,6 +18,16 @@ import static org.hamcrest.Matchers.is;
 public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssuredFixture {
 
     private EndPoint subject = new EndPoint("/gxa/query.tsv?geneQuery=Cyba&exactMatch=true&_exactMatch=on&organism=Any&condition=");
+
+    @Test
+    public void shouldFindResultsForChildEfoTerms() {
+        Response response = get("query.tsv?geneQuery=&exactMatch=true&_exactMatch=on&organism=Any&condition=sex");
+
+        ResponseBody body = response.getBody();
+
+        String[] lines = body.asString().split("\n");
+        assertThat(lines.length, is(1102));
+    }
 
     @Test
     public void verifyLengthOfDocument() {

@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.search.EFO.ConditionSearchEFOExpander;
 import uk.ac.ebi.atlas.utils.VisitorException;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
@@ -43,11 +44,13 @@ public class BioentitiesSearchDifferentialDownloadController {
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
     private DiffAnalyticsTSVWriter tsvWriter;
+    private ConditionSearchEFOExpander efoExpander;
 
     @Inject
-    public BioentitiesSearchDifferentialDownloadController(DiffAnalyticsSearchService diffAnalyticsSearchService, DiffAnalyticsTSVWriter tsvWriter) {
+    public BioentitiesSearchDifferentialDownloadController(DiffAnalyticsSearchService diffAnalyticsSearchService, DiffAnalyticsTSVWriter tsvWriter, ConditionSearchEFOExpander efoExpander) {
         this.diffAnalyticsSearchService = diffAnalyticsSearchService;
         this.tsvWriter = tsvWriter;
+        this.efoExpander = efoExpander;
     }
 
     @RequestMapping(value = "/query.tsv")
@@ -78,7 +81,10 @@ public class BioentitiesSearchDifferentialDownloadController {
             writer.setResponseWriter(response.getWriter());
             writer.writeHeader(requestParameters);
 
-            int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getCondition(), requestParameters.getOrganism(), requestParameters.isExactMatch(), writer);
+
+            String condition = efoExpander.fetchExpandedTermWithEFOChildren(requestParameters.getCondition());
+
+            int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), condition, requestParameters.getOrganism(), requestParameters.isExactMatch(), writer);
             LOGGER.info("downloadGeneQueryResults streamed " + count + " differential gene expressions");
         } catch (VisitorException e) {
             LOGGER.warn("downloadGeneQueryResults aborted, connection may have been lost with the client:" + e.getMessage());
