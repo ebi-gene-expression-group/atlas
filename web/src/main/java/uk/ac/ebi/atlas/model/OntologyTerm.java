@@ -64,6 +64,9 @@ public class OntologyTerm {
 
     @Override
     public int hashCode() {
+        if (source == null) {
+            return this.id.hashCode();
+        }
         return this.id.hashCode() ^ this.source.hashCode();
     }
 }
