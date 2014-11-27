@@ -164,7 +164,7 @@
 
             searchFormModule.geneQuerySearchBoxInitAutocomplete();
 
-            searchFormModule.disableCarriageReturn("#geneQuery");
+            searchFormModule.geneQueryEnterEventHandler();
 
             searchFormModule.disableCarriageReturn("#condition");
 

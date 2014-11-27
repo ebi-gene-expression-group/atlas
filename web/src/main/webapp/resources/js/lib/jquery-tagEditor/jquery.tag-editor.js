@@ -276,6 +276,10 @@
                 }
                 // enter key
                 else if (e.which == 13) {
+                    if ($(ed).find("input").caret() == 0) {
+                        $(ed).trigger("submit");
+                    }
+
                     var next_tag = $t.closest('li').next('li').find('.tag-editor-tag');
                     if (next_tag.length) next_tag.click().find('input').caret(0);
                     else if ($t.val()) ed.click();

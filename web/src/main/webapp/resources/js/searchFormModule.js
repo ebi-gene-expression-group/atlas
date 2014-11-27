@@ -125,7 +125,7 @@ var searchFormModule = (function($) {
                 placeholder: 'Start typing ...',
                 forceLowercase: false
             });
-    }
+    };
 
     function disableCarriageReturn(selector) {
         $(selector).keypress(function(event) {
@@ -136,11 +136,19 @@ var searchFormModule = (function($) {
         });
     }
 
+    function geneQueryEnterEventHandler() {
+        $('.tag-editor').on('submit', function (e) {
+            $("#submit-button").click();
+        });
+    }
+
     function init (watermarkLabel, species, defaultPValueCutOff, defaultFoldChangeCutOff) {
 
         _species = species;
 
         initButtons();
+
+        geneQueryEnterEventHandler();
 
         initWatermarks(defaultPValueCutOff, defaultFoldChangeCutOff);
 
@@ -148,15 +156,14 @@ var searchFormModule = (function($) {
 
         geneQuerySearchBoxInitAutocomplete();
 
-        disableCarriageReturn("#geneQuery");
-
     }
 
     return {
         init: init,
         geneQuerySearchBoxInitAutocomplete: geneQuerySearchBoxInitAutocomplete,
         disableCarriageReturn: disableCarriageReturn,
-        removeHttpParameters: removeHttpParameters
+        removeHttpParameters: removeHttpParameters,
+        geneQueryEnterEventHandler: geneQueryEnterEventHandler
     };
 
 }(jQuery));
