@@ -81,11 +81,21 @@ Biojs.AtlasHeatmap = Biojs.extend({
         };
 
         jQuery.ajax(httpRequest).done(function (data) {
-            data.config.contextRoot = opt.gxaBaseUrl;
+
+            function setContextRoot(data, gxaBaseUrl) {
+                data.config.contextRoot = gxaBaseUrl;
+
+                if (data.anatomogram) {
+                    data.anatomogram.contextRoot = gxaBaseUrl;
+                }
+            }
+
+            setContextRoot(data, opt.gxaBaseUrl);
+
             self.drawHeatmap(data, opt.target);
         }).fail(function (jqXHR, textStatus, errorThrown) {
             Biojs.console.log("ERROR: " + jqXHR.status);
-            containerDiv.html("An error occurred while retrieving the data: " + xhr.status + " - " + xhr.statusText);
+            containerDiv.html("An error occurred while retrieving the data: " + jqXHR.status + " - " + jqXHR.statusText);
         });
 
     },
@@ -125,8 +135,10 @@ Biojs.AtlasHeatmap = Biojs.extend({
          a search for REACT_6900 returns genes belonging to this pathway.
          For multiple identifiers of the same species please use:
          geneQuery=ENSG00000187003+ENSG00000185264&propertyType=identifier
+         or when using a gene name that exists for multiple species, specify
+         the species, eg: geneQuery=ACTL7A&species=homo+sapiens
          */
-        params:'geneQuery=CCNT2&POLR2B',
+        params:'geneQuery=REACT_1309',
         /* Target DIV
          This mandatory parameter is the identifier of the DIV tag where the
          component should be displayed. Use this value to draw your

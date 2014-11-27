@@ -1,0 +1,67 @@
+    <!DOCTYPE html>
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="//wwwdev.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
+    <link type="text/css" rel="stylesheet" href="//wwwdev.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css">
+
+    <link rel="stylesheet" type="text/css" href="//wwwdev.ebi.ac.uk/gxa/resources/css/atlas.css">
+    <link rel="stylesheet" type="text/css" href="//wwwdev.ebi.ac.uk/gxa/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
+    <link rel="stylesheet" type="text/css" href="//wwwdev.ebi.ac.uk/gxa/resources/css/table-grid.css">
+    <link rel="stylesheet" type="text/css" href="//wwwdev.ebi.ac.uk/gxa/resources/css/heatmap-and-anatomogram.css">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.js"></script>
+    <script language="JavaScript" type="text/javascript" src="//wwwdev.ebi.ac.uk/gxa/resources/js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="//wwwdev.ebi.ac.uk/gxa/resources/js/jquery-ui-1.10.3.fix-8740.0520a49/dist/jquery-ui.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+            src="//wwwdev.ebi.ac.uk/gxa/resources/js/jquery-migrate-1.2.0.min.js"></script>
+
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/jsx/factorTooltip.js"></script>
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/js/factorTooltipModule.js"></script>
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/jsx/contrastTooltip.js"></script>
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/js/contrastTooltipModule.js"></script>
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/js/helpTooltipsModule.js"></script>
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/js/genePropertiesTooltipModule.js"></script>
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/js/highlight.js"></script>
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/js/transcriptPopupModule.js"></script>
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/js/anatomogramModule.js"></script>
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/js/EventEmitter-4.2.7.js"></script>
+
+    <script src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
+
+    <!-- for transcripts start -->
+    <!--[if lte IE 8]>
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/js/flot/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/js/flot/jquery.flot.js"></script>
+    <script src="//wwwdev.ebi.ac.uk/gxa/resources/js/flot/jquery.flot.pie.js"></script>
+
+    <!-- fancybox start -->
+    <link rel="stylesheet"
+          href="//wwwdev.ebi.ac.uk/gxa/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css"
+          type="text/css" media="screen"/>
+    <script type="text/javascript"
+            src="//wwwdev.ebi.ac.uk/gxa/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
+    <!-- fancybox end -->
+    <!-- transcripts end -->
+
+    <script language="JavaScript" type="text/javascript" src="//wwwdev.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
+    <script language="JavaScript" type="text/javascript" src="//wwwdev.ebi.ac.uk/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
+</head>
+<body>
+
+<div id="heatmapContainer">
+</div>
+
+<script src="//wwwdev.ebi.ac.uk/gxa/resources/jsx/heatmap.js"></script>
+<script src="//wwwdev.ebi.ac.uk/gxa/resources/jsx/heatmapContainer.js"></script>
+<script type="text/javascript">
+        new Biojs.AtlasHeatmap({
+            gxaBaseUrl: 'http://wwwdev.ebi.ac.uk/gxa',
+            params: 'geneQuery=REACT_1309',
+            target: "heatmapContainer"
+        });
+</script>
+</body>
+</html>
