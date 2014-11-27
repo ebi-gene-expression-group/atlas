@@ -13,7 +13,7 @@ var HeatmapContainer = (function (React) {
             var Heatmap = this.props.Heatmap;
             var height = containsHuman(this.props.anatomogram.maleAnatomogramFile) ? 360 : 250;
             var sexToggleImageSrc = this.props.anatomogram.contextRoot + "/resources/images/male_selected.png";
-            var heatmapClass = "heatmap-position" + this.props.isWidget ? "-widget" : "";
+            var heatmapClass = "heatmap-position" + (this.props.isWidget ? "-widget" : "");
 
             return (
 
