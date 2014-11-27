@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
-import org.springframework.beans.factory.annotation.Required;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 
@@ -124,15 +124,18 @@ public class ApplicationProperties {
     public String buildDownloadURL(HttpServletRequest request) {
         // get original query string, not the one modified by ExperimentDispatcher
         String queryString = (String) request.getAttribute("javax.servlet.forward.query_string");
+        String requestUri = (String) request.getAttribute("javax.servlet.forward.request_uri");
+        String uri = StringUtils.remove(requestUri, request.getContextPath());
+
         return Joiner.on("?").skipNulls()
-                .join(new String[]{request.getAttribute("javax.servlet.forward.request_uri") + TSV_FILE_EXTENSION, queryString}).toString();
+                .join(new String[]{uri + TSV_FILE_EXTENSION, queryString}).toString();
     }
 
     public String buildDownloadURLForWidget(HttpServletRequest request, String experimentAccession) {
         // get original query string, not the one modified by ExperimentDispatcher
         String queryString = (String) request.getAttribute("javax.servlet.forward.query_string");
         return Joiner.on("?").skipNulls()
-                .join(new String[]{request.getContextPath() + "/experiments/" + experimentAccession + TSV_FILE_EXTENSION, queryString}).toString();
+                .join(new String[]{"/experiments/" + experimentAccession + TSV_FILE_EXTENSION, queryString}).toString();
     }
 
     public String urlParamEncode(String value) throws UnsupportedEncodingException {

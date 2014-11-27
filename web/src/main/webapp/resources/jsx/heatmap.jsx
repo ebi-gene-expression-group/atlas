@@ -143,7 +143,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 render: function () {
                     return (
                         <div style={{"float": "left"}}>
-                            <a id="download-profiles-link" ref="downloadProfilesLink" title="Top 50 genes displayed on page. Download results to see the rest." href={downloadProfilesURL} className="button-image" target="_blank">
+                            <a id="download-profiles-link" ref="downloadProfilesLink" title="Top 50 genes displayed on page. Download results to see the rest." href={contextRoot + downloadProfilesURL} className="button-image" target="_blank">
                                 <img id="download-profiles" alt="Download query results" style={{width: "20px"}} src={contextRoot + "/resources/images/download_blue_small.png"}/>
                             </a>
                         </div>

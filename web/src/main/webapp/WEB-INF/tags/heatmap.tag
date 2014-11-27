@@ -194,7 +194,7 @@
                     -->
                     <a id="download-profiles-link"
                        title="Top 50 genes displayed on page. Download results to see the rest."
-                       href="${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
+                       href="${pageContext.request.contextPath}${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
                        class="button-image" target="_blank">
                         <img id="download-profiles" alt="Download query results" style="width:20px"
                              src="${base}/resources/images/download_blue_small.png"/>
