@@ -171,7 +171,12 @@
                         var aco = $.extend({}, o.autocomplete);
                         // extend user provided autocomplete select method
                         var ac_select = 'select'  in aco ? o.autocomplete.select : '';
-                        aco.select = function(){ if (ac_select) ac_select(); setTimeout(function(){ $('.active', ed).find('input').trigger('autogrow'); }, 20); };
+                        aco.select = function(){
+                            if (ac_select) ac_select();
+                            setTimeout(function(){
+                                $('.active', ed).find('input').trigger('autogrow');
+                                ed.click(); // when selection is made with the mouse click then create a new tag automatically
+                            }, 20); };
                         input.autocomplete(aco);
                     }
                 }
