@@ -120,6 +120,17 @@ public class BaselineProfileTest {
     }
 
     @Test
+    public void nonTissueExpressionsDoNotAffectMinOrMax() {
+        assertThat(subject.getMinExpressionLevel(), is(2.2));
+        assertThat(subject.getMaxExpressionLevel(), is(3.001));
+
+        subject.add(QUERY_FACTOR_TYPE, new BaselineExpression("NT", new FactorSet().add(factor1)));
+
+        assertThat(subject.getMinExpressionLevel(), is(2.2));
+        assertThat(subject.getMaxExpressionLevel(), is(3.001));
+    }
+
+    @Test
     public void sumOfUnknownExpressionAndKnownExpressionIsUnknownExpression() {
 
         BaselineProfile profileWithUnknownExpression = buildProfileWithUnknownExpression();

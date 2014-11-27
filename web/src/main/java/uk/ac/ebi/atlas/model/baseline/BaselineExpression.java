@@ -48,15 +48,12 @@ public class BaselineExpression implements Expression {
         switch (expressionLevelString) {
             case "FAIL":
             case "LOWDATA":
+            case "NT":  //Non-Tissue
                 level = 0;
                 known = false;
                 break;
             case "NA":
                 // treat as if zero
-                level = 0;
-                known = true;
-                break;
-            case "NT": //Non-Tissue
                 level = 0;
                 known = true;
                 break;
