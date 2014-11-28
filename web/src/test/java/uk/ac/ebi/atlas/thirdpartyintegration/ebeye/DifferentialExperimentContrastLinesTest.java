@@ -41,14 +41,14 @@ public class DifferentialExperimentContrastLinesTest {
 
     private static final String HTTP_OBO = "http://purl.obolibrary.org/obo/";
     private static final String FACTOR_ONTOLOGY_ID1 = "F:1";
-    private static final OntologyTerm FACTOR_ONTOLOGY_TERM1 = new OntologyTerm(FACTOR_ONTOLOGY_ID1, HTTP_OBO);
+    private static final OntologyTerm FACTOR_ONTOLOGY_TERM1 = OntologyTerm.create(FACTOR_ONTOLOGY_ID1, HTTP_OBO);
     private static final String FACTOR_ONTOLOGY_ID2 = "F:2";
-    private static final OntologyTerm FACTOR_ONTOLOGY_TERM2 = new OntologyTerm(FACTOR_ONTOLOGY_ID2, null);
+    private static final OntologyTerm FACTOR_ONTOLOGY_TERM2 = OntologyTerm.create(FACTOR_ONTOLOGY_ID2, null);
 
     private static final String SAMPLE_ONTOLOGY_ID1 = "S:1";
-    private static final OntologyTerm SAMPLE_ONTOLOGY_TERM1 = new OntologyTerm(SAMPLE_ONTOLOGY_ID1, HTTP_OBO);
+    private static final OntologyTerm SAMPLE_ONTOLOGY_TERM1 = OntologyTerm.create(SAMPLE_ONTOLOGY_ID1, HTTP_OBO);
     private static final String SAMPLE_ONTOLOGY_ID2 = "S:2";
-    private static final OntologyTerm SAMPLE_ONTOLOGY_TERM2 = new OntologyTerm(SAMPLE_ONTOLOGY_ID2, null);
+    private static final OntologyTerm SAMPLE_ONTOLOGY_TERM2 = OntologyTerm.create(SAMPLE_ONTOLOGY_ID2, null);
 
     private DifferentialExperimentContrastLines subject;
 

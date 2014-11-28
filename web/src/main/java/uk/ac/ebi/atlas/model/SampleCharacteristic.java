@@ -2,9 +2,7 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;
-import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 
-import javax.annotation.Nullable;
 import java.util.Set;
 
 @AutoValue
@@ -26,11 +24,4 @@ public abstract class SampleCharacteristic {
     public abstract String value();
     public abstract Set<OntologyTerm> valueOntologyTerms();
 
-    public @Nullable String getValueOntologyTermId() {
-        return valueOntologyTerms().isEmpty() ? null : OntologyTermUtils.joinIds(valueOntologyTerms());
-    }
-
-    public @Nullable String getValueOntologyTermUri() {
-        return valueOntologyTerms().isEmpty() ? null : OntologyTermUtils.joinURIs(valueOntologyTerms());
-    }
 }

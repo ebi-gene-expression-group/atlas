@@ -31,12 +31,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
-import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContaining;
@@ -67,17 +65,17 @@ public class ProteomicsBaselineExperimentMageTabParserIT {
         SampleCharacteristic sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), Matchers.is(ORGANISM_PART));
         assertThat(sampleCharacteristic.value(), Matchers.is("ovary"));
-        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0000973"));
+        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0000973"));
 
         sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), Matchers.is(ORGANISM));
         assertThat(sampleCharacteristic.value(), Matchers.is("Homo sapiens"));
-        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), Matchers.is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
+        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
 
         sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), Matchers.is(DEVELOPMENTAL_STAGE));
         assertThat(sampleCharacteristic.value(), Matchers.is("adult"));
-        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0001272"));
+        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0001272"));
 
         assertThat(experimentDesign.asTableData(), hasSize(30));
         assertThat(experimentDesign.asTableData(), contains(
@@ -113,4 +111,5 @@ public class ProteomicsBaselineExperimentMageTabParserIT {
                 arrayContaining("Fetal_Testis", "fetus", "Homo sapiens", "testis", "fetus", "testis"))
         );
     }
+
 }

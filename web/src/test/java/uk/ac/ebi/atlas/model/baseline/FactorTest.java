@@ -10,9 +10,9 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 
 public class FactorTest {
 
-    private OntologyTerm ontologyTerm1 = new OntologyTerm("UBERON_0002349", "http://purl.obolibrary.org/obo/");
-    private OntologyTerm ontologyTerm2 = new OntologyTerm("UBERON_0002082", "http://purl.obolibrary.org/obo/");
-    private OntologyTerm ontologyTerm3 = new OntologyTerm("UBERON_0002082", "http://purl.obolibrary.org/obo/");
+    private OntologyTerm ontologyTerm1 = OntologyTerm.create("UBERON_0002349", "http://purl.obolibrary.org/obo/");
+    private OntologyTerm ontologyTerm2 = OntologyTerm.create("UBERON_0002082", "http://purl.obolibrary.org/obo/");
+    private OntologyTerm ontologyTerm3 = OntologyTerm.create("UBERON_0002082", "http://purl.obolibrary.org/obo/");
     private Factor subject = new Factor("type", "value", ontologyTerm1, ontologyTerm2, ontologyTerm3);
 
     @Test

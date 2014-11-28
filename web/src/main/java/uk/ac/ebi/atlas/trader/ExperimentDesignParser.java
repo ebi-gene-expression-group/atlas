@@ -30,7 +30,6 @@ import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
-import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,6 +42,8 @@ import java.util.regex.Pattern;
 @Named
 @Scope("prototype")
 public class ExperimentDesignParser {
+
+    private static final String ONTOLOGY_TERM_DELIMITER = " ";
 
     static final Pattern SAMPLE_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristic\\[(.*?)\\]\\s*");
     static final Pattern SAMPLE_ONTOLOGY_TERM_COLUMN_HEADER_PATTERN = Pattern.compile("\\s*Sample Characteristic Ontology Term\\[(.*?)\\]\\s*");
@@ -125,7 +126,7 @@ public class ExperimentDesignParser {
         ImmutableList.Builder<OntologyTerm> ontologyTermBuilder = new ImmutableList.Builder<>();
 
         String uriField = line[ontologyTermIndex];
-        for (String uri : uriField.split(OntologyTermUtils.ONTOLOGY_TERM_DELIMITER)) {
+        for (String uri : uriField.split(ONTOLOGY_TERM_DELIMITER)) {
             ontologyTermBuilder.add(OntologyTerm.createFromUri(uri));
         }
         return ontologyTermBuilder.build().toArray(new OntologyTerm[0]);

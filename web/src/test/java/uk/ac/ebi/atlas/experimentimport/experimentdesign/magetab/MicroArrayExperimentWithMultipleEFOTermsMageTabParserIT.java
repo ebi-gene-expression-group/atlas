@@ -29,7 +29,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
-import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -69,9 +68,7 @@ public class MicroArrayExperimentWithMultipleEFOTermsMageTabParserIT {
     @Test
     public void sampleHasMultipleOntologyTerms() throws IOException{
         ExperimentDesign experimentDesign = subject.parse(MICROARRAY_EXPERIMENT_ACCESSION).getExperimentDesign();
-        assertThat(
-                experimentDesign.getAllOntologyTermIdsByAssayAccession().get("N/LV1")
-                        .iterator().next().split(OntologyTermUtils.ONTOLOGY_TERM_DELIMITER).length, is(2));
+        assertThat(experimentDesign.getAllOntologyTermIdsByAssayAccession().get("N/LV1").size(), is(5));
         assertThat(experimentDesign.getFactors("N/LV1").getFactorByType("ORGANISM_PART").getValueOntologyTerms().size(), is(2));
     }
 

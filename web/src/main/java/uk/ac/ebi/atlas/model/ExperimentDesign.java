@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.model;
 import com.google.common.collect.*;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;
@@ -49,7 +48,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ExperimentDesign implements Serializable {
 
     private SortedSet<String> sampleHeaders = Sets.newTreeSet();
-
     private SortedSet<String> factorHeaders = Sets.newTreeSet();
 
     // assay, SampleCharacteristics
@@ -60,9 +58,7 @@ public class ExperimentDesign implements Serializable {
 
     // assay, factors
     private Map<String, FactorSet> factorSetMap = Maps.newHashMap();
-
     private Map<String, String> arrayDesigns = Maps.newHashMap();
-
     private List<String> assayHeaders = Lists.newArrayList();
 
     public void putSampleCharacteristic(String runOrAssay, String sampleCharacteristicHeader, String sampleCharacteristicValue) {
@@ -160,9 +156,8 @@ public class ExperimentDesign implements Serializable {
             SampleCharacteristics sampleCharacteristics = sampleEntry.getValue();
 
             for (SampleCharacteristic sampleCharacteristic : sampleCharacteristics.values()) {
-                Set<OntologyTerm> valueOntologyTerms = sampleCharacteristic.valueOntologyTerms();
-                if (!valueOntologyTerms.isEmpty()) {
-                    builder.put(runOrAssay, OntologyTermUtils.joinIds(valueOntologyTerms));
+                for (OntologyTerm valueOntologyTerm : sampleCharacteristic.valueOntologyTerms()) {
+                    builder.put(runOrAssay, valueOntologyTerm.id());
                 }
             }
 
@@ -175,9 +170,8 @@ public class ExperimentDesign implements Serializable {
             FactorSet factorSet = factorSetEntry.getValue();
 
             for (Factor factor : factorSet) {
-                Set<OntologyTerm> valueOntologyTerms = factor.getValueOntologyTerms();
-                if (!valueOntologyTerms.isEmpty()) {
-                    builder.put(runOrAssay, OntologyTermUtils.joinIds(valueOntologyTerms));
+                for (OntologyTerm valueOntologyTerm : factor.getValueOntologyTerms()) {
+                    builder.put(runOrAssay, valueOntologyTerm.id());
                 }
             }
         }
@@ -277,5 +271,6 @@ public class ExperimentDesign implements Serializable {
         }
         return species;
     }
+
 
 }

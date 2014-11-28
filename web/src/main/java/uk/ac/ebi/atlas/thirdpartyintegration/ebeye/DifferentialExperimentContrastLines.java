@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.thirdpartyintegration.ebeye;
 
 import com.google.common.collect.ImmutableList;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.differential.Contrast;
@@ -8,6 +9,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class DifferentialExperimentContrastLines implements Iterable<String[]> {
 
@@ -36,22 +38,35 @@ public class DifferentialExperimentContrastLines implements Iterable<String[]> {
 
     private void populateSamples(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value){
         for (SampleCharacteristic sample : experiment.getExperimentDesign().getSampleCharacteristics(assayAccession)) {
-            String ontologyTermUri = sample.getValueOntologyTermUri();
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "characteristic",
-                    sample.header(), sample.value(), ontologyTermUri != null ? ontologyTermUri : "");
+                    sample.header(), sample.value(), joinURIs(sample.valueOntologyTerms()));
             result.add(line);
         }
     }
 
     private void populateFactors(DifferentialExperiment experiment, String assayAccession, Contrast contrast, String value){
         for (Factor factor : experiment.getExperimentDesign().getFactors(assayAccession)) {
-            String valueOntologyTermUri = factor.getValueOntologyTermUri();
             ImmutableList<String> line = ImmutableList.of(experiment.getAccession(), contrast.getId(), value, "factor",
-                    factor.getHeader(), factor.getValue(), valueOntologyTermUri != null ? valueOntologyTermUri : "");
+                    factor.getHeader(), factor.getValue(), joinURIs(factor.getValueOntologyTerms()));
             result.add(line);
         }
 
     }
+
+    private static String joinURIs(Set<OntologyTerm> ontologyTerms) {
+        final String ONTOLOGY_TERM_DELIMITER = " ";
+
+        StringBuilder sb = new StringBuilder();
+        for (OntologyTerm ontologyTerm : ontologyTerms) {
+            sb.append(ontologyTerm.uri()).append(ONTOLOGY_TERM_DELIMITER);
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        return sb.toString();
+    }
+
 
     @Override
     public Iterator<String[]> iterator() {

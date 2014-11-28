@@ -37,7 +37,6 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -52,7 +51,6 @@ import static org.hamcrest.Matchers.*;
 public class RnaSeqExperimentMageTabParserIT {
 
     private static final String EXPERIMENT_ACCESSION_E_MTAB_513 = "E-MTAB-513";
-
     private static final String EXPERIMENT_ACCESSION_E_GEOD_26284 = "E-GEOD-26284";
 
     @Inject
@@ -101,11 +99,11 @@ public class RnaSeqExperimentMageTabParserIT {
         SampleCharacteristic sampleCharacteristic = experimentDesign.getSampleCharacteristic("SRR089334", "karyotype");
         assert sampleCharacteristic != null;
 
-        Set<OntologyTerm> ontologyTermOptional = sampleCharacteristic.valueOntologyTerms();
+        assertThat(sampleCharacteristic.valueOntologyTerms().isEmpty(), is(false));
 
-        assertThat(ontologyTermOptional.isEmpty(), is(false));
-        assertThat(OntologyTermUtils.joinIds(ontologyTermOptional), is("EFO_0000616"));
-        assertThat(OntologyTermUtils.joinSources(ontologyTermOptional), is("EFO"));
+        OntologyTerm ontologyTerm = sampleCharacteristic.valueOntologyTerms().iterator().next();
+        assertThat(ontologyTerm.id(), is("EFO_0000616"));
+        assertThat(ontologyTerm.source(), is("EFO"));
     }
 
     @Test
@@ -148,10 +146,11 @@ public class RnaSeqExperimentMageTabParserIT {
         assertThat(err030880, contains(factor));
 
         Factor organismPart = err030880.iterator().next();
-        Set<OntologyTerm> valueOntologyTerm = organismPart.getValueOntologyTerms();
-        assertThat(valueOntologyTerm.isEmpty(), is(false));
-        assertThat(OntologyTermUtils.joinIds(valueOntologyTerm), is("UBERON:0001013"));
-        assertThat(OntologyTermUtils.joinSources(valueOntologyTerm), is("UBERON"));
+        assertThat(organismPart.getValueOntologyTerms().isEmpty(), is(false));
+
+        OntologyTerm ontologyTerm = organismPart.getValueOntologyTerms().iterator().next();
+        assertThat(ontologyTerm.id(), is("UBERON:0001013"));
+        assertThat(ontologyTerm.source(), is("UBERON"));
     }
 
     @Test

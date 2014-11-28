@@ -66,13 +66,13 @@ public class ExperimentDesignFileWriterTest {
         SampleCharacteristic sampleCharacteristic2 = SampleCharacteristic.create("C2", CHAR_2, OntologyTerm.createFromUri(UBERON_2));
         SampleCharacteristic sampleCharacteristic3 = SampleCharacteristic.create("C3", CHAR_3);
 
-        experimentDesign.putFactor(ASSAY_1, FACTOR_HEADER, ASSAY_1_FACTOR_VALUE, new OntologyTerm(F_1, HTTP_OBO));
+        experimentDesign.putFactor(ASSAY_1, FACTOR_HEADER, ASSAY_1_FACTOR_VALUE, OntologyTerm.create(F_1, HTTP_OBO));
         experimentDesign.putFactor(ASSAY_1, FACTOR2_HEADER, ASSAY_1_FACTOR2_VALUE, ABSENT_ONTOLOGY_TERMS);
         experimentDesign.putSampleCharacteristic(ASSAY_1, CHARACTERISTIC_1_HEADER, sampleCharacteristic1);
         experimentDesign.putSampleCharacteristic(ASSAY_1, CHARACTERISTIC_2_HEADER, sampleCharacteristic2);
         experimentDesign.putSampleCharacteristic(ASSAY_1, CHARACTERISTIC_3_HEADER, sampleCharacteristic3);
 
-        experimentDesign.putFactor(ASSAY_2, FACTOR_HEADER, ASSAY_2_FACTOR_VALUE, new OntologyTerm(F_2, null));
+        experimentDesign.putFactor(ASSAY_2, FACTOR_HEADER, ASSAY_2_FACTOR_VALUE, OntologyTerm.create(F_2, null));
         experimentDesign.putFactor(ASSAY_2, FACTOR2_HEADER, ASSAY_2_FACTOR2_VALUE, ABSENT_ONTOLOGY_TERMS);
         experimentDesign.putSampleCharacteristic(ASSAY_2, CHARACTERISTIC_1_HEADER, sampleCharacteristic1);
         experimentDesign.putSampleCharacteristic(ASSAY_2, CHARACTERISTIC_2_HEADER, sampleCharacteristic2);

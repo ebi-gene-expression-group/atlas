@@ -21,19 +21,19 @@ public class ExperimentDesignTest {
     private static final String FACTOR_HEADER = "FACTOR_HEADER";
     private static final String FACTOR_VALUE = "FACTOR_VALUE";
     public static final String FACTOR_ONTOLOGY_TERM_ID1 = "FACTOR_ONTOLOGY_TERM1";
-    private static final OntologyTerm FACTOR_ONTOLOGY_TERM1 = new OntologyTerm(FACTOR_ONTOLOGY_TERM_ID1);
+    private static final OntologyTerm FACTOR_ONTOLOGY_TERM1 = OntologyTerm.create(FACTOR_ONTOLOGY_TERM_ID1);
 
     private static final String FACTOR_HEADER2 = "FACTOR_HEADER2";
     private static final String FACTOR_VALUE2 = "FACTOR_VALUE2";
     public static final String FACTOR_ONTOLOGY_TERM_ID2 = "FACTOR_ONTOLOGY_TERM2";
-    private static final OntologyTerm FACTOR_ONTOLOGY_TERM2 = new OntologyTerm(FACTOR_ONTOLOGY_TERM_ID2);
+    private static final OntologyTerm FACTOR_ONTOLOGY_TERM2 = OntologyTerm.create(FACTOR_ONTOLOGY_TERM_ID2);
 
     private static final String ASSAY2 = "ASSAY2";
 
     private static final String FACTOR_HEADER3 = "FACTOR_HEADER3";
     private static final String FACTOR_VALUE3 = "FACTOR_VALUE3";
     public static final String FACTOR_ONTOLOGY_TERM_ID3 = "FACTOR_ONTOLOGY_TERM3";
-    private static final OntologyTerm FACTOR_ONTOLOGY_TERM3 = new OntologyTerm(FACTOR_ONTOLOGY_TERM_ID3);
+    private static final OntologyTerm FACTOR_ONTOLOGY_TERM3 = OntologyTerm.create(FACTOR_ONTOLOGY_TERM_ID3);
 
     private static final String SAMPLE_HEADER = "SAMPLE_HEADER1";
 
@@ -42,9 +42,9 @@ public class ExperimentDesignTest {
 
     private static final String HTTP_OBO = "http://purl.obolibrary.org/obo/";
     private static final String SAMPLE_ONTOLOGY_ID1 = "S:1";
-    private static final OntologyTerm SAMPLE_ONTOLOGY_TERM1 = new OntologyTerm(SAMPLE_ONTOLOGY_ID1, HTTP_OBO);
+    private static final OntologyTerm SAMPLE_ONTOLOGY_TERM1 = OntologyTerm.create(SAMPLE_ONTOLOGY_ID1, HTTP_OBO);
     private static final String SAMPLE_ONTOLOGY_ID2 = "S:2";
-    private static final OntologyTerm SAMPLE_ONTOLOGY_TERM2 = new OntologyTerm(SAMPLE_ONTOLOGY_ID2, null);
+    private static final OntologyTerm SAMPLE_ONTOLOGY_TERM2 = OntologyTerm.create(SAMPLE_ONTOLOGY_ID2, null);
 
 
     public ExperimentDesign subject;

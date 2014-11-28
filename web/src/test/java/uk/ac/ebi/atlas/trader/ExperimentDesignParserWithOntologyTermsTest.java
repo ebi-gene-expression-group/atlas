@@ -39,7 +39,6 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -91,8 +90,8 @@ public class ExperimentDesignParserWithOntologyTermsTest {
     private static final String[] EMPTY_ONTOLOGY_TERM = new String[]{ASSAY_ACCESSION_3, A_AFFY_35, RD_INSTAR_LARVA, CYC, SPECIES_2, "", OREGON_R, CYC, ""};
     private static final String[] LAST_LINE = new String[]{ASSAY_ACCESSION_2, A_AFFY_35, RD_INSTAR_LARVA, "wild_type", SPECIES_2, SPECIES_2_ONTOLOGY_TERM_SOURCEID, OREGON_R, "wild_type", ONTOLOGY_TERM_2};
     private static final List<String[]> DATA = Lists.newArrayList(HEADER_LINE, FIRST_LINE, EMPTY_ONTOLOGY_TERM, LAST_LINE);
-    private static final Factor FACTOR1 = new Factor(GENOTYPE, CYC_C_MUTANT, new OntologyTerm(ONTOLOGY_TERM_1));
-    private static final Factor FACTOR2 = new Factor(GENOTYPE, "wild_type", new OntologyTerm(ONTOLOGY_TERM_2));
+    private static final Factor FACTOR1 = new Factor(GENOTYPE, CYC_C_MUTANT, OntologyTerm.create(ONTOLOGY_TERM_1));
+    private static final Factor FACTOR2 = new Factor(GENOTYPE, "wild_type", OntologyTerm.create(ONTOLOGY_TERM_2));
     private static final String ORGANISM = "Organism";
     private static final SampleCharacteristic SC_RABBIT = SampleCharacteristic.create(ORGANISM, SPECIES_2);
     private static final Factor FACTOR_GENOTYPE = new Factor(GENOTYPE, CYC);
@@ -131,12 +130,12 @@ public class ExperimentDesignParserWithOntologyTermsTest {
         assertThat(experimentDesign.getFactorValue(ASSAY_ACCESSION_1, DUMMY), is(nullValue()));
         assertThat(experimentDesign.getFactorValue(DUMMY, GENOTYPE), is(nullValue()));
         assertThat(experimentDesign.getFactors(ASSAY_ACCESSION_1), contains(FACTOR1));
+
         FactorSet factors = experimentDesign.getFactors(ASSAY_ACCESSION_2);
-
         assertThat(factors, contains(FACTOR2));
-        Factor factor = factors.getFactorByType(GENOTYPE);
 
-        assertThat(factor.getValueOntologyTermId(), is(UBERON_0002107));
+        Factor factor = factors.getFactorByType(GENOTYPE);
+        assertThat(factor.getValueOntologyTerms().iterator().next().id(), is(UBERON_0002107));
     }
 
     @Test
@@ -150,12 +149,13 @@ public class ExperimentDesignParserWithOntologyTermsTest {
         assertThat(experimentDesign.getSampleCharacteristicValue(DUMMY, CHARACTERISTIC_1), is(nullValue()));
 
         SampleCharacteristic sampleCharacteristic = experimentDesign.getSampleCharacteristic(ASSAY_ACCESSION_1, CHARACTERISTIC_3);
-        Set<OntologyTerm> ontologyTermOptional = sampleCharacteristic.valueOntologyTerms();
         assertThat(sampleCharacteristic.header().equals(ASSAY_1_SAMPLE_CHARACTERISTIC_3.header()), is (true));
         assertThat(sampleCharacteristic.value().equals(ASSAY_1_SAMPLE_CHARACTERISTIC_3.value()), is (true));
-        assertThat(ontologyTermOptional.isEmpty(), is(false));
-        assertThat(OntologyTermUtils.joinIds(ontologyTermOptional), is(SPECIES_1_ONTOLOGY_ID));
-        assertThat(OntologyTermUtils.joinSources(ontologyTermOptional), is(HTTP_OBO));
+        assertThat(sampleCharacteristic.valueOntologyTerms().isEmpty(), is(false));
+
+        OntologyTerm ontologyTerm = sampleCharacteristic.valueOntologyTerms().iterator().next();
+        assertThat(ontologyTerm.id(), is(SPECIES_1_ONTOLOGY_ID));
+        assertThat(ontologyTerm.source(), is(HTTP_OBO));
     }
 
     @Test

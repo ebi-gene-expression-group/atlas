@@ -25,9 +25,7 @@ package uk.ac.ebi.atlas.model.baseline;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 
-import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.*;
 
@@ -67,14 +65,6 @@ public class Factor implements Comparable<Factor>, Serializable {
     //normalized version of header
     public String getType() {
         return type;
-    }
-
-    public @Nullable String getValueOntologyTermId() {
-        return valueOntologyTerms.isEmpty() ? null : OntologyTermUtils.joinIds(valueOntologyTerms);
-    }
-
-    public @Nullable String getValueOntologyTermUri() {
-        return valueOntologyTerms.isEmpty() ? null : OntologyTermUtils.joinURIs(valueOntologyTerms);
     }
 
     @Override
@@ -121,7 +111,4 @@ public class Factor implements Comparable<Factor>, Serializable {
         return valueOntologyTerms;
     }
 
-    public OntologyTerm[] getValueOntologyTermsAsArray() {
-        return valueOntologyTerms.toArray(new OntologyTerm[0]);
-    }
 }

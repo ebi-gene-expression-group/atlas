@@ -226,7 +226,7 @@ public abstract class MageTabParser<T extends AbstractSDRFNode> {
 
         for (int i = 0 ; i < accessionNumbers.length ; i++) {
             if (!accessionNumbers[i].isEmpty()) {
-                ontologyTermsBuilder.add(new OntologyTerm(accessionNumbers[i], sourceRefs[i]));
+                ontologyTermsBuilder.add(OntologyTerm.create(accessionNumbers[i], sourceRefs[i]));
             }
         }
         return ontologyTermsBuilder.build().toArray(new OntologyTerm[0]);

@@ -26,6 +26,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.collect.Lists;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
@@ -33,9 +34,12 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 
 public class ExperimentDesignFileWriter {
+
+    private static final String ONTOLOGY_TERM_DELIMITER = " ";
 
     private static final String SAMPLE_CHARACTERISTICS_NAME_HEADER_TEMPLATE = "Sample Characteristic[{0}]";
     private static final String SAMPLE_CHARACTERISTICS_ONTOLOGY_TERM_HEADER_TEMPLATE = "Sample Characteristic Ontology Term[{0}]";
@@ -131,7 +135,7 @@ public class ExperimentDesignFileWriter {
     }
 
     private void addFactorValueOntologyTerm(List<String> row, Factor factor) {
-        String factorValueOntologyTermId = (factor == null) ? null : factor.getValueOntologyTermUri();
+        String factorValueOntologyTermId = (factor == null || factor.getValueOntologyTerms().isEmpty()) ? null : joinURIs(factor.getValueOntologyTerms());
         row.add(factorValueOntologyTermId);
     }
 
@@ -141,8 +145,19 @@ public class ExperimentDesignFileWriter {
     }
 
     private void addSampleCharacteristicOntologyTerm(List<String> row, SampleCharacteristic sampleCharacteristic) {
-        String ontologyTermId = (sampleCharacteristic == null) ? null : sampleCharacteristic.getValueOntologyTermUri();
+        String ontologyTermId = (sampleCharacteristic == null || sampleCharacteristic.valueOntologyTerms().isEmpty()) ? null : joinURIs(sampleCharacteristic.valueOntologyTerms());
         row.add(ontologyTermId);
     }
 
+    private static String joinURIs(Set<OntologyTerm> ontologyTerms) {
+        StringBuilder sb = new StringBuilder();
+        for (OntologyTerm ontologyTerm : ontologyTerms) {
+            sb.append(ontologyTerm.uri() + ONTOLOGY_TERM_DELIMITER);
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        return sb.toString();
+    }
 }

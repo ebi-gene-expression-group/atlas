@@ -21,13 +21,11 @@ import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.*;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTraderFactory;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
-import uk.ac.ebi.atlas.utils.OntologyTermUtils;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -396,17 +394,17 @@ public class ExperimentCRUDBaselineProteomicsIT {
         SampleCharacteristic sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), Matchers.is(ORGANISM_PART));
         assertThat(sampleCharacteristic.value(), Matchers.is("ovary"));
-        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0000973"));
+        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0000973"));
 
         sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), Matchers.is(ORGANISM));
         assertThat(sampleCharacteristic.value(), Matchers.is("Homo sapiens"));
-        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), Matchers.is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
+        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
 
         sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), Matchers.is(DEVELOPMENTAL_STAGE));
         assertThat(sampleCharacteristic.value(), Matchers.is("adult"));
-        assertThat(OntologyTermUtils.joinURIs(sampleCharacteristic.valueOntologyTerms()), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0001272"));
+        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0001272"));
     }
 
     @Test
@@ -419,4 +417,5 @@ public class ExperimentCRUDBaselineProteomicsIT {
         verify(experimentDao).deleteExperiment(E_PROT_1);
         verify(baselineAnalyticsDao).deleteAnalytics(E_PROT_1);
     }
+
 }

@@ -44,7 +44,8 @@ public class BaselineExpressionViewModelBuilder {
         String color = (expression == null) ? "" : (expression.isKnown() && !expression.getLevelAsString().equals("NT") ?
                 colourGradient.getGradientColour(expression.getLevel(), minExpressionLevel, maxExpressionLevel) : (expression.getLevelAsString().equals("NT")  ? "" : "UNKNOWN"));
 
-        String svgPathId = factor.getValueOntologyTermId();
+        // We are assuming that the only relevant ontology term for tissues is the first one
+        String svgPathId = factor.getValueOntologyTerms().isEmpty() ? null : factor.getValueOntologyTerms().iterator().next().id();
 
         return new BaselineExpressionViewModel(factorName, color, value, svgPathId);
     }
