@@ -246,7 +246,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         overflow: "auto",
                         "background-image": backgroundImage,
                         filter: lt_ie10_filter}}, 
-                    " "
+                    "\u00a0"
                     )
                     );
             }
