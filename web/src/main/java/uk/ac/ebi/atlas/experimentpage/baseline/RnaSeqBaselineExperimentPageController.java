@@ -103,6 +103,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
         model.addAttribute("isWidget", true);
         model.addAttribute("disableGeneLinks", disableGeneLinks);
         model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
+        model.addAttribute("enableEnsemblLauncher", false);
 
         // set here instead of in JSP, because the JSP may be included elsewhere
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
