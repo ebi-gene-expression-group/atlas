@@ -82,7 +82,7 @@
     (function ($, pubmedMinedBioentitiesModule) {
         $(document).ready(function () {
 
-            var $pubmedGeneQueries = $('.pubmed-genequery')
+            var $pubmedGeneQueries = $('.pubmed-genequery');
 
             $pubmedGeneQueries.tooltip();
 
