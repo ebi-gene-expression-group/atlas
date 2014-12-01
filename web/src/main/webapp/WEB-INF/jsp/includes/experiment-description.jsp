@@ -65,9 +65,31 @@
         <div id="experimentReferences">Reference(s):
             <c:forEach var="pubMedId" items="${pubMedIds}">
                         <span><a class="pubmed-id" href="${applicationProperties.getPubMedURL(pubMedId)}"
-                                 title="View publication in PubMed" target='_blank'>${pubMedId}</a></span>
+                                 title="View publication in PubMed" target='_blank'>${pubMedId}</a>
+                            <a class="pubmed-genequery" data-pubmed-id="${pubMedId}">(search)</a></span>
             </c:forEach>
         </div>
     </c:if>
 </td>
+<script>
+    var europepmcUrl = "http://localhost:8080/gxa/europepmc/";
+</script>
+
+<script src="${pageContext.request.contextPath}/resources/js/pubmedMinedBioentitiesModule.js"></script>
+<script>
+    (function ($, pubmedMinedBioentitiesModule) {
+        $(document).ready(function () {
+
+            $(".pubmed-genequery").click(function (event) {
+                var pubmedId = $(event.target).attr("data-pubmed-id");
+
+                pubmedMinedBioentitiesModule.fetchPubmedMinedBioentities(pubmedId, function (bioentities) {
+                    console.log(bioentities);
+                });
+
+            });
+
+        });
+    })(jQuery, pubmedMinedBioentitiesModule);
+</script>
 
