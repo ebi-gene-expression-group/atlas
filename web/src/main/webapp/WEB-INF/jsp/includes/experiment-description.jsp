@@ -96,6 +96,7 @@
                     }
 
                     if (!bioentities || bioentities.length == 0) {
+                        alert("No text-mined genes/proteins available in Europe PubMed Central for PMID " + pubmedId);
                         console.warn("No pubmed mined bioentities for id " + pubmedId);
                         return;
                     }
