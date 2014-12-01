@@ -89,12 +89,21 @@
             $pubmedGeneQueries.click(function (event) {
                 var pubmedId = $(event.target).attr("data-pubmed-id");
 
-                pubmedMinedBioentitiesModule.fetchPubmedMinedBioentities(pubmedId, function (bioentities) {
+                pubmedMinedBioentitiesModule.fetchPubmedMinedBioentities(pubmedId, function (err, bioentities) {
+
+                    if (err) {
+                        throw new Error("Error fetching pubmed mined bioentities for id " + pubmedId + ": " + err.message);
+                    }
+
+                    if (!bioentities) {
+                        console.warn("No pubmed mined bioentities for id " + pubmedId);
+                    }
+
                     function replaceGeneQueryWithBioentities(url, bioentities) {
                         var newGeneQuery = bioentities.join("%09");
 
                         if (url.indexOf("geneQuery") > -1) {
-                            return url.replace(/[?|&]geneQuery=[^\&]*/, "geneQuery="+newGeneQuery);
+                            return url.replace(/geneQuery=[^\&]*/, "geneQuery="+newGeneQuery);
                         }
 
                         return url + (url.indexOf("?") > -1 ? "&" : "?") + "geneQuery="+newGeneQuery;
