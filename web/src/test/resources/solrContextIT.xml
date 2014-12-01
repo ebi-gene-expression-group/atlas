@@ -31,14 +31,14 @@
     <!--</bean>-->
 
     <bean scope="singleton" id="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
-        <constructor-arg value="http://lime.ebi.ac.uk:8983/solr/gxa"/>
+        <constructor-arg value="http://${solr.host}:8983/solr/gxa"/>
     </bean>
 
     <bean scope="singleton" id="differentialConditionsSolrServer" class="uk.ac.ebi.atlas.solr.DummyUpdateSolrServer">
-        <constructor-arg value="http://lime.ebi.ac.uk:8983/solr/differentialConditions"/>
+        <constructor-arg value="http://${solr.host}:8983/solr/differentialConditions"/>
     </bean>
 
     <bean scope="singleton" id="baselineConditionsSolrServer" class="uk.ac.ebi.atlas.solr.DummyUpdateSolrServer">
-        <constructor-arg value="http://lime.ebi.ac.uk:8983/solr/baselineConditions"/>
+        <constructor-arg value="http://${solr.host}:8983/solr/baselineConditions"/>
     </bean>
 </beans>
