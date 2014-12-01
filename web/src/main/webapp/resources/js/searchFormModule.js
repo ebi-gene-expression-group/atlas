@@ -136,9 +136,9 @@ var searchFormModule = (function($) {
         });
     }
 
-    function geneQueryEnterEventHandler() {
+    function searchBoxEnterEventHandler(element) {
         $('.tag-editor').on('submit', function (e) {
-            $("#submit-button").click();
+            $(element).click();
         });
     }
 
@@ -147,8 +147,6 @@ var searchFormModule = (function($) {
         _species = species;
 
         initButtons();
-
-        geneQueryEnterEventHandler();
 
         initWatermarks(defaultPValueCutOff, defaultFoldChangeCutOff);
 
@@ -163,7 +161,7 @@ var searchFormModule = (function($) {
         geneQuerySearchBoxInitAutocomplete: geneQuerySearchBoxInitAutocomplete,
         disableCarriageReturn: disableCarriageReturn,
         removeHttpParameters: removeHttpParameters,
-        geneQueryEnterEventHandler: geneQueryEnterEventHandler
+        searchBoxEnterEventHandler: searchBoxEnterEventHandler
     };
 
 }(jQuery));

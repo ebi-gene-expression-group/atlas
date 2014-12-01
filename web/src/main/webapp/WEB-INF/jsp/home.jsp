@@ -162,9 +162,11 @@
             var $buttons = $('#submit-button, #reset-button'),
                     $searchFields = $('#geneQuery, #condition');
 
-            searchFormModule.geneQuerySearchBoxInitAutocomplete();
+            searchFormModule.geneQuerySearchBoxInitAutocomplete("#geneQuery");
 
-            searchFormModule.geneQueryEnterEventHandler();
+            searchFormModule.searchBoxEnterEventHandler("#submit-button");
+
+            autocompleteModule.searchBoxEnterEventHandler("#submit-searchbox");
 
             searchFormModule.disableCarriageReturn("#condition");
 

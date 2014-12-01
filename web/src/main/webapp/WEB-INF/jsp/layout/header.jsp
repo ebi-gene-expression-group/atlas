@@ -76,7 +76,8 @@
                         <label>
                             <input id="local-searchbox" name="geneQuery" value="${param.queryString}" maxlength="900" placeholder="(enter gene query)"/>
                         </label>
-
+                    </div>
+                    <div class="left">
                         <!-- Include some example searchterms - keep them short and few! -->
                         <span class="examples">Examples:
                                         <a href="${pageContext.request.contextPath}/query?geneQuery=ASPM">ASPM</a>,
@@ -85,7 +86,7 @@
                                         <a href="${pageContext.request.contextPath}/query?geneQuery=%22zinc+finger%22">"zinc finger"</a></span>
                     </div>
 
-                    <div class="right">
+                    <div class="right" style="position: relative; top: -30px;">
                         <input id="submit-searchbox" class="submit" type="submit" value="Search"/>
                         <!-- If your search is more complex than just a keyword search, you can link to an Advanced Search,
                              with whatever features you want available -->

@@ -24,6 +24,7 @@ var autocompleteModule = (function($) {
     "use strict";
 
     function initAutocomplete(species){
+
         $("#local-searchbox")
             // don't navigate away from the field on tab when selecting an item
             .bind( "keydown", function( event ) {
@@ -32,81 +33,48 @@ var autocompleteModule = (function($) {
                     event.preventDefault();
                 }
             })
-            .autocomplete({
-                delay:500,
-                minLength: 1,
-                autoFocus:true,
-                focus: function() {
-                    // prevent value inserted on focus
-                    return false;
-                },
-                select: function( event, ui ) {
-                    var selectedValue = quoteTextThatContainsMoreThanOneWord(ui.item.value.trim()),
-                        lastItem = extractLast(this.value);
-                    if(startsWith(this.value, "\"")) {
-                        this.value = remoteExtraQuotesFromStart(this.value);
+            .tagEditor({
+                delimiter:"\t",
+                maxLength: 50,
+                autocomplete: {
+                    delay: 500,
+                    minLength: 1,
+                    autoFocus: true,
+                    focus: function() {
+                        // prevent value inserted on focus
+                        return false;
+                    },
+                    source: function (request, response) {
+                        $.ajax({
+                            url: 'json/suggestions',
+                            data: {
+                                'query': request.term,
+                                'species': species
+                            },
+                            success: function (data) {
+                                response(data);
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log("Error. Status: " + textStatus + ", errorThrown: " + errorThrown);
+                            }
+                        });
                     }
-                    this.value = this.value.substr(0, this.value.length - lastItem.length).concat(selectedValue) + " ";
-                    return false;
                 },
-                source:function (request, response) {
-                    var lastItem = extractLast( request.term );
 
-                    $.ajax({
-                        url:'/gxa/json/suggestions',
-                        data:{
-                            'query': lastItem,
-                            'species': species
-                        },
-                        success:function (data) {
-                            response(data);
-                        },
-                        error:function (jqXHR, textStatus, errorThrown) {
-                            console.log("Error. Status: " + textStatus + ", errorThrown: " + errorThrown);
-                        }
-                    });
-                }
+                placeholder: 'Enter gene query...',
+                forceLowercase: false
             });
     }
 
-    function startsWith (str, prefix) {
-        return str.lastIndexOf(prefix, 0) === 0;
+    function searchBoxEnterEventHandler(element) {
+        $('.tag-editor').on('submit', function (e) {
+            $(element).click();
+        });
     }
-
-    function remoteExtraQuotesFromStart (str) {
-        return str.substring(1, str.length);
-    }
-
-    function quoteTextThatContainsMoreThanOneWord (text) {
-        return hasMoreThanOneWord(text) ? "\"" + text + "\"" : text;
-    }
-
-    function hasMoreThanOneWord(text) {
-        return /\s/.test(text.trim());
-    }
-
-    function extractLast( term ) {
-
-        var splitByDoubleQuotes = term.split( /\s*"/),
-            numberOfDoubleQuotes = splitByDoubleQuotes.length - 1,
-            lastItem = splitByDoubleQuotes.pop();
-
-        if (!isEven(numberOfDoubleQuotes)){
-            return lastItem;
-        }
-        return lastItem.split( /\s+/).pop();
-    }
-
-    function isEven(value) {
-        if (value%2 === 0){
-            return true;
-        }
-        return false;
-    }
-
 
     return {
-        init: initAutocomplete
+        init: initAutocomplete,
+        searchBoxEnterEventHandler: searchBoxEnterEventHandler
     };
 
 }(jQuery));

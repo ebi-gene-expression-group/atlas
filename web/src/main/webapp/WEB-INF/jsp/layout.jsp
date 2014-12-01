@@ -126,6 +126,8 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.10.3.fix-8740.0520a49/dist/jquery-ui.min.js"></script>
     <script language="JavaScript" type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/js/lib/jquery-tagEditor/jquery.tag-editor.js"></script>
+    <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
@@ -138,8 +140,7 @@
             src="${pageContext.request.contextPath}/resources/js/jquery.arrayExpress-autocomplete-1.1.0.130305.js"></script>
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/conditionAutocompleteModule.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/lib/jquery-tagEditor/jquery.tag-editor.js"></script>
+
 
 
     <!-- fancybox start -->
@@ -156,6 +157,7 @@
 
                 initExperimentPageButtonsAndTooltips();
                 autocompleteModule.init();
+                autocompleteModule.searchBoxEnterEventHandler("#submit-searchbox");
                 conditonAutocompleteModule.init("${configuration['arrayexpress.autocomplete.url']}");
             });
         })(jQuery);
