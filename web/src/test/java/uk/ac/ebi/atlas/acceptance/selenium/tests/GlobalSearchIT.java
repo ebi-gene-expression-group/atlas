@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HomePage;
@@ -39,6 +40,7 @@ public class GlobalSearchIT extends SinglePageSeleniumFixture {
         subject.get();
     }
 
+    @Ignore
     @Test
     public void globalSearchRedirectsToGeneQuerySearch(){
         String searchText = "ENSG00000179218";
