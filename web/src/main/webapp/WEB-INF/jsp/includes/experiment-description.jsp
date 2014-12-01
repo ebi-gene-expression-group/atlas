@@ -66,7 +66,7 @@
             <c:forEach var="pubMedId" items="${pubMedIds}">
                         <span><a class="pubmed-id" href="${applicationProperties.getPubMedURL(pubMedId)}"
                                  title="View publication in PubMed" target='_blank'>${pubMedId}</a>
-                            <a class="pubmed-genequery" style="cursor: pointer" data-pubmed-id="${pubMedId}">(Filter by genes in paper)</a>
+                            <a class="pubmed-genequery" style="cursor: pointer" data-pubmed-id="${pubMedId}" title="Filter by text-mined genes/proteins accessions in reference publication">(Filter by genes in paper)</a>
                             &nbsp;&nbsp;&nbsp;
                         </span>
             </c:forEach>
@@ -82,11 +82,26 @@
     (function ($, pubmedMinedBioentitiesModule) {
         $(document).ready(function () {
 
-            $(".pubmed-genequery").click(function (event) {
+            var $pubmedGeneQueries = $('.pubmed-genequery')
+
+            $pubmedGeneQueries.tooltip();
+
+            $pubmedGeneQueries.click(function (event) {
                 var pubmedId = $(event.target).attr("data-pubmed-id");
 
                 pubmedMinedBioentitiesModule.fetchPubmedMinedBioentities(pubmedId, function (bioentities) {
-                    console.log(bioentities);
+                    function replaceGeneQueryWithBioentities(url, bioentities) {
+                        var newGeneQuery = bioentities.join("%09");
+
+                        if (url.indexOf("geneQuery") > -1) {
+                            return url.replace(/geneQuery=[^\&]*/, "geneQuery="+newGeneQuery);
+                        }
+
+                        return url + (url.indexOf("?") > -1 ? "&" : "?") + "geneQuery="+newGeneQuery;
+                    }
+
+                    var experimentUrlForPubMedBioentities = replaceGeneQueryWithBioentities(document.URL, bioentities);
+                    window.open(experimentUrlForPubMedBioentities);
                 });
 
             });
