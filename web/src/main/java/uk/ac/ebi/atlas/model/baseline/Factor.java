@@ -26,6 +26,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.*;
 
@@ -109,6 +110,24 @@ public class Factor implements Comparable<Factor>, Serializable {
 
     public Set<OntologyTerm> getValueOntologyTerms() {
         return valueOntologyTerms;
+    }
+
+    public @Nullable String getValueOntologyTermId() {
+        if (valueOntologyTerms.isEmpty()) {
+            return null;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (OntologyTerm valueOntologyTerm : valueOntologyTerms) {
+            sb.append(valueOntologyTerm.id()).append(" ");
+        }
+
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        return sb.toString();
+
     }
 
 }

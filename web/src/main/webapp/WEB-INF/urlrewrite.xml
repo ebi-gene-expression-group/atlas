@@ -30,5 +30,10 @@
         <from>/arrayexpress/(.*)</from>
         <to type="proxy">http://www.ebi.ac.uk/arrayexpress/$1?%{query-string}</to>
     </rule>
+    <rule>
+        <note>For accessing europepmc endpoint during development and integration testing</note>
+        <from>/europepmc/(.*)</from>
+        <to type="proxy">http://www.ebi.ac.uk/europepmc/$1?%{query-string}</to>
+    </rule>
 
 </urlrewrite>
