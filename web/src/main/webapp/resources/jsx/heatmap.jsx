@@ -100,13 +100,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     <div>
                         <table ref="countAndLegend" style={{"background-color": "white", zIndex: 1}}>
                             <tr>
-                                <td>
+                                <td style={{width: "320px"}}>
                                     {type.isMultiExperiment ? <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} experiments found: </span> :
                                         <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span> }
 
                                     {this.props.geneSetProfiles && !type.isMultiExperiment ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
                                 </td>
-                                <td>
+                                <td style={{width: "350px"}}>
                                     { this.legendType() }
                                 </td>
                             </tr>

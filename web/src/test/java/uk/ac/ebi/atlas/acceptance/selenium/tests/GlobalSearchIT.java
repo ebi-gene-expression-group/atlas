@@ -40,7 +40,7 @@ public class GlobalSearchIT extends SinglePageSeleniumFixture {
         subject.get();
     }
 
-    @Ignore
+    @Ignore //TODO need to fix it. Find a proper identifier for the pill box
     @Test
     public void globalSearchRedirectsToGeneQuerySearch(){
         String searchText = "ENSG00000179218";
