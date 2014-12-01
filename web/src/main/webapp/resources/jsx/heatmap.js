@@ -100,13 +100,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     React.DOM.div(null, 
                         React.DOM.table( {ref:"countAndLegend", style:{"background-color": "white", zIndex: 1}}, 
                             React.DOM.tr(null, 
-                                React.DOM.td( {style:{width: "320px"}}, 
+                                React.DOM.td( {style:{width: "58%"}}, 
                                     type.isMultiExperiment ? React.DOM.span( {id:"geneCount"}, "Showing ", this.state.profiles.rows.length, " of ", this.state.profiles.searchResultTotal, " experiments found: " ) :
                                         React.DOM.span( {id:"geneCount"}, "Showing ", this.state.profiles.rows.length, " of ", this.state.profiles.searchResultTotal, " ", this.state.showGeneSetProfiles ? 'gene sets' : 'genes',  " found: " ), 
 
                                     this.props.geneSetProfiles && !type.isMultiExperiment ? React.DOM.a( {href:"javascript:void(0)", onClick:this.toggleGeneSets}, this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)') : ''
                                 ),
-                                React.DOM.td( {style:{width: "350px"}}, 
+                                React.DOM.td(null, 
                                      this.legendType() 
                                 )
                             )
@@ -167,7 +167,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
                 render: function () {
                     return (
-                        React.DOM.div( {style:{float: "right", "padding-left": "100px"}}, 
+                        React.DOM.div( {style:{float: "right", "padding-left": "50px"}}, 
                             React.DOM.div( {style:{float: "left"}}, 
                                 React.DOM.table( {style:{"font-size": "10px"}}, 
                                     React.DOM.tbody(null, 
@@ -191,7 +191,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
                 render: function () {
                     return (
-                        React.DOM.div( {style:{float: "right", "padding-left": "100px"}}, 
+                        React.DOM.div( {style:{float: "right", "padding-left": "50px"}}, 
                             React.DOM.div( {style:{float: "left"}}, 
                                 React.DOM.table( {style:{"font-size": "10px"}}, 
                                     React.DOM.tbody(null, 

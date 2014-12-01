@@ -100,13 +100,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     <div>
                         <table ref="countAndLegend" style={{"background-color": "white", zIndex: 1}}>
                             <tr>
-                                <td style={{width: "320px"}}>
+                                <td style={{width: "58%"}}>
                                     {type.isMultiExperiment ? <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} experiments found: </span> :
                                         <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span> }
 
                                     {this.props.geneSetProfiles && !type.isMultiExperiment ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
                                 </td>
-                                <td style={{width: "350px"}}>
+                                <td>
                                     { this.legendType() }
                                 </td>
                             </tr>
@@ -167,7 +167,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
                 render: function () {
                     return (
-                        <div style={{float: "right", "padding-left": "100px"}}>
+                        <div style={{float: "right", "padding-left": "50px"}}>
                             <div style={{float: "left"}}>
                                 <table style={{"font-size": "10px"}}>
                                     <tbody>
@@ -191,7 +191,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
                 render: function () {
                     return (
-                        <div style={{float: "right", "padding-left": "100px"}}>
+                        <div style={{float: "right", "padding-left": "50px"}}>
                             <div style={{float: "left"}}>
                                 <table style={{"font-size": "10px"}}>
                                     <tbody>
