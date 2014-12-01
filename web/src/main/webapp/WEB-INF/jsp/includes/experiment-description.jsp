@@ -66,13 +66,15 @@
             <c:forEach var="pubMedId" items="${pubMedIds}">
                         <span><a class="pubmed-id" href="${applicationProperties.getPubMedURL(pubMedId)}"
                                  title="View publication in PubMed" target='_blank'>${pubMedId}</a>
-                            <a class="pubmed-genequery" data-pubmed-id="${pubMedId}">(search)</a></span>
+                            <a class="pubmed-genequery" style="cursor: pointer" data-pubmed-id="${pubMedId}" title="Filter by text-mined genes/proteins accessions in reference publication">(Filter by genes in paper)</a>
+                            &nbsp;&nbsp;&nbsp;
+                        </span>
             </c:forEach>
         </div>
     </c:if>
 </td>
 <script>
-    var europepmcUrl = "http://localhost:8080/gxa/europepmc/";
+    var europepmcUrl = "${configuration['europepmc.base.url']}" + "webservices/rest/MED/%pubmedId%/textMinedTerms/GENE_PROTEIN/1/json";
 </script>
 
 <script src="${pageContext.request.contextPath}/resources/js/pubmedMinedBioentitiesModule.js"></script>
@@ -80,11 +82,36 @@
     (function ($, pubmedMinedBioentitiesModule) {
         $(document).ready(function () {
 
-            $(".pubmed-genequery").click(function (event) {
+            var $pubmedGeneQueries = $('.pubmed-genequery');
+
+            $pubmedGeneQueries.tooltip();
+
+            $pubmedGeneQueries.click(function (event) {
                 var pubmedId = $(event.target).attr("data-pubmed-id");
 
-                pubmedMinedBioentitiesModule.fetchPubmedMinedBioentities(pubmedId, function (bioentities) {
-                    console.log(bioentities);
+                pubmedMinedBioentitiesModule.fetchPubmedMinedBioentities(pubmedId, function (err, bioentities) {
+
+                    if (err) {
+                        throw new Error("Error fetching pubmed mined bioentities for id " + pubmedId + ": " + err.message);
+                    }
+
+                    if (!bioentities || bioentities.length == 0) {
+                        console.warn("No pubmed mined bioentities for id " + pubmedId);
+                        return;
+                    }
+
+                    function replaceGeneQueryWithBioentities(url, bioentities) {
+                        var newGeneQuery = bioentities.join("%09");
+
+                        if (url.indexOf("geneQuery") > -1) {
+                            return url.replace(/geneQuery=[^\&]*/, "geneQuery="+newGeneQuery);
+                        }
+
+                        return url + (url.indexOf("?") > -1 ? "&" : "?") + "geneQuery="+newGeneQuery;
+                    }
+
+                    var experimentUrlForPubMedBioentities = replaceGeneQueryWithBioentities(document.URL, bioentities);
+                    window.open(experimentUrlForPubMedBioentities);
                 });
 
             });
