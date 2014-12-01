@@ -94,7 +94,7 @@
                         var newGeneQuery = bioentities.join("%09");
 
                         if (url.indexOf("geneQuery") > -1) {
-                            return url.replace(/geneQuery=[^\&]*/, "geneQuery="+newGeneQuery);
+                            return url.replace(/[?|&]geneQuery=[^\&]*/, "geneQuery="+newGeneQuery);
                         }
 
                         return url + (url.indexOf("?") > -1 ? "&" : "?") + "geneQuery="+newGeneQuery;
