@@ -54,7 +54,7 @@ public class ExperimentTitleIT extends SinglePageSeleniumFixture {
 
     @Test
     public void testReferences() {
-        assertThat(subject.getExperimentReferences(), is("Reference(s): 22496456 22955988 23258890"));
+        assertThat(subject.getExperimentReferences(), is("Reference(s): 22496456 (Filter by genes in paper)     22955988 (Filter by genes in paper)     23258890 (Filter by genes in paper)    "));
     }
 
 }
