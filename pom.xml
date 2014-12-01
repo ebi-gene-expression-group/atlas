@@ -45,6 +45,7 @@
         <solr.host>localhost</solr.host>
         <gxa.server.url>http://ves-hx-74:8080/gxa</gxa.server.url>
         <arrayexpress.ac.url>/gxa/arrayexpress</arrayexpress.ac.url>
+        <europepmc.base.url>/gxa/europepmc</europepmc.base.url>
         <!-- set the next two properties to non empty value only if you want
         to run the selenium tests against a different host/port than localhost:9090 -->
         <integration.test.host>lime</integration.test.host>
@@ -594,6 +595,7 @@
             <properties>
                 <resources.host>www.ebi.ac.uk</resources.host>
                 <arrayexpress.ac.url>/arrayexpress</arrayexpress.ac.url>
+                <europepmc.base.url>/europepmc</europepmc.base.url>
                 <data.files.location>/srv/gxa/data</data.files.location>
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>

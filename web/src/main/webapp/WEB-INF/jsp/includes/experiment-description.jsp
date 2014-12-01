@@ -66,13 +66,15 @@
             <c:forEach var="pubMedId" items="${pubMedIds}">
                         <span><a class="pubmed-id" href="${applicationProperties.getPubMedURL(pubMedId)}"
                                  title="View publication in PubMed" target='_blank'>${pubMedId}</a>
-                            <a class="pubmed-genequery" data-pubmed-id="${pubMedId}">(search)</a></span>
+                            <a class="pubmed-genequery" style="cursor: pointer" data-pubmed-id="${pubMedId}">(Filter by genes in paper)</a>
+                            &nbsp;&nbsp;&nbsp;
+                        </span>
             </c:forEach>
         </div>
     </c:if>
 </td>
 <script>
-    var europepmcUrl = "http://localhost:8080/gxa/europepmc/";
+    var europepmcUrl = "${configuration['europepmc.base.url']}" + "webservices/rest/MED/%pubmedId%/textMinedTerms/GENE_PROTEIN/1/json";
 </script>
 
 <script src="${pageContext.request.contextPath}/resources/js/pubmedMinedBioentitiesModule.js"></script>
