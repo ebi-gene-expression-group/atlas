@@ -95,8 +95,9 @@
                         throw new Error("Error fetching pubmed mined bioentities for id " + pubmedId + ": " + err.message);
                     }
 
-                    if (!bioentities) {
+                    if (!bioentities || bioentities.length == 0) {
                         console.warn("No pubmed mined bioentities for id " + pubmedId);
+                        return;
                     }
 
                     function replaceGeneQueryWithBioentities(url, bioentities) {
