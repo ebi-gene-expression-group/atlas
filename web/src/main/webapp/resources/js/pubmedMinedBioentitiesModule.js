@@ -1,4 +1,4 @@
-var pubmedMinedBioentitiesModule = (function($) {
+var pubmedMinedBioentitiesModule = (function($, europepmcUrl) {
     "use strict";
 
     function fetchPubmedMinedBioentities(pubmedId, callback) {
@@ -10,4 +10,4 @@ var pubmedMinedBioentitiesModule = (function($) {
     return {
         fetchPubmedMinedBioentities: fetchPubmedMinedBioentities
     };
-} (jQuery));
+} (jQuery, europepmcUrl));
