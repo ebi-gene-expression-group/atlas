@@ -424,39 +424,52 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 componentDidMount: function () {
                     contrastTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
 
-                    function enableButton(ref) {
-                        if (ref) {
-                            var element = ref.getDOMNode();
-                            $(element).tooltip();
-
-                            $(element).fancybox({
-                                padding:0,
-                                openEffect:'elastic',
-                                closeEffect:'elastic'
-                            });
-                        }
-                    }
-
                     if (this.showPlotsButton()) {
-
-                        enableButton(this.refs.maButton);
-
-                        enableButton(this.refs.goButton);
-
-                        enableButton(this.refs.interproButton);
-
-                        enableButton(this.refs.reactomeButton);
+                        this.renderToolBarContent(this.refs.plotsToolBarContent.getDOMNode());
 
                         var plotsButton = this.refs.plotsButton.getDOMNode();
                         $(plotsButton).tooltip().button();
                         $(plotsButton).toolbar({
-                            content: this.refs.plotsToolbarOptions.getDOMNode(),
+                            content: this.refs.plotsToolBarContent.getDOMNode(),
                             position: 'right'
                         });
 
                     }
                 },
 
+                renderToolBarContent: function(contentNode) {
+
+                    var $contentNode = $(contentNode);
+
+                    var maPlotURL = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + '/' : '' ) + this.props.contrastId + '/ma-plot.png';
+                    var gseaGoPlotUrl = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + this.props.contrastId + '/gsea_go.png';
+                    var gseaInterproPlotUrl = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + this.props.contrastId + '/gsea_interpro.png';
+                    var gseaReactomePlotUrl = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + this.props.contrastId + '/gsea_reactome.png';
+
+                    var content =
+                        React.DOM.div(null, 
+                            this.props.showMaPlotButton ? React.DOM.a( {href:maPlotURL, id:"maButtonID", title:"Click to view MA plot for the contrast across all genes", onClick:this.clickButton}, React.DOM.img( {src:contextRoot + '/resources/images/maplot-button.png'} )) : null, 
+                            this.props.showGseaGoPlot ? React.DOM.a( {href:gseaGoPlotUrl, id:"goButtonID", title:"Click to view GO terms enrichment analysis plot", onClick:this.clickButton}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-go-button.png'} )) : null, 
+                            this.props.showGseaInterproPlot ? React.DOM.a( {href:gseaInterproPlotUrl, id:"interproButtonID", title:"Click to view Interpro domains enrichment analysis plot", onClick:this.clickButton}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-interpro-button.png'} )) : null, 
+                            this.props.showGseaReactomePlot ? React.DOM.a( {href:gseaReactomePlotUrl, id:"reactomeButtonID", title:"Click to view Reactome pathways enrichment analysis plot", onClick:this.clickButton}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-reactome-button.png'} )) : null 
+                        );
+
+                    // the tool bar content will be copied around the DOM by the toolbar plugin
+                    // so we render using static markup because otherwise when copied, we'll end up with
+                    // duplicate data-reactids
+                    $contentNode.html(React.renderComponentToStaticMarkup(content));
+
+                    $contentNode.find('a').tooltip();
+
+                    //need to use each here otherwise we get a fancybox error
+                    $contentNode.find('a').each(function (index, button) {
+                        $(button).fancybox({
+                            padding:0,
+                            openEffect:'elastic',
+                            closeEffect:'elastic'
+                        });
+                    });
+                },
 
                 clickButton: function (event) {
                     // prevent contrast from being selected
@@ -471,23 +484,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     var thStyle = this.showPlotsButton() ? {width: "60px"} : {};
                     var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
-                    var maPlotURL = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + '/' : '' ) + this.props.contrastId + '/ma-plot.png';
-                    var gseaGoPlotUrl = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + this.props.contrastId + '/gsea_go.png';
-                    var gseaInterproPlotUrl = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + this.props.contrastId + '/gsea_interpro.png';
-                    var gseaReactomePlotUrl = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + this.props.contrastId + '/gsea_reactome.png';
-
                     var plotsButton = (
                         React.DOM.div( {style:{"text-align":"right", "padding-right":"3px"}} , 
                             React.DOM.a( {href:"#", ref:"plotsButton", onClick:this.clickButton, className:"button-image", title:"Click to view plots"}, React.DOM.img( {src:contextRoot + '/resources/images/yellow-chart-icon.png'}))
-                        )
-                    );
-
-                    var plotsToolbar = (
-                        React.DOM.div( {ref:"plotsToolbarOptions", style:{display: "none"}} , 
-                            this.props.showMaPlotButton ? React.DOM.a( {href:maPlotURL, id:"maButtonID", ref:"maButton", title:"Click to view MA plot for the contrast across all genes", onClick:this.clickButton}, React.DOM.img( {src:contextRoot + '/resources/images/maplot-button.png'} )) : null, 
-                            this.props.showGseaGoPlot ? React.DOM.a( {href:gseaGoPlotUrl, id:"goButtonID", ref:"goButton", title:"Click to view GO terms enrichment analysis plot", onClick:this.clickButton}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-go-button.png'} )) : null, 
-                            this.props.showGseaInterproPlot ? React.DOM.a( {href:gseaInterproPlotUrl, id:"interproButtonID", ref:"interproButton", title:"Click to view Interpro domains enrichment analysis plot", onClick:this.clickButton}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-interpro-button.png'} )) : null, 
-                            this.props.showGseaReactomePlot ? React.DOM.a( {href:gseaReactomePlotUrl, id:"reactomeButtonID", ref:"reactomeButton", title:"Click to view Reactome pathways enrichment analysis plot", onClick:this.clickButton}, React.DOM.img( {src:contextRoot + '/resources/images/gsea-reactome-button.png'} )) : null 
                         )
                     );
 
@@ -505,7 +504,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                                 showTickWhenSelected
                             ),
                                 this.showPlotsButton() ? plotsButton : null,
-                                this.showPlotsButton() ? plotsToolbar : null
+                                this.showPlotsButton() ? React.DOM.div( {ref:"plotsToolBarContent", style:{display: "none"}}, "placeholder") : null
                         )
                         );
                 }
