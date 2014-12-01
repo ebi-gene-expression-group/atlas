@@ -112,7 +112,7 @@
                     }
 
                     var experimentUrlForPubMedBioentities = replaceGeneQueryWithBioentities(document.URL, bioentities);
-                    window.open(experimentUrlForPubMedBioentities);
+                    window.open(experimentUrlForPubMedBioentities, '_blank');
                 });
 
             });
