@@ -83,7 +83,7 @@
                 <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
                     <div>
                         <div>
-                            <input id="submit-button" type="submit" value="Search"/>
+                            <input id="submit-button" type="submit" value="Apply"/>
                         </div>
                         <div>
                             <input id="reset-button" type="button" value="Reset"/>
