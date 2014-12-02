@@ -6,11 +6,15 @@ var pubmedMinedBioentitiesModule = (function($, europepmcUrl) {
     function fetchPubmedMinedBioentities(pubmedId, callback) {
 
         var restURL = europepmcUrl.replace("%pubmedId%", pubmedId);
-
-        $.getJSON(restURL,  parseEuropePMCJSONResponse)
-            .done(function() {
-                callback(null, ids);
-            })
+        ids = [];
+        $.ajax({
+            dataType: "json",
+            url: restURL,
+            async: false,
+            success: parseEuropePMCJSONResponse
+        }).done(function() {
+            callback(null, ids);
+        })
             .fail(function(jqHXR) {
                 callback(jqHXR.statusText);
             });
