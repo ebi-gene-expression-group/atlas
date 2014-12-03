@@ -43,6 +43,7 @@
         and are overridden in profiles for specific deployment environments-->
         <solr.data.location>${user.home}/ATLAS3.TEST/solr</solr.data.location>
         <solr.host>localhost</solr.host>
+        <solr.test.host>lime.ebi.ac.uk</solr.test.host>
         <gxa.server.url>http://ves-hx-74:8080/gxa</gxa.server.url>
         <arrayexpress.ac.url>/gxa/arrayexpress</arrayexpress.ac.url>
         <europepmc.base.url>/gxa/europepmc</europepmc.base.url>
@@ -618,7 +619,7 @@
             </build>
             <!-- embedded tomcat started by mvn in bamboo plan -->
             <properties>
-                <solr.host>lime</solr.host>
+                <solr.host>localhost</solr.host>
                 <resources.host>lime:14092</resources.host>
                 <!-- this directory is populated from /web/src/test/resources/ by the build plan  -->
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
@@ -667,6 +668,7 @@
             </build>
             <properties>
                 <solr.host>localhost</solr.host>
+                <solr.test.host>localhost</solr.test.host>
                 <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
                 <oracle.jdbc.url>jdbc:oracle:thin:@localhost:1521:orcl</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
