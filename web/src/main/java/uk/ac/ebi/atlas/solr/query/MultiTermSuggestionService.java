@@ -28,7 +28,7 @@ public class MultiTermSuggestionService {
 
     private RestTemplate restTemplate;
 
-    @Value("#{configuration['index.server.gxa.url']}")
+    @Value("#{configuration['solr.suggester.base.url']}")
     private String serverURL;
 
     private static final Pattern NON_WORD_CHARACTERS_PATTERN = Pattern.compile("[^\\w -]|_");
