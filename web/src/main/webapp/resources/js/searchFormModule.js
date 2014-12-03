@@ -34,14 +34,8 @@
 var searchFormModule = (function($) {
     "use strict";
 
-    var _species;
-
     function removeHttpParameters (string) {
         return string.split("?")[0];
-    }
-
-    function isNotIE7orOlder (){
-        return !($.browser.msie && $.browser.version <= 8.0);
     }
 
     function initButtons(){
@@ -81,52 +75,6 @@ var searchFormModule = (function($) {
 
     }
 
-    function geneQuerySearchBoxInitAutocomplete(){
-        var $buttons = $('#submit-button, #reset-button')
-        $("#geneQuery")
-            // don't navigate away from the field on tab when selecting an item
-            .bind( "keydown", function( event ) {
-                if ( event.keyCode === $.ui.keyCode.TAB &&
-                    $( this ).data( "ui-autocomplete" ).menu.active ) {
-                    event.preventDefault();
-                }
-            })
-            .tagEditor({
-                delimiter:"\t",
-                maxLength: 50,
-                autocomplete: {
-                    delay: 500,
-                    minLength: 1,
-                    autoFocus: true,
-                    focus: function() {
-                        // prevent value inserted on focus
-                        return false;
-                    },
-                    source: function (request, response) {
-                        $.ajax({
-                            url: 'json/suggestions',
-                            data: {
-                                'query': request.term,
-                                'species': _species
-                            },
-                            success: function (data) {
-                                response(data);
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                console.log("Error. Status: " + textStatus + ", errorThrown: " + errorThrown);
-                            }
-                        });
-                    }
-                },
-                onChange: function(field, editor, tags) {
-                    $buttons.button("option", "disabled", tags.length == 0);
-                },
-
-                placeholder: 'Start typing ...',
-                forceLowercase: false
-            });
-    };
-
     function disableCarriageReturn(selector) {
         $(selector).keypress(function(event) {
             if (event.keyCode === 13) {
@@ -137,14 +85,12 @@ var searchFormModule = (function($) {
     }
 
     function searchBoxEnterEventHandler(element) {
-        $('.tag-editor').on('submit', function (e) {
+        $('#searchForm .tag-editor').on('submit', function (e) {
             $(element).click();
         });
     }
 
-    function init (watermarkLabel, species, defaultPValueCutOff, defaultFoldChangeCutOff) {
-
-        _species = species;
+    function init (watermarkLabel, defaultPValueCutOff, defaultFoldChangeCutOff) {
 
         initButtons();
 
@@ -152,16 +98,13 @@ var searchFormModule = (function($) {
 
         initSelectBox(watermarkLabel);
 
-        geneQuerySearchBoxInitAutocomplete();
-
     }
 
     return {
         init: init,
-        geneQuerySearchBoxInitAutocomplete: geneQuerySearchBoxInitAutocomplete,
         disableCarriageReturn: disableCarriageReturn,
-        removeHttpParameters: removeHttpParameters,
-        searchBoxEnterEventHandler: searchBoxEnterEventHandler
+        searchBoxEnterEventHandler: searchBoxEnterEventHandler,
+        removeHttpParameters: removeHttpParameters
     };
 
 }(jQuery));

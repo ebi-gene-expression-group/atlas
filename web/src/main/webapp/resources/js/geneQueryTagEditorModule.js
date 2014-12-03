@@ -20,12 +20,11 @@
  * http://gxa.github.com/gxa
  */
 
-var autocompleteModule = (function($) {
+var geneQueryTagEditorModule = (function($) {
     "use strict";
 
-    function initAutocomplete(species){
-
-        $("#local-searchbox")
+    function initAutocomplete(element, species, onChange){
+        $(element)
             // don't navigate away from the field on tab when selecting an item
             .bind( "keydown", function( event ) {
                 if ( event.keyCode === $.ui.keyCode.TAB &&
@@ -40,7 +39,7 @@ var autocompleteModule = (function($) {
                     delay: 500,
                     minLength: 1,
                     autoFocus: true,
-                    focus: function() {
+                    focus: function () {
                         // prevent value inserted on focus
                         return false;
                     },
@@ -60,21 +59,15 @@ var autocompleteModule = (function($) {
                         });
                     }
                 },
+                onChange: onChange,
 
                 placeholder: 'Enter gene query...',
                 forceLowercase: false
             });
     }
 
-    function searchBoxEnterEventHandler(element) {
-        $('.tag-editor').on('submit', function (e) {
-            $(element).click();
-        });
-    }
-
     return {
-        init: initAutocomplete,
-        searchBoxEnterEventHandler: searchBoxEnterEventHandler
+        init: initAutocomplete
     };
 
 }(jQuery));

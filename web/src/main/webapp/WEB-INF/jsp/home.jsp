@@ -162,11 +162,9 @@
             var $buttons = $('#submit-button, #reset-button'),
                     $searchFields = $('#geneQuery, #condition');
 
-            searchFormModule.geneQuerySearchBoxInitAutocomplete("#geneQuery");
+            geneQueryTagEditorModule.init("#geneQuery", undefined, disableButtonsOnChange);
 
             searchFormModule.searchBoxEnterEventHandler("#submit-button");
-
-            autocompleteModule.searchBoxEnterEventHandler("#submit-searchbox");
 
             searchFormModule.disableCarriageReturn("#condition");
 
@@ -194,6 +192,10 @@
                     });
                     return !atLeastOneValue;
                 }
+            }
+
+            function disableButtonsOnChange (field, editor, tags) {
+                $buttons.button("option", "disabled", tags.length == 0);
             }
 
         });

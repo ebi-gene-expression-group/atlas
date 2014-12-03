@@ -132,7 +132,7 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/helpTooltipsModule.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/autocompleteModule.js"></script>
+            src="${pageContext.request.contextPath}/resources/js/geneQueryTagEditorModule.js"></script>
 
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/jquery.caret-range-1.0.js"></script>
@@ -156,8 +156,16 @@
             $(document).ready(function () {
 
                 initExperimentPageButtonsAndTooltips();
-                autocompleteModule.init();
-                autocompleteModule.searchBoxEnterEventHandler("#submit-searchbox");
+                geneQueryTagEditorModule.init("#local-searchbox");
+
+                searchBoxEnterEventHandler("#submit-searchbox");
+
+                function searchBoxEnterEventHandler(element) {
+                    $('#local-search .tag-editor').on('submit', function (e) {
+                        $(element).click();
+                    });
+                }
+
                 conditonAutocompleteModule.init("${configuration['arrayexpress.autocomplete.url']}");
             });
         })(jQuery);

@@ -117,7 +117,9 @@
 
             //configurations required for any browser...
 
-            searchFormModule.init($('#queryFactorValues').attr('data-placeholder'), '${species}', '${preferences.defaultCutoff}', '${type.isBaseline() ? '' : preferences.defaultFoldChangeCutOff}');
+            searchFormModule.init($('#queryFactorValues').attr('data-placeholder'), '${preferences.defaultCutoff}', '${type.isBaseline() ? '' : preferences.defaultFoldChangeCutOff}');
+
+            geneQueryTagEditorModule.init('#geneQuery', '${species}');
 
             helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', $('[data-help-loc]').not('#heatmap-react [data-help-loc]'));
 
