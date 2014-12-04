@@ -84,6 +84,11 @@ var searchFormModule = (function($) {
         });
     }
 
+    function onLoadSetFocus() {
+        $('#prefForm .tag-editor').click();
+        $('#prefForm .tag-editor').focus();
+    }
+
     function searchBoxEnterEventHandler(element) {
         $('#searchForm .tag-editor').on('submit', function (e) {
             $(element).click();
@@ -104,6 +109,7 @@ var searchFormModule = (function($) {
         init: init,
         disableCarriageReturn: disableCarriageReturn,
         searchBoxEnterEventHandler: searchBoxEnterEventHandler,
+        onLoadSetFocus: onLoadSetFocus,
         removeHttpParameters: removeHttpParameters
     };
 

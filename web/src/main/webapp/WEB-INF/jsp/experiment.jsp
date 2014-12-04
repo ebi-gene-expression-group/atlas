@@ -121,6 +121,8 @@
 
             geneQueryTagEditorModule.init('#geneQuery', '${species}');
 
+            searchFormModule.onLoadSetFocus();
+
             helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', $('[data-help-loc]').not('#heatmap-react [data-help-loc]'));
 
             $('#stickem-container').stickem();
