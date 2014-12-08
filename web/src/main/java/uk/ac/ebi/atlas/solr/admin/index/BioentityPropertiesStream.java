@@ -54,20 +54,28 @@ public class BioentityPropertiesStream implements Closeable {
     }
 
     public Collection<BioentityProperty> next() throws IOException {
+        int lineCount = 0;
+
         Collection<BioentityProperty> propertiesBuffer = Lists.newArrayList();
 
         String[] csvValues;
         // observe order here, otherwise some data lines will be lost because of readNext()
         while (propertiesBuffer.size() <= BATCH_SIZE && (csvValues = csvReader.readNext()) != null) {
+            lineCount++;
 
             List<String> propertyValues = Lists.newArrayList(csvValues);
             String bioentityIdentifier = propertyValues.remove(0);
-            Collection<BioentityProperty> properties = bioentityPropertiesBuilder
-                    .withBioentityIdentifier(bioentityIdentifier)
-                    .withPropertyValues(propertyValues)
-                    .build();
-            propertiesBuffer.addAll(properties);
 
+            if (bioentityIdentifier.trim().isEmpty()) {
+                LOGGER.warn("Line " + lineCount + " ignored because bioentityIdentifier is empty");
+            }
+            else {
+                Collection<BioentityProperty> properties = bioentityPropertiesBuilder
+                        .withBioentityIdentifier(bioentityIdentifier)
+                        .withPropertyValues(propertyValues)
+                        .build();
+                propertiesBuffer.addAll(properties);
+            }
         }
 
         if (propertiesBuffer.size() > 0) {
