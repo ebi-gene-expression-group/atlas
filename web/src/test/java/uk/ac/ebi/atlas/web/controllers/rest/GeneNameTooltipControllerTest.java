@@ -106,7 +106,7 @@ public class GeneNameTooltipControllerTest {
         hashMultimap.put(SYNONYM, "b");
 
         String identifier = subject.buildSynonyms(hashMultimap);
-        assertThat(identifier, is("<span class='property-value-markup'>b</span> <span class='property-value-markup'>a</span> <span class='property-value-markup'>identifier</span>"));
+        assertThat(identifier, is("<span class='property-value-markup'>b</span> <span class='property-value-markup'>a</span>"));
     }
 
     @Test
@@ -150,7 +150,7 @@ public class GeneNameTooltipControllerTest {
         String formattedValues = subject.format(values, true, 1);
 
         assertThat(formattedValues, is(
-                "<span class='property-value-markup'>VALUE_1</span> <span class='property-value-markup'>...(total 2)</span>"));
+                "<span class='property-value-markup'>VALUE_1</span> <span class='property-value-markup'>(...and 2 more)</span>"));
 
     }
 
