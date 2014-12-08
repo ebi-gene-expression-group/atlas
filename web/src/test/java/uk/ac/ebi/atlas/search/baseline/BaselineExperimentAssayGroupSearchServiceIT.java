@@ -1,10 +1,8 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import com.google.common.base.Optional;
+import com.google.common.collect.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,9 +12,7 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import javax.inject.Inject;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -61,9 +57,10 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String geneQuery = "hsa-mir-636";
         String condition = "";
         String species = "";
-        boolean isExactMatch = true;
 
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
+        Set<String> geneIds = Sets.newHashSet(geneQuery);
+
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneIds, Optional.of(condition), Optional.of(species));
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, hasSize(0));
