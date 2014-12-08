@@ -57,10 +57,9 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         String geneQuery = "hsa-mir-636";
         String condition = "";
         String species = "";
+        boolean isExactMatch = true;
 
-        Set<String> geneIds = Sets.newHashSet(geneQuery);
-
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneIds, Optional.of(condition), Optional.of(species));
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, hasSize(0));
