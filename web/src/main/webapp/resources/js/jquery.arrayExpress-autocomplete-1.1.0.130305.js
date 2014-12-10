@@ -14,7 +14,8 @@
 (function($) {
 
 $.fn.extend({
-	arrayExpressAutocomplete: function(urlOrData, options) {
+	arrayExpressAutocomplete: function(options) {
+		var urlOrData = options.urlOrData;
 		var isUrl = typeof urlOrData == "string";
 		options = $.extend({}, $.Autocompleter.defaults, {
 			url: isUrl ? urlOrData : null,
@@ -955,7 +956,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 
     function onWinResize() {
         var adjust = $.browser.mozilla ? 2 : 4;
-        element.width($(input).width() + adjust);
+        //element.width($(input).width() + adjust);
     }
 
 	return {

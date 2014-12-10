@@ -177,7 +177,11 @@
                                 $('.active', ed).find('input').trigger('autogrow');
                                 ed.click(); // when selection is made with the mouse click then create a new tag automatically
                             }, 20); };
-                        input.autocomplete(aco);
+                        if (aco.plugin) {
+                            input[aco.plugin](aco);
+                        } else {
+                            input.autocomplete(aco);
+                        }
                     }
                 }
                 return false;
