@@ -1,4 +1,4 @@
-<%-- required for baseline heatmap transcript breakdown popups, and by the baseline gene distribution panel --%>
+<%-- required for baseline gene distribution panel --%>
 
 <!--[if lte IE 8]>
 <script language="JavaScript" type="text/javascript"

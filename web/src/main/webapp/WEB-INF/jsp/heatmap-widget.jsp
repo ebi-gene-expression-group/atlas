@@ -25,8 +25,6 @@
 
     <div id="queryFactorType" data-value="${queryFactorType}"></div>
 
-    <%@ include file="includes/transcript-breakdown-popup.jsp" %>
-
 </div>
 
 <script>

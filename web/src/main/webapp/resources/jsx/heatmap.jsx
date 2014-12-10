@@ -4,7 +4,7 @@
 /* Modules and parameters for their init methods are passed in here.
  Parameters that affect how the DOM is generated as passed in as props. */
 
-var heatmapModule = (function($, React, genePropertiesTooltipModule, factorTooltipModule, contrastTooltipModule, helpTooltipsModule, TranscriptPopup, EventEmitter, Modernizr) {
+var heatmapModule = (function($, React, genePropertiesTooltipModule, factorTooltipModule, contrastTooltipModule, helpTooltipsModule, EventEmitter, Modernizr) {
 
     var TypeEnum = {
         BASELINE: { isBaseline: true, heatmapTooltip: '#heatMapTableCellInfo', legendTooltip: '#gradient-base' },
@@ -16,7 +16,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
     var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLevelsInputElement) {
 
         // ensemblSpecies is the first two words only, with underscores instead of spaces, and all lower case except for the first character
-        // used for transcripts and to launch the ensembl genome browser for tracks
+        // used to launch the ensembl genome browser for tracks
         var ensemblSpecies = (function toEnsemblSpecies(species) {
             function capitaliseFirstLetter(string)
             {
@@ -756,7 +756,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 cellType: function (expression) {
                     if (type.isBaseline) {
                         return (
-                            <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} showTranscriptPopup={!this.props.showGeneSetProfiles} geneSetProfiles={this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
+                            <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} geneSetProfiles={this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
                             );
                     }
                     else if (type.isDifferential) {
@@ -844,7 +844,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return (numberExpressionLevel >= 100000) ? formatScientificNotation(numberExpressionLevel.toExponential().replace('+','')) : '' + numberExpressionLevel;
         }
 
-        var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, transcriptConfig, formatBaselineExpression) {
+        var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, formatBaselineExpression) {
 
             function hasKnownExpression(value) {
                 // true if not blank or UNKNOWN, ie: has a expression with a known value
@@ -865,38 +865,17 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     );
             }
 
-            function hasTranscriptTooltip(props) {
-                return (!props.disableTranscriptPopup && transcriptConfig && hasKnownExpression(props.value));
-            }
-
             return React.createClass({
-
-                onClick: function () {
-                    if (hasTranscriptTooltip(this.props)) {
-
-                        var factorValue = this.props.factorName,
-                            id = this.props.id,
-                            name = this.props.name;
-
-                        TranscriptPopup.display(contextRoot, experimentAccession, id, name, transcriptConfig.queryFactorType, factorValue, transcriptConfig.serializedFilterFactors, ensemblHost, ensemblSpecies);
-                    }
-                },
 
                 render: function () {
                     if (noExpression(this.props.value)) {
                         return (<td></td>);
                     }
 
-
                     var style = {"background-color": isUnknownExpression(this.props.value) ? "white" : this.props.color};
 
-
-                    if (hasTranscriptTooltip(this.props)) {
-                        style.cursor = "pointer";
-                    }
-
                     return (
-                        <td style={style} onClick={this.onClick}>
+                        <td style={style}>
                             <div
                             className="heatmap_cell"
                             style={{visibility: isUnknownExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
@@ -928,10 +907,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 }
 
             });
-        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, heatmapConfig.transcripts, formatBaselineExpression);
+        })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, formatBaselineExpression);
 
 
-        var CellMultiExperiment = (function (contextRoot, ensemblHost, ensemblSpecies, transcriptConfig, geneId, geneName, formatBaselineExpression) {
+        var CellMultiExperiment = (function (contextRoot, ensemblHost, ensemblSpecies, geneId, geneName, formatBaselineExpression) {
             
             function isNAExpression(value) {
                 return (value === "NT")
@@ -947,21 +926,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     );
             }
 
-            function hasTranscriptTooltip(props) {
-                return (transcriptConfig && props.value && !isNAExpression(props.value));
-            }
-
             return React.createClass({
-
-                onClick: function () {
-                    if (hasTranscriptTooltip(this.props)) {
-                        var factorValue = this.props.factorName,
-                            serializedFilterFactors = this.props.serializedFilterFactors,
-                            experimentAccession = this.props.id;
-
-                        TranscriptPopup.display(contextRoot, experimentAccession, geneId, geneName, transcriptConfig.queryFactorType, factorValue, serializedFilterFactors, ensemblHost, ensemblSpecies);
-                    }
-                },
 
                 render: function () {
                     if (noExpression(this.props.value)) {
@@ -970,12 +935,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                     var style = {"background-color": this.props.color};
 
-                    if (hasTranscriptTooltip(this.props)) {
-                        style.cursor = "pointer";
-                    }
-
                     return (
-                        <td style={style} onClick={this.onClick}>
+                        <td style={style}>
                             <div
                             className="heatmap_cell"
                             style={{visibility: isNAExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
@@ -986,7 +947,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         );
                 }
             });
-        })(heatmapConfig.contextRoot, ensemblHost, ensemblSpecies, heatmapConfig.transcripts, heatmapConfig.geneQuery, heatmapConfig.geneQuery, formatBaselineExpression);
+        })(heatmapConfig.contextRoot, ensemblHost, ensemblSpecies, heatmapConfig.geneQuery, heatmapConfig.geneQuery, formatBaselineExpression);
 
         var CellDifferential = (function () {
 
@@ -1062,4 +1023,4 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
         buildMultiExperiment: function (heatmapConfig, $prefFormDisplayLevelsInputElement) { return build(TypeEnum.MULTIEXPERIMENT, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement); }
     };
 
-})(jQuery, React, genePropertiesTooltipModule, factorTooltipModule, contrastTooltipModule, helpTooltipsModule, TranscriptPopup, EventEmitter, Modernizr);
+})(jQuery, React, genePropertiesTooltipModule, factorTooltipModule, contrastTooltipModule, helpTooltipsModule, EventEmitter, Modernizr);

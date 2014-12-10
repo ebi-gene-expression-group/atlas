@@ -28,7 +28,6 @@ import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWidgetPage;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithTranscriptBreakdownPage;
 
 import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
@@ -68,11 +67,4 @@ public class HeatmapWidgetControllerMultiSpeciesExperimentSIT extends SeleniumFi
         String firstGeneName = subject.getGeneNames().get(0);
         assertThat(firstGeneName, is("TNNI2"));
     }
-
-    @Test
-    public void transcriptPopup() {
-        HeatmapTableWithTranscriptBreakdownPage page = subject.clickOnCell(0, 4);
-        Assert.assertThat(page.getTranscriptBreakdownTitle(), Matchers.is("Expression Level Breakdown for TNNI2 in skeletal muscle\n(0 out of 0 transcript is expressed):"));
-    }
-
 }

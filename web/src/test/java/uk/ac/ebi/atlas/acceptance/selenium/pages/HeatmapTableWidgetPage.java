@@ -26,7 +26,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class HeatmapTableWidgetPage extends HeatmapTableWithTranscriptBreakdownPage {
+public class HeatmapTableWidgetPage extends HeatmapTablePage {
     @FindBy(id = "download-profiles-link")
     private WebElement downloadProfiles;
 

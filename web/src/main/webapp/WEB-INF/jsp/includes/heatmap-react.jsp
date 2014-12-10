@@ -12,7 +12,6 @@
 
         <%@ include file="react.jsp" %>
 
-        <script src="${pageContext.request.contextPath}/resources/js/transcriptPopupModule.js"></script>
         <script language="JavaScript" type="text/javascript"
                 src="${pageContext.request.contextPath}/resources/js/highlight.js"></script>
         <script language="JavaScript" type="text/javascript"
@@ -39,8 +38,6 @@
 
         <%-- used by helpTooltipsModule --%>
         <div id="help-placeholder" style="display: none"></div>
-
-        <%@ include file="transcript-breakdown-popup.jsp" %>
 
         <script type="text/javascript">
             var heatmapData = <%@ include file="heatmap-data.jsp" %>;
