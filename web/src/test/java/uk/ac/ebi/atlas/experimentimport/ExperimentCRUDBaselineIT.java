@@ -44,19 +44,16 @@ public class ExperimentCRUDBaselineIT {
     @Test
     public void loadAndDeleteNewExperiment() throws IOException {
         assertThat("experiment already exists in db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
-        assertThat("baseline transcripts already exist in db", baselinesTranscriptsCount(NEW_EXPERIMENT_ACCESSION), is(0));
         assertThat("baseline expressions already exist in db", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
 
         subject.importExperiment(NEW_EXPERIMENT_ACCESSION, false);
 
         assertThat("experiment row not loaded into db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(1));
-        assertThat("transcripts not loaded into db", baselinesTranscriptsCount(NEW_EXPERIMENT_ACCESSION), is(5));
         assertThat("baseline expressions not loaded into db", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(3332));
 
         subject.deleteExperiment(NEW_EXPERIMENT_ACCESSION);
 
         assertThat("experiment row was not deleted from db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
-        assertThat("baseline transcripts were not deleted from db", baselinesTranscriptsCount(NEW_EXPERIMENT_ACCESSION), is(0));
         assertThat("baseline expressions were not deleted from db", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
     }
 
@@ -65,13 +62,11 @@ public class ExperimentCRUDBaselineIT {
         ExperimentDTO originalExperimentDTO = experimentMetadataCRUD.findExperiment(EXISTING_EXPERIMENT_ACCESSION);
 
         assertThat("experiment does not already exist in db", experimentCount(EXISTING_EXPERIMENT_ACCESSION), is(1));
-        assertThat("baseline transcripts do not already exist in db", baselinesTranscriptsCount(EXISTING_EXPERIMENT_ACCESSION), is(3));
         assertThat("baseline expressions do not already exist in db", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(124394));
 
         subject.importExperiment(EXISTING_EXPERIMENT_ACCESSION, false);
 
         assertThat("count of experiment rows has changed", experimentCount(EXISTING_EXPERIMENT_ACCESSION), is(1));
-        assertThat("count of transcripts has changed", baselinesTranscriptsCount(EXISTING_EXPERIMENT_ACCESSION), is(3));
         assertThat("count of baseline expressions has changed", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(124394));
 
         ExperimentDTO newExperimentDTO = experimentMetadataCRUD.findExperiment(EXISTING_EXPERIMENT_ACCESSION);
@@ -86,10 +81,6 @@ public class ExperimentCRUDBaselineIT {
 
     private int experimentCount(String accession) {
         return jdbcTemplate.queryForObject("select COUNT(*) from EXPERIMENT WHERE accession = ?", Integer.class, accession);
-    }
-
-    private int baselinesTranscriptsCount(String accession) {
-        return jdbcTemplate.queryForObject("select COUNT(*) from RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ? AND ISACTIVE = 'T'", Integer.class, accession);
     }
 
     private int baselineExpressionsCount(String accession) {

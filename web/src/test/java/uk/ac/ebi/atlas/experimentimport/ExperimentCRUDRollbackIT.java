@@ -79,7 +79,6 @@ public class ExperimentCRUDRollbackIT {
     @Test
     public void rollbackDatabaseChangesOnSolrFailure() throws IOException {
         assertThat("experiment already exists in db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
-        assertThat("baseline transcripts already exist in db", baselinesTranscriptsCount(NEW_EXPERIMENT_ACCESSION), is(0));
         assertThat("baseline expressions already exist in db", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
 
         String exceptionMessage = null;
@@ -95,16 +94,11 @@ public class ExperimentCRUDRollbackIT {
         assertThat("no exception thrown", exceptionMessage, is("die!"));
 
         assertThat("experiment not rolled back", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
-        assertThat("baseline transcripts not rolled back", baselinesTranscriptsCount(NEW_EXPERIMENT_ACCESSION), is(0));
         assertThat("baseline expressions not rolled back", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
     }
 
     private int experimentCount(String accession) {
         return jdbcTemplate.queryForObject("select COUNT(*) from EXPERIMENT WHERE accession = ?", Integer.class, accession);
-    }
-
-    private int baselinesTranscriptsCount(String accession) {
-        return jdbcTemplate.queryForObject("select COUNT(*) from RNASEQ_BSLN_TRANSCRIPTS WHERE EXPERIMENT = ?", Integer.class, accession);
     }
 
     private int baselineExpressionsCount(String accession) {
