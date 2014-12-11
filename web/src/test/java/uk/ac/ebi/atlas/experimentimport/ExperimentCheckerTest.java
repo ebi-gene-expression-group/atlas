@@ -91,7 +91,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("experiment.magetab.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.factors.path.template")).thenReturn(pathTemplate);
         subject.checkBaselineFiles(EXPERIMENT_ACCESSION);
-        verify(configurationPropertiesMock, times(3)).getProperty(anyString());
+        verify(configurationPropertiesMock, times(2)).getProperty(anyString());
         tempFile.delete();
     }
 
@@ -139,7 +139,7 @@ public class ExperimentCheckerTest {
         when(configurationPropertiesMock.getProperty("experiment.magetab.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.factors.path.template")).thenReturn(pathTemplate);
         subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(configurationPropertiesMock, times(4)).getProperty(anyString());
+        verify(configurationPropertiesMock, times(3)).getProperty(anyString());
         tempFile.delete();
     }
 
