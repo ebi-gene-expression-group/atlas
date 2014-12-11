@@ -90,9 +90,6 @@ public class ExperimentCRUDBaselineIT {
     private void deleteInactiveAnalytics() {
         int count = jdbcTemplate.update("delete from RNASEQ_BSLN_EXPRESSIONS WHERE ISACTIVE = 'F'");
         LOGGER.info(String.format("RNASEQ_BSLN_EXPRESSIONS %s rows deleted",count));
-
-        int countTranscripts = jdbcTemplate.update("delete from RNASEQ_BSLN_TRANSCRIPTS WHERE ISACTIVE = 'F'");
-        LOGGER.info(String.format("RNASEQ_BSLN_TRANSCRIPTS %s rows deleted",countTranscripts));
     }
 
 }

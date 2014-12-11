@@ -89,7 +89,6 @@ public class ExperimentCheckerTest {
         File tempFile = File.createTempFile(TEMP_FILENAME + EXPERIMENT_ACCESSION, ".tmp");
         String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
         when(configurationPropertiesMock.getProperty("experiment.magetab.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("experiment.transcripts.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.factors.path.template")).thenReturn(pathTemplate);
         subject.checkBaselineFiles(EXPERIMENT_ACCESSION);
         verify(configurationPropertiesMock, times(3)).getProperty(anyString());
@@ -138,7 +137,6 @@ public class ExperimentCheckerTest {
         String pathTemplate = tempFile.getAbsolutePath().replaceAll(EXPERIMENT_ACCESSION, "{0}");
         when(configurationPropertiesMock.getProperty("experiment.analysis-method.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.magetab.path.template")).thenReturn(pathTemplate);
-        when(configurationPropertiesMock.getProperty("experiment.transcripts.path.template")).thenReturn(pathTemplate);
         when(configurationPropertiesMock.getProperty("experiment.factors.path.template")).thenReturn(pathTemplate);
         subject.checkAllFiles(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
         verify(configurationPropertiesMock, times(4)).getProperty(anyString());

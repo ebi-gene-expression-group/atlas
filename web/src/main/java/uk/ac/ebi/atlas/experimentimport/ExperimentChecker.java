@@ -84,7 +84,7 @@ public class ExperimentChecker {
 
     void checkBaselineFiles(String experimentAccession) {
         Set<String> baselineExperimentPathTemplates =
-                Sets.newHashSet("experiment.magetab.path.template", "experiment.transcripts.path.template", "experiment.factors.path.template");
+                Sets.newHashSet("experiment.magetab.path.template", "experiment.factors.path.template");
 
         checkFilesPermissions(baselineExperimentPathTemplates, experimentAccession);
     }
