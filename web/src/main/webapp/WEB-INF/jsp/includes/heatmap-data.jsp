@@ -25,12 +25,6 @@
         "enableEnsemblLauncher": ${isMultiExperiment ? false : (empty enableEnsemblLauncher ? true : enableEnsemblLauncher)},
         "showMaPlotButton": true,
         "gseaPlots": ${empty gseaPlots ? "null" : gseaPlots},
-        <c:if test="${empty disableTranscriptPopups || !disableTranscriptPopups}">
-            "transcripts": {
-                "serializedFilterFactors": "${serializedFilterFactors != null ? serializedFilterFactors : ""}",
-                "queryFactorType": "${isMultiExperiment ? "ORGANISM_PART" : preferences.queryFactorType}"
-            },
-        </c:if>
         "downloadProfilesURL": "${not empty downloadURL ? downloadURL : applicationProperties.buildDownloadURL(pageContext.request)}"
     },
     "columnHeaders": ${jsonColumnHeaders},

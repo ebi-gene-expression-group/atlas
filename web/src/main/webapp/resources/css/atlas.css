@@ -66,18 +66,18 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a {
     color: white;
 }
 
-#atlas-content table, #transcripts-pie table {
+#atlas-content table {
     border: none;
     width: auto;
     margin: 0px;
 }
 
-#atlas-content th, #transcripts-pie th {
+#atlas-content th {
     background-color: transparent;
     text-align: center;
 }
 
-#atlas-content td, th, #transcripts-pie td, th {
+#atlas-content td, th {
     vertical-align: inherit;
     border: none;
     margin: 0px;
