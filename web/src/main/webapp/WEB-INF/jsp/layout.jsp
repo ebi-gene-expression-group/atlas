@@ -165,8 +165,6 @@
                         $(element).click();
                     });
                 }
-
-                conditonAutocompleteModule.init("${configuration['arrayexpress.autocomplete.url']}");
             });
         })(jQuery);
     </script>

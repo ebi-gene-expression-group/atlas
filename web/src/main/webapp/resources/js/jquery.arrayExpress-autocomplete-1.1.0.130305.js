@@ -155,8 +155,13 @@ $.Autocompleter = function(input, options) {
 					// stop default to prevent a form submit, Opera needs special handling
 					event.preventDefault();
 					blockSubmit = true;
+                    ed = $('#conditionSection .tag-editor');
+                    ed.click();
+
 					return false;
-				}
+				} else {
+                    hideResultsNow();
+                }
 				break;
 
 			case KEY.ESC:

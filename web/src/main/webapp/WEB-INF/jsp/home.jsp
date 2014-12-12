@@ -93,7 +93,7 @@
                     </form:select>
                 </td>
                 <td>
-                    <div style="display:inline-block">
+                    <div id="conditionSection" style="display:inline-block">
                         <textarea id="condition" name="condition" maxlength="900" rows="2" cols="36"
                                   placeholder="(all conditions)" tabindex="3"></textarea>
 
@@ -163,6 +163,8 @@
                     $searchFields = $('#geneQuery, #condition');
 
             geneQueryTagEditorModule.init("#geneQuery", undefined, disableButtonsOnChange);
+
+            conditonAutocompleteModule.init("${configuration['arrayexpress.autocomplete.url']}", disableButtonsOnChange);
 
             searchFormModule.searchBoxEnterEventHandler("#submit-button");
 

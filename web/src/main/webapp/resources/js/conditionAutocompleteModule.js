@@ -5,15 +5,15 @@
 var conditonAutocompleteModule = (function ($) {
     "use strict";
 
-    function initConditionAutocomplete (contextPath) {
+    function initConditionAutocomplete (contextPath, onChange) {
 
         var autoCompleteFixSet = function() {
             $(this).attr('arrayExpressAutocomplete', 'off');
-        }
+        };
 
         var autoCompleteFixUnset = function() {
             $(this).removeAttr('arrayExpressAutocomplete');
-        }
+        };
 
         $("#condition")
             // don't navigate away from the field on tab when selecting an item
@@ -36,11 +36,12 @@ var conditonAutocompleteModule = (function ($) {
                     , requestTreeUrl: contextPath + "efotree.txt"
                     , width: 300
                 },
-                onChange: undefined,
+                onChange: onChange,
 
-                placeholder: 'Enter gene query...',
+                placeholder: 'Enter condition query...',
                 forceLowercase: false
-            }).focus(autoCompleteFixSet)
+            })
+            .focus(autoCompleteFixSet)
             .blur(autoCompleteFixUnset)
             .removeAttr('arrayExpressAutocomplete');
 
