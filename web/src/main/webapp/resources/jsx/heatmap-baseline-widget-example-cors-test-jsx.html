@@ -1,41 +1,38 @@
     <!DOCTYPE html>
 <html>
 <head>
-    <link type="text/css" rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
-    <link type="text/css" rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css">
+    <link type="text/css" rel="stylesheet" href="//wwwdev.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
+    <link type="text/css" rel="stylesheet" href="//wwwdev.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css">
 
-    <link rel="stylesheet" type="text/css" href="/gxa/resources/css/atlas.css">
-    <link rel="stylesheet" type="text/css"
-          href="/gxa/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
-    <link rel="stylesheet" type="text/css" href="/gxa/resources/css/table-grid.css">
-    <link rel="stylesheet" type="text/css"
-          href="/gxa/resources/css/heatmap-and-anatomogram.css">
+    <link rel="stylesheet" type="text/css" href="//localhost:8080/gxa/resources/css/atlas.css">
+    <link rel="stylesheet" type="text/css" href="//localhost:8080/gxa/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
+    <link rel="stylesheet" type="text/css" href="//localhost:8080/gxa/resources/css/table-grid.css">
+    <link rel="stylesheet" type="text/css" href="//localhost:8080/gxa/resources/css/heatmap-and-anatomogram.css">
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/react.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.10.0/JSXTransformer.js"></script>
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="//localhost:8080/gxa/resources/js/jquery-1.9.1.min.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="/gxa/resources/js/jquery-ui-1.10.3.fix-8740.0520a49/dist/jquery-ui.min.js"></script>
+            src="//localhost:8080/gxa/resources/js/jquery-ui-1.10.3.fix-8740.0520a49/dist/jquery-ui.min.js"></script>
     <script language="JavaScript" type="text/javascript"
-            src="/gxa/resources/js/jquery-migrate-1.2.0.min.js"></script>
+            src="//localhost:8080/gxa/resources/js/jquery-migrate-1.2.0.min.js"></script>
 
-    <script src="/gxa/resources/jsx/factorTooltip.js"></script>
-    <script src="/gxa/resources/js/factorTooltipModule.js"></script>
-    <script src="/gxa/resources/jsx/contrastTooltip.js"></script>
-    <script src="/gxa/resources/js/contrastTooltipModule.js"></script>
-    <script src="/gxa/resources/js/helpTooltipsModule.js"></script>
-    <script src="/gxa/resources/js/genePropertiesTooltipModule.js"></script>
-    <script src="/gxa/resources/js/highlight.js"></script>
-    <script src="/gxa/resources/js/transcriptPopupModule.js"></script>
-    <script src="/gxa/resources/js/anatomogramModule.js"></script>
-    <script src="/gxa/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
-    <script src="/gxa/resources/js/EventEmitter-4.2.7.js"></script>
+    <script src="//localhost:8080/gxa/resources/jsx/factorTooltip.js"></script>
+    <script src="//localhost:8080/gxa/resources/js/factorTooltipModule.js"></script>
+    <script src="//localhost:8080/gxa/resources/jsx/contrastTooltip.js"></script>
+    <script src="//localhost:8080/gxa/resources/js/contrastTooltipModule.js"></script>
+    <script src="//localhost:8080/gxa/resources/js/helpTooltipsModule.js"></script>
+    <script src="//localhost:8080/gxa/resources/js/genePropertiesTooltipModule.js"></script>
+    <script src="//localhost:8080/gxa/resources/js/highlight.js"></script>
+    <script src="//localhost:8080/gxa/resources/js/transcriptPopupModule.js"></script>
+    <script src="//localhost:8080/gxa/resources/js/anatomogramModule.js"></script>
+    <script src="//localhost:8080/gxa/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
+    <script src="//localhost:8080/gxa/resources/js/EventEmitter-4.2.7.js"></script>
 
     <script src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
 
-
-    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
+    <script language="JavaScript" type="text/javascript" src="//wwwdev.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
+    <script language="JavaScript" type="text/javascript" src="//localhost:8080/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
 </head>
 <body>
 
@@ -45,8 +42,8 @@
 <script src="heatmap.jsx" type="text/jsx"></script>
 <script src="heatmapContainer.jsx" type="text/jsx"></script>
 <script type="text/javascript">
-        new Biojs.AtlasHeatmap({
-            gxaBaseUrl: 'http://lime:14092/gxa',
+    new Biojs.AtlasHeatmap({
+            gxaBaseUrl: 'http://localhost:8080/gxa',
             params: 'geneQuery=CCNT2&POLR2B',
             target: "heatmapContainer"
         });
