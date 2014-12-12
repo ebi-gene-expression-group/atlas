@@ -26,35 +26,33 @@ var HeatmapContainer = (function (React) {
                     <div id="genenametooltip-content" style={{display: "none"}}></div>
 
                     <div id="atlas-content">
-                        <section id="stickem-container" style={{overflow: "auto", "class":"extra-padding"}}>
-                            <div id="heatmap" className="row stickem-container">
+                        <div id="heatmap" className="row stickem-container">
 
-                                <div id="anatomogram" className="aside stickem double-click-noselection" style={{display: "inline"}}>
-                                    <table>
-                                        <tr>
-                                            <td style={{"padding-top": "15px", "vertical-align":"top"}}>
-                                                <span id="sex-toggle">
-                                                    <img id="sex-toggle-image" title="Switch anatomogram" className="button-image"
-                                                    style={{"width":"20px", "height":"38px", "padding":"2px"}}
-                                                    src={sexToggleImageSrc}/>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <div id="anatomogramBody" style={{"display":"inline-block", "width": "230px", "height":height}}>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <div id="anatomogram-ensembl-launcher"></div>
-                                </div>
-
-                                <div id="ensembl-launcher" className="aside stickem" style={{"display":"inline"}}></div>
-
-                                <div id="heatmap-react" className={heatmapClass}>
-                                    <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
-                                </div>
+                            <div id="anatomogram" className="aside stickem double-click-noselection" style={{display: "inline"}}>
+                                <table>
+                                    <tr>
+                                        <td style={{"padding-top": "15px", "vertical-align":"top"}}>
+                                            <span id="sex-toggle">
+                                                <img id="sex-toggle-image" title="Switch anatomogram" className="button-image"
+                                                style={{"width":"20px", "height":"38px", "padding":"2px"}}
+                                                src={sexToggleImageSrc}/>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div id="anatomogramBody" style={{"display":"inline-block", "width": "230px", "height":height}}>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div id="anatomogram-ensembl-launcher"></div>
                             </div>
-                        </section>
+
+                            <div id="ensembl-launcher" className="aside stickem" style={{"display":"inline"}}></div>
+
+                            <div id="heatmap-react" className={heatmapClass}>
+                                <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
+                            </div>
+                        </div>
                     </div>
                 </div>
             );

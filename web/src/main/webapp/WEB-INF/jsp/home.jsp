@@ -79,13 +79,12 @@
 										  placeholder="(all genes)" tabindex="1"></textarea>
 
 								<div>
-										<span>E.g. 
+									<span style="float:left">E.g. 
 											<a href="query?geneQuery=ASPM">ASPM</a>,
-											<a href="query?geneQuery=REACT_200624">REACT_200624</a>,
 											<a href="query?geneQuery=%22zinc+finger%22">zinc finger</a>
 										</span>
 										
-										<span style="float:left">
+										<span style="float:right">
 											<input id="exactMatch" name="exactMatch" type="checkbox" value="true"
 												   checked="checked" tabindex="2">
 											<label for="exactMatch">Exact match</label>
@@ -134,10 +133,16 @@
 
 			<div class="grid_12 omega">
 				<h3>Publications</h3>
-				<p><a
+				
+				<p class="icon icon-conceptual" data-icon="l"><a
+				href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0107026">RNA-Seq Gene Profiling - A
+				Systematic Empirical Comparison</a> (<i>PLoS One</i>, 2014).</p>
+				
+				<p class="icon icon-conceptual" data-icon="l"><a
 				href="http://nar.oxfordjournals.org/content/42/D1/D926.full">Expression
 				Atlas update - a database of gene and transcript expression from microarray
 				and sequencing-based functional genomics experiments</a> (<i>Nucleic Acids Research</i>, 2014).</p>
+
 			</div>
 		</div>
 
