@@ -183,10 +183,10 @@ $.Autocompleter = function(input, options) {
 			hideResults();
 		}
 	}).click(function() {
-		// show select when clicking in a focused field
-		if ( hasFocus++ > 1 && !select.visible() ) {
-			onChange(0, true);
-		}
+        // show select when clicking in a focused field
+        if (hasFocus++ > 1 && !select.visible()) {
+            onChange(0, true);
+        }
 	}).bind("search", function() {
 		// TODO why not just specifying both arguments?
 		var fn = (arguments.length > 1) ? arguments[1] : null;
@@ -218,6 +218,10 @@ $.Autocompleter = function(input, options) {
 		$input.unbind();
 		$(input.form).unbind(".arrayExpressAutocomplete");
 	});
+
+    $('input.ac_input').on('onBlurHideResults', function (e) {
+        hideResultsNow();
+    });
 
     function debugLog(text) {
     //  if ($.browser.safari) {
@@ -769,7 +773,6 @@ $.Autocompleter.Select = function (options, input, select, config) {
             select();
             ed = $('#conditionSection .tag-editor');
             ed.click();
-            input.focus();
 		}).mouseup(function() {
 			config.mouseDownOnSelect = false;
 		});

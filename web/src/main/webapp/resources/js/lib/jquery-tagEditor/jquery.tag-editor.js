@@ -225,6 +225,7 @@
                     o.beforeTagSave(el, ed, tag_list, old_tag, tag);
                     // remove duplicates
                     $('.tag-editor-tag:not(.active)', ed).each(function(){ if ($(this).html() == tag) $(this).closest('li').remove(); });
+                    $('input.ac_input').trigger('onBlurHideResults');
                 }
                 input.parent().html(tag).removeClass('active');
                 if (tag != old_tag) update_globals();
