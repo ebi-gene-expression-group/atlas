@@ -331,10 +331,9 @@ $.Autocompleter = function(input, options) {
     {
         var field = getTermField(term);
 
-        var isTextMultiWord = -1 != text.indexOf(" ");
         return getTermModifier(term)
                 + (field.length > 0 ? field + ":" : "")
-                + (isTextMultiWord ? "\"" : "") + text + (isTextMultiWord ? "\"" : "");
+                + text;
     }
 
     function currentTerm(value, position)
