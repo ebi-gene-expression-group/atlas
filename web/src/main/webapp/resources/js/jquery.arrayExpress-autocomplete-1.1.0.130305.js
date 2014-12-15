@@ -767,6 +767,10 @@ $.Autocompleter.Select = function (options, input, select, config) {
             return false;
 		}).mousedown(function() {
 			config.mouseDownOnSelect = true;
+            select();
+            ed = $('#conditionSection .tag-editor');
+            ed.click();
+            input.focus();
 		}).mouseup(function() {
 			config.mouseDownOnSelect = false;
 		});
