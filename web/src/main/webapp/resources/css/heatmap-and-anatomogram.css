@@ -32,6 +32,7 @@
 .heatmap-position {
     position: relative;
     margin-left: 270px;
+    overflow-x: auto;
 }
 
 .heatmap-position-widget {
