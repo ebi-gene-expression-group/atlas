@@ -31,18 +31,34 @@
     "profiles": ${jsonProfiles},
     "geneSetProfiles": ${not empty jsonGeneSetProfiles ? jsonGeneSetProfiles : "null"},
     "anatomogram" :
-<c:choose>
-    <c:when test="${hasAnatomogram}">
-        {
-            "maleAnatomogramFile": "${maleAnatomogramFile}",
-            "femaleAnatomogramFile":  "${femaleAnatomogramFile}",
-            "allSvgPathIds": ${empty allSvgPathIds ? "null" : allSvgPathIds},
-            "contextRoot": "${pageContext.request.contextPath}"
-        }
-    </c:when>
-    <c:otherwise>
-        null
-    </c:otherwise>
-</c:choose>
+        <c:choose>
+            <c:when test="${hasAnatomogram}">
+                {
+                    "maleAnatomogramFile": "${maleAnatomogramFile}",
+                    "femaleAnatomogramFile":  "${femaleAnatomogramFile}",
+                    "allSvgPathIds": ${empty allSvgPathIds ? "null" : allSvgPathIds},
+                    "contextRoot": "${pageContext.request.contextPath}"
+                }
+            </c:when>
+            <c:otherwise>
+                null
+            </c:otherwise>
+        </c:choose>,
+    "experiment" :
+    <c:choose>
+        <c:when test="${isWidget}">
+            <c:set var="additionalQueryOptionsString"
+                   value="?geneQuery=${preferences.geneQuery}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
+            <c:set var="experimentURL" value="/experiments/${experimentAccession}${additionalQueryOptionsString}"></c:set>
+            {
+            "URL": "${experimentURL}",
+            "description":  "${experimentDescription}",
+            "allSpecies": "${allSpecies}"
+            }
+        </c:when>
+        <c:otherwise>
+            null
+        </c:otherwise>
+    </c:choose>
 
 }

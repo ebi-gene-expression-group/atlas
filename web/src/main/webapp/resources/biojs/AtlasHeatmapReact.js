@@ -82,15 +82,19 @@ Biojs.AtlasHeatmap = Biojs.extend({
 
         jQuery.ajax(httpRequest).done(function (data) {
 
-            function setContextRoot(data, gxaBaseUrl) {
+            function overrideContextRoot(data, gxaBaseUrl) {
                 data.config.contextRoot = gxaBaseUrl;
 
                 if (data.anatomogram) {
                     data.anatomogram.contextRoot = gxaBaseUrl;
                 }
+
+                if (data.experiment) {
+                    data.experiment.contextRoot = gxaBaseUrl;
+                }
             }
 
-            setContextRoot(data, opt.gxaBaseUrl);
+            overrideContextRoot(data, opt.gxaBaseUrl);
 
             self.drawHeatmap(data, opt.target);
         }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -102,13 +106,13 @@ Biojs.AtlasHeatmap = Biojs.extend({
 
     drawHeatmap:function (data, target) {
 
-        (function ($, React, HeatmapContainer, heatmapBuilder, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData) {
+        (function ($, React, HeatmapContainer, heatmapBuilder, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData, experimentData) {
 
             $(document).ready(function () {
                 // call this inside ready() so all scripts load first in IE8
                 var Heatmap = heatmapBuilder(heatmapConfig).Heatmap;
 
-                React.renderComponent(HeatmapContainer({Heatmap: Heatmap, isWidget: true, anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}),
+                React.renderComponent(HeatmapContainer({Heatmap: Heatmap, isWidget: true, experiment: experimentData, anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}),
                     document.getElementById(target)
                 );
 
@@ -121,7 +125,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
             });
 
         })(jQuery, React, HeatmapContainer, heatmapModule.buildBaseline, data.config,
-            data.columnHeaders, data.profiles, data.geneSetProfiles, data.anatomogram);
+            data.columnHeaders, data.profiles, data.geneSetProfiles, data.anatomogram, data.experiment);
 
     },
 

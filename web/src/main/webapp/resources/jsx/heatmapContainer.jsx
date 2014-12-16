@@ -1,6 +1,37 @@
 /** @jsx React.DOM */
 
 /*global React */
+
+
+
+var ExperimentDescription = (function (React) {
+
+    return React.createClass({
+
+        render: function () {
+
+            var experimentURL = this.props.experiment.contextRoot + this.props.experiment.URL;
+
+            return (
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td width="100%">
+                                <div id="experimentDescription">
+                                    <a id="goto-experiment" className="thick-link" title="Experiment Page" href={experimentURL}>{this.props.experiment.description}</a>
+                                </div>
+                                <div id="experimentOrganisms">Organism(s): <span style={{"font-style":"italic"}}>{this.props.experiment.allSpecies}</span></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            );
+        }
+    });
+
+})(React);
+
+
 var HeatmapContainer = (function (React) {
 
     return React.createClass({
@@ -25,7 +56,10 @@ var HeatmapContainer = (function (React) {
                 {/* TODO move into gene tooltips module */}
                     <div id="genenametooltip-content" style={{display: "none"}}></div>
 
-                    <div id="atlas-content">
+                    <div id="atlas-content" className="block">
+
+                        <ExperimentDescription experiment={this.props.experiment} />
+
                         <div id="heatmap" className="row stickem-container">
 
                             <div id="anatomogram" className="aside stickem double-click-noselection" style={{display: "inline"}}>
