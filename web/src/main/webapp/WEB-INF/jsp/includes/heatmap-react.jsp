@@ -12,20 +12,7 @@
 
         <%@ include file="react.jsp" %>
 
-        <script language="JavaScript" type="text/javascript"
-                src="${pageContext.request.contextPath}/resources/js/highlight.js"></script>
-        <script language="JavaScript" type="text/javascript"
-                src="${pageContext.request.contextPath}/resources/js/genePropertiesTooltipModule.js"></script>
-
-        <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/jsx/contrastTooltip.js"></script>
-        <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/contrastTooltipModule.js"></script>
-
-        <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/jsx/factorTooltip.js"></script>
-        <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/factorTooltipModule.js"></script>
-
-        <script src="${pageContext.request.contextPath}/resources/js/EventEmitter-4.2.7.min.js" type="text/javascript"></script>
-
-        <script src="${pageContext.request.contextPath}/resources/jsx/heatmap.js" type="text/javascript"></script>
+        <%@ include file="heatmap-js.jsp" %>
 
         <script src="${pageContext.request.contextPath}/resources/js/jquery.toolbar.js"></script>
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.toolbars.css" />
