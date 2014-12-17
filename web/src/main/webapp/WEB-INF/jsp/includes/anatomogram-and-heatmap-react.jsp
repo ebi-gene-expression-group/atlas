@@ -29,6 +29,7 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
+<%-- TODO: replace this file with heatmapContainer.jsx (which duplicates this page)dd  --%>
 <c:if test="${not empty jsonProfiles}">
     <div id="heatmap" class="row stickem-container">
 
