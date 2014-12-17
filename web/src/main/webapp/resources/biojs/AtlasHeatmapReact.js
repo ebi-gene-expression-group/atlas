@@ -56,9 +56,11 @@
  * });
  *
  */
+
+/*global jQuery,React */
 Biojs.AtlasHeatmap = Biojs.extend({
 
-    constructor:function (options) {
+    constructor:function () {
 
         var self = this;
 
@@ -119,8 +121,6 @@ Biojs.AtlasHeatmap = Biojs.extend({
                 // load anatomogram after heatmap is rendered so wiring works
                 if (anatomogramData) {
                     anatomogramModule.init(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile, anatomogramData.contextRoot);
-                } else {
-                    $("#anatomogram").remove();
                 }
             });
 

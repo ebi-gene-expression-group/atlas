@@ -31,8 +31,7 @@ var ExperimentDescription = (function (React) {
 
 })(React);
 
-
-var HeatmapContainer = (function (React) {
+var Anatomogram = (function (React) {
 
     return React.createClass({
 
@@ -41,9 +40,40 @@ var HeatmapContainer = (function (React) {
                 return s.indexOf("human") > -1;
             }
 
-            var Heatmap = this.props.Heatmap;
             var height = containsHuman(this.props.anatomogram.maleAnatomogramFile) ? 360 : 250;
             var sexToggleImageSrc = this.props.anatomogram.contextRoot + "/resources/images/male_selected.png";
+
+            return (
+                React.DOM.div( {id:"anatomogram", className:"aside stickem double-click-noselection", style:{display: "inline"}}, 
+                    React.DOM.table(null, 
+                        React.DOM.tr(null, 
+                            React.DOM.td( {style:{"padding-top": "15px", "vertical-align":"top"}}, 
+                                React.DOM.span( {id:"sex-toggle"}, 
+                                    React.DOM.img( {id:"sex-toggle-image", title:"Switch anatomogram", className:"button-image",
+                                        style:{"width":"20px", "height":"38px", "padding":"2px"},
+                                        src:sexToggleImageSrc})
+                                )
+                            ),
+                            React.DOM.td(null, 
+                                React.DOM.div( {id:"anatomogramBody", style:{"display":"inline-block", "width": "230px", "height":height}}
+                                )
+                            )
+                        )
+                    ),
+                    React.DOM.div( {id:"anatomogram-ensembl-launcher"})
+                )
+            );
+        }
+    });
+
+})(React);
+
+var HeatmapContainer = (function (React) {
+
+    return React.createClass({
+
+        render: function () {
+            var Heatmap = this.props.Heatmap;
             var heatmapClass = "heatmap-position" + (this.props.isWidget ? "-widget" : "");
 
             return (
@@ -62,24 +92,7 @@ var HeatmapContainer = (function (React) {
 
                         React.DOM.div( {id:"heatmap", className:"row stickem-container"}, 
 
-                            React.DOM.div( {id:"anatomogram", className:"aside stickem double-click-noselection", style:{display: "inline"}}, 
-                                React.DOM.table(null, 
-                                    React.DOM.tr(null, 
-                                        React.DOM.td( {style:{"padding-top": "15px", "vertical-align":"top"}}, 
-                                            React.DOM.span( {id:"sex-toggle"}, 
-                                                React.DOM.img( {id:"sex-toggle-image", title:"Switch anatomogram", className:"button-image",
-                                                style:{"width":"20px", "height":"38px", "padding":"2px"},
-                                                src:sexToggleImageSrc})
-                                            )
-                                        ),
-                                        React.DOM.td(null, 
-                                            React.DOM.div( {id:"anatomogramBody", style:{"display":"inline-block", "width": "230px", "height":height}}
-                                            )
-                                        )
-                                    )
-                                ),
-                                React.DOM.div( {id:"anatomogram-ensembl-launcher"})
-                            ),
+                             this.props.anatomogram ? Anatomogram( {anatomogram:this.props.anatomogram} ) : null,
 
                             React.DOM.div( {id:"ensembl-launcher", className:"aside stickem", style:{"display":"inline"}}),
 

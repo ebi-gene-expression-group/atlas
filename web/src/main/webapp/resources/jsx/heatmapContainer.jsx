@@ -31,8 +31,7 @@ var ExperimentDescription = (function (React) {
 
 })(React);
 
-
-var HeatmapContainer = (function (React) {
+var Anatomogram = (function (React) {
 
     return React.createClass({
 
@@ -41,9 +40,40 @@ var HeatmapContainer = (function (React) {
                 return s.indexOf("human") > -1;
             }
 
-            var Heatmap = this.props.Heatmap;
             var height = containsHuman(this.props.anatomogram.maleAnatomogramFile) ? 360 : 250;
             var sexToggleImageSrc = this.props.anatomogram.contextRoot + "/resources/images/male_selected.png";
+
+            return (
+                <div id="anatomogram" className="aside stickem double-click-noselection" style={{display: "inline"}}>
+                    <table>
+                        <tr>
+                            <td style={{"padding-top": "15px", "vertical-align":"top"}}>
+                                <span id="sex-toggle">
+                                    <img id="sex-toggle-image" title="Switch anatomogram" className="button-image"
+                                        style={{"width":"20px", "height":"38px", "padding":"2px"}}
+                                        src={sexToggleImageSrc}/>
+                                </span>
+                            </td>
+                            <td>
+                                <div id="anatomogramBody" style={{"display":"inline-block", "width": "230px", "height":height}}>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="anatomogram-ensembl-launcher"></div>
+                </div>
+            );
+        }
+    });
+
+})(React);
+
+var HeatmapContainer = (function (React) {
+
+    return React.createClass({
+
+        render: function () {
+            var Heatmap = this.props.Heatmap;
             var heatmapClass = "heatmap-position" + (this.props.isWidget ? "-widget" : "");
 
             return (
@@ -62,24 +92,7 @@ var HeatmapContainer = (function (React) {
 
                         <div id="heatmap" className="row stickem-container">
 
-                            <div id="anatomogram" className="aside stickem double-click-noselection" style={{display: "inline"}}>
-                                <table>
-                                    <tr>
-                                        <td style={{"padding-top": "15px", "vertical-align":"top"}}>
-                                            <span id="sex-toggle">
-                                                <img id="sex-toggle-image" title="Switch anatomogram" className="button-image"
-                                                style={{"width":"20px", "height":"38px", "padding":"2px"}}
-                                                src={sexToggleImageSrc}/>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div id="anatomogramBody" style={{"display":"inline-block", "width": "230px", "height":height}}>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <div id="anatomogram-ensembl-launcher"></div>
-                            </div>
+                            { this.props.anatomogram ? Anatomogram( {anatomogram:this.props.anatomogram} ) : null}
 
                             <div id="ensembl-launcher" className="aside stickem" style={{"display":"inline"}}></div>
 
