@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BioEntityPage extends HeatmapTablePage {
+public class BioEntityPage extends HeatmapTableWidgetPage {
 
     static final String PAGE_LOCATION = "/gxa/";
 
@@ -133,6 +133,7 @@ public class BioEntityPage extends HeatmapTablePage {
 
         diffResultsDisplayLevelsButton.click();
     }
+
 
     @Override
     protected String getPageURI() {

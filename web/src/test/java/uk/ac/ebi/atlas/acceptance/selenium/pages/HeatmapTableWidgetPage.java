@@ -36,7 +36,7 @@ public class HeatmapTableWidgetPage extends HeatmapTablePage {
         this(driver, "/widgets/heatmap/protein", httpParameters);
     }
 
-    private HeatmapTableWidgetPage(WebDriver driver, String pageLocation, String httpParameters) {
+    public HeatmapTableWidgetPage(WebDriver driver, String pageLocation, String httpParameters) {
         super(driver, null, httpParameters);
         this.pageLocation = "/gxa" + pageLocation;
     }

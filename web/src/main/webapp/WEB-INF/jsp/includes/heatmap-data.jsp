@@ -1,3 +1,4 @@
+<%--@elvariable id="applicationProperties" type="uk.ac.ebi.atlas.web.ApplicationProperties"--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -10,6 +11,7 @@
     //TODO: extract ensemlb genome launcher config parameters (ensemblDB, columnType etc.) out into separate object
     //TODO: remove enableGeneLinks parameter
     //TODO: investigate why showMaPlotButton is always true
+    //TODO: break into common params, differential params, and baseline and multiexperiment params (if any)
     --%>
     "config": {
         "atlasHost": "${atlasHost}",
@@ -46,7 +48,7 @@
         </c:choose>,
     "experiment" :
     <c:choose>
-        <c:when test="${isWidget}">
+        <c:when test="${isWidget && !isMultiExperiment}">
             <c:set var="additionalQueryOptionsString"
                    value="?geneQuery=${preferences.geneQuery}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
             <c:set var="experimentURL" value="/experiments/${experimentAccession}${additionalQueryOptionsString}"></c:set>

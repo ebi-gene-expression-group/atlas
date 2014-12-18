@@ -29,11 +29,11 @@ import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -55,6 +55,7 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
@@ -146,6 +147,26 @@ public final class HeatmapWidgetController {
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
                                  Model model) {
 
+        populateModelWithMultiExperimentResults(bioEntityAccession, species, propertyType, model);
+
+        return "heatmap-widget-react";
+    }
+
+    @RequestMapping(value = "/widgets/heatmap/multiExperiment")
+    public String multiExperimentJson(
+            @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
+            @RequestParam(value = "species", required = false) String species,
+            @RequestParam(value = "propertyType", required = false) String propertyType,
+            Model model, HttpServletResponse response) {
+
+        populateModelWithMultiExperimentResults(bioEntityAccession, species, propertyType, model);
+
+        // set here instead of in JSP, because the JSP may be included elsewhere
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        return "heatmap-data";
+    }
+
+    private void populateModelWithMultiExperimentResults(String bioEntityAccession, String species, String propertyType, Model model) {
         String solrSpecies = StringUtils.isBlank(species) ?
                 speciesLookupService.fetchFirstSpeciesByField(propertyType, bioEntityAccession) : species.toLowerCase();
 
@@ -164,9 +185,6 @@ public final class HeatmapWidgetController {
         model.addAttribute("isWidget", true);
         model.addAttribute("isMultiExperiment", true);
         model.addAttribute("geneQuery", bioEntityAccession);
-        model.addAttribute("disableTranscriptPopups", GeneSetUtil.isGeneSet(bioEntityAccession));
-
-        return "heatmap-widget-react";
     }
 
     //TODO: remove duplication with BaselineExperimentPageController

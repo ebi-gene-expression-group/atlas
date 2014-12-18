@@ -77,18 +77,9 @@ var HeatmapContainer = (function (React) {
             var heatmapClass = "heatmap-position" + (this.props.isWidget ? "-widget" : "");
 
             return (
-
-                <div id="content" className="grid_24">
-
-                {/* TODO move into help tooltips module */}
-                    <div id="help-placeholder" style={{display: "none"}}></div>
-
-                {/* TODO move into gene tooltips module */}
-                    <div id="genenametooltip-content" style={{display: "none"}}></div>
-
                     <div id="atlas-content" className="block">
 
-                        <ExperimentDescription experiment={this.props.experiment} />
+                        { this.props.experiment ? ExperimentDescription( {experiment: this.props.experiment} ) : null }
 
                         <div id="heatmap" className="row stickem-container">
 
@@ -99,9 +90,15 @@ var HeatmapContainer = (function (React) {
                             <div id="heatmap-react" className={heatmapClass}>
                                 <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
                             </div>
+
+                            {/* TODO move into help tooltips module */}
+                            <div id="help-placeholder" style={{display: "none"}}></div>
+
+                            {/* TODO move into gene tooltips module */}
+                            <div id="genenametooltip-content" style={{display: "none"}}></div>
+
                         </div>
                     </div>
-                </div>
             );
         }
     });

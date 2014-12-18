@@ -59,7 +59,7 @@ public final class HeatmapWidgetDownloadController {
         this.tsvFileMastheadTemplate = IOUtils.toString(tsvFileMastheadResource.getInputStream());
     }
 
-    @RequestMapping(value = "/widgets/heatmap/bioentity.tsv", method = RequestMethod.GET)
+    @RequestMapping(value = {"/widgets/heatmap/bioentity.tsv", "/widgets/heatmap/multiExperiment.tsv"}, method = RequestMethod.GET)
     public void heatmapWidgetData (@RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
                                      @RequestParam(value = "species", required = true) String species,
                                      HttpServletResponse response) throws IOException {

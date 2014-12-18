@@ -22,12 +22,15 @@
 
 package uk.ac.ebi.atlas.bioentity.widget;
 
+import com.jayway.restassured.response.Response;
+import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
 import java.util.List;
 
+import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -66,6 +69,27 @@ public class GenePageControllerHomoSapiensGeneBaselineWidgetSIT extends SinglePa
         assertThat(subject.getGeneLink(2), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSG00000163331&serializedFilterFactors=ORGANISM%3AHomo%20sapiens"));
         assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=ENSG00000163331"));
         assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-513?geneQuery=ENSG00000163331"));
+        assertThat(subject.hasAnatomogram(), is(true));
+    }
+
+    @Test
+    public void downloadLink() {
+        subject.waitForHeatmapToBeVisible();
+
+        String downloadUrl = subject.downloadProfilesLink();
+        System.out.println(downloadUrl);
+
+        Response response = given().urlEncodingEnabled(false).get(downloadUrl);
+
+        response.then().assertThat().statusCode(200);
+
+        ResponseBody body = response.getBody();
+
+        String[] lines = body.asString().split("\n");
+        assertThat(lines.length, is(7));
+        response.then().assertThat().body(containsString("Twenty seven tissues"));
+        response.then().assertThat().body(containsString("Illumina Body Map"));
+        response.then().assertThat().body(containsString("Vertebrate tissues"));
     }
 
 

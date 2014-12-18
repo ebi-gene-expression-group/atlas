@@ -69,7 +69,8 @@ Biojs.AtlasHeatmap = Biojs.extend({
 
         var opt = self.opt;
 
-        var url = opt.gxaBaseUrl + '/widgets/heatmap/referenceExperiment?' + opt.params;
+        var endpoint = opt.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
+        var url = opt.gxaBaseUrl + endpoint + '?' + opt.params;
 
         var httpRequest = {
             url: url,
@@ -98,7 +99,11 @@ Biojs.AtlasHeatmap = Biojs.extend({
 
             overrideContextRoot(data, opt.gxaBaseUrl);
 
-            self.drawHeatmap(data, opt.target);
+            if (opt.isMultiExperiment) {
+                self.drawHeatmap(data, opt.target, heatmapModule.buildMultiExperiment);
+            } else {
+                self.drawHeatmap(data, opt.target, heatmapModule.buildBaseline);
+            }
         }).fail(function (jqXHR, textStatus, errorThrown) {
             Biojs.console.log("ERROR: " + jqXHR.status);
             containerDiv.html("An error occurred while retrieving the data: " + jqXHR.status + " - " + jqXHR.statusText);
@@ -106,7 +111,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
 
     },
 
-    drawHeatmap:function (data, target) {
+    drawHeatmap:function (data, target, heatmapBuilder) {
 
         (function ($, React, HeatmapContainer, heatmapBuilder, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData, experimentData) {
 
@@ -124,7 +129,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
                 }
             });
 
-        })(jQuery, React, HeatmapContainer, heatmapModule.buildBaseline, data.config,
+        })(jQuery, React, HeatmapContainer, heatmapBuilder, data.config,
             data.columnHeaders, data.profiles, data.geneSetProfiles, data.anatomogram, data.experiment);
 
     },

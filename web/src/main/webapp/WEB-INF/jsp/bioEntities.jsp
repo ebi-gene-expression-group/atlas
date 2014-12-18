@@ -229,7 +229,7 @@
 
 <c:if test="${showWidget}">
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmap.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
 
     <%@ include file="includes/react.jsp" %>
 </c:if>
@@ -247,6 +247,14 @@
 
 <%-- hide expand/collapse icons when accordion sections don't have enough results --%>
 <c:set var="hideIcons" value="${(showBioentityPropertiesPane && !hasBaselineResults && empty bioentities) || (!showBioentityPropertiesPane && !(hasBaselineResult && not empty bioentities))}"/>
+
+<c:if test="${widgetHasBaselineProfiles}">
+    <%@ include file="includes/react.jsp" %>
+    <%@ include file="includes/heatmap-js.jsp" %>
+    <%@ include file="includes/anatomogram.jsp" %>
+
+    <script src="${pageContext.request.contextPath}/resources/jsx/heatmapContainer.js"></script>
+</c:if>
 
 <script>
 
@@ -286,7 +294,9 @@
         var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
 
         new Biojs.AtlasHeatmap({
-            featuresUrl: '/gxa/widgets/heatmap/bioentity?geneQuery=${entityIdentifier}' + widgetParameters,
+            gxaBaseUrl: '${pageContext.request.contextPath}',
+            params: 'geneQuery=${entityIdentifier}' + widgetParameters,
+            isMultiExperiment: true,
             target: "widgetBody"
         });
 
