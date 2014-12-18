@@ -46,8 +46,6 @@
 </section>
 
 <script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
-<script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
 
 <script language="JavaScript" type="text/javascript"
@@ -56,8 +54,6 @@
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/jquery.stickem.js"></script>
 
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/anatomogramModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <script language="JavaScript" type="text/javascript"

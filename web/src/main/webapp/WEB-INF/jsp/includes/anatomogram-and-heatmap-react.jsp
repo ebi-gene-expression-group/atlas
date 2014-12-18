@@ -31,6 +31,8 @@
 
 <%-- TODO: replace this file with heatmapContainer.jsx (which duplicates this page)dd  --%>
 <c:if test="${not empty jsonProfiles}">
+    <%@ include file="anatomogram.jsp" %>
+
     <div id="heatmap" class="row stickem-container">
 
         <div id="anatomogram" class="aside stickem double-click-noselection">
