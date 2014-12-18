@@ -30,6 +30,6 @@ public class ReactomeClientIT {
 
     @Test
     public void reactomeIsUp() {
-        assertThat(subject.fetchPathwayNameFailSafe("REACT_1619"), is("Death Receptor  Signalling"));
+        assertThat(subject.fetchPathwayNameFailSafe("REACT_1619"), is("Death Receptor Signalling"));
     }
 }
