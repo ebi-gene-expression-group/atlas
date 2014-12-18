@@ -26,7 +26,6 @@ import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -34,6 +33,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 
@@ -176,7 +176,7 @@ public class SolrQueryService {
 
         checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
 
-        species = limitSpeciesNameToTwoWords(species);
+        species = Species.shortenSpeciesToFirstTwoWords(species);
 
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
@@ -232,7 +232,7 @@ public class SolrQueryService {
 
         checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
 
-        species = limitSpeciesNameToTwoWords(species);
+        species = Species.shortenSpeciesToFirstTwoWords(species);
 
         return fetchGeneIds(geneQuery, exactMatch, species);
     }
@@ -253,15 +253,6 @@ public class SolrQueryService {
         LOGGER.debug(String.format("Fetched gene ids for %s: returned %s results in %s secs", geneQuery, geneIds.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
 
         return geneIds;
-    }
-
-    String limitSpeciesNameToTwoWords(String species) {
-
-        String[] words = StringUtils.split(species);
-        if (ArrayUtils.getLength(words) > 2) {
-            return words[0].concat(" ").concat(words[1]);
-        }
-        return species;
     }
 
     SortedSetMultimap<String, String> fetchProperties(String bioentityIdentifier, String[] propertyNames) {

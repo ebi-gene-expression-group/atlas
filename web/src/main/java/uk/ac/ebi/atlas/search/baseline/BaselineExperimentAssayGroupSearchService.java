@@ -32,6 +32,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -154,8 +155,7 @@ public class BaselineExperimentAssayGroupSearchService {
 
                 String experimentSpecies = experiment.isMultiOrganismExperiment() ? filterFactor.getOrganismFactorValue() : experiment.getFirstOrganism();
 
-                //filter by searchSpecies
-                if (StringUtils.isBlank(searchSpecies) || experimentSpecies.equalsIgnoreCase(searchSpecies)) {
+                if (StringUtils.isBlank(searchSpecies) || Species.sameSpecies(experimentSpecies, searchSpecies)) {
                     BaselineExperimentAssayGroup result = new BaselineExperimentAssayGroup(experiment.getAccession(), experiment.getDisplayName(),
                             experimentSpecies, experiment.getExperimentalFactors().getDefaultQueryFactorType(), experiment.isTissueExperiment());
                     result.setFilterFactors(filterFactor);

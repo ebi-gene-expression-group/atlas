@@ -10,6 +10,7 @@ import uk.ac.ebi.atlas.experiments.NumberOfExperiments;
 import javax.inject.Inject;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
@@ -26,6 +27,19 @@ public class OrganismDAOIT {
     public void testGetOrganisms() throws Exception {
         List<String> organisms = subject.getOrganisms();
         assertThat(organisms, hasItem("Mus musculus"));
+    }
+
+    // check for 2 word species because differential search requires bioentity species (ie: species with 2 words only)
+    @Test
+    public void containsOryzaSativaShortened() throws Exception {
+        List<String> organisms = subject.getOrganisms();
+        assertThat(organisms, hasItem("Oryza sativa"));
+    }
+
+    @Test
+    public void doesNotContainLongSpeciesNames() throws Exception {
+        List<String> organisms = subject.getOrganisms();
+        assertThat(organisms, not(hasItem("Oryza sativa Japonica Group")));
     }
 
     @Test
