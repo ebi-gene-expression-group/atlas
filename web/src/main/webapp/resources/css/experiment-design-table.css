@@ -235,6 +235,10 @@
     text-align: center;
 }
 
+#atlas-content tfoot th {
+    background-color: rgb(237, 246, 246) !important;
+}
+
 #atlas-content tfoot input {
     margin: 0.5em 0;
     width: 100%;

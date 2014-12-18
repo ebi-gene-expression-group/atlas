@@ -193,7 +193,7 @@ var experimentsPageModule = (function ($) {
             }
         });
 
-        $("#experiments-table th").addClass("header-cell bt");
+        $("#experiments-table thead th").addClass("header-cell bt");
 
         $("#experiments-table tfoot input").keyup(function () {
             /* Filter on the column (the index) of this element */
