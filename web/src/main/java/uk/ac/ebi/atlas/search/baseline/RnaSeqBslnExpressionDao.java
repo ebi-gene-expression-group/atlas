@@ -69,13 +69,14 @@ public class RnaSeqBslnExpressionDao {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DatabaseQuery<Object> baselineExpressionQuery = buildSelect(geneIds);
-
-        final ImmutableList.Builder<RnaSeqBslnExpression> builder = ImmutableList.builder();
-
-        final MutableInt numberOfGenesExpressedInCurrentExperiment = new MutableInt(0);
-
         try {
+
+            DatabaseQuery<Object> baselineExpressionQuery = buildSelect(geneIds);
+
+            final ImmutableList.Builder<RnaSeqBslnExpression> builder = ImmutableList.builder();
+
+            final MutableInt numberOfGenesExpressedInCurrentExperiment = new MutableInt(0);
+
             jdbcTemplate.query(baselineExpressionQuery.getQuery(),
                     new RowCallbackHandler() {
                         @Override
