@@ -9,6 +9,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import javax.inject.Inject;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,6 +22,6 @@ public class EFOIdToTermMapperIT {
 
     @Test
     public void getIdsFromTerm() {
-        assertThat(subject.getIdsFromTerm("cancer").size(), is(34));
+        assertThat(subject.getIdsFromTerm("cancer").size(), is(greaterThanOrEqualTo(44)));
     }
 }
