@@ -261,14 +261,14 @@
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/genePropertiesTooltipModule.js"></script>
 <script language="JavaScript" type="text/javascript"
-        src="${base}/resources/js/heatmapModule.js"></script>
+        src="${base}/resources/js/heatmapModuleDeprecated.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/deprecated/contrastInfoTooltipModule.js"></script>
 <script language="JavaScript" type="text/javascript"
         src="${base}/resources/js/deprecated/factorInfoTooltipModule.js"></script>
 
 <script type="text/javascript">
-    (function ($, heatmapModule) { //self invoking wrapper function that prevents $ namespace conflicts
+    (function ($, heatmapModuleDeprecated) { //self invoking wrapper function that prevents $ namespace conflicts
         $(document).ready(function () {
 
             if (${((geneSet == null) || !geneSet) && !type.isMicroRna()}) {
@@ -279,14 +279,14 @@
 
                 var serializedFilterFactors = '${serializedFilterFactors != null ? serializedFilterFactors : ""}';
 
-                heatmapModule.initBaselineHeatmap('${experimentAccession}', '${species}', serializedFilterFactors, ${geneSet != null ? geneSet : 'false'}, '${base}', '${elementId}', ${hidden != null ? hidden : 'false'});
+                heatmapModuleDeprecated.initBaselineHeatmap('${experimentAccession}', '${species}', serializedFilterFactors, ${geneSet != null ? geneSet : 'false'}, '${base}', '${elementId}', ${hidden != null ? hidden : 'false'});
 
             } else if (${type.isMicroarray()}) {
 
-                heatmapModule.initMicroarrayHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}', 'heatmap-div');
+                heatmapModuleDeprecated.initMicroarrayHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}', 'heatmap-div');
 
             } else {
-                heatmapModule.initRnaSeqHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}', 'heatmap-div');
+                heatmapModuleDeprecated.initRnaSeqHeatmap('${experimentAccession}', ${preferences.cutoff}, '${preferences.geneQuery}', 'heatmap-div');
             }
 
             if (!${type.isBaseline()}) {
@@ -296,5 +296,5 @@
             }
 
         });
-    })(jQuery, heatmapModule);
+    })(jQuery, heatmapModuleDeprecated);
 </script>

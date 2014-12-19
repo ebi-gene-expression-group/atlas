@@ -24,7 +24,7 @@
 /*jslint browser:true */
 /*jslint nomen: true*/
 
-var heatmapModule = (function ($) {
+var heatmapModuleDeprecated = (function ($) {
 
     "use strict";
 
