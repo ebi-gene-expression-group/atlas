@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,10 +31,9 @@ public class ConditionSearchEFOExpanderIT {
 
         String[] terms = StringUtils.split(expandedSearch);
 
-        assertThat(terms, arrayWithSize(35));
+        assertThat(terms.length, is(greaterThanOrEqualTo(45)));
         assertThat(terms[0], is("cancer"));
         assertThat(terms[1], startsWith("EFO_"));
-
     }
 
     @Test
@@ -41,12 +42,11 @@ public class ConditionSearchEFOExpanderIT {
 
         String[] terms = StringUtils.split(expandedSearch);
 
-        assertThat(terms, arrayWithSize(5));
+        assertThat(terms.length, is(greaterThanOrEqualTo(5)));
         assertThat(terms[0], is("Inflammatory"));
         assertThat(terms[1], startsWith("Bowel"));
         assertThat(terms[2], startsWith("Disease"));
         assertThat(terms[3], startsWith("Orphanet_"));
-
     }
 
 
@@ -55,7 +55,7 @@ public class ConditionSearchEFOExpanderIT {
         String expandedSearch = subject.fetchExpandedTermWithEFOChildren("heart");
 
         String[] terms = StringUtils.split(expandedSearch);
-        assertThat(terms, arrayWithSize(49));
+        assertThat(terms.length, is(greaterThanOrEqualTo(49)));
         assertThat(terms[0], is("heart"));
         assertThat(terms[1], is("EFO_0003777"));
 
@@ -82,7 +82,7 @@ public class ConditionSearchEFOExpanderIT {
         assertThat(terms[0], is("cancer"));
         assertThat(terms[1], is("and"));
         assertThat(terms[2], is("heart"));
-        assertThat(terms, arrayWithSize(3));
+        assertThat(terms.length, is(greaterThanOrEqualTo(3)));
     }
 
     @Test
