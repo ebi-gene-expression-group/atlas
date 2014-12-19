@@ -74,10 +74,10 @@ var HeatmapContainer = (function (React) {
 
         render: function () {
             var Heatmap = this.props.Heatmap;
-            var heatmapClass = "heatmap-position" + (this.props.isWidget ? "-widget" : "");
+            var heatmapClass = this.props.heatmapClass ? this.props.heatmapClass : "heatmap-position" + (this.props.isWidget ? "-widget" : "");
 
             return (
-                    <div id="atlas-content" className="block">
+                    <div className="block">
 
                         { this.props.experiment ? ExperimentDescription( {experiment: this.props.experiment} ) : null }
 

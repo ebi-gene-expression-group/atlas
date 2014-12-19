@@ -297,7 +297,8 @@
             gxaBaseUrl: '${pageContext.request.contextPath}',
             params: 'geneQuery=${entityIdentifier}' + widgetParameters,
             isMultiExperiment: true,
-            target: "widgetBody"
+            target: "widgetBody",
+            heatmapClass: "heatmap-position"
         });
 
         </c:if>

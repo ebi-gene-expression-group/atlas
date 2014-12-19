@@ -100,9 +100,9 @@ Biojs.AtlasHeatmap = Biojs.extend({
             overrideContextRoot(data, opt.gxaBaseUrl);
 
             if (opt.isMultiExperiment) {
-                self.drawHeatmap(data, opt.target, heatmapModule.buildMultiExperiment);
+                self.drawHeatmap(data, opt.target, opt.heatmapClass, heatmapModule.buildMultiExperiment);
             } else {
-                self.drawHeatmap(data, opt.target, heatmapModule.buildBaseline);
+                self.drawHeatmap(data, opt.target, opt.heatmapClass, heatmapModule.buildBaseline);
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
             Biojs.console.log("ERROR: " + jqXHR.status);
@@ -111,7 +111,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
 
     },
 
-    drawHeatmap:function (data, target, heatmapBuilder) {
+    drawHeatmap:function (data, target, heatmapClass, heatmapBuilder) {
 
         (function ($, React, HeatmapContainer, heatmapBuilder, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData, experimentData) {
 
@@ -119,7 +119,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
                 // call this inside ready() so all scripts load first in IE8
                 var Heatmap = heatmapBuilder(heatmapConfig).Heatmap;
 
-                React.renderComponent(HeatmapContainer({Heatmap: Heatmap, isWidget: true, experiment: experimentData, anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}),
+                React.renderComponent(HeatmapContainer({Heatmap: Heatmap, isWidget: true, heatmapClass: heatmapClass, experiment: experimentData, anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}),
                     document.getElementById(target)
                 );
 
