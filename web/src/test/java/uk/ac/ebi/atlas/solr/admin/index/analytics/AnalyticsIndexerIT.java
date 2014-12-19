@@ -26,7 +26,7 @@ public class AnalyticsIndexerIT {
                 .experimentType(ExperimentType.RNASEQ_MRNA_BASELINE)
                 .defaultQueryFactorType("ORGANISM_PART")
                 .identifierSearch("foo")
-                .conditionsSearch("bar")
+                .conditionsSearch("brain")
                 .assayGroupId("g1")
                 .expressionLevel(1)
                 .build();
@@ -42,7 +42,7 @@ public class AnalyticsIndexerIT {
                 .experimentType(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL)
                 .defaultQueryFactorType("genotype")
                 .identifierSearch("foo")
-                .conditionsSearch("bar")
+                .conditionsSearch("wild type")
                 .contrastId("g1_g2")
                 .contrastType("genotype")
                 .numReplicates(1)

@@ -4,7 +4,6 @@ import org.apache.solr.client.solrj.beans.Field;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 
 public class AnalyticsDocument {
@@ -36,7 +35,7 @@ public class AnalyticsDocument {
     private String assayGroupId;
 
     @Field
-    private double expressionLevel = Double.NaN;
+    private Double expressionLevel;
 
     @Field
     private String contrastId;
@@ -45,10 +44,10 @@ public class AnalyticsDocument {
     private String contrastType;
 
     @Field
-    private int numReplicates  = Integer.MIN_VALUE;
+    private Integer numReplicates;
 
     @Field
-    private double foldChange = Double.NaN;
+    private Double foldChange;
 
     public static Builder builder() {
         return new Builder();
@@ -72,12 +71,12 @@ public class AnalyticsDocument {
 
             if (build.experimentType.isBaseline()) {
                 checkNotNull(build.assayGroupId, "missing assayGroupId for baseline experiment");
-                checkState(!Double.isNaN(build.expressionLevel), "missing expression level for baseline experiment");
+                checkNotNull(build.expressionLevel, "missing expression level for baseline experiment");
             } else if (build.experimentType.isDifferential()) {
                 checkNotNull(build.contrastId, "missing contrastId for differential experiment");
                 checkNotNull(build.contrastType, "missing contrastType for differential experiment");
-                checkState(build.numReplicates != Integer.MIN_VALUE, "missing numReplicates for differential experiment");
-                checkState(!Double.isNaN(build.foldChange), "missing foldChange for differential experiment");
+                checkNotNull(build.numReplicates, "missing numReplicates for differential experiment");
+                checkNotNull(build.foldChange, "missing foldChange for differential experiment");
             }
 
             build.experimentTypeAsString = build.experimentType.getDescription();

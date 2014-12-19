@@ -5,7 +5,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 
 public class AnalyticsDocumentTest {
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = NullPointerException.class)
     public void cannotBuildBaselineWithoutExpressionLevel() {
         AnalyticsDocument.builder()
                 .bioentityIdentifier("foo")
@@ -34,7 +34,7 @@ public class AnalyticsDocumentTest {
                 .build();
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = NullPointerException.class)
     public void cannotBuildDifferentialWithoutNumReplicates() {
         AnalyticsDocument.builder()
                 .bioentityIdentifier("foo")
@@ -49,7 +49,7 @@ public class AnalyticsDocumentTest {
                 .build();
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = NullPointerException.class)
     public void cannotBuildDifferentialWithoutFoldChange() {
         AnalyticsDocument.builder()
                 .bioentityIdentifier("foo")
