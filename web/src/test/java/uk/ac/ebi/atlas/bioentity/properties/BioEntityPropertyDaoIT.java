@@ -20,9 +20,11 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.bioentity;
+package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.collect.Multimap;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,19 +32,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 
 import javax.inject.Inject;
 
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class FetchGenePagePropertiesIT {
+public class BioEntityPropertyDaoIT {
 
     @Inject
-    private SolrQueryService subject;
+    private BioEntityPropertyDao subject;
 
     @Value("#{configuration['index.property_names.genepage']}")
     private String[] genePagePropertyTypes;
@@ -69,6 +72,40 @@ public class FetchGenePagePropertiesIT {
         assertThat(properties.get("mgi_description"), Matchers.hasItems("glycoprotein (transmembrane) nmb"));
         assertThat(properties.get("gene_biotype"), Matchers.hasItems("protein_coding"));
         assertThat(properties.get("design_element"), Matchers.hasItems("5548029", "108822_at", "5610568", "5182097", "5246058"));
+    }
+
+    @Test
+    public void testFetchTooltipProperties2() throws Exception {
+
+        // given
+        Multimap<String, String> properties = subject.fetchTooltipProperties("ENSMODG00000012671");
+
+        assertThat(properties.size(), Matchers.is(24));
+        assertThat(properties.get("synonym").size(), Matchers.is(5));
+        assertThat(properties.get("synonym"), Matchers.hasItems("Calmbp1", "MCPH5", "ASP"));
+        assertThat(properties.get("goterm"), Matchers.hasItems("oogenesis", "developmental growth", "positive regulation of neuroblast proliferation"));
+        assertThat(properties.get("interproterm"), Matchers.hasItems("Calmodulin-regulated spectrin-associated protein, CH domain", "Armadillo-type fold", "IQ motif, EF-hand binding site"));
+    }
+
+
+
+    @Test
+    public void testQuerySolrForProperties() throws SolrServerException {
+
+        //when
+        Multimap<String, String> multimap = subject.fetchProperties("ENSG00000109819", new String[]{"goterm"});
+
+        // then
+        MatcherAssert.assertThat(multimap.get("goterm"), hasItems("RNA splicing", "cellular response to oxidative stress", "cellular glucose homeostasis"));
+
+    }
+
+    @Test
+    public void testGetPropertyValuesForIdentifier() throws SolrServerException {
+
+        assertThat(subject.findPropertyValuesForGeneId("ENSG00000179218", "symbol"), hasItem("CALR"));
+        assertThat(subject.findPropertyValuesForGeneId("ENSMUSG00000029816", "symbol"), hasItem("Gpnmb"));
+
     }
 
 

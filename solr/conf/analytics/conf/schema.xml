@@ -89,14 +89,14 @@
            and back compatibility is not guaranteed.  Names with both leading and
            trailing underscores (e.g. _version_) are reserved.
         -->
-        <field name="bioentity_identifier" type="string" indexed="true" stored="true"/>
-        <field name="species" type="string" indexed="true" stored="true"/>
+        <field name="bioentity_identifier" type="string" indexed="true" stored="true" required="true"/>
+        <field name="species" type="string" indexed="true" stored="true" required="true"/>
+        <field name="experimentAccession" type="string" indexed="true" stored="true" required="true"/>
+        <field name="experimentType" type="string" indexed="true" stored="true" required="true"/>
+        <field name="defaultQueryFactorType" type="string" indexed="true" stored="true" required="true"/>
         <field name="identifierSearch" type="text_lower" indexed="true" stored="false"/>
-        <field name="experimentAccession" type="string" indexed="true" stored="true"/>
-        <field name="experimentType" type="string" indexed="true" stored="true"/>
-        <field name="defaultQueryFactorType" type="string" indexed="true" stored="true"/>
-        <field name="assayGroupId" type="string" indexed="false" stored="true"/>
         <field name="conditionsSearch" type="text" indexed="true" stored="false"/>
+        <field name="assayGroupId" type="string" indexed="false" stored="true"/>
         <field name="expressionLevel" type="tdouble4" indexed="true" stored="true"/>
         <field name="contrastId" type="string" indexed="false" stored="true"/>
         <field name="contrastType" type="string" indexed="true" stored="true"/>
@@ -108,6 +108,8 @@
     </fields>
 
     <types>
+
+        <!--<fieldType name="experimentType" class="solr.EnumField" enumsConfig="experimentType.xml" enumName="experimentType"/>-->
 
         <!-- The StrField type is not analyzed, but indexed/stored verbatim.
            It supports doc values but in that case the field needs to be

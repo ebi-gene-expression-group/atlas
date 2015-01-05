@@ -33,6 +33,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.solr.query.builders.FacetedPropertyValueQueryBuilder;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 
@@ -58,7 +59,7 @@ public class SolrQueryServiceTest {
     @Mock
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizerMock;
 
-    private SolrQueryService subject;
+    private BioEntityPropertyDao subject;
 
     @Mock
     private SolrQueryBuilderFactory solrQueryBuilderFactoryMock;
@@ -85,7 +86,7 @@ public class SolrQueryServiceTest {
         given(solrQueryBuilderFactoryMock.createFacetedPropertyValueQueryBuilder()).willReturn(facetedPropertyValueQueryBuilderMock);
         given(bioentityPropertyValueTokenizerMock.split(BIOENTITY_IDENTIFIER)).willReturn(Lists.newArrayList(BIOENTITY_IDENTIFIER));
 
-        subject = new SolrQueryService(TOOLTIP_PROPERTY_TYPES, bioentityPropertyValueTokenizerMock, gxaSolrServerMock, solrQueryBuilderFactoryMock);
+        subject = new BioEntityPropertyDao(solrQueryBuilderFactoryMock, gxaSolrServerMock, TOOLTIP_PROPERTY_TYPES);
     }
 
     @Test(expected = BioentityNotFoundException.class)

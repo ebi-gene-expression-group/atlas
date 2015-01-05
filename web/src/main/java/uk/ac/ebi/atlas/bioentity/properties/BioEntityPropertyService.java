@@ -29,7 +29,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.utils.UniProtClient;
 
 import javax.inject.Inject;
@@ -47,7 +46,7 @@ public class BioEntityPropertyService {
 
     private final BioEntityPropertyLinkBuilder linkBuilder;
 
-    private SolrQueryService solrQueryService;
+    private BioEntityPropertyDao bioEntityPropertyDao;
 
     private UniProtClient uniProtClient;
 
@@ -62,8 +61,8 @@ public class BioEntityPropertyService {
     private ArrayDesignDao arrayDesignDao;
 
     @Inject
-    public BioEntityPropertyService(SolrQueryService solrQueryService, UniProtClient uniProtClient, BioEntityPropertyLinkBuilder linkBuilder, ArrayDesignDao arrayDesignDao) {
-        this.solrQueryService = solrQueryService;
+    public BioEntityPropertyService(BioEntityPropertyDao bioEntityPropertyDao, UniProtClient uniProtClient, BioEntityPropertyLinkBuilder linkBuilder, ArrayDesignDao arrayDesignDao) {
+        this.bioEntityPropertyDao = bioEntityPropertyDao;
         this.uniProtClient = uniProtClient;
         this.arrayDesignDao = arrayDesignDao;
         this.linkBuilder = linkBuilder;
@@ -105,7 +104,7 @@ public class BioEntityPropertyService {
 
     private void addMirBaseSequence() {
         String mirbase_id = propertyValuesByType.get("mirbase_id").first();
-        Set<String> mirbase_sequence = solrQueryService.findPropertyValuesForGeneId(mirbase_id, "mirbase_sequence");
+        Set<String> mirbase_sequence = bioEntityPropertyDao.findPropertyValuesForGeneId(mirbase_id, "mirbase_sequence");
         propertyValuesByType.putAll("mirbase_sequence", mirbase_sequence);
     }
 

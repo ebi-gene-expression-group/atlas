@@ -7,7 +7,6 @@ import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
 import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.model.Species;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 
@@ -26,7 +25,7 @@ public class BioEntityPropertyLinkBuilder {
 
     private ReactomeClient reactomeClient;
 
-    private SolrQueryService solrQueryService;
+    private BioEntityPropertyDao bioEntityPropertyDao;
 
     private SpeciesLookupService speciesLookupService;
 
@@ -38,11 +37,11 @@ public class BioEntityPropertyLinkBuilder {
 
     @Inject
     public BioEntityPropertyLinkBuilder(BioEntityCardProperties bioEntityCardProperties, ReactomeClient reactomeClient,
-                                        SolrQueryService solrQueryService, SpeciesLookupService speciesLookupService, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader,
+                                        BioEntityPropertyDao bioEntityPropertyDao, SpeciesLookupService speciesLookupService, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader,
                                         PoTermTrader poTermTrader) {
         this.bioEntityCardProperties = bioEntityCardProperties;
         this.reactomeClient = reactomeClient;
-        this.solrQueryService = solrQueryService;
+        this.bioEntityPropertyDao = bioEntityPropertyDao;
         this.speciesLookupService = speciesLookupService;
         this.goTermTrader = goTermTrader;
         this.interProTermTrader = interProTermTrader;
@@ -99,7 +98,7 @@ public class BioEntityPropertyLinkBuilder {
 
             String speciesToken = " (" + StringUtils.capitalize(species) + ")";
 
-            Set<String> propertyValuesForGeneId = solrQueryService.findPropertyValuesForGeneId(identifier, "symbol");
+            Set<String> propertyValuesForGeneId = bioEntityPropertyDao.findPropertyValuesForGeneId(identifier, "symbol");
             if (!propertyValuesForGeneId.isEmpty()) {
                 String symbol = propertyValuesForGeneId.iterator().next();
                 return symbol + speciesToken;

@@ -25,14 +25,13 @@ package uk.ac.ebi.atlas.solr.query;
 import com.google.common.base.Optional;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Sets;
-import com.google.common.collect.SortedSetMultimap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
@@ -57,7 +56,6 @@ public class SolrQueryService {
     public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     public static final String BIOENTITY_TYPE_FIELD = "bioentity_type";
     public static final String PROPERTY_NAME_FIELD = "property_name";
-    private static final String PROPERTY_VALUE_FIELD = "property_value";
 
     public static final String PROPERTY_EDGENGRAM_FIELD = "property_value_edgengram";
 
@@ -67,23 +65,21 @@ public class SolrQueryService {
 
     private static final int PROPERTY_VALUES_LIMIT = 1000;
 
-    private String[] tooltipPropertyTypes;
-
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
     private GxaSolrServer solrServer;
 
     private SolrQueryBuilderFactory solrQueryBuilderFactory;
+    private BioEntityPropertyDao bioEntityPropertyDao;
 
     @Inject
-    public SolrQueryService(@Value("#{configuration['index.property_names.tooltip']}") String[] tooltipPropertyTypes,
-                            BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer,
+    public SolrQueryService(BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer,
                             GxaSolrServer solrServer,
-                            SolrQueryBuilderFactory solrQueryBuilderFactory) {
-        this.tooltipPropertyTypes = tooltipPropertyTypes;
+                            SolrQueryBuilderFactory solrQueryBuilderFactory, BioEntityPropertyDao bioEntityPropertyDao) {
         this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
         this.solrServer = solrServer;
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
+        this.bioEntityPropertyDao = bioEntityPropertyDao;
     }
 
     //(property_name:"ensgene"OR property_name:"mirna" OR property_name:"ensprotein" OR property_name:"enstranscript") AND property_value_lower: "hsa-mir-6717"
@@ -106,18 +102,6 @@ public class SolrQueryService {
         return null;
     }
 
-    public SortedSetMultimap<String, String> fetchTooltipProperties(String identifier) {
-        return fetchProperties(identifier, tooltipPropertyTypes);
-
-    }
-
-    public SortedSetMultimap<String, String> fetchGenePageProperties(String identifier, String[] propertyNames) {
-        SortedSetMultimap<String, String> propertiesByName = fetchProperties(identifier, propertyNames);
-        if (propertiesByName.isEmpty()) {
-            throw new BioentityNotFoundException("Gene/protein with accession : " + identifier + " is not found!");
-        }
-        return propertiesByName;
-    }
 
     public Set<String> fetchGeneIdentifiersFromSolr(String queryString, String bioentityType, boolean toUppercase, String... propertyNames) {
 
@@ -135,7 +119,8 @@ public class SolrQueryService {
 
         for (String geneIdentifier : geneIdentifiers) {
 
-            Set<String> mirbaseIds = findPropertyValuesForGeneId(geneIdentifier, "mirbase_id");
+
+            Set<String> mirbaseIds = bioEntityPropertyDao.findPropertyValuesForGeneId(geneIdentifier, "mirbase_id");
             String mirbaseId = mirbaseIds.size() > 0 ? mirbaseIds.iterator().next() : null;
             Set<String> matureRNAIds = fetchGeneIdentifiersFromSolr((mirbaseId != null) ? mirbaseId : geneIdentifier, "mirna", false, "hairpin_id");
             if (matureRNAIds.size() > 0) {
@@ -159,17 +144,6 @@ public class SolrQueryService {
             ensemblIDs.addAll(fetchGeneIdentifiersFromSolr(identifier, "ensgene", true, "mirbase_id"));
         }
         return ensemblIDs;
-    }
-
-    public Set<String> findPropertyValuesForGeneId(String identifier, String propertyName) {
-
-        SolrQuery query = solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder()
-                .withPropertyNames(propertyName).buildBioentityQuery(identifier);
-        query.setFields(PROPERTY_VALUE_FIELD);
-        query.setRows(PROPERTY_VALUES_LIMIT);
-
-        return solrServer.query(query, PROPERTY_VALUE_FIELD, false);
-
     }
 
     public GeneQueryResponse fetchGeneIdsOrSetsGroupedByGeneQueryToken(String geneQuery, boolean exactMatch, String species) {
@@ -255,18 +229,5 @@ public class SolrQueryService {
         return geneIds;
     }
 
-    SortedSetMultimap<String, String> fetchProperties(String bioentityIdentifier, String[] propertyNames) {
-
-        SolrQuery solrQuery = solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder()
-                .withPropertyNames(propertyNames).buildBioentityQuery(bioentityIdentifier);
-
-        solrQuery.setRows(PROPERTY_VALUES_LIMIT);
-        solrQuery.setFields(PROPERTY_VALUE_FIELD, PROPERTY_NAME_FIELD);
-
-        LOGGER.debug("<querySolrForProperties> processing solr query: " + solrQuery.getQuery());
-
-        return solrServer.queryForProperties(solrQuery);
-
-    }
 
 }

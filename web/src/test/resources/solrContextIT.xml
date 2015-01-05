@@ -34,6 +34,10 @@
         <constructor-arg value="http://${solr.test.host}:8983/solr/gxa"/>
     </bean>
 
+    <bean scope="singleton" id="analyticsSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+        <constructor-arg value="http://${solr.host}:8983/solr/analytics"/>
+    </bean>
+
     <bean scope="singleton" id="differentialConditionsSolrServer" class="uk.ac.ebi.atlas.solr.DummyUpdateSolrServer">
         <constructor-arg value="http://${solr.test.host}:8983/solr/differentialConditions"/>
     </bean>

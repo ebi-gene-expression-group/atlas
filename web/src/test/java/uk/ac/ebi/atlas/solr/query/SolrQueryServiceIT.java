@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,24 +47,6 @@ public class SolrQueryServiceIT {
     @Inject
     private SolrQueryService subject;
 
-    @Test
-    public void testQuerySolrForProperties() throws SolrServerException {
-
-        //when
-        Multimap<String, String> multimap = subject.fetchProperties("ENSG00000109819", new String[]{"goterm"});
-
-        // then
-        assertThat(multimap.get("goterm"), hasItems("RNA splicing", "cellular response to oxidative stress", "cellular glucose homeostasis"));
-
-    }
-
-    @Test
-    public void testGetPropertyValuesForIdentifier() throws SolrServerException {
-
-        assertThat(subject.findPropertyValuesForGeneId("ENSG00000179218", "symbol"), hasItem("CALR"));
-        assertThat(subject.findPropertyValuesForGeneId("ENSMUSG00000029816", "symbol"), hasItem("Gpnmb"));
-
-    }
 
     @Test
     public void shouldFindCaseInsentiveIdButReturnABioentityPropertyWithRightCase() throws SolrServerException {
