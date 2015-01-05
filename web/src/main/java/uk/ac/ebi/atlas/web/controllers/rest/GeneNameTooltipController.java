@@ -36,7 +36,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -55,16 +55,16 @@ public class GeneNameTooltipController {
     private static final String WORD_SPAN_CLOSE = "</span>";
     private static final int NUMBER_OF_TERMS_TO_SHOW = 5;
 
-    private SolrQueryService solrQueryService;
+    private BioEntityPropertyDao bioEntityPropertyDao;
 
     private Resource htmlTemplateResource;
 
     private String htmlTemplate;
 
     @Inject
-    public GeneNameTooltipController(SolrQueryService solrQueryService,
+    public GeneNameTooltipController(BioEntityPropertyDao bioEntityPropertyDao,
                                      @Value("classpath:/html-templates/geneNameTooltipTemplate.html") Resource htmlTemplateResource) {
-        this.solrQueryService = solrQueryService;
+        this.bioEntityPropertyDao = bioEntityPropertyDao;
         this.htmlTemplateResource = htmlTemplateResource;
     }
 
@@ -84,7 +84,7 @@ public class GeneNameTooltipController {
     public String getTooltipContent(@RequestParam(value = "geneName") String geneName,
                                     @RequestParam(value = "identifier") String identifier) {
 
-        Multimap<String, String> multimap = solrQueryService.fetchTooltipProperties(identifier);
+        Multimap<String, String> multimap = bioEntityPropertyDao.fetchTooltipProperties(identifier);
 
         String synonyms = buildSynonyms(multimap);
 

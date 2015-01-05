@@ -30,6 +30,7 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesHeatMap;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
@@ -55,6 +56,8 @@ import java.util.*;
 public abstract class BioEntityPageController {
 
     protected static final String PROPERTY_TYPE_DESCRIPTION = "description";
+
+    protected BioEntityPropertyDao bioEntityPropertyDao;
 
     protected SolrQueryService solrQueryService;
 
@@ -109,6 +112,11 @@ public abstract class BioEntityPageController {
     @Inject
     public void setBioEntityPropertyService(BioEntityPropertyService bioEntityPropertyService) {
         this.bioEntityPropertyService = bioEntityPropertyService;
+    }
+
+    @Inject
+    public void setBioEntityPropertyDao(BioEntityPropertyDao bioEntityPropertyDao) {
+        this.bioEntityPropertyDao = bioEntityPropertyDao;
     }
 
     @Inject
@@ -224,7 +232,7 @@ public abstract class BioEntityPageController {
     protected void initBioentityPropertyService(String identifier) {
         String species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
 
-        SortedSetMultimap<String, String> propertyValuesByType = solrQueryService.fetchGenePageProperties(identifier, getPagePropertyTypes());
+        SortedSetMultimap<String, String> propertyValuesByType = bioEntityPropertyDao.fetchGenePageProperties(identifier, getPagePropertyTypes());
         SortedSet<String> entityNames = propertyValuesByType.get(getBioentityPropertyName());
         if (entityNames.isEmpty()) {
             entityNames.add(identifier);
