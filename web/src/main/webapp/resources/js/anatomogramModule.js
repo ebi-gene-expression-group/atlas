@@ -132,8 +132,8 @@ var anatomogramModule = (function ($) {
         return svg;
     }
 
-    function init(allSvgPathIds, fileNameMale, fileNameFemale, contextRoot) {
-
+    function init(allSvgPathIds, fileNameMale, fileNameFemale, contextRoot, species) {
+    console.log("Species passed: " +species);
         if ($('#anatomogramBody').length === 0) {
             return;
         }
@@ -169,11 +169,12 @@ var anatomogramModule = (function ($) {
             //switch sex toggle button
             $("#sex-toggle-image").button().toggle(
                 function () {
-                    $(this).attr("src", contextRoot + "/resources/images/female_selected.png");
+
+                    $(this).attr("src", contextRoot + selectFemaleImageToggle(species));
                     loadAnatomogram(contextRoot + "/resources/svg/" + fileNameFemale, allSvgPathIds);
                 },
                 function () {
-                    $(this).attr("src", contextRoot + "/resources/images/male_selected.png");
+                    $(this).attr("src", contextRoot + selectMaleImageToggle(species));
                     loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds);
                 }
             ).tooltip();
@@ -182,6 +183,23 @@ var anatomogramModule = (function ($) {
         }
     }
 
+    function selectFemaleImageToggle (species) {
+        var res = "/resources/images/female_selected.png";
+        if(species == "oryza sativa japonica group") {
+            res = "/resources/images/plant_switch_buttons_1.png";
+        }
+
+        return res;
+    }
+
+    function selectMaleImageToggle (species) {
+        var res = "/resources/images/male_selected.png";
+        if(species == "oryza sativa japonica group") {
+            res = "/resources/images/plant_switch_buttons_2.png";
+        }
+
+        return res;
+    }
 
     return {
 

@@ -29,6 +29,12 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
+<c:set var="plant" value="oryza sativa japonica group"/>
+<c:set var="pathImage" value="${base.concat('/resources/images/male_selected.png')}"/>
+<c:if test="${species.equals(plant)}">
+    <c:set var="pathImage" value="${base.concat('/resources/images/plant_switch_buttons_2.png')}"/>
+</c:if>
+
 <%-- TODO: replace this file with heatmapContainer.jsx (which duplicates this page)dd  --%>
 <c:if test="${not empty jsonProfiles}">
     <%@ include file="anatomogram.jsp" %>
@@ -42,7 +48,7 @@
             <span id="sex-toggle">
                 <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
                      style="width:20px;height:38px;padding:2px"
-                     src="${base}/resources/images/male_selected.png"/>
+                     src="${pathImage}"/>
             </span>
                         <!--
                         <span data-help-loc="#anatomogram"/>
