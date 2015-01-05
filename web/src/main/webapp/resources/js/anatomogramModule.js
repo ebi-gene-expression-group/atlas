@@ -133,7 +133,6 @@ var anatomogramModule = (function ($) {
     }
 
     function init(allSvgPathIds, fileNameMale, fileNameFemale, contextRoot, species) {
-    console.log("Species passed: " +species);
         if ($('#anatomogramBody').length === 0) {
             return;
         }
@@ -184,21 +183,11 @@ var anatomogramModule = (function ($) {
     }
 
     function selectFemaleImageToggle (species) {
-        var res = "/resources/images/female_selected.png";
-        if(species == "oryza sativa japonica group") {
-            res = "/resources/images/plant_switch_buttons_1.png";
-        }
-
-        return res;
+        return (species === "oryza sativa japonica group" ? "/resources/images/plant_switch_buttons_2.png" : "/resources/images/female_selected.png");
     }
 
     function selectMaleImageToggle (species) {
-        var res = "/resources/images/male_selected.png";
-        if(species == "oryza sativa japonica group") {
-            res = "/resources/images/plant_switch_buttons_2.png";
-        }
-
-        return res;
+        return (species === "oryza sativa japonica group" ? "/resources/images/plant_switch_buttons_1.png" : "/resources/images/male_selected.png");
     }
 
     return {
