@@ -104,7 +104,7 @@ public class BioEntityPropertyService {
 
     private void addMirBaseSequence() {
         String mirbase_id = propertyValuesByType.get("mirbase_id").first();
-        Set<String> mirbase_sequence = bioEntityPropertyDao.findPropertyValuesForGeneId(mirbase_id, "mirbase_sequence");
+        Set<String> mirbase_sequence = bioEntityPropertyDao.fetchPropertyValuesForGeneId(mirbase_id, "mirbase_sequence");
         propertyValuesByType.putAll("mirbase_sequence", mirbase_sequence);
     }
 

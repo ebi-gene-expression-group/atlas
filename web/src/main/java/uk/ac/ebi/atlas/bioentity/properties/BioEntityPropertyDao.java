@@ -32,7 +32,7 @@ public class BioEntityPropertyDao {
         this.tooltipPropertyTypes = tooltipPropertyTypes;
     }
 
-    public Set<String> findPropertyValuesForGeneId(String identifier, String propertyName) {
+    public Set<String> fetchPropertyValuesForGeneId(String identifier, String propertyName) {
 
         SolrQuery query = solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder()
                 .withPropertyNames(propertyName).buildBioentityQuery(identifier);

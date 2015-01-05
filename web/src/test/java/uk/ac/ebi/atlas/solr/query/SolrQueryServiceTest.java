@@ -109,7 +109,7 @@ public class SolrQueryServiceTest {
 
     @Test
     public void testFindPropertyValuesForGeneId() throws Exception {
-        assertThat(subject.findPropertyValuesForGeneId(BIOENTITY_IDENTIFIER, SYMBOL), hasItem(SYMBOL));
+        assertThat(subject.fetchPropertyValuesForGeneId(BIOENTITY_IDENTIFIER, SYMBOL), hasItem(SYMBOL));
     }
 
 }

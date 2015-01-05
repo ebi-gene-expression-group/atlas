@@ -120,7 +120,7 @@ public class SolrQueryService {
         for (String geneIdentifier : geneIdentifiers) {
 
 
-            Set<String> mirbaseIds = bioEntityPropertyDao.findPropertyValuesForGeneId(geneIdentifier, "mirbase_id");
+            Set<String> mirbaseIds = bioEntityPropertyDao.fetchPropertyValuesForGeneId(geneIdentifier, "mirbase_id");
             String mirbaseId = mirbaseIds.size() > 0 ? mirbaseIds.iterator().next() : null;
             Set<String> matureRNAIds = fetchGeneIdentifiersFromSolr((mirbaseId != null) ? mirbaseId : geneIdentifier, "mirna", false, "hairpin_id");
             if (matureRNAIds.size() > 0) {

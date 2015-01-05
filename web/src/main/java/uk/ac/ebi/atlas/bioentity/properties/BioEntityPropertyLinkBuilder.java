@@ -98,7 +98,7 @@ public class BioEntityPropertyLinkBuilder {
 
             String speciesToken = " (" + StringUtils.capitalize(species) + ")";
 
-            Set<String> propertyValuesForGeneId = bioEntityPropertyDao.findPropertyValuesForGeneId(identifier, "symbol");
+            Set<String> propertyValuesForGeneId = bioEntityPropertyDao.fetchPropertyValuesForGeneId(identifier, "symbol");
             if (!propertyValuesForGeneId.isEmpty()) {
                 String symbol = propertyValuesForGeneId.iterator().next();
                 return symbol + speciesToken;

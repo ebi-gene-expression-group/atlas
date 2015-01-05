@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Test;
@@ -111,6 +112,21 @@ public class SolrQueryServiceIT {
     @Test
     public void mirbaseMatureIdForSingleGene_ThatAlsoHasHairpain() {
         assertThat(subject.findBioentityIdentifierProperty("hsa-miR-636"), is(nullValue()));
+    }
+
+
+    @Test
+    public void expandGeneQueryIntoGeneIds() throws SolrServerException, GenesNotFoundException {
+
+        // given
+        Set<String> aspm = subject.expandGeneQueryIntoGeneIds("aspm", "", true).get();
+
+        System.out.println("\"" + Joiner.on("\", \"").join(aspm));
+
+        // then
+        assertThat(aspm, hasSize(13));
+        assertThat(aspm, contains("ENSBTAG00000007860", "ENSPTRG00000001807", "ENSCAFG00000011403", "ENSGALG00000002338", "ENSGGOG00000025635", "ENSG00000066279", "ENSSSCG00000010896", "ENSDARG00000071442", "ENSRNOG00000012318", "ENSPPYG00000000389", "ENSOANG00000011184", "ENSMODG00000012671", "ENSMUSG00000033952"));
+
     }
 
     @Test

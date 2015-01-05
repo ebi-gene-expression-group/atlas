@@ -51,7 +51,7 @@ public class BioEntityPropertyDaoIT {
     private String[] genePagePropertyTypes;
 
     @Test
-    public void testFetchTooltipProperties() throws Exception {
+    public void fetchGenePageProperties() throws Exception {
 
         // given
         Multimap<String, String> properties = subject.fetchGenePageProperties("ENSMUSG00000029816", genePagePropertyTypes);
@@ -75,7 +75,7 @@ public class BioEntityPropertyDaoIT {
     }
 
     @Test
-    public void testFetchTooltipProperties2() throws Exception {
+    public void fetchTooltipProperties() throws Exception {
 
         // given
         Multimap<String, String> properties = subject.fetchTooltipProperties("ENSMODG00000012671");
@@ -89,8 +89,10 @@ public class BioEntityPropertyDaoIT {
 
 
 
+
+
     @Test
-    public void testQuerySolrForProperties() throws SolrServerException {
+    public void fetchProperties_goterm() throws SolrServerException {
 
         //when
         Multimap<String, String> multimap = subject.fetchProperties("ENSG00000109819", new String[]{"goterm"});
@@ -101,10 +103,10 @@ public class BioEntityPropertyDaoIT {
     }
 
     @Test
-    public void testGetPropertyValuesForIdentifier() throws SolrServerException {
+    public void findPropertyValuesForGeneId() throws SolrServerException {
 
-        assertThat(subject.findPropertyValuesForGeneId("ENSG00000179218", "symbol"), hasItem("CALR"));
-        assertThat(subject.findPropertyValuesForGeneId("ENSMUSG00000029816", "symbol"), hasItem("Gpnmb"));
+        assertThat(subject.fetchPropertyValuesForGeneId("ENSG00000179218", "symbol"), hasItem("CALR"));
+        assertThat(subject.fetchPropertyValuesForGeneId("ENSMUSG00000029816", "symbol"), hasItem("Gpnmb"));
 
     }
 
