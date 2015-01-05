@@ -183,11 +183,11 @@ var anatomogramModule = (function ($) {
     }
 
     function selectFemaleImageToggle (species) {
-        return (species === "oryza sativa japonica group" ? "/resources/images/plant_switch_buttons_2.png" : "/resources/images/female_selected.png");
+        return (species === "oryza sativa japonica group" || species === "oryza sativa" ? "/resources/images/plant_switch_buttons_2.png" : "/resources/images/female_selected.png");
     }
 
     function selectMaleImageToggle (species) {
-        return (species === "oryza sativa japonica group" ? "/resources/images/plant_switch_buttons_1.png" : "/resources/images/male_selected.png");
+        return (species === "oryza sativa japonica group" || species === "oryza sativa" ? "/resources/images/plant_switch_buttons_1.png" : "/resources/images/male_selected.png");
     }
 
     return {

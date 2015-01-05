@@ -41,7 +41,7 @@ var Anatomogram = (function (React) {
             }
 
             var height = containsHuman(this.props.anatomogram.maleAnatomogramFile) ? 360 : 250;
-            var sexToggleImageSrc = this.props.anatomogram.contextRoot + "/resources/images/male_selected.png";
+            var sexToggleImageSrc =this.props.anatomogram.contextRoot + this.props.anatomogram.toggleButtonImage;
 
             return (
                 React.DOM.div( {id:"anatomogram", className:"aside stickem double-click-noselection", style:{display: "inline"}}, 

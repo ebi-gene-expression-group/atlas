@@ -6,6 +6,11 @@
 <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
 <c:set var="atlasHost" value="${pageContext.request.serverName == 'localhost' ? 'wwwdev' : pageContext.request.serverName.concat(serverPort)}"/>
 
+<c:set var="toggleButtonImage" value="/resources/images/male_selected.png"/>
+<c:if test="${species.equals('oryza sativa')}">
+    <c:set var="toggleButtonImage" value="/resources/images/plant_switch_buttons_1.png"/>
+</c:if>
+
 {
     <%--
     //TODO: extract ensemlb genome launcher config parameters (ensemblDB, columnType etc.) out into separate object
@@ -39,7 +44,8 @@
                     "maleAnatomogramFile": "${maleAnatomogramFile}",
                     "femaleAnatomogramFile":  "${femaleAnatomogramFile}",
                     "allSvgPathIds": ${empty allSvgPathIds ? "null" : allSvgPathIds},
-                    "contextRoot": "${pageContext.request.contextPath}"
+                    "contextRoot": "${pageContext.request.contextPath}",
+                    "toggleButtonImage": "${toggleButtonImage}"
                 }
             </c:when>
             <c:otherwise>
