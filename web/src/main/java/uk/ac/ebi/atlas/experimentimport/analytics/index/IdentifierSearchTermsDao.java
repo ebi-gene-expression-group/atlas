@@ -23,7 +23,7 @@ public class IdentifierSearchTermsDao {
     private static final int PROPERTY_VALUES_LIMIT = 1000;
 
     @Inject
-    public IdentifierSearchTermsDao(SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrServer solrServer, @Value("#{configuration['index.property_names.tooltip']}") String[] searchProperties) {
+    public IdentifierSearchTermsDao(SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrServer solrServer, @Value("#{configuration['index.property_names.identifier.search']}") String[] searchProperties) {
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
         this.solrServer = solrServer;
         this.searchProperties = searchProperties;

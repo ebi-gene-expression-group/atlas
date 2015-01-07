@@ -28,6 +28,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -89,6 +90,14 @@ public class AnalyticsIndexerController {
         }
 
         return sb.toString();
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public String handleResourceNotFoundException(Exception e) throws IOException {
+        LOGGER.error(e.getMessage(), e);
+        return e.getClass().getSimpleName() + ": " + e.getMessage();
     }
 
 }

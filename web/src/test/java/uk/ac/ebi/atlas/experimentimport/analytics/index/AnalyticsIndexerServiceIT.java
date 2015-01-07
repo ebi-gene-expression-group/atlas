@@ -90,7 +90,7 @@ public class AnalyticsIndexerServiceIT {
         assertThat(document.experimentAccession, is("E-MTAB-2039"));
         assertThat(document.experimentType, is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(document.defaultQueryFactorType, is("ORGANISM_PART"));
-        assertThat(document.identifierSearch, is("OS12G0515800 "));
+        assertThat(document.identifierSearch, is("OS12G0515800 Os.12120.1.S1_at Expressed protein; cDNA clone:J013098I09, full insert sequence  [Source:UniProt/SPTREMBL;Acc:Q2QPV9] Q2QPV9"));
         assertThat(document.conditionsSearch, is("emerging inflorescence 60 days after sowing Oryza sativa Japonica Group Nipponbare NCBITaxon:39947 whole post-emergence inflorescence"));
         assertThat(document.assayGroupId, is("g2"));
         assertThat(document.expressionLevel, is(0.2));
