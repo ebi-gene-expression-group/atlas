@@ -11,10 +11,10 @@ import javax.inject.Inject;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class ExperimentIndexerServiceIT {
+public class AnalyticsIndexerServiceIT {
 
     @Inject
-    private ExperimentIndexerService subject;
+    private AnalyticsIndexerService subject;
 
     @Test
     public void indexBaselineExperimentAnalytics() {

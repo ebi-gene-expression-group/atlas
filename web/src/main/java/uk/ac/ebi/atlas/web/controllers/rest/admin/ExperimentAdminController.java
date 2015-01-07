@@ -28,12 +28,10 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.ExperimentIndexerService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
@@ -52,16 +50,13 @@ public class ExperimentAdminController {
     private ExperimentCRUD experimentCRUD;
     private ExperimentMetadataCRUD experimentMetadataCRUD;
     private ExperimentTrader trader;
-    private ExperimentIndexerService experimentIndexer;
 
     @Inject
     public ExperimentAdminController(ExperimentCRUD experimentCRUD,
-                                     ExperimentMetadataCRUD experimentMetadataCRUD, ExperimentTrader trader,
-                                     ExperimentIndexerService experimentIndexer) {
+                                     ExperimentMetadataCRUD experimentMetadataCRUD, ExperimentTrader trader) {
         this.trader = trader;
         this.experimentCRUD = experimentCRUD;
         this.experimentMetadataCRUD = experimentMetadataCRUD;
-        this.experimentIndexer = experimentIndexer;
     }
 
     @RequestMapping("/importExperiment")
@@ -70,32 +65,6 @@ public class ExperimentAdminController {
                                    @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
         UUID accessKeyUUID = experimentCRUD.importExperiment(experimentAccession, isPrivate);
         return "Experiment " + experimentAccession + " loaded, accessKey: " + accessKeyUUID;
-    }
-
-    @RequestMapping("/indexExperiment")
-    @ResponseBody
-    public String indexExperiment(@RequestParam("accession") String experimentAccession) {
-        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-        stopWatch.start();
-
-        int count = experimentIndexer.indexBaselineExperimentAnalytics(experimentAccession);
-
-        stopWatch.stop();
-
-        return String.format("Experiment %s indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
-    }
-
-    @RequestMapping("/unindexExperiment")
-    @ResponseBody
-    public String unindexExperiment(@RequestParam("accession") String experimentAccession) {
-        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-        stopWatch.start();
-
-        experimentIndexer.deleteExperimentFromIndex(experimentAccession);
-
-        stopWatch.stop();
-
-        return String.format("Experiment %s removed from index in %s seconds", experimentAccession, stopWatch.getTotalTimeSeconds());
     }
 
     @RequestMapping("/deleteExperiment")

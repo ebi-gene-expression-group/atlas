@@ -48,9 +48,9 @@ import static com.google.common.base.Preconditions.*;
 
 @Named
 @Scope("singleton")
-public class ExperimentIndexerService {
+public class AnalyticsIndexerService {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentIndexerService.class);
+    private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerService.class);
 
     private final AnalyticsDocumentStreamFactory streamFactory;
     private final EFOParentsLookupService efoParentsLookupService;
@@ -59,7 +59,7 @@ public class ExperimentIndexerService {
     private final ExperimentTrader experimentTrader;
 
     @Inject
-    public ExperimentIndexerService(AnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, AnalyticsIndexer analyticsIndexer, ExperimentTrader experimentTrader) {
+    public AnalyticsIndexerService(AnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, AnalyticsIndexer analyticsIndexer, ExperimentTrader experimentTrader) {
         this.streamFactory = streamFactory;
         this.efoParentsLookupService = efoParentsLookupService;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;

@@ -35,7 +35,6 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.ExperimentIndexerService;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -76,13 +75,10 @@ public class ExperimentAdminControllerTest {
     @Mock
     private ExperimentTrader trader;
 
-    @Mock
-    private ExperimentIndexerService experimentIndexerMock;
-
     @Before
     public void setUp() throws Exception {
 
-        subject = new ExperimentAdminController(experimentCRUDMock, experimentMetadataCRUDMock, trader, experimentIndexerMock);
+        subject = new ExperimentAdminController(experimentCRUDMock, experimentMetadataCRUDMock, trader);
 
 
         when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
