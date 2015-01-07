@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport;
+package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

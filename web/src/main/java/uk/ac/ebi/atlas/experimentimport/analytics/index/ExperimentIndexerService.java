@@ -20,13 +20,14 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentimport;
+package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
 import com.google.common.collect.ImmutableSetMultimap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
+import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
@@ -35,9 +36,6 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
-import uk.ac.ebi.atlas.solr.admin.index.analytics.AnalyticsDocumentStream;
-import uk.ac.ebi.atlas.solr.admin.index.analytics.AnalyticsDocumentStreamFactory;
-import uk.ac.ebi.atlas.solr.admin.index.analytics.AnalyticsIndexer;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;

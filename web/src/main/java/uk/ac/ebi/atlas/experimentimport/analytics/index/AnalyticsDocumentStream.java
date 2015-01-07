@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.admin.index.analytics;
+package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSet;

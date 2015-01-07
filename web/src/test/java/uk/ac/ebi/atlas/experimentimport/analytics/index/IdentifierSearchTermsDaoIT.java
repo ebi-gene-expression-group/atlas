@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.solr.admin.index.analytics;
+package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;

@@ -32,8 +32,8 @@ import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
-import uk.ac.ebi.atlas.experimentimport.ExperimentIndexerService;
 import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
+import uk.ac.ebi.atlas.experimentimport.analytics.index.ExperimentIndexerService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;

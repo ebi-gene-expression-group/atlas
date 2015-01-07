@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.solr.admin.index.analytics;
+package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExperimentType;
