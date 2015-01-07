@@ -1,14 +1,12 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -21,7 +19,7 @@ public class AnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
     private final String ensemblSpecies;
     private final String defaultQueryFactorType;
     private final Iterable<BaselineAnalytics> inputStream;
-    private final ImmutableSetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
+    private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
     private final IdentifierSearchTermsDao identifierSearchTermsDao;
 
     public AnalyticsDocumentStream(String experimentAccession,
@@ -29,7 +27,7 @@ public class AnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
                                    String ensemblSpecies,
                                    String defaultQueryFactorType,
                                    Iterable<BaselineAnalytics> inputStream,
-                                   ImmutableSetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
+                                   SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
                                    IdentifierSearchTermsDao identifierSearchTermsDao) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
@@ -50,7 +48,7 @@ public class AnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
         private Iterator<BaselineAnalytics> inputIterator;
         private String lastSeenGeneId = "";
         private String lastGeneIdSearchTerms;
-        private HashSet<String> assaysSeen = Sets.newHashSet();
+        private Set<String> assaysSeen = Sets.newHashSet();
 
         private AnalyticsDocumentIterator(Iterable<BaselineAnalytics> inputStream) {
             inputIterator = inputStream.iterator();
@@ -86,8 +84,7 @@ public class AnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
         }
 
         private String getConditionSearchTerms(String assayGroupId) {
-            ImmutableSet<String> searchTerms = conditionSearchTermsByAssayAccessionId.get(assayGroupId);
-
+            Set<String> searchTerms = conditionSearchTermsByAssayAccessionId.get(assayGroupId);
 
             if (searchTerms.isEmpty() && !assaysSeen.contains(assayGroupId)) {
                 assaysSeen.add(assayGroupId);

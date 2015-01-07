@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
-import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.SetMultimap;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
@@ -22,7 +22,7 @@ public class AnalyticsDocumentStreamFactory {
                                           String ensemblSpecies,
                                           String defaultQueryFactorType,
                                           Iterable<BaselineAnalytics> inputStream,
-                                          ImmutableSetMultimap<String, String> conditionSearchTermsByAssayAccessionId) {
+                                          SetMultimap<String, String> conditionSearchTermsByAssayAccessionId) {
         return new AnalyticsDocumentStream(experimentAccession, experimentType, ensemblSpecies, defaultQueryFactorType,
                 inputStream, conditionSearchTermsByAssayAccessionId, identifierSearchTermsDao);
     }

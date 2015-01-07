@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
 import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.SetMultimap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
@@ -36,11 +37,14 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
+import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -57,17 +61,19 @@ public class AnalyticsIndexerService {
     private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
     private final AnalyticsIndexer analyticsIndexer;
     private final ExperimentTrader experimentTrader;
+    private final BaselineConditionsBuilder baselineConditionsBuilder;
 
     @Inject
-    public AnalyticsIndexerService(AnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, AnalyticsIndexer analyticsIndexer, ExperimentTrader experimentTrader) {
+    public AnalyticsIndexerService(AnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, AnalyticsIndexer analyticsIndexer, ExperimentTrader experimentTrader, BaselineConditionsBuilder baselineConditionsBuilder) {
         this.streamFactory = streamFactory;
         this.efoParentsLookupService = efoParentsLookupService;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
         this.analyticsIndexer = analyticsIndexer;
         this.experimentTrader = experimentTrader;
+        this.baselineConditionsBuilder = baselineConditionsBuilder;
     }
 
-    public int indexBaselineExperimentAnalytics(String experimentAccession) {
+    public int  indexBaselineExperimentAnalytics(String experimentAccession) {
         checkNotNull(experimentAccession);
 
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
@@ -80,22 +86,36 @@ public class AnalyticsIndexerService {
         checkState(species.size() == 1, "Multiple species experiments not yet supported");
         String ensemblSpecies = Species.shortenSpeciesToFirstTwoWords(species.iterator().next());
 
-        ImmutableSetMultimap<String, String> termIdsByAssayAccessionId = experimentDesign.getAllOntologyTermIdsByAssayAccession();
+        ImmutableSetMultimap<String, String> ontologyTermIdsByAssayAccession = expandOntologyTerms(experimentDesign.getAllOntologyTermIdsByAssayAccession());
+
+        ImmutableSetMultimap<String, String> conditionSearchTermsByAssayGroupId = buildConditionSearchTermsByAssayGroupId(experiment, ontologyTermIdsByAssayAccession);
 
         return indexRnaSeqBaselineExperimentAnalytics(experimentAccession, experimentType, ensemblSpecies,
                 defaultQueryFactorType,
-                termIdsByAssayAccessionId);
+                conditionSearchTermsByAssayGroupId);
+    }
+
+    ImmutableSetMultimap<String, String> buildConditionSearchTermsByAssayGroupId(BaselineExperiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
+
+        Collection<Condition> conditions = baselineConditionsBuilder.buildProperties(experiment, ontologyTermIdsByAssayAccession);
+
+        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
+
+        for (Condition condition : conditions) {
+            builder.putAll(condition.getAssayGroupId(), condition.getValues());
+        }
+
+        return builder.build();
+
     }
 
     public int indexRnaSeqBaselineExperimentAnalytics(String experimentAccession, ExperimentType experimentType, String ensemblSpecies,
                                          String defaultQueryFactorType,
-                                         ImmutableSetMultimap<String, String> conditionOntologyIdsByAssayAccessionId) {
+                                         SetMultimap<String, String> conditionSearchTermsByAssayGroupId) {
         checkNotNull(experimentAccession);
         checkNotNull(experimentType);
         checkArgument(StringUtils.isNotBlank(ensemblSpecies));
         checkArgument(StringUtils.isNotBlank(defaultQueryFactorType));
-
-        ImmutableSetMultimap<String, String> expandedTermsByAssayAccessionId = expandOntologyTerms(conditionOntologyIdsByAssayAccessionId);
 
         LOGGER.info("Begin indexing analytics for experiment " + experimentAccession);
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
@@ -110,7 +130,7 @@ public class AnalyticsIndexerService {
 
             AnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, ensemblSpecies,
                     defaultQueryFactorType,
-                    inputStream, expandedTermsByAssayAccessionId);
+                    inputStream, conditionSearchTermsByAssayGroupId);
 
             count = analyticsIndexer.addDocuments(analyticsDocuments);
 
