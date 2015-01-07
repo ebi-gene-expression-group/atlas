@@ -9,45 +9,45 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class AnalyticsDocument {
 
     @Field("bioentity_identifier")
-    private String bioentityIdentifier;
+    String bioentityIdentifier;
 
     @Field
-    private String species;
+    String species;
 
     @Field
-    private String experimentAccession;
+    String experimentAccession;
 
-    private ExperimentType experimentType;
+    ExperimentType experimentType;
 
     @Field("experimentType")
-    private String experimentTypeAsString;
+    String experimentTypeAsString;
 
     @Field
-    private String defaultQueryFactorType;
+    String defaultQueryFactorType;
 
     @Field
-    private String identifierSearch;
+    String identifierSearch;
 
     @Field
-    private String conditionsSearch;
+    String conditionsSearch;
 
     @Field
-    private String assayGroupId;
+    String assayGroupId;
 
     @Field
-    private Double expressionLevel;
+    Double expressionLevel;
 
     @Field
-    private String contrastId;
+    String contrastId;
 
     @Field
-    private String contrastType;
+    String contrastType;
 
     @Field
-    private Integer numReplicates;
+    Integer numReplicates;
 
     @Field
-    private Double foldChange;
+    Double foldChange;
 
     public static Builder builder() {
         return new Builder();

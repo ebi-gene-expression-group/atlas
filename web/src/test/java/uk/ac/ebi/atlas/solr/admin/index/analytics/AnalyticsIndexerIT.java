@@ -20,9 +20,9 @@ public class AnalyticsIndexerIT {
     @Test
     public void addBaseline() {
         AnalyticsDocument analyticsDocument = AnalyticsDocument.builder()
-                .bioentityIdentifier("foo")
+                .bioentityIdentifier("delme")
                 .species("bar")
-                .experimentAccession("E-TEST-BASELINE")
+                .experimentAccession("E-DELME")
                 .experimentType(ExperimentType.RNASEQ_MRNA_BASELINE)
                 .defaultQueryFactorType("ORGANISM_PART")
                 .identifierSearch("foo")
@@ -31,14 +31,16 @@ public class AnalyticsIndexerIT {
                 .expressionLevel(1)
                 .build();
         analyticsIndexer.addDocument(analyticsDocument);
+
+        analyticsIndexer.deleteDocumentsForExperiment("E-DELME");
     }
 
     @Test
     public void addDiff() {
         AnalyticsDocument analyticsDocument = AnalyticsDocument.builder()
-                .bioentityIdentifier("foo")
+                .bioentityIdentifier("delme")
                 .species("bar")
-                .experimentAccession("E-TEST-DIFF")
+                .experimentAccession("E-DELME")
                 .experimentType(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL)
                 .defaultQueryFactorType("genotype")
                 .identifierSearch("foo")
@@ -49,6 +51,8 @@ public class AnalyticsIndexerIT {
                 .foldChange(0.02)
                 .build();
         analyticsIndexer.addDocument(analyticsDocument);
+
+        analyticsIndexer.deleteDocumentsForExperiment("E-DELME");
     }
 
 }

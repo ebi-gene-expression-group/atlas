@@ -26,15 +26,17 @@ import com.google.gson.Gson;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.experimentimport.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
+import uk.ac.ebi.atlas.experimentimport.ExperimentIndexerService;
 import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -46,26 +48,20 @@ import java.util.UUID;
 public class ExperimentAdminController {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentAdminController.class);
-    public static final int INTERNAL_SERVER_ERROR = 500;
 
     private ExperimentCRUD experimentCRUD;
     private ExperimentMetadataCRUD experimentMetadataCRUD;
     private ExperimentTrader trader;
+    private ExperimentIndexerService experimentIndexer;
 
     @Inject
     public ExperimentAdminController(ExperimentCRUD experimentCRUD,
-                                     ExperimentMetadataCRUD experimentMetadataCRUD, ExperimentTrader trader) {
+                                     ExperimentMetadataCRUD experimentMetadataCRUD, ExperimentTrader trader,
+                                     ExperimentIndexerService experimentIndexer) {
         this.trader = trader;
         this.experimentCRUD = experimentCRUD;
         this.experimentMetadataCRUD = experimentMetadataCRUD;
-    }
-
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public String handleException(Exception e, HttpServletResponse response) throws IOException {
-        LOGGER.error(e.getMessage(), e);
-        response.setStatus(INTERNAL_SERVER_ERROR);
-        return e.getClass().getSimpleName() + ": " + e.getMessage();
+        this.experimentIndexer = experimentIndexer;
     }
 
     @RequestMapping("/importExperiment")
@@ -74,6 +70,32 @@ public class ExperimentAdminController {
                                    @RequestParam(value = "private", defaultValue = "true") boolean isPrivate) throws IOException {
         UUID accessKeyUUID = experimentCRUD.importExperiment(experimentAccession, isPrivate);
         return "Experiment " + experimentAccession + " loaded, accessKey: " + accessKeyUUID;
+    }
+
+    @RequestMapping("/indexExperiment")
+    @ResponseBody
+    public String indexExperiment(@RequestParam("accession") String experimentAccession) {
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+        stopWatch.start();
+
+        int count = experimentIndexer.indexBaselineExperimentAnalytics(experimentAccession);
+
+        stopWatch.stop();
+
+        return String.format("Experiment %s indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
+    }
+
+    @RequestMapping("/unindexExperiment")
+    @ResponseBody
+    public String unindexExperiment(@RequestParam("accession") String experimentAccession) {
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+        stopWatch.start();
+
+        experimentIndexer.deleteExperimentFromIndex(experimentAccession);
+
+        stopWatch.stop();
+
+        return String.format("Experiment %s removed from index in %s seconds", experimentAccession, stopWatch.getTotalTimeSeconds());
     }
 
     @RequestMapping("/deleteExperiment")
@@ -132,6 +154,23 @@ public class ExperimentAdminController {
     public String invalidateExperimentCache() throws IOException {
         trader.removeAllExperimentsFromCache();
         return "All experiments removed from cache";
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public String handleException(Exception e) throws IOException {
+        String lineSeparator = "<br>";
+        LOGGER.error(e.getMessage(), e);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(e.getClass().getSimpleName()).append(": ").append(e.getMessage()).append(lineSeparator);
+
+        for (StackTraceElement element : e.getStackTrace()) {
+            sb.append(element.toString()).append(lineSeparator);
+        }
+
+        return sb.toString();
     }
 
 }
