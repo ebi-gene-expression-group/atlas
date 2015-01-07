@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentCRUD;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -140,6 +141,14 @@ public class ExperimentAdminController {
         }
 
         return sb.toString();
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public String handleResourceNotFoundException(Exception e) throws IOException {
+        LOGGER.error(e.getMessage(), e);
+        return e.getClass().getSimpleName() + ": " + e.getMessage();
     }
 
 }
