@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
+import com.google.common.base.Joiner;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,20 +47,22 @@ public class IdentifierSearchTermsDaoIT {
 
 
     @Test
-    public void fetchSearchTerms() throws Exception {
+    public void fetchSearchTerms() {
         Set<String> properties = subject.fetchSearchTerms("ENSMODG00000012671");
 
-        assertThat(properties.size(), Matchers.is(24));
-        assertThat(properties, contains("oogenesis","positive regulation of neuroblast proliferation","spindle pole","developmental growth","maintenance of centrosome location","negative regulation of asymmetric cell division","ASP","IQ motif, EF-hand binding site","neuron migration","Calmbp1","FLJ10549","Calponin homology domain","forebrain neuroblast division","negative regulation of neuron differentiation","protein binding","MCPH5","Calmodulin-regulated spectrin-associated protein, CH domain","binding","FLJ10517","spermatogenesis","brain development","midbody","Armadillo-type fold","positive regulation of canonical Wnt receptor signaling pathway"));
+        System.out.println("\"" + Joiner.on("\", \"").join(properties) + "\"");
 
-        ///assertThat(properties.get("synonym").size(), Matchers.is(5));
+        assertThat(properties.size(), Matchers.is(27));
+        assertThat(properties, contains("oogenesis", "developmental growth", "negative regulation of asymmetric cell division", "IQ motif, EF-hand binding site", "ASP", "neuron migration", "Calmbp1", "Calponin homology domain", "FLJ10549", "forebrain neuroblast division", "ASPM", "positive regulation of neuroblast proliferation", "spindle pole", "maintenance of centrosome location", "protein_coding", "asp (abnormal spindle) homolog, microcephaly associated (Drosophila) [Source:HGNC Symbol;Acc:19048]", "protein binding", "negative regulation of neuron differentiation", "MCPH5", "Calmodulin-regulated spectrin-associated protein, CH domain", "FLJ10517", "binding", "spermatogenesis", "brain development", "Armadillo-type fold", "midbody", "positive regulation of canonical Wnt receptor signaling pathway"));
+
+                ///assertThat(properties.get("synonym").size(), Matchers.is(5));
         //assertThat(properties.get("synonym"), Matchers.hasItems("Calmbp1", "MCPH5", "ASP"));
         //assertThat(properties.get("goterm"), Matchers.hasItems("oogenesis", "developmental growth", "positive regulation of neuroblast proliferation"));
         //assertThat(properties.get("interproterm"), Matchers.hasItems("Calmodulin-regulated spectrin-associated protein, CH domain", "Armadillo-type fold", "IQ motif, EF-hand binding site"));
     }
 
     @Test
-    public void fetchSearchTermsForUnknownGene() throws Exception {
+    public void fetchSearchTermsForUnknownGene()  {
         Set<String> properties = subject.fetchSearchTerms("FOOBAR");
 
         assertThat(properties.size(), is(0));
