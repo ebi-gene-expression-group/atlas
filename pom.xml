@@ -620,6 +620,7 @@
             <!-- embedded tomcat started by mvn in bamboo plan -->
             <properties>
                 <solr.host>localhost</solr.host>
+                <solr.test.host>lime</solr.test.host>
                 <resources.host>lime:14092</resources.host>
                 <!-- this directory is populated from /web/src/test/resources/ by the build plan  -->
                 <data.files.location>/nfs/ma/home/tomcats/ATLAS3.TEST/integration-test-data</data.files.location>
