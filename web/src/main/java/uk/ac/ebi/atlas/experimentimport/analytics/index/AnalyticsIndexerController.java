@@ -46,9 +46,11 @@ public class AnalyticsIndexerController {
         this.experimentIndexer = experimentIndexer;
     }
 
-    @RequestMapping("/analyticsIndex/addExperiment")
+    @RequestMapping("/analyticsIndex/indexExperiment")
     @ResponseBody
     public String indexExperiment(@RequestParam("accession") String experimentAccession) {
+        experimentIndexer.deleteExperimentFromIndex(experimentAccession);
+
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
@@ -56,7 +58,7 @@ public class AnalyticsIndexerController {
 
         stopWatch.stop();
 
-        return String.format("Experiment %s indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
+        return String.format("Experiment %s (re)indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds());
     }
 
     @RequestMapping("/analyticsIndex/deleteExperiment")
