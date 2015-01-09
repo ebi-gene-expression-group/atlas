@@ -88,7 +88,7 @@ public class BaselineExperimentTest {
         when(assayGroupsMock.getAssayGroupIds()).thenReturn(Sets.newHashSet("g1", "g2"));
 
         subject = new BaselineExperiment("accession", new Date(), experimentalFactorsMock,
-                "description", "displayName", Sets.newHashSet("species"), speciesMapping,
+                "description", "displayName", Sets.newHashSet("species"), "kingdom", speciesMapping,
                 true, Sets.newHashSet(PUBMEDID)
                 , experimentDesignMock, assayGroupsMock);
 

@@ -24,13 +24,13 @@ package uk.ac.ebi.atlas.trader.loader;
 
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
+import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -46,12 +47,15 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
     private ConfigurationTrader configurationTrader;
 
+    private SpeciesEnsemblTrader speciesEnsemblTrader;
+
     private String logFoldChangePathTemplate;
 
     @Inject
-    public MicroarrayExperimentsCacheLoader(ConfigurationTrader configurationTrader,
-                                            @Value("#{configuration['microarray.log-fold-changes.data.path.template']}") String logFoldChangePathTemplate, ExperimentDAO experimentDAO) {
+    public MicroarrayExperimentsCacheLoader(ConfigurationTrader configurationTrader, SpeciesEnsemblTrader speciesEnsemblTrader,
+                                            @Value("#{configuration['microarray.log-fold-changes.data.path.template']}") String logFoldChangePathTemplate) {
         this.configurationTrader = configurationTrader;
+        this.speciesEnsemblTrader = speciesEnsemblTrader;
         this.logFoldChangePathTemplate = logFoldChangePathTemplate;
     }
 
@@ -70,8 +74,10 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
         boolean hasLogFoldChangeFile = Files.exists(Paths.get(logFoldChangeFileLocation));
 
+        String kingdom = speciesEnsemblTrader.getEnsemblDb(experimentDTO.getSpecies());
+
         return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession, experimentDTO.getLastUpdate(),
-                                        contrasts, experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), arrayDesignAccessions,
+                                        contrasts, experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), kingdom, arrayDesignAccessions,
                                         hasLogFoldChangeFile, experimentDTO.getPubmedIds(), experimentDesign);
 
     }

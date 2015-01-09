@@ -44,6 +44,8 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
 
     private SortedSet<String> species = Sets.newTreeSet();
 
+    private String kingdom;
+
     private SortedSet<String> experimentalFactors = Sets.newTreeSet();
 
     private SortedSet<String> arrayDesigns = Sets.newTreeSet();
@@ -96,6 +98,14 @@ public class ExperimentInfo implements Comparable<ExperimentInfo> {
 
     public void setSpecies(Set<String> species) {
         this.species = Sets.newTreeSet(species);
+    }
+
+    public String getKingdom() {
+        return kingdom;
+    }
+
+    public void setKingdom(String kingdom) {
+        this.kingdom = kingdom;
     }
 
     public SortedSet<String> getExperimentalFactors() {

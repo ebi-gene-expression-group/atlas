@@ -32,6 +32,7 @@ import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -67,6 +68,9 @@ public class BaselineExperimentsCacheLoaderTest {
     private ConfigurationTrader configurationTraderMock;
 
     @Mock
+    private SpeciesEnsemblTrader speciesEnsemblTraderMock;
+
+    @Mock
     private TsvReader experimentDataTsvReaderMock;
 
     @Mock
@@ -88,7 +92,7 @@ public class BaselineExperimentsCacheLoaderTest {
         BaselineExperimentExpressionLevelFile baselineExperimentExpressionLevelFile = new BaselineExperimentExpressionLevelFile(tsvReaderBuilderMock, PATH_TEMPLATE_FAKE);
 
         subject =
-                new BaselineExperimentsCacheLoader(baselineExperimentExpressionLevelFile, configurationTraderMock){
+                new BaselineExperimentsCacheLoader(baselineExperimentExpressionLevelFile, configurationTraderMock, speciesEnsemblTraderMock) {
 
                     @Override
                     protected BaselineExperimentBuilder createExperimentBuilder() {

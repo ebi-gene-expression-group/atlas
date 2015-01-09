@@ -7,6 +7,7 @@ import uk.ac.ebi.atlas.model.Species;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,6 +26,16 @@ public class SpeciesEnsemblTrader {
 
     public String getEnsemblDb(String species) {
         return speciesEnsemblMap.get(Species.shortenSpeciesToFirstTwoWords(species));
+    }
+
+    public String getEnsemblDb(Set<String> species) {
+        for (String s : species) {
+            String kingdom = getEnsemblDb(s.toLowerCase());
+            if (kingdom != null) {
+                return kingdom;
+            }
+        }
+        return "";
     }
 
 }

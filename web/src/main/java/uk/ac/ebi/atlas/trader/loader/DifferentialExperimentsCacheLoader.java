@@ -29,6 +29,7 @@ import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -40,9 +41,12 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
 
     private ConfigurationTrader configurationTrader;
 
+    private SpeciesEnsemblTrader speciesEnsemblTrader;
+
     @Inject
-    public DifferentialExperimentsCacheLoader(ConfigurationTrader configurationTrader) {
+    public DifferentialExperimentsCacheLoader(ConfigurationTrader configurationTrader, SpeciesEnsemblTrader speciesEnsemblTrader) {
         this.configurationTrader = configurationTrader;
+        this.speciesEnsemblTrader = speciesEnsemblTrader;
     }
 
     @Override
@@ -54,8 +58,10 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
         ExperimentConfiguration experimentConfiguration = configurationTrader.getExperimentConfiguration(experimentAccession);
         Set<Contrast> contrasts = experimentConfiguration.getContrasts();
 
+        String kingdom = speciesEnsemblTrader.getEnsemblDb(experimentDTO.getSpecies());
+
         return new DifferentialExperiment(experimentAccession, experimentDTO.getLastUpdate(), contrasts,
-                experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), experimentDTO.getPubmedIds(), experimentDesign);
+                experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), kingdom, experimentDTO.getPubmedIds(), experimentDesign);
 
     }
 }

@@ -5,4 +5,6 @@ public class NumberOfExperiments {
     public static final int ALL = 28;
     public static final int DISTINCT_ORGANISMS = 19;
     public static final int NUMBER_OF_BASELINE_EXPERIMENTS = 16;
+    public static final int NUMBER_OF_PLANTS_EXPERIMENTS = 9;
+    public static final int NUMBER_OF_ANIMALS_AND_FUNGI_EXPERIMENTS = 19;
 }

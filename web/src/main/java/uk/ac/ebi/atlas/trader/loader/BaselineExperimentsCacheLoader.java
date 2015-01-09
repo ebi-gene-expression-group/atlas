@@ -33,13 +33,11 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
+import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -51,13 +49,16 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
     private final BaselineExperimentExpressionLevelFile expressionLevelFile;
     private final ConfigurationTrader configurationTrader;
+    private final SpeciesEnsemblTrader speciesEnsemblTrader;
 
     @Inject
     protected BaselineExperimentsCacheLoader(BaselineExperimentExpressionLevelFile expressionLevelFile,
-                                             ConfigurationTrader configurationTrader) {
+                                             ConfigurationTrader configurationTrader,
+                                             SpeciesEnsemblTrader speciesEnsemblTrader) {
 
         this.configurationTrader = configurationTrader;
         this.expressionLevelFile = expressionLevelFile;
+        this.speciesEnsemblTrader = speciesEnsemblTrader;
     }
 
     @Override
@@ -70,11 +71,20 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 
+        String kingdom = speciesEnsemblTrader.getEnsemblDb(experimentDTO.getSpecies());
+        if (kingdom.isEmpty()) {
+            Iterator<String> speciesIterator = experimentDTO.getSpecies().iterator();
+            while (speciesIterator.hasNext() && kingdom.isEmpty()) {
+                kingdom = speciesEnsemblTrader.getEnsemblDb(factorsConfig.getSpeciesMapping().get(speciesIterator.next()));
+            }
+        }
+
         String[] orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
 
         ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
 
         return createExperimentBuilder().forOrganisms(experimentDTO.getSpecies())
+                .ofKingdom(kingdom)
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)

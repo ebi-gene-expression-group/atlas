@@ -37,23 +37,23 @@ public class BaselineExperiment extends Experiment {
 
     BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description, String displayName,
-                       Set<String> organisms, Map<String, String> speciesMapping,
+                       Set<String> organisms, String kingdom, Map<String, String> speciesMapping,
                        boolean hasExtraInfoFile, Set<String> pubMedIds,
                        ExperimentDesign experimentDesign, AssayGroups assayGroups) {
         this(ExperimentType.RNASEQ_MRNA_BASELINE, accession, lastUpdate, experimentalFactors,
-                description, displayName, organisms, speciesMapping,
+                description, displayName, organisms, kingdom, speciesMapping,
                 hasExtraInfoFile, pubMedIds,
                 experimentDesign, assayGroups);
     }
 
     BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description, String displayName,
-                       Set<String> organisms, Map<String, String> speciesMapping,
+                       Set<String> organisms, String kingdom, Map<String, String> speciesMapping,
                        boolean hasExtraInfoFile, Set<String> pubMedIds,
                        ExperimentDesign experimentDesign, AssayGroups assayGroups) {
 
         super(experimentType, accession, lastUpdate, displayName, description,
-                hasExtraInfoFile, organisms, speciesMapping, pubMedIds, experimentDesign);
+                hasExtraInfoFile, organisms, kingdom, speciesMapping, pubMedIds, experimentDesign);
         this.experimentalFactors = experimentalFactors;
         this.assayGroups = assayGroups;
     }

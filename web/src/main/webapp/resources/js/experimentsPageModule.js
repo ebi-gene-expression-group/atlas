@@ -182,7 +182,9 @@ var experimentsPageModule = (function ($) {
                 { "sTitle":"ArrayExpress", "mData":"experimentAccession", "sClass":"center bb br",
                     "mRender":function (data, type, full) {
                         return formatExperimentAccession(data, type, full);
-                    } }
+                    } },
+
+                { "sTitle":"Kingdom", "mData":"kingdom", "sClass":"center bb italic", "bVisible": false}
             ],
             "aLengthMenu":[
                 [10, 25, 50, 100, -1],
@@ -200,13 +202,26 @@ var experimentsPageModule = (function ($) {
             oTable.fnFilter(this.value, $("#experiments-table tfoot input").index(this));
         });
 
-        $("#experiments-table tfoot select").change(function () {
+        $("#experiments-table tfoot select#base-diff").change(function () {
             /* same for drop down filter */
             oTable.fnFilter(this.value, $("#experiments-table tfoot select").index(this));
         });
 
+        $("#experiments-table tfoot select#plants-animals").change(function () {
+            if (this.value == 'plants') {
+                oTable.fnFilter('plants', 9);
+            }
+            else if (this.value == 'animals-fungi') {
+                oTable.fnFilter('metazoa|ensembl|fungi', 9, true);
+            }
+            else {
+                oTable.fnFilter('', 9);
+            }
+
+        });
+
         /*
-         * Support functions to provide a little bit of 'user friendlyness' to the textboxes in
+         * Support functions to provide a little bit of 'user friendliness' to the text boxes in
          * the footer
          */
         $("#experiments-table tfoot input").each(function (i) {

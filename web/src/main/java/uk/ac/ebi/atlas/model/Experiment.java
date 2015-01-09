@@ -34,6 +34,7 @@ public class Experiment implements Serializable {
     private ExperimentType type;
     private ExperimentDesign experimentDesign;
     private SortedSet<String> organisms;
+    private String kingdom;
     private SortedSet<String> pubMedIds;
     private Map<String, String> speciesMapping;
     private String accession;
@@ -43,7 +44,7 @@ public class Experiment implements Serializable {
     private Date lastUpdate;
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String displayName, String description,
-                      boolean hasExtraInfoFile, Set<String> organisms, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
+                      boolean hasExtraInfoFile, Set<String> organisms, String kingdom, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.experimentDesign = experimentDesign;
@@ -52,13 +53,14 @@ public class Experiment implements Serializable {
         this.description = description;
         this.hasExtraInfoFile = hasExtraInfoFile;
         this.organisms = new TreeSet<>(organisms);
+        this.kingdom = kingdom;
         this.speciesMapping = speciesMapping;
         this.pubMedIds = Sets.newTreeSet(pubMedIds);
     }
 
     public Experiment(ExperimentType type, String accession, Date lastUpdate, String description, boolean hasExtraInfoFile,
-                      Set<String> organisms, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
-        this(type, accession, lastUpdate, null, description, hasExtraInfoFile, organisms, speciesMapping, pubMedIds, experimentDesign);
+                      Set<String> organisms, String kingdom, Map<String, String> speciesMapping, Set<String> pubMedIds, ExperimentDesign experimentDesign) {
+        this(type, accession, lastUpdate, null, description, hasExtraInfoFile, organisms, kingdom, speciesMapping, pubMedIds, experimentDesign);
     }
 
     public ExperimentType getType() {
@@ -94,6 +96,10 @@ public class Experiment implements Serializable {
 
     public Set<String> getOrganisms() {
         return Collections.unmodifiableSet(organisms);
+    }
+
+    public String getKingdom() {
+        return kingdom;
     }
 
     public List<String> getPubMedIds() {

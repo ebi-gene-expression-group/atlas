@@ -170,7 +170,7 @@ public class ExperimentsTablePageSIT extends SinglePageSeleniumFixture {
     //TODO: FIX THIS TEST sortOnLoadedColumn
     @Test
     @Ignore
-    public void sortOnLoadedColumn() {
+    public void     sortOnLoadedColumn() {
         subject.clickSecondColumnHeader();
         List<ExperimentInfo> allInfos = Lists.newArrayList(baselineInfos);
         allInfos.addAll(differentialInfos);
@@ -230,4 +230,21 @@ public class ExperimentsTablePageSIT extends SinglePageSeleniumFixture {
         }
     }
 
+    @Test
+    public void selectPlantsExperiments() {
+        subject.selectPlantsExperiments();
+        subject.getExperimentsTableInfo().contains("of " + NumberOfExperiments.NUMBER_OF_PLANTS_EXPERIMENTS + " entries");
+    }
+
+    @Test
+    public void selectAnimalsAndFungiExperiments() {
+        subject.selectAnimalsAndFungiExperiments();
+        subject.getExperimentsTableInfo().contains("of " + NumberOfExperiments.NUMBER_OF_ANIMALS_AND_FUNGI_EXPERIMENTS + " entries");
+    }
+
+    @Test
+    public void selectPlantsAnimalsAndFungiExperiments() {
+        subject.selectPlantAnimalAndFungiExperiments();
+        subject.getExperimentsTableInfo().contains("of " + NumberOfExperiments.ALL + " entries");
+    }
 }

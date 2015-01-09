@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperimentBuilder;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactorsBuilder;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.trader.ExperimentDesignParser;
+import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 import uk.ac.ebi.atlas.utils.ArrayExpressClient;
 
 import javax.inject.Inject;
@@ -16,6 +17,9 @@ public class ProteomicsBaselineExperimentsCacheLoaderFactory {
 
     @Inject
     private ConfigurationTrader configurationTrader;
+
+    @Inject
+    private SpeciesEnsemblTrader speciesEnsemblTrader;
 
     @Inject
     private ProteomicsBaselineExperimentExpressionLevelFile expressionLevelFile;
@@ -31,7 +35,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderFactory {
 
     public ProteomicsBaselineExperimentsCacheLoader create(ExperimentDAO experimentDao) {
 
-        ProteomicsBaselineExperimentsCacheLoader loader = new ProteomicsBaselineExperimentsCacheLoader(expressionLevelFile, configurationTrader) {
+        ProteomicsBaselineExperimentsCacheLoader loader = new ProteomicsBaselineExperimentsCacheLoader(expressionLevelFile, configurationTrader, speciesEnsemblTrader) {
             @Override
             protected BaselineExperimentBuilder createExperimentBuilder() {
                 return new BaselineExperimentBuilder();

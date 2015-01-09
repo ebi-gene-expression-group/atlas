@@ -31,16 +31,24 @@
     <tr>
         <th rowspan="1" colspan="1">
             <input type="hidden" class="search_init">
-            <select>
+            <select id="base-diff">
                 <option value="">All</option>
                 <option value="baseline">Baseline</option>
                 <option value="differential">Differential</option>
             </select>
         </th>
-        <th><input type="hidden" class="search_init"></th>
+        <th rowspan="1" colspan="1">
+            <input type="hidden" class="search_init">
+            <select id="plants-animals">
+                <option value="">All</option>
+                <option value="plants">Plants</option>
+                <option value="animals-fungi">Animals and Fungi</option>
+            </select>
+        </th>
         <th rowspan="1" colspan="1">
             <input type="text" class="search_init" value="Search description" name="search_description">
         </th>
+        <th><input type="hidden" class="search_init"></th>
         <th><input type="hidden" class="search_init"></th>
         <th><input type="hidden" class="search_init"></th>
         <th rowspan="1" colspan="1">

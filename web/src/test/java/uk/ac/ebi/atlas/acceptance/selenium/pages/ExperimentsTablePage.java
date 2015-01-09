@@ -29,6 +29,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 
 import java.util.List;
@@ -58,6 +59,9 @@ public class ExperimentsTablePage extends AtlasPage{
 
     @FindBy(xpath = "//thead/tr[1]/th[3]")
     private WebElement thirdColumnHeader;
+
+    @FindBy(id="plants-animals")
+    private WebElement plantsSelectWebElement;
 
     public ExperimentsTablePage(WebDriver driver) {
         super(driver);
@@ -150,4 +154,18 @@ public class ExperimentsTablePage extends AtlasPage{
         return table.findElements(By.xpath(xPath));
     }
 
+    public void selectPlantsExperiments() {
+        Select plantsSelect = new Select(plantsSelectWebElement);
+        plantsSelect.selectByValue("plants");
+    }
+
+    public void selectAnimalsAndFungiExperiments() {
+        Select plantsSelect = new Select(plantsSelectWebElement);
+        plantsSelect.selectByValue("animals-fungi");
+    }
+
+    public void selectPlantAnimalAndFungiExperiments() {
+        Select plantsSelect = new Select(plantsSelectWebElement);
+        plantsSelect.selectByValue("");
+    }
 }
