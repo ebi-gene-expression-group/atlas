@@ -74,7 +74,8 @@ $.Autocompleter = function(input, options) {
 	var hasFocus = 0;
 	var lastKeyPressCode;
 	var config = {
-		mouseDownOnSelect: false
+		mouseDownOnSelect: false,
+        isTreeControlHit: false
 	};
 	var select = $.Autocompleter.Select(options, input, selectCurrent, config);
 
@@ -187,7 +188,16 @@ $.Autocompleter = function(input, options) {
         if (hasFocus++ > 1 && !select.visible()) {
             onChange(0, true);
         }
-	}).bind("search", function() {
+
+        ed = $('#conditionSection .tag-editor');
+
+		if(!config.isTreeControlHit) {
+            ed.trigger('onTreeNoExpansionHit');
+        } else {
+            ed.trigger('onTreeExpansionHit');
+        }
+
+    }).bind("search", function() {
 		// TODO why not just specifying both arguments?
 		var fn = (arguments.length > 1) ? arguments[1] : null;
 		function findValueCallback(q, data) {
@@ -219,9 +229,7 @@ $.Autocompleter = function(input, options) {
 		$(input.form).unbind(".arrayExpressAutocomplete");
 	});
 
-    $('input.ac_input').on('onBlurHideResults', function (e) {
-        hideResultsNow();
-    });
+
 
     function debugLog(text) {
     //  if ($.browser.safari) {
@@ -770,9 +778,15 @@ $.Autocompleter.Select = function (options, input, select, config) {
             return false;
 		}).mousedown(function() {
 			config.mouseDownOnSelect = true;
-            select();
-            ed = $('#conditionSection .tag-editor');
-            ed.click();
+
+            if(isTreeControlHit(event)){
+                config.isTreeControlHit = true;
+                input.click();
+            } else {
+                config.isTreeControlHit = false;
+                input.click();
+                select();
+            }
 		}).mouseup(function() {
 			config.mouseDownOnSelect = false;
 		});

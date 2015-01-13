@@ -207,6 +207,15 @@
                 update_globals();
             }
 
+            var isTreeExpansionHit = false;
+            ed.on('onTreeExpansionHit', function (e) {
+                isTreeExpansionHit = true;
+            });
+
+            ed.on('onTreeNoExpansionHit', function (e) {
+                isTreeExpansionHit = false;
+            });
+
             ed.on('blur', 'input', function(e){
                 var input = $(this), old_tag = input.data('old_tag'), tag = $.trim(input.val().replace(/ +/, ' ').replace(o.dregex, o.delimiter[0]));
                 if (!tag) {
@@ -225,9 +234,11 @@
                     o.beforeTagSave(el, ed, tag_list, old_tag, tag);
                     // remove duplicates
                     $('.tag-editor-tag:not(.active)', ed).each(function(){ if ($(this).html() == tag) $(this).closest('li').remove(); });
-                    $('input.ac_input').trigger('onBlurHideResults');
                 }
-                input.parent().html(tag).removeClass('active');
+
+                if(!isTreeExpansionHit) {
+                    input.parent().html(tag).removeClass('active');
+                }
                 if (tag != old_tag) update_globals();
                 set_placeholder();
             });
