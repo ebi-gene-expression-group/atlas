@@ -11,9 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
-import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
 import java.util.SortedSet;
 
@@ -24,14 +22,14 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineExperimentProfileSearchServiceTest {
+public class BaselineTissueExperimentSearchResultProducerTest {
 
     private static final double LUNG_LEVEL = 48948;
     private static final double THYMUS_LEVEL = 54922;
     private static final double SPLEEN_LEVEL = 387123;
     private static final String EXPERIMENT_DISPLAY_NAME = "mouse experiment";
     public static final String E_MTAB_599 = "E-MTAB-599";
-    BaselineExperimentProfileSearchService subject;
+    BaselineTissueExperimentSearchResultProducer subject;
 
     RnaSeqBslnExpression g3_thymus = RnaSeqBslnExpression.create(E_MTAB_599, "g3", THYMUS_LEVEL);
     RnaSeqBslnExpression g5_lung = RnaSeqBslnExpression.create(E_MTAB_599, "g5", LUNG_LEVEL);
@@ -43,12 +41,6 @@ public class BaselineExperimentProfileSearchServiceTest {
     private static final Factor THYMUS = new Factor(ORGANISM_PART, "thymus");
 
     private static final ImmutableSortedSet<Factor> ALL_FACTORS = ImmutableSortedSet.of(LUNG, SPLEEN, THYMUS);
-
-    @Mock
-    private RnaSeqBslnExpressionDao rnaSeqBslnExpressionDao;
-
-    @Mock
-    private SolrQueryService solrQueryService;
 
     @Mock
     private ExperimentTrader experimentTrader;
@@ -74,7 +66,7 @@ public class BaselineExperimentProfileSearchServiceTest {
         when(experimentalFactors.getFilteredFactors(Mockito.any(FactorGroup.class))).thenReturn(ALL_FACTORS);
         when(experimentalFactors.getNonDefaultFactors(Mockito.anyString())).thenReturn(EMPTY_FACTOR_SET);
 
-        subject = new BaselineExperimentProfileSearchService(rnaSeqBslnExpressionDao, solrQueryService, experimentTrader);
+        subject = new BaselineTissueExperimentSearchResultProducer(experimentTrader);
     }
 
     @Test
