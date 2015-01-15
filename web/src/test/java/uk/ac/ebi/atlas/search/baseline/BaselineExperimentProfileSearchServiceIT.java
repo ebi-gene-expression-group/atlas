@@ -24,9 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
@@ -87,6 +85,10 @@ public class BaselineExperimentProfileSearchServiceIT {
     public static final Factor ADRENAL_GLAND = new Factor(ORGANISM_PART, "adrenal gland");
     public static final Factor ADIPOSE = new Factor(ORGANISM_PART, "adipose tissue");
 
+    private static final FactorGroup EMPTY_FACTOR_SET = new FactorSet();
+    private static final FactorGroup ORGANISM_HOMO_SAPIENS = new FactorSet(new Factor("ORGANISM", "Homo sapiens"));
+    private static final FactorGroup STAGE_ADULT = new FactorSet(new Factor("DEVELOPMENTAL_STAGE", "adult"));
+
     @Inject
     private BaselineExperimentProfileSearchService subject;
 
@@ -96,11 +98,6 @@ public class BaselineExperimentProfileSearchServiceIT {
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;
 
-    private static final FactorGroup EMPTY_FACTOR_SET = new FactorSet();
-
-    private static final FactorGroup ORGANISM_HOMO_SAPIENS = new FactorSet(new Factor("ORGANISM", "Homo sapiens"));
-
-    private static final FactorGroup STAGE_ADULT = new FactorSet(new Factor("DEVELOPMENTAL_STAGE", "adult"));
 
     @Inject
     private SolrQueryService solrQueryService;
@@ -149,7 +146,7 @@ public class BaselineExperimentProfileSearchServiceIT {
         return experiment.getExperimentalFactors().getFactorsByType("ORGANISM_PART");
     }
 
-    private ImmutableSortedSet<Factor> getEMtab1733Tissues() {
+    private static ImmutableSortedSet<Factor> getEMtab1733Tissues() {
         ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
         builder.add(ADIPOSE);
         builder.add(ADRENAL_GLAND);
@@ -181,7 +178,7 @@ public class BaselineExperimentProfileSearchServiceIT {
         return builder.build();
     }
 
-    private ImmutableSortedSet<Factor> getEMtab30352Tissues() {
+    private static ImmutableSortedSet<Factor> getEMtab30352Tissues() {
         ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
         builder.add(CEREBELLUM);
         builder.add(FRONTAL_LOBE);
@@ -194,7 +191,7 @@ public class BaselineExperimentProfileSearchServiceIT {
         return builder.build();
     }
 
-    private ImmutableSortedSet<Factor> getEProt1Tissues() {
+    private static ImmutableSortedSet<Factor> getEProt1Tissues() {
         ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
         builder.add(B_CELL);
         builder.add(CD4);

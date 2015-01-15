@@ -1,0 +1,39 @@
+{
+  "experimentType": {
+    "terms": {
+      "field": "experimentType",
+      "facet": {
+        "species": {
+          "terms": {
+            "field": "species",
+            "facet": {
+              "defaultQueryFactorType": {
+                "terms": {
+                  "field": "defaultQueryFactorType",
+                  "facet": {
+                    "experimentAccession": {
+                      "terms": {
+                        "field": "experimentAccession",
+                        "facet": {
+                          "assayGroupId": {
+                            "terms": {
+                              "field": "assayGroupId",
+                              "facet": {
+                                "sumExpressionLevel": "sum(expressionLevel)"
+                              }
+                            }
+                          },
+                          "uniqueIdentifiers": "unique(bioentity_identifier)"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
