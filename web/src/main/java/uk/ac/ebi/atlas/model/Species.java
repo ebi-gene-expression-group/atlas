@@ -10,7 +10,7 @@ public final class Species {
     }
 
     public static String convertToEnsemblSpecies(String species) {
-       return firstTwoWords(species).toLowerCase();
+       return species == null ? null : firstTwoWords(species).toLowerCase();
     }
 
     static String firstTwoWords(String sentence) {
