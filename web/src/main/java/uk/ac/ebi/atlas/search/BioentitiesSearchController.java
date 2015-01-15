@@ -46,7 +46,6 @@ import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
-import uk.ac.ebi.atlas.utils.StringUtil;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
@@ -82,14 +81,6 @@ public class BioentitiesSearchController {
         this.efoExpander = efoExpander;
     }
 
-    @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
-    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
-    public ModelAndView handleException(Exception e) {
-        ModelAndView mav = new ModelAndView("bioEntities");
-        mav.addObject("exceptionMessage", e.getMessage());
-        return mav;
-    }
-
     @RequestMapping(value = "/query")
     public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model, BindingResult result) {
 
@@ -110,10 +101,9 @@ public class BioentitiesSearchController {
             }
         }
 
+        model.addAttribute("entityIdentifier", geneQuery);
 
-        model.addAttribute("entityIdentifier", requestParameters.getGeneQuery());
-
-        model.addAttribute("searchTerm", requestParameters.getDescription());
+        model.addAttribute("searchDescription", requestParameters.getDescription());
 
         String condition = efoExpander.fetchExpandedTermWithEFOChildren(requestParameters.getCondition());
 
@@ -169,6 +159,14 @@ public class BioentitiesSearchController {
 
         return Optional.absent();
 
+    }
+
+    @ExceptionHandler(value = {MissingServletRequestParameterException.class, IllegalArgumentException.class})
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    public ModelAndView handleException(Exception e) {
+        ModelAndView mav = new ModelAndView("bioEntities");
+        mav.addObject("exceptionMessage", e.getMessage());
+        return mav;
     }
 
     @ExceptionHandler(value = {SolrException.class})

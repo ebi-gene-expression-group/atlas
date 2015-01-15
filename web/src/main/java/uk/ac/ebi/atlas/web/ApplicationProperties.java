@@ -105,7 +105,7 @@ public class ApplicationProperties {
         return Sets.newHashSet(configurationProperties.getProperty(propertyKey).trim().split(","));
     }
 
-    public String getBaselineWidgetExperimentAccessionBySpecies(String species) {
+    public String getBaselineReferenceExperimentAccession(String species) {
         return speciesToExperimentProperties.getProperty(species.toLowerCase().replace(" ", "_"));
     }
 

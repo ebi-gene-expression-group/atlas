@@ -155,7 +155,7 @@ public abstract class BioEntityPageController {
 
         initBioentityPropertyService(identifier);
 
-        model.addAttribute("searchTerm", identifier);
+        model.addAttribute("searchDescription", identifier);
 
         model.addAttribute("entityIdentifier", identifier);
 
@@ -174,7 +174,7 @@ public abstract class BioEntityPageController {
 
     void addWidgetHasBaselineProfiles(String identifier, Model model) {
         String species = fetchSpecies(identifier);
-        String referenceExperimentAccession = applicationProperties.getBaselineWidgetExperimentAccessionBySpecies(species);
+        String referenceExperimentAccession = applicationProperties.getBaselineReferenceExperimentAccession(species);
 
         try {
             //to check if the widget contains the identifier or not and inform properly in the results gene pages

@@ -26,11 +26,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
-
-<input type="text"
-       value="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : not empty originalSearchTerm ? originalSearchTerm : entityIdentifier}"
-       style="display: none" id="searchterm">
-
 <c:choose>
 <c:when test="${not empty exceptionMessage}">
     <div id="error-content" class="block">
@@ -45,15 +40,10 @@
 <c:otherwise>
 <section class="grid_17 alpha extra-padding">
     <h2 class="strapline">
-        Expression Atlas results for <span
-            class="searchterm">${not empty originalSearchTerm ? originalSearchTerm : searchTerm}</span>
+        Expression Atlas results for <span class="searchterm">${searchDescription}</span>
     </h2>
 </section>
-<aside id="search-extras" class="grid_6 omega shortcuts expander">
-    <div id="ebi_search_results"><h3 data-icon="u" class="slideToggle icon icon-functional">Show more data from
-        EMBL-EBI</h3>
-    </div>
-</aside>
+<h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : not empty originalSearchTerm ? originalSearchTerm : entityIdentifier}"/>
 
 <section class="grid_23 extra-padding">
     <div id="accordion">
@@ -224,14 +214,15 @@
 
 <div id="help-placeholder" style="display: none"></div>
 
-<script src="${pageContext.request.contextPath}/resources/js/ebi-global-search-run.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/ebi-global-search.js"></script>
-
 <c:if test="${showWidget}">
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
 
     <%@ include file="includes/react.jsp" %>
+    <%@ include file="includes/heatmap-js.jsp" %>
+    <%@ include file="includes/anatomogram.jsp" %>
+
+    <script src="${pageContext.request.contextPath}/resources/jsx/heatmapContainer.js"></script>
 </c:if>
 
 <c:set var="hasBaselineResults" value="${showWidget || not empty baselineCounts}"/>
@@ -247,14 +238,6 @@
 
 <%-- hide expand/collapse icons when accordion sections don't have enough results --%>
 <c:set var="hideIcons" value="${(showBioentityPropertiesPane && !hasBaselineResults && empty bioentities) || (!showBioentityPropertiesPane && !(hasBaselineResult && not empty bioentities))}"/>
-
-<c:if test="${widgetHasBaselineProfiles}">
-    <%@ include file="includes/react.jsp" %>
-    <%@ include file="includes/heatmap-js.jsp" %>
-    <%@ include file="includes/anatomogram.jsp" %>
-
-    <script src="${pageContext.request.contextPath}/resources/jsx/heatmapContainer.js"></script>
-</c:if>
 
 <script>
 
@@ -289,7 +272,7 @@
 
         helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
-        <c:if test="${widgetHasBaselineProfiles}">
+        <c:if test="${showWidget}">
 
         var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
 
