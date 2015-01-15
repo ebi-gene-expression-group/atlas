@@ -26,7 +26,6 @@ package uk.ac.ebi.atlas.solr.query;
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -57,8 +56,6 @@ public class SuggestionService {
         LOGGER.info(String.format("fetchTopSuggestions for query %s, species %s", query, species));
 
         LinkedHashSet<String> suggestions = Sets.newLinkedHashSet();
-
-        species = StringUtils.lowerCase(species);
 
         if (!CharMatcher.WHITESPACE.or(CharMatcher.is('-')).matchesAnyOf(query)) {
             suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInName(query, species));

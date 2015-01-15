@@ -150,7 +150,7 @@ public class SolrQueryService {
 
         checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
 
-        species = Species.shortenSpeciesToFirstTwoWords(species);
+        species = Species.convertToEnsemblSpecies(species);
 
         GeneQueryResponse geneQueryResponse = new GeneQueryResponse();
 
@@ -186,10 +186,8 @@ public class SolrQueryService {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        String solrSpecies = StringUtils.isNotBlank(specie) ? specie.toLowerCase() : "";
-
         //resolve any gene keywords to identifiers
-        Set<String> geneIds = findGeneIdsOrSets(geneQuery, isExactMatch, solrSpecies);
+        Set<String> geneIds = findGeneIdsOrSets(geneQuery, isExactMatch, specie);
 
         Set<String> matureRNAIds = findMatureRNAIds(geneQuery);
         geneIds.addAll(matureRNAIds);
@@ -206,7 +204,7 @@ public class SolrQueryService {
 
         checkArgument(StringUtils.isNotBlank(geneQuery), "Please specify a gene query");
 
-        species = Species.shortenSpeciesToFirstTwoWords(species);
+        species = Species.convertToEnsemblSpecies(species);
 
         return fetchGeneIds(geneQuery, exactMatch, species);
     }

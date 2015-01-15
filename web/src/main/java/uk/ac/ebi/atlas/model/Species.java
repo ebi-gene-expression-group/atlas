@@ -9,18 +9,18 @@ public final class Species {
     private Species() {
     }
 
-    public static String shortenSpeciesToFirstTwoWords(String species) {
+    public static String convertToEnsemblSpecies(String species) {
+       return firstTwoWords(species).toLowerCase();
+    }
 
-        String[] words = StringUtils.split(species);
+    static String firstTwoWords(String sentence) {
+        String[] words = StringUtils.split(sentence);
 
-        if (ArrayUtils.getLength(words) > 2) {
-            return words[0].concat(" ").concat(words[1]);
-        }
-        return species;
+        return (ArrayUtils.getLength(words) > 2) ? words[0].concat(" ").concat(words[1]) : sentence;
     }
 
     public static boolean sameSpecies(String species1, String species2) {
-        return shortenSpeciesToFirstTwoWords(species1).equalsIgnoreCase(shortenSpeciesToFirstTwoWords(species2));
+        return convertToEnsemblSpecies(species1).equals(convertToEnsemblSpecies(species2));
     }
 
     public static String convertSpacesToUnderscore(String species) {

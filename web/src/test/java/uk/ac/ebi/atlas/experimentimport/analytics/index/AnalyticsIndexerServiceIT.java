@@ -86,7 +86,7 @@ public class AnalyticsIndexerServiceIT {
 
         AnalyticsDocument document = documents.get(0);
         assertThat(document.bioentityIdentifier, is("OS12G0515800"));
-        assertThat(document.species, is("Oryza sativa"));
+        assertThat(document.species, is("oryza sativa"));
         assertThat(document.experimentAccession, is("E-MTAB-2039"));
         assertThat(document.experimentType, is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(document.defaultQueryFactorType, is("ORGANISM_PART"));

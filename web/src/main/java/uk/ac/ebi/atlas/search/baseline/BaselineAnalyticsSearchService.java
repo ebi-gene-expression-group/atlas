@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.common.collect.ImmutableList;
+import uk.ac.ebi.atlas.model.Species;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,7 +22,7 @@ public class BaselineAnalyticsSearchService {
 
     public BaselineTissueExperimentSearchResult findExpressionsForTissueExperiments(String geneQuery, String species) {
         String jsonResponse = baselineAnalyticsSearchDao.queryByIdentifierSearch(geneQuery);
-        ImmutableList<RnaSeqBslnExpression> expressions = baselineAnalyticsFacetsReader.extractAverageExpressionLevel(jsonResponse, species, "ORGANISM_PART");
+        ImmutableList<RnaSeqBslnExpression> expressions = baselineAnalyticsFacetsReader.extractAverageExpressionLevel(jsonResponse, Species.convertToEnsemblSpecies(species), "ORGANISM_PART");
         return baselineTissueExperimentSearchResultProducer.buildProfilesForTissueExperiments(expressions);
     }
 

@@ -25,7 +25,7 @@ public class SpeciesEnsemblTrader {
     }
 
     public String getEnsemblDb(String species) {
-        return speciesEnsemblMap.get(Species.shortenSpeciesToFirstTwoWords(species));
+        return speciesEnsemblMap.get(Species.convertToEnsemblSpecies(species));
     }
 
     public String getEnsemblDb(Set<String> species) {

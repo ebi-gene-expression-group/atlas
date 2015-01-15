@@ -84,7 +84,7 @@ public class AnalyticsIndexerService {
         Set<String> species = experiment.getOrganisms();
 
         checkState(species.size() == 1, "Multiple species experiments not yet supported");
-        String ensemblSpecies = Species.shortenSpeciesToFirstTwoWords(species.iterator().next());
+        String ensemblSpecies = Species.convertToEnsemblSpecies(species.iterator().next());
 
         ImmutableSetMultimap<String, String> ontologyTermIdsByAssayAccession = expandOntologyTerms(experimentDesign.getAllOntologyTermIdsByAssayAccession());
 
