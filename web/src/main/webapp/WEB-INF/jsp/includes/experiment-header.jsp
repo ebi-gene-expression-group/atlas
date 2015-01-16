@@ -125,7 +125,7 @@
                                 <td>
                                     <a id="download-expressions" class="button-image"
                                        title="Download all expressions for the experiment"
-                                       href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=0">
+                                       href="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}.tsv?accessKey=${param.accessKey}&geneQuery=&cutoff=-0.1">
                                         <img src="${pageContext.request.contextPath}/resources/images/download_blue_small_normalized.png"/></a>
                                 </td>
                             </c:when>
