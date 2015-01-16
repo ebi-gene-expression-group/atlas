@@ -31,6 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import uk.ac.ebi.atlas.search.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineTissueExperimentSearchResult;
 import uk.ac.ebi.atlas.search.baseline.BaselineTissueExperimentSearchResultFormatter;
@@ -51,26 +52,41 @@ public final class HeatmapWidgetDownloadController {
 
     private final BaselineExperimentProfileSearchService baselineExperimentProfileSearchService;
     private final String tsvFileMastheadTemplate;
+    private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
     @Inject
     private HeatmapWidgetDownloadController(BaselineExperimentProfileSearchService baselineExperimentProfileSearchService,
-                                            @Value("classpath:/file-templates/download-headers-baseline-widget.txt") Resource tsvFileMastheadResource) throws IOException {
+                                            @Value("classpath:/file-templates/download-headers-baseline-widget.txt") Resource tsvFileMastheadResource,
+                                            BaselineAnalyticsSearchService baselineAnalyticsSearchService) throws IOException {
         this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
+        this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.tsvFileMastheadTemplate = IOUtils.toString(tsvFileMastheadResource.getInputStream());
     }
 
     @RequestMapping(value = {"/widgets/heatmap/bioentity.tsv", "/widgets/heatmap/multiExperiment.tsv"}, method = RequestMethod.GET)
-    public void heatmapWidgetData (@RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
-                                     @RequestParam(value = "species", required = true) String species,
-                                     HttpServletResponse response) throws IOException {
-
-
+         public void heatmapWidgetData (@RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
+                                        @RequestParam(value = "species", required = true) String species,
+                                        HttpServletResponse response) throws IOException {
         BaselineTissueExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(bioEntityAccession, species, true);
 
         if (!searchResult.isEmpty()) {
             setHttpHeaders(response, bioEntityAccession + "_baseline.tsv");
             PrintWriter writer = response.getWriter();
             writer.write(formatFileHeader(bioEntityAccession));
+            writeTsv(searchResult, writer);
+        }
+    }
+
+    @RequestMapping(value = {"/widgets/heatmap/baselineAnalytics.tsv"}, method = RequestMethod.GET)
+    public void baselineAnalytics (@RequestParam(value = "geneQuery", required = true) String geneQuery,
+                                   @RequestParam(value = "species", required = true) String species,
+                                   HttpServletResponse response) throws IOException {
+        BaselineTissueExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressionsForTissueExperiments(geneQuery, species);
+
+        if (!searchResult.isEmpty()) {
+            setHttpHeaders(response, geneQuery + "_baseline.tsv");
+            PrintWriter writer = response.getWriter();
+            writer.write(formatFileHeader(geneQuery));
             writeTsv(searchResult, writer);
         }
     }

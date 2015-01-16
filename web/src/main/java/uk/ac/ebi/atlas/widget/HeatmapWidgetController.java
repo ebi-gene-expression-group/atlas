@@ -35,6 +35,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
@@ -43,6 +44,7 @@ import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineExperimentProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
+import uk.ac.ebi.atlas.search.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineTissueExperimentSearchResult;
@@ -87,19 +89,29 @@ public final class HeatmapWidgetController {
 
     FilterFactorsConverter filterFactorsConverter = new FilterFactorsConverter();
 
+    private final BaselineAnalyticsSearchService baselineAnalyticsSearchService;
+
+    //TODO: refactor, too many colloborators
     @Inject
     private HeatmapWidgetController(ExperimentTrader experimentTrader,
-                                    ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService, BaselineExperimentProfileSearchService baselineExperimentProfileSearchService, BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder, AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder) {
+                                    ApplicationProperties applicationProperties, SpeciesLookupService speciesLookupService,
+                                    BaselineExperimentProfileSearchService baselineExperimentProfileSearchService,
+                                    BaselineExperimentProfilesViewModelBuilder baselineExperimentProfilesViewModelBuilder,
+                                    AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
+                                    BaselineAnalyticsSearchService baselineAnalyticsSearchService) {
         this.experimentTrader = experimentTrader;
         this.applicationProperties = applicationProperties;
         this.speciesLookupService = speciesLookupService;
         this.baselineExperimentProfileSearchService = baselineExperimentProfileSearchService;
         this.baselineExperimentProfilesViewModelBuilder = baselineExperimentProfilesViewModelBuilder;
         this.assayGroupFactorViewModelBuilder = assayGroupFactorViewModelBuilder;
+        this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
     }
 
     // similar to ExperimentDispatcher but for the widget, ie: loads baseline experiment into model and request
-    //ToDo: (OMannion) deprecate protein in favour of bioentity
+    // /widgets/heatmap/protein is deprecated
+    //ToDo: (OMannion) remove /widgets/heatmap/protein (still being used by BioJS demo page)
+    // in favour of /widgets/heatmap/referenceExperiment
     @RequestMapping(value = {"/widgets/heatmap/protein", "/widgets/heatmap/referenceExperiment"})
     public String dispatchWidget(HttpServletRequest request,
                                  @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
@@ -140,51 +152,78 @@ public final class HeatmapWidgetController {
         return "forward:" + getRequestURL(request) + buildQueryString(species, experiment, disableGeneLinks);
     }
 
+    // used for testing only
     @RequestMapping(value = "/widgets/heatmap/bioentity")
     public String heatmapWidgetPage(
-                                 @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
+                                 @RequestParam(value = "geneQuery", required = true) String geneQuery,
                                  @RequestParam(value = "species", required = false) String species,
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
                                  Model model) {
 
-        populateModelWithMultiExperimentResults(bioEntityAccession, species, propertyType, model);
+        fetchMultiExperimentResultsAndPopulateModel(geneQuery, species, propertyType, model);
 
+        //TODO: replace this with a version that uses the Biojs widget
         return "heatmap-widget-react";
     }
 
     @RequestMapping(value = "/widgets/heatmap/multiExperiment")
     public String multiExperimentJson(
-            @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
+            @RequestParam(value = "geneQuery", required = true) String geneQuery,
             @RequestParam(value = "species", required = false) String species,
             @RequestParam(value = "propertyType", required = false) String propertyType,
             Model model, HttpServletResponse response) {
 
-        populateModelWithMultiExperimentResults(bioEntityAccession, species, propertyType, model);
+
+        fetchMultiExperimentResultsAndPopulateModel(geneQuery, species, propertyType, model);
 
         // set here instead of in JSP, because the JSP may be included elsewhere
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         return "heatmap-data";
     }
 
-    private void populateModelWithMultiExperimentResults(String bioEntityAccession, String species, String propertyType, Model model) {
-        String solrSpecies = StringUtils.isBlank(species) ?
-                speciesLookupService.fetchFirstSpeciesByField(propertyType, bioEntityAccession) : species.toLowerCase();
+    @RequestMapping(value = "/widgets/heatmap/baselineAnalytics")
+    public String analyticsJson(
+            @RequestParam(value = "geneQuery", required = true) String geneQuery,
+            @RequestParam(value = "species", required = false) String species,
+            @RequestParam(value = "propertyType", required = false) String propertyType,
 
-        BaselineTissueExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(bioEntityAccession, solrSpecies, true);
+            Model model, HttpServletResponse response) {
 
+        String ensemblSpecies = StringUtils.isBlank(species) ?
+                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery) : Species.convertToEnsemblSpecies(species);
+
+        BaselineTissueExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressionsForTissueExperiments(geneQuery, ensemblSpecies);
+
+        populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
+
+        // set here instead of in JSP, because the JSP may be included elsewhere
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        return "heatmap-data";
+    }
+
+    private void fetchMultiExperimentResultsAndPopulateModel(String geneQuery, String species, String propertyType, Model model) {
+        String ensemblSpecies = StringUtils.isBlank(species) ?
+                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery) : Species.convertToEnsemblSpecies(species);
+
+        BaselineTissueExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(geneQuery, ensemblSpecies, true);
+
+        populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
+    }
+
+    private void populateModelWithMultiExperimentResults(String geneQuery, String ensemblSpecies, BaselineTissueExperimentSearchResult searchResult, Model model) {
         SortedSet<Factor> orderedFactors = searchResult.getTissueFactorsAcrossAllExperiments();
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
 
         ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);
-        addAnatomogram(allSvgPathIds, model, solrSpecies);
+        addAnatomogram(allSvgPathIds, model, ensemblSpecies);
 
         BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
         addJsonForHeatMap(experimentProfiles, filteredAssayGroupFactors, orderedFactors, model);
 
-        model.addAttribute("species", solrSpecies);
+        model.addAttribute("species", ensemblSpecies);
         model.addAttribute("isWidget", true);
         model.addAttribute("isMultiExperiment", true);
-        model.addAttribute("geneQuery", bioEntityAccession);
+        model.addAttribute("geneQuery", geneQuery);
     }
 
     //TODO: remove duplication with BaselineExperimentPageController
@@ -245,8 +284,7 @@ public final class HeatmapWidgetController {
         model.addAttribute("jsonProfiles", jsonProfiles);
     }
 
-
-
+    //TODO: is this needed anymore, now that we don't have transcripts
     private void prepareModelForTranscripts(Model model, String species, Experiment experiment) {
         ExperimentalFactors experimentalFactors = ((BaselineExperiment) experiment).getExperimentalFactors();
 
