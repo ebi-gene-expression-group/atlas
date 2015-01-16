@@ -27,15 +27,13 @@
     <script src="/gxa/resources/js/helpTooltipsModule.js"></script>
     <script src="/gxa/resources/js/genePropertiesTooltipModule.js"></script>
     <script src="/gxa/resources/js/highlight.js"></script>
-    <script src="/gxa/resources/js/heatmapModule.js"></script>
-    <script src="/gxa/resources/js/transcriptPopupModule.js"></script>
     <script src="/gxa/resources/js/EventEmitter-4.2.7.js"></script>
 
     <script src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
 
-
 </head>
 <body>
+
 
 <!-- for ? tool tips  -->
 <div id="help-placeholder" style="display: none"></div>
@@ -108,8 +106,8 @@
         ];
 
         var geneSetProfiles = {
-            minExpressionLevel: 99999,
-            maxExpressionLevel: 100002,
+            minExpressionLevel: 10,
+            maxExpressionLevel: 40,
             searchResultTotal: 1,
             rows: [
                 {
@@ -119,23 +117,23 @@
                         {
                             "factorName": "adipose",
                             "color": "#B3B3C0",
-                            "value": "99999",
+                            "value": "10",
                             "svgPathId": "ontologyTerm"
                         },
                         {
                             "factorName": "adrenal",
                             "color": "#9697C0",
-                            "value": "100000"
+                            "value": "20"
                         },
                         {
                             "factorName": "brain",
                             "color": "#A9AAC0",
-                            "value": "100001"
+                            "value": "30"
                         },
                         {
                             "factorName": "breast",
                             "color": "#8D8DC0",
-                            "value": "100002"
+                            "value": "40"
                         }
                     ]
                 }
@@ -143,8 +141,8 @@
         };
 
         var profiles = {
-            minExpressionLevel: 99999,
-            maxExpressionLevel: 100002,
+            minExpressionLevel: 3,
+            maxExpressionLevel: 47,
             searchResultTotal: 20,
             rows:[
                 {
@@ -154,23 +152,23 @@
                         {
                             "factorName": "adipose",
                             "color": "#B3B3C0",
-                            "value": "99999",
+                            "value": "3",
                             "svgPathId": "ontologyTerm"
                         },
                         {
                             "factorName": "adrenal",
                             "color": "#9697C0",
-                            "value": "100000"
+                            "value": "9"
                         },
                         {
                             "factorName": "brain",
                             "color": "#A9AAC0",
-                            "value": "100001"
+                            "value": "5"
                         },
                         {
                             "factorName": "breast",
                             "color": "#8D8DC0",
-                            "value": "100002"
+                            "value": "11"
                         }
                     ]
                 },
@@ -215,7 +213,7 @@
 </script>
 
 
-<script src="heatmap.jsx" type="text/jsx"></script>
+<script src="../heatmap.jsx" type="text/jsx"></script>
 <script type="text/jsx"> // text/jsx only so it runs after previous script
     /** @jsx React.DOM */
 
