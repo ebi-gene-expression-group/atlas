@@ -35,10 +35,14 @@ public class BaselineAnalyticsSearchDao {
     }
 
     String fetchFacets(String q, double cutOff) {
-        return fetchResponseAsString(solrBaseUrl + constructQueryParameters(q, cutOff) + analyticsSearchJsonFacet);
+        return fetchResponseAsString(buildQueryUrl(q, cutOff));
     }
 
-    String constructQueryParameters(String q, double cutOff) {
+    String buildQueryUrl(String q, double cutOff) {
+        return solrBaseUrl + buildQueryParameters(q, cutOff) + analyticsSearchJsonFacet;
+    }
+
+    String buildQueryParameters(String q, double cutOff) {
         return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q)) + encodeQuery(MessageFormat.format(FQ_TEMPLATE, cutOff));
     }
 
