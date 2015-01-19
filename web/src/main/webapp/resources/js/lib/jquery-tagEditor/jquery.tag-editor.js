@@ -177,7 +177,11 @@
                                 $('.active', ed).find('input').trigger('autogrow');
                                 ed.click(); // when selection is made with the mouse click then create a new tag automatically
                             }, 20); };
-                        input.autocomplete(aco);
+                        if (aco.plugin) {
+                            input[aco.plugin](aco);
+                        } else {
+                            input.autocomplete(aco);
+                        }
                     }
                 }
                 return false;
@@ -203,6 +207,15 @@
                 update_globals();
             }
 
+            var isTreeExpansionHit = false;
+            ed.on('onTreeExpansionHit', function (e) {
+                isTreeExpansionHit = true;
+            });
+
+            ed.on('onTreeNoExpansionHit', function (e) {
+                isTreeExpansionHit = false;
+            });
+
             ed.on('blur', 'input', function(e){
                 var input = $(this), old_tag = input.data('old_tag'), tag = $.trim(input.val().replace(/ +/, ' ').replace(o.dregex, o.delimiter[0]));
                 if (!tag) {
@@ -222,7 +235,10 @@
                     // remove duplicates
                     $('.tag-editor-tag:not(.active)', ed).each(function(){ if ($(this).html() == tag) $(this).closest('li').remove(); });
                 }
-                input.parent().html(tag).removeClass('active');
+
+                if(!isTreeExpansionHit) {
+                    input.parent().html(tag).removeClass('active');
+                }
                 if (tag != old_tag) update_globals();
                 set_placeholder();
             });
@@ -256,7 +272,9 @@
                 else if ((e.which == 39 || !o.autocomplete && e.which == 40) && ($t.caret() == $t.val().length)) {
                     var next_tag = $t.closest('li').next('li').find('.tag-editor-tag');
                     if (next_tag.length) next_tag.click().find('input').caret(0);
-                    else if ($t.val()) ed.click();
+                    else if ($t.val() && !isTreeExpansionHit) {
+                        ed.click();
+                    }
                     return false;
                 }
                 // tab key

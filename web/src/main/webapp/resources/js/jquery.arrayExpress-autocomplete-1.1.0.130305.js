@@ -14,7 +14,8 @@
 (function($) {
 
 $.fn.extend({
-	arrayExpressAutocomplete: function(urlOrData, options) {
+	arrayExpressAutocomplete: function(options) {
+		var urlOrData = options.urlOrData;
 		var isUrl = typeof urlOrData == "string";
 		options = $.extend({}, $.Autocompleter.defaults, {
 			url: isUrl ? urlOrData : null,
@@ -73,7 +74,8 @@ $.Autocompleter = function(input, options) {
 	var hasFocus = 0;
 	var lastKeyPressCode;
 	var config = {
-		mouseDownOnSelect: false
+		mouseDownOnSelect: false,
+        isTreeControlHit: false
 	};
 	var select = $.Autocompleter.Select(options, input, selectCurrent, config);
 
@@ -118,6 +120,7 @@ $.Autocompleter = function(input, options) {
 				if ( select.visible() ) {
 					if (select.collapseTree()) {
                         event.preventDefault();
+                        config.isTreeControlHit = false;
                     }
 				}
 				break;
@@ -126,6 +129,8 @@ $.Autocompleter = function(input, options) {
 				if ( select.visible() ) {
 					if (select.expandTree()) {
                         event.preventDefault();
+                        config.isTreeControlHit = true;
+                        input.click();
                     }
 				}
 				break;
@@ -154,8 +159,17 @@ $.Autocompleter = function(input, options) {
 					// stop default to prevent a form submit, Opera needs special handling
 					event.preventDefault();
 					blockSubmit = true;
+
+                    select.expandTree() ? config.isTreeControlHit = true : config.isTreeControlHit = false;
+                    input.click();
+
+                    ed = $('#conditionSection .tag-editor');
+                    ed.click();
+
 					return false;
-				}
+				} else {
+                    hideResultsNow();
+                }
 				break;
 
 			case KEY.ESC:
@@ -173,15 +187,24 @@ $.Autocompleter = function(input, options) {
 		hasFocus++;
 	}).blur(function() {
 		hasFocus = 0;
-		if (!config.mouseDownOnSelect) {
+        if (!config.mouseDownOnSelect && !config.isTreeControlHit) {
 			hideResults();
 		}
 	}).click(function() {
-		// show select when clicking in a focused field
-		if ( hasFocus++ > 1 && !select.visible() ) {
-			onChange(0, true);
-		}
-	}).bind("search", function() {
+        // show select when clicking in a focused field
+        if (hasFocus++ > 1 && !select.visible()) {
+            onChange(0, true);
+        }
+
+        ed = $('#conditionSection .tag-editor');
+
+		if(!config.isTreeControlHit) {
+            ed.trigger('onTreeNoExpansionHit');
+        } else {
+            ed.trigger('onTreeExpansionHit');
+        }
+
+    }).bind("search", function() {
 		// TODO why not just specifying both arguments?
 		var fn = (arguments.length > 1) ? arguments[1] : null;
 		function findValueCallback(q, data) {
@@ -212,6 +235,8 @@ $.Autocompleter = function(input, options) {
 		$input.unbind();
 		$(input.form).unbind(".arrayExpressAutocomplete");
 	});
+
+
 
     function debugLog(text) {
     //  if ($.browser.safari) {
@@ -325,10 +350,9 @@ $.Autocompleter = function(input, options) {
     {
         var field = getTermField(term);
 
-        var isTextMultiWord = -1 != text.indexOf(" ");
         return getTermModifier(term)
                 + (field.length > 0 ? field + ":" : "")
-                + (isTextMultiWord ? "\"" : "") + text + (isTextMultiWord ? "\"" : "");
+                + text;
     }
 
     function currentTerm(value, position)
@@ -761,6 +785,15 @@ $.Autocompleter.Select = function (options, input, select, config) {
             return false;
 		}).mousedown(function() {
 			config.mouseDownOnSelect = true;
+
+            if(isTreeControlHit(event)){
+                config.isTreeControlHit = true;
+                input.click();
+            } else {
+                config.isTreeControlHit = false;
+                input.click();
+                select();
+            }
 		}).mouseup(function() {
 			config.mouseDownOnSelect = false;
 		});
@@ -955,7 +988,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 
     function onWinResize() {
         var adjust = $.browser.mozilla ? 2 : 4;
-        element.width($(input).width() + adjust);
+        //element.width($(input).width() + adjust);
     }
 
 	return {

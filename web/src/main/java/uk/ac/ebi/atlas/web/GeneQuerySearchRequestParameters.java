@@ -13,7 +13,7 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
     }
 
     public void setCondition(String condition) {
-        this.condition = condition;
+        this.condition = tagsToQueryString(condition);
     }
 
     public boolean hasCondition() {
@@ -52,7 +52,6 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
 
         else if (hasCondition()) {
             stringBuilder.append(getCondition());
-
             if (hasOrganism()) {
                 stringBuilder.append(" AND ");
                 stringBuilder.append(getOrganism());
