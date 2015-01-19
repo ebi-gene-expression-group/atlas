@@ -45,7 +45,7 @@ public class ExperimentPageBaselineHeaderSIT extends SinglePageSeleniumFixture {
         subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION);
         subject.get();
 
-        assertThat(subject.getDownloadAllExpressionsLink(), endsWith("/experiments/E-MTAB-1733.tsv?accessKey=&geneQuery=&cutoff=0"));
+        assertThat(subject.getDownloadAllExpressionsLink(), endsWith("/experiments/E-MTAB-1733.tsv?accessKey=&geneQuery=&cutoff=-0.1"));
     }
 
 }
