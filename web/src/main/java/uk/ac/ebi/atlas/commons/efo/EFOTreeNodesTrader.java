@@ -17,18 +17,23 @@ import java.util.Map;
 @Scope("singleton")
 public class EFOTreeNodesTrader {
 
+    private String efoOwlFilePath;
     private Map<String, EFONode> urlToEFONode;
 
     @Inject
-    public EFOTreeNodesTrader(@Value("#{configuration['efo.owl.file']}") String efoOwlFilePath, EFOLoader efoLoader) {
-        try {
-            urlToEFONode = efoLoader.load(new FileInputStream(efoOwlFilePath)).getMap();
-        } catch (FileNotFoundException e) {
-            throw new EFOTreeNodesTraderException(e);
-        }
+    public EFOTreeNodesTrader(@Value("#{configuration['efo.owl.file']}") String efoOwlFilePath) {
+        this.efoOwlFilePath = efoOwlFilePath;
     }
 
     public Map<String, EFONode> getTreeNodes() {
+        if (urlToEFONode == null) {
+            try {
+                EFOLoader efoLoader = new EFOLoader();
+                urlToEFONode = efoLoader.load(new FileInputStream(efoOwlFilePath)).getMap();
+            } catch (FileNotFoundException e) {
+                throw new EFOTreeNodesTraderException(e);
+            }
+        }
         return urlToEFONode;
     }
 

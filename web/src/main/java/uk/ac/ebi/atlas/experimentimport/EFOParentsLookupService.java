@@ -14,22 +14,20 @@ import java.util.*;
 @Scope("singleton")
 public class EFOParentsLookupService {
 
+    private EFOTreeNodesTrader efoTreeNodesTrader;
     private ImmutableMap<String, EFONode> idToEFONode;
 
     @Inject
     public EFOParentsLookupService(EFOTreeNodesTrader efoTreeNodesTrader) {
-        Map<String, EFONode> urlToEFONode = efoTreeNodesTrader.getTreeNodes();
-
-        ImmutableMap.Builder<String, EFONode> builder = new ImmutableMap.Builder<>();
-        for (EFONode efoNode : urlToEFONode.values()) {
-            String id = OntologyTerm.splitAtFinalSlash(efoNode.getId())[1];
-            builder.put(id, efoNode);
-        }
-        idToEFONode = builder.build();
+        this.efoTreeNodesTrader = efoTreeNodesTrader;
     }
 
     public Set<String> getAllParents(String id)
     {
+        if (idToEFONode == null) {
+            buildIdToEFONodeMap();
+        }
+
         HashSet<String> parentIds = new HashSet<>();
 
         if (idToEFONode.containsKey(id)) {
@@ -46,11 +44,27 @@ public class EFOParentsLookupService {
 
     public Set<String> getAllParents(Set<String> ids)
     {
+        if (idToEFONode == null) {
+            buildIdToEFONodeMap();
+        }
+
         HashSet<String> parentIds = new HashSet<>();
         for (String id : ids) {
             parentIds.addAll(getAllParents(id));
         }
 
         return parentIds;
+    }
+
+
+    private void buildIdToEFONodeMap() {
+        Map<String, EFONode> urlToEFONode = efoTreeNodesTrader.getTreeNodes();
+
+        ImmutableMap.Builder<String, EFONode> builder = new ImmutableMap.Builder<>();
+        for (EFONode efoNode : urlToEFONode.values()) {
+            String id = OntologyTerm.splitAtFinalSlash(efoNode.getId())[1];
+            builder.put(id, efoNode);
+        }
+        idToEFONode = builder.build();
     }
 }
