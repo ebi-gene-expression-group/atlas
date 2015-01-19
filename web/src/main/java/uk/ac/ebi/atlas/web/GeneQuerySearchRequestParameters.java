@@ -52,7 +52,6 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
 
         else if (hasCondition()) {
             stringBuilder.append(getCondition());
-
             if (hasOrganism()) {
                 stringBuilder.append(" AND ");
                 stringBuilder.append(getOrganism());
