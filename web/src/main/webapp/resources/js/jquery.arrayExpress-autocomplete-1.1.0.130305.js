@@ -120,6 +120,7 @@ $.Autocompleter = function(input, options) {
 				if ( select.visible() ) {
 					if (select.collapseTree()) {
                         event.preventDefault();
+                        config.isTreeControlHit = false;
                     }
 				}
 				break;
@@ -128,6 +129,8 @@ $.Autocompleter = function(input, options) {
 				if ( select.visible() ) {
 					if (select.expandTree()) {
                         event.preventDefault();
+                        config.isTreeControlHit = true;
+                        input.click();
                     }
 				}
 				break;
@@ -156,6 +159,10 @@ $.Autocompleter = function(input, options) {
 					// stop default to prevent a form submit, Opera needs special handling
 					event.preventDefault();
 					blockSubmit = true;
+
+                    select.expandTree() ? config.isTreeControlHit = true : config.isTreeControlHit = false;
+                    input.click();
+
                     ed = $('#conditionSection .tag-editor');
                     ed.click();
 
@@ -180,7 +187,7 @@ $.Autocompleter = function(input, options) {
 		hasFocus++;
 	}).blur(function() {
 		hasFocus = 0;
-		if (!config.mouseDownOnSelect) {
+        if (!config.mouseDownOnSelect && !config.isTreeControlHit) {
 			hideResults();
 		}
 	}).click(function() {

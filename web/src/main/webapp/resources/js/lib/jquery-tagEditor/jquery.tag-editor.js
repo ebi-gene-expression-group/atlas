@@ -272,7 +272,9 @@
                 else if ((e.which == 39 || !o.autocomplete && e.which == 40) && ($t.caret() == $t.val().length)) {
                     var next_tag = $t.closest('li').next('li').find('.tag-editor-tag');
                     if (next_tag.length) next_tag.click().find('input').caret(0);
-                    else if ($t.val()) ed.click();
+                    else if ($t.val() && !isTreeExpansionHit) {
+                        ed.click();
+                    }
                     return false;
                 }
                 // tab key
