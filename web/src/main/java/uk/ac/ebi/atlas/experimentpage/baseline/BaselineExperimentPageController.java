@@ -102,7 +102,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         return baselineProfilesHeatMap.fetch(options);
     }
 
-    void prepareModel(BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request) {
+    BaselineProfilesList prepareModel(BaselineRequestPreferences preferences, BindingResult result, Model model, HttpServletRequest request) {
 
         initializeContext(preferences, request);
 
@@ -160,11 +160,15 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
                     model.addAttribute("hasAnatomogram", false);
                 }
 
+                return baselineProfiles;
+
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + preferences.getGeneQuery() + "'"));
             }
 
         }
+
+        return null;
     }
 
     private ImmutableSet<String> extractOntologyTerm(SortedSet<AssayGroupFactor> filteredAssayGroupFactors) {

@@ -106,7 +106,12 @@ Biojs.AtlasHeatmap = Biojs.extend({
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
             Biojs.console.log("ERROR: " + jqXHR.status);
-            containerDiv.html("An error occurred while retrieving the data: " + jqXHR.status + " - " + jqXHR.statusText);
+            //containerDiv.html("An error occurred while retrieving the data: " + jqXHR.status + " - " + jqXHR.statusText);
+            if (textStatus === "parsererror") {
+                containerDiv.html("<div class='error'>Could not parse JSON response</div>");
+            } else {
+                containerDiv.html(jqXHR.responseText);
+            }
         });
 
     },

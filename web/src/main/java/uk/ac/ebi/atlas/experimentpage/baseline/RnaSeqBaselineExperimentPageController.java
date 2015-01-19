@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
@@ -96,7 +97,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
             , @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request,
                                                        HttpServletResponse response) {
 
-        prepareModel(preferences, result, model, request);
+        BaselineProfilesList baselineProfiles = prepareModel(preferences, result, model, request);
 
         BaselineExperiment experiment = (BaselineExperiment) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
@@ -104,6 +105,18 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
         model.addAttribute("disableGeneLinks", disableGeneLinks);
         model.addAttribute("downloadURL", applicationProperties.buildDownloadURLForWidget(request, experiment.getAccession()));
         model.addAttribute("enableEnsemblLauncher", false);
+
+        if (result.hasErrors()) {
+            model.addAttribute("errorMessage", result.getGlobalError().getDefaultMessage());
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return "widget-error";
+        }
+
+        if (baselineProfiles.isEmpty()) {
+            model.addAttribute("errorMessage", "No baseline expression found for " + preferences.getGeneQuery());
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return "widget-error";
+        }
 
         // set here instead of in JSP, because the JSP may be included elsewhere
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

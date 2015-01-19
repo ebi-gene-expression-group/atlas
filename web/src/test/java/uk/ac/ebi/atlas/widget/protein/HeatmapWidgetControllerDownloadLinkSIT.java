@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.widget;
+package uk.ac.ebi.atlas.widget.protein;
 
 import org.junit.Before;
 import org.junit.Test;

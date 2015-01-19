@@ -138,8 +138,8 @@
         <put-attribute name="body" value="/WEB-INF/jsp/heatmap-widget-react.jsp"/>
     </definition>
 
-    <definition name="widget-error" extends="widget.base.definition">
-        <put-attribute name="body" value="/WEB-INF/jsp/widget-error.jsp"/>
+    <definition name="widget-error" template="/WEB-INF/jsp/widget-error.jsp">
+
     </definition>
 
     <definition name="das-features" template="/WEB-INF/jsp/das-features.jsp">

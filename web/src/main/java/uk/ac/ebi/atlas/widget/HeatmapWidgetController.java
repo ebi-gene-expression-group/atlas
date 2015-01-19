@@ -110,7 +110,7 @@ public final class HeatmapWidgetController {
 
     // similar to ExperimentDispatcher but for the widget, ie: loads baseline experiment into model and request
     // /widgets/heatmap/protein is deprecated
-    //ToDo: (OMannion) remove /widgets/heatmap/protein (still being used by BioJS demo page)
+    //ToDo: (OMannion) remove /widgets/heatmap/protein (still being used by http://www.ebi.ac.uk/Tools/biojs/registry/Biojs.ExpressionAtlasBaselineSummary.html)
     // in favour of /widgets/heatmap/referenceExperiment
     @RequestMapping(value = {"/widgets/heatmap/protein", "/widgets/heatmap/referenceExperiment"})
     public String dispatchWidget(HttpServletRequest request,
@@ -119,13 +119,14 @@ public final class HeatmapWidgetController {
                                  @RequestParam(value = "species", required = false) String species,
                                  @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks,
                                  @ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
-                                 Model model) {
+                                 Model model, HttpServletResponse response) {
 
         try {
             if (StringUtils.isBlank(species)) {
                 species = speciesLookupService.fetchFirstSpeciesByField(propertyType, bioEntityAccession);
             }
-        } catch (Exception e) {
+        } catch (ResourceNotFoundException e) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             model.addAttribute("errorMessage", "No genes found matching query: " + bioEntityAccession);
             return "widget-error";
         }
@@ -133,6 +134,7 @@ public final class HeatmapWidgetController {
         String experimentAccession = applicationProperties.getBaselineReferenceExperimentAccession(species);
 
         if (StringUtils.isEmpty(experimentAccession)) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             model.addAttribute("errorMessage", "No baseline experiment for species " + species);
             model.addAttribute("identifier", bioEntityAccession);
             return "widget-error";
@@ -152,6 +154,7 @@ public final class HeatmapWidgetController {
         return "forward:" + getRequestURL(request) + buildQueryString(species, experiment, disableGeneLinks);
     }
 
+    // returns an HTML page with the multiexperiment widget
     // used for testing only
     @RequestMapping(value = "/widgets/heatmap/bioentity")
     public String heatmapWidgetPage(
@@ -173,8 +176,26 @@ public final class HeatmapWidgetController {
             @RequestParam(value = "propertyType", required = false) String propertyType,
             Model model, HttpServletResponse response) {
 
+        String ensemblSpecies;
+        try {
+            ensemblSpecies = StringUtils.isBlank(species) ?
+                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery) : Species.convertToEnsemblSpecies(species);
 
-        fetchMultiExperimentResultsAndPopulateModel(geneQuery, species, propertyType, model);
+        } catch (ResourceNotFoundException e) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            model.addAttribute("errorMessage", "No genes found matching query: " + geneQuery);
+            return "widget-error";
+        }
+
+        BaselineTissueExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(geneQuery, ensemblSpecies, true);
+
+        if (searchResult.isEmpty()) {
+            model.addAttribute("errorMessage", "No baseline expression found for " + geneQuery);
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return "widget-error";
+        }
+
+        populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
 
         // set here instead of in JSP, because the JSP may be included elsewhere
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

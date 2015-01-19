@@ -20,10 +20,8 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.widget;
+package uk.ac.ebi.atlas.widget.protein;
 
-import org.hamcrest.Matchers;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;

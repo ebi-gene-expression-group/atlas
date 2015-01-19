@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.widget;
+package uk.ac.ebi.atlas.widget.multiexperiment;
 
 import com.jayway.restassured.response.Response;
 import org.junit.Test;
@@ -12,7 +12,7 @@ public class HeatmapWidgetDownloadControllerSIT extends RestAssuredFixture {
 
     @Test
     public void contrastLinesExperiments(){
-        Response response = given().urlEncodingEnabled(false).get("/widgets/heatmap/bioentity.tsv?geneQuery=ENSG00000026103&propertyType=bioentity_identifier&species=homo%20sapiens");
+        Response response = given().urlEncodingEnabled(false).get("/widgets/heatmap/multiExperiment.tsv?geneQuery=ENSG00000026103&propertyType=bioentity_identifier&species=homo%20sapiens");
 
         response.then().assertThat().statusCode(200);
         response.then().assertThat().contentType("text/tab-separated-values");
@@ -25,7 +25,7 @@ public class HeatmapWidgetDownloadControllerSIT extends RestAssuredFixture {
 
     @Test
     public void nonExistingGene(){
-        Response response = given().urlEncodingEnabled(false).log().all().get("/widgets/heatmap/bioentity.tsv?geneQuery=foo&species=homo%20sapiens");
+        Response response = given().urlEncodingEnabled(false).get("/widgets/heatmap/multiExperiment.tsv?geneQuery=foo&species=homo%20sapiens");
 
         response.then().assertThat().statusCode(200);
         response.then().assertThat().header("Content-Length", is("0"));

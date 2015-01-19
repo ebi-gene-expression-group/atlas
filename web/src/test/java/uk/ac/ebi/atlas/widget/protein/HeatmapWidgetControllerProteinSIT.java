@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.widget;
+package uk.ac.ebi.atlas.widget.protein;
 
 import org.junit.Assert;
 import org.junit.Before;
