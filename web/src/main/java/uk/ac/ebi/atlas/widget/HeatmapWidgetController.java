@@ -154,21 +154,6 @@ public final class HeatmapWidgetController {
         return "forward:" + getRequestURL(request) + buildQueryString(species, experiment, disableGeneLinks);
     }
 
-    // returns an HTML page with the multiexperiment widget
-    // used for testing only
-    @RequestMapping(value = "/widgets/heatmap/bioentity")
-    public String heatmapWidgetPage(
-                                 @RequestParam(value = "geneQuery", required = true) String geneQuery,
-                                 @RequestParam(value = "species", required = false) String species,
-                                 @RequestParam(value = "propertyType", required = false) String propertyType,
-                                 Model model) {
-
-        fetchMultiExperimentResultsAndPopulateModel(geneQuery, species, propertyType, model);
-
-        //TODO: replace this with a version that uses the Biojs widget
-        return "heatmap-widget-react";
-    }
-
     @RequestMapping(value = "/widgets/heatmap/multiExperiment")
     public String multiExperimentJson(
             @RequestParam(value = "geneQuery", required = true) String geneQuery,

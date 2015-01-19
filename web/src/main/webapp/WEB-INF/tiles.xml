@@ -134,10 +134,6 @@
     <definition name="heatmap-data" template="/WEB-INF/jsp/includes/heatmap-data.jsp">
     </definition>
 
-    <definition name="heatmap-widget-react" extends="widget.base.definition">
-        <put-attribute name="body" value="/WEB-INF/jsp/heatmap-widget-react.jsp"/>
-    </definition>
-
     <definition name="widget-error" template="/WEB-INF/jsp/widget-error.jsp">
 
     </definition>
