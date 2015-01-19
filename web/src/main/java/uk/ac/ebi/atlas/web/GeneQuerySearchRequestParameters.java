@@ -13,7 +13,7 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
     }
 
     public void setCondition(String condition) {
-        this.condition = tagsToQueryString(condition);
+        this.condition = TagEditorConverter.tagsToQueryString(condition);
     }
 
     public boolean hasCondition() {

@@ -22,16 +22,10 @@
 
 package uk.ac.ebi.atlas.web;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import org.apache.commons.lang.StringUtils;
-import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
-
-import java.util.List;
 
 public class SearchRequest {
-
-    private static String TAG_DELIMETER = "\t";
 
     private String geneQuery = getDefaultGeneQuery();
 
@@ -46,16 +40,11 @@ public class SearchRequest {
     }
 
     public void setGeneQuery(String geneQuery) {
-        this.geneQuery = tagsToQueryString(geneQuery);
+        this.geneQuery = TagEditorConverter.tagsToQueryString(geneQuery);
     }
 
     public String getGeneQueryTagEditor() {
-        return queryStringToTags(this.geneQuery);
-    }
-
-    boolean areQuotesMatching(String searchText) {
-        int numberOfDoubleQuotes = StringUtils.countMatches(searchText, "\"");
-        return numberOfDoubleQuotes % 2 == 0;
+        return TagEditorConverter.queryStringToTags(this.geneQuery);
     }
 
     public String toString() {
@@ -77,54 +66,4 @@ public class SearchRequest {
         return StringUtils.isNotBlank(getGeneQuery());
     }
 
-    public String tagsToQueryString(String geneQuery) {
-        String trimmedQuery = geneQuery.trim();
-
-        String[] tags = trimmedQuery.split(TAG_DELIMETER);
-        String resQuery = "";
-
-        if (tags.length == 1) {
-            if (StringUtils.startsWith(trimmedQuery, "\"") || onlyOneWord(trimmedQuery)) {
-                return trimmedQuery;
-            } else {
-                return "\"" + trimmedQuery + "\"";
-            }
-        }
-
-        for (String tag : tags) { //for any tag find single word or multiple words
-            String[] words = tag.trim().split(" ");
-
-            if (words.length > 1) {  //multi-term
-                String res = "";
-
-                for (String word : words) {
-                    res = res + word + " ";
-                }
-                res = res.trim();
-
-                if (!StringUtils.startsWith(res, "\"")) {
-                    res = "\"" + res;
-                }
-
-                if (!StringUtils.endsWith(res, "\"")) {
-                    res = res + "\"";
-                }
-
-                resQuery = resQuery + res + " ";
-            } else {  //single term
-                resQuery = resQuery + tag.trim() + " ";
-            }
-        }
-
-        return resQuery.trim();
-    }
-
-    private boolean onlyOneWord(String geneQuery) {
-        return StringUtils.countMatches(geneQuery, " ") == 0;
-    }
-
-    public String queryStringToTags(String geneQuery) {
-        List<String> tags = BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(geneQuery);
-        return Joiner.on(TAG_DELIMETER).join(tags).replace("\"", "");
-    }
 }

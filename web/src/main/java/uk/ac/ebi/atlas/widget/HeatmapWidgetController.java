@@ -140,6 +140,8 @@ public final class HeatmapWidgetController {
             return "widget-error";
         }
 
+
+
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
 
         prepareModel(request, model, experiment);

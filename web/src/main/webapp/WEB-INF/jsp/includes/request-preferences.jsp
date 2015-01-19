@@ -26,6 +26,7 @@
   --%>
 
 <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
+<%--@elvariable id="preferences" type="uk.ac.ebi.atlas.web.SearchRequest"--%>
 <div id="preferencesFormBlock" class="block-max-width">
     <form:form method="get" commandName="preferences" id="prefForm">
         <input type="hidden" name="accessKey" value="${param.accessKey}"/>
