@@ -31,9 +31,11 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
     }
 
     public String trimCondition(String condition) {
-        String trimmedCondition = condition.trim();
-
-        return trimmedCondition.replace("\"", "");
+        if(StringUtils.isNotBlank(condition)) {
+            String trimmedCondition = condition.trim();
+            return trimmedCondition.replace("\"", "");
+        }
+        return condition;
     }
 
     public boolean hasOrganism() {
