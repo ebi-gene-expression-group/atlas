@@ -132,6 +132,9 @@ $.Autocompleter = function(input, options) {
                         config.isTreeControlHit = true;
                         input.click();
                     }
+					else {
+						hideResultsNow();
+					}
 				}
 				break;
 
