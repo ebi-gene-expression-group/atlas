@@ -31,7 +31,7 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
     }
 
     public String trimCondition(String condition) {
-        if(StringUtils.isNotBlank(condition)) {
+        if(StringUtils.isNotBlank(condition) && !condition.contains("and")) {
             String trimmedCondition = condition.trim();
             return trimmedCondition.replace("\"", "");
         }
