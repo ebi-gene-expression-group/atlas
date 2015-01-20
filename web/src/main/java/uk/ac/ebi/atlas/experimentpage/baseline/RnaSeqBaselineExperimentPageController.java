@@ -40,7 +40,9 @@ import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
+import uk.ac.ebi.atlas.web.TagEditorConverter;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
+import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -85,6 +87,11 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
     public String showGeneProfilesWidget(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request) {
 
+        //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
+        // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
+        // instead of the current tab separated syntax for geneQuery
+        preferences.setGeneQuery(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY)));
+
         prepareModel(preferences, result, model, request);
 
         model.addAttribute("isWidget", true);
@@ -96,6 +103,11 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
     public String fetchReferenceExperimentProfilesJson(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
             , @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request,
                                                        HttpServletResponse response) {
+
+        //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
+        // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
+        // instead of the current tab separated syntax for geneQuery
+        preferences.setGeneQuery(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY)));
 
         BaselineProfilesList baselineProfiles = prepareModel(preferences, result, model, request);
 

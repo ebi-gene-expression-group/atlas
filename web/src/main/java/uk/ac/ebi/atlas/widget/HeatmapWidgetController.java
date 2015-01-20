@@ -74,6 +74,7 @@ public final class HeatmapWidgetController {
     private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
     private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
     private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
+    public static final String ORIGINAL_GENEQUERY = "geneQuery";
 
     private ApplicationProperties applicationProperties;
 
@@ -140,13 +141,14 @@ public final class HeatmapWidgetController {
             return "widget-error";
         }
 
-
-
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
 
         prepareModel(request, model, experiment);
 
         prepareModelForTranscripts(model, species, experiment);
+
+        //TODO: hacky, fix this, see RnaSeqBaselineExperimentPageController
+        request.setAttribute(ORIGINAL_GENEQUERY, bioEntityAccession);
 
         // forward to /widgets/heatmap/protein?type=RNASEQ_MRNA_BASELINE in BaselineExperimentPageController
         // eg: forward:/widgets/heatmap/protein?type=RNASEQ_MRNA_BASELINE&serializedFilterFactors=ORGANISM:Monodelphis domestica&disableGeneLinks=true

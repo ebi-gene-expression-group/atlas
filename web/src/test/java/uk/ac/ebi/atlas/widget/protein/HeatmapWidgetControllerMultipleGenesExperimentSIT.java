@@ -22,10 +22,8 @@
 
 package uk.ac.ebi.atlas.widget.protein;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWidgetPage;
 
@@ -33,54 +31,32 @@ import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.StringContains.containsString;
 
-public class HeatmapWidgetControllerProteinSIT extends SeleniumFixture {
+public class HeatmapWidgetControllerMultipleGenesExperimentSIT extends SeleniumFixture {
 
-    private static final String PROTEIN_ACCESSION = "Q9Y615";
+    private HeatmapTableWidgetPage subject;
 
-    private HeatmapTableWidgetPage heatmapTablePage;
-
+    // tests the URL being used by http://www.ebi.ac.uk/Tools/biojs/registry/Biojs.ExpressionAtlasBaselineSummary.html
     @Before
     public void initPage(){
-        heatmapTablePage = new HeatmapTableWidgetPage(driver, "geneQuery=" + PROTEIN_ACCESSION);
-        heatmapTablePage.get();
+        subject = new HeatmapTableWidgetPage(driver, "geneQuery=ENSG00000187003+ENSG00000185264");
+        subject.get();
     }
 
     @Test
-    public void testAnatomogramIsThere() {
-        assertThat(heatmapTablePage.getAnatomogram().isDisplayed(), is(true));
-    }
+    public void header() {
+        assertThat(subject.getAnatomogram().isDisplayed(), is(true));
+        assertThat(subject.getGeneCount(), containsString("2 of 2"));
 
-    @Test(expected = NoSuchElementException.class)
-    public void testNoResultFoundForNotValidAccession() {
-        heatmapTablePage = new HeatmapTableWidgetPage(driver, "geneQuery=123321xyzzyx");
-        heatmapTablePage.get();
-        heatmapTablePage.getAnatomogram().isDisplayed();
-    }
-
-    @Test
-    public void verifyResultOnSinglePropertyQuery() {
-        Assert.assertThat(heatmapTablePage.getGeneCount(), containsString("of 1"));
-    }
-
-    @Test
-    public void testTitle() {
-        String experimentDescription = heatmapTablePage.getExperimentDescription();
+        String experimentDescription = subject.getExperimentDescription();
         assertThat(experimentDescription, startsWith("RNA-seq of coding RNA from tissue samples of 95 human individuals representing 27 different tissues in order to determine tissue-specificity of all protein-coding genes"));
+
+        //TODO: fix experiment URL
+        String experimentDescriptionLink = subject.getExperimentDescriptionLink();
+        assertThat(experimentDescriptionLink, endsWith("/gxa/experiments/E-MTAB-1733?geneQuery=ENSG00000187003%20ENSG00000185264&serializedFilterFactors="));
+
+        assertThat(subject.getGeneNames(), contains("ACTL7A", "TEX33"));
     }
-
-    @Test
-    public void testGeneName() {
-        String firstGeneName = heatmapTablePage.getGeneNames().get(0);
-        assertThat(firstGeneName, is("ACTL7A"));
-    }
-
-    @Test
-    public void testLinkToExperiment() {
-        String experimentDescriptionLink = heatmapTablePage.getExperimentDescriptionLink();
-        assertThat(experimentDescriptionLink, endsWith("/experiments/E-MTAB-1733?geneQuery=Q9Y615&serializedFilterFactors="));
-    }
-
-
 }
