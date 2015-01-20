@@ -9,7 +9,7 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
     private String organism;
 
     public String getCondition() {
-        return condition;
+        return trimCondition(condition);
     }
 
     public void setCondition(String condition) {
@@ -28,6 +28,12 @@ public class GeneQuerySearchRequestParameters extends SearchRequest {
         if (!"Any".equals(organism)) {
             this.organism = organism;
         }
+    }
+
+    public String trimCondition(String condition) {
+        String trimmedCondition = condition.trim();
+
+        return trimmedCondition.replace("\"", "");
     }
 
     public boolean hasOrganism() {
