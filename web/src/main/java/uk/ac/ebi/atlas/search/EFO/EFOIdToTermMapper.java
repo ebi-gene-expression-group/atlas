@@ -19,21 +19,19 @@ import org.springframework.context.annotation.Scope;
 @Scope("singleton")
 public class EFOIdToTermMapper {
 
+    private EFOTreeNodesTrader efoTreeNodesTrader;
     private ImmutableMap<String, String> termToId;
 
     @Inject
     public EFOIdToTermMapper(EFOTreeNodesTrader efoTreeNodesTrader) {
-        Map<String, EFONode> urlToEFONode = efoTreeNodesTrader.getTreeNodes();
-
-        ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<>();
-        for (EFONode efoNode : urlToEFONode.values()) {
-            String id = OntologyTerm.splitAtFinalSlash(efoNode.getId())[1];
-            builder.put(efoNode.getTerm(), id);
-        }
-        termToId = builder.build();
+        this.efoTreeNodesTrader = efoTreeNodesTrader;
     }
 
     public Set<String> getIdsFromTerm(String term) {
+        if (termToId == null) {
+            buildTermToIdMap();
+        }
+
         Set<String> efoIds = new HashSet<>();
         for (String efoTerm : termToId.keySet()) {
             if (StringUtils.containsIgnoreCase(efoTerm, term)) {
@@ -44,4 +42,15 @@ public class EFOIdToTermMapper {
         return efoIds;
     }
 
+
+    private void buildTermToIdMap() {
+        Map<String, EFONode> urlToEFONode = efoTreeNodesTrader.getTreeNodes();
+
+        ImmutableMap.Builder<String, String> builder = new ImmutableMap.Builder<>();
+        for (EFONode efoNode : urlToEFONode.values()) {
+            String id = OntologyTerm.splitAtFinalSlash(efoNode.getId())[1];
+            builder.put(efoNode.getTerm(), id);
+        }
+        termToId = builder.build();
+    }
 }

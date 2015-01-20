@@ -41,6 +41,4 @@ public class ConditionSearchEFOExpander {
         return term + (efoTerms.isEmpty() ? "" : " " + Joiner.on(" ").join(efoTerms));
     }
 
-
-
 }
