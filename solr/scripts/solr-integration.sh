@@ -4,12 +4,13 @@
 # location of unpacked solr tarball
 SOLR_DIST=/nfs/ma/home/atlas3/solr-integration/
 SOLR_INDEXES_DIR=/nfs/ma/home/tomcats/ATLAS3.TEST/data/solr
-SOLR_CONF=./solr
+SOLR_CONF=/nfs/ma/home/atlas3/solr-conf/
+SOLR_LOG=/nfs/ma/home/atlas3/log/
 SOLR_BIN=${SOLR_DIST}/example
 JAVA="/nfs/ma/home/java/jdk7/bin/java"
 
-JAVA_OPTIONS="-Dsolr.indexes.dir=$SOLR_INDEXES_DIR -Dsolr.solr.home=$SOLR_CONF -Djava.util.logging.config.file=$SOLR_DIST/logging.properties -server -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Xmx4096M -Xms1024M -jar start.jar"
-CONSOLE_LOG="$SOLR_DIST/console.log"
+JAVA_OPTIONS="-Dsolr.indexes.dir=$SOLR_INDEXES_DIR -Dsolr.solr.home=$SOLR_CONF -Dsolr.log=$SOLR_LOG -Dlog4j.configuration=file:$SOLR_CONF/log4j.properties -server -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Xmx4096M -Xms1024M -jar start.jar"
+CONSOLE_LOG=console.log
 
 set -e
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin

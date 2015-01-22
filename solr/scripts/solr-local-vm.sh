@@ -2,14 +2,15 @@
 # description: Starts and stops Solr production, adapted from http://john.parnefjord.se/node/63
 
 # location of unpacked solr tarball
-SOLR_DIST=~/solr-4.4.0/
-SOLR_INDEXES_DIR=/nfs/ma/home/tomcats/ATLAS3.TEST/data/solr
-SOLR_CONF=./solr
+SOLR_DIST=~/solr/solr-hs_0.09
+SOLR_INDEXES_DIR=~/solr/index
+SOLR_CONF=~/solr/conf
+SOLR_LOG=~/solr/logs
 SOLR_BIN=${SOLR_DIST}/example
-JAVA="/nfs/ma/home/java/jdk7/bin/java"
+JAVA=`which java`
 
-JAVA_OPTIONS="-Dsolr.indexes.dir=$SOLR_INDEXES_DIR -Dsolr.solr.home=$SOLR_CONF -Djava.util.logging.config.file=$SOLR_DIST/logging.properties -server -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Xmx4096M -Xms1024M -jar start.jar"
-CONSOLE_LOG="$SOLR_DIST/console.log"
+JAVA_OPTIONS="-Dsolr.indexes.dir=$SOLR_INDEXES_DIR -Dsolr.solr.home=$SOLR_CONF -Dsolr.log=$SOLR_LOG -Dlog4j.configuration=file:$SOLR_CONF/log4j.properties -server -DSTOP.PORT=8079 -DSTOP.KEY=stopkey -Xms1500M -Xmx1500M -jar start.jar"
+CONSOLE_LOG=console.log
 
 set -e
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
@@ -18,7 +19,7 @@ case $1 in
 	start)
 		echo "Starting Solr"
 		cd $SOLR_BIN
-		echo $JAVA_OPTIONS
+		echo $JAVA $JAVA_OPTIONS
 		nohup $JAVA $JAVA_OPTIONS 2> $CONSOLE_LOG &
 		echo "ok - remember it may take a minute or two before Solr responds on requests"
 		;;
