@@ -32,6 +32,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static uk.ac.ebi.atlas.search.SearchTestUtil.selectResult;
 
 public class BioentitiesSearchControllerConditionAndOrganismSIT extends SinglePageSeleniumFixture {
 
@@ -47,16 +48,17 @@ public class BioentitiesSearchControllerConditionAndOrganismSIT extends SinglePa
     public void checkBaselineExperimentCounts() {
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(2));
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-PROT-1"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Human Proteome Map - adult"));
-        assertThat(baselineCounts.get(0).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-PROT-1?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=B%20cell,CD4-positive%20T%20cell,CD8-positive%20T%20cell,adrenal%20gland,colon,esophagus,frontal%20cortex,gallbladder,kidney,liver,lung,monocyte,natural%20killer%20cell,ovary,pancreas,platelet,prostate,rectum,retina,spinal%20cord,testis,urinary%20bladder&geneQuery=&exactMatch=true&serializedFilterFactors=DEVELOPMENTAL_STAGE:adult"));
+        assertThat(baselineCounts, hasSize(3));
 
-        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-1733"));
-        assertThat(baselineCounts.get(1).getExperimentName(), is("Twenty seven tissues"));
-        assertThat(baselineCounts.get(1).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(1).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=&exactMatch=true"));
+        BaselineBioEntitiesSearchResult result1 = selectResult(baselineCounts, "E-PROT-1");
+        assertThat(result1.getExperimentName(), is("Human Proteome Map - adult"));
+        assertThat(result1.getSpecies(), is("Homo sapiens"));
+        assertThat(result1.getHref(), endsWith("E-PROT-1?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=B%20cell,CD4-positive%20T%20cell,CD8-positive%20T%20cell,adrenal%20gland,colon,esophagus,frontal%20cortex,gallbladder,kidney,liver,lung,monocyte,natural%20killer%20cell,ovary,pancreas,platelet,prostate,rectum,retina,spinal%20cord,testis,urinary%20bladder&geneQuery=&exactMatch=true&serializedFilterFactors=DEVELOPMENTAL_STAGE:adult"));
+
+        BaselineBioEntitiesSearchResult result2 = selectResult(baselineCounts, "E-MTAB-1733");
+        assertThat(result2.getExperimentName(), is("Twenty seven tissues"));
+        assertThat(result2.getSpecies(), is("Homo sapiens"));
+        assertThat(result2.getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=&exactMatch=true"));
     }
 
     @Test

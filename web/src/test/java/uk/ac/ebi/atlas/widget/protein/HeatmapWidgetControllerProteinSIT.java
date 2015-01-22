@@ -37,7 +37,7 @@ import static org.hamcrest.core.StringContains.containsString;
 
 public class HeatmapWidgetControllerProteinSIT extends SeleniumFixture {
 
-    private static final String PROTEIN_ACCESSION = "Q9Y615";
+    private static final String PROTEIN_ACCESSION = "Q8TCE9";
 
     private HeatmapTableWidgetPage heatmapTablePage;
 
@@ -67,19 +67,19 @@ public class HeatmapWidgetControllerProteinSIT extends SeleniumFixture {
     @Test
     public void testTitle() {
         String experimentDescription = heatmapTablePage.getExperimentDescription();
-        assertThat(experimentDescription, startsWith("RNA-seq of coding RNA from tissue samples of 95 human individuals representing 27 different tissues in order to determine tissue-specificity of all protein-coding genes"));
+        assertThat(experimentDescription, startsWith("RNA-seq of coding RNA from tissue samples of 122 human individuals representing 32 different tissues"));
     }
 
     @Test
     public void testGeneName() {
         String firstGeneName = heatmapTablePage.getGeneNames().get(0);
-        assertThat(firstGeneName, is("ACTL7A"));
+        assertThat(firstGeneName, is("LGALS14"));
     }
 
     @Test
     public void testLinkToExperiment() {
         String experimentDescriptionLink = heatmapTablePage.getExperimentDescriptionLink();
-        assertThat(experimentDescriptionLink, endsWith("/experiments/E-MTAB-1733?geneQuery=Q9Y615&serializedFilterFactors="));
+        assertThat(experimentDescriptionLink, endsWith("/experiments/E-MTAB-2836?geneQuery=Q8TCE9&serializedFilterFactors="));
     }
 
 

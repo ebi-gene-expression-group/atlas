@@ -41,7 +41,7 @@ public class HeatmapWidgetControllerMultipleGenesExperimentSIT extends SeleniumF
     // tests the URL being used by http://www.ebi.ac.uk/Tools/biojs/registry/Biojs.ExpressionAtlasBaselineSummary.html
     @Before
     public void initPage(){
-        subject = new HeatmapTableWidgetPage(driver, "geneQuery=ENSG00000187003+ENSG00000185264");
+        subject = new HeatmapTableWidgetPage(driver, "geneQuery=ENSG00000006659+ENSG00000007372");
         subject.get();
     }
 
@@ -51,12 +51,12 @@ public class HeatmapWidgetControllerMultipleGenesExperimentSIT extends SeleniumF
         assertThat(subject.getGeneCount(), containsString("2 of 2"));
 
         String experimentDescription = subject.getExperimentDescription();
-        assertThat(experimentDescription, startsWith("RNA-seq of coding RNA from tissue samples of 95 human individuals representing 27 different tissues in order to determine tissue-specificity of all protein-coding genes"));
+        assertThat(experimentDescription, startsWith("RNA-seq of coding RNA from tissue samples of 122 human individuals representing 32 different tissues"));
 
         //TODO: fix experiment URL
         String experimentDescriptionLink = subject.getExperimentDescriptionLink();
-        assertThat(experimentDescriptionLink, endsWith("/gxa/experiments/E-MTAB-1733?geneQuery=ENSG00000187003%20ENSG00000185264&serializedFilterFactors="));
+        assertThat(experimentDescriptionLink, endsWith("/gxa/experiments/E-MTAB-2836?geneQuery=ENSG00000006659%20ENSG00000007372&serializedFilterFactors="));
 
-        assertThat(subject.getGeneNames(), contains("ACTL7A", "TEX33"));
+        assertThat(subject.getGeneNames(), contains("LGALS14", "PAX6"));
     }
 }

@@ -31,6 +31,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static uk.ac.ebi.atlas.search.SearchTestUtil.selectResult;
 
 public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePageSeleniumFixture {
 
@@ -47,11 +48,11 @@ public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePa
     public void checkBaselineExperimentCounts() {
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(16));
-        assertThat(baselineCounts.get(8).getExperimentAccession(), is("E-MTAB-513"));
-        assertThat(baselineCounts.get(8).getExperimentName(), is("Illumina Body Map"));
-        assertThat(baselineCounts.get(8).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(8).getHref(), endsWith("E-MTAB-513?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=adipose,brain,breast,colon,kidney,lymph%20node,ovary,thyroid&geneQuery=&exactMatch=true"));
+        assertThat(baselineCounts, hasSize(17));
+        BaselineBioEntitiesSearchResult result = selectResult(baselineCounts, "E-MTAB-513");
+        assertThat(result.getExperimentName(), is("Illumina Body Map"));
+        assertThat(result.getSpecies(), is("Homo sapiens"));
+        assertThat(result.getHref(), endsWith("E-MTAB-513?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=adipose,brain,breast,colon,kidney,lymph%20node,ovary,thyroid&geneQuery=&exactMatch=true"));
 
     }
 

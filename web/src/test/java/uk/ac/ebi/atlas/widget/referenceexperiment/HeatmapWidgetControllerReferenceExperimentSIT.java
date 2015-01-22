@@ -24,14 +24,14 @@ public class HeatmapWidgetControllerReferenceExperimentSIT extends RestAssuredFi
 
     @Test
     public void unknownExpressionResultsForLowDataGene() {
-        Response response = get("/widgets/heatmap/referenceExperiment?geneQuery=AC004837.3");
+        Response response = get("/widgets/heatmap/referenceExperiment?geneQuery=ENSG00000033100");
 
         response.then().assertThat().statusCode(200);
         response.then().assertThat().contentType("text/html");
 
         JsonPath json = response.jsonPath();
 
-        assertThat((String)json.get("profiles.rows[0].name"), is("AC004837.3"));
+        assertThat((String)json.get("profiles.rows[0].name"), is("CHPF2"));
         assertThat((String)json.get("profiles.rows[0].expressions[0].value"), is("UNKNOWN"));
     }
 
@@ -65,7 +65,7 @@ public class HeatmapWidgetControllerReferenceExperimentSIT extends RestAssuredFi
         JsonPath json = response.jsonPath();
 
         //TODO: fix experiment URL
-        assertThat((String) json.get("experiment.URL"), is("/experiments/E-MTAB-1733?geneQuery=A1A4S6 Q13177&serializedFilterFactors="));
+        assertThat((String) json.get("experiment.URL"), is("/experiments/E-MTAB-2836?geneQuery=A1A4S6 Q13177&serializedFilterFactors="));
     }
 
 }

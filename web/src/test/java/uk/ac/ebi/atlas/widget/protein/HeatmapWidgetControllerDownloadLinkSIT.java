@@ -22,7 +22,7 @@ public class HeatmapWidgetControllerDownloadLinkSIT extends SeleniumFixture {
 
     @Test
     public void downloadProfilesLink() {
-        assertThat(widget.downloadProfilesLink(), endsWith("/gxa/experiments/E-MTAB-1733.tsv?geneQuery=REACT_1619"));
+        assertThat(widget.downloadProfilesLink(), endsWith("/gxa/experiments/E-MTAB-2836.tsv?geneQuery=REACT_1619"));
     }
 
 }

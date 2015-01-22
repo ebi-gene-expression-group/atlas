@@ -27,7 +27,8 @@ import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
 
 public class BioentitiesSearchControllerGeneQueryGeneInProteomicsExperimentSIT extends SinglePageSeleniumFixture {
 
@@ -42,7 +43,7 @@ public class BioentitiesSearchControllerGeneQueryGeneInProteomicsExperimentSIT e
     @Test
     public void baselinePaneResultsMessage() {
         assertThat(subject.isBaselinePaneExpanded(), is(true));
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("4 results"));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("5 results"));
     }
 
     @Test

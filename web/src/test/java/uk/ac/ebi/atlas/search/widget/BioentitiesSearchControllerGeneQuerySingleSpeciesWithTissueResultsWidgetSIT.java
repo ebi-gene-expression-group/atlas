@@ -49,10 +49,11 @@ public class BioentitiesSearchControllerGeneQuerySingleSpeciesWithTissueResultsW
     public void displaysWidget() {
         // wait for ajax widget to load
         subject.waitForHeatmapToBeVisible();
-        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Human Proteome Map - adult", "Illumina Body Map"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=%22zinc%20finger%22"));
-        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-PROT-1?geneQuery=%22zinc%20finger%22&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Aadult"));
-        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-MTAB-513?geneQuery=%22zinc%20finger%22"));
+        assertThat(subject.getGeneNames(), contains("Thirty two tissues", "Twenty seven tissues", "Human Proteome Map - adult", "Illumina Body Map"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-2836?geneQuery=%22zinc%20finger%22"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-1733?geneQuery=%22zinc%20finger%22"));
+        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-PROT-1?geneQuery=%22zinc%20finger%22&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Aadult"));
+        assertThat(subject.getGeneLink(3), endsWith("/experiments/E-MTAB-513?geneQuery=%22zinc%20finger%22"));
     }
 
 }

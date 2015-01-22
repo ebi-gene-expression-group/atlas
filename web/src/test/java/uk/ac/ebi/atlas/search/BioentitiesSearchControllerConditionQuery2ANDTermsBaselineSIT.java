@@ -31,6 +31,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static uk.ac.ebi.atlas.search.SearchTestUtil.selectResult;
 
 public class BioentitiesSearchControllerConditionQuery2ANDTermsBaselineSIT extends SinglePageSeleniumFixture {
 
@@ -46,11 +47,11 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsBaselineSIT exten
     public void checkBaselineExperimentCounts() {
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(4));
-        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-1733"));
-        assertThat(baselineCounts.get(1).getExperimentName(), is("Twenty seven tissues"));
-        assertThat(baselineCounts.get(1).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(1).getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=heart&geneQuery=&exactMatch=true"));
+        assertThat(baselineCounts, hasSize(5));
+        BaselineBioEntitiesSearchResult result = selectResult(baselineCounts, "E-MTAB-1733");
+        assertThat(result.getExperimentName(), is("Twenty seven tissues"));
+        assertThat(result.getSpecies(), is("Homo sapiens"));
+        assertThat(result.getHref(), endsWith("E-MTAB-1733?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=heart&geneQuery=&exactMatch=true"));
     }
 
 }
