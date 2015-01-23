@@ -112,7 +112,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         return experimentalFactorsBuilder
                 .withOrderedFactorGroups(orderedFactorGroups)
-                .withOrderedFactorGroupsByAssayGroup(orderedFactorGroupsByAssayGroup)
+                .withOrderedFactorGroupsByAssayGroupId(orderedFactorGroupsByAssayGroup)
                 .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
                 .withFactorNamesByType(factorNamesByType)
                 .withDefaultQueryType(factorsConfig.getDefaultQueryFactorType())

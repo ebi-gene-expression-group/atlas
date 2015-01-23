@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -35,8 +36,8 @@ import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -46,6 +47,8 @@ public class ExperimentalFactorsTest {
     private static final String DEFAULT_QUERY_TYPE = "DEFAULT_QUERY_TYPE";
 
     private static final String DEFAULT_FILTER_FACTOR_TYPE = "A filter factor type";
+    private static final String G1 = "g1";
+    private static final String G2 = "g2";
 
     @Mock
     private Factor defaultFilterFactorMock;
@@ -85,9 +88,11 @@ public class ExperimentalFactorsTest {
 
         ExperimentalFactorsBuilder builder = new ExperimentalFactorsBuilder();
         List<FactorGroup> factorGroups = Lists.newArrayList(factorGroup1, factorGroup2);
+        Map<String, FactorGroup> orderedFactorGroupsByAssayGroup = ImmutableMap.of(G1, factorGroup1, G2, factorGroup2);
         subject = builder
                 .withMenuFilterFactorTypes(Sets.newHashSet("TYPE1", "TYPE2"))
                 .withOrderedFactorGroups(factorGroups)
+                .withOrderedFactorGroupsByAssayGroupId(orderedFactorGroupsByAssayGroup)
                 .withFactorNamesByType(factorNameByType)
                 .withDefaultQueryType(DEFAULT_QUERY_TYPE)
                 .withDefaultFilterFactors(Collections.singleton(FACTOR1))
@@ -128,20 +133,28 @@ public class ExperimentalFactorsTest {
 
 
     @Test
-    public void testGetFilteredFactors() {
-        SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType1, factorWithType2));
-        assertThat(filteredFactors, contains(factorWithType3));
+    public void getComplementFactors() {
+        SortedSet<Factor> complement = subject.getComplementFactors(Sets.newHashSet(factorWithType1, factorWithType2));
+        assertThat(complement, contains(factorWithType3));
 
-        filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType1, factorWithType2DifferentValue));
-        assertThat(filteredFactors, contains(factorWithType3DifferentValue));
+        complement = subject.getComplementFactors(Sets.newHashSet(factorWithType1, factorWithType2DifferentValue));
+        assertThat(complement, contains(factorWithType3DifferentValue));
 
 
-        filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType3DifferentValue, factorWithType2DifferentValue));
-        assertThat(filteredFactors, contains(factorWithType1));
+        complement = subject.getComplementFactors(Sets.newHashSet(factorWithType3DifferentValue, factorWithType2DifferentValue));
+        assertThat(complement, contains(factorWithType1));
 
         //ToDo: this is not valid combination: do we need to check it?!!!
-        filteredFactors = subject.getFilteredFactors(Sets.newHashSet(factorWithType3DifferentValue, factorWithType2));
-        assertThat(filteredFactors.isEmpty(), is(true));
+        complement = subject.getComplementFactors(Sets.newHashSet(factorWithType3DifferentValue, factorWithType2));
+        assertThat(complement.isEmpty(), is(true));
+    }
+
+    @Test
+    public void getComplementAssayGroupFactors() {
+        SortedSet<AssayGroupFactor> complement = subject.getComplementAssayGroupFactors(Sets.newHashSet(factorWithType1, factorWithType2));
+
+        assertThat(complement, contains(new AssayGroupFactor(G1, factorWithType3)));
+        assertThat(complement, not(hasItem(new AssayGroupFactor(G2, factorWithType3DifferentValue))));
     }
 
 

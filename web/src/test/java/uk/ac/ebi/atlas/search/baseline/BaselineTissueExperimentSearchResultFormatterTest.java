@@ -54,7 +54,7 @@ public class BaselineTissueExperimentSearchResultFormatterTest {
 
         when(exp1.getExperimentalFactors()).thenReturn(experimentalFactors);
         when(exp2.getExperimentalFactors()).thenReturn(experimentalFactors);
-        when(experimentalFactors.getFilteredFactors(Mockito.any(FactorGroup.class))).thenReturn(new TreeSet<Factor>());
+        when(experimentalFactors.getComplementFactors(Mockito.any(FactorGroup.class))).thenReturn(new TreeSet<Factor>());
 
         BaselineExperimentSlice slice1 = BaselineExperimentSlice.create(exp1, noFilterFactors);
         BaselineExperimentSlice slice2 = BaselineExperimentSlice.create(exp2, noFilterFactors);

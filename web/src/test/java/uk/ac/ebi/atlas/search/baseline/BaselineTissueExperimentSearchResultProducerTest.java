@@ -60,10 +60,10 @@ public class BaselineTissueExperimentSearchResultProducerTest {
         when(baselineExperiment.isTissueExperiment()).thenReturn(true);
         when(baselineExperiment.getAccession()).thenReturn(E_MTAB_599);
         when(baselineExperiment.getDisplayName()).thenReturn(EXPERIMENT_DISPLAY_NAME);
-        when(experimentalFactors.getFactorGroupByAssayGroupId("g3")).thenReturn(new FactorSet(THYMUS));
-        when(experimentalFactors.getFactorGroupByAssayGroupId("g5")).thenReturn(new FactorSet(LUNG));
-        when(experimentalFactors.getFactorGroupByAssayGroupId("g6")).thenReturn(new FactorSet(SPLEEN));
-        when(experimentalFactors.getFilteredFactors(Mockito.any(FactorGroup.class))).thenReturn(ALL_FACTORS);
+        when(experimentalFactors.getFactorGroup("g3")).thenReturn(new FactorSet(THYMUS));
+        when(experimentalFactors.getFactorGroup("g5")).thenReturn(new FactorSet(LUNG));
+        when(experimentalFactors.getFactorGroup("g6")).thenReturn(new FactorSet(SPLEEN));
+        when(experimentalFactors.getComplementFactors(Mockito.any(FactorGroup.class))).thenReturn(ALL_FACTORS);
         when(experimentalFactors.getNonDefaultFactors(Mockito.anyString())).thenReturn(EMPTY_FACTOR_SET);
 
         subject = new BaselineTissueExperimentSearchResultProducer(experimentTrader);

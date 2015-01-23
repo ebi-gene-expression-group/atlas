@@ -64,14 +64,14 @@ public class ExperimentalFactorsIT {
 
     @Test
     public void getFactorsByTypeTest() {
-        assertThat(subject.getFactorsByType("RNA").size(), is(3));
-        assertThat(subject.getFactorsByType("CELL_LINE").size(), is(23));
-        assertThat(subject.getFactorsByType("CELLULAR_COMPONENT").size(), is(6));
+        assertThat(subject.getFactors("RNA").size(), is(3));
+        assertThat(subject.getFactors("CELL_LINE").size(), is(23));
+        assertThat(subject.getFactors("CELLULAR_COMPONENT").size(), is(6));
     }
 
     @Test
     public void getNonExistentFactor() {
-        assertThat(subject.getFactorsByType("FOOBAR").size(), is(0));
+        assertThat(subject.getFactors("FOOBAR").size(), is(0));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class ExperimentalFactorsIT {
         Factor filterFactor1 = new Factor("RNA", "total RNA");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
-        SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2));
+        SortedSet<Factor> filteredFactors = subject.getComplementFactors(Sets.newHashSet(filterFactor1, filterFactor2));
 
         assertThat(filteredFactors.size(), is(5));
         assertThat(filteredFactors.first().getValue(), is("CD34-positive mobilized cell cell line"));
@@ -91,7 +91,7 @@ public class ExperimentalFactorsIT {
         Factor filterFactor1 = new Factor("CELL_LINE", "IMR-90");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
-        SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2));
+        SortedSet<Factor> filteredFactors = subject.getComplementFactors(Sets.newHashSet(filterFactor1, filterFactor2));
 
         assertThat(filteredFactors.size(), is(2));
         assertThat(filteredFactors.first().getValue(), is("long polyA RNA"));
@@ -119,7 +119,7 @@ public class ExperimentalFactorsIT {
         Factor filterFactor1 = new Factor("CELL_LINE", "IMR-90");
         Factor filterFactor2 = new Factor("RNA", "total RNA");
 
-        SortedSet<Factor> filteredFactors = subject.getFilteredFactors(Sets.newHashSet(filterFactor1, filterFactor2));
+        SortedSet<Factor> filteredFactors = subject.getComplementFactors(Sets.newHashSet(filterFactor1, filterFactor2));
 
         assertThat(filteredFactors.size(), is(1));
         assertThat(filteredFactors.first().getValue(), is("whole cell"));

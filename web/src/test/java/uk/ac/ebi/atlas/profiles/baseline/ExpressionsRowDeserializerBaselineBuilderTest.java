@@ -83,7 +83,7 @@ public class ExpressionsRowDeserializerBaselineBuilderTest {
 
         when(experimentsCacheMock.getExperiment(MOCK_EXPERIMENT_ACCESSION)).thenReturn(experimentMock);
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
-        when(experimentalFactorsMock.getOrderedFactorGroups()).thenReturn(ImmutableList.of(factorGroup));
+        when(experimentalFactorsMock.getFactorGroupsInOrder()).thenReturn(ImmutableList.of(factorGroup));
 
         subject = new ExpressionsRowDeserializerBaselineBuilder(experimentsCacheMock);
     }

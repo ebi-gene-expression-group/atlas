@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.base.Objects;
+
 import javax.annotation.Nullable;
 
 public class AssayGroupFactor implements Comparable<AssayGroupFactor>{
@@ -38,5 +40,33 @@ public class AssayGroupFactor implements Comparable<AssayGroupFactor>{
     @Override
     public int compareTo(AssayGroupFactor assayGroupFactor) {
         return factor.compareTo(assayGroupFactor.getFactor());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AssayGroupFactor that = (AssayGroupFactor) o;
+
+        if (!assayGroupId.equals(that.assayGroupId)) return false;
+        if (!factor.equals(that.factor)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = assayGroupId.hashCode();
+        result = 31 * result + factor.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("assayGroupId", assayGroupId)
+                .add("factor", factor)
+                .toString();
     }
 }

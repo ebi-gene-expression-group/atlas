@@ -71,7 +71,7 @@ public class BaselineExperiment extends Experiment {
     }
 
     public SortedSet<Factor> getAssayGroupFactors(Collection<String> assayGroupIds, String factorType) {
-        return getExperimentalFactors().getFactorsForAssayGroupsByType(assayGroupIds, factorType);
+        return getExperimentalFactors().getFactors(assayGroupIds, factorType);
     }
 
     public boolean isTissueExperiment() {

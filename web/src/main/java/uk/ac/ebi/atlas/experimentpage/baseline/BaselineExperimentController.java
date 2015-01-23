@@ -68,7 +68,7 @@ public abstract class BaselineExperimentController {
     private boolean allFactorsInSliceSelected(BaselineRequestPreferences preferences, BaselineExperiment experiment) {
 
         Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
-        SortedSet<Factor> allFactorsInSlice = experiment.getExperimentalFactors().getFilteredFactors(selectedFilterFactors);
+        SortedSet<Factor> allFactorsInSlice = experiment.getExperimentalFactors().getComplementFactors(selectedFilterFactors);
 
         return (preferences.getQueryFactorValues().size() == allFactorsInSlice.size());
     }

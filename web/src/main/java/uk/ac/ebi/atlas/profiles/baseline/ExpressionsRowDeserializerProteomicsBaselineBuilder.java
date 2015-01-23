@@ -64,7 +64,7 @@ public class ExpressionsRowDeserializerProteomicsBaselineBuilder extends Express
         BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
         //TODO: ordered factor groups should be passed in from the top, not looked up here
-        return new ExpressionsRowDeserializerProteomicsBaseline(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups(), indicesOfAssayGroups);
+        return new ExpressionsRowDeserializerProteomicsBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder(), indicesOfAssayGroups);
 
     }
 

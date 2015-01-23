@@ -70,7 +70,7 @@ public class ExpressionsRowDeserializerBaselineBuilder implements ExpressionsRow
         BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
         //TODO: ordered factor groups should be passed in from the top, not looked up here
-        return new ExpressionsRowDeserializerBaseline(baselineExperiment.getExperimentalFactors().getOrderedFactorGroups());
+        return new ExpressionsRowDeserializerBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder());
     }
 
 }

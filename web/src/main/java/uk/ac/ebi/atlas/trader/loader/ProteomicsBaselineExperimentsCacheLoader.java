@@ -113,7 +113,7 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
 
         return experimentalFactorsBuilder
                 .withOrderedFactorGroups(orderedFactorGroups)
-                .withOrderedFactorGroupsByAssayGroup(orderedFactorGroupsByAssayGroup)
+                .withOrderedFactorGroupsByAssayGroupId(orderedFactorGroupsByAssayGroup)
                 .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
                 .withFactorNamesByType(factorNamesByType)
                 .withDefaultQueryType(factorsConfig.getDefaultQueryFactorType())
