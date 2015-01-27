@@ -72,7 +72,7 @@ public class GenePageControllerGeneInProteomicsExperimentBaselineWidgetSIT exten
     @Test
     public void expressionLevelDisplayedInScientificNotation() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getGeneProfile(3).get(RETINA), is("9.91 × 106"));
+        assertThat(subject.getGeneProfile(3).get(RETINA), is("9.9 × 106"));
     }
 
 }
