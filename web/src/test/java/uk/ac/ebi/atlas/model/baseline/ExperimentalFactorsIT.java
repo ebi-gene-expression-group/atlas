@@ -151,7 +151,7 @@ public class ExperimentalFactorsIT {
 
     @Test
     public void groupAssayGroupIdsByNonDefaultFilterFactor() {
-        Multimap<FactorGroup,String> byFactorGroup = subject.groupAssayGroupIdsByNonDefaultFactor(ImmutableList.of("g59", "g41", "g20"));
+        Multimap<FactorGroup,String> byFactorGroup = subject.getAssayGroupIdsGroupedByNonDefaultFactors(ImmutableList.of("g59", "g41", "g20"));
 
         Factor filterFactor1 = new Factor("RNA", "total RNA");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");

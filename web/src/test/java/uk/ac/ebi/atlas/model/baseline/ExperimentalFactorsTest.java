@@ -157,5 +157,13 @@ public class ExperimentalFactorsTest {
         assertThat(complement, not(hasItem(new AssayGroupFactor(G2, factorWithType3DifferentValue))));
     }
 
+    @Test
+    public void getFactorGroupedByAssayGroupId() {
+        ImmutableMap<String, Factor> type2ByAssayGroupId = subject.getFactorGroupedByAssayGroupId("TYPE2");
 
+        assertThat(type2ByAssayGroupId.size(), is(2));
+        assertThat(type2ByAssayGroupId, hasEntry(G1, factorWithType2));
+        assertThat(type2ByAssayGroupId, hasEntry(G2, factorWithType2DifferentValue));
+
+    }
 }

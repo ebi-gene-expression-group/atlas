@@ -22,18 +22,17 @@
 
 package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.*;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
@@ -47,7 +46,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.*;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
 @Scope("singleton")
@@ -74,7 +74,7 @@ public class AnalyticsIndexerService {
         this.baselineConditionsBuilder = baselineConditionsBuilder;
     }
 
-    public int  indexBaselineExperimentAnalytics(String experimentAccession) {
+    public int indexBaselineExperimentAnalytics(String experimentAccession) {
         checkNotNull(experimentAccession);
 
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
@@ -82,19 +82,15 @@ public class AnalyticsIndexerService {
         ExperimentType experimentType = experiment.getType();
         String defaultQueryFactorType = experiment.getExperimentalFactors().getDefaultQueryFactorType();
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
-        Set<String> species = experiment.getOrganisms();
 
-        checkState(species.size() == 1, "Multiple species experiments not yet supported");
-        String ensemblSpecies = Species.convertToEnsemblSpecies(species.iterator().next());
+        ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId = SpeciesGrouper.buildEnsemblSpeciesGroupedByAssayGroupId(experiment);
 
         ImmutableSetMultimap<String, String> ontologyTermIdsByAssayAccession = expandOntologyTerms(experimentDesign.getAllOntologyTermIdsByAssayAccession());
 
         ImmutableSetMultimap<String, String> conditionSearchTermsByAssayGroupId = buildConditionSearchTermsByAssayGroupId(experiment, ontologyTermIdsByAssayAccession);
 
-
         checkNotNull(experimentAccession);
         checkNotNull(experimentType);
-        checkArgument(StringUtils.isNotBlank(ensemblSpecies));
         checkArgument(StringUtils.isNotBlank(defaultQueryFactorType));
 
         LOGGER.info("Begin indexing analytics for experiment " + experimentAccession);
@@ -104,17 +100,32 @@ public class AnalyticsIndexerService {
         int count;
 
         if (experimentType == ExperimentType.PROTEOMICS_BASELINE) {
-            count = indexProteomicsBaselineExperimentAnalytics(experimentAccession, experimentType, ensemblSpecies,
-                        defaultQueryFactorType, conditionSearchTermsByAssayGroupId);
+            count = indexProteomicsBaselineExperimentAnalytics(experimentAccession, experimentType,
+                        defaultQueryFactorType, conditionSearchTermsByAssayGroupId, ensemblSpeciesGroupedByAssayGroupId);
         } else {
-            count = indexRnaSeqBaselineExperimentAnalytics(experimentAccession, experimentType, ensemblSpecies,
-                    defaultQueryFactorType, conditionSearchTermsByAssayGroupId);
+            count = indexRnaSeqBaselineExperimentAnalytics(experimentAccession, experimentType,
+                    defaultQueryFactorType, conditionSearchTermsByAssayGroupId, ensemblSpeciesGroupedByAssayGroupId);
         }
 
         stopWatch.stop();
         LOGGER.info(String.format("Done indexing analytics for experiment %s, indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds()));
 
         return count;
+    }
+
+    private ImmutableSetMultimap<String, String> expandOntologyTerms(ImmutableSetMultimap<String, String> termIdsByAssayAccession) {
+
+        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
+        for (String assayAccession : termIdsByAssayAccession.keys()) {
+            Set<String> expandedOntologyTerms = new HashSet<>();
+
+            expandedOntologyTerms.addAll(efoParentsLookupService.getAllParents(termIdsByAssayAccession.get(assayAccession)));
+            expandedOntologyTerms.addAll(termIdsByAssayAccession.get(assayAccession));
+
+            builder.putAll(assayAccession, expandedOntologyTerms);
+        }
+
+        return builder.build();
     }
 
     ImmutableSetMultimap<String, String> buildConditionSearchTermsByAssayGroupId(BaselineExperiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {
@@ -131,16 +142,17 @@ public class AnalyticsIndexerService {
 
     }
 
-    public int indexRnaSeqBaselineExperimentAnalytics(String experimentAccession, ExperimentType experimentType, String ensemblSpecies,
+    public int indexRnaSeqBaselineExperimentAnalytics(String experimentAccession, ExperimentType experimentType,
                                                       String defaultQueryFactorType,
-                                                      SetMultimap<String, String> conditionSearchTermsByAssayGroupId) {
+                                                      SetMultimap<String, String> conditionSearchTermsByAssayGroupId,
+                                                      ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId) {
 
         try (BaselineAnalyticsInputStream baselineAnalyticsInputStream =
                      baselineAnalyticsInputStreamFactory.create(experimentAccession)) {
 
             IterableObjectInputStream<BaselineAnalytics> inputStream = new IterableObjectInputStream<>(baselineAnalyticsInputStream);
 
-            AnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, ensemblSpecies,
+            AnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, ensemblSpeciesGroupedByAssayGroupId,
                     defaultQueryFactorType,
                     inputStream, conditionSearchTermsByAssayGroupId);
 
@@ -151,16 +163,17 @@ public class AnalyticsIndexerService {
         }
     }
 
-    public int indexProteomicsBaselineExperimentAnalytics(String experimentAccession, ExperimentType experimentType, String ensemblSpecies,
+    public int indexProteomicsBaselineExperimentAnalytics(String experimentAccession, ExperimentType experimentType,
                                                           String defaultQueryFactorType,
-                                                          SetMultimap<String, String> conditionSearchTermsByAssayGroupId) {
+                                                          SetMultimap<String, String> conditionSearchTermsByAssayGroupId,
+                                                          ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId) {
 
         try (BaselineProteomicsAnalyticsInputStream baselineProteomicsAnalyticsInputStream =
                      baselineProteomicsAnalyticsInputStreamFactory.create(experimentAccession)) {
 
             IterableObjectInputStream<BaselineAnalytics> inputStream = new IterableObjectInputStream<>(baselineProteomicsAnalyticsInputStream);
 
-            AnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, ensemblSpecies,
+            AnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, ensemblSpeciesGroupedByAssayGroupId,
                     defaultQueryFactorType,
                     inputStream, conditionSearchTermsByAssayGroupId);
 
@@ -169,21 +182,6 @@ public class AnalyticsIndexerService {
         } catch (IOException e) {
             throw new ExperimentAnalyticsIndexerServiceException(e);
         }
-    }
-
-    private ImmutableSetMultimap<String, String> expandOntologyTerms(ImmutableSetMultimap<String, String> termIdsByAssayAccession) {
-
-        ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
-        for (String assayAccession : termIdsByAssayAccession.keys()) {
-            Set<String> expandedOntologyTerms = new HashSet<>();
-
-            expandedOntologyTerms.addAll(efoParentsLookupService.getAllParents(termIdsByAssayAccession.get(assayAccession)));
-            expandedOntologyTerms.addAll(termIdsByAssayAccession.get(assayAccession));
-
-            builder.putAll(assayAccession, expandedOntologyTerms);
-        }
-
-        return builder.build();
     }
 
     public void deleteExperimentFromIndex(String accession) {

@@ -8,7 +8,10 @@ import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class AnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
 
@@ -16,7 +19,7 @@ public class AnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
 
     private final String experimentAccession;
     private final ExperimentType experimentType;
-    private final String ensemblSpecies;
+    private final Map<String, String> ensemblSpeciesGroupedByAssayGroupId;
     private final String defaultQueryFactorType;
     private final Iterable<BaselineAnalytics> inputStream;
     private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
@@ -24,14 +27,14 @@ public class AnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
 
     public AnalyticsDocumentStream(String experimentAccession,
                                    ExperimentType experimentType,
-                                   String ensemblSpecies,
+                                   Map<String, String> ensemblSpeciesGroupedByAssayGroupId,
                                    String defaultQueryFactorType,
                                    Iterable<BaselineAnalytics> inputStream,
                                    SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
                                    IdentifierSearchTermsDao identifierSearchTermsDao) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
-        this.ensemblSpecies = ensemblSpecies;
+        this.ensemblSpeciesGroupedByAssayGroupId = ensemblSpeciesGroupedByAssayGroupId;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.inputStream = inputStream;
         this.conditionSearchTermsByAssayAccessionId = conditionSearchTermsByAssayAccessionId;
@@ -73,7 +76,7 @@ public class AnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
             builder.experimentAccession(experimentAccession)
                     .experimentType(experimentType)
                     .defaultQueryFactorType(defaultQueryFactorType)
-                    .species(ensemblSpecies)
+                    .species(getEnsemblSpecies(assayGroupId))
                     .bioentityIdentifier(geneId)
                     .expressionLevel(baselineAnalytics.getExpressionLevel())
                     .identifierSearch(identifierSearch)
@@ -81,6 +84,12 @@ public class AnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
                     .conditionsSearch(conditionSearch);
 
             return builder.build();
+        }
+
+        private String getEnsemblSpecies(String assayGroupId) {
+            String ensemblSpecies = ensemblSpeciesGroupedByAssayGroupId.get(assayGroupId);
+            checkNotNull(ensemblSpecies, "No species for assay group " + assayGroupId);
+            return ensemblSpecies;
         }
 
         private String getConditionSearchTerms(String assayGroupId) {
@@ -102,7 +111,7 @@ public class AnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
                 if (searchTerms.isEmpty()) {
                     LOGGER.warn("No identifier search terms found for " + geneId);
                 }
-                lastGeneIdSearchTerms = geneId + " " + Joiner.on(" ").join(searchTerms);
+                lastGeneIdSearchTerms = geneId + (searchTerms.isEmpty() ? "" : " " + Joiner.on(" ").join(searchTerms));
             }
 
             return lastGeneIdSearchTerms;

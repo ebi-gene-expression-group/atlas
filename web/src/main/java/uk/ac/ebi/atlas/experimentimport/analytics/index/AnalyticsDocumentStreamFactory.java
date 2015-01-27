@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Map;
 
 @Named
 public class AnalyticsDocumentStreamFactory {
@@ -19,11 +20,11 @@ public class AnalyticsDocumentStreamFactory {
 
     public AnalyticsDocumentStream create(String experimentAccession,
                                           ExperimentType experimentType,
-                                          String ensemblSpecies,
+                                          Map<String, String> ensemblSpeciesGroupedByAssayGroupId,
                                           String defaultQueryFactorType,
                                           Iterable<BaselineAnalytics> inputStream,
                                           SetMultimap<String, String> conditionSearchTermsByAssayAccessionId) {
-        return new AnalyticsDocumentStream(experimentAccession, experimentType, ensemblSpecies, defaultQueryFactorType,
+        return new AnalyticsDocumentStream(experimentAccession, experimentType, ensemblSpeciesGroupedByAssayGroupId, defaultQueryFactorType,
                 inputStream, conditionSearchTermsByAssayAccessionId, identifierSearchTermsDao);
     }
 

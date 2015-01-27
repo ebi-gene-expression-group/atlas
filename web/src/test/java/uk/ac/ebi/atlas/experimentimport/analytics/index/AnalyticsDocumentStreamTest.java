@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import org.junit.Test;
@@ -21,7 +22,7 @@ public class AnalyticsDocumentStreamTest {
 
     private static final String EXPERIMENT_ACCESSION = "EXP1";
     private static final ExperimentType EXPERIMENT_TYPE = ExperimentType.RNASEQ_MRNA_BASELINE;
-    private static final String ENSEMBL_SPECIES = "homo sapiens";
+    private static final String HOMO_SAPIENS = "homo sapiens";
     private static final String DEFAULT_QUERY_FACTOR_TYPE = "ORGANISM_PART";
 
     private static final String GENEID1 = "GENE1";
@@ -42,9 +43,11 @@ public class AnalyticsDocumentStreamTest {
 
     public static final String GENE_2_SEARCHTERM_1 = "gene2_searchterm_1";
     public static final String GENE_2_SEARCHTERM_2 = "gene2_searchterm_2";
+    private static final String MUS_MUSCULUS = "mus musculus";
 
     @Mock
     private IdentifierSearchTermsDao identifierSearchTermsDao;
+    private ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId = ImmutableMap.of(ASSAYGROUPID1, HOMO_SAPIENS, ASSAYGROUPID2, MUS_MUSCULUS);
 
     @Test
     public void test() {
@@ -60,8 +63,10 @@ public class AnalyticsDocumentStreamTest {
 
         ImmutableSetMultimap<String, String> conditionSearchTermByAssayAccessionId = conditionSearchBuilder.build();
 
-        AnalyticsDocumentStream stream = new AnalyticsDocumentStreamFactory(identifierSearchTermsDao).create(EXPERIMENT_ACCESSION, EXPERIMENT_TYPE, ENSEMBL_SPECIES, DEFAULT_QUERY_FACTOR_TYPE,
-                ImmutableSet.of(BASELINE_ANALYTICS1, BASELINE_ANALYTICS2, BASELINE_ANALYTICS3), conditionSearchTermByAssayAccessionId);
+        AnalyticsDocumentStream stream = new AnalyticsDocumentStreamFactory(identifierSearchTermsDao).create(
+                EXPERIMENT_ACCESSION, EXPERIMENT_TYPE, ensemblSpeciesGroupedByAssayGroupId, DEFAULT_QUERY_FACTOR_TYPE,
+                ImmutableSet.of(BASELINE_ANALYTICS1, BASELINE_ANALYTICS2, BASELINE_ANALYTICS3),
+                conditionSearchTermByAssayAccessionId);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = stream.iterator();
 
@@ -72,7 +77,7 @@ public class AnalyticsDocumentStreamTest {
         assertThat(analyticsDocumentIterator.hasNext(), is(false));
 
         assertThat(analyticsDocument1.bioentityIdentifier, is(GENEID1));
-        assertThat(analyticsDocument1.species, is(ENSEMBL_SPECIES));
+        assertThat(analyticsDocument1.species, is(HOMO_SAPIENS));
         assertThat(analyticsDocument1.experimentAccession, is(EXPERIMENT_ACCESSION));
         assertThat(analyticsDocument1.experimentType, is(EXPERIMENT_TYPE));
         assertThat(analyticsDocument1.defaultQueryFactorType, is(DEFAULT_QUERY_FACTOR_TYPE));
@@ -82,7 +87,7 @@ public class AnalyticsDocumentStreamTest {
         assertThat(analyticsDocument1.expressionLevel, is(1.1));
 
         assertThat(analyticsDocument2.bioentityIdentifier, is(GENEID2));
-        assertThat(analyticsDocument2.species, is(ENSEMBL_SPECIES));
+        assertThat(analyticsDocument2.species, is(MUS_MUSCULUS));
         assertThat(analyticsDocument2.experimentAccession, is(EXPERIMENT_ACCESSION));
         assertThat(analyticsDocument2.experimentType, is(EXPERIMENT_TYPE));
         assertThat(analyticsDocument2.defaultQueryFactorType, is(DEFAULT_QUERY_FACTOR_TYPE));
@@ -92,11 +97,11 @@ public class AnalyticsDocumentStreamTest {
         assertThat(analyticsDocument2.expressionLevel, is(2.2));
 
         assertThat(analyticsDocument3.bioentityIdentifier, is(UNKNOWN_GENEID));
-        assertThat(analyticsDocument3.species, is(ENSEMBL_SPECIES));
+        assertThat(analyticsDocument3.species, is(MUS_MUSCULUS));
         assertThat(analyticsDocument3.experimentAccession, is(EXPERIMENT_ACCESSION));
         assertThat(analyticsDocument3.experimentType, is(EXPERIMENT_TYPE));
         assertThat(analyticsDocument3.defaultQueryFactorType, is(DEFAULT_QUERY_FACTOR_TYPE));
-        assertThat(analyticsDocument3.identifierSearch, is(UNKNOWN_GENEID + " "));
+        assertThat(analyticsDocument3.identifierSearch, is(UNKNOWN_GENEID));
         assertThat(analyticsDocument3.conditionsSearch, is(G2_SEARCH_TERM_1 + " " + G2_SEARCH_TERM_2));
         assertThat(analyticsDocument3.assayGroupId, is(ASSAYGROUPID2));
         assertThat(analyticsDocument3.expressionLevel, is(3.3));

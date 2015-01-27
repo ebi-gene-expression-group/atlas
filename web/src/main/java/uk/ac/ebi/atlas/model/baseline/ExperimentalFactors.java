@@ -30,6 +30,7 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 /*
@@ -110,8 +111,19 @@ public class ExperimentalFactors implements Serializable {
 
     }
 
+    public ImmutableMap<String, Factor> getFactorGroupedByAssayGroupId(String factorType) {
+        ImmutableMap.Builder<String, Factor> builder = ImmutableMap.builder();
+        for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
+            Factor factor = orderedFactorGroupsByAssayGroupId.get(groupId).getFactorByType(factorType);
+            checkNotNull(factor, String.format("No factor of type %s for assay group %s", factorType, groupId));
+            builder.put(groupId, factor);
+        }
 
-    public Multimap<FactorGroup, String> groupAssayGroupIdsByNonDefaultFactor(Iterable<String> assayGroupIds) {
+        return builder.build();
+    }
+
+    //TODO: move this into BaselineExperimentAssayGroupSearchService
+    public Multimap<FactorGroup, String> getAssayGroupIdsGroupedByNonDefaultFactors(Iterable<String> assayGroupIds) {
         Function<String, FactorGroup> groupByFunction = new Function<String, FactorGroup>() {
             @Nullable
             @Override

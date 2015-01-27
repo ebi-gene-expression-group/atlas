@@ -147,7 +147,7 @@ public class BaselineExperimentAssayGroupSearchService {
 
             BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
 
-            Multimap<FactorGroup, String> assayGroupIdsByFilterFactors = experiment.getExperimentalFactors().groupAssayGroupIdsByNonDefaultFactor(assayGroupIds);
+            Multimap<FactorGroup, String> assayGroupIdsByFilterFactors = experiment.getExperimentalFactors().getAssayGroupIdsGroupedByNonDefaultFactors(assayGroupIds);
 
             for (Map.Entry<FactorGroup, Collection<String>> filterFactorAssayGroupIds : assayGroupIdsByFilterFactors.asMap().entrySet()) {
                 FactorGroup filterFactor = filterFactorAssayGroupIds.getKey();

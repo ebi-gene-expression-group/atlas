@@ -101,6 +101,34 @@ public class AnalyticsIndexerServiceIT {
     }
 
     @Test
+    public void indexMultiSpeciesBaselineExperimentAnalytics() {
+        subject.indexBaselineExperimentAnalytics("E-GEOD-30352");
+        assertThat(documents, hasSize(2179));
+
+        AnalyticsDocument document = documents.get(0);
+        assertThat(document.bioentityIdentifier, is("ENSGALG00000009623"));
+        assertThat(document.species, is("gallus gallus"));
+        assertThat(document.experimentAccession, is("E-GEOD-30352"));
+        assertThat(document.experimentType, is(ExperimentType.RNASEQ_MRNA_BASELINE));
+        assertThat(document.defaultQueryFactorType, is("ORGANISM_PART"));
+        assertThat(document.identifierSearch, is("ENSGALG00000009623"));
+        assertThat(document.conditionsSearch, is("UBERON:0002037 EFO EFO:0001272 EFO:0001266 Gallus gallus male adult approx 1 year Facility of Linkoping University, Sweden cerebellum female EFO:0001265"));
+        assertThat(document.assayGroupId, is("g52"));
+        assertThat(document.expressionLevel, is(0.4));
+
+        AnalyticsDocument document2 = documents.get(2);
+        assertThat(document2.bioentityIdentifier, is("ENSMMUG00000032178"));
+        assertThat(document2.species, is("macaca mulatta"));
+        assertThat(document2.experimentAccession, is("E-GEOD-30352"));
+        assertThat(document2.experimentType, is(ExperimentType.RNASEQ_MRNA_BASELINE));
+        assertThat(document2.defaultQueryFactorType, is("ORGANISM_PART"));
+        assertThat(document2.identifierSearch, is("ENSMMUG00000032178 Endonuclease/exonuclease/phosphatase Uncharacterized protein  [Source:UniProtKB/TrEMBL;Acc:F7FU52] F7FU52 protein_coding"));
+        assertThat(document2.conditionsSearch, is("UBERON:0002037 8 year EFO female EFO:0001265 Macaque facility in Souzhou, China Macaca mulatta cerebellum EFO:0001266 male"));
+        assertThat(document2.assayGroupId, is("g27"));
+        assertThat(document2.expressionLevel, is(17.0));
+    }
+
+    @Test
     public void indexProteomicsBaselineExperimentAnalytics() {
         subject.indexBaselineExperimentAnalytics("E-PROT-1");
         assertThat(documents, hasSize(3366));

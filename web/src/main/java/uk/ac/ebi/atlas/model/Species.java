@@ -3,10 +3,17 @@ package uk.ac.ebi.atlas.model;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.Map;
+
 //TODO: turn this into a proper domain class, rather than a util class
 public final class Species {
 
     private Species() {
+    }
+
+    public static String convertToEnsemblSpecies(Map<String, String> organismToEnsemblSpeciesMapping, String organism) {
+        String ensemblSpecies = organismToEnsemblSpeciesMapping.get(organism);
+        return ensemblSpecies == null ? Species.convertToEnsemblSpecies(organism) : ensemblSpecies;
     }
 
     public static String convertToEnsemblSpecies(String species) {
