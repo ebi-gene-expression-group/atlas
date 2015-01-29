@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.atlas.search.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
@@ -23,10 +24,12 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class SearchController {
 
     private EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder;
+    private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
 
     @Inject
-    public SearchController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder) {
+    public SearchController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, BaselineAnalyticsSearchService baselineAnalyticsSearchService) {
         this.ebiGlobalSearchQueryBuilder = ebiGlobalSearchQueryBuilder;
+        this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
     }
 
     @RequestMapping(value = "/search")
@@ -42,6 +45,8 @@ public class SearchController {
         String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery, requestParameters.getCondition());
 
         model.addAttribute("globalSearchTerm", globalSearchTerm);
+
+        model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(geneQuery));
 
         return "search-results";
     }

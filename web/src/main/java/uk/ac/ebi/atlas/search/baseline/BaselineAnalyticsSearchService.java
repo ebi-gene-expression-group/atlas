@@ -26,4 +26,10 @@ public class BaselineAnalyticsSearchService {
         return baselineTissueExperimentSearchResultProducer.buildProfilesForTissueExperiments(expressions);
     }
 
+    public String findFacetsForTreeSearch(String geneQuery) {
+        String jsonResponse = baselineAnalyticsSearchDao.queryByIdentifierSearch(geneQuery);
+
+        return baselineAnalyticsFacetsReader.generateFacetsTreeJson(jsonResponse);
+    }
+
 }

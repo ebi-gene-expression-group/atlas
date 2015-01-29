@@ -51,7 +51,52 @@
 <script src="${pageContext.request.contextPath}/resources/jsx/heatmapContainer.js"></script>
 
 
+<section class="grid_23 extra-padding">
+    <div id="facets-react"> FACETS TREE SELECTION</div>
+</section>
 
+
+<script src="${pageContext.request.contextPath}/resources/jsx/facets.js"></script>
+
+<script type="text/jsx">
+
+    <%--var facetsData = <%@ include file="includes/facets-data.jsp" %>;--%>
+
+    var facetsData = {
+        "config" : {
+            contextRoot: '/gxa'
+        },
+        "facets": [
+                {
+                    "Homo sapiens": [
+                        {"factor": "ORGANISM_PART", "source": "Organism part"},
+                        {"factor": "CELL_LINE", "source": "Cell line"}
+                    ],
+                    "Mus musculus": [
+                        {"factor": "CELL_LINE", "source": "Cell line"}
+                    ]
+                }
+             ]
+
+    };
+
+//    var facetsModuleBuild = 'facetsModule.build';
+
+    (function ($, React, build, facetsConfig, facets) {
+
+        $(document).ready(function () {
+            // call this inside ready() so all scripts load first in IE8
+            var facets = facetsModule.build(facetsConfig);
+
+            React.renderComponent(facets.Facets({facets: facets}),
+                    document.getElementById('facets-react')
+            );
+
+        });
+
+    })(jQuery, React, facetsModule, facetsData.config, facetsData.facets);
+
+</script>
 <script>
 
     window.onload = function () {

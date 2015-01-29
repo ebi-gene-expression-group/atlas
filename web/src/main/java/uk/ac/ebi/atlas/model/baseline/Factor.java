@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
+import org.apache.velocity.util.StringUtils;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.annotation.Nullable;
@@ -52,6 +53,27 @@ public class Factor implements Comparable<Factor>, Serializable {
 
     public static String normalize(String type) {
         return type.replaceAll(" ", "_").toUpperCase();
+    }
+
+    public static String convertToLowerCase(String type) {
+        StringBuilder result = new StringBuilder();
+        String[] split = type.replaceAll("_", " ").split(" ");
+
+        boolean firstTokenCapitalized = false;
+        for (String token : split) {
+            token = token.toLowerCase();
+
+            if (!firstTokenCapitalized) {
+                token = StringUtils.capitalizeFirstLetter(token);
+                firstTokenCapitalized = true;
+            }
+            result.append(token);
+
+        result.append(" ");
+        }
+
+        return result.toString().trim();
+
     }
 
     //same as type but un-normalized

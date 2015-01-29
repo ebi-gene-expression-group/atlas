@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class BaselineAnalyticsFacetsReaderTest {
@@ -35,6 +36,14 @@ public class BaselineAnalyticsFacetsReaderTest {
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    @Test
+    public void extractTreeFacets() {
+        String facetsTreeJson = subject.generateFacetsTreeJson(loadJson());
+
+
+        assertThat(facetsTreeJson, is("[{\"Homo sapiens\":[{\"factor\":\"ORGANISM_PART\",\"source\":\"Organism part\"},{\"factor\":\"CELL_LINE\",\"source\":\"Cell line\"}]}]"));
     }
 
 }
