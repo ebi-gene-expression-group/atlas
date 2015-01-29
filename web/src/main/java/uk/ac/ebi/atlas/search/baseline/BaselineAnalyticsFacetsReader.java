@@ -76,7 +76,7 @@ public class BaselineAnalyticsFacetsReader {
                 facetTreeList.add(factor);
             }
 
-            facetTree.put(species, facetTreeList);
+            facetTree.put(Factor.convertToLowerCase(species), facetTreeList);
 
         }
 
