@@ -1,0 +1,152 @@
+{
+  "response": {
+    "numFound": 456088,
+    "start": 0,
+    "docs": []
+  },
+  "facets": {
+    "count": 456088,
+    "experimentType": {
+      "buckets": [
+        {
+          "val": "rnaseq_mrna_baseline",
+          "count": 456088,
+          "species": {
+            "buckets": [
+              {
+                "val": "Homo sapiens",
+                "count": 456088,
+                "defaultQueryFactorType": {
+                  "buckets": [
+                    {
+                      "val": "ORGANISM_PART",
+                      "count": 453289,
+                      "experimentAccession": {
+                        "buckets": [
+                          {
+                            "val": "E-MTAB-1733",
+                            "count": 449957,
+                            "uniqueIdentifiers": 25247,
+                            "assayGroupId": {
+                              "buckets": [
+                                {
+                                  "val": "g22",
+                                  "count": 21971,
+                                  "sumExpressionLevel": 467512.3999999801
+                                },
+                                {
+                                  "val": "g15",
+                                  "count": 16868,
+                                  "sumExpressionLevel": 486396.0999999961
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "val": "E-MTAB-513",
+                            "count": 3332,
+                            "uniqueIdentifiers": 352,
+                            "assayGroupId": {
+                              "buckets": [
+                                {
+                                  "val": "g13",
+                                  "count": 262,
+                                  "sumExpressionLevel": 4510.1
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "val": "CELL_LINE",
+                      "count": 2799,
+                      "experimentAccession": {
+                        "buckets": [
+                          {
+                            "val": "E-GEOD-26284",
+                            "count": 2799,
+                            "uniqueIdentifiers": 75,
+                            "assayGroupId": {
+                              "buckets": []
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "val": "Mus musculus",
+                "count": 456088,
+                "defaultQueryFactorType": {
+                  "buckets": [
+                    {
+                      "val": "ORGANISM_PART",
+                      "count": 453289,
+                      "experimentAccession": {
+                        "buckets": [
+                          {
+                            "val": "E-MTAB-1733",
+                            "count": 449957,
+                            "uniqueIdentifiers": 25247,
+                            "assayGroupId": {
+                              "buckets": [
+                                {
+                                  "val": "g22",
+                                  "count": 21971,
+                                  "sumExpressionLevel": 467512.3999999801
+                                },
+                                {
+                                  "val": "g15",
+                                  "count": 16868,
+                                  "sumExpressionLevel": 486396.0999999961
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "val": "E-MTAB-513",
+                            "count": 3332,
+                            "uniqueIdentifiers": 352,
+                            "assayGroupId": {
+                              "buckets": [
+                                {
+                                  "val": "g13",
+                                  "count": 262,
+                                  "sumExpressionLevel": 4510.1
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "val": "CELL_LINE",
+                      "count": 2799,
+                      "experimentAccession": {
+                        "buckets": [
+                          {
+                            "val": "E-GEOD-26284",
+                            "count": 2799,
+                            "uniqueIdentifiers": 75,
+                            "assayGroupId": {
+                              "buckets": []
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

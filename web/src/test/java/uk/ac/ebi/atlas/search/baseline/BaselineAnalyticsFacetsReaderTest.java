@@ -38,12 +38,20 @@ public class BaselineAnalyticsFacetsReaderTest {
         }
     }
 
+    static String load2Json() {
+        InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/test/analytics.facets.test.json");
+        try {
+            return IOUtils.toString(in);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     @Test
     public void extractTreeFacets() {
-        String facetsTreeJson = subject.generateFacetsTreeJson(loadJson());
+        String facetsTreeJson = subject.generateFacetsTreeJson(load2Json());
 
-
-        assertThat(facetsTreeJson, is("[{\"Homo sapiens\":[{\"factor\":\"ORGANISM_PART\",\"source\":\"Organism part\"},{\"factor\":\"CELL_LINE\",\"source\":\"Cell line\"}]}]"));
+        assertThat(facetsTreeJson, is("{\"Homo sapiens\":[{\"factor\":\"ORGANISM_PART\",\"source\":\"Organism part\"},{\"factor\":\"CELL_LINE\",\"source\":\"Cell line\"}],\"Mus musculus\":[{\"factor\":\"ORGANISM_PART\",\"source\":\"Organism part\"},{\"factor\":\"CELL_LINE\",\"source\":\"Cell line\"}]}"));
     }
 
 }

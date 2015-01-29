@@ -58,8 +58,6 @@ public class BaselineAnalyticsFacetsReader {
 
         List<Map<String, Object>> results = JsonPath.read(json, FACET_TREE_PATH);
 
-        ImmutableList.Builder<Map<String,List<FacetTree>>> builder = ImmutableList.builder();
-
         Map<String,List<FacetTree>> facetTree = Maps.newLinkedHashMap();
 
         for (Map<String, Object> experiment : results) {
@@ -80,12 +78,11 @@ public class BaselineAnalyticsFacetsReader {
 
             facetTree.put(species, facetTreeList);
 
-            builder.add(facetTree);
         }
 
         Gson gson = new Gson();
 
-        return gson.toJson(builder.build());
+        return gson.toJson(facetTree);
     }
 
     private class FacetTree {

@@ -58,43 +58,25 @@
 
 <script src="${pageContext.request.contextPath}/resources/jsx/facets.js"></script>
 
-<script type="text/jsx">
+<script>
 
     <%--var facetsData = <%@ include file="includes/facets-data.jsp" %>;--%>
 
-    var facetsData = {
-        "config" : {
-            contextRoot: '/gxa'
-        },
-        "facets": [
-                {
-                    "Homo sapiens": [
-                        {"factor": "ORGANISM_PART", "source": "Organism part"},
-                        {"factor": "CELL_LINE", "source": "Cell line"}
-                    ],
-                    "Mus musculus": [
-                        {"factor": "CELL_LINE", "source": "Cell line"}
-                    ]
-                }
-             ]
+    var facetsData = ${jsonFacets};
 
-    };
-
-//    var facetsModuleBuild = 'facetsModule.build';
-
-    (function ($, React, build, facetsConfig, facets) {
+    (function ($, React, build, facetsConfig, facetsData) {
 
         $(document).ready(function () {
             // call this inside ready() so all scripts load first in IE8
             var facets = facetsModule.build(facetsConfig);
 
-            React.renderComponent(facets.Facets({facets: facets}),
+            React.renderComponent(facets.Facets({facets: facetsData}),
                     document.getElementById('facets-react')
             );
 
         });
 
-    })(jQuery, React, facetsModule, facetsData.config, facetsData.facets);
+    })(jQuery, React, facetsModule, facetsData.config, facetsData);
 
 </script>
 <script>
