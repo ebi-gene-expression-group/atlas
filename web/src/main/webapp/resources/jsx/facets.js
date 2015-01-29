@@ -5,48 +5,48 @@ var facetsModule = (function($, React) {
 
     var build = function build(facetsConfig, eventEmitter) {
 
-        var Facets = React.createClass({
+        var Facets = React.createClass({displayName: 'Facets',
 
              render: function () {
                  var speciesRows = Object.keys(this.props.facets).map( function (species) {
-                     return <Species species={species} sources={this.props.facets[species]} />;
+                     return Species( {species:species, sources:this.props.facets[species]} );
                 }.bind(this));
 
                 return (
-                    <span>
-                        {speciesRows}
-                    </span>
+                    React.DOM.span(null, 
+                        speciesRows
+                    )
                 );
             }
         });
 
-        var Species = React.createClass({
+        var Species = React.createClass({displayName: 'Species',
 
             render: function () {
                 var sourcesRows = Object.keys(this.props.sources).map(function( sources ){
                     var sourcesObject = this.props.sources[sources];
-                    return <Source factor={sourcesObject.factor} name={sourcesObject.source} />;
+                    return Source( {factor:sourcesObject.factor, name:sourcesObject.source} );
 
                 }.bind(this));
 
                 return (
-                    <span>
-                        <div>
-                            <span>{this.props.species}</span>
-                        </div>
-                    {sourcesRows}
-                    </span>
+                    React.DOM.span(null, 
+                        React.DOM.div(null, 
+                            React.DOM.span(null, this.props.species)
+                        ),
+                    sourcesRows
+                    )
                 );
             }
         });
 
-        var Source = React.createClass({
+        var Source = React.createClass({displayName: 'Source',
 
             render: function() {
                 return (
-                    <div>
-                        <input type="checkbox" /> {this.props.name}
-                    </div>
+                    React.DOM.div(null, 
+                        React.DOM.input( {type:"checkbox"} ), " ", this.props.name
+                    )
                 );
             }
         });
