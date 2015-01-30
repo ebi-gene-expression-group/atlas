@@ -36,7 +36,7 @@
 
 
 <section class="grid_23 extra-padding">
-    <div id="widgetBody"></div>
+    <div id="atlasHeatmap"></div>
 </section>
 
 <div id="help-placeholder" style="display: none"></div>
@@ -48,6 +48,8 @@
 <%@ include file="includes/heatmap-js.jsp" %>
 <%@ include file="includes/anatomogram.jsp" %>
 
+<script src="${pageContext.request.contextPath}/resources/jsx/facets.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jsx/bioJSAtlasHeatmap.js"></script>
 <script src="${pageContext.request.contextPath}/resources/jsx/heatmapContainer.js"></script>
 
 
@@ -56,15 +58,13 @@
 </section>
 
 
-<script src="${pageContext.request.contextPath}/resources/jsx/facets.js"></script>
-
 <script>
 
     <%--var facetsData = <%@ include file="includes/facets-data.jsp" %>;--%>
 
     var facetsData = ${jsonFacets};
 
-    (function ($, React, build, facetsConfig, facetsData) {
+    (function ($, React, facetsConfig, facetsData) {
 
         $(document).ready(function () {
             // call this inside ready() so all scripts load first in IE8
@@ -76,7 +76,7 @@
 
         });
 
-    })(jQuery, React, facetsModule, facetsData.config, facetsData);
+    })(jQuery, React, facetsData.config, facetsData);
 
 </script>
 <script>
@@ -84,15 +84,9 @@
     window.onload = function () {
 
         var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
+        var gxaBaseUrl = '${pageContext.request.contextPath}';
 
-        new Biojs.AtlasHeatmap({
-            gxaBaseUrl: '${pageContext.request.contextPath}',
-            params: 'geneQuery=${identifierSearch}' + widgetParameters,
-            isMultiExperiment: true,
-            target: "widgetBody",
-            heatmapClass: "heatmap-position",
-            heatmapUrl: "/widgets/heatmap/baselineAnalytics"
-        });
+        React.renderComponent(BioJSAtlasHeatmap({widgetParameters:widgetParameters, gxaBaseUrl:gxaBaseUrl, geneQuery:'${identifierSearch}'}), document.getElementById('atlasHeatmap'));
 
     };
 </script>

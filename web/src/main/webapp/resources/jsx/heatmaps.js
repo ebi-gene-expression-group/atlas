@@ -8,9 +8,9 @@ var Heatmaps = (function (React) {
         render: function () {
             // this.props.geneQuery
             return (
-                <div>
-                    {JSON.stringify(this.props.heatmaps)}
-                </div>
+                React.DOM.div(null, 
+                    JSON.stringify(this.props.heatmaps)
+                )
             );
         }
     });
