@@ -122,7 +122,7 @@ public class BaselineExperimentSearchResultProducer {
         double level = rnaSeqBslnExpression.expressionLevel();
 
         String assayGroupId = rnaSeqBslnExpression.assayGroupId();
-        FactorGroup factorGroup = experiment.getExperimentalFactors().getFactorGroupByAssayGroupId(assayGroupId);
+        FactorGroup factorGroup = experiment.getExperimentalFactors().getFactorGroup(assayGroupId);
 
         return new BaselineExpression(level, factorGroup);
     }

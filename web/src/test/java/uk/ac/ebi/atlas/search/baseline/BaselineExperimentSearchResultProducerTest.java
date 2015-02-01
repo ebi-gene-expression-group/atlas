@@ -74,10 +74,10 @@ public class BaselineExperimentSearchResultProducerTest {
         when(baselineExperiment1.isTissueExperiment()).thenReturn(true);
         when(baselineExperiment1.getAccession()).thenReturn(E_MTAB_599);
         when(baselineExperiment1.getDisplayName()).thenReturn(EXPERIMENT_DISPLAY_NAME);
-        when(experimentalFactors.getFactorGroup("g3")).thenReturn(new FactorSet(THYMUS));
-        when(experimentalFactors.getFactorGroup("g5")).thenReturn(new FactorSet(LUNG));
-        when(experimentalFactors.getFactorGroup("g6")).thenReturn(new FactorSet(SPLEEN));
-        when(experimentalFactors.getComplementFactors(Mockito.any(FactorGroup.class))).thenReturn(ALL_FACTORS);
+        when(experimentalFactors1.getFactorGroup("g3")).thenReturn(new FactorSet(THYMUS));
+        when(experimentalFactors1.getFactorGroup("g5")).thenReturn(new FactorSet(LUNG));
+        when(experimentalFactors1.getFactorGroup("g6")).thenReturn(new FactorSet(SPLEEN));
+        when(experimentalFactors1.getComplementFactors(Mockito.any(FactorGroup.class))).thenReturn(ALL_FACTORS);
         when(experimentalFactors1.getNonDefaultFactors(Mockito.anyString())).thenReturn(EMPTY_FACTOR_SET);
         when(experimentalFactors1.getDefaultQueryFactorType()).thenReturn(ORGANISM_PART);
 
@@ -87,8 +87,8 @@ public class BaselineExperimentSearchResultProducerTest {
         when(baselineExperiment2.isTissueExperiment()).thenReturn(false);
         when(baselineExperiment2.getAccession()).thenReturn(E_MTAB_513);
         when(baselineExperiment2.getDisplayName()).thenReturn(E_MTAB_513_DISPLAY_NAME);
-        when(experimentalFactors2.getFactorGroupByAssayGroupId("gnt")).thenReturn(new FactorSet(HOMO_SAPIENS));
-        when(experimentalFactors2.getFilteredFactors(Mockito.any(FactorGroup.class))).thenReturn(ImmutableSortedSet.of(HOMO_SAPIENS));
+        when(experimentalFactors2.getFactorGroup("gnt")).thenReturn(new FactorSet(HOMO_SAPIENS));
+        when(experimentalFactors2.getComplementFactors(Mockito.any(FactorGroup.class))).thenReturn(ImmutableSortedSet.of(HOMO_SAPIENS));
         when(experimentalFactors2.getNonDefaultFactors(Mockito.anyString())).thenReturn(EMPTY_FACTOR_SET);
         when(experimentalFactors2.getDefaultQueryFactorType()).thenReturn(ORGANISM);
 
