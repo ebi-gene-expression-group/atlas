@@ -48,15 +48,21 @@
 <%@ include file="includes/heatmap-js.jsp" %>
 <%@ include file="includes/anatomogram.jsp" %>
 
-<script src="${pageContext.request.contextPath}/resources/jsx/facets.js"></script>
-<script src="${pageContext.request.contextPath}/resources/jsx/bioJSAtlasHeatmap.js"></script>
-<script src="${pageContext.request.contextPath}/resources/jsx/heatmapContainer.js"></script>
-
-
 <section class="grid_23 extra-padding">
-    <div id="facets-react"> FACETS TREE SELECTION</div>
+    <div id="facets"> FACETS TREE SELECTION</div>
+    <div id="heatmaps"></div>
 </section>
 
+<script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/query-string.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jsx/heatmaps.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jsx/facets.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jsx/heatmapsRouter.js"></script>
+
+
+
+<script src="${pageContext.request.contextPath}/resources/jsx/bioJSAtlasHeatmap.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jsx/heatmapContainer.js"></script>
 
 <script>
 
@@ -64,19 +70,12 @@
 
     var facetsData = ${jsonFacets};
 
-    (function ($, React, facetsConfig, facetsData) {
+    (function (HeatmapsRouter, facetsData) {
 
-        $(document).ready(function () {
-            // call this inside ready() so all scripts load first in IE8
-            var facets = facetsModule.build(facetsConfig);
+        HeatmapsRouter( document.getElementById('facets'),
+                document.getElementById('heatmaps'), facetsData);
 
-            React.renderComponent(facets.Facets({facets: facetsData}),
-                    document.getElementById('facets-react')
-            );
-
-        });
-
-    })(jQuery, React, facetsData.config, facetsData);
+    })(HeatmapsRouter, facetsData);
 
 </script>
 <script>

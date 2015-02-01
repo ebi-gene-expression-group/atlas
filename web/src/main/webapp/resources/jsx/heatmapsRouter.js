@@ -36,7 +36,12 @@ var HeatmapsRouter = (function (React, page, queryString, facetsModule, Heatmaps
         page(ctx.pathname + newQueryString);
       }
 
+
       function addSelection(select, species, factor) {
+        if (!select) {
+          select = {};
+        }
+
         if (!select[species]) {
           select[species] = {};
         }
