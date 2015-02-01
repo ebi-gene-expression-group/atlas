@@ -1,51 +1,43 @@
 //var React = require('react');
 
-var HeatmapsRouter = (function (React, page, queryString, facetsModule, Heatmaps) {
+var HeatmapsRouter = (function (React, queryString, facetsModule, Heatmaps) {
 
     var Facets = facetsModule.build().Facets;
 
     return function (facetsElement, heatmapsElement, facetData) {
 
         //TODO: add this outside the module, when module is first loaded
-        window.addEventListener('popstate', onPopState, false);
+        window.addEventListener('popstate', renderPage, false);
 
-        renderMain();
+        renderPage();
 
-        function onPopState() {
-            renderMain();
+        function renderPage() {
+            var query = queryString.parse(window.location.search.slice(1)),
+                pathname = window.location.pathname;
+            query.select = query.select && JSON.parse(query.select);
+            render(query, pathname);
         }
 
-        function renderMain() {
-            var ctx = {};
-            ctx.pathname = window.location.pathname;
-            ctx.query = queryString.parse(window.location.search.slice(1));
-            ctx.query.select = ctx.query.select && JSON.parse(ctx.query.select);
-            render(ctx);
-        }
-
-        function render(ctx) {
-            React.renderComponent(Facets({facets: facetData, checkedFacets: ctx.query.select, setChecked: setChecked}),
+        function render(query, pathname) {
+            React.renderComponent(Facets({facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
                 facetsElement
             );
 
-            React.renderComponent(Heatmaps({geneQuery: ctx.query.geneQuery, heatmaps: queryToHeatmaps(ctx.query)}),
+            React.renderComponent(Heatmaps({geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query)}),
                 heatmapsElement
             );
 
             function setChecked(checked, species, factor) {
-                console.log(ctx.query);
-                console.log("setChecked " + species + " " + factor + ": " + checked);
-
-                var newSelect = checked ? addSelection(ctx.query.select, species, factor) : removeSelection(ctx.query.select, species, factor);
-                var newQueryString = "?geneQuery=" + ctx.query.geneQuery + "&select=" + JSON.stringify(newSelect);
+                var newSelect = checked ? addSelection(query.select, species, factor) : removeSelection(query.select, species, factor);
+                var newQueryString = "?geneQuery=" + query.geneQuery + "&select=" + JSON.stringify(newSelect);
                 console.log(newQueryString);
-                navigateTo(ctx.pathname + newQueryString);
+                navigateTo(pathname + newQueryString);
             }
 
             function navigateTo(url) {
                 var state, title;
                 history.pushState(state, title, url);
-                renderMain();
+                renderPage();
             }
 
 
@@ -118,4 +110,4 @@ var HeatmapsRouter = (function (React, page, queryString, facetsModule, Heatmaps
 
     }
 
-})(React, page, window.queryString, facetsModule, Heatmaps);
+})(React, window.queryString, facetsModule, Heatmaps);

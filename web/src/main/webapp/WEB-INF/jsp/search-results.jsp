@@ -53,7 +53,6 @@
     <div id="heatmaps"></div>
 </section>
 
-<script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/query-string.js"></script>
 <script src="${pageContext.request.contextPath}/resources/jsx/heatmaps.js"></script>
 <script src="${pageContext.request.contextPath}/resources/jsx/facets.js"></script>
