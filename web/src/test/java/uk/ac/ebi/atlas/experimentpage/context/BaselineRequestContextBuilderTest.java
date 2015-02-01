@@ -81,7 +81,7 @@ public class BaselineRequestContextBuilderTest {
         when(preferencesMock.getQueryFactorValues()).thenReturn(Sets.newTreeSet(Sets.newHashSet(QUERY_FACTOR1, QUERY_FACTOR2, QUERY_FACTOR3)));
         when(preferencesMock.getQueryFactorType()).thenReturn(FACTOR_TYPE);
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
-        when(experimentalFactorsMock.getFilteredFactors(anySet())).thenReturn(Sets.newTreeSet(Sets.newHashSet(new Factor(FACTOR_TYPE, FACTOR_VALUE))));
+        when(experimentalFactorsMock.getComplementFactors(anySet())).thenReturn(Sets.newTreeSet(Sets.newHashSet(new Factor(FACTOR_TYPE, FACTOR_VALUE))));
     }
 
     @Test

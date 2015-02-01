@@ -74,10 +74,10 @@ public class BaselineExperimentSearchResultProducerTest {
         when(baselineExperiment1.isTissueExperiment()).thenReturn(true);
         when(baselineExperiment1.getAccession()).thenReturn(E_MTAB_599);
         when(baselineExperiment1.getDisplayName()).thenReturn(EXPERIMENT_DISPLAY_NAME);
-        when(experimentalFactors1.getFactorGroupByAssayGroupId("g3")).thenReturn(new FactorSet(THYMUS));
-        when(experimentalFactors1.getFactorGroupByAssayGroupId("g5")).thenReturn(new FactorSet(LUNG));
-        when(experimentalFactors1.getFactorGroupByAssayGroupId("g6")).thenReturn(new FactorSet(SPLEEN));
-        when(experimentalFactors1.getFilteredFactors(Mockito.any(FactorGroup.class))).thenReturn(ALL_FACTORS);
+        when(experimentalFactors.getFactorGroup("g3")).thenReturn(new FactorSet(THYMUS));
+        when(experimentalFactors.getFactorGroup("g5")).thenReturn(new FactorSet(LUNG));
+        when(experimentalFactors.getFactorGroup("g6")).thenReturn(new FactorSet(SPLEEN));
+        when(experimentalFactors.getComplementFactors(Mockito.any(FactorGroup.class))).thenReturn(ALL_FACTORS);
         when(experimentalFactors1.getNonDefaultFactors(Mockito.anyString())).thenReturn(EMPTY_FACTOR_SET);
         when(experimentalFactors1.getDefaultQueryFactorType()).thenReturn(ORGANISM_PART);
 

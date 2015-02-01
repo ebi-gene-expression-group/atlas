@@ -116,7 +116,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
-        SortedSet<AssayGroupFactor> filteredAssayGroupFactors = experimentalFactors.getFilteredAssayGroupFactors(selectedFilterFactors);
+        SortedSet<AssayGroupFactor> filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors);
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
         // It is in order.
@@ -150,7 +150,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
                     model.addAttribute("profilesAsGeneSets", profilesAsGeneSets);
                 }
 
-                addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, experimentalFactors.getFilteredFactors(selectedFilterFactors), model);
+                addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, experimentalFactors.getComplementFactors(selectedFilterFactors), model);
 
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
                     ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);

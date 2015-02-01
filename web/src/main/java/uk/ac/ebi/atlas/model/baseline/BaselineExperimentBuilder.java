@@ -135,6 +135,7 @@ public class BaselineExperimentBuilder {
         checkState(speciesMapping != null, "Please provide a map of species mappings");
         checkState(experimentalFactors != null, "Please provide a ExperimentFactors object");
         checkState(experimentDesign != null, "Please provide a ExperimentDesign object");
+        checkState(pubMedIds != null, "Please provide a pubMedIds object");
 
         if (StringUtils.isBlank(displayName)) {
             displayName = experimentAccession;

@@ -136,10 +136,10 @@ public class BaselineExperimentBuilderTest2 {
         Set<Factor> filteredFactors = Sets.newHashSet(factorMock1, factorMock2);
         //when
         ExperimentalFactors experimentalFactors = subject.getExperimentalFactors();
-        experimentalFactors.getFilteredFactors(filteredFactors);
+        experimentalFactors.getComplementFactors(filteredFactors);
 
         //then
-        verify(experimentalFactorsMock).getFilteredFactors(filteredFactors);
+        verify(experimentalFactorsMock).getComplementFactors(filteredFactors);
         assertThat(subject.getExperimentalFactors().getMenuFilterFactorNames(), is(Collections.EMPTY_SET));
     }
 

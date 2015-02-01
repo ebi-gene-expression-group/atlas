@@ -92,7 +92,7 @@ public class BaselineRequestContextBuilder {
         }
         requestContext.setSelectedQueryFactors(queryFactors);
 
-        SortedSet<Factor> allQueryFactors = experiment.getExperimentalFactors().getFilteredFactors(selectedFilterFactors);
+        SortedSet<Factor> allQueryFactors = experiment.getExperimentalFactors().getComplementFactors(selectedFilterFactors);
         checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
         requestContext.setAllQueryFactors(allQueryFactors);
 

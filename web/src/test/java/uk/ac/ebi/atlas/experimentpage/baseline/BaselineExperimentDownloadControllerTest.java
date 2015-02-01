@@ -101,7 +101,7 @@ public class BaselineExperimentDownloadControllerTest {
         when(baselineExperimentMock.getAccession()).thenReturn(EXPERIMENT_ACCESSION);
         when(baselineExperimentMock.getAssayGroups()).thenReturn(assayGroupsMock);
         when(baselineExperimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
-        when(experimentalFactorsMock.getFilteredFactors(anySet())).thenReturn(new TreeSet());
+        when(experimentalFactorsMock.getComplementFactors(anySet())).thenReturn(new TreeSet());
 
         when(requestContextBuilderMock.forExperiment(baselineExperimentMock)).thenReturn(requestContextBuilderMock);
         when(requestContextBuilderMock.withPreferences(preferencesMock)).thenReturn(requestContextBuilderMock);

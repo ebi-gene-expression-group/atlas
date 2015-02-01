@@ -118,7 +118,7 @@ public class BaselineProfilesTSVWriterTest {
                 .thenReturn(baselineProfile2)
                 .thenReturn(null);
 
-        when(experimentalFactorsMock.getFactorsByType(anyString())).thenReturn(ImmutableSortedSet.copyOf(organismParts));
+        when(experimentalFactorsMock.getFactors(anyString())).thenReturn(ImmutableSortedSet.copyOf(organismParts));
         when(experimentMock.getExperimentalFactors()).thenReturn(experimentalFactorsMock);
     }
 

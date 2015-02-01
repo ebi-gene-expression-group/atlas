@@ -149,7 +149,7 @@ public class BaselineExperimentProfileSearchServiceIT {
 
     private ImmutableSortedSet<Factor> getOrganismPartFactors(String experimentAccession) {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
-        return experiment.getExperimentalFactors().getFactorsByType("ORGANISM_PART");
+        return experiment.getExperimentalFactors().getFactors("ORGANISM_PART");
     }
 
     private static ImmutableSortedSet<Factor> getEMtab1733Tissues() {

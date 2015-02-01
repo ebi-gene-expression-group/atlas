@@ -47,7 +47,7 @@ public class BaselineProfileStreamOptionsWidgetQuery implements BaselineProfileS
 
     @Override
     public Set<Factor> getAllQueryFactors() {
-        return baselineExperiment.getExperimentalFactors().getFilteredFactors(selectedFilterFactors);
+        return baselineExperiment.getExperimentalFactors().getComplementFactors(selectedFilterFactors);
     }
 
     @Override

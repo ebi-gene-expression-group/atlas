@@ -141,6 +141,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
 
     opt:{
         gxaBaseUrl: 'http://www.ebi.ac.uk/gxa',
+
         /* params
          This mandatory parameter consists of the query for a particular
          gene or genes by given their properties. For a single gene query,
@@ -153,6 +154,20 @@ Biojs.AtlasHeatmap = Biojs.extend({
          the species, eg: geneQuery=ACTL7A&species=homo+sapiens
          */
         params:'geneQuery=REACT_1309',
+
+        /*  if false (default, deprecated), show expression data for individual genes from the reference baseline expression
+            experiment only. This allows comparing individual genes when params specifies a pathway or multiple genes.
+            When params is a pathway (eg: REACT_6900) then the widget with display "show by gene set" toggle for
+            displaying expression levels aggregated for the entire pathway.
+            To see an example: http://wwwdev.ebi.ac.uk/gxa/resources/biojs/test/heatmap-referenceExperiment.html?geneQuery=REACT_6900
+
+            if true (recommended), show expression for all genes by experiment, across all experiments in GXA. It allows the user to
+            see patterns of expression of a given gene in the same tissue across multiple experiments, further
+            strengthening the evidence of that gene’s expression in that tissue.
+            To see an example: http://wwwdev.ebi.ac.uk/gxa/resources/biojs/test/heatmap-multiExperiment.html?geneQuery=Brca1
+        */
+        isMultiExperiment: false,
+
         /* Target DIV
          This mandatory parameter is the identifier of the DIV tag where the
          component should be displayed. Use this value to draw your

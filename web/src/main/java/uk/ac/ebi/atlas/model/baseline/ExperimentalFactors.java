@@ -30,6 +30,7 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 /*
@@ -104,19 +105,48 @@ public class ExperimentalFactors implements Serializable {
         return coOccurringFactors.get(factor);
     }
 
-    public ImmutableSortedSet<Factor> getFactorsByType(String type) {
+    public ImmutableSortedSet<Factor> getFactors(String type) {
 
         return ImmutableSortedSet.copyOf(factorsByType.get(type));
 
     }
 
-    // return factors for the slice specified
-    public SortedSet<Factor> getFilteredFactors(final FactorGroup slice) {
-        TreeSet<Factor> factors = Sets.newTreeSet(slice);
-        return getFilteredFactors(factors);
+    public ImmutableMap<String, Factor> getFactorGroupedByAssayGroupId(String factorType) {
+        ImmutableMap.Builder<String, Factor> builder = ImmutableMap.builder();
+        for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
+            Factor factor = orderedFactorGroupsByAssayGroupId.get(groupId).getFactorByType(factorType);
+            checkNotNull(factor, String.format("No factor of type %s for assay group %s", factorType, groupId));
+            builder.put(groupId, factor);
+        }
+
+        return builder.build();
     }
 
-    public SortedSet<Factor> getFilteredFactors(final Set<Factor> filterFactors) {
+    //TODO: move this into BaselineExperimentAssayGroupSearchService
+    public Multimap<FactorGroup, String> getAssayGroupIdsGroupedByNonDefaultFactors(Iterable<String> assayGroupIds) {
+        Function<String, FactorGroup> groupByFunction = new Function<String, FactorGroup>() {
+            @Nullable
+            @Override
+            public FactorGroup apply(@Nullable String assayGroupId) {
+                return getNonDefaultFactors(assayGroupId);
+            }
+        };
+        return Multimaps.index(assayGroupIds, groupByFunction);
+    }
+
+    public FactorGroup getNonDefaultFactors(String assayGroupId) {
+        FactorGroup factorGroup = orderedFactorGroupsByAssayGroupId.get(assayGroupId);
+        return factorGroup.removeType(getDefaultQueryFactorType());
+    }
+
+
+    // return factors for the slice specified
+    public SortedSet<Factor> getComplementFactors(final FactorGroup slice) {
+        TreeSet<Factor> factors = Sets.newTreeSet(slice);
+        return getComplementFactors(factors);
+    }
+
+    public SortedSet<Factor> getComplementFactors(final Set<Factor> filterFactors) {
 
         if (CollectionUtils.isEmpty(filterFactors)) {
             return getAllFactors();
@@ -136,23 +166,9 @@ public class ExperimentalFactors implements Serializable {
 
     }
 
-    public FactorGroup getNonDefaultFactors(String assayGroupId) {
-        FactorGroup factorGroup = orderedFactorGroupsByAssayGroupId.get(assayGroupId);
-        return factorGroup.removeType(getDefaultQueryFactorType());
-    }
-
-    public Multimap<FactorGroup, String> groupAssayGroupIdsByNonDefaultFactor(Iterable<String> assayGroupIds) {
-        Function<String, FactorGroup> groupByFunction = new Function<String, FactorGroup>() {
-            @Nullable
-            @Override
-            public FactorGroup apply(@Nullable String assayGroupId) {
-                return getNonDefaultFactors(assayGroupId);
-            }
-        };
-        return Multimaps.index(assayGroupIds, groupByFunction);
-    }
-
-    public SortedSet<AssayGroupFactor> getFilteredAssayGroupFactors(final Set<Factor> filterFactors) {
+    // match each FactorGroup with the filterFactors, and for each match return the remaining single factor
+    // (if there is one and only one)
+    public SortedSet<AssayGroupFactor> getComplementAssayGroupFactors(final Set<Factor> filterFactors) {
 
         SortedSet<AssayGroupFactor> result = Sets.newTreeSet();
 
@@ -172,14 +188,15 @@ public class ExperimentalFactors implements Serializable {
         return result;
     }
 
-    public FactorGroup getFactorGroupByAssayGroupId(String assayGroupId) {
+
+    public FactorGroup getFactorGroup(String assayGroupId) {
         return orderedFactorGroupsByAssayGroupId.get(assayGroupId);
     }
 
-    public SortedSet<Factor> getFactorsForAssayGroupsByType(Collection<String> assayGroupIds, String factorType) {
+    public SortedSet<Factor> getFactors(Collection<String> assayGroupIds, String factorType) {
         SortedSet<Factor> factors = Sets.newTreeSet();
         for (String assayGroupId : assayGroupIds) {
-            FactorGroup factorGroupForAssay = getFactorGroupByAssayGroupId(assayGroupId);
+            FactorGroup factorGroupForAssay = getFactorGroup(assayGroupId);
             Factor defaultFactorForAssay = factorGroupForAssay.getFactorByType(factorType);
             factors.add(defaultFactorForAssay);
         }
@@ -203,12 +220,8 @@ public class ExperimentalFactors implements Serializable {
         return ImmutableSortedSet.copyOf(factorsByType.values());
     }
 
-    public int getFactorIndex(FactorGroup factorGroup) {
-        return orderedFactorGroups.indexOf(factorGroup);
-    }
-
     // ordered the same as the assay group ids in the expression levels .tsv
-    public ImmutableList<FactorGroup> getOrderedFactorGroups() {
+    public ImmutableList<FactorGroup> getFactorGroupsInOrder() {
         return ImmutableList.copyOf(orderedFactorGroups);
     }
 

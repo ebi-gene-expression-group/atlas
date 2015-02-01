@@ -19,7 +19,7 @@ public abstract class BaselineExperimentSlice {
 
     // these will typically be the tissue (ie: ORGANISM_PART) factors for the slice
     public SortedSet<Factor> nonFilterFactors() {
-        return experiment().getExperimentalFactors().getFilteredFactors(filterFactors());
+        return experiment().getExperimentalFactors().getComplementFactors(filterFactors());
     }
 
     public String organism() {
