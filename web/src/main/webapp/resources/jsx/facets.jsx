@@ -63,11 +63,10 @@ var facetsModule = (function ($, React) {
             },
 
             render: function () {
-                var sourcesRows = Object.keys(this.props.sources).map(function (sources) {
-                    var sourcesObject = this.props.sources[sources];
-                    return <Source factor={sourcesObject.factor}
-                        name={sourcesObject.source}
-                        checked={this.props.checkedSources && this.props.checkedSources[sourcesObject.factor]}
+                var sourcesRows = this.props.sources.map(function (source) {
+                    return <Source factor={source.factor}
+                        name={source.source}
+                        checked={this.props.checkedSources && this.props.checkedSources[source.factor]}
                         setChecked={this._setChecked}
                     />;
 
@@ -93,7 +92,7 @@ var facetsModule = (function ($, React) {
             render: function () {
                 return (
                     <div>
-                        <input type="checkbox" defaultChecked={this.props.checked}
+                        <input type="checkbox" checked={this.props.checked ? true : false}
                             onChange={this._setChecked}/> {this.props.name}
                     </div>
                 );
