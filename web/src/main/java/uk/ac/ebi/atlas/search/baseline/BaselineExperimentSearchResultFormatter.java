@@ -9,17 +9,17 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 import java.util.Iterator;
 import java.util.SortedSet;
 
-public class BaselineTissueExperimentSearchResultFormatter implements Iterable<String[]> {
+public class BaselineExperimentSearchResultFormatter implements Iterable<String[]> {
     final BaselineExperimentProfilesList experimentProfiles;
-    final SortedSet<Factor> tissueFactorsAcrossAllExperiments;
+    final SortedSet<Factor> factorsAcrossAllExperiments;
 
-    public BaselineTissueExperimentSearchResultFormatter(BaselineTissueExperimentSearchResult searchResult) {
+    public BaselineExperimentSearchResultFormatter(BaselineExperimentSearchResult searchResult) {
         this(searchResult.getExperimentProfiles(), searchResult.getTissueFactorsAcrossAllExperiments());
     }
 
-    public BaselineTissueExperimentSearchResultFormatter(BaselineExperimentProfilesList experimentProfiles, SortedSet<Factor> tissueFactorsAcrossAllExperiments) {
+    public BaselineExperimentSearchResultFormatter(BaselineExperimentProfilesList experimentProfiles, SortedSet<Factor> factorsAcrossAllExperiments) {
         this.experimentProfiles = experimentProfiles;
-        this.tissueFactorsAcrossAllExperiments = tissueFactorsAcrossAllExperiments;
+        this.factorsAcrossAllExperiments = factorsAcrossAllExperiments;
     }
 
     private String[] format(SortedSet<Factor> tissueFactorsAcrossAllExperiments) {
@@ -35,7 +35,7 @@ public class BaselineTissueExperimentSearchResultFormatter implements Iterable<S
     }
 
     public String[] getHeaders() {
-        return ArrayUtils.addAll(new String[] {"Experiment"} , format(tissueFactorsAcrossAllExperiments));
+        return ArrayUtils.addAll(new String[] {"Experiment"} , format(factorsAcrossAllExperiments));
     }
 
     public boolean isEmpty() {
@@ -66,13 +66,13 @@ public class BaselineTissueExperimentSearchResultFormatter implements Iterable<S
         }
 
         private String[] format(BaselineExperimentProfile profile) {
-            String[] row = new String[tissueFactorsAcrossAllExperiments.size() + 1];
+            String[] row = new String[factorsAcrossAllExperiments.size() + 1];
 
             int i = 0;
 
             row[i++] = profile.getName();
 
-            for (Factor factor : tissueFactorsAcrossAllExperiments) {
+            for (Factor factor : factorsAcrossAllExperiments) {
                 BaselineExpression expression = profile.getExpression(factor);
                 if (expression == null) {
                     row[i++] = "";

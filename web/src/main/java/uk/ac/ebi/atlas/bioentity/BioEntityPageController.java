@@ -40,7 +40,7 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWidgetQuery
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroupSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
-import uk.ac.ebi.atlas.search.baseline.BaselineTissueExperimentSearchResult;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList;
 import uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsSearchService;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -190,7 +190,7 @@ public abstract class BioEntityPageController {
     }
 
     void addBaselineResults(Set<String> geneIds, Model model) {
-        BaselineTissueExperimentSearchResult tissueResults = baselineExperimentProfileSearchService.query(geneIds);
+        BaselineExperimentSearchResult tissueResults = baselineExperimentProfileSearchService.query(geneIds);
 
         if (tissueResults.isEmpty()) {
             addBaselineCounts(geneIds, model);

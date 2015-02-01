@@ -17,10 +17,6 @@ public abstract class BaselineExperimentSlice {
     public abstract BaselineExperiment experiment();
     public abstract FactorGroup filterFactors();
 
-    public boolean isTissueExperiment() {
-        return experiment().isTissueExperiment();
-    }
-
     // these will typically be the tissue (ie: ORGANISM_PART) factors for the slice
     public SortedSet<Factor> nonFilterFactors() {
         return experiment().getExperimentalFactors().getFilteredFactors(filterFactors());

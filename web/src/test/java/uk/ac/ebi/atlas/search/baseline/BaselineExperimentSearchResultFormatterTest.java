@@ -20,7 +20,7 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineTissueExperimentSearchResultFormatterTest {
+public class BaselineExperimentSearchResultFormatterTest {
 
     private static final String HEART = "heart";
     private static final String LIVER = "liver";
@@ -43,7 +43,7 @@ public class BaselineTissueExperimentSearchResultFormatterTest {
     BaselineExperimentProfile profile1;
     BaselineExperimentProfile profile2;
 
-    private BaselineTissueExperimentSearchResultFormatter subject;
+    private BaselineExperimentSearchResultFormatter subject;
 
     @Before
     public void before() {
@@ -63,7 +63,7 @@ public class BaselineTissueExperimentSearchResultFormatterTest {
         profile2 = new BaselineExperimentProfile(slice2);
         BaselineExperimentProfilesList experimentProfiles = new BaselineExperimentProfilesList(ImmutableList.of(profile1, profile2));
 
-        subject = new BaselineTissueExperimentSearchResultFormatter(experimentProfiles, factors);
+        subject = new BaselineExperimentSearchResultFormatter(experimentProfiles, factors);
     }
 
     @Test

@@ -6,16 +6,16 @@ import uk.ac.ebi.atlas.model.baseline.Factor;
 
 import java.util.SortedSet;
 
-public class BaselineTissueExperimentSearchResult {
+public class BaselineExperimentSearchResult {
     final BaselineExperimentProfilesList experimentProfiles;
     final SortedSet<Factor> tissueFactorsAcrossAllExperiments;
 
-    public BaselineTissueExperimentSearchResult() {
+    public BaselineExperimentSearchResult() {
         experimentProfiles = new BaselineExperimentProfilesList();
         tissueFactorsAcrossAllExperiments = ImmutableSortedSet.of();
     }
 
-    public BaselineTissueExperimentSearchResult(BaselineExperimentProfilesList experimentProfiles, SortedSet<Factor> tissueFactorsAcrossAllExperiments) {
+    public BaselineExperimentSearchResult(BaselineExperimentProfilesList experimentProfiles, SortedSet<Factor> tissueFactorsAcrossAllExperiments) {
         this.experimentProfiles = experimentProfiles;
         this.tissueFactorsAcrossAllExperiments = tissueFactorsAcrossAllExperiments;
     }

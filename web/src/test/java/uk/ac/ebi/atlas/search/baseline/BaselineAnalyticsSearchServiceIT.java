@@ -82,7 +82,7 @@ public class BaselineAnalyticsSearchServiceIT {
 
     @Test
     public void singleGeneInEMtab1733() {
-        BaselineTissueExperimentSearchResult result = subject.findExpressionsForTissueExperiments("ENSG00000126549", "Homo sapiens");
+        BaselineExperimentSearchResult result = subject.findExpressionsForTissueExperiments("ENSG00000126549", "Homo sapiens");
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 

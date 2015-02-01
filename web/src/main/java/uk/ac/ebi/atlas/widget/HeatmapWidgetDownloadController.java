@@ -33,8 +33,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import uk.ac.ebi.atlas.search.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
-import uk.ac.ebi.atlas.search.baseline.BaselineTissueExperimentSearchResult;
-import uk.ac.ebi.atlas.search.baseline.BaselineTissueExperimentSearchResultFormatter;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResultFormatter;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -67,7 +67,7 @@ public final class HeatmapWidgetDownloadController {
          public void heatmapWidgetData (@RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
                                         @RequestParam(value = "species", required = true) String species,
                                         HttpServletResponse response) throws IOException {
-        BaselineTissueExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(bioEntityAccession, species, true);
+        BaselineExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(bioEntityAccession, species, true);
 
         if (!searchResult.isEmpty()) {
             setHttpHeaders(response, bioEntityAccession + "_baseline.tsv");
@@ -81,7 +81,7 @@ public final class HeatmapWidgetDownloadController {
     public void baselineAnalytics (@RequestParam(value = "geneQuery", required = true) String geneQuery,
                                    @RequestParam(value = "species", required = true) String species,
                                    HttpServletResponse response) throws IOException {
-        BaselineTissueExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressionsForTissueExperiments(geneQuery, species);
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressionsForTissueExperiments(geneQuery, species);
 
         if (!searchResult.isEmpty()) {
             setHttpHeaders(response, geneQuery + "_baseline.tsv");
@@ -101,8 +101,8 @@ public final class HeatmapWidgetDownloadController {
         return MessageFormat.format(tsvFileMastheadTemplate, bioEntityAccession, timeStamp) + "\n";
     }
 
-    private void writeTsv(BaselineTissueExperimentSearchResult searchResult, PrintWriter writer)  {
-        BaselineTissueExperimentSearchResultFormatter formatter = new BaselineTissueExperimentSearchResultFormatter(searchResult);
+    private void writeTsv(BaselineExperimentSearchResult searchResult, PrintWriter writer)  {
+        BaselineExperimentSearchResultFormatter formatter = new BaselineExperimentSearchResultFormatter(searchResult);
 
         String headers = Joiner.on("\t").join(formatter.getHeaders()) + "\n";
         writer.write(headers);

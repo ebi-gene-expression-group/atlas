@@ -47,7 +47,7 @@ import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.search.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
-import uk.ac.ebi.atlas.search.baseline.BaselineTissueExperimentSearchResult;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
@@ -176,7 +176,7 @@ public final class HeatmapWidgetController {
             return "widget-error";
         }
 
-        BaselineTissueExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(geneQuery, ensemblSpecies, true);
+        BaselineExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(geneQuery, ensemblSpecies, true);
 
         if (searchResult.isEmpty()) {
             model.addAttribute("errorMessage", "No baseline expression found for " + geneQuery);
@@ -202,7 +202,7 @@ public final class HeatmapWidgetController {
         String ensemblSpecies = StringUtils.isBlank(species) ?
                 speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery) : Species.convertToEnsemblSpecies(species);
 
-        BaselineTissueExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressionsForTissueExperiments(geneQuery, ensemblSpecies);
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressionsForTissueExperiments(geneQuery, ensemblSpecies);
 
         populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
 
@@ -211,16 +211,7 @@ public final class HeatmapWidgetController {
         return "heatmap-data";
     }
 
-    private void fetchMultiExperimentResultsAndPopulateModel(String geneQuery, String species, String propertyType, Model model) {
-        String ensemblSpecies = StringUtils.isBlank(species) ?
-                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery) : Species.convertToEnsemblSpecies(species);
-
-        BaselineTissueExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(geneQuery, ensemblSpecies, true);
-
-        populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
-    }
-
-    private void populateModelWithMultiExperimentResults(String geneQuery, String ensemblSpecies, BaselineTissueExperimentSearchResult searchResult, Model model) {
+    private void populateModelWithMultiExperimentResults(String geneQuery, String ensemblSpecies, BaselineExperimentSearchResult searchResult, Model model) {
         SortedSet<Factor> orderedFactors = searchResult.getTissueFactorsAcrossAllExperiments();
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
 

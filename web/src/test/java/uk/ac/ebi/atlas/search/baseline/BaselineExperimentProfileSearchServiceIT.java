@@ -110,7 +110,7 @@ public class BaselineExperimentProfileSearchServiceIT {
 
     @Test
     public void singleGeneInMultipleExperiments() {
-        BaselineTissueExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of("ENSG00000228278")));
+        BaselineExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of("ENSG00000228278")));
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
@@ -257,7 +257,7 @@ public class BaselineExperimentProfileSearchServiceIT {
 
         Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds("REACT_1619", "homo sapiens", true);
 
-        BaselineTissueExperimentSearchResult result = subject.query(geneIds.get());
+        BaselineExperimentSearchResult result = subject.query(geneIds.get());
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
@@ -410,7 +410,7 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(expressions,  hasItem(hasExperimentAccession("E-GEOD-26284")));
 
         // test that cell lines experiment is not returned
-        BaselineTissueExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT)));
+        BaselineExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT)));
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
@@ -444,7 +444,7 @@ public class BaselineExperimentProfileSearchServiceIT {
 
     @Test
     public void sortExperimentsByNonFilterFactors() {
-        BaselineTissueExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of("ENSG00000187003")));
+        BaselineExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of("ENSG00000187003")));
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
@@ -468,7 +468,7 @@ public class BaselineExperimentProfileSearchServiceIT {
 
     @Test
     public void nonOrganismFactorsAppendedToExperimentName() {
-        BaselineTissueExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of("ENSRNOG00000015557")));
+        BaselineExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of("ENSRNOG00000015557")));
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
@@ -491,7 +491,7 @@ public class BaselineExperimentProfileSearchServiceIT {
 
     @Test
     public void ignoreGeneInExperimentWithOrganismPartButOrganismPartIsNotDefaultQueryType() {
-        BaselineTissueExperimentSearchResult result = subject.query(ImmutableSet.of("WBGene00194914"));
+        BaselineExperimentSearchResult result = subject.query(ImmutableSet.of("WBGene00194914"));
 
         assertThat(result.isEmpty(), is(true));
     }

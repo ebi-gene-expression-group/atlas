@@ -45,13 +45,13 @@ public class BaselineExperimentProfileSearchService {
 
     private final SolrQueryService solrQueryService;
 
-    private BaselineTissueExperimentSearchResultProducer baselineTissueExperimentSearchResultProducer;
+    private BaselineExperimentSearchResultProducer baselineExperimentSearchResultProducer;
 
     @Inject
-    public BaselineExperimentProfileSearchService(RnaSeqBslnExpressionDao rnaSeqBslnExpressionDao, SolrQueryService solrQueryService, BaselineTissueExperimentSearchResultProducer baselineTissueExperimentSearchResultProducer) {
+    public BaselineExperimentProfileSearchService(RnaSeqBslnExpressionDao rnaSeqBslnExpressionDao, SolrQueryService solrQueryService, BaselineExperimentSearchResultProducer baselineExperimentSearchResultProducer) {
         this.rnaSeqBslnExpressionDao = rnaSeqBslnExpressionDao;
         this.solrQueryService = solrQueryService;
-        this.baselineTissueExperimentSearchResultProducer = baselineTissueExperimentSearchResultProducer;
+        this.baselineExperimentSearchResultProducer = baselineExperimentSearchResultProducer;
     }
 
     boolean isEmpty(Optional<? extends Collection<?>> coll) {
@@ -60,7 +60,7 @@ public class BaselineExperimentProfileSearchService {
 
     // query(Set<String> geneIds) to be used going forward, see TODO below
     @Deprecated
-    public BaselineTissueExperimentSearchResult query(String geneQuery, String species, boolean isExactMatch)  {
+    public BaselineExperimentSearchResult query(String geneQuery, String species, boolean isExactMatch)  {
         LOGGER.info(String.format("<query> geneQuery=%s", geneQuery));
 
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
@@ -70,7 +70,7 @@ public class BaselineExperimentProfileSearchService {
         //for both baseline and differential.
         Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
 
-        BaselineTissueExperimentSearchResult result = fetchTissueExperimentProfiles(geneIds);
+        BaselineExperimentSearchResult result = fetchTissueExperimentProfiles(geneIds);
 
         stopWatch.stop();
         LOGGER.info(String.format("<query> %s results, took %s seconds", result.experimentProfiles.size(), stopWatch.getTotalTimeSeconds()));
@@ -78,13 +78,13 @@ public class BaselineExperimentProfileSearchService {
         return result;
     }
 
-    public BaselineTissueExperimentSearchResult query(Set<String> geneIds)  {
+    public BaselineExperimentSearchResult query(Set<String> geneIds)  {
         LOGGER.info(String.format("<query> geneIds=%s", Joiner.on(",").join(geneIds)));
 
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        BaselineTissueExperimentSearchResult result = fetchTissueExperimentProfiles(Optional.of(geneIds));
+        BaselineExperimentSearchResult result = fetchTissueExperimentProfiles(Optional.of(geneIds));
 
         stopWatch.stop();
         LOGGER.info(String.format("<query> %s results, took %s seconds", result.experimentProfiles.size(), stopWatch.getTotalTimeSeconds()));
@@ -92,15 +92,15 @@ public class BaselineExperimentProfileSearchService {
         return result;
     }
 
-    BaselineTissueExperimentSearchResult fetchTissueExperimentProfiles(Optional<? extends Set<String>> geneIds) {
+    BaselineExperimentSearchResult fetchTissueExperimentProfiles(Optional<? extends Set<String>> geneIds) {
 
         if (isEmpty(geneIds)) {
-            return new BaselineTissueExperimentSearchResult();
+            return new BaselineExperimentSearchResult();
         }
 
         List<RnaSeqBslnExpression> expressions = rnaSeqBslnExpressionDao.fetchAverageExpressionByExperimentAssayGroup(geneIds.get());
 
-        return baselineTissueExperimentSearchResultProducer.buildProfilesForTissueExperiments(expressions);
+        return baselineExperimentSearchResultProducer.buildProfilesForTissueExperiments(expressions);
     }
 
 }
