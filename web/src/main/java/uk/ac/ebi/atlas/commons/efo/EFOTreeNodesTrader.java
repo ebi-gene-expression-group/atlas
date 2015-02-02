@@ -31,8 +31,9 @@ public class EFOTreeNodesTrader {
         if (urlToEFONode == null) {
             try {
                 EFOLoader efoLoader = new EFOLoader();
-                LOGGER.debug("efoLoader.load " + efoOwlFilePath);
+                LOGGER.debug("load " + efoOwlFilePath);
                 urlToEFONode = efoLoader.load(new FileInputStream(efoOwlFilePath)).getMap();
+                LOGGER.debug("load done");
             } catch (FileNotFoundException e) {
                 throw new EFOTreeNodesTraderException(e);
             }
