@@ -64,6 +64,9 @@
 
 <%@ include file="includes/heatmap-react.jsp" %>
 
+<%-- used by helpTooltipsModule and the prefForm --%>
+<div id="help-placeholder" style="display: none"></div>
+
 <script type="text/javascript">
 
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts
