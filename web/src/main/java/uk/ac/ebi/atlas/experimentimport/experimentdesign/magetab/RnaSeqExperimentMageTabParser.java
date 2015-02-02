@@ -41,13 +41,20 @@ import java.util.Set;
 public class RnaSeqExperimentMageTabParser extends MageTabParser<ScanNode> {
 
     private static final String ENA_RUN = "ENA_RUN";
+    private static final String RUN_NAME = "RUN_NAME";
 
     @Override
     protected Set<NamedSdrfNode<ScanNode>> getAssayNodes(SDRF sdrf) {
 
         Set<NamedSdrfNode<ScanNode>> namedSdrfNodes = Sets.newLinkedHashSet();
         for (ScanNode scanNode : sdrf.getNodes(ScanNode.class)) {
-            namedSdrfNodes.add(new NamedSdrfNode(scanNode.comments.get(ENA_RUN).iterator().next(), scanNode));
+            List<String> assayNodes = scanNode.comments.get(ENA_RUN);
+            if (assayNodes == null || assayNodes.isEmpty()) {
+                // We procure certain human RNA-seq experiments directly from EGA, hence their sdrf will not
+                // have an ENA_RUN comment. Im such cases, we take the RUN_NAME comment column as the assay node.
+                assayNodes = scanNode.comments.get(RUN_NAME);
+            }
+            namedSdrfNodes.add(new NamedSdrfNode(assayNodes.iterator().next(), scanNode));
         }
         return namedSdrfNodes;
     }
