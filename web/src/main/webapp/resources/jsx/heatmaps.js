@@ -7,9 +7,13 @@ var Heatmaps = (function (React) {
 
         render: function () {
             // this.props.geneQuery
+            var geneQuery = this.props.geneQuery;
             return (
                 React.DOM.div(null, 
-                    JSON.stringify(this.props.heatmaps)
+                     this.props.heatmaps.map(function (heatmapParameters) {
+                         return BioJSAtlasHeatmap({gxaBaseUrl: "/gxa", 
+                             geneQuery: geneQuery, species: heatmapParameters.species, factor: heatmapParameters.factor});
+                     })
                 )
             );
         }

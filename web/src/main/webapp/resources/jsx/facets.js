@@ -30,9 +30,9 @@ var facetsModule = (function ($, React) {
 
             render: function () {
                 var speciesRows = Object.keys(this.props.facets).map(function (species) {
-                    return Species( {species:species, sources:this.props.facets[species],
-                                    checkedSources:this.props.checkedFacets && this.props.checkedFacets[species],
-                                    setChecked:this._setChecked}
+                    return Species({species: species, sources: this.props.facets[species], 
+                                    checkedSources: this.props.checkedFacets && this.props.checkedFacets[species], 
+                                    setChecked: this._setChecked}
                     );
                 }.bind(this));
 
@@ -64,10 +64,10 @@ var facetsModule = (function ($, React) {
 
             render: function () {
                 var sourcesRows = this.props.sources.map(function (source) {
-                    return Source( {factor:source.factor,
-                        name:source.source,
-                        checked:this.props.checkedSources && this.props.checkedSources[source.factor],
-                        setChecked:this._setChecked}
+                    return Source({factor: source.factor, 
+                        name: source.source, 
+                        checked: this.props.checkedSources && this.props.checkedSources[source.factor], 
+                        setChecked: this._setChecked}
                     );
 
                 }.bind(this));
@@ -76,7 +76,7 @@ var facetsModule = (function ($, React) {
                     React.DOM.span(null, 
                         React.DOM.div(null, 
                             React.DOM.span(null, this.props.species)
-                        ),
+                        ), 
                     sourcesRows
                     )
                 );
@@ -92,8 +92,8 @@ var facetsModule = (function ($, React) {
             render: function () {
                 return (
                     React.DOM.div(null, 
-                        React.DOM.input( {type:"checkbox", checked:this.props.checked ? true : false,
-                            onChange:this._setChecked}), " ", this.props.name
+                        React.DOM.input({type: "checkbox", checked: this.props.checked ? true : false, 
+                            onChange: this._setChecked}), " ", this.props.name
                     )
                 );
             }

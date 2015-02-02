@@ -24,7 +24,7 @@ var BioJSAtlasHeatmap = (function(React) {
         componentDidMount: function() {
             new Biojs.AtlasHeatmap({
                 gxaBaseUrl: this.props.gxaBaseUrl,
-                params: 'geneQuery=' + this.props.geneQuery + this.props.widgetParameters,
+                params: 'geneQuery=' + this.props.geneQuery + "&species=" + this.props.species + "&factor=" + this.props.factor,
                 isMultiExperiment: true,
                 target: this.refs.widgetBody.getDOMNode(),
                 heatmapClass: "heatmap-position",
