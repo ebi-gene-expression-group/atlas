@@ -66,6 +66,8 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
     public String showGeneProfiles(@ModelAttribute("preferences") @Valid MicroarrayRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
 
+        model.addAttribute("isSingleGene", false);
+
         return super.showGeneProfiles(preferences, result, model, request);
 
     }
