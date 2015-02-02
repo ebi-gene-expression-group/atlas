@@ -184,6 +184,8 @@ public final class HeatmapWidgetController {
             return "widget-error";
         }
 
+        model.addAttribute("isSingleGene", true);
+
         populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
 
         // set here instead of in JSP, because the JSP may be included elsewhere

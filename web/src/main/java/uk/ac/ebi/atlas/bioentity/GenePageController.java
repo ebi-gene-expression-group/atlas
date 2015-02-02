@@ -64,6 +64,8 @@ public class GenePageController extends BioEntityPageController {
 
         model.addAttribute("disableGeneLinks", true);
 
+        model.addAttribute("isSingleGene", true);
+
         addBaselineResults(ImmutableSet.of(identifier), model);
 
         loadDifferentialResults(identifier, model);

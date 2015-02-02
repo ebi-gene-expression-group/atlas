@@ -80,6 +80,8 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
 
         model.addAttribute("isWidget", false);
 
+        model.addAttribute("isSingleGene", false);
+
         return "experiment";
     }
 

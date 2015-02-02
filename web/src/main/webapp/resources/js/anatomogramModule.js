@@ -31,20 +31,24 @@ var anatomogramModule = (function ($) {
         path.style.fillOpacity = opacity;
     }
 
-    function togglePathColor(path, evtType) {
+    function togglePathColor(path, evtType, isSingleGene, color) {
 
         "use strict";
 
-        if (evtType === undefined) {
-            setHilighting(path, "gray", 0.5);
-        } else if (evtType === 'mouseenter' || evtType === 'mouseover') {
+        if(isSingleGene && evtType === undefined && color === "red"){ //We highlight the whole anatomogram with paths expressed in the gene
             setHilighting(path, "red", 0.7);
         } else {
-            setHilighting(path, "gray", 0.5);
+            if (evtType === undefined) {
+                setHilighting(path, "gray", 0.5);
+            } else if (!isSingleGene && (evtType === 'mouseenter' || evtType === 'mouseover')) {
+                setHilighting(path, "red", 0.7);
+            } else {
+                setHilighting(path, "gray", 0.5);
+            }
         }
     }
 
-    function toggleOrganismPartColor(svg, svgPathId, evt) {
+    function toggleOrganismPartColor(svg, isSingleGene, svgPathId, evt, color) {
 
         "use strict";
 
@@ -54,10 +58,10 @@ var anatomogramModule = (function ($) {
         if (element !== null) {
             if (element.nodeName === 'g') {
                 $.each(element.getElementsByTagName('path'), function () {
-                    togglePathColor(this, evtType);
+                    togglePathColor(this, evtType, isSingleGene, color);
                 });
             } else {
-                togglePathColor(element, evtType);
+                togglePathColor(element, evtType, isSingleGene, color);
             }
 
         }
@@ -111,28 +115,48 @@ var anatomogramModule = (function ($) {
         });
     }
 
-    function highlightAllOrganismParts(svg, allSvgPathIds) {
+    function highlightAllOrganismParts(svg, isSingleGene, allSvgPathIds) {
         $.each(allSvgPathIds, function () {
-            toggleOrganismPartColor(svg, this);
+            toggleOrganismPartColor(svg, isSingleGene, this);
         });
     }
 
     //load anatomogram from given location and display given organism parts
-    function loadAnatomogram(location, allSvgPathIds) {
+    function loadAnatomogram(location, allSvgPathIds, isSingleGene) {
         var svg = $('#anatomogramBody').svg('get');
 
         svg.load(location, {
             onLoad:function(){
                 scaleAnatomogram(svg);
-                highlightAllOrganismParts(svg, allSvgPathIds);
-                initAnatomogramBindings(svg, allSvgPathIds);
-
+                if(isSingleGene) {
+                    highlightAllOrganismParts(svg, isSingleGene, allSvgPathIds);
+                    highlightExpressedOrganismsPartsOnly(svg, isSingleGene);
+                }
+                else {
+                    highlightAllOrganismParts(svg, isSingleGene, allSvgPathIds);
+                    initAnatomogramBindings(svg, allSvgPathIds);
+                }
             }
         });
         return svg;
     }
 
-    function init(allSvgPathIds, fileNameMale, fileNameFemale, contextRoot, species) {
+    function highlightExpressedOrganismsPartsOnly(svg, isSingleGene) {
+
+        var geneExpressions = $("#heatmap-table td:first-child").parent("tr").find('div[data-svg-path-id!=‘’]');
+
+        var factorValues = geneExpressions.map(function () {
+            if( $(this).find("span").text() != "NA" )
+                return $(this).attr('data-svg-path-id');
+        }).get();
+
+        $.each(factorValues, function () {
+            toggleOrganismPartColor(svg, isSingleGene, this, undefined, "red");    //isExpressed-> true then highlight in red
+        });
+
+    }
+
+    function init(allSvgPathIds, fileNameMale, fileNameFemale, contextRoot, species, isSingleGene) {
         if ($('#anatomogramBody').length === 0) {
             return;
         }
@@ -140,7 +164,7 @@ var anatomogramModule = (function ($) {
         //init svg
         $('#anatomogramBody').svg();
 
-        var svg = loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds);
+        var svg = loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
 
         //hover on gene name, to highlight all organism parts involved on a single gene profile
         $("#heatmap-table td:first-child").on("hover", function (evt) { //hover on cells of the first table column
@@ -150,17 +174,20 @@ var anatomogramModule = (function ($) {
                 return $(this).attr('data-svg-path-id');
             }).get();
 
-            $.each(factorValues, function () {
-                toggleOrganismPartColor(svg, this, evt);
-            });
+
+            if(!isSingleGene) {  //if is not gene page then highlight
+                $.each(factorValues, function () {
+                    toggleOrganismPartColor(svg, isSingleGene, this, evt);
+                });
+            }
 
         });
 
         //hover on a header or expression level cell to highlight related SVG organism part
         $("#heatmap-table td,th").on("hover", function (evt) {
             var organismPart = $(this).find('div').attr("data-svg-path-id");
-            if (organismPart !== undefined) {
-                toggleOrganismPartColor(svg, organismPart, evt);
+            if (organismPart !== undefined && !isSingleGene) {  //if is not gene page then highlight
+                toggleOrganismPartColor(svg, isSingleGene, organismPart, evt);
             }
         });
 
@@ -170,11 +197,11 @@ var anatomogramModule = (function ($) {
                 function () {
 
                     $(this).attr("src", contextRoot + selectFemaleImageToggle(species));
-                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameFemale, allSvgPathIds);
+                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameFemale, allSvgPathIds, isSingleGene);
                 },
                 function () {
                     $(this).attr("src", contextRoot + selectMaleImageToggle(species));
-                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds);
+                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
                 }
             ).tooltip();
         } else {

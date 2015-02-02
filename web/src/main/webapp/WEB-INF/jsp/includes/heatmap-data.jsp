@@ -40,7 +40,8 @@
                 "enableEnsemblLauncher": ${isMultiExperiment ? false : (empty enableEnsemblLauncher ? true : enableEnsemblLauncher)},
                 "showMaPlotButton": true,
                 "gseaPlots": ${empty gseaPlots ? "null" : gseaPlots},
-                "downloadProfilesURL": "${not empty downloadURL ? downloadURL : applicationProperties.buildDownloadURL(pageContext.request)}"
+                "downloadProfilesURL": "${not empty downloadURL ? downloadURL : applicationProperties.buildDownloadURL(pageContext.request)}",
+                "isSingleGene": ${isSingleGene}
             },
             "columnHeaders": ${not empty jsonColumnHeaders ? jsonColumnHeaders : "null"},
             "profiles": ${not empty jsonProfiles ? jsonProfiles : "null"},
