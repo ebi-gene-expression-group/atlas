@@ -103,7 +103,7 @@ public class BaselineAnalyticsSearchServiceIT {
         assertThat(baselineProfile.getKnownExpressionLevel(PLACENTA), is(36D));
         assertThat(baselineProfile.getKnownExpressionLevel(SALIVARY_GLAND), is(80452D));
 
-        SortedSet<Factor> factors = result.tissueFactorsAcrossAllExperiments;
+        SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
         ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
         ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab1733Tissues()).build();
         assertThat(factors, contains(allFactors.toArray()));

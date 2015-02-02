@@ -214,7 +214,7 @@ public final class HeatmapWidgetController {
     }
 
     private void populateModelWithMultiExperimentResults(String geneQuery, String ensemblSpecies, BaselineExperimentSearchResult searchResult, Model model) {
-        SortedSet<Factor> orderedFactors = searchResult.getTissueFactorsAcrossAllExperiments();
+        SortedSet<Factor> orderedFactors = searchResult.getFactorsAcrossAllExperiments();
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
 
         ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);

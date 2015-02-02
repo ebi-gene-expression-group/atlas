@@ -14,7 +14,7 @@ public class BaselineExperimentSearchResultFormatter implements Iterable<String[
     final SortedSet<Factor> factorsAcrossAllExperiments;
 
     public BaselineExperimentSearchResultFormatter(BaselineExperimentSearchResult searchResult) {
-        this(searchResult.getExperimentProfiles(), searchResult.getTissueFactorsAcrossAllExperiments());
+        this(searchResult.getExperimentProfiles(), searchResult.getFactorsAcrossAllExperiments());
     }
 
     public BaselineExperimentSearchResultFormatter(BaselineExperimentProfilesList experimentProfiles, SortedSet<Factor> factorsAcrossAllExperiments) {

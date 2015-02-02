@@ -141,7 +141,7 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(baselineProfile2.getKnownExpressionLevel(PROSTATE), is(8D));
         assertThat(baselineProfile2.getKnownExpressionLevel(STOMACH), is(10D));
 
-        SortedSet<Factor> factors = result.tissueFactorsAcrossAllExperiments;
+        SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
         ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
         ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab1733Tissues()).addAll(getEMtab30352Tissues()).build();
         assertThat(factors, contains(allFactors.toArray()));
@@ -395,7 +395,7 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(baselineProfile3.getKnownExpressionLevel(TESTIS), is(14D));
         assertThat(baselineProfile3.getKnownExpressionLevel(THYROID), is(nullValue()));
 
-        SortedSet<Factor> factors = result.tissueFactorsAcrossAllExperiments;
+        SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
         ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
         ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab2836Tissues()).addAll(getEMtab30352Tissues()).addAll(getEMtab1733Tissues()).addAll(getEProt1Tissues()).build();
         assertThat(factors, contains(allFactors.toArray()));
@@ -420,7 +420,7 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(baselineProfilesList, hasItem(illuminaBodyMapExperimentProfile));
         assertThat(baselineProfilesList, not(hasItem(cellLinesExperimentProfile)));
 
-        SortedSet<Factor> factors = result.tissueFactorsAcrossAllExperiments;
+        SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
         ImmutableSortedSet<Factor> allFactors = getOrganismPartFactors("E-MTAB-513");
         assertThat(factors, contains(allFactors.toArray()));
 
