@@ -10,10 +10,10 @@ var Heatmaps = (function (React) {
             var geneQuery = this.props.geneQuery;
             return (
                 React.DOM.div(null, 
-                     this.props.heatmaps.map(function (heatmapParameters) {
-                         return BioJSAtlasHeatmap({gxaBaseUrl: "/gxa", 
-                             geneQuery: geneQuery, species: heatmapParameters.species, factor: heatmapParameters.factor});
-                     })
+                    this.props.heatmaps.map(function (heatmapParameters) {
+                        return BioJSAtlasHeatmap({gxaBaseUrl: "/gxa", 
+                            geneQuery: geneQuery, species: heatmapParameters.species, factor: heatmapParameters.factor});
+                    })
                 )
             );
         }
