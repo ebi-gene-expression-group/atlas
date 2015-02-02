@@ -34,6 +34,15 @@ public class BaselineAnalyticsSearchDao {
         return fetchFacets("identifierSearch:" + geneQuery, DEFAULT_CUT_OFF);
     }
 
+    public String queryByIdentifierSearchReturnFacetsOnly(String geneQuery) {
+        //if needed, could improve perf by getting counts only, and not sum(expressionLevel) or unique(bioentity_identifier)
+        return queryByIdentifierSearch(geneQuery);
+    }
+
+    public String queryByIdentifierSearch(String geneQuery, String defaultQueryFactorType) {
+        return fetchFacets(String.format("identifierSearch:%s AND defaultQueryFactorType:%s", geneQuery, defaultQueryFactorType), DEFAULT_CUT_OFF);
+    }
+
     String fetchFacets(String q, double cutOff) {
         return fetchResponseAsString(buildQueryUrl(q, cutOff));
     }

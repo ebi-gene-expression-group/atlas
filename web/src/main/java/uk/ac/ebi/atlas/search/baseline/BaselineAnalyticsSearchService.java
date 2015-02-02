@@ -21,19 +21,13 @@ public class BaselineAnalyticsSearchService {
     }
 
     public BaselineExperimentSearchResult findExpressions(String geneQuery, String species, String defaultQueryFactorType) {
-        String jsonResponse = baselineAnalyticsSearchDao.queryByIdentifierSearch(geneQuery);
+        String jsonResponse = baselineAnalyticsSearchDao.queryByIdentifierSearch(geneQuery, defaultQueryFactorType);
         ImmutableList<RnaSeqBslnExpression> expressions = baselineAnalyticsFacetsReader.extractAverageExpressionLevel(jsonResponse, Species.convertToEnsemblSpecies(species), defaultQueryFactorType);
-        return baselineExperimentSearchResultProducer.buildProfilesForTissueExperiments(expressions);
-    }
-
-    public BaselineExperimentSearchResult findExpressionsForTissueExperiments(String geneQuery, String species) {
-        String jsonResponse = baselineAnalyticsSearchDao.queryByIdentifierSearch(geneQuery);
-        ImmutableList<RnaSeqBslnExpression> expressions = baselineAnalyticsFacetsReader.extractAverageExpressionLevel(jsonResponse, Species.convertToEnsemblSpecies(species), "ORGANISM_PART");
-        return baselineExperimentSearchResultProducer.buildProfilesForTissueExperiments(expressions);
+        return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, defaultQueryFactorType);
     }
 
     public String findFacetsForTreeSearch(String geneQuery) {
-        String jsonResponse = baselineAnalyticsSearchDao.queryByIdentifierSearch(geneQuery);
+        String jsonResponse = baselineAnalyticsSearchDao.queryByIdentifierSearchReturnFacetsOnly(geneQuery);
 
         return baselineAnalyticsFacetsReader.generateFacetsTreeJson(jsonResponse);
     }

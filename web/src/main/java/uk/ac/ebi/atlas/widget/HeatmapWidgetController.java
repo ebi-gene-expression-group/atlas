@@ -198,13 +198,14 @@ public final class HeatmapWidgetController {
             @RequestParam(value = "geneQuery", required = true) String geneQuery,
             @RequestParam(value = "species", required = false) String species,
             @RequestParam(value = "propertyType", required = false) String propertyType,
-
+            @RequestParam(value = "source", required = false) String source,
             Model model, HttpServletResponse response) {
 
         String ensemblSpecies = StringUtils.isBlank(species) ?
                 speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery) : Species.convertToEnsemblSpecies(species);
 
-        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressionsForTissueExperiments(geneQuery, ensemblSpecies);
+        String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source;
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, ensemblSpecies, defaultFactorQueryType);
 
         populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
 

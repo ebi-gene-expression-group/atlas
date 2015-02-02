@@ -76,13 +76,15 @@ public class BaselineAnalyticsSearchServiceIT {
     private static final FactorGroup EMPTY_FACTOR_SET = new FactorSet();
     private static final FactorGroup ORGANISM_HOMO_SAPIENS = new FactorSet(new Factor("ORGANISM", "Homo sapiens"));
     private static final FactorGroup STAGE_ADULT = new FactorSet(new Factor("DEVELOPMENTAL_STAGE", "adult"));
+    private static final String CELL_LINE = "CELL_LINE";
+    private static final Factor AG445 = new Factor(CELL_LINE, "AG445");
 
     @Inject
     private BaselineAnalyticsSearchService subject;
 
     @Test
-    public void singleGeneInEMtab1733() {
-        BaselineExperimentSearchResult result = subject.findExpressionsForTissueExperiments("ENSG00000126549", "Homo sapiens");
+    public void singleSpeciesGeneAccession_Tissues() {
+        BaselineExperimentSearchResult result = subject.findExpressions("ENSG00000126549", "Homo sapiens", "ORGANISM_PART");
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
@@ -139,6 +141,31 @@ public class BaselineAnalyticsSearchServiceIT {
         builder.add(TESTIS);
         builder.add(THYROID);
         return builder.build();
+    }
+
+    @Test
+    public void geneQuery_CellLine() {
+        BaselineExperimentSearchResult result = subject.findExpressions("blood", "Homo sapiens", CELL_LINE);
+
+        BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
+
+        assertThat(baselineProfilesList, hasSize(5));
+        assertThat(baselineProfilesList.getTotalResultCount(), is(5));
+
+        BaselineExperimentProfile baselineProfile = baselineProfilesList.get(0);
+        assertThat(baselineProfile.getId(), is("E-GEOD-26284"));
+        assertThat(baselineProfile.getName(), is("ENCODE cell lines - long polyA RNA, whole cell"));
+        assertThat(baselineProfile.getFilterFactors(), is((FactorGroup) new FactorSet(new Factor("RNA", "long polyA RNA"), new Factor("CELLULAR_COMPONENT", "whole cell"))));
+        assertThat(baselineProfile.getConditions(), hasSize(9));
+        assertThat(baselineProfile.getMinExpressionLevel(), is(80D));
+        assertThat(baselineProfile.getMaxExpressionLevel(), is(364D));
+        assertThat(baselineProfile.getKnownExpressionLevel(AG445), is(364D));
+
+        SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
+        assertThat(factors, hasSize(23));
+//        ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
+//        ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab1733Tissues()).build();
+//        assertThat(factors, contains(allFactors.toArray()));
     }
 
 }

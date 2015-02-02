@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.widget;
 
 import com.google.common.base.Joiner;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
@@ -80,8 +81,11 @@ public final class HeatmapWidgetDownloadController {
     @RequestMapping(value = {"/widgets/heatmap/baselineAnalytics.tsv"}, method = RequestMethod.GET)
     public void baselineAnalytics (@RequestParam(value = "geneQuery", required = true) String geneQuery,
                                    @RequestParam(value = "species", required = true) String species,
+                                   @RequestParam(value = "source", required = false) String source,
                                    HttpServletResponse response) throws IOException {
-        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressionsForTissueExperiments(geneQuery, species);
+
+        String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source;
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, species, defaultFactorQueryType);
 
         if (!searchResult.isEmpty()) {
             setHttpHeaders(response, geneQuery + "_baseline.tsv");
