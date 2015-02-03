@@ -35,11 +35,8 @@ var BioJSAtlasHeatmap = (function(React) {
         render: function() {
             // render a heatmap per each element in the array heatmapsParams
             return(
-                React.DOM.div(null, 
-                JSON.stringify(this.props),
-                React.DOM.div( {ref:"widgetBody"}
+                React.DOM.div({ref: "widgetBody"}
 
-                )
                 )
             );
         }
