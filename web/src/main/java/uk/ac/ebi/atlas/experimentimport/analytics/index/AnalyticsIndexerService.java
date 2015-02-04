@@ -93,7 +93,7 @@ public class AnalyticsIndexerService {
         checkNotNull(experimentType);
         checkArgument(StringUtils.isNotBlank(defaultQueryFactorType));
 
-        LOGGER.info("Begin indexing analytics for experiment " + experimentAccession);
+        LOGGER.info("Start indexing " + experimentAccession);
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
@@ -108,7 +108,7 @@ public class AnalyticsIndexerService {
         }
 
         stopWatch.stop();
-        LOGGER.info(String.format("Done indexing analytics for experiment %s, indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds()));
+        LOGGER.info(String.format("Done indexing %s, indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds()));
 
         return count;
     }
