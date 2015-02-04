@@ -35,10 +35,6 @@
 <h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : not empty originalSearchTerm ? originalSearchTerm : entityIdentifier}"/>
 
 
-<section class="grid_23 extra-padding">
-    <div id="atlasHeatmap"></div>
-</section>
-
 <div id="help-placeholder" style="display: none"></div>
 
 <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
@@ -76,17 +72,6 @@
 
     })(HeatmapsRouter, facetsData);
 
-</script>
-<script>
-
-    window.onload = function () {
-
-        var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
-        var gxaBaseUrl = '${pageContext.request.contextPath}';
-
-        React.renderComponent(BioJSAtlasHeatmap({widgetParameters:widgetParameters, gxaBaseUrl:gxaBaseUrl, geneQuery:'${identifierSearch}'}), document.getElementById('atlasHeatmap'));
-
-    };
 </script>
 
 

@@ -198,15 +198,18 @@ public final class HeatmapWidgetController {
             @RequestParam(value = "geneQuery", required = true) String geneQuery,
             @RequestParam(value = "species", required = false) String species,
             @RequestParam(value = "propertyType", required = false) String propertyType,
-
+            @RequestParam(value = "source", required = false) String source,
             Model model, HttpServletResponse response) {
 
         String ensemblSpecies = StringUtils.isBlank(species) ?
                 speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery) : Species.convertToEnsemblSpecies(species);
 
-        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressionsForTissueExperiments(geneQuery, ensemblSpecies);
+        String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source;
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, ensemblSpecies, defaultFactorQueryType);
 
         populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
+        model.addAttribute("hasAnatomogram", false);
+
 
         // set here instead of in JSP, because the JSP may be included elsewhere
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
@@ -214,7 +217,7 @@ public final class HeatmapWidgetController {
     }
 
     private void populateModelWithMultiExperimentResults(String geneQuery, String ensemblSpecies, BaselineExperimentSearchResult searchResult, Model model) {
-        SortedSet<Factor> orderedFactors = searchResult.getTissueFactorsAcrossAllExperiments();
+        SortedSet<Factor> orderedFactors = searchResult.getFactorsAcrossAllExperiments();
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
 
         ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);

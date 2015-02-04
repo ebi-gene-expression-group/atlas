@@ -21,12 +21,12 @@ var BioJSAtlasHeatmap = (function(React) {
     //    <BioJsAtlasHeatmap ….. />
 
         //TODO The string this.props.widgetParameters must be built from this.props.species and this.props.factor
-        buildHeatmap: function() {
+        componentDidMount: function() {
             new Biojs.AtlasHeatmap({
                 gxaBaseUrl: this.props.gxaBaseUrl,
-                params: 'geneQuery=' + this.props.geneQuery + this.props.widgetParameters,
+                params: 'geneQuery=' + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
                 isMultiExperiment: true,
-                target: "widgetBody",
+                target: this.refs.widgetBody.getDOMNode(),
                 heatmapClass: "heatmap-position",
                 heatmapUrl: "/widgets/heatmap/baselineAnalytics"
             });
@@ -35,8 +35,8 @@ var BioJSAtlasHeatmap = (function(React) {
         render: function() {
             // render a heatmap per each element in the array heatmapsParams
             return(
-                <div id="widgetBody">
-                    {this.buildHeatmap()}
+                <div ref="widgetBody">
+
                 </div>
             );
         }

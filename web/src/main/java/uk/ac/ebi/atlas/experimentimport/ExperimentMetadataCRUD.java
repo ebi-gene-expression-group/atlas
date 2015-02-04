@@ -214,7 +214,7 @@ public class ExperimentMetadataCRUD {
             }
 
         } catch (IOException e) {
-            throw new IllegalStateException("<updateExperimentDesign> error writeExperimentDesignFile : ", e);
+            throw new IllegalStateException(e);
         }
     }
 

@@ -1,8 +1,7 @@
 package uk.ac.ebi.atlas.commons.efo;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress.utils.efo.EFOLoader;
 import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
@@ -13,9 +12,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
+
 @Named
 @Scope("singleton")
 public class EFOTreeNodesTrader {
+
+    private static final Logger LOGGER = Logger.getLogger(EFOTreeNodesTrader.class);
 
     private String efoOwlFilePath;
     private Map<String, EFONode> urlToEFONode;
@@ -29,7 +31,9 @@ public class EFOTreeNodesTrader {
         if (urlToEFONode == null) {
             try {
                 EFOLoader efoLoader = new EFOLoader();
+                LOGGER.debug("load " + efoOwlFilePath);
                 urlToEFONode = efoLoader.load(new FileInputStream(efoOwlFilePath)).getMap();
+                LOGGER.debug("load done");
             } catch (FileNotFoundException e) {
                 throw new EFOTreeNodesTraderException(e);
             }

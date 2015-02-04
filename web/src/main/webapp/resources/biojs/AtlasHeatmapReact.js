@@ -64,8 +64,8 @@ Biojs.AtlasHeatmap = Biojs.extend({
 
         var self = this;
 
-        var containerDiv = jQuery("#" + self.opt.target);
-        containerDiv.empty();
+        var targetElement = (typeof self.opt.target == 'string') ? document.getElementById(self.opt.target) : self.opt.target;
+        var $targetElement = jQuery(targetElement);
 
         var opt = self.opt;
 
@@ -79,7 +79,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
             beforeSend:function () {
                 // TODO: nasty workaround for http://youtrack.jetbrains.com/issue/IDEA-25934 (still not fixed)
                 var resource_host = ("${resources.host}" === "\${resources.host}") ? "wwwdev.ebi.ac.uk" : "${resources.host}";
-                containerDiv.html("<img src='http://" + resource_host + "/gxa/resources/images/loading.gif' />");
+                $targetElement.html("<img src='http://" + resource_host + "/gxa/resources/images/loading.gif' />");
             }
         };
 
@@ -100,23 +100,23 @@ Biojs.AtlasHeatmap = Biojs.extend({
             overrideContextRoot(data, opt.gxaBaseUrl);
 
             if (opt.isMultiExperiment) {
-                self.drawHeatmap(data, opt.target, opt.heatmapClass, heatmapModule.buildMultiExperiment);
+                self.drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildMultiExperiment);
             } else {
-                self.drawHeatmap(data, opt.target, opt.heatmapClass, heatmapModule.buildBaseline);
+                self.drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildBaseline);
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
             Biojs.console.log("ERROR: " + jqXHR.status);
             //containerDiv.html("An error occurred while retrieving the data: " + jqXHR.status + " - " + jqXHR.statusText);
             if (textStatus === "parsererror") {
-                containerDiv.html("<div class='error'>Could not parse JSON response</div>");
+                $targetElement.html("<div class='error'>Could not parse JSON response</div>");
             } else {
-                containerDiv.html(jqXHR.responseText);
+                $targetElement.html(jqXHR.responseText);
             }
         });
 
     },
 
-    drawHeatmap:function (data, target, heatmapClass, heatmapBuilder) {
+    drawHeatmap:function (data, targetElement, heatmapClass, heatmapBuilder) {
 
         (function ($, React, HeatmapContainer, heatmapBuilder, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData, experimentData) {
 
@@ -125,7 +125,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
                 var Heatmap = heatmapBuilder(heatmapConfig).Heatmap;
 
                 React.renderComponent(HeatmapContainer({Heatmap: Heatmap, isWidget: true, heatmapClass: heatmapClass, experiment: experimentData, anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}),
-                    document.getElementById(target)
+                    targetElement
                 );
 
                 // load anatomogram after heatmap is rendered so wiring works
@@ -170,7 +170,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
 
         /* Target DIV
          This mandatory parameter is the identifier of the DIV tag where the
-         component should be displayed. Use this value to draw your
+         component should be displayed, or a DOMElement. Use this value to draw your
          component into. */
         target:"YourOwnDivId"
     }

@@ -23,8 +23,7 @@
 
         <div id="genenametooltip-content" style="display: none"></div>
 
-        <%-- used by helpTooltipsModule --%>
-        <div id="help-placeholder" style="display: none"></div>
+
 
         <script type="text/javascript">
             var heatmapData = <%@ include file="heatmap-data.jsp" %>;

@@ -8,16 +8,16 @@ import java.util.SortedSet;
 
 public class BaselineExperimentSearchResult {
     final BaselineExperimentProfilesList experimentProfiles;
-    final SortedSet<Factor> tissueFactorsAcrossAllExperiments;
+    final SortedSet<Factor> factorsAcrossAllExperiments;
 
     public BaselineExperimentSearchResult() {
         experimentProfiles = new BaselineExperimentProfilesList();
-        tissueFactorsAcrossAllExperiments = ImmutableSortedSet.of();
+        factorsAcrossAllExperiments = ImmutableSortedSet.of();
     }
 
-    public BaselineExperimentSearchResult(BaselineExperimentProfilesList experimentProfiles, SortedSet<Factor> tissueFactorsAcrossAllExperiments) {
+    public BaselineExperimentSearchResult(BaselineExperimentProfilesList experimentProfiles, SortedSet<Factor> factorsAcrossAllExperiments) {
         this.experimentProfiles = experimentProfiles;
-        this.tissueFactorsAcrossAllExperiments = tissueFactorsAcrossAllExperiments;
+        this.factorsAcrossAllExperiments = factorsAcrossAllExperiments;
     }
 
     public boolean isEmpty() {
@@ -28,7 +28,7 @@ public class BaselineExperimentSearchResult {
         return experimentProfiles;
     }
 
-    public SortedSet<Factor> getTissueFactorsAcrossAllExperiments() {
-        return tissueFactorsAcrossAllExperiments;
+    public SortedSet<Factor> getFactorsAcrossAllExperiments() {
+        return factorsAcrossAllExperiments;
     }
 }

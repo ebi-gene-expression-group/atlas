@@ -27,26 +27,27 @@ public class BaselineExperimentSearchResultProducerTest {
     private static final double LUNG_LEVEL = 48948;
     private static final double THYMUS_LEVEL = 54922;
     private static final double SPLEEN_LEVEL = 387123;
-    private static final String EXPERIMENT_DISPLAY_NAME = "mouse experiment";
+    private static final String E_MTAB_599_NAME = "mouse experiment";
     public static final String E_MTAB_599 = "E-MTAB-599";
-    private static final double HOMO_SAPIENS_LEVEL = 123;
-    private static final String E_MTAB_513 = "E-MTAB-513";
-    private static final java.lang.String E_MTAB_513_DISPLAY_NAME = "homo sapiens non tissue experiment";
-    private static final java.lang.String ORGANISM = "ORGANISM";
+    private static final double IMR_90_LEVEL = 123;
+    private static final String E_GEOD_26284 = "E-GEOD-26284";
+    private static final java.lang.String E_GEOD_26284_NAME = "cell line experiment";
+    private static final java.lang.String CELL_LINE = "CELL_LINE";
     BaselineExperimentSearchResultProducer subject;
 
     RnaSeqBslnExpression g3_thymus = RnaSeqBslnExpression.create(E_MTAB_599, "g3", THYMUS_LEVEL);
     RnaSeqBslnExpression g5_lung = RnaSeqBslnExpression.create(E_MTAB_599, "g5", LUNG_LEVEL);
     RnaSeqBslnExpression g6_spleen = RnaSeqBslnExpression.create(E_MTAB_599, "g6", SPLEEN_LEVEL);
-    RnaSeqBslnExpression g_nonTissueExpression = RnaSeqBslnExpression.create(E_MTAB_513, "gnt", HOMO_SAPIENS_LEVEL);
+    RnaSeqBslnExpression g_nonTissueExpression = RnaSeqBslnExpression.create(E_GEOD_26284, "g12", IMR_90_LEVEL);
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
     private static final Factor LUNG = new Factor(ORGANISM_PART, "lung");
     private static final Factor SPLEEN = new Factor(ORGANISM_PART, "spleen");
     private static final Factor THYMUS = new Factor(ORGANISM_PART, "thymus");
-    private static final Factor HOMO_SAPIENS = new Factor(ORGANISM, "homo sapiens");
+    private static final Factor IMR_90 = new Factor(CELL_LINE, "IMR-90");
+    public static final ImmutableSortedSet<Factor> E_GEOD_26284_ALL_FACTORS = ImmutableSortedSet.of(IMR_90);
 
-    private static final ImmutableSortedSet<Factor> ALL_FACTORS = ImmutableSortedSet.of(LUNG, SPLEEN, THYMUS);
+    private static final ImmutableSortedSet<Factor> E_MTAB_599_ALL_FACTORS = ImmutableSortedSet.of(LUNG, SPLEEN, THYMUS);
 
     @Mock
     private ExperimentTrader experimentTrader;
@@ -73,50 +74,76 @@ public class BaselineExperimentSearchResultProducerTest {
         when(baselineExperiment1.getExperimentalFactors()).thenReturn(experimentalFactors1);
         when(baselineExperiment1.isTissueExperiment()).thenReturn(true);
         when(baselineExperiment1.getAccession()).thenReturn(E_MTAB_599);
-        when(baselineExperiment1.getDisplayName()).thenReturn(EXPERIMENT_DISPLAY_NAME);
+        when(baselineExperiment1.getDisplayName()).thenReturn(E_MTAB_599_NAME);
         when(experimentalFactors1.getFactorGroup("g3")).thenReturn(new FactorSet(THYMUS));
         when(experimentalFactors1.getFactorGroup("g5")).thenReturn(new FactorSet(LUNG));
         when(experimentalFactors1.getFactorGroup("g6")).thenReturn(new FactorSet(SPLEEN));
-        when(experimentalFactors1.getComplementFactors(Mockito.any(FactorGroup.class))).thenReturn(ALL_FACTORS);
+        when(experimentalFactors1.getComplementFactors(Mockito.any(FactorGroup.class))).thenReturn(E_MTAB_599_ALL_FACTORS);
         when(experimentalFactors1.getNonDefaultFactors(Mockito.anyString())).thenReturn(EMPTY_FACTOR_SET);
         when(experimentalFactors1.getDefaultQueryFactorType()).thenReturn(ORGANISM_PART);
 
-        when(experimentTrader.getPublicExperiment(E_MTAB_513)).thenReturn(baselineExperiment2);
+        when(experimentTrader.getPublicExperiment(E_GEOD_26284)).thenReturn(baselineExperiment2);
 
         when(baselineExperiment2.getExperimentalFactors()).thenReturn(experimentalFactors2);
         when(baselineExperiment2.isTissueExperiment()).thenReturn(false);
-        when(baselineExperiment2.getAccession()).thenReturn(E_MTAB_513);
-        when(baselineExperiment2.getDisplayName()).thenReturn(E_MTAB_513_DISPLAY_NAME);
-        when(experimentalFactors2.getFactorGroup("gnt")).thenReturn(new FactorSet(HOMO_SAPIENS));
-        when(experimentalFactors2.getComplementFactors(Mockito.any(FactorGroup.class))).thenReturn(ImmutableSortedSet.of(HOMO_SAPIENS));
+        when(baselineExperiment2.getAccession()).thenReturn(E_GEOD_26284);
+        when(baselineExperiment2.getDisplayName()).thenReturn(E_GEOD_26284_NAME);
+        when(experimentalFactors2.getFactorGroup("g12")).thenReturn(new FactorSet(IMR_90));
+        when(experimentalFactors2.getComplementFactors(Mockito.any(FactorGroup.class))).thenReturn(E_GEOD_26284_ALL_FACTORS);
         when(experimentalFactors2.getNonDefaultFactors(Mockito.anyString())).thenReturn(EMPTY_FACTOR_SET);
-        when(experimentalFactors2.getDefaultQueryFactorType()).thenReturn(ORGANISM);
+        when(experimentalFactors2.getDefaultQueryFactorType()).thenReturn(CELL_LINE);
 
         subject = new BaselineExperimentSearchResultProducer(experimentTrader);
     }
 
     @Test
     public void buildProfilesForTissueExperiments() {
+        // include g_nonTissueExpression which should be filtered out
         ImmutableList<RnaSeqBslnExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
 
         BaselineExperimentSearchResult result = subject.buildProfilesForTissueExperiments(expressions);
 
         BaselineExperimentProfilesList profiles = result.experimentProfiles;
-        SortedSet<Factor> factors = result.tissueFactorsAcrossAllExperiments;
+        SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
 
-        assertThat(factors, contains(ALL_FACTORS.toArray()));
+        assertThat(factors, contains(E_MTAB_599_ALL_FACTORS.toArray()));
 
         assertThat(profiles, hasSize(1));
 
         BaselineProfile baselineProfile = profiles.get(0);
 
         assertThat(baselineProfile.getId(), is(E_MTAB_599));
-        assertThat(baselineProfile.getName(), is(EXPERIMENT_DISPLAY_NAME));
+        assertThat(baselineProfile.getName(), is(E_MTAB_599_NAME));
         assertThat(baselineProfile.getMinExpressionLevel(), is(Doubles.min(LUNG_LEVEL, SPLEEN_LEVEL, THYMUS_LEVEL)));
         assertThat(baselineProfile.getMaxExpressionLevel(), is(Doubles.max(LUNG_LEVEL, SPLEEN_LEVEL, THYMUS_LEVEL)));
+        assertThat(baselineProfile.getSpecificity(), is(3));
         assertThat(baselineProfile.getKnownExpressionLevel(LUNG), is(LUNG_LEVEL));
         assertThat(baselineProfile.getKnownExpressionLevel(SPLEEN), is(SPLEEN_LEVEL));
         assertThat(baselineProfile.getKnownExpressionLevel(THYMUS), is(THYMUS_LEVEL));
+    }
+
+    @Test
+    public void buildProfilesForCellLineExperiments() {
+        // include tissue expressions which should be filtered out
+        ImmutableList<RnaSeqBslnExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
+
+        BaselineExperimentSearchResult result = subject.buildProfilesForExperiments(expressions, CELL_LINE);
+
+        BaselineExperimentProfilesList profiles = result.experimentProfiles;
+        SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
+
+        assertThat(factors, contains(E_GEOD_26284_ALL_FACTORS.toArray()));
+
+        assertThat(profiles, hasSize(1));
+
+        BaselineProfile baselineProfile = profiles.get(0);
+
+        assertThat(baselineProfile.getId(), is(E_GEOD_26284));
+        assertThat(baselineProfile.getName(), is(E_GEOD_26284_NAME));
+        assertThat(baselineProfile.getMinExpressionLevel(), is(Doubles.min(IMR_90_LEVEL)));
+        assertThat(baselineProfile.getMaxExpressionLevel(), is(Doubles.max(IMR_90_LEVEL)));
+        assertThat(baselineProfile.getSpecificity(), is(1));
+        assertThat(baselineProfile.getKnownExpressionLevel(IMR_90), is(IMR_90_LEVEL));
 
     }
 
