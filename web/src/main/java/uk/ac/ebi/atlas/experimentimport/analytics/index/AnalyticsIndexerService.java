@@ -29,8 +29,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
+import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
-import uk.ac.ebi.atlas.experimentimport.analytics.baseline.*;
+import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
+import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
+import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineProteomicsAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -46,8 +49,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.*;
 
 @Named
 @Scope("singleton")
@@ -80,6 +82,9 @@ public class AnalyticsIndexerService {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
 
         ExperimentType experimentType = experiment.getType();
+
+        checkState(experimentType.isBaseline(), experimentAccession + " is not a baseline experiment");
+
         String defaultQueryFactorType = experiment.getExperimentalFactors().getDefaultQueryFactorType();
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
 
@@ -97,15 +102,12 @@ public class AnalyticsIndexerService {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        int count;
+        //TODO: move this to another class
+        ObjectInputStream<BaselineAnalytics> inputStream = (experimentType == ExperimentType.PROTEOMICS_BASELINE) ?
+                baselineProteomicsAnalyticsInputStreamFactory.create(experimentAccession) : baselineAnalyticsInputStreamFactory.create(experimentAccession);
 
-        if (experimentType == ExperimentType.PROTEOMICS_BASELINE) {
-            count = indexProteomicsBaselineExperimentAnalytics(experimentAccession, experimentType,
-                        defaultQueryFactorType, conditionSearchTermsByAssayGroupId, ensemblSpeciesGroupedByAssayGroupId);
-        } else {
-            count = indexRnaSeqBaselineExperimentAnalytics(experimentAccession, experimentType,
-                    defaultQueryFactorType, conditionSearchTermsByAssayGroupId, ensemblSpeciesGroupedByAssayGroupId);
-        }
+        int count = indexRnaSeqBaselineExperimentAnalytics(experimentAccession, experimentType,
+                defaultQueryFactorType, conditionSearchTermsByAssayGroupId, ensemblSpeciesGroupedByAssayGroupId, inputStream);
 
         stopWatch.stop();
         LOGGER.info(String.format("Done indexing %s, indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds()));
@@ -145,42 +147,21 @@ public class AnalyticsIndexerService {
     public int indexRnaSeqBaselineExperimentAnalytics(String experimentAccession, ExperimentType experimentType,
                                                       String defaultQueryFactorType,
                                                       SetMultimap<String, String> conditionSearchTermsByAssayGroupId,
-                                                      ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId) {
+                                                      ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId,
+                                                      ObjectInputStream<BaselineAnalytics> inputStream) {
 
-        try (BaselineAnalyticsInputStream baselineAnalyticsInputStream =
-                     baselineAnalyticsInputStreamFactory.create(experimentAccession)) {
+        try (ObjectInputStream<BaselineAnalytics> closeableInputStream = inputStream) {
 
-            IterableObjectInputStream<BaselineAnalytics> inputStream = new IterableObjectInputStream<>(baselineAnalyticsInputStream);
+            IterableObjectInputStream<BaselineAnalytics> iterableInputStream = new IterableObjectInputStream<>(closeableInputStream);
 
             AnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, ensemblSpeciesGroupedByAssayGroupId,
                     defaultQueryFactorType,
-                    inputStream, conditionSearchTermsByAssayGroupId);
+                    iterableInputStream, conditionSearchTermsByAssayGroupId);
 
             return analyticsIndexer.addDocuments(analyticsDocuments);
 
         } catch (IOException e) {
-            throw new ExperimentAnalyticsIndexerServiceException(e);
-        }
-    }
-
-    public int indexProteomicsBaselineExperimentAnalytics(String experimentAccession, ExperimentType experimentType,
-                                                          String defaultQueryFactorType,
-                                                          SetMultimap<String, String> conditionSearchTermsByAssayGroupId,
-                                                          ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId) {
-
-        try (BaselineProteomicsAnalyticsInputStream baselineProteomicsAnalyticsInputStream =
-                     baselineProteomicsAnalyticsInputStreamFactory.create(experimentAccession)) {
-
-            IterableObjectInputStream<BaselineAnalytics> inputStream = new IterableObjectInputStream<>(baselineProteomicsAnalyticsInputStream);
-
-            AnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, ensemblSpeciesGroupedByAssayGroupId,
-                    defaultQueryFactorType,
-                    inputStream, conditionSearchTermsByAssayGroupId);
-
-            return analyticsIndexer.addDocuments(analyticsDocuments);
-
-        } catch (IOException e) {
-            throw new ExperimentAnalyticsIndexerServiceException(e);
+            throw new AnalyticsIndexerServiceException(e);
         }
     }
 
@@ -188,8 +169,8 @@ public class AnalyticsIndexerService {
         analyticsIndexer.deleteDocumentsForExperiment(accession);
     }
 
-    private class ExperimentAnalyticsIndexerServiceException extends RuntimeException {
-        public ExperimentAnalyticsIndexerServiceException(Exception e) {
+    private class AnalyticsIndexerServiceException extends RuntimeException {
+        public AnalyticsIndexerServiceException(Exception e) {
             super(e);
         }
     }
