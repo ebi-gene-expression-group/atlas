@@ -25,15 +25,18 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
     private final Iterable<? extends DifferentialAnalytics> inputStream;
     private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
     private final IdentifierSearchTermsDao identifierSearchTermsDao;
+    private final Set<String> factors;
 
     public DiffAnalyticsDocumentStream(String experimentAccession,
                                        ExperimentType experimentType,
+                                       Set<String> factors,
                                        Map<String, String> ensemblSpeciesGroupedByContrastId,
                                        Iterable<? extends DifferentialAnalytics> inputStream,
                                        SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
                                        IdentifierSearchTermsDao identifierSearchTermsDao) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
+        this.factors = factors;
         this.ensemblSpeciesGroupedByContrastId = ensemblSpeciesGroupedByContrastId;
         this.inputStream = inputStream;
         this.conditionSearchTermsByAssayAccessionId = conditionSearchTermsByAssayAccessionId;
@@ -78,7 +81,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
                     .bioentityIdentifier(geneId)
                     .identifierSearch(identifierSearch)
                     .contrastId(contrastId)
-                    .contrastType("not yet implemented")
+                    .factors(factors)
                     .foldChange(analytics.getFoldChange())
                     .numReplicates(-1)
                     .conditionsSearch(conditionSearch);

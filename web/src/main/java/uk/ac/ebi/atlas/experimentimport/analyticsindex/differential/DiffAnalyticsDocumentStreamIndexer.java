@@ -14,6 +14,7 @@ import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.util.Set;
 
 @Named
 public class DiffAnalyticsDocumentStreamIndexer {
@@ -32,6 +33,7 @@ public class DiffAnalyticsDocumentStreamIndexer {
 
     public int index(String experimentAccession,
                      ExperimentType experimentType,
+                     Set<String> factors,
                      SetMultimap<String, String> conditionSearchTermsByContrastGroupId,
                      ImmutableMap<String, String> ensemblSpeciesGroupedByContrastId) {
 
@@ -43,7 +45,7 @@ public class DiffAnalyticsDocumentStreamIndexer {
 
             IterableObjectInputStream<? extends DifferentialAnalytics> iterableInputStream = new IterableObjectInputStream<>(closeableInputStream);
 
-            DiffAnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, ensemblSpeciesGroupedByContrastId,
+            DiffAnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, factors, ensemblSpeciesGroupedByContrastId,
                     iterableInputStream, conditionSearchTermsByContrastGroupId);
 
             int count = analyticsIndexDao.addDocuments(analyticsDocuments);

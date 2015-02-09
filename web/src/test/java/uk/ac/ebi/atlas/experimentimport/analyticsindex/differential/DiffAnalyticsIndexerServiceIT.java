@@ -32,6 +32,7 @@ import java.io.StringReader;
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
@@ -107,7 +108,7 @@ public class DiffAnalyticsIndexerServiceIT {
     }
 
     @Test
-    public void indexRnaSeqDiff() {
+    public void index() {
 
         DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment("E-GEOD-38400");
         subject.index(experiment);
@@ -121,7 +122,7 @@ public class DiffAnalyticsIndexerServiceIT {
         assertThat(document.getIdentifierSearch(), is("AT3G18710 biological_process carpel C globular stage root LP.02 two leaves visible stage protein ubiquitination shoot apex leaf apex 4 leaf senescence stage cauline leaf cytoplasm collective leaf structure flower bud inflorescence meristem flower ubiquitin ligase complex petal petal differentiation and expansion stage U box domain cell LP.04 four leaves visible stage vascular leaf ubiquitin-protein ligase activity D bilateral stage sepal LP.08 eight leaves visible stage transmembrane receptor protein serine/threonine kinase binding PUB29 plant sperm cell binding plant embryo Q9LSA6 flowering stage ATPUB29 LP.12 twelve leaves visible stage cellular protein modification process 257748_at plasmodesma shoot system LP.10 ten leaves visible stage molecular_function F mature embryo stage hypocotyl stamen intracellular response to chitin leaf lamina base ligase activity petiole pedicel protein complex seed plant U-box 29 [Source:TAIR_LOCUS;Acc:AT3G18710] cellular_component E expanded cotyledon stage stem Armadillo-type fold"));
         assertThat(document.getConditionsSearch(), is("NCBITaxon#NCBITaxon_3702 Arabidopsis thaliana seedling Col-0 2 to 3 weeks wild type genotype idn2-1"));
         assertThat(document.getContrastId(), is("g1_g4"));
-        assertThat(document.getContrastType(), is("not yet implemented"));
+        assertThat(document.getFactors(), contains("genotype"));
         assertThat(document.getNumReplicates(), is(-1));
         assertThat(document.getFoldChange(), is(-0.0979807106778182));
         assertThat(document.getRegulation(), is(Regulation.DOWN));

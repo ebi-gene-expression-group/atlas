@@ -4,6 +4,8 @@ import org.apache.solr.client.solrj.beans.Field;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 
+import java.util.Set;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 
@@ -42,7 +44,7 @@ public class AnalyticsDocument {
     String contrastId;
 
     @Field
-    String contrastType;
+    Set<String> factors;
 
     @Field
     Integer numReplicates;
@@ -93,8 +95,8 @@ public class AnalyticsDocument {
         return contrastId;
     }
 
-    public String getContrastType() {
-        return contrastType;
+    public Set<String> getFactors() {
+        return factors;
     }
 
     public Integer getNumReplicates() {
@@ -133,7 +135,7 @@ public class AnalyticsDocument {
                 checkNotNull(build.expressionLevel, "missing expression level for baseline experiment");
             } else if (build.experimentType.isDifferential()) {
                 checkNotNull(build.contrastId, "missing contrastId for differential experiment");
-                checkNotNull(build.contrastType, "missing contrastType for differential experiment");
+                checkNotNull(build.factors, "missing factors for differential experiment");
                 checkNotNull(build.numReplicates, "missing numReplicates for differential experiment");
                 checkNotNull(build.foldChange, "missing foldChange for differential experiment");
                 checkNotNull(build.regulation, "missing regulation for differential experiment");
@@ -193,8 +195,8 @@ public class AnalyticsDocument {
             return this;
         }
 
-        public Builder contrastType(String contrastType) {
-            build.contrastType = contrastType;
+        public Builder factors(Set<String> factor) {
+            build.factors = factor;
             return this;
         }
 

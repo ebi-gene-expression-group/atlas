@@ -3,6 +3,8 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 import org.junit.Test;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import java.util.Collections;
+
 public class AnalyticsDocumentTest {
 
     @Test(expected = NullPointerException.class)
@@ -45,7 +47,7 @@ public class AnalyticsDocumentTest {
                 .identifierSearch("foo")
                 .conditionsSearch("bar")
                 .contrastId("g1_g2")
-                .contrastType("sex")
+                .factors(Collections.singleton("sex"))
                 .build();
     }
 
@@ -60,7 +62,7 @@ public class AnalyticsDocumentTest {
                 .identifierSearch("foo")
                 .conditionsSearch("bar")
                 .contrastId("g1_g2")
-                .contrastType("sex")
+                .factors(Collections.singleton("sex"))
                 .numReplicates(1)
                 .build();
     }
@@ -76,7 +78,7 @@ public class AnalyticsDocumentTest {
                 .identifierSearch("foo")
                 .conditionsSearch("bar")
                 .contrastId("g1_g2")
-                .contrastType("sex")
+                .factors(Collections.singleton("sex"))
                 .numReplicates(1)
                 .foldChange(0.02)
                 .build();

@@ -9,6 +9,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
+import java.util.Collections;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -50,7 +51,7 @@ public class AnalyticsIndexDaoIT {
                 .identifierSearch("foo")
                 .conditionsSearch("wild type")
                 .contrastId("g1_g2")
-                .contrastType("genotype")
+                .factors(Collections.singleton("genotype"))
                 .numReplicates(1)
                 .foldChange(0.02)
                 .build();

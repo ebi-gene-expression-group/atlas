@@ -67,7 +67,9 @@ public class DiffAnalyticsIndexerService {
 
         ImmutableSetMultimap<String, String> conditionSearchTermsByContrastId = buildConditionSearchTermsByAssayGroupId(experiment, ontologyTermIdsByAssayAccession);
 
-        return  diffAnalyticsDocumentStreamIndexer.index(experimentAccession, experimentType,
+        Set<String> factors = experimentDesign.getFactorHeaders();
+
+        return  diffAnalyticsDocumentStreamIndexer.index(experimentAccession, experimentType, factors,
                 conditionSearchTermsByContrastId, ensemblSpeciesGroupedByContrastId);
     }
 

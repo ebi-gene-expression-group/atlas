@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Map;
+import java.util.Set;
 
 @Named
 public class DiffAnalyticsDocumentStreamFactory {
@@ -21,10 +22,11 @@ public class DiffAnalyticsDocumentStreamFactory {
 
     public DiffAnalyticsDocumentStream create(String experimentAccession,
                                           ExperimentType experimentType,
+                                          Set<String> factors,
                                           Map<String, String> ensemblSpeciesGroupedByAssayGroupId,
                                           Iterable<? extends DifferentialAnalytics> inputStream,
                                           SetMultimap<String, String> conditionSearchTermsByAssayAccessionId) {
-        return new DiffAnalyticsDocumentStream(experimentAccession, experimentType, ensemblSpeciesGroupedByAssayGroupId,
+        return new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors, ensemblSpeciesGroupedByAssayGroupId,
                 inputStream, conditionSearchTermsByAssayAccessionId, identifierSearchTermsDao);
     }
 
