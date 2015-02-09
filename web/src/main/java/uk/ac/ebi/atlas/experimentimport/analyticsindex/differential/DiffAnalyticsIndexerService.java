@@ -20,15 +20,15 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentimport.analytics.index.differential;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsIndexDao;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.support.SpeciesGrouper;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.SpeciesGrouper;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;

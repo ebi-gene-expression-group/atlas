@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.index.differential;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.SetMultimap;
@@ -7,7 +7,7 @@ import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsInputStreamFactory;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsIndexDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 

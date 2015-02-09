@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.index;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import org.junit.Ignore;
 import org.junit.Test;

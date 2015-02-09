@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.index;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServer;

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.index.baseline;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -8,8 +8,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.support.IdentifierSearchTermsDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Collections;

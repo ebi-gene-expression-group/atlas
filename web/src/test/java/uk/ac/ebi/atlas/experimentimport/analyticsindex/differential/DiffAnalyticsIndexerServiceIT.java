@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.index.differential;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableList;
@@ -16,8 +16,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsInputStreamFactory;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsIndexDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;

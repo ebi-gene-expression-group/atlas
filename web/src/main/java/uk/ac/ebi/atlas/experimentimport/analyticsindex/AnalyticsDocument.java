@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.index;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import org.apache.solr.client.solrj.beans.Field;
 import uk.ac.ebi.atlas.model.ExperimentType;

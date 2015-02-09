@@ -1,12 +1,12 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.index.baseline;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.support.IdentifierSearchTermsDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Iterator;

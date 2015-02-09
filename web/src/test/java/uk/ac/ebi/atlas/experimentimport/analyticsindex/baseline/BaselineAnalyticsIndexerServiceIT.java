@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.index.baseline;
+package uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
@@ -15,8 +15,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineProteomicsAnalyticsInputStreamFactory;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsIndexDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
