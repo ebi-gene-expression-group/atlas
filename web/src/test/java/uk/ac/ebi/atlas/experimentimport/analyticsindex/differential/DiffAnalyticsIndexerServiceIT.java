@@ -19,6 +19,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDiff
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -73,7 +74,7 @@ public class DiffAnalyticsIndexerServiceIT {
         RnaSeqDifferentialAnalyticsInputStream inputStream38400 = new RnaSeqDifferentialAnalyticsInputStream(csvReader38400, "38400 mock");
         when(rnaSeqDifferentialAnalyticsInputStreamFactory.create("E-GEOD-38400")).thenReturn(inputStream38400);
         DiffAnalyticsDocumentStreamIndexer streamIndexer = new DiffAnalyticsDocumentStreamIndexer(rnaSeqDifferentialAnalyticsInputStreamFactory, streamFactory, analyticsIndexDaoMock);
-        subject = new DiffAnalyticsIndexerService(efoParentsLookupService, analyticsIndexDaoMock, experimentTrader, conditionsBuilder, streamIndexer);
+        subject = new DiffAnalyticsIndexerService(efoParentsLookupService, conditionsBuilder, streamIndexer);
     }
 
     Answer<Integer> storeDocuments() {
@@ -98,7 +99,9 @@ public class DiffAnalyticsIndexerServiceIT {
 
     @Test
     public void indexRnaSeqDiff() {
-        subject.index("E-GEOD-38400");
+
+        DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment("E-GEOD-38400");
+        subject.index(experiment);
         assertThat(documents, hasSize(12));
 
         AnalyticsDocument document = documents.get(0);

@@ -28,7 +28,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline.BaselineAnalyticsIndexerService;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -41,22 +40,22 @@ public class AnalyticsIndexerController {
 
     private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerController.class);
 
-    private BaselineAnalyticsIndexerService experimentIndexer;
+    private AnalyticsIndexerService analyticsIndexerService;
 
     @Inject
-    public AnalyticsIndexerController(BaselineAnalyticsIndexerService experimentIndexer) {
-        this.experimentIndexer = experimentIndexer;
+    public AnalyticsIndexerController(AnalyticsIndexerService analyticsIndexerService) {
+        this.analyticsIndexerService = analyticsIndexerService;
     }
 
     @RequestMapping("/analyticsIndex/indexExperiment")
     @ResponseBody
     public String indexExperiment(@RequestParam("accession") String experimentAccession) {
-        experimentIndexer.deleteExperimentFromIndex(experimentAccession);
+        analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
 
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        int count = experimentIndexer.indexBaselineExperimentAnalytics(experimentAccession);
+        int count = analyticsIndexerService.index(experimentAccession);
 
         stopWatch.stop();
 
@@ -69,7 +68,7 @@ public class AnalyticsIndexerController {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        experimentIndexer.deleteExperimentFromIndex(experimentAccession);
+        analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
 
         stopWatch.stop();
 

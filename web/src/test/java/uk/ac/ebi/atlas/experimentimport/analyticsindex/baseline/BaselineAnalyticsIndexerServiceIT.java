@@ -18,6 +18,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineProteomicsAna
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -62,7 +63,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     public void before() {
         MockitoAnnotations.initMocks(this);
         when(analyticsIndexDaoMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any())).thenAnswer(storeDocuments());
-        subject = new BaselineAnalyticsIndexerService(streamFactory, efoParentsLookupService, baselineAnalyticsInputStreamFactory, baselineProteomicsAnalyticsInputStreamFactory, analyticsIndexDaoMock, experimentTrader, baselineConditionsBuilder);
+        subject = new BaselineAnalyticsIndexerService(streamFactory, efoParentsLookupService, baselineAnalyticsInputStreamFactory, baselineProteomicsAnalyticsInputStreamFactory, analyticsIndexDaoMock, baselineConditionsBuilder);
     }
 
     Answer<Integer> storeDocuments() {
@@ -87,7 +88,8 @@ public class BaselineAnalyticsIndexerServiceIT {
 
     @Test
     public void indexBaselineExperimentAnalytics() {
-        subject.indexBaselineExperimentAnalytics("E-MTAB-2039");
+        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-MTAB-2039");
+        subject.index(experiment);
         assertThat(documents, hasSize(14));
 
         AnalyticsDocument document = documents.get(0);
@@ -104,7 +106,9 @@ public class BaselineAnalyticsIndexerServiceIT {
 
     @Test
     public void indexMultiSpeciesBaselineExperimentAnalytics() {
-        subject.indexBaselineExperimentAnalytics("E-GEOD-30352");
+        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-GEOD-30352");
+        subject.index(experiment);
+
         assertThat(documents, hasSize(2179));
 
         AnalyticsDocument document = documents.get(0);
@@ -132,7 +136,9 @@ public class BaselineAnalyticsIndexerServiceIT {
 
     @Test
     public void indexProteomicsBaselineExperimentAnalytics() {
-        subject.indexBaselineExperimentAnalytics("E-PROT-1");
+        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1");
+        subject.index(experiment);
+
         assertThat(documents, hasSize(3366));
 
         AnalyticsDocument document = documents.get(0);

@@ -42,7 +42,6 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -52,7 +51,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
 @Scope("singleton")
@@ -65,25 +63,20 @@ public class BaselineAnalyticsIndexerService {
     private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
     private final BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory;
     private final AnalyticsIndexDao analyticsIndexDao;
-    private final ExperimentTrader experimentTrader;
     private final BaselineConditionsBuilder baselineConditionsBuilder;
 
     @Inject
-    public BaselineAnalyticsIndexerService(BaselineAnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory, AnalyticsIndexDao analyticsIndexDao, ExperimentTrader experimentTrader, BaselineConditionsBuilder baselineConditionsBuilder) {
+    public BaselineAnalyticsIndexerService(BaselineAnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory, AnalyticsIndexDao analyticsIndexDao,  BaselineConditionsBuilder baselineConditionsBuilder) {
         this.streamFactory = streamFactory;
         this.efoParentsLookupService = efoParentsLookupService;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
         this.baselineProteomicsAnalyticsInputStreamFactory = baselineProteomicsAnalyticsInputStreamFactory;
         this.analyticsIndexDao = analyticsIndexDao;
-        this.experimentTrader = experimentTrader;
         this.baselineConditionsBuilder = baselineConditionsBuilder;
     }
 
-    public int indexBaselineExperimentAnalytics(String experimentAccession) {
-        checkNotNull(experimentAccession);
-
-        BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-
+    public int index(BaselineExperiment experiment) {
+        String experimentAccession = experiment.getAccession();
         ExperimentType experimentType = experiment.getType();
 
         String defaultQueryFactorType = experiment.getExperimentalFactors().getDefaultQueryFactorType();
@@ -95,8 +88,6 @@ public class BaselineAnalyticsIndexerService {
 
         ImmutableSetMultimap<String, String> conditionSearchTermsByAssayGroupId = buildConditionSearchTermsByAssayGroupId(experiment, ontologyTermIdsByAssayAccession);
 
-        checkNotNull(experimentAccession);
-        checkNotNull(experimentType);
         checkArgument(StringUtils.isNotBlank(defaultQueryFactorType));
 
         LOGGER.info("Start indexing " + experimentAccession);
@@ -164,10 +155,6 @@ public class BaselineAnalyticsIndexerService {
         } catch (IOException e) {
             throw new AnalyticsIndexerServiceException(e);
         }
-    }
-
-    public void deleteExperimentFromIndex(String accession) {
-        analyticsIndexDao.deleteDocumentsForExperiment(accession);
     }
 
     private class AnalyticsIndexerServiceException extends RuntimeException {

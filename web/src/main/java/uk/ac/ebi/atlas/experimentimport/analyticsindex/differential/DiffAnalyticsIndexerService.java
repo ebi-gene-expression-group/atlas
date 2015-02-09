@@ -27,7 +27,6 @@ import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDao;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.SpeciesGrouper;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -35,7 +34,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
-import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,32 +41,23 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 @Named
 @Scope("singleton")
 public class DiffAnalyticsIndexerService {
 
     private final EFOParentsLookupService efoParentsLookupService;
-    private final AnalyticsIndexDao analyticsIndexDao;
-    private final ExperimentTrader experimentTrader;
     private final DifferentialConditionsBuilder diffConditionsBuilder;
     private final DiffAnalyticsDocumentStreamIndexer diffAnalyticsDocumentStreamIndexer;
 
     @Inject
-    public DiffAnalyticsIndexerService(EFOParentsLookupService efoParentsLookupService, AnalyticsIndexDao analyticsIndexDao, ExperimentTrader experimentTrader, DifferentialConditionsBuilder diffConditionsBuilder, DiffAnalyticsDocumentStreamIndexer diffAnalyticsDocumentStreamIndexer) {
+    public DiffAnalyticsIndexerService(EFOParentsLookupService efoParentsLookupService, DifferentialConditionsBuilder diffConditionsBuilder, DiffAnalyticsDocumentStreamIndexer diffAnalyticsDocumentStreamIndexer) {
         this.efoParentsLookupService = efoParentsLookupService;
-        this.analyticsIndexDao = analyticsIndexDao;
-        this.experimentTrader = experimentTrader;
         this.diffConditionsBuilder = diffConditionsBuilder;
         this.diffAnalyticsDocumentStreamIndexer = diffAnalyticsDocumentStreamIndexer;
     }
 
-    public int index(String experimentAccession) {
-        checkNotNull(experimentAccession);
-
-        DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-
+    public int index(DifferentialExperiment experiment) {
+        String experimentAccession = experiment.getAccession();
         ExperimentType experimentType = experiment.getType();
 
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
@@ -78,9 +67,6 @@ public class DiffAnalyticsIndexerService {
         ImmutableSetMultimap<String, String> ontologyTermIdsByAssayAccession = expandOntologyTerms(experimentDesign.getAllOntologyTermIdsByAssayAccession());
 
         ImmutableSetMultimap<String, String> conditionSearchTermsByContrastId = buildConditionSearchTermsByAssayGroupId(experiment, ontologyTermIdsByAssayAccession);
-
-        checkNotNull(experimentAccession);
-        checkNotNull(experimentType);
 
         return  diffAnalyticsDocumentStreamIndexer.index(experimentAccession, experimentType,
                 conditionSearchTermsByContrastId, ensemblSpeciesGroupedByContrastId);
@@ -114,10 +100,5 @@ public class DiffAnalyticsIndexerService {
         return builder.build();
 
     }
-
-    public void deleteExperimentFromIndex(String accession) {
-        analyticsIndexDao.deleteDocumentsForExperiment(accession);
-    }
-
 
 }
