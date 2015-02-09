@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.analytics.index.differential;
 
 import com.google.common.collect.SetMultimap;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.IdentifierSearchTermsDao;
+import uk.ac.ebi.atlas.experimentimport.analytics.index.support.IdentifierSearchTermsDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;

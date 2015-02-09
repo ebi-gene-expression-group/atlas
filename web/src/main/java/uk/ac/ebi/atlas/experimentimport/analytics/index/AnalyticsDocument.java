@@ -53,6 +53,62 @@ public class AnalyticsDocument {
     @Field
     Regulation regulation;
 
+    public String getBioentityIdentifier() {
+        return bioentityIdentifier;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public String getExperimentAccession() {
+        return experimentAccession;
+    }
+
+    public ExperimentType getExperimentType() {
+        return experimentType;
+    }
+
+    public String getDefaultQueryFactorType() {
+        return defaultQueryFactorType;
+    }
+
+    public String getIdentifierSearch() {
+        return identifierSearch;
+    }
+
+    public String getConditionsSearch() {
+        return conditionsSearch;
+    }
+
+    public String getAssayGroupId() {
+        return assayGroupId;
+    }
+
+    public Double getExpressionLevel() {
+        return expressionLevel;
+    }
+
+    public String getContrastId() {
+        return contrastId;
+    }
+
+    public String getContrastType() {
+        return contrastType;
+    }
+
+    public Integer getNumReplicates() {
+        return numReplicates;
+    }
+
+    public Double getFoldChange() {
+        return foldChange;
+    }
+
+    public Regulation getRegulation() {
+        return regulation;
+    }
+
     public static Builder builder() {
         return new Builder();
     }

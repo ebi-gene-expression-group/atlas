@@ -28,6 +28,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.experimentimport.analytics.index.baseline.BaselineAnalyticsIndexerService;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -40,10 +41,10 @@ public class AnalyticsIndexerController {
 
     private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerController.class);
 
-    private AnalyticsIndexerService experimentIndexer;
+    private BaselineAnalyticsIndexerService experimentIndexer;
 
     @Inject
-    public AnalyticsIndexerController(AnalyticsIndexerService experimentIndexer) {
+    public AnalyticsIndexerController(BaselineAnalyticsIndexerService experimentIndexer) {
         this.experimentIndexer = experimentIndexer;
     }
 

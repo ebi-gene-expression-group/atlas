@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.index;
+package uk.ac.ebi.atlas.experimentimport.analytics.index.differential;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.collect.ImmutableList;
@@ -16,9 +16,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsInputStreamFactory;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.differential.DiffAnalyticsDocumentStreamFactory;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.differential.DiffAnalyticsDocumentStreamIndexer;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.differential.DiffAnalyticsIndexerService;
+import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsDocument;
+import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsIndexDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
@@ -103,35 +102,35 @@ public class DiffAnalyticsIndexerServiceIT {
         assertThat(documents, hasSize(12));
 
         AnalyticsDocument document = documents.get(0);
-        assertThat(document.bioentityIdentifier, is("AT3G18710"));
-        assertThat(document.species, is("arabidopsis thaliana"));
-        assertThat(document.experimentAccession, is("E-GEOD-38400"));
-        assertThat(document.experimentType, is(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL));
-        assertThat(document.identifierSearch, is("AT3G18710 biological_process carpel C globular stage root LP.02 two leaves visible stage protein ubiquitination shoot apex leaf apex 4 leaf senescence stage cauline leaf cytoplasm collective leaf structure flower bud inflorescence meristem flower ubiquitin ligase complex petal petal differentiation and expansion stage U box domain cell LP.04 four leaves visible stage vascular leaf ubiquitin-protein ligase activity D bilateral stage sepal LP.08 eight leaves visible stage transmembrane receptor protein serine/threonine kinase binding PUB29 plant sperm cell binding plant embryo Q9LSA6 flowering stage ATPUB29 LP.12 twelve leaves visible stage cellular protein modification process 257748_at plasmodesma shoot system LP.10 ten leaves visible stage molecular_function F mature embryo stage hypocotyl stamen intracellular response to chitin leaf lamina base ligase activity petiole pedicel protein complex seed plant U-box 29 [Source:TAIR_LOCUS;Acc:AT3G18710] cellular_component E expanded cotyledon stage stem Armadillo-type fold"));
-        assertThat(document.conditionsSearch, is(""));
-        assertThat(document.contrastId, is("g1_g4"));
-        assertThat(document.contrastType, is("not yet implemented"));
-        assertThat(document.numReplicates, is(-1));
-        assertThat(document.foldChange, is(-0.0979807106778182));
-        assertThat(document.regulation, is(Regulation.DOWN));
+        assertThat(document.getBioentityIdentifier(), is("AT3G18710"));
+        assertThat(document.getSpecies(), is("arabidopsis thaliana"));
+        assertThat(document.getExperimentAccession(), is("E-GEOD-38400"));
+        assertThat(document.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL));
+        assertThat(document.getIdentifierSearch(), is("AT3G18710 biological_process carpel C globular stage root LP.02 two leaves visible stage protein ubiquitination shoot apex leaf apex 4 leaf senescence stage cauline leaf cytoplasm collective leaf structure flower bud inflorescence meristem flower ubiquitin ligase complex petal petal differentiation and expansion stage U box domain cell LP.04 four leaves visible stage vascular leaf ubiquitin-protein ligase activity D bilateral stage sepal LP.08 eight leaves visible stage transmembrane receptor protein serine/threonine kinase binding PUB29 plant sperm cell binding plant embryo Q9LSA6 flowering stage ATPUB29 LP.12 twelve leaves visible stage cellular protein modification process 257748_at plasmodesma shoot system LP.10 ten leaves visible stage molecular_function F mature embryo stage hypocotyl stamen intracellular response to chitin leaf lamina base ligase activity petiole pedicel protein complex seed plant U-box 29 [Source:TAIR_LOCUS;Acc:AT3G18710] cellular_component E expanded cotyledon stage stem Armadillo-type fold"));
+        assertThat(document.getConditionsSearch(), is(""));
+        assertThat(document.getContrastId(), is("g1_g4"));
+        assertThat(document.getConditionsSearch(), is("not yet implemented"));
+        assertThat(document.getNumReplicates(), is(-1));
+        assertThat(document.getFoldChange(), is(-0.0979807106778182));
+        assertThat(document.getRegulation(), is(Regulation.DOWN));
 
         AnalyticsDocument document2 = documents.get(1);
-        assertThat(document2.bioentityIdentifier, is("AT3G18710"));
-        assertThat(document2.contrastId, is("g1_g3"));
-        assertThat(document2.foldChange, is(0.0452223119926126));
-        assertThat(document2.regulation, is(Regulation.UP));
+        assertThat(document2.getBioentityIdentifier(), is("AT3G18710"));
+        assertThat(document2.getContrastId(), is("g1_g3"));
+        assertThat(document2.getFoldChange(), is(0.0452223119926126));
+        assertThat(document2.getRegulation(), is(Regulation.UP));
 
         AnalyticsDocument document3 = documents.get(2);
-        assertThat(document3.bioentityIdentifier, is("AT3G18710"));
-        assertThat(document3.contrastId, is("g1_g2"));
-        assertThat(document3.foldChange, is(0.311218971678632));
+        assertThat(document3.getBioentityIdentifier(), is("AT3G18710"));
+        assertThat(document3.getContrastId(), is("g1_g2"));
+        assertThat(document3.getFoldChange(), is(0.311218971678632));
 
         AnalyticsDocument document4 = documents.get(3);
-        assertThat(document4.bioentityIdentifier, is("AT4G25880"));
-        assertThat(document4.identifierSearch, is("AT4G25880 biological_process carpel C globular stage root RNA binding LP.02 two leaves visible stage biosynthetic process leaf apex shoot apex 4 leaf senescence stage nucleotide biosynthetic process cauline leaf collective leaf structure inflorescence meristem flower petal PUM6 petal differentiation and expansion stage vascular leaf LP.04 four leaves visible stage D bilateral stage mRNA binding small molecule metabolic process sepal LP.08 eight leaves visible stage LP.06 six leaves visible stage plant sperm cell cellular nitrogen compound metabolic process pumilio 6 [Source:TAIR_LOCUS;Acc:AT4G25880] cotyledon binding plant embryo flowering stage APUM6 LP.12 twelve leaves visible stage 254045_at cultured plant cell shoot system LP.10 ten leaves visible stage pollen molecular_function F mature embryo stage hypocotyl stamen leaf lamina base petiole pedicel seed Pumilio RNA-binding repeat Q9C5E7 E expanded cotyledon stage stem Armadillo-type fold"));
-        assertThat(document4.conditionsSearch, is(""));
-        assertThat(document4.contrastId, is("g1_g4"));
-        assertThat(document4.foldChange, is(0.0836848323581764));
+        assertThat(document4.getBioentityIdentifier(), is("AT4G25880"));
+        assertThat(document4.getIdentifierSearch(), is("AT4G25880 biological_process carpel C globular stage root RNA binding LP.02 two leaves visible stage biosynthetic process leaf apex shoot apex 4 leaf senescence stage nucleotide biosynthetic process cauline leaf collective leaf structure inflorescence meristem flower petal PUM6 petal differentiation and expansion stage vascular leaf LP.04 four leaves visible stage D bilateral stage mRNA binding small molecule metabolic process sepal LP.08 eight leaves visible stage LP.06 six leaves visible stage plant sperm cell cellular nitrogen compound metabolic process pumilio 6 [Source:TAIR_LOCUS;Acc:AT4G25880] cotyledon binding plant embryo flowering stage APUM6 LP.12 twelve leaves visible stage 254045_at cultured plant cell shoot system LP.10 ten leaves visible stage pollen molecular_function F mature embryo stage hypocotyl stamen leaf lamina base petiole pedicel seed Pumilio RNA-binding repeat Q9C5E7 E expanded cotyledon stage stem Armadillo-type fold"));
+        assertThat(document4.getConditionsSearch(), is(""));
+        assertThat(document4.getContrastId(), is("g1_g4"));
+        assertThat(document4.getFoldChange(), is(0.0836848323581764));
 
     }
 

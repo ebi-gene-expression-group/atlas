@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.index;
+package uk.ac.ebi.atlas.experimentimport.analytics.index.support;
 
 import com.google.common.collect.ImmutableMap;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;

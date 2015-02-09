@@ -1,10 +1,12 @@
-package uk.ac.ebi.atlas.experimentimport.analytics.index;
+package uk.ac.ebi.atlas.experimentimport.analytics.index.baseline;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
+import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsDocument;
+import uk.ac.ebi.atlas.experimentimport.analytics.index.support.IdentifierSearchTermsDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Iterator;
@@ -13,9 +15,9 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class AnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
+public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
 
-    private static final Logger LOGGER = Logger.getLogger(AnalyticsDocumentStream.class);
+    private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsDocumentStream.class);
 
     private final String experimentAccession;
     private final ExperimentType experimentType;
@@ -25,13 +27,13 @@ public class AnalyticsDocumentStream implements Iterable<AnalyticsDocument> {
     private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
     private final IdentifierSearchTermsDao identifierSearchTermsDao;
 
-    public AnalyticsDocumentStream(String experimentAccession,
-                                   ExperimentType experimentType,
-                                   Map<String, String> ensemblSpeciesGroupedByAssayGroupId,
-                                   String defaultQueryFactorType,
-                                   Iterable<BaselineAnalytics> inputStream,
-                                   SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
-                                   IdentifierSearchTermsDao identifierSearchTermsDao) {
+    public BaselineAnalyticsDocumentStream(String experimentAccession,
+                                           ExperimentType experimentType,
+                                           Map<String, String> ensemblSpeciesGroupedByAssayGroupId,
+                                           String defaultQueryFactorType,
+                                           Iterable<BaselineAnalytics> inputStream,
+                                           SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
+                                           IdentifierSearchTermsDao identifierSearchTermsDao) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
         this.ensemblSpeciesGroupedByAssayGroupId = ensemblSpeciesGroupedByAssayGroupId;

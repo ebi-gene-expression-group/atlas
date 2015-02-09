@@ -6,7 +6,7 @@ import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analytics.index.IdentifierSearchTermsDao;
+import uk.ac.ebi.atlas.experimentimport.analytics.index.support.IdentifierSearchTermsDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
 import java.util.Iterator;

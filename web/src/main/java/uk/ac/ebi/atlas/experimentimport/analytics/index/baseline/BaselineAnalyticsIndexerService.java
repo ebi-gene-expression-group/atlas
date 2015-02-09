@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentimport.analytics.index;
+package uk.ac.ebi.atlas.experimentimport.analytics.index.baseline;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
@@ -34,6 +34,8 @@ import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineProteomicsAnalyticsInputStreamFactory;
+import uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsIndexDao;
+import uk.ac.ebi.atlas.experimentimport.analytics.index.support.SpeciesGrouper;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -54,11 +56,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
 @Scope("singleton")
-public class AnalyticsIndexerService {
+public class BaselineAnalyticsIndexerService {
 
-    private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerService.class);
+    private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsIndexerService.class);
 
-    private final AnalyticsDocumentStreamFactory streamFactory;
+    private final BaselineAnalyticsDocumentStreamFactory streamFactory;
     private final EFOParentsLookupService efoParentsLookupService;
     private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
     private final BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory;
@@ -67,7 +69,7 @@ public class AnalyticsIndexerService {
     private final BaselineConditionsBuilder baselineConditionsBuilder;
 
     @Inject
-    public AnalyticsIndexerService(AnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory, AnalyticsIndexDao analyticsIndexDao, ExperimentTrader experimentTrader, BaselineConditionsBuilder baselineConditionsBuilder) {
+    public BaselineAnalyticsIndexerService(BaselineAnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory, AnalyticsIndexDao analyticsIndexDao, ExperimentTrader experimentTrader, BaselineConditionsBuilder baselineConditionsBuilder) {
         this.streamFactory = streamFactory;
         this.efoParentsLookupService = efoParentsLookupService;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
@@ -153,7 +155,7 @@ public class AnalyticsIndexerService {
 
             IterableObjectInputStream<BaselineAnalytics> iterableInputStream = new IterableObjectInputStream<>(closeableInputStream);
 
-            AnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, ensemblSpeciesGroupedByAssayGroupId,
+            BaselineAnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, ensemblSpeciesGroupedByAssayGroupId,
                     defaultQueryFactorType,
                     iterableInputStream, conditionSearchTermsByAssayGroupId);
 
