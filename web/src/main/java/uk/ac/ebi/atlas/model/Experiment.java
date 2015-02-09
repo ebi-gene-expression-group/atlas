@@ -119,6 +119,9 @@ public class Experiment implements Serializable {
         pongo abelii.
         The Ensembl species is what is used to look up genes in Solr
      */
+
+    //TODO: this should be moved to BaselineExperiment, because speciesMapping is always null for differentialExperiment
+    // (see DifferentialExperiment constructor)
     public Map<String, String> getOrganismToEnsemblSpeciesMapping() {
         return Collections.unmodifiableMap(speciesMapping);
     }

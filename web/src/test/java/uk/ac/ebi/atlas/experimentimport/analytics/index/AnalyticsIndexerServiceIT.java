@@ -44,7 +44,7 @@ public class AnalyticsIndexerServiceIT {
     BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory;
 
     @Mock
-    AnalyticsIndexer analyticsIndexerMock;
+    AnalyticsIndexDao analyticsIndexDaoMock;
 
     @Inject
     ExperimentTrader experimentTrader;
@@ -59,8 +59,8 @@ public class AnalyticsIndexerServiceIT {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        when(analyticsIndexerMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any())).thenAnswer(storeDocuments());
-        subject = new AnalyticsIndexerService(streamFactory, efoParentsLookupService, baselineAnalyticsInputStreamFactory, baselineProteomicsAnalyticsInputStreamFactory, analyticsIndexerMock, experimentTrader, baselineConditionsBuilder);
+        when(analyticsIndexDaoMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any())).thenAnswer(storeDocuments());
+        subject = new AnalyticsIndexerService(streamFactory, efoParentsLookupService, baselineAnalyticsInputStreamFactory, baselineProteomicsAnalyticsInputStreamFactory, analyticsIndexDaoMock, experimentTrader, baselineConditionsBuilder);
     }
 
     Answer<Integer> storeDocuments() {

@@ -17,6 +17,7 @@ public class AutocompleteFacetedPropertyValueQueryBuilder extends SolrQueryBuild
         return buildQueryObject(solrQueryString);
     }
 
+    //NB: facet results will be sorted by count
     private SolrQuery buildQueryObject(String queryString) {
         SolrQuery solrQuery = new SolrQuery(queryString);
 

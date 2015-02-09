@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,13 +12,13 @@ import javax.inject.Inject;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class AnalyticsIndexerIT {
+public class AnalyticsIndexDaoIT {
 
     @Inject
-    AnalyticsIndexer analyticsIndexer;
+    AnalyticsIndexDao analyticsIndexDao;
 
     @Test
-    @Ignore // TODO: fix (see http://bar:8085/artifact/ATLAS-TESTDELIVERY/shared/build-2496/failsafe-reports/uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsIndexerIT.txt)
+    //@Ignore // TODO: fix (see http://bar:8085/artifact/ATLAS-TESTDELIVERY/shared/build-2496/failsafe-reports/uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsIndexerIT.txt)
     public void addBaseline() {
         AnalyticsDocument analyticsDocument = AnalyticsDocument.builder()
                 .bioentityIdentifier("delme")
@@ -32,13 +31,13 @@ public class AnalyticsIndexerIT {
                 .assayGroupId("g1")
                 .expressionLevel(1)
                 .build();
-        analyticsIndexer.addDocument(analyticsDocument);
+        analyticsIndexDao.addDocument(analyticsDocument);
 
-        analyticsIndexer.deleteDocumentsForExperiment("E-DELME");
+        analyticsIndexDao.deleteDocumentsForExperiment("E-DELME");
     }
 
     @Test
-    @Ignore // TODO: fix (see http://bar:8085/artifact/ATLAS-TESTDELIVERY/shared/build-2496/failsafe-reports/uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsIndexerIT.txt)
+    //@Ignore // TODO: fix (see http://bar:8085/artifact/ATLAS-TESTDELIVERY/shared/build-2496/failsafe-reports/uk.ac.ebi.atlas.experimentimport.analytics.index.AnalyticsIndexerIT.txt)
     public void addDiff() {
         AnalyticsDocument analyticsDocument = AnalyticsDocument.builder()
                 .bioentityIdentifier("delme")
@@ -53,9 +52,9 @@ public class AnalyticsIndexerIT {
                 .numReplicates(1)
                 .foldChange(0.02)
                 .build();
-        analyticsIndexer.addDocument(analyticsDocument);
+        analyticsIndexDao.addDocument(analyticsDocument);
 
-        analyticsIndexer.deleteDocumentsForExperiment("E-DELME");
+        //analyticsIndexer.deleteDocumentsForExperiment("E-DELME");
     }
 
 }

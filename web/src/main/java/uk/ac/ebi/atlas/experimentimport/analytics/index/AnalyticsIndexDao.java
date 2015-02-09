@@ -12,13 +12,13 @@ import java.io.IOException;
 
 @Named
 @Scope("prototype")
-public class AnalyticsIndexer {
-    private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexer.class);
+public class AnalyticsIndexDao {
+    private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexDao.class);
 
     private SolrServer solrServer;
 
     @Inject
-    public AnalyticsIndexer(@Qualifier("analyticsSolrServer") SolrServer solrServer) {
+    public AnalyticsIndexDao(@Qualifier("analyticsSolrServer") SolrServer solrServer) {
         this.solrServer = solrServer;
     }
 

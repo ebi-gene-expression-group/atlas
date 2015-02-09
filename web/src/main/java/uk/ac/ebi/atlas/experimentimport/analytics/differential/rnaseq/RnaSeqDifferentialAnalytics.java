@@ -1,8 +1,9 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq;
 
 import com.google.common.base.Objects;
+import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 
-public class RnaSeqDifferentialAnalytics {
+public class RnaSeqDifferentialAnalytics implements DifferentialAnalytics {
 
     private String geneId;
 
@@ -20,18 +21,22 @@ public class RnaSeqDifferentialAnalytics {
         this.foldChange = foldChange;
     }
 
+    @Override
     public String getGeneId() {
         return geneId;
     }
 
+    @Override
     public String getContrastId() {
         return contrastId;
     }
 
+    @Override
     public double getpValue() {
         return pValue;
     }
 
+    @Override
     public double getFoldChange() {
         return foldChange;
     }

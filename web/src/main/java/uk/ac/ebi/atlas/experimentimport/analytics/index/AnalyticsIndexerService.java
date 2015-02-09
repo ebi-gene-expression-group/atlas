@@ -49,7 +49,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.*;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
 @Scope("singleton")
@@ -61,17 +62,17 @@ public class AnalyticsIndexerService {
     private final EFOParentsLookupService efoParentsLookupService;
     private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
     private final BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory;
-    private final AnalyticsIndexer analyticsIndexer;
+    private final AnalyticsIndexDao analyticsIndexDao;
     private final ExperimentTrader experimentTrader;
     private final BaselineConditionsBuilder baselineConditionsBuilder;
 
     @Inject
-    public AnalyticsIndexerService(AnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory, AnalyticsIndexer analyticsIndexer, ExperimentTrader experimentTrader, BaselineConditionsBuilder baselineConditionsBuilder) {
+    public AnalyticsIndexerService(AnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory, AnalyticsIndexDao analyticsIndexDao, ExperimentTrader experimentTrader, BaselineConditionsBuilder baselineConditionsBuilder) {
         this.streamFactory = streamFactory;
         this.efoParentsLookupService = efoParentsLookupService;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
         this.baselineProteomicsAnalyticsInputStreamFactory = baselineProteomicsAnalyticsInputStreamFactory;
-        this.analyticsIndexer = analyticsIndexer;
+        this.analyticsIndexDao = analyticsIndexDao;
         this.experimentTrader = experimentTrader;
         this.baselineConditionsBuilder = baselineConditionsBuilder;
     }
@@ -82,8 +83,6 @@ public class AnalyticsIndexerService {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
 
         ExperimentType experimentType = experiment.getType();
-
-        checkState(experimentType.isBaseline(), experimentAccession + " is not a baseline experiment");
 
         String defaultQueryFactorType = experiment.getExperimentalFactors().getDefaultQueryFactorType();
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();
@@ -158,7 +157,7 @@ public class AnalyticsIndexerService {
                     defaultQueryFactorType,
                     iterableInputStream, conditionSearchTermsByAssayGroupId);
 
-            return analyticsIndexer.addDocuments(analyticsDocuments);
+            return analyticsIndexDao.addDocuments(analyticsDocuments);
 
         } catch (IOException e) {
             throw new AnalyticsIndexerServiceException(e);
@@ -166,7 +165,7 @@ public class AnalyticsIndexerService {
     }
 
     public void deleteExperimentFromIndex(String accession) {
-        analyticsIndexer.deleteDocumentsForExperiment(accession);
+        analyticsIndexDao.deleteDocumentsForExperiment(accession);
     }
 
     private class AnalyticsIndexerServiceException extends RuntimeException {

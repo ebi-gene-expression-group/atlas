@@ -1,9 +1,11 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
 import com.google.common.collect.ImmutableMap;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import java.util.Map;
 import java.util.Set;
@@ -48,6 +50,35 @@ public final class SpeciesGrouper {
 
         return builder.build();
     }
+
+    public static ImmutableMap<String, String> buildEnsemblSpeciesGroupedByContrastId(DifferentialExperiment experiment) {
+        if (experiment.isMultiOrganismExperiment()) {
+            return buildMultipleEnsemblSpeciesGroupedByContrastId(experiment);
+        } else {
+            return buildSingleEnsemblSpeciesGroupedByContrastId(experiment);
+        }
+    }
+
+    private static ImmutableMap<String, String> buildSingleEnsemblSpeciesGroupedByContrastId(DifferentialExperiment experiment) {
+        Set<String> contrastIds = experiment.getContrastIds();
+
+        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
+
+        String ensemblSpecies = Species.convertToEnsemblSpecies(experiment.getFirstOrganism());
+
+        for (String contrastId : contrastIds)  {
+            builder.put(contrastId, ensemblSpecies);
+        }
+
+        return builder.build();
+    }
+
+    private static ImmutableMap<String, String> buildMultipleEnsemblSpeciesGroupedByContrastId(DifferentialExperiment experiment) {
+        //TODO: eg: example multi-species diff experiment: http://wwwdev.ebi.ac.uk/gxa/experiments/E-GEOD-6404/experiment-design
+
+        throw new NotImplementedException();
+    }
+
 
 
 

@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.analytics.index;
 
 import org.apache.solr.client.solrj.beans.Field;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.differential.Regulation;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -49,6 +50,9 @@ public class AnalyticsDocument {
     @Field
     Double foldChange;
 
+    @Field
+    Regulation regulation;
+
     public static Builder builder() {
         return new Builder();
     }
@@ -65,7 +69,6 @@ public class AnalyticsDocument {
             checkNotNull(build.species, "missing species");
             checkNotNull(build.experimentAccession, "missing experimentAccession");
             checkNotNull(build.experimentType, "missing experimentType");
-            checkNotNull(build.defaultQueryFactorType, "missing defaultQueryFactorType");
             checkNotNull(build.identifierSearch, "missing identifierSearch");
             checkNotNull(build.conditionsSearch, "missing conditionsSearch");
 
@@ -77,6 +80,7 @@ public class AnalyticsDocument {
                 checkNotNull(build.contrastType, "missing contrastType for differential experiment");
                 checkNotNull(build.numReplicates, "missing numReplicates for differential experiment");
                 checkNotNull(build.foldChange, "missing foldChange for differential experiment");
+                checkNotNull(build.regulation, "missing regulation for differential experiment");
             }
 
             build.experimentTypeAsString = build.experimentType.getDescription();
@@ -145,8 +149,10 @@ public class AnalyticsDocument {
 
         public Builder foldChange(double foldChange) {
             build.foldChange = foldChange;
+            build.regulation = Regulation.valueOf(foldChange);
             return this;
         }
+
     }
 
 }

@@ -102,12 +102,15 @@
         <field name="contrastType" type="string" indexed="true" stored="true"/>
         <field name="numReplicates" type="tint4" indexed="true" stored="true"/>
         <field name="foldChange" type="tdouble4" indexed="true" stored="true"/>
+        <field name="regulation" type="regulationEnum" indexed="true" stored="false"/>
 
         <field name="_version_" type="long" indexed="true" stored="true"/>
 
     </fields>
 
     <types>
+
+        <fieldType name="regulationEnum" class="solr.EnumField" enumsConfig="enumsConfig.xml" enumName="regulation" />
 
         <!--<fieldType name="experimentType" class="solr.EnumField" enumsConfig="experimentType.xml" enumName="experimentType"/>-->
 
