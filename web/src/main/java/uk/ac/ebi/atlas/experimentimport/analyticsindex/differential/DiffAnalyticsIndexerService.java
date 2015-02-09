@@ -31,7 +31,6 @@ import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.SpeciesGrouper;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
 
@@ -93,8 +92,8 @@ public class DiffAnalyticsIndexerService {
 
         ImmutableSetMultimap.Builder<String, String> builder = ImmutableSetMultimap.builder();
 
-        for (Condition condition : conditions) {
-            builder.putAll(condition.getAssayGroupId(), condition.getValues());
+        for (DifferentialCondition condition : conditions) {
+            builder.putAll(condition.getContrastId(), condition.getValues());
         }
 
         return builder.build();
