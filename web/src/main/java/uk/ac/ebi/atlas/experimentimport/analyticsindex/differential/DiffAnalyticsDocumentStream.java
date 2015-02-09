@@ -21,26 +21,29 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
 
     private final String experimentAccession;
     private final ExperimentType experimentType;
-    private final Map<String, String> ensemblSpeciesGroupedByContrastId;
+    private final Map<String, String> ensemblSpeciesByContrastId;
+    private final Map<String, Integer> numReplicatesByContrastId;
     private final Iterable<? extends DifferentialAnalytics> inputStream;
-    private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
+    private final SetMultimap<String, String> conditionSearchTermsByContrastId;
     private final IdentifierSearchTermsDao identifierSearchTermsDao;
     private final Set<String> factors;
 
     public DiffAnalyticsDocumentStream(String experimentAccession,
                                        ExperimentType experimentType,
                                        Set<String> factors,
-                                       Map<String, String> ensemblSpeciesGroupedByContrastId,
+                                       Map<String, String> ensemblSpeciesByContrastId,
                                        Iterable<? extends DifferentialAnalytics> inputStream,
-                                       SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
+                                       SetMultimap<String, String> conditionSearchTermsByContrastId,
+                                       Map<String, Integer> numReplicatesByContrastId,
                                        IdentifierSearchTermsDao identifierSearchTermsDao) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
         this.factors = factors;
-        this.ensemblSpeciesGroupedByContrastId = ensemblSpeciesGroupedByContrastId;
+        this.ensemblSpeciesByContrastId = ensemblSpeciesByContrastId;
         this.inputStream = inputStream;
-        this.conditionSearchTermsByAssayAccessionId = conditionSearchTermsByAssayAccessionId;
+        this.conditionSearchTermsByContrastId = conditionSearchTermsByContrastId;
         this.identifierSearchTermsDao = identifierSearchTermsDao;
+        this.numReplicatesByContrastId = numReplicatesByContrastId;
     }
 
     @Override
@@ -83,24 +86,30 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
                     .contrastId(contrastId)
                     .factors(factors)
                     .foldChange(analytics.getFoldChange())
-                    .numReplicates(-1)
+                    .numReplicates(getNumReplicates(contrastId))
                     .conditionsSearch(conditionSearch);
 
             return builder.build();
         }
 
+        private int getNumReplicates(String contrastId) {
+            int numReplicates = numReplicatesByContrastId.get(contrastId);
+            checkNotNull(numReplicates, "No replicates for contrast " + contrastId);
+            return numReplicates;
+        }
+
         private String getEnsemblSpecies(String contrastId) {
-            String ensemblSpecies = DiffAnalyticsDocumentStream.this.ensemblSpeciesGroupedByContrastId.get(contrastId);
-            checkNotNull(ensemblSpecies, "No species for assay group " + contrastId);
+            String ensemblSpecies = ensemblSpeciesByContrastId.get(contrastId);
+            checkNotNull(ensemblSpecies, "No species for contrast " + contrastId);
             return ensemblSpecies;
         }
 
-        private String getConditionSearchTerms(String assayGroupId) {
-            Set<String> searchTerms = conditionSearchTermsByAssayAccessionId.get(assayGroupId);
+        private String getConditionSearchTerms(String contrastId) {
+            Set<String> searchTerms = conditionSearchTermsByContrastId.get(contrastId);
 
-            if (searchTerms.isEmpty() && !assaysSeen.contains(assayGroupId)) {
-                assaysSeen.add(assayGroupId);
-                LOGGER.warn("No condition search terms found for " + assayGroupId);
+            if (searchTerms.isEmpty() && !assaysSeen.contains(contrastId)) {
+                assaysSeen.add(contrastId);
+                LOGGER.warn("No condition search terms found for " + contrastId);
             }
 
             return Joiner.on(" ").join(searchTerms);

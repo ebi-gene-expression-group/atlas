@@ -123,13 +123,14 @@ public class DiffAnalyticsIndexerServiceIT {
         assertThat(document.getConditionsSearch(), is("NCBITaxon#NCBITaxon_3702 Arabidopsis thaliana seedling Col-0 2 to 3 weeks wild type genotype idn2-1"));
         assertThat(document.getContrastId(), is("g1_g4"));
         assertThat(document.getFactors(), contains("genotype"));
-        assertThat(document.getNumReplicates(), is(-1));
+        assertThat(document.getNumReplicates(), is(3));
         assertThat(document.getFoldChange(), is(-0.0979807106778182));
         assertThat(document.getRegulation(), is(Regulation.DOWN));
 
         AnalyticsDocument document2 = documents.get(1);
         assertThat(document2.getBioentityIdentifier(), is("AT3G18710"));
         assertThat(document2.getContrastId(), is("g1_g3"));
+        assertThat(document.getNumReplicates(), is(3));
         assertThat(document2.getConditionsSearch(), is("NCBITaxon#NCBITaxon_3702 Arabidopsis thaliana seedling Col-0 2 to 3 weeks wild type genotype swi3b +/-"));
         assertThat(document2.getFoldChange(), is(0.0452223119926126));
         assertThat(document2.getRegulation(), is(Regulation.UP));

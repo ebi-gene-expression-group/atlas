@@ -30,6 +30,7 @@ import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.SpeciesGrouper;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
@@ -38,6 +39,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Named
@@ -69,8 +71,21 @@ public class DiffAnalyticsIndexerService {
 
         Set<String> factors = experimentDesign.getFactorHeaders();
 
+        Map<String, Integer> numReplicatesByContrastId = buildNumReplicatesByContrastId(experiment);
+
         return  diffAnalyticsDocumentStreamIndexer.index(experimentAccession, experimentType, factors,
-                conditionSearchTermsByContrastId, ensemblSpeciesGroupedByContrastId);
+                conditionSearchTermsByContrastId, ensemblSpeciesGroupedByContrastId, numReplicatesByContrastId);
+    }
+
+    private Map<String, Integer> buildNumReplicatesByContrastId(DifferentialExperiment experiment) {
+        ImmutableMap.Builder<String, Integer> builder = ImmutableMap.builder();
+
+        for (Contrast contrast : experiment.getContrasts()) {
+            int numReplicates = Math.min(contrast.getReferenceAssayGroup().getReplicates(), contrast.getTestAssayGroup().getReplicates());
+            builder.put(contrast.getId(), numReplicates);
+        }
+
+        return builder.build();
     }
 
     private ImmutableSetMultimap<String, String> expandOntologyTerms(ImmutableSetMultimap<String, String> termIdsByAssayAccession) {

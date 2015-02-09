@@ -25,9 +25,10 @@ public class DiffAnalyticsDocumentStreamFactory {
                                           Set<String> factors,
                                           Map<String, String> ensemblSpeciesGroupedByAssayGroupId,
                                           Iterable<? extends DifferentialAnalytics> inputStream,
-                                          SetMultimap<String, String> conditionSearchTermsByAssayAccessionId) {
+                                          SetMultimap<String, String> conditionSearchTermsByContrastId,
+                                          Map<String, Integer> numReplicatesByContrastId) {
         return new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors, ensemblSpeciesGroupedByAssayGroupId,
-                inputStream, conditionSearchTermsByAssayAccessionId, identifierSearchTermsDao);
+                inputStream, conditionSearchTermsByContrastId, numReplicatesByContrastId, identifierSearchTermsDao);
     }
 
 }
