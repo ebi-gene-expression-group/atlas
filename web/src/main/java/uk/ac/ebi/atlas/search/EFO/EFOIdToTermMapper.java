@@ -2,18 +2,16 @@ package uk.ac.ebi.atlas.search.EFO;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
 import uk.ac.ebi.atlas.commons.efo.EFOTreeNodesTrader;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import org.springframework.context.annotation.Scope;
 
 @Named
 @Scope("singleton")
@@ -27,14 +25,14 @@ public class EFOIdToTermMapper {
         this.efoTreeNodesTrader = efoTreeNodesTrader;
     }
 
-    public Set<String> getIdsFromTerm(String term) {
+    public Set<String> getIdsForTermSubstring(String substring) {
         if (termToId == null) {
             buildTermToIdMap();
         }
 
         Set<String> efoIds = new HashSet<>();
         for (String efoTerm : termToId.keySet()) {
-            if (StringUtils.containsIgnoreCase(efoTerm, term)) {
+            if (StringUtils.containsIgnoreCase(efoTerm, substring)) {
                 efoIds.add(termToId.get(efoTerm));
             }
         }

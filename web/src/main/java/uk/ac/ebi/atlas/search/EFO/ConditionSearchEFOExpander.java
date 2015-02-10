@@ -2,9 +2,7 @@ package uk.ac.ebi.atlas.search.EFO;
 
 import com.google.common.base.Joiner;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.utils.StringUtil;
 
 import javax.inject.Inject;
@@ -15,8 +13,6 @@ import java.util.Set;
 @Scope("singleton")
 public class ConditionSearchEFOExpander {
 
-    private static final Logger LOGGER = Logger.getLogger(ConditionSearchEFOExpander.class);
-
     private EFOIdToTermMapper efoIdToTermMapper;
 
     @Inject
@@ -24,7 +20,7 @@ public class ConditionSearchEFOExpander {
         this.efoIdToTermMapper = efoIdToTermMapper;
     }
 
-    public String fetchExpandedTermWithEFOChildren(String queryTerms) {
+    public String getIds(String queryTerms) {
         if (StringUtils.isBlank(queryTerms)) {
             return queryTerms;
         }
@@ -33,11 +29,11 @@ public class ConditionSearchEFOExpander {
             return queryTerms;
         }
 
-        return termPlusEFOTerms(StringUtil.trimSurroundingQuotes(queryTerms));
+        return termPlusIds(StringUtil.trimSurroundingQuotes(queryTerms));
     }
 
-    private String termPlusEFOTerms(String term) {
-        Set<String> efoTerms = efoIdToTermMapper.getIdsFromTerm(term);
+    private String termPlusIds(String term) {
+        Set<String> efoTerms = efoIdToTermMapper.getIdsForTermSubstring(term);
         return term + (efoTerms.isEmpty() ? "" : " " + Joiner.on(" ").join(efoTerms));
     }
 

@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -20,7 +19,7 @@ public class ConditionSearchEFOExpanderTest {
 
     @Test
     public void nullTerm() {
-        assertThat(subject.fetchExpandedTermWithEFOChildren(null), is(nullValue()));
+        assertThat(subject.getIds(null), is(nullValue()));
     }
 
 }

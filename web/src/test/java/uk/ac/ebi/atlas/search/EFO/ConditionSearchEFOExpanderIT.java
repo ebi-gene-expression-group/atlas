@@ -26,7 +26,7 @@ public class ConditionSearchEFOExpanderIT {
 
     @Test
     public void cancer() throws Exception {
-        String expandedSearch = subject.fetchExpandedTermWithEFOChildren("cancer");
+        String expandedSearch = subject.getIds("cancer");
 
         String[] terms = StringUtils.split(expandedSearch);
 
@@ -37,7 +37,7 @@ public class ConditionSearchEFOExpanderIT {
 
     @Test
     public void inflammatoryBowelDisease() throws Exception {
-        String expandedSearch = subject.fetchExpandedTermWithEFOChildren("Inflammatory Bowel Disease");
+        String expandedSearch = subject.getIds("Inflammatory Bowel Disease");
 
         String[] terms = StringUtils.split(expandedSearch);
 
@@ -51,7 +51,7 @@ public class ConditionSearchEFOExpanderIT {
 
     @Test
     public void heart() throws Exception {
-        String expandedSearch = subject.fetchExpandedTermWithEFOChildren("heart");
+        String expandedSearch = subject.getIds("heart");
 
         String[] terms = StringUtils.split(expandedSearch);
         assertThat(terms.length, is(greaterThanOrEqualTo(49)));
@@ -64,7 +64,7 @@ public class ConditionSearchEFOExpanderIT {
 
     @Test
     public void cancerANDheart() throws Exception {
-        String expandedSearch = subject.fetchExpandedTermWithEFOChildren("cancer AND heart");
+        String expandedSearch = subject.getIds("cancer AND heart");
 
         String[] terms = StringUtils.split(expandedSearch);
         assertThat(terms[0], is("cancer"));
@@ -75,7 +75,7 @@ public class ConditionSearchEFOExpanderIT {
 
     @Test
     public void cancerANDheartLowerCase() throws Exception {
-        String expandedSearch = subject.fetchExpandedTermWithEFOChildren("cancer and heart");
+        String expandedSearch = subject.getIds("cancer and heart");
 
         String[] terms = StringUtils.split(expandedSearch);
         assertThat(terms[0], is("cancer"));
@@ -86,8 +86,8 @@ public class ConditionSearchEFOExpanderIT {
 
     @Test
     public void quotes() {
-        String expandedSearchWithoutQuotes = subject.fetchExpandedTermWithEFOChildren("anatomy basic component");
-        String expandedSearchWithQuotes = subject.fetchExpandedTermWithEFOChildren("\"anatomy basic component\"");
+        String expandedSearchWithoutQuotes = subject.getIds("anatomy basic component");
+        String expandedSearchWithQuotes = subject.getIds("\"anatomy basic component\"");
 
         assertThat(expandedSearchWithQuotes.equals(expandedSearchWithoutQuotes), is(true));
     }

@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -21,7 +22,15 @@ public class EFOIdToTermMapperIT {
     EFOIdToTermMapper subject;
 
     @Test
-    public void getIdsFromTerm() {
-        assertThat(subject.getIdsFromTerm("cancer").size(), is(greaterThanOrEqualTo(44)));
+    public void cancer() {
+        assertThat(subject.getIdsForTermSubstring("cancer").size(), is(greaterThanOrEqualTo(44)));
     }
+
+    @Test
+    public void cancerIncludesResultsContainingCancerAsASubstring() {
+        String cancerBiomarkerMeasurement = "EFO_0005127";          // see http://www.ebi.ac.uk/efo/EFO_0005127
+
+        assertThat(subject.getIdsForTermSubstring("cancer"), hasItem(cancerBiomarkerMeasurement));
+    }
+
 }
