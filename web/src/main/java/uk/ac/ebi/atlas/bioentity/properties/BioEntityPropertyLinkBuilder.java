@@ -79,13 +79,13 @@ public class BioEntityPropertyLinkBuilder {
                 displayName = reactomeClient.fetchPathwayNameFailSafe(propertyValue);
                 break;
             case "go":
-                displayName = goTermTrader.getTerm(propertyValue);
+                displayName = goTermTrader.getTermName(propertyValue);
                 break;
             case "interpro":
                 displayName = interProTermTrader.getTerm(propertyValue);
                 break;
             case "po":
-                displayName = poTermTrader.getTerm(propertyValue);
+                displayName = poTermTrader.getTermName(propertyValue);
                 break;
 
         }

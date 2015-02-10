@@ -99,5 +99,4 @@ public class GenePageController extends BioEntityPageController {
     String getBioentityPropertyName() {
         return BIOENTITY_PROPERTY_NAME;
     }
-
 }

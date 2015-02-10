@@ -24,11 +24,11 @@ package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.*;
 import org.springframework.ui.Model;
+import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
+import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
+import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
@@ -73,6 +73,10 @@ public abstract class BioEntityPageController {
 
     private ExperimentTrader experimentTrader;
 
+    private GoTermTrader goTermTrader;
+
+    private PoTermTrader poTermTrader;
+
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
 
     private BaselineExperimentAssayGroupSearchService baselineExperimentAssayGroupSearchService;
@@ -97,6 +101,16 @@ public abstract class BioEntityPageController {
     @Inject
     public void setExperimentTrader(ExperimentTrader experimentTrader) {
         this.experimentTrader = experimentTrader;
+    }
+
+    @Inject
+    public void setGoTermTrader(GoTermTrader goTermTrader) {
+        this.goTermTrader = goTermTrader;
+    }
+
+    @Inject
+    public void setPoTermTrader(PoTermTrader poTermTrader) {
+        this.poTermTrader = poTermTrader;
     }
 
     @Inject
@@ -237,7 +251,11 @@ public abstract class BioEntityPageController {
         if (entityNames.isEmpty()) {
             entityNames.add(identifier);
         }
-        bioEntityPropertyService.init(species, propertyValuesByType, entityNames, identifier);
+
+        ImmutableSetMultimap<Integer, GoPoTerm> goTerms = mapGoTermsByDepth(propertyValuesByType.get("go"));
+        ImmutableSetMultimap<Integer, GoPoTerm> poTerms = mapPoTermsByDepth(propertyValuesByType.get("po"));
+
+        bioEntityPropertyService.init(species, propertyValuesByType, goTerms, poTerms, entityNames, identifier);
     }
 
     protected boolean widgetHasBaselineProfiles(String experimentAccession, String species, Set<String> identifiers) throws GenesNotFoundException {
@@ -259,4 +277,25 @@ public abstract class BioEntityPageController {
         return (baselineProfiles.size() > 0);
     }
 
+
+    protected ImmutableSetMultimap<Integer, GoPoTerm> mapGoTermsByDepth(Set<String> accessions) {
+        ImmutableSetMultimap.Builder<Integer, GoPoTerm> builder = new ImmutableSetMultimap.Builder<>();
+
+        for (String accession : accessions) {
+            builder.put(goTermTrader.getDepth(accession), goTermTrader.getTerm(accession));
+        }
+
+        return builder.build();
+    }
+
+
+    protected ImmutableSetMultimap<Integer, GoPoTerm> mapPoTermsByDepth(Set<String> accessions) {
+        ImmutableSetMultimap.Builder<Integer, GoPoTerm> builder = new ImmutableSetMultimap.Builder<>();
+
+        for (String accession : accessions) {
+            builder.put(poTermTrader.getDepth(accession), poTermTrader.getTerm(accession));
+        }
+
+        return builder.build();
+    }
 }

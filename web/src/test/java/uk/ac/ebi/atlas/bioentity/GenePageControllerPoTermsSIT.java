@@ -29,11 +29,8 @@ public class GenePageControllerPoTermsSIT extends SinglePageSeleniumFixture {
     public void infoCard() {
         assertThat(subject.getBioEntityCardTitle(), is("F11B9.23 Arabidopsis thaliana UDP-Glycosyltransferase superfamily protein"));
         assertThat(subject.getPropertiesTableSize(), is(7));
-        assertThat(subject.getPropertiesTableRow(0), hasItems("Gene Ontology", "molecular function, cellular component, intracellular, cell, nucleus, response to stress, defense response, " +
-                "aging, biological process, metabolic process, UDP-glycosyltransferase activity, leaf senescence, transferase activity, " +
-                "transferring glycosyl groups, transferase activity, transferring hexosyl groups, organelle, glucosyltransferase activity, anatomical structure development, defense response to fungus"));
-        assertThat(subject.getPropertiesTableRow(1), hasItems("Plant Ontology", "LP.02 two leaves visible stage, petal differentiation " +
-                "and expansion stage, flowering stage, root, vascular leaf, stamen, sepal, petal, hypocotyl, collective leaf structure, pollen"));
+        assertThat(subject.getPropertiesTableRow(0), hasItems("Gene Ontology", "leaf senescence, glucosyltransferase activity, defense response to fungus (... and 15 more)"));
+        assertThat(subject.getPropertiesTableRow(1), hasItems("Plant Ontology", "LP.02 two leaves visible stage, petal differentiation and expansion stage, flowering stage (... and 8 more)"));
         assertThat(subject.getPropertiesTableRow(2), hasItems("InterPro", "UDP-glucuronosyl/UDP-glucosyltransferase (family)"));
         assertThat(subject.getPropertiesTableRow(3), hasItems("Ensembl Gene", "AT3G11340"));
         assertThat(subject.getPropertiesTableRow(4), hasItems("Entrez", "820307"));
@@ -42,5 +39,14 @@ public class GenePageControllerPoTermsSIT extends SinglePageSeleniumFixture {
 
         assertThat(subject.getLinksInTableRow(1).get(0), is("http://plantontology.org/amigo/go.cgi?view=details&search_constraint=terms&depth=0&query=PO%3A0007098"));
         assertThat(subject.getLinksInTableRow(1).get(1), is("http://plantontology.org/amigo/go.cgi?view=details&search_constraint=terms&depth=0&query=PO%3A0007611"));
+    }
+
+    @Test
+    public void showMoreAndLessPlantOntologyTerms() {
+        subject.clickShowMorePoLinks();
+        assertThat(subject.getPropertiesTableRow(1), hasItems("Plant Ontology", "LP.02 two leaves visible stage, petal differentiation and expansion stage, flowering stage, root, vascular leaf, stamen, sepal, petal, hypocotyl, collective leaf structure, pollen (show less)"));
+
+        subject.clickShowLessPoLinks();
+        assertThat(subject.getPropertiesTableRow(1), hasItems("Plant Ontology", "LP.02 two leaves visible stage, petal differentiation and expansion stage, flowering stage (... and 8 more)"));
     }
 }
