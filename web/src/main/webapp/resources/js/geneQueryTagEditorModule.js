@@ -45,29 +45,43 @@ var geneQueryTagEditorModule = (function($) {
                     },
                     source: function (request, response) {
                         $.ajax({
-                            url: 'json/suggestions',
+                            url: 'json/suggestions', //'json/suggestions',         json/suggestionsDataJson',
+                            dataType: "json",
                             data: {
                                 'query': request.term,
                                 'species': species
                             },
-                            success: function (data) {
-                                response(data);
+                            success: function(data) {
+                                var source_data = $.map(data, function (obj) {
+                                    return {
+                                        label: obj.term + ' --- ' + obj.source,
+                                        value: obj.term
+
+                                    };
+                                });
+                                response(source_data);
                             },
+
                             error: function (jqXHR, textStatus, errorThrown) {
                                 console.log("Error. Status: " + textStatus + ", errorThrown: " + errorThrown);
                             }
                         });
                     }
+
                 },
+
                 onChange: onChange,
 
                 placeholder: 'Enter gene query...',
                 forceLowercase: false
-            });
+
+        });
+
     }
+
 
     return {
         init: initAutocomplete
     };
 
-}(jQuery));
+    }(jQuery));

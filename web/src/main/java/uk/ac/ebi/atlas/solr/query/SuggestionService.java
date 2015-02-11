@@ -52,10 +52,10 @@ public class SuggestionService {
         this.multiTermSuggestionService = multiTermSuggestionService;
     }
 
-    public List<String> fetchTopSuggestions(String query, @Nullable String species) {
+    public List<TermSourceSuggestion> fetchTopSuggestions(String query, @Nullable String species) {
         LOGGER.info(String.format("fetchTopSuggestions for query %s, species %s", query, species));
 
-        LinkedHashSet<String> suggestions = Sets.newLinkedHashSet();
+        LinkedHashSet<TermSourceSuggestion> suggestions = Sets.newLinkedHashSet();
 
         if (!CharMatcher.WHITESPACE.or(CharMatcher.is('-')).matchesAnyOf(query)) {
             suggestions.addAll(geneIdSuggestionService.fetchGeneIdSuggestionsInName(query, species));
@@ -70,11 +70,11 @@ public class SuggestionService {
         }
 
         if (suggestions.size() < MAX_NUMBER_OF_SUGGESTIONS) {
-            List<String> multiTermSuggestions = multiTermSuggestionService.fetchMultiTermSuggestions(query);
+            List<TermSourceSuggestion> multiTermSuggestions = multiTermSuggestionService.fetchMultiTermSuggestions(query);
             suggestions.addAll(multiTermSuggestions);
         }
 
-        List<String> topSuggestions = Lists.newArrayList(suggestions);
+        List<TermSourceSuggestion> topSuggestions = Lists.newArrayList(suggestions);
 
         if (topSuggestions.size() > MAX_NUMBER_OF_SUGGESTIONS) {
             topSuggestions = topSuggestions.subList(0, MAX_NUMBER_OF_SUGGESTIONS);

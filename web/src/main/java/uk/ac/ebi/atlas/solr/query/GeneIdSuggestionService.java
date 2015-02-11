@@ -26,6 +26,8 @@ import com.google.common.collect.Lists;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Species;
@@ -59,43 +61,62 @@ public class GeneIdSuggestionService {
         this.solrServer = solrServer;
     }
 
-    public List<String> fetchGeneIdSuggestionsInName(String geneName, String species) {
+    public List<TermSourceSuggestion> fetchGeneIdSuggestionsInName(String geneName, String species) {
         // ie: property_value_edgengram:"<geneName>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"symbol")
         return fetchAutoCompleteSuggestions(geneName, species, bioentityNamePropertyNames);
     }
 
-    public List<String> fetchGeneIdSuggestionsInSynonym(String geneName, String species) {
+    public List<TermSourceSuggestion> fetchGeneIdSuggestionsInSynonym(String geneName, String species) {
         // ie: property_value_edgengram:"<geneName>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"synonym")
         return fetchAutoCompleteSuggestions(geneName, species, synonymPropertyNames);
     }
 
-    public List<String> fetchGeneIdSuggestionsInIdentifier(String geneName, String species) {
+    public List<TermSourceSuggestion> fetchGeneIdSuggestionsInIdentifier(String geneName, String species) {
         // ie: property_value_edgengram:"<geneName>" AND (bioentity_type:"ensgene" OR bioentity_type:"mirna" OR bioentity_type:"ensprotein" OR bioentity_type:"enstranscript") AND (property_name:"gene_biotype" OR property_name:"ensfamily" OR property_name:"refseq" OR property_name:"rgd" OR property_name:"design_element" OR property_name:"mirbase_accession" OR property_name:"mirbase_name" OR property_name:"flybase_transcript_id" OR property_name:"unigene" OR property_name:"embl" OR property_name:"interpro" OR property_name:"ensgene" OR property_name:"flybase_gene_id" OR property_name:"pathwayid" OR property_name:"mgi_id" OR property_name:"ensprotein" OR property_name:"mirbase_id" OR property_name:"enstranscript" OR property_name:"entrezgene" OR property_name:"uniprot" OR property_name:"go")
         return fetchAutoCompleteSuggestions(geneName, species, identifierPropertyNames);
     }
 
-    List<String> fetchAutoCompleteSuggestions(String queryString, String species, String[] propertyNames) {
-        SolrQuery solrQuery = solrQueryBuilderFactory.createAutocompleFacetedPropertyValueQueryBuilder()
+    List<TermSourceSuggestion> fetchAutoCompleteSuggestions(String queryString, String species, String[] propertyNames) {
+        SolrQuery solrQuery = solrQueryBuilderFactory.createAutocompleteGroupedPropertyValueQueryBuilder()
                 .withSpecies(Species.convertToEnsemblSpecies(species))
                 .withBioentityTypes(BioentityType.getAllSolrAliases())
                 .withPropertyNames(propertyNames)
-                .buildPropertyValueAutocompleteQuery(queryString);
+                .build(queryString);
 
-        return fetchFacetedResults(solrQuery);
+        return fetchGroupedFacetedResults(solrQuery);
     }
 
     //TODO: replace with SolrUtil.extractFirstFacetValues
-    List<String> fetchFacetedResults(SolrQuery solrQuery) {
+//    List<String> fetchFacetedResults(SolrQuery solrQuery) {
+//
+//        QueryResponse solrResponse = solrServer.query(solrQuery);
+//
+//        List<String> geneNames = Lists.newArrayList();
+//        List<FacetField.Count> firstFacetFieldCounts = solrResponse.getFacetFields().get(0).getValues();
+//        if (firstFacetFieldCounts != null) {
+//            for (FacetField.Count facetFieldCount : firstFacetFieldCounts) {
+//                geneNames.add(facetFieldCount.getName());
+//            }
+//        }
+//        return geneNames;
+//    }
 
-        QueryResponse solrResponse = solrServer.query(solrQuery);
+    List<TermSourceSuggestion> fetchGroupedFacetedResults(SolrQuery solrQuery) {
+        QueryResponse queryResponse = solrServer.query(solrQuery);
 
-        List<String> geneNames = Lists.newArrayList();
-        List<FacetField.Count> firstFacetFieldCounts = solrResponse.getFacetFields().get(0).getValues();
-        if (firstFacetFieldCounts != null) {
-            for (FacetField.Count facetFieldCount : firstFacetFieldCounts) {
-                geneNames.add(facetFieldCount.getName());
+        List<TermSourceSuggestion> geneNames = Lists.newArrayList();
+
+        SolrDocumentList results = queryResponse.getResults();
+        if(results != null) {
+            for (SolrDocument doc : results) {
+                String propertyValue = doc.getFieldValue("property_value").toString();
+                String propertyName = doc.getFieldValue("property_name").toString();    //TODO: create mapping between property_name and source to show in the UI
+
+                TermSourceSuggestion termSource = new TermSourceSuggestion(propertyValue, propertyName);
+                geneNames.add(termSource);
             }
         }
+
         return geneNames;
     }
 

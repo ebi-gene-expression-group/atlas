@@ -74,7 +74,7 @@
 
 					<tr>
 						<td>
-							<div style="display:inline-block">
+							<div id="geneQuerySection" style="display:inline-block">
 								<textarea id="geneQuery" name="geneQuery" rows="2" cols="36"
 										  placeholder="(all genes)" tabindex="1"></textarea>
 

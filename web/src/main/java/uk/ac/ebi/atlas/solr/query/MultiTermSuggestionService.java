@@ -40,7 +40,7 @@ public class MultiTermSuggestionService {
         this.restTemplate = restTemplate;
     }
 
-    public List<String> fetchMultiTermSuggestions(String multiTermToken) {
+    public List<TermSourceSuggestion> fetchMultiTermSuggestions(String multiTermToken) {
         // uses Spelling suggester, see https://www.ebi.ac.uk/seqdb/confluence/display/GXA/Solr+server#Solrserver-Suggestcomponent
         // ie: http://lime:8983/solr/gxa/suggest_properties?spellcheck.q=<multiTermPhrase>&wt=json&omitHeader=true&rows=0&json.nl=arrarr
 
@@ -54,8 +54,6 @@ public class MultiTermSuggestionService {
         return extractSuggestions(jsonString);
     }
 
-
-
     JsonElement extractSuggestionsElement(String jsonString) {
         JsonObject spellCheckObject = new JsonParser().parse(jsonString).getAsJsonObject().getAsJsonObject("spellcheck");
         if (spellCheckObject != null) {
@@ -64,8 +62,8 @@ public class MultiTermSuggestionService {
         return null;
     }
 
-    List<String> extractSuggestions(String jsonString) {
-        List<String> suggestionStrings = new ArrayList<>();
+    List<TermSourceSuggestion> extractSuggestions(String jsonString) {
+        List<TermSourceSuggestion> suggestionStrings = new ArrayList<>();
 
         JsonElement suggestionsElement = extractSuggestionsElement(jsonString);
 
@@ -77,7 +75,10 @@ public class MultiTermSuggestionService {
                 JsonArray suggestionElements = suggestionsArray.get(0).getAsJsonArray().get(1).getAsJsonObject().get("suggestion").getAsJsonArray();
 
                 for (JsonElement suggestionElement : suggestionElements) {
-                     suggestionStrings.add(suggestionElement.getAsString());
+                    String term = suggestionElement.getAsString();
+                    TermSourceSuggestion termSource = new TermSourceSuggestion(term, "");
+
+                    suggestionStrings.add(termSource);
                 }
             }
         }

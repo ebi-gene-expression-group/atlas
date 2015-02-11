@@ -31,6 +31,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.atlas.solr.query.SuggestionService;
+import uk.ac.ebi.atlas.solr.query.TermSourceSuggestion;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -54,7 +55,7 @@ public class AutoCompleteController {
             return StringUtils.EMPTY;
         }
 
-        List<String> suggestions = suggestionService.fetchTopSuggestions(query, species);
+        List<TermSourceSuggestion> suggestions = suggestionService.fetchTopSuggestions(query, species);
 
         return new Gson().toJson(suggestions);
     }
