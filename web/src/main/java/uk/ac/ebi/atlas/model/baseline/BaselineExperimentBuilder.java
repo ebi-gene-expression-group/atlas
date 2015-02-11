@@ -43,6 +43,8 @@ public class BaselineExperimentBuilder {
     private Set<String> organisms;
     private String kingdom;
     private String description;
+    private String dataProviderURL;
+    private String dataProviderDescription;
     private String displayName;
     private boolean hasExtraInfoFile;
     private Map<String, String> speciesMapping;
@@ -65,6 +67,16 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder withDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public BaselineExperimentBuilder withDataProviderURL(String dataProviderURL) {
+        this.dataProviderURL = dataProviderURL;
+        return this;
+    }
+
+    public BaselineExperimentBuilder withDataProviderDescription(String dataProviderDescription) {
+        this.dataProviderDescription = dataProviderDescription;
         return this;
     }
 
@@ -118,7 +130,7 @@ public class BaselineExperimentBuilder {
 
         return new BaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
                 displayName, organisms, kingdom, speciesMapping, hasExtraInfoFile,
-                pubMedIds, experimentDesign, assayGroups);
+                pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
     }
 
     public ProteomicsBaselineExperiment createProteomics() {
@@ -126,7 +138,7 @@ public class BaselineExperimentBuilder {
 
         return new ProteomicsBaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
                 displayName, organisms, kingdom, speciesMapping, hasExtraInfoFile,
-                pubMedIds, experimentDesign, assayGroups);
+                pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
     }
 
     void validate() {

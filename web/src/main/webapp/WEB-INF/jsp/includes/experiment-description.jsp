@@ -72,7 +72,13 @@
             </c:forEach>
         </div>
     </c:if>
-</td>
+    <c:if test="${not empty dataProviderURL and not empty dataProviderDescription}">
+        <div id="dataProvider">Data Provider:
+        <a id="goto-dataprovider" class="thick-link" title="Experiment Data Provider"
+            href="${dataProviderURL}">${dataProviderDescription}</a>
+        </div>
+    </c:if>
+    </td>
 <script>
     var europepmcUrl = "${configuration['europepmc.base.url']}" + "webservices/rest/MED/%pubmedId%/textMinedTerms/GENE_PROTEIN/1/json";
 </script>

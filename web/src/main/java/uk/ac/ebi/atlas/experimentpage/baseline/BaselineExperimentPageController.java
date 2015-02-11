@@ -124,6 +124,10 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
         String species = requestContext.getFilteredBySpecies();
 
+        // required to show link to a data provider on baseline page (if it was provided in <expAcc>-factors.xml file)
+        model.addAttribute("dataProviderURL", experiment.getDataProviderURL());
+        model.addAttribute("dataProviderDescription", experiment.getDataProviderDescription());
+
         //required by autocomplete and heatmap
         model.addAttribute("species", species);
 

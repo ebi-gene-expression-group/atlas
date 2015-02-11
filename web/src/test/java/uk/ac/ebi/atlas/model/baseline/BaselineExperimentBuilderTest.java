@@ -53,6 +53,8 @@ public class BaselineExperimentBuilderTest {
     private static final String RUN_ACCESSION1 = "run1";
     private static final String RUN_ACCESSION2 = "run2";
     private static final String PUBMEDID = "PUBMEDID";
+    private static final String PROVIDER_URL = "http://www.provider.com";
+    private static final String PROVIDER_DESCRIPTION = "Baseline experiment data provider";
 
     private BaselineExperimentBuilder subject;
 
@@ -109,6 +111,8 @@ public class BaselineExperimentBuilderTest {
                 .withExperimentDesign(experimentDesignMock)
                 .withExperimentalFactors(experimentalFactors)
                 .withAssayGroups(assayGroupsMock)
+                .withDataProviderURL(PROVIDER_URL)
+                .withDataProviderDescription(PROVIDER_DESCRIPTION)
                 .create();
 
         assertThat(experiment.getAccession(), is(EXPERIMENT_ACCESSION));
@@ -123,5 +127,7 @@ public class BaselineExperimentBuilderTest {
         assertThat(experiment.getPubMedIds(), contains(PUBMEDID));
         assertThat(experiment.getExperimentDesign(), is(experimentDesignMock));
         assertThat(experiment.getExperimentalFactors(), is(experimentalFactors));
+        assertThat(experiment.getDataProviderURL(), is(PROVIDER_URL));
+        assertThat(experiment.getDataProviderDescription(), is(PROVIDER_DESCRIPTION));
     }
 }

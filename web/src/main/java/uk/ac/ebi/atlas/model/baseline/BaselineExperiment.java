@@ -35,15 +35,27 @@ public class BaselineExperiment extends Experiment {
 
     private AssayGroups assayGroups;
 
+    private String dataProviderURL;
+    private String dataProviderDescription;
+
     BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
                        String description, String displayName,
                        Set<String> organisms, String kingdom, Map<String, String> speciesMapping,
                        boolean hasExtraInfoFile, Set<String> pubMedIds,
                        ExperimentDesign experimentDesign, AssayGroups assayGroups) {
+        this(accession, lastUpdate, experimentalFactors, description, displayName, organisms, kingdom, speciesMapping,
+                hasExtraInfoFile, pubMedIds, experimentDesign,  assayGroups, "", "");
+    }
+
+    BaselineExperiment(String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
+                       String description, String displayName,
+                       Set<String> organisms, String kingdom, Map<String, String> speciesMapping,
+                       boolean hasExtraInfoFile, Set<String> pubMedIds,
+                       ExperimentDesign experimentDesign, AssayGroups assayGroups, String dataProviderURL, String dataProviderDescription) {
         this(ExperimentType.RNASEQ_MRNA_BASELINE, accession, lastUpdate, experimentalFactors,
                 description, displayName, organisms, kingdom, speciesMapping,
                 hasExtraInfoFile, pubMedIds,
-                experimentDesign, assayGroups);
+                experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
     }
 
     BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
@@ -51,11 +63,22 @@ public class BaselineExperiment extends Experiment {
                        Set<String> organisms, String kingdom, Map<String, String> speciesMapping,
                        boolean hasExtraInfoFile, Set<String> pubMedIds,
                        ExperimentDesign experimentDesign, AssayGroups assayGroups) {
+        this(experimentType, accession, lastUpdate, experimentalFactors, description, displayName, organisms, kingdom, speciesMapping,
+                hasExtraInfoFile, pubMedIds, experimentDesign, assayGroups, "", "");
+    }
+
+    BaselineExperiment(ExperimentType experimentType, String accession, Date lastUpdate, ExperimentalFactors experimentalFactors,
+            String description, String displayName,
+            Set < String > organisms, String kingdom, Map < String, String > speciesMapping,
+        boolean hasExtraInfoFile, Set<String> pubMedIds,
+                       ExperimentDesign experimentDesign, AssayGroups assayGroups, String dataProviderURL, String dataProviderDescription) {
 
         super(experimentType, accession, lastUpdate, displayName, description,
                 hasExtraInfoFile, organisms, kingdom, speciesMapping, pubMedIds, experimentDesign);
         this.experimentalFactors = experimentalFactors;
         this.assayGroups = assayGroups;
+        this.dataProviderURL = dataProviderURL;
+        this.dataProviderDescription = dataProviderDescription;
     }
 
     public Set<String> getExperimentRunAccessions() {
@@ -69,6 +92,15 @@ public class BaselineExperiment extends Experiment {
     public AssayGroups getAssayGroups() {
         return assayGroups;
     }
+
+    public String getDataProviderURL() {
+        return dataProviderURL;
+    }
+
+    public String getDataProviderDescription() {
+        return dataProviderDescription;
+    }
+
 
     public SortedSet<Factor> getAssayGroupFactors(Collection<String> assayGroupIds, String factorType) {
         return getExperimentalFactors().getFactors(assayGroupIds, factorType);

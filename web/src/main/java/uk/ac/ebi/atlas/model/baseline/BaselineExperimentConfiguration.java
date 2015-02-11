@@ -39,6 +39,14 @@ public class BaselineExperimentConfiguration {
         return config.getString("landingPageDisplayName");
     }
 
+    public String getDataProviderURL() {
+        return config.getString("dataProviderURL");
+    }
+
+    public String getDataProviderDescription() {
+        return config.getString("dataProviderDescription");
+    }
+
     public Set<Factor> getDefaultFilterFactors() {
 
         Set<Factor> defaultFilterFactors = new HashSet<>();
