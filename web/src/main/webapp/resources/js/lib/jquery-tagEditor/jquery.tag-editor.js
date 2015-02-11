@@ -181,6 +181,9 @@
                             input[aco.plugin](aco);
                         } else {
                             input.autocomplete(aco);
+                            if (aco._renderItem) {
+                                input.autocomplete( "instance" )._renderItem = aco._renderItem;
+                            }
                         }
                     }
                 }
