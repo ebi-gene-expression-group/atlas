@@ -45,7 +45,7 @@ var geneQueryTagEditorModule = (function($) {
                     },
                     source: function (request, response) {
                         $.ajax({
-                            url: 'json/suggestions', //'json/suggestions',         json/suggestionsDataJson',
+                            url: 'json/suggestions',
                             dataType: "json",
                             data: {
                                 'query': request.term,
@@ -54,8 +54,9 @@ var geneQueryTagEditorModule = (function($) {
                             success: function(data) {
                                 var source_data = $.map(data, function (obj) {
                                     return {
-                                        label: obj.term + ' --- ' + obj.source,
-                                        value: obj.term
+                                        label: obj.term,
+                                        value: obj.term,
+                                        source: obj.source
 
                                     };
                                 });
@@ -68,9 +69,14 @@ var geneQueryTagEditorModule = (function($) {
                         });
                     },
                     _renderItem: function( ul, item) {
-                                    return $( "<li></li>" )
+                                    var source_des ='&nbsp;';
+                                    if(item.source.length != 0) {
+                                        source_des = item.source;
+                                    }
+
+                                    return $( "<li style='width: 300px;'></li>" )
                                         .data( "item.autocomplete", item )
-                                        .append( "<a>!" + item.label + "!</a>" )
+                                        .append( "<a>" + "<div style='float:left;text-align: left'>" + item.label + "</div><div style='text-align: right'><small>" + source_des + "</small></div></a>" )
                                         .appendTo( ul );
                     }
                 },

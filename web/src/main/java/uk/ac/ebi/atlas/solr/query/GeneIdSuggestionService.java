@@ -87,19 +87,6 @@ public class GeneIdSuggestionService {
     }
 
     //TODO: replace with SolrUtil.extractFirstFacetValues
-//    List<String> fetchFacetedResults(SolrQuery solrQuery) {
-//
-//        QueryResponse solrResponse = solrServer.query(solrQuery);
-//
-//        List<String> geneNames = Lists.newArrayList();
-//        List<FacetField.Count> firstFacetFieldCounts = solrResponse.getFacetFields().get(0).getValues();
-//        if (firstFacetFieldCounts != null) {
-//            for (FacetField.Count facetFieldCount : firstFacetFieldCounts) {
-//                geneNames.add(facetFieldCount.getName());
-//            }
-//        }
-//        return geneNames;
-//    }
 
     List<TermSourceSuggestion> fetchGroupedFacetedResults(SolrQuery solrQuery) {
         QueryResponse queryResponse = solrServer.query(solrQuery);

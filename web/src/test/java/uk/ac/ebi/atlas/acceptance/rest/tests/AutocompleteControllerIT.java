@@ -28,13 +28,13 @@ import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ResponseBody;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.EndPoint;
+import uk.ac.ebi.atlas.solr.query.TermSourceSuggestion;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class AutocompleteControllerIT {
 
@@ -63,10 +63,13 @@ public class AutocompleteControllerIT {
         String jsonString = responseBody.asString();
         Gson gson = new Gson();
         //when
-        List<String> suggestions = gson.fromJson(jsonString, List.class);
+        TermSourceSuggestion[] suggestions = gson.fromJson(jsonString, TermSourceSuggestion[].class);
 
-        assertThat(suggestions, hasItems("ASP","ASPM"));
-        assertThat(suggestions, hasSize(15));
+        List<TermSourceSuggestion> suggestionList = Arrays.asList(suggestions);
+
+        assertThat(suggestionList.get(0).term, is("ASPA"));
+        assertThat(suggestionList.get(0).source, is("symbol"));
+        assertThat(suggestionList, hasSize(15));
 
     }
 
@@ -78,10 +81,15 @@ public class AutocompleteControllerIT {
         String jsonString = responseBody.asString();
         Gson gson = new Gson();
         //when
-        List<String> suggestions = gson.fromJson(jsonString, List.class);
+        TermSourceSuggestion[] suggestions = gson.fromJson(jsonString, TermSourceSuggestion[].class);
+        List<TermSourceSuggestion> suggestionList = Arrays.asList(suggestions);
 
-        assertThat(suggestions, hasItems("ASPH","ASPM"));
-        assertThat(suggestions, hasSize(15));
+        assertThat(suggestionList.get(11).term, is("ASPSCR1"));
+        assertThat(suggestionList.get(11).source, is("symbol"));
+        assertThat(suggestionList.get(14).term, is("ASP2"));
+        assertThat(suggestionList.get(14).source, is("symbol"));
+
+        assertThat(suggestionList, hasSize(15));
 
     }
 
