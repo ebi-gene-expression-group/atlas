@@ -51,7 +51,8 @@ public class RnaSeqBslnQueryBuilderTest {
         DatabaseQuery<Object> databaseQuery = subject.withGeneIds(geneIds).build();
 
         MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT rbe.experiment, rbe.assaygroupid, SUM(rbe.expression), count(distinct IDENTIFIER) as NumberOfGenesExpressed from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
-                "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value GROUP BY GROUPING SETS (rbe.experiment, (rbe.experiment, rbe.assaygroupid)) ORDER BY rbe.experiment, rbe.assaygroupid desc"));
+                "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value WHERE rbe.experiment = (SELECT accession FROM experiment WHERE private = 'F' AND accession = rbe.experiment) " +
+                "GROUP BY GROUPING SETS (rbe.experiment, (rbe.experiment, rbe.assaygroupid)) ORDER BY rbe.experiment, rbe.assaygroupid desc"));
         MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains((Object) geneIds));
 
     }
