@@ -94,7 +94,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.addValidators(new BaselineRequestPreferencesValidator());
+//        binder.addValidators(new BaselineRequestPreferencesValidator());
     }
 
     private BaselineProfilesList fetchGeneProfilesAsGeneSets() {

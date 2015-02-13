@@ -31,6 +31,7 @@ public class BaselineRequestPreferencesValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
+
         return BaselineRequestPreferences.class.equals(aClass);
     }
 

@@ -34,8 +34,8 @@ import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuil
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
+import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +62,7 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
 
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = "type=PROTEOMICS_BASELINE")
-    public String baselineExperiment(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
+    public String baselineExperiment(@ModelAttribute("preferences") @Valid ProteomicsBaselineRequestPreferences preferences
             , BindingResult result, Model model, HttpServletRequest request) {
         prepareModel(preferences, result, model, request);
 
