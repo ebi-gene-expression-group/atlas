@@ -101,6 +101,18 @@ public class BioEntityPage extends HeatmapTableWidgetPage {
     @FindBy(id = "diffresults-display-levels")
     private WebElement diffResultsDisplayLevelsButton;
 
+    @FindBy(id = "goMoreLinks")
+    private WebElement showMoreGoLinks;
+
+    @FindBy(id = "goLessLinks")
+    private WebElement showLessGoLinks;
+
+    @FindBy(id = "poMoreLinks")
+    private WebElement showMorePoLinks;
+
+    @FindBy(id = "poLessLinks")
+    private WebElement showLessPoLinks;
+
     private final By firstColorGradientBar = By.xpath("//div[contains(@class, 'color-gradient')]");
 
     private final By secondColorGradientBar = By.xpath("//table[@id='diff-heatmap-legend']//tbody//tr[2]//td[2]//div[@class='color-gradient']");
@@ -347,6 +359,22 @@ public class BioEntityPage extends HeatmapTableWidgetPage {
 
     public List<String> getDiffHeatmapRow(int oneBasedRowIndex) {
         return getRowValues(diffHeatmapTable, oneBasedRowIndex);
+    }
+
+    public void clickShowMoreGoLinks() {
+        showMoreGoLinks.click();
+    }
+
+    public void clickShowLessGoLinks() {
+        showLessGoLinks.click();
+    }
+
+    public void clickShowMorePoLinks() {
+        showMorePoLinks.click();
+    }
+
+    public void clickShowLessPoLinks() {
+        showLessPoLinks.click();
     }
 
 }

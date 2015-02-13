@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.bioentity.go;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,12 +21,16 @@ public class PoTermTraderIT {
 
     @Test
     public void firstTerm() {
-        assertThat(subject.getTerm("PO:0000001"), is("embryo proper"));
+        assertThat(subject.getTermName("PO:0000001"), is("embryo proper"));
     }
 
     @Test
     public void lastTerm() {
-        assertThat(subject.getTerm("PO:0030087"), is("non-vascular leaf initial cell"));
+        assertThat(subject.getTermName("PO:0030087"), is("non-vascular leaf initial cell"));
     }
 
+    @Test
+    public void termsWithoutDepthColumnHaveDepth1() {
+        assertThat(subject.getDepth("PO:0030087"), is(1));
+    }
 }

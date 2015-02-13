@@ -23,20 +23,17 @@
 package uk.ac.ebi.atlas.bioentity.properties;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.Lists;
-import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 import uk.ac.ebi.atlas.utils.UniProtClient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 @Named("bioEntityPropertyService")
 @Scope("request")
@@ -44,13 +41,15 @@ public class BioEntityPropertyService {
 
     public static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
+    private BioEntityPropertyDao bioEntityPropertyDao;
+    private UniProtClient uniProtClient;
+    private ArrayDesignDao arrayDesignDao;
     private final BioEntityPropertyLinkBuilder linkBuilder;
 
-    private BioEntityPropertyDao bioEntityPropertyDao;
-
-    private UniProtClient uniProtClient;
-
     private SortedSetMultimap<String, String> propertyValuesByType;
+
+    private Multimap<Integer, GoPoTerm> depthToGoTerms;
+    private Multimap<Integer, GoPoTerm> depthToPoTerms;
 
     private String species;
 
@@ -58,7 +57,6 @@ public class BioEntityPropertyService {
 
     private String identifier;
 
-    private ArrayDesignDao arrayDesignDao;
 
     @Inject
     public BioEntityPropertyService(BioEntityPropertyDao bioEntityPropertyDao, UniProtClient uniProtClient, BioEntityPropertyLinkBuilder linkBuilder, ArrayDesignDao arrayDesignDao) {
@@ -68,17 +66,18 @@ public class BioEntityPropertyService {
         this.linkBuilder = linkBuilder;
     }
 
-    public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, SortedSet<String> entityNames, String identifier) {
+    public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, Multimap<Integer, GoPoTerm> goTerms, Multimap<Integer, GoPoTerm> poTerms, SortedSet<String> entityNames, String identifier) {
         this.species = species;
         this.propertyValuesByType = propertyValuesByType;
         this.entityNames = entityNames;
         this.identifier = identifier;
+        this.depthToGoTerms = goTerms;
+        this.depthToPoTerms = poTerms;
 
         // this is to add mirbase sequence for ENSEMBL mirnas
         if (propertyValuesByType.containsKey("mirbase_id") && !propertyValuesByType.containsKey("mirbase_sequence")) {
             addMirBaseSequence();
         }
-
     }
 
     public String getSpecies() {
@@ -99,6 +98,98 @@ public class BioEntityPropertyService {
                 propertyLinks.add(link.get());
             }
         }
+        return propertyLinks;
+    }
+
+    public List<PropertyLink> fetchRelevantGoPoLinks(String ontology, int includeAtLeast) {
+        switch (ontology) {
+            case "go":
+                return fetchRelevantGoLinks(includeAtLeast);
+            case "po":
+                return fetchRelevantPoLinks(includeAtLeast);
+            default:
+                return new ImmutableList.Builder<PropertyLink>().build();
+        }
+    }
+
+    public List<PropertyLink> fetchGoPoLinksOrderedByDepth(String ontology) {
+        switch (ontology) {
+            case "go":
+                return fetchGoLinksOrderedByDepth();
+            case "po":
+                return fetchPoLinksOrderedByDepth();
+            default:
+                return new ImmutableList.Builder<PropertyLink>().build();
+        }
+    }
+
+    private List<PropertyLink> fetchRelevantGoLinks(int includeAtLeast) {
+        List<PropertyLink> propertyLinks = Lists.newArrayList();
+
+        if (!depthToGoTerms.isEmpty()) {
+            for (int i = Collections.max(depthToGoTerms.keySet()) ; i >= 1 && propertyLinks.size() < includeAtLeast; i--) {
+                for (GoPoTerm goPoTerm : depthToGoTerms.get(i)) {
+                    Optional<PropertyLink> link = linkBuilder.createLink(identifier, "go", goPoTerm.accession(), species);
+                    if (link.isPresent()) {
+                        propertyLinks.add(link.get());
+                    }
+                }
+            }
+        }
+
+        return propertyLinks;
+    }
+
+    private List<PropertyLink> fetchGoLinksOrderedByDepth() {
+        List<PropertyLink> propertyLinks = Lists.newArrayList();
+
+        if (!depthToGoTerms.isEmpty()) {
+            for (int i = Collections.max(depthToGoTerms.keySet()) ; i >= 1 ; i--) {
+                for (GoPoTerm goPoTerm : depthToGoTerms.get(i)) {
+                    Optional<PropertyLink> link = linkBuilder.createLink(identifier, "go", goPoTerm.accession(), species);
+                    if (link.isPresent()) {
+                        propertyLinks.add(link.get());
+                    }
+                }
+            }
+        }
+
+        return propertyLinks;
+    }
+
+    // We don’t have depth information so far for PO. Once we do, remove this comment and apply the same logic as in GO
+    private List<PropertyLink> fetchRelevantPoLinks(int maxLinkCount) {
+        List<PropertyLink> propertyLinks = Lists.newArrayList();
+
+        if (!depthToPoTerms.isEmpty()) {
+            for (GoPoTerm goPoTerm : depthToPoTerms.values()) {
+                Optional<PropertyLink> link = linkBuilder.createLink(identifier, "po", goPoTerm.accession(), species);
+                if (link.isPresent()) {
+                    propertyLinks.add(link.get());
+                }
+                if (propertyLinks.size() >= maxLinkCount) {
+                    break;
+                }
+            }
+        }
+
+        return propertyLinks;
+    }
+
+    private List<PropertyLink> fetchPoLinksOrderedByDepth() {
+        List<PropertyLink> propertyLinks = Lists.newArrayList();
+
+            if (!depthToPoTerms.isEmpty()) {
+            for (int i = Collections.max(depthToPoTerms.keySet()) ; i >= 1 ; i--) {
+                for (GoPoTerm goPoTerm : depthToPoTerms.get(i)) {
+                    Optional<PropertyLink> link = linkBuilder.createLink(identifier, "po", goPoTerm.accession(), species);
+                    if (link.isPresent()) {
+                        propertyLinks.add(link.get());
+                    }
+                }
+            }
+        }
+
         return propertyLinks;
     }
 
@@ -138,6 +229,5 @@ public class BioEntityPropertyService {
             }
         }
     }
-
 }
 

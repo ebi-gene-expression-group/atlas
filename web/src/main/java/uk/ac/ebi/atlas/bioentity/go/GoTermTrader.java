@@ -11,24 +11,34 @@ import java.io.IOException;
 @Scope("singleton")
 public class GoTermTrader {
 
-    private ImmutableMap<String, String> goAccessionToTerm;
+    private ImmutableMap<String, GoPoTerm> goAccessionToTerm;
 
     @Inject
     public GoTermTrader(GoPoTermTSVReaderFactory goPoTermTSVReaderFactory) {
-        goAccessionToTerm = readAll(goPoTermTSVReaderFactory);
+        readAll(goPoTermTSVReaderFactory);
     }
 
-    private ImmutableMap<String, String> readAll(GoPoTermTSVReaderFactory goPoTermTSVReaderFactory) {
+    private void readAll(GoPoTermTSVReaderFactory goPoTermTSVReaderFactory) {
         try (GoPoTermTSVReader goPoTermTSVReader = goPoTermTSVReaderFactory.createGoTerms()) {
 
-            return goPoTermTSVReader.readAll();
+            goPoTermTSVReader.readAll();
+
+            goAccessionToTerm = goPoTermTSVReader.getAccessionToTermMap();
 
         } catch (IOException e) {
             throw new GoTraderException("Cannot read from " + goPoTermTSVReaderFactory.getFilePath(), e);
         }
     }
 
-    public String getTerm(String accession) {
+    public String getTermName(String accession) {
+        return goAccessionToTerm.get(accession).name();
+    }
+
+    public int getDepth(String accession) {
+        return goAccessionToTerm.get(accession).depth();
+    }
+
+    public GoPoTerm getTerm(String accession) {
         return goAccessionToTerm.get(accession);
     }
 

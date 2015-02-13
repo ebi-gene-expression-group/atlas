@@ -21,17 +21,21 @@ public class GoTermTraderIT {
 
     @Test
     public void firstTerm() {
-        assertThat(subject.getTerm("GO:0000001"), is("mitochondrion inheritance"));
+        assertThat(subject.getTermName("GO:0000001"), is("mitochondrion inheritance"));
     }
 
     @Test
     public void lastTerm() {
-        assertThat(subject.getTerm("GO:2001317"), is("kojic acid biosynthetic process"));
+        assertThat(subject.getTermName("GO:2001317"), is("kojic acid biosynthetic process"));
     }
 
     @Test
     public void topLevelTermsDoNotHaveUnderscore() {
-        assertThat(subject.getTerm("GO:0003674"), is("molecular function"));
+        assertThat(subject.getTermName("GO:0003674"), is("molecular function"));
     }
 
+    @Test
+    public void repeatedTermHasMinimumDepth() {
+        assertThat(subject.getDepth("GO:0000022"), is(6));
+    }
 }
