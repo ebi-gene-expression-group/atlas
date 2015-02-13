@@ -191,8 +191,8 @@
             });
 
             // helper: split into multiple tags, e.g. after paste
-            function split_cleanup(input){
-                var li = input.closest('li'), sub_tags = input.val().replace(/ +/, ' ').split(o.dregex), old_tag = input.data('old_tag');
+            function split_cleanup(input, text){
+                var li = input.closest('li'), sub_tags = text.replace(/ +/, ' ').split(o.dregex), old_tag = input.data('old_tag');
                 var old_tags = tag_list.slice(0); // copy tag_list
                 for (i in sub_tags) {
                     tag = $.trim(sub_tags[i]).slice(0, o.maxLength);
@@ -247,10 +247,15 @@
             });
 
             var pasted_content;
-            ed.on('paste', 'input', function(e){
+            var input_content;
+            ed.on('paste', 'input',function(e) {
+                var text = (e.originalEvent || e).clipboardData.getData('text/plain');
                 $(this).removeAttr('maxlength');
-                pasted_content = $(this);
-                setTimeout(function(){ split_cleanup(pasted_content); }, 30);
+                pasted_content = text;
+                input_content = $(this);
+                setTimeout(function(){
+                    split_cleanup(input_content, pasted_content);
+                }, 30);
             });
 
             // keypress delimiter

@@ -32,8 +32,13 @@ var geneQueryTagEditorModule = (function($) {
                     event.preventDefault();
                 }
             })
+            .on('paste',function(e) {
+                e.preventDefault();
+                var text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('Paste something..');
+                window.document.execCommand('insertText', false, text);
+            })
             .tagEditor({
-                delimiter:"\t",
+                delimiter:'\t\n',
                 maxLength: 50,
                 autocomplete: {
                     delay: 500,
@@ -89,6 +94,12 @@ var geneQueryTagEditorModule = (function($) {
         });
 
     }
+
+    //$('#geneQuery').on('paste',function(e) {
+    //    e.preventDefault();
+    //    var text = (e.originalEvent || e).clipboardData.getData('text/plain') || prompt('Paste something..');
+    //    window.document.execCommand('insertText', false, text);
+    //});
 
 
     return {
