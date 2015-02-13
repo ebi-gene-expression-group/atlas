@@ -17,9 +17,9 @@ public class RnaSeqBslnQueryBuilder {
     static final String EXPRESSION = "SUM(RBE.EXPRESSION)";
     static final String NUMBER_GENES_EXPRESSED = "NumberOfGenesExpressed";
 
-    //TODO - should fetch public experiments only
     static final String SELECT_QUERY = "SELECT rbe.experiment, rbe.assaygroupid, SUM(rbe.expression), count(distinct IDENTIFIER) as NumberOfGenesExpressed from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe ";
     static final String FOR_GENES = "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value ";
+    static final String WHERE_PUBLIC = "WHERE rbe.experiment = (SELECT accession FROM experiment WHERE private = 'F' AND accession = rbe.experiment) ";
     static final String GROUP_BY = "GROUP BY GROUPING SETS (rbe.experiment, (rbe.experiment, rbe.assaygroupid)) ";
     static final String ORDER_BY = "ORDER BY rbe.experiment, rbe.assaygroupid desc";
 
@@ -40,6 +40,7 @@ public class RnaSeqBslnQueryBuilder {
 
         addGeneIds(databaseQuery);
 
+        databaseQuery.appendToQueryString(WHERE_PUBLIC);
         databaseQuery.appendToQueryString(GROUP_BY);
         databaseQuery.appendToQueryString(ORDER_BY);
 
