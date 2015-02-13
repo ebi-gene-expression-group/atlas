@@ -66,11 +66,6 @@ public class BioEntityPropertyService {
         this.linkBuilder = linkBuilder;
     }
 
-    public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, SortedSet<String> entityNames, String identifier) {
-        ImmutableMultimap.Builder<Integer, GoPoTerm> builder = new ImmutableMultimap.Builder<>();
-        init(species, propertyValuesByType, builder.build(), builder.build(), entityNames, identifier);
-    }
-
     public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, Multimap<Integer, GoPoTerm> goTerms, Multimap<Integer, GoPoTerm> poTerms, SortedSet<String> entityNames, String identifier) {
         this.species = species;
         this.propertyValuesByType = propertyValuesByType;

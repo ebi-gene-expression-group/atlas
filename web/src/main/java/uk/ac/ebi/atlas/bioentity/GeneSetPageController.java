@@ -23,15 +23,14 @@
 package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.Sets;
-import com.google.common.collect.SortedSetMultimap;
-import com.google.common.collect.TreeMultimap;
+import com.google.common.collect.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
 import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
@@ -133,13 +132,18 @@ public class GeneSetPageController extends BioEntityPageController {
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
 
+        ImmutableSetMultimap.Builder<Integer, GoPoTerm> builder = new ImmutableSetMultimap.Builder<>();
+        ImmutableSetMultimap<Integer, GoPoTerm> goTermsByDepth = builder.build();
+        ImmutableSetMultimap<Integer, GoPoTerm> poTermsByDepth = builder.build();
+
         if (GeneSetUtil.isReactome(identifier)) {
             propertyValuesByType.put("reactome", identifier.toUpperCase());
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeClient.fetchPathwayNameFailSafe(identifier));
         } else if (GeneSetUtil.isGeneOntology(identifier)) {
-            String term = goTermTrader.getTermName(identifier);
+            String termName = goTermTrader.getTermName(identifier);
             propertyValuesByType.put("go", identifier);
-            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
+            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
+            goTermsByDepth = mapGoTermsByDepth(propertyValuesByType.get("go"));
         } else if (GeneSetUtil.isInterPro(identifier)) {
             String term = interProTermTrader.getTerm(identifier);
             propertyValuesByType.put("interpro", identifier);
@@ -149,7 +153,7 @@ public class GeneSetPageController extends BioEntityPageController {
         SortedSet<String> names = Sets.newTreeSet();
         names.add(identifier);
 
-        bioEntityPropertyService.init(species, propertyValuesByType, names, identifier);
+        bioEntityPropertyService.init(species, propertyValuesByType, goTermsByDepth, poTermsByDepth, names, identifier);
     }
 
     @Override
