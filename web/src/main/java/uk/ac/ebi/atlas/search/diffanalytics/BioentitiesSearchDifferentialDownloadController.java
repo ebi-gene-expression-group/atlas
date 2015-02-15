@@ -81,7 +81,7 @@ public class BioentitiesSearchDifferentialDownloadController {
             writer.setResponseWriter(response.getWriter());
             writer.writeHeader(requestParameters);
 
-            String condition = efoExpander.getIds(requestParameters.getConditionQuery()).asString();
+            String condition = efoExpander.addEfoAccessions(requestParameters.getConditionQuery()).asString();
 
             int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), condition, requestParameters.getOrganism(), requestParameters.isExactMatch(), writer);
             LOGGER.info("downloadGeneQueryResults streamed " + count + " differential gene expressions");

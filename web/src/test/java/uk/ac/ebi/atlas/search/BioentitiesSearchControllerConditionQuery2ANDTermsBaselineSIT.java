@@ -39,7 +39,7 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsBaselineSIT exten
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "condition=heart+AND+adult");
+        subject = BioEntitiesPage.search(driver, "condition=heart%09AND%09adult");
         subject.get();
     }
 

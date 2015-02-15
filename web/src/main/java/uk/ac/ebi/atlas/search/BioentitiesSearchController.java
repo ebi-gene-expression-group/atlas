@@ -105,7 +105,7 @@ public class BioentitiesSearchController {
 
         model.addAttribute("searchDescription", requestParameters.getDescription());
 
-        String condition = efoExpander.getIds(requestParameters.getConditionQuery()).asString();
+        String condition = efoExpander.addEfoAccessions(requestParameters.getConditionQuery()).asString();
 
         SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQuery, condition, selectedSpecie.toLowerCase(), requestParameters.isExactMatch());
 

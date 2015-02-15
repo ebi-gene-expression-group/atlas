@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.search.EFO;
 
-import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableSet;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.search.ConditionQuery;
 
@@ -19,7 +19,7 @@ public class ConditionSearchEFOExpander {
         this.efoIdToTermMapper = efoIdToTermMapper;
     }
 
-    public ConditionQuery getIds(ConditionQuery query) {
+    public ConditionQuery addEfoAccessions(ConditionQuery query) {
         if (query.isEmpty()) {
             return query;
         }
@@ -28,18 +28,20 @@ public class ConditionSearchEFOExpander {
             return query;
         }
 
-        //TODO: add support for multiple terms
-        String allTerms = Joiner.on(" ").join(query);
-
-        HashSet<String> termAndIds = termPlusIds(allTerms);
+        ImmutableSet<String> termAndIds = buildTermsAndEfoAccessions(query.terms());
 
         return ConditionQuery.create(termAndIds);
     }
 
-    private HashSet<String> termPlusIds(String term) {
-        HashSet<String> efoTerms = efoIdToTermMapper.getIdsForTermSubstring(term);
-        efoTerms.add(term);
-        return efoTerms;
+    private ImmutableSet<String> buildTermsAndEfoAccessions(Iterable<String> terms) {
+        ImmutableSet.Builder<String> builder = ImmutableSet.builder();
+        for (String term : terms) {
+            HashSet<String> efoTerms = efoIdToTermMapper.getIdsForTermSubstring(term);
+            builder.add(term);
+            builder.addAll(efoTerms);
+        }
+
+        return builder.build();
     }
 
 }

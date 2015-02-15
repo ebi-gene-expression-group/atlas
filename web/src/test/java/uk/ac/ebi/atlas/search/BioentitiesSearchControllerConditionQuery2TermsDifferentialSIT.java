@@ -35,7 +35,7 @@ public class BioentitiesSearchControllerConditionQuery2TermsDifferentialSIT exte
 
 
     @Test
-    public void nrpe1Cdk8() {
+    public void nrpe1OrCdk8() {
         BioEntitiesPage subject = BioEntitiesPage.search(driver, "condition=nrpe1%09cdk8");
         subject.get();
         assertThat(subject.diffExpressionResultCount(), is("Showing 25 results"));
