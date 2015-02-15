@@ -23,7 +23,7 @@
 package uk.ac.ebi.atlas.search;
 
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
@@ -33,19 +33,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static uk.ac.ebi.atlas.search.SearchTestUtil.selectResult;
 
-public class BioentitiesSearchControllerConditionQuery2TermsBaselineSIT extends SinglePageSeleniumFixture {
-
-    private BioEntitiesPage subject;
-
-    @Override
-    protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "condition=adipose+thymus");
-        subject.get();
-    }
-
+public class BioentitiesSearchControllerConditionQuery2TermsBaselineSIT extends SeleniumFixture {
 
     @Test
-    public void checkBaselineExperimentCounts() {
+    public void adiposeOrThymus() {
+        BioEntitiesPage subject = BioEntitiesPage.search(driver, "condition=adipose%09thymus");
+        subject.get();
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
         assertThat(baselineCounts, hasSize(5));

@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.utils;
 
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 
@@ -13,7 +14,7 @@ public class StringUtil {
         return StringUtils.isAllUpperCase(s) ? s : StringUtils.lowerCase(s);
     }
 
-    public static String trimSurroundingQuotes(String s) {
+    public static String removeSurroundingQuotes(String s) {
         s = s.trim();
         if (s.startsWith("\"")) {
             s = s.substring(1);
@@ -24,4 +25,23 @@ public class StringUtil {
 
         return s;
     }
+
+    public static String quoteIfMoreThanOneWord(String s) {
+        return moreThanOneWord(s) ? "\"" + s + "\"" : s;
+    }
+
+    private static boolean moreThanOneWord(String s) {
+        return s.trim().contains(" ");
+    }
+
+    public static ImmutableList<String> quotePhrases(Iterable<String> strings) {
+        ImmutableList.Builder<String> builder = ImmutableList.builder();
+
+        for (String s : strings) {
+            builder.add(quoteIfMoreThanOneWord(s));
+        }
+
+        return builder.build();
+    }
+
 }

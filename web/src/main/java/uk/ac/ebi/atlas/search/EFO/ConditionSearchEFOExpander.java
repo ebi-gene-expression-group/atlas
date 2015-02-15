@@ -1,13 +1,12 @@
 package uk.ac.ebi.atlas.search.EFO;
 
 import com.google.common.base.Joiner;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.utils.StringUtil;
+import uk.ac.ebi.atlas.search.ConditionQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Set;
+import java.util.HashSet;
 
 @Named
 @Scope("singleton")
@@ -20,21 +19,27 @@ public class ConditionSearchEFOExpander {
         this.efoIdToTermMapper = efoIdToTermMapper;
     }
 
-    public String getIds(String queryTerms) {
-        if (StringUtils.isBlank(queryTerms)) {
-            return queryTerms;
+    public ConditionQuery getIds(ConditionQuery query) {
+        if (query.isEmpty()) {
+            return query;
         }
 
-        if (queryTerms.contains(" AND ") || queryTerms.contains(" and ")) {
-            return queryTerms;
+        if (query.containsIgnoreCase("and")) {
+            return query;
         }
 
-        return termPlusIds(StringUtil.trimSurroundingQuotes(queryTerms));
+        //TODO: add support for multiple terms
+        String allTerms = Joiner.on(" ").join(query);
+
+        HashSet<String> termAndIds = termPlusIds(allTerms);
+
+        return ConditionQuery.create(termAndIds);
     }
 
-    private String termPlusIds(String term) {
-        Set<String> efoTerms = efoIdToTermMapper.getIdsForTermSubstring(term);
-        return term + (efoTerms.isEmpty() ? "" : " " + Joiner.on(" ").join(efoTerms));
+    private HashSet<String> termPlusIds(String term) {
+        HashSet<String> efoTerms = efoIdToTermMapper.getIdsForTermSubstring(term);
+        efoTerms.add(term);
+        return efoTerms;
     }
 
 }

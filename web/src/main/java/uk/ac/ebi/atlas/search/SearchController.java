@@ -42,7 +42,7 @@ public class SearchController {
         model.addAttribute("identifierSearch", geneQuery);
         model.addAttribute("searchDescription", requestParameters.getDescription());
 
-        String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery, requestParameters.getCondition());
+        String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery, requestParameters.getConditionQuery());
 
         model.addAttribute("globalSearchTerm", globalSearchTerm);
 

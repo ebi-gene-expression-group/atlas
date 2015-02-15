@@ -22,8 +22,10 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.utils.StringUtil;
 
 import javax.inject.Named;
 import java.util.List;
@@ -59,28 +61,15 @@ public class BioentityPropertyValueTokenizer {
         return results;
     }
 
+    public static String joinQuotingPhrases(Iterable<String> strings) {
+        return Joiner.on(" ").join(StringUtil.quotePhrases(strings));
+    }
+
+
     //use static method instead
     @Deprecated
     public List<String> split(String geneQuery) {
-
-        List<String> results = Lists.newArrayList();
-
-        if (geneQuery == null) {
-            return results;
-        }
-
-        Matcher m = SPLITTING_PATTERN.matcher(geneQuery);
-        while (m.find()) {
-            if (m.group(1) != null) {
-                // quoted
-                results.add("\"" + m.group(1) + "\"");
-            } else {
-                // plain
-                results.add(m.group(2));
-            }
-        }
-
-        return results;
+        return splitBySpacePreservingQuotes(geneQuery);
     }
 
 }

@@ -105,7 +105,7 @@ public class BioentitiesSearchController {
 
         model.addAttribute("searchDescription", requestParameters.getDescription());
 
-        String condition = efoExpander.getIds(requestParameters.getCondition());
+        String condition = efoExpander.getIds(requestParameters.getConditionQuery()).asString().replace("\"", "");
 
         SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQuery, condition, selectedSpecie.toLowerCase(), requestParameters.isExactMatch());
 
@@ -126,7 +126,7 @@ public class BioentitiesSearchController {
 
         model.addAttribute("exactMatch", requestParameters.isExactMatch());
 
-        String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery, requestParameters.getCondition());
+        String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery, requestParameters.getConditionQuery());
 
         model.addAttribute("globalSearchTerm", globalSearchTerm);
 

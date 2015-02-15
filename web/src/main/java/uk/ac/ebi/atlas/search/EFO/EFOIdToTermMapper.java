@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 @Named
 @Scope("singleton")
@@ -25,12 +24,12 @@ public class EFOIdToTermMapper {
         this.efoTreeNodesTrader = efoTreeNodesTrader;
     }
 
-    public Set<String> getIdsForTermSubstring(String substring) {
+    public HashSet<String> getIdsForTermSubstring(String substring) {
         if (termToId == null) {
             buildTermToIdMap();
         }
 
-        Set<String> efoIds = new HashSet<>();
+        HashSet<String> efoIds = new HashSet<>();
         for (String efoTerm : termToId.keySet()) {
             if (StringUtils.containsIgnoreCase(efoTerm, substring)) {
                 efoIds.add(termToId.get(efoTerm));

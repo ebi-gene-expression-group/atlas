@@ -2,22 +2,21 @@ package uk.ac.ebi.atlas.thirdpartyintegration;
 
 import com.google.common.base.Joiner;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.search.ConditionQuery;
 import uk.ac.ebi.atlas.solr.query.BioentityPropertyValueTokenizer;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
+
+import static uk.ac.ebi.atlas.utils.StringUtil.quoteIfMoreThanOneWord;
 
 @Named
 @Scope("singleton")
 public class EBIGlobalSearchQueryBuilder {
 
-    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
-
-    @Inject
-    public EBIGlobalSearchQueryBuilder(BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer) {
-        this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
+    public String buildGlobalSearchTerm(String geneQuery, ConditionQuery condition) {
+        return buildGlobalSearchTerm(BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(geneQuery), condition.terms());
     }
 
     private String buildGlobalSearchTerm(List<String> geneQueryTerms, List<String> condition) {
@@ -54,7 +53,7 @@ public class EBIGlobalSearchQueryBuilder {
                 if (term.equalsIgnoreCase("AND")) {
                     joinOn = " AND ";
                 } else {
-                    conditionTermsWithoutAnd.add(term);
+                    conditionTermsWithoutAnd.add(quoteIfMoreThanOneWord(term));
                 }
             }
 
@@ -72,8 +71,5 @@ public class EBIGlobalSearchQueryBuilder {
         return stringBuilder.toString();
     }
 
-    public String buildGlobalSearchTerm(String geneQuery, String condition) {
-        return buildGlobalSearchTerm(bioentityPropertyValueTokenizer.split(geneQuery), bioentityPropertyValueTokenizer.split(condition));
-    }
 
 }
