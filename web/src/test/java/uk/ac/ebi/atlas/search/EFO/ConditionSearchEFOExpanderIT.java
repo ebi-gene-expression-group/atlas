@@ -48,10 +48,8 @@ public class ConditionSearchEFOExpanderIT {
     public void adiposeThymus() throws Exception {
         ConditionQuery expandedSearch = subject.getIds(ConditionQuery.create("\"adipose thymus\""));
 
-        assertThat(expandedSearch.size(), is(greaterThanOrEqualTo(3)));
+        assertThat(expandedSearch.size(), is(greaterThanOrEqualTo(1)));
         assertThat(expandedSearch, hasItem("adipose thymus"));
-        assertThat(expandedSearch, hasItem(startsWith("Orphanet_")));
-        assertThat(expandedSearch, hasItem(startsWith("EFO_")));
     }
 
     @Test
