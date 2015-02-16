@@ -35,7 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
-public class GenePageControllerGeneInPrivateExperimentSIT extends SinglePageSeleniumFixture {
+public class GenePageControllerPrivateExperimentSIT extends SinglePageSeleniumFixture {
 
     private static final String GENE_IDENTIFIER = "ENSG00000161547";
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-1733";
