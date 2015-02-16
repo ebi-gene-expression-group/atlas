@@ -23,28 +23,23 @@
 package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Objects;
-import org.apache.commons.lang.StringUtils;
 
 public class SearchRequest {
 
-    private String geneQuery = getDefaultGeneQuery();
+    private GeneQuery geneQuery = getDefaultGeneQuery();
 
     private boolean exactMatch = true;
 
-    protected String getDefaultGeneQuery() {
-        return StringUtils.EMPTY;
+    protected GeneQuery getDefaultGeneQuery() {
+        return GeneQuery.EMPTY;
     }
 
-    public String getGeneQuery() {
+    public GeneQuery getGeneQuery() {
         return this.geneQuery;
     }
 
-    public void setGeneQuery(String geneQuery) {
-        this.geneQuery = TagEditorConverter.tagsToQueryString(geneQuery);
-    }
-
-    public String getGeneQueryTagEditor() {
-        return TagEditorConverter.queryStringToTags(this.geneQuery);
+    public void setGeneQuery(GeneQuery geneQuery) {
+        this.geneQuery = geneQuery;
     }
 
     public String toString() {
@@ -63,7 +58,7 @@ public class SearchRequest {
     }
 
     public boolean hasGeneQuery() {
-        return StringUtils.isNotBlank(getGeneQuery());
+        return !geneQuery.isEmpty();
     }
 
 }

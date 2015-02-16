@@ -32,7 +32,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -47,6 +49,8 @@ import uk.ac.ebi.atlas.solr.BioentityType;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.GeneQueryPropertyEditor;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -81,12 +85,17 @@ public class BioentitiesSearchController {
         this.efoExpander = efoExpander;
     }
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(GeneQuery.class, new GeneQueryPropertyEditor());
+    }
+
     @RequestMapping(value = "/query")
     public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model, BindingResult result) {
 
         checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
 
-        String geneQuery = requestParameters.getGeneQuery().trim();
+        String geneQuery = requestParameters.getGeneQuery().asString().trim();
 
         String selectedSpecie = "";
         if(requestParameters.hasOrganism()) {
@@ -101,7 +110,7 @@ public class BioentitiesSearchController {
             }
         }
 
-        model.addAttribute("entityIdentifier", geneQuery);
+        model.addAttribute("geneQuery", requestParameters.getGeneQuery());
 
         model.addAttribute("searchDescription", requestParameters.getDescription());
 

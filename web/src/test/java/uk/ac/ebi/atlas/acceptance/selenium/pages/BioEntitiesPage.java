@@ -86,6 +86,10 @@ public class BioEntitiesPage extends BioEntityPage {
 
     }
 
+    public List<WebElement> getBaselineCountElements() {
+        return driver.findElements(By.className("bioEntityCardLink"));
+    }
+
     private BaselineBioEntitiesSearchResult buildBaselineEntityCount(WebElement linkElement, WebElement countElement) {
 
         String linkText = linkElement.getText();

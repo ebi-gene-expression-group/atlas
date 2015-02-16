@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.search.EFO.ConditionSearchEFOExpander;
 import uk.ac.ebi.atlas.utils.VisitorException;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -65,7 +66,7 @@ public class BioentitiesSearchDifferentialDownloadController {
     public void downloadGeneDifferentialExpressions(@PathVariable String identifier, HttpServletResponse response) throws IOException {
 
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(identifier);
+        requestParameters.setGeneQuery(GeneQuery.create(identifier));
 
         LOGGER.info("downloadGeneDifferentialExpressions for " + requestParameters);
 
@@ -83,7 +84,7 @@ public class BioentitiesSearchDifferentialDownloadController {
 
             String condition = efoExpander.addEfoAccessions(requestParameters.getConditionQuery()).asString();
 
-            int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), condition, requestParameters.getOrganism(), requestParameters.isExactMatch(), writer);
+            int count = diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery().asString(), condition, requestParameters.getOrganism(), requestParameters.isExactMatch(), writer);
             LOGGER.info("downloadGeneQueryResults streamed " + count + " differential gene expressions");
         } catch (VisitorException e) {
             LOGGER.warn("downloadGeneQueryResults aborted, connection may have been lost with the client:" + e.getMessage());

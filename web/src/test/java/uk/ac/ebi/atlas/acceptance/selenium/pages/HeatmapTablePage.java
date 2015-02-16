@@ -344,7 +344,7 @@ public class HeatmapTablePage extends TablePage {
         return getCell(getHeatmapTable(), profileIndex + 1, expressionIndex + getGeneExpressionStartingRowIndex() + 1);
     }
 
-    protected WebElement getGeneAnchor(int profileIndex) {
+    public WebElement getGeneAnchor(int profileIndex) {
         return getGeneAnchor(getHeatmapTable(), profileIndex + 1);
     }
 

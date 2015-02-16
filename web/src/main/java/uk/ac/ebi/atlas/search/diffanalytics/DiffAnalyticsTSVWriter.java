@@ -145,9 +145,9 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalyt
     }
 
     public String getTsvFileMasthead(GeneQuerySearchRequestParameters requestParameters) {
-        String geneQuery = StringUtils.isNotEmpty(requestParameters.getGeneQuery()) ? "Genes matching: '" + requestParameters.getGeneQuery() + "'" : "";
-        String exactMatch = StringUtils.isNotEmpty(requestParameters.getGeneQuery()) && requestParameters.isExactMatch() ? " exactly" : "";
-        String comma = StringUtils.isNotEmpty(requestParameters.getGeneQuery()) ? ", " : "";
+        String geneQuery = StringUtils.isNotEmpty(requestParameters.getGeneQuery().asString()) ? "Genes matching: '" + requestParameters.getGeneQuery() + "'" : "";
+        String exactMatch = StringUtils.isNotEmpty(requestParameters.getGeneQuery().asString()) && requestParameters.isExactMatch() ? " exactly" : "";
+        String comma = StringUtils.isNotEmpty(requestParameters.getGeneQuery().asString()) ? ", " : "";
 
         boolean hasCondition = requestParameters.hasCondition();
         String condition = hasCondition ? " in condition matching '" + requestParameters.getConditionQuery().asString() + "'": "";

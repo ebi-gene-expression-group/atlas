@@ -47,8 +47,8 @@ public class BioentitiesSearchControllerGeneQuery2GenesMultipleResultsWidgetSIT 
         // wait for ajax widget to load
         subject.waitForHeatmapToBeVisible();
         assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Illumina Body Map"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=ENSG00000161547%20ENSG00000211855"));
-        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-513?geneQuery=ENSG00000161547%20ENSG00000211855"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=ENSG00000161547%09ENSG00000211855"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-513?geneQuery=ENSG00000161547%09ENSG00000211855"));
     }
 
 }

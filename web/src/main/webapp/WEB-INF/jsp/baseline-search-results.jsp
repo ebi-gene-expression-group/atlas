@@ -43,7 +43,7 @@
                     <tr>
                         <td>
                             <a class="bioEntityCardLink"
-                                   href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${applicationProperties.urlParamEncode(entityIdentifier)}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
+                                   href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
                                title="experiment">
                                     ${baselineResult}
                             </a>

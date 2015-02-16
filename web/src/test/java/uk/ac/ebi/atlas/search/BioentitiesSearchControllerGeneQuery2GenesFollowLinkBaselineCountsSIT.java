@@ -20,37 +20,44 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.search.widget;
+package uk.ac.ebi.atlas.search;
 
+import org.junit.Assert;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
+
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasSize;
 
-public class BioentitiesSearchControllerGeneQuery2GenesWidgetSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerGeneQuery2GenesFollowLinkBaselineCountsSIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "geneQuery=ENSMUSG00000097801%09ENSMUSG00000090429");
+        subject = BioEntitiesPage.search(driver, "geneQuery=TERF2%09GFI1");
         subject.get();
     }
 
     @Test
-    public void baselinePaneResultsMessage() {
-        assertThat(subject.isBaselinePaneExpanded(), is(true));
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
-    }
+    public void multipleGenesQueryInMultipleSpecies_followingBaselineCountsLinkShouldGoToExperimentPageWithResults() {
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-    @Test
-    public void displaysWidget() {
-        // wait for ajax widget to load
-        subject.waitForHeatmapToBeVisible();
-        assertThat(subject.getGeneNames(), contains("Six tissues"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-599?geneQuery=ENSMUSG00000097801%09ENSMUSG00000090429"));
+        assertThat(baselineCounts, hasSize(12));
+
+        //click link to go to experiment page
+        subject.getBaselineCountElements().get(0).click();
+
+        HeatmapTablePage experimentPage = new HeatmapTablePage(driver, null);
+
+        List<String> geneNames = experimentPage.getGeneNames();
+        Assert.assertThat(geneNames, contains("GFI1", "TERF2"));
     }
 
 }

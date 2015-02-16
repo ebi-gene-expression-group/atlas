@@ -55,7 +55,7 @@ public class HeatmapWidgetControllerMultipleGenesExperimentSIT extends SeleniumF
 
         //TODO: fix experiment URL
         String experimentDescriptionLink = subject.getExperimentDescriptionLink();
-        assertThat(experimentDescriptionLink, endsWith("/gxa/experiments/E-MTAB-2836?geneQuery=ENSG00000006659%20ENSG00000007372&serializedFilterFactors="));
+        assertThat(experimentDescriptionLink, endsWith("/gxa/experiments/E-MTAB-2836?geneQuery=ENSG00000006659%09ENSG00000007372&serializedFilterFactors="));
 
         assertThat(subject.getGeneNames(), contains("LGALS14", "PAX6"));
     }

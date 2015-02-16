@@ -26,8 +26,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
-<%@ page import="org.apache.commons.lang.StringUtils" %>
-
 <c:choose>
 <c:when test="${not empty exceptionMessage}">
     <div id="error-content" class="block">
@@ -45,7 +43,7 @@
         Expression Atlas results for <span class="searchterm">${searchDescription}</span>
     </h2>
 </section>
-<h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : not empty originalSearchTerm ? originalSearchTerm : entityIdentifier}"/>
+<h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : geneQuery.asString()}"/>
 
 <section class="grid_23 extra-padding">
     <div id="accordion">
@@ -340,13 +338,13 @@
 
         helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', '');
 
-        <c:if test="${showWidget}">
+        <c:if test="${showWidget}"><%--@elvariable id="geneQuery" type="uk.ac.ebi.atlas.web.GeneQuery"--%>
 
         var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
 
         new Biojs.AtlasHeatmap({
             gxaBaseUrl: '${pageContext.request.contextPath}',
-            params: 'geneQuery=${entityIdentifier}' + widgetParameters,
+            params: 'geneQuery=${geneQuery.asUrlQueryParameter()}' + widgetParameters,
             isMultiExperiment: true,
             target: "widgetBody",
             heatmapClass: "heatmap-position"

@@ -18,6 +18,7 @@ import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.solr.query.conditions.DifferentialConditionsSearchService;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.utils.Visitor;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -67,9 +68,9 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
     @Test
     public void geneQueryKeywordProteinCoding()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("protein_coding");
+        requestParameters.setGeneQuery(GeneQuery.create("protein_coding"));
         String species = "";
-        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getConditionQuery().asString(), species, requestParameters.isExactMatch());
+        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery().asString(), requestParameters.getConditionQuery().asString(), species, requestParameters.isExactMatch());
     }
 
 
@@ -77,11 +78,11 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
     @Ignore //TODO: re-enable when performance fixed
     public void visitEachExpressionGeneQueryKeywordProteinCoding()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("protein_coding");
+        requestParameters.setGeneQuery(GeneQuery.create("protein_coding"));
 
         final List<String> names = Lists.newArrayList();
 
-        diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery(), requestParameters.getConditionQuery().asString(), requestParameters.getOrganism(), requestParameters.isExactMatch(), new Visitor<DiffAnalytics>() {
+        diffAnalyticsSearchService.visitEachExpression(requestParameters.getGeneQuery().asString(), requestParameters.getConditionQuery().asString(), requestParameters.getOrganism(), requestParameters.isExactMatch(), new Visitor<DiffAnalytics>() {
 
             @Override
             public void visit(DiffAnalytics value) {
@@ -95,17 +96,17 @@ public class DiffAnalyticsSearchServicePerfMockedContrastTrader {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setCondition("Homo sapiens");
         String species = "";
-        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getConditionQuery().asString(), species, requestParameters.isExactMatch());
+        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery().asString(), requestParameters.getConditionQuery().asString(), species, requestParameters.isExactMatch());
     }
 
 
     @Test
     public void geneQueryKeywordProteinCodingAndConditionHomoSapiens()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("protein_coding");
+        requestParameters.setGeneQuery(GeneQuery.create("protein_coding"));
         requestParameters.setCondition("Homo sapiens");
         String species = "";
-        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery(), requestParameters.getConditionQuery().asString(), species, requestParameters.isExactMatch());
+        diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery().asString(), requestParameters.getConditionQuery().asString(), species, requestParameters.isExactMatch());
     }
 
 }

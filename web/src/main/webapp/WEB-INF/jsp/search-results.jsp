@@ -32,7 +32,7 @@
         Expression Atlas results for <span class="searchterm">${searchDescription}</span>
     </h2>
 </section>
-<h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : not empty originalSearchTerm ? originalSearchTerm : entityIdentifier}"/>
+<h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : geneQuery.asString()}"/>
 
 
 <div id="help-placeholder" style="display: none"></div>

@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -43,7 +44,7 @@ public class DiffAnalyticsTSVWriterHeaderIT {
     @Test
     public void queryDescriptionWithGeneQueryExactMatch(){
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("TEST");
+        requestParameters.setGeneQuery(GeneQuery.create("TEST"));
 
         String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
 
@@ -53,7 +54,7 @@ public class DiffAnalyticsTSVWriterHeaderIT {
     @Test
     public void queryDescriptionWithGeneQueryInexactMatch(){
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("TEST");
+        requestParameters.setGeneQuery(GeneQuery.create("TEST"));
         requestParameters.setExactMatch(false);
 
         String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");
@@ -95,7 +96,7 @@ public class DiffAnalyticsTSVWriterHeaderIT {
     @Test
     public void queryDescriptionWithGeneQueryAndCondition(){
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery("TEST");
+        requestParameters.setGeneQuery(GeneQuery.create("TEST"));
         requestParameters.setCondition("LIVER");
 
         String[] headerRows = subject.getTsvFileMasthead(requestParameters).split("\n");

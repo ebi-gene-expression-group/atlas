@@ -29,12 +29,12 @@
 
 <c:if test="${isWidget && not empty param.accessKey}">
     <c:set var="additionalQueryOptionsString"
-           value="&geneQuery=${preferences.geneQuery}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
+           value="&geneQuery=${preferences.geneQuery.asUrlQueryParameter()}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
 </c:if>
 
 <c:if test="${isWidget && empty param.accessKey}">
     <c:set var="additionalQueryOptionsString"
-           value="?geneQuery=${preferences.geneQuery}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
+           value="?geneQuery=${preferences.geneQuery.asUrlQueryParameter()}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
 </c:if>
 
 <c:set var="experimentURL" value="${applicationProperties.buildServerURL(pageContext.request)}/experiments/${experimentAccession}${accessKeyQueryString}${additionalQueryOptionsString}"></c:set>

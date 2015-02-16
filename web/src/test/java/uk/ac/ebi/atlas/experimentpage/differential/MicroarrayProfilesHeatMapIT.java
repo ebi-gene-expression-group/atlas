@@ -17,6 +17,7 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 
 import javax.inject.Inject;
@@ -193,7 +194,7 @@ public class MicroarrayProfilesHeatMapIT {
     }
 
     private void setGeneQuery(String geneQuery) {
-        requestPreferences.setGeneQuery(geneQuery);
+        requestPreferences.setGeneQuery(GeneQuery.create(geneQuery));
     }
 
     private void setNotSpecific() {

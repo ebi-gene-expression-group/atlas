@@ -17,7 +17,7 @@ public class BioentitiesSearchControllerOrganismQueryOneBaselineResultWidgetSIT 
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "geneQuery=%22zinc+finger%22&exactMatch=true&_exactMatch=on&organism=Mus+musculus&condition=");
+        subject = BioEntitiesPage.search(driver, "geneQuery=zinc+finger&exactMatch=true&_exactMatch=on&organism=Mus+musculus&condition=");
         subject.get();
     }
 
@@ -37,7 +37,7 @@ public class BioentitiesSearchControllerOrganismQueryOneBaselineResultWidgetSIT 
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
         assertThat(subject.getGeneNames(), IsIterableContainingInOrder.contains("Six tissues"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-599?geneQuery=%22zinc%20finger%22"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-599?geneQuery=zinc+finger"));
     }
 
 }

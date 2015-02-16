@@ -18,6 +18,7 @@ import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -151,7 +152,7 @@ public class BaselineProfilesHeatMapIT {
     }
 
     private void setGeneQuery(String geneQuery) {
-        requestPreferences.setGeneQuery(geneQuery);
+        requestPreferences.setGeneQuery(GeneQuery.create(geneQuery));
     }
 
     private void setNotSpecific() {

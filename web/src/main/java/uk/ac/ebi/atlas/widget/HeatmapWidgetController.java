@@ -32,6 +32,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -50,9 +51,7 @@ import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
+import uk.ac.ebi.atlas.web.*;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -109,6 +108,11 @@ public final class HeatmapWidgetController {
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
     }
 
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(GeneQuery.class, new GeneQueryPropertyEditor());
+    }
+
     // similar to ExperimentDispatcher but for the widget, ie: loads baseline experiment into model and request
     // /widgets/heatmap/protein is deprecated
     //ToDo: (OMannion) remove /widgets/heatmap/protein (still being used by http://www.ebi.ac.uk/Tools/biojs/registry/Biojs.ExpressionAtlasBaselineSummary.html)
@@ -160,7 +164,7 @@ public final class HeatmapWidgetController {
 
     @RequestMapping(value = "/widgets/heatmap/multiExperiment")
     public String multiExperimentJson(
-            @RequestParam(value = "geneQuery", required = true) String geneQuery,
+            @RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
             @RequestParam(value = "species", required = false) String species,
             @RequestParam(value = "propertyType", required = false) String propertyType,
             Model model, HttpServletResponse response) {
@@ -168,18 +172,18 @@ public final class HeatmapWidgetController {
         String ensemblSpecies;
         try {
             ensemblSpecies = StringUtils.isBlank(species) ?
-                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery) : Species.convertToEnsemblSpecies(species);
+                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString()) : Species.convertToEnsemblSpecies(species);
 
         } catch (ResourceNotFoundException e) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            model.addAttribute("errorMessage", "No genes found matching query: " + geneQuery);
+            model.addAttribute("errorMessage", "No genes found matching query: " + geneQuery.description());
             return "widget-error";
         }
 
-        BaselineExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(geneQuery, ensemblSpecies, true);
+        BaselineExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(geneQuery.asString(), ensemblSpecies, true);
 
         if (searchResult.isEmpty()) {
-            model.addAttribute("errorMessage", "No baseline expression found for " + geneQuery);
+            model.addAttribute("errorMessage", "No baseline expression found for " + geneQuery.description());
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return "widget-error";
         }
@@ -195,17 +199,17 @@ public final class HeatmapWidgetController {
 
     @RequestMapping(value = "/widgets/heatmap/baselineAnalytics")
     public String analyticsJson(
-            @RequestParam(value = "geneQuery", required = true) String geneQuery,
+            @RequestParam(value = "geneQuery", required = true) GeneQuery geneQuery,
             @RequestParam(value = "species", required = false) String species,
             @RequestParam(value = "propertyType", required = false) String propertyType,
             @RequestParam(value = "source", required = false) String source,
             Model model, HttpServletResponse response) {
 
         String ensemblSpecies = StringUtils.isBlank(species) ?
-                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery) : Species.convertToEnsemblSpecies(species);
+                speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString()) : Species.convertToEnsemblSpecies(species);
 
         String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source;
-        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, ensemblSpecies, defaultFactorQueryType);
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery.asString(), ensemblSpecies, defaultFactorQueryType);
 
         populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
         model.addAttribute("hasAnatomogram", false);
@@ -216,7 +220,7 @@ public final class HeatmapWidgetController {
         return "heatmap-data";
     }
 
-    private void populateModelWithMultiExperimentResults(String geneQuery, String ensemblSpecies, BaselineExperimentSearchResult searchResult, Model model) {
+    private void populateModelWithMultiExperimentResults(GeneQuery geneQuery, String ensemblSpecies, BaselineExperimentSearchResult searchResult, Model model) {
         SortedSet<Factor> orderedFactors = searchResult.getFactorsAcrossAllExperiments();
         SortedSet<AssayGroupFactor> filteredAssayGroupFactors = convert(orderedFactors);
 

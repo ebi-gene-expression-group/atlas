@@ -27,6 +27,7 @@ import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
 import uk.ac.ebi.atlas.profiles.writer.RnaSeqProfilesTSVWriter;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import java.io.PrintWriter;
@@ -314,7 +315,7 @@ public class RnaSeqProfilesWriterIT {
     }
 
     private void setGeneQuery(String geneQuery) {
-        requestPreferences.setGeneQuery(geneQuery);
+        requestPreferences.setGeneQuery(GeneQuery.create(geneQuery));
     }
 
     private void setNotSpecific() {

@@ -48,6 +48,7 @@ import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -171,7 +172,7 @@ public abstract class BioEntityPageController {
 
         model.addAttribute("searchDescription", identifier);
 
-        model.addAttribute("entityIdentifier", identifier);
+        model.addAttribute("geneQuery", GeneQuery.create(identifier));
 
         model.addAttribute("exactMatch", true);
 

@@ -58,7 +58,7 @@ public abstract class RequestContext<T, K extends ExperimentPageRequestPreferenc
     }
 
     public String getGeneQuery() {
-        return getRequestPreferences().getGeneQuery();
+        return getRequestPreferences().getGeneQuery().asString();
     }
 
     public Integer getHeatmapMatrixSize() {

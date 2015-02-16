@@ -37,7 +37,7 @@ public class SearchController {
 
         checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition.");
 
-        String geneQuery = requestParameters.getGeneQuery().trim();
+        String geneQuery = requestParameters.getGeneQuery().asString().trim();
 
         model.addAttribute("identifierSearch", geneQuery);
         model.addAttribute("searchDescription", requestParameters.getDescription());

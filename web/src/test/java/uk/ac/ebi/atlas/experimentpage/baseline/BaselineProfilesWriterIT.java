@@ -25,6 +25,7 @@ import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.CsvWriterFactory;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import java.io.PrintWriter;
@@ -325,7 +326,7 @@ public class BaselineProfilesWriterIT {
     }
 
     private void setGeneQuery(String geneQuery) {
-        requestPreferences.setGeneQuery(geneQuery);
+        requestPreferences.setGeneQuery(GeneQuery.create(geneQuery));
     }
 
     private void setNotSpecific() {

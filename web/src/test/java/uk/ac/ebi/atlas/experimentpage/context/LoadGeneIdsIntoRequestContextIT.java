@@ -8,6 +8,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 
@@ -44,7 +45,7 @@ public class LoadGeneIdsIntoRequestContextIT {
 
     @Test
     public void mirbaseGeneIdsAreExpanded() throws GenesNotFoundException {
-        requestPreferences.setGeneQuery("hsa-mir-636");
+        requestPreferences.setGeneQuery(GeneQuery.create("hsa-mir-636"));
         populateRequestContext("E-MTAB-1733");
         subject.load(baselineRequestContext, "homo sapiens");
 

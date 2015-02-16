@@ -33,8 +33,8 @@ public class BaselineRequestPreferences extends ExperimentPageRequestPreferences
     private BaselineExpressionLevelRounder baselineExpressionLevelRounder = new BaselineExpressionLevelRounder();
 
     @Override
-    protected String getDefaultGeneQuery() {
-        return DEFAULT_GENE_QUERY;
+    protected GeneQuery getDefaultGeneQuery() {
+        return GeneQuery.create(DEFAULT_GENE_QUERY);
     }
 
     @Override

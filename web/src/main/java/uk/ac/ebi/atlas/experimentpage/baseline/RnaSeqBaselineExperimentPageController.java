@@ -37,10 +37,7 @@ import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuil
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
-import uk.ac.ebi.atlas.web.ApplicationProperties;
-import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
-import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.TagEditorConverter;
+import uk.ac.ebi.atlas.web.*;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
 
@@ -92,7 +89,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
         //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
         // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
         // instead of the current tab separated syntax for geneQuery
-        preferences.setGeneQuery(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY)));
+        preferences.setGeneQuery(GeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
 
         prepareModel(preferences, result, model, request);
 
@@ -109,7 +106,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
         //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
         // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
         // instead of the current tab separated syntax for geneQuery
-        preferences.setGeneQuery(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY)));
+        preferences.setGeneQuery(GeneQuery.create(TagEditorConverter.queryStringToTags((String) request.getAttribute(HeatmapWidgetController.ORIGINAL_GENEQUERY))));
 
         BaselineProfilesList baselineProfiles = prepareModel(preferences, result, model, request);
 
@@ -127,7 +124,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
         }
 
         if (baselineProfiles.isEmpty()) {
-            model.addAttribute("errorMessage", "No baseline expression found for " + preferences.getGeneQuery());
+            model.addAttribute("errorMessage", "No baseline expression found for " + preferences.getGeneQuery().description());
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return "widget-error";
         }

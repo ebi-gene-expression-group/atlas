@@ -17,6 +17,7 @@ import uk.ac.ebi.atlas.model.differential.Regulation;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -179,7 +180,7 @@ public class RnaSeqProfilesHeatMapIT {
     }
 
     private void setGeneQuery(String geneQuery) {
-        requestPreferences.setGeneQuery(geneQuery);
+        requestPreferences.setGeneQuery(GeneQuery.create(geneQuery));
     }
 
     private void setNotSpecific() {

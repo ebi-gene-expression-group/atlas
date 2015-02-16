@@ -15,7 +15,7 @@
 <c:choose>
     <c:when test="${empty jsonProfiles}">
         {
-            "error" : "No expression found for ${geneQuery}"
+            "error" : "No expression found for ${geneQuery.description()}"
         }
     </c:when>
     <c:otherwise>
@@ -30,7 +30,7 @@
                 "atlasHost": "${atlasHost}",
                 "contextRoot": "${pageContext.request.contextPath}",
                 "experimentAccession": "${experimentAccession}",
-                "geneQuery": "${fn:replace(geneQuery, '\"', '\\\"')}",
+                "geneQuery": "${geneQuery.asUrlQueryParameter()}",
                 "accessKey": "${param.accessKey}",
                 "species": "${species}",
                 "ensemblDB": "${ensemblDB}",
@@ -65,7 +65,7 @@
             <c:choose>
                 <c:when test="${isWidget && !isMultiExperiment}">
                     <c:set var="additionalQueryOptionsString"
-                           value="?geneQuery=${preferences.geneQuery}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
+                           value="?geneQuery=${geneQuery.asUrlQueryParameter()}&serializedFilterFactors=${preferences.serializedFilterFactors}"></c:set>
                     <c:set var="experimentURL" value="/experiments/${experimentAccession}${additionalQueryOptionsString}"></c:set>
                     {
                     "URL": "${experimentURL}",

@@ -94,6 +94,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
+        super.initBinder(binder);
         binder.addValidators(new BaselineRequestPreferencesValidator());
     }
 
