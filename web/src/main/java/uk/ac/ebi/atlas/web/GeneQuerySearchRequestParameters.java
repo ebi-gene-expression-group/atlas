@@ -2,14 +2,20 @@ package uk.ac.ebi.atlas.web;
 
 import com.google.common.base.Objects;
 import org.apache.commons.lang.StringUtils;
+import uk.ac.ebi.atlas.search.ConditionQuery;
 
 public class GeneQuerySearchRequestParameters extends SearchRequest {
     private String condition;
 
     private String organism;
 
+    @Deprecated // use getConditionQuery
     public String getCondition() {
         return trimCondition(condition);
+    }
+
+    public ConditionQuery getConditionQuery() {
+        return ConditionQuery.create(condition);
     }
 
     public void setCondition(String condition) {

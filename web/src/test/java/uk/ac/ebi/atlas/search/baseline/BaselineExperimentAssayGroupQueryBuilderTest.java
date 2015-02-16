@@ -53,6 +53,7 @@ public class BaselineExperimentAssayGroupQueryBuilderTest {
 
         MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
                 "JOIN TABLE(?) assayGroups on rbe.EXPERIMENT = assayGroups.EXPERIMENT and rbe.ASSAYGROUPID = assayGroups.CONTRASTID " +
+                "WHERE rbe.experiment = (SELECT accession FROM experiment WHERE private = 'F' AND accession = rbe.experiment) " +
                 "GROUP BY rbe.experiment, rbe.assaygroupid"));
         MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains((Object) assayGroups));
     }
@@ -65,6 +66,7 @@ public class BaselineExperimentAssayGroupQueryBuilderTest {
 
         MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
                 "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value " +
+                "WHERE rbe.experiment = (SELECT accession FROM experiment WHERE private = 'F' AND accession = rbe.experiment) " +
                 "GROUP BY rbe.experiment, rbe.assaygroupid"));
         MatcherAssert.assertThat(databaseQuery.getParameters(), IsIterableContainingInOrder.contains((Object) geneIds));
 
@@ -82,6 +84,7 @@ public class BaselineExperimentAssayGroupQueryBuilderTest {
         MatcherAssert.assertThat(databaseQuery.getQuery(), is("SELECT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe " +
                 "JOIN TABLE(?) assayGroups on rbe.EXPERIMENT = assayGroups.EXPERIMENT and rbe.ASSAYGROUPID = assayGroups.CONTRASTID " +
                 "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value " +
+                "WHERE rbe.experiment = (SELECT accession FROM experiment WHERE private = 'F' AND accession = rbe.experiment) " +
                 "GROUP BY rbe.experiment, rbe.assaygroupid"));
         MatcherAssert.assertThat(databaseQuery.getParameters().size(), is(2));
 

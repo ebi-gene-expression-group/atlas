@@ -149,8 +149,8 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalyt
         String exactMatch = StringUtils.isNotEmpty(requestParameters.getGeneQuery()) && requestParameters.isExactMatch() ? " exactly" : "";
         String comma = StringUtils.isNotEmpty(requestParameters.getGeneQuery()) ? ", " : "";
 
-        boolean hasCondition = StringUtils.isNotEmpty(requestParameters.getCondition());
-        String condition = hasCondition ? " in condition matching '" + requestParameters.getCondition() + "'": "";
+        boolean hasCondition = requestParameters.hasCondition();
+        String condition = hasCondition ? " in condition matching '" + requestParameters.getConditionQuery().asString() + "'": "";
         String organism = StringUtils.isNotEmpty(requestParameters.getOrganism()) ? (hasCondition ? " and" : "")  + " in organism '" + requestParameters.getOrganism() + "'": "";
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
         return MessageFormat.format(tsvFileMastheadTemplate, geneQuery, exactMatch, comma, condition, organism, timeStamp);

@@ -15,6 +15,7 @@ public class BaselineExperimentAssayGroupQueryBuilder {
     static final String SELECT_QUERY = "SELECT rbe.experiment, rbe.assaygroupid from RNASEQ_BSLN_EXPRESSIONS subpartition( ABOVE_CUTOFF ) rbe ";
     static final String FOR_ASSAY_GROUPS = "JOIN TABLE(?) assayGroups on rbe.EXPERIMENT = assayGroups.EXPERIMENT and rbe.ASSAYGROUPID = assayGroups.CONTRASTID ";
     static final String FOR_GENES = "JOIN TABLE(?) identifiersTable ON rbe.IDENTIFIER = identifiersTable.column_value ";
+    static final String WHERE_PUBLIC = "WHERE rbe.experiment = (SELECT accession FROM experiment WHERE private = 'F' AND accession = rbe.experiment) ";
     static final String GROUP_BY = "GROUP BY rbe.experiment, rbe.assaygroupid";
 
     private ARRAY experimentAssayGroups;
@@ -42,6 +43,7 @@ public class BaselineExperimentAssayGroupQueryBuilder {
 
         addGeneIds(databaseQuery);
 
+        databaseQuery.appendToQueryString(WHERE_PUBLIC);
         databaseQuery.appendToQueryString(GROUP_BY);
 
         return databaseQuery;
