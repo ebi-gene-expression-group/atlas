@@ -75,4 +75,10 @@ public class SpeciesLookupServiceIT {
         assertThat(speciesLookupService.fetchSpeciesForBioentityId("ENSP00000000233"), is("homo sapiens"));
     }
 
+    @Test
+    public void plantReactomeId() {
+        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("REACT_1619");
+        assertThat(result.isMultiSpecies(), is(false));
+        assertThat(result.firstSpecies(), is("homo sapiens"));
+    }
 }

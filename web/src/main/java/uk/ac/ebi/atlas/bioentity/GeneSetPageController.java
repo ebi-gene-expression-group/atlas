@@ -75,9 +75,9 @@ public class GeneSetPageController extends BioEntityPageController {
         this.interProTermTrader = interProTermTrader;
     }
 
-    // identifier = Reactome, GO, or Interpro term
+    // identifier = Reactome, Plant Reactome, GO, or Interpro term
     @RequestMapping(value = "/genesets/{identifier:.*}")
-    public String showBioentityPage(@PathVariable String identifier, Model model) {
+    public String showBioentityPage(@PathVariable String  identifier, Model model) {
         checkIdentifierIsGeneSet(identifier);
 
         model.addAttribute("isGeneSet", true);
@@ -91,8 +91,8 @@ public class GeneSetPageController extends BioEntityPageController {
         addBaselineResults(identifier, model);
 
         // load diff results in same way as BioentitiesSearchController
-        String specie = "";
-        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(identifier, specie, true);
+        String species = "";
+        Optional<Set<String>> geneIdsResult = solrQueryService.expandGeneQueryIntoGeneIds(identifier, species, true);
 
         if (!geneIdsResult.isPresent() || geneIdsResult.get().isEmpty()) {
             throw new ResourceNotFoundException(identifier);
@@ -148,6 +148,8 @@ public class GeneSetPageController extends BioEntityPageController {
             String term = interProTermTrader.getTerm(identifier);
             propertyValuesByType.put("interpro", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
+        } else if (GeneSetUtil.isPlantReactome(identifier)) {
+            propertyValuesByType.put("plant_reactome", identifier);
         }
 
         SortedSet<String> names = Sets.newTreeSet();

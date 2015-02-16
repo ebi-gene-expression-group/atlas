@@ -20,8 +20,12 @@ public final class GeneSetUtil {
         return identifier.startsWith("REACT_");
     }
 
+    public static boolean isPlantReactome(String identifier) {
+        return identifier.matches("[\\d]+");
+    }
+
     public static boolean isGeneSet(String identifier) {
-        return isReactome(identifier) || isInterPro(identifier) || isGeneOntology(identifier);
+        return isReactome(identifier) || isInterPro(identifier) || isGeneOntology(identifier) || isPlantReactome(identifier);
     }
 
 }

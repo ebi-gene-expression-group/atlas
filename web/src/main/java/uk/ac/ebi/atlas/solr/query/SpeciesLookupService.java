@@ -48,14 +48,10 @@ public class SpeciesLookupService {
     public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     public static final String PROPERTY_LOWER_FIELD = "property_value_lower";
 
-    private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
-
     private GxaSolrServer solrServer;
 
     @Inject
-    public SpeciesLookupService(BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer,
-                                GxaSolrServer solrServer) {
-        this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
+    public SpeciesLookupService(GxaSolrServer solrServer) {
         this.solrServer = solrServer;
     }
 
@@ -71,7 +67,7 @@ public class SpeciesLookupService {
             fieldName = PROPERTY_LOWER_FIELD;
         }
 
-        List<String> queryTokens = bioentityPropertyValueTokenizer.split(multiTermQuery);
+        List<String> queryTokens = BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(multiTermQuery);
         for (String queryToken : queryTokens) {
             Optional<String> species = fetchFirstSpecies(fieldName, encloseInQuotes(queryToken));
             if (species.isPresent()) {
@@ -101,12 +97,13 @@ public class SpeciesLookupService {
         return species.isEmpty() ? Optional.<String>absent() : Optional.of(species.iterator().next());
     }
 
-    // used for looking up species for gene sets (go, interpro, react etc.)
-    // REACT are always single species, by go and interpro gene sets can be multi-species
-    // if results are empty, then term does not exist in Solr
+    // Used for looking up species for gene sets (GO, InterPro, Reactome and Plant Reactome)
+    // Reactome and Plant Reactome are always single species, but GO and InterPro gene sets can be multi-species
+    // If results are empty, then term does not exist in Solr
     public Result fetchSpeciesForGeneSet(String term) {
         // eg: property_value_lower:"IPR027417"
-        String queryText = PROPERTY_LOWER_FIELD + ":" + encloseInQuotes(term);
+        String queryText = PROPERTY_LOWER_FIELD + ":" + encloseInQuotes(term) +
+                " AND property_name:(pathwayid OR go OR interpro OR REACT_303889)";  // Needed to exclude Entrez numerical ids, identical to Plan Reactome ids (pathwayid)
         LOGGER.debug("fetch species for geneset " + queryText);
 
         SolrQuery query = new SolrQuery(queryText);
