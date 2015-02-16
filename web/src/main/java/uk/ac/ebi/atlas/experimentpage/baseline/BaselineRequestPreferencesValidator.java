@@ -26,11 +26,19 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences;
+import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
 
 public class BaselineRequestPreferencesValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
+        if(aClass.isAssignableFrom(BaselineRequestPreferences.class)) {
+            return BaselineRequestPreferences.class.equals(aClass);
+        }
+
+        if(aClass.isAssignableFrom(ProteomicsBaselineRequestPreferences.class)) {
+            return ProteomicsBaselineRequestPreferences.class.equals(aClass);
+        }
 
         return BaselineRequestPreferences.class.equals(aClass);
     }
