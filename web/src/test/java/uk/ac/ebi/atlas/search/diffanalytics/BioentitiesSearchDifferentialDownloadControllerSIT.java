@@ -12,21 +12,21 @@ import java.util.List;
 import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssuredFixture {
 
     private EndPoint subject = new EndPoint("/gxa/query.tsv?geneQuery=Cyba&exactMatch=true&_exactMatch=on&organism=Any&condition=");
 
     @Test
-    public void shouldFindResultsForChildEfoTerms() {
+    public void hasResultsForEfoAnnotatedContrasts() {
         Response response = get("query.tsv?geneQuery=&exactMatch=true&_exactMatch=on&organism=Any&condition=sex");
 
         ResponseBody body = response.getBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(1102));
+        assertThat(lines.length, is(greaterThan(4)));
+        assertThat(lines[4], startsWith("Cp36\tDrosophila melanogaster\tE-MEXP-1099\t'homozygous for chico mutation' vs 'wild type'"));
     }
 
     @Test

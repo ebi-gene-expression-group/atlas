@@ -33,6 +33,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 import uk.ac.ebi.atlas.utils.Visitor;
 import uk.ac.ebi.atlas.utils.VisitorException;
+import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Named;
@@ -145,15 +146,16 @@ public class DiffAnalyticsTSVWriter implements AutoCloseable, Visitor<DiffAnalyt
     }
 
     public String getTsvFileMasthead(GeneQuerySearchRequestParameters requestParameters) {
-        String geneQuery = StringUtils.isNotEmpty(requestParameters.getGeneQuery().asString()) ? "Genes matching: '" + requestParameters.getGeneQuery() + "'" : "";
-        String exactMatch = StringUtils.isNotEmpty(requestParameters.getGeneQuery().asString()) && requestParameters.isExactMatch() ? " exactly" : "";
-        String comma = StringUtils.isNotEmpty(requestParameters.getGeneQuery().asString()) ? ", " : "";
+        GeneQuery geneQuery = requestParameters.getGeneQuery();
+        String geneQueryHeader = !geneQuery.isEmpty() ? "Genes matching: '" + geneQuery.description() + "'" : "";
+        String exactMatch = !geneQuery.isEmpty() && requestParameters.isExactMatch() ? " exactly" : "";
+        String comma = !geneQuery.isEmpty() ? ", " : "";
 
         boolean hasCondition = requestParameters.hasCondition();
         String condition = hasCondition ? " in condition matching '" + requestParameters.getConditionQuery().asString() + "'": "";
         String organism = StringUtils.isNotEmpty(requestParameters.getOrganism()) ? (hasCondition ? " and" : "")  + " in organism '" + requestParameters.getOrganism() + "'": "";
         String timeStamp = new SimpleDateFormat("E, dd-MMM-yyyy HH:mm:ss").format(new Date());
-        return MessageFormat.format(tsvFileMastheadTemplate, geneQuery, exactMatch, comma, condition, organism, timeStamp);
+        return MessageFormat.format(tsvFileMastheadTemplate, geneQueryHeader, exactMatch, comma, condition, organism, timeStamp);
     }
 
     @Override

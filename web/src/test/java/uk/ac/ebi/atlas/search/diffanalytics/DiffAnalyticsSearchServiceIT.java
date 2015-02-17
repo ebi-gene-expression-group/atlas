@@ -81,7 +81,7 @@ public class DiffAnalyticsSearchServiceIT {
     @Test
     public void geneQuery2IDsDifferentSpecies()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("ENSMUSG00000091366", "tAT5G26220"));
+        requestParameters.setGeneQuery(GeneQuery.create("ENSMUSG00000091366", "AT5G26220"));
 
         String species = "";
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery().asString(), requestParameters.getConditionQuery().asString(), species, requestParameters.isExactMatch());
@@ -125,9 +125,9 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
-    public void geneQueryKeywordWithQuotesApoptoticProcess()  {
+    public void geneQueryPhrase_ApoptoticProcess()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
-        requestParameters.setGeneQuery(GeneQuery.create("\"apoptotic process\""));
+        requestParameters.setGeneQuery(GeneQuery.create("apoptotic process"));
 
         String species = "";
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery().asString(), requestParameters.getConditionQuery().asString(), species, requestParameters.isExactMatch());
