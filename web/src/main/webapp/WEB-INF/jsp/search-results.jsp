@@ -27,14 +27,6 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
 
-<section class="grid_17 alpha extra-padding">
-    <h2 class="strapline">
-        Expression Atlas results for <span class="searchterm">${searchDescription}</span>
-    </h2>
-</section>
-<h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : geneQuery.asString()}"/>
-
-
 <div id="help-placeholder" style="display: none"></div>
 
 <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
@@ -45,7 +37,20 @@
 <%@ include file="includes/anatomogram.jsp" %>
 
 <section class="grid_23 extra-padding">
-    <div id="facets"> FACETS TREE SELECTION</div>
+    <%@ include file="includes/search-form.jsp" %>
+</section>
+
+<c:if test="${not empty searchDescription}" >
+    <section class="grid_17 alpha extra-padding">
+        <h2 class="strapline">
+            Showing results for <span class="searchterm">${searchDescription}</span>
+        </h2>
+    </section>
+    <h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : geneQuery.asString()}"/>
+</c:if>
+
+<section class="grid_23 extra-padding">
+    <div id="facets"></div>
     <div id="heatmaps"></div>
 </section>
 

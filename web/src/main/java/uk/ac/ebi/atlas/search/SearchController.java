@@ -6,18 +6,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.search.baseline.BaselineAnalyticsSearchService;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
+import uk.ac.ebi.atlas.web.GeneQuery;
+import uk.ac.ebi.atlas.web.GeneQueryPropertyEditor;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 @Controller
 @Scope("request")
@@ -32,21 +34,25 @@ public class SearchController {
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
     }
 
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(GeneQuery.class, new GeneQueryPropertyEditor());
+    }
+
     @RequestMapping(value = "/search")
     public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model) {
 
-        checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition.");
+        GeneQuery geneQuery = requestParameters.getGeneQuery();
 
-        String geneQuery = requestParameters.getGeneQuery().asString().trim();
+        if (!geneQuery.isEmpty()) {
+            model.addAttribute("searchDescription", requestParameters.getDescription());
+            model.addAttribute("geneQuery", geneQuery);
 
-        model.addAttribute("identifierSearch", geneQuery);
-        model.addAttribute("searchDescription", requestParameters.getDescription());
+            String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery.asString(), requestParameters.getConditionQuery());
+            model.addAttribute("globalSearchTerm", globalSearchTerm);
 
-        String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery, requestParameters.getConditionQuery());
-
-        model.addAttribute("globalSearchTerm", globalSearchTerm);
-
-        model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(geneQuery));
+            model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(geneQuery.asString()));
+        }
 
         return "search-results";
     }

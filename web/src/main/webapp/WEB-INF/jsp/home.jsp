@@ -174,6 +174,8 @@
 <%-- placeholder which is loaded with tooltip text --%>
 <div id="help-placeholder" style="display: none"></div>
 
+<%@ include file="includes/condition-autocomplete-js.jsp" %>
+
 <script type="text/javascript">
 
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts

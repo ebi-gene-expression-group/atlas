@@ -134,15 +134,6 @@
     <script language="JavaScript" type="text/javascript"
             src="${pageContext.request.contextPath}/resources/js/geneQueryTagEditorModule.js"></script>
 
-    <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery.caret-range-1.0.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/jquery.arrayExpress-autocomplete-1.1.0.130305.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${pageContext.request.contextPath}/resources/js/conditionAutocompleteModule.js"></script>
-
-
-
     <!-- fancybox start -->
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css"
