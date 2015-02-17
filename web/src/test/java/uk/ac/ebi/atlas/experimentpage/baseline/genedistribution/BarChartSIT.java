@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormAndBarChartPage;
@@ -60,7 +61,7 @@ public class BarChartSIT extends SinglePageSeleniumFixture {
         assertThat(subject.getLegendLabel(), is("Y = number of genes expressed above the given FPKM cutoff in any experimental variable"));
     }
 
-    @Test
+    @Ignore
     public void checkBarChartAxisForCellLine() {
         subject.selectQueryFactorValue("HFDPC cell line");
         assertThat(subject.getYAxisValue(0), is("0"));
