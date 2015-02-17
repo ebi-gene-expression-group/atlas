@@ -48,7 +48,7 @@ public class BarChartSIT extends SinglePageSeleniumFixture {
         subject.clickDisplayChartButton();
     }
 
-    @Test
+    @Ignore
     public void checkBarChartAxisForAllOrganismParts() {
         assertThat(subject.getXAxisValue(0), is("0"));
         assertThat(subject.getXAxisValue(1), is("0.2"));
