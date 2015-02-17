@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.baseline;
+package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 
 import com.jayway.restassured.response.Response;
@@ -11,7 +11,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class ProteomicsBaselineExperimentDownloadControllerIT {
+public class ProteomicsBaselineExperimentDownloadControllerSIT {
 
     private EndPoint subject = new EndPoint("/gxa/experiments/E-PROT-1.tsv?geneQuery=&exactMatch=false");
 

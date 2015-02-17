@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.rest.tests.geod3779;
+package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 
 import com.jayway.restassured.response.Response;
@@ -37,7 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 
-public class GEOD3779MicroarrayExperimentDownloadControllerIT {
+public class GEOD3779MicroarrayExperimentDownloadControllerSIT {
 
     private static final String EXPRESSION_ATLAS_VERSION = "# Expression Atlas version:";
     private static final String QUERY_DESCRIPTION = "# Query: Genes matching: '', specifically up/down differentially expressed in any contrast given the p-value cutoff 0.05 and log2-fold change cutoff 0 in experiment E-GEOD-3779";

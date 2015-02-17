@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.differential;
+package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;

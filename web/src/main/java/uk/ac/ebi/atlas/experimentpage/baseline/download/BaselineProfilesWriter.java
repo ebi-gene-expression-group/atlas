@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.baseline;
+package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;

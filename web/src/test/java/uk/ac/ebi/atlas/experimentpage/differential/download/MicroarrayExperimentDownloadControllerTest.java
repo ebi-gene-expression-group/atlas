@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.differential;
+package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;
@@ -31,8 +31,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.experimentpage.differential.download.DataWriterFactory;
-import uk.ac.ebi.atlas.experimentpage.differential.download.ExpressionsWriter;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;

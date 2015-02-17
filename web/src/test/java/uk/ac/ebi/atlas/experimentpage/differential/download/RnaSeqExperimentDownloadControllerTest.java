@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.differential;
+package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,8 +29,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
-import uk.ac.ebi.atlas.experimentpage.differential.download.DataWriterFactory;
-import uk.ac.ebi.atlas.experimentpage.differential.download.ExpressionsWriter;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;

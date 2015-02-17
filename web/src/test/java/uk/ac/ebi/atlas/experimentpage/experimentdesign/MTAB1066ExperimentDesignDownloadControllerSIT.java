@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.rest.tests.mtab513;
+package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
 
 import com.jayway.restassured.response.Response;
@@ -33,9 +33,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class MTAB513ExperimentDesignDownloadControllerIT {
+public class MTAB1066ExperimentDesignDownloadControllerSIT {
 
-    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-513/experiment-design.tsv");
+    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-1066/experiment-design.tsv");
 
     @Test
     public void verifyHeader() {
@@ -58,7 +58,7 @@ public class MTAB513ExperimentDesignDownloadControllerIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("Run", "Sample Characteristic[Organism]", "Sample Characteristic Ontology Term[Organism]", "Sample Characteristic[age]", "Sample Characteristic Ontology Term[age]", "Sample Characteristic[ethnic group]", "Sample Characteristic Ontology Term[ethnic group]", "Sample Characteristic[organism part]", "Sample Characteristic Ontology Term[organism part]", "Sample Characteristic[sex]", "Sample Characteristic Ontology Term[sex]", "Factor Value[organism part]", "Factor Value Ontology Term[organism part]", "Analysed")
+                contains("Assay", "Array", "Sample Characteristic[DevelopmentalStage]", "Sample Characteristic Ontology Term[DevelopmentalStage]", "Sample Characteristic[Genotype]", "Sample Characteristic Ontology Term[Genotype]", "Sample Characteristic[Organism]", "Sample Characteristic Ontology Term[Organism]", "Sample Characteristic[StrainOrLine]", "Sample Characteristic Ontology Term[StrainOrLine]", "Factor Value[genotype]", "Factor Value Ontology Term[genotype]", "Analysed")
         );
 
     }
@@ -70,20 +70,7 @@ public class MTAB513ExperimentDesignDownloadControllerIT {
         List<String> secondLine = subject.getRowValues(1);
 
         assertThat(secondLine,
-                contains("ERR030856", "Homo sapiens", "NCBITaxon/NCBITaxon:9606", "", "", "", "", "16 tissues mixture", "", "", "", "16 tissues mixture", "", "No")
-        );
-
-    }
-
-    @Test
-    public void verifyUsedLine() {
-
-        ResponseBody body = subject.getResponseBody();
-
-        List<String> line = subject.getRowValues(17);
-
-        assertThat(line,
-                contains("ERR030872", "Homo sapiens", "NCBITaxon/NCBITaxon:9606", "60 years", "", "Caucasian", "EFO/EFO:0003156", "thyroid", "UBERON/UBERON:0002046", "female", "EFO/EFO:0001265", "thyroid", "UBERON/UBERON:0002046", "Yes")
+                contains("C1", "A-AFFY-35", "3rd instar larva", "", "w1118; +; cycCY5", "", "Drosophila melanogaster", "", "", "", "cycC mutant", "", "Yes")
         );
 
     }
@@ -93,7 +80,7 @@ public class MTAB513ExperimentDesignDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(49));
+        assertThat(lines.length, is(10));
     }
 
 }

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.differential;
+package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Joiner;

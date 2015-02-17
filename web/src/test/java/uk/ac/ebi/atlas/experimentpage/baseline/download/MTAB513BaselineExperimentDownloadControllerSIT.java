@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.acceptance.rest.tests.mtab1066;
+package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 
 import com.jayway.restassured.response.Response;
@@ -33,9 +33,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class MTAB1066ExperimentDesignDownloadControllerIT {
+public class MTAB513BaselineExperimentDownloadControllerSIT {
 
-    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-1066/experiment-design.tsv");
+    private EndPoint subject = new EndPoint("/gxa/experiments/E-MTAB-513.tsv?geneQuery=&exactMatch=false");
 
     @Test
     public void verifyHeader() {
@@ -47,31 +47,45 @@ public class MTAB1066ExperimentDesignDownloadControllerIT {
         // unicode encoded plain text
         assertThat(response.getContentType(), is("text/plain;charset=utf-8"));
 
-        // filename of attachment should be ending in -experiment-design.tsv
-        assertThat(response.getHeader("Content-Disposition"), containsString("-experiment-design.tsv"));
+        // filename of attachment should be ending in -query-results.tsv
+        assertThat(response.getHeader("Content-Disposition"), containsString("-query-results.tsv"));
     }
 
     @Test
     public void verifyFirstLine() {
-        ResponseBody body = subject.getResponseBody();
 
-        List<String> firstLine = subject.getRowValues(0);
+        List<String> firstLine = subject.getRowValues(3);
 
         assertThat(firstLine,
-                contains("Assay", "Array", "Sample Characteristic[DevelopmentalStage]", "Sample Characteristic Ontology Term[DevelopmentalStage]", "Sample Characteristic[Genotype]", "Sample Characteristic Ontology Term[Genotype]", "Sample Characteristic[Organism]", "Sample Characteristic Ontology Term[Organism]", "Sample Characteristic[StrainOrLine]", "Sample Characteristic Ontology Term[StrainOrLine]", "Factor Value[genotype]", "Factor Value Ontology Term[genotype]", "Analysed")
+                contains("Gene ID", "Gene Name", "adipose", "adrenal gland", "brain", "breast", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid")
         );
 
     }
 
     @Test
     public void verifySecondLine() {
-        ResponseBody body = subject.getResponseBody();
 
-        List<String> secondLine = subject.getRowValues(1);
+        List<String> secondLine = subject.getRowValues(4);
 
         assertThat(secondLine,
-                contains("C1", "A-AFFY-35", "3rd instar larva", "", "w1118; +; cycCY5", "", "Drosophila melanogaster", "", "", "", "cycC mutant", "", "Yes")
+                hasItems("ENSG00000244656", "ENSG00000244656", "57")
         );
+
+        assertThat(secondLine.get(2), isEmptyString());
+        assertThat(secondLine.get(3), isEmptyString());
+        assertThat(secondLine.get(4), isEmptyString());
+        assertThat(secondLine.get(5), isEmptyString());
+        assertThat(secondLine.get(6), isEmptyString());
+        assertThat(secondLine.get(8), isEmptyString());
+        assertThat(secondLine.get(9), isEmptyString());
+        assertThat(secondLine.get(10), isEmptyString());
+        assertThat(secondLine.get(11), isEmptyString());
+        assertThat(secondLine.get(12), isEmptyString());
+        assertThat(secondLine.get(13), isEmptyString());
+        assertThat(secondLine.get(14), isEmptyString());
+        assertThat(secondLine.get(15), isEmptyString());
+        assertThat(secondLine.get(16), isEmptyString());
+        assertThat(secondLine.get(17), isEmptyString());
 
     }
 
@@ -80,7 +94,7 @@ public class MTAB1066ExperimentDesignDownloadControllerIT {
         ResponseBody body = subject.getResponseBody();
 
         String[] lines = body.asString().split("\n");
-        assertThat(lines.length, is(10));
+        assertThat(lines.length, is(267));
     }
 
 }

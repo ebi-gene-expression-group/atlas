@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.baseline;
+package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;

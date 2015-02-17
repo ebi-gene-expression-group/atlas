@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.differential;
+package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
@@ -32,8 +32,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.MicroarrayRequestContextBuilder;
-import uk.ac.ebi.atlas.experimentpage.differential.download.DataWriterFactory;
-import uk.ac.ebi.atlas.experimentpage.differential.download.ExpressionsWriter;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQueryPropertyEditor;

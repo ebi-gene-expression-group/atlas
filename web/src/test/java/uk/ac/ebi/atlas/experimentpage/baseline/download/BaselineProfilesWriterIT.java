@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.baseline;
+package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Joiner;

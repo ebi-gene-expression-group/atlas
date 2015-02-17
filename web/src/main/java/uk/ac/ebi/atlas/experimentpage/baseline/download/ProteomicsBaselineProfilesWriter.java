@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.baseline;
+package uk.ac.ebi.atlas.experimentpage.baseline.download;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentpage.context.LoadGeneIdsIntoRequestContext;

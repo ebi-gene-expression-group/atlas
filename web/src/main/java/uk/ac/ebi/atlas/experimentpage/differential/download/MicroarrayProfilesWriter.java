@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.experimentpage.differential;
+package uk.ac.ebi.atlas.experimentpage.differential.download;
 
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
