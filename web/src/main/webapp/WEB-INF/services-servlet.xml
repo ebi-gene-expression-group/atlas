@@ -2,11 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 
     <!-- NB: see also the WebConfig class for further configuration options -->
@@ -19,6 +22,10 @@
     Can be further configured using nested tag properties.
     -->
     <mvc:annotation-driven/>
+
+    <context:component-scan base-package="uk.ac.ebi.atlas.web.common">
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
 
     <!--
     view resolver specialized for page with JSTL tag libraries
@@ -37,6 +44,7 @@
             <property name="exposeContextBeansAsAttributes" value="true"/>
         </bean>
     -->
+
 
     <bean id="tilesViewResolver" class="uk.ac.ebi.atlas.utils.spring.servlet.view.TilesExposingBeansViewResolver">
         <property name="order" value="1"/>

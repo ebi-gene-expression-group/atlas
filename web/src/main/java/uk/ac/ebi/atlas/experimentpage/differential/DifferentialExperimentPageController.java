@@ -46,8 +46,6 @@ import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewM
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
-import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.GeneQueryPropertyEditor;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -83,7 +81,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(new DifferentialRequestPreferencesValidator());
-        binder.registerCustomEditor(GeneQuery.class, new GeneQueryPropertyEditor());
     }
 
     // called from sub classes

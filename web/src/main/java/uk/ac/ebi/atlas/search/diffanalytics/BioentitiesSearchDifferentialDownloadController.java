@@ -25,14 +25,11 @@ package uk.ac.ebi.atlas.search.diffanalytics;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.search.EFO.ConditionSearchEFOExpander;
 import uk.ac.ebi.atlas.utils.VisitorException;
 import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.GeneQueryPropertyEditor;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
@@ -55,11 +52,6 @@ public class BioentitiesSearchDifferentialDownloadController {
         this.diffAnalyticsSearchService = diffAnalyticsSearchService;
         this.tsvWriter = tsvWriter;
         this.efoExpander = efoExpander;
-    }
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(GeneQuery.class, new GeneQueryPropertyEditor());
     }
 
     @RequestMapping(value = "/query.tsv")

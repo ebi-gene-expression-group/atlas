@@ -25,9 +25,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.common.SolrException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
@@ -36,8 +34,6 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
-import uk.ac.ebi.atlas.web.GeneQuery;
-import uk.ac.ebi.atlas.web.GeneQueryPropertyEditor;
 
 import java.util.Set;
 import java.util.SortedSet;
@@ -46,11 +42,6 @@ public abstract class BaselineExperimentController {
 
     private BaselineRequestContextBuilder baselineRequestContextBuilder;
     private FilterFactorsConverter filterFactorsConverter;
-
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(GeneQuery.class, new GeneQueryPropertyEditor());
-    }
 
     protected BaselineExperimentController(BaselineRequestContextBuilder baselineRequestContextBuilder,
                                            FilterFactorsConverter filterFactorsConverter) {
