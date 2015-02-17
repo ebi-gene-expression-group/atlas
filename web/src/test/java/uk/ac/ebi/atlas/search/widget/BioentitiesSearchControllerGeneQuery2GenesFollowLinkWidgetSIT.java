@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.search.widget;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
@@ -43,7 +44,7 @@ public class BioentitiesSearchControllerGeneQuery2GenesFollowLinkWidgetSIT exten
         subject.get();
     }
 
-    @Test
+    @Ignore
     public void multipleGenesQueryInSingleSpeciesTissue_followingWidgetLinkShouldGoToExperimentPageWithResults() {
         subject.waitForHeatmapToBeVisible();
         assertThat(subject.getGeneNames(), contains("Twenty seven tissues"));
