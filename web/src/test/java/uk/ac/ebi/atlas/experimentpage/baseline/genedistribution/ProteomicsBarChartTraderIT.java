@@ -16,10 +16,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasEntry;
 
 /**
- * Created by barrera on 27/10/2014.
- *
- * Testing barchart data related to proteomics experiments
- */
+* Created by barrera on 27/10/2014.
+*
+* Testing barchart data related to proteomics experiments
+*/
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

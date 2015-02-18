@@ -99,6 +99,8 @@ public final class ExperimentDispatcher {
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
+        model.addAttribute("accessKey", accessKey);
+
         prepareModel(request, model, experiment);
 
         return "forward:" + buildForwardURL(request, experiment, accessKey);

@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -44,10 +45,14 @@ public class BaselineBarChartController {
 
     private FilterFactorsConverter filterFactorsConverter;
 
+    private BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader;
+
     @Inject
-    public BaselineBarChartController(BarChartTradersCache barChartTradersCache, FilterFactorsConverter filterFilterFactorsConverter) {
+    public BaselineBarChartController(BarChartTradersCache barChartTradersCache, FilterFactorsConverter filterFilterFactorsConverter,
+                                      BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader) {
         this.barChartTradersCache = barChartTradersCache;
         this.filterFactorsConverter = filterFilterFactorsConverter;
+        this.barChartExperimentAccessKeyTrader = barChartExperimentAccessKeyTrader;
     }
 
     @RequestMapping(value = "/json/barchart/{experimentAccession}", method = RequestMethod.GET, produces = "application/json")
@@ -55,7 +60,12 @@ public class BaselineBarChartController {
     @ResponseBody
     public String getMap(@PathVariable String experimentAccession,
                          @RequestParam(value = "queryFactorValues[]", required = false) Set<String> queryFactorValues,
-                         @RequestParam String queryFactorType, @RequestParam(required = false) String serializedFilterFactors) {
+                         @RequestParam String queryFactorType, @RequestParam(required = false) String serializedFilterFactors,
+                         @RequestParam(required = false) String accesskey) {
+
+        Map<String, String> experimentAccessKeyMap = Maps.newHashMap();
+        experimentAccessKeyMap.put(experimentAccession, accesskey);
+        barChartExperimentAccessKeyTrader.setExperimentAccessKeyMap(experimentAccessKeyMap);
 
         BarChartTrader barchartTrader = barChartTradersCache.getBarchartTrader(experimentAccession);
 

@@ -178,14 +178,15 @@ var geneDistribution = (function ($) {
         });
     }
 
-    function loadSliderAndPlot(cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors, buildLegendText) {
+    function loadSliderAndPlot(cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors, accesskey, buildLegendText) {
         "use strict";
 
         $.ajax({
             url: "json/barchart/" + experimentAccession,
             data: {queryFactorValues: selectedQueryFactorValues,
                 queryFactorType: queryFactorType,
-                serializedFilterFactors: serializeFilterFactors},
+                serializedFilterFactors: serializeFilterFactors,
+                accesskey: accesskey},
             datatype: 'json',
             success: function (data) {
 
@@ -285,11 +286,11 @@ var geneDistribution = (function ($) {
     }
 
     return {
-        loadSliderAndPlot: function (cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors) {
-            loadSliderAndPlot(cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors, buildLegendText);
+        loadSliderAndPlot: function (cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors, accessKey) {
+            loadSliderAndPlot(cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors, accessKey, buildLegendText);
         },
-        loadProteomicsSliderAndPlot: function (cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors) {
-            loadSliderAndPlot(cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors, buildProteomicsLegendText);
+        loadProteomicsSliderAndPlot: function (cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors, accessKey) {
+            loadSliderAndPlot(cutoff, experimentAccession, selectedQueryFactorValues, queryFactorType, serializeFilterFactors, accessKey, buildProteomicsLegendText);
         },
         initBarChartButton: initBarChartButton
     }

@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import au.com.bytecode.opencsv.CSVReader;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -48,20 +49,26 @@ public class BaselineExpressionsInputStreamFactory {
     private CsvReaderFactory csvReaderFactory;
     private ExperimentTrader experimentTrader;
 
+    private BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader;
+
     @Inject
     public BaselineExpressionsInputStreamFactory(ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
                                                  ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder,
                                                  CsvReaderFactory csvReaderFactory,
-                                                 ExperimentTrader experimentTrader) {
+                                                 ExperimentTrader experimentTrader,
+                                                 BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader) {
         this.expressionsRowDeserializerBaselineBuilder = expressionsRowDeserializerBaselineBuilder;
         this.expressionsRowDeserializerProteomicsBaselineBuilder = expressionsRowDeserializerProteomicsBaselineBuilder;
         this.csvReaderFactory = csvReaderFactory;
         this.experimentTrader = experimentTrader;
+        this.barChartExperimentAccessKeyTrader = barChartExperimentAccessKeyTrader;
     }
 
     public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(String experimentAccession) {
 
-        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+        String _accessKey = barChartExperimentAccessKeyTrader.getAccessKey(experimentAccession);
+
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, _accessKey);
 
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
