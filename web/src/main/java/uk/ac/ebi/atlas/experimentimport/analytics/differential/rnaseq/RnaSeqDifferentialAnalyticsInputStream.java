@@ -25,9 +25,10 @@ import static com.google.common.base.Preconditions.checkState;
  * ENSMUSG00000041538, g2_g1, 0.1, 0.3
  * ENSMUSG00000041538, g2_g4, 0.7, 0.9
  *
- * If any of p-value or log2foldchange contain NA then skip to next set
+ * If any of p-value or log2foldchange contain NA, then skip
+ * If log2foldchange is 0, then skip
  * "inf" in any value is interpreted as Double.POSITIVE_INFINITY
- * "-inf" in any value is interpreted as Double.NEAGTIVE_INFINITY
+ * "-inf" in any value is interpreted as Double.NEGATIVE_INFINITY
  */
 public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream<RnaSeqDifferentialAnalytics> {
 
@@ -108,8 +109,10 @@ public class RnaSeqDifferentialAnalyticsInputStream implements ObjectInputStream
                 if (!("NA".equalsIgnoreCase(pValueString) || "NA".equalsIgnoreCase(foldChangeString))) {
                     double pValue = DifferentialTsvFileParsingUtil.parseDouble(pValueString);
                     double foldChange = DifferentialTsvFileParsingUtil.parseDouble(foldChangeString);
-                    RnaSeqDifferentialAnalytics dto = new RnaSeqDifferentialAnalytics(geneId, contrastId, pValue, foldChange);
-                    builder.add(dto);
+                    if (foldChange != 0) {
+                        RnaSeqDifferentialAnalytics dto = new RnaSeqDifferentialAnalytics(geneId, contrastId, pValue, foldChange);
+                        builder.add(dto);
+                    }
                 }
 
             }

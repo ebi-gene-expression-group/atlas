@@ -55,6 +55,9 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
     private static final String TSV_LINE_1_NA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, DESIGN_ELEMENT_1,
             ""+ P_VALUE_1, NA, ""+ FOLD_CHANGE_1});
 
+    private static final String TSV_LINE_1_ZERO = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, DESIGN_ELEMENT_1,
+            ""+ P_VALUE_1, ""+ TSTAT_1, ""+ 0});
+
     private static final String TSV_LINE_1_INF = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, DESIGN_ELEMENT_1,
             ""+ P_VALUE_1, INF, ""+ FOLD_CHANGE_1});
 
@@ -66,7 +69,9 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
     private static String tsvContents1Contrast = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_LINE_1, TSV_LINE_2});
     private static String tsvContents2Contrasts = Joiner.on("\n").join(new String[]{TSV_HEADER_2_CONTRASTS, TSV_LINE_2_CONTRASTS});
     private static String tsvContents1ContrastNA = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_LINE_1_NA, TSV_LINE_2});
+    private static String tsvContents1ContrastZero = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_LINE_1_ZERO, TSV_LINE_2});
     private static String tsvContents1ContrastINF = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_LINE_1_INF, TSV_LINE_2_NEGATIVE_INF});
+
     private static final String TSV_CONTENTS_MANY_NAS = Joiner.on("\n").join(new String[]{TSV_HEADER_1, TSV_MANY_NA_LINES, TSV_LINE_2});
 
 
@@ -100,7 +105,19 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readContrastContainingNA() throws IOException {
-        Reader tsvSource = new StringReader(TSV_CONTENTS_MANY_NAS);
+        Reader tsvSource = new StringReader(tsvContents1ContrastNA);
+        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
+        MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
+
+        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
+
+        assertThat(subject.readNext(), is(dto2));
+        assertThat(subject.readNext(), is(nullValue()));
+    }
+
+    @Test
+    public void readContrastWithZeroFoldChange() throws IOException {
+        Reader tsvSource = new StringReader(tsvContents1ContrastZero);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
         MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
 
@@ -112,7 +129,7 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
 
     @Test
     public void readContrastContainingManyNAsWithoutStackOverflow() throws IOException {
-        Reader tsvSource = new StringReader(tsvContents1ContrastNA);
+        Reader tsvSource = new StringReader(TSV_CONTENTS_MANY_NAS);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
         MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
 
