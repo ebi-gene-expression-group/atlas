@@ -26,7 +26,7 @@ public class AnalyticsSearchDaoIT {
     public void all() {
         ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes("*");
 
-        assertThat(experimentTypes, containsInAnyOrder("rnaseq_mrna_baseline", "rnaseq_mrna_differential"));
+        assertThat(experimentTypes, containsInAnyOrder("rnaseq_mrna_baseline", "rnaseq_mrna_differential", "proteomics_baseline"));
     }
 
     @Test
