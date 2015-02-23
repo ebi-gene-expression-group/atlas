@@ -29,7 +29,7 @@
         </filterFactor>
         <filterFactor>
             <type>RNA</type>
-            <value>total RNA</value>
+            <value>long polyA RNA</value>
         </filterFactor>
     </defaultFilterFactors>
     <defaultQueryFactorType>CELL_LINE</defaultQueryFactorType>
