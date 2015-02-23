@@ -21,13 +21,13 @@ public class BaselineAnalyticsSearchService {
     }
 
     public BaselineExperimentSearchResult findExpressions(String geneQuery, String species, String defaultQueryFactorType) {
-        String jsonResponse = baselineAnalyticsSearchDao.queryByIdentifierSearch(geneQuery, defaultQueryFactorType);
+        String jsonResponse = baselineAnalyticsSearchDao.fetchExpressionLevelFaceted(geneQuery, defaultQueryFactorType);
         ImmutableList<RnaSeqBslnExpression> expressions = baselineAnalyticsFacetsReader.extractAverageExpressionLevel(jsonResponse, Species.convertToEnsemblSpecies(species), defaultQueryFactorType);
         return baselineExperimentSearchResultProducer.buildProfilesForExperiments(expressions, defaultQueryFactorType);
     }
 
     public String findFacetsForTreeSearch(String geneQuery) {
-        String jsonResponse = baselineAnalyticsSearchDao.queryByIdentifierSearchReturnFacetsOnly(geneQuery);
+        String jsonResponse = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery);
 
         return baselineAnalyticsFacetsReader.generateFacetsTreeJson(jsonResponse);
     }

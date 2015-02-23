@@ -23,9 +23,12 @@
 package uk.ac.ebi.atlas.model;
 
 
+import com.google.common.collect.ImmutableSet;
+
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public enum ExperimentType {
 
@@ -97,4 +100,11 @@ public enum ExperimentType {
         return TYPE_BY_DESCRIPTION.get(experimentTypeDescription.toLowerCase());
     }
 
+    public static boolean containsBaseline(Set<String> experimentTypes) {
+        return experimentTypes.contains(RNASEQ_MRNA_BASELINE.getDescription()) || experimentTypes.contains(PROTEOMICS_BASELINE.getDescription());
+    }
+
+    public static boolean containsDifferential(ImmutableSet<String> experimentTypes) {
+        return experimentTypes.contains(RNASEQ_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL.getDescription()) || experimentTypes.contains(MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL.getDescription());
+    }
 }

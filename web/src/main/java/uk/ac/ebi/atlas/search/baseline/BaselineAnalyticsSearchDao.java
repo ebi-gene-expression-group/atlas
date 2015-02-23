@@ -1,5 +1,7 @@
 package uk.ac.ebi.atlas.search.baseline;
 
+import com.google.common.base.Stopwatch;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -11,9 +13,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
+import java.util.concurrent.TimeUnit;
 
 @Named
 public class BaselineAnalyticsSearchDao {
+
+    private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsSearchDao.class);
 
     public static final double DEFAULT_CUT_OFF = 0.5;
     private final RestTemplate restTemplate;
@@ -30,21 +35,30 @@ public class BaselineAnalyticsSearchDao {
         this.analyticsSearchJsonFacet = "&json.facet=" + encodeQueryParam(analyticsSearchJsonFacet);
     }
 
-    public String queryByIdentifierSearch(String geneQuery) {
+    public String fetchExpressionLevelFaceted(String geneQuery) {
         return fetchFacets("identifierSearch:" + geneQuery, DEFAULT_CUT_OFF);
     }
 
-    public String queryByIdentifierSearchReturnFacetsOnly(String geneQuery) {
+    public String fetchFacetsThatHaveExpression(String geneQuery) {
         //if needed, could improve perf by getting counts only, and not sum(expressionLevel) or unique(bioentity_identifier)
-        return queryByIdentifierSearch(geneQuery);
+        return fetchExpressionLevelFaceted(geneQuery);
     }
 
-    public String queryByIdentifierSearch(String geneQuery, String defaultQueryFactorType) {
+    public String fetchExpressionLevelFaceted(String geneQuery, String defaultQueryFactorType) {
         return fetchFacets(String.format("identifierSearch:%s AND defaultQueryFactorType:%s", geneQuery, defaultQueryFactorType), DEFAULT_CUT_OFF);
     }
 
     String fetchFacets(String q, double cutOff) {
-        return fetchResponseAsString(buildQueryUrl(q, cutOff));
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
+        String result = fetchResponseAsString(buildQueryUrl(q, cutOff));
+
+        stopwatch.stop();
+
+        LOGGER.debug(String.format("fetchFacets q=%s cutOff=%s took %.2f seconds", q, cutOff, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+        return result;
+
     }
 
     String buildQueryUrl(String q, double cutOff) {

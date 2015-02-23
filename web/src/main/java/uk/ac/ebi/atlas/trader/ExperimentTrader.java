@@ -64,7 +64,8 @@ public class ExperimentTrader {
     }
 
     public Experiment getPublicExperiment(String experimentAccession) {
-
+        //TODO: this is a bottleneck because it goes back to the database each time - to improve perf,
+        //we need to lookup the experiment type from a cache and then get the experiment from the appropriate cache
         ExperimentDTO experimentDTO = experimentDAO.findPublicExperiment(experimentAccession);
 
         return getExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());

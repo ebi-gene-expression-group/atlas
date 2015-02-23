@@ -20,6 +20,8 @@ public class AnalyticsDocument {
     @Field
     String experimentAccession;
 
+    //TODO: add baseline boolean
+
     ExperimentType experimentType;
 
     @Field("experimentType")

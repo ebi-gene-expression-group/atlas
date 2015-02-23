@@ -44,19 +44,19 @@
 <c:if test="${not empty searchDescription}" >
     <section class="grid_23 extra-padding">
         <section class="grid_12 alpha extra-padding">
-            <div style="font-weight: bold">
             <c:if test="${hasBaselineResults}">
-                Baseline
+                <a href="${pageContext.request.contextPath}/search?geneQuery=${pageContext.request.getParameter("geneQuery")}">Baseline</a>
             </c:if>
             <c:if test="${!hasBaselineResults}">
                 Baseline (no results)
             </c:if>
-            </div>
         </section>
 
         <section class="grid_11 extra-padding">
             <c:if test="${hasDifferentialResults}">
-                <a href="${pageContext.request.contextPath}/search/differential?geneQuery=${pageContext.request.getParameter("geneQuery")}">Differential</a>
+                <div style="font-weight: bold">
+                    Differential
+                </div>
             </c:if>
             <c:if test="${!hasDifferentialResults}">
                 Differential (no results)
@@ -66,7 +66,7 @@
 
     <section class="grid_17 alpha extra-padding">
         <h5 class="strapline">
-            Baseline results for <span class="searchterm">${searchDescription}</span>
+            Differential results for <span class="searchterm">${searchDescription}</span>
         </h5>
 
     </section>
@@ -76,8 +76,8 @@
 
 <section class="grid_23 extra-padding">
 
-    <c:if test="${!hasBaselineResults}">
-        No baseline results
+    <c:if test="${!hasDifferentialResults}">
+        No differential results
     </c:if>
 
     <div id="facets"></div>

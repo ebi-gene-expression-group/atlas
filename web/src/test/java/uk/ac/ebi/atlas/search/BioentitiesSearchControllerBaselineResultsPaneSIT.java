@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class    BioentitiesSearchControllerBaselineResultsPaneSIT extends SinglePageSeleniumFixture {
+public class BioentitiesSearchControllerBaselineResultsPaneSIT extends SinglePageSeleniumFixture {
 
     private BioEntitiesPage subject;
 

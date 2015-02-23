@@ -10,10 +10,10 @@
                 <label>Gene query</label>
                 <span data-help-loc="#geneSearch"></span>
             </td>
-            <td>
-                <label>Sample properties</label>
-                <span data-help-loc="#experimentalConditions"></span>
-            </td>
+            <%--<td>--%>
+                <%--<label>Sample properties</label>--%>
+                <%--<span data-help-loc="#experimentalConditions"></span>--%>
+            <%--</td>--%>
             <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
                 <div class="actions">
                     <div>
@@ -41,20 +41,20 @@
                 </div>
             </td>
 
-            <td>
-                <div id="conditionSection" style="display:inline-block">
-                    <textarea id="condition" name="condition" maxlength="900" rows="2" cols="36"
-                              placeholder="(all conditions)" tabindex="3"></textarea>
+            <%--<td>--%>
+                <%--<div id="conditionSection" style="display:inline-block">--%>
+                    <%--<textarea id="condition" name="condition" maxlength="900" rows="2" cols="36"--%>
+                              <%--placeholder="(all conditions)" tabindex="3"></textarea>--%>
 
-                    <div>
-                        <span class="examples">E.g.
-                            <a href="${thisPage}?condition=leaf">leaf</a>,
-                            <a href="${thisPage}?condition=valproic+acid">valproic acid</a>,
-                            <a href="${thisPage}?condition=cancer">cancer</a>
-                        </span>
-                    </div>
-                </div>
-            </td>
+                    <%--<div>--%>
+                        <%--<span class="examples">E.g.--%>
+                            <%--<a href="${thisPage}?condition=leaf">leaf</a>,--%>
+                            <%--<a href="${thisPage}?condition=valproic+acid">valproic acid</a>,--%>
+                            <%--<a href="${thisPage}?condition=cancer">cancer</a>--%>
+                        <%--</span>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</td>--%>
         </tr>
     </table>
 </form>
