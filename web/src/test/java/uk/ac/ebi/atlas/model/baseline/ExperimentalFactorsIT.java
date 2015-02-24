@@ -127,7 +127,7 @@ public class ExperimentalFactorsIT {
 
     @Test
     public void getNonDefaultFactors_g59() {
-        Factor filterFactor1 = new Factor("RNA", "total RNA");
+        Factor filterFactor1 = new Factor("RNA", "long non-polyA RNA");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
         assertThat(subject.getNonDefaultFactors("g59"), contains(filterFactor1, filterFactor2));
@@ -151,7 +151,7 @@ public class ExperimentalFactorsIT {
 
     @Test
     public void groupAssayGroupIdsByNonDefaultFilterFactor() {
-        Multimap<FactorGroup,String> byFactorGroup = subject.getAssayGroupIdsGroupedByNonDefaultFactors(ImmutableList.of("g59", "g41", "g20"));
+        Multimap<FactorGroup,String> byFactorGroup = subject.getAssayGroupIdsGroupedByNonDefaultFactors(ImmutableList.of("g80", "g41", "g46"));
 
         Factor filterFactor1 = new Factor("RNA", "total RNA");
         Factor filterFactor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
@@ -167,8 +167,8 @@ public class ExperimentalFactorsIT {
 
         assertThat(byFactorGroup.entries(), hasSize(3));
         assertThat(byFactorGroup.asMap(), allOf(
-                hasEntry(equalTo((FactorGroup) factorSet1), containsInAnyOrder("g59")),
-                hasEntry(equalTo((FactorGroup) factorSet2), containsInAnyOrder("g41", "g20"))
+                hasEntry(equalTo((FactorGroup) factorSet1), containsInAnyOrder("g80")),
+                hasEntry(equalTo((FactorGroup) factorSet2), containsInAnyOrder("g46", "g41"))
         ));
     }
 

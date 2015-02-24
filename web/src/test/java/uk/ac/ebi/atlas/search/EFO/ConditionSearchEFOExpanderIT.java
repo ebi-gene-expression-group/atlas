@@ -36,6 +36,17 @@ public class ConditionSearchEFOExpanderIT {
     }
 
     @Test
+    public void anatomyBasicComponent() throws Exception {
+        ConditionQuery expandedSearch = subject.addEfoAccessions(ConditionQuery.create("\"anatomy basic component\""));
+
+        System.out.println("\"" + Joiner.on("\", \"").join(expandedSearch) + "\"");
+
+        assertThat(expandedSearch.size(), is(2));
+        assertThat(expandedSearch, hasItem("anatomy basic component"));
+        assertThat(expandedSearch, hasItem("EFO_0000786"));
+    }
+
+    @Test
     public void inflammatoryBowelDisease() throws Exception {
         ConditionQuery expandedSearch = subject.addEfoAccessions(ConditionQuery.create("\"Inflammatory Bowel Disease\""));
 

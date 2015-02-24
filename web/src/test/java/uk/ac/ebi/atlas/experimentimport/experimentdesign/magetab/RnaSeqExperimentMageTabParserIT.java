@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
@@ -77,7 +78,8 @@ public class RnaSeqExperimentMageTabParserIT {
     @Test
     public void testExtractCharacteristics26284() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_GEOD_26284).getExperimentDesign();
-        assertThat(experimentDesign.getSampleHeaders(), containsInAnyOrder("sex", "biosource provider", "cell line", "cellular component", "organism part", "karyotype", "disease state", "cell type", "Organism"));
+        System.out.println("\"" + Joiner.on("\", \"").join(experimentDesign.getSampleHeaders()) + "\"");
+        assertThat(experimentDesign.getSampleHeaders(), containsInAnyOrder("biosource provider", "cell line", "cell type", "cellular component", "disease", "karyotype", "organism", "organism part", "sex"));
     }
 
     @Test
@@ -102,8 +104,8 @@ public class RnaSeqExperimentMageTabParserIT {
         assertThat(sampleCharacteristic.valueOntologyTerms().isEmpty(), is(false));
 
         OntologyTerm ontologyTerm = sampleCharacteristic.valueOntologyTerms().iterator().next();
-        assertThat(ontologyTerm.id(), is("EFO_0000616"));
-        assertThat(ontologyTerm.source(), is("EFO"));
+        assertThat(ontologyTerm.id(), is("EFO_0000311"));
+        assertThat(ontologyTerm.source(), is("http://www.ebi.ac.uk/efo/"));
     }
 
     @Test
@@ -175,8 +177,8 @@ public class RnaSeqExperimentMageTabParserIT {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_GEOD_26284).getExperimentDesign();
 
         assertThat(experimentDesign.asTableData().size(), is(171));
-        assertThat(experimentDesign.asTableData().get(0), arrayContaining("SRR089332", "Homo sapiens", "Coriell Cell Repositories http://ccr.coriell.org/Sections/Search/Search.aspx?PgId=165&q=GM12878", "GM12878", "B cell", "whole cell", null, "relatively normal", null, "female", "total RNA", "GM12878", "whole cell"));
-        assertThat(experimentDesign.asTableData().get(170), arrayContaining("SRR534335","Homo sapiens","PromoCell","hMSC-AT cell line","human mesenchymal stem cell from adipose tissue (hMSC-AT)","whole cell",null,null,"adipose",null,"total RNA","hMSC-AT cell line","whole cell"));
+        assertThat(experimentDesign.asTableData().get(0), arrayContaining("SRR089332", "Coriell Cell Repositories http://ccr.coriell.org/Sections/Search/Search.aspx?PgId=165&q=GM12878", "GM12878", "B cell", "whole cell", null, "relatively normal", "Homo sapiens", null, "female", "total RNA", "GM12878", "whole cell"));
+        assertThat(experimentDesign.asTableData().get(170), arrayContaining("SRR534335", "PromoCell", "hMSC-AT cell line", "human mesenchymal stem cell from adipose tissue (hMSC-AT)", "whole cell", null, null, "Homo sapiens", "adipose tissue",null, "total RNA","hMSC-AT cell line","whole cell"));
     }
 
 }

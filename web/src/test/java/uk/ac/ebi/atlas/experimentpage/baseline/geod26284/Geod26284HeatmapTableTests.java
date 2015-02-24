@@ -24,7 +24,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline.geod26284;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SingleDriverSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
 import java.util.List;
@@ -33,9 +33,9 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public abstract class Geod26284HeatmapTableTests extends SinglePageSeleniumFixture {
+public abstract class Geod26284HeatmapTableTests extends SingleDriverSeleniumFixture {
 
-    protected HeatmapTablePage subject;
+    protected static HeatmapTablePage subject;
 
     protected abstract String getQueryFactorLabel();
 
@@ -75,15 +75,11 @@ public abstract class Geod26284HeatmapTableTests extends SinglePageSeleniumFixtu
 
     @Test
     public void verifyFirstGeneProfile() {
-        subject.clickDisplayLevelsButton();
-
         assertThat(subject.getFirstGeneProfile(), contains(getFirstGeneProfile()));
     }
 
     @Test
     public void verifyNinthGeneProfile() {
-        subject.clickDisplayLevelsButton();
-
         assertThat(subject.getGeneProfile(9), contains(getNinthGeneProfile()));
     }
 

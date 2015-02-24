@@ -80,8 +80,10 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         List<String> experimentAccessions = getExperimentAccessions(results);
         ImmutableList<String> descriptions = toStrings(results);
 
-        assertThat(experimentAccessions, contains("E-PROT-1", "E-MTAB-513", "E-MTAB-2836", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352"));
-        assertThat(descriptions, contains("Homo sapiens - Human Proteome Map - adult", "Homo sapiens - Illumina Body Map",  "Homo sapiens - Thirty two tissues", "Homo sapiens - Twenty seven tissues", "Mus musculus - Six tissues", "Pan paniscus - Vertebrate tissues", "Pan troglodytes - Vertebrate tissues", "Pongo pygmaeus - Vertebrate tissues"));
+        System.out.println("\"" + Joiner.on("\", \"").join(descriptions) + "\"");
+
+        assertThat(experimentAccessions, contains("E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-PROT-1", "E-MTAB-513", "E-MTAB-2836", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352"));
+        assertThat(descriptions, contains("Homo sapiens - ENCODE cell lines - long non-polyA RNA, cytosol", "Homo sapiens - ENCODE cell lines - long non-polyA RNA, nucleus", "Homo sapiens - ENCODE cell lines - long non-polyA RNA, whole cell", "Homo sapiens - ENCODE cell lines - long polyA RNA, cytosol", "Homo sapiens - ENCODE cell lines - long polyA RNA, nucleus", "Homo sapiens - ENCODE cell lines - long polyA RNA, whole cell", "Homo sapiens - ENCODE cell lines - total RNA, chromatin", "Homo sapiens - ENCODE cell lines - total RNA, nucleolus", "Homo sapiens - ENCODE cell lines - total RNA, nucleoplasm", "Homo sapiens - ENCODE cell lines - total RNA, whole cell", "Homo sapiens - Human Proteome Map - adult", "Homo sapiens - Illumina Body Map", "Homo sapiens - Thirty two tissues", "Homo sapiens - Twenty seven tissues", "Mus musculus - Six tissues", "Pan paniscus - Vertebrate tissues", "Pan troglodytes - Vertebrate tissues", "Pongo pygmaeus - Vertebrate tissues"));
     }
 
     @Test
@@ -180,7 +182,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
     @Test
     public void resultsInMoreThanOneSlice()  {
-        String geneQuery = "AHI1";
+        String geneQuery = "MPO";
         String condition = "";
         String species = "";
         boolean isExactMatch = true;
@@ -192,14 +194,14 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
         System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
 
-        assertThat(experimentAccessions, contains("E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-MTAB-513", "E-MTAB-1733", "E-MTAB-599"));
+        assertThat(experimentAccessions, contains("E-GEOD-26284", "E-GEOD-26284", "E-PROT-1", "E-PROT-1", "E-MTAB-2836", "E-MTAB-1733", "E-MTAB-599"));
 
-        assertThat(first.getFilterFactors(), contains(new Factor("RNA", "long non-polyA RNA"), new Factor("CELLULAR_COMPONENT", "cytosol")));
+        assertThat(first.getFilterFactors(), contains(new Factor("RNA", "long non-polyA RNA"), new Factor("CELLULAR_COMPONENT", "whole cell")));
     }
 
     @Test
     public void resultsInMoreThanOneSliceWithSelectedSpecie()  {
-        String geneQuery = "AHI1";
+        String geneQuery = "MPO";
         String condition = "";
         String species = "homo sapiens";
         boolean isExactMatch = true;
@@ -207,12 +209,10 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        BaselineExperimentAssayGroup first = results.iterator().next();
 
-        assertThat(experimentAccessions, contains("E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284",
-                "E-MTAB-513", "E-MTAB-1733"));
+        System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
 
-        assertThat(first.getFilterFactors(), contains(new Factor("RNA", "long non-polyA RNA"), new Factor("CELLULAR_COMPONENT", "cytosol")));
+        assertThat(experimentAccessions, contains("E-GEOD-26284", "E-GEOD-26284", "E-PROT-1", "E-PROT-1", "E-MTAB-2836", "E-MTAB-1733"));
     }
 
     @Test
@@ -247,6 +247,23 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
         assertThat(baselineExperimentAssayGroups, hasSize(1));
         assertThat(searchResult.getFilterFactors().size(), is(0));
+    }
+
+
+    @Test
+    public void conditionAnatomyBasicComponent()  {
+        String geneQuery = "";
+        String condition = "\"anatomy basic component\"";
+        String species = "";
+        boolean isExactMatch = true;
+
+        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
+        List<String> experimentAccessions = getExperimentAccessions(results);
+
+        System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
+
+        assertThat(experimentAccessions, contains("E-MTAB-1733", "E-MTAB-599"));
+
     }
 
     @Test

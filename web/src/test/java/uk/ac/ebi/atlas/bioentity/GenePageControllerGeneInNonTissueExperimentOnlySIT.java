@@ -16,7 +16,7 @@ public class GenePageControllerGeneInNonTissueExperimentOnlySIT extends Selenium
 
     @Override
     protected void getStartingPage() {
-        subject = new BioEntitiesPage(driver, "genes/ENSG00000236118");
+        subject = new BioEntitiesPage(driver, "genes/ENSG00000020219");
         subject.get();
     }
 
@@ -29,9 +29,9 @@ public class GenePageControllerGeneInNonTissueExperimentOnlySIT extends Selenium
         assertThat(baselineCounts, hasSize(3)); //including geneset description
 
         assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-GEOD-26284"));
-        assertThat(baselineCounts.get(2).getExperimentName(), is("ENCODE cell lines - long polyA RNA, whole cell"));
+        assertThat(baselineCounts.get(2).getExperimentName(), is("ENCODE cell lines - long non-polyA RNA, whole cell"));
         assertThat(baselineCounts.get(2).getSpecies(), is("Homo sapiens"));
-        assertThat(baselineCounts.get(2).getHref(), endsWith("/experiments/E-GEOD-26284?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=&geneQuery=ENSG00000236118&exactMatch=true&serializedFilterFactors=RNA:long%20polyA%20RNA,CELLULAR_COMPONENT:whole%20cell"));
+        assertThat(baselineCounts.get(2).getHref(), endsWith("/experiments/E-GEOD-26284?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=&geneQuery=ENSG00000020219&exactMatch=true&serializedFilterFactors=RNA:long%20non-polyA%20RNA,CELLULAR_COMPONENT:whole%20cell"));
     }
 
 }

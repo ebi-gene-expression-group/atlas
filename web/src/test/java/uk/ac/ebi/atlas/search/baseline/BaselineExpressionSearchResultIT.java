@@ -29,6 +29,7 @@ public class BaselineExpressionSearchResultIT {
     public static final String E_MTAB_513 = "E-MTAB-513";
     private static final String E_GEOD_26284 = "E-GEOD-26284";
     private static final String ORGANISM_PART = "ORGANISM_PART";
+    private static final String CELL_LINE = "CELL_LINE";
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;
 
@@ -68,9 +69,9 @@ public class BaselineExpressionSearchResultIT {
     public void multiFactor_TwoSpecificAssayGroups_InSlice() {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_GEOD_26284);
 
-        BaselineExperimentAssayGroup subject = new BaselineExperimentAssayGroup(E_MTAB_513, E_MTAB_513, "Homo sapiens", ORGANISM_PART, true);
+        BaselineExperimentAssayGroup subject = new BaselineExperimentAssayGroup(E_GEOD_26284, E_GEOD_26284, "Homo sapiens", CELL_LINE, true);
 
-        Set<String> assayGroupIdsWithExpression = ImmutableSet.<String>builder().add("g11", "g59").build();
+        Set<String> assayGroupIdsWithExpression = ImmutableSet.<String>builder().add("g80", "g58").build();
         Factor factor1 = new Factor("RNA", "total RNA");
         Factor factor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 
@@ -79,8 +80,8 @@ public class BaselineExpressionSearchResultIT {
         subject.setAssayGroupsWithCondition(assayGroupIdsWithExpression, experiment);
         subject.setFilterFactors(filterFactors);
 
-        Factor assayGroupFactor1 = new Factor("CELL_LINE", "HFDPC cell line");
-        Factor assayGroupFactor2 = new Factor("CELL_LINE", "IMR-90");
+        Factor assayGroupFactor1 = new Factor("CELL_LINE", "CD34-positive mobilized cell cell line");
+        Factor assayGroupFactor2 = new Factor("CELL_LINE", "HFDPC cell line");
         assertThat(subject.getDefaultFactorsForSpecificAssayGroupsWithCondition(), containsInAnyOrder(assayGroupFactor1, assayGroupFactor2));
     }
 
@@ -88,9 +89,9 @@ public class BaselineExpressionSearchResultIT {
     public void multiFactor_AllAssayGroups_InSlice() {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(E_GEOD_26284);
 
-        BaselineExperimentAssayGroup subject = new BaselineExperimentAssayGroup(E_MTAB_513, E_MTAB_513, "Homo sapiens", ORGANISM_PART, true);
+        BaselineExperimentAssayGroup subject = new BaselineExperimentAssayGroup(E_GEOD_26284, E_GEOD_26284, "Homo sapiens", CELL_LINE, true);
 
-        Set<String> assayGroupIdsWithExpression = ImmutableSet.<String>builder().add("g11", "g59", "g54", "g71", "g9").build();
+        Set<String> assayGroupIdsWithExpression = ImmutableSet.<String>builder().add("g80", "g58", "g54", "g12", "g9").build();
         Factor factor1 = new Factor("RNA", "total RNA");
         Factor factor2 = new Factor("CELLULAR_COMPONENT", "whole cell");
 

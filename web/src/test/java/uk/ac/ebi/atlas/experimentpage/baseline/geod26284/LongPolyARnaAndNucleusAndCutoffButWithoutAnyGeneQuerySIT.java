@@ -22,12 +22,15 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline.geod26284;
 
+import org.junit.BeforeClass;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SingleDriverSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.Geod26284HeatmapTablePage;
 
 public class LongPolyARnaAndNucleusAndCutoffButWithoutAnyGeneQuerySIT extends Geod26284HeatmapTableTests {
 
-    public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=RNA%3Along+polyA+RNA%2CCELLULAR_COMPONENT%3Anucleus&queryFactorType=CELL_LINE");
+    @BeforeClass
+    public static void getStartingPage() {
+        subject = new Geod26284HeatmapTablePage(SingleDriverSeleniumFixture.create(), "geneQuery=&serializedFilterFactors=RNA%3Along+polyA+RNA%2CCELLULAR_COMPONENT%3Anucleus&queryFactorType=CELL_LINE&displayLevels=true");
         subject.get();
     }
 
@@ -38,8 +41,8 @@ public class LongPolyARnaAndNucleusAndCutoffButWithoutAnyGeneQuerySIT extends Ge
 
     @Override
     protected String[] getTop9Genes() {
-        return new String[]{"RP11-439L8.3", "RP11-192H23.4", "RP11-736N17.8", "RP11-727M10.1", "RGS7BP",
-                "RP5-961K14.1", "SLC10A1", "RP11-14C10.1", "RP11-273B20.1"};
+        return new String[]{"FGR", "ATP1A2", "DCN", "CALCR", "NR1H4",
+                "C8B", "TFAP2B", "CYP3A43", "TTC22"};
     }
 
     @Override
@@ -49,16 +52,16 @@ public class LongPolyARnaAndNucleusAndCutoffButWithoutAnyGeneQuerySIT extends Ge
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"", "19", "", "", "", "", "", "", "", "", ""};
+        return new String[]{"", "281", "", "", "", "", "", "", "", "", ""};
     }
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"", "", "", "", "25", "", "", "", "0.9", "", ""};
+        return new String[]{"", "", "", "", "", "", "", "", "", "3", ""};
     }
 
     @Override
     protected String getGeneCount() {
-        return "48";
+        return "467";
     }
 }

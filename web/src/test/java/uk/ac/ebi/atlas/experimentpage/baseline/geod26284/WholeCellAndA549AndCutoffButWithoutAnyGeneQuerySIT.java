@@ -22,12 +22,16 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline.geod26284;
 
+import org.junit.BeforeClass;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SingleDriverSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.Geod26284HeatmapTablePage;
 
 public class WholeCellAndA549AndCutoffButWithoutAnyGeneQuerySIT extends Geod26284HeatmapTableTests {
 
-    public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=&serializedFilterFactors=CELLULAR_COMPONENT%3Awhole+cell%2CCELL_LINE%3AA549&queryFactorType=RNA");
+    @BeforeClass
+    public static void getStartingPage() {
+        subject = new Geod26284HeatmapTablePage(SingleDriverSeleniumFixture.create(),
+                "geneQuery=&serializedFilterFactors=CELLULAR_COMPONENT%3Awhole+cell%2CCELL_LINE%3AA549&queryFactorType=RNA&displayLevels=true");
         subject.get();
     }
 
@@ -38,7 +42,7 @@ public class WholeCellAndA549AndCutoffButWithoutAnyGeneQuerySIT extends Geod2628
 
     @Override
     protected String[] getTop9Genes() {
-        return new String[]{"AC011293.1", "RN7SKP271", "RP11-20I23.6", "RP5-961K14.1", "TRPM2", "RPS6P20", "RP11-90H3.1", "TMSB10", "CALU"};
+        return new String[]{"ZBTB32", "NME2", "ARHGAP31", "CLDN11", "GPR124", "ABCC8", "PHF7", "PGLYRP1", "CCDC88C"};
     }
 
     @Override
@@ -48,17 +52,17 @@ public class WholeCellAndA549AndCutoffButWithoutAnyGeneQuerySIT extends Geod2628
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"294", ""};
+        return new String[]{"2", ""};
     }
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"14", "105"};
+        return new String[]{"0.9", ""};
     }
 
     @Override
     protected String getGeneCount() {
-        return "31";
+        return "369";
     }
 
 }

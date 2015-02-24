@@ -401,7 +401,7 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(factors, contains(allFactors.toArray()));
     }
 
-    private static final String GENE_IN_CELL_LINES_EXPERIMENT = "ENSG00000258081";
+    private static final String GENE_IN_CELL_LINES_EXPERIMENT = "ENSG00000007062";
 
     @Test
     public void onlyTissueExperimentsReturned() {
@@ -415,13 +415,13 @@ public class BaselineExperimentProfileSearchServiceIT {
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
         Matcher cellLinesExperimentProfile = Matchers.<BaselineExperimentProfile>hasProperty("id", is("E-GEOD-26284"));
-        Matcher illuminaBodyMapExperimentProfile = Matchers.<BaselineExperimentProfile>hasProperty("id", is("E-MTAB-513"));
+        Matcher thirtyTwoTissuesExperimentProfile = Matchers.<BaselineExperimentProfile>hasProperty("id", is("E-MTAB-2836"));
 
-        assertThat(baselineProfilesList, hasItem(illuminaBodyMapExperimentProfile));
+        assertThat(baselineProfilesList, hasItem(thirtyTwoTissuesExperimentProfile));
         assertThat(baselineProfilesList, not(hasItem(cellLinesExperimentProfile)));
 
         SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
-        ImmutableSortedSet<Factor> allFactors = getOrganismPartFactors("E-MTAB-513");
+        ImmutableSortedSet<Factor> allFactors = getOrganismPartFactors("E-MTAB-2836");
         assertThat(factors, contains(allFactors.toArray()));
 
     }

@@ -15,6 +15,7 @@ public abstract class ConditionQuery implements Iterable<String> {
 
     public abstract ImmutableList<String> terms();
 
+    //TODO: change to use same interface as GeneQuery ie, String...
     public static ConditionQuery create(String conditionQueryString) {
         List<String> terms = BioentityPropertyValueTokenizer.splitBySpacePreservingQuotes(conditionQueryString);
         return new AutoValue_ConditionQuery(removeSurroundingQuotes(terms));

@@ -49,15 +49,15 @@ public class BioentitiesSearchControllerGeneQuery2GenesFollowLinkBaselineCountsS
     public void multipleGenesQueryInMultipleSpecies_followingBaselineCountsLinkShouldGoToExperimentPageWithResults() {
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
 
-        assertThat(baselineCounts, hasSize(12));
+        assertThat(baselineCounts, hasSize(4));
 
-        //click link to go to experiment page
-        subject.getBaselineCountElements().get(0).click();
+        //click link to go to experiment page for 27 tissues
+        subject.getBaselineCountElements().get(1).click();
 
         HeatmapTablePage experimentPage = new HeatmapTablePage(driver, null);
 
         List<String> geneNames = experimentPage.getGeneNames();
-        Assert.assertThat(geneNames, contains("GFI1", "TERF2"));
+        Assert.assertThat(geneNames, contains("TERF2", "GFI1"));
     }
 
 }

@@ -22,12 +22,15 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline.geod26284;
 
+import org.junit.BeforeClass;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SingleDriverSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.Geod26284HeatmapTablePage;
 
 public class DefaultFilterFactorValuesAndCutoffButWithoutAnyGeneQuerySIT extends Geod26284HeatmapTableTests {
 
-    public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=");
+    @BeforeClass
+    public static void getStartingPage() {
+        subject = new Geod26284HeatmapTablePage(SingleDriverSeleniumFixture.create(), "geneQuery=&displayLevels=true");
         subject.get();
     }
 
@@ -38,26 +41,26 @@ public class DefaultFilterFactorValuesAndCutoffButWithoutAnyGeneQuerySIT extends
 
     @Override
     protected String[] getTop9Genes() {
-        return new String[]{"RP11-384J4.2", "TERF2", "GFI1", "SCN2A", "SLC10A1", "TRPM2", "GEMIN8P4", "RP11-368L12.1", "RP11-20I23.6"};
+        return new String[]{"CALCR", "MUSK", "NPC1L1", "NR1H4", "INSRR", "C8B", "MMP25", "CD6", "LGALS14"};
     }
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"CD34-positive...", "HFDPC cell line", "HPC-PL cell line", "IMR-90", "hMSC-AT cell line"};
+        return new String[]{"A549", "AG445", "BJ", "CD20-positive B...", "GM12878", "H1-hESC", "HMEC cell line", "HSMM cell line", "HUVEC cell line", "HeLa-S3", "HepG2", "IMR-90", "K562", "MCF-7", "NHEK cell line", "NHLF cell line", "SK-N-SH", "SK-N-SH_RA"};
     }
 
     @Override
     protected String[] getFirstGeneProfile() {
-        return new String[]{"", "", "6", "", ""};
+        return new String[]{"", "", "", "", "", "", "", "", "", "", "", "", "", "27", "", "", "", ""};
     }
 
     @Override
     protected String[] getNinthGeneProfile() {
-        return new String[]{"4", "", "1", "", "1"};
+        return new String[]{"", "", "", "", "4", "", "", "", "", "", "", "", "", "", "", "", "", ""};
     }
 
     @Override
     protected String getGeneCount() {
-        return "30";
+        return "469";
     }
 }

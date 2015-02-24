@@ -23,8 +23,9 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.geod26284;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.fixture.SingleDriverSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.Geod26284HeatmapTablePage;
 
 import java.util.List;
@@ -33,7 +34,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class DefaultFilterByMenuSIT extends SinglePageSeleniumFixture {
+public class DefaultFilterByMenuSIT extends SingleDriverSeleniumFixture {
 
     public static final String TOTAL_RNA = "total RNA";
     public static final String RNA_TYPE = "RNA";
@@ -46,10 +47,12 @@ public class DefaultFilterByMenuSIT extends SinglePageSeleniumFixture {
     public static final String A_549 = "A549";
     public static final String H_MSC_AT_CELL_LINE = "hMSC-AT cell line";
 
-    protected Geod26284HeatmapTablePage subject;
+    protected static Geod26284HeatmapTablePage subject;
 
-    public void getStartingPage() {
-        subject = new Geod26284HeatmapTablePage(driver, "geneQuery=");
+
+    @BeforeClass
+    public static void getStartingPage() {
+        subject = new Geod26284HeatmapTablePage(SingleDriverSeleniumFixture.create(), "geneQuery=");
         subject.get();
     }
 
@@ -107,6 +110,11 @@ public class DefaultFilterByMenuSIT extends SinglePageSeleniumFixture {
     }
 
     @Test
+    public void verifyDefault() {
+        verifyDefaultTop9SelectedGenes();
+        verifyDefaultHeatmapHeaders();
+    }
+
     public void verifyDefaultTop9SelectedGenes() {
         //given that we selected the default filterFactorValues RNA Type : total RNA and cellular component : whole cell
 
@@ -115,13 +123,13 @@ public class DefaultFilterByMenuSIT extends SinglePageSeleniumFixture {
 
         //then
         Assert.assertThat(selectedGenes, contains(
-                "RP11-384J4.2", "TERF2", "GFI1", "SCN2A", "SLC10A1", "TRPM2", "GEMIN8P4", //expressed on 1 FactorValue
-                "RP11-368L12.1", //expressed on two FactorValues
-                "RP11-20I23.6" //expressed on three FactorValues
+                "MPO", "PROM1", "MATK", "ITGA2B", "CD79B", "WAS", "PRKCH", //expressed on 1 FactorValue
+                "CCDC88C", //expressed on two FactorValues
+                "ITGAL" //expressed on three FactorValues
         ));
     }
 
-    @Test
+
     public void verifyDefaultHeatmapHeaders() {
         //given that we selected the default filterFactorValues RNA Type : total RNA and cellular component : whole cell
 
@@ -172,7 +180,7 @@ public class DefaultFilterByMenuSIT extends SinglePageSeleniumFixture {
 
         //then
         Assert.assertThat(selectedGenes, contains(
-                "RP11-439L8.3", "RNU4-50P", "RP11-90H3.1", "RTDR1", "RGS7BP", "RP11-736N17.8", "RP11-727M10.1", "RP3-406C18.2", "SCN2A"
+                "TMEM176A", "MARCO", "TFAP2B", "GABRA1", "INSRR", "SOX8", "CD6", "MPO", "LGALS14"
         ));
     }
 
@@ -181,6 +189,7 @@ public class DefaultFilterByMenuSIT extends SinglePageSeleniumFixture {
         assertThat(subject.getFilterByMenuText(new int[]{2, 2, 1, 3}), is(WHOLE_CELL));
 
         // always the last index
+        // click total RNA - whole cell
         subject.clickFilterByMenuElement(new int[]{2, 2, 1, 3});
 
         //then
@@ -190,7 +199,7 @@ public class DefaultFilterByMenuSIT extends SinglePageSeleniumFixture {
         List<String> selectedGenes = subject.getGeneNames().subList(0, 9);
 
         //then
-        Assert.assertThat(selectedGenes, contains("RP11-384J4.2", "TERF2", "GFI1", "SCN2A", "SLC10A1", "TRPM2", "GEMIN8P4", "RP11-368L12.1", "RP11-20I23.6"));
+        Assert.assertThat(selectedGenes, contains("MPO", "PROM1", "MATK", "ITGA2B", "CD79B", "WAS", "PRKCH", "CCDC88C", "ITGAL"));
 
     }
 

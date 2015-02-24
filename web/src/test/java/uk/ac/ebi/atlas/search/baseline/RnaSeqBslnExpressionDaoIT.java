@@ -52,7 +52,7 @@ public class RnaSeqBslnExpressionDaoIT {
         ImmutableList<String> react71geneIds = ImmutableList.of("ENSG00000196652", "ENSG00000082258", "ENSG00000047315", "ENSG00000077312", "ENSG00000198939", "ENSG00000178665", "ENSG00000161547");
 
         List<RnaSeqBslnExpression> results = subject.fetchAverageExpressionByExperimentAssayGroup(react71geneIds);
-        assertThat(results, hasSize(124));
+        assertThat(results, hasSize(49));
 
         RnaSeqBslnExpression adipose = RnaSeqBslnExpression.create("E-MTAB-513", "g15", 7D);
         RnaSeqBslnExpression adrenalGland = RnaSeqBslnExpression.create("E-MTAB-513", "g16", 10D);
