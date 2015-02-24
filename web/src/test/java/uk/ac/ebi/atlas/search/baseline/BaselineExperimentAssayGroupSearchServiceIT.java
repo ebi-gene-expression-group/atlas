@@ -249,23 +249,6 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         assertThat(searchResult.getFilterFactors().size(), is(0));
     }
 
-
-    @Test
-    public void conditionAnatomyBasicComponent()  {
-        String geneQuery = "";
-        String condition = "\"anatomy basic component\"";
-        String species = "";
-        boolean isExactMatch = true;
-
-        Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
-        List<String> experimentAccessions = getExperimentAccessions(results);
-
-        System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
-
-        assertThat(experimentAccessions, contains("E-MTAB-1733", "E-MTAB-599"));
-
-    }
-
     @Test
     public void geneQueryGeneIDAndConditionHeart()  {
         String geneQuery = "ENSG00000129170";                       //expressed in ovary
