@@ -32,7 +32,7 @@ import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
-import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
+import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.ProteomicsBaselineRequestPreferences;
@@ -53,11 +53,11 @@ public class ProteomicsBaselineExperimentPageController extends BaselineExperime
                                                       FilterFactorMenuBuilder filterFactorMenuBuilder,
                                                       BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                                       AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
-                                                      SpeciesEnsemblTrader speciesEnsemblTrader,
+                                                      SpeciesKingdomTrader speciesKingdomTrader,
                                                       TracksUtil tracksUtil) {
 
         super(baselineProfilesHeatMap, applicationProperties, requestContextBuilder, filterFactorsConverter, filterFactorMenuBuilder,
-                baselineProfilesViewModelBuilder, assayGroupFactorViewModelBuilder, speciesEnsemblTrader, tracksUtil);
+                baselineProfilesViewModelBuilder, assayGroupFactorViewModelBuilder, speciesKingdomTrader, tracksUtil);
     }
 
 

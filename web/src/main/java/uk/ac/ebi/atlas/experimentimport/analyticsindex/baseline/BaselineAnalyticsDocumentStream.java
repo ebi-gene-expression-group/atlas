@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -26,6 +27,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
     private final Iterable<BaselineAnalytics> inputStream;
     private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
     private final IdentifierSearchTermsDao identifierSearchTermsDao;
+    private final SpeciesKingdomTrader speciesKingdomTrader;
 
     public BaselineAnalyticsDocumentStream(String experimentAccession,
                                            ExperimentType experimentType,
@@ -33,7 +35,8 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
                                            String defaultQueryFactorType,
                                            Iterable<BaselineAnalytics> inputStream,
                                            SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
-                                           IdentifierSearchTermsDao identifierSearchTermsDao) {
+                                           IdentifierSearchTermsDao identifierSearchTermsDao,
+                                           SpeciesKingdomTrader speciesKingdomTrader) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
         this.ensemblSpeciesGroupedByAssayGroupId = ensemblSpeciesGroupedByAssayGroupId;
@@ -41,6 +44,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
         this.inputStream = inputStream;
         this.conditionSearchTermsByAssayAccessionId = conditionSearchTermsByAssayAccessionId;
         this.identifierSearchTermsDao = identifierSearchTermsDao;
+        this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
     @Override
@@ -79,6 +83,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
                     .experimentType(experimentType)
                     .defaultQueryFactorType(defaultQueryFactorType)
                     .species(getEnsemblSpecies(assayGroupId))
+                    .kingdom(speciesKingdomTrader.getKingdom(getEnsemblSpecies(assayGroupId)))
                     .bioentityIdentifier(geneId)
                     .expressionLevel(baselineAnalytics.getExpressionLevel())
                     .identifierSearch(identifierSearch)

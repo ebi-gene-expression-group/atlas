@@ -4,6 +4,8 @@ import com.google.common.collect.SetMultimap;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,10 +15,12 @@ import java.util.Map;
 public class BaselineAnalyticsDocumentStreamFactory {
 
     private final IdentifierSearchTermsDao identifierSearchTermsDao;
+    private final SpeciesKingdomTrader speciesKingdomTrader;
 
     @Inject
-    public BaselineAnalyticsDocumentStreamFactory(IdentifierSearchTermsDao identifierSearchTermsDao) {
+    public BaselineAnalyticsDocumentStreamFactory(IdentifierSearchTermsDao identifierSearchTermsDao, SpeciesKingdomTrader speciesKingdomTrader) {
         this.identifierSearchTermsDao = identifierSearchTermsDao;
+        this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
     public BaselineAnalyticsDocumentStream create(String experimentAccession,
@@ -26,7 +30,7 @@ public class BaselineAnalyticsDocumentStreamFactory {
                                           Iterable<BaselineAnalytics> inputStream,
                                           SetMultimap<String, String> conditionSearchTermsByAssayAccessionId) {
         return new BaselineAnalyticsDocumentStream(experimentAccession, experimentType, ensemblSpeciesGroupedByAssayGroupId, defaultQueryFactorType,
-                inputStream, conditionSearchTermsByAssayAccessionId, identifierSearchTermsDao);
+                inputStream, conditionSearchTermsByAssayAccessionId, identifierSearchTermsDao, speciesKingdomTrader);
     }
 
 }

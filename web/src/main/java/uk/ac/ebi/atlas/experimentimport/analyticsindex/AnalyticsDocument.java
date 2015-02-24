@@ -18,6 +18,9 @@ public class AnalyticsDocument {
     String species;
 
     @Field
+    String kingdom;
+
+    @Field
     String experimentAccession;
 
     //TODO: add baseline boolean
@@ -63,6 +66,10 @@ public class AnalyticsDocument {
 
     public String getSpecies() {
         return species;
+    }
+
+    public String getKingdom() {
+        return kingdom;
     }
 
     public String getExperimentAccession() {
@@ -127,6 +134,7 @@ public class AnalyticsDocument {
         public AnalyticsDocument build() {
             checkNotNull(build.bioentityIdentifier, "missing bioentityIdentifier");
             checkNotNull(build.species, "missing species");
+            checkNotNull(build.kingdom, "missing kingdom");
             checkNotNull(build.experimentAccession, "missing experimentAccession");
             checkNotNull(build.experimentType, "missing experimentType");
             checkNotNull(build.identifierSearch, "missing identifierSearch");
@@ -154,6 +162,11 @@ public class AnalyticsDocument {
 
         public Builder species(String species) {
             build.species = species;
+            return this;
+        }
+
+        public Builder kingdom(String kingdom) {
+            build.kingdom = kingdom;
             return this;
         }
 

@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDiff
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -39,6 +40,9 @@ public class DiffAnalyticsDocumentStreamTest {
     @Mock
     IdentifierSearchTermsDao identifierSearchTermsDao;
 
+    @Mock
+    SpeciesKingdomTrader speciesKingdomTrader;
+
     @Test
     public void test() {
         String experimentAccession = "E-GEOD-38400";
@@ -55,7 +59,7 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, identifierSearchTermsDao);
+                numReplicatesByContrastId, identifierSearchTermsDao, speciesKingdomTrader);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();
 
@@ -89,7 +93,8 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, identifierSearchTermsDao);
+                numReplicatesByContrastId, identifierSearchTermsDao, speciesKingdomTrader
+        );
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();
 

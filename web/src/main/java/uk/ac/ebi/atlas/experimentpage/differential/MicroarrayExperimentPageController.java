@@ -34,7 +34,7 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
-import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
+import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.MicroarrayRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 
@@ -56,8 +56,8 @@ public class MicroarrayExperimentPageController extends DifferentialExperimentPa
                                               MicroarrayProfilesHeatMap profilesHeatMap,
                                               DownloadURLBuilder downloadURLBuilder,
                                               ArrayDesignTrader arrayDesignTrader,
-                                              DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesEnsemblTrader speciesEnsemblTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
-        super(requestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder, speciesEnsemblTrader, tracksUtil, gseaPlotsBuilder);
+                                              DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder, SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
+        super(requestContextBuilder, profilesHeatMap, downloadURLBuilder, differentialProfilesViewModelBuilder, speciesKingdomTrader, tracksUtil, gseaPlotsBuilder);
 
         this.arrayDesignTrader = arrayDesignTrader;
     }

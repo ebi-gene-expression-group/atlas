@@ -44,7 +44,7 @@ import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModel;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
-import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
+import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -55,7 +55,7 @@ import java.util.Set;
 public abstract class DifferentialExperimentPageController<T extends DifferentialExperiment, K extends DifferentialRequestPreferences, P extends DifferentialProfile> {
 
     private final DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder;
-    private final SpeciesEnsemblTrader speciesEnsemblTrader;
+    private final SpeciesKingdomTrader speciesKingdomTrader;
     private final GseaPlotsBuilder gseaPlotsBuilder;
     private DownloadURLBuilder downloadURLBuilder;
     private DifferentialRequestContextBuilder differentialRequestContextBuilder;
@@ -67,13 +67,13 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
     protected DifferentialExperimentPageController(DifferentialRequestContextBuilder differentialRequestContextBuilder,
                                                    ProfilesHeatMap<P, ? extends DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions> profilesHeatMap,
                                                    DownloadURLBuilder downloadURLBuilder, DifferentialProfilesViewModelBuilder differentialProfilesViewModelBuilder,
-                                                   SpeciesEnsemblTrader speciesEnsemblTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
+                                                   SpeciesKingdomTrader speciesKingdomTrader, TracksUtil tracksUtil, GseaPlotsBuilder gseaPlotsBuilder) {
         this.differentialRequestContextBuilder = differentialRequestContextBuilder;
         // cast here to avoid having to make a type parameter for DifferentialRequestContext
         this.profilesHeatMap = (ProfilesHeatMap<P, DifferentialRequestContext, DifferentialProfilesList<P>, DifferentialProfileStreamOptions>) profilesHeatMap;
         this.downloadURLBuilder = downloadURLBuilder;
         this.differentialProfilesViewModelBuilder = differentialProfilesViewModelBuilder;
-        this.speciesEnsemblTrader = speciesEnsemblTrader;
+        this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
         this.gseaPlotsBuilder = gseaPlotsBuilder;
     }
@@ -122,7 +122,7 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
                 downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
 
                 //required for genome track browser in ensembl
-                String ensemblDB = speciesEnsemblTrader.getEnsemblDb(requestContext.getFilteredBySpecies());
+                String ensemblDB = speciesKingdomTrader.getKingdom(requestContext.getFilteredBySpecies());
                 model.addAttribute("ensemblDB", ensemblDB);
 
 

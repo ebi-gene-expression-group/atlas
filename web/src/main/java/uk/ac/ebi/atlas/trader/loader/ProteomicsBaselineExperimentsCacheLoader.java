@@ -33,7 +33,7 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
-import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
+import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -50,15 +50,15 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
 
     private final ProteomicsBaselineExperimentExpressionLevelFile expressionLevelFile;
     private final ConfigurationTrader configurationTrader;
-    private final SpeciesEnsemblTrader speciesEnsemblTrader;
+    private final SpeciesKingdomTrader speciesKingdomTrader;
 
     @Inject
     protected ProteomicsBaselineExperimentsCacheLoader(ProteomicsBaselineExperimentExpressionLevelFile expressionLevelFile,
-                                                       ConfigurationTrader configurationTrader, SpeciesEnsemblTrader speciesEnsemblTrader) {
+                                                       ConfigurationTrader configurationTrader, SpeciesKingdomTrader speciesKingdomTrader) {
 
         this.configurationTrader = configurationTrader;
         this.expressionLevelFile = expressionLevelFile;
-        this.speciesEnsemblTrader = speciesEnsemblTrader;
+        this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
     @Override
@@ -71,11 +71,11 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
 
         AssayGroups assayGroups = configurationTrader.getExperimentConfiguration(experimentAccession).getAssayGroups();
 
-        String kingdom = speciesEnsemblTrader.getEnsemblDb(experimentDTO.getSpecies());
+        String kingdom = speciesKingdomTrader.getKingdom(experimentDTO.getSpecies());
         if (kingdom.isEmpty()) {
             Iterator<String> speciesIterator = experimentDTO.getSpecies().iterator();
             while (speciesIterator.hasNext() && kingdom.isEmpty()) {
-                kingdom = speciesEnsemblTrader.getEnsemblDb(factorsConfig.getSpeciesMapping().get(speciesIterator.next()));
+                kingdom = speciesKingdomTrader.getKingdom(factorsConfig.getSpeciesMapping().get(speciesIterator.next()));
             }
         }
 

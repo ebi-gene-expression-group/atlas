@@ -11,7 +11,9 @@ import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
+import javax.inject.Inject;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -47,8 +49,14 @@ public class BaselineAnalyticsDocumentStreamTest {
     public static final String GENE_2_SEARCHTERM_2 = "gene2_searchterm_2";
     private static final String MUS_MUSCULUS = "mus musculus";
 
+    private static final String ENSEMBL_KINGDOM = "ensembl";
+
     @Mock
     private IdentifierSearchTermsDao identifierSearchTermsDao;
+
+    @Mock
+    private SpeciesKingdomTrader speciesKingdomTraderMock;
+
     private ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId = ImmutableMap.of(ASSAYGROUPID1, HOMO_SAPIENS, ASSAYGROUPID2, MUS_MUSCULUS);
 
     @Test
@@ -58,6 +66,9 @@ public class BaselineAnalyticsDocumentStreamTest {
         when(identifierSearchTermsDao.fetchSearchTerms(GENEID2)).thenReturn(ImmutableSet.of(GENE_2_SEARCHTERM_1, GENE_2_SEARCHTERM_2));
         when(identifierSearchTermsDao.fetchSearchTerms(UNKNOWN_GENEID)).thenReturn(Collections.<String>emptySet());
 
+        when(speciesKingdomTraderMock.getKingdom(HOMO_SAPIENS)).thenReturn(ENSEMBL_KINGDOM);
+        when(speciesKingdomTraderMock.getKingdom(MUS_MUSCULUS)).thenReturn(ENSEMBL_KINGDOM);
+
         ImmutableSetMultimap.Builder<String, String> conditionSearchBuilder = ImmutableSetMultimap.builder();
 
         conditionSearchBuilder.putAll(ASSAYGROUPID1, G1_SEARCH_TERM_1);
@@ -65,7 +76,7 @@ public class BaselineAnalyticsDocumentStreamTest {
 
         ImmutableSetMultimap<String, String> conditionSearchTermByAssayAccessionId = conditionSearchBuilder.build();
 
-        BaselineAnalyticsDocumentStream stream = new BaselineAnalyticsDocumentStreamFactory(identifierSearchTermsDao).create(
+        BaselineAnalyticsDocumentStream stream = new BaselineAnalyticsDocumentStreamFactory(identifierSearchTermsDao, speciesKingdomTraderMock).create(
                 EXPERIMENT_ACCESSION, EXPERIMENT_TYPE, ensemblSpeciesGroupedByAssayGroupId, DEFAULT_QUERY_FACTOR_TYPE,
                 ImmutableSet.of(BASELINE_ANALYTICS1, BASELINE_ANALYTICS2, BASELINE_ANALYTICS3),
                 conditionSearchTermByAssayAccessionId);
@@ -80,6 +91,7 @@ public class BaselineAnalyticsDocumentStreamTest {
 
         assertThat(analyticsDocument1.getBioentityIdentifier(), is(GENEID1));
         assertThat(analyticsDocument1.getSpecies(), is(HOMO_SAPIENS));
+        assertThat(analyticsDocument1.getKingdom(), is(ENSEMBL_KINGDOM));
         assertThat(analyticsDocument1.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(analyticsDocument1.getExperimentType(), is(EXPERIMENT_TYPE));
         assertThat(analyticsDocument1.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));
@@ -90,6 +102,7 @@ public class BaselineAnalyticsDocumentStreamTest {
 
         assertThat(analyticsDocument2.getBioentityIdentifier(), is(GENEID2));
         assertThat(analyticsDocument2.getSpecies(), is(MUS_MUSCULUS));
+        assertThat(analyticsDocument2.getKingdom(), is(ENSEMBL_KINGDOM));
         assertThat(analyticsDocument2.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(analyticsDocument2.getExperimentType(), is(EXPERIMENT_TYPE));
         assertThat(analyticsDocument2.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));
@@ -100,6 +113,7 @@ public class BaselineAnalyticsDocumentStreamTest {
 
         assertThat(analyticsDocument3.getBioentityIdentifier(), is(UNKNOWN_GENEID));
         assertThat(analyticsDocument3.getSpecies(), is(MUS_MUSCULUS));
+        assertThat(analyticsDocument3.getKingdom(), is(ENSEMBL_KINGDOM));
         assertThat(analyticsDocument3.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(analyticsDocument3.getExperimentType(), is(EXPERIMENT_TYPE));
         assertThat(analyticsDocument3.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));

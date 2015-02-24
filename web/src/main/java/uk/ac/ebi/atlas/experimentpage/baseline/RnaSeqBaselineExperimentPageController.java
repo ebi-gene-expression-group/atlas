@@ -36,7 +36,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineProfilesList;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
-import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
+import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.*;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 import uk.ac.ebi.atlas.widget.HeatmapWidgetController;
@@ -60,10 +60,10 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
                                                   FilterFactorMenuBuilder filterFactorMenuBuilder,
                                                   BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                                   AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
-                                                  SpeciesEnsemblTrader speciesEnsemblTrader,
+                                                  SpeciesKingdomTrader speciesKingdomTrader,
                                                   TracksUtil tracksUtil) {
         super(baselineProfilesHeatMap, applicationProperties, requestContextBuilder, filterFactorsConverter, filterFactorMenuBuilder,
-                baselineProfilesViewModelBuilder, assayGroupFactorViewModelBuilder, speciesEnsemblTrader, tracksUtil);
+                baselineProfilesViewModelBuilder, assayGroupFactorViewModelBuilder, speciesKingdomTrader, tracksUtil);
         this.applicationProperties = applicationProperties;
     }
 

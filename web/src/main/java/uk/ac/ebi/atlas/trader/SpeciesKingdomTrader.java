@@ -15,22 +15,22 @@ import java.util.Set;
  */
 @Named
 @Scope("singleton")
-public class SpeciesEnsemblTrader {
+public class SpeciesKingdomTrader {
 
     private ImmutableMap<String, String> speciesEnsemblMap;
 
     @Inject
-    public SpeciesEnsemblTrader(OrganismEnsemblDAO organismEnsemblDAO) {
+    public SpeciesKingdomTrader(OrganismEnsemblDAO organismEnsemblDAO) {
         this.speciesEnsemblMap = organismEnsemblDAO.getEnsemblOrganismNamesMap();
     }
 
-    public String getEnsemblDb(String species) {
+    public String getKingdom(String species) {
         return speciesEnsemblMap.get(Species.convertToEnsemblSpecies(species));
     }
 
-    public String getEnsemblDb(Set<String> species) {
+    public String getKingdom(Set<String> species) {
         for (String s : species) {
-            String kingdom = getEnsemblDb(s.toLowerCase());
+            String kingdom = getKingdom(s.toLowerCase());
             if (kingdom != null) {
                 return kingdom;
             }

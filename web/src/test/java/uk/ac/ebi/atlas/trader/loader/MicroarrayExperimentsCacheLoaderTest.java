@@ -38,7 +38,7 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperimentConfiguration;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
-import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
+import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -57,7 +57,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
     private ConfigurationTrader configurationTraderMock;
 
     @Mock
-    private SpeciesEnsemblTrader speciesEnsemblTraderMock;
+    private SpeciesKingdomTrader speciesKingdomTraderMock;
 
     @Mock
     private MicroarrayExperimentConfiguration experimentConfigurationMock;
@@ -84,7 +84,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, speciesEnsemblTraderMock, "{0}{1}");
+        subject = new MicroarrayExperimentsCacheLoader(configurationTraderMock, speciesKingdomTraderMock, "{0}{1}");
 
         when(experimentDTOMock.getExperimentAccession()).thenReturn(ACCESSION);
         when(experimentDTOMock.getExperimentType()).thenReturn(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
@@ -93,7 +93,7 @@ public class MicroarrayExperimentsCacheLoaderTest {
         when(experimentDTOMock.getSpecies()).thenReturn(Sets.newHashSet(SPECIES));
 
         when(configurationTraderMock.getMicroarrayExperimentConfiguration(ACCESSION)).thenReturn(experimentConfigurationMock);
-        when(speciesEnsemblTraderMock.getEnsemblDb(experimentDTOMock.getSpecies())).thenReturn("kingdom");
+        when(speciesKingdomTraderMock.getKingdom(experimentDTOMock.getSpecies())).thenReturn("kingdom");
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
         when(experimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGNS)));
         when(mageTabLimpopoUtilsMock.parseInvestigation(ACCESSION)).thenReturn(investigationMock);

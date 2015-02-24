@@ -40,7 +40,7 @@ import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModelBuil
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModel;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.BaselineProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
-import uk.ac.ebi.atlas.trader.SpeciesEnsemblTrader;
+import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.ApplicationProperties;
 import uk.ac.ebi.atlas.web.BaselineRequestPreferences;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
@@ -68,7 +68,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
     private final BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder;
 
-    private final SpeciesEnsemblTrader speciesEnsemblTrader;
+    private final SpeciesKingdomTrader speciesKingdomTrader;
 
     private final AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder;
 
@@ -79,7 +79,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
                                             FilterFactorMenuBuilder filterFactorMenuBuilder,
                                             BaselineProfilesViewModelBuilder baselineProfilesViewModelBuilder,
                                             AssayGroupFactorViewModelBuilder assayGroupFactorViewModelBuilder,
-                                            SpeciesEnsemblTrader speciesEnsemblTrader,
+                                            SpeciesKingdomTrader speciesKingdomTrader,
                                             TracksUtil tracksUtil) {
 
         super(requestContextBuilder, filterFactorsConverter);
@@ -88,7 +88,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         this.filterFactorMenuBuilder = filterFactorMenuBuilder;
         this.baselineProfilesViewModelBuilder = baselineProfilesViewModelBuilder;
         this.assayGroupFactorViewModelBuilder = assayGroupFactorViewModelBuilder;
-        this.speciesEnsemblTrader = speciesEnsemblTrader;
+        this.speciesKingdomTrader = speciesKingdomTrader;
         this.tracksUtil = tracksUtil;
     }
 
@@ -132,7 +132,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         model.addAttribute("species", species);
 
         //required for genome track browser in ensembl
-        String ensemblDB = speciesEnsemblTrader.getEnsemblDb(species);
+        String ensemblDB = speciesKingdomTrader.getKingdom(species);
         model.addAttribute("ensemblDB", ensemblDB);
 
         if(!filteredAssayGroupFactors.isEmpty()) {

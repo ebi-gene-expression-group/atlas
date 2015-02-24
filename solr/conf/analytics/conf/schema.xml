@@ -91,6 +91,7 @@
         -->
         <field name="bioentity_identifier" type="string" indexed="true" stored="true" required="true"/>
         <field name="species" type="string" indexed="true" stored="true" required="true"/>
+        <field name="kingdom" type="kingdomEnum" indexed="true" stored="true" required="true"/>
         <field name="experimentAccession" type="string" indexed="true" stored="true" required="true"/>
         <field name="experimentType" type="string" indexed="true" stored="true" required="true"/>
         <field name="defaultQueryFactorType" type="string" indexed="true" stored="true"/>
@@ -110,7 +111,8 @@
 
     <types>
 
-        <fieldType name="regulationEnum" class="solr.EnumField" enumsConfig="enumsConfig.xml" enumName="regulation" />
+        <fieldType name="regulationEnum" class="solr.EnumField" enumsConfig="enumsConfig.xml" enumName="regulation"/>
+        <fieldType name="kingdomEnum" class="solr.EnumField" enumsConfig="enumsConfig.xml" enumName="kingdom"/>
 
         <!--<fieldType name="experimentType" class="solr.EnumField" enumsConfig="experimentType.xml" enumName="experimentType"/>-->
 

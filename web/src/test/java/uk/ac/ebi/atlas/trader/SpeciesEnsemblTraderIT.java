@@ -17,21 +17,21 @@ import static org.junit.Assert.assertThat;
 public class SpeciesEnsemblTraderIT {
 
     @Inject
-    private SpeciesEnsemblTrader subject;
+    private SpeciesKingdomTrader subject;
 
     @Test
     public void caenorhabditisElegansReturnsMetazoa() throws Exception {
-        assertThat(subject.getEnsemblDb("caenorhabditis elegans"), is("metazoa"));
+        assertThat(subject.getKingdom("caenorhabditis elegans"), is("metazoa"));
     }
 
     @Test
     public void bosTaurusReturnsEnsembl() throws Exception {
-        assertThat(subject.getEnsemblDb("bos taurus"), is("ensembl"));
+        assertThat(subject.getKingdom("bos taurus"), is("ensembl"));
     }
 
     @Test
     public void oryzaSativaJaponicaGroupReturnsPlants() throws Exception {
-        assertThat(subject.getEnsemblDb("oryza sativa japonica group"), is("plants"));
+        assertThat(subject.getKingdom("oryza sativa japonica group"), is("plants"));
     }
 
 
