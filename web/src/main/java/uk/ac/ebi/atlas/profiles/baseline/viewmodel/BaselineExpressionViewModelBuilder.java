@@ -1,9 +1,11 @@
 package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
+import com.google.common.base.Optional;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.Quartiles;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
@@ -39,6 +41,7 @@ public class BaselineExpressionViewModelBuilder {
     private BaselineExpressionViewModel createBaselineExpressionViewModel(Profile<Factor, BaselineExpression> profile, Factor factor, double minExpressionLevel, double maxExpressionLevel) {
         String factorName = factor.getValue();
         BaselineExpression expression = profile.getExpression(factor);
+        Optional<Quartiles> quartiles = (expression == null) ? Optional.<Quartiles>absent() : expression.getQuartiles();
 
         String value = (expression == null) ? "" : (expression.getLevelAsString().equals("NT")) ? "NT" : (!expression.isKnown() ? "UNKNOWN" : baselineExpressionLevelRounder.format(expression.getLevel()));
         String color = (expression == null) ? "" : (expression.isKnown() && !expression.getLevelAsString().equals("NT") ?
@@ -47,7 +50,7 @@ public class BaselineExpressionViewModelBuilder {
         // We are assuming that the only relevant ontology term for tissues is the first one
         String svgPathId = factor.getValueOntologyTerms().isEmpty() ? null : factor.getValueOntologyTerms().iterator().next().id();
 
-        return new BaselineExpressionViewModel(factorName, color, value, svgPathId);
+        return new BaselineExpressionViewModel(factorName, color, value, svgPathId, quartiles);
     }
 
 }
