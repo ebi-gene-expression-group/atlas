@@ -19,6 +19,7 @@ import java.util.Set;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,6 +30,7 @@ public class DiffAnalyticsDocumentStreamTest {
     public static final String CONTRAST3 = "g1_g4";
     private static final String GENEID1 = "GENEID_1";
     public static final String SPECIES1 = "arabidopsis thaliana";
+    public static final String PLANTS_KINGDOM = "plants";
     private static final String SPECIES3 = "species3";
     public static final String PROTEIN_CODING = "protein_coding";
     public static final String CONDITION_SEARCH_1 = "condition1";
@@ -41,7 +43,7 @@ public class DiffAnalyticsDocumentStreamTest {
     IdentifierSearchTermsDao identifierSearchTermsDao;
 
     @Mock
-    SpeciesKingdomTrader speciesKingdomTrader;
+    SpeciesKingdomTrader speciesKingdomTraderMock;
 
     @Test
     public void test() {
@@ -52,6 +54,7 @@ public class DiffAnalyticsDocumentStreamTest {
         SetMultimap<String, String> conditionSearchTermsByContrastId = ImmutableSetMultimap.of(CONTRAST1, CONDITION_SEARCH_1, CONTRAST2, CONDITION_SEARCH_2, CONTRAST3, CONDITION_SEARCH_3);
         Map<String, Integer> numReplicatesByContrastId = ImmutableMap.of(CONTRAST1, 3, CONTRAST2, 3, CONTRAST3, 3);
         when(identifierSearchTermsDao.fetchSearchTerms(Matchers.<String>any())).thenReturn(ImmutableSet.of(PROTEIN_CODING));
+        when(speciesKingdomTraderMock.getKingdom(anyString())).thenReturn(PLANTS_KINGDOM);
 
         double pValue = 1.0;
         double foldChange = -0.0979807106778182;
@@ -59,7 +62,7 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, identifierSearchTermsDao, speciesKingdomTrader);
+                numReplicatesByContrastId, identifierSearchTermsDao, speciesKingdomTraderMock);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();
 
@@ -93,7 +96,7 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, identifierSearchTermsDao, speciesKingdomTrader
+                numReplicatesByContrastId, identifierSearchTermsDao, speciesKingdomTraderMock
         );
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();
