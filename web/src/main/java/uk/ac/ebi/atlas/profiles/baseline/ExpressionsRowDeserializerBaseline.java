@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
@@ -61,7 +60,7 @@ public class ExpressionsRowDeserializerBaseline extends ExpressionsRowDeserializ
         }
 
         if (expressionLevelString.contains(",")) {
-            Quartiles quartiles = createFromCsvString(expressionLevelString);
+            Quartiles quartiles = Quartiles.createFromCsvString(expressionLevelString);
 
             return new BaselineExpression(quartiles, factorGroups.next());
         }
@@ -69,20 +68,5 @@ public class ExpressionsRowDeserializerBaseline extends ExpressionsRowDeserializ
         return new BaselineExpression(expressionLevelString, factorGroups.next());
     }
 
-    public static Quartiles createFromCsvString(String csv) {
-        Iterable<String> values = Splitter.on(",").split(csv);
-
-        checkArgument(Iterables.size(values) == 5, "expected 5 values for quartiles but got " + csv);
-
-        Iterator<String> iterator = values.iterator();
-
-        double min = Double.parseDouble(iterator.next());
-        double lower = Double.parseDouble(iterator.next());
-        double median = Double.parseDouble(iterator.next());
-        double upper = Double.parseDouble(iterator.next());
-        double max = Double.parseDouble(iterator.next());
-
-        return Quartiles.create(min, lower, median, upper, max);
-    }
 
 }
