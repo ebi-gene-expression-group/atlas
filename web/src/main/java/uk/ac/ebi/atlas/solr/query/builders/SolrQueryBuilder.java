@@ -27,7 +27,6 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Collection;
@@ -68,7 +67,7 @@ public abstract class SolrQueryBuilder<T extends SolrQueryBuilder<T>> {
     }
 
     public T withPropertyNames(String... propertyNames){
-        checkArgument(ArrayUtils.isNotEmpty(propertyNames));
+        checkArgument(org.apache.commons.lang3.ArrayUtils.isNotEmpty(propertyNames));
 
         Collection<String> propertyNameConditions = transformToConditions(PROPERTY_NAME_FIELD, Sets.newHashSet(propertyNames));
 
