@@ -95,6 +95,8 @@ public abstract class ProteomicsBaselineExperimentsCacheLoader extends Experimen
                 .withAssayGroups(assayGroups)
                 .withExperimentDesign(experimentDesign)
                 .withExperimentalFactors(experimentalFactors)
+                .withDataProviderURL(factorsConfig.getDataProviderURL())
+                .withDataProviderDescription(factorsConfig.getDataProviderDescription())
                 .createProteomics();
 
     }

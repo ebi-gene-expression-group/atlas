@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
+import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.*;
 
@@ -39,18 +40,20 @@ public class BaselineExperimentConfiguration {
         return config.getString("landingPageDisplayName");
     }
 
-    public List<String> getDataProviderURL() {
-        if (config.getString("dataProviderURL") == null) {
-            return Collections.emptyList();
+    private List<String> getListOfStrings(List<Object> objects) {
+        List<String> result = newArrayList();
+        for (Object object : objects) {
+            result.add(object != null ? object.toString() : null);
         }
-        return Arrays.asList(config.getString("dataProviderURL").split("\\s*,\\s*"));
+        return result;
+    }
+
+    public List<String> getDataProviderURL() {
+        return getListOfStrings(config.getList("dataProviderURL"));
     }
 
     public List<String> getDataProviderDescription() {
-        if (config.getString("dataProviderDescription") == null) {
-            return Collections.emptyList();
-        }
-        return Arrays.asList(config.getString("dataProviderDescription").split("\\s*,\\s*"));
+        return getListOfStrings(config.getList("dataProviderDescription"));
     }
 
     public Set<Factor> getDefaultFilterFactors() {
