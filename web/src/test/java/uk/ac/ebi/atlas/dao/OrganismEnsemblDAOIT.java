@@ -27,7 +27,7 @@ public class OrganismEnsemblDAOIT {
 
         assertThat(organismEnsemblNames.get("homo sapiens"), is("ensembl"));
         assertThat(organismEnsemblNames.get("mus musculus"), is("ensembl"));
-        assertThat(organismEnsemblNames.size(), is(31));
+        assertThat(organismEnsemblNames.size(), is(33));
         assertThat(organismEnsemblNames.get("arabidopsis thaliana"), is("plants"));
 
     }
