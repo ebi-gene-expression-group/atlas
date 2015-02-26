@@ -40,10 +40,16 @@ public class BaselineExperimentConfiguration {
     }
 
     public List<String> getDataProviderURL() {
+        if (config.getString("dataProviderURL") == null) {
+            return Collections.emptyList();
+        }
         return Arrays.asList(config.getString("dataProviderURL").split("\\s*,\\s*"));
     }
 
     public List<String> getDataProviderDescription() {
+        if (config.getString("dataProviderDescription") == null) {
+            return Collections.emptyList();
+        }
         return Arrays.asList(config.getString("dataProviderDescription").split("\\s*,\\s*"));
     }
 
