@@ -79,9 +79,6 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
             }
         }
 
-        String dataProviderURL = factorsConfig.getDataProviderURL();
-        String dataProviderDescription = factorsConfig.getDataProviderDescription();
-
         String[] orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
 
         ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
@@ -98,8 +95,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withAssayGroups(assayGroups)
                 .withExperimentDesign(experimentDesign)
                 .withExperimentalFactors(experimentalFactors)
-                .withDataProviderURL(dataProviderURL)
-                .withDataProviderDescription(dataProviderDescription)
+                .withDataProviderURL(factorsConfig.getDataProviderURL())
+                .withDataProviderDescription(factorsConfig.getDataProviderDescription())
                 .create();
 
     }

@@ -39,12 +39,12 @@ public class BaselineExperimentConfiguration {
         return config.getString("landingPageDisplayName");
     }
 
-    public String getDataProviderURL() {
-        return config.getString("dataProviderURL");
+    public List<String> getDataProviderURL() {
+        return Arrays.asList(config.getString("dataProviderURL").split("\\s*,\\s*"));
     }
 
-    public String getDataProviderDescription() {
-        return config.getString("dataProviderDescription");
+    public List<String> getDataProviderDescription() {
+        return Arrays.asList(config.getString("dataProviderDescription").split("\\s*,\\s*"));
     }
 
     public Set<Factor> getDefaultFilterFactors() {

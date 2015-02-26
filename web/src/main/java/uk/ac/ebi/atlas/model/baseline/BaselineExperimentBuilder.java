@@ -30,6 +30,7 @@ import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import javax.inject.Named;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,8 +44,8 @@ public class BaselineExperimentBuilder {
     private Set<String> organisms;
     private String kingdom;
     private String description;
-    private String dataProviderURL;
-    private String dataProviderDescription;
+    private List<String> dataProviderURL;
+    private List<String> dataProviderDescription;
     private String displayName;
     private boolean hasExtraInfoFile;
     private Map<String, String> speciesMapping;
@@ -70,12 +71,12 @@ public class BaselineExperimentBuilder {
         return this;
     }
 
-    public BaselineExperimentBuilder withDataProviderURL(String dataProviderURL) {
+    public BaselineExperimentBuilder withDataProviderURL(List<String> dataProviderURL) {
         this.dataProviderURL = dataProviderURL;
         return this;
     }
 
-    public BaselineExperimentBuilder withDataProviderDescription(String dataProviderDescription) {
+    public BaselineExperimentBuilder withDataProviderDescription(List<String> dataProviderDescription) {
         this.dataProviderDescription = dataProviderDescription;
         return this;
     }

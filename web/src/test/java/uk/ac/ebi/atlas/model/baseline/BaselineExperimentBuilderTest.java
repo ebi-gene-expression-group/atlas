@@ -34,6 +34,8 @@ import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -53,8 +55,8 @@ public class BaselineExperimentBuilderTest {
     private static final String RUN_ACCESSION1 = "run1";
     private static final String RUN_ACCESSION2 = "run2";
     private static final String PUBMEDID = "PUBMEDID";
-    private static final String PROVIDER_URL = "http://www.provider.com";
-    private static final String PROVIDER_DESCRIPTION = "Baseline experiment data provider";
+    private static final List<String> PROVIDER_URL = Collections.singletonList("http://www.provider.com");
+    private static final List<String> PROVIDER_DESCRIPTION = Collections.singletonList("Baseline experiment data provider");
 
     private BaselineExperimentBuilder subject;
 
