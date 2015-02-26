@@ -153,11 +153,11 @@
 
 		<h3>Browse...</h3>
 
+        <h4><img src="resources/images/allup2_transparent_bkg.png" style="padding-right: 15px"><a href="baseline/experiments">Baseline Experiments</a></h4>
+        <p>See all baseline expression data sets in Expression Atlas.</p>
+
 		<h4><img src="resources/images/experiment_page_small.png" style="padding-right: 15px"><a href="experiments">All Experiments</a></h4>
 		<p>Scroll through the complete list of all data sets in Expression Atlas.</p>
-
-		<h4><img src="resources/images/allup2_transparent_bkg.png" style="padding-right: 15px"><a href="baseline/experiments">Baseline Experiments</a></h4>
-		<p>See all baseline expression data sets in Expression Atlas.</p>
 	</aside>
 
 </div>
