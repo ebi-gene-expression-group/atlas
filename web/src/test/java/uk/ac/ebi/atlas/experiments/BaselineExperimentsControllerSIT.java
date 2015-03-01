@@ -76,6 +76,6 @@ public class BaselineExperimentsControllerSIT extends SinglePageSeleniumFixture 
     public void mouseLinks() {
         List<String> allExperimentLinksOfSpecies = subject.getAllExperimentLinksOfSpecies(8);
         assertThat(allExperimentLinksOfSpecies.get(0), containsString("experiments/E-MTAB-599"));
-        assertThat(allExperimentLinksOfSpecies.get(1), containsString("experiments/E-GEOD-41338?serializedFilterFactors=ORGANISM:Mus%20musculus"));
+        assertThat(allExperimentLinksOfSpecies.get(1), containsString("experiments/E-GEOD-30352?serializedFilterFactors=ORGANISM:Mus%20musculus"));
     }
 }

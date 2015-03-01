@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experiments;
 
+import com.google.common.base.Joiner;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
 import org.junit.Test;
@@ -23,7 +24,9 @@ public class ExperimentsSIT extends RestAssuredFixture {
 
         List<String> accessions = response.jsonPath().get("aaData.experimentAccession");
 
-        assertThat(accessions, containsInAnyOrder("E-MTAB-2836", "E-GEOD-10732","E-GEOD-11758","E-GEOD-12108","E-GEOD-21860","E-GEOD-22351","E-GEOD-26284","E-GEOD-30352","E-GEOD-3779","E-GEOD-38400","E-GEOD-41338","E-GEOD-43049","E-GEOD-8122","E-MEXP-1099","E-MEXP-1276","E-MEXP-3628","E-MTAB-1066","E-MTAB-1733","E-MTAB-2039","E-MTAB-2800","E-MTAB-2809","E-MTAB-2812","E-MTAB-513","E-MTAB-599","E-MTAB-698","E-PROT-1","E-TABM-51","E-TABM-713", "E-GEOD-2507"));
+        System.out.println("\"" + Joiner.on("\", \"").join(accessions) + "\"");
+
+        assertThat(accessions, containsInAnyOrder("E-GEOD-10732", "E-GEOD-11758", "E-GEOD-12108", "E-GEOD-21860", "E-GEOD-22351", "E-GEOD-2507", "E-GEOD-26284", "E-GEOD-30352", "E-GEOD-3779", "E-GEOD-38400", "E-GEOD-41338", "E-GEOD-43049", "E-GEOD-8122", "E-MEXP-1099", "E-MEXP-1276", "E-MEXP-3628", "E-MTAB-1066", "E-MTAB-1733", "E-MTAB-2039", "E-MTAB-2800", "E-MTAB-2809", "E-MTAB-2812", "E-MTAB-2836", "E-MTAB-2980", "E-MTAB-513", "E-MTAB-599", "E-MTAB-698", "E-PROT-1", "E-TABM-51", "E-TABM-713"));
     }
 
     @Test
