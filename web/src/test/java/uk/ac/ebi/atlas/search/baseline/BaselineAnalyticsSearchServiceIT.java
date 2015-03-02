@@ -78,6 +78,7 @@ public class BaselineAnalyticsSearchServiceIT {
     private static final FactorGroup STAGE_ADULT = new FactorSet(new Factor("DEVELOPMENTAL_STAGE", "adult"));
     private static final String CELL_LINE = "CELL_LINE";
     private static final Factor AG445 = new Factor(CELL_LINE, "AG445");
+    private static final Factor H1_hESC = new Factor(CELL_LINE, "H1-hESC");
 
     @Inject
     private BaselineAnalyticsSearchService subject;
@@ -149,17 +150,17 @@ public class BaselineAnalyticsSearchServiceIT {
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
-        assertThat(baselineProfilesList, hasSize(5));
-        assertThat(baselineProfilesList.getTotalResultCount(), is(5));
+        assertThat(baselineProfilesList, hasSize(7));
+        assertThat(baselineProfilesList.getTotalResultCount(), is(7));
 
         BaselineExperimentProfile baselineProfile = baselineProfilesList.get(0);
         assertThat(baselineProfile.getId(), is("E-GEOD-26284"));
         assertThat(baselineProfile.getName(), is("ENCODE cell lines - long polyA RNA, whole cell"));
         assertThat(baselineProfile.getFilterFactors(), is((FactorGroup) new FactorSet(new Factor("RNA", "long polyA RNA"), new Factor("CELLULAR_COMPONENT", "whole cell"))));
-        assertThat(baselineProfile.getConditions(), hasSize(9));
-        assertThat(baselineProfile.getMinExpressionLevel(), is(80D));
-        assertThat(baselineProfile.getMaxExpressionLevel(), is(364D));
-        assertThat(baselineProfile.getKnownExpressionLevel(AG445), is(364D));
+        assertThat(baselineProfile.getConditions(), hasSize(6));
+        assertThat(baselineProfile.getMinExpressionLevel(), is(7D));
+        assertThat(baselineProfile.getMaxExpressionLevel(), is(7D));
+        assertThat(baselineProfile.getKnownExpressionLevel(H1_hESC), is(7D));
 
         SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
         assertThat(factors, hasSize(23));
