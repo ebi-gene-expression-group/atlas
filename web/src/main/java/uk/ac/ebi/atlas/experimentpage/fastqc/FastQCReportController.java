@@ -207,15 +207,6 @@ public class FastQCReportController {
                                       @RequestParam(value = "accessKey",required = false) String accessKey,
                                       @ModelAttribute("preferences") @Valid FastQCReportRequestPreferences preferences) throws IOException {
 
-        //NB: although we only need the experiment object in the case of accessing fastqc_report.html
-        // this will through a ResourceNotFoundException for a private experiment with the wrong/missing access key
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-        prepareModel(request, model, experiment);
-
-        model.addAttribute("fastQCReports", preferences.fastQCReportsList());
-
-        model.addAttribute("allSpecies", experiment.getOrganisms());
-
         String reportSelected = preferences.getSelectedReport();
 
         if (StringUtils.isBlank(reportSelected)) {
@@ -265,6 +256,16 @@ public class FastQCReportController {
         if (!Files.exists(path)) {
             throw new FileNotFoundException(fullPath + " does not exist");
         }
+
+        //NB: by looking up the experiment at the end, we improve performance the other resources (eg: images)
+        // that don't need the experiment, however we made it possible for those resources from private experiments
+        // to become accessible publically - an acceptable tradeoff for now.
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        prepareModel(request, model, experiment);
+
+        model.addAttribute("fastQCReports", preferences.fastQCReportsList());
+
+        model.addAttribute("allSpecies", experiment.getOrganisms());
 
         request.setAttribute("contentPath", path);
 
