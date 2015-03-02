@@ -4,7 +4,6 @@ import com.google.common.collect.SetMultimap;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
 import javax.inject.Inject;

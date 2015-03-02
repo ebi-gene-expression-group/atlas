@@ -33,6 +33,7 @@ public class MicroarrayDifferentialAnalyticsInputStream implements ObjectInputSt
 
     private static final Logger LOGGER = Logger.getLogger(MicroarrayDifferentialAnalyticsInputStream.class);
 
+    private static final int GENE_ID_INDEX = 0;
     private static final int DESIGN_ELEMENT_INDEX = 2;
     private static final int FIRST_CONTRAST_INDEX = 3;
 
@@ -91,6 +92,7 @@ public class MicroarrayDifferentialAnalyticsInputStream implements ObjectInputSt
                 return null;
             }
 
+            String geneId = line[GENE_ID_INDEX];
             String designElement = line[DESIGN_ELEMENT_INDEX];
             String[] contrastAnalyticsArray = (String[]) ArrayUtils.subarray(line, FIRST_CONTRAST_INDEX, line.length);
             ImmutableList<String> contrastAnalyticsList = ImmutableList.<String>builder().add(contrastAnalyticsArray).build();
@@ -114,7 +116,7 @@ public class MicroarrayDifferentialAnalyticsInputStream implements ObjectInputSt
                     double tStatistic = DifferentialTsvFileParsingUtil.parseDouble(tStatisticString);
                     double foldChange = DifferentialTsvFileParsingUtil.parseDouble(foldChangeString);
                     if (foldChange != 0) {
-                        MicroarrayDifferentialAnalytics dto = new MicroarrayDifferentialAnalytics(designElement, contrastId, pValue, foldChange, tStatistic);
+                        MicroarrayDifferentialAnalytics dto = new MicroarrayDifferentialAnalytics(geneId, designElement, contrastId, pValue, foldChange, tStatistic);
                         builder.add(dto);
                     }
                 }

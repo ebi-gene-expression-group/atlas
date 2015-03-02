@@ -1,8 +1,11 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray;
 
 import com.google.common.base.Objects;
+import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 
-public class MicroarrayDifferentialAnalytics {
+public class MicroarrayDifferentialAnalytics implements DifferentialAnalytics {
+
+    private String geneId;
 
     private String designElement;
 
@@ -14,13 +17,18 @@ public class MicroarrayDifferentialAnalytics {
 
     private double tstatistic;
 
-    public MicroarrayDifferentialAnalytics(String designElement, String contrastId,
+    public MicroarrayDifferentialAnalytics(String geneId, String designElement, String contrastId,
                                            double pValue, double foldChange, double tstatistic) {
+        this.geneId = geneId;
         this.designElement = designElement;
         this.contrastId = contrastId;
         this.pValue = pValue;
         this.foldChange = foldChange;
         this.tstatistic = tstatistic;
+    }
+
+    public String getGeneId() {
+        return geneId;
     }
 
     public String getDesignElement() {

@@ -39,6 +39,8 @@ public class DiffAnalyticsDocumentStreamIndexer {
                      ImmutableMap<String, String> ensemblSpeciesGroupedByContrastId,
                      Map<String, Integer> numReplicatesByContrastId) {
 
+
+
         try (ObjectInputStream<? extends DifferentialAnalytics> closeableInputStream =  rnaSeqDifferentialAnalyticsInputStreamFactory.create(experimentAccession)) {
 
             LOGGER.info("Start indexing " + experimentAccession);
