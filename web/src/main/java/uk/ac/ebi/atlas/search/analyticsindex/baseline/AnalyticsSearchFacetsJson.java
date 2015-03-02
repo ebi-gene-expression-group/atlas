@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.baseline;
+package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;

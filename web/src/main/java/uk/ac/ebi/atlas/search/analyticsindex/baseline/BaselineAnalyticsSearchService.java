@@ -1,7 +1,10 @@
-package uk.ac.ebi.atlas.search.baseline;
+package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
 import uk.ac.ebi.atlas.model.Species;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResultProducer;
+import uk.ac.ebi.atlas.search.baseline.RnaSeqBslnExpression;
 
 import javax.inject.Inject;
 import javax.inject.Named;

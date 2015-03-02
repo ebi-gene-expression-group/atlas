@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.baseline;
+package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;

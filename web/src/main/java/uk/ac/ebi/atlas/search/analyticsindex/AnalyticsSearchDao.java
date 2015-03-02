@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search;
+package uk.ac.ebi.atlas.search.analyticsindex;
 
 import com.google.common.collect.ImmutableSet;
 import org.apache.log4j.Logger;

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.baseline;
+package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
+import uk.ac.ebi.atlas.search.baseline.RnaSeqBslnExpression;
 
 import javax.inject.Inject;
 import javax.inject.Named;

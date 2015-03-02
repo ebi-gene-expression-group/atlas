@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.baseline;
+package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableSortedSet;
 import org.junit.Test;
@@ -9,6 +9,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 
 import javax.inject.Inject;
 import java.util.SortedSet;
@@ -87,7 +90,7 @@ public class BaselineAnalyticsSearchServiceIT {
     public void singleSpeciesGeneAccession_Tissues() {
         BaselineExperimentSearchResult result = subject.findExpressions("ENSG00000126549", "Homo sapiens", "ORGANISM_PART");
 
-        BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
+        BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
         assertThat(baselineProfilesList, hasSize(1));
         assertThat(baselineProfilesList.getTotalResultCount(), is(1));
@@ -106,7 +109,7 @@ public class BaselineAnalyticsSearchServiceIT {
         assertThat(baselineProfile.getKnownExpressionLevel(PLACENTA), is(36D));
         assertThat(baselineProfile.getKnownExpressionLevel(SALIVARY_GLAND), is(80452D));
 
-        SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
+        SortedSet<Factor> factors = result.getFactorsAcrossAllExperiments();
         ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
         ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab1733Tissues()).build();
         assertThat(factors, contains(allFactors.toArray()));
@@ -148,7 +151,7 @@ public class BaselineAnalyticsSearchServiceIT {
     public void geneQuery_CellLine() {
         BaselineExperimentSearchResult result = subject.findExpressions("blood", "Homo sapiens", CELL_LINE);
 
-        BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
+        BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
         assertThat(baselineProfilesList, hasSize(7));
         assertThat(baselineProfilesList.getTotalResultCount(), is(7));
@@ -162,7 +165,7 @@ public class BaselineAnalyticsSearchServiceIT {
         assertThat(baselineProfile.getMaxExpressionLevel(), is(7D));
         assertThat(baselineProfile.getKnownExpressionLevel(H1_hESC), is(7D));
 
-        SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
+        SortedSet<Factor> factors = result.getFactorsAcrossAllExperiments();
         assertThat(factors, hasSize(23));
 //        ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
 //        ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab1733Tissues()).build();

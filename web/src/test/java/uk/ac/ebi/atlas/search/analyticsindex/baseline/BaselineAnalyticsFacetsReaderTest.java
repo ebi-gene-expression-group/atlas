@@ -1,9 +1,10 @@
-package uk.ac.ebi.atlas.search.baseline;
+package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
+import uk.ac.ebi.atlas.search.baseline.RnaSeqBslnExpression;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,4 +1,4 @@
-package uk.ac.ebi.atlas.search.baseline;
+package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
