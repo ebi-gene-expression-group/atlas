@@ -54,7 +54,7 @@ public class BaselineAnalyticsFacetsReader {
         return builder.build();
     }
 
-    public String generateFacetsTreeJson(String json) {
+    public static String generateFacetsTreeJson(String json) {
 
         List<Map<String, Object>> results = JsonPath.read(json, FACET_TREE_PATH);
 
@@ -85,7 +85,7 @@ public class BaselineAnalyticsFacetsReader {
         return gson.toJson(facetTree);
     }
 
-    private class FacetTree {
+    private static class FacetTree {
         String factor;
         String source;
 

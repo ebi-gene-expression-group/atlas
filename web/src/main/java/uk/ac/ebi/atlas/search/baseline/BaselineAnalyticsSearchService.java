@@ -29,7 +29,7 @@ public class BaselineAnalyticsSearchService {
     public String findFacetsForTreeSearch(String geneQuery) {
         String jsonResponse = baselineAnalyticsSearchDao.fetchFacetsThatHaveExpression(geneQuery);
 
-        return baselineAnalyticsFacetsReader.generateFacetsTreeJson(jsonResponse);
+        return BaselineAnalyticsFacetsReader.generateFacetsTreeJson(jsonResponse);
     }
 
 }
