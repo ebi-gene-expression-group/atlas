@@ -81,31 +81,24 @@
     </c:if>
 
     <div id="facets"></div>
-    <div id="heatmaps"></div>
+    <div id="results"></div>
 </section>
 
 <script src="${pageContext.request.contextPath}/resources/js/lib/query-string.js"></script>
-<script src="${pageContext.request.contextPath}/resources/jsx/heatmaps.js"></script>
-<script src="${pageContext.request.contextPath}/resources/jsx/facets.js"></script>
-<script src="${pageContext.request.contextPath}/resources/jsx/heatmapsRouter.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jsx/facetsDifferential.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jsx/differentialRouter.js"></script>
 
-
-
-<script src="${pageContext.request.contextPath}/resources/jsx/bioJSAtlasHeatmap.js"></script>
-<script src="${pageContext.request.contextPath}/resources/jsx/heatmapContainer.js"></script>
 
 <script>
 
-    <%--var facetsData = <%@ include file="includes/facets-data.jsp" %>;--%>
-
     var facetsData = ${jsonFacets};
 
-    (function (HeatmapsRouter, facetsData) {
+    (function (DifferentialRouter, facetsData) {
 
-        HeatmapsRouter( document.getElementById('facets'),
-                document.getElementById('heatmaps'), facetsData);
+        DifferentialRouter( document.getElementById('facets'),
+                document.getElementById('results'), facetsData);
 
-    })(HeatmapsRouter, facetsData);
+    })(DifferentialRouter, facetsData);
 
 </script>
 
