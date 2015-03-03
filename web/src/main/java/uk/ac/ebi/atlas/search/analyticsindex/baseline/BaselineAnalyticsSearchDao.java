@@ -26,13 +26,13 @@ public class BaselineAnalyticsSearchDao {
     private final String solrBaseUrl;
     private static final String QUERY_TEMPLATE = "query?q={0}&rows=0&omitHeader=true";
     private static final String FQ_TEMPLATE = "&fq=expressionLevel:[{0} TO *]";
-    private final String analyticsSearchJsonFacet;
+    private final String baselineHeatmapPivotQuery;
 
     @Inject
-    public BaselineAnalyticsSearchDao(RestTemplate restTemplate, @Value("#{configuration['solr.analytics.base.url']}") String solrBaseUrl, String analyticsSearchJsonFacet) {
+    public BaselineAnalyticsSearchDao(RestTemplate restTemplate, @Value("#{configuration['solr.analytics.base.url']}") String solrBaseUrl, String baselineHeatmapPivotQuery) {
         this.restTemplate = restTemplate;
         this.solrBaseUrl = solrBaseUrl;
-        this.analyticsSearchJsonFacet = "&json.facet=" + encodeQueryParam(analyticsSearchJsonFacet);
+        this.baselineHeatmapPivotQuery = "&json.facet=" + encodeQueryParam(baselineHeatmapPivotQuery);
     }
 
     public String fetchExpressionLevelFaceted(String geneQuery) {
@@ -62,7 +62,7 @@ public class BaselineAnalyticsSearchDao {
     }
 
     String buildQueryUrl(String q, double cutOff) {
-        return solrBaseUrl + buildQueryParameters(q, cutOff) + analyticsSearchJsonFacet;
+        return solrBaseUrl + buildQueryParameters(q, cutOff) + baselineHeatmapPivotQuery;
     }
 
     String buildQueryParameters(String q, double cutOff) {

@@ -31,7 +31,7 @@ public class BaselineAnalyticsFacetsReaderTest {
     }
 
     static String loadJson() {
-        InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/test/analytics.test.json");
+        InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/test/baseline.heatmap.pivot.response.json");
         try {
             return IOUtils.toString(in);
         } catch (IOException e) {
@@ -40,7 +40,7 @@ public class BaselineAnalyticsFacetsReaderTest {
     }
 
     static String load2Json() {
-        InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/test/analytics.facets.test.json");
+        InputStream in = BaselineAnalyticsFacetsReaderTest.class.getResourceAsStream("/test/baseline.heatmap.pivot.response2.json");
         try {
             return IOUtils.toString(in);
         } catch (IOException e) {
