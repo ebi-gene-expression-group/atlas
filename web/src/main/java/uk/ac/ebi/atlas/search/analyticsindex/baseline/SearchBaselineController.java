@@ -34,7 +34,7 @@ public class SearchBaselineController extends SearchController {
 
             addSearchHeader(requestParameters, model);
 
-            model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(geneQuery.asString()));
+            model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(geneQuery));
         }
 
         return "search-results";

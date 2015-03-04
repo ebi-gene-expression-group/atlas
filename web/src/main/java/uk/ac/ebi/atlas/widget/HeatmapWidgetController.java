@@ -206,7 +206,7 @@ public final class HeatmapWidgetController {
                 speciesLookupService.fetchFirstSpeciesByField(propertyType, geneQuery.asString()) : Species.convertToEnsemblSpecies(species);
 
         String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source;
-        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery.asString(), ensemblSpecies, defaultFactorQueryType);
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, ensemblSpecies, defaultFactorQueryType);
 
         populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
         model.addAttribute("hasAnatomogram", false);

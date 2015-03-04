@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfile;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfilesList;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import java.util.SortedSet;
@@ -88,7 +89,7 @@ public class BaselineAnalyticsSearchServiceIT {
 
     @Test
     public void singleSpeciesGeneAccession_Tissues() {
-        BaselineExperimentSearchResult result = subject.findExpressions("ENSG00000126549", "Homo sapiens", "ORGANISM_PART");
+        BaselineExperimentSearchResult result = subject.findExpressions(GeneQuery.create("ENSG00000126549"), "Homo sapiens", "ORGANISM_PART");
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
@@ -149,7 +150,7 @@ public class BaselineAnalyticsSearchServiceIT {
 
     @Test
     public void geneQuery_CellLine() {
-        BaselineExperimentSearchResult result = subject.findExpressions("blood", "Homo sapiens", CELL_LINE);
+        BaselineExperimentSearchResult result = subject.findExpressions(GeneQuery.create("blood"), "Homo sapiens", CELL_LINE);
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
