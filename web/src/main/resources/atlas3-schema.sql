@@ -85,7 +85,7 @@ REFRESH COMPLETE ON DEMAND
 ENABLE QUERY REWRITE AS
 select IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT
 from (
-select dem.IDENTIFIER, bn.NAME AS NAME, o.NAME AS ORGANISM, mda.EXPERIMENT, mda.CONTRASTID, mda.ISACTIVE, mda.PVAL, mda.LOG2FOLD, mda.TSTAT
+select dem.IDENTIFIER, bn.NAME AS NAME, o.NAME AS ORGANISM, mda.EXPERIMENT, mda.CONTRASTID, mda.PVAL, mda.LOG2FOLD, mda.TSTAT
 ,rank() over(partition by mda.EXPERIMENT, mda.CONTRASTID, dem.IDENTIFIER order by(abs(mda.LOG2FOLD)) desc) as lfrank
 from MICROARRAY_DIFF_ANALYTICS subpartition( BELOW_DEFAULT_FDR ) mda
 join DESIGNELEMENT_MAPPING dem on mda.designelement=dem.designelement and mda.arraydesign = dem.arraydesign
