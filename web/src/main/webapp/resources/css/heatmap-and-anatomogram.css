@@ -8,12 +8,7 @@
     display:none
 }
 
-.container {
-    margin: 20px auto;
-    /*width: 960px;*/
-}
-
-.row {
+.heatmap-anatomogram-row {
     /*
     border-bottom: 1px solid #ccc;
     margin-bottom: 40px;
@@ -22,7 +17,7 @@
     position: relative;
 }
 
-.row:after {
+.heatmap-anatomogram-row:after {
     clear: both;
     content: ".";
     display: block;

@@ -38,7 +38,7 @@
     </c:when>
     <c:otherwise><%--@elvariable id="geneProfiles" type="uk.ac.ebi.atlas.model.GeneProfilesList"--%>
 
-        <div id="heatmap" class="row stickem-container">
+        <div id="heatmap-anatomogram" class="heatmap-anatomogram-row stickem-container">
 
             <div id="anatomogram" class="aside stickem double-click-noselection" style="display:inline">
                 <table>

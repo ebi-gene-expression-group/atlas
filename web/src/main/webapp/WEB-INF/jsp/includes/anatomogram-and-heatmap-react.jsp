@@ -38,7 +38,7 @@
 <c:if test="${not empty jsonProfiles}">
     <%@ include file="anatomogram.jsp" %>
 
-    <div id="heatmap" class="row stickem-container">
+    <div id="heatmap-anatomogram" class="heatmap-anatomogram-row stickem-container">
 
         <div id="anatomogram" class="aside stickem double-click-noselection">
             <table>

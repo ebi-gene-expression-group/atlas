@@ -81,7 +81,7 @@ var HeatmapContainer = (function (React) {
 
                         { this.props.experiment ? ExperimentDescription( {experiment: this.props.experiment} ) : null }
 
-                        <div id="heatmap" className="row stickem-container">
+                        <div id="heatmap-anatomogram" className="heatmap-anatomogram-row stickem-container">
 
                             { this.props.anatomogram ? Anatomogram( {anatomogram:this.props.anatomogram} ) : null}
 
