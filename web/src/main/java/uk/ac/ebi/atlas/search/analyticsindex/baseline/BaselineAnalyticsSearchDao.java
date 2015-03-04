@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriUtils;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,17 +36,19 @@ public class BaselineAnalyticsSearchDao {
         this.baselineHeatmapPivotQuery = "&json.facet=" + encodeQueryParam(baselineHeatmapPivotQuery);
     }
 
-    public String fetchExpressionLevelFaceted(String geneQuery) {
-        return fetchFacets("identifierSearch:" + geneQuery, DEFAULT_CUT_OFF);
-    }
-
-    public String fetchFacetsThatHaveExpression(String geneQuery) {
+    public String fetchFacetsThatHaveExpression(GeneQuery geneQuery) {
         //if needed, could improve perf by getting counts only, and not sum(expressionLevel) or unique(bioentity_identifier)
         return fetchExpressionLevelFaceted(geneQuery);
     }
 
-    public String fetchExpressionLevelFaceted(String geneQuery, String defaultQueryFactorType) {
-        return fetchFacets(String.format("identifierSearch:%s AND defaultQueryFactorType:%s", geneQuery, defaultQueryFactorType), DEFAULT_CUT_OFF);
+    String fetchExpressionLevelFaceted(GeneQuery geneQuery) {
+        String identifierSearch = geneQuery.asString(); //TODO: support multiple gene query terms
+        return fetchFacets("identifierSearch:" + identifierSearch, DEFAULT_CUT_OFF);
+    }
+
+    public String fetchExpressionLevelFaceted(GeneQuery geneQuery, String defaultQueryFactorType) {
+        String identifierSearch = geneQuery.asString(); //TODO: support multiple gene query terms
+        return fetchFacets(String.format("identifierSearch:%s AND defaultQueryFactorType:%s", identifierSearch, defaultQueryFactorType), DEFAULT_CUT_OFF);
     }
 
     String fetchFacets(String q, double cutOff) {

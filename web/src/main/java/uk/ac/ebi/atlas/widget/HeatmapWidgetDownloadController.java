@@ -36,6 +36,7 @@ import uk.ac.ebi.atlas.search.analyticsindex.baseline.BaselineAnalyticsSearchSer
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentProfileSearchService;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResult;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentSearchResultFormatter;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
@@ -85,7 +86,7 @@ public final class HeatmapWidgetDownloadController {
                                    HttpServletResponse response) throws IOException {
 
         String defaultFactorQueryType = StringUtils.isBlank(source) ? "ORGANISM_PART" : source;
-        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(geneQuery, species, defaultFactorQueryType);
+        BaselineExperimentSearchResult searchResult = baselineAnalyticsSearchService.findExpressions(GeneQuery.create(geneQuery), species, defaultFactorQueryType);
 
         if (!searchResult.isEmpty()) {
             setHttpHeaders(response, geneQuery + "_baseline.tsv");
