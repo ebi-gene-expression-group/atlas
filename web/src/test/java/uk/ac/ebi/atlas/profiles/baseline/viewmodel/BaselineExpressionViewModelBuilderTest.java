@@ -8,6 +8,7 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.model.baseline.Quartiles;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.utils.ColourGradient;
@@ -75,6 +76,51 @@ public class BaselineExpressionViewModelBuilderTest {
             "  }\n" +
         "]";
 
+
+        assertThat(json, is(expected));
+    }
+
+    @Test
+    public void buildExpressionViewModelWithQuartiles () {
+        BaselineProfile profile = new BaselineProfile("Factor_ID", "Factor_NAME");
+        profile.add("ORGANISM_PART", new BaselineExpression(NT, new FactorSet(ADIPOSE)));
+        profile.add("ORGANISM_PART", new BaselineExpression(Quartiles.create(0.1,0.2,0.3,0.4,0.5), new FactorSet(ADRENAL)));
+
+        BaselineExpressionViewModel[] expressions = subject.buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(expressions);
+
+        String expected = "[\n" +
+                "  {\n" +
+                "    \"factorName\": \"adipose\",\n" +
+                "    \"color\": \"\",\n" +
+                "    \"value\": \"NT\",\n" +
+                "    \"svgPathId\": \"ontologyTerm\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"factorName\": \"adrenal\",\n" +
+                "    \"color\": \"#C0C0C0\",\n" +
+                "    \"value\": \"0.3\",\n" +
+                "    \"quartiles\": {\n" +
+                "      \"min\": 0.1,\n" +
+                "      \"lower\": 0.2,\n" +
+                "      \"median\": 0.3,\n" +
+                "      \"upper\": 0.4,\n" +
+                "      \"max\": 0.5\n" +
+                "    }\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"factorName\": \"brain\",\n" +
+                "    \"color\": \"\",\n" +
+                "    \"value\": \"\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"factorName\": \"breast\",\n" +
+                "    \"color\": \"\",\n" +
+                "    \"value\": \"\"\n" +
+                "  }\n" +
+                "]";
 
         assertThat(json, is(expected));
     }

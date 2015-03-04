@@ -6,6 +6,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
+import uk.ac.ebi.atlas.model.baseline.Quartiles;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -111,7 +112,7 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
 
             if (!("FAIL".equalsIgnoreCase(expressionLevelString) || "LOWDATA".equalsIgnoreCase(expressionLevelString) ||
             "NA".equalsIgnoreCase(expressionLevelString))) {
-                Double expressionLevel = Double.parseDouble(expressionLevels[i]);
+                Double expressionLevel = expressionLevelString.contains(",") ? Quartiles.createFromCsvString(expressionLevelString).median() : Double.parseDouble(expressionLevels[i]);
                 if (expressionLevel != 0.0) {
                     builder.add(new BaselineAnalytics(geneId, assayGroupId, expressionLevel));
                 }

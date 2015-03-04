@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.collect.ImmutableList;
 import org.hamcrest.Matchers;
+import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +33,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.Quartiles;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.LinkedList;
@@ -148,6 +150,43 @@ public class ExpressionsRowDeserializerBaselineTest {
 
         baselineExpressionsQueue.reload("1");
     }
+
+    @Test
+    public void testQuartiles() {
+        String[] values = {"1,2,3,4,5", "0.1,0.2,0.3,0.4,0.5", "NA"};
+
+        Factor factor1 = new Factor("ORGANISM_PART", "lung");
+        Factor factor2 = new Factor("ORGANISM_PART", "liver");
+        Factor factor3 = new Factor("ORGANISM_PART", "brain");
+
+
+        FactorGroup factorGroup1 = new FactorSet(factor1);
+        FactorGroup factorGroup2 = new FactorSet(factor2);
+        FactorGroup factorGroup3 = new FactorSet(factor3);
+
+        List<FactorGroup> orderedFactorGroups = ImmutableList.of(factorGroup1, factorGroup2, factorGroup3);
+        subject = new ExpressionsRowDeserializerBaseline(orderedFactorGroups);
+
+        subject.reload(values);
+
+        BaselineExpression baselineExpression1 = subject.next();
+        BaselineExpression baselineExpression2 = subject.next();
+        BaselineExpression baselineExpression3 = subject.next();
+        assertThat(subject.next(), Is.is(nullValue()));
+
+        assertThat(baselineExpression1.getQuartiles().get(), is(Quartiles.create(1, 2, 3, 4, 5)));
+        assertThat(baselineExpression1.getLevel(), is(3D));
+        assertThat(baselineExpression1.getFactorGroup(), is(factorGroup1));
+
+        assertThat(baselineExpression2.getQuartiles().get(), is(Quartiles.create(0.1, 0.2, 0.3, 0.4, 0.5)));
+        assertThat(baselineExpression2.getLevel(), is(0.3D));
+        assertThat(baselineExpression2.getFactorGroup(), is(factorGroup2));
+
+        assertThat(baselineExpression3.getQuartiles().isPresent(), is(false));
+        assertThat(baselineExpression3.getLevelAsString(), is("NA"));
+        assertThat(baselineExpression3.getFactorGroup(), is(factorGroup3));
+    }
+
 
 
 }

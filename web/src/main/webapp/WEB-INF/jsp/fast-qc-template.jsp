@@ -59,8 +59,10 @@
     %>
 </div>
 
+<script src="${pageContext.request.contextPath}/resources/js/lib/query-string.js"></script>
+
 <script>
-    $(function () {
+    (function ($) {
 
         $(document).ready(function () {
 
@@ -72,8 +74,33 @@
                 $('#prefForm').submit();
             });
 
+
         });
 
-    });
+    })(jQuery);
+
+    (function ($, queryString) {
+
+        $(document).ready(function () {
+
+            var addAccessKeyToUrl = function (e) {
+                e.preventDefault();
+                var url = e.target.href;
+
+                var query = queryString.parse(window.location.search.slice(1));
+
+                if (query.accessKey) {
+                    url = url + "?accessKey=" + query.accessKey;
+                }
+
+                window.location = url;
+            };
+
+            $('#fast-qc-content').on('click', 'a', addAccessKeyToUrl);
+
+        });
+
+    })($, queryString);
+
 
 </script>

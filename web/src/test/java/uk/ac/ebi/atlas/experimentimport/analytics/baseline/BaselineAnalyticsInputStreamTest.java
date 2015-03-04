@@ -30,8 +30,8 @@ public class BaselineAnalyticsInputStreamTest {
     private static final String TSV_LINE_NO_EXPRESSION = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "0", "0", "0"});
     private static final String TSV_LINE_LOWDATA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "1", "LOWDATA", "0", "0"});
     private static final String TSV_LINE_FAIL = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "1", "FAIL", "0", "0"});
-
     private static final String TSV_LINE_NA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "NA", "1", "0"});
+    private static final String TSV_LINE_QUARTILES = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0,0,1,0,0", "0,0,2,0,0", "0,0,3,0,0", "0,0,4,0,0", "0,0,-0.00248510654802851,0,0"});
 
     private static String TSV_CONTENTS = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_1, TSV_LINE_2});
 
@@ -112,6 +112,30 @@ public class BaselineAnalyticsInputStreamTest {
         assertThat(subject.readNext(), is(line1g2));
         assertThat(subject.readNext(), is(nullValue()));
     }
+
+    @Test
+    public void readTsvLineWithQuartiles() throws IOException {
+        String tsvContents = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_QUARTILES});
+
+        Reader tsvSource = new StringReader(tsvContents);
+        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
+        BaselineAnalyticsInputStream subject = new BaselineAnalyticsInputStream(csvReader, "Test");
+
+        BaselineAnalytics line1g1 = new BaselineAnalytics(GENE_ID_1, "g1", 1.0);
+        BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 2.0);
+        BaselineAnalytics line1g3 = new BaselineAnalytics(GENE_ID_1, "g3", 3.0);
+        BaselineAnalytics line1g4 = new BaselineAnalytics(GENE_ID_1, "g4", 4.0);
+        BaselineAnalytics line1g5 = new BaselineAnalytics(GENE_ID_1, "g5", -0.00248510654802851);
+
+        assertThat(subject.readNext(), is(line1g1));
+        assertThat(subject.readNext(), is(line1g2));
+        assertThat(subject.readNext(), is(line1g3));
+        assertThat(subject.readNext(), is(line1g4));
+        assertThat(subject.readNext(), is(line1g5));
+
+        assertThat(subject.readNext(), is(nullValue()));
+    }
+
 
     @Test
     public void tryResourcesClosesUnderlyingReaderWhenFinished() throws IOException {

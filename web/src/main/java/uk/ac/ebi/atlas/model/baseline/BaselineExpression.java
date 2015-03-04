@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Optional;
 import uk.ac.ebi.atlas.model.Expression;
 
 import java.text.DecimalFormat;
@@ -34,18 +35,29 @@ public class BaselineExpression implements Expression {
     private final String levelString;
     private FactorGroup factorGroup;
     private final boolean known;
+    private final Optional<Quartiles> quartiles;
 
     public BaselineExpression(double level, FactorGroup factorGroup) {
+        this(level, factorGroup, Optional.<Quartiles>absent());
+    }
+
+    public BaselineExpression(Quartiles quartiles, FactorGroup factorGroup) {
+        this(quartiles.median(), factorGroup, Optional.of(quartiles));
+    }
+
+    private BaselineExpression(double level, FactorGroup factorGroup, Optional<Quartiles> quartiles) {
         this.level = level;
         this.factorGroup = factorGroup;
         this.levelString = removeTrailingZero(level);
         this.known = true;
+        this.quartiles = quartiles;
     }
 
     public BaselineExpression(String expressionLevelString, FactorGroup factorGroup) {
         this.levelString = expressionLevelString;
 
         switch (expressionLevelString) {
+            //TODO: remove FAIL, LOWDATA - no longer present in the input data
             case "FAIL":
             case "LOWDATA":
             case "NT":  //Non-Tissue
@@ -63,6 +75,11 @@ public class BaselineExpression implements Expression {
                 break;
         }
         this.factorGroup = factorGroup;
+        this.quartiles = Optional.absent();
+    }
+
+    public Optional<Quartiles> getQuartiles() {
+        return quartiles;
     }
 
     //ToDo: this method is only required by BarChartTraderBuilder and is just exposing internal data structure, maybe it should not be here.
@@ -134,4 +151,6 @@ public class BaselineExpression implements Expression {
                 .add("factorGroup", factorGroup)
                 .toString();
     }
+
+
 }

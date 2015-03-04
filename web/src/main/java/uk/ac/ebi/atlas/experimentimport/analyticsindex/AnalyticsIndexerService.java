@@ -25,10 +25,12 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline.BaselineAnalyticsIndexerService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.DiffAnalyticsIndexerService;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.MicroArrayDiffAnalyticsIndexerService;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
@@ -43,13 +45,17 @@ public class AnalyticsIndexerService {
     private final AnalyticsIndexDao analyticsIndexDao;
     private final BaselineAnalyticsIndexerService baselineAnalyticsIndexerService;
     private final DiffAnalyticsIndexerService diffAnalyticsIndexerService;
+    private final MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService;
+    //private final Micro
     private final ExperimentTrader experimentTrader;
 
     @Inject
-    public AnalyticsIndexerService(AnalyticsIndexDao analyticsIndexDao, BaselineAnalyticsIndexerService baselineAnalyticsIndexerService, DiffAnalyticsIndexerService diffAnalyticsIndexerService, ExperimentTrader experimentTrader) {
+    public AnalyticsIndexerService(AnalyticsIndexDao analyticsIndexDao, BaselineAnalyticsIndexerService baselineAnalyticsIndexerService, DiffAnalyticsIndexerService diffAnalyticsIndexerService, MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService, ExperimentTrader experimentTrader) {
         this.analyticsIndexDao = analyticsIndexDao;
         this.baselineAnalyticsIndexerService = baselineAnalyticsIndexerService;
         this.diffAnalyticsIndexerService = diffAnalyticsIndexerService;
+        this.microArrayDiffAnalyticsIndexerService = microArrayDiffAnalyticsIndexerService;
+
         this.experimentTrader = experimentTrader;
     }
 
@@ -70,6 +76,12 @@ public class AnalyticsIndexerService {
             return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment);
         } else if (experimentType == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
             return diffAnalyticsIndexerService.index((DifferentialExperiment) experiment);
+        } else if (experimentType == ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL) {
+            return microArrayDiffAnalyticsIndexerService.index((MicroarrayExperiment) experiment);
+        } else if (experimentType == ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL) {
+            return microArrayDiffAnalyticsIndexerService.index((MicroarrayExperiment) experiment);
+        } else if (experimentType == ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL) {
+            return microArrayDiffAnalyticsIndexerService.index((MicroarrayExperiment) experiment);
         } else if (experimentType.isMicroarray()) {
             throw new UnsupportedOperationException("No analytics loader for experiment type " + experimentType);
         }

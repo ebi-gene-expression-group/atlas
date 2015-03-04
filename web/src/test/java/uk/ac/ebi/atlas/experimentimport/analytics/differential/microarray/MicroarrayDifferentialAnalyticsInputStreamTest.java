@@ -81,8 +81,8 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
         MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
 
-        MicroarrayDifferentialAnalytics dto1 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, TSTAT_1);
-        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
+        MicroarrayDifferentialAnalytics dto1 = new MicroarrayDifferentialAnalytics(GENE_ID_1, DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, TSTAT_1);
+        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(GENE_ID_2, DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
 
         assertThat(subject.readNext(), is(dto1));
         assertThat(subject.readNext(), is(dto2));
@@ -95,8 +95,8 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
         MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
 
-        MicroarrayDifferentialAnalytics dto1 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, TSTAT_1);
-        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_1, CONTRAST_ID_2, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
+        MicroarrayDifferentialAnalytics dto1 = new MicroarrayDifferentialAnalytics(GENE_ID_1, DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, TSTAT_1);
+        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(GENE_ID_1, DESIGN_ELEMENT_1, CONTRAST_ID_2, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
 
         assertThat(subject.readNext(), is(dto1));
         assertThat(subject.readNext(), is(dto2));
@@ -109,7 +109,7 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
         MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
 
-        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
+        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(GENE_ID_2, DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
 
         assertThat(subject.readNext(), is(dto2));
         assertThat(subject.readNext(), is(nullValue()));
@@ -121,7 +121,7 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
         MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
 
-        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
+        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(GENE_ID_2, DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
 
         assertThat(subject.readNext(), is(dto2));
         assertThat(subject.readNext(), is(nullValue()));
@@ -133,7 +133,7 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
         MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
 
-        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
+        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(GENE_ID_2, DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, TSTAT_2);
 
         assertThat(subject.readNext(), is(dto2));
         assertThat(subject.readNext(), is(nullValue()));
@@ -145,8 +145,8 @@ public class MicroarrayDifferentialAnalyticsInputStreamTest {
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
         MicroarrayDifferentialAnalyticsInputStream subject = new MicroarrayDifferentialAnalyticsInputStream(csvReader, "Test");
 
-        MicroarrayDifferentialAnalytics dto1 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, Double.POSITIVE_INFINITY);
-        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, Double.NEGATIVE_INFINITY);
+        MicroarrayDifferentialAnalytics dto1 = new MicroarrayDifferentialAnalytics(GENE_ID_1, DESIGN_ELEMENT_1, CONTRAST_ID_1, P_VALUE_1, FOLD_CHANGE_1, Double.POSITIVE_INFINITY);
+        MicroarrayDifferentialAnalytics dto2 = new MicroarrayDifferentialAnalytics(GENE_ID_2, DESIGN_ELEMENT_2, CONTRAST_ID_1, P_VALUE_2, FOLD_CHANGE_2, Double.NEGATIVE_INFINITY);
 
         assertThat(subject.readNext(), is(dto1));
         assertThat(subject.readNext(), is(dto2));

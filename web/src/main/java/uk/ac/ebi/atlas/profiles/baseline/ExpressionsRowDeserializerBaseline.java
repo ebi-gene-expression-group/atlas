@@ -26,6 +26,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.Quartiles;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializer;
 
 import java.util.Iterator;
@@ -36,8 +37,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 public class ExpressionsRowDeserializerBaseline extends ExpressionsRowDeserializer<BaselineExpression> {
 
-    private final int expectedNumberOfValues;
-    private Iterator<FactorGroup> factorGroups;
+    final int expectedNumberOfValues;
+    Iterator<FactorGroup> factorGroups;
 
     public ExpressionsRowDeserializerBaseline(List<FactorGroup> orderedFactorGroups) {
         expectedNumberOfValues = orderedFactorGroups.size();
@@ -56,6 +57,12 @@ public class ExpressionsRowDeserializerBaseline extends ExpressionsRowDeserializ
 
         if (expressionLevelString == null) {
             return null;
+        }
+
+        if (expressionLevelString.contains(",")) {
+            Quartiles quartiles = Quartiles.createFromCsvString(expressionLevelString);
+
+            return new BaselineExpression(quartiles, factorGroups.next());
         }
 
         return new BaselineExpression(expressionLevelString, factorGroups.next());

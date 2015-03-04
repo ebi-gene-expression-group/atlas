@@ -1,10 +1,13 @@
 package uk.ac.ebi.atlas.experimentpage.fastqc;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -13,8 +16,11 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.Set;
 
@@ -36,9 +42,8 @@ public class FastQCReportController {
 
     private final FastQCReportUtil fastQCReportUtil;
     private ExperimentTrader experimentTrader;
-    private String reportSelected;
-    private String specieSelected;
 
+    private static final Logger LOGGER = Logger.getLogger(FastQCReportController.class);
 
     @Inject
     public FastQCReportController(FastQCReportUtil fastQCReportUtil, ExperimentTrader experimentTrader) {
@@ -70,7 +75,7 @@ public class FastQCReportController {
 
         model.addAttribute("allSpecies", experiment.getOrganisms());
 
-        reportSelected = preferences.getSelectedReport();
+        String reportSelected = preferences.getSelectedReport();
 
         if (StringUtils.isBlank(reportSelected)) {
             reportSelected = FastQCReportRequestPreferences.FastQCReportType.QC.toString();
@@ -89,7 +94,7 @@ public class FastQCReportController {
         preferences.setSelectedReport(reportSelected);
 
         //Specie selection
-        specieSelected = preferences.getSelectedSpecie();
+        String specieSelected = preferences.getSelectedSpecie();
         if(StringUtils.isBlank(specieSelected)) {
             specieSelected = species;
         }
@@ -143,7 +148,7 @@ public class FastQCReportController {
 
         model.addAttribute("allSpecies", experiment.getOrganisms());
 
-        reportSelected = preferences.getSelectedReport();
+        String reportSelected = preferences.getSelectedReport();
 
         if (StringUtils.isBlank(reportSelected)) {
             reportSelected = FastQCReportRequestPreferences.FastQCReportType.MAPPING.toString();
@@ -162,7 +167,7 @@ public class FastQCReportController {
         preferences.setSelectedReport(reportSelected);
 
         //Specie selection
-        specieSelected = preferences.getSelectedSpecie();
+        String specieSelected = preferences.getSelectedSpecie();
         if(StringUtils.isBlank(specieSelected)) {
             specieSelected = species;
         }
@@ -202,14 +207,7 @@ public class FastQCReportController {
                                       @RequestParam(value = "accessKey",required = false) String accessKey,
                                       @ModelAttribute("preferences") @Valid FastQCReportRequestPreferences preferences) throws IOException {
 
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
-        prepareModel(request, model, experiment);
-
-        model.addAttribute("fastQCReports", preferences.fastQCReportsList());
-
-        model.addAttribute("allSpecies", experiment.getOrganisms());
-
-        reportSelected = preferences.getSelectedReport();
+        String reportSelected = preferences.getSelectedReport();
 
         if (StringUtils.isBlank(reportSelected)) {
             reportSelected = FastQCReportRequestPreferences.FastQCReportType.QC.toString();
@@ -228,7 +226,7 @@ public class FastQCReportController {
         preferences.setSelectedReport(reportSelected);
 
         //Specie selection
-        specieSelected = preferences.getSelectedSpecie();
+        String specieSelected = preferences.getSelectedSpecie();
         if(StringUtils.isBlank(specieSelected)) {
             specieSelected = species;
         }
@@ -247,19 +245,35 @@ public class FastQCReportController {
         String endPath = extractPath(request.getServletPath());
 
         //We need to check if the resource is an image or icon and handle it to the correspondent path
-        String file = endPath.substring(endPath.lastIndexOf("/") + 1);
-        if(!file.equals("fastqc_report.html")){
+        String fileName = endPath.substring(endPath.lastIndexOf("/") + 1);
+        if(!fileName.equals("fastqc_report.html")){
             return forwardToFastQCReportMappingResources(experimentAccession, species, endPath);
         }
 
         String fullPath = beginPath + "/" + endPath;
-        request.setAttribute("contentPath", FileSystems.getDefault().getPath(fullPath));
+        Path path = FileSystems.getDefault().getPath(fullPath);
+
+        if (!Files.exists(path)) {
+            throw new FileNotFoundException(fullPath + " does not exist");
+        }
+
+        //NB: by looking up the experiment at the end, we improve performance the other resources (eg: images)
+        // that don't need the experiment, however we made it possible for those resources from private experiments
+        // to become accessible publically - an acceptable tradeoff for now.
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
+        prepareModel(request, model, experiment);
+
+        model.addAttribute("fastQCReports", preferences.fastQCReportsList());
+
+        model.addAttribute("allSpecies", experiment.getOrganisms());
+
+        request.setAttribute("contentPath", path);
 
         return "fast-qc-template";
     }
 
     private String extractPath(String path) {
-        return path.substring(path.indexOf("raw_data"));
+        return path.substring(path.indexOf("riq/") + 4);
     }
 
     // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
@@ -291,5 +305,21 @@ public class FastQCReportController {
 
         return splitStr.length > 1 ? splitStr[0] + "_" + splitStr[1] : species;
     }
+
+
+    @ExceptionHandler(value = FileNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ModelAndView handleFileNotFound(Exception e) {
+        LOGGER.error(e.getMessage(), e);
+        return new ModelAndView("error-page");
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ModelAndView handleAllOtherExceptions(Exception e) {
+        LOGGER.error(e.getMessage(), e);
+        return new ModelAndView("error-page");
+    }
+
 
 }
