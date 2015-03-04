@@ -77,7 +77,7 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a {
     text-align: center;
 }
 
-#atlas-content td, th {
+#atlas-content td, #atlas-content th {
     vertical-align: inherit;
     border: none;
     margin: 0px;
