@@ -26,7 +26,7 @@ public abstract class SearchController {
 
     public void addSearchHeader(GeneQuerySearchRequestParameters requestParameters, Model model) {
         GeneQuery geneQuery = requestParameters.getGeneQuery();
-        ImmutableSet<String> experimentTypes = analyticsSearchDao.fetchExperimentTypes(geneQuery.asString());
+        ImmutableSet<String> experimentTypes = analyticsSearchDao.fetchExperimentTypes(geneQuery);
 
         model.addAttribute("hasBaselineResults", ExperimentType.containsBaseline(experimentTypes));
         model.addAttribute("hasDifferentialResults", ExperimentType.containsDifferential(experimentTypes));

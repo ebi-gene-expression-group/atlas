@@ -9,6 +9,7 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import uk.ac.ebi.atlas.solr.SolrUtil;
+import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,7 +28,7 @@ public class AnalyticsSearchDao {
     }
 
 
-    public ImmutableSet<String> fetchExperimentTypes(String geneQuery) {
+    public ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery) {
 
         QueryResponse queryResponse = query(buildQuery(geneQuery));
 
@@ -50,8 +51,9 @@ public class AnalyticsSearchDao {
         }
     }
 
-    private SolrQuery buildQuery(String geneQuery) {
-        SolrQuery solrQuery = new SolrQuery("identifierSearch:" + geneQuery);
+    private SolrQuery buildQuery(GeneQuery geneQuery) {
+        String identifierSearch = geneQuery.asString(); //TODO: support multiple gene query terms
+        SolrQuery solrQuery = new SolrQuery("identifierSearch:" + identifierSearch);
         solrQuery.setRows(0);
         solrQuery.setFilterQueries(ABOVE_CUTOFF);
         solrQuery.setFacet(true);
