@@ -76,7 +76,8 @@ CREATE INDEX RNASEQ_DIFF_ANALYTICS_IDX ON RNASEQ_DIFF_ANALYTICS (EXPERIMENT, CON
    , PARTITION  DIFF_ANALYTICS_INACTIVE TABLESPACE ATLASPRD3_INDX
 );
 
--- Differential analitics across all types of experiments, with additional gene name and organism information
+-- Differential analitics across all types of experiments, with additional gene name and organism information, restricted to FDR<0.05 and log2fold>=1
+-- Used by the UI
 DROP MATERIALIZED VIEW VW_DIFFANALYTICS;
 CREATE MATERIALIZED VIEW VW_DIFFANALYTICS
 NOLOGGING PARALLEL 16
@@ -102,6 +103,32 @@ join EXPERIMENT_ORGANISM eo on o.name = eo.bioentity_organism and eo.experiment 
 where abs(rda.LOG2FOLD) >= 1;
 
 exec dbms_mview.refresh( 'VW_DIFFANALYTICS', 'C' );
+
+-- Differential analitics across all types of experiments, with additional gene name and organism information, restricted to FDR<0.05 only
+-- Used to generate a data dump at Atlas release time
+DROP MATERIALIZED VIEW VW_DIFFANALYTICS_DUMP;
+CREATE MATERIALIZED VIEW VW_DIFFANALYTICS_DUMP
+NOLOGGING PARALLEL 16
+BUILD DEFERRED
+REFRESH COMPLETE ON DEMAND
+ENABLE QUERY REWRITE AS
+select IDENTIFIER, NAME, ORGANISM, EXPERIMENT, CONTRASTID, PVAL, LOG2FOLD, TSTAT
+from (
+select dem.IDENTIFIER, bn.NAME AS NAME, o.NAME AS ORGANISM, mda.EXPERIMENT, mda.CONTRASTID, mda.PVAL, mda.LOG2FOLD, mda.TSTAT
+,rank() over(partition by mda.EXPERIMENT, mda.CONTRASTID, dem.IDENTIFIER order by(abs(mda.LOG2FOLD)) desc) as lfrank
+from MICROARRAY_DIFF_ANALYTICS subpartition( BELOW_DEFAULT_FDR ) mda
+join DESIGNELEMENT_MAPPING dem on mda.designelement=dem.designelement and mda.arraydesign = dem.arraydesign
+join BIOENTITY_NAME bn on dem.identifier=bn.identifier
+join BIOENTITY_ORGANISM o on bn.organismid = o.organismid
+) where lfrank = 1
+union all
+select rda.IDENTIFIER, bn.NAME AS NAME, o.name AS ORGANISM, rda.EXPERIMENT, rda.CONTRASTID, rda.PVAL, rda.LOG2FOLD, null
+from RNASEQ_DIFF_ANALYTICS subpartition( BELOW_DEFAULT_FDR ) rda
+join BIOENTITY_NAME bn on rda.IDENTIFIER=bn.identifier
+join BIOENTITY_ORGANISM o on bn.organismid = o.organismid
+join EXPERIMENT_ORGANISM eo on o.name = eo.bioentity_organism and eo.experiment = rda.experiment
+
+exec dbms_mview.refresh( 'VW_DIFFANALYTICS_DUMP', 'C' );
 
 
 -- RNA-seq baseline analytics
