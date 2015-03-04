@@ -32,7 +32,7 @@ var facetsDifferentialModule = (function ($, React) {
             //},
 
             render: function () {
-                var facetsRows = Object.keys(this.props.facets).map(function (facet) {
+                var facets = Object.keys(this.props.facets).map(function (facet) {
                     return <Facet facetName={facet} facetCategories={this.props.facets[facet]}
                                     checkedCategories={this.props.checkedFacets && this.props.checkedFacets[facet]}
                                     //setChecked={this._setChecked}
@@ -41,7 +41,7 @@ var facetsDifferentialModule = (function ($, React) {
 
                 return (
                     <span>
-                        {facetsRows}
+                        {facets}
                     </span>
                 );
             }
@@ -52,7 +52,7 @@ var facetsDifferentialModule = (function ($, React) {
                 facetName: React.PropTypes.string.isRequired,
 
                 // eg: [ {"name": "rnaseq_mrna_differential", "value": "RNA-seq mRNA"}, {"name": "microarray_1colour_mrna_differential", "value": "1 colour mRNA"} ]
-                facetCategories: React.PropTypes.arrayOf(React.PropTypes.shape({
+                facetItems: React.PropTypes.arrayOf(React.PropTypes.shape({
                     name: React.PropTypes.string.isRequired,
                     value: React.PropTypes.string.isRequired
                 })).isRequired,
@@ -66,9 +66,9 @@ var facetsDifferentialModule = (function ($, React) {
             //},
 
             render: function () {
-                var categoriesRows = this.props.facetCategories.map(function (category) {
-                    return <Category name={category.name} value={category.value}
-                        checked={this.props.checkedCategories && this.props.checkedCategories[category.name]}
+                var facetItems = this.props.facetItems.map(function (facetItem) {
+                    return <FacetItem name={facetItem.name} value={facetItem.value}
+                        checked={this.props.checkedCategories && this.props.checkedCategories[facetItem.name]}
                         //setChecked={this._setChecked}
                     />;
 
@@ -79,13 +79,13 @@ var facetsDifferentialModule = (function ($, React) {
                         <div>
                             <span>{this.props.facetName}</span>
                         </div>
-                    {categoriesRows}
+                    {facetItems}
                     </span>
                 );
             }
         });
 
-        var Category = React.createClass({
+        var FacetItem = React.createClass({
 
             //_setChecked: function () {
             //    this.props.setChecked(!this.props.checked, this.props.name);
