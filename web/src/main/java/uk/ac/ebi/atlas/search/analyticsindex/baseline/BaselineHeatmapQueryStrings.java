@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Configuration
-public class BaselineHeatmapPivotQuery {
+public class BaselineHeatmapQueryStrings {
 
     @Value("classpath:baseline.heatmap.pivot.query.json")
     private Resource baselineHeatmapPivotQuery;
