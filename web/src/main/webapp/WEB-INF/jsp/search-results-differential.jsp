@@ -91,12 +91,14 @@
 
 <script>
 
-    var facetsData = ${jsonFacets};
+    var facetsData = ${empty jsonFacets ? 'null' : jsonFacets};
 
     (function (DifferentialRouter, facetsData) {
 
-        DifferentialRouter( document.getElementById('facets'),
-                document.getElementById('results'), facetsData);
+        if (facetsData) {
+            DifferentialRouter(document.getElementById('facets'),
+                    document.getElementById('results'), facetsData);
+        }
 
     })(DifferentialRouter, facetsData);
 

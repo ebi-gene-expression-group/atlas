@@ -98,12 +98,14 @@
 
     <%--var facetsData = <%@ include file="includes/facets-data.jsp" %>;--%>
 
-    var facetsData = ${jsonFacets};
+    var facetsData = ${empty jsonFacets ? 'null' : jsonFacets};
 
     (function (HeatmapsRouter, facetsData) {
 
-        HeatmapsRouter( document.getElementById('facets'),
-                document.getElementById('heatmaps'), facetsData);
+        if (facetsData) {
+            HeatmapsRouter(document.getElementById('facets'),
+                    document.getElementById('heatmaps'), facetsData);
+        }
 
     })(HeatmapsRouter, facetsData);
 
