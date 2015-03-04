@@ -841,7 +841,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
         function formatBaselineExpression(expressionLevel) {
             var numberExpressionLevel = +expressionLevel;
-            return (numberExpressionLevel >= 100000) ? formatScientificNotation(numberExpressionLevel.toExponential(1).replace('+','')) : '' + numberExpressionLevel;
+            return (numberExpressionLevel >= 100000 || numberExpressionLevel < 0.1) ? formatScientificNotation(numberExpressionLevel.toExponential(1).replace('+','')) : '' + numberExpressionLevel;
         }
 
         var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, formatBaselineExpression) {

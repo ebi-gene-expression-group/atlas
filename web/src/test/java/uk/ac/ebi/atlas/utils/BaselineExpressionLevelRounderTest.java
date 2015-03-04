@@ -13,6 +13,7 @@ public class BaselineExpressionLevelRounderTest {
     @Test
     public void formatBaselineExpressionLevel_SmallValues() {
         assertThat(subject.format(0.9), is("0.9"));
+        assertThat(subject.format(0.05176479), is("0.0517648"));
         assertThat(subject.format(0.90), is("0.9"));
         assertThat(subject.format(0.95), is("1"));
 
