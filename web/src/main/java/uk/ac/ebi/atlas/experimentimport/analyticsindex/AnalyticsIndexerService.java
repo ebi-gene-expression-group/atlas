@@ -76,15 +76,12 @@ public class AnalyticsIndexerService {
             return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment);
         } else if (experimentType == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
             return diffAnalyticsIndexerService.index((DifferentialExperiment) experiment);
-        } else if (experimentType == ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL) {
+        } else if (experimentType == ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL ||
+                   experimentType == ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL ||
+                   experimentType == ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL) {
             return microArrayDiffAnalyticsIndexerService.index((MicroarrayExperiment) experiment);
-        } else if (experimentType == ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL) {
-            return microArrayDiffAnalyticsIndexerService.index((MicroarrayExperiment) experiment);
-        } else if (experimentType == ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL) {
-            return microArrayDiffAnalyticsIndexerService.index((MicroarrayExperiment) experiment);
-        } else if (experimentType.isMicroarray()) {
-            throw new UnsupportedOperationException("No analytics loader for experiment type " + experimentType);
         }
+
         throw new UnsupportedOperationException("No analytics loader for experiment type " + experimentType);
     }
 
