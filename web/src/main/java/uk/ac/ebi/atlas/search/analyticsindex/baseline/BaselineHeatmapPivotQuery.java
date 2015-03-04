@@ -10,14 +10,14 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Configuration
-public class AnalyticsSearchFacetsJson {
+public class BaselineHeatmapPivotQuery {
 
-    @Value("classpath:analytics.search.facets.json")
-    private Resource analyticsSearchFacetsJson;
+    @Value("classpath:baseline.heatmap.pivot.query.json")
+    private Resource baselineHeatmapPivotQuery;
 
     @Bean
-    public String analyticsSearchJsonFacet() {
-        try (InputStream inputStream = analyticsSearchFacetsJson.getInputStream()) {
+    public String baselineHeatmapPivotQuery() {
+        try (InputStream inputStream = baselineHeatmapPivotQuery.getInputStream()) {
             return IOUtils.toString(inputStream);
         } catch (IOException e) {
             throw new IllegalStateException(e);
