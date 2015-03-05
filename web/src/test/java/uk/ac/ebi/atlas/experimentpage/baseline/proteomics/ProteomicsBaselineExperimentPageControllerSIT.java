@@ -53,7 +53,7 @@ public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixtu
 
         assertThat(subject.getGeneProfile(RHBDD2).get(FRONTAL_CORTEX), is("9.5 × 106"));
 
-        assertThat(subject.getHeatmapLegendMinLevels(), contains("0"));
+        assertThat(subject.getHeatmapLegendMinLevels(), contains("4.3 × 10-6"));
         assertThat(subject.getHeatmapLegendMaxLevels(), contains("9.8 × 107"));
     }
 
