@@ -31,7 +31,10 @@ import java.util.Set;
 
 public class BaselineProfileComparator implements Comparator<BaselineProfile> {
 
-    private static final double CUTOFF_DIVISOR_DEFAULT_VALUE = 0.09;
+    // This value is just smaller than the smallest non-zero value we allow,
+    // c.f. FRACTIONAL_DIGITS_FOR_VALUE_SMALLER_THAN_ZEROPOINTONE in
+    // BaselineExpressionLevelRounder class
+    private static final double CUTOFF_DIVISOR_DEFAULT_VALUE = 0.00000009;
 
     private boolean isSpecific;
     private Set<Factor> selectedQueryFactors;

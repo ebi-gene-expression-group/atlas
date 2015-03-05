@@ -173,7 +173,7 @@ public class BaselineProfileComparatorTest {
         subject = new BaselineProfileComparator(false, selectedOrganismParts, allOrganismParts, 0d);
 
         double averageExpressionLevel = subject.getExpressionLevelFoldChange(geneWithSpecificity1);
-        assertThat(averageExpressionLevel, is(55.55555555555556));
+        assertThat(averageExpressionLevel, is(5.555555555555556E7));
 
     }
 
