@@ -33,14 +33,14 @@ var facetsDifferentialModule = (function ($, React) {
 
             render: function () {
                 var facets = Object.keys(this.props.facets).map(function (facet) {
-                    return Facet({facetName: facet, facetCategories: this.props.facets[facet], 
-                                    checkedCategories: this.props.checkedFacets && this.props.checkedFacets[facet]}
+                    return Facet({key: facet, facetName: facet, facetItems: this.props.facets[facet], 
+                                  checkedCategories: this.props.checkedFacets && this.props.checkedFacets[facet]}
                                     //setChecked={this._setChecked}
                     );
                 }.bind(this));
 
                 return (
-                    React.DOM.span(null, 
+                    React.DOM.ul(null, 
                         facets
                     )
                 );
@@ -67,7 +67,7 @@ var facetsDifferentialModule = (function ($, React) {
 
             render: function () {
                 var facetItems = this.props.facetItems.map(function (facetItem) {
-                    return FacetItem({name: facetItem.name, value: facetItem.value, 
+                    return FacetItem({key: facetItem.name, name: facetItem.name, value: facetItem.value, 
                         checked: this.props.checkedCategories && this.props.checkedCategories[facetItem.name]}
                         //setChecked={this._setChecked}
                     );
@@ -75,11 +75,11 @@ var facetsDifferentialModule = (function ($, React) {
                 }.bind(this));
 
                 return (
-                    React.DOM.span(null, 
-                        React.DOM.div(null, 
-                            React.DOM.span(null, this.props.facetName)
-                        ), 
-                    facetItems
+                    React.DOM.li({className: "facet"}, 
+                        React.DOM.span(null, this.props.facetName), 
+                        React.DOM.ul({className: "facetItems"}, 
+                            facetItems
+                        )
                     )
                 );
             }
@@ -93,11 +93,9 @@ var facetsDifferentialModule = (function ($, React) {
 
             render: function () {
                 return (
-                    React.DOM.div(null, 
-                        React.DOM.input({type: "checkbox", checked: this.props.checked ? true : false}
+                    React.DOM.li(null, React.DOM.input({type: "checkbox", checked: this.props.checked ? true : false}
                             //onChange={this._setChecked}
-                        ), " ", this.props.value
-                    )
+                    ), this.props.value)
                 );
             }
         });

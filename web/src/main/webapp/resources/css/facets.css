@@ -1,0 +1,9 @@
+#facets ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li.facet {
+    padding: 0 0 10px 0;
+}
