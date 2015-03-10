@@ -65,6 +65,7 @@ public class BioEntitiesPage extends BioEntityPage {
         return 3;
     }
 
+    @Deprecated // use getBaselineResults() because this method includes gene info card properties
     public List<BaselineBioEntitiesSearchResult> getBaselineCounts() {
         List<BaselineBioEntitiesSearchResult> baselineCounts = Lists.newArrayList();
 
@@ -86,17 +87,45 @@ public class BioEntitiesPage extends BioEntityPage {
 
     }
 
+    public List<BaselineBioEntitiesSearchResult> getBaselineResultsWithoutSpecies() {
+        return getBaselineResults(false);
+    }
+
+    public List<BaselineBioEntitiesSearchResult> getBaselineResults() {
+        return getBaselineResults(true);
+    }
+
+    public List<BaselineBioEntitiesSearchResult> getBaselineResults(boolean hasSpecies) {
+        List<BaselineBioEntitiesSearchResult> baselineCounts = Lists.newArrayList();
+
+        By byBaselineCountsTableId = By.id("baselineCountsTable");
+        FluentWait wait = new WebDriverWait(driver, 25L).pollingEvery(20, TimeUnit.MILLISECONDS);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(byBaselineCountsTableId));
+
+        List<WebElement> linkElements = driver.findElements(By.cssSelector("#baselineCountsTable .bioEntityCardLink"));
+
+        for (WebElement linkElement : linkElements) {
+            baselineCounts.add(buildBaselineEntityCount(linkElement, null, hasSpecies));
+        }
+
+        return baselineCounts;
+    }
+
     public List<WebElement> getBaselineCountElements() {
         return driver.findElements(By.className("bioEntityCardLink"));
     }
 
     private BaselineBioEntitiesSearchResult buildBaselineEntityCount(WebElement linkElement, WebElement countElement) {
+        return buildBaselineEntityCount(linkElement, countElement, true);
+    }
+
+    private BaselineBioEntitiesSearchResult buildBaselineEntityCount(WebElement linkElement, WebElement countElement, boolean hasSpecies) {
 
         String linkText = linkElement.getText();
         String linkHref = linkElement.getAttribute("href");
 
-        String species = StringUtils.substringBefore(linkText, " - ").trim();
-        String experimentName = StringUtils.substringAfter(linkText, " - ").trim();
+        String species = hasSpecies ? StringUtils.substringBefore(linkText, " - ").trim() : null;
+        String experimentName = hasSpecies ? StringUtils.substringAfter(linkText, " - ").trim() : linkText.trim();
 
         String experimentAccession = StringUtils.substringAfterLast(linkHref, "/");
         experimentAccession = StringUtils.substringBeforeLast(experimentAccession, "?");

@@ -117,8 +117,16 @@ public class BaselineExperimentAssayGroup implements Comparable<BaselineExperime
 
     @Override
     public String toString() {
+        return descriptionWithSpecies();
+    }
+
+    public String descriptionWithSpecies() {
+        return species + " - " + description();
+    }
+
+    public String description() {
         StringBuilder sb = new StringBuilder();
-        sb.append(species).append(" - ").append(experimentName);
+        sb.append(experimentName);
         if (!filterFactors.isEmpty() && !filterFactors.containsOnlyOrganism()) {
             sb.append(" - ").append(filterFactorsConverter.prettyPrint(filterFactors));
         }
