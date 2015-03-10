@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class SpeciesEnsemblTraderIT {
+public class SpeciesKingdomTraderIT {
 
     @Inject
     private SpeciesKingdomTrader subject;
