@@ -83,17 +83,24 @@
 
         $(document).ready(function () {
 
+            function startsWith(str, test) {
+                return str.lastIndexOf(test, 0) === 0;
+            }
+
             var addAccessKeyToUrl = function (e) {
-                e.preventDefault();
                 var url = e.target.href;
+                if (!startsWith(url, "javascript")) {
+                    e.preventDefault();
 
-                var query = queryString.parse(window.location.search.slice(1));
 
-                if (query.accessKey) {
-                    url = url + "?accessKey=" + query.accessKey;
+                    var query = queryString.parse(window.location.search.slice(1));
+
+                    if (query.accessKey) {
+                        url = url + "?accessKey=" + query.accessKey;
+                    }
+
+                    window.location = url;
                 }
-
-                window.location = url;
             };
 
             $('#fast-qc-content').on('click', 'a', addAccessKeyToUrl);
