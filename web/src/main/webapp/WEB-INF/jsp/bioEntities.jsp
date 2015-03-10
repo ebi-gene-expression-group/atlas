@@ -209,7 +209,8 @@
                 <c:when test="${showWidget}">
                     <div class="ui-corner-all bioEntityCardDifferentialSummary">
                         <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
-                        <span style="float: right">Expression Level cut-off: 0.5</span>
+                        <span style="float: right">Within Sample Abundance (Proteomics) > 0</span>
+                        <span style="float: center">FPKM (Transcriptomics) > 0.5</span>
                     </div>
                     <div id="widgetBody"></div>
 
