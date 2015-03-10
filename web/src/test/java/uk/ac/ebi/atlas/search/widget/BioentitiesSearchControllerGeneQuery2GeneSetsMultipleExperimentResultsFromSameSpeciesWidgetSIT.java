@@ -42,7 +42,7 @@ public class BioentitiesSearchControllerGeneQuery2GeneSetsMultipleExperimentResu
     @Test
     public void baselinePaneResultsMessage() {
         assertThat(subject.isBaselinePaneExpanded(), is(true));
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results found"));
     }
 
     @Test

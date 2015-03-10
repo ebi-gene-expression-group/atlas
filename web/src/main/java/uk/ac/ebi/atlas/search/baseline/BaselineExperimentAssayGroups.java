@@ -1,6 +1,9 @@
 package uk.ac.ebi.atlas.search.baseline;
 
+import com.google.common.collect.ImmutableSet;
+
 import java.util.Iterator;
+import java.util.Set;
 import java.util.SortedSet;
 
 public final class BaselineExperimentAssayGroups {
@@ -31,6 +34,19 @@ public final class BaselineExperimentAssayGroups {
             }
         }
         return false;
+    }
+
+
+    public static ImmutableSet<BaselineExperimentAssayGroup> selectNonTissueExperiments(Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups) {
+        ImmutableSet.Builder<BaselineExperimentAssayGroup> builder = ImmutableSet.builder();
+
+        for (BaselineExperimentAssayGroup beag : baselineExperimentAssayGroups) {
+            if (!beag.isTissueExperiment()) {
+                builder.add(beag);
+            }
+        }
+
+        return builder.build();
     }
 
 }
