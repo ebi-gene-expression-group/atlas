@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -80,6 +81,7 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
         when(experimentSlice2.nonFilterFactors()).thenReturn(nonFilterFactors_EMPTY);
         when(experimentSlice2.experimentAccession()).thenReturn("EXP2");
         when(experimentSlice2.experimentDisplayName()).thenReturn("EXP2NAME");
+        when(experimentSlice2.getExperimentType()).thenReturn(ExperimentType.PROTEOMICS_BASELINE);
 
         profile1 = new BaselineExperimentProfile(experimentSlice1);
         profile2 = new BaselineExperimentProfile(experimentSlice2);

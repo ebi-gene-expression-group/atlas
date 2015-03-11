@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.baseline;
 
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.web.FilterFactorsConverter;
@@ -10,6 +11,8 @@ public class BaselineExperimentProfile extends BaselineProfile implements Compar
 
     private final Integer nonFilterFactorsSize;
 
+    private ExperimentType experimentType;
+
     private FilterFactorsConverter filterFactorsConverter = new FilterFactorsConverter();
 
 
@@ -17,6 +20,7 @@ public class BaselineExperimentProfile extends BaselineProfile implements Compar
         super(experimentSlice.experimentAccession(), experimentSlice.experimentDisplayName());
         filterFactors = experimentSlice.filterFactors();
         nonFilterFactorsSize = experimentSlice.nonFilterFactors().size();
+        experimentType = experimentSlice.getExperimentType();
     }
 
     public FactorGroup getFilterFactors() {
@@ -37,5 +41,9 @@ public class BaselineExperimentProfile extends BaselineProfile implements Compar
             sb.append(" - ").append(filterFactorsConverter.prettyPrint(filterFactors));
         }
         return sb.toString();
+    }
+
+    public String getExperimentType() {
+        return experimentType.toString();
     }
 }
