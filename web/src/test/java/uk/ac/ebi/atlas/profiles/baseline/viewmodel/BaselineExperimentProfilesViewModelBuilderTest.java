@@ -75,13 +75,14 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
         when(experimentSlice1.nonFilterFactors()).thenReturn(experiment1nonFilterFactors);
         when(experimentSlice1.experimentAccession()).thenReturn("EXP1");
         when(experimentSlice1.experimentDisplayName()).thenReturn("EXP1NAME");
+        when(experimentSlice1.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
 
         when(experimentSlice2.experiment()).thenReturn(experiment2);
         when(experimentSlice2.filterFactors()).thenReturn(EMPTY_FACTOR_SET);
         when(experimentSlice2.nonFilterFactors()).thenReturn(nonFilterFactors_EMPTY);
         when(experimentSlice2.experimentAccession()).thenReturn("EXP2");
         when(experimentSlice2.experimentDisplayName()).thenReturn("EXP2NAME");
-        when(experimentSlice2.getExperimentType()).thenReturn(ExperimentType.PROTEOMICS_BASELINE);
+        when(experimentSlice2.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
 
         profile1 = new BaselineExperimentProfile(experimentSlice1);
         profile2 = new BaselineExperimentProfile(experimentSlice2);
@@ -104,6 +105,7 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "    {\n" +
                 "      \"id\": \"EXP1\",\n" +
                 "      \"name\": \"EXP1NAME\",\n" +
+                "      \"experimentType\": \"RNASEQ_MRNA_BASELINE\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
@@ -132,6 +134,7 @@ public class BaselineExperimentProfilesViewModelBuilderTest {
                 "    {\n" +
                 "      \"id\": \"EXP2\",\n" +
                 "      \"name\": \"EXP2NAME\",\n" +
+                "      \"experimentType\": \"RNASEQ_MRNA_BASELINE\",\n" +
                 "      \"expressions\": [\n" +
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
