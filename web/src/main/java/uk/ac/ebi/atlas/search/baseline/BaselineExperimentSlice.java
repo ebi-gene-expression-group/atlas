@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.baseline;
 
 import com.google.auto.value.AutoValue;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
@@ -32,6 +33,10 @@ public abstract class BaselineExperimentSlice {
 
     public String experimentDisplayName() {
         return experiment().getDisplayName();
+    }
+
+    public ExperimentType getExperimentType() {
+        return experiment().getType();
     }
 
 }

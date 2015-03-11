@@ -689,7 +689,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
             profileRowType: function (profile)  {
                 return (type.isMultiExperiment ?
-                    <GeneProfileRow id={profile.id} name={profile.name} expressions={profile.expressions} serializedFilterFactors={profile.serializedFilterFactors} displayLevels={this.props.displayLevels} />
+                    <GeneProfileRow id={profile.id} name={profile.name} experimentType={profile.experimentType} expressions={profile.expressions} serializedFilterFactors={profile.serializedFilterFactors} displayLevels={this.props.displayLevels} />
                     :
                     <GeneProfileRow selected={profile.id === this.state.selectedGeneId} selectGene={this.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles}/>
                 );
@@ -733,11 +733,12 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     var experimentURL = '/experiments/' + this.props.id + '?geneQuery=' + geneQuery + (this.props.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(this.props.serializedFilterFactors) : "");
                     var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + isExactMatch : '/genes/' + this.props.id;
 
+
                     var url = (type.isMultiExperiment ? experimentURL : geneURL);
 
                     // don't render id for gene sets to prevent tooltips
                     return (
-                        <a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked}>{this.props.name}</a>
+                        <div className="icon icon-conceptual icon-c2" data-icon={type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}><a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked}>{this.props.name}</a></div>
                         );
                 },
 
@@ -786,7 +787,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     return (
                         <tr>
                             <td className={className} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
-                                { enableGeneLinks ? this.geneNameLinked() : this.geneNameNotLinked()}
+                                { enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked()}
                                 {showSelectTextOnHover}
                                 {showTickWhenSelected}
                             </td>

@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%--
@@ -26,6 +25,12 @@
 <%--@elvariable id="preferences" type="uk.ac.ebi.atlas.web.ExperimentPageRequestPreferences"--%>
 <%--@elvariable id="requestParameters" type="uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters"--%>
 
+
+<%@ attribute name="exactMatch" required="true" type="java.lang.Boolean"%>
+<%@ attribute name="geneQuery" required="true" type="uk.ac.ebi.atlas.web.GeneQuery"%>
+<%@ attribute name="baselineCounts" required="true" type="java.lang.Iterable"%>
+<%@ attribute name="hideSpecies" type="java.lang.Boolean"%>
+
 <c:set var="base" value="${pageContext.request.contextPath}"/>
 <c:if test="${not empty preferences.rootContext}">
     <c:set var="base" value="${preferences.rootContext}"/>
@@ -38,14 +43,22 @@
         <table id="baselineCountsTable">
             <tbody>
                 <%--@elvariable id="baselineResult" type="uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup"--%>
-                <c:forEach var="baselineResult" items="${baselineCounts}">
+                <c:forEach var="baselineResult" items="${baselineCounts}"><%--@elvariable id="filterFactorsConverter" type="uk.ac.ebi.atlas.web.FilterFactorsConverter"--%>
                 
                     <tr>
                         <td>
                             <a class="bioEntityCardLink"
                                    href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
                                title="experiment">
-                                    ${baselineResult}
+                                <c:choose>
+                                    <c:when test="${hideSpecies}">
+                                        ${baselineResult.description()}
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${baselineResult.descriptionWithSpecies()}
+                                    </c:otherwise>
+                                </c:choose>
+
                             </a>
                         </td>
                         <%-- We don't show counts for now --%>

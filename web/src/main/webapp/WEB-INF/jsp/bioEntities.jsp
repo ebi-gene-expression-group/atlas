@@ -175,9 +175,16 @@
             <span class="bioEntityCardBioentityName">Baseline Expression</span>
             <c:choose>
                 <c:when test="${showWidget}">
-                        <span style="margin-left: 10px; margin-top:10px">
-                          Results in tissues
-                        </span>
+                     <span style="margin-left: 10px; margin-top:10px">
+                        <c:choose>
+                            <c:when test="${not empty baselineCounts}">
+                                Results found
+                            </c:when>
+                            <c:otherwise>
+                                Results in tissues
+                            </c:otherwise>
+                        </c:choose>
+                    </span>
                 </c:when>
                 <c:otherwise>
                     <c:choose>
@@ -202,13 +209,23 @@
                 <c:when test="${showWidget}">
                     <div class="ui-corner-all bioEntityCardDifferentialSummary">
                         <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
-                        <span style="float: right">Expression Level cut-off: 0.5</span>
+                        <span style="float: right">Within Sample Abundance (Proteomics) > 0</span>
+                        <span style="float: center">FPKM (Transcriptomics) > 0.5</span>
                     </div>
                     <div id="widgetBody"></div>
+
+
+                    <c:if test="${not empty baselineCounts}">
+                        <section class="grid_17 alpha extra-padding">
+                            <h5 style="padding: 0px">Other baseline experiments</h5>
+                            <h:baseline-search-results exactMatch="${exactMatch}" baselineCounts="${baselineCounts}" geneQuery="${geneQuery}" hideSpecies="true"/>
+                        </section>
+                    </c:if>
+
                 </c:when>
 
                 <c:otherwise>
-                    <c:import url="baseline-search-results.jsp"/>
+                    <h:baseline-search-results exactMatch="${exactMatch}" baselineCounts="${baselineCounts}" geneQuery="${geneQuery}"/>
                 </c:otherwise>
             </c:choose>
         </div>

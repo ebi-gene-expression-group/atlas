@@ -24,7 +24,7 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<%@ attribute name="geneProfiles" required="true" type="java.util.ArrayList"%>
+<%@ attribute name="geneProfiles" required="true" type="java.util.List"%>
 <%@ attribute name="type" required="true"%>
 
 <c:choose>

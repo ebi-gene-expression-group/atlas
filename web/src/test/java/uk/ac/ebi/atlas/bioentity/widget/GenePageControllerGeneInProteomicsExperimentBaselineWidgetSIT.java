@@ -53,7 +53,7 @@ public class GenePageControllerGeneInProteomicsExperimentBaselineWidgetSIT exten
 
     @Test
     public void baselineWidgetGenes() {
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results found"));
 
         subject.waitForHeatmapToBeVisible();
 

@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.hamcrest.core.StringEndsWith.endsWith;
 import static org.junit.Assert.assertThat;
 
@@ -46,8 +47,8 @@ public class BaselineAnalyticsSearchDaoIT {
         assertThat(count, hasSize(1));
         assertThat(count.get(0), is(greaterThan(300000)));
         assertThat(species, contains("homo sapiens"));
-        assertThat(sourcesForHomoSapiens, contains("ORGANISM_PART", "CELL_LINE"));
-        assertThat(experimentsForHomoSapiensOrganismPart, contains("E-MTAB-1733", "E-MTAB-513"));
+        assertThat(sourcesForHomoSapiens, hasItems("ORGANISM_PART", "CELL_LINE"));
+        assertThat(experimentsForHomoSapiensOrganismPart, hasItems("E-MTAB-1733", "E-MTAB-513"));
     }
 
 }

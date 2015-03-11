@@ -54,6 +54,8 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import java.util.*;
 
+import static uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroups.selectNonTissueExperiments;
+
 public abstract class BioEntityPageController {
 
     protected static final String PROPERTY_TYPE_DESCRIPTION = "description";
@@ -211,6 +213,7 @@ public abstract class BioEntityPageController {
             addBaselineCounts(geneIds, model);
         } else {
             addWidget(model);
+            addBaselineCountsForNonTissueExperiments(geneIds, model);
         }
     }
 
@@ -223,6 +226,12 @@ public abstract class BioEntityPageController {
         model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
     }
 
+    void addBaselineCountsForNonTissueExperiments(Set<String> geneIds, Model model) {
+        Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.queryAnySpecies(geneIds, Optional.<String>absent());
+
+        ImmutableSet<BaselineExperimentAssayGroup> nonTissueExperiments = selectNonTissueExperiments(baselineExperimentAssayGroups);
+        model.addAttribute("baselineCounts", nonTissueExperiments);
+    }
 
     String fetchSpecies(String identifier) {
         return speciesLookupService.fetchSpeciesForBioentityId(identifier);
