@@ -62,7 +62,7 @@
                     <c:set var="speciesIconCode" value="5"/>
                 </c:when>
                 <c:when test="${specie == 'Macaca mulatta'}">
-                    <c:set var="speciesIconCode" value=""/>
+                    <c:set var="speciesIconCode" value="r"/>
                 </c:when>
                 <c:when test="${specie == 'Monodelphis domestica'}">
                     <c:set var="speciesIconCode" value="9"/>
