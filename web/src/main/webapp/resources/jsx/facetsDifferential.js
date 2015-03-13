@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 
 /*global React */
-var facetsDifferentialModule = (function ($, React) {
+var facetsDifferentialModule = (function (React) {
 
-    var build = function build(facetsConfig, eventEmitter) {
+    var build = function () {
 
         var Facets = React.createClass({displayName: 'Facets',
             propTypes: {
@@ -103,13 +103,10 @@ var facetsDifferentialModule = (function ($, React) {
         return {
             Facets: Facets
         };
-
     };
 
     return {
-        build: function (facetsConfig) {
-            return build(facetsConfig, new EventEmitter());
-        }
+        build: build
     };
 
-})(jQuery, React, EventEmitter);
+})(React);

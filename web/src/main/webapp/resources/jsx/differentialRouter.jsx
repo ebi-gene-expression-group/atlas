@@ -1,12 +1,12 @@
 //var React = require('react');
 
-//var DifferentialRouter = (function (React, queryString, facetsDifferentialModule, DifferentialResults) {
-
-var DifferentialRouter = (function (React, queryString, facetsDifferentialModule) {
+var DifferentialRouter = (function (React, queryString, facetsDifferentialModule, differentialResultsModule) {
 
     var Facets = facetsDifferentialModule.build().Facets;
 
-    return function (facetsElement, resultsElement, facetData) {
+    var DifferentialResults = differentialResultsModule.build().DifferentialResults;
+
+    return function (facetsElement, resultsElement, facetData, results) {
 
         //TODO: add this outside the module, when module is first loaded
         window.addEventListener('popstate', renderPage, false);
@@ -26,10 +26,9 @@ var DifferentialRouter = (function (React, queryString, facetsDifferentialModule
                 facetsElement
             );
 
-            // TODO React.renderComponent(differentialResults...)
-            //React.renderComponent(Heatmaps({geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query)}),
-            //    resultsElement
-            //);
+            React.renderComponent(DifferentialResults({diffResultsData: results}),
+                resultsElement
+            );
 
             //function setChecked(checked, species, factor) {
             //    var newSelect = checked ? addSelection(query.select, species, factor) : removeSelection(query.select, species, factor);
@@ -114,4 +113,4 @@ var DifferentialRouter = (function (React, queryString, facetsDifferentialModule
 
     }
 
-})(React, window.queryString, facetsDifferentialModule);
+})(React, window.queryString, facetsDifferentialModule, differentialResultsModule);

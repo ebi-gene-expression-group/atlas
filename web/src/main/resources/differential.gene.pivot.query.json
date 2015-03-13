@@ -1,0 +1,24 @@
+{
+  "species": {
+    "terms": {
+      "field": "species",
+      "facet": {
+        "experimentAccession": {
+          "terms": {
+            "field": "experimentAccession",
+            "facet": {
+              "contrastId": {
+                "terms": {
+                  "field": "contrastId",
+                  "facet": {
+                    "geneCount": "unique(bioentity_identifier)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

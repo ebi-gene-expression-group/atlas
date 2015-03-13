@@ -8,8 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDao;
-import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,24 +15,23 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
+/**
+ * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 11/03/15.
+ */
+
 @RunWith(MockitoJUnitRunner.class)
-public class SearchDifferentialControllerTest {
+public class DifferentialAnalyticsSearchServiceTest {
 
-    SearchDifferentialController subject;
-
-    @Mock
-    EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder;
+    DifferentialAnalyticsSearchService subject;
 
     @Mock
-    AnalyticsSearchDao analyticsSearchDao;
+    DifferentialAnalyticsFacetsReader differentialAnalyticsFacetsReader;
 
     @Mock
     DifferentialAnalyticsSearchDao differentialAnalyticsSearchDao;
 
-
     @Test
     public void test() {
-
         ImmutableMultimap<String, NameValue> facets = ImmutableMultimap.<String, NameValue>builder()
                 .putAll("species", ImmutableList.of(NameValue.create("homo sapiens", "Homo sapiens"), NameValue.create("arabidopsis thaliana")))
                 .put("experimentType", NameValue.create("rnaseq_mrna_differential"))
@@ -44,7 +41,7 @@ public class SearchDifferentialControllerTest {
                 .build();
 
         when(differentialAnalyticsSearchDao.fetchFacets(any(GeneQuery.class))).thenReturn(facets);
-        subject = new SearchDifferentialController(ebiGlobalSearchQueryBuilder, analyticsSearchDao, differentialAnalyticsSearchDao);
+        subject = new DifferentialAnalyticsSearchService(differentialAnalyticsSearchDao, differentialAnalyticsFacetsReader);
 
         String expected = "{\n" +
                 "  \"species\": [\n" +
@@ -84,8 +81,6 @@ public class SearchDifferentialControllerTest {
                 "}";
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        assertThat(subject.fetchFacetsAsJson(GeneQuery.create("dummy"), gson), is(expected));
+        assertThat(subject.fetchDifferentialGeneQueryFacetsAsJson(GeneQuery.create("dummy"), gson), is(expected));
     }
-
-
 }
