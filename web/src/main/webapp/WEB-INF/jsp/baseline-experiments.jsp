@@ -106,7 +106,7 @@
                 <c:when test="${specie == 'Zea mays'}">
                     <c:set var="speciesIconCode" value="5"/>
                 </c:when>
-                <c:when test="${specie == 'Xenopus (Silurana) tropicalis'}">
+                <c:when test="${specie == 'Xenopus tropicalis'}">
                     <c:set var="speciesIconCode" value="f"/>
                 </c:when>
                 <c:otherwise>
