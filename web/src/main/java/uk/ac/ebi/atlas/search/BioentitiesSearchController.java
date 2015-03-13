@@ -87,14 +87,14 @@ public class BioentitiesSearchController {
 
         String geneQuery = requestParameters.getGeneQuery().asString().trim();
 
-        String selectedSpecie = "";
+        String selectedSpecies = "";
         if(requestParameters.hasOrganism()) {
-            selectedSpecie = requestParameters.getOrganism().trim();
+            selectedSpecies = requestParameters.getOrganism().trim();
         }
 
         if (requestParameters.hasGeneQuery() && !requestParameters.hasCondition()) {
             //If Query just for a single bioentityID
-            Optional<String> geneIdRedirectString = getGeneIdRedirectString(geneQuery, selectedSpecie, requestParameters.isExactMatch());
+            Optional<String> geneIdRedirectString = getGeneIdRedirectString(geneQuery, selectedSpecies, requestParameters.isExactMatch());
             if (geneIdRedirectString.isPresent()) {
                 return geneIdRedirectString.get();
             }
@@ -106,7 +106,7 @@ public class BioentitiesSearchController {
 
         String condition = efoExpander.addEfoAccessions(requestParameters.getConditionQuery()).asString();
 
-        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQuery, condition, selectedSpecie.toLowerCase(), requestParameters.isExactMatch());
+        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.query(geneQuery, condition, selectedSpecies.toLowerCase(), requestParameters.isExactMatch());
 
         boolean showWidget = hasAllSameSpecies(baselineExperimentAssayGroups) && hasAnyTissueExperiment(baselineExperimentAssayGroups) & !requestParameters.hasCondition();
 
@@ -120,7 +120,7 @@ public class BioentitiesSearchController {
         }
 
         // used to populate diff-heatmap-table
-        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(geneQuery, condition, selectedSpecie, requestParameters.isExactMatch());
+        DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(geneQuery, condition, selectedSpecies, requestParameters.isExactMatch());
 
         model.addAttribute("bioentities", bioentityExpressions);
 
