@@ -53,46 +53,25 @@
     /** @jsx React.DOM */
 
     /*global React */
-    var varianceData =  {
-            "id": "ENSG00000047315",
-            "name": "POLR2B",
-            "expressions": [
-                {
-                    "factorName": "adipose",
-                    "color": "UNKNOWN",
-                    "value": "UNKNOWN",
-                    "svgPathId": "ontologyTerm"
-                },
-                {
-                    "factorName": "adrenal",
-                    "color": "#0000FF",
-                    "value": "47",
-                    "quartiles": {"min":9.0,"lower":10.0,"median":11.0,"upper":11.0,"max":12.0}
-                }
-                ,
-                {
-                    "factorName": "brain",
-                    "color": "",
-                    "value": ""
-                },
-                {
-                    "factorName": "breast",
-                    "color": "#4A4AC0",
-                    "value": "25"
-                }
-            ]
-    };
+    var expression =  {
+            "factorName": "adipose",
+            "color": "UNKNOWN",
+            "value": "UNKNOWN",
+            "quartiles": {"min":9.0,"lower":10.0,"median":11.0,"upper":11.0,"max":12.0}
+        };
 
-    (function ($, React, baselineVarianceModule, varianceData) {
 
-        var variance = baselineVarianceModule.build(varianceData);
 
-        React.renderComponent(variance.Variance( {expressions: varianceData} ),
+    (function ($, React, baselineVarianceModule, expression) {
+
+        var cellBaselineExpression = baselineVarianceModule.build(expression);
+
+        React.renderComponent(cellBaselineExpression.CellBaselineExpression( {quartiles: expression} ),
                 document.getElementById('variance')
         );
 
 
-    })(jQuery, React, baselineVarianceModule, varianceData.expressions);
+    })(jQuery, React, baselineVarianceModule, expression.quartiles);
 
 
 </script>

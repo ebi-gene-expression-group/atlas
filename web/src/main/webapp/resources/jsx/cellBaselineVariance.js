@@ -6,36 +6,23 @@
 
 var baselineVarianceModule  = (function ($, React) {
 
-    var build = function build(expressions) {
+    var build = function build(expression) {
 
-        var Variance =  React.createClass({displayName: 'Variance',
-
-            render: function () {
-                var expressionRow = this.props.expressions.map(function (expression) {
-                    return Expression( {expression:expression, quartiles:expression.quartiles} )
-                }.bind(this));
-
-                return (
-                    React.DOM.div(null,  " ", expressionRow, " " )
-
-                );
-            }
-
-        });
-
-        var Expression = React.createClass({displayName: 'Expression',
+        var CellBaselineExpression = React.createClass({displayName: 'CellBaselineExpression',
 
             render: function () {
-
-                var style = {"height": "400px", "margin": "auto", "min-width": "400px", "max-width": "600px"};
+                var boxPlotStyle = {"height": "400px", "margin": "auto", "min-width": "400px", "max-width": "600px"};
 
                 return (
 
-                    React.DOM.div( {id:"container", style:style})
+                    React.DOM.td(null, 
+                        React.DOM.div( {id:"container", style:boxPlotStyle})
+                    )
+
+
 
                 );
             },
-
 
             componentDidMount: function () {
                 if(this.props.quartiles) {
@@ -51,6 +38,20 @@ var baselineVarianceModule  = (function ($, React) {
 
                         legend: {
                             enabled: false
+                        },
+
+                        xAxis: {
+                            //categories: ['1', '2', '3', '4', '5'],
+                            title: {
+                                text: 'Variance'
+                            }
+                        },
+
+                        yAxis: {
+                            title: {
+                                text: 'Observations'
+                            }
+
                         },
 
                         plotOptions: {
@@ -84,14 +85,14 @@ var baselineVarianceModule  = (function ($, React) {
         });
 
         return {
-            Variance: Variance
+            CellBaselineExpression: CellBaselineExpression
         };
 
     };
 
     return {
-        build: function (expressions) {
-            return build(expressions);
+        build: function (expression) {
+            return build(expression);
         }
     };
 
