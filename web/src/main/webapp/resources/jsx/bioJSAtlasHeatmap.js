@@ -4,7 +4,7 @@
 var BioJSAtlasHeatmap = (function(React) {
 
     return React.createClass({
-    //    <Heatmaps gxaBaseUrl='/gxa/' heatmapsParams={[
+    //    <Heatmaps gxaBaseUrl='/gxa/' geneQuery='blood' heatmaps={[
     //    {
     //        // Data for first heatmap
     //        "geneQuery": "blood",
@@ -18,9 +18,7 @@ var BioJSAtlasHeatmap = (function(React) {
     //        "factor": "CELL_LINE"
     //    }
     //    ]} />
-    //    <BioJsAtlasHeatmap ….. />
 
-        //TODO The string this.props.widgetParameters must be built from this.props.species and this.props.factor
         componentDidMount: function() {
             new Biojs.AtlasHeatmap({
                 gxaBaseUrl: this.props.gxaBaseUrl,
