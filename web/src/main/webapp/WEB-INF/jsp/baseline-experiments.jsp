@@ -91,6 +91,9 @@
                 <c:when test="${specie == 'Pan troglodytes'}">
                     <c:set var="speciesIconCode" value="i"/>
                 </c:when>
+                <c:when test="${specie == 'Papio anubis'}">
+                    <c:set var="speciesIconCode" value="8"/>
+                </c:when>
                 <c:when test="${specie == 'Pongo pygmaeus'}">
                     <c:set var="speciesIconCode" value=""/>
                 </c:when>
