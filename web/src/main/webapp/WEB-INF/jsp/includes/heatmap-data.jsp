@@ -21,7 +21,7 @@
     <c:otherwise>
         {
             <%--
-            //TODO: extract ensemlb genome launcher config parameters (ensemblDB, columnType etc.) out into separate object
+            //TODO: extract ensembl genome launcher config parameters (ensemblDB, columnType etc.) out into separate object
             //TODO: remove enableGeneLinks parameter
             //TODO: investigate why showMaPlotButton is always true
             //TODO: break into common params, differential params, and baseline and multiexperiment params (if any)
