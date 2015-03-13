@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 
 /*global React */
-var facetsModule = (function ($, React) {
+var facetsModule = (function (React) {
 
-    var build = function build(facetsConfig, eventEmitter) {
+    var build = function build() {
 
         var Facets = React.createClass({
             propTypes: {
@@ -30,7 +30,7 @@ var facetsModule = (function ($, React) {
 
             render: function () {
                 var speciesRows = Object.keys(this.props.facets).map(function (species) {
-                    return <Species species={species} sources={this.props.facets[species]}
+                    return <Species key={species} species={species} sources={this.props.facets[species]}
                                     checkedSources={this.props.checkedFacets && this.props.checkedFacets[species]}
                                     setChecked={this._setChecked}
                     />;
@@ -64,8 +64,7 @@ var facetsModule = (function ($, React) {
 
             render: function () {
                 var sourcesRows = this.props.sources.map(function (source) {
-                    return <Source factor={source.factor}
-                        name={source.source}
+                    return <Source key={this.props.species + source.factor} factor={source.factor} name={source.source}
                         checked={this.props.checkedSources && this.props.checkedSources[source.factor]}
                         setChecked={this._setChecked}
                     />;
@@ -106,9 +105,7 @@ var facetsModule = (function ($, React) {
     };
 
     return {
-        build: function (facetsConfig) {
-            return build(facetsConfig, new EventEmitter());
-        }
+        build: build
     };
 
-})(jQuery, React, EventEmitter);
+})(React);
