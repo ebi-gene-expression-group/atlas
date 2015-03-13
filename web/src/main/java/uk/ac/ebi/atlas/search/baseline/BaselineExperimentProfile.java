@@ -28,9 +28,21 @@ public class BaselineExperimentProfile extends BaselineProfile implements Compar
     }
 
     @Override
+    /**
+     * RNA-seq experiments should come before other types of baseline experiments;
+     * Within the same experiment type, the experiments with more conditions with expressions in them should come to the top.
+     * If the number of conditions with expression is the same, the sorting should be alphabetic - by the experiment display name.
+     */
     public int compareTo(BaselineExperimentProfile other) {
+        int experimentTypeComparison =
+                this.experimentType == other.experimentType ?
+                        0 : (this.experimentType == ExperimentType.RNASEQ_MRNA_BASELINE ? -1 : 1);
         int comparison = (other.nonFilterFactorsSize).compareTo(this.nonFilterFactorsSize);
-        return (comparison != 0) ? comparison : (this.getName().compareTo(other.getName()));
+        if (experimentTypeComparison != 0) {
+            return experimentTypeComparison;
+        } else {
+            return (comparison != 0) ? comparison : (this.getName().compareTo(other.getName()));
+        }
     }
 
     @Override

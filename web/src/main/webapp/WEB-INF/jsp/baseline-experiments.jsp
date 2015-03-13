@@ -19,81 +19,114 @@
   ~
   ~ http://gxa.github.com/gxa
   --%>
+<!-- blue icon 5bc0de-->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="species-navigation" id="species-nav">
+<div class="grid_24" id="species-nav">
+
+    <!-- Simple page header -->
+    <div class="container">
+        <div class="page-header">
+            <h2>Browse baseline experiments</h2>
+            <p>These datasets show baseline gene expression for many different tissues and cell types from a wide range of species,
+                from human and mouse to Arabidopsis and maize. In Expression Atlas, "baseline" expression is the expression level of
+                each gene in normal, untreated conditions. All baseline experiments are either RNA-seq or proteomics data. Each RNA-seq experiment is manually
+                curated to a high standard, and expression levels are calculated using the <a href="https://code.google.com/p/irap/">iRAP</a> pipeline.
+            </p>
+        </div>
+    </div>
+    <!-- /Simple page header -->
 
     <c:forEach items="${experimentAccessionsBySpecies.keySet()}" var="specie">
 
-        <div class="item" style="width: 200px;">
-            <img src="resources/images/home/${specie}.png" width="40" height="40"
-                 class="circle"/>
-            <a href="#" class="species-icon"></a>
+        <div class="grid_6 specie_item">
 
-            <div class="specie_experiment">
-                <h2>${specie}</h2>
-                <ul>
-                    <c:forEach items="${experimentAccessionsBySpecies.get(specie)}" var="experimentAccession">
+            <c:choose>
+                <c:when test="${specie == 'Anolis carolinensis'}">
+                <c:set var="speciesIconCode" value="7"/>
+                </c:when>
+                <c:when test="${specie == 'Arabidopsis thaliana'}">
+                    <c:set var="speciesIconCode" value="B"/>
+                </c:when>
+                <c:when test="${specie == 'Bos taurus'}">
+                    <c:set var="speciesIconCode" value="C"/>
+                </c:when>
+                <c:when test="${specie == 'Caenorhabditis elegans'}">
+                    <c:set var="speciesIconCode" value="W"/>
+                </c:when>
+                <c:when test="${specie == 'Gallus gallus'}">
+                    <c:set var="speciesIconCode" value="k"/>
+                </c:when>
+                <c:when test="${specie == 'Gorilla gorilla'}">
+                    <c:set var="speciesIconCode" value="G"/>
+                </c:when>
+                <c:when test="${specie == 'Homo sapiens'}">
+                    <c:set var="speciesIconCode" value="H"/>
+                </c:when>
+                <c:when test="${specie == 'Hordeum vulgare subsp. vulgare'}">
+                    <c:set var="speciesIconCode" value="5"/>
+                </c:when>
+                <c:when test="${specie == 'Macaca mulatta'}">
+                    <c:set var="speciesIconCode" value="r"/>
+                </c:when>
+                <c:when test="${specie == 'Monodelphis domestica'}">
+                    <c:set var="speciesIconCode" value="9"/>
+                </c:when>
+                <c:when test="${specie == 'Mus musculus'}">
+                    <c:set var="speciesIconCode" value="M"/>
+                </c:when>
+                <c:when test="${specie == 'Mus musculus'}">
+                    <c:set var="speciesIconCode" value="M"/>
+                </c:when>
+                <c:when test="${specie == 'Mus musculus'}">
+                    <c:set var="speciesIconCode" value="M"/>
+                </c:when>
+                <c:when test="${specie == 'Oryza sativa Japonica Group'}">
+                    <c:set var="speciesIconCode" value="6"/>
+                </c:when>
+                <c:when test="${specie == 'Pan paniscus'}">
+                    <c:set var="speciesIconCode" value="i"/>
+                </c:when>
+                <c:when test="${specie == 'Pan troglodytes'}">
+                    <c:set var="speciesIconCode" value="i"/>
+                </c:when>
+                <c:when test="${specie == 'Papio anubis'}">
+                    <c:set var="speciesIconCode" value="8"/>
+                </c:when>
+                <c:when test="${specie == 'Pongo pygmaeus'}">
+                    <c:set var="speciesIconCode" value=""/>
+                </c:when>
+                <c:when test="${specie == 'Rattus norvegicus'}">
+                    <c:set var="speciesIconCode" value="R"/>
+                </c:when>
+                <c:when test="${specie == 'Tetraodon nigroviridis'}">
+                    <c:set var="speciesIconCode" value="E"/>
+                </c:when>
+                <c:when test="${specie == 'Zea mays'}">
+                    <c:set var="speciesIconCode" value="5"/>
+                </c:when>
+                <c:when test="${specie == 'Xenopus (Silurana) tropicalis'}">
+                    <c:set var="speciesIconCode" value="f"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="speciesIconCode" value=""/>
+                </c:otherwise>
+            </c:choose>
+
+                <h3>${specie}</h3>
+                <span class="icon icon-species" data-icon="${speciesIconCode}"></span>
+                <ul style="list-style:none;padding-left:0; margin-left:0;">
+                    <c:forEach items="${experimentAccessionsBySpecies.get(specie)}" begin="0" end="20" var="experimentAccession">
                         <c:set var="key" value="${experimentAccession}${specie}"/>
                         <li>
-                            <a href="experiments/${experimentAccession}${experimentLinks.get(key)}">${experimentDisplayNames.get(experimentAccession)}</a>
+                            <a href="experiments/${experimentAccession}${experimentLinks.get(key)}" style="color:#337ab7; border-bottom: none;">
+                            ${experimentDisplayNames.get(experimentAccession)}</a>
                         </li>
                     </c:forEach>
                 </ul>
-            </div>
+
         </div>
     </c:forEach>
 
 </div>
-
-<div class="wordcloud">
-    <img src="resources/images/home/centre_landing1.png"/>
-</div>
-
-<!-- The JavaScript -->
-
-
-<script type="text/javascript">
-
-    /*
-     drawEllipse()
-     selector : a jQuery selector defining an element or array of elements
-     x: the left offset of all points on the ellipse
-     y: the top offset of all points on the ellipse
-     a: the height of the ellipse
-     b: the width of the ellipse
-     angle: the angle of the ellipse
-     Sample usage:
-     CSS: .box { background-color:red; height:60px; width:60px;  position:absolute; margin:5px;}
-     JS:drawEllipse(".box", 230,300, 200, 350, 360);
-     */
-    function drawEllipse(selector, x, y, a, b, angle) {
-        var steps = $(selector).length;
-        var i = 0;
-        var beta = -angle * (Math.PI / 180);
-        var sinbeta = Math.sin(beta);
-        var cosbeta = Math.cos(beta);
-        $(selector).each(function (index) {
-            i += (360 / steps);
-            var alpha = i * (Math.PI / 180);
-            var sinalpha = Math.sin(alpha);
-            var cosalpha = Math.cos(alpha);
-            var X = x + (a * cosalpha * cosbeta - b * sinalpha * sinbeta);
-            var Y = y + (a * cosalpha * sinbeta + b * sinalpha * cosbeta);
-            X = Math.floor(X);
-            Y = Math.floor(Y);
-            //again, here's where the important X and Y coordinates
-            //are being output
-            $(this).css('margin-top', X + 'px');
-            $(this).css('margin-left', Y + 'px');
-        });
-    }
-
-    $(document).ready(function () {
-        // x and y offset is vice versa!
-        drawEllipse('.item', 240, 350, 230, 440, 180);
-
-    });
-
-</script>
