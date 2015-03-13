@@ -46,6 +46,12 @@
                 <c:when test="${specie == 'Anolis carolinensis'}">
                 <c:set var="speciesIconCode" value="7"/>
                 </c:when>
+                <c:when test="${specie == 'Arabidopsis thaliana'}">
+                    <c:set var="speciesIconCode" value="B"/>
+                </c:when>
+                <c:when test="${specie == 'Bos taurus'}">
+                    <c:set var="speciesIconCode" value="C"/>
+                </c:when>
                 <c:when test="${specie == 'Caenorhabditis elegans'}">
                     <c:set var="speciesIconCode" value="W"/>
                 </c:when>
@@ -93,6 +99,9 @@
                 </c:when>
                 <c:when test="${specie == 'Tetraodon nigroviridis'}">
                     <c:set var="speciesIconCode" value="E"/>
+                </c:when>
+                <c:when test="${specie == 'Zea mays'}">
+                    <c:set var="speciesIconCode" value="5"/>
                 </c:when>
                 <c:when test="${specie == 'Xenopus (Silurana) tropicalis'}">
                     <c:set var="speciesIconCode" value="f"/>
