@@ -31,8 +31,8 @@
             <h2>Browse baseline experiments</h2>
             <p>These datasets show baseline gene expression for many different tissues and cell types from a wide range of species,
                 from human and mouse to Arabidopsis and maize. In Expression Atlas, "baseline" expression is the expression level of
-                each gene in normal, untreated conditions. All baseline experiments are either RNA-seq or proteomics data. Each RNA-seq experiment is manually
-                curated to a high standard, and expression levels are calculated using the <a href="https://code.google.com/p/irap/">iRAP</a> pipeline.
+                each gene in normal, untreated conditions. All baseline experiments are either RNA-seq or proteomics data. Each experiment is manually
+                curated to a high standard, and RNA expression levels are calculated using the <a href="https://code.google.com/p/irap/">iRAP</a> pipeline.
             </p>
         </div>
     </div>
@@ -79,9 +79,6 @@
                 <c:when test="${specie == 'Mus musculus'}">
                     <c:set var="speciesIconCode" value="M"/>
                 </c:when>
-                <c:when test="${specie == 'Mus musculus'}">
-                    <c:set var="speciesIconCode" value="M"/>
-                </c:when>
                 <c:when test="${specie == 'Oryza sativa Japonica Group'}">
                     <c:set var="speciesIconCode" value="6"/>
                 </c:when>
@@ -106,7 +103,7 @@
                 <c:when test="${specie == 'Zea mays'}">
                     <c:set var="speciesIconCode" value="5"/>
                 </c:when>
-                <c:when test="${specie == 'Xenopus (Silurana) tropicalis'}">
+                <c:when test="${specie == 'Xenopus tropicalis'}">
                     <c:set var="speciesIconCode" value="f"/>
                 </c:when>
                 <c:otherwise>

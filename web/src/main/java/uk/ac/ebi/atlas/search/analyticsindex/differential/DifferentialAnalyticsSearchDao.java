@@ -1,7 +1,9 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
+import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.google.gson.JsonArray;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
@@ -10,22 +12,41 @@ import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriUtils;
 import uk.ac.ebi.atlas.web.GeneQuery;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.MessageFormat;
+import java.util.concurrent.TimeUnit;
 
 @Named
 public class DifferentialAnalyticsSearchDao {
-    public static final String DIFFERENTIAL_ONLY = "experimentType:rnaseq_mrna_differential OR experimentType:microarray_1colour_mrna_differential or experimentType:microarray_2colour_mrna_differential or experimentType:microarray_1colour_microrna_differential";
 
     private static final Logger LOGGER = Logger.getLogger(DifferentialAnalyticsSearchDao.class);
 
+    public static final String DIFFERENTIAL_ONLY = "experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential)";
+    private static final String QUERY_TEMPLATE = "query?q={0}&rows=0&omitHeader=true";
+    private final RestTemplate restTemplate;
+
     private SolrServer analyticsSolrServer;
+    private String solrBaseUrl;
+    private final String differentialGenePivotQuery;
 
     @Inject
-    public DifferentialAnalyticsSearchDao(@Qualifier("analyticsSolrServer") SolrServer analyticsSolrServer) {
+    // TODO Move buildQuery to json.facet and implement using restTemplate to remove analyticsSolrServer
+    public DifferentialAnalyticsSearchDao(RestTemplate restTemplate, @Value("#{configuration['solr.analytics.base.url']}") String solrBaseUrl, @Qualifier("analyticsSolrServer") SolrServer analyticsSolrServer, String differentialGenePivotQuery) {
+        this.restTemplate = restTemplate;
         this.analyticsSolrServer = analyticsSolrServer;
+        this.solrBaseUrl = solrBaseUrl;
+        this.differentialGenePivotQuery = "&json.facet=" + encodeQueryParam(differentialGenePivotQuery);
     }
 
 
@@ -43,8 +64,6 @@ public class DifferentialAnalyticsSearchDao {
             for (FacetField.Count facetFieldCount : facetField.getValues()) {
                 builder.put(name, NameValue.create(facetFieldCount.getName(), facetFieldCount.getName()));
             }
-
-
         }
         return builder.build();
 
@@ -64,6 +83,7 @@ public class DifferentialAnalyticsSearchDao {
         }
     }
 
+    // TODO implement using restTemplate
     private SolrQuery buildQuery(GeneQuery geneQuery) {
 
         String identifierSearch = geneQuery.asString(); //TODO support multiple gene queries
@@ -84,5 +104,53 @@ public class DifferentialAnalyticsSearchDao {
         return solrQuery;
     }
 
+    String fetchDifferentialGeneQueryResults(GeneQuery geneQuery) {
+        return fetchDifferentialResults(buildGeneIdentifierQuery(geneQuery));
+    }
 
+    String buildGeneIdentifierQuery(GeneQuery geneQuery) {
+        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(\"%s\")", StringUtils.join(geneQuery.terms(), "\" OR \""));
+    }
+
+    private String fetchDifferentialResults(String q) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
+        String result = fetchResponseAsString(buildDifferentialOnlyQueryUrl(q));
+
+        stopwatch.stop();
+
+        LOGGER.debug(String.format("fetchDifferentialGeneResults q=%s took %.2f seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+        return result;
+    }
+
+    String buildDifferentialOnlyQueryUrl(String q) {
+        String query = q.isEmpty() ? DIFFERENTIAL_ONLY : q + " AND " + DIFFERENTIAL_ONLY;
+        return solrBaseUrl + buildQueryParameters(query) + differentialGenePivotQuery;
+    }
+
+    String buildQueryParameters(String q) {
+        return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q));
+    }
+
+    private static String encodeQueryParam(String param) {
+        try {
+            return UriUtils.encodeQueryParam(param, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new DifferentialAnalyticsSearchDaoException(e);
+        }
+    }
+
+    String fetchResponseAsString(String url) {
+        try {
+            return restTemplate.getForObject(new URI(url), String.class);
+        } catch (RestClientException | URISyntaxException e) {
+            throw new DifferentialAnalyticsSearchDaoException(e);
+        }
+    }
+
+    private static class DifferentialAnalyticsSearchDaoException extends RuntimeException {
+        public DifferentialAnalyticsSearchDaoException(Exception e) {
+            super(e);
+        }
+    }
 }

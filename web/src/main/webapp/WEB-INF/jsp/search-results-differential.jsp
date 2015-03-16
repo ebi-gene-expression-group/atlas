@@ -88,21 +88,22 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/lib/query-string.js"></script>
 <script src="${pageContext.request.contextPath}/resources/jsx/facetsDifferential.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jsx/differentialResults.js"></script>
 <script src="${pageContext.request.contextPath}/resources/jsx/differentialRouter.js"></script>
 
 
 <script>
 
-    var facetsData = ${empty jsonFacets ? 'null' : jsonFacets};
+    var facetsData = ${empty jsonDifferentialGeneQueryFacets ? 'null' : jsonDifferentialGeneQueryFacets};
+    var diffResultsData = ${empty jsonDifferentialGeneQueryResults ? 'null': jsonDifferentialGeneQueryResults};
 
-    (function (DifferentialRouter, facetsData) {
+    (function (DifferentialRouter, facetsData, diffResultsData) {
 
         if (facetsData) {
-            DifferentialRouter(document.getElementById('facets'),
-                    document.getElementById('results'), facetsData);
+            DifferentialRouter(document.getElementById('facets'), document.getElementById('results'), facetsData, diffResultsData);
         }
 
-    })(DifferentialRouter, facetsData);
+    })(DifferentialRouter, facetsData, diffResultsData);
 
 </script>
 

@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
-import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -19,16 +18,21 @@ import javax.validation.Valid;
 @Scope("request")
 public class SearchDifferentialController extends SearchController {
 
-    private final DifferentialAnalyticsSearchDao differentialAnalyticsSearchDao;
+    private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
+    private DifferentialAnalyticsFacetsReader differentialAnalyticsFacetsReader;
 
     @Inject
-    public SearchDifferentialController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder, AnalyticsSearchDao analyticsSearchDao, DifferentialAnalyticsSearchDao differentialAnalyticsSearchDao) {
+    public SearchDifferentialController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder,
+                                        AnalyticsSearchDao analyticsSearchDao,
+                                        DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
+                                        DifferentialAnalyticsFacetsReader differentialAnalyticsFacetsReader) {
         super(ebiGlobalSearchQueryBuilder, analyticsSearchDao);
-        this.differentialAnalyticsSearchDao = differentialAnalyticsSearchDao;
+        this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
+        this.differentialAnalyticsFacetsReader = differentialAnalyticsFacetsReader;
     }
 
     @RequestMapping(value = "/search/differential")
-    public String searchBaseline(@Valid GeneQuerySearchRequestParameters requestParameters, Model model) {
+    public String searchDifferential(@Valid GeneQuerySearchRequestParameters requestParameters, Model model) {
 
         GeneQuery geneQuery = requestParameters.getGeneQuery();
 
@@ -36,16 +40,11 @@ public class SearchDifferentialController extends SearchController {
 
             addSearchHeader(requestParameters, model);
 
-            model.addAttribute("jsonFacets", fetchFacetsAsJson(geneQuery, new Gson()));
+            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialGeneQueryFacetsAsJson(geneQuery, new Gson()));
+
+            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fecthDifferentialGeneQueryResultsAsJson(geneQuery, new Gson()));
         }
 
         return "search-results-differential";
     }
-
-    String fetchFacetsAsJson(GeneQuery geneQuery, Gson gson) {
-        Multimap<String, NameValue> facets = differentialAnalyticsSearchDao.fetchFacets(geneQuery);
-
-        return gson.toJson(facets.asMap());
-    }
-
 }
