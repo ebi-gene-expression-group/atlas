@@ -87,12 +87,12 @@ public class BaselineAnalyticsFacetsReader {
     }
 
     private static class FacetTree {
-        String factor;
-        String source;
+        String name;
+        String value;
 
-        public FacetTree(String factor, String source) {
-            this.factor = factor;
-            this.source = source;
+        public FacetTree(String name, String value) {
+            this.name = name;
+            this.value = value;
         }
     }
 

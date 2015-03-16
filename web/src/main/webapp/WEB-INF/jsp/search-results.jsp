@@ -33,6 +33,8 @@
 <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
 <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
 
+<link type="text/css" rel="stylesheet" href="/gxa/resources/css/facets.css" />
+
 <%@ include file="includes/react.jsp" %>
 <%@ include file="includes/heatmap-js.jsp" %>
 <%@ include file="includes/anatomogram.jsp" %>
@@ -96,15 +98,12 @@
 
 <script>
 
-    <%--var facetsData = <%@ include file="includes/facets-data.jsp" %>;--%>
-
     var facetsData = ${empty jsonFacets ? 'null' : jsonFacets};
 
     (function (HeatmapsRouter, facetsData) {
 
         if (facetsData) {
-            HeatmapsRouter(document.getElementById('facets'),
-                    document.getElementById('heatmaps'), facetsData);
+            HeatmapsRouter(document.getElementById('facets'), document.getElementById('heatmaps'), facetsData);
         }
 
     })(HeatmapsRouter, facetsData);

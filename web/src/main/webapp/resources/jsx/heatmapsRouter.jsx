@@ -75,7 +75,7 @@ var HeatmapsRouter = (function (React, queryString, facetsModule, Heatmaps) {
              },
              {
              "geneQuery": "blood",
-             "species": "Mus musculus",
+             "species": "Homo sapiens",
              "factor": "CELL_LINE"
              }
              ]

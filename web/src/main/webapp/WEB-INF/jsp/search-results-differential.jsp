@@ -87,7 +87,7 @@
 </section>
 
 <script src="${pageContext.request.contextPath}/resources/js/lib/query-string.js"></script>
-<script src="${pageContext.request.contextPath}/resources/jsx/facetsDifferential.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jsx/facets.js"></script>
 <script src="${pageContext.request.contextPath}/resources/jsx/differentialResults.js"></script>
 <script src="${pageContext.request.contextPath}/resources/jsx/differentialRouter.js"></script>
 
