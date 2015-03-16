@@ -53,6 +53,8 @@ public class PlantExperimentsController {
 
     private SortedSetMultimap<String, String> baselineExperimentAccessionsBySpecies;
 
+    private Integer numberOfPlantExperiments;
+
     private SortedMap<String, Integer> numDifferentialExperimentsBySpecies;
 
     private Map<String, String> experimentLinks = new HashMap<>();
@@ -77,12 +79,16 @@ public class PlantExperimentsController {
         model.addAttribute("numDifferentialExperimentsBySpecies", numDifferentialExperimentsBySpecies);
         model.addAttribute("experimentLinks", experimentLinks);
         model.addAttribute("experimentDisplayNames", experimentDisplayNames);
+        model.addAttribute("numberOfPlantExperiments", numberOfPlantExperiments);
 
         return "plant-experiments";
     }
 
     @PostConstruct
     private void loadExperimentAccessionsBySpecie() {
+
+        // Get number of all public plant experiments in Atlas
+        numberOfPlantExperiments = experimentTrader.getNumberOfPublicExperiments("plants");
 
         for (String experimentAccession : experimentTrader.getAllBaselineExperimentAccessions()) {
             String displayName = null;

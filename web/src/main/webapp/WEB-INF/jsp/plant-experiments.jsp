@@ -39,7 +39,7 @@
 
             <div class="grid_18 omega">
                 <p>Thanks to funding from the <a href="http://www.gramene.org/">Gramene</a> project,
-                    Expression Atlas contains <b>X</b> plant experiments, including <b>Arabidopsis</b>, <b>rice</b>, and <b>maize</b>.
+                    Expression Atlas contains <b>${numberOfPlantExperiments}</b> plant experiments, studying e.g. <b>Arabidopsis</b>, <b>rice</b>, and <b>maize</b>.
                     To see more information about individual plant experiments click <a href="/gxa/experiments">here</a>.</p>
 
                 <p>

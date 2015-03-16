@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.trader;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
@@ -37,6 +39,8 @@ import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 @Named
@@ -164,6 +168,29 @@ public class ExperimentTrader {
 
     Set<String> getPublicExperimentAccessions(ExperimentType... experimentType) {
         return experimentDAO.findPublicExperimentAccessions(experimentType);
+    }
+
+    /**
+     *
+     * @param kingdom
+     * @return Number of public experiments in kingdom
+     */
+    public Integer getNumberOfPublicExperiments(String kingdom) {
+
+        Set<String> allExperiments = getMicroarrayExperimentAccessions();
+        allExperiments.addAll(getRnaSeqDifferentialExperimentAccessions());
+        allExperiments.addAll(getAllBaselineExperimentAccessions());
+        allExperiments.addAll(getProteomicsBaselineExperimentAccessions());
+
+        Collection<String> kingdoms = Collections2.transform(allExperiments, new Function<String, String>() {
+            @Override
+            public String apply(String experimentAccession) {
+                return getPublicExperiment(experimentAccession).getKingdom();
+            }
+        });
+
+        return Collections.frequency(kingdoms, kingdom);
+
     }
 
 }
