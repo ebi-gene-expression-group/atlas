@@ -3,15 +3,22 @@
     "terms": {
       "field": "species",
       "facet": {
-        "experimentAccession": {
+        "experimentType": {
           "terms": {
-            "field": "experimentAccession",
+            "field": "experimentType",
             "facet": {
-              "contrastId": {
+              "experimentAccession": {
                 "terms": {
-                  "field": "contrastId",
+                  "field": "experimentAccession",
                   "facet": {
-                    "geneCount": "unique(bioentity_identifier)"
+                    "contrastId": {
+                      "terms": {
+                        "field": "contrastId",
+                        "facet": {
+                          "geneCount": "unique(bioentity_identifier)"
+                        }
+                      }
+                    }
                   }
                 }
               }

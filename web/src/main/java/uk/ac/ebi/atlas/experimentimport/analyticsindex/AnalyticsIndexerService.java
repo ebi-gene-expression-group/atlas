@@ -46,7 +46,6 @@ public class AnalyticsIndexerService {
     private final BaselineAnalyticsIndexerService baselineAnalyticsIndexerService;
     private final DiffAnalyticsIndexerService diffAnalyticsIndexerService;
     private final MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService;
-    //private final Micro
     private final ExperimentTrader experimentTrader;
 
     @Inject

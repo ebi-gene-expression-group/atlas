@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
@@ -18,9 +19,10 @@ public class DifferentialAnalyticsFacetsReader {
     private final ContrastTrader contrastTrader;
 
     private static final String SPECIES_PATH              = "$.facets.species.buckets[*].val";
-    private static final String EXPERIMENT_ACCESSION_PATH = "$.facets.species.buckets[?(@.val=='%s')].experimentAccession.buckets[*].val";
-    private static final String CONTRASTID_PATH           = "$.facets.species.buckets[?(@.val=='%s')].experimentAccession.buckets[?(@.val=='%s')].contrastId.buckets[*].val";
-    private static final String GENE_COUNT_PATH           = "$.facets.species.buckets[?(@.val=='%s')].experimentAccession.buckets[?(@.val=='%s')].contrastId.buckets[?(@.val=='%s')].geneCount";
+    private static final String EXPERIMENT_TYPE_PATH      = "$.facets.species.buckets[?(@.val=='%s')].experimentType.buckets[*].val";
+    private static final String EXPERIMENT_ACCESSION_PATH = "$.facets.species.buckets[?(@.val=='%s')].experimentType.buckets[?(@.val=='%s')].experimentAccession.buckets[*].val";
+    private static final String CONTRASTID_PATH           = "$.facets.species.buckets[?(@.val=='%s')].experimentType.buckets[?(@.val=='%s')].experimentAccession.buckets[?(@.val=='%s')].contrastId.buckets[*].val";
+    private static final String GENE_COUNT_PATH           = "$.facets.species.buckets[?(@.val=='%s')].experimentType.buckets[?(@.val=='%s')].experimentAccession.buckets[?(@.val=='%s')].contrastId.buckets[?(@.val=='%s')].geneCount";
 
     @Inject
     public DifferentialAnalyticsFacetsReader(ExperimentTrader experimentTrader, ContrastTrader contrastTrader) {
@@ -34,17 +36,20 @@ public class DifferentialAnalyticsFacetsReader {
         ReadContext jsonReadContext = JsonPath.parse(solrResponseAsJson);
 
         for (String species : (List<String>) jsonReadContext.read(SPECIES_PATH)) {
-            for (String experimentAccession: (List<String>) jsonReadContext.read(String.format(EXPERIMENT_ACCESSION_PATH, species))) {
-                for (String contrastId : (List<String>) jsonReadContext.read(String.format(CONTRASTID_PATH, species, experimentAccession))) {
-                    int geneCount = ((List<Integer>) jsonReadContext.read(String.format(GENE_COUNT_PATH, species, experimentAccession, contrastId))).get(0);
-                    JsonObject jsonObject = new JsonObject();
-                    jsonObject.addProperty("geneCount", geneCount);
-                    jsonObject.addProperty("organism", species);
-                    jsonObject.addProperty("contrastId", contrastId);
-                    jsonObject.addProperty("comparison", contrastTrader.getContrast(experimentAccession, contrastId).getDisplayName());
-                    jsonObject.addProperty("experimentAccession", experimentAccession);
-                    jsonObject.addProperty("experimentName", experimentTrader.getPublicExperiment(experimentAccession).getDescription());
-                    differentialResults.add(jsonObject);
+            for (String experimentTypeDesc : (List<String>) jsonReadContext.read(String.format(EXPERIMENT_TYPE_PATH, species))) {
+                for (String experimentAccession: (List<String>) jsonReadContext.read(String.format(EXPERIMENT_ACCESSION_PATH, species, experimentTypeDesc))) {
+                    for (String contrastId : (List<String>) jsonReadContext.read(String.format(CONTRASTID_PATH, species, experimentTypeDesc, experimentAccession))) {
+                        int geneCount = ((List<Integer>) jsonReadContext.read(String.format(GENE_COUNT_PATH, species, experimentTypeDesc, experimentAccession, contrastId))).get(0);
+                        ExperimentType experimentType = ExperimentType.get(experimentTypeDesc);
+                        JsonObject jsonObject = new JsonObject();
+                        jsonObject.addProperty("geneCount", geneCount);
+                        jsonObject.addProperty("organism", species);
+                        jsonObject.addProperty("contrastId", contrastId);
+                        jsonObject.addProperty("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
+                        jsonObject.addProperty("experimentAccession", experimentAccession);
+                        jsonObject.addProperty("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
+                        differentialResults.add(jsonObject);
+                    }
                 }
             }
         }

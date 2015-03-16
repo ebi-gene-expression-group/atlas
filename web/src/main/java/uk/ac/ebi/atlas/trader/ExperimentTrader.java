@@ -112,7 +112,7 @@ public class ExperimentTrader {
         microarrayExperimentsCache.evictAll();
     }
 
-    private Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
+    public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
 
         switch (experimentType) {
             case RNASEQ_MRNA_BASELINE:
