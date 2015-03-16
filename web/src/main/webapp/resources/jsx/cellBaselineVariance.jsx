@@ -6,17 +6,17 @@
 
 var baselineVarianceModule  = (function ($, React) {
 
-    var build = function build(expression) {
+    var build = function build() {
 
-        var CellBaselineExpression = React.createClass({
+        var CellBaselineVariance = React.createClass({
 
             render: function () {
-                var boxPlotStyle = {"height": "400px", "margin": "auto", "min-width": "400px", "max-width": "600px"};
+                var boxPlotStyle = {"height": "100px", "margin": "0px", "min-width": "100px", "max-width": "150px"};
 
                 return (
 
                     <td>
-                        <div id="container" style={boxPlotStyle}></div>
+                        <div id="container" ref="container" style={boxPlotStyle}></div>
                     </td>
 
 
@@ -26,14 +26,20 @@ var baselineVarianceModule  = (function ($, React) {
 
             componentDidMount: function () {
                 if(this.props.quartiles) {
-                    $('#container').highcharts({
+                    $(this.refs.container.getDOMNode()).highcharts({
 
                         chart: {
-                            type: 'boxplot'
+                            type: 'boxplot',
+                            margin: 0
+
+                        },
+
+                        credits: {
+                            enabled: false
                         },
 
                         title: {
-                            text: 'Highcharts box plot styling'
+                            text: ''
                         },
 
                         legend: {
@@ -41,7 +47,6 @@ var baselineVarianceModule  = (function ($, React) {
                         },
 
                         xAxis: {
-                            //categories: ['1', '2', '3', '4', '5'],
                             title: {
                                 text: 'Variance'
                             }
@@ -49,9 +54,13 @@ var baselineVarianceModule  = (function ($, React) {
 
                         yAxis: {
                             title: {
-                                text: 'Observations'
+                                text: ''
                             }
 
+                        },
+
+                        exporting: {
+                            enabled: false
                         },
 
                         plotOptions: {
@@ -73,7 +82,10 @@ var baselineVarianceModule  = (function ($, React) {
                             name: 'Observations',
                             data: [
                                 [this.props.quartiles.min, this.props.quartiles.lower, this.props.quartiles.median, this.props.quartiles.upper, this.props.quartiles.max]
-                            ]
+                            ],
+                            tooltip: {
+                                headerFormat: ''
+                            }
                         }]
 
                     });
@@ -85,14 +97,14 @@ var baselineVarianceModule  = (function ($, React) {
         });
 
         return {
-            CellBaselineExpression: CellBaselineExpression
+            CellBaselineVariance: CellBaselineVariance
         };
 
     };
 
     return {
-        build: function (expression) {
-            return build(expression);
+        build: function () {
+            return build();
         }
     };
 
