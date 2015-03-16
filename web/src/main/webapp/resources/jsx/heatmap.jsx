@@ -4,7 +4,7 @@
 /* Modules and parameters for their init methods are passed in here.
  Parameters that affect how the DOM is generated as passed in as props. */
 
-var heatmapModule = (function($, React, genePropertiesTooltipModule, factorTooltipModule, contrastTooltipModule, helpTooltipsModule, EventEmitter, Modernizr) {
+var heatmapModule = (function($, React, genePropertiesTooltipModule, factorTooltipModule, contrastTooltipModule, helpTooltipsModule, baselineVarianceModule, EventEmitter, Modernizr) {
 
     var TypeEnum = {
         BASELINE: { isBaseline: true, heatmapTooltip: '#heatMapTableCellInfo', legendTooltip: '#gradient-base' },
@@ -38,12 +38,14 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
             getInitialState: function () {
                 var displayLevels = $prefFormDisplayLevelsInputElement ? ($prefFormDisplayLevelsInputElement.val() === "true") : false;
+
                 return {
                     showGeneSetProfiles: false,
                     displayLevels: displayLevels,
                     profiles: this.props.profiles,
                     selectedColumnId: null,
-                    selectedGeneId: null};
+                    selectedGeneId: null,
+                    selectedRadioButton: "gradients"};
             },
 
             toggleGeneSets: function () {
@@ -66,7 +68,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             componentDidMount: function() {
 
                 if (!type.isMultiExperiment) {
-                    makeTableHeaderSticky.call(this);
+                   // makeTableHeaderSticky.call(this);
                 }
 
                 //TODO: use Stickem instead of Sticky.js - we only need one sticky library
@@ -121,7 +123,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                                                 <tr ref="heatmapTableRow">
                                                     <td>
                                                         <table ref="heatmapTable" id="heatmap-table" className="table-grid">
-                                                            <HeatmapTableHeader isMicroarray={this.isMicroarray()} columnHeaders={this.props.columnHeaders} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
+                                                            <HeatmapTableHeader isMicroarray={this.isMicroarray()} columnHeaders={this.props.columnHeaders} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton}/>
                                                             <HeatmapTableRows profiles={this.state.profiles.rows} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles}/>
                                                         </table>
                                                     </td>
@@ -274,7 +276,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 return (
                     <thead>
                         <th className="horizontal-header-cell" colSpan={this.props.isMicroarray ? 2 : undefined}>
-                            <TopLeftCorner displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels}/>
+                            <TopLeftCorner displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels} selectedRadioButton={this.props.selectedRadioButton}/>
                         </th>
 
                         { this.legendType() }
@@ -630,6 +632,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                             <div className="heatmap-matrix-top-left-corner">
                                 <span id='tooltip-span' data-help-loc={type.heatmapTooltip} ref='tooltipSpan'></span>
                                 <displayLevelsButton displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels}/>
+                                <displayLevelsRadio selectedRadioButton={this.props.selectedRadioButton} />
                             </div>
                         );
                 },
@@ -668,6 +671,50 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
             });
         };
+
+        var displayLevelsRadio = React.createClass({
+
+            getInitialState: function () {
+                return (
+                    {   selected : this.props.selectedRadioButton }
+                );
+            },
+
+            componentDidMount: function(){
+                this._handleChange();
+            },
+
+            _handleChange: function() {
+                debugger;
+
+                if(this.refs.gradients.getDOMNode().checked) {
+                    console.log("Display gradients");
+                    this.setState({ selected: "gradients" });
+
+                } else if (this.refs.levels.getDOMNode().checked) {
+                    console.log("Display gradients");
+                    this.setState ( { selected: "levels" });
+
+                } else if (this.refs.variance.getDOMNode().checked) {
+                    console.log("Display gradients");
+                    this.setState({selected: "variance"});
+                }
+
+            },
+
+            render: function () {
+                //console.log(this.props.selectedRadioButton);
+                console.log(this.state.selected);
+                return (
+                    <div onchange={this._handleChange}>
+                        <input type="radio" ref="gradients" value="gradients" name="radiolevels" defaultChecked="checked" /> Display gradients  <br />
+                        <input type="radio" ref="levels" value="levels" name="radiolevels" /> Display levels            <br />
+                        <input type="radio" ref="variance" value="variance" name="radiolevels"  /> Display variance
+                    </div>
+                );
+            }
+        });
+
 
         var DisplayLevelsButtonBaseline = createDisplayLevelsButton('Hide levels', 'Display levels');
 
@@ -710,6 +757,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
         });
 
         var GeneProfileRow = (function (contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks, enableEnsemblLauncher, geneQuery) {
+
+            var cellBaselineExpression = baselineVarianceModule.build().CellBaselineVariance;
 
             return React.createClass({
 
@@ -756,6 +805,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                 cellType: function (expression) {
                     if (type.isBaseline) {
+
                         return (
                             <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} geneSetProfiles={this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
                             );
@@ -778,6 +828,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     }.bind(this));
                 },
 
+                varianceExpressionCell: function (expression) {
+                    React.renderComponent(cellBaselineExpression.CellBaselineVariance( {quartiles: expression} ));
+                },
+
                 render: function () {
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "relative", float:"right", color:"green"}}>  select</span> : null;
                     var showTickWhenSelected = this.props.selected ? <span style={{position: "relative", float:"right", color:"green"}}> &#10004; </span>: null ;
@@ -793,6 +847,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                             </td>
                             {this.props.designElement ?  <td className="design-element">{this.props.designElement}</td> : null}
                             {this.cells(this.props.expressions)}
+
                         </tr>
                         );
                 },
@@ -1024,4 +1079,4 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
         buildMultiExperiment: function (heatmapConfig, $prefFormDisplayLevelsInputElement) { return build(TypeEnum.MULTIEXPERIMENT, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement); }
     };
 
-})(jQuery, React, genePropertiesTooltipModule, factorTooltipModule, contrastTooltipModule, helpTooltipsModule, EventEmitter, Modernizr);
+})(jQuery, React, genePropertiesTooltipModule, factorTooltipModule, contrastTooltipModule, helpTooltipsModule, baselineVarianceModule, EventEmitter, Modernizr);
