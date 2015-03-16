@@ -88,21 +88,7 @@ public class PlantExperimentsController {
     private void loadExperimentAccessionsBySpecie() {
 
         // Get number of all public plant experiments in Atlas
-        numberOfPlantExperiments = experimentTrader.getNumberOfPublicExperiments("plants");
-
-        for (String experimentAccession : experimentTrader.getAllBaselineExperimentAccessions()) {
-            String displayName = null;
-            try {
-                displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
-                //displayName = experimentsCache.getExperiment(experimentAccession).getDisplayName();
-            } catch (RuntimeException e) {
-                // we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
-                LOGGER.error(e.getMessage(), e);
-                displayName = experimentAccession;
-            }
-
-            experimentDisplayNames.put(experimentAccession, displayName);
-        }
+        numberOfPlantExperiments = 0;
 
         Comparator<String> keyComparator = new Comparator<String>() {
             @Override
@@ -120,10 +106,10 @@ public class PlantExperimentsController {
         baselineExperimentAccessionsBySpecies = TreeMultimap.create(keyComparator, valueComparator);
 
         for (String experimentAccession : experimentTrader.getAllBaselineExperimentAccessions()) {
-
+            String displayName = null;
             try {
                 BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
-
+                displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
                 for (String specie : experiment.getOrganisms()) {
                     if (speciesKingdomTrader.getKingdom(specie).equals("plants")) {
                         baselineExperimentAccessionsBySpecies.put(specie, experimentAccession);
@@ -138,7 +124,8 @@ public class PlantExperimentsController {
                 // we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
             }
-
+            numberOfPlantExperiments++;
+            experimentDisplayNames.put(experimentAccession, displayName);
         }
 
         numDifferentialExperimentsBySpecies = new TreeMap<String, Integer>();
@@ -164,10 +151,7 @@ public class PlantExperimentsController {
                 // we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
             }
-
+            numberOfPlantExperiments++;
         }
-
     }
-
-
 }

@@ -125,7 +125,7 @@
                     <span class="icon icon-species" data-icon="${speciesIconCode}"></span>
                     <ul style="list-style:none;padding-left:0; margin-left:0;">
                         <a href="experiments?species=${specie}" style="color:#337ab7; border-bottom: none;">
-                                ${numDifferentialExperimentsBySpecies.get(specie)} experiments</a>
+                                ${numDifferentialExperimentsBySpecies.get(specie)} experiment${numDifferentialExperimentsBySpecies.get(specie) > 1 ? "s" : "" }</a>
                     </ul>
                 </div>
             </c:forEach>
