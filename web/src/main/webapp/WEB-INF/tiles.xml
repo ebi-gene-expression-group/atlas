@@ -66,6 +66,12 @@
         <put-attribute name="body" value="/WEB-INF/jsp/baseline-experiments.jsp"/>
     </definition>
 
+    <definition name="plant-experiments" extends="base.definition">
+        <put-attribute name="title" value="Expression Atlas"/>
+        <put-attribute name="menu" value=""/>
+        <put-attribute name="body" value="/WEB-INF/jsp/plant-experiments.jsp"/>
+    </definition>
+
     <definition name="bioEntities" extends="base.definition">
         <put-attribute name="title" value="Expression Atlas"/>
         <put-attribute name="menu" value=""/>
