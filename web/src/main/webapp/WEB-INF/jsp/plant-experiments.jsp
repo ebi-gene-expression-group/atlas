@@ -34,13 +34,13 @@
             <div class="grid_4 alpha">
                 <p><div><img src="${pageContext.request.contextPath}/resources/images/gramene_logo.png"/></div></p>
 
-                <p><div class="icon icon-functional" data-icon="1"><a href="/gxa/home?kingdom=plants">Search plant data in Atlas</a></div></p>
+                <p><div class="icon icon-functional" data-icon="1"><a href="/gxa/home">Search Atlas</a></div></p>
             </div>
 
             <div class="grid_18 omega">
                 <p>Thanks to funding from the <a href="http://www.gramene.org/">Gramene</a> project,
-                    Expression Atlas contains <b>${numberOfPlantExperiments}</b> plant experiments, studying e.g. <b>Arabidopsis</b>, <b>rice</b>, and <b>maize</b>.
-                    To see more information about individual plant experiments click <a href="/gxa/experiments">here</a>.</p>
+                    Expression Atlas contains <b>${numberOfPlantExperiments}</b> <a href="/gxa/experiments?kingdom=plants">plant experiments</a>, studying e.g. <a href="/gxa/experiments?organism=Arabidopsis+thaliana">Arabidopsis</a>, <a href="/gxa/experiments?organism=Oryza+sativa">rice</a>, and <a href="/gxa/experiments?organism=Zea+mays">maize</a>.
+               </p>
 
                 <p>
                     The <i>baseline</i> experiments, are either RNA-seq or proteomics, and display expression levels of gene products under 'normal' conditions (e.g. normal rice tissues).
@@ -124,7 +124,7 @@
                     <h4>${specie}</h4>
                     <span class="icon icon-species" data-icon="${speciesIconCode}"></span>
                     <ul style="list-style:none;padding-left:0; margin-left:0;">
-                        <a href="experiments?species=${specie}" style="color:#337ab7; border-bottom: none;">
+                        <a href="experiments?organism=${specie}" style="color:#337ab7; border-bottom: none;">
                                 ${numDifferentialExperimentsBySpecies.get(specie)} experiment${numDifferentialExperimentsBySpecies.get(specie) > 1 ? "s" : "" }</a>
                     </ul>
                 </div>
