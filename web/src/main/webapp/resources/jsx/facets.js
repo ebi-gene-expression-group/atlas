@@ -89,9 +89,9 @@ var facetsModule = (function (React) {
                 }.bind(this));
 
                 return (
-                    React.DOM.li({className: "facet"}, 
+                    React.DOM.li({className: "atlasAnalyticsSearchFacet"}, 
                         React.DOM.span(null, this.props.facetName), 
-                        React.DOM.ul({className: "facetItems"}, 
+                        React.DOM.ul(null, 
                             facetItems
                         )
                     )

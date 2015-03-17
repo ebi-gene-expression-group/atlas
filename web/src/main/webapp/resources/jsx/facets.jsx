@@ -91,7 +91,7 @@ var facetsModule = (function (React) {
                 return (
                     <li className="atlasAnalyticsSearchFacet">
                         <span>{this.props.facetName}</span>
-                        <ul className="atlasAnalyticsSearchFacetItems">
+                        <ul>
                             {facetItems}
                         </ul>
                     </li>
