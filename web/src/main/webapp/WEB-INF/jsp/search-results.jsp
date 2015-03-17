@@ -82,8 +82,8 @@
         No baseline results
     </c:if>
 
-    <div id="facets"></div>
-    <div id="heatmaps"></div>
+    <div id="atlasAnalyticsSearchFacetContainer"></div>
+    <div id="atlasAnalyticsSearchHeatmapsContainer"></div>
 </section>
 
 <script src="${pageContext.request.contextPath}/resources/js/lib/query-string.js"></script>
@@ -103,7 +103,10 @@
     (function (HeatmapsRouter, facetsData) {
 
         if (facetsData) {
-            HeatmapsRouter(document.getElementById('facets'), document.getElementById('heatmaps'), facetsData);
+            HeatmapsRouter(
+                    document.getElementById('atlasAnalyticsSearchFacetContainer'),
+                    document.getElementById('atlasAnalyticsSearchHeatmapsContainer'),
+                    facetsData);
         }
 
     })(HeatmapsRouter, facetsData);
