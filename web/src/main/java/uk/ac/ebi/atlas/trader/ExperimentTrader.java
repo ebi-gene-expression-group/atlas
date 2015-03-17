@@ -162,7 +162,8 @@ public class ExperimentTrader {
         return identifiers;
     }
 
-    Set<String> getPublicExperimentAccessions(ExperimentType... experimentType) {
+    // Making this method public is part of a work-around until https://www.pivotaltracker.com/story/show/88885788 gets implemented
+    public Set<String> getPublicExperimentAccessions(ExperimentType... experimentType) {
         return experimentDAO.findPublicExperimentAccessions(experimentType);
     }
 

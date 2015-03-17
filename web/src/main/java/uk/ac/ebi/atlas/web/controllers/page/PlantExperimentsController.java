@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -129,13 +130,24 @@ public class PlantExperimentsController {
         }
 
         numDifferentialExperimentsBySpecies = new TreeMap<String, Integer>();
+        long start = System.currentTimeMillis();
+        populateExperimentAccessionToSpecies(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
+        populateExperimentAccessionToSpecies(ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL);
+        populateExperimentAccessionToSpecies(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
+        populateExperimentAccessionToSpecies(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
+        LOGGER.info(" DE exps took: " + (System.currentTimeMillis() - start) + " ms");
+    }
 
-        Set<String> allDifferentialExperiments = experimentTrader.getMicroarrayExperimentAccessions();
-        allDifferentialExperiments.addAll(experimentTrader.getRnaSeqDifferentialExperimentAccessions());
-        for (String experimentAccession : allDifferentialExperiments) {
 
+    /**
+     * Populates numDifferentialExperimentsBySpecies and numberOfPlantExperiments for a given experimentType
+     * This is a part of a work-around until https://www.pivotaltracker.com/story/show/88885788 gets implemented.
+     * @param experimentType
+     */
+    private void populateExperimentAccessionToSpecies(ExperimentType experimentType) {
+        for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
             try {
-                DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+                DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getExperimentFromCache(experimentAccession, experimentType);
                 for (String specie : experiment.getOrganisms()) {
 
                     if (speciesKingdomTrader.getKingdom(specie).equals("plants")) {
