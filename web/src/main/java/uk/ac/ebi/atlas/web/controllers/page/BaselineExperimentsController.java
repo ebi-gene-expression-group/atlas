@@ -97,6 +97,8 @@ public class BaselineExperimentsController {
                 // Services review: Alvis' edict for Homo sapiens experiments to always come up on top of baseline landing page
                 if (o1.equals("Homo sapiens") && !o2.equals("Homo sapiens"))
                     return -1;
+                else if (o2.equals("Homo sapiens") && !o1.equals("Homo sapiens"))
+                    return 1;
                 else
                     return o1.compareTo(o2);
             }
@@ -107,9 +109,11 @@ public class BaselineExperimentsController {
             public int compare(String o1, String o2) {
                 // Services review: Alvis' edict for proteomics experiments to always come up at the bottom of
                 // the list of experiments within each species
-                if (o1.indexOf("-PROT-") != -1) {
+                if (o1.indexOf("-PROT-") != -1 && o2.indexOf("-PROT-") == -1)
                     return 1;
-                } else
+                else if (o2.indexOf("-PROT-") != -1 && o1.indexOf("-PROT-") == -1)
+                    return -1;
+                else
                     return experimentDisplayNames.get(o1).compareTo(experimentDisplayNames.get(o2));
             }
         };
