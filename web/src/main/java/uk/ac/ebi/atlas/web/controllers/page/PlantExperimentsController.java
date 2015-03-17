@@ -118,13 +118,13 @@ public class PlantExperimentsController {
                         } else {
                             experimentLinks.put(experimentAccession + specie, "");
                         }
+                        numberOfPlantExperiments++;
                     }
                 }
             } catch (RuntimeException e) {
                 // we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
             }
-            numberOfPlantExperiments++;
             experimentDisplayNames.put(experimentAccession, displayName);
         }
 
@@ -145,13 +145,13 @@ public class PlantExperimentsController {
                         } else {
                             numDifferentialExperimentsBySpecies.put(specie, ++numSoFar);
                         }
+                        numberOfPlantExperiments++;
                     }
                 }
             } catch (RuntimeException e) {
                 // we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
             }
-            numberOfPlantExperiments++;
         }
     }
 }
