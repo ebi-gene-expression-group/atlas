@@ -68,6 +68,9 @@
                 <c:when test="${specie == 'Hordeum vulgare subsp. vulgare'}">
                     <c:set var="speciesIconCode" value="5"/>
                 </c:when>
+                <c:when test="${specie == 'Oryza sativa Indica Group'}">
+                    <c:set var="speciesIconCode" value="6"/>
+                </c:when>
                 <c:when test="${specie == 'Oryza sativa Japonica Group'}">
                     <c:set var="speciesIconCode" value="6"/>
                 </c:when>
@@ -76,7 +79,7 @@
                 </c:when>
 
                 <c:otherwise>
-                    <c:set var="speciesIconCode" value=""/>
+                    <c:set var="speciesIconCode" value="P"/>
                 </c:otherwise>
             </c:choose>
 
@@ -112,12 +115,15 @@
                         <c:when test="${specie == 'Oryza sativa Japonica Group'}">
                             <c:set var="speciesIconCode" value="6"/>
                         </c:when>
+                        <c:when test="${specie == 'Oryza sativa Indica Group'}">
+                            <c:set var="speciesIconCode" value="6"/>
+                        </c:when>
                         <c:when test="${specie == 'Zea mays'}">
                             <c:set var="speciesIconCode" value="5"/>
                         </c:when>
 
                         <c:otherwise>
-                            <c:set var="speciesIconCode" value=""/>
+                            <c:set var="speciesIconCode" value="P"/>
                         </c:otherwise>
                     </c:choose>
 
