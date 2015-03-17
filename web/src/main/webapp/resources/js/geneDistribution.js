@@ -129,7 +129,7 @@ var geneDistribution = (function ($) {
 
     function buildLegendText(isAnyQueryFactorValueSelected) {
         "use strict";
-        return "Y = number of genes expressed above the given FPKM cutoff " +
+        return "Y = number of genes expressed above the given expression cutoff " +
             (isAnyQueryFactorValueSelected ? "for the selected experimental variables" : "in any experimental variable");
     }
 
