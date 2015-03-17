@@ -60,6 +60,8 @@ public abstract class BioEntityPageController {
 
     protected static final String PROPERTY_TYPE_DESCRIPTION = "description";
 
+    protected static final int DEFAULT_BASELINE_SPLIT = 10;
+
     protected BioEntityPropertyDao bioEntityPropertyDao;
 
     protected SolrQueryService solrQueryService;
@@ -223,14 +225,32 @@ public abstract class BioEntityPageController {
 
     void addBaselineCounts(Set<String> geneIds, Model model) {
         Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.queryAnySpecies(geneIds, Optional.<String>absent());
-        model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
+        model.addAttribute("firstBaselineCounts", baselineExperimentAssayGroups);
     }
 
     void addBaselineCountsForNonTissueExperiments(Set<String> geneIds, Model model) {
         Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.queryAnySpecies(geneIds, Optional.<String>absent());
-
         ImmutableSet<BaselineExperimentAssayGroup> nonTissueExperiments = selectNonTissueExperiments(baselineExperimentAssayGroups);
-        model.addAttribute("baselineCounts", nonTissueExperiments);
+
+        addSplitBaselineCountsToModel(model, nonTissueExperiments, DEFAULT_BASELINE_SPLIT);
+    }
+
+    private void addSplitBaselineCountsToModel(Model model, Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups, int split) {
+        Iterator<BaselineExperimentAssayGroup> iterator = baselineExperimentAssayGroups.iterator();
+        int count = 0;
+
+        ImmutableSet.Builder<BaselineExperimentAssayGroup> firstBuilder = new ImmutableSet.Builder<>();
+        ImmutableSet.Builder<BaselineExperimentAssayGroup> remainingBuilder = new ImmutableSet.Builder<>();
+        while (iterator.hasNext() && count < split) {
+            firstBuilder.add(iterator.next());
+            count++;
+        }
+        while (iterator.hasNext()) {
+            remainingBuilder.add(iterator.next());
+        }
+
+        model.addAttribute("firstBaselineCounts", firstBuilder.build());
+        model.addAttribute("remainingBaselineCounts", remainingBuilder.build());
     }
 
     String fetchSpecies(String identifier) {
