@@ -157,7 +157,7 @@
         <p>See all baseline expression data sets in Expression Atlas.</p>
 
         <h4><span class="icon icon-species" data-icon="B"></span><a href="plant/experiments">Plant Experiments</a></h4>
-        <p>See all plant expression data sets in Expression Atlas.</p>
+        <p>See all expression data sets in plants in Expression Atlas.</p>
 
 		<h4><img src="resources/images/experiment_page_small.png" style="padding-right: 15px"><a href="experiments">All Experiments</a></h4>
 		<p>Scroll through the complete list of all data sets in Expression Atlas.</p>
