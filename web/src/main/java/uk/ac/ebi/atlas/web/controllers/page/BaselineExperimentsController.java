@@ -95,7 +95,7 @@ public class BaselineExperimentsController {
             @Override
             public int compare(String o1, String o2) {
                 // Services review: Alvis' edict for Homo sapiens experiments to always come up on top of baseline landing page
-                if (o1.equals("Homo sapiens"))
+                if (o1.equals("Homo sapiens") && !o2.equals("Homo sapiens"))
                     return -1;
                 else
                     return o1.compareTo(o2);
