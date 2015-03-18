@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.acceptance.selenium.tests;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.FeedbackHomePage;
@@ -65,7 +66,7 @@ public class FeedbackFormSIT extends SinglePageSeleniumFixture {
         assertThat(subject.isFeedbackTipsShown(), is(false));
     }
 
-    @Test
+    @Ignore // Flakey
     public void sendTestFeedback() throws InterruptedException {
         subject.clickFeedbackLink();
         assertThat(subject.getFeedbackText(), is(""));
@@ -77,7 +78,7 @@ public class FeedbackFormSIT extends SinglePageSeleniumFixture {
         assertThat(subject.isFeedbackTipsShown(), is(false));
     }
 
-    @Test
+    @Ignore // Flakey
     public void sendTestFeedbackAndEmail() throws InterruptedException {
         subject.clickFeedbackLink();
         assertThat(subject.getFeedbackText(), is(""));

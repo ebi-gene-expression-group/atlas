@@ -26,47 +26,41 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
-import java.util.List;
-
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
-public class Cutoff20AndOrganismPartIT extends SinglePageSeleniumFixture {
+public class Cutoff05AndGenePropertySIT extends SinglePageSeleniumFixture {
 
-    private HeatmapTablePage subject;
+    private final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private final static String EXPERIMENT_ACCESSION = "E-MTAB-513";
+    protected HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION,
-                "specific=true&heatmapMatrixSize=5&geneQuery=&queryFactorValues=adrenal+gland&_queryFactorValues=1&cutoff=20");
+//
+    }
+
+    @Test
+    public void verifyResultOnSinglePropertyQuery() {
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, "geneQuery=&cutoff=0.5");
         subject.get();
+        assertThat(subject.getGeneCount(), containsString("of 263"));
     }
 
     @Test
-    public void verifySelectedGenes() {
-        List<String> selectedGenes = subject.getGeneNames();
-        assertThat(selectedGenes.size(), is(3));
-        assertThat(selectedGenes, contains("TRAJ13", "Y_RNA", "MT-ATP6"));
+    public void verifyResultOnMultiplePropertyQuery() {
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, "geneQuery=&cutoff=0.5");
+        subject.get();
+        assertThat(subject.getGeneCount(), containsString("of 263"));
     }
 
     @Test
-    public void verifyFirstGeneProfile() {
+    public void verifyResultOnMultiplePropertyAndOrganismPartQuery() {
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, "geneQuery=&queryFactorValues=skeletal+muscle&queryFactorValues=thyroid&_queryFactorValues=2&cutoff=0.5");
+        subject.get();
+        assertThat(subject.getGeneCount(), containsString("of 15"));
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("", "766", "", "", "", "", "", "", "", "", "", "", "", "", "", ""));
-    }
-
-    @Test
-    public void verifyLastGeneProfile() {
-        subject.clickDisplayLevelsButton();
-        assertThat(subject.getLastGeneProfile(), contains("", "10690", "", "", "", "", "", "4149", ""
-                , "6899", "7810", "6724", "", "", "", "8664"));
-    }
-
-    @Test
-    public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("3"), is(true));
+        assertThat(subject.getFirstGeneProfile(), contains("0.6", "", "1", "", "", "0.6", "0.9", "1", "", "", "1", "", "", "8", "", "3"));
     }
 
 }

@@ -26,18 +26,20 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
-import static org.hamcrest.Matchers.*;
+import java.util.List;
+
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class NonSpecificAndCutoff05IT extends SinglePageSeleniumFixture {
+public class SpecificAndCutoff05AndBrainAndBreastSIT extends SinglePageSeleniumFixture {
 
-    private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
+    private final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
     private static final String HTTP_PARAMETERS = "geneQuery=&cutoff=0.5"
-            + "&specific=false";
+            + "&queryFactorValues=brain&queryFactorValues=breast"
+            + "&specific=true";
 
-    private static final String HIGHER_RANKING_GENE = "ARPC5";
-    private static final String LOWER_RANKING_GENE = "RAB13";
     protected HeatmapTablePage subject;
 
     public void getStartingPage() {
@@ -46,25 +48,30 @@ public class NonSpecificAndCutoff05IT extends SinglePageSeleniumFixture {
     }
 
     @Test
-    public void averageFpkmShouldDetermineRanking() {
+    public void verifySelectedGenes() {
+        List<String> selectedGenes = subject.getGeneNames();
+        assertThat(selectedGenes.size(), is(15));
+        assertThat(selectedGenes.get(0), is("MIR215"));
+        assertThat(selectedGenes.get(1), is("PRMT8"));
+        assertThat(selectedGenes.get(2), is("AC073479.1"));
+    }
 
-        //given
+    @Test
+    public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "109", "", "", "", "", "", "", "", "", "", "", "", "", ""));
+    }
 
-        double higherRankingGeneAverageFpkm = subject.getAverageFpkm(10);
-        double lowerRankingGeneAverageFpkm = subject.getAverageFpkm(11);
+    @Test
+    public void verifyLastGeneProfile() {
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getLastGeneProfile(), contains("", "", "0.6", "", "", "", "", "", ""
+                , "", "", "", "", "", "", ""));
+    }
 
-        //then
-        assertThat(higherRankingGeneAverageFpkm, is(89.4375));
-        assertThat(higherRankingGeneAverageFpkm, is(greaterThan(lowerRankingGeneAverageFpkm)));
-
-        //and max fpkm is greater for gene at row 11 than gene at row 10
-        assertThat(subject.getMaxExpressionLevel(11), is(lessThan(subject.getMaxExpressionLevel(10))));
-
-        //gene at row 11 follows gene at row 10
-        assertThat(subject.getGeneThatRanksAt(10), is(HIGHER_RANKING_GENE));
-        assertThat(subject.getGeneThatRanksAt(11), is(LOWER_RANKING_GENE));
-
+    @Test
+    public void verifyGeneCount() {
+        assertThat(subject.getGeneCount().contains("15"), is(true));
     }
 
 }

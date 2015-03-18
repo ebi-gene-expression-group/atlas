@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class NonSpecificAndCutoff05AndBrainAndBreastIT extends SinglePageSeleniumFixture {
+public class NonSpecificAndCutoff05AndBrainAndBreastSIT extends SinglePageSeleniumFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
