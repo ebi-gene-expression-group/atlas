@@ -31,6 +31,10 @@
     height: 100%;
 }
 
+.form-grid {
+    border: 2px solid #cdcdcd !important;
+}
+
 .table-grid, .analysis-grid {
     border-collapse: collapse;
 }
