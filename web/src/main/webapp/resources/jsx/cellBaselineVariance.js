@@ -7,12 +7,10 @@
 var baselineVarianceModule  = (function ($, React) {
 
     var build = function build() {
-
         var CellBaselineVariance = React.createClass({displayName: 'CellBaselineVariance',
 
             render: function () {
-                var boxPlotStyle = {"height": "100px", "margin": "0px", "min-width": "100px", "max-width": "150px"};
-
+                var boxPlotStyle = {"height": "100px", "margin": "0px", "min-width": "80px", "max-width": "120px"};
                 return (
 
                     React.DOM.td(null, 
@@ -31,7 +29,6 @@ var baselineVarianceModule  = (function ($, React) {
                         chart: {
                             type: 'boxplot',
                             margin: 0
-
                         },
 
                         credits: {
@@ -82,11 +79,19 @@ var baselineVarianceModule  = (function ($, React) {
                             name: 'Observations',
                             data: [
                                 [this.props.quartiles.min, this.props.quartiles.lower, this.props.quartiles.median, this.props.quartiles.upper, this.props.quartiles.max]
-                            ],
-                            tooltip: {
-                                headerFormat: ''
+                            ]
+
+                        }],
+
+                        tooltip: {
+                            headerFormat: '',
+                            style: {
+                                padding: 5,
+                                fontSize: '9px',
+                                width: 80,
+                                height: 100
                             }
-                        }]
+                        }
 
                     });
                 }

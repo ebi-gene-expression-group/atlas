@@ -41,21 +41,21 @@ var differentialResultsModule = (function (React) {
 
             render: function() {
                 var differentialResultRows = this.props.diffResultsData.map(function (diffResult) {
-                    return DifferentialResultRow({
-                                key: diffResult.experimentAccession + diffResult.contrastId, 
-                                geneCount: diffResult.geneCount, organism: diffResult.organism, comparison: diffResult.comparison, experimentName: diffResult.experimentName, 
-                                contrastId: diffResult.contrastId, experimentAccession: diffResult.experimentAccession}
+                    return DifferentialResultRow(
+                                {key:diffResult.experimentAccession + diffResult.contrastId,
+                                geneCount:diffResult.geneCount, organism:diffResult.organism, comparison:diffResult.comparison, experimentName:diffResult.experimentName,
+                                contrastId:diffResult.contrastId, experimentAccession:diffResult.experimentAccession}
                     );
                 }.bind(this));
 
                 return (
                     React.DOM.table(null, 
                         React.DOM.tr(null, 
-                            React.DOM.th(null, "Gene count"), 
-                            React.DOM.th(null, "Species"), 
-                            React.DOM.th(null, "Comparison"), 
+                            React.DOM.th(null, "Gene count"),
+                            React.DOM.th(null, "Species"),
+                            React.DOM.th(null, "Comparison"),
                             React.DOM.th(null, "Experiment name")
-                        ), 
+                        ),
                         differentialResultRows
                     )
                 );
@@ -77,9 +77,9 @@ var differentialResultsModule = (function (React) {
             render: function() {
                 return(
                     React.DOM.tr(null, 
-                        React.DOM.td(null, this.props.geneCount), 
-                        React.DOM.td(null, this.props.organism), 
-                        React.DOM.td(null, this.props.comparison), 
+                        React.DOM.td(null, this.props.geneCount),
+                        React.DOM.td(null, this.props.organism),
+                        React.DOM.td(null, this.props.comparison),
                         React.DOM.td(null, this.props.experimentName)
                     )
                 );
