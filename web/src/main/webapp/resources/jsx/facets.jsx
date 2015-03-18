@@ -24,7 +24,7 @@ var facetsModule = (function (React) {
                  "mus musculus" : [ {"factor": "CELL_LINE", "source": "Cell line"}, {"factor": "INDIVIDUAL", "source": "Individual"} ]
                  }
                  */
-                facets: React.PropTypes.object,
+                facets: React.PropTypes.object.isRequired,
 
                 /*
                  Differential eg:
@@ -34,7 +34,9 @@ var facetsModule = (function (React) {
                  eg:
                  { "homo sapiens" : { "CELL_LINE": true, "ORGANISM_PART": true } }
                  */
-                checkedFacets: React.PropTypes.object
+                checkedFacets: React.PropTypes.object,
+
+                setChecked: React.PropTypes.func.isRequired
             },
 
             _setChecked: function (checked, facet, facetItem) {
@@ -68,7 +70,9 @@ var facetsModule = (function (React) {
                 })).isRequired,
 
                 // eg: { "rnaseq_mrna_differential": true, "microarray_1colour_mrna_differential": true }
-                checkedFacetItems: React.PropTypes.object
+                checkedFacetItems: React.PropTypes.object,
+
+                setChecked: React.PropTypes.func.isRequired
             },
 
             _setChecked: function (checked, facetItem) {
@@ -85,9 +89,9 @@ var facetsModule = (function (React) {
                 }.bind(this));
 
                 return (
-                    <li className="facet">
+                    <li className="atlasAnalyticsSearchFacet">
                         <span>{this.props.facetName}</span>
-                        <ul className="facetItems">
+                        <ul>
                             {facetItems}
                         </ul>
                     </li>
@@ -99,7 +103,8 @@ var facetsModule = (function (React) {
             propTypes: {
                 name: React.PropTypes.string.isRequired,
                 value: React.PropTypes.string.isRequired,
-                checked: React.PropTypes.bool.isRequired
+                checked: React.PropTypes.bool,
+                setChecked: React.PropTypes.func.isRequired
             },
 
             _setChecked: function () {

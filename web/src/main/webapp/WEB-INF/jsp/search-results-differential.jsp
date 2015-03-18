@@ -82,8 +82,8 @@
         No differential results
     </c:if>
 
-    <div id="facets"></div>
-    <div id="results"></div>
+    <div id="atlasAnalyticsSearchFacetContainer"></div>
+    <div id="atlasAnalyticsSearchDiffResultsContainer"></div>
 </section>
 
 <script src="${pageContext.request.contextPath}/resources/js/lib/query-string.js"></script>
@@ -100,7 +100,10 @@
     (function (DifferentialRouter, facetsData, diffResultsData) {
 
         if (facetsData) {
-            DifferentialRouter(document.getElementById('facets'), document.getElementById('results'), facetsData, diffResultsData);
+            DifferentialRouter(
+                    document.getElementById('atlasAnalyticsSearchFacetContainer'),
+                    document.getElementById('atlasAnalyticsSearchDiffResultsContainer'),
+                    facetsData, diffResultsData);
         }
 
     })(DifferentialRouter, facetsData, diffResultsData);

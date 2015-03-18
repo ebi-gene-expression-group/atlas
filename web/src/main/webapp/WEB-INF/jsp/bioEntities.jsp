@@ -210,22 +210,24 @@
                     <div class="ui-corner-all bioEntityCardDifferentialSummary">
                         <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
                         <span style="float: right">Within Sample Abundance (Proteomics) > 0</span>
-                        <span style="float: center">FPKM/TPM (Transcriptomics) > 0.5</span>
+                        <span style="float: left">FPKM (Transcriptomics) > 0.5</span>
                     </div>
                     <div id="widgetBody"></div>
 
 
-                    <c:if test="${not empty baselineCounts}">
+                    <c:if test="${not empty firstBaselineCounts}">
                         <section class="grid_17 alpha extra-padding">
                             <h5 style="padding: 0px">Other baseline experiments</h5>
-                            <h:baseline-search-results exactMatch="${exactMatch}" baselineCounts="${baselineCounts}" geneQuery="${geneQuery}" hideSpecies="true"/>
+                            <h:baseline-search-results exactMatch="${exactMatch}" firstBaselineCounts="${firstBaselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery}" hideSpecies="true"/>
                         </section>
                     </c:if>
 
                 </c:when>
 
                 <c:otherwise>
-                    <h:baseline-search-results exactMatch="${exactMatch}" baselineCounts="${baselineCounts}" geneQuery="${geneQuery}"/>
+                    <c:if test="${not empty baselineCounts}">
+                        <h:baseline-search-results exactMatch="${exactMatch}" firstBaselineCounts="${baselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery}"/>
+                    </c:if>
                 </c:otherwise>
             </c:choose>
         </div>

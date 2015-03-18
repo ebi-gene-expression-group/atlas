@@ -28,7 +28,8 @@
 
 <%@ attribute name="exactMatch" required="true" type="java.lang.Boolean"%>
 <%@ attribute name="geneQuery" required="true" type="uk.ac.ebi.atlas.web.GeneQuery"%>
-<%@ attribute name="baselineCounts" required="true" type="java.lang.Iterable"%>
+<%@ attribute name="firstBaselineCounts" required="true" type="java.lang.Iterable"%>
+<%@ attribute name="remainingBaselineCounts" required="true" type="java.lang.Iterable"%>
 <%@ attribute name="hideSpecies" type="java.lang.Boolean"%>
 
 <c:set var="base" value="${pageContext.request.contextPath}"/>
@@ -36,44 +37,61 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
-<c:choose>
-    <c:when test="${not empty baselineCounts}">
-    <c:set var="resultsCount" value="${baselineCounts.size()}"/>
+<table id="baselineCountsTable">
+    <tbody>
+        <c:forEach var="baselineResult" items="${firstBaselineCounts}">
+            <tr>
+                <td>
+                    <a class="bioEntityCardLink"
+                       href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
+                       title="experiment">
+                        <c:choose>
+                            <c:when test="${hideSpecies}">
+                                ${baselineResult.description()}
+                            </c:when>
+                            <c:otherwise>
+                                ${baselineResult.descriptionWithSpecies()}
+                            </c:otherwise>
+                        </c:choose>
 
-        <table id="baselineCountsTable">
-            <tbody>
-                <%--@elvariable id="baselineResult" type="uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup"--%>
-                <c:forEach var="baselineResult" items="${baselineCounts}"><%--@elvariable id="filterFactorsConverter" type="uk.ac.ebi.atlas.web.FilterFactorsConverter"--%>
-                
-                    <tr>
-                        <td>
-                            <a class="bioEntityCardLink"
-                                   href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
-                               title="experiment">
-                                <c:choose>
-                                    <c:when test="${hideSpecies}">
-                                        ${baselineResult.description()}
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${baselineResult.descriptionWithSpecies()}
-                                    </c:otherwise>
-                                </c:choose>
+                    </a>
+                </td>
+            </tr>
+        </c:forEach>
 
-                            </a>
-                        </td>
-                        <%-- We don't show counts for now --%>
-                        <%--<c:if test="${empty param.geneQuery}">--%>
-                            <%--<td class="count">--%>
-                                <%--(${baselineResult.count})--%>
-                            <%--</td>--%>
-                        <%--</c:if>--%>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+        <c:if test="${not empty remainingBaselineCounts}">
+            <tr id="moreResultsRow" >
+                <td><a id="moreResultsLink" href="">${remainingBaselineCounts.size()} more results...</a></td>
+            </tr>
 
-    </c:when>
-    <c:otherwise>
-        <%--<div>No baseline experiments were found.</div>--%>
-    </c:otherwise>
-</c:choose>
+            <c:forEach var="baselineResult" items="${remainingBaselineCounts}"><%--@elvariable id="filterFactorsConverter" type="uk.ac.ebi.atlas.web.FilterFactorsConverter"--%>
+                <tr class="additionalResultRow" style="display:none">
+                    <td>
+                        <a class="bioEntityCardLink"
+                           href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
+                           title="experiment">
+                            <c:choose>
+                                <c:when test="${hideSpecies}">
+                                    ${baselineResult.description()}
+                                </c:when>
+                                <c:otherwise>
+                                    ${baselineResult.descriptionWithSpecies()}
+                                </c:otherwise>
+                            </c:choose>
+
+                        </a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </c:if>
+    </tbody>
+</table>
+
+<script>
+    $("#moreResultsLink").click(function() {
+        $("#moreResultsRow").hide();
+        $(".additionalResultRow").show();
+        return false;
+    });
+</script>
+
