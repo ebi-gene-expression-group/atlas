@@ -52,7 +52,7 @@ public class BaselineAnalyticsFacetsReaderTest {
     public void extractTreeFacets() {
         String facetsTreeJson = subject.generateFacetsTreeJson(load2Json());
 
-        assertThat(facetsTreeJson, is("{\"Homo sapiens\":[{\"factor\":\"ORGANISM_PART\",\"source\":\"Organism part\"},{\"factor\":\"CELL_LINE\",\"source\":\"Cell line\"}],\"Mus musculus\":[{\"factor\":\"ORGANISM_PART\",\"source\":\"Organism part\"},{\"factor\":\"CELL_LINE\",\"source\":\"Cell line\"}]}"));
+        assertThat(facetsTreeJson, is("{\"Homo sapiens\":[{\"name\":\"ORGANISM_PART\",\"value\":\"Organism part\"},{\"name\":\"CELL_LINE\",\"value\":\"Cell line\"}],\"Mus musculus\":[{\"name\":\"ORGANISM_PART\",\"value\":\"Organism part\"},{\"name\":\"CELL_LINE\",\"value\":\"Cell line\"}]}"));
     }
 
 }
