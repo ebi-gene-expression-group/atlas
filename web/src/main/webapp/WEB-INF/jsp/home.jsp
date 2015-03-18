@@ -156,7 +156,7 @@
         <h4><img src="resources/images/allup2_transparent_bkg.png" style="padding-right: 15px"><a href="baseline/experiments">Baseline Experiments</a></h4>
         <p>See all baseline expression data sets in Expression Atlas.</p>
 
-        <h4><span class="icon icon-species" data-icon="B"></span><a href="plant/experiments">Plant Experiments</a></h4>
+        <h4><span class="icon icon-species" data-icon="P"></span><a href="plant/experiments">Plant Experiments</a></h4>
         <p>See all expression data sets in plants in Expression Atlas.</p>
 
 		<h4><img src="resources/images/experiment_page_small.png" style="padding-right: 15px"><a href="experiments">All Experiments</a></h4>
