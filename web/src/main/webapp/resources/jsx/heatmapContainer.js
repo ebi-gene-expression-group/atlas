@@ -13,14 +13,14 @@ var ExperimentDescription = (function (React) {
             var experimentURL = this.props.experiment.contextRoot + this.props.experiment.URL;
 
             return (
-                React.DOM.table({width: "100%"}, 
+                React.DOM.table( {width:"100%"}, 
                     React.DOM.tbody(null, 
                         React.DOM.tr(null, 
-                            React.DOM.td({width: "100%"}, 
-                                React.DOM.div({id: "experimentDescription"}, 
-                                    React.DOM.a({id: "goto-experiment", className: "thick-link", title: "Experiment Page", href: experimentURL}, this.props.experiment.description)
-                                ), 
-                                React.DOM.div({id: "experimentOrganisms"}, "Organism(s): ", React.DOM.span({style: {"font-style":"italic"}}, this.props.experiment.allSpecies))
+                            React.DOM.td( {width:"100%"}, 
+                                React.DOM.div( {id:"experimentDescription"}, 
+                                    React.DOM.a( {id:"goto-experiment", className:"thick-link", title:"Experiment Page", href:experimentURL}, this.props.experiment.description)
+                                ),
+                                React.DOM.div( {id:"experimentOrganisms"}, "Organism(s): ", React.DOM.span( {style:{"font-style":"italic"}}, this.props.experiment.allSpecies))
                             )
                         )
                     )
@@ -44,23 +44,23 @@ var Anatomogram = (function (React) {
             var sexToggleImageSrc =this.props.anatomogram.contextRoot + this.props.anatomogram.toggleButtonImage;
 
             return (
-                React.DOM.div({id: "anatomogram", className: "aside stickem double-click-noselection", style: {display: "inline"}}, 
+                React.DOM.div( {id:"anatomogram", className:"aside stickem double-click-noselection", style:{display: "inline"}}, 
                     React.DOM.table(null, 
                         React.DOM.tr(null, 
-                            React.DOM.td({style: {"padding-top": "15px", "vertical-align":"top"}}, 
-                                React.DOM.span({id: "sex-toggle"}, 
-                                    React.DOM.img({id: "sex-toggle-image", title: "Switch anatomogram", className: "button-image", 
-                                        style: {"width":"20px", "height":"38px", "padding":"2px"}, 
-                                        src: sexToggleImageSrc})
+                            React.DOM.td( {style:{"padding-top": "15px", "vertical-align":"top"}}, 
+                                React.DOM.span( {id:"sex-toggle"}, 
+                                    React.DOM.img( {id:"sex-toggle-image", title:"Switch anatomogram", className:"button-image",
+                                        style:{"width":"20px", "height":"38px", "padding":"2px"},
+                                        src:sexToggleImageSrc})
                                 )
-                            ), 
+                            ),
                             React.DOM.td(null, 
-                                React.DOM.div({id: "anatomogramBody", style: {"display":"inline-block", "width": "230px", "height":height}}
+                                React.DOM.div( {id:"anatomogramBody", style:{"display":"inline-block", "width": "230px", "height":height}}
                                 )
                             )
                         )
-                    ), 
-                    React.DOM.div({id: "anatomogram-ensembl-launcher"})
+                    ),
+                    React.DOM.div( {id:"anatomogram-ensembl-launcher"})
                 )
             );
         }
@@ -77,25 +77,25 @@ var HeatmapContainer = (function (React) {
             var heatmapClass = this.props.heatmapClass ? this.props.heatmapClass : "heatmap-position" + (this.props.isWidget ? "-widget" : "");
 
             return (
-                    React.DOM.div({className: "block"}, 
+                    React.DOM.div( {className:"block"}, 
 
                          this.props.experiment ? ExperimentDescription( {experiment: this.props.experiment} ) : null, 
 
-                        React.DOM.div({id: "heatmap-anatomogram", className: "heatmap-anatomogram-row stickem-container"}, 
+                        React.DOM.div( {id:"heatmap-anatomogram", className:"heatmap-anatomogram-row stickem-container"}, 
 
-                             this.props.anatomogram ? Anatomogram( {anatomogram:this.props.anatomogram} ) : null, 
+                             this.props.anatomogram ? Anatomogram( {anatomogram:this.props.anatomogram} ) : null,
 
-                            React.DOM.div({id: "ensembl-launcher", className: "aside stickem", style: {"display":"inline"}}), 
+                            React.DOM.div( {id:"ensembl-launcher", className:"aside stickem", style:{"display":"inline"}}),
 
-                            React.DOM.div({id: "heatmap-react", className: heatmapClass}, 
-                                Heatmap({columnHeaders: this.props.columnHeaders, profiles: this.props.profiles, geneSetProfiles: this.props.geneSetProfiles})
-                            ), 
+                            React.DOM.div( {id:"heatmap-react", className:heatmapClass}, 
+                                Heatmap( {columnHeaders:this.props.columnHeaders, profiles:this.props.profiles, geneSetProfiles:this.props.geneSetProfiles} )
+                            ),
 
                             /* TODO move into help tooltips module */
-                            React.DOM.div({id: "help-placeholder", style: {display: "none"}}), 
+                            React.DOM.div( {id:"help-placeholder", style:{display: "none"}}),
 
                             /* TODO move into gene tooltips module */
-                            React.DOM.div({id: "genenametooltip-content", style: {display: "none"}})
+                            React.DOM.div( {id:"genenametooltip-content", style:{display: "none"}})
 
                         )
                     )

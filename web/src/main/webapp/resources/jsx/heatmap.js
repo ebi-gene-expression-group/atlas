@@ -61,8 +61,25 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 }
             },
 
+            toggleRadioButton: function(value) {
+                var newSelected = value;
+                this.setState({selectedRadioButton: newSelected});
+
+            },
+
             isMicroarray: function () {
                 return !(typeof(this.props.profiles.rows[0].designElement) === "undefined");
+            },
+
+            hasQuartiles: function() {
+                var hasQuartiles = false;
+                for(var i=0; i < this.props.profiles.rows[0].expressions.length; i++) {
+                    if(this.props.profiles.rows[0].expressions[i].quartiles != undefined) {
+                        hasQuartiles = true;
+                        break;
+                    }
+                }
+                return hasQuartiles;
             },
 
             componentDidMount: function() {
@@ -123,8 +140,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                                                 React.DOM.tr( {ref:"heatmapTableRow"}, 
                                                     React.DOM.td(null, 
                                                         React.DOM.table( {ref:"heatmapTable", id:"heatmap-table", className:"table-grid"}, 
-                                                            HeatmapTableHeader( {isMicroarray:this.isMicroarray(), columnHeaders:this.props.columnHeaders, displayLevels:this.state.displayLevels, toggleDisplayLevels:this.toggleDisplayLevels, showGeneSetProfiles:this.state.showGeneSetProfiles, selectedRadioButton:this.state.selectedRadioButton}),
-                                                            HeatmapTableRows( {profiles:this.state.profiles.rows, displayLevels:this.state.displayLevels, showGeneSetProfiles:this.state.showGeneSetProfiles})
+                                                            HeatmapTableHeader( {isMicroarray:this.isMicroarray(), hasQuartiles:this.hasQuartiles(), columnHeaders:this.props.columnHeaders, displayLevels:this.state.displayLevels, toggleDisplayLevels:this.toggleDisplayLevels, showGeneSetProfiles:this.state.showGeneSetProfiles, selectedRadioButton:this.state.selectedRadioButton, toggleRadioButton:this.toggleRadioButton}),
+                                                            HeatmapTableRows( {profiles:this.state.profiles.rows, displayLevels:this.state.displayLevels, showGeneSetProfiles:this.state.showGeneSetProfiles, selectedRadioButton:this.state.selectedRadioButton, hasQuartiles:this.hasQuartiles()} )
                                                         )
                                                     ),
                                                     downloadProfilesButton
@@ -276,7 +293,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 return (
                     React.DOM.thead(null, 
                         React.DOM.th( {className:"horizontal-header-cell", colSpan:this.props.isMicroarray ? 2 : undefined}, 
-                            TopLeftCorner( {displayLevels:this.props.displayLevels, toggleDisplayLevels:this.props.toggleDisplayLevels, selectedRadioButton:this.props.selectedRadioButton})
+                            TopLeftCorner( {hasQuartiles:this.props.hasQuartiles, displayLevels:this.props.displayLevels, toggleDisplayLevels:this.props.toggleDisplayLevels, selectedRadioButton:this.props.selectedRadioButton, toggleRadioButton:this.props.toggleRadioButton})
                         ),
 
                          this.legendType(), 
@@ -626,13 +643,21 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
         var TopLeftCorner = (function (contextRoot) {
             return React.createClass({
 
-                render: function () {
+                displayLevelsBaseline: function() {
+                    debugger;
                     var displayLevelsButton = type.isDifferential ? DisplayLevelsButtonDifferential : DisplayLevelsButtonBaseline;
+                    return ( this.props.hasQuartiles ?
+                        displayLevelsRadio( {selectedRadioButton:this.props.selectedRadioButton, toggleRadioButton:this.props.toggleRadioButton} ) :
+                        displayLevelsButton( {displayLevels:this.props.displayLevels, toggleDisplayLevels:this.props.toggleDisplayLevels})
+                    );
+                },
+
+                render: function () {
                     return (
                             React.DOM.div( {className:"heatmap-matrix-top-left-corner"}, 
                                 React.DOM.span( {id:"tooltip-span", 'data-help-loc':type.heatmapTooltip, ref:"tooltipSpan"}),
-                                displayLevelsButton( {displayLevels:this.props.displayLevels, toggleDisplayLevels:this.props.toggleDisplayLevels}),
-                                displayLevelsRadio( {selectedRadioButton:this.props.selectedRadioButton} )
+
+                                this.displayLevelsBaseline()
                             )
                         );
                 },
@@ -684,32 +709,20 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 this._handleChange();
             },
 
-            _handleChange: function() {
-                debugger;
-
-                if(this.refs.gradients.getDOMNode().checked) {
-                    console.log("Display gradients");
-                    this.setState({ selected: "gradients" });
-
-                } else if (this.refs.levels.getDOMNode().checked) {
-                    console.log("Display gradients");
-                    this.setState ( { selected: "levels" });
-
-                } else if (this.refs.variance.getDOMNode().checked) {
-                    console.log("Display gradients");
-                    this.setState({selected: "variance"});
-                }
-
+            _handleChange: function(value) {
+                this.setState({selected: value});
+                this.props.toggleRadioButton(value);
             },
 
             render: function () {
-                //console.log(this.props.selectedRadioButton);
-                console.log(this.state.selected);
+                var radioStyle = {"vertical-align":"middle","margin-left":"10px", "margin-top":"10px"};
                 return (
-                    React.DOM.div( {onchange:this._handleChange}, 
-                        React.DOM.input( {type:"radio", ref:"gradients", value:"gradients", name:"radiolevels", defaultChecked:"checked"} ), " Display gradients  ",  React.DOM.br(null ),
-                        React.DOM.input( {type:"radio", ref:"levels", value:"levels", name:"radiolevels"} ), " Display levels            ",            React.DOM.br(null ),
-                        React.DOM.input( {type:"radio", ref:"variance", value:"variance", name:"radiolevels"}  ), " Display variance"
+                    React.DOM.div( {style:{"margin-top":"20px"}}, 
+                        React.DOM.div( {style:radioStyle}, 
+                            React.DOM.input( {type:"radio", name:"radiolevels", defaultChecked:"checked", onChange:this._handleChange.bind(this, "gradients")} ), " Display gradients  ",  React.DOM.br(null ),
+                            React.DOM.input( {type:"radio", name:"radiolevels", onChange:this._handleChange.bind(this, "levels")} ), " Display levels            ",            React.DOM.br(null ),
+                            React.DOM.input( {type:"radio", name:"radiolevels", onChange:this._handleChange.bind(this, "variance")}  ), " Display variance"
+                        )
                     )
                 );
             }
@@ -738,7 +751,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 return (type.isMultiExperiment ?
                     GeneProfileRow( {id:profile.id, name:profile.name, experimentType:profile.experimentType, expressions:profile.expressions, serializedFilterFactors:profile.serializedFilterFactors, displayLevels:this.props.displayLevels} )
                     :
-                    GeneProfileRow( {selected:profile.id === this.state.selectedGeneId, selectGene:this.selectGene, designElement:profile.designElement, id:profile.id, name:profile.name, expressions:profile.expressions, displayLevels:this.props.displayLevels, showGeneSetProfiles:this.props.showGeneSetProfiles})
+                    GeneProfileRow( {selected:profile.id === this.state.selectedGeneId, selectGene:this.selectGene, designElement:profile.designElement, id:profile.id, name:profile.name, expressions:profile.expressions, displayLevels:this.props.displayLevels, showGeneSetProfiles:this.props.showGeneSetProfiles, selectedRadioButton:this.props.selectedRadioButton, hasQuartiles:this.props.hasQuartiles} )
                 );
 
             },
@@ -758,12 +771,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
         var GeneProfileRow = (function (contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks, enableEnsemblLauncher, geneQuery) {
 
-            var cellBaselineExpression = baselineVarianceModule.build().CellBaselineVariance;
-
             return React.createClass({
 
                 getInitialState: function () {
-                    return ({hover:false, selected:false});
+                    return ({hover:false, selected:false, levels: this.props.displayLevels});
                 },
 
                 onMouseEnter: function () {
@@ -803,12 +814,28 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         );
                 },
 
+                displayLevelsRadio: function() {
+                    if(this.props.hasQuartiles) {
+                        if(this.props.selectedRadioButton == "gradients") {
+                            return false;
+                        }
+                        else if(this.props.selectedRadioButton == "levels") {
+                            return true;
+                        }
+                    }
+                    else return (this.props.displayLevels);
+                },
+
                 cellType: function (expression) {
                     if (type.isBaseline) {
-
-                        return (
-                            CellBaseline( {factorName:expression.factorName, color:expression.color, value:expression.value, displayLevels:this.props.displayLevels, svgPathId:expression.svgPathId, geneSetProfiles:this.props.showGeneSetProfiles, id:this.props.id, name:this.props.name})
+                        if(this.props.selectedRadioButton == "variance") {
+                            return ( this.varianceExpressionCell(expression));
+                        }
+                        else {
+                            return (
+                                CellBaseline( {factorName:expression.factorName, color:expression.color, value:expression.value, displayLevels:this.displayLevelsRadio(), svgPathId:expression.svgPathId, geneSetProfiles:this.props.showGeneSetProfiles, id:this.props.id, name:this.props.name})
                             );
+                        }
                     }
                     else if (type.isDifferential) {
                         return (
@@ -829,7 +856,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 },
 
                 varianceExpressionCell: function (expression) {
-                    React.renderComponent(cellBaselineExpression.CellBaselineVariance( {quartiles: expression} ));
+                    var CellBaselineVariance = baselineVarianceModule.build().CellBaselineVariance;
+                    return (CellBaselineVariance( {quartiles:expression.quartiles} ) );
+
                 },
 
                 render: function () {
@@ -922,8 +951,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             }
 
             return React.createClass({
-
                 render: function () {
+                   debugger;
                     if (noExpression(this.props.value)) {
                         return (React.DOM.td(null));
                     }

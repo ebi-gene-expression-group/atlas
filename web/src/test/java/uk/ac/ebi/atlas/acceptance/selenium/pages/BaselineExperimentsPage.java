@@ -46,17 +46,17 @@ public class BaselineExperimentsPage extends GlobalSearchPage {
     }
 
     public List<WebElement> getAllSpeciesItems() {
-        return speciesNav.findElements(By.className("item"));
+        return speciesNav.findElements(By.className("specie_item"));
     }
 
     public String getNameOfSpecies(int i) {
-        WebElement specie = getAllSpeciesItems().get(i);
-        return specie.findElement(By.xpath("div/h2")).getText();
+        WebElement species = getAllSpeciesItems().get(i);
+        return species.findElement(By.xpath("h3")).getText();
     }
 
     public List<WebElement> getAllExperimentsOfSpecies(int i) {
-        WebElement specie = getAllSpeciesItems().get(i);
-        return specie.findElements(By.xpath("div/ul/li"));
+        WebElement species = getAllSpeciesItems().get(i);
+        return species.findElements(By.xpath("ul/li"));
     }
 
     public List<String> getAllExperimentLinksOfSpecies(int i){

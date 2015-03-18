@@ -29,7 +29,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPage;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-public class DisplayValuesButtonIT extends SinglePageSeleniumFixture {
+public class DisplayValuesButtonSIT extends SinglePageSeleniumFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
