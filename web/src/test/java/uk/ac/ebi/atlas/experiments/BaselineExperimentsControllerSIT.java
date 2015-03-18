@@ -47,18 +47,18 @@ public class BaselineExperimentsControllerSIT extends SinglePageSeleniumFixture 
     }
 
     @Test
-    public void checkFirstSpecieName() {
-        assertThat(subject.getNameOfSpecies(0), is("Anolis carolinensis"));
+    public void checkFirstSpeciesName() {
+        assertThat(subject.getNameOfSpecies(0), is("Homo sapiens"));
     }
 
     @Test
-    public void checkSecondSpecieName() {
-        assertThat(subject.getNameOfSpecies(1), is("Caenorhabditis elegans"));
+    public void checkSecondSpeciesName() {
+        assertThat(subject.getNameOfSpecies(1), is("Anolis carolinensis"));
     }
 
     @Test
     public void homoSapiensTotal() {
-        assertThat(subject.getAllExperimentsOfSpecies(4).size(), is(NumberOfExperiments.NUMBER_OF_HOMO_SAPIEN_BASELINE_EXPERIMENTS));
+        assertThat(subject.getAllExperimentsOfSpecies(0).size(), is(NumberOfExperiments.NUMBER_OF_HOMO_SAPIEN_BASELINE_EXPERIMENTS));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class BaselineExperimentsControllerSIT extends SinglePageSeleniumFixture 
 
     @Test
     public void gorillaGorillaLink() {
-        List<String> allExperimentLinksOfSpecies = subject.getAllExperimentLinksOfSpecies(3);
+        List<String> allExperimentLinksOfSpecies = subject.getAllExperimentLinksOfSpecies(4);
         assertThat(allExperimentLinksOfSpecies.get(0), containsString("experiments/E-GEOD-30352?serializedFilterFactors=ORGANISM:Gorilla%20gorilla"));
     }
 
