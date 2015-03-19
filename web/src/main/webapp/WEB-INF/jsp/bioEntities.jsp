@@ -210,7 +210,7 @@
                     <div class="ui-corner-all bioEntityCardDifferentialSummary">
                         <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
                         <span style="float: right">Within Sample Abundance (Proteomics) > 0</span>
-                        <span style="float: left">FPKM (Transcriptomics) > 0.5</span>
+                        <span style="float: left">FPKM/TPM (Transcriptomics) > 0.5</span>
                     </div>
                     <div id="widgetBody"></div>
 
