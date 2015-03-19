@@ -52,8 +52,8 @@ var baselineVarianceModule  = (function ($, React) {
                         yAxis: {
                             title: {
                                 text: ''
-                            }
-
+                            },
+                            gridLineColor: '#FFFFFF'
                         },
 
                         exporting: {
