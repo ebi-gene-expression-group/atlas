@@ -177,7 +177,7 @@
                 <c:when test="${showWidget}">
                      <span style="margin-left: 10px; margin-top:10px">
                         <c:choose>
-                            <c:when test="${not empty baselineCounts}">
+                            <c:when test="${not empty firstBaselineCounts}">
                                 Results found
                             </c:when>
                             <c:otherwise>
@@ -188,8 +188,8 @@
                 </c:when>
                 <c:otherwise>
                     <c:choose>
-                        <c:when test="${not empty baselineCounts}">
-                            <c:set var="resultsCount" value="${baselineCounts.size()}"/>
+                        <c:when test="${not empty firstBaselineCounts}">
+                            <c:set var="resultsCount" value="${firstBaselineCounts.size()}"/>
                             <span style="margin-left: 10px; margin-top:10px">
                                 ${resultsCount} ${resultsCount == 1 ? "result" : "results"}
                             </span>
@@ -225,8 +225,8 @@
                 </c:when>
 
                 <c:otherwise>
-                    <c:if test="${not empty baselineCounts}">
-                        <h:baseline-search-results exactMatch="${exactMatch}" firstBaselineCounts="${baselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery}"/>
+                    <c:if test="${not empty firstBaselineCounts}">
+                        <h:baseline-search-results exactMatch="${exactMatch}" firstBaselineCounts="${firstBaselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery}"/>
                     </c:if>
                 </c:otherwise>
             </c:choose>
@@ -310,7 +310,7 @@
     <script src="${pageContext.request.contextPath}/resources/jsx/heatmapContainer.js"></script>
 </c:if>
 
-<c:set var="hasBaselineResults" value="${showWidget || not empty baselineCounts}"/>
+<c:set var="hasBaselineResults" value="${showWidget || not empty firstBaselineCounts}"/>
 
 <c:choose>
     <c:when test="${showBioentityPropertiesPane}">
