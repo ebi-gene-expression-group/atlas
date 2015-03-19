@@ -64,6 +64,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             toggleRadioButton: function(value) {
                 var newSelected = value;
                 this.setState({selectedRadioButton: newSelected});
+                var newDisplayLevels = (value == "levels"); //update the LegendType
+                this.setState({displayLevels: newDisplayLevels});
 
             },
 
@@ -80,6 +82,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     }
                 }
                 return hasQuartiles;
+            },
+
+            isSingleGeneResult: function () {
+                return (this.props.profiles.rows.length == 1);
             },
 
             componentDidMount: function() {
@@ -140,8 +146,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                                                 <tr ref="heatmapTableRow">
                                                     <td>
                                                         <table ref="heatmapTable" id="heatmap-table" className="table-grid">
-                                                            <HeatmapTableHeader isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} columnHeaders={this.props.columnHeaders} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton}/>
-                                                            <HeatmapTableRows profiles={this.state.profiles.rows} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} hasQuartiles={this.hasQuartiles()} />
+                                                            <HeatmapTableHeader isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton}/>
+                                                            <HeatmapTableRows profiles={this.state.profiles.rows} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} />
                                                         </table>
                                                     </td>
                                                     {downloadProfilesButton}
@@ -293,7 +299,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 return (
                     <thead>
                         <th className="horizontal-header-cell" colSpan={this.props.isMicroarray ? 2 : undefined}>
-                            <TopLeftCorner hasQuartiles={this.props.hasQuartiles} displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels} selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton}/>
+                            <TopLeftCorner hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels} selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton}/>
                         </th>
 
                         { this.legendType() }
@@ -644,9 +650,8 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
 
                 displayLevelsBaseline: function() {
-                    debugger;
                     var displayLevelsButton = type.isDifferential ? DisplayLevelsButtonDifferential : DisplayLevelsButtonBaseline;
-                    return ( this.props.hasQuartiles ?
+                    return ( this.props.hasQuartiles && this.props.isSingleGeneResult ?
                         <displayLevelsRadio selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton} /> :
                         <displayLevelsButton displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels}/>
                     );
@@ -751,7 +756,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 return (type.isMultiExperiment ?
                     <GeneProfileRow id={profile.id} name={profile.name} experimentType={profile.experimentType} expressions={profile.expressions} serializedFilterFactors={profile.serializedFilterFactors} displayLevels={this.props.displayLevels} />
                     :
-                    <GeneProfileRow selected={profile.id === this.state.selectedGeneId} selectGene={this.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles} selectedRadioButton={this.props.selectedRadioButton} hasQuartiles={this.props.hasQuartiles} />
+                    <GeneProfileRow selected={profile.id === this.state.selectedGeneId} selectGene={this.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles} selectedRadioButton={this.props.selectedRadioButton} hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} />
                 );
 
             },
@@ -815,7 +820,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 },
 
                 displayLevelsRadio: function() {
-                    if(this.props.hasQuartiles) {
+                    if(this.props.hasQuartiles && this.props.isSingleGeneResult) {
                         if(this.props.selectedRadioButton == "gradients") {
                             return false;
                         }
@@ -836,6 +841,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                                 <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.displayLevelsRadio()} svgPathId={expression.svgPathId} geneSetProfiles={this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
                             );
                         }
+
                     }
                     else if (type.isDifferential) {
                         return (
@@ -952,7 +958,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
             return React.createClass({
                 render: function () {
-                   debugger;
                     if (noExpression(this.props.value)) {
                         return (<td></td>);
                     }
