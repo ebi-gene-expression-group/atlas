@@ -726,7 +726,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         <div style={radioStyle}>
                             <input type="radio" name="radiolevels" defaultChecked="checked" onChange={this._handleChange.bind(this, "gradients")} /> Display gradients  <br />
                             <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "levels")} /> Display levels            <br />
-                            <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "variance")}  /> Display variance
+                            <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "variance")}  /> Display variation
                         </div>
                     </div>
                 );
