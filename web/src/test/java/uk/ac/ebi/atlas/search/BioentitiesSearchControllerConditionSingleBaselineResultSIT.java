@@ -44,7 +44,7 @@ public class BioentitiesSearchControllerConditionSingleBaselineResultSIT extends
 
     @Test
     public void displaysResultsTableBecauseThereIsACondition() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResults();
 
         assertThat(baselineCounts, hasSize(1));
 

@@ -45,7 +45,7 @@ public class BioentitiesSearchConditionQueryParentEFOTermSIT extends SinglePageS
 
     @Test
     public void checkBaselineExperimentCounts() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResults();
 
         assertThat(baselineCounts, hasSize(15));
 

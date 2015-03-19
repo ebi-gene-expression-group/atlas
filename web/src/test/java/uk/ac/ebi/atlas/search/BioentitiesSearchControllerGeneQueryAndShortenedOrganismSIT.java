@@ -44,7 +44,7 @@ public class BioentitiesSearchControllerGeneQueryAndShortenedOrganismSIT extends
 
     @Test
     public void checkBaselineExperimentCounts() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResults();
 
         assertThat(baselineCounts, hasSize(1));
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-2809"));
