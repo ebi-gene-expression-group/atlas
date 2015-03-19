@@ -80,7 +80,7 @@
 
 								<div>
 									<span style="float:left">E.g.
-											<a href="query?geneQuery=ASPM">ASPM</a>,
+											<a href="query?geneQuery=SFTPA2&organism=Homo+sapiens">SFTPA2</a>,
 											<a href="query?geneQuery=%22zinc+finger%22">zinc finger</a>
 										</span>
 
@@ -106,6 +106,7 @@
 
 								<div>
 									<span class="examples">E.g.
+                                        <a href="query?condition=lung">lung</a>,
 										<a href="query?condition=leaf">leaf</a>,
 										<a href="query?condition=&quot;valproic+acid&quot;">"valproic acid"</a>,
 										<a href="query?condition=cancer">cancer</a>

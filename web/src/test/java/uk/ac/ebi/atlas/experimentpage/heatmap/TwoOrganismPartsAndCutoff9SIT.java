@@ -24,29 +24,43 @@ package uk.ac.ebi.atlas.experimentpage.heatmap;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
+import java.util.List;
+
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class GeneNameLinksIT extends SinglePageSeleniumFixture {
+public class TwoOrganismPartsAndCutoff9SIT extends SinglePageSeleniumFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    protected HeatmapTablePage subject;
+    private HeatmapTablePage subject;
 
     public void getStartingPage() {
-        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION);
+        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION,
+                "heatmapMatrixSize=5&queryFactorValues=adipose&geneQuery=&queryFactorValues=heart&_queryFactorValues=2&cutoff=9");
         subject.get();
     }
 
     @Test
-    public void clickingOnGeneNameShouldTakeToTheGenePage() {
-        BioEntityPage bioEntityPage = subject.clickGeneName(1);
+    public void verifySelectedGenes() {
+        List<String> selectedGenes = subject.getGeneNames();
+        assertThat(selectedGenes.size(), is(5));
+        assertThat(selectedGenes, contains("AL031284.1", "AL162853.1", "ENSG00000244656", "NEBL", "ENSG00000228964"));
+    }
 
-        assertThat(bioEntityPage.getBioEntityCardTitle(), is("TEX33 Homo sapiens testis expressed 33"));
+    @Test
+    public void verifyFirstGeneProfile() {
+        subject.clickDisplayLevelsButton();
+        assertThat(subject.getFirstGeneProfile(), contains("225", "", "", "", "", "581", "", ""
+                , "", "", "", "", "", "", "", ""));
+    }
 
+    @Test
+    public void verifyGeneCount() {
+        assertThat(subject.getGeneCount().contains("5"), is(true));
     }
 
 }

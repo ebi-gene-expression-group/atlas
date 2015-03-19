@@ -114,9 +114,9 @@ public class BioentitiesSearchController {
             model.addAttribute("widgetHasBaselineProfiles", true);
             model.addAttribute("species", baselineExperimentAssayGroups.iterator().next().getSpecies());
 
-            model.addAttribute("baselineCounts", selectNonTissueExperiments(baselineExperimentAssayGroups));
+            model.addAttribute("firstBaselineCounts", selectNonTissueExperiments(baselineExperimentAssayGroups));
         } else {
-            model.addAttribute("baselineCounts", baselineExperimentAssayGroups);
+            model.addAttribute("firstBaselineCounts", baselineExperimentAssayGroups);
         }
 
         // used to populate diff-heatmap-table
