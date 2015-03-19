@@ -36,6 +36,10 @@ div#local-search form fieldset, form#local-search fieldset {
     width: 15%;
 }
 
+#gxaHomeSearchContainer {
+    overflow:scroll;
+}
+
 .atlas-body {
     min-width: 975px;
     /* font-family: Verdana, Helvetica, Arial, sans-serif;*/
