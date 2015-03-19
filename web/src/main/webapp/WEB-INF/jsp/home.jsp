@@ -106,6 +106,7 @@
 
 								<div>
 									<span class="examples">E.g.
+                                        <a href="query?condition=lung">lung</a>,
 										<a href="query?condition=leaf">leaf</a>,
 										<a href="query?condition=&quot;valproic+acid&quot;">"valproic acid"</a>,
 										<a href="query?condition=cancer">cancer</a>
