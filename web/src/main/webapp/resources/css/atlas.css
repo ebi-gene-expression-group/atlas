@@ -37,7 +37,19 @@ div#local-search form fieldset, form#local-search fieldset {
 }
 
 #gxaHomeSearchContainer {
-    overflow:scroll;
+    overflow: scroll;
+}
+
+td.gxaHomeSearchFluidTableColumn {
+    vertical-align: top;
+    width: 30%;
+    padding-right: 10px;
+}
+
+td.gxaHomeSearchFixedSizeTableColumn {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .atlas-body {
@@ -82,7 +94,6 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a {
 }
 
 #atlas-content td, .rotated-cell {
-    vertical-align: inherit;
     border: none;
     margin: 0px;
     padding: 2px;
@@ -98,7 +109,6 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a {
 }
 
 #atlas-content form td, #dialog-form form td {
-    vertical-align: top;
     padding: 4px;
 }
 

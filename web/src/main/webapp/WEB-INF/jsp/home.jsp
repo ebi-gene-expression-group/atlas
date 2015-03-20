@@ -49,18 +49,18 @@
 			<form method="get" action="query" id="searchForm">
 				<table class="form-grid">
 					<tr>
-						<td>
+						<td class="gxaHomeSearchFluidTableColumn">
 							<label>Gene query</label>
 							<span data-help-loc="#geneSearch"></span>
 						</td>
-						<td>
+						<td  class="gxaHomeSearchFluidTableColumn">
 							<label>Organism</label>
 						</td>
-						<td>
+						<td  class="gxaHomeSearchFluidTableColumn">
 							<label>Sample properties</label>
 							<span data-help-loc="#experimentalConditions"></span>
 						</td>
-						<td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
+						<td rowspan="2" class="gxaHomeSearchFixedSizeTableColumn">
 							<div class="actions">
 								<div>
 									<input id="submit-button" type="submit" value="Search" tabindex="4">
@@ -73,11 +73,10 @@
 					</tr>
 
 					<tr>
-						<td>
-							<div id="geneQuerySection" style="display:inline-block">
+						<td class="gxaHomeSearchFluidTableColumn">
+							<div id="geneQuerySection">
 								<textarea id="geneQuery" name="geneQuery" rows="2" cols="36"
 										  placeholder="(all genes)" tabindex="1"></textarea>
-
 								<div>
 									<span style="float:left">E.g.
 											<a href="query?geneQuery=SFTPA2&organism=Homo+sapiens">SFTPA2</a>,
@@ -94,13 +93,13 @@
 							</div>
 						</td>
 
-						<td>
+						<td class="gxaHomeSearchFluidTableColumn">
 							<form:select id="organism" name="organism" path="dummyPath">
 								<form:options items="${organisms}" />
 							</form:select>
 						</td>
-						<td>
-                    	<div id="conditionSection" style="display:inline-block">
+						<td class="gxaHomeSearchFluidTableColumn">
+                    	<div id="conditionSection">
 								<textarea id="condition" name="condition" maxlength="900" rows="2" cols="36"
 										  placeholder="(all conditions)" tabindex="3"></textarea>
 
