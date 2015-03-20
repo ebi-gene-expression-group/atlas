@@ -35,10 +35,10 @@ public class BaselineExperimentSearchResultProducerTest {
     private static final java.lang.String CELL_LINE = "CELL_LINE";
     BaselineExperimentSearchResultProducer subject;
 
-    BaselineExpression g3_thymus = BaselineExpression.create(E_MTAB_599, "g3", THYMUS_LEVEL);
-    BaselineExpression g5_lung = BaselineExpression.create(E_MTAB_599, "g5", LUNG_LEVEL);
-    BaselineExpression g6_spleen = BaselineExpression.create(E_MTAB_599, "g6", SPLEEN_LEVEL);
-    BaselineExpression g_nonTissueExpression = BaselineExpression.create(E_GEOD_26284, "g12", IMR_90_LEVEL);
+    BaselineExperimentExpression g3_thymus = BaselineExperimentExpression.create(E_MTAB_599, "g3", THYMUS_LEVEL);
+    BaselineExperimentExpression g5_lung = BaselineExperimentExpression.create(E_MTAB_599, "g5", LUNG_LEVEL);
+    BaselineExperimentExpression g6_spleen = BaselineExperimentExpression.create(E_MTAB_599, "g6", SPLEEN_LEVEL);
+    BaselineExperimentExpression g_nonTissueExpression = BaselineExperimentExpression.create(E_GEOD_26284, "g12", IMR_90_LEVEL);
 
     private static final String ORGANISM_PART = "ORGANISM_PART";
     private static final Factor LUNG = new Factor(ORGANISM_PART, "lung");
@@ -99,7 +99,7 @@ public class BaselineExperimentSearchResultProducerTest {
     @Test
     public void buildProfilesForTissueExperiments() {
         // include g_nonTissueExpression which should be filtered out
-        ImmutableList<BaselineExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
+        ImmutableList<BaselineExperimentExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
 
         BaselineExperimentSearchResult result = subject.buildProfilesForTissueExperiments(expressions);
 
@@ -125,7 +125,7 @@ public class BaselineExperimentSearchResultProducerTest {
     @Test
     public void buildProfilesForCellLineExperiments() {
         // include tissue expressions which should be filtered out
-        ImmutableList<BaselineExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
+        ImmutableList<BaselineExperimentExpression> expressions = ImmutableList.of(g3_thymus, g5_lung, g6_spleen, g_nonTissueExpression);
 
         BaselineExperimentSearchResult result = subject.buildProfilesForExperiments(expressions, CELL_LINE);
 

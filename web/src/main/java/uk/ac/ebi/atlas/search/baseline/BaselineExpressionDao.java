@@ -60,7 +60,7 @@ public class BaselineExpressionDao {
     }
 
     //TODO: allow fetching by species
-    public ImmutableList<BaselineExpression> fetchAverageExpressionByExperimentAssayGroup(final Collection<String> geneIds) {
+    public ImmutableList<BaselineExperimentExpression> fetchAverageExpressionByExperimentAssayGroup(final Collection<String> geneIds) {
         if (geneIds.isEmpty()) {
             return ImmutableList.of();
         }
@@ -73,7 +73,7 @@ public class BaselineExpressionDao {
 
             DatabaseQuery<Object> baselineExpressionQuery = buildSelect(geneIds);
 
-            final ImmutableList.Builder<BaselineExpression> builder = ImmutableList.builder();
+            final ImmutableList.Builder<BaselineExperimentExpression> builder = ImmutableList.builder();
 
             final MutableInt numberOfGenesExpressedInCurrentExperiment = new MutableInt(0);
 
@@ -93,14 +93,14 @@ public class BaselineExpressionDao {
                             }
 
                             double expression = baselineExpressionLevelRounder.round(rs.getDouble(BaselineQueryBuilder.EXPRESSION) / numberOfGenesExpressedInCurrentExperiment.intValue());
-                            BaselineExpression bslnExpression = BaselineExpression.create(experimentAccession, assayGroupId, expression);
+                            BaselineExperimentExpression bslnExpression = BaselineExperimentExpression.create(experimentAccession, assayGroupId, expression);
 
                             builder.add(bslnExpression);
                         }
                     },
                     baselineExpressionQuery.getParameters().toArray());
 
-            ImmutableList<BaselineExpression> results = builder.build();
+            ImmutableList<BaselineExperimentExpression> results = builder.build();
 
             stopwatch.stop();
             LOGGER.debug(String.format("fetchAverageExpressionByExperimentAssayGroup returned %s results in %.2f seconds", results.size(), stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));

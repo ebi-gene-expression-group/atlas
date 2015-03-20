@@ -362,7 +362,7 @@ public class BaselineExperimentProfileSearchServiceIT {
     @Test
     public void onlyTissueExperimentsReturned() {
         // test gene has expression in cell lines experiment (E-MTAB-1733)
-        List<BaselineExpression> expressions = baselineExpressionDao.fetchAverageExpressionByExperimentAssayGroup(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT));
+        List<BaselineExperimentExpression> expressions = baselineExpressionDao.fetchAverageExpressionByExperimentAssayGroup(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT));
         assertThat(expressions,  hasItem(hasExperimentAccession("E-MTAB-1733")));
 
         // test that cell lines experiment is not returned
@@ -427,11 +427,11 @@ public class BaselineExperimentProfileSearchServiceIT {
 
     }
 
-    private Matcher<BaselineExpression> hasExperimentAccession(final String expectedExperimentAccession) {
-        return new BaseMatcher<BaselineExpression>() {
+    private Matcher<BaselineExperimentExpression> hasExperimentAccession(final String expectedExperimentAccession) {
+        return new BaseMatcher<BaselineExperimentExpression>() {
             @Override
             public boolean matches(Object o) {
-                String actualExperimentAccession = ((BaselineExpression)o).experimentAccession();
+                String actualExperimentAccession = ((BaselineExperimentExpression)o).experimentAccession();
                 return expectedExperimentAccession.equals(actualExperimentAccession);
             }
 

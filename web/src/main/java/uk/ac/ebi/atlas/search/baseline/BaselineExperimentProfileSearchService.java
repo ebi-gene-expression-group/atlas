@@ -98,7 +98,7 @@ public class BaselineExperimentProfileSearchService {
             return new BaselineExperimentSearchResult();
         }
 
-        List<BaselineExpression> expressions = baselineExpressionDao.fetchAverageExpressionByExperimentAssayGroup(geneIds.get());
+        List<BaselineExperimentExpression> expressions = baselineExpressionDao.fetchAverageExpressionByExperimentAssayGroup(geneIds.get());
 
         return baselineExperimentSearchResultProducer.buildProfilesForTissueExperiments(expressions);
     }
