@@ -47,7 +47,7 @@ public class BioentitiesSearchControllerGeneQuery2GenesFollowLinkBaselineCountsS
 
     @Test
     public void multipleGenesQueryInMultipleSpecies_followingBaselineCountsLinkShouldGoToExperimentPageWithResults() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResults();
 
         assertThat(baselineCounts, hasSize(4));
 

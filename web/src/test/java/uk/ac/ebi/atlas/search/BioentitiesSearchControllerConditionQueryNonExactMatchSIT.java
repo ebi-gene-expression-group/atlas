@@ -47,7 +47,7 @@ public class BioentitiesSearchControllerConditionQueryNonExactMatchSIT extends S
     public void baselineResultsLinkIncludesExactMatchFalse() {
         subject.clickBaselinePane();
 
-        List<BaselineBioEntitiesSearchResult> baselineResults = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineResults = subject.getBaselineResults();
 
         assertThat(baselineResults.get(1).getHref(), containsString("geneQuery=kinase&exactMatch=false"));
     }

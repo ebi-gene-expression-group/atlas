@@ -48,7 +48,7 @@ public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends Sin
 
     @Test
     public void checkBaselineExperimentCounts() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResults();
 
         assertThat(baselineCounts, hasSize(2));
 

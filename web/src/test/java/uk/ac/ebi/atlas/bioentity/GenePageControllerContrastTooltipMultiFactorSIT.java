@@ -79,7 +79,7 @@ public class GenePageControllerContrastTooltipMultiFactorSIT extends SinglePageS
 
     @Test
     public void checkContrastSummaryTooltipExperimentAndContrastDescription() {
-        assertThat(subject.getDiffHeatmapContrastSummaryTooltipExperimentDescription(), is("Transcription profiling by array of seven ecotypes of Arabidopsis thaliana after time course treatment with salicylic acid."));
+        assertThat(subject.getDiffHeatmapContrastSummaryTooltipExperimentDescription(), is("Transcription profiling of expression diversity in Arabidopsis thaliana"));
         assertThat(subject.getContrastSummaryTooltipContrastDescription(), is("treatment: 'salicylic acid' vs 'Silwet' at time: '4 hours' in ecotype: 'Col-0'"));
     }
 

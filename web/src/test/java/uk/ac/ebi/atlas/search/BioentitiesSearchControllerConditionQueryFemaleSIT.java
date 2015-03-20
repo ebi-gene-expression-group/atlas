@@ -46,7 +46,7 @@ public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePa
 
     @Test
     public void checkBaselineExperimentCounts() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResults();
 
         assertThat(baselineCounts, hasSize(17));
         BaselineBioEntitiesSearchResult result = selectResult(baselineCounts, "E-MTAB-513");

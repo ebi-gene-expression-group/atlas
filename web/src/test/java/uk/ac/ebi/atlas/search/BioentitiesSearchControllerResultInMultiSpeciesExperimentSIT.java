@@ -45,7 +45,7 @@ public class BioentitiesSearchControllerResultInMultiSpeciesExperimentSIT extend
 
     @Test
     public void checkBaselineExperimentCounts() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResults();
 
         assertThat(baselineCounts, hasSize(4));
 
