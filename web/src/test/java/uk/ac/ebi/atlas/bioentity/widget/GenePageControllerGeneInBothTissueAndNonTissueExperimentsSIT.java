@@ -30,11 +30,11 @@ public class GenePageControllerGeneInBothTissueAndNonTissueExperimentsSIT extend
     public void baselineWidget() {
         subject.waitForHeatmapToBeVisible();
 
-        assertThat(subject.getGeneCount(), is("Showing 3 of 3 experiments found:"));
+        assertThat(subject.getGeneCount(), is("Showing 4 of 4 experiments found:"));
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
-        assertThat(subject.getGeneNames().size(), is(3));
-        assertThat(subject.getGeneNames(), contains("Thirty two tissues", "Twenty seven tissues", "Human Proteome Map - adult"));
+        assertThat(subject.getGeneNames().size(), is(4));
+        assertThat(subject.getGeneNames(), contains("Thirty two tissues", "Twenty seven tissues", "Human Proteome Map - adult", "Human Proteome Map - fetus"));
         assertThat(subject.hasAnatomogram(), is(true));
     }
 
