@@ -12,13 +12,11 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.model.OntologyTerm;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -106,6 +104,9 @@ public class BaselineExperimentProfileSearchServiceIT {
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;
 
+    @Inject
+    private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache;
+
 
     @Inject
     private SolrQueryService solrQueryService;
@@ -149,9 +150,14 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(factors, contains(allFactors.toArray()));
     }
 
-    private ImmutableSortedSet<Factor> getOrganismPartFactors(String experimentAccession) {
+    private ImmutableSortedSet<Factor> getOrganismPartFactorsInBaselineExperiment(String experimentAccession) {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
         return experiment.getExperimentalFactors().getFactors("ORGANISM_PART");
+    }
+
+    private SortedSet<Factor> getDefaultFilterFactorsInProteomicsExperiment(String experimentAccession) {
+        ProteomicsBaselineExperiment experiment = proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
+        return experiment.getExperimentalFactors().getCoOccurringFactors(experiment.getExperimentalFactors().getDefaultFilterFactors().iterator().next());
     }
 
     private static ImmutableSortedSet<Factor> getEMtab1733Tissues() {
@@ -425,56 +431,13 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(baselineProfilesList, not(hasItem(encodeCellLinesExperimentProfile)));
 
         SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
-        ImmutableSortedSet<Factor> allFactors = getOrganismPartFactors("E-MTAB-1733");
 
-        //TODO: CHANGE THIS FOR A METHOD THAT ALSO RETURNS PROTEOMICS FACTORS IN THE getOrganismPartFactors
-        OntologyTerm ontologyTerm1 = OntologyTerm.create("CL_0000236", "http://purl.obolibrary.org/obo/");
-        Factor factor1 = new Factor(ORGANISM_PART, "B cell", ontologyTerm1);
-        Factor factor2 = new Factor(ORGANISM_PART, "CD4-positive T cell");
-        Factor factor3 = new Factor(ORGANISM_PART, "CD8-positive T cell");
+        ImmutableSortedSet.Builder<Factor> allFactorsBuilder = ImmutableSortedSet.naturalOrder();
+        allFactorsBuilder.addAll(getOrganismPartFactorsInBaselineExperiment("E-MTAB-1733"));
+        allFactorsBuilder.addAll(getOrganismPartFactorsInBaselineExperiment("E-MTAB-2836"));
+        allFactorsBuilder.addAll(getDefaultFilterFactorsInProteomicsExperiment("E-PROT-1"));
 
-        OntologyTerm ontologyTerm2 = OntologyTerm.create("UBERON_0001870", "http://purl.obolibrary.org/obo/");
-        Factor factor4 = new Factor(ORGANISM_PART, "frontal cortex", ontologyTerm2);
-        Factor factor5 = new Factor(ORGANISM_PART, "gallbladder");
-        OntologyTerm ontologyTerm3 = OntologyTerm.create("CL_0000576", "http://purl.obolibrary.org/obo/");
-        Factor factor6 = new Factor(ORGANISM_PART, "monocyte", ontologyTerm3);
-        OntologyTerm ontologyTerm4 = OntologyTerm.create("CL_0000623", "http://purl.obolibrary.org/obo/");
-        Factor factor7 = new Factor(ORGANISM_PART, "natural killer cell", ontologyTerm4);
-        OntologyTerm ontologyTerm5 = OntologyTerm.create("EFO_0000973", "http://purl.obolibrary.org/obo/");
-        Factor factor8 = new Factor(ORGANISM_PART, "ovary", ontologyTerm5);
-        OntologyTerm ontologyTerm6 = OntologyTerm.create("CL_0000233", "http://purl.obolibrary.org/obo/");
-        Factor factor9 = new Factor(ORGANISM_PART, "platelet", ontologyTerm6);
-        OntologyTerm ontologyTerm7 = OntologyTerm.create("UBERON_0001052", "http://purl.obolibrary.org/obo/");
-        Factor factor10 = new Factor(ORGANISM_PART, "rectum", ontologyTerm7);
-        OntologyTerm ontologyTerm8 = OntologyTerm.create("UBERON_0000966", "http://purl.obolibrary.org/obo/");
-        Factor factor11 = new Factor(ORGANISM_PART, "retina", ontologyTerm8);
-        OntologyTerm ontologyTerm9 = OntologyTerm.create("UBERON_0002240", "http://purl.obolibrary.org/obo/");
-        Factor factor12 = new Factor(ORGANISM_PART, "spinal cord", ontologyTerm9);
-        Factor factor13 = new Factor(ORGANISM_PART, "urinary bladder");
-
-        ImmutableSortedSet.Builder<Factor> protFactorBuilder = ImmutableSortedSet.naturalOrder();
-        protFactorBuilder.add(factor1);
-        protFactorBuilder.add(factor2);
-        protFactorBuilder.add(factor3);
-        protFactorBuilder.add(factor4);
-        protFactorBuilder.add(factor5);
-        protFactorBuilder.add(factor6);
-        protFactorBuilder.add(factor7);
-        protFactorBuilder.add(factor8);
-        protFactorBuilder.add(factor9);
-        protFactorBuilder.add(factor10);
-        protFactorBuilder.add(factor11);
-        protFactorBuilder.add(factor12);
-        protFactorBuilder.add(factor13);
-
-        protFactorBuilder.build();
-
-        protFactorBuilder.addAll(allFactors);
-
-        protFactorBuilder.addAll(getOrganismPartFactors("E-MTAB-2836"));
-
-        assertThat(factors, containsInAnyOrder(protFactorBuilder.build().toArray()));
-
+        assertThat(factors, containsInAnyOrder(allFactorsBuilder.build().toArray()));
     }
 
     private Matcher<BaselineExperimentExpression> hasExperimentAccession(final String expectedExperimentAccession) {
@@ -491,7 +454,6 @@ public class BaselineExperimentProfileSearchServiceIT {
             }
         };
     }
-
 
     @Test
     public void sortExperimentsByNonFilterFactors() {
@@ -546,5 +508,4 @@ public class BaselineExperimentProfileSearchServiceIT {
 
         assertThat(result.isEmpty(), is(true));
     }
-
 }
