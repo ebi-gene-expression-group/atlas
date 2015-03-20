@@ -1,0 +1,11 @@
+{
+  "name": "mochatest",
+  "version": "1.0.0",
+  "devDependencies": {
+    "chai": "^1",
+    "mocha": "^1",
+    "mocha-loader": "^0.6",
+    "script-loader": "^0.5",
+    "webpack": "^1"
+  }
+}
