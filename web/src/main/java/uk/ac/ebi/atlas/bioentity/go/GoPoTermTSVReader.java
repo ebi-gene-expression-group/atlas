@@ -27,7 +27,7 @@ public class GoPoTermTSVReader implements Closeable {
         while ((nextLine = csvReader.readNext()) != null) {
             String accession = nextLine[0];
             String term = nextLine[1].replace("_", " ");
-            int depth = nextLine.length == 3 ? Integer.parseInt(nextLine[2]) : 1;
+            int depth = nextLine.length == 4 ? Integer.parseInt(nextLine[3]) : 1;
 
             if(accession.startsWith(termType)) {
                 multimapBuilder.put(accession, GoPoTerm.create(accession, term, depth));
