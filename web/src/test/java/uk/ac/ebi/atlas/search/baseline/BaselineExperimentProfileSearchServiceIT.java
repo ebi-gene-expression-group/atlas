@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
@@ -27,6 +28,7 @@ import java.util.SortedSet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
@@ -99,7 +101,7 @@ public class BaselineExperimentProfileSearchServiceIT {
     private BaselineExperimentProfileSearchService subject;
 
     @Inject
-    private RnaSeqBslnExpressionDao rnaSeqBslnExpressionDao;
+    private BaselineExpressionDao baselineExpressionDao;
 
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;
@@ -261,97 +263,68 @@ public class BaselineExperimentProfileSearchServiceIT {
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
-        assertThat(baselineProfilesList, hasSize(4));
+        assertThat(baselineProfilesList, hasSize(3));
 
-        assertThat(baselineProfilesList.getTotalResultCount(), is(4));
+        assertThat(baselineProfilesList.getTotalResultCount(), is(3));
 
         BaselineExperimentProfile baselineProfile0 = baselineProfilesList.get(0);
-        assertThat(baselineProfile0.getId(), is("E-MTAB-2836"));
-        assertThat(baselineProfile0.getName(), is("Thirty two tissues"));
+        assertThat(baselineProfile0.getId(), is("E-MTAB-1733"));
+        assertThat(baselineProfile0.getName(), is("Twenty seven tissues"));
         assertThat(baselineProfile0.getFilterFactors(), is(EMPTY_FACTOR_SET));
-        assertThat(baselineProfile0.getConditions(), hasSize(47));
-        assertThat(baselineProfile0.getMinExpressionLevel(), is(0.4D));
-        assertThat(baselineProfile0.getMaxExpressionLevel(), is(15D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(ADIPOSE), is(5D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(ADRENAL_GLAND), is(7D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(ANIMAL_OVARY), is(8D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(APPENDIX), is(12D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(BLADDER), is(9D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(BONE_MARROW), is(9D));
-        assertThat(baselineProfile0.getExpression(CEREBELLUM).isKnown(), is(false));
-        assertThat(baselineProfile0.getKnownExpressionLevel(CEREBRAL_CORTEX), is(2D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(COLON), is(9D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(DUODENUM), is(9D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(ENDOMETRIUM), is(7D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(ESOPHAGUS), is(7D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(FALLOPIAN_TUBE), is(9D));
-        assertThat(baselineProfile0.getExpression(FRONTAL_CORTEX).isKnown(), is(false));
-        assertThat(baselineProfile0.getExpression(FRONTAL_LOBE).isKnown(), is(false));
-        assertThat(baselineProfile0.getKnownExpressionLevel(GALL_BLADDER), is(10D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(HEART), is(2D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(KIDNEY), is(3D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(LIVER), is(6D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(LUNG), is(10D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(LYMPH_NODE), is(11D));
-        assertThat(baselineProfile0.getExpression(MONOCYTE).isKnown(), is(false));
-        assertThat(baselineProfile0.getExpression(NATURAL_KILLER).isKnown(), is(false));
-        assertThat(baselineProfile0.getExpression(OVARY).isKnown(), is(false));
-        assertThat(baselineProfile0.getExpression(PANCREAS), is(nullValue()));
-        assertThat(baselineProfile0.getKnownExpressionLevel(PLACENTA), is(6D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(PROSTATE), is(6D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(RECTUM), is(15D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(SALIVARY_GLAND), is(1D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(SKELETAL_MUSCLE), is(0.4D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(SKIN), is(5D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(SMALL_INTESTINE), is(8D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(SMOOTH_MUSCLE), is(7D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(SPLEEN), is(11D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(STOMACH), is(5D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(TESTIS), is(2D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(THYROID), is(4D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(TONSIL), is(9D));
+        assertThat(baselineProfile0.getConditions(), hasSize(44));
+        assertThat(baselineProfile0.getMinExpressionLevel(), is(3D));
+        assertThat(baselineProfile0.getMaxExpressionLevel(), is(32D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(ADIPOSE), is(12D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(ADRENAL_GLAND), is(19D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(ANIMAL_OVARY), is(12D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(APPENDIX), is(25D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(BLADDER), is(30D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(BONE_MARROW), is(16D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(CEREBRAL_CORTEX), is(5D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(COLON), is(20D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(DUODENUM), is(25D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(ENDOMETRIUM), is(14D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(ESOPHAGUS), is(16D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(GALL_BLADDER), is(25D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(HEART), is(6D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(KIDNEY), is(16D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(LIVER), is(15D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(LUNG), is(32D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(LYMPH_NODE), is(21D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(PANCREAS), is(3D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(PLACENTA), is(21D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(PROSTATE), is(15D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(SALIVARY_GLAND), is(11D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(SKIN), is(15D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(SMALL_INTESTINE), is(24D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(SPLEEN), is(20D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(STOMACH), is(15D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(TESTIS), is(7D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(THYROID), is(13D));
 
         BaselineExperimentProfile baselineProfile1 = baselineProfilesList.get(1);
-        assertThat(baselineProfile1.getId(), is("E-MTAB-1733"));
-        assertThat(baselineProfile1.getName(), is("Twenty seven tissues"));
-        assertThat(baselineProfile1.getFilterFactors(), is(EMPTY_FACTOR_SET));
-        assertThat(baselineProfile1.getConditions(), hasSize(48));
-        assertThat(baselineProfile1.getMinExpressionLevel(), is(3D));
-        assertThat(baselineProfile1.getMaxExpressionLevel(), is(32D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(ADIPOSE), is(12D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(ADRENAL_GLAND), is(19D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(ANIMAL_OVARY), is(12D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(APPENDIX), is(25D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(BLADDER), is(30D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(BONE_MARROW), is(16D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(CEREBRAL_CORTEX), is(5D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(COLON), is(20D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(DUODENUM), is(25D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(ENDOMETRIUM), is(14D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(ESOPHAGUS), is(16D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(GALL_BLADDER), is(25D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(HEART), is(6D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(KIDNEY), is(16D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(LIVER), is(15D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(LUNG), is(32D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(LYMPH_NODE), is(21D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(PANCREAS), is(3D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(PLACENTA), is(21D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(PROSTATE), is(15D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(SALIVARY_GLAND), is(11D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(SKIN), is(15D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(SMALL_INTESTINE), is(24D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(SPLEEN), is(20D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(STOMACH), is(15D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(TESTIS), is(7D));
-        assertThat(baselineProfile1.getKnownExpressionLevel(THYROID), is(13D));
+        assertThat(baselineProfile1.getId(), is("E-GEOD-30352"));
+        assertThat(baselineProfile1.getName(), is("Vertebrate tissues"));
+        assertThat(baselineProfile1.getFilterFactors(), is(ORGANISM_HOMO_SAPIENS));
+        assertThat(baselineProfile1.getConditions(), hasSize(44));
+        assertThat(baselineProfile1.getMinExpressionLevel(), is(4D));
+        assertThat(baselineProfile1.getMaxExpressionLevel(), is(22D));
+        assertThat(baselineProfile1.getKnownExpressionLevel(CEREBELLUM), is(4D));
+        assertThat(baselineProfile1.getKnownExpressionLevel(FRONTAL_LOBE), is(4D));
+        assertThat(baselineProfile1.getKnownExpressionLevel(HEART), is(12D));
+        assertThat(baselineProfile1.getKnownExpressionLevel(KIDNEY), is(22D));
+        assertThat(baselineProfile1.getKnownExpressionLevel(LIVER), is(17D));
+        assertThat(baselineProfile1.getKnownExpressionLevel(PREFRONTAL_CORTEX), is(4D));
+        assertThat(baselineProfile1.getKnownExpressionLevel(TEMPORAL_LOBE), is(6D));
+        assertThat(baselineProfile1.getKnownExpressionLevel(TESTIS), is(14D));
+        assertThat(baselineProfile1.getKnownExpressionLevel(THYROID), is(nullValue()));
 
         BaselineExperimentProfile baselineProfile2 = baselineProfilesList.get(2);
         assertThat(baselineProfile2.getId(), is("E-PROT-1"));
         assertThat(baselineProfile2.getName(), is("Human Proteome Map - adult"));
         assertThat(baselineProfile2.getFilterFactors(), is(STAGE_ADULT));
-        assertThat(baselineProfile2.getConditions(), hasSize(28));
-        assertThat(baselineProfile2.getMinExpressionLevel(), is(2400000D));
+        assertThat(baselineProfile2.getConditions(), hasSize(31));
+        assertThat(baselineProfile2.getMinExpressionLevel(), is(2.7E-6));
         assertThat(baselineProfile2.getMaxExpressionLevel(), is(1.745E7D));
         assertThat(baselineProfile2.getKnownExpressionLevel(ADIPOSE), is(nullValue()));
         assertThat(baselineProfile2.getKnownExpressionLevel(APPENDIX), is(nullValue()));
@@ -378,26 +351,9 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(baselineProfile2.getKnownExpressionLevel(TEMPORAL_LOBE), is(nullValue()));
         assertThat(baselineProfile2.getKnownExpressionLevel(THYROID), is(nullValue()));
 
-        BaselineExperimentProfile baselineProfile3 = baselineProfilesList.get(3);
-        assertThat(baselineProfile3.getId(), is("E-GEOD-30352"));
-        assertThat(baselineProfile3.getName(), is("Vertebrate tissues"));
-        assertThat(baselineProfile3.getFilterFactors(), is(ORGANISM_HOMO_SAPIENS));
-        assertThat(baselineProfile3.getConditions(), hasSize(48));
-        assertThat(baselineProfile3.getMinExpressionLevel(), is(4D));
-        assertThat(baselineProfile3.getMaxExpressionLevel(), is(22D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(CEREBELLUM), is(4D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(FRONTAL_LOBE), is(4D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(HEART), is(12D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(KIDNEY), is(22D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(LIVER), is(17D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(PREFRONTAL_CORTEX), is(4D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(TEMPORAL_LOBE), is(6D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(TESTIS), is(14D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(THYROID), is(nullValue()));
-
         SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
         ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
-        ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab2836Tissues()).addAll(getEMtab30352Tissues()).addAll(getEMtab1733Tissues()).addAll(getEProt1Tissues()).build();
+        ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab30352Tissues()).addAll(getEMtab1733Tissues()).addAll(getEProt1Tissues()).build();
         assertThat(factors, contains(allFactors.toArray()));
     }
 
@@ -405,32 +361,77 @@ public class BaselineExperimentProfileSearchServiceIT {
 
     @Test
     public void onlyTissueExperimentsReturned() {
-        // test gene has expression in cell lines experiment (E-GEOD-26284)
-        List<RnaSeqBslnExpression> expressions = rnaSeqBslnExpressionDao.fetchAverageExpressionByExperimentAssayGroup(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT));
-        assertThat(expressions,  hasItem(hasExperimentAccession("E-GEOD-26284")));
+        // test gene has expression in cell lines experiment (E-MTAB-1733)
+        List<BaselineExpression> expressions = baselineExpressionDao.fetchAverageExpressionByExperimentAssayGroup(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT));
+        assertThat(expressions,  hasItem(hasExperimentAccession("E-MTAB-1733")));
 
         // test that cell lines experiment is not returned
         BaselineExperimentSearchResult result = subject.fetchTissueExperimentProfiles(Optional.of(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT)));
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
-        Matcher cellLinesExperimentProfile = Matchers.<BaselineExperimentProfile>hasProperty("id", is("E-GEOD-26284"));
+        Matcher twentySevenTissuesExperimentProfile = Matchers.<BaselineExperimentProfile>hasProperty("id", is("E-MTAB-1733"));
         Matcher thirtyTwoTissuesExperimentProfile = Matchers.<BaselineExperimentProfile>hasProperty("id", is("E-MTAB-2836"));
 
-        assertThat(baselineProfilesList, hasItem(thirtyTwoTissuesExperimentProfile));
-        assertThat(baselineProfilesList, not(hasItem(cellLinesExperimentProfile)));
+        assertThat(baselineProfilesList, hasItem(twentySevenTissuesExperimentProfile));
+        assertThat(baselineProfilesList, not(hasItem(thirtyTwoTissuesExperimentProfile)));
 
         SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
-        ImmutableSortedSet<Factor> allFactors = getOrganismPartFactors("E-MTAB-2836");
-        assertThat(factors, contains(allFactors.toArray()));
+        ImmutableSortedSet<Factor> allFactors = getOrganismPartFactors("E-MTAB-1733");
+
+        //TODO: CHANGE THIS FOR A METHOD THAT ALSO RETURNS PROTEOMICS FACTORS IN THE getOrganismPartFactors
+        OntologyTerm ontologyTerm1 = OntologyTerm.create("CL_0000236", "http://purl.obolibrary.org/obo/");
+        Factor factor1 = new Factor(ORGANISM_PART, "B cell", ontologyTerm1);
+        Factor factor2 = new Factor(ORGANISM_PART, "CD4-positive T cell");
+        Factor factor3 = new Factor(ORGANISM_PART, "CD8-positive T cell");
+
+        OntologyTerm ontologyTerm2 = OntologyTerm.create("UBERON_0001870", "http://purl.obolibrary.org/obo/");
+        Factor factor4 = new Factor(ORGANISM_PART, "frontal cortex", ontologyTerm2);
+        Factor factor5 = new Factor(ORGANISM_PART, "gallbladder");
+        OntologyTerm ontologyTerm3 = OntologyTerm.create("CL_0000576", "http://purl.obolibrary.org/obo/");
+        Factor factor6 = new Factor(ORGANISM_PART, "monocyte", ontologyTerm3);
+        OntologyTerm ontologyTerm4 = OntologyTerm.create("CL_0000623", "http://purl.obolibrary.org/obo/");
+        Factor factor7 = new Factor(ORGANISM_PART, "natural killer cell", ontologyTerm4);
+        OntologyTerm ontologyTerm5 = OntologyTerm.create("EFO_0000973", "http://purl.obolibrary.org/obo/");
+        Factor factor8 = new Factor(ORGANISM_PART, "ovary", ontologyTerm5);
+        OntologyTerm ontologyTerm6 = OntologyTerm.create("CL_0000233", "http://purl.obolibrary.org/obo/");
+        Factor factor9 = new Factor(ORGANISM_PART, "platelet", ontologyTerm6);
+        OntologyTerm ontologyTerm7 = OntologyTerm.create("UBERON_0001052", "http://purl.obolibrary.org/obo/");
+        Factor factor10 = new Factor(ORGANISM_PART, "rectum", ontologyTerm7);
+        OntologyTerm ontologyTerm8 = OntologyTerm.create("UBERON_0000966", "http://purl.obolibrary.org/obo/");
+        Factor factor11 = new Factor(ORGANISM_PART, "retina", ontologyTerm8);
+        OntologyTerm ontologyTerm9 = OntologyTerm.create("UBERON_0002240", "http://purl.obolibrary.org/obo/");
+        Factor factor12 = new Factor(ORGANISM_PART, "spinal cord", ontologyTerm9);
+        Factor factor13 = new Factor(ORGANISM_PART, "urinary bladder");
+
+        ImmutableSortedSet.Builder<Factor> protFactorBuilder = ImmutableSortedSet.naturalOrder();
+        protFactorBuilder.add(factor1);
+        protFactorBuilder.add(factor2);
+        protFactorBuilder.add(factor3);
+        protFactorBuilder.add(factor4);
+        protFactorBuilder.add(factor5);
+        protFactorBuilder.add(factor6);
+        protFactorBuilder.add(factor7);
+        protFactorBuilder.add(factor8);
+        protFactorBuilder.add(factor9);
+        protFactorBuilder.add(factor10);
+        protFactorBuilder.add(factor11);
+        protFactorBuilder.add(factor12);
+        protFactorBuilder.add(factor13);
+
+        protFactorBuilder.build();
+
+        protFactorBuilder.addAll(allFactors);
+
+        assertThat(factors, containsInAnyOrder(protFactorBuilder.build().toArray()));
 
     }
 
-    private Matcher<RnaSeqBslnExpression> hasExperimentAccession(final String expectedExperimentAccession) {
-        return new BaseMatcher<RnaSeqBslnExpression>() {
+    private Matcher<BaselineExpression> hasExperimentAccession(final String expectedExperimentAccession) {
+        return new BaseMatcher<BaselineExpression>() {
             @Override
             public boolean matches(Object o) {
-                String actualExperimentAccession = ((RnaSeqBslnExpression)o).experimentAccession();
+                String actualExperimentAccession = ((BaselineExpression)o).experimentAccession();
                 return expectedExperimentAccession.equals(actualExperimentAccession);
             }
 

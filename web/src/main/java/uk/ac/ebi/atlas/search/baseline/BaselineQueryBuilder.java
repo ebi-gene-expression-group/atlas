@@ -10,7 +10,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class RnaSeqBslnQueryBuilder {
+public class BaselineQueryBuilder {
 
     static final String EXPERIMENT = "EXPERIMENT";
     static final String ASSAY_GROUP_ID = "ASSAYGROUPID";
@@ -31,7 +31,7 @@ public class RnaSeqBslnQueryBuilder {
 
     private ARRAY geneIds;
 
-    public RnaSeqBslnQueryBuilder withGeneIds(ARRAY geneIds) {
+    public BaselineQueryBuilder withGeneIds(ARRAY geneIds) {
         this.geneIds = geneIds;
         return this;
     }

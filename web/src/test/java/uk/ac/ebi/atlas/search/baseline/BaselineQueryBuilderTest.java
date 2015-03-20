@@ -35,13 +35,13 @@ import uk.ac.ebi.atlas.search.DatabaseQuery;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RnaSeqBslnQueryBuilderTest {
+public class BaselineQueryBuilderTest {
 
-    private RnaSeqBslnQueryBuilder subject;
+    private BaselineQueryBuilder subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = new RnaSeqBslnQueryBuilder();
+        subject = new BaselineQueryBuilder();
     }
 
     @Test

@@ -41,15 +41,15 @@ public class BaselineExperimentProfileSearchService {
 
     private static final Logger LOGGER = Logger.getLogger(BaselineExperimentProfileSearchService.class);
 
-    private final RnaSeqBslnExpressionDao rnaSeqBslnExpressionDao;
+    private final BaselineExpressionDao baselineExpressionDao;
 
     private final SolrQueryService solrQueryService;
 
     private BaselineExperimentSearchResultProducer baselineExperimentSearchResultProducer;
 
     @Inject
-    public BaselineExperimentProfileSearchService(RnaSeqBslnExpressionDao rnaSeqBslnExpressionDao, SolrQueryService solrQueryService, BaselineExperimentSearchResultProducer baselineExperimentSearchResultProducer) {
-        this.rnaSeqBslnExpressionDao = rnaSeqBslnExpressionDao;
+    public BaselineExperimentProfileSearchService(BaselineExpressionDao baselineExpressionDao, SolrQueryService solrQueryService, BaselineExperimentSearchResultProducer baselineExperimentSearchResultProducer) {
+        this.baselineExpressionDao = baselineExpressionDao;
         this.solrQueryService = solrQueryService;
         this.baselineExperimentSearchResultProducer = baselineExperimentSearchResultProducer;
     }
@@ -98,7 +98,7 @@ public class BaselineExperimentProfileSearchService {
             return new BaselineExperimentSearchResult();
         }
 
-        List<RnaSeqBslnExpression> expressions = rnaSeqBslnExpressionDao.fetchAverageExpressionByExperimentAssayGroup(geneIds.get());
+        List<BaselineExpression> expressions = baselineExpressionDao.fetchAverageExpressionByExperimentAssayGroup(geneIds.get());
 
         return baselineExperimentSearchResultProducer.buildProfilesForTissueExperiments(expressions);
     }
