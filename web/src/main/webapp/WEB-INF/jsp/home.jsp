@@ -125,7 +125,7 @@
 		<div class="grid_24 alpha" style="padding-top: 20px">
 			<div class="grid_12 alpha">
 				<h3>iRAP: RNA-seq analysis tool</h3>
-				<p><a href="https://code.google.com/p/irap/">iRAP</a> is a flexible
+				<p><a href="http://nunofonseca.github.io/irap/">iRAP</a> is a flexible
 				pipeline for RNA-seq analysis that integrates many existing tools for
 				filtering and mapping reads, quantifying expression and testing for
 				differential expression. iRAP is used to process all RNA-seq data in
