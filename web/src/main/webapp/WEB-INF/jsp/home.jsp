@@ -44,7 +44,7 @@
 
 		<h3>Search...</h3>
 
-		<div id="gxaHomeSearchContainer" class="grid_24 alpha">
+		<div class="grid_24 alpha">
 
 			<form method="get" action="query" id="searchForm">
 				<table class="form-grid">

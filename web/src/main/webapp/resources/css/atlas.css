@@ -36,10 +36,6 @@ div#local-search form fieldset, form#local-search fieldset {
     width: 15%;
 }
 
-#gxaHomeSearchContainer {
-    overflow: scroll;
-}
-
 td.gxaHomeSearchFluidTableColumn {
     vertical-align: top;
     width: 30%;
