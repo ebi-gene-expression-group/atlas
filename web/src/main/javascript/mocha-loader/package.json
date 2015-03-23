@@ -6,6 +6,7 @@
     "mocha": "^1",
     "mocha-loader": "^0.6",
     "script-loader": "^0.5",
-    "webpack": "^1"
+    "source-map-support": "^0.2.10",
+    "webpack": "^1.4"
   }
 }

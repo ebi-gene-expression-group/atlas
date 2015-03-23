@@ -5,20 +5,26 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --progress --colors --watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --progress --colors --port 9000",
+    "test": "mocha --compilers .jsx:build-util/jsxcompiler.js search-results-differential/__tests__/differential-facets-specs.js",
+    "dev": "webpack-dev-server --progress --colors --port 9000 --config webpack.config.dev.js",
     "start-verbose": "webpack --progress --colors --debug --output-pathinfo --display-chunks --display-modules"
   },
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "react": "^0.12.1",
+    "react": "^0.12.2",
     "query-string": "1.0.0"
   },
   "devDependencies": {
-    "webpack": "^1.4.13",
+    "chai": "^2.1.2",
+    "jquery": "^1.8.3",
     "jsx-loader": "^0.12.2",
+    "mocha-loader": "^0.7.1",
     "react-addons": "^0.9.0",
-    "jquery": "^1.8.3"
+    "source-map-support": "^0.2.10",
+    "webpack": "^1.7.3",
+    "jsdom": "^3.1.1",
+    "mocha": "^2.0.1",
+    "react-tools": "^0.12.2"
   }
 }
