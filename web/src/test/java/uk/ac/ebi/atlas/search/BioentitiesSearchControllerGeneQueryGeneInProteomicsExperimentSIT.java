@@ -48,6 +48,7 @@ public class BioentitiesSearchControllerGeneQueryGeneInProteomicsExperimentSIT e
 
     @Test
     public void baselinePaneResultsIncludeProteomicsExperiments() {
+        subject.clickMoreBaselineResults();
         assertThat(subject.getBaselinePaneContents(), containsString("Human Proteome Map - adult"));
         assertThat(subject.getBaselinePaneContents(), containsString("Human Proteome Map - fetus"));
     }

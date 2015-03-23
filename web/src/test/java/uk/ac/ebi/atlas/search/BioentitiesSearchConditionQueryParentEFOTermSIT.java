@@ -49,6 +49,8 @@ public class BioentitiesSearchConditionQueryParentEFOTermSIT extends SinglePageS
 
         assertThat(baselineCounts, hasSize(15));
 
+        subject.clickMoreBaselineResults();
+
         BaselineBioEntitiesSearchResult result = selectResult(baselineCounts, "E-MTAB-1733");
 
         assertThat(result.getExperimentName(), is("Twenty seven tissues"));
