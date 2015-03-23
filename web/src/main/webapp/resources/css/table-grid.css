@@ -92,6 +92,10 @@
     text-align: left;
 }
 
+tr.gxaProteomicsExperiment td.horizontal-header-cell {
+    background-color: rgb(210, 233, 233) !important;
+}
+
 .table-grid th.highlight {
     background-color: #deebeb;
 }

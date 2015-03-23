@@ -871,10 +871,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.DOM.span({style: {position: "relative", float:"right", color:"green"}}, "  select") : null;
                     var showTickWhenSelected = this.props.selected ? React.DOM.span({style: {position: "relative", float:"right", color:"green"}}, " ✔ "): null ;
                     var className = (this.props.selected ? "horizontal-header-cell-selected hoverable-header" : "horizontal-header-cell hoverable-header") + (enableEnsemblLauncher ? " selectable-header" : "");
+                    var rowClassName = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "gxaProteomicsExperiment" : "gxaTranscriptomicsExperiment" ) : "";
 
                     // NB: empty title tag below is required for tooltip to work
                     return (
-                        React.DOM.tr(null, 
+                        React.DOM.tr({className: rowClassName}, 
                             React.DOM.td({className: className, onMouseEnter: enableEnsemblLauncher ? this.onMouseEnter : undefined, onMouseLeave: enableEnsemblLauncher ? this.onMouseLeave : undefined, onClick: enableEnsemblLauncher ? this.onClick : undefined}, 
                                  enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked(), 
                                 showSelectTextOnHover, 
