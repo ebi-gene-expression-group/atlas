@@ -64,7 +64,7 @@ public class GeneSetPageControllerGoTermSIT extends SinglePageSeleniumFixture {
         subject.clickBaselinePane();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("38 results"));
 
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResults();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
         assertThat(baselineCounts, hasSize(38));
 
         List<String> accessions = extract(baselineCounts, on(BaselineBioEntitiesSearchResult.class).getExperimentAccession());

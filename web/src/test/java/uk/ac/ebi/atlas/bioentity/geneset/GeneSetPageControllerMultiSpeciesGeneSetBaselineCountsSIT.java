@@ -26,7 +26,7 @@ public class GeneSetPageControllerMultiSpeciesGeneSetBaselineCountsSIT extends S
     public void baselineResults() {
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("30 results"));
 
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResults();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
 
         assertThat(baselineCounts, hasSize(30));
 

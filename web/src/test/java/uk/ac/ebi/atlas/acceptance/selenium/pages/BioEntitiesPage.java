@@ -65,15 +65,23 @@ public class BioEntitiesPage extends BioEntityPage {
         return 3;
     }
 
-    public List<BaselineBioEntitiesSearchResult> getBaselineResultsWithoutSpecies() {
-        return getBaselineResults(false);
+    public List<BaselineBioEntitiesSearchResult> getAllBaselineResultsWithoutSpecies() {
+        return getBaselineResults(false, false);
     }
 
-    public List<BaselineBioEntitiesSearchResult> getBaselineResults() {
-        return getBaselineResults(true);
+    public List<BaselineBioEntitiesSearchResult> getAllBaselineResults() {
+        return getBaselineResults(true, false);
     }
 
-    public List<BaselineBioEntitiesSearchResult> getBaselineResults(boolean hasSpecies) {
+    public List<BaselineBioEntitiesSearchResult> getVisibleBaselineResultsWithoutSpecies() {
+        return getBaselineResults(false, true);
+    }
+
+    public List<BaselineBioEntitiesSearchResult> getVisibleBaselineResults() {
+        return getBaselineResults(true, true);
+    }
+
+    public List<BaselineBioEntitiesSearchResult> getBaselineResults(boolean hasSpecies, boolean onlyVisible) {
         List<BaselineBioEntitiesSearchResult> baselineCounts = Lists.newArrayList();
 
         By byBaselineCountsTableId = By.id("baselineCountsTable");
@@ -83,6 +91,9 @@ public class BioEntitiesPage extends BioEntityPage {
         List<WebElement> linkElements = driver.findElements(By.cssSelector("#baselineCountsTable .bioEntityCardLink"));
 
         for (WebElement linkElement : linkElements) {
+            if (onlyVisible && !linkElement.isDisplayed()) {
+                continue;
+            }
             baselineCounts.add(buildBaselineEntityCount(linkElement, null, hasSpecies));
         }
 

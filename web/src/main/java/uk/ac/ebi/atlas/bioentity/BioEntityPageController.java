@@ -54,6 +54,7 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 import javax.inject.Inject;
 import java.util.*;
 
+import static uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroups.removeFirstAssayGroups;
 import static uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroups.selectNonTissueExperiments;
 
 public abstract class BioEntityPageController {
@@ -224,33 +225,18 @@ public abstract class BioEntityPageController {
     }
 
     void addBaselineCounts(Set<String> geneIds, Model model) {
-        Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.queryAnySpecies(geneIds, Optional.<String>absent());
-        model.addAttribute("firstBaselineCounts", baselineExperimentAssayGroups);
+        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.queryAnySpecies(geneIds, Optional.<String>absent());
+
+        model.addAttribute("firstBaselineCounts", removeFirstAssayGroups(baselineExperimentAssayGroups, DEFAULT_BASELINE_SPLIT));
+        model.addAttribute("remainingBaselineCounts", baselineExperimentAssayGroups);
     }
 
     void addBaselineCountsForNonTissueExperiments(Set<String> geneIds, Model model) {
-        Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.queryAnySpecies(geneIds, Optional.<String>absent());
-        ImmutableSet<BaselineExperimentAssayGroup> nonTissueExperiments = selectNonTissueExperiments(baselineExperimentAssayGroups);
+        SortedSet<BaselineExperimentAssayGroup> baselineExperimentAssayGroups = baselineExperimentAssayGroupSearchService.queryAnySpecies(geneIds, Optional.<String>absent());
+        SortedSet<BaselineExperimentAssayGroup> nonTissueExperiments = selectNonTissueExperiments(baselineExperimentAssayGroups);
 
-        addSplitBaselineCountsToModel(model, nonTissueExperiments, DEFAULT_BASELINE_SPLIT);
-    }
-
-    private void addSplitBaselineCountsToModel(Model model, Set<BaselineExperimentAssayGroup> baselineExperimentAssayGroups, int split) {
-        Iterator<BaselineExperimentAssayGroup> iterator = baselineExperimentAssayGroups.iterator();
-        int count = 0;
-
-        ImmutableSet.Builder<BaselineExperimentAssayGroup> firstBuilder = new ImmutableSet.Builder<>();
-        ImmutableSet.Builder<BaselineExperimentAssayGroup> remainingBuilder = new ImmutableSet.Builder<>();
-        while (iterator.hasNext() && count < split) {
-            firstBuilder.add(iterator.next());
-            count++;
-        }
-        while (iterator.hasNext()) {
-            remainingBuilder.add(iterator.next());
-        }
-
-        model.addAttribute("firstBaselineCounts", firstBuilder.build());
-        model.addAttribute("remainingBaselineCounts", remainingBuilder.build());
+        model.addAttribute("firstBaselineCounts", removeFirstAssayGroups(nonTissueExperiments, DEFAULT_BASELINE_SPLIT));
+        model.addAttribute("remainingBaselineCounts", nonTissueExperiments);
     }
 
     String fetchSpecies(String identifier) {
