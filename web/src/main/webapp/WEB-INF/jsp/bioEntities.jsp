@@ -189,7 +189,7 @@
                 <c:otherwise>
                     <c:choose>
                         <c:when test="${not empty firstBaselineCounts}">
-                            <c:set var="resultsCount" value="${firstBaselineCounts.size()}"/>
+                            <c:set var="resultsCount" value="${firstBaselineCounts.size() + remainingBaselineCounts.size()}"/>
                             <span style="margin-left: 10px; margin-top:10px">
                                 ${resultsCount} ${resultsCount == 1 ? "result" : "results"}
                             </span>
