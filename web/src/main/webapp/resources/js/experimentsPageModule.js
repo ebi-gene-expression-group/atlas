@@ -76,7 +76,7 @@ var experimentsPageModule = (function ($) {
 
     var asInitVals = new Array();
 
-    function init() {
+    function init(experimentType, kingdom, organism) {
 
         /* Create an array with the values of all the img title attributes in a column */
         $.fn.dataTableExt.afnSortData['dom-text'] = function (oSettings, iColumn) {
@@ -183,8 +183,7 @@ var experimentsPageModule = (function ($) {
                     "mRender":function (data, type, full) {
                         return formatExperimentAccession(data, type, full);
                     } },
-
-                { "sTitle":"Kingdom", "mData":"kingdom", "sClass":"center bb italic", "bVisible": false}
+                { "sTitle":"Kingdom", "mData":"kingdom", "sClass":"center bb italic", "bVisible": false }
             ],
             "aLengthMenu":[
                 [10, 25, 50, 100, -1],
@@ -202,12 +201,12 @@ var experimentsPageModule = (function ($) {
             oTable.fnFilter(this.value, $("#experiments-table tfoot input").index(this));
         });
 
-        $("#experiments-table tfoot select#base-diff").change(function () {
+        $("#gxaExperimentsTableExperimentTypeSelect").change(function () {
             /* same for drop down filter */
             oTable.fnFilter(this.value, $("#experiments-table tfoot select").index(this));
         });
 
-        $("#experiments-table tfoot select#plants-animals").change(function () {
+        $("#gxaExperimentsTableKingdomSelect").change(function () {
             if (this.value == 'plants') {
                 oTable.fnFilter('plants', 9);
             }
@@ -242,12 +241,13 @@ var experimentsPageModule = (function ($) {
             }
         });
 
+        $("#gxaExperimentsTableKingdomSelect").val(kingdom).change();
+        $("#gxaExperimentsTableExperimentTypeSelect").val(experimentType).change();
+        $("#gxaExperimentsTableOrganismInput").val(organism).keyup();
     }
 
     return {
-
-        init:init
-
+        init: init
     };
 
 }(jQuery));

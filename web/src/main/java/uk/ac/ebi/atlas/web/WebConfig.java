@@ -60,13 +60,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/expdata/**").addResourceLocations("file:" + experimentDataLocation);
     }
 
-    // equivalent to mvc:view-controller
-    @Override
-    public void addViewControllers(ViewControllerRegistry viewControllerRegistry) {
-        viewControllerRegistry.addViewController("/experiments").setViewName("experiments");
-        viewControllerRegistry.addViewController("/experiments/").setViewName("experiments");
-    }
-
     // equivalent to mvc:interceptors
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

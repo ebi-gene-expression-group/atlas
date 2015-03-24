@@ -247,4 +247,6 @@ public class ExperimentsTablePageSIT extends SinglePageSeleniumFixture {
         subject.selectPlantAnimalAndFungiExperiments();
         subject.getExperimentsTableInfo().contains("of " + NumberOfExperiments.ALL + " entries");
     }
+
+
 }
