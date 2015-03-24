@@ -45,11 +45,10 @@ public class BioentitiesSearchConditionQueryParentEFOTermSIT extends SinglePageS
 
     @Test
     public void checkBaselineExperimentCounts() {
+        subject.clickMoreBaselineResults();
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
 
         assertThat(baselineCounts, hasSize(15));
-
-        subject.clickMoreBaselineResults();
 
         BaselineBioEntitiesSearchResult result = selectResult(baselineCounts, "E-MTAB-1733");
 
