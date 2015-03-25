@@ -63,7 +63,7 @@ public class BaselineExperimentsControllerSIT extends SinglePageSeleniumFixture 
 
     @Test
     public void mouseTotal() {
-        assertThat(subject.getAllExperimentsOfSpecies(8).size(), is(2));
+        assertThat(subject.getAllExperimentsOfSpecies(8).size(), is(3));
     }
 
     @Test
