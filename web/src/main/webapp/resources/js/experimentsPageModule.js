@@ -241,8 +241,8 @@ var experimentsPageModule = (function ($) {
             }
         });
 
-        $("#gxaExperimentsTableKingdomSelect").val(kingdom).change();
-        $("#gxaExperimentsTableExperimentTypeSelect").val(experimentType).change();
+        $("#gxaExperimentsTableKingdomSelect").val(kingdom.toLowerCase()).change();
+        $("#gxaExperimentsTableExperimentTypeSelect").val(experimentType.toLowerCase()).change();
         $("#gxaExperimentsTableOrganismInput").val(organism).keyup();
     }
 
