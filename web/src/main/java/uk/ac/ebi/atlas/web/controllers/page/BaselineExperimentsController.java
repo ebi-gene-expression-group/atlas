@@ -65,7 +65,7 @@ public class BaselineExperimentsController {
     @RequestMapping("/baseline/experiments")
     public String getBaselineExperimentsPage(Model model) {
 
-        loadExperimentAccessionsBySpecie();
+        loadExperimentAccessionsBySpecies();
 
         model.addAttribute("experimentAccessionsBySpecies", experimentAccessionsBySpecies);
         model.addAttribute("experimentLinks", experimentLinks);
@@ -75,20 +75,21 @@ public class BaselineExperimentsController {
     }
 
     @PostConstruct
-    private void loadExperimentAccessionsBySpecie() {
+    private void loadExperimentAccessionsBySpecies() {
 
         for (String experimentAccession : experimentTrader.getAllBaselineExperimentAccessions()) {
             String displayName = null;
             try {
                 displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
-                //displayName = experimentsCache.getExperiment(experimentAccession).getDisplayName();
             } catch (RuntimeException e) {
                 // we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
                 displayName = experimentAccession;
             }
 
-            experimentDisplayNames.put(experimentAccession, displayName);
+            int numberOfAssays = ((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession)).getExperimentRunAccessions().size();
+
+            experimentDisplayNames.put(experimentAccession, displayName + " (" + numberOfAssays + " assays)");
         }
 
         Comparator<String> keyComparator = new Comparator<String>() {
