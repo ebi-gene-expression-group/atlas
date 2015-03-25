@@ -63,7 +63,7 @@ public class BioentitiesSearchControllerGeneQuerySingleSpeciesWithTissueResultsW
 
     @Test
     public void baselineResults() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResultsWithoutSpecies();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResultsWithoutSpecies();
 
         // no tissue results
         assertThat(hasResult(baselineCounts, "E-PROT-1"), is(false));

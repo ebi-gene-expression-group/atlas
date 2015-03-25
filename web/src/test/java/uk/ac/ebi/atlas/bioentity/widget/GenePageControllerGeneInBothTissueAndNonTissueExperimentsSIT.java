@@ -40,7 +40,7 @@ public class GenePageControllerGeneInBothTissueAndNonTissueExperimentsSIT extend
 
     @Test
     public void baselineResults() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResultsWithoutSpecies();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResultsWithoutSpecies();
 
         assertThat(baselineCounts, hasSize(20));
 
@@ -48,6 +48,13 @@ public class GenePageControllerGeneInBothTissueAndNonTissueExperimentsSIT extend
         assertThat(baselineCounts.get(0).getExperimentName(), is("ENCODE cell lines - long non-polyA RNA, cytosol"));
         assertThat(baselineCounts.get(0).getSpecies(), is(nullValue()));
         assertThat(baselineCounts.get(0).getHref(), endsWith("/experiments/E-GEOD-26284?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=&geneQuery=ENSG00000005194&exactMatch=true&serializedFilterFactors=RNA:long%20non-polyA%20RNA,CELLULAR_COMPONENT:cytosol"));
+    }
+
+    @Test
+    public void hiddenBaselineResults() {
+        assertThat(subject.getVisibleBaselineResultsWithoutSpecies(), hasSize(10));
+        subject.clickMoreBaselineResults();
+        assertThat(subject.getVisibleBaselineResultsWithoutSpecies(), hasSize(20));
     }
 
 }

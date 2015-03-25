@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
-public class ExperimentsTablePage extends AtlasPage{
+public class ExperimentsTablePage extends AtlasPage {
 
     private static final String DEFAULT_PAGE_URI = "/gxa/experiments";
 
@@ -60,11 +60,15 @@ public class ExperimentsTablePage extends AtlasPage{
     @FindBy(xpath = "//thead/tr[1]/th[3]")
     private WebElement thirdColumnHeader;
 
-    @FindBy(id="plants-animals")
+    @FindBy(id="gxaExperimentsTableKingdomSelect")
     private WebElement plantsSelectWebElement;
 
     public ExperimentsTablePage(WebDriver driver) {
         super(driver);
+    }
+
+    public ExperimentsTablePage(WebDriver driver, String httpParameters) {
+        super(driver, httpParameters);
     }
 
     @Override

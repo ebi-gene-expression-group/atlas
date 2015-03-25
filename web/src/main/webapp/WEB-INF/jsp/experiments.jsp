@@ -31,7 +31,7 @@
     <tr>
         <th rowspan="1" colspan="1">
             <input type="hidden" class="search_init">
-            <select id="base-diff">
+            <select id="gxaExperimentsTableExperimentTypeSelect">
                 <option value="">All</option>
                 <option value="baseline">Baseline</option>
                 <option value="differential">Differential</option>
@@ -39,7 +39,7 @@
         </th>
         <th rowspan="1" colspan="1">
             <input type="hidden" class="search_init">
-            <select id="plants-animals">
+            <select id="gxaExperimentsTableKingdomSelect">
                 <option value="">All</option>
                 <option value="plants">Plants</option>
                 <option value="animals-fungi">Animals and Fungi</option>
@@ -51,7 +51,7 @@
         <th><input type="hidden" class="search_init"></th>
         <th><input type="hidden" class="search_init"></th>
         <th rowspan="1" colspan="1">
-            <input type="text" class="search_init" value="Search organisms" name="search_organisms">
+            <input id="gxaExperimentsTableOrganismInput" type="text" class="search_init" value="Search organisms" name="search_organisms">
         </th>
         <th rowspan="1" colspan="1">
             <input type="text" class="search_init" value="Search factors" name="search_factors">
@@ -78,7 +78,7 @@
     (function ($) {
         $(document).ready(function () {
 
-            experimentsPageModule.init();
+            experimentsPageModule.init("${experimentType}", "${kingdom}", "${organism}");
 
         });
     })(jQuery);

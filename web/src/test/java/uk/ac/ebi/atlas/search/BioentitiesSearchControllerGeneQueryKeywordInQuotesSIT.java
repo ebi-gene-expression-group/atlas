@@ -47,7 +47,7 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
 
     @Test
     public void baselineExperimentCountsAreCorrect() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResults();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
 
         assertThat(baselineCounts, hasSize(3));
 

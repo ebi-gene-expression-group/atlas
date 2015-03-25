@@ -24,7 +24,7 @@ public class GenePageControllerGeneInNonTissueExperimentOnlySIT extends Selenium
     public void baselineResults() {
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("1 result"));
 
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResults();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
 
         assertThat(baselineCounts, hasSize(1));
 

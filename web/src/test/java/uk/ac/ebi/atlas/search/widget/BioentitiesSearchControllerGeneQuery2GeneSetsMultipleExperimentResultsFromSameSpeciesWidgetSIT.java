@@ -56,4 +56,11 @@ public class BioentitiesSearchControllerGeneQuery2GeneSetsMultipleExperimentResu
         assertThat(subject.getGeneLink(3), endsWith("/experiments/E-PROT-1?geneQuery=REACT_152%09REACT_111102&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Aadult"));
         assertThat(subject.getGeneLink(4), endsWith("/experiments/E-PROT-1?geneQuery=REACT_152%09REACT_111102&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Afetus"));
     }
+
+    @Test
+    public void hiddenBaselineResults() {
+        assertThat(subject.getVisibleBaselineResultsWithoutSpecies(), hasSize(10));
+        subject.clickMoreBaselineResults();
+        assertThat(subject.getVisibleBaselineResultsWithoutSpecies(), hasSize(20));
+    }
 }

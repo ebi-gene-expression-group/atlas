@@ -61,6 +61,8 @@ import static uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroups.*;
 @Scope("prototype")
 public class BioentitiesSearchController {
 
+    private static final int DEFAULT_BASELINE_SPLIT = 10;
+
     private static final Logger LOGGER = Logger.getLogger(BioentitiesSearchController.class);
 
     private DiffAnalyticsSearchService diffAnalyticsSearchService;
@@ -114,9 +116,12 @@ public class BioentitiesSearchController {
             model.addAttribute("widgetHasBaselineProfiles", true);
             model.addAttribute("species", baselineExperimentAssayGroups.iterator().next().getSpecies());
 
-            model.addAttribute("firstBaselineCounts", selectNonTissueExperiments(baselineExperimentAssayGroups));
+            SortedSet<BaselineExperimentAssayGroup> nonTissueExperimentAssayGroups = selectNonTissueExperiments(baselineExperimentAssayGroups);
+            model.addAttribute("firstBaselineCounts", removeFirstAssayGroups(nonTissueExperimentAssayGroups, DEFAULT_BASELINE_SPLIT));
+            model.addAttribute("remainingBaselineCounts", nonTissueExperimentAssayGroups);
         } else {
-            model.addAttribute("firstBaselineCounts", baselineExperimentAssayGroups);
+            model.addAttribute("firstBaselineCounts", removeFirstAssayGroups(baselineExperimentAssayGroups, DEFAULT_BASELINE_SPLIT));
+            model.addAttribute("remainingBaselineCounts", baselineExperimentAssayGroups);
         }
 
         // used to populate diff-heatmap-table
