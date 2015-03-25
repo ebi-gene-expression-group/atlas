@@ -43,7 +43,7 @@ var anatomogramModule = (function ($) {
         if(isSingleGene && evtType === undefined && color === "red") { //We highlight the whole anatomogram with paths expressed in the gene
             setHilighting(path, "red", 0.7);
         } else if(isSingleGene && (evtType === 'mouseenter' || evtType === 'mouseover')) { //highlight in different colors when onmouseover
-            setHilighting(path, "blue", 0.7);
+            setHilighting(path, "#421C52", 0.8);
         } else {
             if (evtType === undefined) {
                 setHilighting(path, "gray", 0.5);
