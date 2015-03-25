@@ -21,8 +21,8 @@ public class ExperimentsController {
             @RequestParam(value = "organism", required = false) String organism,
             Model model) {
 
-        model.addAttribute("experimentType", experimentType.toLowerCase());
-        model.addAttribute("kingdom", kingdom.toLowerCase());
+        model.addAttribute("experimentType", experimentType);
+        model.addAttribute("kingdom", kingdom);
         model.addAttribute("organism", organism);
 
         return "experiments";
