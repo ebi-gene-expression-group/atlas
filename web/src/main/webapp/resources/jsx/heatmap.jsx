@@ -91,7 +91,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             componentDidMount: function() {
 
                 if (!type.isMultiExperiment) {
-                   // makeTableHeaderSticky.call(this);
+                   makeTableHeaderSticky.call(this);
                 }
 
                 //TODO: use Stickem instead of Sticky.js - we only need one sticky library
