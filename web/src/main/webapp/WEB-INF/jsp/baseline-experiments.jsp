@@ -40,7 +40,7 @@
 
     <c:forEach items="${experimentAccessionsBySpecies.keySet()}" var="specie">
 
-        <div class="grid_6 specie_item">
+        <div class="grid_8 specie_item">
 
             <c:choose>
                 <c:when test="${specie == 'Anolis carolinensis'}">
