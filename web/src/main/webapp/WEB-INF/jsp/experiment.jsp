@@ -74,7 +74,7 @@
         $(document).ready(function () {
 
             clearLocalNav();
-            $('#local-nav-home').addClass("active");
+            $('#gxaLocalNavHome').addClass("active");
 
             if ($.browser.msie && $.browser.version <= 8) {
                 $("#anatomogram").remove();

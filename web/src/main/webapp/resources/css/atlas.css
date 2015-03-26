@@ -54,7 +54,7 @@ td.gxaHomeSearchFixedSizeTableColumn {
     margin: 0px auto !important;
 }
 
-ul#local-nav a:hover, ul#local-nav a:active, li.active a {
+ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     border-bottom-color: #207A7A !important;
     border-bottom: 3px solid;
 }

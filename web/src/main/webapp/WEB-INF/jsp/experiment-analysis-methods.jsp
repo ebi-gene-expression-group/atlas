@@ -50,6 +50,6 @@
 <script type="text/javascript">
     $(function () {
         clearLocalNav();
-        $('#local-nav-home').addClass("active");
+        $('#gxaLocalNavHome').addClass("active");
     });
 </script>
