@@ -8,7 +8,8 @@ module.exports = {
     entry: {
         // to run tests open http://localhost:9000/webpack-dev-server/specs
         specs: [  "./build-util/install-source-map-support.js"
-                    , "mocha!./search-results-differential/__tests__/differential-facets-specs.js"],
+                    , "mocha!./test/heatmap/heatmap-test.js"
+                    , "mocha!./test/search-results/differential-facets-test.js"],
         vendor: ["jquery", "react", "react-addons"]
     },
 

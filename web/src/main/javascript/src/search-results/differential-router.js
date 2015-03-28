@@ -1,4 +1,5 @@
 /* global require */
+/* global require */
 
 var React = require('react');
 var queryString = require('query-string');

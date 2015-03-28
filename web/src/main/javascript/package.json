@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --progress --colors --watch",
-    "test": "mocha --compilers .jsx:build-util/jsxcompiler.js search-results-differential/__tests__/differential-facets-specs.js",
+    "test": "mocha test --recursive --compilers .jsx:build-util/jsxcompiler.js",
     "dev": "webpack-dev-server --progress --colors --port 9000 --config webpack.config.dev.js",
     "start-verbose": "webpack --progress --colors --debug --output-pathinfo --display-chunks --display-modules"
   },
