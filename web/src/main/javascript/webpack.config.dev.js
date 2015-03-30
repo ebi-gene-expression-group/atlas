@@ -13,13 +13,13 @@ module.exports = {
     devtool: 'inline-source-map',
 
     entry: {
-        // to run tests open http://localhost:9000/webpack-dev-server/specs
-        specs: [  "./build-util/install-source-map-support.js"].concat(mochaloader(testfiles)),
-        vendor: ["jquery", "react", "react-addons"]
+        // to run tests open http://localhost:9000/webpack-dev-server/testpages/mocha.html
+        specs: [  "./build-util/install-source-map-support.js"].concat(mochaloader(testfiles))
+        ,vendor: ["jquery", "react", "react-addons", "chai", "source-map-support"]
     },
 
     output: {
-        filename: '[name].js' // [name] is substituted for the entry name, eg: specs.js.
+        filename: '[name]-bundle.js' // [name] is substituted for the entry name, eg: specs.js.
     },
 
     module: {
@@ -29,7 +29,8 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.IgnorePlugin(/jsdom$/)
+        new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor-bundle.js", ["vendor", "specs"])
+        ,new webpack.IgnorePlugin(/jsdom$/)
     ],
 
     node: {

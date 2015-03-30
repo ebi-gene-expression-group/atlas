@@ -40,7 +40,7 @@ describe("differential-facets", function () {
 
         var facetsTopLevelText =  $(facets.getDOMNode()).children('li').children('span').map(function (index, el) { return el.textContent; });
 
-        expect(facetsTopLevelText.toArray()).to.eql(["kingdoms", "species", "experimentType", "factors", "numReplicates", "regulation"]);
+        expect(facetsTopLevelText.toArray()).to.eql(["kingdom", "species", "experimentType", "factors", "numReplicates", "regulation"]);
     });
 
 });
