@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --progress --colors --watch",
     "test": "mocha test --recursive --compilers .jsx:build-util/jsxcompiler.js",
     "dev": "webpack-dev-server --progress --colors --port 9000 --config webpack.config.dev.js",
-    "start-verbose": "webpack --progress --colors --debug --output-pathinfo --display-chunks --display-modules"
+    "prod": "webpack --progress --colors --watch --optimize-minimize  --debug --output-pathinfo --display-chunks --display-modules"
   },
   "author": "",
   "license": "BSD-2-Clause",
