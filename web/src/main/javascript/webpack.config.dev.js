@@ -29,7 +29,7 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor-bundle.js", ["vendor", "specs"])
+        new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor-bundle.js")
         ,new webpack.IgnorePlugin(/jsdom$/)
     ],
 

@@ -8,6 +8,7 @@ module.exports = {
     // define the bundles we want
     entry: {
         "search-results-differential-page": "./src/search-results/differential-page.js"
+        ,"search-results-baseline-page": "./src/search-results/baseline-page.js"
         ,vendor: ["jquery", "react"]
     },
 
@@ -18,7 +19,7 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor-bundle.js", ["vendor", "search-results-differential-page"])
+        new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor-bundle.js")
     ],
 
     module: {
