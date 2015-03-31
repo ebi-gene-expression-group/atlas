@@ -11,8 +11,7 @@ describe("heatmap", function () {
 
         var heatmap = TestUtils.renderIntoDocument(Heatmap());
 
-        var div = TestUtils.findRenderedDOMComponentWithTag(
-            heatmap, 'div');
+        var div = TestUtils.findRenderedDOMComponentWithTag(heatmap, 'div');
 
         expect(div.textContent).to.eql("Hello React!");
     });

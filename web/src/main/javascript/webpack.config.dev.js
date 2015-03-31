@@ -15,6 +15,7 @@ module.exports = {
     entry: {
         // to run tests open http://localhost:9000/webpack-dev-server/testpages/mocha.html
         specs: [  "./build-util/install-source-map-support.js"].concat(mochaloader(testfiles))
+        ,"search-results-differential-page": "./src/search-results/differential-page.js"
         ,vendor: ["jquery", "react", "react-addons", "chai", "source-map-support"]
     },
 
