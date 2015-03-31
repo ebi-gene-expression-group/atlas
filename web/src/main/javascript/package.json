@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test --recursive --compilers .jsx:build-util/jsxcompiler.js",
-    "dev": "webpack-dev-server --progress --colors --port 9000 --config webpack.config.dev.js",
+    "tdd": "webpack-dev-server --progress --colors --port 9000 --config webpack.config.tdd.js",
     "prod": "webpack --progress --colors --watch --optimize-minimize  --debug --output-pathinfo --display-chunks --display-modules"
   },
   "author": "",
