@@ -289,6 +289,12 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>com.atlassian.util.concurrent</groupId>
+            <artifactId>atlassian-util-concurrent</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
         <!-- Guava -->
 
         <dependency>
@@ -515,6 +521,13 @@
         <repository>
             <id>artifactory-repo</id>
             <url>http://bar.ebi.ac.uk:8081/artifactory/repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>atlassian-public</id>
+            <url>http://maven.atlassian.com/content/repositories/atlassian-public/</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>

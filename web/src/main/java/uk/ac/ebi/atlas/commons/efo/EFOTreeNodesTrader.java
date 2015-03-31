@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.commons.efo;
 
+import com.atlassian.util.concurrent.LazyReference;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -9,9 +10,7 @@ import uk.ac.ebi.arrayexpress.utils.efo.EFONode;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Map;
-
 
 @Named
 @Scope("singleton")
@@ -20,7 +19,18 @@ public class EFOTreeNodesTrader {
     private static final Logger LOGGER = Logger.getLogger(EFOTreeNodesTrader.class);
 
     private String efoOwlFilePath;
-    private Map<String, EFONode> urlToEFONode;
+
+    // efoLoader.load is not thread-safe so we serialize concurrent access using a LazyReference
+    private LazyReference<Map<String, EFONode>> urlToEFONode = new LazyReference<Map<String, EFONode>>() {
+        @Override
+        protected Map<String, EFONode> create() throws Exception {
+            EFOLoader efoLoader = new EFOLoader();
+            LOGGER.debug("load " + efoOwlFilePath);
+            Map<String, EFONode> urlToEFONode = efoLoader.load(new FileInputStream(efoOwlFilePath)).getMap();
+            LOGGER.debug("load done");
+            return urlToEFONode;
+        }
+    };
 
     @Inject
     public EFOTreeNodesTrader(@Value("#{configuration['efo.owl.file']}") String efoOwlFilePath) {
@@ -28,23 +38,7 @@ public class EFOTreeNodesTrader {
     }
 
     public Map<String, EFONode> getTreeNodes() {
-        if (urlToEFONode == null) {
-            try {
-                EFOLoader efoLoader = new EFOLoader();
-                LOGGER.debug("load " + efoOwlFilePath);
-                urlToEFONode = efoLoader.load(new FileInputStream(efoOwlFilePath)).getMap();
-                LOGGER.debug("load done");
-            } catch (FileNotFoundException e) {
-                throw new EFOTreeNodesTraderException(e);
-            }
-        }
-        return urlToEFONode;
-    }
-
-    private class EFOTreeNodesTraderException extends RuntimeException {
-        public EFOTreeNodesTraderException(Throwable e) {
-            super(e);
-        }
+        return urlToEFONode.get();
     }
 
 }
