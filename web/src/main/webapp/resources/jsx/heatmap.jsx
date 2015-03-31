@@ -91,7 +91,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             componentDidMount: function() {
 
                 if (!type.isMultiExperiment) {
-                   // makeTableHeaderSticky.call(this);
+                   makeTableHeaderSticky.call(this);
                 }
 
                 //TODO: use Stickem instead of Sticky.js - we only need one sticky library
@@ -798,12 +798,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     var experimentURL = '/experiments/' + this.props.id + '?geneQuery=' + geneQuery + (this.props.serializedFilterFactors ? "&serializedFilterFactors=" + encodeURIComponent(this.props.serializedFilterFactors) : "");
                     var geneURL = this.props.showGeneSetProfiles ? '/query?geneQuery=' + this.props.name + '&exactMatch=' + isExactMatch : '/genes/' + this.props.id;
 
+                    var titleTooltip = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "Protein Expression" : "RNA Expression" ) : "";
 
                     var url = (type.isMultiExperiment ? experimentURL : geneURL);
 
                     // don't render id for gene sets to prevent tooltips
                     return (
-                        <div className="icon icon-conceptual icon-c2" data-icon={type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}><a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked}>{this.props.name}</a></div>
+                        <div className="icon icon-conceptual icon-c2" title={titleTooltip} data-icon={type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}><a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked}>{this.props.name}</a></div>
                         );
                 },
 
@@ -871,10 +872,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "relative", float:"right", color:"green"}}>  select</span> : null;
                     var showTickWhenSelected = this.props.selected ? <span style={{position: "relative", float:"right", color:"green"}}> &#10004; </span>: null ;
                     var className = (this.props.selected ? "horizontal-header-cell-selected hoverable-header" : "horizontal-header-cell hoverable-header") + (enableEnsemblLauncher ? " selectable-header" : "");
+                    var rowClassName = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "gxaProteomicsExperiment" : "gxaTranscriptomicsExperiment" ) : "";
 
                     // NB: empty title tag below is required for tooltip to work
                     return (
-                        <tr>
+                        <tr className={rowClassName}>
                             <td className={className} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
                                 { enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked()}
                                 {showSelectTextOnHover}

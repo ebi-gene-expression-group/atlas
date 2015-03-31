@@ -113,6 +113,9 @@ public class BioEntityPage extends HeatmapTableWidgetPage {
     @FindBy(id = "poLessLinks")
     private WebElement showLessPoLinks;
 
+    @FindBy(id = "gxaMoreBaselineResultsLink")
+    private WebElement moreBaselineResultsLink;
+
     private final By firstColorGradientBar = By.xpath("//div[contains(@class, 'color-gradient')]");
 
     private final By secondColorGradientBar = By.xpath("//table[@id='diff-heatmap-legend']//tbody//tr[2]//td[2]//div[@class='color-gradient']");
@@ -377,4 +380,7 @@ public class BioEntityPage extends HeatmapTableWidgetPage {
         showLessPoLinks.click();
     }
 
+    public void clickMoreBaselineResults() {
+        moreBaselineResultsLink.click();
+    }
 }

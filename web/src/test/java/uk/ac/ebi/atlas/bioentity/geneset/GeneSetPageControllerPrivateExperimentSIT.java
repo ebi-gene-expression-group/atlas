@@ -75,8 +75,8 @@ public class GeneSetPageControllerPrivateExperimentSIT extends SinglePageSeleniu
 
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("2 results"));
 
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
-        assertThat(baselineCounts, hasSize(3));
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
+        assertThat(baselineCounts, hasSize(2));
 
         List<String> accessions = extract(baselineCounts, on(BaselineBioEntitiesSearchResult.class).getExperimentAccession());
         assertThat(accessions, hasItems("E-MTAB-599", "E-GEOD-30352"));

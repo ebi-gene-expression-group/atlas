@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
-import uk.ac.ebi.atlas.search.baseline.RnaSeqBslnExpression;
+import uk.ac.ebi.atlas.search.baseline.BaselineExperimentExpression;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,12 +27,12 @@ public class BaselineAnalyticsFacetsReader {
         this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
     }
 
-    public ImmutableList<RnaSeqBslnExpression> extractAverageExpressionLevel(String json, String species, String defaultQueryFactorType) {
+    public ImmutableList<BaselineExperimentExpression> extractAverageExpressionLevel(String json, String species, String defaultQueryFactorType) {
         String experimentsPath = String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType);
 
         List<Map<String, Object>> results = JsonPath.read(json, experimentsPath);
 
-        ImmutableList.Builder<RnaSeqBslnExpression> builder = ImmutableList.builder();
+        ImmutableList.Builder<BaselineExperimentExpression> builder = ImmutableList.builder();
 
         for (Map<String, Object> experiment : results) {
             String experimentAccession = (String) experiment.get("val");
@@ -46,7 +46,7 @@ public class BaselineAnalyticsFacetsReader {
                 double sumExpressionLevel = (double) assayGroup.get("sumExpressionLevel");
 
                 double expression = baselineExpressionLevelRounder.round(sumExpressionLevel / numberOfGenesExpressedAcrossAllAssayGroups);
-                RnaSeqBslnExpression bslnExpression = RnaSeqBslnExpression.create(experimentAccession, assayGroupId, expression);
+                BaselineExperimentExpression bslnExpression = BaselineExperimentExpression.create(experimentAccession, assayGroupId, expression);
 
                 builder.add(bslnExpression);
             }

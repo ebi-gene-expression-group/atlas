@@ -12,12 +12,11 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
-import uk.ac.ebi.atlas.model.baseline.Factor;
-import uk.ac.ebi.atlas.model.baseline.FactorGroup;
+import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -29,6 +28,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
 
@@ -99,10 +99,13 @@ public class BaselineExperimentProfileSearchServiceIT {
     private BaselineExperimentProfileSearchService subject;
 
     @Inject
-    private RnaSeqBslnExpressionDao rnaSeqBslnExpressionDao;
+    private BaselineExpressionDao baselineExpressionDao;
 
     @Inject
     private BaselineExperimentsCache baselineExperimentsCache;
+
+    @Inject
+    private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache;
 
 
     @Inject
@@ -147,9 +150,14 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(factors, contains(allFactors.toArray()));
     }
 
-    private ImmutableSortedSet<Factor> getOrganismPartFactors(String experimentAccession) {
+    private ImmutableSortedSet<Factor> getOrganismPartFactorsInBaselineExperiment(String experimentAccession) {
         BaselineExperiment experiment = baselineExperimentsCache.getExperiment(experimentAccession);
         return experiment.getExperimentalFactors().getFactors("ORGANISM_PART");
+    }
+
+    private SortedSet<Factor> getDefaultFilterFactorsInProteomicsExperiment(String experimentAccession) {
+        ProteomicsBaselineExperiment experiment = proteomicsBaselineExperimentsCache.getExperiment(experimentAccession);
+        return experiment.getExperimentalFactors().getCoOccurringFactors(experiment.getExperimentalFactors().getDefaultFilterFactors().iterator().next());
     }
 
     private static ImmutableSortedSet<Factor> getEMtab1733Tissues() {
@@ -346,12 +354,30 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(baselineProfile1.getKnownExpressionLevel(TESTIS), is(7D));
         assertThat(baselineProfile1.getKnownExpressionLevel(THYROID), is(13D));
 
-        BaselineExperimentProfile baselineProfile2 = baselineProfilesList.get(2);
+
+        BaselineExperimentProfile baselineProfile3 = baselineProfilesList.get(2);
+        assertThat(baselineProfile3.getId(), is("E-GEOD-30352"));
+        assertThat(baselineProfile3.getName(), is("Vertebrate tissues"));
+        assertThat(baselineProfile3.getFilterFactors(), is(ORGANISM_HOMO_SAPIENS));
+        assertThat(baselineProfile3.getConditions(), hasSize(48));
+        assertThat(baselineProfile3.getMinExpressionLevel(), is(4D));
+        assertThat(baselineProfile3.getMaxExpressionLevel(), is(22D));
+        assertThat(baselineProfile3.getKnownExpressionLevel(CEREBELLUM), is(4D));
+        assertThat(baselineProfile3.getKnownExpressionLevel(FRONTAL_LOBE), is(4D));
+        assertThat(baselineProfile3.getKnownExpressionLevel(HEART), is(12D));
+        assertThat(baselineProfile3.getKnownExpressionLevel(KIDNEY), is(22D));
+        assertThat(baselineProfile3.getKnownExpressionLevel(LIVER), is(17D));
+        assertThat(baselineProfile3.getKnownExpressionLevel(PREFRONTAL_CORTEX), is(4D));
+        assertThat(baselineProfile3.getKnownExpressionLevel(TEMPORAL_LOBE), is(6D));
+        assertThat(baselineProfile3.getKnownExpressionLevel(TESTIS), is(14D));
+        assertThat(baselineProfile3.getKnownExpressionLevel(THYROID), is(nullValue()));
+
+        BaselineExperimentProfile baselineProfile2 = baselineProfilesList.get(3);
         assertThat(baselineProfile2.getId(), is("E-PROT-1"));
         assertThat(baselineProfile2.getName(), is("Human Proteome Map - adult"));
         assertThat(baselineProfile2.getFilterFactors(), is(STAGE_ADULT));
-        assertThat(baselineProfile2.getConditions(), hasSize(28));
-        assertThat(baselineProfile2.getMinExpressionLevel(), is(2400000D));
+        assertThat(baselineProfile2.getConditions(), hasSize(35));
+        assertThat(baselineProfile2.getMinExpressionLevel(), is(2.7E-6));
         assertThat(baselineProfile2.getMaxExpressionLevel(), is(1.745E7D));
         assertThat(baselineProfile2.getKnownExpressionLevel(ADIPOSE), is(nullValue()));
         assertThat(baselineProfile2.getKnownExpressionLevel(APPENDIX), is(nullValue()));
@@ -378,22 +404,6 @@ public class BaselineExperimentProfileSearchServiceIT {
         assertThat(baselineProfile2.getKnownExpressionLevel(TEMPORAL_LOBE), is(nullValue()));
         assertThat(baselineProfile2.getKnownExpressionLevel(THYROID), is(nullValue()));
 
-        BaselineExperimentProfile baselineProfile3 = baselineProfilesList.get(3);
-        assertThat(baselineProfile3.getId(), is("E-GEOD-30352"));
-        assertThat(baselineProfile3.getName(), is("Vertebrate tissues"));
-        assertThat(baselineProfile3.getFilterFactors(), is(ORGANISM_HOMO_SAPIENS));
-        assertThat(baselineProfile3.getConditions(), hasSize(48));
-        assertThat(baselineProfile3.getMinExpressionLevel(), is(4D));
-        assertThat(baselineProfile3.getMaxExpressionLevel(), is(22D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(CEREBELLUM), is(4D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(FRONTAL_LOBE), is(4D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(HEART), is(12D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(KIDNEY), is(22D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(LIVER), is(17D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(PREFRONTAL_CORTEX), is(4D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(TEMPORAL_LOBE), is(6D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(TESTIS), is(14D));
-        assertThat(baselineProfile3.getKnownExpressionLevel(THYROID), is(nullValue()));
 
         SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
         ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
@@ -406,7 +416,7 @@ public class BaselineExperimentProfileSearchServiceIT {
     @Test
     public void onlyTissueExperimentsReturned() {
         // test gene has expression in cell lines experiment (E-GEOD-26284)
-        List<RnaSeqBslnExpression> expressions = rnaSeqBslnExpressionDao.fetchAverageExpressionByExperimentAssayGroup(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT));
+        List<BaselineExperimentExpression> expressions = baselineExpressionDao.fetchAverageExpressionByExperimentAssayGroup(ImmutableSet.of(GENE_IN_CELL_LINES_EXPERIMENT));
         assertThat(expressions,  hasItem(hasExperimentAccession("E-GEOD-26284")));
 
         // test that cell lines experiment is not returned
@@ -414,23 +424,27 @@ public class BaselineExperimentProfileSearchServiceIT {
 
         BaselineExperimentProfilesList baselineProfilesList = result.experimentProfiles;
 
-        Matcher cellLinesExperimentProfile = Matchers.<BaselineExperimentProfile>hasProperty("id", is("E-GEOD-26284"));
-        Matcher thirtyTwoTissuesExperimentProfile = Matchers.<BaselineExperimentProfile>hasProperty("id", is("E-MTAB-2836"));
+        Matcher twentySevenTissuesExperimentProfile = Matchers.<BaselineExperimentProfile>hasProperty("id", is("E-MTAB-1733"));
+        Matcher encodeCellLinesExperimentProfile = Matchers.<BaselineExperimentProfile>hasProperty("id", is("E-GEOD-26284"));
 
-        assertThat(baselineProfilesList, hasItem(thirtyTwoTissuesExperimentProfile));
-        assertThat(baselineProfilesList, not(hasItem(cellLinesExperimentProfile)));
+        assertThat(baselineProfilesList, hasItem(twentySevenTissuesExperimentProfile));
+        assertThat(baselineProfilesList, not(hasItem(encodeCellLinesExperimentProfile)));
 
         SortedSet<Factor> factors = result.factorsAcrossAllExperiments;
-        ImmutableSortedSet<Factor> allFactors = getOrganismPartFactors("E-MTAB-2836");
-        assertThat(factors, contains(allFactors.toArray()));
 
+        ImmutableSortedSet.Builder<Factor> allFactorsBuilder = ImmutableSortedSet.naturalOrder();
+        allFactorsBuilder.addAll(getOrganismPartFactorsInBaselineExperiment("E-MTAB-1733"));
+        allFactorsBuilder.addAll(getOrganismPartFactorsInBaselineExperiment("E-MTAB-2836"));
+        allFactorsBuilder.addAll(getDefaultFilterFactorsInProteomicsExperiment("E-PROT-1"));
+
+        assertThat(factors, containsInAnyOrder(allFactorsBuilder.build().toArray()));
     }
 
-    private Matcher<RnaSeqBslnExpression> hasExperimentAccession(final String expectedExperimentAccession) {
-        return new BaseMatcher<RnaSeqBslnExpression>() {
+    private Matcher<BaselineExperimentExpression> hasExperimentAccession(final String expectedExperimentAccession) {
+        return new BaseMatcher<BaselineExperimentExpression>() {
             @Override
             public boolean matches(Object o) {
-                String actualExperimentAccession = ((RnaSeqBslnExpression)o).experimentAccession();
+                String actualExperimentAccession = ((BaselineExperimentExpression)o).experimentAccession();
                 return expectedExperimentAccession.equals(actualExperimentAccession);
             }
 
@@ -440,7 +454,6 @@ public class BaselineExperimentProfileSearchServiceIT {
             }
         };
     }
-
 
     @Test
     public void sortExperimentsByNonFilterFactors() {
@@ -495,5 +508,4 @@ public class BaselineExperimentProfileSearchServiceIT {
 
         assertThat(result.isEmpty(), is(true));
     }
-
 }

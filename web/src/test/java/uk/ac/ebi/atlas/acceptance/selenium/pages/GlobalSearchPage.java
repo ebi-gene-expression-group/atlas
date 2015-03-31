@@ -26,7 +26,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public abstract class GlobalSearchPage extends AtlasPage{
+public abstract class GlobalSearchPage extends AtlasPage {
 
     @FindBy(id = "local-searchbox")
     private WebElement globalSearchBox;

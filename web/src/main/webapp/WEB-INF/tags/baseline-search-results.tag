@@ -60,12 +60,12 @@
         </c:forEach>
 
         <c:if test="${not empty remainingBaselineCounts}">
-            <tr id="moreResultsRow" >
-                <td><a id="moreResultsLink" href="">${remainingBaselineCounts.size()} more results...</a></td>
+            <tr id="gxaMoreResultsRow" >
+                <td><a id="gxaMoreBaselineResultsLink" href="">${remainingBaselineCounts.size()} more results...</a></td>
             </tr>
 
             <c:forEach var="baselineResult" items="${remainingBaselineCounts}"><%--@elvariable id="filterFactorsConverter" type="uk.ac.ebi.atlas.web.FilterFactorsConverter"--%>
-                <tr class="additionalResultRow" style="display:none">
+                <tr class="gxaAdditionalResultRow" style="display:none">
                     <td>
                         <a class="bioEntityCardLink"
                            href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
@@ -88,9 +88,9 @@
 </table>
 
 <script>
-    $("#moreResultsLink").click(function() {
-        $("#moreResultsRow").hide();
-        $(".additionalResultRow").show();
+    $("#gxaMoreBaselineResultsLink").click(function() {
+        $("#gxaMoreResultsRow").hide();
+        $(".gxaAdditionalResultRow").show();
         return false;
     });
 </script>

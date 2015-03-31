@@ -30,17 +30,17 @@ public class GenePageControllerGeneInBothTissueAndNonTissueExperimentsSIT extend
     public void baselineWidget() {
         subject.waitForHeatmapToBeVisible();
 
-        assertThat(subject.getGeneCount(), is("Showing 3 of 3 experiments found:"));
+        assertThat(subject.getGeneCount(), is("Showing 4 of 4 experiments found:"));
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
-        assertThat(subject.getGeneNames().size(), is(3));
-        assertThat(subject.getGeneNames(), contains("Thirty two tissues", "Twenty seven tissues", "Human Proteome Map - adult"));
+        assertThat(subject.getGeneNames().size(), is(4));
+        assertThat(subject.getGeneNames(), contains("Thirty two tissues", "Twenty seven tissues", "Human Proteome Map - adult", "Human Proteome Map - fetus"));
         assertThat(subject.hasAnatomogram(), is(true));
     }
 
     @Test
     public void baselineResults() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineResultsWithoutSpecies();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResultsWithoutSpecies();
 
         assertThat(baselineCounts, hasSize(20));
 
@@ -48,6 +48,13 @@ public class GenePageControllerGeneInBothTissueAndNonTissueExperimentsSIT extend
         assertThat(baselineCounts.get(0).getExperimentName(), is("ENCODE cell lines - long non-polyA RNA, cytosol"));
         assertThat(baselineCounts.get(0).getSpecies(), is(nullValue()));
         assertThat(baselineCounts.get(0).getHref(), endsWith("/experiments/E-GEOD-26284?_specific=on&queryFactorType=CELL_LINE&queryFactorValues=&geneQuery=ENSG00000005194&exactMatch=true&serializedFilterFactors=RNA:long%20non-polyA%20RNA,CELLULAR_COMPONENT:cytosol"));
+    }
+
+    @Test
+    public void hiddenBaselineResults() {
+        assertThat(subject.getVisibleBaselineResultsWithoutSpecies(), hasSize(10));
+        subject.clickMoreBaselineResults();
+        assertThat(subject.getVisibleBaselineResultsWithoutSpecies(), hasSize(20));
     }
 
 }

@@ -40,7 +40,7 @@ public class BioentitiesSearchControllerConditionQuery2TermsBaselineSIT extends 
     public void adiposeOrThymus() {
         BioEntitiesPage subject = BioEntitiesPage.search(driver, "condition=adipose%09thymus");
         subject.get();
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
 
         assertThat(baselineCounts, hasSize(5));
 
@@ -59,7 +59,7 @@ public class BioentitiesSearchControllerConditionQuery2TermsBaselineSIT extends 
     public void searchFullPhraseAndNotIndividualWords() {
         BioEntitiesPage subject = BioEntitiesPage.search(driver, "condition=whole+post-emergence+inflorescence");
         subject.get();
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
 
         //should not contain experiments with the world "whole", eg: E-GEOD-26284 (Homo sapiens - ENCODE cell lines - long non-polyA RNA, whole cell)
         assertThat(hasResult(baselineCounts, "E-GEOD-26284"), is(false));

@@ -31,16 +31,25 @@ var anatomogramModule = (function ($) {
         path.style.fillOpacity = opacity;
     }
 
-    function togglePathColor(path, evtType, isSingleGene, color) {
+    function isFactorExpressed(factor){
+        return ($.inArray(factor, factorsExpressed) > -1);
+    }
+
+    function togglePathColor(path, evtType, isSingleGene, svgPathId, color) {
 
         "use strict";
 
-        if(isSingleGene && evtType === undefined && color === "red"){ //We highlight the whole anatomogram with paths expressed in the gene
+
+        if(isSingleGene && evtType === undefined && color === "red") { //We highlight the whole anatomogram with paths expressed in the gene
             setHilighting(path, "red", 0.7);
+        } else if(isSingleGene && (evtType === 'mouseenter' || evtType === 'mouseover')) { //highlight in different colors when onmouseover
+            setHilighting(path, "#421C52", 0.8);
         } else {
             if (evtType === undefined) {
                 setHilighting(path, "gray", 0.5);
             } else if (!isSingleGene && (evtType === 'mouseenter' || evtType === 'mouseover')) {
+                setHilighting(path, "red", 0.7);
+            } else if (isSingleGene && (isFactorExpressed(svgPathId) || isFactorExpressed(path.id) || isFactorExpressed(path.parentElement.id))) {
                 setHilighting(path, "red", 0.7);
             } else {
                 setHilighting(path, "gray", 0.5);
@@ -58,10 +67,10 @@ var anatomogramModule = (function ($) {
         if (element !== null) {
             if (element.nodeName === 'g') {
                 $.each(element.getElementsByTagName('path'), function () {
-                    togglePathColor(this, evtType, isSingleGene, color);
+                    togglePathColor(this, evtType, isSingleGene, svgPathId, color);
                 });
             } else {
-                togglePathColor(element, evtType, isSingleGene, color);
+                togglePathColor(element, evtType, isSingleGene, svgPathId, color);
             }
 
         }
@@ -69,33 +78,33 @@ var anatomogramModule = (function ($) {
     }
 
 
-    function initMouseOverBindingForSvgPath(svgPath, svgPathId) {
+    function initMouseOverBindingForSvgPath(svgPath, svgPathId, isSingleGene) {
 
         var headerDiv = $('#heatmap-table th').has("div[data-svg-path-id='" + svgPathId + "']");
 
         svgPath.addEventListener("mouseover", function () {
             headerDiv.addClass("headerHover");
-            togglePathColor(svgPath, "mouseover");
+            togglePathColor(svgPath, "mouseover", isSingleGene);
         }, false);
 
         svgPath.addEventListener("mouseout", function () {
             headerDiv.removeClass("headerHover");
-            togglePathColor(svgPath, "mouseout");
+            togglePathColor(svgPath, "mouseout", isSingleGene);
         }, false);
     }
 
 
-    function initBindingsForAnatomogramPaths(svg, svgPathId) {
+    function initBindingsForAnatomogramPaths(svg, isSingleGene, svgPathId) {
 
         var svgElement = svg.getElementById(svgPathId);
 
         if (svgElement !== null) {
             if (svgElement.nodeName === 'g') {
                 $.each(svgElement.getElementsByTagName('path'), function () {
-                    initMouseOverBindingForSvgPath(this, svgPathId);
+                    initMouseOverBindingForSvgPath(this, svgPathId, isSingleGene);
                 });
             } else {
-                initMouseOverBindingForSvgPath(svgElement, svgPathId);
+                initMouseOverBindingForSvgPath(svgElement, svgPathId, isSingleGene);
             }
         }
     }
@@ -109,9 +118,9 @@ var anatomogramModule = (function ($) {
     }
 
 
-    function initAnatomogramBindings(svg, allSvgPathIds) {
+    function initAnatomogramBindings(svg, isSingleGene, allSvgPathIds) {
         $.each(allSvgPathIds, function () {
-            initBindingsForAnatomogramPaths(svg, this);
+            initBindingsForAnatomogramPaths(svg, isSingleGene, this);
         });
     }
 
@@ -131,23 +140,29 @@ var anatomogramModule = (function ($) {
                 if(isSingleGene) {
                     highlightAllOrganismParts(svg, isSingleGene, allSvgPathIds);
                     highlightExpressedOrganismsPartsOnly(svg, isSingleGene);
+                    initAnatomogramBindings(svg, isSingleGene, allSvgPathIds);
                 }
                 else {
                     highlightAllOrganismParts(svg, isSingleGene, allSvgPathIds);
-                    initAnatomogramBindings(svg, allSvgPathIds);
+                    initAnatomogramBindings(svg, isSingleGene, allSvgPathIds);
                 }
             }
         });
         return svg;
     }
 
+    var factorsExpressed = [];
+
     function highlightExpressedOrganismsPartsOnly(svg, isSingleGene) {
 
         var geneExpressions = $("#heatmap-table td:first-child").parent("tr").find('div[data-svg-path-id!=‘’]');
 
         var factorValues = geneExpressions.map(function () {
-            if( $(this).find("span").text() != "NA" )
+            if( $(this).find("span").text() != "NA" ){
+                if($(this).attr('data-svg-path-id')!=undefined)
+                    factorsExpressed.push($(this).attr('data-svg-path-id'));
                 return $(this).attr('data-svg-path-id');
+            }
         }).get();
 
         $.each(factorValues, function () {
@@ -175,18 +190,18 @@ var anatomogramModule = (function ($) {
             }).get();
 
 
-            if(!isSingleGene) {  //if is not gene page then highlight
+            //if(!isSingleGene) {  //if is not gene page then highlight
                 $.each(factorValues, function () {
                     toggleOrganismPartColor(svg, isSingleGene, this, evt);
                 });
-            }
+            //}
 
         });
 
         //hover on a header or expression level cell to highlight related SVG organism part
         $("#heatmap-table td,th").on("hover", function (evt) {
             var organismPart = $(this).find('div').attr("data-svg-path-id");
-            if (organismPart !== undefined && !isSingleGene) {  //if is not gene page then highlight
+            if (organismPart !== undefined){ // && !isSingleGene) {  //if is not gene page then highlight
                 toggleOrganismPartColor(svg, isSingleGene, organismPart, evt);
             }
         });

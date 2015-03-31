@@ -62,12 +62,12 @@ public class GeneSetPageControllerInterProTermSIT extends SinglePageSeleniumFixt
         subject.clickBaselinePane();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("5 results"));
 
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
 
-        assertThat(baselineCounts, hasSize(6)); //including geneset description
+        assertThat(baselineCounts, hasSize(5));
 
-        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-1733"));
-        assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-MTAB-599"));
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-1733"));
+        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-599"));
     }
 
     @Test

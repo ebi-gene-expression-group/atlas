@@ -45,9 +45,9 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsBaselineSIT exten
 
     @Test
     public void checkBaselineExperimentCounts() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getBaselineCounts();
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
 
-        assertThat(baselineCounts, hasSize(5));
+        assertThat(baselineCounts, hasSize(6));
         BaselineBioEntitiesSearchResult result = selectResult(baselineCounts, "E-MTAB-1733");
         assertThat(result.getExperimentName(), is("Twenty seven tissues"));
         assertThat(result.getSpecies(), is("Homo sapiens"));

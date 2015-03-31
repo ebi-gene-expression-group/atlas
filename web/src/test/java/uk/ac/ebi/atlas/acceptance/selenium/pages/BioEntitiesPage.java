@@ -65,37 +65,23 @@ public class BioEntitiesPage extends BioEntityPage {
         return 3;
     }
 
-    @Deprecated // use getBaselineResults() because this method includes gene info card properties
-    public List<BaselineBioEntitiesSearchResult> getBaselineCounts() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = Lists.newArrayList();
-
-        By byBaselineCountsTableId = By.id("baselineCountsTable");
-        FluentWait wait = new WebDriverWait(driver, 25L).pollingEvery(20, TimeUnit.MILLISECONDS);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(byBaselineCountsTableId));
-
-        List<WebElement> linkElements = driver.findElements(By.className("bioEntityCardLink"));
-
-        List<WebElement> countElements = driver.findElements(By.className("count"));
-
-        for (int i = 0; i < linkElements.size(); i++) {
-            boolean hasCountElement =  (i <= countElements.size() - 1);
-            WebElement countElement =  hasCountElement ? countElements.get(i) : null;
-            baselineCounts.add(buildBaselineEntityCount(linkElements.get(i), countElement));
-        }
-
-        return baselineCounts;
-
+    public List<BaselineBioEntitiesSearchResult> getAllBaselineResultsWithoutSpecies() {
+        return getBaselineResults(false, false);
     }
 
-    public List<BaselineBioEntitiesSearchResult> getBaselineResultsWithoutSpecies() {
-        return getBaselineResults(false);
+    public List<BaselineBioEntitiesSearchResult> getAllBaselineResults() {
+        return getBaselineResults(true, false);
     }
 
-    public List<BaselineBioEntitiesSearchResult> getBaselineResults() {
-        return getBaselineResults(true);
+    public List<BaselineBioEntitiesSearchResult> getVisibleBaselineResultsWithoutSpecies() {
+        return getBaselineResults(false, true);
     }
 
-    public List<BaselineBioEntitiesSearchResult> getBaselineResults(boolean hasSpecies) {
+    public List<BaselineBioEntitiesSearchResult> getVisibleBaselineResults() {
+        return getBaselineResults(true, true);
+    }
+
+    public List<BaselineBioEntitiesSearchResult> getBaselineResults(boolean hasSpecies, boolean onlyVisible) {
         List<BaselineBioEntitiesSearchResult> baselineCounts = Lists.newArrayList();
 
         By byBaselineCountsTableId = By.id("baselineCountsTable");
@@ -105,6 +91,9 @@ public class BioEntitiesPage extends BioEntityPage {
         List<WebElement> linkElements = driver.findElements(By.cssSelector("#baselineCountsTable .bioEntityCardLink"));
 
         for (WebElement linkElement : linkElements) {
+            if (onlyVisible && !linkElement.isDisplayed()) {
+                continue;
+            }
             baselineCounts.add(buildBaselineEntityCount(linkElement, null, hasSpecies));
         }
 

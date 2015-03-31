@@ -14,6 +14,6 @@
 <script type="text/javascript">
     $(function () {
         clearLocalNav();
-        $('#local-nav-${nav}').addClass("active");
+        $('#gxaLocalNav${nav}').addClass("active");
     });
 </script>

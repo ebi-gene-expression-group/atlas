@@ -102,27 +102,27 @@
 
         <!-- /local-search -->
 
-        <!-- local-nav -->
+        <!-- gxaLocalNav -->
 
         <nav>
-            <ul class="grid_24" id="local-nav">
-                <li id="local-nav-home" class="first active">
+            <ul class="grid_24" id="gxaLocalNav">
+                <li id="gxaLocalNavHome" class="first active">
                     <a href="${pageContext.request.contextPath}" title="Expression Atlas homepage">Home</a>
                 </li>
-                <li id="local-nav-release-notes">
+                <li id="gxaLocalNavRelease-notes">
                     <a href="${pageContext.request.contextPath}/release-notes.html" title="Release notes">Release notes</a>
                 </li>
-                <li id="local-nav-FAQ">
+                <li id="gxaLocalNavFAQ">
                     <a href="${pageContext.request.contextPath}/FAQ.html" title="FAQs">FAQs</a>
                 </li>
-                <li id="local-nav-download">
+                <li id="gxaLocalNavDownload">
                     <a href="${pageContext.request.contextPath}/download.html" title="Download">Download</a>
                 </li>
-                <li id="local-nav-help" class="last">
+                <li id="gxaLocalNavHelp" class="last">
                     <a href="${pageContext.request.contextPath}/help/index.html"
                        title="Help pages">Help</a>
                 </li>
-                <li id="local-nav-about" class="last">
+                <li id="gxaLocalNavAbout" class="last">
                     <a href="${pageContext.request.contextPath}/about.html"
                        title="About Expression Atlas">About</a>
                 </li>
@@ -138,7 +138,7 @@
             </ul>
         </nav>
 
-        <!-- /local-nav -->
+        <!-- /gxaLocalNav -->
 
     </div>
 </header>
@@ -193,7 +193,7 @@
 
 <script>
     function clearLocalNav() {
-        var listItems = $("#local-nav li");
+        var listItems = $("#gxaLocalNav li");
         listItems.each(function (idx, li) {
             var item = $(li);
             item.removeClass("active");

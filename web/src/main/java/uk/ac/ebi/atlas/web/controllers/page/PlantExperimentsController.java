@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -126,7 +127,16 @@ public class PlantExperimentsController {
                 // we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
             }
-            experimentDisplayNames.put(experimentAccession, displayName);
+
+            int numberOfAssays = 0;
+            Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
+            if (experiment.getType() == ExperimentType.RNASEQ_MRNA_BASELINE || experiment.getType() == ExperimentType.PROTEOMICS_BASELINE) {
+                numberOfAssays = ((BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession)).getExperimentRunAccessions().size();
+            }
+            else if (experiment.getType() == ExperimentType.MICROARRAY_ANY || experiment.getType() == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
+                numberOfAssays = ((DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession)).getAssayAccessions().size();
+            }
+            experimentDisplayNames.put(experimentAccession, displayName + " (" + numberOfAssays + " assays)");
         }
 
         numDifferentialExperimentsBySpecies = new TreeMap<String, Integer>();

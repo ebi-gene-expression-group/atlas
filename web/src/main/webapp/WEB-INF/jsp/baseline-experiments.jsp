@@ -32,7 +32,7 @@
             <p>These datasets show baseline gene expression for many different tissues and cell types from a wide range of species,
                 from human and mouse to Arabidopsis and maize. In Expression Atlas, "baseline" expression is the expression level of
                 each gene in normal, untreated conditions. All baseline experiments are either RNA-seq or proteomics data. Each experiment is manually
-                curated to a high standard, and RNA expression levels are calculated using the <a href="https://code.google.com/p/irap/">iRAP</a> pipeline.
+                curated to a high standard, and RNA expression levels are calculated using the <a href="http://nunofonseca.github.io/irap/">iRAP</a> pipeline.
             </p>
         </div>
     </div>
@@ -40,7 +40,7 @@
 
     <c:forEach items="${experimentAccessionsBySpecies.keySet()}" var="specie">
 
-        <div class="grid_6 specie_item">
+        <div class="grid_8 specie_item">
 
             <c:choose>
                 <c:when test="${specie == 'Anolis carolinensis'}">

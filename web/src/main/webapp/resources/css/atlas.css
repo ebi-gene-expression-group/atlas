@@ -36,13 +36,25 @@ div#local-search form fieldset, form#local-search fieldset {
     width: 15%;
 }
 
+td.gxaHomeSearchFluidTableColumn {
+    vertical-align: top;
+    width: 30%;
+    padding-right: 10px;
+}
+
+td.gxaHomeSearchFixedSizeTableColumn {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
 .atlas-body {
     min-width: 975px;
     /* font-family: Verdana, Helvetica, Arial, sans-serif;*/
     margin: 0px auto !important;
 }
 
-ul#local-nav a:hover, ul#local-nav a:active, li.active a {
+ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     border-bottom-color: #207A7A !important;
     border-bottom: 3px solid;
 }
@@ -78,7 +90,6 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a {
 }
 
 #atlas-content td, .rotated-cell {
-    vertical-align: inherit;
     border: none;
     margin: 0px;
     padding: 2px;
@@ -94,7 +105,6 @@ ul#local-nav a:hover, ul#local-nav a:active, li.active a {
 }
 
 #atlas-content form td, #dialog-form form td {
-    vertical-align: top;
     padding: 4px;
 }
 
