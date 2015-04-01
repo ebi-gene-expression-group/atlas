@@ -2,6 +2,7 @@
 
 ```
 npm install
+npm install webpack-dev-server -g
 ```
 
 # Tests
