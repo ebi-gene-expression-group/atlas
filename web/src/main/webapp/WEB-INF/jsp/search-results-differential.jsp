@@ -30,14 +30,9 @@
 
 <div id="help-placeholder" style="display: none"></div>
 
-<script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
-<script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
-
 <link type="text/css" rel="stylesheet" href="/gxa/resources/css/facets.css" />
 
 <%@ include file="includes/react.jsp" %>
-<%@ include file="includes/heatmap-js.jsp" %>
-<%@ include file="includes/anatomogram.jsp" %>
 
 <section class="grid_23 extra-padding">
     <%@ include file="includes/search-form.jsp" %>

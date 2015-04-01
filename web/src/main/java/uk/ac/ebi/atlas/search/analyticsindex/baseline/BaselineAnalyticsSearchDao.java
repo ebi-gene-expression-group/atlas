@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.base.Stopwatch;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestClientException;
@@ -28,6 +29,7 @@ public class BaselineAnalyticsSearchDao {
     private static final String QUERY_TEMPLATE = "query?q={0}&rows=0&omitHeader=true";
     private static final String FQ_TEMPLATE = "&fq=expressionLevel:[{0} TO *]";
     private final String baselineHeatmapPivotQuery;
+    public static final String BASELINE_ONLY = "experimentType:(rnaseq_mrna_baseline OR proteomics_baseline)";
 
     @Inject
     public BaselineAnalyticsSearchDao(RestTemplate restTemplate, @Value("#{configuration['solr.analytics.base.url']}") String solrBaseUrl, String baselineHeatmapPivotQuery) {
@@ -41,14 +43,18 @@ public class BaselineAnalyticsSearchDao {
         return fetchExpressionLevelFaceted(geneQuery);
     }
 
+    String buildGeneIdentifierQuery(GeneQuery geneQuery) {
+        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(\"%s\")", StringUtils.join(geneQuery.terms(), "\" OR \""));
+    }
+
     String fetchExpressionLevelFaceted(GeneQuery geneQuery) {
-        String identifierSearch = geneQuery.asString(); //TODO: support multiple gene query terms
-        return fetchFacets("identifierSearch:" + identifierSearch, DEFAULT_CUT_OFF);
+        String identifierSearch = buildGeneIdentifierQuery(geneQuery);
+        return fetchFacets(identifierSearch, DEFAULT_CUT_OFF);
     }
 
     public String fetchExpressionLevelFaceted(GeneQuery geneQuery, String defaultQueryFactorType) {
-        String identifierSearch = geneQuery.asString(); //TODO: support multiple gene query terms
-        return fetchFacets(String.format("identifierSearch:%s AND defaultQueryFactorType:%s", identifierSearch, defaultQueryFactorType), DEFAULT_CUT_OFF);
+        String identifierSearch = buildGeneIdentifierQuery(geneQuery);
+        return fetchFacets(String.format("%s AND defaultQueryFactorType:%s", identifierSearch, defaultQueryFactorType), DEFAULT_CUT_OFF);
     }
 
     String fetchFacets(String q, double cutOff) {
@@ -65,7 +71,8 @@ public class BaselineAnalyticsSearchDao {
     }
 
     String buildQueryUrl(String q, double cutOff) {
-        return solrBaseUrl + buildQueryParameters(q, cutOff) + baselineHeatmapPivotQuery;
+        String query = q.isEmpty() ? BASELINE_ONLY : q + " AND " + BASELINE_ONLY;
+        return solrBaseUrl + buildQueryParameters(query, cutOff) + baselineHeatmapPivotQuery;
     }
 
     String buildQueryParameters(String q, double cutOff) {

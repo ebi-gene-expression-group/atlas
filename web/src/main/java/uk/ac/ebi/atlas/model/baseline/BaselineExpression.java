@@ -36,6 +36,7 @@ public class BaselineExpression implements Expression {
     private FactorGroup factorGroup;
     private final boolean known;
     private final Optional<Quartiles> quartiles;
+    public static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
 
     public BaselineExpression(double level, FactorGroup factorGroup) {
         this(level, factorGroup, Optional.<Quartiles>absent());
@@ -140,8 +141,7 @@ public class BaselineExpression implements Expression {
     }
 
     static String removeTrailingZero(double value) {
-        NumberFormat format = new DecimalFormat("0.####");
-        return format.format(value);
+        return FOUR_DP.format(value);
     }
 
     @Override
