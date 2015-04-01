@@ -12,7 +12,7 @@ import java.io.IOException;
 @Scope("singleton")
 public class TracksController {
 
-    @RequestMapping(value = "/experiments/{experimentAccession}/tracks/{trackFileName:.*}", method = RequestMethod.GET)
+    @RequestMapping(value = "/experiments/{experimentAccession}/tracks/{trackFileName:.*}", method = {RequestMethod.GET, RequestMethod.HEAD})
     public String forwardToQcResource(@PathVariable String experimentAccession,@PathVariable String trackFileName) throws IOException {
         // forwards to a url that is handled by the mvc:resources handler, see WebConfig.java
         String path = String.format("/expdata/%s/%s", experimentAccession, trackFileName);
