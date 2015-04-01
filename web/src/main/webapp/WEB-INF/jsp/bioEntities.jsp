@@ -55,6 +55,7 @@
                             <c:forEach var="entityName" varStatus="loopStatus"
                                        items="${bioEntityPropertyService.entityNames}">
                                 ${entityName}<c:if test="${not loopStatus.last}">, </c:if>
+                                <c:set var="entityNamesList" value="${entityNamesList} ${entityName}"/>
                             </c:forEach>
                         </span>
                 <c:set var="species" value="${bioEntityPropertyService.getSpecies()}"/>
@@ -323,12 +324,15 @@
 
 <%-- hide expand/collapse icons when accordion sections don't have enough results --%>
 <c:set var="hideIcons" value="${(showBioentityPropertiesPane && !hasBaselineResults && empty bioentities) || (!showBioentityPropertiesPane && !(hasBaselineResult && not empty bioentities))}"/>
-
+<%-- Assemble the full query information for SEO --%>
+<c:set var="fullQueryDescription" value="${fn:replace(searchDescription,'&quot;','')} ${entityNamesList}"/>
 <script>
 
-    window.onload = function () {
+    window.onload = function (fullSearchDescription) {
 
         var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : defaultPanelIndex};
+
+        $('head').append('<meta name="description" content="Baseline and differential gene (RNA) expression for ${fullQueryDescription}" />');
 
         $("#bioentity-info-image").tooltip();
         $("#differential-info-image").tooltip();
