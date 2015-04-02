@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.common.base.Joiner;
-import junit.framework.TestCase;
 import org.junit.Test;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
@@ -16,7 +15,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-public class BaselineProteomicsAnalyticsInputStreamTest {
+public class ProteomicsBaselineAnalyticsInputStreamTest {
     private static CsvReaderFactory csvReaderFactory = new CsvReaderFactory();
 
     public static final String GENE_ID_1 = "ENSG00000003400";
@@ -40,7 +39,7 @@ public class BaselineProteomicsAnalyticsInputStreamTest {
     public void readTwoTsvLines() throws IOException {
         Reader tsvSource = new StringReader(TSV_CONTENTS);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        BaselineProteomicsAnalyticsInputStream subject = new BaselineProteomicsAnalyticsInputStream(csvReader, "Test");
+        ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(csvReader, "Test");
 
         BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g2", 5010000);
         BaselineAnalytics line1g3 = new BaselineAnalytics(GENE_ID_1, "g3", 0.0000133);
@@ -66,7 +65,7 @@ public class BaselineProteomicsAnalyticsInputStreamTest {
 
         Reader tsvSource = new StringReader(tsvContents);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        BaselineProteomicsAnalyticsInputStream subject = new BaselineProteomicsAnalyticsInputStream(csvReader, "Test");
+        ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(csvReader, "Test");
 
         assertThat(subject.readNext(), is(nullValue()));
     }
@@ -77,7 +76,7 @@ public class BaselineProteomicsAnalyticsInputStreamTest {
 
         Reader tsvSource = new StringReader(tsvContents);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        BaselineProteomicsAnalyticsInputStream subject = new BaselineProteomicsAnalyticsInputStream(csvReader, "Test");
+        ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(csvReader, "Test");
 
         BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g4", 0.0000079);
         assertThat(subject.readNext(), is(line1g2));
@@ -90,7 +89,7 @@ public class BaselineProteomicsAnalyticsInputStreamTest {
 
         Reader tsvSource = new StringReader(tsvContents);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        BaselineProteomicsAnalyticsInputStream subject = new BaselineProteomicsAnalyticsInputStream(csvReader, "Test");
+        ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(csvReader, "Test");
 
         BaselineAnalytics line1g4 = new BaselineAnalytics(GENE_ID_1, "g2", 0.0000079);
         assertThat(subject.readNext(), is(line1g4));
@@ -104,7 +103,7 @@ public class BaselineProteomicsAnalyticsInputStreamTest {
 
         Reader tsvSource = new StringReader(tsvContents);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
-        BaselineProteomicsAnalyticsInputStream subject = new BaselineProteomicsAnalyticsInputStream(csvReader, "Test");
+        ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(csvReader, "Test");
 
         BaselineAnalytics line1g2 = new BaselineAnalytics(GENE_ID_1, "g5", 0.0000079);
         assertThat(subject.readNext(), is(line1g2));
@@ -116,7 +115,7 @@ public class BaselineProteomicsAnalyticsInputStreamTest {
         Reader tsvSource = spy(new StringReader(TSV_CONTENTS));
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
 
-        try (BaselineProteomicsAnalyticsInputStream subject = new BaselineProteomicsAnalyticsInputStream(csvReader, "Test")) {
+        try (ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(csvReader, "Test")) {
             subject.readNext();
         }
 
@@ -128,7 +127,7 @@ public class BaselineProteomicsAnalyticsInputStreamTest {
         Reader tsvSource = spy(new StringReader(TSV_CONTENTS));
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvSource);
 
-        try (BaselineProteomicsAnalyticsInputStream subject = new BaselineProteomicsAnalyticsInputStream(csvReader, "Test")) {
+        try (ProteomicsBaselineAnalyticsInputStream subject = new ProteomicsBaselineAnalyticsInputStream(csvReader, "Test")) {
             subject.readNext();
             throw new RuntimeException("foobar");
         } catch (RuntimeException e) {

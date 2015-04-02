@@ -11,24 +11,24 @@ public class AnalyticsLoaderFactory {
     private AnalyticsLoader baselineAnalyticsLoader;
     private AnalyticsLoader rnaSeqDifferentialAnalyticsLoader;
     private AnalyticsLoader microarrayDifferentialAnalyticsLoader;
-    private AnalyticsLoader baselineProteomicsAnalyticsLoader;
+    private AnalyticsLoader proteomicsBaselineAnalyticsLoader;
 
     @Inject
     public AnalyticsLoaderFactory(AnalyticsLoader baselineAnalyticsLoader,
                                   AnalyticsLoader rnaSeqDifferentialAnalyticsLoader,
                                   AnalyticsLoader microarrayDifferentialAnalyticsLoader,
-                                  AnalyticsLoader baselineProteomicsAnalyticsLoader) {
+                                  AnalyticsLoader proteomicsBaselineAnalyticsLoader) {
         this.baselineAnalyticsLoader = baselineAnalyticsLoader;
         this.rnaSeqDifferentialAnalyticsLoader = rnaSeqDifferentialAnalyticsLoader;
         this.microarrayDifferentialAnalyticsLoader = microarrayDifferentialAnalyticsLoader;
-        this.baselineProteomicsAnalyticsLoader = baselineProteomicsAnalyticsLoader;
+        this.proteomicsBaselineAnalyticsLoader = proteomicsBaselineAnalyticsLoader;
     }
 
     public AnalyticsLoader getLoader(ExperimentType experimentType) {
         if (experimentType == ExperimentType.RNASEQ_MRNA_BASELINE) {
             return baselineAnalyticsLoader;
         } else if (experimentType == ExperimentType.PROTEOMICS_BASELINE) {
-            return baselineProteomicsAnalyticsLoader;
+            return proteomicsBaselineAnalyticsLoader;
         } else if (experimentType == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
             return rnaSeqDifferentialAnalyticsLoader;
         } else if (experimentType.isMicroarray()) {

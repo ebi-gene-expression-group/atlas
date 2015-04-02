@@ -8,16 +8,16 @@ import javax.inject.Named;
 import java.io.IOException;
 
 @Named
-public class BaselineProteomicsAnalyticsLoader implements AnalyticsLoader {
+public class ProteomicsBaselineAnalyticsLoader implements AnalyticsLoader {
 
     private final BaselineAnalyticsDao baselineAnalyticsDao;
-    private final BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory;
+    private final ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
 
     @Inject
-    public BaselineProteomicsAnalyticsLoader(BaselineAnalyticsDao baselineAnalyticsDao,
-                                             BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory) {
+    public ProteomicsBaselineAnalyticsLoader(BaselineAnalyticsDao baselineAnalyticsDao,
+                                             ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory) {
         this.baselineAnalyticsDao = baselineAnalyticsDao;
-        this.baselineProteomicsAnalyticsInputStreamFactory = baselineProteomicsAnalyticsInputStreamFactory;
+        this.proteomicsBaselineAnalyticsInputStreamFactory = proteomicsBaselineAnalyticsInputStreamFactory;
     }
 
     @Override
@@ -27,9 +27,9 @@ public class BaselineProteomicsAnalyticsLoader implements AnalyticsLoader {
     }
 
     private void loadBaselineExpressions(String accession) {
-        BaselineProteomicsAnalyticsInputStream baselineProteomicsAnalyticsInputStream =
-                baselineProteomicsAnalyticsInputStreamFactory.create(accession);
-        baselineAnalyticsDao.loadAnalytics(accession, baselineProteomicsAnalyticsInputStream);
+        ProteomicsBaselineAnalyticsInputStream proteomicsBaselineAnalyticsInputStream =
+                proteomicsBaselineAnalyticsInputStreamFactory.create(accession);
+        baselineAnalyticsDao.loadAnalytics(accession, proteomicsBaselineAnalyticsInputStream);
     }
 
     @Override
