@@ -123,7 +123,7 @@ public class ExperimentChecker {
     }
 
     void checkFilesPermissions(Set<String> pathTemplatePropertyKeys, String... pathArguments) {
-        for (String pathTemplatePropertyKey : pathTemplatePropertyKeys){
+        for (String pathTemplatePropertyKey : pathTemplatePropertyKeys) {
             checkFilePermission(pathTemplatePropertyKey, pathArguments);
         }
     }

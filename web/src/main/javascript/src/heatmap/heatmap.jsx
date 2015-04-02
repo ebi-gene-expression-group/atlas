@@ -16,3 +16,5 @@ var Heatmap = (function (React) {
     });
 
 })(React);
+
+module.exports = Heatmap;

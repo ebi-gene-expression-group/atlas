@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -42,6 +43,7 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
     private final String name;
     private int lineNumber = 0;
 
+
     public BaselineAnalyticsInputStream(CSVReader csvReader, String name) {
         this.name = name;
         this.csvReader = csvReader;
@@ -49,10 +51,12 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
         this.assayGroupIds = (String[]) ArrayUtils.subarray(headers, FIRST_EXPRESSION_LEVEL_INDEX, headers.length);
     }
 
+
     @Override
     public void close() throws IOException {
         csvReader.close();
     }
+
 
     private String[] readCsvLine() {
         lineNumber++;
@@ -63,6 +67,7 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
             throw new IllegalStateException(String.format("%s exception thrown while reading line %s", name, lineNumber), e);
         }
     }
+
 
     @Override
     public BaselineAnalytics readNext() {
@@ -79,6 +84,7 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
 
         return queue.remove();
     }
+
 
     private ImmutableList<BaselineAnalytics> readNextNonZeroLine() {
 
@@ -99,6 +105,7 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
         return baselineAnalytics;
     }
 
+
     private ImmutableList<BaselineAnalytics> createList(String geneId, String[] assayGroupIds, String[] expressionLevels) {
         checkArgument(StringUtils.isNotBlank(geneId), "Cannot load analytics - gene id is blank");
         checkArgument(assayGroupIds.length == expressionLevels.length, String.format("Cannot load analytics - expecting %s expressions but got %s instead.", assayGroupIds.length, expressionLevels.length));
@@ -112,13 +119,25 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
 
             if (!("FAIL".equalsIgnoreCase(expressionLevelString) || "LOWDATA".equalsIgnoreCase(expressionLevelString) ||
             "NA".equalsIgnoreCase(expressionLevelString))) {
-                Double expressionLevel = expressionLevelString.contains(",") ? Quartiles.createFromCsvString(expressionLevelString).median() : Double.parseDouble(expressionLevels[i]);
+
+                Double expressionLevel = 0.0;
+                Optional<Quartiles> quartiles;
+                if (expressionLevelString.contains(",")) {
+                    quartiles = Optional.fromNullable(Quartiles.createFromCsvString(expressionLevelString));
+                    expressionLevel = quartiles.get().median();
+                }
+                else {
+                    quartiles = Optional.absent();
+                    Double.parseDouble(expressionLevels[i]);
+                }
+
                 if (expressionLevel != 0.0) {
-                    builder.add(new BaselineAnalytics(geneId, assayGroupId, expressionLevel));
+                    builder.add(new BaselineAnalytics(geneId, assayGroupId, expressionLevel, quartiles));
                 }
             }
         }
 
         return builder.build();
     }
+
 }

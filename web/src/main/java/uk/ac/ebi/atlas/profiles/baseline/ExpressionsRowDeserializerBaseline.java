@@ -37,6 +37,9 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 public class ExpressionsRowDeserializerBaseline extends ExpressionsRowDeserializer<BaselineExpression> {
 
+    private static final String ZERO_CODE = "-";
+    private static final Quartiles ZERO_QUARTILES = Quartiles.create(0.0, 0.0, 0.0, 0.0, 0.0);
+
     final int expectedNumberOfValues;
     Iterator<FactorGroup> factorGroups;
 
@@ -57,6 +60,10 @@ public class ExpressionsRowDeserializerBaseline extends ExpressionsRowDeserializ
 
         if (expressionLevelString == null) {
             return null;
+        }
+
+        if (expressionLevelString.equals(ZERO_CODE)) {
+            return new BaselineExpression(ZERO_QUARTILES, factorGroups.next());
         }
 
         if (expressionLevelString.contains(",")) {

@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
@@ -66,9 +65,9 @@ public class BaselineExpressionsInputStreamFactory {
 
     public ObjectInputStream<BaselineExpressions> createGeneExpressionsInputStream(String experimentAccession) {
 
-        String _accessKey = barChartExperimentAccessKeyTrader.getAccessKey(experimentAccession);
+        String accessKey = barChartExperimentAccessKeyTrader.getAccessKey(experimentAccession);
 
-        Experiment experiment = experimentTrader.getExperiment(experimentAccession, _accessKey);
+        Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);

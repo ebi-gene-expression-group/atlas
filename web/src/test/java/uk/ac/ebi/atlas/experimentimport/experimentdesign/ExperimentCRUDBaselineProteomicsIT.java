@@ -100,7 +100,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
     AnalyticsLoaderFactory analyticsLoaderFactory;
 
     @Inject
-    BaselineProteomicsAnalyticsInputStreamFactory baselineProteomicsAnalyticsInputStreamFactory;
+    ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
 
     @Inject
     private ExperimentMetadataCRUDFactory experimentMetadataCRUDFactory;
@@ -132,7 +132,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
     ArgumentCaptor<ExperimentDesign> experimentDesignArgumentCaptor;
 
     @Captor
-    ArgumentCaptor<BaselineProteomicsAnalyticsInputStream> baselineProteomicsAnalyticsInputStreamArgumentCaptor;
+    ArgumentCaptor<ProteomicsBaselineAnalyticsInputStream> baselineProteomicsAnalyticsInputStreamArgumentCaptor;
 
     @Mock
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
@@ -159,7 +159,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
         subject = new ExperimentCRUD();
         subject.setAnalyticsDao(analyticsDao);
 
-        when(analyticsLoaderFactory.getLoader(ExperimentType.PROTEOMICS_BASELINE)).thenReturn(new BaselineProteomicsAnalyticsLoader(baselineAnalyticsDao, baselineProteomicsAnalyticsInputStreamFactory));
+        when(analyticsLoaderFactory.getLoader(ExperimentType.PROTEOMICS_BASELINE)).thenReturn(new ProteomicsBaselineAnalyticsLoader(baselineAnalyticsDao, proteomicsBaselineAnalyticsInputStreamFactory));
 
         subject.setAnalyticsLoaderFactory(analyticsLoaderFactory);
         subject.setExperimentChecker(experimentChecker);
@@ -209,169 +209,169 @@ public class ExperimentCRUDBaselineProteomicsIT {
 
         verify(baselineAnalyticsDao).loadAnalytics(eq(E_PROT_1), baselineProteomicsAnalyticsInputStreamArgumentCaptor.capture());
 
-        BaselineProteomicsAnalyticsInputStream baselineProteomicsAnalyticsInputStream = baselineProteomicsAnalyticsInputStreamArgumentCaptor.getValue();
+        ProteomicsBaselineAnalyticsInputStream proteomicsBaselineAnalyticsInputStream = baselineProteomicsAnalyticsInputStreamArgumentCaptor.getValue();
 
-        BaselineAnalytics baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        BaselineAnalytics baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_1_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g5"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_1_G5_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_1_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g18"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_1_G18_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_1_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g15"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_1_G15_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_1_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g16"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_1_G16_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_1_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g22"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_1_G22_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_1_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g28"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_1_G28_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g5"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G5_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g6"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G6_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g3"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G3_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g4"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G4_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g10"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G10_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g7"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G7_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g8"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G8_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g14"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G14_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g11"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G11_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g12"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G12_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g17"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G17_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g18"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G18_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g15"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G15_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g16"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G16_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g22"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G22_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g20"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G20_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g19"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G19_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g26"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G26_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g25"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G25_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g24"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G24_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g23"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G23_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g30"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G30_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g29"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G29_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g28"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G28_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g27"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G27_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g2"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G2_ABUNDANCE));
 
-        baselineAnalytics = baselineProteomicsAnalyticsInputStream.readNext();
+        baselineAnalytics = proteomicsBaselineAnalyticsInputStream.readNext();
         assertThat(baselineAnalytics.getGeneId(), is(E_PROT_1_LINE_2_GENE_ID));
         assertThat(baselineAnalytics.getAssayGroupId(), is("g1"));
         assertThat(baselineAnalytics.getExpressionLevel(), is(E_PROT_1_LINE_2_G1_ABUNDANCE));

@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.profiles.baseline.viewmodel;
 
-import uk.ac.ebi.atlas.model.ExperimentType;
-
 public class BaselineExperimentProfileRowViewModel {
 
     private final String id;

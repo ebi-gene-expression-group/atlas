@@ -68,6 +68,15 @@ public class ExperimentAdminController {
         return "Experiment " + experimentAccession + " loaded, accessKey: " + accessKeyUUID;
     }
 
+    // TODO This should be done when an experiment is imported. See TODO note in ExperimentCRUD
+    // TODO Add another URL/method to do this for all experiments -> https://www.pivotaltracker.com/story/show/91486348
+    @RequestMapping("/serializeExpressionData")
+    @ResponseBody
+    public String serializeExpressionData(@RequestParam("accession") String experimentAccession) throws IOException {
+        experimentCRUD.serializeExpressionData(experimentAccession);
+        return "Expression data successfully serialized for " + experimentAccession;
+    }
+
     @RequestMapping("/deleteExperiment")
     @ResponseBody
     public String deleteExperiment(@RequestParam("accession") String experimentAccession) {

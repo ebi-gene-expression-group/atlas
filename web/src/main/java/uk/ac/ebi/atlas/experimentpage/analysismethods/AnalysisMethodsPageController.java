@@ -74,8 +74,8 @@ public class AnalysisMethodsPageController {
 
     @Inject
     public AnalysisMethodsPageController(TsvReaderBuilder tsvReaderBuilder, DownloadURLBuilder downloadURLBuilder,
-                                         @Value("#{configuration['experiment.analysis-method.path.template']}")
-                                         String pathTemplate, ArrayDesignTrader arrayDesignTrader,
+                                         @Value("#{configuration['experiment.analysis-method.path.template']}") String pathTemplate,
+                                         ArrayDesignTrader arrayDesignTrader,
                                          @Value("#{configuration['analysis-methods.pdf.path.template']}") String pdfFileTemplate) {
 
         this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);

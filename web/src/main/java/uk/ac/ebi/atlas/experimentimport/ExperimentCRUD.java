@@ -5,9 +5,12 @@ import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
+import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerFactory;
+import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
+
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,9 +25,10 @@ public class ExperimentCRUD {
     private AnalyticsLoaderFactory analyticsLoaderFactory;
     private AnalyticsDao analyticsDao;
     private ConfigurationTrader configurationTrader;
+    private ExpressionSerializerService expressionSerializerService;
 
-    // requires no-arg constructor for @Transactional proxying, hence setter injection
-    // of dependencies
+
+    // requires no-arg constructor for @Transactional proxying, hence setter injection of dependencies
     public ExperimentCRUD() {
     }
 
@@ -53,6 +57,11 @@ public class ExperimentCRUD {
         this.analyticsDao = analyticsDao;
     }
 
+    @Inject
+    public void setExpressionSerializerService(ExpressionSerializerService expressionSerializerService) {
+        this.expressionSerializerService = expressionSerializerService;
+    }
+
     @Transactional
     public UUID importExperiment(String experimentAccession, boolean isPrivate) throws IOException {
 
@@ -67,6 +76,11 @@ public class ExperimentCRUD {
 
         AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(configuration.getExperimentType());
         analyticsLoader.loadAnalytics(experimentAccession);
+
+        // TODO Add expression serialization here
+        // if (configuration.getExperimentType() == ExperimentType.RNASEQ_MRNA_BASELINE || ExperimentType.{a serializable experiment type}...) {
+        //     serializeExpressionData(experimentAccession, experimentType);
+        // }
 
         return experimentMetadataCRUD.importExperiment(experimentAccession, configuration, isPrivate, accessKey);
     }
@@ -100,5 +114,9 @@ public class ExperimentCRUD {
 
     public void deleteInactiveAnalytics() {
         analyticsDao.deleteInactiveAnalytics();
+    }
+
+    public void serializeExpressionData(String experimentAccession) {
+        expressionSerializerService.serializeExpressionData(experimentAccession);
     }
 }

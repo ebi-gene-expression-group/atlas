@@ -131,8 +131,8 @@ public class ExperimentDTO {
         return title;
     }
 
-    public void addSpecie(String specie) {
-        species.add(specie);
+    public void addSpecies(String aSpecies) {
+        species.add(aSpecies);
     }
 
 }

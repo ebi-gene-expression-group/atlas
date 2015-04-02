@@ -49,6 +49,7 @@ public class ExperimentTrader {
     private ExperimentDAO experimentDAO;
     private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache;
 
+
     @Inject
     public ExperimentTrader(ExperimentDAO experimentDAO,
                             BaselineExperimentsCache baselineExperimentsCache,
@@ -63,14 +64,15 @@ public class ExperimentTrader {
         this.proteomicsBaselineExperimentsCache = proteomicsBaselineExperimentsCache;
     }
 
+
     public Experiment getPublicExperiment(String experimentAccession) {
         //TODO: this is a bottleneck because it goes back to the database each time - to improve perf,
         //we need to lookup the experiment type from a cache and then get the experiment from the appropriate cache
         ExperimentDTO experimentDTO = experimentDAO.findPublicExperiment(experimentAccession);
 
         return getExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
-
     }
+
 
     public Experiment getExperiment(String experimentAccession, String accessKey) {
 
@@ -106,11 +108,13 @@ public class ExperimentTrader {
 
     }
 
+
     public void removeAllExperimentsFromCache() {
         baselineExperimentsCache.evictAll();
         rnaSeqDiffExperimentsCache.evictAll();
         microarrayExperimentsCache.evictAll();
     }
+
 
     public Experiment getExperimentFromCache(String experimentAccession, ExperimentType experimentType) {
 
@@ -137,9 +141,11 @@ public class ExperimentTrader {
         return getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_BASELINE);
     }
 
+
     public Set<String> getProteomicsBaselineExperimentAccessions() {
         return getPublicExperimentAccessions(ExperimentType.PROTEOMICS_BASELINE);
     }
+
 
     public Set<String> getAllBaselineExperimentAccessions() {
         return ImmutableSet.<String>builder().
@@ -149,9 +155,11 @@ public class ExperimentTrader {
 
     }
 
+
     public Set<String> getRnaSeqDifferentialExperimentAccessions() {
         return getPublicExperimentAccessions(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
     }
+
 
     public Set<String> getMicroarrayExperimentAccessions() {
         Set<String> identifiers = Sets.newHashSet();
@@ -161,6 +169,7 @@ public class ExperimentTrader {
         identifiers.addAll((getPublicExperimentAccessions(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL)));
         return identifiers;
     }
+
 
     // Making this method public is part of a work-around until https://www.pivotaltracker.com/story/show/88885788 gets implemented
     public Set<String> getPublicExperimentAccessions(ExperimentType... experimentType) {

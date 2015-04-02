@@ -52,7 +52,7 @@ public class ExperimentDTOResultSetExtractor implements ResultSetExtractor<List<
 
             String specie = resultSet.getString("organism");
             if (!StringUtils.isBlank(specie)) {
-                experiment.addSpecie(specie);
+                experiment.addSpecies(specie);
             }
 
         }

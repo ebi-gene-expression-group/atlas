@@ -52,9 +52,9 @@ public class TsvReaderImpl implements TsvReader {
             }
             return line;
 
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Cannot read Tsv file", e);
+        } catch (IOException exception) {
+            LOGGER.error(exception.getMessage(), exception);
+            throw new IllegalStateException("Cannot read TSV file", exception);
         }
     }
 
@@ -74,9 +74,9 @@ public class TsvReaderImpl implements TsvReader {
             }
             return rows;
 
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException("Cannot read Tsv file", e);
+        } catch (IOException exception) {
+            LOGGER.error(exception.getMessage(), exception);
+            throw new IllegalStateException("Cannot read TSV file", exception);
         }
     }
 
