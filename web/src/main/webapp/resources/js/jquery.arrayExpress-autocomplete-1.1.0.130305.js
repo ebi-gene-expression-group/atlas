@@ -786,7 +786,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			    input.focus();
             }
             return false;
-		}).mousedown(function() {
+		}).mousedown(function(event) {
 			config.mouseDownOnSelect = true;
 
             if(isTreeControlHit(event)){
