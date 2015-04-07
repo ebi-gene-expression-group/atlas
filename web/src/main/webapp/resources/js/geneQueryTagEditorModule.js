@@ -43,7 +43,7 @@ var geneQueryTagEditorModule = (function($) {
                 autocomplete: {
                     delay: 500,
                     minLength: 1,
-                    autoFocus: true,
+                    autoFocus: false,
                     focus: function () {
                         // prevent value inserted on focus
                         return false;
