@@ -7,7 +7,7 @@ import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class GenePageControllerDifferentialResultColorGradientBarIT extends SinglePageSeleniumFixture {
+public class GenePageControllerDifferentialResultColorGradientBarSIT extends SinglePageSeleniumFixture {
 
     private BioEntityPage subject;
 
