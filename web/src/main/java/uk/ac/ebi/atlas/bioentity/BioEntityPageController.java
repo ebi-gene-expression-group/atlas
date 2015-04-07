@@ -173,7 +173,7 @@ public abstract class BioEntityPageController {
 
     public String showBioentityPage(String identifier, Model model, boolean singleGeneDiffHeatmap) {
 
-        initBioentityPropertyService(identifier);
+        initBioentityPropertyService(identifier.toUpperCase());
 
         model.addAttribute("searchDescription", identifier);
 

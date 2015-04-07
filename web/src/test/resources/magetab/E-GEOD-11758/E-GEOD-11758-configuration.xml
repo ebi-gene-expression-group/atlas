@@ -39,7 +39,7 @@
 		</assay_groups>
 		<contrasts>
             <contrast id="g1_g2">
-                <name>'37 degres celsius' vs '20 degres celsius'</name>
+                <name>'37 degrees celsius' vs '20 degrees celsius'</name>
                 <reference_assay_group>g1</reference_assay_group>
                 <test_assay_group>g2</test_assay_group>
             </contrast>

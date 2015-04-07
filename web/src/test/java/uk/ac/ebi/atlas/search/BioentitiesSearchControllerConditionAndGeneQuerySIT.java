@@ -51,7 +51,6 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
         assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
         assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
         assertThat(baselineCounts.get(0).getHref(), endsWith("-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=apoptotic+process&exactMatch=true"));
-
     }
 
     @Test
@@ -64,9 +63,7 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
         assertThat(subject.getFoldChange(), hasItems("3.5", "1"));
 
         //System.out.println("\"" + Joiner.on("\", \"").join(subject.getDiffHeatmapTableGeneColumn()) + "\"");
-
         assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Lcn2", "Tnfrsf12a", "Trp53inp1", "Apip", "Tao", "Gja1", "Srgn", "Eif2ak3", "Mknk2", "Kras", "wgn", "Arf6", "Tgfbr1", "Sgms1", "Mef2a", "Dab2"));
-
     }
 
 }

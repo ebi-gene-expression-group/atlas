@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
 import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
+import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.solr.query.SolrQueryService;
@@ -54,6 +55,7 @@ public class GeneSetPageController extends BioEntityPageController {
     private final ReactomeClient reactomeClient;
 
     private final GoTermTrader goTermTrader;
+    private final PoTermTrader poTermTrader;
 
     private final InterProTermTrader interProTermTrader;
 
@@ -67,11 +69,12 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Inject
-    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeClient reactomeClient, GoTermTrader goTermTrader, InterProTermTrader interProTermTrader) {
+    public GeneSetPageController(SolrQueryService solrQueryService, BioEntityPropertyService bioEntityPropertyService, ReactomeClient reactomeClient, GoTermTrader goTermTrader, PoTermTrader poTermTrader, InterProTermTrader interProTermTrader) {
         this.solrQueryService = solrQueryService;
         this.bioEntityPropertyService = bioEntityPropertyService;
         this.reactomeClient = reactomeClient;
         this.goTermTrader = goTermTrader;
+        this.poTermTrader = poTermTrader;
         this.interProTermTrader = interProTermTrader;
     }
 
@@ -136,14 +139,21 @@ public class GeneSetPageController extends BioEntityPageController {
         ImmutableSetMultimap<Integer, GoPoTerm> goTermsByDepth = builder.build();
         ImmutableSetMultimap<Integer, GoPoTerm> poTermsByDepth = builder.build();
 
+        identifier = identifier.toUpperCase();
+
         if (GeneSetUtil.isReactome(identifier)) {
-            propertyValuesByType.put("reactome", identifier.toUpperCase());
+            propertyValuesByType.put("reactome", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeClient.fetchPathwayNameFailSafe(identifier));
         } else if (GeneSetUtil.isGeneOntology(identifier)) {
             String termName = goTermTrader.getTermName(identifier);
             propertyValuesByType.put("go", identifier);
             propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
             goTermsByDepth = mapGoTermsByDepth(propertyValuesByType.get("go"));
+        } else if (GeneSetUtil.isPlantOntology(identifier)) {
+            String termName = poTermTrader.getTermName(identifier);
+            propertyValuesByType.put("po", identifier);
+            propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
+            poTermsByDepth = mapPoTermsByDepth(propertyValuesByType.get("po"));
         } else if (GeneSetUtil.isInterPro(identifier)) {
             String term = interProTermTrader.getTerm(identifier);
             propertyValuesByType.put("interpro", identifier);

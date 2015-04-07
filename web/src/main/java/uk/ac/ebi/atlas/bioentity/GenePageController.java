@@ -66,9 +66,9 @@ public class GenePageController extends BioEntityPageController {
 
         model.addAttribute("isSingleGene", true);
 
-        addBaselineResults(ImmutableSet.of(identifier), model);
+        addBaselineResults(ImmutableSet.of(identifier.toUpperCase()), model);
 
-        loadDifferentialResults(identifier, model);
+        loadDifferentialResults(identifier.toUpperCase(), model);
 
         return showBioentityPage(identifier, model, true);
     }
