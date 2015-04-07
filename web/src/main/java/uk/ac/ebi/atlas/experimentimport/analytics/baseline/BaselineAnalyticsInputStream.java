@@ -128,7 +128,7 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
                 }
                 else {
                     quartiles = Optional.absent();
-                    Double.parseDouble(expressionLevels[i]);
+                    expressionLevel = Double.parseDouble(expressionLevels[i]);
                 }
 
                 if (expressionLevel != 0.0) {
