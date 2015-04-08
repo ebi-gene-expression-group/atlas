@@ -65,6 +65,21 @@ public class SpeciesLookupServiceIT {
         assertThat(result.firstSpecies(), is("rattus norvegicus"));
     }
 
+    // TODO Add in Solr PO: documents to other plant species for the following test to pass
+    // @Test
+    // public void PO_multiSpeciesGeneSet() {
+    //     SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("PO:0009005");
+    //     assertThat(result.isMultiSpecies(), is(true));
+    //     assertThat(result.firstSpecies(), is("arabidopsis thaliana"));
+    // }
+
+    @Test
+    public void PO_singleSpeciesGeneSet() {
+        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("PO:0000013");
+        assertThat(result.isMultiSpecies(), is(false));
+        assertThat(result.firstSpecies(), is("arabidopsis thaliana"));
+    }
+
     @Test
     public void ensgeneId() {
         assertThat(speciesLookupService.fetchSpeciesForBioentityId("ENSMUSG00000021789"), is("mus musculus"));

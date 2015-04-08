@@ -97,13 +97,13 @@ public class SpeciesLookupService {
         return species.isEmpty() ? Optional.<String>absent() : Optional.of(species.iterator().next());
     }
 
-    // Used for looking up species for gene sets (GO, InterPro, Reactome and Plant Reactome)
-    // Reactome and Plant Reactome are always single species, but GO and InterPro gene sets can be multi-species
+    // Used for looking up species for gene sets (GO, PO, InterPro, Reactome and Plant Reactome)
+    // Reactome and Plant Reactome are always single species, but GO, PO and InterPro gene sets can be multi-species
     // If results are empty, then term does not exist in Solr
     public Result fetchSpeciesForGeneSet(String term) {
         // eg: property_value_lower:"IPR027417"
         String queryText = PROPERTY_LOWER_FIELD + ":" + encloseInQuotes(term) +
-                " AND property_name:(pathwayid OR go OR interpro OR REACT_303889)";  // Needed to exclude Entrez numerical ids, identical to Plan Reactome ids (pathwayid)
+                " AND property_name:(pathwayid OR go OR po OR interpro OR REACT_303889)";  // Needed to exclude Entrez numerical ids, identical to Plant Reactome ids (pathwayid)
         LOGGER.debug("fetch species for geneset " + queryText);
 
         SolrQuery query = new SolrQuery(queryText);
