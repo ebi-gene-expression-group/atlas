@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.*;
 
 public class GenePageControllerPoTermsSIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "AT3G11340";
+    private static final String GENE_IDENTIFIER = "AT4G23810";
 
     private BioEntityPage subject;
 
@@ -22,31 +22,32 @@ public class GenePageControllerPoTermsSIT extends SinglePageSeleniumFixture {
 
     @Test
     public void searchResultsHeader(){
-        assertThat(subject.getSearchResultsHeader(), endsWith("results for AT3G11340"));
+        assertThat(subject.getSearchResultsHeader(), endsWith("results for AT4G23810"));
     }
 
     @Test
     public void infoCard() {
-        assertThat(subject.getBioEntityCardTitle(), is("F11B9.23 Arabidopsis thaliana UDP-Glycosyltransferase superfamily protein"));
-        assertThat(subject.getPropertiesTableSize(), is(7));
-        assertThat(subject.getPropertiesTableRow(0), hasItems("Gene Ontology", "leaf senescence, glucosyltransferase activity, defense response to fungus (... and 15 more)"));
-        assertThat(subject.getPropertiesTableRow(1), hasItems("Plant Ontology", "LP.02 two leaves visible stage, petal differentiation and expansion stage, flowering stage (... and 8 more)"));
-        assertThat(subject.getPropertiesTableRow(2), hasItems("InterPro", "UDP-glucuronosyl/UDP-glucosyltransferase (family)"));
-        assertThat(subject.getPropertiesTableRow(3), hasItems("Ensembl Gene", "AT3G11340"));
-        assertThat(subject.getPropertiesTableRow(4), hasItems("Entrez", "820307"));
-        assertThat(subject.getPropertiesTableRow(5), hasItems("UniProt", "Q8GWA0, Q9C768, Q9CAY9"));
-        assertThat(subject.getPropertiesTableRow(6), hasItems("Design Element", "256252_at"));
+        assertThat(subject.getBioEntityCardTitle(), is("WRKY53 Arabidopsis thaliana WRKY family transcription factor"));
+        assertThat(subject.getPropertiesTableSize(), is(8));
+        assertThat(subject.getPropertiesTableRow(0), hasItems("Synonyms", "ATWRKY53"));
+        assertThat(subject.getPropertiesTableRow(1), hasItems("Gene Ontology", "protein targeting to membrane, regulation of transcription, DNA-templated, protein targeting, positive regulation of transcription, DNA-templated (... and 41 more)"));
+        assertThat(subject.getPropertiesTableRow(2), hasItems("Plant Ontology", "cauline leaf, shoot apex, inflorescence meristem (... and 29 more)"));
+        assertThat(subject.getPropertiesTableRow(3), hasItems("InterPro", "DNA-binding WRKY (domain)"));
+        assertThat(subject.getPropertiesTableRow(4), hasItems("Ensembl Gene", "AT4G23810"));
+        assertThat(subject.getPropertiesTableRow(5), hasItems("Entrez", "828481"));
+        assertThat(subject.getPropertiesTableRow(6), hasItems("UniProt", "Q9SUP6"));
+        assertThat(subject.getPropertiesTableRow(7), hasItems("Design Element", "254231_at"));
 
-        assertThat(subject.getLinksInTableRow(1).get(0), is("http://plantontology.org/amigo/go.cgi?view=details&search_constraint=terms&depth=0&query=PO%3A0007098"));
-        assertThat(subject.getLinksInTableRow(1).get(1), is("http://plantontology.org/amigo/go.cgi?view=details&search_constraint=terms&depth=0&query=PO%3A0007611"));
+        assertThat(subject.getLinksInTableRow(2).get(0), is("http://plantontology.org/amigo/go.cgi?view=details&search_constraint=terms&depth=0&query=PO%3A0000013"));
+        assertThat(subject.getLinksInTableRow(2).get(1), is("http://plantontology.org/amigo/go.cgi?view=details&search_constraint=terms&depth=0&query=PO%3A0000037"));
     }
 
     @Test
     public void showMoreAndLessPlantOntologyTerms() {
         subject.clickShowMorePoLinks();
-        assertThat(subject.getPropertiesTableRow(1), hasItems("Plant Ontology", "LP.02 two leaves visible stage, petal differentiation and expansion stage, flowering stage, root, vascular leaf, stamen, sepal, petal, hypocotyl, collective leaf structure, pollen (show less)"));
+        assertThat(subject.getPropertiesTableRow(2), hasItems("Plant Ontology", "cauline leaf, shoot apex, inflorescence meristem, 4 leaf senescence stage, F mature embryo stage, C globular stage, D bilateral stage, LP.12 twelve leaves visible stage, LP.08 eight leaves visible stage, LP.02 two leaves visible stage, LP.10 ten leaves visible stage, LP.04 four leaves visible stage, LP.06 six leaves visible stage, petal differentiation and expansion stage, flowering stage, leaf lamina base, root, plant embryo, seed, vascular leaf, stamen, carpel, sepal, petal, flower, stem, pedicel, cotyledon, petiole, hypocotyl, leaf apex, collective leaf structure (show less)"));
 
         subject.clickShowLessPoLinks();
-        assertThat(subject.getPropertiesTableRow(1), hasItems("Plant Ontology", "LP.02 two leaves visible stage, petal differentiation and expansion stage, flowering stage (... and 8 more)"));
+        assertThat(subject.getPropertiesTableRow(2), hasItems("Plant Ontology", "cauline leaf, shoot apex, inflorescence meristem (... and 29 more)"));
     }
 }
