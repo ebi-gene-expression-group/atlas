@@ -4,6 +4,8 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -23,10 +25,13 @@ public class GeneSetPageControllerCaseInsensitiveSIT extends SinglePageSeleniumF
     @Test
     public void reactIdentifierIsCaseInsensitive() {
         subject = new BioEntityPage(driver, REACT_IDENTIFIER.toLowerCase(), "genesets");
-        BioEntityPage target = new BioEntityPage(driver, REACT_IDENTIFIER, "genesets");
-
         subject.get();
+
+        BioEntityPage target = new BioEntityPage(driver, REACT_IDENTIFIER, "genesets");
         target.get();
+
+        subject.clickInfoCard(true);
+        target.clickInfoCard(true);
         assertThat(subject.getBioEntityCardTitle(), is(target.getBioEntityCardTitle()));
 
         subject.clickBaselinePane();
@@ -41,10 +46,13 @@ public class GeneSetPageControllerCaseInsensitiveSIT extends SinglePageSeleniumF
     @Test
     public void interproIdentifierIsCaseInsensitive() {
         subject = new BioEntityPage(driver, INTERPRO_IDENTIFIER.toLowerCase(), "genesets");
-        BioEntityPage target = new BioEntityPage(driver, INTERPRO_IDENTIFIER, "genesets");
-
         subject.get();
+
+        BioEntityPage target = new BioEntityPage(driver, INTERPRO_IDENTIFIER, "genesets");
         target.get();
+
+        subject.clickInfoCard(true);
+        target.clickInfoCard(true);
         assertThat(subject.getBioEntityCardTitle(), is(target.getBioEntityCardTitle()));
 
         subject.clickBaselinePane();
@@ -59,10 +67,13 @@ public class GeneSetPageControllerCaseInsensitiveSIT extends SinglePageSeleniumF
     @Test
     public void goIdentifierIsCaseInsensitive() {
         subject = new BioEntityPage(driver, GO_IDENTIFIER.toLowerCase(), "genesets");
-        BioEntityPage target = new BioEntityPage(driver, GO_IDENTIFIER, "genesets");
-
         subject.get();
+
+        BioEntityPage target = new BioEntityPage(driver, GO_IDENTIFIER, "genesets");
         target.get();
+
+        subject.clickInfoCard(true);
+        target.clickInfoCard(true);
         assertThat(subject.getBioEntityCardTitle(), is(target.getBioEntityCardTitle()));
 
         subject.clickBaselinePane();
@@ -77,10 +88,13 @@ public class GeneSetPageControllerCaseInsensitiveSIT extends SinglePageSeleniumF
     @Test
     public void poIdentifierIsCaseInsensitive() {
         subject = new BioEntityPage(driver, PO_IDENTIFIER.toLowerCase(), "genesets");
-        BioEntityPage target = new BioEntityPage(driver, PO_IDENTIFIER, "genesets");
-
         subject.get();
+
+        BioEntityPage target = new BioEntityPage(driver, PO_IDENTIFIER, "genesets");
         target.get();
+
+        subject.clickInfoCard(true);
+        target.clickInfoCard(true);
         assertThat(subject.getBioEntityCardTitle(), is(target.getBioEntityCardTitle()));
 
         subject.clickBaselinePane();

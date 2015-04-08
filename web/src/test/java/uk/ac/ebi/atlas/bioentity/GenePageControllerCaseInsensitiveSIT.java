@@ -22,10 +22,13 @@ public class GenePageControllerCaseInsensitiveSIT extends SinglePageSeleniumFixt
     @Test
     public void geneIdentifierIsCaseInsensitive() {
         subject = new BioEntityPage(driver, GENE_IDENTIFIER.toLowerCase(), "genes");
-        BioEntityPage target = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
-
         subject.get();
+
+        BioEntityPage target = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
         target.get();
+
+        subject.clickInfoCard(true);
+        target.clickInfoCard(true);
         assertThat(subject.getBioEntityCardTitle(), is(target.getBioEntityCardTitle()));
 
         subject.clickBaselinePane();

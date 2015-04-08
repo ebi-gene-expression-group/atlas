@@ -208,14 +208,6 @@ public class BioEntityPage extends HeatmapTableWidgetPage {
         return driver.findElement(By.id(DIFF_PROFILE_BODY_ID));
     }
 
-    public void clickDifferentialPane() {
-        diffProfilePaneHeader.click();
-
-        By byBioEntityCardClass = By.className("bioEntityCard");
-        WebDriverWait wait = new WebDriverWait(driver, 2L);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(byBioEntityCardClass));
-    }
-
     public List<String> getContrastColumn() {
         return getColumnValues(this.diffHeatmapTable, getContrastColumnIndex());
     }
@@ -337,12 +329,19 @@ public class BioEntityPage extends HeatmapTableWidgetPage {
         return 1;
     }
 
+    public void clickDifferentialPane() {
+        diffProfilePaneHeader.click();
+        waitFiveSeconds();
+    }
+
     public void clickBaselinePane() {
         baselinePaneHeader.click();
+        waitFiveSeconds();
+    }
 
-        // wait for the accordion to expand
+    private void waitFiveSeconds() {
         try {
-            Thread.sleep(250);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
