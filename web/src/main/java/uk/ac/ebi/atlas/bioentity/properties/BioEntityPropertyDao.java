@@ -33,9 +33,10 @@ public class BioEntityPropertyDao {
     }
 
     public Set<String> fetchPropertyValuesForGeneId(String identifier, String propertyName) {
+        String _identifier = identifier.replace(":", "\\:").replace("[", "\\[").replace("]", "\\]");
 
         SolrQuery query = solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder()
-                .withPropertyNames(propertyName).buildBioentityQuery(identifier);
+                .withPropertyNames(propertyName).buildBioentityQuery(_identifier);
         query.setFields(PROPERTY_VALUE_FIELD);
         query.setRows(PROPERTY_VALUES_LIMIT);
 

@@ -67,7 +67,7 @@ public class BioentityPropertyValueTokenizerTest {
 
     @Test
     public void join() {
-        assertThat(joinQuotingPhrases(ImmutableList.of("one", "two words", "three")), is("one \"two words\" three"));
+        assertThat(joinQuotingPhrases(ImmutableList.of("one", "two words", "three")), is("\"one\" \"two words\" \"three\""));
     }
 
 }

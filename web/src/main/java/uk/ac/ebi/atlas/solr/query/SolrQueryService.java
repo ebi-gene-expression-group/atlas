@@ -29,6 +29,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.params.MultiMapSolrParams;
+import org.apache.solr.servlet.SolrRequestParsers;
 import org.springframework.context.annotation.Scope;
 import org.springframework.util.StopWatch;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
@@ -84,7 +86,9 @@ public class SolrQueryService {
 
     //(property_name:"ensgene"OR property_name:"mirna" OR property_name:"ensprotein" OR property_name:"enstranscript") AND property_value_lower: "hsa-mir-6717"
     public BioentityProperty findBioentityIdentifierProperty(String bioentityId) {
-        String query = MessageFormat.format(BIOENTITY_TYPE_QUERY, bioentityId);
+        String _bioentityId = bioentityId.replace(":", "\\:").replace("[", "\\[").replace("]", "\\]");
+
+        String query = MessageFormat.format(BIOENTITY_TYPE_QUERY, _bioentityId);
         SolrQuery solrQuery = new SolrQuery(query);
         solrQuery.setRows(PROPERTY_VALUES_LIMIT);
         QueryResponse response = solrServer.query(solrQuery);
@@ -118,8 +122,6 @@ public class SolrQueryService {
         Set<String> expandedIdentifiers = Sets.newHashSet();
 
         for (String geneIdentifier : geneIdentifiers) {
-
-
             Set<String> mirbaseIds = bioEntityPropertyDao.fetchPropertyValuesForGeneId(geneIdentifier, "mirbase_id");
             String mirbaseId = mirbaseIds.size() > 0 ? mirbaseIds.iterator().next() : null;
             Set<String> matureRNAIds = fetchGeneIdentifiersFromSolr((mirbaseId != null) ? mirbaseId : geneIdentifier, "mirna", false, "hairpin_id");

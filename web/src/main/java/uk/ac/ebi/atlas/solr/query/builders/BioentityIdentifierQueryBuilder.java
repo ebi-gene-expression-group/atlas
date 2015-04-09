@@ -48,7 +48,7 @@ public class BioentityIdentifierQueryBuilder extends SolrQueryBuilder<BioentityI
     }
 
     public BioentityIdentifierQueryBuilder forQueryString(String queryString, boolean applyOrOnQueryStringContent){
-        this.queryString = queryString.replace(":", "\\:");
+        this.queryString = queryString.replace(":", "\\:").replace("[", "\\[").replace("]", "\\]");
         this.applyOrOnQueryStringContent = applyOrOnQueryStringContent;
         return this;
     }
