@@ -66,7 +66,7 @@ public class RequestContextTest {
 
     @Test
     public void testGetGeneQuery() throws Exception {
-        assertThat(subject.getGeneQuery(), is("\"GENE_QUERY\""));
+        assertThat(subject.getGeneQuery(), is("GENE_QUERY"));
     }
 
     @Test

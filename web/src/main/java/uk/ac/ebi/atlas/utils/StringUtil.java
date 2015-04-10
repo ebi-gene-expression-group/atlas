@@ -27,8 +27,7 @@ public class StringUtil {
     }
 
     public static String quoteIfMoreThanOneWord(String s) {
-//        return moreThanOneWord(s) ? "\"" + s + "\"" : s;
-        return "\"" + s + "\"";
+        return moreThanOneWord(s) ? "\"" + s + "\"" : s;
     }
 
     private static boolean moreThanOneWord(String s) {
