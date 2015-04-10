@@ -35,7 +35,8 @@
                     response.push({field: el[0], editor: ed, tags: ed.data('tags')});
                 else if (options == 'addTag') {
                     // insert new tag
-                    $('<li><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag"></div><div class="tag-editor-delete"><i></i></div></li>').appendTo(ed).find('.tag-editor-tag')
+                    //$('<li><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag"></div><div class="tag-editor-delete"><i></i></div></li>').appendTo(ed).find('.tag-editor-tag')
+                    $('<li><div class="tag-editor-spacer">'+o.delimiter[0]+'</div><div class="tag-editor-tag"></div><div class="tag-editor-delete"><i></i></div></li>').appendTo(ed).find('.tag-editor-tag')
                         .html('<input type="text" maxlength="'+o.maxLength+'">').addClass('active').find('input').val(val).blur();
                     if (!blur) ed.click();
                     else $('.placeholder', ed).remove();
@@ -78,10 +79,11 @@
             el.data('options', o); // set data on hidden field
 
             // add dummy item for min-height on empty editor
-            ed.append('<li style="width:.1px">&nbsp;</li>');
+            ed.append('<li style="width:.1px"></li>');
 
             // markup for new tag
-            var new_tag = '<li><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag"></div><div class="tag-editor-delete"><i></i></div></li>';
+            //var new_tag = '<li><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag"></div><div class="tag-editor-delete"><i></i></div></li>';
+            var new_tag = '<li><div class="tag-editor-spacer">'+o.delimiter[0]+'</div><div class="tag-editor-tag"></div><div class="tag-editor-delete"><i></i></div></li>';
 
             // helper: update global data
             function set_placeholder(){
@@ -140,7 +142,9 @@
 
                 var li = $(this).closest('li'), tag = li.find('.tag-editor-tag');
                 if (o.beforeTagDelete(el, ed, tag_list, tag.html()) === false) return false;
-                tag.addClass('deleted').animate({width: 0}, 175, function(){ li.remove(); set_placeholder(); });
+                // Ugly animation without space:nowrap in CSS file -> https://www.pivotaltracker.com/story/show/91094574
+                //tag.addClass('deleted').animate({width: 0}, 175, function(){ li.remove(); set_placeholder(); });
+                tag.addClass('deleted').animate({width: 0}, 0, function(){ li.remove(); set_placeholder(); });
                 update_globals();
                 return false;
             });
@@ -151,7 +155,8 @@
                     if (e.ctrlKey || e.which > 1) {
                         var li = $(this).closest('li'), tag = li.find('.tag-editor-tag');
                         if (o.beforeTagDelete(el, ed, tag_list, tag.html()) === false) return false;
-                        tag.addClass('deleted').animate({width: 0}, 175, function(){ li.remove(); set_placeholder(); });
+                        // Ugly animation without space:nowrap in CSS file -> https://www.pivotaltracker.com/story/show/91094574
+                        tag.addClass('deleted').animate({width: 0}, 0, function(){ li.remove(); set_placeholder(); });
                         update_globals();
                         return false;
                     }
@@ -203,7 +208,8 @@
                         if (~$.inArray(tag, old_tags))
                             $('.tag-editor-tag', ed).each(function(){ if ($(this).html() == tag) $(this).closest('li').remove(); });
                         old_tags.push(tag);
-                        li.before('<li><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag">'+tag+'</div><div class="tag-editor-delete"><i></i></div></li>');
+                        //li.before('<li><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag">'+tag+'</div><div class="tag-editor-delete"><i></i></div></li>');
+                        li.before('<li><div class="tag-editor-spacer">'+o.delimiter[0]+'</div><div class="tag-editor-tag">'+tag+'</div><div class="tag-editor-delete"><i></i></div></li>');
                     }
                 }
                 input.attr('maxlength', o.maxLength).removeData('old_tag').val('').focus();
@@ -334,7 +340,8 @@
                 if (tag) {
                     if (o.forceLowercase) tag = tag.toLowerCase();
                     tag_list.push(tag);
-                    ed.append('<li><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag">'+tag+'</div><div class="tag-editor-delete"><i></i></div></li>');
+                    //ed.append('<li><div class="tag-editor-spacer">&nbsp;'+o.delimiter[0]+'</div><div class="tag-editor-tag">'+tag+'</div><div class="tag-editor-delete"><i></i></div></li>');
+                    ed.append('<li><div class="tag-editor-spacer">'+o.delimiter[0]+'</div><div class="tag-editor-tag">'+tag+'</div><div class="tag-editor-delete"><i></i></div></li>');
                 }
             }
             update_globals(true); // true -> no onChange callback

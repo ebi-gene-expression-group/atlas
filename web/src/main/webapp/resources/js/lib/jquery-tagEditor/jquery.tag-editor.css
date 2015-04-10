@@ -1,6 +1,6 @@
 /* surrounding tag container */
 .tag-editor {
-    list-style-type: none; padding: 0 5px 0 0; margin: 0; overflow: hidden; border: 1px solid #eee; cursor: text;
+    list-style-type: none; padding: 0 5px 0 5px; margin: 0; overflow: hidden; border: 1px solid #eee; cursor: text;
     font: normal 14px sans-serif; color: #555; background: #fff !important;
 }
 
@@ -17,7 +17,7 @@
 
 /* tag style */
 .tag-editor .tag-editor-tag {
-    padding-left: 5px; color: #46799b; background: #e0eaf1; white-space: nowrap;
+    padding-left: 5px; color: #46799b; background: #e0eaf1;
     overflow: hidden; cursor: pointer; border-radius: 2px 0 0 2px;
 }
 
