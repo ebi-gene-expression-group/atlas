@@ -60,7 +60,7 @@ var searchFormModule = (function($) {
     }
 
     function initSelectBox(watermarkLabel){
-        $("#queryFactorValues").chosen();
+        $("#queryFactorValues").chosen({width: "100%"});
 
         //following code is a patch to reload the right watermark label in the 'chosen' plugin
         $("#queryFactorValues").change(function () {
