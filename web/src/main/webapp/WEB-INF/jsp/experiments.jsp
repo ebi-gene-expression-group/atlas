@@ -31,6 +31,7 @@
     <tr>
         <th rowspan="1" colspan="1">
             <input type="hidden" class="search_init">
+            <input type="hidden" id="hiddenSelected" name="hiddenSelected" value="">
             <select id="gxaExperimentsTableExperimentTypeSelect">
                 <option value="">All</option>
                 <option value="baseline">Baseline</option>

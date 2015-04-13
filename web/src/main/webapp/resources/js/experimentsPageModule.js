@@ -202,6 +202,14 @@ var experimentsPageModule = (function ($) {
         });
 
         $("#gxaExperimentsTableExperimentTypeSelect").change(function () {
+            var selected = $("#gxaExperimentsTableExperimentTypeSelect :selected").val();
+            var hiddenSelected = $("#hiddenSelected").val();
+            if(hiddenSelected != "") {
+                $("#gxaExperimentsTableExperimentTypeSelect").val(hiddenSelected);
+            }
+            $("#hiddenSelected").val(selected);
+
+            //$("#gxaExperimentsTableExperimentTypeSelect").val($("#hiddenSelected").val());
             /* same for drop down filter */
             oTable.fnFilter(this.value, $("#experiments-table tfoot select").index(this));
         });
