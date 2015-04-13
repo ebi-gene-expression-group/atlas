@@ -27,7 +27,6 @@
 
         <script type="text/javascript">
             var heatmapData = <%@ include file="heatmap-data.jsp" %>;
-
             var heatmapModuleBuild = ${isMultiExperiment ? 'heatmapModule.buildMultiExperiment': (type.differential ? 'heatmapModule.buildDifferential' : (type.proteomicsBaseline ? 'heatmapModule.buildProteomicsBaseline' : 'heatmapModule.buildBaseline'))};
 
             (function ($, React, build, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData) {

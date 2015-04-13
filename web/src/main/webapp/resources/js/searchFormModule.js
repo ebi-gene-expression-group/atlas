@@ -85,8 +85,8 @@ var searchFormModule = (function($) {
     }
 
     function onLoadSetFocus() {
-        $('#prefForm .tag-editor').click();
-        $('#prefForm .tag-editor').focus();
+        //$('#prefForm .tag-editor').click();
+        //$('#prefForm .tag-editor').focus();
     }
 
     function searchBoxEnterEventHandler(element) {
