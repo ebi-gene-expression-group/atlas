@@ -34,6 +34,7 @@
     <meta content="en-GB" http-equiv="Content-Language">
     <meta content="_top" http-equiv="Window-target">
     <meta content="http://www.unspam.com/noemailcollection/" name="no-email-collection">
+    <meta name="google-site-verification" content="4xV6HGqtqbEXtsFgcZGrPUSwcHb03eNNu7B_fFuwdUU" />
 
     <c:set var="baseUri" value="${requestScope['javax.servlet.forward.request_uri']}" />
     <c:set var="experimentAccession" value="${experimentAccession}"/>
