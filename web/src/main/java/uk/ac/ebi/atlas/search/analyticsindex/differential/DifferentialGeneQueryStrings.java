@@ -15,9 +15,21 @@ public class DifferentialGeneQueryStrings {
     @Value("classpath:differential.gene.pivot.query.json")
     private Resource differentialGenePivotQuery;
 
+    @Value("classpath:differential.gene.facets.query.json")
+    private Resource differentialGeneFacetsQuery;
+
     @Bean
     public String differentialGenePivotQuery() {
         try (InputStream inputStream = differentialGenePivotQuery.getInputStream()) {
+            return IOUtils.toString(inputStream);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @Bean
+    public String differentialGeneFacetsQuery() {
+        try (InputStream inputStream = differentialGeneFacetsQuery.getInputStream()) {
             return IOUtils.toString(inputStream);
         } catch (IOException e) {
             throw new IllegalStateException(e);

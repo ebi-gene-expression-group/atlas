@@ -49,7 +49,7 @@ public class DifferentialAnalyticsFacetsReaderTest {
             "  \"facets\":{\n" +
             "    \"count\":0}}";
 
-    private final String FOOBAR_RESULTS = "[]";
+    private final String FOOBAR_RESULTS = "\"[]\"";
     
     private final String ASPM_RESPONSE = "{\n" +
             "  \"response\":{},\n" +
@@ -121,56 +121,56 @@ public class DifferentialAnalyticsFacetsReaderTest {
             "                            \"count\":2,\n" +
             "                            \"geneCount\":1}]}}]}}]}}]}}}";
 
-    private final String ASPM_RESULTS = "[" +
+    private final String ASPM_RESULTS = "\"[" +
             "{" +
-                "\"geneCount\":1," +
-                "\"organism\":\"mus musculus\"," +
-                "\"contrastId\":\"g1_g2\"," +
-                "\"comparison\":\"sex:'male' vs 'female'\"," +
-                "\"experimentAccession\":\"E-MTAB-698\"," +
-                "\"experimentName\":\"RNA-seq of vomeronasal tissue from adult male and female mice\"" +
+                "\\\"geneCount\\\":1," +
+                "\\\"organism\\\":\\\"mus musculus\\\"," +
+                "\\\"contrastId\\\":\\\"g1_g2\\\"," +
+                "\\\"comparison\\\":\\\"sex:'male' vs 'female'\\\"," +
+                "\\\"experimentAccession\\\":\\\"E-MTAB-698\\\"," +
+                "\\\"experimentName\\\":\\\"RNA-seq of vomeronasal tissue from adult male and female mice\\\"" +
             "}," +
             "{" +
-                "\"geneCount\":1," +
-                "\"organism\":\"mus musculus\"," +
-                "\"contrastId\":\"g1_g2\"," +
-                "\"comparison\":\"clinical information:'non-pregnant' vs 'pregnant'\"," +
-                "\"experimentAccession\":\"E-GEOD-21860\"," +
-                "\"experimentName\":\"RNA-seq of pancreatic islets from pregnant mice\"" +
+                "\\\"geneCount\\\":1," +
+                "\\\"organism\\\":\\\"mus musculus\\\"," +
+                "\\\"contrastId\\\":\\\"g1_g2\\\"," +
+                "\\\"comparison\\\":\\\"clinical information:'non-pregnant' vs 'pregnant'\\\"," +
+                "\\\"experimentAccession\\\":\\\"E-GEOD-21860\\\"," +
+                "\\\"experimentName\\\":\\\"RNA-seq of pancreatic islets from pregnant mice\\\"" +
             "}," +
             "{" +
-                "\"geneCount\":1," +
-                "\"organism\":\"mus musculus\"," +
-                "\"contrastId\":\"g1_g2\"," +
-                "\"comparison\":\"genotype:'expressing human TDP-43' vs 'non transgenic'\"," +
-                "\"experimentAccession\":\"E-GEOD-22351\"," +
-                "\"experimentName\":\"RNA-seq of mouse spinal cord expressing wild type human TDP-43\"" +
+                "\\\"geneCount\\\":1," +
+                "\\\"organism\\\":\\\"mus musculus\\\"," +
+                "\\\"contrastId\\\":\\\"g1_g2\\\"," +
+                "\\\"comparison\\\":\\\"genotype:'expressing human TDP-43' vs 'non transgenic'\\\"," +
+                "\\\"experimentAccession\\\":\\\"E-GEOD-22351\\\"," +
+                "\\\"experimentName\\\":\\\"RNA-seq of mouse spinal cord expressing wild type human TDP-43\\\"" +
             "}," +
             "{" +
-                "\"geneCount\":1," +
-                "\"organism\":\"mus musculus\"," +
-                "\"contrastId\":\"g2_g1\"," +
-                "\"comparison\":\"compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36\"," +
-                "\"experimentAccession\":\"E-MEXP-1276\"," +
-                "\"experimentName\":\"Transcription profiling by array of pancreatic cells from C57BL/6 mice following dibenzazepine treatment\"" +
+                "\\\"geneCount\\\":1," +
+                "\\\"organism\\\":\\\"mus musculus\\\"," +
+                "\\\"contrastId\\\":\\\"g2_g1\\\"," +
+                "\\\"comparison\\\":\\\"compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36\\\"," +
+                "\\\"experimentAccession\\\":\\\"E-MEXP-1276\\\"," +
+                "\\\"experimentName\\\":\\\"Transcription profiling by array of pancreatic cells from C57BL/6 mice following dibenzazepine treatment\\\"" +
             "}," +
             "{" +
-                "\"geneCount\":1," +
-                "\"organism\":\"homo sapiens\"," +
-                "\"contrastId\":\"g3_g1\"," +
-                "\"comparison\":\"'Francisella tularensis Schu S4' vs 'uninfected'\"," +
-                "\"experimentAccession\":\"E-GEOD-12108\"," +
-                "\"experimentName\":\"Transcription profiling by array of human peripheral blood mononuclear cells infected with Francisella tularensis\"" +
+                "\\\"geneCount\\\":1," +
+                "\\\"organism\\\":\\\"homo sapiens\\\"," +
+                "\\\"contrastId\\\":\\\"g3_g1\\\"," +
+                "\\\"comparison\\\":\\\"'Francisella tularensis Schu S4' vs 'uninfected'\\\"," +
+                "\\\"experimentAccession\\\":\\\"E-GEOD-12108\\\"," +
+                "\\\"experimentName\\\":\\\"Transcription profiling by array of human peripheral blood mononuclear cells infected with Francisella tularensis\\\"" +
             "}," +
             "{" +
-                "\"geneCount\":1," +
-                "\"organism\":\"homo sapiens\"," +
-                "\"contrastId\":\"g3_g2\"," +
-                "\"comparison\":\"'Francisella tularensis novicida' vs 'uninfected'\"," +
-                "\"experimentAccession\":\"E-GEOD-12108\"," +
-                "\"experimentName\":\"Transcription profiling by array of human peripheral blood mononuclear cells infected with Francisella tularensis\"" +
+                "\\\"geneCount\\\":1," +
+                "\\\"organism\\\":\\\"homo sapiens\\\"," +
+                "\\\"contrastId\\\":\\\"g3_g2\\\"," +
+                "\\\"comparison\\\":\\\"'Francisella tularensis novicida' vs 'uninfected'\\\"," +
+                "\\\"experimentAccession\\\":\\\"E-GEOD-12108\\\"," +
+                "\\\"experimentName\\\":\\\"Transcription profiling by array of human peripheral blood mononuclear cells infected with Francisella tularensis\\\"" +
             "}" +
-        "]";
+        "]\"";
 
     
     @Before
@@ -178,6 +178,7 @@ public class DifferentialAnalyticsFacetsReaderTest {
 
         subject = new DifferentialAnalyticsFacetsReader(experimentTraderMock, contrastTraderMock);
         gson = new GsonBuilder().disableHtmlEscaping().create();
+        //gson = new GsonBuilder().create();
     }
 
     @Test

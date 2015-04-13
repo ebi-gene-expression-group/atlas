@@ -1,7 +1,5 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
-import com.google.common.collect.Multimap;
-import com.google.gson.Gson;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
@@ -19,14 +17,14 @@ public class DifferentialAnalyticsSearchService {
         this.differentialAnalyticsFacetsReader = differentialAnalyticsFacetsReader;
     }
 
-    String fetchDifferentialGeneQueryFacetsAsJson(GeneQuery geneQuery, Gson gson) {
-        Multimap<String, NameValue> facets = differentialAnalyticsSearchDao.fetchFacets(geneQuery);
-        return gson.toJson(facets.asMap());
+    String fetchDifferentialGeneQueryFacetsAsJson(GeneQuery geneQuery) {
+        String jsonResponse = differentialAnalyticsSearchDao.fetchFacets(geneQuery);
+            return differentialAnalyticsFacetsReader.generateFacetsTreeJson(jsonResponse);
     }
 
-    String fecthDifferentialGeneQueryResultsAsJson(GeneQuery geneQuery, Gson gson) {
-        String differentialResults = differentialAnalyticsSearchDao.fetchDifferentialGeneQueryResults(geneQuery);
-        return gson.toJson(differentialAnalyticsFacetsReader.extractResultsAsJson(differentialResults));
+    String fetchDifferentialGeneQueryResultsAsJson(GeneQuery geneQuery) {
+        String differentialResults = differentialAnalyticsSearchDao.fetchDifferentialGeneQueryResultsAboveDefaultFoldChange(geneQuery);
+        return differentialAnalyticsFacetsReader.extractResultsAsJson(differentialResults);
     }
 
 }

@@ -11,6 +11,7 @@ var facetsModule = (function (React) {
                 /*
                  Differential eg:
                  {
+                 "kingdom": [ {"name": "org.apache.solr.common.EnumFieldValue:ensembl", "value": "Ensembl"} , {"name": "org.apache.solr.common.EnumFieldValue:plants", "value": "Plants"} ],
                  "species": [ {"name": "homo sapiens", "value": "Homo sapiens"}, {"name": "arabidopsis thaliana", "value": "Arabidopsis thaliana"} ],
                  "experimentType": [ {"name": "rnaseq_mrna_differential", "value": "RNA-seq mRNA"}, {"name": "microarray_1colour_mrna_differential", "value": "1 colour mRNA"} ],
                  "factors": [ {"name": "genotype", "value": "Genotype"} ],
@@ -20,8 +21,8 @@ var facetsModule = (function (React) {
 
                  Baseline eg:
                  {
-                 "homo sapiens" : [ {"factor": "CELL_LINE", "source": "Cell line"}, {"factor": "ORGANISM_PART", "source": "Tissue"} ],
-                 "mus musculus" : [ {"factor": "CELL_LINE", "source": "Cell line"}, {"factor": "INDIVIDUAL", "source": "Individual"} ]
+                 "homo sapiens" : [ {"name": "CELL_LINE", "value": "Cell line"}, {"name": "ORGANISM_PART", "value": "Tissue"} ],
+                 "mus musculus" : [ {"name": "CELL_LINE", "value": "Cell line"}, {"name": "INDIVIDUAL", "value": "Individual"} ]
                  }
                  */
                 facets: React.PropTypes.object.isRequired,

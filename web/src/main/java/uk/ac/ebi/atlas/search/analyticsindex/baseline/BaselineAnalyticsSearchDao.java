@@ -38,24 +38,29 @@ public class BaselineAnalyticsSearchDao {
         this.baselineHeatmapPivotQuery = "&json.facet=" + encodeQueryParam(baselineHeatmapPivotQuery);
     }
 
+
     public String fetchFacetsThatHaveExpression(GeneQuery geneQuery) {
         //if needed, could improve perf by getting counts only, and not sum(expressionLevel) or unique(bioentity_identifier)
         return fetchExpressionLevelFaceted(geneQuery);
     }
 
-    String buildGeneIdentifierQuery(GeneQuery geneQuery) {
-        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(\"%s\")", StringUtils.join(geneQuery.terms(), "\" OR \""));
-    }
 
     String fetchExpressionLevelFaceted(GeneQuery geneQuery) {
         String identifierSearch = buildGeneIdentifierQuery(geneQuery);
         return fetchFacets(identifierSearch, DEFAULT_CUT_OFF);
     }
 
+
+    String buildGeneIdentifierQuery(GeneQuery geneQuery) {
+        return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(\"%s\")", StringUtils.join(geneQuery.terms(), "\" OR \""));
+    }
+
+
     public String fetchExpressionLevelFaceted(GeneQuery geneQuery, String defaultQueryFactorType) {
         String identifierSearch = buildGeneIdentifierQuery(geneQuery);
         return fetchFacets(String.format("%s AND defaultQueryFactorType:%s", identifierSearch, defaultQueryFactorType), DEFAULT_CUT_OFF);
     }
+
 
     String fetchFacets(String q, double cutOff) {
 
@@ -70,14 +75,17 @@ public class BaselineAnalyticsSearchDao {
 
     }
 
+
     String buildQueryUrl(String q, double cutOff) {
         String query = q.isEmpty() ? BASELINE_ONLY : q + " AND " + BASELINE_ONLY;
         return solrBaseUrl + buildQueryParameters(query, cutOff) + baselineHeatmapPivotQuery;
     }
 
+
     String buildQueryParameters(String q, double cutOff) {
         return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q)) + encodeQuery(MessageFormat.format(FQ_TEMPLATE, cutOff));
     }
+
 
     String fetchResponseAsString(String url) {
         try {
@@ -87,6 +95,7 @@ public class BaselineAnalyticsSearchDao {
         }
     }
 
+
     private static String encodeQueryParam(String param) {
         try {
             return UriUtils.encodeQueryParam(param, "UTF-8");
@@ -94,6 +103,7 @@ public class BaselineAnalyticsSearchDao {
             throw new BaselineAnalyticsSearchDaoException(e);
         }
     }
+
 
     private static String encodeQuery(String s) {
         // doesn't encode =
@@ -103,6 +113,7 @@ public class BaselineAnalyticsSearchDao {
             throw new BaselineAnalyticsSearchDaoException(e);
         }
     }
+
 
     private static class BaselineAnalyticsSearchDaoException extends RuntimeException {
         public BaselineAnalyticsSearchDaoException(Exception e) {

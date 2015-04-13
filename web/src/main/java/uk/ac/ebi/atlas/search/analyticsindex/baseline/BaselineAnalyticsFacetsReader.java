@@ -27,6 +27,7 @@ public class BaselineAnalyticsFacetsReader {
         this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
     }
 
+
     public ImmutableList<BaselineExperimentExpression> extractAverageExpressionLevel(String json, String species, String defaultQueryFactorType) {
         String experimentsPath = String.format(EXPERIMENTS_PATH, species, defaultQueryFactorType);
 
@@ -54,6 +55,7 @@ public class BaselineAnalyticsFacetsReader {
 
         return builder.build();
     }
+
 
     public static String generateFacetsTreeJson(String json) {
 
@@ -86,6 +88,7 @@ public class BaselineAnalyticsFacetsReader {
         return gson.toJson(facetTree);
     }
 
+
     private static class FacetTree {
         String name;
         String value;
@@ -95,5 +98,4 @@ public class BaselineAnalyticsFacetsReader {
             this.value = value;
         }
     }
-
 }

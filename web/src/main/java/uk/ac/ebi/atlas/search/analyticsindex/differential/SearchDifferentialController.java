@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
-import com.google.gson.Gson;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +18,13 @@ import javax.validation.Valid;
 public class SearchDifferentialController extends SearchController {
 
     private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
-    private DifferentialAnalyticsFacetsReader differentialAnalyticsFacetsReader;
 
     @Inject
     public SearchDifferentialController(EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder,
                                         AnalyticsSearchDao analyticsSearchDao,
-                                        DifferentialAnalyticsSearchService differentialAnalyticsSearchService,
-                                        DifferentialAnalyticsFacetsReader differentialAnalyticsFacetsReader) {
+                                        DifferentialAnalyticsSearchService differentialAnalyticsSearchService) {
         super(ebiGlobalSearchQueryBuilder, analyticsSearchDao);
         this.differentialAnalyticsSearchService = differentialAnalyticsSearchService;
-        this.differentialAnalyticsFacetsReader = differentialAnalyticsFacetsReader;
     }
 
     @RequestMapping(value = "/search/differential")
@@ -37,12 +33,9 @@ public class SearchDifferentialController extends SearchController {
         GeneQuery geneQuery = requestParameters.getGeneQuery();
 
         if (!geneQuery.isEmpty()) {
-
             addSearchHeader(requestParameters, model);
-
-            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialGeneQueryFacetsAsJson(geneQuery, new Gson()));
-
-            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fecthDifferentialGeneQueryResultsAsJson(geneQuery, new Gson()));
+            model.addAttribute("jsonDifferentialGeneQueryFacets", differentialAnalyticsSearchService.fetchDifferentialGeneQueryFacetsAsJson(geneQuery));
+            model.addAttribute("jsonDifferentialGeneQueryResults", differentialAnalyticsSearchService.fetchDifferentialGeneQueryResultsAsJson(geneQuery));
         }
 
         return "search-results-differential";
