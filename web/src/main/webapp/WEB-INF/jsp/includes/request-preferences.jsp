@@ -43,46 +43,46 @@
         <form:errors path="*" cssClass="error"/>
         <table class="form-grid">
             <tr>
-                <td>
+                <td class="gxaExperimentRequestPreferencesFluidWideTableColumn">
                     <form:label path="geneQuery">Gene query</form:label>
                     <span data-help-loc="#geneSearch"></span>
                 </td>
 
                 <c:if test="${!type.isBaseline()}">
-                    <td> <!-- empty placeholder above Contrasts --> </td>
+                    <td class="gxaExperimentRequestPreferencesFluidNarrowTableColumn"> <!-- empty placeholder above Contrasts --> </td>
                 </c:if>
 
                 <c:if test="${selectedFilterFactorNamesAndValues.size() > 0}">
-                    <td>
+                    <td class="gxaExperimentRequestPreferencesFluidTableColumn">
                         <label>Filtered by</label>
                         <span data-help-loc="#filterBy"></span>
                     </td>
                 </c:if>
 
-                <td>
+                <td class="gxaExperimentRequestPreferencesFluidWideTableColumn">
                     <form:label path="queryFactorValues">${queryFactorName}</form:label>
                     <span data-help-loc="#factorSearch${type.isBaseline() ? '' : '-differential'}"></span>
                 </td>
                 <c:choose>
                     <c:when test="${type.isBaseline()}">
-                        <td style="width:100%;display:block">
+                        <td class="gxaExperimentRequestPreferencesFluidTableColumn>
                             <form:label path="cutoff">Expression level cutoff</form:label>
                             <span data-help-loc="#cutoff${type.isProteomicsBaseline() ? '-proteomics' : ''}"></span>
                         </td>
                     </c:when>
                     <c:otherwise>
-                        <td>
+                        <td class="gxaExperimentRequestPreferencesFluidNarrowTableColumn">
                             <form:label path="cutoff">Adjusted <i>p</i>-value cutoff</form:label>
                             <span data-help-loc="#cutoff-differential"></span>
                         </td>
-                        <td>
+                        <td class="gxaExperimentRequestPreferencesFluidNarrowTableColumn">
                             <form:label path="foldChangeCutOff">Log<sub>2</sub>-fold change cutoff</form:label>
                             <span data-help-loc="#foldChangeCutOff"></span>
                         </td>
                     </c:otherwise>
                 </c:choose>
-                <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
-                    <div>
+                <td rowspan="2" class="gxaExperimentRequestPreferencesFixedSizeTableColumn">
+                    <div class="gxaExperimentRequestPreferencesActionButtons">
                         <div>
                             <input id="submit-button" type="submit" value="Apply"/>
                         </div>
@@ -92,30 +92,25 @@
                     </div>
                 </td>
             </tr>
+
             <tr>
-                <td>
-                    <div style="display:inline-block">
-                        <textarea id="geneQuery" name="geneQuery" rows="2" cols="36" >${preferences.geneQuery.asTags()}</textarea>
-                        <div>
-                            <span style="float:left">
-                                <form:checkbox id="exactMatch"
-                                               path="exactMatch"
-                                               label="Exact match"/>
-                            </span>
-                        </div>
-                    </div>
+                <td class="gxaExperimentRequestPreferencesFluidWideTableColumn">
+                    <textarea id="geneQuery" name="geneQuery" rows="2" cols="36" >${preferences.geneQuery.asTags()}</textarea>
+                    <form:checkbox style="vertical-align: middle" id="exactMatch" path="exactMatch" label="Exact match"/>
                 </td>
+
                 <c:if test="${selectedFilterFactorNamesAndValues.size() > 0}">
-                    <td>
+                    <td class="gxaExperimentRequestPreferencesFluidTableColumn">
                         <c:import url="includes/filterby-menu.jsp"/>
                     </td>
                 </c:if>
                 <c:if test="${!type.isBaseline()}">
-                    <td>
+                    <td class="gxaExperimentRequestPreferencesFluidNarrowTableColumn">
                         <c:import url="includes/contrast-up-down-menu.jsp"/>
                     </td>
                 </c:if>
-                <td>
+
+                <td class="gxaExperimentRequestPreferencesFluidWideTableColumn">
                     <div>
                         <c:set var="isSingleContrast" value="${(!type.isBaseline()) && allQueryFactors.size() == 1}"/>
                         <c:set var="itemLabel" value="${type.isBaseline() ? 'value' : 'displayName'}"/>
@@ -124,19 +119,15 @@
                         <form:select path="queryFactorValues" data-placeholder="(any ${stringUtil.lowerCaseIfNotAllUpperCase(queryFactorName)}s)"
                                      tabindex="-1"
                                      items="${allQueryFactors}" itemValue="${itemValue}" itemLabel="${itemLabel}"
-                                     cssStyle="width:340px;"
+                                     cssStyle="width:100%;"
                                      disabled="${isSingleContrast ? true : false}"/>
                     </div>
-                    <span>
-                        <form:checkbox id="specific"
-                                       path="specific"
-                                       label="Specific"
-                                       disabled="${isSingleContrast ? true : false}"/>
-                    </span>
+                    <form:checkbox style="vertical-align: middle" id="specific" path="specific" label="Specific" disabled="${isSingleContrast ? true : false}"/>
                     <span data-help-loc="#specific${type.isBaseline() ? '' : '-differential'}"
                           style="display:inline-block"></span>
                 </td>
-                <td>
+
+                <td class="gxaExperimentRequestPreferencesFluidTableColumn">
                     <div>
                         <c:choose>
                             <c:when test="${fn:endsWith('' + preferences.cutoff, '.0')}">
@@ -152,8 +143,11 @@
                         </c:choose>
                     </div>
                 </td>
+
                 <c:if test="${!type.isBaseline()}">
-                    <td><form:input size="10" path="foldChangeCutOff" id="foldChangeCutOff"/></td>
+                    <td class="gxaExperimentRequestPreferencesFluidTableColumn">
+                        <form:input size="10" path="foldChangeCutOff" id="foldChangeCutOff"/>
+                    </td>
                 </c:if>
             </tr>
         </table>
