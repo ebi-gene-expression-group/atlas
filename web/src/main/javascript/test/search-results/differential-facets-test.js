@@ -1,7 +1,7 @@
 require('./../../build-util/testdom.js')('<html><body></body></html>');
 var chai = require('chai');
 var expect = chai.expect;
-var Facets = require('./../../src/search-results/differential-facets.jsx');
+var Facets = require('./../../src/search-results/facets.jsx');
 var TestUtils = require('react-addons').TestUtils;
 var $ = require('jquery');
 

@@ -3,9 +3,10 @@
 
 var React = require('react');
 var queryString = require('query-string');
-var Facets = require('./differential-facets.jsx');
+var Facets = require('./facets.jsx');
+var DifferentialResults = require('./differential-results.jsx');
 
-module.exports = function (facetsElement, resultsElement, facetData) {
+module.exports = function (facetsElement, resultsElement, facetData, results) {
 
     //TODO: add this outside the module, when module is first loaded
     window.addEventListener('popstate', renderPage, false);
@@ -20,68 +21,59 @@ module.exports = function (facetsElement, resultsElement, facetData) {
     }
 
     function render(query, pathname) {
-        //React.renderComponent(Facets({facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
-        React.renderComponent(Facets({facets: facetData, checkedFacets: query.select}),
+        React.renderComponent(Facets({facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
             facetsElement
         );
 
-        // TODO React.renderComponent(differentialResults...)
-        //React.renderComponent(Heatmaps({geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query)}),
-        //    resultsElement
-        //);
+        React.renderComponent(DifferentialResults({diffResultsData: results}),
+            resultsElement
+        );
 
-        //function setChecked(checked, species, factor) {
-        //    var newSelect = checked ? addSelection(query.select, species, factor) : removeSelection(query.select, species, factor);
-        //    var newQueryString = "?geneQuery=" + query.geneQuery + "&select=" + JSON.stringify(newSelect);
-        //    console.log(newQueryString);
-        //    navigateTo(pathname + newQueryString);
-        //}
+        function setChecked(checked, facet, facetItem) {
+            var newSelect = checked ? addSelection(query.select, facet, facetItem) : removeSelection(query.select, facet, facetItem);
+            var newQueryString = "?geneQuery=" + query.geneQuery + "&select=" + JSON.stringify(newSelect);
+            console.log(newQueryString);
+            navigateTo(pathname + newQueryString);
+        }
 
-        //function navigateTo(url) {
-        //    var state, title;
-        //    history.pushState(state, title, url);
-        //    renderPage();
-        //}
+        function navigateTo(url) {
+            var state, title;
+            history.pushState(state, title, url);
+            renderPage();
+        }
 
 
-        //function addSelection(select, species, factor) {
-        //    if (!select) {
-        //        select = {};
-        //    }
-        //
-        //    if (!select[species]) {
-        //        select[species] = {};
-        //    }
-        //    select[species][factor] = true;
-        //    return select;
-        //}
+        function addSelection(select, facet, facetItem) {
+            if (!select) {
+                select = {};
+            }
 
-        //function removeSelection(select, species, factor) {
-        //    select[species][factor] = false;
-        //    return select;
-        //}
+            if (!select[facet]) {
+                select[facet] = {};
+            }
+            select[facet][facetItem] = true;
+            return select;
+        }
+
+        function removeSelection(select, facet, facetItem) {
+            select[facet][facetItem] = false;
+            return select;
+        }
 
     }
 
-    //function queryToHeatmaps(query) {
+    //function queryToDifferentialResults(query) {
     //    /* eg:
-    //     query.geneQuery=blood
-    //     query.select={ "homo sapiens" : { "CELL_LINE": true, "ORGANISM_PART": true } }
+    //     query.geneQuery="zinc finger"
+    //     query.select={ "kingdom": {"ensembl": true}, "factors": {"temperature": true, "time": true} }
     //
     //     ->
     //
-    //     [
     //     {
-    //     "geneQuery": "blood",
-    //     "species": "Homo sapiens",
-    //     "factor": "ORGANISM_PART"
-    //     },
-    //     {
-    //     "geneQuery": "blood",
-    //     "species": "Mus musculus",
-    //     "factor": "CELL_LINE"
+    //     "geneQuery": "zinc finger",
+    //     "kingdom": "ensembl",
+    //     "factors": { "temperature", "time" }
     //     }
-    //     ]
     //
     //     */
     //    var select = query.select;

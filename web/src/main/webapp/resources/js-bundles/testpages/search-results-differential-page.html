@@ -13,6 +13,9 @@ Then open browser at: http://localhost:8080/gxa/resources/js-bundles/testpages/s
 <div id="facets">If you see this then something is wrong.</div>
 <div id="results"></div>
 
+<script src="../vendor-bundle.js"></script>
+<script src="../search-results-differential-page-bundle.js"></script>
+
 <script>
     var facetsData = {
         "kingdom": [{"name": "ensembl", "value": "ensembl"}, {"name": "plants", "value": "plants"}],
@@ -40,9 +43,14 @@ Then open browser at: http://localhost:8080/gxa/resources/js-bundles/testpages/s
         }, {"name": "6", "value": "6"}],
         "regulation": [{"name": "DOWN", "value": "DOWN"}, {"name": "UP", "value": "UP"}]
     };
+
+    var diffResultsData = [];
+
+    var differential_page_js = window.$page;
+
+    differential_page_js(facetsData, diffResultsData, 'facets', 'results');
+
 </script>
-<script src="../vendor-bundle.js"></script>
-<script src="../search-results-differential-page-bundle.js"></script>
 
 </body>
 </html>
