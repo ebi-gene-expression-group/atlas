@@ -211,6 +211,9 @@ var experimentsPageModule = (function ($) {
          */
 
         var hiddenTypeSelected = $("#hiddenTypeSelected").val();
+        if(experimentType.toLowerCase()!= "") {
+            hiddenTypeSelected = experimentType.toLowerCase();
+        }
 
         $("#gxaExperimentsTableExperimentTypeSelect").change(function () {
             var selected = $("#gxaExperimentsTableExperimentTypeSelect :selected").val();
@@ -239,6 +242,9 @@ var experimentsPageModule = (function ($) {
          *
          */
         var hiddenKingdomSelected = $("#hiddenKingdomSelected").val();
+        if(kingdom.toLowerCase()!= "") {
+            hiddenKingdomSelected = kingdom.toLowerCase();
+        }
 
         $("#gxaExperimentsTableKingdomSelect").change(function () {
             var selected = $("#gxaExperimentsTableKingdomSelect :selected").val();
