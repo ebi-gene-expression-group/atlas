@@ -79,6 +79,9 @@
                 <c:when test="${specie == 'Mus musculus'}">
                     <c:set var="speciesIconCode" value="M"/>
                 </c:when>
+                <c:when test="${specie == 'Oryctolagus cuniculus'}">
+                    <c:set var="speciesIconCode" value="t"/>
+                </c:when>
                 <c:when test="${specie == 'Oryza sativa Japonica Group'}">
                     <c:set var="speciesIconCode" value="6"/>
                 </c:when>
