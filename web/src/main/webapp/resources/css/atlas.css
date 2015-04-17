@@ -20,6 +20,70 @@
  * http://gxa.github.com/gxa
  */
 
+.gxaBody {
+    min-width: 975px;
+}
+
+td.gxaSearchFormFullWidthColumn {
+    /*border: none;*/
+    /*vertical-align: top;*/
+    width: 100%;
+    /*padding: 5px;*/
+}
+
+td.gxaHomeSearchFluidTableColumn {
+    border: none;
+    vertical-align: top;
+    width: 30%;
+    padding: 5px;
+}
+
+td.gxaHomeSearchFixedSizeTableColumn, td.gxaExperimentRequestPreferencesFixedSizeTableColumn {
+    border: none;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+td.gxaExperimentRequestPreferencesFluidTableColumn {
+    vertical-align: top;
+    width: 25%;
+    padding-right: 10px;
+}
+
+td.gxaExperimentRequestPreferencesFluidWideTableColumn {
+    vertical-align: top;
+    width: 32%;
+    padding-right: 10px;
+}
+
+td.gxaFacetSearchFluidTableColumn {
+    vertical-align: top;
+    width: 80%;
+    padding-right: 10px;
+}
+
+td.gxaExperimentRequestPreferencesFluidNarrowTableColumn {
+    vertical-align: top;
+    width: 12%;
+    padding-right: 10px;
+}
+
+.gxaHomeSearchActionButtons, .gxaExperimentRequestPreferencesActionButtons, .gxaFacetedSearchActionButtons {
+    float: right;
+}
+
+.gxaHomeSearchActionButtons div, .gxaExperimentRequestPreferencesActionButtons div, .gxaFacetedSearchActionButtons div {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.gxaExperimentRequestPreferencesActionButton {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+}
+
 /* ebi css override: start */
 
 #global-footer.grid_24 {
@@ -34,24 +98,6 @@ div#local-search form fieldset, form#local-search fieldset {
 
 #global-footer.grid_24 .grid_4 {
     width: 15%;
-}
-
-td.gxaHomeSearchFluidTableColumn {
-    vertical-align: top;
-    width: 30%;
-    padding-right: 10px;
-}
-
-td.gxaHomeSearchFixedSizeTableColumn {
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.atlas-body {
-    min-width: 975px;
-    /* font-family: Verdana, Helvetica, Arial, sans-serif;*/
-    margin: 0px auto !important;
 }
 
 ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
@@ -99,17 +145,9 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     padding-left: 10px;
 }
 
-#atlas-content form, #dialog-form form {
+#atlas-content form {
     padding: 0px;
     margin: 0px;
-}
-
-#atlas-content form td, #dialog-form form td {
-    padding: 4px;
-}
-
-#atlas-content form td div, #dialog-form form td div {
-    padding-bottom: 3px;
 }
 
 #atlas-content form fieldset, #dialog-form form fieldset {
@@ -303,11 +341,13 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 
 .filters-frame {
     display: inline-block;
-    width: 140px;
+    width: 95%;
     border-style: solid;
     border-width: 1px;
     border-color: lightgray;
     margin-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
 }
 
 .filter-name {

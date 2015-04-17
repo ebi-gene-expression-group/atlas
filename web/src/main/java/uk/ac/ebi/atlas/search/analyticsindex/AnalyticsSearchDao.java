@@ -16,7 +16,7 @@ import javax.inject.Named;
 
 @Named
 public class AnalyticsSearchDao {
-    public static final String ABOVE_CUTOFF = "((experimentType:rnaseq_mrna_baseline OR experimentType:proteomics_baseline) AND expressionLevel:[0.5 TO *]) OR ((experimentType:rnaseq_mrna_differential OR experimentType:microarray_1colour_mrna_differential or experimentType:microarray_2colour_mrna_differential or experimentType:microarray_1colour_microrna_differential) AND foldChange:[1.0 TO *])";
+    public static final String ABOVE_CUTOFF = "(((experimentType:rnaseq_mrna_baseline OR experimentType:proteomics_baseline) AND expressionLevel:[0.5 TO *]) OR ((experimentType:rnaseq_mrna_differential OR experimentType:microarray_1colour_mrna_differential or experimentType:microarray_2colour_mrna_differential or experimentType:microarray_1colour_microrna_differential) AND foldChange:[1.0 TO *]))";
 
     private static final Logger LOGGER = Logger.getLogger(AnalyticsSearchDao.class);
 

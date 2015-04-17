@@ -1,5 +1,5 @@
 <!--
-From the command line: npm run dev
+From the command line: npm run tdd
 
 Then open browser at: http://localhost:9000/webpack-dev-server/testpages/search-results-differential-page.html
 
@@ -14,6 +14,9 @@ Changes made to html/js will automatically be reloaded in the browser
 
 <div id="facets">If you see this then something is wrong.</div>
 <div id="results"></div>
+
+<script src="/vendor-bundle.js"></script>
+<script src="/search-results-differential-page-bundle.js"></script>
 
 <script>
     var facetsData = {
@@ -42,9 +45,13 @@ Changes made to html/js will automatically be reloaded in the browser
         }, {"name": "6", "value": "6"}],
         "regulation": [{"name": "DOWN", "value": "DOWN"}, {"name": "UP", "value": "UP"}]
     };
-</script>
-<script src="/vendor-bundle.js"></script>
-<script src="/search-results-differential-page-bundle.js"></script>
 
+    var diffResultsData = [];
+
+    var differential_page_js = window.$page;
+
+    differential_page_js(facetsData, diffResultsData, 'facets', 'results');
+
+</script>
 </body>
 </html>

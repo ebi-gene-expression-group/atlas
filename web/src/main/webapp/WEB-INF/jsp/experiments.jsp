@@ -24,6 +24,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="experimentsPageHeading">Experiments in Expression Atlas</div>
+<input type="hidden" id="hiddenTypeSelected" name="hiddenTypeSelected" value="">
+<input type="hidden" id="hiddenKingdomSelected" name="hiddenKingdomSelected" value="">
 
 <table cellspacing="0" cellpadding="0" border="0" id="experiments-table" class="display">
     <thead/>
@@ -31,7 +33,6 @@
     <tr>
         <th rowspan="1" colspan="1">
             <input type="hidden" class="search_init">
-            <input type="hidden" id="hiddenSelected" name="hiddenSelected" value="">
             <select id="gxaExperimentsTableExperimentTypeSelect">
                 <option value="">All</option>
                 <option value="baseline">Baseline</option>

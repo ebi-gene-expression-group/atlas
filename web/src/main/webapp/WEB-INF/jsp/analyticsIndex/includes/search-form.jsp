@@ -6,16 +6,26 @@
 <form method="get" action="${thisPage}" id="searchForm">
     <table class="form-grid">
         <tr>
-            <td>
-                <label>Gene query</label>
-                <span data-help-loc="#geneSearch"></span>
+            <td class="gxaSearchFormFullWidthColumn">
+                <div>
+                    <label>Gene query</label>
+                    <span data-help-loc="#geneSearch"></span>
+                </div>
+                <div>
+                    <textarea id="geneQuery" name="geneQuery"
+                              placeholder="(all genes)" tabindex="1">${geneQuery.asTags()}</textarea>
+
+                    <div>
+                    <span style="float:left">E.g.
+                        <a href="${thisPage}?geneQuery=ASPM">ASPM</a>,
+                        <a href="${thisPage}?geneQuery=zinc+finger">zinc finger</a>
+                    </span>
+                    </div>
+                </div>
             </td>
-            <%--<td>--%>
-                <%--<label>Sample properties</label>--%>
-                <%--<span data-help-loc="#experimentalConditions"></span>--%>
-            <%--</td>--%>
-            <td rowspan="2" style="display:table-cell;text-align:center;vertical-align: middle;">
-                <div class="actions">
+
+            <td>
+                <div class="gxaFacetedSearchActionButtons">
                     <div>
                         <input id="submit-button" type="submit" value="Search" tabindex="4">
                     </div>
@@ -25,41 +35,10 @@
                 </div>
             </td>
         </tr>
-
-        <tr>
-            <td>
-                <div id="geneQuerySection" style="display:inline-block">
-                    <textarea id="geneQuery" name="geneQuery" rows="2" cols="36"
-                              placeholder="(all genes)" tabindex="1">${geneQuery.asTags()}</textarea>
-
-                    <div>
-                        <span style="float:left">E.g.
-                                <a href="${thisPage}?geneQuery=ASPM">ASPM</a>,
-                                <a href="${thisPage}?geneQuery=zinc+finger">zinc finger</a>
-                            </span>
-                    </div>
-                </div>
-            </td>
-
-            <%--<td>--%>
-                <%--<div id="conditionSection" style="display:inline-block">--%>
-                    <%--<textarea id="condition" name="condition" maxlength="900" rows="2" cols="36"--%>
-                              <%--placeholder="(all conditions)" tabindex="3"></textarea>--%>
-
-                    <%--<div>--%>
-                        <%--<span class="examples">E.g.--%>
-                            <%--<a href="${thisPage}?condition=leaf">leaf</a>,--%>
-                            <%--<a href="${thisPage}?condition=valproic+acid">valproic acid</a>,--%>
-                            <%--<a href="${thisPage}?condition=cancer">cancer</a>--%>
-                        <%--</span>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</td>--%>
-        </tr>
     </table>
 </form>
 
-<%@ include file="condition-autocomplete-js.jsp" %>
+<%@ include file="../../includes/condition-autocomplete-js.jsp" %>
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <script type="text/javascript">
@@ -107,7 +86,6 @@
             function disableButtonsOnChange(field, editor, tags) {
                 $buttons.button("option", "disabled", tags.length == 0);
             }
-
         });
 
     })(jQuery);

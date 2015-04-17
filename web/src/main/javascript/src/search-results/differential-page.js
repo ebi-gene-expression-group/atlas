@@ -2,7 +2,10 @@
 
 var DifferentialRouter = require('./differential-router.js');
 
-if (facetsData) {
-    DifferentialRouter(document.getElementById('facets'),
-        document.getElementById('results'), facetsData);
-}
+module.exports = function(facetsData, diffResultsData, facetContainerId, resultsContainerId) {
+    DifferentialRouter(
+        document.getElementById(facetContainerId),
+        document.getElementById(resultsContainerId),
+        facetsData, diffResultsData);
+};
+

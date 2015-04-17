@@ -75,7 +75,7 @@ public class PlantExperimentsController {
     @RequestMapping("/plant/experiments")
     public String getBaselineExperimentsPage(Model model) {
 
-        loadExperimentAccessionsBySpecie();
+        loadExperimentAccessionsBySpecies();
 
         model.addAttribute("baselineExperimentAccessionsBySpecies", baselineExperimentAccessionsBySpecies);
         model.addAttribute("numDifferentialExperimentsBySpecies", numDifferentialExperimentsBySpecies);
@@ -87,7 +87,7 @@ public class PlantExperimentsController {
     }
 
     @PostConstruct
-    private void loadExperimentAccessionsBySpecie() {
+    private void loadExperimentAccessionsBySpecies() {
 
         // Get number of all public plant experiments in Atlas
         numberOfPlantExperiments = 0;
@@ -112,13 +112,13 @@ public class PlantExperimentsController {
             try {
                 BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment(experimentAccession);
                 displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
-                for (String specie : experiment.getOrganisms()) {
-                    if (speciesKingdomTrader.getKingdom(specie).equals("plants")) {
-                        baselineExperimentAccessionsBySpecies.put(specie, experimentAccession);
+                for (String species : experiment.getOrganisms()) {
+                    if (speciesKingdomTrader.getKingdom(species).equals("plants")) {
+                        baselineExperimentAccessionsBySpecies.put(species, experimentAccession);
                         if (experiment.getOrganisms().size() > 1) {
-                            experimentLinks.put(experimentAccession + specie, "?serializedFilterFactors=ORGANISM:" + specie);
+                            experimentLinks.put(experimentAccession + species, "?serializedFilterFactors=ORGANISM:" + species);
                         } else {
-                            experimentLinks.put(experimentAccession + specie, "");
+                            experimentLinks.put(experimentAccession + species, "");
                         }
                         numberOfPlantExperiments++;
                     }
@@ -158,14 +158,19 @@ public class PlantExperimentsController {
         for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
             try {
                 DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getExperimentFromCache(experimentAccession, experimentType);
-                for (String specie : experiment.getOrganisms()) {
+                for (String species : experiment.getOrganisms()) {
 
-                    if (speciesKingdomTrader.getKingdom(specie).equals("plants")) {
-                        Integer numSoFar = numDifferentialExperimentsBySpecies.get(specie);
-                        if (numDifferentialExperimentsBySpecies.get(specie) == null) {
-                            numDifferentialExperimentsBySpecies.put(specie, 1);
+                    if (speciesKingdomTrader.getKingdom(species) == null) {
+                        LOGGER.warn(species + " has no kingdom (maybe it is missing in BIOENTITY_ORGANISM ot it has been mis-spelled)");
+                        continue;
+                    }
+
+                    if (speciesKingdomTrader.getKingdom(species).equals("plants")) {
+                        Integer numSoFar = numDifferentialExperimentsBySpecies.get(species);
+                        if (numDifferentialExperimentsBySpecies.get(species) == null) {
+                            numDifferentialExperimentsBySpecies.put(species, 1);
                         } else {
-                            numDifferentialExperimentsBySpecies.put(specie, ++numSoFar);
+                            numDifferentialExperimentsBySpecies.put(species, ++numSoFar);
                         }
                         numberOfPlantExperiments++;
                     }

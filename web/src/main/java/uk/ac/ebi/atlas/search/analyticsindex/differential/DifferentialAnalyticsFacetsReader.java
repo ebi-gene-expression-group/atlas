@@ -18,6 +18,8 @@ public class DifferentialAnalyticsFacetsReader {
     private final ExperimentTrader experimentTrader;
     private final ContrastTrader contrastTrader;
 
+    private static final String[] FACET_FIELDS = {"kingdom", "species", "experimentType", "factors", "numReplicates", "regulation"};
+
     private static final String SPECIES_PATH              = "$.facets.species.buckets[*].val";
     private static final String EXPERIMENT_TYPE_PATH      = "$.facets.species.buckets[?(@.val=='%s')].experimentType.buckets[*].val";
     private static final String EXPERIMENT_ACCESSION_PATH = "$.facets.species.buckets[?(@.val=='%s')].experimentType.buckets[?(@.val=='%s')].experimentAccession.buckets[*].val";
@@ -30,7 +32,8 @@ public class DifferentialAnalyticsFacetsReader {
         this.contrastTrader = contrastTrader;
     }
 
-    public JsonArray extractResultsAsJson(String solrResponseAsJson) {
+
+    public String extractResultsAsJson(String solrResponseAsJson) {
         JsonArray differentialResults = new JsonArray();
 
         ReadContext jsonReadContext = JsonPath.parse(solrResponseAsJson);
@@ -54,6 +57,28 @@ public class DifferentialAnalyticsFacetsReader {
             }
         }
 
-        return differentialResults;
+        return differentialResults.toString();
+    }
+
+
+    // TODO Merge Metazoa and Ensembl into "Animals"
+    // TODO Prettify fields with a Hashmap: <Field as it is stored in Solr> -> <Pretty field>
+    public String generateFacetsTreeJson(String solrResponseAsJson) {
+        JsonObject facets = new JsonObject();
+
+        ReadContext jsonReadContext = JsonPath.parse(solrResponseAsJson);
+
+        for (String facetField : FACET_FIELDS) {
+            JsonArray facet = new JsonArray();
+            for (Object facetFieldValue : (List<Object>) jsonReadContext.read("$.." + facetField + "..val")) {
+                JsonObject facetItem = new JsonObject();
+                facetItem.addProperty("name", facetFieldValue.toString());
+                facetItem.addProperty("value", facetFieldValue.toString());  // TODO Prettify (see above)
+                facet.add(facetItem);
+            }
+            facets.add(facetField, facet);
+        }
+
+        return facets.toString();
     }
 }

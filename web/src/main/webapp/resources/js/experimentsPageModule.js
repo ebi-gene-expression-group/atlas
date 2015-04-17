@@ -201,31 +201,79 @@ var experimentsPageModule = (function ($) {
             oTable.fnFilter(this.value, $("#experiments-table tfoot input").index(this));
         });
 
+        $("#gxaExperimentsTableKingdomSelect").val(kingdom.toLowerCase());
+        $("#gxaExperimentsTableExperimentTypeSelect").val(experimentType.toLowerCase());
+
+
+        /*
+         * Filter by experiment type
+         *
+         */
+
+        var hiddenTypeSelected = $("#hiddenTypeSelected").val();
+        if(experimentType.toLowerCase()!= "") {
+            hiddenTypeSelected = experimentType.toLowerCase();
+        }
+
         $("#gxaExperimentsTableExperimentTypeSelect").change(function () {
             var selected = $("#gxaExperimentsTableExperimentTypeSelect :selected").val();
-            var hiddenSelected = $("#hiddenSelected").val();
-            if(hiddenSelected != "") {
-                $("#gxaExperimentsTableExperimentTypeSelect").val(hiddenSelected);
-            }
-            $("#hiddenSelected").val(selected);
 
-            //$("#gxaExperimentsTableExperimentTypeSelect").val($("#hiddenSelected").val());
-            /* same for drop down filter */
-            oTable.fnFilter(this.value, $("#experiments-table tfoot select").index(this));
+            if(hiddenTypeSelected != selected) {
+                hiddenTypeSelected = selected;
+                $("#hiddenTypeSelected").val(selected);
+                $("#gxaExperimentsTableExperimentTypeSelect").val(hiddenTypeSelected);
+            }
+            filterByExperimentType(this.value, this);
         });
 
+        $("#gxaExperimentsTableExperimentTypeSelect").val(hiddenTypeSelected);
+        if(hiddenTypeSelected != undefined) {
+            var select = $("#gxaExperimentsTableExperimentTypeSelect");
+            filterByExperimentType(hiddenTypeSelected, select);
+        }
+
+        function filterByExperimentType(value, selectionId) {
+            /* same for drop down filter */
+            oTable.fnFilter(value, $("#experiments-table tfoot select").index(selectionId));
+        }
+
+        /*
+         * Filter by kingdom
+         *
+         */
+        var hiddenKingdomSelected = $("#hiddenKingdomSelected").val();
+        if(kingdom.toLowerCase()!= "") {
+            hiddenKingdomSelected = kingdom.toLowerCase();
+        }
+
         $("#gxaExperimentsTableKingdomSelect").change(function () {
-            if (this.value == 'plants') {
+            var selected = $("#gxaExperimentsTableKingdomSelect :selected").val();
+
+            if(hiddenKingdomSelected != selected) {
+                hiddenKingdomSelected = selected;
+                $("#hiddenKingdomSelected").val(selected);
+                $("#gxaExperimentsTableKingdomSelect").val(hiddenKingdomSelected);
+            }
+            filterByKingdom();
+
+        });
+
+        $("#gxaExperimentsTableKingdomSelect").val(hiddenKingdomSelected);
+        if(hiddenKingdomSelected != undefined) {
+            filterByKingdom();
+        }
+
+        function filterByKingdom() {
+            if (hiddenKingdomSelected == 'plants') {
                 oTable.fnFilter('plants', 9);
             }
-            else if (this.value == 'animals-fungi') {
+            else if (hiddenKingdomSelected == 'animals-fungi') {
                 oTable.fnFilter('metazoa|ensembl|fungi', 9, true);
             }
             else {
                 oTable.fnFilter('', 9);
             }
-
-        });
+        }
 
         /*
          * Support functions to provide a little bit of 'user friendliness' to the text boxes in
@@ -249,8 +297,6 @@ var experimentsPageModule = (function ($) {
             }
         });
 
-        $("#gxaExperimentsTableKingdomSelect").val(kingdom.toLowerCase()).change();
-        $("#gxaExperimentsTableExperimentTypeSelect").val(experimentType.toLowerCase()).change();
         $("#gxaExperimentsTableOrganismInput").val(organism).keyup();
     }
 

@@ -61,7 +61,7 @@
 							<span data-help-loc="#experimentalConditions"></span>
 						</td>
 						<td rowspan="2" class="gxaHomeSearchFixedSizeTableColumn">
-							<div class="actions">
+							<div class="gxaHomeSearchActionButtons">
 								<div>
 									<input id="submit-button" type="submit" value="Search" tabindex="4">
 								</div>
@@ -84,7 +84,7 @@
 										</span>
 
 										<span style="float:right">
-											<input id="exactMatch" name="exactMatch" type="checkbox" value="true"
+											<input style="vertical-align: middle" id="exactMatch" name="exactMatch" type="checkbox" value="true"
 												   checked="checked" tabindex="2">
 											<label for="exactMatch">Exact match</label>
 											<input type="hidden" name="_exactMatch" value="on">
@@ -99,7 +99,7 @@
 							</form:select>
 						</td>
 						<td class="gxaHomeSearchFluidTableColumn">
-                    	<div id="conditionSection">
+                    		<div id="conditionSection">
 								<textarea id="condition" name="condition" maxlength="900" rows="2" cols="36"
 										  placeholder="(all conditions)" tabindex="3"></textarea>
 
@@ -111,7 +111,7 @@
 										<a href="query?condition=cancer">cancer</a>
 									</span>
 								</div>
-						</div>
+							</div>
 						</td>
 					</tr>
 				</table>

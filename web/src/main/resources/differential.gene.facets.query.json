@@ -1,0 +1,20 @@
+{
+  "kingdom": { "terms": {
+    "field": "kingdom"
+  }},
+  "species": { "terms": {
+    "field": "species"
+  }},
+  "experimentType": { "terms": {
+    "field": "experimentType"
+  }},
+  "factors": { "terms" : {
+    "field": "factors"
+  }},
+  "numReplicates": { "terms" : {
+    "field": "numReplicates"
+  }},
+  "regulation": { "terms" : {
+    "field": "regulation"
+  }}
+}

@@ -163,7 +163,7 @@
 
 </head>
 
-<body class="level2 atlas-body">
+<body class="gxaBody">
 
 <div id="skip-to">
     <ul>
@@ -191,8 +191,6 @@
     <tiles:insertAttribute name="footer"/>
 
 </div>
-
-
 
 </body>
 
