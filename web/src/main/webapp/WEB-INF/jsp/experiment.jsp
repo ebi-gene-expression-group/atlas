@@ -30,19 +30,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <section class="extra-padding">
-
     <c:import url="includes/request-preferences.jsp"/>
-
 </section>
 
-<section id="stickem-container" style="overflow: auto;" class="extra-padding">
-
+<section style="overflow: auto;" class="extra-padding">
     <spring:hasBindErrors name="preferences">
         <c:set var="isPreferenceError" value="true"/>
     </spring:hasBindErrors>
 
     <%@ include file="includes/anatomogram-and-heatmap-react.jsp" %>
-
 </section>
 
 <script language="JavaScript" type="text/javascript"
@@ -52,7 +48,11 @@
         src="${pageContext.request.contextPath}/resources/js/jquery-watermark/jquery.watermark.min.js"></script>
 
 <script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/jquery.stickem.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/jquery-hcsticky/jquery.hc-sticky.js"></script>
+
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/jquery.ba-throttle-debounce.js"></script>
+
 
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
@@ -124,9 +124,106 @@
 
             helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', $('[data-help-loc]').not('#heatmap-react [data-help-loc]'));
 
-            $('#stickem-container').stickem();
-        });
+            $('#anatomogram').hcSticky({responsive: true});
 
+            if ($('#gxaExperimentPageHeatmapTableStickyWrapperStickyHead').length) {
+                var $w	   = $(window),
+                    $t	   = $('#heatmap-table'),
+                    $stickyHead = $('#gxaExperimentPageHeatmapTableStickyWrapperStickyHead'),
+                    $stickyWrap  = $t.parent('#gxaExperimentPageHeatmapTableStickyWrapper');
+
+                // Resize sticky header width to match actual headers
+                var setWidths = function () {
+                        $stickyHead.find('thead th').each(function (i) {
+                            var $originalHeader = $t.find('thead th').eq(i),
+                                widthDiff = $originalHeader.width() - $(this).width();
+
+                            if (widthDiff !== 0) {
+                                // Changing the width for elements that have an inner div has no effect (and no, outerWidth and outerHeight don’t work either)
+                                if ($(this).find('div').length) {
+                                    var $thisDiv = $(this).find('div');
+                                    $thisDiv.width($thisDiv.width() + widthDiff);
+                                } else {
+                                    $(this).width($(this).width() + widthDiff);
+                                }
+                            }
+                        });
+
+                        //$stickyHead.width($t.width());
+                    },
+                    repositionStickyHead = function () {
+                        // Return value of calculated allowance
+                        var allowance = calcAllowance();
+
+                        // Check if wrapper parent is overflowing along the y-axis
+                        if($t.height() > $stickyWrap.height()) {
+                            // If it is overflowing (advanced layout)
+                            // Position sticky header based on wrapper scrollTop()
+                            if($stickyWrap.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() > 0) {
+                                // When top of wrapping parent is out of view
+                                $stickyHead.add($stickyInsct).css({
+                                    opacity: 1,
+                                    top: $stickyWrap.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() + parseInt($stickyWrap.css("padding-top").replace("px", ""))
+                                });
+                            } else {
+                                // When top of wrapping parent is in view
+                                $stickyHead.css({
+                                    opacity: 0,
+                                    top: 0
+                                });
+                            }
+                        } else {
+                            // If it is not overflowing (basic layout)
+                            // Position sticky header based on viewport scrollTop
+                            if($w.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() > $t.offset().top && $w.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() < $t.offset().top + $t.outerHeight() - allowance) {
+                                // When top of viewport is in the table itself
+                                $stickyHead.css({
+                                    opacity: 1,
+                                    top: $w.scrollTop() - $t.offset().top + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() + parseInt($stickyWrap.css("padding-top").replace("px", ""))
+                                });
+                            } else if ($t.offset().top && $w.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() > $t.offset().top + $t.outerHeight() - allowance) {
+                                // Sticky header past allowance. Keep calm and continue scrolling.
+                            } else {
+                                // When top of viewport is above or below table
+                                $stickyHead.css({
+                                    opacity: 0,
+                                    top: 0
+                                });
+                            }
+                        }
+                    },
+                    calcAllowance = function () {
+                        var a = 0;
+                        // Calculate allowance: number of bottom rows from which the sticky head disappears
+                        $t.find('tbody tr:lt(3)').each(function () {
+                            a += $(this).height();
+                        });
+
+                        // Set fail safe limit (last three row might be too tall)
+                        // Set arbitrary limit at 0.25 of viewport height, or you can use an arbitrary pixel value
+                        if(a > $w.height()*0.25) {
+                            a = $w.height()*0.25;
+                        }
+
+                        // Add the height of sticky header
+                        a += $stickyHead.height();
+                        return a;
+                    };
+
+                setWidths();
+                $t.parent('#gxaExperimentPageHeatmapTableStickyWrapper').scroll(function() {
+                    repositionStickyHead();
+                });
+
+                $w
+                .load(setWidths)
+                .resize(function () {
+                    setWidths();
+                    repositionStickyHead();
+                })
+                .scroll(repositionStickyHead);
+            }
+        });
     })(jQuery);
 
 </script>

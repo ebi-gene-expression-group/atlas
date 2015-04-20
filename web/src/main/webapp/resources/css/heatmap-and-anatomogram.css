@@ -1,5 +1,3 @@
-/* start of sticky things */
-
 .svg #anatomogram {
     display:inline
 }
@@ -9,11 +7,6 @@
 }
 
 .heatmap-anatomogram-row {
-    /*
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 40px;
-    padding-bottom: 40px;
-    */
     position: relative;
 }
 
@@ -27,7 +20,7 @@
 .heatmap-position {
     position: relative;
     margin-left: 270px;
-    overflow-x: auto;
+    overflow: hidden;
 }
 
 .heatmap-position-widget {
@@ -39,20 +32,6 @@
     float: left;
     /*padding: 0 20px;*/
 }
-
-.stickit {
-    margin-right: 600px;
-    position: fixed;
-    top: 0;
-}
-
-.stickit-end {
-    bottom: 40px;
-    position: absolute;
-    /*right: 0;*/
-}
-
-/* end of sticky things */
 
 .gradient-level-min {
     text-align: right;
@@ -105,4 +84,10 @@
 #ensembl-launcher-box-ensembl button, #ensembl-launcher-box-gramene button {
     display: table;
     margin: 0 auto;
+}
+
+#gxaExperimentPageHeatmapCountAndLegend {
+    width: 100%;
+    max-width: 1040px;
+    z-index: 1000; /* Some high number to stay above the table when it becomes hcSticky() */
 }

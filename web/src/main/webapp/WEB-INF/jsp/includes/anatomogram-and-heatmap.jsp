@@ -38,17 +38,16 @@
     </c:when>
     <c:otherwise><%--@elvariable id="geneProfiles" type="uk.ac.ebi.atlas.model.GeneProfilesList"--%>
 
-        <div id="heatmap-anatomogram" class="heatmap-anatomogram-row stickem-container">
+        <div id="heatmap-anatomogram" class="heatmap-anatomogram-row">
 
-            <div id="anatomogram" class="aside stickem double-click-noselection" style="display:inline">
+            <div id="anatomogram" class="double-click-noselection aside" style="display:inline">
                 <table>
                     <tr>
                         <td style="padding-top: 15px; vertical-align:top">
-                <span id="sex-toggle">
-                    <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
-                         style="width:20px;height:38px;padding:2px"
-                         src="${base}/resources/images/male_selected.png"/>
-                </span>
+                            <span id="sex-toggle">
+                                <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
+                                     style="width:20px;height:38px;padding:2px" src="${base}/resources/images/male_selected.png"/>
+                            </span>
                             <!--
                             <span data-help-loc="#anatomogram"/>
                             -->
@@ -67,7 +66,6 @@
             </div>
 
             <div id="heatmap-div" class="heatmap-position${isWidget ? '-widget' : ''}">
-
                 <table>
                     <tr>
                         <td>

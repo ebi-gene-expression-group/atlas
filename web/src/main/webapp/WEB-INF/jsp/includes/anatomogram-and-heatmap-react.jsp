@@ -38,17 +38,16 @@
 <c:if test="${not empty jsonProfiles}">
     <%@ include file="anatomogram.jsp" %>
 
-    <div id="heatmap-anatomogram" class="heatmap-anatomogram-row stickem-container">
+    <div id="heatmap-anatomogram" class="heatmap-anatomogram-row">
 
-        <div id="anatomogram" class="aside stickem double-click-noselection">
+        <div id="anatomogram" class="double-click-noselection aside">
             <table>
                 <tr>
                     <td style="padding-top: 15px; vertical-align:top">
-            <span id="sex-toggle">
-                <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
-                     style="width:20px;height:38px;padding:2px"
-                     src="${pathImage}"/>
-            </span>
+                        <span id="sex-toggle">
+                            <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
+                                 style="width:20px;height:38px;padding:2px" src="${pathImage}"/>
+                        </span>
                         <!--
                         <span data-help-loc="#anatomogram"/>
                         -->
@@ -67,7 +66,7 @@
             <div id="anatomogram-ensembl-launcher"></div>
         </div>
 
-        <div id="ensembl-launcher" class="aside stickem" style="display:inline"></div>
+        <div id="ensembl-launcher" class="aside" style="display:inline"></div>
 
         <div id="heatmap-react" class="heatmap-position${isWidget ? '-widget' : ''}"></div>
 

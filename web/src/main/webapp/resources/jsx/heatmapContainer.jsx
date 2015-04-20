@@ -13,18 +13,12 @@ var ExperimentDescription = (function (React) {
             var experimentURL = this.props.experiment.contextRoot + this.props.experiment.URL;
 
             return (
-                <table width="100%">
-                    <tbody>
-                        <tr>
-                            <td width="100%">
-                                <div id="experimentDescription">
-                                    <a id="goto-experiment" className="thick-link" title="Experiment Page" href={experimentURL}>{this.props.experiment.description}</a>
-                                </div>
-                                <div id="experimentOrganisms">Organism(s): <span style={{"font-style":"italic"}}>{this.props.experiment.allSpecies}</span></div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div style={{width: "100%"}}>
+                    <div id="experimentDescription">
+                        <a id="goto-experiment" className="thick-link" title="Experiment Page" href={experimentURL}>{this.props.experiment.description}</a>
+                    </div>
+                    <div id="experimentOrganisms">Organism(s): <span style={{"font-style":"italic"}}>{this.props.experiment.allSpecies}</span></div>
+                </div>
             );
         }
     });
@@ -44,7 +38,7 @@ var Anatomogram = (function (React) {
             var sexToggleImageSrc =this.props.anatomogram.contextRoot + this.props.anatomogram.toggleButtonImage;
 
             return (
-                <div id="anatomogram" className="aside stickem double-click-noselection" style={{display: "inline"}}>
+                <div id="anatomogram" className="aside double-click-noselection" style={{display: "inline"}}>
                     <table>
                         <tr>
                             <td style={{"padding-top": "15px", "vertical-align":"top"}}>
@@ -81,11 +75,11 @@ var HeatmapContainer = (function (React) {
 
                         { this.props.experiment ? ExperimentDescription( {experiment: this.props.experiment} ) : null }
 
-                        <div id="heatmap-anatomogram" className="heatmap-anatomogram-row stickem-container">
+                        <div id="heatmap-anatomogram" className="heatmap-anatomogram-row">
 
                             { this.props.anatomogram ? Anatomogram( {anatomogram:this.props.anatomogram} ) : null}
 
-                            <div id="ensembl-launcher" className="aside stickem" style={{"display":"inline"}}></div>
+                            <div id="ensembl-launcher" className="aside" style={{"display":"inline"}}></div>
 
                             <div id="heatmap-react" className={heatmapClass}>
                                 <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
