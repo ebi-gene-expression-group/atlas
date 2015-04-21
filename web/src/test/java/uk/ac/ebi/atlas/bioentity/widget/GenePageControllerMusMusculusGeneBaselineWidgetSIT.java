@@ -60,7 +60,7 @@ public class GenePageControllerMusMusculusGeneBaselineWidgetSIT extends SinglePa
 
         List<String> factorValueHeaders = subject.getFactorValueHeaders();
         //System.out.println("\"" + Joiner.on("\", \"").join(factorValueHeaders) + "\"");
-        assertThat(factorValueHeaders, contains("brain", "cerebellum", "heart", "hippocampus", "kidney", "liver", "lung", "spleen", "testis", "thymus"));
+        assertThat(factorValueHeaders, containsInAnyOrder("brain", "cerebellum", "heart", "hippocampus", "kidney", "liver", "lung", "spleen", "testis", "thymus"));
 
         assertThat(subject.getGeneNames().size(), is(2));
         assertThat(subject.getGeneNames(), contains("Six tissues","Vertebrate tissues"));

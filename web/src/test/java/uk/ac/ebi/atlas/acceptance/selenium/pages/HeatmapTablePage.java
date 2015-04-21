@@ -91,7 +91,7 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(className = "gradient-level-max")
     private WebElement gradientLevelsMax;
 
-    @FindBy(css = "#heatmap-table > tbody > tr > td > div > a")
+    @FindBy(css = "#heatmap-table > tbody > tr > th > span > a")
     private List<WebElement> geneNames;
 
     @FindBy(xpath = "//label[@for='queryFactorValues']")
@@ -100,13 +100,13 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "anatomogram")
     private WebElement anatomogram;
 
-    @FindBy(css = "#heatmap-react table table")
+    @FindBy(css = "#gxaExperimentPageHeatmapCountAndLegend > div > div")
     private WebElement diffHeatmapTableLegend;
 
-    @FindBy(xpath = "//thead/tr/td[1]")
+    @FindBy(xpath = "id('heatmap-table')/thead/tr[2]/th")
     private WebElement geneColumnHeader;
 
-    @FindBy(xpath = "//thead/tr/td[2]")
+    @FindBy(xpath = "id('heatmap-table')/thead/tr[2]/th[2]")
     private WebElement designElementHeader;
 
     @FindBy(id = "ensembl-launcher")
@@ -139,9 +139,9 @@ public class HeatmapTablePage extends TablePage {
     protected int getGeneExpressionStartingRowIndex() {
         try {
             driver.findElement(By.id("arrayDesignAccession")).getAttribute("value");
-            return 2; //MicroarrayExperiment, we have two columns before expression level cells
+            return 1; //MicroarrayExperiment, we have the header and one column before expression level cells
         } catch (NoSuchElementException e) {
-            return 1; //Other experiment types, we have one column before expression level cells
+            return 0; //Other experiment types, we have only the header before expression level cells
         }
     }
 
@@ -152,7 +152,7 @@ public class HeatmapTablePage extends TablePage {
     public List<String> getFactorValueHeaders() {
         List<String> queryFactorValues = getTableHeaders(getHeatmapTable());
         //and we need to remove the last header value, because is related to the organism part column
-        return queryFactorValues.subList(getGeneExpressionStartingRowIndex(), queryFactorValues.size());
+        return queryFactorValues.subList(getGeneExpressionStartingRowIndex() + 1, queryFactorValues.size() - 1);
     }
 
     public String getHeatmapMessage() {
@@ -294,13 +294,12 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public boolean areGradientLevelsHidden() {
-        String style = gradientLevelsMin.getAttribute("style");
-        String style2 = gradientLevelsMax.getAttribute("style");
-        return style.contains("display") && style.contains("none") && style2.contains("display") && style2.contains("none");
+        String visibilityMin = gradientLevelsMin.getCssValue("visibility");
+        String visibilityMax = gradientLevelsMax.getCssValue("visibility");
+        return visibilityMin.equals("hidden") && visibilityMax.equals("hidden");
     }
 
     public Boolean areExpressionLevelsHidden() {
-        //we get the cell at index 1 because at index 0 we have the gene name
         WebElement firstExpressionLevelCell = getNonEmptyCellsFromFirstTableRow(getHeatmapTable()).get(getGeneExpressionStartingRowIndex());
         WebElement div = firstExpressionLevelCell.findElement(By.tagName("div"));
         return SeleniumUtil.isVisibilityHidden(div);
