@@ -26,30 +26,14 @@
 <%@ attribute name="highValueColorExpressionLevel" required="true" %>
 <%@ attribute name="lowValueColorExpressionLevel" required="true" %>
 
-<tr>
-    <td>
-        <span style="display:none" class="gradient-level-min">
-            ${lowValueColorExpressionLevel}
-        </span>
-    </td>
-    <td width="200px">
-        <div class="color-gradient" style="
-                overflow:auto;
-                background-image:
-                -webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));
-
+<div>
+    <div style="visibility: hidden; display: inline-block; white-space: nowrap" class="gradient-level-min"> ${lowValueColorExpressionLevel}</div>
+    <div class="color-gradient"
+         style="overflow: auto; vertical-align: middle;
+                background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));
                 background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});
-
                 background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour});
-
-                filter:progid:DXImageTransform.Microsoft.Gradient(GradientType =1,
-                startColorstr=${lowValueColour},endColorstr=${highValueColour});">
-            &nbsp;
-        </div>
-    </td>
-    <td>
-        <span style="display:none" class="gradient-level-max">
-            ${highValueColorExpressionLevel}
-        </span>
-    </td>
-</tr>
+                filter: progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${lowValueColour},endColorstr=${highValueColour});
+                width: 200px; height: 15px; margin: 2px 6px 2px 6px; display: inline-block"></div>
+    <div style="visibility: hidden; display: inline-block; white-space: nowrap" class="gradient-level-max">${highValueColorExpressionLevel}</div>
+</div>

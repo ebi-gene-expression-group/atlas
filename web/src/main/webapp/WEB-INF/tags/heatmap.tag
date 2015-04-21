@@ -38,172 +38,149 @@
 <fmt:setBundle basename="configuration" var="configuration"/>
 
 <div class="block">
-    <table>
-        <tbody>
-        <tr>
-            <td>
-                <display:table name="${geneProfiles}" id="geneProfile"
-                               htmlId="heatmap-table" class="table-grid">
-                    <display:column
-                            title="
-                                    <div class='heatmap-matrix-top-left-corner'>
-                                    <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo'></span>
-                                    <button id='display-levels' class='display-levels-button' />
-                                    </button>
-                                    </div>"
-                            class="horizontal-header-cell">
+    <display:table name="${geneProfiles}" id="geneProfile"
+                   htmlId="heatmap-table" class="table-grid">
+        <display:column
+                title="
+                        <div class='heatmap-matrix-top-left-corner'>
+                        <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo'></span>
+                        <button id='display-levels' class='display-levels-button' />
+                        </button>
+                        </div>"
+                class="horizontal-header-cell">
 
-                        <c:set var="geneId" value="${geneProfile.id}"/>
-                        <c:set var="bioEntityURL" value="${geneSet? \"query?geneQuery=\".concat(geneProfile.getName()).concat(\"&exactMatch=\").concat(preferences.isExactMatch()) : \"genes/\".concat(geneProfile.id)}"/>
+            <c:set var="geneId" value="${geneProfile.id}"/>
+            <c:set var="bioEntityURL" value="${geneSet? \"query?geneQuery=\".concat(geneProfile.getName()).concat(\"&exactMatch=\").concat(preferences.isExactMatch()) : \"genes/\".concat(geneProfile.id)}"/>
 
+            <c:choose>
+                <c:when test="${!disableGeneLinks}">
+                    <a ${(geneSet == null || !geneSet) ? 'class="genename" id="'.concat(geneId).concat('"') : ''}
+                       href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityURL}'
+                       title="">${geneProfile.getName()}</a>
+                </c:when>
+                <c:otherwise>
+                    <div ${(geneSet == null || !geneSet) ? 'class="genename" id="'.concat(geneId).concat('"') : ''}>${geneProfile.getName()}</div>
+                </c:otherwise>
+            </c:choose>
+        </display:column>
+
+        <c:if test="${type.isMicroarray()}">
+            <display:column title="" class="design-element">
+                ${geneProfile.designElementName}
+            </display:column>
+        </c:if>
+
+        <c:forEach var="factorHolder" items="${allQueryFactors}">
+
+            <c:choose>
+                <c:when test="${type.isBaseline()}">
+                    <c:set var="queryFactor" value="${factorHolder.factor}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="queryFactor" value="${factorHolder}"/>
+                </c:otherwise>
+            </c:choose>
+
+            <%--@elvariable id="expression" type="uk.ac.ebi.atlas.model.differential.DifferentialExpression"--%>
+            <c:set var="expression" value="${geneProfile.getExpression(queryFactor)}" />
+
+            <c:set var="hasExpression" value="${not empty expression}" />
+
+            <c:set var="isKnownLevel" value="${hasExpression && expression.isKnown()}" />
+
+            <c:set var="expressionLevel" value="${isKnownLevel ? expression.getLevel() : null}"/>
+
+            <!-- first we preset the style to empty value because this code is being executed within a loop,
+            if we didn't do this the style value would be depending on the results of the previous loop iteration -->
+            <c:set var="style" value=""/>
+            <!-- then we check if expressionLevel is not null we set the style value to the right shade of gradient -->
+            <c:if test="${not empty expressionLevel}">
+                <%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
+                <c:choose>
+                    <c:when test="${type.isBaseline()}">
+                        <c:set var="cellColour"
+                               value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
+                    </c:when>
+                    <c:otherwise>
                         <c:choose>
-                            <c:when test="${!disableGeneLinks}">
-                                <a ${(geneSet == null || !geneSet) ? 'class="genename" id="'.concat(geneId).concat('"') : ''}
-                                   href='${applicationProperties.buildServerURL(pageContext.request)}/${bioEntityURL}'
-                                   title="">${geneProfile.getName()}</a>
+                            <c:when test="${geneProfile.getExpression(queryFactor).overExpressed}">
+                                <c:set var="cellColour"
+                                       value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - geneProfiles.getMinUpRegulatedExpressionLevel(), 1 - geneProfiles.getMaxUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
                             </c:when>
                             <c:otherwise>
-                                <div ${(geneSet == null || !geneSet) ? 'class="genename" id="'.concat(geneId).concat('"') : ''}>${geneProfile.getName()}</div>
+                                <c:set var="cellColour"
+                                       value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - geneProfiles.getMinDownRegulatedExpressionLevel(), 1 - geneProfiles.getMaxDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
                             </c:otherwise>
                         </c:choose>
+                    </c:otherwise>
+                </c:choose>
 
-                    </display:column>
+                <c:if test="${isKnownLevel}">
+                    <c:set var="style" value="background-color:${cellColour}"/>
+                </c:if>
+            </c:if>
 
-                    <c:if test="${type.isMicroarray()}">
-                        <display:column title="" class="design-element">
-                            ${geneProfile.designElementName}
-                        </display:column>
-                    </c:if>
 
-                    <c:forEach var="factorHolder" items="${allQueryFactors}">
+            <c:set var="columnHeader"
+                   value="${type.isBaseline() ? queryFactor.value : queryFactor.displayName}"/>
 
-                        <c:choose>
-                            <c:when test="${type.isBaseline()}">
-                                <c:set var="queryFactor" value="${factorHolder.factor}"/>
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="queryFactor" value="${factorHolder}"/>
-                            </c:otherwise>
-                        </c:choose>
-
-                        <%--@elvariable id="expression" type="uk.ac.ebi.atlas.model.differential.DifferentialExpression"--%>
-                        <c:set var="expression" value="${geneProfile.getExpression(queryFactor)}" />
-
-                        <c:set var="hasExpression" value="${not empty expression}" />
-
-                        <c:set var="isKnownLevel" value="${hasExpression && expression.isKnown()}" />
-
-                        <c:set var="expressionLevel" value="${isKnownLevel ? expression.getLevel() : null}"/>
-
-                        <!-- first we preset the style to empty value because this code is being executed within a loop,
-                        if we didn't do this the style value would be depending on the results of the previous loop iteration -->
-                        <c:set var="style" value=""/>
-                        <!-- then we check if expressionLevel is not null we set the style value to the right shade of gradient -->
-                        <c:if test="${not empty expressionLevel}">
-                            <%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
-                            <c:choose>
-                                <c:when test="${type.isBaseline()}">
-                                    <c:set var="cellColour"
-                                           value="${colourGradient.getGradientColour(expressionLevel, geneProfiles.getMinExpressionLevel(), geneProfiles.getMaxExpressionLevel())}"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:choose>
-                                        <c:when test="${geneProfile.getExpression(queryFactor).overExpressed}">
-                                            <c:set var="cellColour"
-                                                   value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - geneProfiles.getMinUpRegulatedExpressionLevel(), 1 - geneProfiles.getMaxUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <c:set var="cellColour"
-                                                   value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - geneProfiles.getMinDownRegulatedExpressionLevel(), 1 - geneProfiles.getMaxDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:otherwise>
-                            </c:choose>
-
-                            <c:if test="${isKnownLevel}">
-                                <c:set var="style" value="background-color:${cellColour}"/>
+            <display:column
+                    title="<div data-organism-part=\"${columnHeader}\"
+                        ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTermId).concat('\"') : ''}
+                        ${type.isMicroarray() ? 'data-array-design=\"'.concat(queryFactor.arrayDesignAccession).concat('\"') : ''}
+                        ${type.isBaseline() ? 'data-assay-group-id=\"'.concat(factorHolder.assayGroupId).concat('\"') : ''}
+                        ${!type.isBaseline() ? 'data-contrast-id=\"'.concat(queryFactor.id).concat('\"') : ''}
+                        ${'data-experiment-accession=\"'.concat(experimentAccession).concat('\"')}
+                        class=\"factor-header rotate_text\"></div>"
+                    headerClass="rotated_cell vertical-header-cell ${!type.isBaseline() ? 'contrastNameCell' : 'factorNameCell'}"
+                    style="${style}">
+                <c:choose>
+                <c:when test="${isKnownLevel}">
+                    <c:choose>
+                        <c:when test="${type.isBaseline()}">
+                            <%--@elvariable id="baselineExpressionLevelRounder" type="uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder"--%>
+                            <c:set var="roundedExpressionLevel" value="${baselineExpressionLevelRounder.format(expressionLevel)}"/>
+                        </c:when>
+                        <c:when test="${!type.isBaseline()}">
+                            <%--@elvariable id="pValueFormatter" type="uk.ac.ebi.atlas.profiles.differential.viewmodel.PValueFormatter"--%>
+                            <%--@elvariable id="foldChangeRounder" type="uk.ac.ebi.atlas.profiles.differential.viewmodel.FoldChangeRounder"--%>
+                            <c:set var="pValue" value="${pValueFormatter.formatPValueAsScientificNotationHtmlEscaped(expression.getPValue())}"/>
+                            <c:set var="foldChange" value="${foldChangeRounder.format(expression.foldChange)}"/>
+                            <c:if test="${type.isMicroarray()}">
+                                <fmt:formatNumber type="number"
+                                                  maxFractionDigits="2"
+                                                  value="${expression.tstatistic}"
+                                                  groupingUsed="false"
+                                                  var="tstatistic"/>
                             </c:if>
-                        </c:if>
+                        </c:when>
+                    </c:choose>
 
+                    <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
+                        ${!type.isBaseline() ? 'data-pValue="'.concat(pValue).concat('"'):""}
+                         data-organism-part="${columnHeader}" data-color="${cellColour}"
+                         ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTermId).concat('\"') : ''}>
+                            ${!type.isBaseline() ? foldChange : roundedExpressionLevel}
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <c:if test="${hasExpression}">
+                        <%--Otherwise show question marks tooltip--%>
+                        <div style="text-align: center" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
+                            ${!type.isBaseline() ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
+                                data-organism-part="${columnHeader}"
+                            ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTermId).concat('\"') : ''}>
 
-                        <c:set var="columnHeader"
-                               value="${type.isBaseline() ? queryFactor.value : queryFactor.displayName}"/>
+                            <span id='unknownCell' data-help-loc='#heatMapTableUnknownCell'></span>
+                        </div>
+                    </c:if>
+                </c:otherwise>
+                </c:choose>
+            </display:column>
 
-                        <display:column
-                                title="<div data-organism-part=\"${columnHeader}\"
-                                    ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTermId).concat('\"') : ''}
-                                    ${type.isMicroarray() ? 'data-array-design=\"'.concat(queryFactor.arrayDesignAccession).concat('\"') : ''}
-                                    ${type.isBaseline() ? 'data-assay-group-id=\"'.concat(factorHolder.assayGroupId).concat('\"') : ''}
-                                    ${!type.isBaseline() ? 'data-contrast-id=\"'.concat(queryFactor.id).concat('\"') : ''}
-                                    ${'data-experiment-accession=\"'.concat(experimentAccession).concat('\"')}
-                                    class=\"factor-header rotate_text\"></div>"
-                                headerClass="rotated_cell vertical-header-cell ${!type.isBaseline() ? 'contrastNameCell' : 'factorNameCell'}"
-                                style="${style}">
-                            <c:choose>
-                            <c:when test="${isKnownLevel}">
-                                <c:choose>
-                                    <c:when test="${type.isBaseline()}">
-                                        <%--@elvariable id="baselineExpressionLevelRounder" type="uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder"--%>
-                                        <c:set var="roundedExpressionLevel" value="${baselineExpressionLevelRounder.format(expressionLevel)}"/>
-                                    </c:when>
-                                    <c:when test="${!type.isBaseline()}">
-                                        <%--@elvariable id="pValueFormatter" type="uk.ac.ebi.atlas.profiles.differential.viewmodel.PValueFormatter"--%>
-                                        <%--@elvariable id="foldChangeRounder" type="uk.ac.ebi.atlas.profiles.differential.viewmodel.FoldChangeRounder"--%>
-                                        <c:set var="pValue" value="${pValueFormatter.formatPValueAsScientificNotationHtmlEscaped(expression.getPValue())}"/>
-                                        <c:set var="foldChange" value="${foldChangeRounder.format(expression.foldChange)}"/>
-                                        <c:if test="${type.isMicroarray()}">
-                                            <fmt:formatNumber type="number"
-                                                              maxFractionDigits="2"
-                                                              value="${expression.tstatistic}"
-                                                              groupingUsed="false"
-                                                              var="tstatistic"/>
-                                        </c:if>
-                                    </c:when>
-                                </c:choose>
+        </c:forEach>
 
-                                <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
-                                    ${!type.isBaseline() ? 'data-pValue="'.concat(pValue).concat('"'):""}
-                                     data-organism-part="${columnHeader}" data-color="${cellColour}"
-                                     ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTermId).concat('\"') : ''}>
-                                        ${!type.isBaseline() ? foldChange : roundedExpressionLevel}
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <c:if test="${hasExpression}">
-                                    <%--Otherwise show question marks tooltip--%>
-                                    <div style="text-align: center" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
-                                        ${!type.isBaseline() ? 'data-fold-change="'.concat(foldChange).concat('"'):""}
-                                            data-organism-part="${columnHeader}"
-                                        ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTermId).concat('\"') : ''}>
-
-                                        <span id='unknownCell' data-help-loc='#heatMapTableUnknownCell'></span>
-                                    </div>
-                                </c:if>
-                            </c:otherwise>
-                            </c:choose>
-                        </display:column>
-
-                    </c:forEach>
-
-                </display:table>
-            </td>
-            <td style="vertical-align: top">
-                <div style="float:left;">
-                    <!--
-                     <button id="download-profiles" class="button-image" value="D"></button>
-                    -->
-                    <a id="download-profiles-link"
-                       title="Top 50 genes displayed on page. Download results to see the rest."
-                       href="${pageContext.request.contextPath}${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
-                       class="button-image" target="_blank">
-                        <img id="download-profiles" alt="Download query results" style="width:20px"
-                             src="${base}/resources/images/download_blue_small.png"/>
-                    </a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    </display:table>
 
     <c:choose>
         <c:when test="${type.isBaseline()}">

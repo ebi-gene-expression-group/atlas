@@ -43,6 +43,15 @@
 
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
+<link rel="stylesheet" type="text/css"
+      href="${pageContext.request.contextPath}/resources/js/chosen/chosen.css">
+
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/jquery-stickysort/jquery.ba-throttle-debounce.min.js"></script>
+<script language="JavaScript" type="text/javascript"
+        src="${pageContext.request.contextPath}/resources/js/jquery-stickysort/jquery.stickysort.js"></script>
+<link rel="stylesheet" type="text/css"
+      href="${pageContext.request.contextPath}/resources/js/jquery-stickysort/stickysort.css">
 
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/jquery-watermark/jquery.watermark.min.js"></script>

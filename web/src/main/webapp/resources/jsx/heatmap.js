@@ -91,9 +91,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 var heatMapTableWidth = $(this.refs.heatmapTable.getDOMNode()).width(),
                     countAndLegendWidth = $(this.refs.countAndLegend.getDOMNode()).width();
 
-                console.log(heatMapTableWidth);
-                console.log(countAndLegendWidth);
-
                 if (heatMapTableWidth > countAndLegendWidth) {
                     $(this.refs.countAndLegend.getDOMNode()).width(heatMapTableWidth);
                 }
@@ -116,18 +113,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     // Resize sticky header width to match actual headers
                     var setWidths = function () {
                             $stickyHead.find('thead th').each(function (i) {
-                                var $originalHeader = $t.find('thead th').eq(i),
-                                    widthDiff = $originalHeader.width() - $(this).width();
-
-                                if (widthDiff !== 0) {
-                                    // Changing the width for elements that have an inner div has no effect (and no, outerWidth and outerHeight don’t work either)
-                                    if ($(this).find('div').length) {
-                                        var $thisDiv = $(this).find('div');
-                                        $thisDiv.width($thisDiv.width() + widthDiff);
-                                    } else {
-                                        $(this).width($(this).width() + widthDiff);
-                                    }
-                                }
+                                $(this).css({width: $t.find('thead th').eq(i).css("width")});
                             });
                             $stickyHead.width($t.width());
                         },
@@ -206,8 +192,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             },
 
             legendType: function () {
-                return (type.isBaseline || type.isMultiExperiment ? LegendBaseline({displayLevels: this.state.displayLevels, minExpressionLevel: this.state.profiles.minExpressionLevel, maxExpressionLevel: this.state.profiles.maxExpressionLevel})
-                    : LegendDifferential({displayLevels: this.state.displayLevels, minDownLevel: this.state.profiles.minDownLevel, maxDownLevel: this.state.profiles.maxDownLevel, minUpLevel: this.state.profiles.minUpLevel, maxUpLevel: this.state.profiles.maxUpLevel}));
+                return (type.isBaseline || type.isMultiExperiment ?
+                    LegendBaseline({displayLevels: this.state.displayLevels, minExpressionLevel: this.state.profiles.minExpressionLevel, maxExpressionLevel: this.state.profiles.maxExpressionLevel}) :
+                    LegendDifferential({displayLevels: this.state.displayLevels, minDownLevel: this.state.profiles.minDownLevel, maxDownLevel: this.state.profiles.maxDownLevel, minUpLevel: this.state.profiles.minUpLevel, maxUpLevel: this.state.profiles.maxUpLevel}));
             },
 
             render: function () {
@@ -224,9 +211,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                             React.DOM.div({style: {display: "inline-block", "padding-left": "10px", "vertical-align": "top"}}, 
                                 DownloadProfilesButton({ref: "downloadProfilesButton"})
                             ), 
-                            React.DOM.div({style: {display: "inline-block", "padding-left": "20px"}}, 
-                                this.legendType()
-                            )
+                            this.legendType()
                         ), 
 
                         React.DOM.div({id: "gxaExperimentPageHeatmapTableStickyWrapper", style: {"padding-top": "10px"}}, 
@@ -273,7 +258,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
                 render: function () {
                     return (
-                        React.DOM.div(null, 
+                        React.DOM.div({style: {display: "inline-block", "padding-left": "20px"}}, 
                             React.DOM.div({style: {display: "inline-block"}}, 
                                 LegendRow({displayLevels: this.props.displayLevels, lowExpressionLevel: formatBaselineExpression(this.props.minExpressionLevel), highExpressionLevel: formatBaselineExpression(this.props.maxExpressionLevel), lowValueColour: "#C0C0C0", highValueColour: "#0000FF"})
                             ), 
@@ -293,7 +278,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
                 render: function () {
                     return (
-                        React.DOM.div(null, 
+                        React.DOM.div({style: {display: "inline-block", "padding-left": "20px"}}, 
                             React.DOM.div({style: {display: "inline-block"}}, 
                                 !isNaN(this.props.minDownLevel) && !isNaN(this.props.maxDownLevel) ? LegendRow({displayLevels: this.props.displayLevels, lowExpressionLevel: this.props.minDownLevel, highExpressionLevel: this.props.maxDownLevel, lowValueColour: "#C0C0C0", highValueColour: "#0000FF"}) : null, 
                                 !isNaN(this.props.minUpLevel) && !isNaN(this.props.maxUpLevel) ? LegendRow({displayLevels: this.props.displayLevels, lowExpressionLevel: this.props.minUpLevel, highExpressionLevel: this.props.maxUpLevel, lowValueColour: "#FFAFAF", highValueColour: "#FF0000"}) : null
@@ -933,7 +918,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     // NB: empty title tag below is required for tooltip to work
                     return (
                         React.DOM.tr({className: rowClassName}, 
-                            React.DOM.th({className: className, onMouseEnter: enableEnsemblLauncher ? this.onMouseEnter : undefined, onMouseLeave: enableEnsemblLauncher ? this.onMouseLeave : undefined, onClick: enableEnsemblLauncher ? this.onClick : undefined}, 
+                            React.DOM.td({className: className, onMouseEnter: enableEnsemblLauncher ? this.onMouseEnter : undefined, onMouseLeave: enableEnsemblLauncher ? this.onMouseLeave : undefined, onClick: enableEnsemblLauncher ? this.onClick : undefined}, 
                                  enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked(), 
                                 showSelectTextOnHover, 
                                 showTickWhenSelected
@@ -960,7 +945,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             var formatParts = scientificNotationString.split(/[Ee]/);
 
             if (formatParts.length == 1) {
-                return scientificNotationString;
+                return (
+                    React.DOM.span(null, scientificNotationString)
+                );
             }
 
             var mantissa = formatParts[0];
@@ -1118,7 +1105,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         return "<table class='table-grid' style='margin: 0; padding: 0;'><thead><th class='header-cell'>Adjusted <i>p</i>-value</th>" +
                             (tstatistic !== undefined ? "<th class='header-cell'><i>t</i>-statistic</th>" : "") +
                             "<th class='header-cell'>Log<sub>2</sub>-fold change</th></thead>" +
-                            "<tbody><tr><td style='padding:6px'>" + React.renderComponentToString(formatScientificNotation(pValue)) + "</td>" +
+                            "<tbody><tr><td style='padding:6px'>" + React.renderComponentToStaticMarkup(formatScientificNotation(pValue)) + "</td>" +
                             (tstatistic !== undefined ? "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
                             "<td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
                             "</table>";

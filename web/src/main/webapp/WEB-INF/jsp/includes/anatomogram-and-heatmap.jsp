@@ -66,54 +66,61 @@
             </div>
 
             <div id="heatmap-div" class="heatmap-position${isWidget ? '-widget' : ''}">
-                <table>
-                    <tr>
-                        <td>
-                        <span id="geneCount">Showing ${geneProfiles.size()}
-                            of ${geneProfiles.getTotalResultCount()} genes found:
-                        </span>
+                <div>
+                    <div style="display: inline-block; vertical-align: top;">
+                        <span id="geneCount">Showing ${geneProfiles.size()} of ${geneProfiles.getTotalResultCount()} genes found:</span>
                         <c:if test="${not empty profilesAsGeneSets}">
                             <a id="showGeneSetProfiles" href="javascript:void(0)">(show by gene set)</a>
                         </c:if>
-                        </td>
-                        <td>
-                            <h:heatmap-legend geneProfiles="${geneProfiles}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <h:heatmap geneProfiles="${geneProfiles}" elementId="heatmap-div"/>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <c:if test="${not empty profilesAsGeneSets}">
-                <div id="heatmap-profilesAsGeneSets" class="heatmap-position${isWidget ? '-widget' : ''}" style="display:none">
-
-                    <table>
-                        <tr>
-                            <td>
-                        <span id="geneSetsCount">Showing ${profilesAsGeneSets.size()}
-                            of ${profilesAsGeneSets.getTotalResultCount()} gene sets found:
-                        </span>
-                        <a id="showIndividualGenes" href="javascript:void(0)">(show individual genes)</a>
-                            </td>
-                            <td>
-                                <h:heatmap-legend geneProfiles="${profilesAsGeneSets}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <h:heatmap geneProfiles="${profilesAsGeneSets}" elementId="heatmap-profilesAsGeneSets" geneSet="true" hidden="true"/>
-                            </td>
-                        </tr>
-                    </table>
+                    </div>
+                    <div style="display: inline-block; padding-left: 10px; vertical-align: top">
+                        <a id="download-profiles-link"
+                           title="Top 50 genes displayed on page. Download results to see the rest."
+                           href="${pageContext.request.contextPath}${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
+                           class="button-image" target="_blank">
+                            <img id="download-profiles" alt="Download query results" style="width:20px"
+                                 src="${base}/resources/images/download_blue_small.png"/>
+                        </a>
+                    </div>
+                    <div style="display: inline-block; padding-left: 20px">
+                        <h:heatmap-legend geneProfiles="${geneProfiles}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
+                    </div>
                 </div>
-            </c:if>
-
-            <div id="heatmap-react-baseline" class="heatmap-position"></div>
-
+                <div>
+                    <h:heatmap geneProfiles="${geneProfiles}" elementId="heatmap-div"/>
+                </div>
+            </div>
         </div>
+
+        <c:if test="${not empty profilesAsGeneSets}">
+            <div id="heatmap-profilesAsGeneSets" class="heatmap-position${isWidget ? '-widget' : ''}" style="display:none">
+                <div>
+                    <div style="display: inline-block; vertical-align: top;">
+                        <span id="geneSetsCount">Showing ${profilesAsGeneSets.size()} of ${profilesAsGeneSets.getTotalResultCount()} gene sets found:</span>
+                        <c:if test="${not empty profilesAsGeneSets}">
+                            <a id="showIndividualGenes" href="javascript:void(0)">(show individual genes)</a>
+                        </c:if>
+                    </div>
+                    <div style="display: inline-block; padding-left: 10px; vertical-align: top">
+                        <a id="download-profiles-link"
+                           title="Top 50 genes displayed on page. Download results to see the rest."
+                           href="${pageContext.request.contextPath}${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
+                           class="button-image" target="_blank">
+                            <img id="download-profiles" alt="Download query results" style="width:20px"
+                                 src="${base}/resources/images/download_blue_small.png"/>
+                        </a>
+                    </div>
+                    <div style="display: inline-block; padding-left: 20px">
+                        <h:heatmap-legend geneProfiles="${profilesAsGeneSets}" type="${type.isBaseline() ? 'baseline' : 'differential'}"/>
+                    </div>
+                </div>
+                <div>
+                    <h:heatmap geneProfiles="${profilesAsGeneSets}" elementId="heatmap-profilesAsGeneSets" geneSet="true" hidden="true"/>
+                </div>
+            </div>
+        </c:if>
+
+        <div id="heatmap-react-baseline" class="heatmap-position"></div>
+
     </c:otherwise>
 </c:choose>

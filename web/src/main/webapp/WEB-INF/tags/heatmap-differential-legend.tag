@@ -29,28 +29,24 @@
 
 <%@ attribute name="geneProfiles" required="true" type="uk.ac.ebi.atlas.model.differential.DifferentialExpressionLimits"%>
 
-<div style="float:right; padding-left: 100px">
-    <div style="float:left">
-        <table style="font-size:10px;" id="diff-heatmap-legend">
-            <c:if test="${((preferences.regulation eq 'DOWN') or (preferences.regulation eq 'UP_DOWN'))
-                            and geneProfiles.getMinDownRegulatedExpressionLevel() != '0.0'}">
+<div style="display: inline-block">
+    <c:if test="${((preferences.regulation eq 'DOWN') or (preferences.regulation eq 'UP_DOWN'))
+                    and geneProfiles.getMinDownRegulatedExpressionLevel() != '0.0'}">
 
-                <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
-                                      highValueColour="${colourGradient.getHexByColourName('blue')}"
-                                      highValueColorExpressionLevel="${foldChangeRounder.round(geneProfiles.getMaxDownRegulatedExpressionLevel())}"
-                                      lowValueColorExpressionLevel="${foldChangeRounder.round(geneProfiles.getMinDownRegulatedExpressionLevel())}"/>
+        <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
+                              highValueColour="${colourGradient.getHexByColourName('blue')}"
+                              highValueColorExpressionLevel="${foldChangeRounder.round(geneProfiles.getMaxDownRegulatedExpressionLevel())}"
+                              lowValueColorExpressionLevel="${foldChangeRounder.round(geneProfiles.getMinDownRegulatedExpressionLevel())}"/>
 
-            </c:if>
-            <c:if test="${((preferences.regulation eq 'UP') or (preferences.regulation eq 'UP_DOWN'))
-                            and geneProfiles.getMinUpRegulatedExpressionLevel() != '0.0'}">
+    </c:if>
+    <c:if test="${((preferences.regulation eq 'UP') or (preferences.regulation eq 'UP_DOWN'))
+                    and geneProfiles.getMinUpRegulatedExpressionLevel() != '0.0'}">
 
-                <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('pink')}"
-                                      highValueColour="${colourGradient.getHexByColourName('red')}"
-                                      highValueColorExpressionLevel="${foldChangeRounder.round(geneProfiles.getMaxUpRegulatedExpressionLevel())}"
-                                      lowValueColorExpressionLevel="${foldChangeRounder.round(geneProfiles.getMinUpRegulatedExpressionLevel())}"/>
+        <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('pink')}"
+                              highValueColour="${colourGradient.getHexByColourName('red')}"
+                              highValueColorExpressionLevel="${foldChangeRounder.round(geneProfiles.getMaxUpRegulatedExpressionLevel())}"
+                              lowValueColorExpressionLevel="${foldChangeRounder.round(geneProfiles.getMinUpRegulatedExpressionLevel())}"/>
 
-            </c:if>
-        </table>
-    </div>
-    <div id="gradient-help-diff" data-help-loc="#gradient-differential-crossexp" style="float:left;"></div>
+    </c:if>
 </div>
+<div id="gradient-help-diff" data-help-loc="#gradient-differential-crossexp" style="display: inline-block; vertical-align: top; padding-left: 4px"></div>

@@ -91,11 +91,11 @@
     text-align: left !important;
 }
 
-tr.gxaProteomicsExperiment th.horizontal-header-cell {
+tr.gxaProteomicsExperiment td.horizontal-header-cell {
     background-color: rgb(210, 233, 233) !important;
 }
 
-tr.gxaProteomicsExperiment th.horizontal-header-cell-selected, tr.gxaProteomicsExperiment th.horizontal-header-cell:hover {
+tr.gxaProteomicsExperiment td.horizontal-header-cell-selected, tr.gxaProteomicsExperiment td.horizontal-header-cell:hover {
     background-color: rgb(200, 220, 220) !important;
 }
 
