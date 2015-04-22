@@ -26,14 +26,16 @@
 <%@ attribute name="highValueColorExpressionLevel" required="true" %>
 <%@ attribute name="lowValueColorExpressionLevel" required="true" %>
 
-<div>
-    <div style="visibility: hidden; display: inline-block; white-space: nowrap" class="gradient-level-min"> ${lowValueColorExpressionLevel}</div>
-    <div class="color-gradient"
-         style="overflow: auto; vertical-align: middle;
-                background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));
-                background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});
-                background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour});
-                filter: progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${lowValueColour},endColorstr=${highValueColour});
-                width: 200px; height: 15px; margin: 2px 6px 2px 6px; display: inline-block"></div>
-    <div style="visibility: hidden; display: inline-block; white-space: nowrap" class="gradient-level-max">${highValueColorExpressionLevel}</div>
+<div style=""display: table-row>
+    <div style="visibility: hidden; display: table-cell; white-space: nowrap" class="gradient-level-min"> ${lowValueColorExpressionLevel}</div>
+    <div style="display: table-cell">
+        <span class="color-gradient"
+              style="overflow: auto; vertical-align: middle;
+                     background-image: -webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));
+                     background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});
+                     background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour});
+                     filter: progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${lowValueColour},endColorstr=${highValueColour});
+                     width: 200px; height: 15px; margin: 2px 6px 2px 6px; display: inline-block"></span>
+    </div>
+    <div style="visibility: hidden; display: none; white-space: nowrap" class="gradient-level-max">${highValueColorExpressionLevel}</div>
 </div>
