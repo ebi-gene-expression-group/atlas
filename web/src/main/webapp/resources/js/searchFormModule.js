@@ -60,7 +60,7 @@ var searchFormModule = (function($) {
     }
 
     function initSelectBox(watermarkLabel){
-        $("#queryFactorValues").chosen({width: "100%"});
+        $("#queryFactorValues").chosen();
 
         //following code is a patch to reload the right watermark label in the 'chosen' plugin
         $("#queryFactorValues").change(function () {
@@ -68,11 +68,9 @@ var searchFormModule = (function($) {
                 $(this).data("chosen").default_text = "";
             } else {
                 $(this).data("chosen").default_text = watermarkLabel;
-                $(this).trigger("liszt:updated");
+                $(this).trigger("chosen:updated");
             }
-
         });
-
     }
 
     function disableCarriageReturn(selector) {

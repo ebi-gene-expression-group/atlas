@@ -28,21 +28,14 @@
 
 <%@ attribute name="geneProfiles" required="true" type="uk.ac.ebi.atlas.model.baseline.BaselineProfilesList"%>
 
-<div style="float:right; padding-left: 100px">
-    <div style="float:left">
-        <table style="font-size:10px;" id="baseline-heatmap-legend">
+<div style="display: inline-block">
+    <%--@elvariable id="baselineExpressionLevelRounder" type="uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder"--%>
+    <c:set var="minExpressionLevel" value="${baselineExpressionLevelRounder.format(geneProfiles.getMinExpressionLevel())}"/>
+    <c:set var="maxExpressionLevel" value="${baselineExpressionLevelRounder.format(geneProfiles.getMaxExpressionLevel())}"/>
 
-            <%--@elvariable id="baselineExpressionLevelRounder" type="uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder"--%>
-            <c:set var="minExpressionLevel" value="${baselineExpressionLevelRounder.format(geneProfiles.getMinExpressionLevel())}"/>
-            <c:set var="maxExpressionLevel" value="${baselineExpressionLevelRounder.format(geneProfiles.getMaxExpressionLevel())}"/>
-
-            <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
-                                  highValueColour="${colourGradient.getHexByColourName('blue')}"
-                                  lowValueColorExpressionLevel="${minExpressionLevel}"
-                                  highValueColorExpressionLevel="${maxExpressionLevel}"/>
-
-        </table>
-
-    </div>
-    <div id="baseline-help-diff" data-help-loc="#gradient-base" style="float:left;"></div>
+    <h:gradient-table-row lowValueColour="${colourGradient.getHexByColourName('lightGray')}"
+                          highValueColour="${colourGradient.getHexByColourName('blue')}"
+                          lowValueColorExpressionLevel="${minExpressionLevel}"
+                          highValueColorExpressionLevel="${maxExpressionLevel}"/>
 </div>
+<div id="baseline-help-diff" data-help-loc="#gradient-base" style="display: inline-block; vertical-align: top; padding-left: 4px"></div>

@@ -42,16 +42,16 @@ var heatmapModuleDeprecated = (function ($) {
         $heatmap("div[data-color]").each(function () {
             showCellText(this);
         });
-        $heatmap(".gradient-level-min").attr("style", 'white-space: nowrap;');
-        $heatmap(".gradient-level-max").attr("style", 'white-space: nowrap;');
+        $heatmap(".gradient-level-min").css("visibility", "visible");
+        $heatmap(".gradient-level-max").css("visibility", "visible");
     }
 
     function hideExpressionLevels($heatmap) {
         $heatmap("div[data-color]").each(function () {
             hideCellText(this);
         });
-        $heatmap(".gradient-level-min").css("display", "none");
-        $heatmap(".gradient-level-max").css("display", "none");
+        $heatmap(".gradient-level-min").css("visibility", "hidden");
+        $heatmap(".gradient-level-max").css("visibility", "hidden");
     }
 
     function initGeneSetLinkOnClick() {
