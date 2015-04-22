@@ -47,7 +47,7 @@ public class OneCellLineAndCutoff05SpecificSearchSIT extends Geod26284HeatmapTab
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"CD34-positive...", "HFDPC cell line", "HPC-PL cell line", "IMR-90", "hMSC-AT cell line"};
+        return new String[]{"CD34-positive…", "HFDPC cell line", "HPC-PL cell line", "IMR-90", "hMSC-AT cell line"};
     }
 
     @Override

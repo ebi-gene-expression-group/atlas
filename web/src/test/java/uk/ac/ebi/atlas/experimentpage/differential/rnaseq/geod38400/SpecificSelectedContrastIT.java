@@ -35,7 +35,7 @@ public class SpecificSelectedContrastIT extends SeleniumFixture {
     protected HeatmapTablePage subject;
 
     @Test
-    public void verifyQueryFactorLableAndHeatmapHeaders() {
+    public void verifyQueryFactorLabelAndHeatmapHeaders() {
         subject = new HeatmapTablePage(driver, E_E_GEOD_38400_ACCESSION, "regulation=UP&displayLevels=true&queryFactorValues=g1_g4");
         subject.get();
 

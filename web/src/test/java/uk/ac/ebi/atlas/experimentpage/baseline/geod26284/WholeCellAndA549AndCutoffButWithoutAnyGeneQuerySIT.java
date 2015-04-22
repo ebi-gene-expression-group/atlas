@@ -47,7 +47,7 @@ public class WholeCellAndA549AndCutoffButWithoutAnyGeneQuerySIT extends Geod2628
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"long non-polyA...", "long polyA RNA"};
+        return new String[]{"long non-polyA…", "long polyA RNA"};
     }
 
     @Override
