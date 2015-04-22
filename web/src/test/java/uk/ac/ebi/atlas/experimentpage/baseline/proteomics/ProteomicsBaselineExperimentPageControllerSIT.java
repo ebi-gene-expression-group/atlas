@@ -35,7 +35,7 @@ import static org.junit.Assert.assertThat;
 public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixture {
 
     private static final String E_PROT_1 = "E-PROT-1";
-    private static final String E_PROT_1_ACCESS_KEY = "&accessKey=b91b4661-5d85-4fc1-b6b4-8d178991ef3b";
+    private static final String E_PROT_1_ACCESS_KEY = "&accessKey=37f172c7-c40f-470e-afcb-8199ed77c9d8";
     public static final int SPAST = 1;
     public static final int BRAIN = 0;
     public static final int RHBDD2 = 1;

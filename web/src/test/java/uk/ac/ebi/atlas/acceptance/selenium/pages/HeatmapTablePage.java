@@ -91,7 +91,7 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(className = "gradient-level-max")
     private WebElement gradientLevelsMax;
 
-    @FindBy(css = "#heatmap-table > tbody > tr > th > span > a")
+    @FindBy(css = "#heatmap-table > tbody > tr > td > span > a")
     private List<WebElement> geneNames;
 
     @FindBy(xpath = "//label[@for='queryFactorValues']")

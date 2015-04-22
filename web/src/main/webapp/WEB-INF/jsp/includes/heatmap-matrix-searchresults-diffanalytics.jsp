@@ -33,114 +33,95 @@
 
 <c:set var="showMultiGeneColumns" value="${!singleGeneDiffHeatmap}" />
 
-<table>
-    <tbody>
+<table id="diff-heatmap-table" class="table-grid">
+    <thead>
+
     <tr>
-        <td>
-            <table id="diff-heatmap-table" class="table-grid">
-                <thead>
+    <c:if test="${showMultiGeneColumns}">
+        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+            <div>Gene</div>
+        </th>
+    </c:if>
 
-                <tr>
-                <c:if test="${showMultiGeneColumns}">
-                    <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
-                        <div>Gene</div>
-                    </th>
-                </c:if>
-
-                <c:if test="${showMultiGeneColumns}">
-                    <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
-                        <div>Organism</div>
-                    </th>
-                </c:if>
-                    <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
-                        <div>Comparison</div>
-                    </th>
-                    <th class="horizontal-header-cell" style="padding: 5px;">
-                        <div class='factor-header' data-organism-part=''>Log<sub>2</sub>-fold change</div>
-                    </th>
-                </tr>
-
-                </thead>
-
-                <tbody>
-
-                <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList"--%>
-                <c:forEach items="${bioentities}"
-                           var="diffAnalytics">
-                    <tr>
-                     <c:if test="${showMultiGeneColumns}">
-                        <td class="horizontal-header-cell">
-                                <a href="genes/${diffAnalytics.bioentityId}">${diffAnalytics.bioentityName}</a>
-                        </td>
-                     </c:if>
-                      <c:if test="${showMultiGeneColumns}">
-                        <td class="horizontal-header-cell">
-                                ${diffAnalytics.species}
-                        </td>
-                      </c:if>
-
-                        <td class="horizontal-header-cell contrastNameCell"
-                            data-experiment-accession="${diffAnalytics.experimentAccession}"
-                            data-contrast-id="${diffAnalytics.contrastId}">
-                            <a href="experiments/${diffAnalytics.experimentPageUrl}">${diffAnalytics.contrastDisplayName}</a>
-                        </td>
-
-                        <c:set var="expression" value="${diffAnalytics.expression}"/>
-
-                        <c:set var="expressionLevel"
-                               value="${expression.level}"/>
-
-                        <c:if test="${! empty expressionLevel}">
-
-                            <c:choose>
-                                <%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
-                                <c:when test="${expression.overExpressed}">
-                                    <c:set var="cellColour"
-                                           value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - bioentities.getMinUpRegulatedExpressionLevel(), 1 - bioentities.getMaxUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="cellColour"
-                                           value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - bioentities.getMinDownRegulatedExpressionLevel(), 1 - bioentities.getMaxDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
-                                </c:otherwise>
-                            </c:choose>
-
-                            <c:set var="style" value="background-color:${cellColour}"/>
-
-                        </c:if>
-
-                        <td style="${style}">
-
-                            <c:if test="${not empty expressionLevel}">
-                                <c:set var="foldChange" value="${foldChangeRounder.format(expression.foldChange)}"/>
-
-                                <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
-                                    ${'data-fold-change="'.concat(foldChange).concat('"')}
-                                     data-organism-part="${firstInRow}" data-color="${cellColour}">
-                                        ${foldChange}
-                                </div>
-
-                            </c:if>
-
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </td>
-        <td style="vertical-align: top">
-            <div style="float:left;">
-                <a id="download-profiles-link"
-                   title="Top 50 genes displayed on page. Download results to see the rest."
-                   href="${pageContext.request.contextPath}${applicationProperties.buildDownloadURL(pageContext.request)}"
-                   class="button-image" target="_blank">
-                    <img id="download-profiles" alt="Download query results" style="width:20px"
-                         src="${base}/resources/images/download_blue_small.png">
-                </a>
-            </div>
-        </td>
+    <c:if test="${showMultiGeneColumns}">
+        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+            <div>Organism</div>
+        </th>
+    </c:if>
+        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+            <div>Comparison</div>
+        </th>
+        <th class="horizontal-header-cell" style="padding: 5px;">
+            <div class='factor-header' data-organism-part=''>Log<sub>2</sub>-fold change</div>
+        </th>
     </tr>
+
+    </thead>
+
+    <tbody>
+
+    <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList"--%>
+    <c:forEach items="${bioentities}"
+               var="diffAnalytics">
+        <tr>
+         <c:if test="${showMultiGeneColumns}">
+            <td class="horizontal-header-cell">
+                    <a href="genes/${diffAnalytics.bioentityId}">${diffAnalytics.bioentityName}</a>
+            </td>
+         </c:if>
+          <c:if test="${showMultiGeneColumns}">
+            <td class="horizontal-header-cell">
+                    ${diffAnalytics.species}
+            </td>
+          </c:if>
+
+            <td class="horizontal-header-cell contrastNameCell"
+                data-experiment-accession="${diffAnalytics.experimentAccession}"
+                data-contrast-id="${diffAnalytics.contrastId}">
+                <a href="experiments/${diffAnalytics.experimentPageUrl}">${diffAnalytics.contrastDisplayName}</a>
+            </td>
+
+            <c:set var="expression" value="${diffAnalytics.expression}"/>
+
+            <c:set var="expressionLevel"
+                   value="${expression.level}"/>
+
+            <c:if test="${! empty expressionLevel}">
+
+                <c:choose>
+                    <%--@elvariable id="colourGradient" type="uk.ac.ebi.atlas.utils.ColourGradient"--%>
+                    <c:when test="${expression.overExpressed}">
+                        <c:set var="cellColour"
+                               value="${colourGradient.getGradientColour(1 - expressionLevel, 1 - bioentities.getMinUpRegulatedExpressionLevel(), 1 - bioentities.getMaxUpRegulatedExpressionLevel(), 'pink', 'red')}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="cellColour"
+                               value="${colourGradient.getGradientColour(1 - expressionLevel,  1 - bioentities.getMinDownRegulatedExpressionLevel(), 1 - bioentities.getMaxDownRegulatedExpressionLevel(), 'lightGray', 'blue')}"/>
+                    </c:otherwise>
+                </c:choose>
+
+                <c:set var="style" value="background-color:${cellColour}"/>
+
+            </c:if>
+
+            <td style="${style}">
+
+                <c:if test="${not empty expressionLevel}">
+                    <c:set var="foldChange" value="${foldChangeRounder.format(expression.foldChange)}"/>
+
+                    <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
+                        ${'data-fold-change="'.concat(foldChange).concat('"')}
+                         data-organism-part="${firstInRow}" data-color="${cellColour}">
+                            ${foldChange}
+                    </div>
+
+                </c:if>
+            </td>
+        </tr>
+    </c:forEach>
     </tbody>
 </table>
+
 
 <%@ include file="react.jsp" %>
 
