@@ -91,7 +91,7 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(className = "gradient-level-max")
     private WebElement gradientLevelsMax;
 
-    @FindBy(css = "#heatmap-table > tbody > tr > th > span > a")
+    @FindBy(css = "#heatmap-table > tbody > tr > td > span > a")
     private List<WebElement> geneNames;
 
     @FindBy(xpath = "//label[@for='queryFactorValues']")
@@ -139,9 +139,9 @@ public class HeatmapTablePage extends TablePage {
     protected int getGeneExpressionStartingRowIndex() {
         try {
             driver.findElement(By.id("arrayDesignAccession")).getAttribute("value");
-            return 1; //MicroarrayExperiment, we have the header and one column before expression level cells
+            return 2; //MicroarrayExperiment, we have the gene name and one column before expression level cells
         } catch (NoSuchElementException e) {
-            return 0; //Other experiment types, we have only the header before expression level cells
+            return 1; //Other experiment types, we have only the gene name before expression level cells
         }
     }
 
@@ -152,7 +152,7 @@ public class HeatmapTablePage extends TablePage {
     public List<String> getFactorValueHeaders() {
         List<String> queryFactorValues = getTableHeaders(getHeatmapTable());
         //and we need to remove the last header value, because is related to the organism part column
-        return queryFactorValues.subList(getGeneExpressionStartingRowIndex() + 1, queryFactorValues.size() - 1);
+        return queryFactorValues.subList(getGeneExpressionStartingRowIndex(), queryFactorValues.size() - 1);
     }
 
     public String getHeatmapMessage() {

@@ -267,26 +267,30 @@
                     </div>
 
                     <div id="heatmap-div" style="display:none;">
-                        <table style="margin-left:auto;margin-right:auto;">
-                            <tr>
-                                <td>
+                        <div style="padding: 10px">
+                            <div style="display: inline-block; vertical-align: top; text-align: center">
                                     <button id='diffresults-display-levels' data-pressedtext="hide"
-                                            data-unpressedText='show' style="margin-top: 5px; margin-bottom: 5px">
-                                            <%--<label for='display-levels'>Display <i>p</i>-values</label>--%>
+                                            data-unpressedText="show" style="margin-top: 5px; margin-bottom: 5px; width: 186px;">
                                     </button>
                                     <span id='buttonText' pressedtext='Hide log<sub>2</sub>-fold change'
                                           unpressedText='Display log<sub>2</sub>-fold change'/>
-                                </td>
-                                <td>
-                                    <h:heatmap-differential-legend geneProfiles="${bioentities}"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <c:import url="includes/heatmap-matrix-searchresults-diffanalytics.jsp"/>
-                                </td>
-                            </tr>
-                        </table>
+                            </div>
+                            <div id="gxaBioentityPageHeatmapDifferentialLegend" style="display: inline-block; vertical-align: top; font-size: 93%">
+                                <h:heatmap-differential-legend geneProfiles="${bioentities}"/>
+                            </div>
+                            <div style="display: inline-block; vertical-align: top">
+                                <a id="download-profiles-link"
+                                   title="Top 50 genes displayed on page. Download results to see the rest."
+                                   href="${pageContext.request.contextPath}${applicationProperties.buildDownloadURL(pageContext.request)}"
+                                   class="button-image" target="_blank">
+                                    <img id="download-profiles" alt="Download query results" style="width:20px"
+                                         src="${pageContext.request.contextPath}/resources/images/download_blue_small.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div style="padding: 10px">
+                                <c:import url="includes/heatmap-matrix-searchresults-diffanalytics.jsp"/>
+                        </div>
                     </div>
                 </div>
             </c:when>

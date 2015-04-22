@@ -118,7 +118,7 @@ public class BioEntityPage extends HeatmapTableWidgetPage {
 
     private final By firstColorGradientBar = By.xpath("//div[contains(@class, 'color-gradient')]");
 
-    private final By secondColorGradientBar = By.xpath("//table[@id='diff-heatmap-legend']//tbody//tr[2]//td[2]//div[@class='color-gradient']");
+    private final By secondColorGradientBar = By.xpath("//div[@id='gxaBioentityPageHeatmapDifferentialLegend']//div[1]//div[2]//div[2]");
 
     @FindBy(css = "#global-search-results > li > a")
     private List<WebElement> globalSearchPointers;

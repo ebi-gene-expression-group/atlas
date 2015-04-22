@@ -35,6 +35,7 @@ import static org.junit.Assert.assertThat;
 public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixture {
 
     private static final String E_PROT_1 = "E-PROT-1";
+    private static final String E_PROT_1_ACCESS_KEY = "&accessKey=37f172c7-c40f-470e-afcb-8199ed77c9d8";
     public static final int SPAST = 1;
     public static final int BRAIN = 0;
     public static final int RHBDD2 = 1;
@@ -43,10 +44,11 @@ public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixtu
 
     @Test
     public void first5Genes() {
-        subject = new HeatmapTablePage(driver, E_PROT_1, "displayLevels=true");
+        // Remove accessKey when experiment goes public
+        subject = new HeatmapTablePage(driver, E_PROT_1, "displayLevels=true" + E_PROT_1_ACCESS_KEY);
         subject.get();
 
-        assertThat(subject.getFactorValueHeaders(), contains("B cell", "CD4-positive T...", "CD8-positive T...", "adrenal gland", "colon", "esophagus", "frontal cortex", "gallbladder", "heart", "kidney", "liver", "lung", "monocyte", "natural killer...", "ovary", "pancreas", "platelet", "prostate", "rectum", "retina", "spinal cord", "testis", "urinary bladder"));
+        assertThat(subject.getFactorValueHeaders(), contains("B cell", "CD4-positive T…", "CD8-positive T…", "adrenal gland", "colon", "esophagus", "frontal cortex", "gallbladder", "heart", "kidney", "liver", "lung", "monocyte", "natural killer…", "ovary", "pancreas", "platelet", "prostate", "rectum", "retina", "spinal cord", "testis", "urinary bladder"));
 
         List<String> first5Genes = subject.getGeneNames().subList(0, 5);
         assertThat(first5Genes, contains("RHBDD2","TMEM132A", "GABRA3", "CXorf56", "BTN3A1"));
@@ -59,7 +61,7 @@ public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixtu
 
     @Test
     public void first5Genes_Fetus() {
-        subject = new HeatmapTablePage(driver, E_PROT_1, "serializedFilterFactors=DEVELOPMENTAL_STAGE%3Afetus&displayLevels=true");
+        subject = new HeatmapTablePage(driver, E_PROT_1, "serializedFilterFactors=DEVELOPMENTAL_STAGE%3Afetus&displayLevels=true" + E_PROT_1_ACCESS_KEY);
         subject.get();
 
         //System.out.println(Joiner.on("\", \"").join(subject.getFactorValueHeaders()));
