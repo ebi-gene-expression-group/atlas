@@ -239,6 +239,12 @@ $.Autocompleter = function(input, options) {
 		$(input.form).unbind(".arrayExpressAutocomplete");
 	});
 
+    ed = $('#conditionSection .tag-editor');
+    ed.on('onBlurHideResults', function (e) {
+        if (!config.mouseDownOnSelect && !config.isTreeControlHit) {
+            hideResults();
+        }
+    });
 
 
     function debugLog(text) {
