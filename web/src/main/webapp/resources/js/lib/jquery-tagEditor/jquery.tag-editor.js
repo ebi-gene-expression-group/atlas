@@ -249,6 +249,9 @@
                     input.parent().html(tag).removeClass('active');
                 }
                 if (tag != old_tag) update_globals();
+
+                ed.trigger('onBlurHideResults');
+
                 set_placeholder();
             });
 
