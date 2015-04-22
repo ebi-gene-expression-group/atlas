@@ -26,7 +26,7 @@
 <%@ attribute name="highValueColorExpressionLevel" required="true" %>
 <%@ attribute name="lowValueColorExpressionLevel" required="true" %>
 
-<div style=""display: table-row>
+<div style="display: table-row">
     <div style="visibility: hidden; display: table-cell; white-space: nowrap" class="gradient-level-min"> ${lowValueColorExpressionLevel}</div>
     <div style="display: table-cell">
         <span class="color-gradient"
