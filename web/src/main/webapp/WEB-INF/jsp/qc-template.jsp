@@ -3,40 +3,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-
 <%@ page import="org.apache.commons.io.IOUtils" %>
 <%@ page import="java.nio.file.Files" %>
 <%@ page import="java.nio.file.Path" %>
 
-    <div id="arrayDesignsQc" style="width: 50%">
+<div id="arrayDesignsQc" class="extra-padding">
+    <c:if test="${fn:length(qcArrayDesigns) > 1}">
 
-        <c:if test="${fn:length(qcArrayDesigns) > 1}">
+        <c:if test= "${not empty qcArrayDesigns}" />
 
-            <c:if test= "${not empty qcArrayDesigns}" />
+        <form:form commandName="preferences" method="get" id="prefForm" >
+            <c:if test="${not empty param.accessKey}">
+                <input id="accessKey" name="accessKey" type="hidden" value="${param.accessKey}"/>
+            </c:if>
 
-            <form:form commandName="preferences" method="get" id="prefForm" >
-                <c:if test="${not empty param.accessKey}">
-                    <input id="accessKey" name="accessKey" type="hidden" value="${param.accessKey}"/>
-                </c:if>
+            <span>Choose array design to view report for:</span>
+            <div style="display:inline">
+            <form:select path="arrayDesignAccession">
+                <form:options items="${qcArrayDesigns}" />
+             </form:select>
+        </form:form>
 
-                <table cellpadding="0" cellspacing="0" border="0" style="margin-left: 10px" >
-                    <tr>
-                        <td style="margin-left: 20px;">Choose array design to view report for : </td>
-
-                        <td>
-                            <form:select path="arrayDesignAccession">
-                                <form:options items="${qcArrayDesigns}" />
-                             </form:select>
-                        </td>
-
-                    </tr>
-                </table>
-
-            </form:form>
-
-        </c:if>
-
-    </div>
+    </c:if>
+</div>
 
 <div id="qc-content">
     <%
@@ -49,7 +38,6 @@
 
 <script>
     $(function () {
-
         $(document).ready(function () {
 
             $('#arrayDesignAccession').change(function () {
@@ -57,7 +45,5 @@
             });
 
         });
-
     });
-
 </script>

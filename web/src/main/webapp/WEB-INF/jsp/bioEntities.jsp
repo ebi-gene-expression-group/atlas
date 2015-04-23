@@ -275,7 +275,7 @@
                                     <span id='buttonText' pressedtext='Hide log<sub>2</sub>-fold change'
                                           unpressedText='Display log<sub>2</sub>-fold change'/>
                             </div>
-                            <div id="gxaBioentityPageHeatmapDifferentialLegend" style="display: inline-block; vertical-align: top; font-size: 93%">
+                            <div class="gxaHeatmapLegendGradient" style="display: inline-block; padding-left: 20px">
                                 <h:heatmap-differential-legend geneProfiles="${bioentities}"/>
                             </div>
                             <div style="display: inline-block; vertical-align: top">

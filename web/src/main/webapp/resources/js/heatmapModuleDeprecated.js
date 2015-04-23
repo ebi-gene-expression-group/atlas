@@ -44,6 +44,7 @@ var heatmapModuleDeprecated = (function ($) {
         });
         $heatmap(".gradient-level-min").css("visibility", "visible");
         $heatmap(".gradient-level-max").css("visibility", "visible");
+        $heatmap(".gradient-level-max").css("display", "table-cell");
     }
 
     function hideExpressionLevels($heatmap) {
@@ -52,6 +53,7 @@ var heatmapModuleDeprecated = (function ($) {
         });
         $heatmap(".gradient-level-min").css("visibility", "hidden");
         $heatmap(".gradient-level-max").css("visibility", "hidden");
+        $heatmap(".gradient-level-max").css("display", "none");
     }
 
     function initGeneSetLinkOnClick() {

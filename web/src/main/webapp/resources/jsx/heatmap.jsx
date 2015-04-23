@@ -65,7 +65,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 this.setState({selectedRadioButton: newSelected});
                 var newDisplayLevels = (newSelected == "levels"); //update the LegendType
                 this.setState({displayLevels: newDisplayLevels});
-
             },
 
             isMicroarray: function () {
@@ -113,9 +112,23 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     // Resize sticky header width to match actual headers
                     var setWidths = function () {
                             $stickyHead.find('thead th').each(function (i) {
-                                $(this).css({width: $t.find('thead th').eq(i).css("width")});
+                                // Breaks in Chrome
+                                //$(this).css({width: $t.find('thead th').eq(i).css("width")});
+                                var $originalHeader = $t.find('thead th').eq(i),
+                                    widthDiff = $originalHeader.width() - $(this).width();
+
+                                if (widthDiff !== 0) {
+                                    // Changing the width for elements that have an inner div has no effect (and no, outerWidth and outerHeight don’t work either)
+                                    if ($(this).find('div').length) {
+                                        var $thisDiv = $(this).find('div');
+                                        $thisDiv.width($thisDiv.width() + widthDiff);
+                                    } else {
+                                        $(this).width($(this).width() + widthDiff);
+                                    }
+                                }
                             });
-                            $stickyHead.width($t.width());
+                            // Breaks in Chrome
+                            //$stickyHead.width($t.width());
                         },
                         repositionStickyHead = function () {
                             var allowance = calcAllowance();
@@ -258,11 +271,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
                 render: function () {
                     return (
-                        <div style={{display: "inline-block", "padding-left": "20px"}}>
-                            <div style={{display: "inline-block"}}>
+                        <div style={{display: "inline-block", "padding-left": "20px"}} className="gxaHeatmapLegendGradient">
+                            <div style={{display: "inline-table"}}>
                                 <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={formatBaselineExpression(this.props.minExpressionLevel)} highExpressionLevel={formatBaselineExpression(this.props.maxExpressionLevel)} lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
                             </div>
-                            <div ref="legendHelp" data-help-loc={type.legendTooltip} style={{display: "inline-block", 'vertical-align': "top", "padding-left": "4px"}}/>
+                            <div ref="legendHelp" data-help-loc={type.legendTooltip} style={{display: "inline-block", "vertical-align": "top", "padding-left": "2px"}}/>
                         </div>
                         );
                 },
@@ -278,12 +291,12 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
                 render: function () {
                     return (
-                        <div style={{display: "inline-block", "padding-left": "20px"}}>
-                            <div style={{display: "inline-block"}}>
+                        <div style={{display: "inline-block", "padding-left": "20px"}} className="gxaHeatmapLegendGradient">
+                            <div style={{display: "inline-table"}}>
                                 {!isNaN(this.props.minDownLevel) && !isNaN(this.props.maxDownLevel) ? <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minDownLevel} highExpressionLevel={this.props.maxDownLevel} lowValueColour="#C0C0C0" highValueColour="#0000FF"/> : null }
                                 {!isNaN(this.props.minUpLevel) && !isNaN(this.props.maxUpLevel) ? <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minUpLevel} highExpressionLevel={this.props.maxUpLevel} lowValueColour="#FFAFAF" highValueColour="#FF0000"/> : null }
                             </div>
-                            <div ref="legendHelp" data-help-loc="#gradient-differential" style={{display: "inline-block", 'vertical-align': "top", "padding-left": "4px"}}/>
+                            <div ref="legendHelp" data-help-loc="#gradient-differential" style={{display: "inline-block", 'vertical-align': "top", "padding-left": "2px"}}/>
                         </div>
                     );
                 },
@@ -305,10 +318,12 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 var lt_ie10_filter = LT_IE10_FILTER_TEMPLATE.replace(/\${lowValueColour}/, this.props.lowValueColour).replace(/\${highValueColour}/, this.props.highValueColour);
 
                 return (
-                    <div>
-                        <div style={this.props.displayLevels ? {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "inline-block"} : {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "inline-block", visibility: "hidden"}} className="gradient-level-min">{this.props.lowExpressionLevel}</div>
-                        <div className="color-gradient" style={{overflow: "auto", 'vertical-align': "middle", "background-image": backgroundImage, filter: lt_ie10_filter, width: "200px", height: "15px", margin: "2px 6px 2px 6px", display: "inline-block"}} />
-                        <div style={this.props.displayLevels ? {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "inline-block"} : {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "none", visibility: "hidden"}} className="gradient-level-max">{this.props.highExpressionLevel}</div>
+                    <div style={{display: "table-row"}}>
+                        <div style={this.props.displayLevels ? {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "table-cell"} : {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "table-cell", visibility: "hidden"}} className="gradient-level-min">{this.props.lowExpressionLevel}</div>
+                        <div style={{display: "table-cell"}}>
+                            <span className="color-gradient" style={{overflow: "auto", 'vertical-align': "middle", "background-image": backgroundImage, filter: lt_ie10_filter, width: "200px", height: "15px", margin: "2px 6px 2px 6px", display: "inline-block"}} />
+                        </div>
+                        <div style={this.props.displayLevels ? {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "table-cell"} : {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "none", visibility: "hidden"}} className="gradient-level-max">{this.props.highExpressionLevel}</div>
                     </div>
                 );
             }
@@ -743,11 +758,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
             getInitialState: function () {
                 return (
-                    {   selected : this.props.selectedRadioButton }
+                    { selected : this.props.selectedRadioButton }
                 );
             },
 
-            componentDidMount: function(){
+            componentDidMount: function() {
                 this._handleChange();
             },
 
@@ -761,9 +776,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 return (
                     <div style={{"margin-top":"20px"}}>
                         <div style={radioStyle}>
-                            <input type="radio" name="radiolevels" defaultChecked="checked" onChange={this._handleChange.bind(this, "gradients")} /> Display gradients  <br />
-                            <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "levels")} /> Display levels            <br />
-                            <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "variance")}  /> Display variation
+                            <input type="radio" name="radiolevels" defaultChecked="checked" onChange={this._handleChange.bind(this, "gradients")} />Display gradients<br />
+                            <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "levels")} />Display levels<br />
+                            <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "variance")}  />Display variation
                         </div>
                     </div>
                 );

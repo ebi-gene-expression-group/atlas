@@ -28,7 +28,7 @@
 
 <%@ attribute name="geneProfiles" required="true" type="uk.ac.ebi.atlas.model.baseline.BaselineProfilesList"%>
 
-<div style="display: inline-block">
+<div style="display: inline-table">
     <%--@elvariable id="baselineExpressionLevelRounder" type="uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder"--%>
     <c:set var="minExpressionLevel" value="${baselineExpressionLevelRounder.format(geneProfiles.getMinExpressionLevel())}"/>
     <c:set var="maxExpressionLevel" value="${baselineExpressionLevelRounder.format(geneProfiles.getMaxExpressionLevel())}"/>
@@ -38,4 +38,4 @@
                           lowValueColorExpressionLevel="${minExpressionLevel}"
                           highValueColorExpressionLevel="${maxExpressionLevel}"/>
 </div>
-<div id="baseline-help-diff" data-help-loc="#gradient-base" style="display: inline-block; vertical-align: top; padding-left: 4px"></div>
+<div id="baseline-help-diff" data-help-loc="#gradient-base" style="display: inline-block; vertical-align: top; padding-left: 2px"></div>

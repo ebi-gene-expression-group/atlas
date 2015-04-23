@@ -29,7 +29,7 @@
 
 <%@ attribute name="geneProfiles" required="true" type="uk.ac.ebi.atlas.model.differential.DifferentialExpressionLimits"%>
 
-<div style="display: inline-block">
+<div style="display: inline-table">
     <c:if test="${((preferences.regulation eq 'DOWN') or (preferences.regulation eq 'UP_DOWN'))
                     and geneProfiles.getMinDownRegulatedExpressionLevel() != '0.0'}">
 
@@ -49,4 +49,4 @@
 
     </c:if>
 </div>
-<div id="gradient-help-diff" data-help-loc="#gradient-differential-crossexp" style="display: inline-block; vertical-align: top; padding-left: 4px"></div>
+<div id="gradient-help-diff" data-help-loc="#gradient-differential-crossexp" style="display: inline-block; vertical-align: top; padding-left: 2px"></div>
