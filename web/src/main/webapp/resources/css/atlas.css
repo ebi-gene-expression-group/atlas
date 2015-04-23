@@ -301,6 +301,7 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 
 .block {
     padding-top: 1em;
+    min-height: 0px !important;
 }
 
 .block-max-width {

@@ -180,7 +180,7 @@ public final class HeatmapWidgetController {
         BaselineExperimentSearchResult searchResult = baselineExperimentProfileSearchService.query(geneQuery.asString(), ensemblSpecies, true);
 
         if (searchResult.isEmpty()) {
-            model.addAttribute("errorMessage", "No baseline expression found for " + geneQuery.description());
+            model.addAttribute("errorMessage", "No baseline expression in tissues found for " + geneQuery.description());
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return "widget-error";
         }
