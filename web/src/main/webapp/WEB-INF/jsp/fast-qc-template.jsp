@@ -6,51 +6,41 @@
 <%@ page import="java.nio.file.Files" %>
 <%@ page import="java.nio.file.Path" %>
 
-<div id="fastQcReports" style="width: 100%">
-
-    <%--@elvariable id="fastQReportUtil" type="uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil"--%>
+<div id="fastQcReports" class="extra-padding">
     <c:set var="hasFastQcReport" value="${fastQReportUtil.hasFastQC(experimentAccession,species)}"/>
     <c:if test="${hasFastQcReport}" >
-
         <form:form commandName="preferences" method="get" id="prefForm" >
             <c:if test="${not empty param.accessKey}">
                 <input id="accessKey" name="accessKey" type="hidden" value="${param.accessKey}"/>
             </c:if>
 
-            <table cellpadding="0" cellspacing="0" border="0" style="margin-left: 10px" >
-                <tr>
-                    <td style="margin-left: 20px;">Choose view report for : </td>
+            <span>Choose view report for:</span>
+            <div style="display: inline">
+                <form:select path="selectedReport">
+                    <form:options items="${fastQCReports}" itemLabel="qcReport" />
+                </form:select>
+            </div>
 
-                    <td>
-                        <form:select path="selectedReport">
-                            <form:options items="${fastQCReports}" itemLabel="qcReport" />
-                        </form:select>
-                    </td>
-
-                    <c:set var="hasMultipleOrganism" value="${fastQReportUtil.hasMultiOrganism(experimentAccession,param.accessKey)}" />
-                    <c:if test="${hasMultipleOrganism}">
-                        <td style="margin-left: 20px;"> Selected organism: </td>
-                        <td>
-                            <form:select path="selectedSpecie">
-                                <form:options items="${allSpecies}"/>
-                            </form:select>
-                        </td>
-                    </c:if>
-
-                </tr>
-            </table>
-
+            <c:set var="hasMultipleOrganism" value="${fastQReportUtil.hasMultiOrganism(experimentAccession,param.accessKey)}" />
+            <c:if test="${hasMultipleOrganism}">
+                <span style="margin-left: 20px;">Selected organism:</span>
+                <div style="display: inline">
+                    <form:select path="selectedSpecie">
+                        <form:options items="${allSpecies}"/>
+                    </form:select>
+                </div>
+            </c:if>
         </form:form>
-
     </c:if>
+</div>
 
-    <br/>
-    <hr>
+<%--<div style="padding-top: 11px; padding-left: 2%; padding-right: 2%; font-family: helvetica,arial,sans-serif; font-size: 10pt; background-color: #FFF; text-align: justify;">--%>
+<div class="extra-padding">
+    <hr/>
 </div>
 
 
 <div id="fast-qc-content">
-
     <%
         // manually load file contents instead of using c:import to avoid javax.servlet.jsp.JspTagException: 304 errors
         // see http://stackoverflow.com/questions/17218609/jsp-exception-when-i-try-to-import-static-file
@@ -108,6 +98,4 @@
         });
 
     })($, queryString);
-
-
 </script>
