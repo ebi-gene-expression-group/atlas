@@ -65,7 +65,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 this.setState({selectedRadioButton: newSelected});
                 var newDisplayLevels = (newSelected == "levels"); //update the LegendType
                 this.setState({displayLevels: newDisplayLevels});
-
             },
 
             isMicroarray: function () {
@@ -272,7 +271,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
                 render: function () {
                     return (
-                        <div style={{display: "inline-block", "padding-left": "20px"}}>
+                        <div style={{display: "inline-block", "padding-left": "20px"}} className="gxaHeatmapLegendGradient">
                             <div style={{display: "inline-table"}}>
                                 <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={formatBaselineExpression(this.props.minExpressionLevel)} highExpressionLevel={formatBaselineExpression(this.props.maxExpressionLevel)} lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
                             </div>
@@ -292,7 +291,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
                 render: function () {
                     return (
-                        <div style={{display: "inline-block", "padding-left": "20px"}}>
+                        <div style={{display: "inline-block", "padding-left": "20px"}} className="gxaHeatmapLegendGradient">
                             <div style={{display: "inline-table"}}>
                                 {!isNaN(this.props.minDownLevel) && !isNaN(this.props.maxDownLevel) ? <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minDownLevel} highExpressionLevel={this.props.maxDownLevel} lowValueColour="#C0C0C0" highValueColour="#0000FF"/> : null }
                                 {!isNaN(this.props.minUpLevel) && !isNaN(this.props.maxUpLevel) ? <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minUpLevel} highExpressionLevel={this.props.maxUpLevel} lowValueColour="#FFAFAF" highValueColour="#FF0000"/> : null }
@@ -759,11 +758,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
             getInitialState: function () {
                 return (
-                    {   selected : this.props.selectedRadioButton }
+                    { selected : this.props.selectedRadioButton }
                 );
             },
 
-            componentDidMount: function(){
+            componentDidMount: function() {
                 this._handleChange();
             },
 
@@ -777,9 +776,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 return (
                     <div style={{"margin-top":"20px"}}>
                         <div style={radioStyle}>
-                            <input type="radio" name="radiolevels" defaultChecked="checked" onChange={this._handleChange.bind(this, "gradients")} /> Display gradients  <br />
-                            <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "levels")} /> Display levels            <br />
-                            <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "variance")}  /> Display variation
+                            <input type="radio" name="radiolevels" defaultChecked="checked" onChange={this._handleChange.bind(this, "gradients")} />Display gradients<br />
+                            <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "levels")} />Display levels<br />
+                            <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "variance")}  />Display variation
                         </div>
                     </div>
                 );
