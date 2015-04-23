@@ -133,7 +133,7 @@
                      add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
                      whichever one will show up last...
                      For example: -->
-                <li class="functional last"><a id="feedback-link" href="feedback-form" class="icon icon-generic"
+                <li class="functional last" style="float: right"><a id="feedback-link" href="feedback-form" class="icon icon-generic"
                                                data-icon="\">Feedback</a></li>
             </ul>
         </nav>
