@@ -11,8 +11,9 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "react": "^0.12.2",
-    "query-string": "1.0.0"
+    "expose-loader": "^0.6.0",
+    "query-string": "1.0.0",
+    "react": "^0.12.2"
   },
   "devDependencies": {
     "chai": "^2.1.2",
