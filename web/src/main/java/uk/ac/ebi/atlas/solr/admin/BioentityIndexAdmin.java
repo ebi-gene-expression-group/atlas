@@ -72,9 +72,7 @@ public class BioentityIndexAdmin {
                 public void run() {
                     try {
                         bioentityIndex.deleteAll();
-
                         bioentityIndex.indexAll(Files.newDirectoryStream(bioentityPropertiesPath));
-
                     } catch (Exception e) {
                         LOGGER.error(e.getMessage(), e);
                         bioentityIndexMonitor.failed(e);
@@ -82,8 +80,6 @@ public class BioentityIndexAdmin {
                 }
             });
             executorService.shutdown();
-
         }
     }
-
 }
