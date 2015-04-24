@@ -42,10 +42,7 @@ var searchFormModule = (function($) {
 
         $("#submit-button").button();
 
-        $("#reset-button").button().click(function (event) {
-            var urlWithoutParameters = removeHttpParameters(window.location.href);
-            window.location.replace(urlWithoutParameters);
-        });
+        $("#reset-button").button();
 
     }
 
