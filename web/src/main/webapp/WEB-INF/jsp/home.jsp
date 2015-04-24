@@ -203,9 +203,26 @@
 
             selectDefaultOrganism();
 
+            onResetButtonEventHandler();
+
             function initButtons() {
                 $buttons.each(function () {
                     $(this).button({ disabled: true });
+                });
+            }
+
+            function onResetButtonEventHandler() {
+                $('#reset-button').on('click' , function () {
+                    // Remove all tags
+                    var tags = $('#geneQuery').tagEditor('getTags')[0].tags;
+                    for (i = 0; i < tags.length; i++) {
+                        $('#geneQuery').tagEditor('removeTag', tags[i]);
+                    }
+
+                    var tags = $('#condition').tagEditor('getTags')[0].tags;
+                    for (i = 0; i < tags.length; i++) {
+                        $('#condition').tagEditor('removeTag', tags[i]);
+                    }
                 });
             }
 

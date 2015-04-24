@@ -15,7 +15,7 @@ public class HeatmapWidgetControllerMultiExperimentSIT extends RestAssuredFixtur
 
         response.then().assertThat().statusCode(404);
         response.then().assertThat().contentType("text/html");
-        response.then().assertThat().body(containsString("No baseline expression found for OR4F4"));
+        response.then().assertThat().body(containsString("No baseline expression in tissues found for OR4F4"));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class HeatmapWidgetControllerMultiExperimentSIT extends RestAssuredFixtur
 
         response.then().assertThat().statusCode(404);
         response.then().assertThat().contentType("text/html");
-        response.then().assertThat().body(containsString("No baseline expression found for AC004837.3"));
+        response.then().assertThat().body(containsString("No baseline expression in tissues found for AC004837.3"));
     }
 
     @Test
