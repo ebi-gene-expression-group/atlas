@@ -10,7 +10,6 @@ import uk.ac.ebi.atlas.search.ConditionQuery;
 //the code base
 public class GeneQuerySearchRequestParameters extends SearchRequest {
     private String condition;
-
     private String organism;
 
     @Deprecated // use getConditionQuery

@@ -31,9 +31,7 @@ public class SearchBaselineController extends SearchController {
         GeneQuery geneQuery = requestParameters.getGeneQuery();
 
         if (!geneQuery.isEmpty()) {
-
             addSearchHeader(requestParameters, model);
-
             model.addAttribute("jsonFacets", baselineAnalyticsSearchService.findFacetsForTreeSearch(geneQuery));
         }
 

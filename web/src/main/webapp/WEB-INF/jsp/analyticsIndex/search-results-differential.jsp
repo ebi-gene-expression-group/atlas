@@ -38,7 +38,7 @@
     <section class="grid_23 extra-padding">
         <section class="grid_12 alpha extra-padding">
             <c:if test="${hasBaselineResults}">
-                <a href="${pageContext.request.contextPath}/search?geneQuery=${pageContext.request.getParameter("geneQuery")}">Baseline</a>
+                <a href="${pageContext.request.contextPath}/search?geneQuery=${geneQuery.asUrlQueryParameter()}">Baseline</a>
             </c:if>
             <c:if test="${!hasBaselineResults}">
                 Baseline (no results)

@@ -33,7 +33,7 @@
 
         <section class="grid_11 extra-padding">
             <c:if test="${hasDifferentialResults}">
-                <a href="${pageContext.request.contextPath}/search/differential?geneQuery=${pageContext.request.getParameter("geneQuery")}">Differential</a>
+                <a href="${pageContext.request.contextPath}/search/differential?geneQuery=${geneQuery.asUrlQueryParameter()}">Differential</a>
             </c:if>
             <c:if test="${!hasDifferentialResults}">
                 Differential (no results)
