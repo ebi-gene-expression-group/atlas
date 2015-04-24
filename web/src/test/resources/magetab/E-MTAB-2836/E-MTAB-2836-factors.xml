@@ -2,8 +2,6 @@
     <defaultFilterFactors/>
     <defaultQueryFactorType>ORGANISM_PART</defaultQueryFactorType>
     <menuFilterFactorTypes/>
-    <landingPageDisplayName>Tissues - 32 Uhlen's Lab</landingPageDisplayName>
-    <dataProviderURL>http://www.proteinatlas.org/humanproteome/tissue+specific</dataProviderURL>
-    <dataProviderDescription>The Human Protein Atlas</dataProviderDescription>
+    <landingPageDisplayName>Thirty two tissues</landingPageDisplayName>
     <speciesMapping/>
 </factors-definition>
