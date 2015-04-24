@@ -58,7 +58,7 @@ http://wiki.apache.org/solr/SchemaXml
              ]]> -->
         <fieldtype name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
 
-        <fieldtype name="integer" class="solr.IntField" omitNorms="true"/>
+        <fieldtype name="integer" class="solr.TrieIntField" omitNorms="true"/>
 
 	<fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
 
