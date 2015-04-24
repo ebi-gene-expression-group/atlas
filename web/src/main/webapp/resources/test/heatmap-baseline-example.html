@@ -30,6 +30,9 @@
     <script src="/gxa/resources/js/EventEmitter-4.2.7.js"></script>
 
     <script src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
+    <script src="/gxa/resources/js/jquery-hcsticky/jquery.hc-sticky.min.js"></script>
+
+    <script src="/gxa/resources/jsx/cellBaselineVariance.js"></script>
 
 </head>
 <body>
@@ -46,11 +49,11 @@
 
 <div id="content" class="grid_24">
     <div id="atlas-content">
-        <section id="stickem-container" style="overflow: auto;" class="extra-padding">
+        <section style="overflow: auto;" class="extra-padding">
 
-            <div id="heatmap" class="row stickem-container">
+            <div id="heatmap" class="row">
 
-                <div id="ensembl-launcher" class="aside stickem" style="display:inline"></div>
+                <div id="ensembl-launcher" class="aside" style="display:inline"></div>
 
                 <div id="heatmap-react-baseline" class="heatmap-position"></div>
 
@@ -213,7 +216,7 @@
 </script>
 
 
-<script src="../heatmap.jsx" type="text/jsx"></script>
+<script src="../jsx/heatmap.jsx" type="text/jsx"></script>
 <script type="text/jsx"> // text/jsx only so it runs after previous script
     /** @jsx React.DOM */
 
