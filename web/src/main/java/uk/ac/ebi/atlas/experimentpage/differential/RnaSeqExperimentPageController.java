@@ -22,17 +22,21 @@
 
 package uk.ac.ebi.atlas.experimentpage.differential;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import uk.ac.ebi.atlas.experimentpage.context.RnaSeqRequestContextBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.DifferentialProfilesViewModelBuilder;
 import uk.ac.ebi.atlas.tracks.TracksUtil;
+import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 import uk.ac.ebi.atlas.web.DifferentialRequestPreferences;
 import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
@@ -40,10 +44,26 @@ import uk.ac.ebi.atlas.web.controllers.DownloadURLBuilder;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Set;
 
 @Controller
 @Scope("request")
 public class RnaSeqExperimentPageController extends DifferentialExperimentPageController<DifferentialExperiment, DifferentialRequestPreferences, RnaSeqProfile> {
+
+    public static final String EXPERIMENT_ATTRIBUTE = "experiment";
+    private static final String ALL_SPECIES_ATTRIBUTE = "allSpecies";
+    private static final String PUBMED_IDS_ATTRIBUTE = "pubMedIds";
+    private static final String EXPERIMENT_DESCRIPTION_ATTRIBUTE = "experimentDescription";
+    private static final String HAS_EXTRA_INFO_ATTRIBUTE = "hasExtraInfo";
+    private static final String EXPERIMENT_TYPE_ATTRIBUTE = "type";
+
+    private ExperimentTrader experimentTrader;
+
+    @Inject
+    @Required
+    public void setExperimentTrader(ExperimentTrader experimentTrader) {
+        this.experimentTrader = experimentTrader;
+    }
 
     @Inject
     public RnaSeqExperimentPageController(RnaSeqRequestContextBuilder rnaSeqRequestContextBuilder,
@@ -59,10 +79,31 @@ public class RnaSeqExperimentPageController extends DifferentialExperimentPageCo
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})
-    public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences
+    public String showGeneProfiles(@ModelAttribute("preferences") @Valid DifferentialRequestPreferences preferences, @PathVariable String experimentAccession
             , BindingResult result, Model model, HttpServletRequest request) {
 
+        if(request.getAttribute(EXPERIMENT_ATTRIBUTE) == null) {
+            DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment(experimentAccession);
+            prepareModel(request, model, experiment);
+        }
+
         return super.showGeneProfiles(preferences, result, model, request);
+    }
+
+    private void prepareModel(HttpServletRequest request, Model model, DifferentialExperiment experiment) {
+        request.setAttribute(EXPERIMENT_ATTRIBUTE, experiment);
+        Set<String> allSpecies = experiment.getOrganisms();
+
+        model.addAttribute(EXPERIMENT_TYPE_ATTRIBUTE, experiment.getType());
+
+        model.addAttribute(ALL_SPECIES_ATTRIBUTE, StringUtils.join(allSpecies, ", "));
+
+        model.addAttribute(EXPERIMENT_DESCRIPTION_ATTRIBUTE, experiment.getDescription());
+
+        model.addAttribute(HAS_EXTRA_INFO_ATTRIBUTE, experiment.hasExtraInfoFile());
+
+        model.addAttribute(PUBMED_IDS_ATTRIBUTE, experiment.getPubMedIds());
+
     }
 
 }
