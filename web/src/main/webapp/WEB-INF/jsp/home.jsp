@@ -223,6 +223,8 @@
                     for (i = 0; i < tags.length; i++) {
                         $('#condition').tagEditor('removeTag', tags[i]);
                     }
+
+                    selectDefaultOrganism();
                 });
             }
 
