@@ -52,7 +52,6 @@
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/jquery-hcsticky/jquery.hc-sticky.min.js"></script>
 
-
 <script language="JavaScript" type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <script language="JavaScript" type="text/javascript"

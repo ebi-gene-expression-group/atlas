@@ -10,3 +10,4 @@
 <![endif]-->
 
 <script src="${pageContext.request.contextPath}/resources/js/react/react-0.11.1.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/react-radiogroup.js"></script>

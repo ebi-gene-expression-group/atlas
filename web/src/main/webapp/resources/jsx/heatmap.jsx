@@ -4,6 +4,9 @@
 /* Modules and parameters for their init methods are passed in here.
  Parameters that affect how the DOM is generated as passed in as props. */
 
+/* State stores: Levels/Quartiles displayed and checked columns
+ */
+
 var heatmapModule = (function($, React, genePropertiesTooltipModule, factorTooltipModule, contrastTooltipModule, helpTooltipsModule, baselineVarianceModule, EventEmitter, Modernizr) {
 
     var TypeEnum = {
@@ -38,7 +41,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
             getInitialState: function () {
                 var displayLevels = $prefFormDisplayLevelsInputElement ? ($prefFormDisplayLevelsInputElement.val() === "true") : false;
-
                 return {
                     showGeneSetProfiles: false,
                     displayLevels: displayLevels,
@@ -48,23 +50,28 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     selectedRadioButton: "gradients"};
             },
 
+            selectColumn: function (columnId) {
+                var selectedColumnId = (columnId === this.state.selectedColumnId) ? null : columnId;
+                this.setState({selectedColumnId: selectedColumnId}, function() {
+                    eventEmitter.emitEvent('onColumnSelectionChange', [selectedColumnId]);
+                });
+            },
+
             toggleGeneSets: function () {
                 var newProfiles = this.state.showGeneSetProfiles ? this.props.profiles : this.props.geneSetProfiles;
                 this.setState({showGeneSetProfiles: !this.state.showGeneSetProfiles, profiles: newProfiles});
             },
 
             toggleDisplayLevels: function () {
-                var newDisplayLevels = !this.state.displayLevels;
-                this.setState({displayLevels: newDisplayLevels});
+                this.setState({displayLevels: !this.state.displayLevels});
                 if ($prefFormDisplayLevelsInputElement) {
-                    $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
+                    $prefFormDisplayLevelsInputElement.val(this.state.displayLevels);
                 }
             },
 
             toggleRadioButton: function(newSelected) {
                 this.setState({selectedRadioButton: newSelected});
-                var newDisplayLevels = (newSelected == "levels"); //update the LegendType
-                this.setState({displayLevels: newDisplayLevels});
+                this.setState({displayLevels: (newSelected === "levels")}); //update the LegendType
             },
 
             isMicroarray: function () {
@@ -104,9 +111,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         $countAndLegend.hcSticky({responsive: true});
                     }
 
-                    var $w	   = $(window),
-                        $t	   = $('#heatmap-table'),
-                        $stickyHead = $('#gxaExperimentPageHeatmapTableStickyWrapperStickyHead'),
+                    var $w	         = $(window),
+                        $t	         = $('#heatmap-table'),
+                        $stickyHead  = $('#gxaExperimentPageHeatmapTableStickyWrapperStickyHead'),
                         $stickyWrap  = $t.parent('#gxaExperimentPageHeatmapTableStickyWrapper');
 
                     // Resize sticky header width to match actual headers
@@ -140,14 +147,16 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                                 if($stickyWrap.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() > 0) {
                                     // When top of wrapping parent is out of view
                                     $stickyHead.add($stickyInsct).css({
-                                        opacity: 1,
-                                        top: $stickyWrap.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() + parseInt($stickyWrap.css("padding-top").replace("px", ""))
+                                        "opacity": 1,
+                                        "z-index": 50,
+                                        "top": $stickyWrap.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() + parseInt($stickyWrap.css("padding-top").replace("px", ""))
                                     });
                                 } else {
                                     // When top of wrapping parent is in view
                                     $stickyHead.css({
-                                        opacity: 0,
-                                        top: 0
+                                        "opacity": 0,
+                                        "z-index": -50,
+                                        "top": 0
                                     });
                                 }
                             } else {
@@ -156,16 +165,18 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                                 if($w.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() > $t.offset().top && $w.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() < $t.offset().top + $t.outerHeight() - allowance) {
                                     // When top of viewport is in the table itself
                                     $stickyHead.css({
-                                        opacity: 1,
-                                        top: $w.scrollTop() - $t.offset().top + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() + parseInt($stickyWrap.css("padding-top").replace("px", ""))
+                                        "opacity": 1,
+                                        "z-index": 50,
+                                        "top": $w.scrollTop() - $t.offset().top + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() + parseInt($stickyWrap.css("padding-top").replace("px", ""))
                                     });
                                 } else if ($t.offset().top && $w.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() > $t.offset().top + $t.outerHeight() - allowance) {
                                     // Sticky header past allowance. Keep calm and continue scrolling.
                                 } else {
                                     // When top of viewport is above or below table
                                     $stickyHead.css({
-                                        opacity: 0,
-                                        top: 0
+                                        "opacity": 0,
+                                        "z-index": -50,
+                                        "top": 0
                                     });
                                 }
                             }
@@ -227,11 +238,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                         <div id="gxaExperimentPageHeatmapTableStickyWrapper" style={{"padding-top": "10px"}}>
                             <table ref="heatmapTable" id="heatmap-table" className="table-grid">
-                                <HeatmapTableHeader isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton}/>
+                                <HeatmapTableHeader ref="heatmapTableHeader" isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} sticky={""}/>
                                 <HeatmapTableRows profiles={this.state.profiles.rows} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} />
                             </table>
                             <table className="table-grid" id="gxaExperimentPageHeatmapTableStickyWrapperStickyHead">
-                                <HeatmapTableHeader isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton}/>
+                                <HeatmapTableHeader ref="heatmapTableStickyHeader" isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} sticky={"Sticky"}/>
                             </table>
                         </div>
                     </div>
@@ -331,25 +342,25 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
             legendType: function () {
                 if (type.isBaseline) {
-                    return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} experimentAccession={heatmapConfig.experimentAccession}/> );
+                    return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} selectedColumnId={this.props.selectedColumnId} selectColumn={this.props.selectColumn} experimentAccession={heatmapConfig.experimentAccession}/> );
                 }
                 else if (type.isDifferential) {
-                    return (<ContrastHeaders contrasts={this.props.columnHeaders} experimentAccession={heatmapConfig.experimentAccession} showMaPlotButton={heatmapConfig.showMaPlotButton} gseaPlots={heatmapConfig.gseaPlots}/>);
+                    return (<ContrastHeaders contrasts={this.props.columnHeaders} selectedColumnId={this.props.selectedColumnId} selectColumn={this.props.selectColumn} experimentAccession={heatmapConfig.experimentAccession} showMaPlotButton={heatmapConfig.showMaPlotButton} gseaPlots={heatmapConfig.gseaPlots}/>);
                 }
                 else if (type.isMultiExperiment) {
-                     return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} /> );
+                     return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} selectedColumnId={this.props.selectedColumnId} selectColumn={this.props.selectColumn}/> );
                 }
-
             },
 
             render: function () {
                 var showGeneProfile = this.props.showGeneSetProfiles ? 'Gene set' : 'Gene';
                 var showExperimentProfile = type.isMultiExperiment ? "Experiment" : showGeneProfile;
 
+                // TODO Put all <th> inside <tr> elements (needs quite a lot of restructuring)
                 return (
                     <thead>
                         <th className="horizontal-header-cell" colSpan={this.props.isMicroarray ? 2 : undefined}>
-                            <TopLeftCorner hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels} selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton}/>
+                            <TopLeftCorner hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels} selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton} sticky={this.props.sticky}/>
                         </th>
 
                         { this.legendType() }
@@ -378,21 +389,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
         var FactorHeaders = React.createClass({
 
-            getInitialState: function () {
-                return ({selectedColumnId: null});
-            },
-
-            selectColumn: function (columnId) {
-                var selectedColumnId = (columnId === this.state.selectedColumnId) ? null : columnId;
-                this.setState({selectedColumnId: selectedColumnId}, function() {
-                    eventEmitter.emitEvent('onColumnSelectionChange', [selectedColumnId]);
-                });
-            },
-
             render: function () {
                 var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
                     return <FactorHeader factorName={assayGroupFactor.factorValue} svgPathId={assayGroupFactor.factorValueOntologyTermId} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={this.props.experimentAccession}
-                            selectColumn={this.selectColumn} selected={assayGroupFactor.assayGroupId === this.state.selectedColumnId} />;
+                            selectColumn={this.props.selectColumn} selected={assayGroupFactor.assayGroupId === this.props.selectedColumnId} />;
                 }.bind(this));
 
                 return (
@@ -450,21 +450,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
         var ContrastHeaders = React.createClass({
 
-            getInitialState: function () {
-                return ({selectedColumnId: null});
-            },
-
-            selectColumn: function (columnId) {
-                var selectedColumnId = (columnId === this.state.selectedColumnId) ? null : columnId;
-                this.setState({selectedColumnId: selectedColumnId}, function() {
-                    eventEmitter.emitEvent('onColumnSelectionChange', [selectedColumnId]);
-                });
-            },
-
             render: function () {
                 var contrastHeaders = this.props.contrasts.map(function (contrast) {
                     var gseaPlotsThisContrast = this.props.gseaPlots ? this.props.gseaPlots[contrast.id] : {go: false, interpro: false, reactome: false};
-                    return <ContrastHeader selectColumn={this.selectColumn} selected={contrast.id === this.state.selectedColumnId} contrastName={contrast.displayName} arrayDesignAccession={contrast.arrayDesignAccession} contrastId={contrast.id} experimentAccession={this.props.experimentAccession} showMaPlotButton={this.props.showMaPlotButton}
+                    return <ContrastHeader selectColumn={this.props.selectColumn} selected={contrast.id === this.props.selectedColumnId} contrastName={contrast.displayName} arrayDesignAccession={contrast.arrayDesignAccession} contrastId={contrast.id} experimentAccession={this.props.experimentAccession} showMaPlotButton={this.props.showMaPlotButton}
                     showGseaGoPlot={gseaPlotsThisContrast.go}
                     showGseaInterproPlot={gseaPlotsThisContrast.interpro}
                     showGseaReactomePlot={gseaPlotsThisContrast.reactome}/>;
@@ -702,19 +691,18 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 displayLevelsBaseline: function() {
                     var displayLevelsButton = type.isDifferential ? DisplayLevelsButtonDifferential : DisplayLevelsButtonBaseline;
                     return ( this.props.hasQuartiles && this.props.isSingleGeneResult ?
-                        <displayLevelsRadio selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton} /> :
+                        <LevelsRadioGroup selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton} sticky={this.props.sticky}/> :
                         <displayLevelsButton displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels}/>
                     );
                 },
 
                 render: function () {
                     return (
-                            <div className="heatmap-matrix-top-left-corner">
-                                <span id='tooltip-span' data-help-loc={type.heatmapTooltip} ref='tooltipSpan'></span>
-
-                                {this.displayLevelsBaseline()}
-                            </div>
-                        );
+                        <div className="heatmap-matrix-top-left-corner">
+                            <span id='tooltip-span' data-help-loc={type.heatmapTooltip} ref='tooltipSpan'></span>
+                            {this.displayLevelsBaseline()}
+                        </div>
+                    );
                 },
 
                 componentDidMount: function () {
@@ -738,7 +726,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 render: function () {
                     return (
                         <button id='display-levels' onClick={this.props.toggleDisplayLevels}></button>
-                        );
+                    );
                 },
 
                 componentDidMount: function () {
@@ -752,34 +740,26 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             });
         };
 
-        var displayLevelsRadio = React.createClass({
+        var LevelsRadioGroup = React.createClass({
+            getInitialState: function() {
+                return {value: this.props.selectedRadioButton};
+            },
 
-            getInitialState: function () {
+            render: function() {
                 return (
-                    { selected : this.props.selectedRadioButton }
-                );
-            },
-
-            componentDidMount: function() {
-                this._handleChange();
-            },
-
-            _handleChange: function(value) {
-                this.setState({selected: value});
-                this.props.toggleRadioButton(value);
-            },
-
-            render: function () {
-                var radioStyle = {"vertical-align":"middle","margin-left":"10px", "margin-top":"10px"};
-                return (
-                    <div style={{"margin-top":"20px"}}>
-                        <div style={radioStyle}>
-                            <input type="radio" name="radiolevels" defaultChecked="checked" onChange={this._handleChange.bind(this, "gradients")} />Display gradients<br />
-                            <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "levels")} />Display levels<br />
-                            <input type="radio" name="radiolevels" onChange={this._handleChange.bind(this, "variance")}  />Display variation
+                    <RadioGroup name={"displayLevelsGroup" + this.props.sticky} value={this.props.selectedRadioButton} onChange={this.handleChange}>
+                        <div style={{"margin-left": "10px", "margin-top": "8px"}}>
+                            <input type="radio" value="gradients"/>Display gradients<br />
+                            <input type="radio" value="levels"/>Display levels<br />
+                            <input type="radio" value="variance"/>Display variance
                         </div>
-                    </div>
+                    </RadioGroup>
                 );
+            },
+
+            handleChange: function(event) {
+                this.props.toggleRadioButton(event.target.value);
+                this.setState({value: this.props.selectedRadioButton});
             }
         });
 
@@ -876,27 +856,21 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                 displayLevelsRadio: function() {
                     if(this.props.hasQuartiles && this.props.isSingleGeneResult) {
-                        if(this.props.selectedRadioButton == "gradients") {
-                            return false;
-                        }
-                        else if(this.props.selectedRadioButton == "levels") {
-                            return true;
-                        }
+                        return this.props.selectedRadioButton === "levels";
                     }
                     else return (this.props.displayLevels);
                 },
 
                 cellType: function (expression) {
                     if (type.isBaseline) {
-                        if(this.props.selectedRadioButton == "variance") {
-                            return ( this.varianceExpressionCell(expression));
+                        if(this.props.selectedRadioButton === "variance") {
+                            return (this.varianceExpressionCell(expression));
                         }
                         else {
                             return (
                                 <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.displayLevelsRadio()} svgPathId={expression.svgPathId} geneSetProfiles={this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
                             );
                         }
-
                     }
                     else if (type.isDifferential) {
                         return (
