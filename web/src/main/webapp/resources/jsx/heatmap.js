@@ -62,12 +62,21 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 this.setState({showGeneSetProfiles: !this.state.showGeneSetProfiles, profiles: newProfiles});
             },
 
+
             toggleDisplayLevels: function () {
-                this.setState({displayLevels: !this.state.displayLevels});
+                var newDisplayLevels = !this.state.displayLevels;
+                this.setState({displayLevels: newDisplayLevels});
                 if ($prefFormDisplayLevelsInputElement) {
-                    $prefFormDisplayLevelsInputElement.val(this.state.displayLevels);
+                    $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
                 }
             },
+
+            //toggleDisplayLevels: function () {
+            //    this.setState({displayLevels: !this.state.displayLevels});
+            //    if ($prefFormDisplayLevelsInputElement) {
+            //        $prefFormDisplayLevelsInputElement.val(this.state.displayLevels);
+            //    }
+            //},
 
             toggleRadioButton: function(newSelected) {
                 this.setState({selectedRadioButton: newSelected});

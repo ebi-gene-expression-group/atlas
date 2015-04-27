@@ -63,9 +63,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             },
 
             toggleDisplayLevels: function () {
-                this.setState({displayLevels: !this.state.displayLevels});
+                var newDisplayLevels = !this.state.displayLevels;
+                this.setState({displayLevels: newDisplayLevels});
                 if ($prefFormDisplayLevelsInputElement) {
-                    $prefFormDisplayLevelsInputElement.val(this.state.displayLevels);
+                    $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
                 }
             },
 
