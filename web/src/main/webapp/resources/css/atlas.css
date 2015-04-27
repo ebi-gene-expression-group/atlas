@@ -304,6 +304,10 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     min-height: 0px !important;
 }
 
+.gxaBlockWithoutPaddingBottom {
+    padding-bottom: 0px !important;
+}
+
 .block-max-width {
     max-width: 950px;
 }
