@@ -49,7 +49,7 @@
                 </td>
 
                 <c:if test="${!type.isBaseline()}">
-                    <td class="gxaExperimentRequestPreferencesFluidNarrowTableColumn"> <!-- empty placeholder above Contrasts --> </td>
+                    <td class=""> <!-- empty placeholder above Contrasts --> </td>
                 </c:if>
 
                 <c:if test="${selectedFilterFactorNamesAndValues.size() > 0}">
@@ -105,7 +105,7 @@
                     </td>
                 </c:if>
                 <c:if test="${!type.isBaseline()}">
-                    <td class="gxaExperimentRequestPreferencesFluidNarrowTableColumn">
+                    <td class="">
                         <c:import url="includes/contrast-up-down-menu.jsp"/>
                     </td>
                 </c:if>
