@@ -36,15 +36,13 @@
 <body>
 
 <div id="heatmapContainer"></div>
-<div>atlas expression</div>
-<div>another example</div>
 
 
 <script src="/gxa/resources/jsx/heatmap.jsx" type="text/jsx"></script>
 <script src="/gxa/resources/jsx/heatmapContainer.jsx" type="text/jsx"></script>
 <script type="text/javascript">
     new Biojs.AtlasHeatmap({
-        gxaBaseUrl: "http://www.ebi.ac.uk/gxa",
+        gxaBaseUrl: "/gxa/",
         params: 'geneQuery=ASPM&species=mus%20musculus',
         isMultiExperiment: true,
         target: "heatmapContainer"
