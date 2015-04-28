@@ -38,38 +38,6 @@ var searchFormModule = (function($) {
         return string.split("?")[0];
     }
 
-    function initButtons(){
-
-        $("#submit-button").button();
-
-        $("#reset-button").button();
-
-    }
-
-    function initWatermarks(defaultPValueCutOff, defaultFoldChangeCutOff){
-        $("#geneQuery").watermark("(all genes)");
-
-        $("#cutoff").watermark("(default "+ defaultPValueCutOff +")");
-
-        if (defaultFoldChangeCutOff) {
-            $("#foldChangeCutOff").watermark("(default "+ defaultFoldChangeCutOff +")");
-        }
-    }
-
-    function initSelectBox(watermarkLabel){
-        $("#queryFactorValues").chosen();
-
-        //following code is a patch to reload the right watermark label in the 'chosen' plugin
-        $("#queryFactorValues").change(function () {
-            if ($(this).val()) {
-                $(this).data("chosen").default_text = "";
-            } else {
-                $(this).data("chosen").default_text = watermarkLabel;
-                $(this).trigger("chosen:updated");
-            }
-        });
-    }
-
     function disableCarriageReturn(selector) {
         $(selector).keypress(function(event) {
             if (event.keyCode === 13) {
@@ -79,37 +47,27 @@ var searchFormModule = (function($) {
         });
     }
 
-    function onLoadSetFocus() {
-        //$('#prefForm .tag-editor').click();
-        //$('#prefForm .tag-editor').focus();
-    }
-
     function searchBoxEnterEventHandler(element) {
         $('#searchForm .tag-editor').on('submit', function (e) {
             $(element).click();
         });
     }
 
-    function init (watermarkLabel, defaultPValueCutOff, defaultFoldChangeCutOff) {
-
-        initButtons();
-
-        initWatermarks(defaultPValueCutOff, defaultFoldChangeCutOff);
-
-        initSelectBox(watermarkLabel);
-
+    function init () {
+        // Initialize buttons and select box
+        $("#submit-button").button();
+        $("#reset-button").button();
+        $("#queryFactorValues").chosen();
     }
 
     return {
         init: init,
         disableCarriageReturn: disableCarriageReturn,
         searchBoxEnterEventHandler: searchBoxEnterEventHandler,
-        onLoadSetFocus: onLoadSetFocus,
         removeHttpParameters: removeHttpParameters
     };
 
 }(jQuery));
 
-//---------------------------------------------------
 
 
