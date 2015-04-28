@@ -88,5 +88,5 @@
 #gxaExperimentPageHeatmapCountAndLegend {
     width: 100%;
     max-width: 1040px;
-    z-index: 1000; /* Some high number to stay above the table when it becomes hcSticky() */
+    z-index: 75; /* A high enough number to stay above the table when it becomes hcSticky() but low enough to be below Chosen plugin (100) */
 }
