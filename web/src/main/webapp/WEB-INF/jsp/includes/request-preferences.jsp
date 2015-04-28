@@ -65,7 +65,7 @@
                 </td>
                 <c:choose>
                     <c:when test="${type.isBaseline()}">
-                        <td class="gxaExperimentRequestPreferencesFluidTableColumn>
+                        <td class="gxaExperimentRequestPreferencesFluidTableColumn">
                             <form:label path="cutoff">Expression level cutoff</form:label>
                             <span data-help-loc="#cutoff${type.isProteomicsBaseline() ? '-proteomics' : ''}"></span>
                         </td>
