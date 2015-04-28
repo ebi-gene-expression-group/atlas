@@ -27,38 +27,38 @@
 	----------------------------------------------------*/
 
 	// check for scroll direction and speed
-	var getScroll = function() {
+	var hcGetScroll = function() {
 		var pageXOffset = window.pageXOffset !== undefined ? window.pageXOffset : (document.compatMode == "CSS1Compat" ? window.document.documentElement.scrollLeft : window.document.body.scrollLeft),
 			pageYOffset = window.pageYOffset !== undefined ? window.pageYOffset : (document.compatMode == "CSS1Compat" ? window.document.documentElement.scrollTop : window.document.body.scrollTop);
 
-		if (typeof getScroll.x == 'undefined') {
-			getScroll.x = pageXOffset;
-			getScroll.y = pageYOffset;
+		if (typeof hcGetScroll.x == 'undefined') {
+			hcGetScroll.x = pageXOffset;
+			hcGetScroll.y = pageYOffset;
 		}
-		if (typeof getScroll.distanceX == 'undefined') {
-			getScroll.distanceX = pageXOffset;
-			getScroll.distanceY = pageYOffset;
+		if (typeof hcGetScroll.distanceX == 'undefined') {
+			hcGetScroll.distanceX = pageXOffset;
+			hcGetScroll.distanceY = pageYOffset;
 		} else {
-			getScroll.distanceX = pageXOffset - getScroll.x;
-			getScroll.distanceY = pageYOffset - getScroll.y;
+			hcGetScroll.distanceX = pageXOffset - hcGetScroll.x;
+			hcGetScroll.distanceY = pageYOffset - hcGetScroll.y;
 		}
 
-		var diffX = getScroll.x - pageXOffset,
-			diffY = getScroll.y - pageYOffset;
+		var diffX = hcGetScroll.x - pageXOffset,
+			diffY = hcGetScroll.y - pageYOffset;
 
-		getScroll.direction = diffX < 0 ? 'right' :
+		hcGetScroll.direction = diffX < 0 ? 'right' :
 			diffX > 0 ? 'left' :
 			diffY <= 0 ? 'down' :
 			diffY > 0 ? 'up' : 'first';
 
-		getScroll.x = pageXOffset;
-		getScroll.y = pageYOffset;
+		hcGetScroll.x = pageXOffset;
+		hcGetScroll.y = pageYOffset;
 	};
-	$window.on('scroll', getScroll);
+	$window.on('scroll', hcGetScroll);
 
 
 	// little original style plugin
-	$.fn.style = function(style) {
+	$.fn.hcStyle = function(style) {
 		if (!style) return null;
 
 		var $this = $(this),
@@ -224,7 +224,7 @@
 								'height': $this.outerHeight(true),
 								'width': (function(){
 									// check if wrapper already has width in %
-									var width = $this_wrapper.style('width');
+									var width = $this_wrapper.hcStyle('width');
 									if (width.indexOf('%') >= 0 || width == 'auto') {
 										if ($this.css('box-sizing') == 'border-box' || $this.css('-moz-box-sizing') == 'border-box') {
 											$this.css('width', $this_wrapper.width());
@@ -243,7 +243,7 @@
 						}
 					})() || (function(){ // wrapper doesn't exist
 
-						var this_css = $this.style(['width', 'margin-left', 'left', 'right', 'top', 'bottom', 'float', 'display']);
+						var this_css = $this.hcStyle(['width', 'margin-left', 'left', 'right', 'top', 'bottom', 'float', 'display']);
 						var display = $this.css('display');
 
 						var $this_wrapper = $('<div>', {
@@ -439,7 +439,7 @@
 
 							if (this_window_top + this_height <= window_height) { // element bigger than window with follow scroll on
 
-								if (getScroll.direction == 'down') {
+								if (hcGetScroll.direction == 'down') {
 									// scroll down
 									_setFixed({
 										top: window_height - this_height
@@ -448,22 +448,22 @@
 									// scroll up
 									if (this_window_top < 0 && $this.css('position') == 'fixed') {
 										_reset({
-											top: this_document_top - (top_limit + options.top - top_spacing) - getScroll.distanceY
+											top: this_document_top - (top_limit + options.top - top_spacing) - hcGetScroll.distanceY
 										});
 									}
 								}
 
 							} else { // element smaller than window or follow scroll turned off
 
-								if (getScroll.direction == 'up' && this_document_top >= offset_top + options.top - top_spacing) {
+								if (hcGetScroll.direction == 'up' && this_document_top >= offset_top + options.top - top_spacing) {
 									// scroll up
 									_setFixed({
 										top: options.top - top_spacing
 									});
-								} else if (getScroll.direction == 'down' && this_document_top + this_height > window_height && $this.css('position') == 'fixed') {
+								} else if (hcGetScroll.direction == 'down' && this_document_top + this_height > window_height && $this.css('position') == 'fixed') {
 									// scroll down
 									_reset({
-										top: this_document_top - (top_limit + options.top - top_spacing) - getScroll.distanceY
+										top: this_document_top - (top_limit + options.top - top_spacing) - hcGetScroll.distanceY
 									});
 								}
 
@@ -522,8 +522,8 @@
 							$wrapper.after($resize_clone);
 						}
 
-						var wrapper_width = $wrapper.style('width');
-						var resize_clone_width = $resize_clone.style('width');
+						var wrapper_width = $wrapper.hcStyle('width');
+						var resize_clone_width = $resize_clone.hcStyle('width');
 
 						if (resize_clone_width == 'auto' && wrapper_width != 'auto') {
 							resize_clone_width = parseInt($this.css('width'));
