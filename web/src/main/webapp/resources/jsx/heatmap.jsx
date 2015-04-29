@@ -546,7 +546,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 },
 
                 render: function () {
-                    var thStyle = this.showPlotsButton() ? {width: "80px"} : {};
+                    var thStyle = this.showPlotsButton() ? {"min-width": "80px"} : {};
                     var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
                     var plotsButton = (
