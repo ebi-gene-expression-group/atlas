@@ -34,7 +34,7 @@ public class RnaSeqBaselineExpressionSerializer implements ExpressionSerializer 
 
 
     @Inject
-    public RnaSeqBaselineExpressionSerializer(@Value("#{configuration['experiment.magetab.serialised.path.template']}") String serializedFileTemplate,
+    public RnaSeqBaselineExpressionSerializer(@Value("#{configuration['experiment.serialized_expression.path.template']}") String serializedFileTemplate,
                                               @Value("#{configuration['experiment.magetab.path.template']}") String tsvFileTemplate,
                                               CsvReaderFactory csvReaderFactory) {
         this.serializedFileTemplate = serializedFileTemplate;
@@ -42,12 +42,10 @@ public class RnaSeqBaselineExpressionSerializer implements ExpressionSerializer 
         this.csvReaderFactory = csvReaderFactory;
     }
 
-
     // This method will automatically block if the serialization is requested concurrently on the same experiment: it will wait
     // until the current serialization is finished. It can concurrently serialize different experiments, and each call needs its own
     // Kryo instance, as Kryo isn’t thread safe.
     public void serializeExpressionData(final String experimentAccession) {
-
         Kryo kryo = new Kryo();
 
         String tsvFilePath = MessageFormat.format(tsvFileTemplate, experimentAccession);
