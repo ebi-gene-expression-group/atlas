@@ -24,9 +24,9 @@ var ContrastTooltip = (function(React) {
 
             return (
                 React.DOM.tr(null, 
-                    React.DOM.td( {style:style}, property.propertyName),
-                    React.DOM.td( {style:style}, property.testValue),
-                    React.DOM.td( {style:style}, property.referenceValue)
+                    React.DOM.td({style: style}, property.propertyName), 
+                    React.DOM.td({style: style}, property.testValue), 
+                    React.DOM.td({style: style}, property.referenceValue)
                 )
             );
         },
@@ -35,22 +35,22 @@ var ContrastTooltip = (function(React) {
             return (
 
                 React.DOM.div(null, 
-                    React.DOM.div( {id:"contrastExperimentDescription", style:{'font-weight':'bold', 'color':'blue', 'text-align': 'center'}}, this.props.experimentDescription),
-                    React.DOM.div( {id:"contrastDescription", style:{'text-align': 'center'}}, this.props.contrastDescription),
-                    React.DOM.table( {className:"table-grid", style:{padding: '0px', margin: '0px'}}, 
+                    React.DOM.div({id: "contrastExperimentDescription", style: {'font-weight':'bold', 'color':'blue', 'text-align': 'center'}}, this.props.experimentDescription), 
+                    React.DOM.div({id: "contrastDescription", style: {'text-align': 'center'}}, this.props.contrastDescription), 
+                    React.DOM.table({className: "table-grid", style: {padding: '0px', margin: '0px', width: '100%'}}, 
                         React.DOM.thead(null, 
                             React.DOM.tr(null, 
-                                React.DOM.th( {className:"header-cell"}, 
+                                React.DOM.th({className: "header-cell"}, 
                                 "Property"
-                                ),
-                                React.DOM.th( {className:"header-cell"}, 
-                                "Test value (N=",this.props.testReplicates,")"
-                                ),
-                                React.DOM.th( {className:"header-cell"}, 
-                                "Reference value (N=",this.props.referenceReplicates,")"
+                                ), 
+                                React.DOM.th({className: "header-cell"}, 
+                                "Test value (N=", this.props.testReplicates, ")"
+                                ), 
+                                React.DOM.th({className: "header-cell"}, 
+                                "Reference value (N=", this.props.referenceReplicates, ")"
                                 )
                             )
-                        ),
+                        ), 
                         React.DOM.tbody(null, 
                             this.props.properties.map(this.propertyRow)
                         )

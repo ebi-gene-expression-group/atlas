@@ -113,15 +113,12 @@
             }
 
             //configurations required for any browser...
-
             searchFormModule.init();
-
             geneQueryTagEditorModule.init('#geneQuery', '${species}');
-
             helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', $('[data-help-loc]').not('#heatmap-react [data-help-loc]'));
 
             $('#anatomogram').hcSticky({responsive: true});
-
+            $('#ensembl-launcher').hcSticky({responsive: true});
         });
     })(jQuery);
 

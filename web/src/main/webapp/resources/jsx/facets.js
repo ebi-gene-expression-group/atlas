@@ -46,9 +46,9 @@ var facetsModule = (function (React) {
 
             render: function () {
                 var facets = Object.keys(this.props.facets).map(function (facet) {
-                    return Facet( {key:facet, facetName:facet, facetItems:this.props.facets[facet],
-                                  checkedFacetItems:this.props.checkedFacets && this.props.checkedFacets[facet],
-                                  setChecked:this._setChecked}
+                    return Facet({key: facet, facetName: facet, facetItems: this.props.facets[facet], 
+                                  checkedFacetItems: this.props.checkedFacets && this.props.checkedFacets[facet], 
+                                  setChecked: this._setChecked}
                     );
                 }.bind(this));
 
@@ -82,16 +82,16 @@ var facetsModule = (function (React) {
 
             render: function () {
                 var facetItems = this.props.facetItems.map(function (facetItem) {
-                    return FacetItem( {key:facetItem.name, name:facetItem.name, value:facetItem.value,
-                        checked:this.props.checkedFacetItems && this.props.checkedFacetItems[facetItem.name],
-                        setChecked:this._setChecked}
+                    return FacetItem({key: facetItem.name, name: facetItem.name, value: facetItem.value, 
+                        checked: this.props.checkedFacetItems && this.props.checkedFacetItems[facetItem.name], 
+                        setChecked: this._setChecked}
                     );
 
                 }.bind(this));
 
                 return (
-                    React.DOM.li( {className:"atlasAnalyticsSearchFacet"}, 
-                        React.DOM.span(null, this.props.facetName),
+                    React.DOM.li({className: "atlasAnalyticsSearchFacet"}, 
+                        React.DOM.span(null, this.props.facetName), 
                         React.DOM.ul(null, 
                             facetItems
                         )
@@ -114,9 +114,9 @@ var facetsModule = (function (React) {
 
             render: function () {
                 return (
-                    React.DOM.li(null, React.DOM.input( {type:"checkbox", checked:this.props.checked ? true : false,
-                               onChange:this._setChecked}
-                    ),this.props.value)
+                    React.DOM.li(null, React.DOM.input({type: "checkbox", checked: this.props.checked ? true : false, 
+                               onChange: this._setChecked}
+                    ), this.props.value)
                 );
             }
         });
