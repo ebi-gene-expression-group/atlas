@@ -24,8 +24,8 @@ var FactorTooltip = (function(React) {
 
             return (
                 React.DOM.tr(null, 
-                    React.DOM.td( {style:style}, property.propertyName),
-                    React.DOM.td( {style:style}, property.testValue)
+                    React.DOM.td({style: style}, property.propertyName), 
+                    React.DOM.td({style: style}, property.testValue)
                 )
             );
         },
@@ -33,13 +33,13 @@ var FactorTooltip = (function(React) {
         render: function () {
             return (
                 React.DOM.div(null, 
-                    React.DOM.table( {className:"table-grid", style:{padding: '0px', margin: '0px'}}, 
+                    React.DOM.table({className: "table-grid", style: {padding: '0px', margin: '0px'}}, 
                         React.DOM.thead(null, 
                             React.DOM.tr(null, 
-                                React.DOM.th( {className:"header-cell"}, "Property"),
-                                React.DOM.th( {className:"header-cell"}, "Value (N=",this.props.replicates,")")
+                                React.DOM.th({className: "header-cell"}, "Property"), 
+                                React.DOM.th({className: "header-cell"}, "Value (N=", this.props.replicates, ")")
                             )
-                        ),
+                        ), 
                         React.DOM.tbody(null, 
                             this.props.properties.map(this.propertyRow)
                         )
