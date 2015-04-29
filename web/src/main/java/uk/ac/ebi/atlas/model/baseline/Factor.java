@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.model.baseline;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
 import org.apache.velocity.util.StringUtils;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
@@ -36,7 +35,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Factor implements Comparable<Factor>, Serializable {
 
-    private ArrayList<String> tissuesOrderedBySystem = Lists.newArrayList("lung", "heart", "left ventricle", "umbilical vein", "appendix", "colon", "duodenum", "esophagus", "gall bladder", "pharyngeal muscle cell", "rectum", "small intestine", "spleen", "stomach", "adrenal gland", "fetal liver", "gonad", "liver", "pancreas", "thymus", "thyroid", "parotid gland", "salivary gland", "submandibular gland", "tongue", "bone marrow", "lymph node", "leukocyte", "adipose tissue", "hair follicle", "mammary", "skin", "gastrocnemius", "skeletal muscle", "smooth muscle", "amygdala", "brain", "brain cerebellum", "brain temporal lobe", "caudate nucleus", "cerebral cortex", "frontal lobe", "globus pallidus", "hippocampus", "hypothalamus", "locus coeruleus", "medulla oblongata", "middle temporal gyrus", "motor neuron", "neuron", "occipital lobe", "parietal lobe", "pineal gland", "pituitary gland", "prefrontal cortex", "spinal cord", "substantia nigra", "thalamus", "bladder", "kidney", "animal ovary", "breast", "cervix", "endometrium", "epididymis", "fallopian tube", "penis", "placenta", "prostate", "seminal vesicle", "testis", "umbilical cord", "uterus", "vagina", "diaphragm", "tonsil", "trachea", "eye");
     private final String header;
     private final String type;
     private final String value;
@@ -46,7 +44,7 @@ public class Factor implements Comparable<Factor>, Serializable {
         this(header, value, new OntologyTerm[0]);
     }
 
-    public Factor(String header, String value, OntologyTerm... valueOntologyTerms) {
+    public Factor(String header, String value, OntologyTerm ... valueOntologyTerms) {
         this.header = header;
         this.type = normalize(checkNotNull(header));
         this.value = checkNotNull(value);
@@ -71,7 +69,7 @@ public class Factor implements Comparable<Factor>, Serializable {
             }
             result.append(token);
 
-            result.append(" ");
+        result.append(" ");
         }
 
         return result.toString().trim();
@@ -121,17 +119,7 @@ public class Factor implements Comparable<Factor>, Serializable {
         if (factorCompare != 0) {
             return factorCompare;
         }
-        if (type.equals("ORGANISM_PART") && (tissuesOrderedBySystem.contains(value) || tissuesOrderedBySystem.contains(factor.value))) {
-            if (!tissuesOrderedBySystem.contains(value)) {
-                factorCompare = 1;
-            } else if (!tissuesOrderedBySystem.contains(factor.value)) {
-                factorCompare = -1;
-            } else
-                factorCompare = tissuesOrderedBySystem.indexOf(value) - tissuesOrderedBySystem.indexOf(factor.value);
-        } else {
-            factorCompare = value.compareTo(factor.value);
-        }
-        return factorCompare;
+        return value.compareTo(factor.value);
     }
 
     public static SortedSet<String> getValues(Set<Factor> factors) {
@@ -146,9 +134,7 @@ public class Factor implements Comparable<Factor>, Serializable {
         return valueOntologyTerms;
     }
 
-    public
-    @Nullable
-    String getValueOntologyTermId() {
+    public @Nullable String getValueOntologyTermId() {
         if (valueOntologyTerms.isEmpty()) {
             return null;
         }
