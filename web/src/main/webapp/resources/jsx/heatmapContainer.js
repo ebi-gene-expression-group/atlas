@@ -93,7 +93,7 @@ var HeatmapContainer = (function (React) {
 
                         ),
 
-                         this.props.isWidget ? React.DOM.div( {id:"disclaimer-message"},  " ", React.DOM.p(null, "Expression widget provided by ", React.DOM.a( {href:"http://www.ebi.ac.uk/gxa"}, "Expression Atlas"),
+                         !this.props.heatmapClass ? React.DOM.div( {id:"disclaimer-message"},  " ", React.DOM.p(null, "Expression view provided by ", React.DOM.a( {href:"http://www.ebi.ac.uk/gxa"}, "Expression Atlas"),
                             React.DOM.br(null),"Please direct any queries or feedback to ", React.DOM.a( {href:"mailto:arrayexpress-atlas@ebi.ac.uk"}, "arrayexpress-atlas@ebi.ac.uk"))) : null
 
                     )
