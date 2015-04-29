@@ -14,7 +14,7 @@ var baselineVarianceModule  = (function ($, React) {
                 return (
 
                     React.DOM.td(null, 
-                        React.DOM.div({id: "container", ref: "container", style: boxPlotStyle})
+                        React.DOM.div( {id:"container", ref:"container", style:boxPlotStyle})
                     )
 
 
