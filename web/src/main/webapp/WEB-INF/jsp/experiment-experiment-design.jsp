@@ -36,33 +36,25 @@
 
     <div id="table-caption"><b>Experiment Design</b></div>
 
-    <div id="toolbar">
-        <table cellpadding="0" cellspacing="0" border="0" style="float: left;">
-            <tr>
-                <td style="vertical-align: middle; padding: 0px;">Show Analysed only?</td>
-                <td style="vertical-align: middle; padding: 0em 0em 0em 0.2em; "><input type="checkbox"
-                                                                                        id="showOnlyAnalysedRuns"
-                                                                                        name="showOnlyAnalysedRuns"
-                                                                                        checked="yes"/></td>
-            </tr>
-        </table>
+    <div id="toolbar" style="padding-bottom:5px">
+        <div style="display:inline">
+            <span>Show analysed only?</span>
+            <input type="checkbox" id="showOnlyAnalysedRuns" name="showOnlyAnalysedRuns" checked="yes"/>
+        </div>
 
         <c:if test="${!type.isBaseline()}">
-            <table cellpadding="0" cellspacing="0" border="0"
-                   style="float: right; padding: 0px 3px 10px 0px; margin-bottom: 0.2em;">
-                <tr>
-                    <td style="vertical-align: middle; padding: 0px 10px 0px 0px; white-space: nowrap;">
-                        <form:label path="selectedContrast" cssStyle="vertical-align: middle;">Comparison: </form:label>
-                        <input type="hidden" name="accessKey" value="${param.accessKey}"/>
-                        <form:select path="selectedContrast" items="${contrasts}" itemValue="id"
-                                     itemLabel="displayName"/>
-                    </td>
-                    <td style="vertical-align: middle; padding: 0px 4px 0px 0px;">Reference:</td>
-                    <td style="vertical-align: middle; padding: 0px; background-color:#FFC266;width:20px;">&nbsp;</td>
-                    <td style="vertical-align: middle; padding: 0px 4px 0px 10px;">Test:</td>
-                    <td style="vertical-align: middle; padding: 0px; background-color:#82CDCD;width:20px;">&nbsp;</td>
-                </tr>
-            </table>
+            <div style="display:inline; float:right">
+                <span>
+                    <form:label path="selectedContrast" cssStyle="vertical-align: middle;">Comparison: </form:label>
+                    <input type="hidden" name="accessKey" value="${param.accessKey}"/>
+                    <form:select path="selectedContrast" items="${contrasts}" itemValue="id"
+                                 itemLabel="displayName"/>
+                </span>
+                <span style="padding-left:10px">Reference:</span>
+                <span style="display:inline-block; vertical-align: middle; padding: 0px; background-color:#FFC266;width:20px;">&nbsp;</span>
+                <span style="vertical-align: middle; padding: 0px 4px 0px 10px;">Test:</span>
+                <span style="display:inline-block; vertical-align: middle; padding: 0px; background-color:#82CDCD;width:20px;">&nbsp;</span>
+            </div>
         </c:if>
     </div>
 
