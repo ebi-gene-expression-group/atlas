@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -46,7 +47,7 @@ public class TwoColourExperimentMageTabParserIT {
     @Inject
     private TwoColourExperimentMageTabParser subject;
 
-    @Test
+    @Ignore
     public void cultureConditionFactorValuesAreSelectedForTheCorrectChannel() throws IOException {
         ExperimentDesign experimentDesign = subject.parse(TWO_COLOUR_EXPERIMENT_ACCESSION).getExperimentDesign();
 
