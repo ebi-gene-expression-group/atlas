@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.acceptance.rest.tests.admin;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
 
@@ -38,7 +39,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
 
     private static final String EXISTING_EXPERIMENT_ACCESSION = "E-MTAB-599";
     private static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";
-    private static final String DIFFERENTIAL_EXPERIMENT_ACCESSION = "E-GEOD-21860";
+    private static final String DIFFERENTIAL_EXPERIMENT_ACCESSION = "E-GEOD-12108";
 
     @Test
     public void listExperiments() {
@@ -125,10 +126,10 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     @Test
     public void updateDifferentialExperiment(){
 
-        expect().body(is("Experiment E-GEOD-21860 successfully updated.")).when()
+        expect().body(is("Experiment " + DIFFERENTIAL_EXPERIMENT_ACCESSION + " successfully updated.")).when()
                 .get("updateStatus?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=true");
 
-        expect().body(is("Experiment E-GEOD-21860 successfully updated.")).when()
+        expect().body(is("Experiment " + DIFFERENTIAL_EXPERIMENT_ACCESSION + " successfully updated.")).when()
                 .get("updateStatus?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=false");
 
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(4));
@@ -139,7 +140,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     @Test
     public void deleteAndLoadDifferentialExperimentPublic() {
 
-        expect().body(is("Experiment E-GEOD-21860 successfully deleted.")).when()
+            expect().body(is("Experiment " + DIFFERENTIAL_EXPERIMENT_ACCESSION + " successfully deleted.")).when()
                 .get("deleteExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
 
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(0));

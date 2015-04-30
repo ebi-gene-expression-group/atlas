@@ -37,7 +37,7 @@ public class GenePageControllerBaselineResultsPaneSIT extends SinglePageSelenium
 
     @Test
     public void whenNoBaselineResultsAndDiffResultsThenTheDifferentialPaneIsOpen() {
-        BioEntityPage subject = new BioEntityPage(driver, "ENSMUSG00000070683", "genes");
+        BioEntityPage subject = new BioEntityPage(driver, "ENSMUSG00000069045", "genes");
         subject.get();
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
         assertThat(subject.getDiffPaneHeaderResultsMessage(), is("1 result"));

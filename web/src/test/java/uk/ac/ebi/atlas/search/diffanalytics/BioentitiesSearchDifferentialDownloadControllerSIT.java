@@ -67,7 +67,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
 
     @Test
     public void downloadGeneDifferentialExpressions() {
-        Response response = new EndPoint("/gxa/genes/ENSMUSG00000050520.tsv").getResponse();
+        Response response = new EndPoint("/gxa/genes/ENSMUSG00000083856.tsv").getResponse();
 
         response.then().assertThat().statusCode(200).contentType(ContentType.TEXT);
 
@@ -145,7 +145,7 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
 
     @Test
     public void downloadWithLogFoldChangeOfInfinity() {
-        String url = "/genes/ENSMUSG00000070368.tsv";
+        String url = "/genes/ENSMUSG00000069045.tsv";
 
         Response response = given().urlEncodingEnabled(false).get(url);
 
@@ -156,6 +156,6 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
 
         String firstGene = lines[4];
         assertThat(firstGene,
-                is("Prok1\tMus musculus\tE-GEOD-21860\tclinical information:'non-pregnant' vs 'pregnant'\t0.00148726343533448\tInf\tNA"));
+                is("Ddx3y\tMus musculus\tE-MTAB-698\tsex:'male' vs 'female'\t3.78366892203992E-123\tInf\tNA"));
     }
 }

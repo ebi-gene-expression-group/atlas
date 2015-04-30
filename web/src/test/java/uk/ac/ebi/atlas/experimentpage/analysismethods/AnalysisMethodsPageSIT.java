@@ -21,7 +21,7 @@ public class AnalysisMethodsPageSIT extends RestAssuredFixture {
 
     @Test
     public void rnaseqDiffExperiment(){
-        Response response = get("/experiments/E-GEOD-21860/analysis-methods");
+        Response response = get("/experiments/E-GEOD-22351/analysis-methods");
 
         response.then().assertThat().statusCode(200);
         response.then().assertThat().contentType("text/html");

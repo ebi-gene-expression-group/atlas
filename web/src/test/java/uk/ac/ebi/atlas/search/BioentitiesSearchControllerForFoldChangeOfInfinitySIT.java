@@ -37,7 +37,7 @@ public class BioentitiesSearchControllerForFoldChangeOfInfinitySIT extends Singl
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "geneQuery=Prok1");
+        subject = BioEntitiesPage.search(driver, "geneQuery=Ddx3y");
         subject.get();
     }
 

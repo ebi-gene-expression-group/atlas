@@ -67,7 +67,7 @@ public class GenePageControllerContrastTooltipSIT extends SinglePageSeleniumFixt
     //This is not working with PhantomJS browser :((
     @Test
     public void checkContrastSummaryTooltipExperimentAndContrastDescription() {
-        assertThat(subject.getDiffHeatmapContrastSummaryTooltipExperimentDescription(), is("RNA-seq of Arabidopsis mutants with defects in long-non-coding-RNA-mediated transcriptional silencing"));
+        assertThat(subject.getDiffHeatmapContrastSummaryTooltipExperimentDescription(), is("A SWI/SNF nucleosome remodeling complex acts in non-coding RNA-mediated transcriptional silencing"));
         assertThat(subject.getContrastSummaryTooltipContrastDescription(), is("idn2 mutant vs wild type"));
     }
 

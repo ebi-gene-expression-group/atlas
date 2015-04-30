@@ -49,7 +49,7 @@ public class RnaSeqProfilesWriterIT {
     public static final int GENE_NAME_INDEX = 1;
 
     private static final String E_GEOD_38400 = "E-GEOD-38400";
-    private static final String E_GEOD_21860 = "E-GEOD-21860";
+    private static final String E_MTAB_698 = "E-MTAB-698";
 
 
     private RnaSeqProfilesWriter subject;
@@ -155,18 +155,18 @@ public class RnaSeqProfilesWriterIT {
     @Test
     public void geneQuery_ProteinCoding() throws GenesNotFoundException {
         setGeneQuery("protein_coding");
-        RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_21860);
+        RnaSeqRequestContext requestContext = populateRequestContext(E_MTAB_698);
         long genesCount = subject.write(printWriterMock, requestContext);
 
         List<String> geneNames = geneNames(csvLines());
 
-        int expectedCount = 108;
+        int expectedCount = 15;
         assertThat(genesCount, is((long) expectedCount));
         assertThat(geneNames, hasSize(expectedCount));
 
         System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
 
-        assertThat(geneNames, containsInAnyOrder("Npas4", "Gm16314", "B3galnt1", "Hsph1", "Gabbr2", "Slc6a8", "Sptbn2", "Hspa1a", "Lgals12", "Reg3b", "Dnahc8", "Gpr26", "Gcsh", "Fam155a", "Cntn3", "Bsn", "Hspa1b", "Grem2", "Junb", "Map6", "Ogdhl", "Hsbp1", "Gatm", "Dnaja1", "Gbp8", "Fmo1", "Aldh9a1", "Nr4a1", "Car8", "Cux2", "Mctp1", "Ikzf4", "Gpr119", "D630039A03Rik", "Prok1", "Hopx", "Aldh1l2", "Matn2", "Ggact", "Prkd1", "Prkar2b", "Nupr1", "Cldn8", "Tmem255a", "Cish", "Reg3a", "Grp", "Igfals", "Enpp2", "Csrnp1", "Pycr1", "Wipi1", "Rnf150", "Rab3d", "Cttnbp2", "Prlr", "Sftpd", "Neb", "Mdm1", "Glp1r", "Chst11", "Synpr", "Bmp1", "Ngfr", "Lrrc55", "Rnf182", "Dnmt3b", "Txnrd2", "Apobec1", "Cspg5", "Dnajb1", "Lactbl1", "Cartpt", "Grhl1", "Itga6", "Dusp1", "Fmo4", "Socs2", "Syce2", "Tnfrsf11b", "Znrf2", "Gas2", "Rgs2", "Ern1", "Gyltl1b", "Tph1", "Dhcr7", "Tsc22d3", "Ivd", "Chgb", "Disp2", "Tph2", "Ovol2", "Ehhadh", "Derl3", "Enox1", "Reg3d", "Fosb", "Slc40a1", "Vip", "Fkbp11", "Aqp4", "Slc2a13", "Arc", "Lrp8", "Lonrf3", "Acvr1c", "Igfbp5"));
+        assertThat(geneNames, containsInAnyOrder("Ddx3y", "Eif2s3y", "Kdm5d", "Uty", "Scgb1b27", "Scgb2b27", "Prss33", "Dnase1", "Gpx6", "Cyp1a2", "Cnga2", "Hbb-b2", "Pcolce2", "Stoml3", "Vmn2r121"));
     }
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400.tsv?regulation=UP

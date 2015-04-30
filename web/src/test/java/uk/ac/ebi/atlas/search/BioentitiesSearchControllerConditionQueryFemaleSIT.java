@@ -59,7 +59,9 @@ public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePa
     @Test
     public void checkDifferentialProfilesCount() {
         subject.clickDifferentialPane();
-        assertThat(subject.diffExpressionResultCount(), is("Showing 50 of 1233 results"));
+        // TODO Change back when E-GEOD-21860 and E-GEOD-43049 are back
+        // assertThat(subject.diffExpressionResultCount(), is("Showing 50 of 1233 results"));
+        assertThat(subject.diffExpressionResultCount(), is("Showing 50 of 1115 results"));
     }
 
 }

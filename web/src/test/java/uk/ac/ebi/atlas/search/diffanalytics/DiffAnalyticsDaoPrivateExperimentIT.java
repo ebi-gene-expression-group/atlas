@@ -46,7 +46,7 @@ import java.util.List;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class DiffAnalyticsDaoPrivateExperimentIT {
 
-    private static final String EXPERIMENT_ACCESSION = "E-GEOD-21860";
+    private static final String EXPERIMENT_ACCESSION = "E-MTAB-698";
 
     @Inject
     private DiffAnalyticsDao subject;
