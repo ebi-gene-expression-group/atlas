@@ -82,7 +82,7 @@ var HeatmapContainer = (function (React) {
                             <div id="ensembl-launcher" className="gxaAside" style={{"display":"inline"}}></div>
 
                             <div id="heatmap-react" className={heatmapClass}>
-                                <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />
+                                <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} isWidget={this.props.isWidget}/>
                             </div>
 
                             {/* TODO move into help tooltips module */}
