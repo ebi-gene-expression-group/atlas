@@ -37,16 +37,16 @@ var ContrastTooltip = (function(React) {
                 React.DOM.div(null, 
                     React.DOM.div({id: "contrastExperimentDescription", style: {'font-weight':'bold', 'color':'blue', 'text-align': 'center'}}, this.props.experimentDescription), 
                     React.DOM.div({id: "contrastDescription", style: {'text-align': 'center'}}, this.props.contrastDescription), 
-                    React.DOM.table({className: "table-grid", style: {padding: '0px', margin: '0px', width: '100%'}}, 
+                    React.DOM.table({className: "gxaTableGrid", style: {padding: '0px', margin: '0px', width: '100%'}}, 
                         React.DOM.thead(null, 
                             React.DOM.tr(null, 
-                                React.DOM.th({className: "header-cell"}, 
+                                React.DOM.th({className: "gxaHeaderCell"}, 
                                 "Property"
                                 ), 
-                                React.DOM.th({className: "header-cell"}, 
+                                React.DOM.th({className: "gxaHeaderCell"}, 
                                 "Test value (N=", this.props.testReplicates, ")"
                                 ), 
-                                React.DOM.th({className: "header-cell"}, 
+                                React.DOM.th({className: "gxaHeaderCell"}, 
                                 "Reference value (N=", this.props.referenceReplicates, ")"
                                 )
                             )

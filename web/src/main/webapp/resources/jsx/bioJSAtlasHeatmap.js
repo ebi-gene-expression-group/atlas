@@ -25,7 +25,7 @@ var BioJSAtlasHeatmap = (function(React) {
                 params: 'geneQuery=' + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
                 isMultiExperiment: true,
                 target: this.refs.widgetBody.getDOMNode(),
-                heatmapClass: "heatmap-position",
+                heatmapClass: "gxaHeatmapPosition",
                 heatmapUrl: "/widgets/heatmap/baselineAnalytics"
             });
         },
