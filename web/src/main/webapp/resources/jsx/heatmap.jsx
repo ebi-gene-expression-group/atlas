@@ -238,11 +238,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         </div>
 
                         <div id="gxaExperimentPageHeatmapTableStickyWrapper" style={{"padding-top": "10px"}}>
-                            <table ref="heatmapTable" id="heatmap-table" className="table-grid">
+                            <table ref="heatmapTable" id="heatmap-table" className="gxaTableGrid">
                                 <HeatmapTableHeader ref="heatmapTableHeader" isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} sticky={""}/>
                                 <HeatmapTableRows profiles={this.state.profiles.rows} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} />
                             </table>
-                            <table className="table-grid" id="gxaExperimentPageHeatmapTableStickyWrapperStickyHead">
+                            <table className="gxaTableGrid" id="gxaExperimentPageHeatmapTableStickyWrapperStickyHead">
                                 <HeatmapTableHeader ref="heatmapTableStickyHeader" isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} sticky={"Sticky"}/>
                             </table>
                         </div>
@@ -257,7 +257,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     return (
                         <a id="download-profiles-link" ref="downloadProfilesLink"
                            title="Up to 50 of top genes displayed on page. Download results to see the rest."
-                           href={contextRoot + downloadProfilesURL} className="button-image" target="_blank">
+                           href={contextRoot + downloadProfilesURL} className="gxaButtonImage" target="_blank">
                            <img id="download-profiles" alt="Download query results" style={{width: "20px"}}
                                 src={contextRoot + "/resources/images/download_blue_small.png"}/>
                         </a>
@@ -329,11 +329,11 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                 return (
                     <div style={{display: "table-row"}}>
-                        <div style={this.props.displayLevels ? {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "table-cell"} : {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "table-cell", visibility: "hidden"}} className="gradient-level-min">{this.props.lowExpressionLevel}</div>
+                        <div style={this.props.displayLevels ? {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "table-cell"} : {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "table-cell", visibility: "hidden"}} className="gxaGradientLevelMin">{this.props.lowExpressionLevel}</div>
                         <div style={{display: "table-cell"}}>
                             <span className="color-gradient" style={{overflow: "auto", 'vertical-align': "middle", "background-image": backgroundImage, filter: lt_ie10_filter, width: "200px", height: "15px", margin: "2px 6px 2px 6px", display: "inline-block"}} />
                         </div>
-                        <div style={this.props.displayLevels ? {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "table-cell"} : {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "none", visibility: "hidden"}} className="gradient-level-max">{this.props.highExpressionLevel}</div>
+                        <div style={this.props.displayLevels ? {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "table-cell"} : {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "none", visibility: "hidden"}} className="gxaGradientLevelMax">{this.props.highExpressionLevel}</div>
                     </div>
                 );
             }
@@ -360,15 +360,15 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 // TODO Put all <th> inside <tr> elements (needs quite a lot of restructuring)
                 return (
                     <thead>
-                        <th className="horizontal-header-cell" colSpan={this.props.isMicroarray ? 2 : undefined}>
+                        <th className="gxaHorizontalHeaderCell" colSpan={this.props.isMicroarray ? 2 : undefined}>
                             <TopLeftCorner hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels} selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton} sticky={this.props.sticky}/>
                         </th>
 
                         { this.legendType() }
 
                         <tr>
-                            <th className="horizontal-header-cell" style={ this.props.isMicroarray ? {width:"166px"} : undefined}>{ showExperimentProfile }</th>
-                            { this.props.isMicroarray ? <th className="horizontal-header-cell">Design Element</th> : null}
+                            <th className="gxaHorizontalHeaderCell" style={ this.props.isMicroarray ? {width:"166px"} : undefined}>{ showExperimentProfile }</th>
+                            { this.props.isMicroarray ? <th className="gxaHorizontalHeaderCell">Design Element</th> : null}
                         </tr>
                     </thead>
                 );
@@ -432,7 +432,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}>  select</span> : null;
                     var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}> &#10004; </span>: null ;
-                    var thClass = "rotated_cell hoverable-header " + (this.props.selected ? "vertical-header-cell-selected " : "vertical-header-cell ") + (enableEnsemblLauncher ? "selectable-header" : "");
+                    var thClass = "rotated_cell gxaHoverableHeader " + (this.props.selected ? "gxaVerticalHeaderCell-selected " : "gxaVerticalHeaderCell ") + (enableEnsemblLauncher ? "gxaSelectableHeader" : "");
                     var divClass = "rotate_text factor-header";
                     var factorName = csstransforms ? restrictLabelSize(this.props.factorName, 17) : this.props.factorName;
 
@@ -551,13 +551,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                     var plotsButton = (
                         <div style={{"text-align":"right", "padding-right":"3px"}} >
-                            <a href="#" ref="plotsButton" onClick={this.clickButton} className='button-image' title='Click to view plots'><img src={contextRoot + '/resources/images/yellow-chart-icon.png'}/></a>
+                            <a href="#" ref="plotsButton" onClick={this.clickButton} className='gxaButtonImage' title='Click to view plots'><img src={contextRoot + '/resources/images/yellow-chart-icon.png'}/></a>
                         </div>
                     );
 
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", bottom:"-35px", color:"green"}}>  select</span> : null;
                     var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position:"absolute", width:"5px", right:"0px", left:"125px", bottom:"-35px", color:"green"}}> &#10004; </span>: null;
-                    var thClass = "rotated_cell hoverable-header " + (this.props.selected ? "vertical-header-cell-selected " : "vertical-header-cell ") + (enableEnsemblLauncher ? "selectable-header" : "");
+                    var thClass = "rotated_cell gxaHoverableHeader " + (this.props.selected ? "gxaVerticalHeaderCell-selected " : "gxaVerticalHeaderCell ") + (enableEnsemblLauncher ? "gxaSelectableHeader" : "");
                     var divClass = "rotate_text factor-header";
                     var contrastName = csstransforms ? restrictLabelSize(this.props.contrastName, 17) : this.props.contrastName;
 
@@ -699,7 +699,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                 render: function () {
                     return (
-                        <div className="heatmap-matrix-top-left-corner">
+                        <div className="gxaHeatmapMatrixTopLeftCorner">
                             <span id='tooltip-span' data-help-loc={type.heatmapTooltip} ref='tooltipSpan'></span>
                             {this.displayLevelsBaseline()}
                         </div>
@@ -900,7 +900,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 render: function () {
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{"padding-top": "5px", "float": "right", "color": "green"}}>select</span> : null;
                     var showTickWhenSelected = this.props.selected ? <span style={{"padding-top": "5px", "float": "right", "color": "green"}}> &#10004; </span>: null ;
-                    var className = (this.props.selected ? "horizontal-header-cell-selected hoverable-header" : "horizontal-header-cell hoverable-header") + (enableEnsemblLauncher ? " selectable-header" : "");
+                    var className = (this.props.selected ? "gxaHorizontalHeaderCell-selected gxaHoverableHeader" : "gxaHorizontalHeaderCell gxaHoverableHeader") + (enableEnsemblLauncher ? " gxaSelectableHeader" : "");
                     var rowClassName = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "gxaProteomicsExperiment" : "gxaTranscriptomicsExperiment" ) : "";
 
                     // NB: empty title tag below is required for tooltip to work
@@ -985,7 +985,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     return (
                         <td style={style}>
                             <div
-                            className="heatmap_cell"
+                            className="gxaHeatmapCell"
                             style={{visibility: isUnknownExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
                             data-svg-path-id={this.props.svgPathId}>
                                 {isUnknownExpression(this.props.value) ? unknownCell(this.props.geneSetProfiles) : formatBaselineExpression(this.props.value)}
@@ -1046,7 +1046,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     return (
                         <td style={style}>
                             <div
-                            className="heatmap_cell"
+                            className="gxaHeatmapCell"
                             style={{visibility: isNAExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
                             data-svg-path-id={this.props.svgPathId}>
                                 {isNAExpression(this.props.value) ? tissueNotStudiedInExperiment() : formatBaselineExpression(this.props.value)}
@@ -1072,7 +1072,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                     return (
                         <td style={{"background-color": this.props.color}}>
-                            <div className={this.props.displayLevels ? "show_cell" : "hide_cell"}>
+                            <div className={this.props.displayLevels ? "gxaShowCell" : "gxaHideCell"}>
                                 {this.props.foldChange}
                             </div>
                         </td>
@@ -1090,9 +1090,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     //TODO - build this from a React component, like we do for FactorTooltip
                     function buildHeatmapCellTooltip (pValue, tstatistic, foldChange) {
 
-                        return "<table class='table-grid' style='margin: 0; padding: 0;'><thead><th class='header-cell'>Adjusted <i>p</i>-value</th>" +
-                            (tstatistic !== undefined ? "<th class='header-cell'><i>t</i>-statistic</th>" : "") +
-                            "<th class='header-cell'>Log<sub>2</sub>-fold change</th></thead>" +
+                        return "<table class='gxaTableGrid' style='margin: 0; padding: 0;'><thead><th class='gxaHeaderCell'>Adjusted <i>p</i>-value</th>" +
+                            (tstatistic !== undefined ? "<th class='gxaHeaderCell'><i>t</i>-statistic</th>" : "") +
+                            "<th class='gxaHeaderCell'>Log<sub>2</sub>-fold change</th></thead>" +
                             "<tbody><tr><td style='padding:6px'>" + React.renderComponentToStaticMarkup(formatScientificNotation(pValue)) + "</td>" +
                             (tstatistic !== undefined ? "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
                             "<td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
@@ -1106,7 +1106,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                             ui.tooltip.css('background', props.color);
                         },
 
-                        tooltipClass:"help-tooltip pvalue-tooltip-styling",
+                        tooltipClass:"help-tooltip gxaPvalueTooltipStyling",
 
                         content:function () {
                             return buildHeatmapCellTooltip(props.pValue, props.tStat, props.foldChange);

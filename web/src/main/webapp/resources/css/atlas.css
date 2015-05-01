@@ -186,8 +186,19 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 
 /* ebi css and ebi-visual.css override: end */
 
+.gxaHelpTooltip {
+    background: #fafafa;
+    border: 1px solid #2777A5 !important;
+    padding: 4px;
+    max-width: 400px !important;
+    color: #2777A5;
+    border-radius: 4px;
+    font: 10px Verdana, Helvetica, Arial, sans-serif;
+    box-shadow: 0 0 7px gray;
+}
+
 /* JQuery UI overrides: start */
-.ui-tooltip, .help-tooltip {
+.ui-tooltip {
     background: #fafafa;
     border: 1px solid #2777A5 !important;
     padding: 4px;
@@ -240,19 +251,15 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 
 /* JQuery UI overrides: end */
 
-.extra-padding {
+.gxaExtraPadding {
     padding: 10px;
 }
 
-.thick-link {
+.gxaThickLink {
     font-weight: bold;
 }
 
-.chzn-choices {
-    min-height: 48px;
-}
-
-.barchart-tooltip {
+div.gxaExperimentRequestPreferencesBarchartTooltip {
     position: fixed;
     border: 2px solid rgb(238, 195, 46);
     border-radius: 4px;
@@ -268,13 +275,15 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     background: transparent url('../images/download_blue_small.png');
 }
 
-.button-image {
+.gxaButtonImage {
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
-}
+    padding: 2px !important;
 
-.button-image .ui-button-text {
+}
+/* TODO: This class is used in jquery-ui-1.10.2.custom.css - move out to a separate css file */
+.ui-button-text {
     padding: 2px !important;
 }
 
@@ -286,20 +295,14 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 
 /**** END ANALYSIS PLOTS STYLING **/
 
-.error {
+.gxaError {
     color: red;
     display: block;
     padding-bottom: 5px;
 }
 
-.page-contents {
-    padding-left: 3em;
-    padding-right: 3em;
-    padding-top: 6em;
-    padding-bottom: 3em;
-}
 
-.block {
+.gxaBlock {
     padding-top: 1em;
     min-height: 0px !important;
 }
@@ -308,17 +311,8 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     padding-bottom: 0px !important;
 }
 
-.block-max-width {
+div.gxaExperimentRequestPreferencesBlockMaxWidth {
     max-width: 950px;
-}
-
-.experiment-accession {
-    text-align: left;
-    padding-right: 5px;
-    font-size: 18px;
-    white-space: nowrap;
-    font-weight: bold;
-    font-family: "Helvetica Narrow", "Arial Narrow", Tahoma, Arial, Helvetica, sans-serif
 }
 
 #reload-form-table {
@@ -331,7 +325,7 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 
 /* selected link */
 
-.double-click-noselection {
+div.gxaDoubleClickNoSelection {
     -webkit-user-select: none;
 / / webkit ( safari, chrome ) browsers -moz-user-select : none;
 / / mozilla browsers -khtml-user-select : none;
@@ -339,11 +333,7 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 / / IE 10
 }
 
-.tooltip-div {
-    display: inline-block;
-}
-
-.filters-frame {
+div.gxaFiltersFrame {
     display: inline-block;
     width: 95%;
     border-style: solid;
@@ -354,7 +344,7 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     padding-right: 4px;
 }
 
-.filter-name {
+div.gxaFilterName {
     color: #FF9C2A;
     font-weight: bold;
 }
@@ -393,27 +383,28 @@ a.ext:hover, a.ext:active, a.ext:focus {
     background: url(../images/ico_ext_link_on.png) no-repeat 0 2px;
 }
 
-.highlight {
+.gxaHighlight {
     background-color: yellow
 }
 
-.gene-property-label {
+span.gxaGenePropertyLabel {
     color: brown;
     font-weight: bold;
     display: inline-block;
     text-align: left;
 }
 
-.property-value-markup {
+.gxaPropertyValueMarkup {
     text-align: center;
     background-color: rgb(223, 213, 213);
 
 }
 
-.genename-tooltip {
+.gxaGeneNameTooltip {
     text-align: justify;
 }
 
+/* TODO: Is this still needed and used in jquery.flot.pie.js ? */
 .pieLabel {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
@@ -424,19 +415,19 @@ a.ext:hover, a.ext:active, a.ext:focus {
     padding-bottom: 4px;
 }
 
-.bioEntityCard {
+div.gxaBioEntityCard {
     background: white !important;
     background-color: white !important;
     font-family: Verdana, sans-serif;
 }
 
-.bioEntityCardHeader {
+ul.gxaBioEntityCardHeader {
     background: #f1fffa !important;
     background-color: #f1fffa !important;
     border: 1px solid #CCCCCC !important;
 }
 
-.bioEntityCardBioentityName {
+span.gxaBioEntityCardBioentityName {
     font-size: 16px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     font-weight: bold;
@@ -444,14 +435,14 @@ a.ext:hover, a.ext:active, a.ext:focus {
     padding-left: 14px;
 }
 
-.bioEntityCardDescription {
+span.gxaBioEntityCardDescription {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     color: gray;
     padding-left: 6px;
 }
 
-.bioEntityCardSpecies {
+span.gxaBioEntityCardSpecies {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     font-style: italic;
@@ -459,7 +450,7 @@ a.ext:hover, a.ext:active, a.ext:focus {
     padding-left: 6px;
 }
 
-.bioEntityCardPropertyType {
+td.gxaBioEntityCardPropertyType {
     font-size: 14px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     font-weight: bold;
@@ -467,16 +458,16 @@ a.ext:hover, a.ext:active, a.ext:focus {
     vertical-align: top;
 }
 
-.bioEntityCardPropertyValue {
+td.gxaBioEntityCardPropertyValue {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
 }
 
-.bioEntityCardLink {
+a.gxaBioEntityCardLink {
     color: #343094 !important;
 }
 
-.bioEntityCardIconPlus {
+.gxaBioEntityCardIconPlus {
     background-position: -16px -128px;
     position: relative !important;
     top: 0px !important;
@@ -485,7 +476,7 @@ a.ext:hover, a.ext:active, a.ext:focus {
     float: right;
 }
 
-.bioEntityCardIconMinus {
+.gxaBioEntityCardIconMinus {
     background-position: -48px -128px;
     position: relative !important;
     top: 0px !important;
@@ -494,7 +485,7 @@ a.ext:hover, a.ext:active, a.ext:focus {
     float: right;
 }
 
-.bioEntityCardDifferentialSummary {
+div.gxaBioEntityCardDifferentialSummary {
     border: 1px solid #FBD850;
     color: #EB8F00;
     font-weight: bold;
@@ -506,7 +497,7 @@ a.ext:hover, a.ext:active, a.ext:focus {
     width: 100%;
 }
 
-.experimentsPageHeading {
+div.gxaExperimentsPageHeading {
     font-size: 14px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     font-weight: bold;

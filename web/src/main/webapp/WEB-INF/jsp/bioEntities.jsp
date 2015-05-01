@@ -28,30 +28,30 @@
 
 <c:choose>
 <c:when test="${not empty exceptionMessage}">
-    <div id="error-content" class="block">
-        <div class="error">
+    <div id="error-content" class="gxaBlock">
+        <div class="gxaError">
                 ${exceptionMessage}
         </div>
     </div>
-    <div id="content" class="block">
+    <div id="content" class="gxaBlock">
         <a href="/gxa">Go to Expression Atlas home page</a>
     </div>
 </c:when>
 <c:otherwise>
-<section class="grid_17 alpha extra-padding">
+<section class="grid_17 alpha gxaExtraPadding">
     <h2 class="strapline">
         Expression Atlas results for <span class="searchterm">${searchDescription}</span>
     </h2>
 </section>
 <h:ebiGlobalSearch ebiSearchTerm="${not empty globalSearchTerm ? applicationProperties.urlParamEncode(globalSearchTerm) : geneQuery.asString()}"/>
 
-<section class="grid_23 extra-padding">
+<section class="grid_23 gxaExtraPadding">
     <div id="accordion">
         <c:if test="${showBioentityPropertiesPane}">
-            <ul id="infoHeader" class="bioEntityCardHeader">
+            <ul id="infoHeader" class="gxaBioEntityCardHeader">
                 <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
                      src="resources/images/bioentity_info_transparent_bkg.png"/>
-                        <span class="bioEntityCardBioentityName">
+                        <span class="gxaBioEntityCardBioentityName">
                             <c:forEach var="entityName" varStatus="loopStatus"
                                        items="${bioEntityPropertyService.entityNames}">
                                 ${entityName}<c:if test="${not loopStatus.last}">, </c:if>
@@ -59,11 +59,11 @@
                             </c:forEach>
                         </span>
                 <c:set var="species" value="${bioEntityPropertyService.getSpecies()}"/>
-                <span class="bioEntityCardSpecies">${fn:toUpperCase(fn:substring(species, 0, 1))}${fn:substring(species, 1,fn:length(species))}</span>
-                <span class="bioEntityCardDescription">${bioEntityPropertyService.getBioEntityDescription()}</span>
+                <span class="gxaBioEntityCardSpecies">${fn:toUpperCase(fn:substring(species, 0, 1))}${fn:substring(species, 1,fn:length(species))}</span>
+                <span class="gxaBioEntityCardDescription">${bioEntityPropertyService.getBioEntityDescription()}</span>
             </ul>
 
-            <div id="infoBody" class="bioEntityCard">
+            <div id="infoBody" class="gxaBioEntityCard">
                 <table id="bioEntityCardTable">
                     <c:forEach var="propertyType" items="${propertyNames.keySet()}">
                         <c:choose>
@@ -76,8 +76,8 @@
 
                                 <c:if test="${relevantGoPoLinks.size() > 0}">
                                     <tr>
-                                        <td class="bioEntityCardPropertyType">${propertyNames.get(propertyType)}</td>
-                                        <td class="bioEntityCardPropertyValue">
+                                        <td class="gxaBioEntityCardPropertyType">${propertyNames.get(propertyType)}</td>
+                                        <td class="gxaBioEntityCardPropertyValue">
                                             <div id="${propertyType}RelevantLinks">
                                                 <c:set var="count" value="0"/>
                                                 <c:forEach var="goLink" items="${relevantGoPoLinks}">
@@ -135,8 +135,8 @@
                                        value="${bioEntityPropertyService.fetchPropertyLinks(propertyType)}"/>
                                 <c:if test="${propertyLinks.size() > 0}">
                                     <tr>
-                                        <td class="bioEntityCardPropertyType">${propertyNames.get(propertyType)}</td>
-                                        <td class="bioEntityCardPropertyValue">
+                                        <td class="gxaBioEntityCardPropertyType">${propertyNames.get(propertyType)}</td>
+                                        <td class="gxaBioEntityCardPropertyValue">
                                             <c:set var="count" value="0"/>
                                             <c:forEach var="propertyLink" items="${propertyLinks}">
 
@@ -169,11 +169,11 @@
 
         <c:set var="showWidget" value="${widgetHasBaselineProfiles}"/>
 
-        <ul id="baselineProfileHeader" class="bioEntityCardHeader">
+        <ul id="baselineProfileHeader" class="gxaBioEntityCardHeader">
             <img id="baseline-info-image" title="Baseline Expression"
                  style="position: absolute; left: 0.5em; "
                  src="resources/images/allup2_transparent_bkg.png"/>
-            <span class="bioEntityCardBioentityName">Baseline Expression</span>
+            <span class="gxaBioEntityCardBioentityName">Baseline Expression</span>
             <c:choose>
                 <c:when test="${showWidget}">
                      <span style="margin-left: 10px; margin-top:10px">
@@ -205,10 +205,10 @@
             </c:choose>
         </ul>
 
-        <div id="baselineProfileBody" class="bioEntityCard">
+        <div id="baselineProfileBody" class="gxaBioEntityCard">
             <c:choose>
                 <c:when test="${showWidget}">
-                    <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                    <div class="ui-corner-all gxaBioEntityCardDifferentialSummary">
                         <span style="visibility:hidden">c</span><%--this is to have a border around text bellow--%>
                         <span style="float: right">Within Sample Abundance (Proteomics) > 0</span>
                         <span style="float: left">FPKM/TPM (Transcriptomics) > 0.5</span>
@@ -217,7 +217,7 @@
 
 
                     <c:if test="${not empty firstBaselineCounts}">
-                        <section class="grid_17 alpha extra-padding">
+                        <section class="grid_17 alpha gxaExtraPadding">
                             <h5 style="padding: 0px">Other baseline experiments</h5>
                             <h:baseline-search-results exactMatch="${exactMatch}" firstBaselineCounts="${firstBaselineCounts}" remainingBaselineCounts="${remainingBaselineCounts}" geneQuery="${geneQuery}" hideSpecies="true"/>
                         </section>
@@ -233,11 +233,11 @@
             </c:choose>
         </div>
 
-        <ul id="diffProfileHeader" class="bioEntityCardHeader">
+        <ul id="diffProfileHeader" class="gxaBioEntityCardHeader">
             <img id="differential-info-image" title="Differential Expression"
                  style="position: absolute; left: 0.5em; "
                  src="resources/images/updown_transparent_bkg.png"/>
-            <span class="bioEntityCardBioentityName">Differential Expression</span>
+            <span class="gxaBioEntityCardBioentityName">Differential Expression</span>
             <c:choose>
                 <c:when test="${not empty bioentities}">
                     <span style="margin-left: 10px; margin-top:10px">${bioentities.getTotalNumberOfResults()} ${bioentities.getTotalNumberOfResults() == 1 ? "result" : "results"}</span>
@@ -252,8 +252,8 @@
             <%--@elvariable id="bioentities" type="uk.ac.ebi.atlas.search.diffanalytics.DiffAnalyticsList"--%>
             <c:when test="${not empty bioentities}">
 
-                <div id="diffProfileBody" class="bioEntityCard">
-                    <div class="ui-corner-all bioEntityCardDifferentialSummary">
+                <div id="diffProfileBody" class="gxaBioEntityCard">
+                    <div class="ui-corner-all gxaBioEntityCardDifferentialSummary">
                         <c:choose>
                             <c:when test="${bioentities.getTotalNumberOfResults() <= 50}">
                                 <span> Showing ${bioentities.getTotalNumberOfResults()} ${bioentities.getTotalNumberOfResults() == 1 ? "result" : "results"}</span>
@@ -345,7 +345,7 @@
             collapsible: true,
             active: openPanelIndex,
             heightStyle: "content",
-            icons: ${hideIcons ? "{ 'header': 'ui-icon-blank'}" : "{ 'header': 'bioEntityCardIconPlus', 'activeHeader': 'bioEntityCardIconMinus' }"},
+            icons: ${hideIcons ? "{ 'header': 'ui-icon-blank'}" : "{ 'header': 'gxaBioEntityCardIconPlus', 'activeHeader': 'gxaBioEntityCardIconMinus' }"},
             header: "ul",
             beforeActivate: function( event, ui ) {
                 // prevent empty panel from being opened
@@ -374,7 +374,7 @@
             params: 'geneQuery=${geneQuery.asUrlQueryParameter()}' + widgetParameters,
             isMultiExperiment: true,
             target: "widgetBody",
-            heatmapClass: "heatmap-position"
+            heatmapClass: "gxaHeatmapPosition"
         });
 
         </c:if>

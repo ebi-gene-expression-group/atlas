@@ -23,24 +23,24 @@ var experimentDesignTableModule = (function ($) {
     function initColumns(aoColumnDefs, values, startingFromColumnIndex) {
         for (var value in values) {
             aoColumnDefs[startingFromColumnIndex] = {
-                "sClass":"center bb",
+                "sClass":"center gxaBB",
                 "sTitle":values[value],
                 "aTargets":[ startingFromColumnIndex ]
             };
             ++startingFromColumnIndex;
 
         }
-        aoColumnDefs[startingFromColumnIndex - 1].sClass = "center bb br";
+        aoColumnDefs[startingFromColumnIndex - 1].sClass = "center gxaBB gxaBR";
     }
 
     /* populate all sub categories */
     function initColumnDefs() {
         var aoColumnDefs = [];
         if (_assayHeaders.length === 1) {
-            aoColumnDefs[0] = { "sClass":"bb bl br", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ 0 ]};
+            aoColumnDefs[0] = { "sClass":"gxaBB gxaBL gxaBR", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#runAccs'>", "aTargets":[ 0 ]};
         } else {
-            aoColumnDefs[0] = { "sClass":"bb bl", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#assayAccs'>", "aTargets":[ 0 ]};
-            aoColumnDefs[1] = { "sClass":"bb br", "sTitle":_assayHeaders[1] + "<span class='doc-span' data-help-loc='#arrayAccs'>", "aTargets":[ 1 ]};
+            aoColumnDefs[0] = { "sClass":"gxaBB gxaBL", "sTitle":_assayHeaders[0] + "<span class='doc-span' data-help-loc='#assayAccs'>", "aTargets":[ 0 ]};
+            aoColumnDefs[1] = { "sClass":"gxaBB gxaBR", "sTitle":_assayHeaders[1] + "<span class='doc-span' data-help-loc='#arrayAccs'>", "aTargets":[ 1 ]};
         }
 
         initColumns(aoColumnDefs, _sampleHeaders, _assayHeaders.length);
@@ -99,7 +99,7 @@ var experimentDesignTableModule = (function ($) {
             "bScrollCollapse":true,
             "sScrollY":calcDataTableHeight(),
             "sScrollX":calcDataTableWidth(),
-            "sDom":'i<"download">f<"clear">t',
+            "sDom":'i<"gxaDownload">f<"gxaClear">t',
             "aaSorting": aaSorting
         });
 
@@ -107,8 +107,8 @@ var experimentDesignTableModule = (function ($) {
             _oTable.fnDraw();
         });
 
-        $('div.download').html($('#download-button'));
-        $('div.download').attr('style', 'float: right');
+        $('div.gxaDownload').html($('#download-button'));
+        $('div.gxaDownload').attr('style', 'float: right');
 
         $(window).resize(function () {
             _adjustTableSize();
@@ -116,9 +116,9 @@ var experimentDesignTableModule = (function ($) {
 
         var tableHeaderRow = $(".dataTables_scrollHeadInner").find('thead > tr');
 
-        $("<tr><th id='assaysHeader' class='header-cell br bt bl'></th>" +
-            "<th id='samplesHeader' class='samples header-cell  br bt'>Sample Characteristics<span class='doc-span' data-help-loc='#sampleChars'></span></th>" +
-            "<th id='factorsHeader' class='factors header-cell br bt'>Experimental Variables<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>")
+        $("<tr><th id='assaysHeader' class='gxaHeaderCell gxaBR gxaBT gxaBL'></th>" +
+            "<th id='samplesHeader' class='gxaSamples gxaHeaderCell  gxaBR gxaBT'>Sample Characteristics<span class='doc-span' data-help-loc='#sampleChars'></span></th>" +
+            "<th id='factorsHeader' class='gxaFactors gxaHeaderCell gxaBR gxaBT'>Experimental Variables<span class='doc-span' data-help-loc='#factorValues'></span></th></tr>")
             .insertBefore(tableHeaderRow);
 
         /* Set colspan for each category */
@@ -128,7 +128,7 @@ var experimentDesignTableModule = (function ($) {
 
         $('#download-experiment-design-link').button().tooltip();
 
-        $("th").addClass("header-cell");
+        $("th").addClass("gxaHeaderCell");
 
     }
 

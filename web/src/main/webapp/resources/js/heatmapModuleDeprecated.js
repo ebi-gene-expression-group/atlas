@@ -31,29 +31,29 @@ var heatmapModuleDeprecated = (function ($) {
     var _contextRoot;
 
     function showCellText(div) {
-        $(div).removeClass("hide_cell").addClass("show_cell");
+        $(div).removeClass("gxaHideCell").addClass("gxaShowCell");
     }
 
     function hideCellText(div) {
-        $(div).removeClass("show_cell").addClass("hide_cell");
+        $(div).removeClass("gxaShowCell").addClass("gxaHideCell");
     }
 
     function showExpressionLevels($heatmap) {
         $heatmap("div[data-color]").each(function () {
             showCellText(this);
         });
-        $heatmap(".gradient-level-min").css("visibility", "visible");
-        $heatmap(".gradient-level-max").css("visibility", "visible");
-        $heatmap(".gradient-level-max").css("display", "table-cell");
+        $heatmap(".gxaGradientLevelMin").css("visibility", "visible");
+        $heatmap(".gxaGradientLevelMax").css("visibility", "visible");
+        $heatmap(".gxaGradientLevelMax").css("display", "table-cell");
     }
 
     function hideExpressionLevels($heatmap) {
         $heatmap("div[data-color]").each(function () {
             hideCellText(this);
         });
-        $heatmap(".gradient-level-min").css("visibility", "hidden");
-        $heatmap(".gradient-level-max").css("visibility", "hidden");
-        $heatmap(".gradient-level-max").css("display", "none");
+        $heatmap(".gxaGradientLevelMin").css("visibility", "hidden");
+        $heatmap(".gxaGradientLevelMax").css("visibility", "hidden");
+        $heatmap(".gxaGradientLevelMax").css("display", "none");
     }
 
     function initGeneSetLinkOnClick() {
@@ -108,9 +108,9 @@ var heatmapModuleDeprecated = (function ($) {
 
     //there must be a cleaner way to do this, but I don't know it yet!
     function buildHeatmapCellTooltip(pValue, tstatistic, foldChange) {
-        return "<table class='table-grid' style='margin: 0px; padding: 0px;'><thead><th class='header-cell'>Adjusted <i>p</i>-value</th>" +
-            (tstatistic !== undefined ? "<th class='header-cell'><i>t</i>-statistic</th>" : "") +
-            "<th class='header-cell'>Log<sub>2</sub>-fold change</th></thead>" +
+        return "<table class='gxaTableGrid' style='margin: 0px; padding: 0px;'><thead><th class='gxaHeaderCell'>Adjusted <i>p</i>-value</th>" +
+            (tstatistic !== undefined ? "<th class='gxaHeaderCell'><i>t</i>-statistic</th>" : "") +
+            "<th class='gxaHeaderCell'>Log<sub>2</sub>-fold change</th></thead>" +
             "<tbody><tr><td style='padding:6px'><span style=\"white-space: nowrap;\">" + pValue + "</span></td>" +
             (tstatistic !== undefined ? "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
             "<td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
@@ -124,7 +124,7 @@ var heatmapModuleDeprecated = (function ($) {
                     var colour = $(this).find("div").attr("data-color");
                     ui.tooltip.css('background', colour);
                 },
-                tooltipClass:"help-tooltip pvalue-tooltip-styling",
+                tooltipClass:"gxaHelpTooltip pvalue-tooltip-styling",
 
                 content:function () {
                     var foldChange = $(this).find("div").html(),
@@ -159,7 +159,7 @@ var heatmapModuleDeprecated = (function ($) {
             .each(function () {
                 if ($.browser.msie) {
                     $(this).append($(this).attr("data-organism-part"));
-                    $heatmap("div", "th", "#heatmap-table").addClass('rotate_text_IE').removeClass('rotate_text');
+                    $heatmap("div", "th", "#heatmap-table").addClass('gxaRotateTextIE').removeClass('rotate_text');
                     $heatmap("th", "#heatmap-table").addClass('heatmap td').removeClass('rotated_cell');
                 } else {
                     var organismPartName = $(this).attr("data-organism-part");
@@ -175,7 +175,7 @@ var heatmapModuleDeprecated = (function ($) {
         var headers = "";
 
         $(accessionHeaders).each(function () {
-            headers += "<td class='horizontal-header-cell'>" + this + "</td>";
+            headers += "<td class='gxaHorizontalHeaderCell'>" + this + "</td>";
         });
 
         //add header cells for gene name and design element (if any)
@@ -208,7 +208,7 @@ var heatmapModuleDeprecated = (function ($) {
 
             maPlotURL = 'external-resources/' + experimentAccession + '/' + (arrayDesignAccession ? arrayDesignAccession + '/' : '' ) + contrastId + '/ma-plot.png';
             //append a button div now
-            $(this).append("<div style='text-align:right;padding-right:3px'><a href='" + maPlotURL + "' class='ma-button button-image' title='Click to view MA plot for the comparison across all genes'><img src='resources/images/maplot-button.png'/></a></div>");
+            $(this).append("<div style='text-align:right;padding-right:3px'><a href='" + maPlotURL + "' class='ma-button gxaButtonImage' title='Click to view MA plot for the comparison across all genes'><img src='resources/images/maplot-button.png'/></a></div>");
 
         });
 
@@ -235,7 +235,7 @@ var heatmapModuleDeprecated = (function ($) {
         var heatmapElement = $('#' + heatmapElementId);
         $heatmap = contextFactory(heatmapElement);
 
-        $heatmap('#heatmap-table th:first').addClass('horizontal-header-cell'); //because displaytag doesn't let us configure TH cells...
+        $heatmap('#heatmap-table th:first').addClass('gxaHorizontalHeaderCell'); //because displaytag doesn't let us configure TH cells...
 
         initDifferentialHeatmapCellsTooltip();
         initDownloadButtonTooltip();

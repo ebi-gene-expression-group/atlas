@@ -4,7 +4,7 @@
 <c:set var="thisPage" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
 <form method="get" action="${thisPage}" id="searchForm">
-    <table class="form-grid">
+    <table class="gxaFormGrid">
         <tr>
             <td class="gxaSearchFormFullWidthColumn">
                 <div>

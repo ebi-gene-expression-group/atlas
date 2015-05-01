@@ -15,7 +15,7 @@ var ExperimentDescription = (function (React) {
             return (
                 <div style={{width: "100%"}}>
                     <div id="experimentDescription">
-                        <a id="goto-experiment" className="thick-link" title="Experiment Page" href={experimentURL}>{this.props.experiment.description}</a>
+                        <a id="goto-experiment" className="gxaThickLink" title="Experiment Page" href={experimentURL}>{this.props.experiment.description}</a>
                     </div>
                     <div id="experimentOrganisms">Organism(s): <span style={{"font-style":"italic"}}>{this.props.experiment.allSpecies}</span></div>
                 </div>
@@ -38,12 +38,12 @@ var Anatomogram = (function (React) {
             var sexToggleImageSrc =this.props.anatomogram.contextRoot + this.props.anatomogram.toggleButtonImage;
 
             return (
-                <div id="anatomogram" className="aside double-click-noselection" style={{display: "inline"}}>
+                <div id="anatomogram" className="gxaAside gxaDoubleClickNoSelection" style={{display: "inline"}}>
                     <table>
                         <tr>
                             <td style={{"padding-top": "15px", "vertical-align":"top"}}>
                                 <span id="sex-toggle">
-                                    <img id="sex-toggle-image" title="Switch anatomogram" className="button-image"
+                                    <img id="sex-toggle-image" title="Switch anatomogram" className="gxaButtonImage"
                                         style={{"width":"20px", "height":"38px", "padding":"2px"}}
                                         src={sexToggleImageSrc}/>
                                 </span>
@@ -68,18 +68,18 @@ var HeatmapContainer = (function (React) {
 
         render: function () {
             var Heatmap = this.props.Heatmap;
-            var heatmapClass = this.props.heatmapClass ? this.props.heatmapClass : "heatmap-position" + (this.props.isWidget ? "-widget" : "");
+            var heatmapClass = this.props.heatmapClass ? this.props.heatmapClass : "gxaHeatmapPosition" + (this.props.isWidget ? "-widget" : "");
 
             return (
-                    <div className="block">
+                    <div className="gxaBlock">
 
                         { this.props.experiment ? ExperimentDescription( {experiment: this.props.experiment} ) : null }
 
-                        <div id="heatmap-anatomogram" className="heatmap-anatomogram-row">
+                        <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
                             { this.props.anatomogram ? Anatomogram( {anatomogram:this.props.anatomogram} ) : null}
 
-                            <div id="ensembl-launcher" className="aside" style={{"display":"inline"}}></div>
+                            <div id="ensembl-launcher" className="gxaAside" style={{"display":"inline"}}></div>
 
                             <div id="heatmap-react" className={heatmapClass}>
                                 <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} />

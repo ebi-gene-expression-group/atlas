@@ -27,7 +27,7 @@
 <%@ attribute name="lowValueColorExpressionLevel" required="true" %>
 
 <div style="display: table-row">
-    <div style="visibility: hidden; display: table-cell; white-space: nowrap" class="gradient-level-min"> ${lowValueColorExpressionLevel}</div>
+    <div style="visibility: hidden; display: table-cell; white-space: nowrap" class="gxaGradientLevelMin"> ${lowValueColorExpressionLevel}</div>
     <div style="display: table-cell">
         <span class="color-gradient"
               style="overflow: auto; vertical-align: middle;
@@ -37,5 +37,5 @@
                      filter: progid:DXImageTransform.Microsoft.Gradient(GradientType =1, startColorstr=${lowValueColour},endColorstr=${highValueColour});
                      width: 200px; height: 15px; margin: 2px 6px 2px 6px; display: inline-block"></span>
     </div>
-    <div style="visibility: hidden; display: none; white-space: nowrap" class="gradient-level-max">${highValueColorExpressionLevel}</div>
+    <div style="visibility: hidden; display: none; white-space: nowrap" class="gxaGradientLevelMax">${highValueColorExpressionLevel}</div>
 </div>

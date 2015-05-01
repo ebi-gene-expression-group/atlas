@@ -33,25 +33,25 @@
 
 <c:set var="showMultiGeneColumns" value="${!singleGeneDiffHeatmap}" />
 
-<table id="diff-heatmap-table" class="table-grid">
+<table id="diff-heatmap-table" class="gxaTableGrid">
     <thead>
 
     <tr>
     <c:if test="${showMultiGeneColumns}">
-        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+        <th class="gxaHorizontalHeaderCell" style="padding: 5px; text-align:center;">
             <div>Gene</div>
         </th>
     </c:if>
 
     <c:if test="${showMultiGeneColumns}">
-        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+        <th class="gxaHorizontalHeaderCell" style="padding: 5px; text-align:center;">
             <div>Organism</div>
         </th>
     </c:if>
-        <th class="horizontal-header-cell" style="padding: 5px; text-align:center;">
+        <th class="gxaHorizontalHeaderCell" style="padding: 5px; text-align:center;">
             <div>Comparison</div>
         </th>
-        <th class="horizontal-header-cell" style="padding: 5px;">
+        <th class="gxaHorizontalHeaderCell" style="padding: 5px;">
             <div class='factor-header' data-organism-part=''>Log<sub>2</sub>-fold change</div>
         </th>
     </tr>
@@ -65,17 +65,17 @@
                var="diffAnalytics">
         <tr>
          <c:if test="${showMultiGeneColumns}">
-            <td class="horizontal-header-cell">
+            <td class="gxaHorizontalHeaderCell">
                     <a href="genes/${diffAnalytics.bioentityId}">${diffAnalytics.bioentityName}</a>
             </td>
          </c:if>
           <c:if test="${showMultiGeneColumns}">
-            <td class="horizontal-header-cell">
+            <td class="gxaHorizontalHeaderCell">
                     ${diffAnalytics.species}
             </td>
           </c:if>
 
-            <td class="horizontal-header-cell contrastNameCell"
+            <td class="gxaHorizontalHeaderCell contrastNameCell"
                 data-experiment-accession="${diffAnalytics.experimentAccession}"
                 data-contrast-id="${diffAnalytics.contrastId}">
                 <a href="experiments/${diffAnalytics.experimentPageUrl}">${diffAnalytics.contrastDisplayName}</a>
@@ -109,7 +109,7 @@
                 <c:if test="${not empty expressionLevel}">
                     <c:set var="foldChange" value="${foldChangeRounder.format(expression.foldChange)}"/>
 
-                    <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
+                    <div class="gxaHideCell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
                         ${'data-fold-change="'.concat(foldChange).concat('"')}
                          data-organism-part="${firstInRow}" data-color="${cellColour}">
                             ${foldChange}

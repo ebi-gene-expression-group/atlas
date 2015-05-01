@@ -6,7 +6,7 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
-<div id="atlas-content" class="block">
+<div id="atlas-content" class="gxaBlock">
     <table width="100%">
         <tbody>
         <tr>

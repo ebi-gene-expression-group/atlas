@@ -6,8 +6,8 @@
 <c:set value="${requestScope['javax.servlet.error.status_code']}" var="statusCode"/>
 
 
-<div id="error-content" class="block">
-    <div class="error">
+<div id="error-content" class="gxaBlock">
+    <div class="gxaError">
         <c:choose>
             <c:when test="${statusCode == '404'}">
                 Resource not found.
@@ -19,6 +19,6 @@
     </div>
 </div>
 
-<div id="content" class="block">
+<div id="content" class="gxaBlock">
 <a href="/gxa">Go to Expression Atlas home page</a>
 </div>

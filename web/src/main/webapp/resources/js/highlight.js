@@ -56,7 +56,7 @@ Johann Burkard
 					var pos = (ignore ? replaceDiacritics(node.data) : node.data).toUpperCase().indexOf(currentTerm);
 					if (pos >= 0) {
 						var spannode = document.createElement('span');
-						spannode.className = 'highlight';
+						spannode.className = 'gxaHighlight';
 						var middlebit = node.splitText(pos);
 						var endbit = middlebit.splitText(currentTerm.length);
 						var middleclone = middlebit.cloneNode(true);
@@ -83,7 +83,7 @@ Johann Burkard
 	}
 
 	$.fn.removeHighlight = function() {
-		return this.find("span.highlight").each(function() {
+		return this.find("span.gxaHighlight").each(function() {
 			this.parentNode.firstChild.nodeName;
 			with(this.parentNode) {
 				replaceChild(this.firstChild, this);

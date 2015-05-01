@@ -29,11 +29,11 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<section class="extra-padding">
+<section class="gxaExtraPadding">
     <c:import url="includes/request-preferences.jsp"/>
 </section>
 
-<section style="overflow: auto;" class="extra-padding">
+<section style="overflow: auto;" class="gxaExtraPadding">
     <spring:hasBindErrors name="preferences">
         <c:set var="isPreferenceError" value="true"/>
     </spring:hasBindErrors>

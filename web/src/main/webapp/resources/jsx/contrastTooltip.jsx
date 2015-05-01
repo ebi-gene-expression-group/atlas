@@ -37,16 +37,16 @@ var ContrastTooltip = (function(React) {
                 <div>
                     <div id="contrastExperimentDescription" style={{'font-weight':'bold', 'color':'blue', 'text-align': 'center'}}>{this.props.experimentDescription}</div>
                     <div id="contrastDescription" style={{'text-align': 'center'}}>{this.props.contrastDescription}</div>
-                    <table className="table-grid" style={{padding: '0px', margin: '0px', width: '100%'}}>
+                    <table className="gxaTableGrid" style={{padding: '0px', margin: '0px', width: '100%'}}>
                         <thead>
                             <tr>
-                                <th className='header-cell'>
+                                <th className='gxaHeaderCell'>
                                 Property
                                 </th>
-                                <th className='header-cell'>
+                                <th className='gxaHeaderCell'>
                                 Test value (N={this.props.testReplicates})
                                 </th>
-                                <th className='header-cell'>
+                                <th className='gxaHeaderCell'>
                                 Reference value (N={this.props.referenceReplicates})
                                 </th>
                             </tr>

@@ -54,7 +54,7 @@ public class GenePageControllerBaselineWidgetGallusGallusSIT extends SinglePageS
         assertThat(widgetBody, is("Results in tissues"));
 
         FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
-        wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector(".bioEntityCardDifferentialSummary"), "Within Sample Abundance (Proteomics) > 0"));
+        wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector("div.gxaBioEntityCardDifferentialSummary"), "Within Sample Abundance (Proteomics) > 0"));
 
         assertThat(subject.isBaselinePaneExpanded(), is(true));
 

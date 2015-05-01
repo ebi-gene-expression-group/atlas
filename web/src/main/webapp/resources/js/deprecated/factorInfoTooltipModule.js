@@ -32,7 +32,7 @@ var factorInfoTooltipModule = (function ($) {
 
             hide:false,
             show:false,
-            tooltipClass:"help-tooltip pvalue-tooltip-styling",
+            tooltipClass:"gxaHelpTooltip gxaPvalueTooltipStyling",
             content:function (callback) {
 
                 //TODO: get this via a function parameter instead of the DOM

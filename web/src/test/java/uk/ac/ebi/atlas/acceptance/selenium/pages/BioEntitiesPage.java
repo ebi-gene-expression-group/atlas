@@ -88,7 +88,7 @@ public class BioEntitiesPage extends BioEntityPage {
         FluentWait wait = new WebDriverWait(driver, 25L).pollingEvery(20, TimeUnit.MILLISECONDS);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byBaselineCountsTableId));
 
-        List<WebElement> linkElements = driver.findElements(By.cssSelector("#baselineCountsTable .bioEntityCardLink"));
+        List<WebElement> linkElements = driver.findElements(By.cssSelector("#baselineCountsTable a.gxaBioEntityCardLink"));
 
         for (WebElement linkElement : linkElements) {
             if (onlyVisible && !linkElement.isDisplayed()) {
@@ -101,7 +101,7 @@ public class BioEntitiesPage extends BioEntityPage {
     }
 
     public List<WebElement> getBaselineCountElements() {
-        return driver.findElements(By.className("bioEntityCardLink"));
+        return driver.findElements(By.className("gxaBioEntityCardLink"));
     }
 
     private BaselineBioEntitiesSearchResult buildBaselineEntityCount(WebElement linkElement, WebElement countElement) {

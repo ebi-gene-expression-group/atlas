@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-.form-grid, .table-grid, .analysis-grid {
+.gxaFormGrid, .gxaTableGrid, .gxaAnalysisGrid {
     color: #404040;
     background-color: white;
     /*background-color: rgb(237,246,246);*/
@@ -33,32 +33,32 @@
     text-align: left;
 }
 
-.form-grid {
+.gxaFormGrid {
     width: 100%;
     border: 2px solid #cdcdcd !important;
 }
 
-.table-grid, .analysis-grid {
+.gxaTableGrid, .gxaAnalysisGrid {
     width: auto;
     border-collapse: collapse;
 }
 
-.form-grid label, .analysis-grid label {
+.gxaFormGrid label, .gxaAnalysisGrid label {
     font-weight: bold;
     vertical-align: middle;
     margin-right: 0 !important;
 }
 
-.analysis-grid thead {
+.gxaAnalysisGrid thead {
     display: none;
 }
 
-.analysis-grid td {
+.gxaAnalysisGrid td {
     border: 1px solid #cdcdcd !important;
     padding: 5px !important;
 }
 
-.table-grid>tbody>tr>td, .table-grid>thead>tr>td {
+.gxaTableGrid>tbody>tr>td, .gxaTableGrid>thead>tr>td {
     color: #3D3D3D;
     vertical-align: middle;
     border: 1px solid #cdcdcd !important;
@@ -67,49 +67,49 @@
     white-space: nowrap;
 }
 
-.vertical-header-cell, .horizontal-header-cell {
+.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {
     font-weight: normal;
     background-color: rgb(237, 246, 246) !important;
 }
 
-.hoverable-header:hover, .headerHover {
+.gxaHoverableHeader:hover, .gxaHeaderHover {
     background-color: #deebeb !important;
 }
 
-.selectable-header:hover {
+.gxaSelectableHeader:hover {
     cursor: pointer;
 }
 
-.vertical-header-cell-selected, .vertical-header-cell-selected:hover, .horizontal-header-cell-selected, .horizontal-header-cell-selected:hover {
+.gxaVerticalHeaderCell-selected, .gxaVerticalHeaderCell-selected:hover, .gxaHorizontalHeaderCell-selected, .gxaHorizontalHeaderCell-selected:hover {
     background-color: rgb(181, 234, 234) !important;
 }
 
-.horizontal-header-cell {
+.gxaHorizontalHeaderCell {
     border: 1px solid #cdcdcd;
     white-space: nowrap;
     padding:5px;
     text-align: left !important;
 }
 
-tr.gxaProteomicsExperiment td.horizontal-header-cell {
+tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell {
     background-color: rgb(210, 233, 233) !important;
 }
 
-tr.gxaProteomicsExperiment td.horizontal-header-cell-selected, tr.gxaProteomicsExperiment td.horizontal-header-cell:hover {
+tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell:hover {
     background-color: rgb(200, 220, 220) !important;
 }
 
-.table-grid th.highlight {
+.gxaTableGrid th.gxaHighlight {
     background-color: #deebeb;
 }
 
-.table-grid td.highlight {
+.gxaTableGrid td.gxaHighlight {
     background-color: #deebeb;
     opacity: .75;
     -moz-opacity: .75;
 }
 
-.heatmap_cell {
+.gxaHeatmapCell {
     font-size: 9px;
     background-color: white;
     margin: 4px;
@@ -118,7 +118,7 @@ tr.gxaProteomicsExperiment td.horizontal-header-cell-selected, tr.gxaProteomicsE
     text-align: center;
 }
 
-.show_cell {
+.gxaShowCell {
     font-size: 9px;
     background-color: white;
     margin: 4px;
@@ -128,7 +128,7 @@ tr.gxaProteomicsExperiment td.horizontal-header-cell-selected, tr.gxaProteomicsE
 }
 
 /*next is a css hack patch that only gets enabled on IE7. It removes margins, that do not display properly in IE7.*/
-* + html .show_cell {
+* + html .gxaShowCell {
     PADDING-RIGHT: 0px;
     DISPLAY: inline;
     PADDING-LEFT: 0px;
@@ -137,7 +137,7 @@ tr.gxaProteomicsExperiment td.horizontal-header-cell-selected, tr.gxaProteomicsE
     PADDING-TOP: 0px
 }
 
-.hide_cell {
+.gxaHideCell {
     display: none;
     visibility: hidden;
 }
@@ -172,10 +172,10 @@ tr.gxaProteomicsExperiment td.horizontal-header-cell-selected, tr.gxaProteomicsE
     -o-transform: rotate(-270deg);
 }
 
-.rotate_text_IE {
+.gxaRotateTextIE {
 }
 
-.form-grid .ui-button.ui-widget {
+.gxaFormGrid .ui-button.ui-widget {
     width: 70px
 }
 

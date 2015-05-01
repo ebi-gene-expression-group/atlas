@@ -26,9 +26,9 @@
   --%>
 
 
-<div class="filters-frame">
+<div class="gxaFiltersFrame">
     <c:forEach items="${selectedFilterFactorNamesAndValues}" var="nameFactorEntry">
-        <div class="filter-name">${nameFactorEntry.key}:</div>
+        <div class="gxaFilterName">${nameFactorEntry.key}:</div>
         ${nameFactorEntry.value}<br/>
     </c:forEach>
 </div>

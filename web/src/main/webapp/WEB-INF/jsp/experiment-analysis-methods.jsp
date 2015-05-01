@@ -27,8 +27,8 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<div class="block">
-    <display:table name="${csvLines}" id="csvLine" htmlId="methods-table" class="analysis-grid">
+<div class="gxaBlock">
+    <display:table name="${csvLines}" id="csvLine" htmlId="methods-table" class="gxaAnalysisGrid">
         <display:caption>
             <div style="text-align:left;padding-top:10px; padding-bottom:5px">
                 <label>
@@ -36,7 +36,7 @@
                 </label>
             </div>
         </display:caption>
-        <display:column class="horizontal-header-cell">
+        <display:column class="gxaHorizontalHeaderCell">
             <label>
                     ${csvLine[0]}
             </label>

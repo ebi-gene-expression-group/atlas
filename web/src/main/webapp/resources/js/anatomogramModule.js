@@ -83,12 +83,12 @@ var anatomogramModule = (function ($) {
         var headerDiv = $('#heatmap-table th').has("div[data-svg-path-id='" + svgPathId + "']");
 
         svgPath.addEventListener("mouseover", function () {
-            headerDiv.addClass("headerHover");
+            headerDiv.addClass("gxaHeaderHover");
             togglePathColor(svgPath, "mouseover", isSingleGene);
         }, false);
 
         svgPath.addEventListener("mouseout", function () {
-            headerDiv.removeClass("headerHover");
+            headerDiv.removeClass("gxaHeaderHover");
             togglePathColor(svgPath, "mouseout", isSingleGene);
         }, false);
     }

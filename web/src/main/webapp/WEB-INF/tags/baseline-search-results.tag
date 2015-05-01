@@ -42,7 +42,7 @@
         <c:forEach var="baselineResult" items="${firstBaselineCounts}">
             <tr>
                 <td>
-                    <a class="bioEntityCardLink"
+                    <a class="gxaBioEntityCardLink"
                        href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
                        title="experiment">
                         <c:choose>
@@ -67,7 +67,7 @@
             <c:forEach var="baselineResult" items="${remainingBaselineCounts}"><%--@elvariable id="filterFactorsConverter" type="uk.ac.ebi.atlas.web.FilterFactorsConverter"--%>
                 <tr class="gxaAdditionalResultRow" style="display:none">
                     <td>
-                        <a class="bioEntityCardLink"
+                        <a class="gxaBioEntityCardLink"
                            href="${base}/experiments/${baselineResult.experimentAccession}?_specific=on&queryFactorType=${baselineResult.defaultQueryFactorType}&queryFactorValues=${applicationProperties.encodeMultiValues(baselineResult.defaultFactorValuesForSpecificAssayGroupsWithCondition)}&geneQuery=${geneQuery.asUrlQueryParameter()}&exactMatch=${exactMatch}${baselineResult.filterFactors.isEmpty() ? "" : "&serializedFilterFactors=".concat(filterFactorsConverter.serialize(baselineResult.filterFactors))}"
                            title="experiment">
                             <c:choose>

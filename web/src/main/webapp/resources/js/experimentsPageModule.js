@@ -147,43 +147,43 @@ var experimentsPageModule = (function ($) {
             "bProcessing":true,
             "sAjaxSource":"json/experiments",
             "aoColumns":[
-                { "sTitle":"Type", "mData":"experimentType", "sClass":"center bb bl", "sSortDataType":"dom-text",
+                { "sTitle":"Type", "mData":"experimentType", "sClass":"center gxaBB gxaBL", "sSortDataType":"dom-text",
                     "mRender":function (data, type, full) {
                         return formatExperimentType(data, type, full);
                     } },
-                { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center bb nowrap", 'sType': 'date-eu',
+                { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center gxaBB nowrap", 'sType': 'date-eu',
                     "mRender":function (data, type, full) {
                         return formatLastUpdate(data, type, full);
                     } },
-                { "sTitle":"Experiment", "mData":"experimentDescription", "sClass":"center bb padding",
+                { "sTitle":"Experiment", "mData":"experimentDescription", "sClass":"center gxaBB padding",
                     "mRender":function (data, type, full) {
                         return formatExperimentDescription(data, type, full);
                     } },
-                { "sTitle":"Assays", "mData":"numberOfAssays", "sClass":"center bb", "sType":"title-numeric", "sWidth":"5%",
+                { "sTitle":"Assays", "mData":"numberOfAssays", "sClass":"center gxaBB", "sType":"title-numeric", "sWidth":"5%",
                     "mRender":function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, type, full);
                     } },
-                { "sTitle":"Comparisons", "mData":"numberOfContrasts", "sClass":"center bb", "sType":"title-numeric",
+                { "sTitle":"Comparisons", "mData":"numberOfContrasts", "sClass":"center gxaBB", "sType":"title-numeric",
                     "mRender":function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, type, full);
                     } },
-                { "sTitle":"Organisms", "mData":"species", "sClass":"center bb italic", "sWidth":"10%",
+                { "sTitle":"Organisms", "mData":"species", "sClass":"center gxaBB italic", "sWidth":"10%",
                     "mRender":function (data, type, full) {
                         return withLineBreaks(data, type, full);
                     } },
-                { "sTitle":"Experimental Variables", "mData":"experimentalFactors", "sClass":"center bb",
+                { "sTitle":"Experimental Variables", "mData":"experimentalFactors", "sClass":"center gxaBB",
                     "mRender":function (data, type, full) {
                         return withLineBreaks(data, type, full);
                     } },
-                { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center bb", "sWidth":"15%",
+                { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center gxaBB", "sWidth":"15%",
                     "mRender":function (data, type, full) {
                         return formatArrayDesign(data, type, full);
                     } },
-                { "sTitle":"ArrayExpress", "mData":"experimentAccession", "sClass":"center bb br",
+                { "sTitle":"ArrayExpress", "mData":"experimentAccession", "sClass":"center gxaBB gxaBR",
                     "mRender":function (data, type, full) {
                         return formatExperimentAccession(data, type, full);
                     } },
-                { "sTitle":"Kingdom", "mData":"kingdom", "sClass":"center bb italic", "bVisible": false }
+                { "sTitle":"Kingdom", "mData":"kingdom", "sClass":"center gxaBB italic", "bVisible": false }
             ],
             "aLengthMenu":[
                 [10, 25, 50, 100, -1],
@@ -194,7 +194,7 @@ var experimentsPageModule = (function ($) {
             }
         });
 
-        $("#experiments-table thead th").addClass("header-cell bt");
+        $("#experiments-table thead th").addClass("gxaHeaderCell gxaBT");
 
         $("#experiments-table tfoot input").keyup(function () {
             /* Filter on the column (the index) of this element */

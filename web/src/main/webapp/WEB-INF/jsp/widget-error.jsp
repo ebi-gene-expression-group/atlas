@@ -23,8 +23,8 @@
   ~ http://gxa.github.com/gxa
   --%>
 
-<div id="content" class="block gxaBlockWithoutPaddingBottom">
-    <div class="error">
+<div id="content" class="gxaBlock gxaBlockWithoutPaddingBottom">
+    <div class="gxaError">
         <c:if test="${not empty errorMessage}">
             <span style="font-weight: bold;"></span><span>${errorMessage}</span>
         </c:if>

@@ -7,7 +7,7 @@
 <%@ page import="java.nio.file.Files" %>
 <%@ page import="java.nio.file.Path" %>
 
-<div id="arrayDesignsQc" class="extra-padding">
+<div id="arrayDesignsQc" class="gxaExtraPadding">
     <c:if test="${fn:length(qcArrayDesigns) > 1}">
 
         <c:if test= "${not empty qcArrayDesigns}" />

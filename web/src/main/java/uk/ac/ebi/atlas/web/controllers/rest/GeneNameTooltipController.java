@@ -51,7 +51,7 @@ import java.util.List;
 @Scope("request")
 public class GeneNameTooltipController {
     private static final Logger LOGGER = Logger.getLogger(GeneNameTooltipController.class);
-    private static final String WORD_SPAN_OPEN = "<span class='property-value-markup'>";
+    private static final String WORD_SPAN_OPEN = "<span class='gxaPropertyValueMarkup'>";
     private static final String WORD_SPAN_CLOSE = "</span>";
     private static final int NUMBER_OF_TERMS_TO_SHOW = 5;
 

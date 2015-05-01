@@ -23,7 +23,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="experimentsPageHeading">Experiments in Expression Atlas</div>
+<div class="gxaExperimentsPageHeading">Experiments in Expression Atlas</div>
 <input type="hidden" id="hiddenTypeSelected" name="hiddenTypeSelected" value="">
 <input type="hidden" id="hiddenKingdomSelected" name="hiddenKingdomSelected" value="">
 

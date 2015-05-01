@@ -66,7 +66,7 @@ public class FastQCReportControllerSIT extends RestAssuredFixture {
 
         String body = response.getBody().asString();
 
-        assertThat(body.contains("div class=\"error\""), is(false));
+        assertThat(body.contains("div class=\"gxaError\""), is(false));
     }
 
 }

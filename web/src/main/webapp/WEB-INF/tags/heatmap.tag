@@ -37,17 +37,17 @@
 
 <fmt:setBundle basename="configuration" var="configuration"/>
 
-<div class="block">
+<div class="gxaBlock">
     <display:table name="${geneProfiles}" id="geneProfile"
-                   htmlId="heatmap-table" class="table-grid">
+                   htmlId="heatmap-table" class="gxaTableGrid">
         <display:column
                 title="
-                        <div class='heatmap-matrix-top-left-corner'>
+                        <div class='gxaHeatmapMatrixTopLeftCorner'>
                         <span id='tooltip-span' data-help-loc='#heatMapTableCellInfo'></span>
                         <button id='display-levels' class='display-levels-button' />
                         </button>
                         </div>"
-                class="horizontal-header-cell">
+                class="gxaHorizontalHeaderCell">
 
             <c:set var="geneId" value="${geneProfile.id}"/>
             <c:set var="bioEntityURL" value="${geneSet? \"query?geneQuery=\".concat(geneProfile.getName()).concat(\"&exactMatch=\").concat(preferences.isExactMatch()) : \"genes/\".concat(geneProfile.id)}"/>
@@ -132,7 +132,7 @@
                         ${!type.isBaseline() ? 'data-contrast-id=\"'.concat(queryFactor.id).concat('\"') : ''}
                         ${'data-experiment-accession=\"'.concat(experimentAccession).concat('\"')}
                         class=\"factor-header rotate_text\"></div>"
-                    headerClass="rotated_cell vertical-header-cell ${!type.isBaseline() ? 'contrastNameCell' : 'factorNameCell'}"
+                    headerClass="rotated_cell gxaVerticalHeaderCell ${!type.isBaseline() ? 'contrastNameCell' : 'factorNameCell'}"
                     style="${style}">
                 <c:choose>
                 <c:when test="${isKnownLevel}">
@@ -198,16 +198,16 @@
 <section id="contrastInfo" style="display:none">
     <div id="contrastExperimentDescription" style="font-weight: bold; color:blue; text-align: center"></div>
     <div id="contrastDescription" style="text-align: center"></div>
-    <table class='table-grid' style="padding: 0px; margin: 0px;">
+    <table class='gxaTableGrid' style="padding: 0px; margin: 0px;">
         <thead>
         <tr>
-            <th class='header-cell'>
+            <th class='gxaHeaderCell'>
                 Property
             </th>
-            <th class='header-cell'>
+            <th class='gxaHeaderCell'>
                 Test value
             </th>
-            <th class='header-cell'>
+            <th class='gxaHeaderCell'>
                 Reference value
             </th>
         </tr>
@@ -218,13 +218,13 @@
 
 <section id="factorInfo" style="display:none">
     <div id="factorDescription" style="text-align: center"></div>
-    <table class='table-grid' style="padding: 0px; margin: 0px;">
+    <table class='gxaTableGrid' style="padding: 0px; margin: 0px;">
         <thead>
         <tr>
-            <th class='header-cell'>
+            <th class='gxaHeaderCell'>
                 Property
             </th>
-            <th class='header-cell'>
+            <th class='gxaHeaderCell'>
                 Value
             </th>
         </tr>

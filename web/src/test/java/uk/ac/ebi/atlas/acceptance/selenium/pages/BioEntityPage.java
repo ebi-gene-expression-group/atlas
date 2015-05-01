@@ -156,7 +156,7 @@ public class BioEntityPage extends HeatmapTableWidgetPage {
     }
 
     public String getBioEntityCardTitle() {
-        WebElement header = SeleniumUtil.findChildElementWaitingUntilAvailable(driver, accordion, By.className("bioEntityCardHeader"));
+        WebElement header = SeleniumUtil.findChildElementWaitingUntilAvailable(driver, accordion, By.className("gxaBioEntityCardHeader"));
         return header.getText();
     }
 

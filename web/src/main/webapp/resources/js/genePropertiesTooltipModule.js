@@ -40,7 +40,7 @@ var genePropertiesTooltipModule = (function($) {
     function initTooltip(contextRoot, highlightedWords, element){
 
         $(element).tooltip({
-            tooltipClass:"genename-tooltip",
+            tooltipClass:"gxaGeneNameTooltip",
             position: { my: "left+120 top", at: "left top", collision: "flipfit" },
             hide:false,
             show:false,

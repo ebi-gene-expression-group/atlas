@@ -56,7 +56,7 @@ var helpTooltipsModule = (function($) {
             })
             .tooltip(
             {
-                tooltipClass: "help-tooltip",
+                tooltipClass: "gxaHelpTooltip",
                 content: function(callback) {
                     var tooltipHelpHtmlId = $(this).parent().attr('data-help-loc');
 

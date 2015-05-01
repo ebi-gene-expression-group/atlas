@@ -13,7 +13,7 @@
 
 <body class="atlas-body">
 <%-- Log error on server side --%>
-<div class="error">
+<div class="gxaError">
     An error occurred:
 </div>
 <div class="errorMessage">

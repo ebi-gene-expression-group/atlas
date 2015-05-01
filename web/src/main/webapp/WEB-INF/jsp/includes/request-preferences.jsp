@@ -27,7 +27,7 @@
 
 <%--@elvariable id="type" type="uk.ac.ebi.atlas.model.ExperimentType"--%>
 <%--@elvariable id="preferences" type="uk.ac.ebi.atlas.web.SearchRequest"--%>
-<div id="preferencesFormBlock" class="block-max-width">
+<div id="preferencesFormBlock" class="gxaExperimentRequestPreferencesBlockMaxWidth">
     <form:form method="get" commandName="preferences" id="prefForm">
         <input type="hidden" name="accessKey" value="${param.accessKey}"/>
         <form:hidden path="serializedFilterFactors"/>
@@ -40,8 +40,8 @@
             <form:hidden path="arrayDesignAccession"/>
         </c:if>
 
-        <form:errors path="*" cssClass="error"/>
-        <table class="form-grid">
+        <form:errors path="*" cssClass="gxaError"/>
+        <table class="gxaFormGrid">
             <tr>
                 <td class="gxaExperimentRequestPreferencesFluidWideTableColumn">
                     <form:label path="geneQuery">Gene query</form:label>
@@ -154,7 +154,7 @@
         <br/>
     </form:form>
     <div style="min-width: 955px;position:relative" id="gene-distribution-panel">
-        <div class="barchart-tooltip" id="barChartTooltip"></div>
+        <div class="gxaExperimentRequestPreferencesBarchartTooltip" id="barChartTooltip"></div>
         <div id="gene-distribution" style="height:100px;width:940px;display:inline-block;">
         </div>
         <span data-help-loc="#gene-distribution" style="vertical-align: top"></span>
@@ -163,7 +163,7 @@
     <div style="min-width: 955px;display:none;" id="sliderAndChart">
         <div style="display:inline-block">
             <div id="gene-distribution-button" style="float:left">
-                <a id="display-chart" title="Display gene distribution" class="button-image" href="#">
+                <a id="display-chart" title="Display gene distribution" class="gxaButtonImage" href="#">
                     <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
                 </a>
             </div>

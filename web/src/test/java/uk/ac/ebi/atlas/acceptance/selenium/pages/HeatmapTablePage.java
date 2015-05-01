@@ -85,10 +85,10 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "download-logFold")
     private WebElement downloadLogFoldLink;
 
-    @FindBy(className = "gradient-level-min")
+    @FindBy(className = "gxaGradientLevelMin")
     private WebElement gradientLevelsMin;
 
-    @FindBy(className = "gradient-level-max")
+    @FindBy(className = "gxaGradientLevelMax")
     private WebElement gradientLevelsMax;
 
     @FindBy(css = "#heatmap-table > tbody > tr > td > span > a")
@@ -177,7 +177,7 @@ public class HeatmapTablePage extends TablePage {
 
     public List<String> getHeatmapLegendMinLevels() {
         List<String> result = new ArrayList<>();
-        for (WebElement element : diffHeatmapTableLegend.findElements(By.className("gradient-level-min"))) {
+        for (WebElement element : diffHeatmapTableLegend.findElements(By.className("gxaGradientLevelMin"))) {
             result.add(element.getText());
         }
         return result;
@@ -185,7 +185,7 @@ public class HeatmapTablePage extends TablePage {
 
     public List<String> getHeatmapLegendMaxLevels() {
         List<String> result = new ArrayList<>();
-        for (WebElement element : diffHeatmapTableLegend.findElements(By.className("gradient-level-max"))) {
+        for (WebElement element : diffHeatmapTableLegend.findElements(By.className("gxaGradientLevelMax"))) {
             result.add(element.getText());
         }
         return result;
@@ -379,7 +379,7 @@ public class HeatmapTablePage extends TablePage {
         WebElement geneProfileHeaderCell = getGeneAnchor(zeroBasedProfileIndex);
         hoverOnElement(geneProfileHeaderCell);
 
-        By byTooltipClass = By.className("genename-tooltip");
+        By byTooltipClass = By.className("gxaGeneNameTooltip");
         WebDriverWait wait = new WebDriverWait(driver, 8L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
@@ -457,7 +457,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public List<String> getGenePropertyTooltipHighlightedTerms(int zeroBasedProfileIndex) {
-        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//span[@class='highlight']");
+        By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//span[@class='gxaHighlight']");
         WebDriverWait wait = new WebDriverWait(driver, 3L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         List<WebElement> highlightedTermElements = driver.findElements(byTooltipClass);
@@ -495,7 +495,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public boolean hasAnatomogram() {
-        return !driver.findElements(By.cssSelector("#anatomogram svg")).isEmpty();
+        return !driver.findElements(By.cssSelector("#anatomogram gxaSvg")).isEmpty();
     }
 
     public boolean hasEnsemblLauncher() {

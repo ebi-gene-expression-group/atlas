@@ -20,36 +20,31 @@
  * http://gxa.github.com/gxa
  */
 
-.bt {
+.gxaBT {
     border-top: 1px solid #cdcdcd !important;
 }
 
-.br {
+.gxaBR {
     border-right: 1px solid #cdcdcd !important;
 }
 
-.bb {
+.gxaBB {
     border-bottom: 1px solid #cdcdcd !important;
 }
 
-.bl {
+.gxaBL {
     border-left: 1px solid #cdcdcd !important;
 }
 
-.samples {
+.gxaSamples {
     background-color: #FAFAFA !important;
 }
 
-.factors {
+.gxaFactors {
     background-color: #FAFAFA !important;
 }
 
-.assays {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.header-cell {
+.gxaHeaderCell {
     background-color: rgb(237, 246, 246) !important;
     font-weight: bold;
     padding-left: 5px;
@@ -57,24 +52,25 @@
 }
 
 /* needed for span inside header-cell that is added by React */
-.header-cell span {
+.gxaHeaderCell span {
     font-weight: bold;
 }
 
-.header-cell:hover {
+.gxaHeaderCell:hover {
     background-color: #deebeb !important;
     cursor: pointer;
     *cursor: hand;
 }
 
-.doc_span {
-    margin-left: 3px;
+.gxaClear {
+    clear: both;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables features
  */
 
+/* TODO: Move out classes below that overlap with classes under web/src/main/webapp/resources/js/datatables-1.9.4/css into a separate file  */
 .dataTables_wrapper {
     position: relative;
     clear: both;
@@ -207,11 +203,6 @@
     background: #FAFAFA url('../images/sort_desc_disabled.png') no-repeat border-box center right;
 }
 
-.experiment-design-table thead th:active,
-.experiment-design-table thead td:active {
-    outline: none;
-}
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 * Misc
 */
@@ -225,10 +216,6 @@
 
 .top .dataTables_info {
     float: none;
-}
-
-.clear {
-    clear: both;
 }
 
 .dataTables_empty {

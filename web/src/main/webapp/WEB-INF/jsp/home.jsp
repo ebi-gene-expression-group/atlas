@@ -47,7 +47,7 @@
 		<div class="grid_24 alpha">
 
 			<form method="get" action="query" id="searchForm">
-				<table class="form-grid">
+				<table class="gxaFormGrid">
 					<tr>
 						<td class="gxaHomeSearchFluidTableColumn">
 							<label>Gene query</label>

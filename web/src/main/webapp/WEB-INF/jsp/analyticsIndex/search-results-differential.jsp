@@ -30,13 +30,13 @@
 
 <div id="help-placeholder" style="display: none"></div>
 
-<section class="grid_23 extra-padding">
+<section class="grid_23 gxaExtraPadding">
     <%@ include file="includes/search-form.jsp" %>
 </section>
 
 <c:if test="${not empty searchDescription}" >
-    <section class="grid_23 extra-padding">
-        <section class="grid_12 alpha extra-padding">
+    <section class="grid_23 gxaExtraPadding">
+        <section class="grid_12 alpha gxaExtraPadding">
             <c:if test="${hasBaselineResults}">
                 <a href="${pageContext.request.contextPath}/search?geneQuery=${geneQuery.asUrlQueryParameter()}">Baseline</a>
             </c:if>
@@ -45,7 +45,7 @@
             </c:if>
         </section>
 
-        <section class="grid_11 extra-padding">
+        <section class="grid_11 gxaExtraPadding">
             <c:if test="${hasDifferentialResults}">
                 <div style="font-weight: bold">
                     Differential
@@ -57,7 +57,7 @@
         </section>
     </section>
 
-    <section class="grid_17 alpha extra-padding">
+    <section class="grid_17 alpha gxaExtraPadding">
         <h5 class="strapline">
             Differential results for <span class="searchterm">${searchDescription}</span>
         </h5>
@@ -67,7 +67,7 @@
 </c:if>
 
 
-<section class="grid_23 extra-padding">
+<section class="grid_23 gxaExtraPadding">
 
     <c:if test="${!hasDifferentialResults}">
         No differential results

@@ -33,11 +33,11 @@ var FactorTooltip = (function(React) {
         render: function () {
             return (
                 <div>
-                    <table className="table-grid" style={{padding: '0px', margin: '0px'}}>
+                    <table className="gxaTableGrid" style={{padding: '0px', margin: '0px'}}>
                         <thead>
                             <tr>
-                                <th className="header-cell">Property</th>
-                                <th className="header-cell">Value (N={this.props.replicates})</th>
+                                <th className="gxaHeaderCell">Property</th>
+                                <th className="gxaHeaderCell">Value (N={this.props.replicates})</th>
                             </tr>
                         </thead>
                         <tbody>

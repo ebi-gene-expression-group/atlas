@@ -38,14 +38,14 @@
     </c:when>
     <c:otherwise><%--@elvariable id="geneProfiles" type="uk.ac.ebi.atlas.model.GeneProfilesList"--%>
 
-        <div id="heatmap-anatomogram" class="heatmap-anatomogram-row">
+        <div id="heatmap-anatomogram" class="gxaHeatmapAnatomogramRow">
 
-            <div id="anatomogram" class="double-click-noselection aside" style="display:inline">
+            <div id="anatomogram" class="gxaDoubleClickNoSelection gxaAside" style="display:inline">
                 <table>
                     <tr>
                         <td style="padding-top: 15px; vertical-align:top">
                             <span id="sex-toggle">
-                                <img id="sex-toggle-image" title="Switch anatomogram" class="button-image"
+                                <img id="sex-toggle-image" title="Switch anatomogram" class="gxaButtonImage"
                                      style="width:20px;height:38px;padding:2px" src="${base}/resources/images/male_selected.png"/>
                             </span>
                             <!--
@@ -65,7 +65,7 @@
                 </table>
             </div>
 
-            <div id="heatmap-div" class="heatmap-position${isWidget ? '-widget' : ''}">
+            <div id="heatmap-div" class="gxaHeatmapPosition${isWidget ? '-widget' : ''}">
                 <div>
                     <div style="display: inline-block; vertical-align: top;">
                         <span id="geneCount">Showing ${geneProfiles.size()} of ${geneProfiles.getTotalResultCount()} genes found:</span>
@@ -77,7 +77,7 @@
                         <a id="download-profiles-link"
                            title="Up to 50 of top genes displayed on page. Download results to see the rest."
                            href="${pageContext.request.contextPath}${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
-                           class="button-image" target="_blank">
+                           class="gxaButtonImage" target="_blank">
                             <img id="download-profiles" alt="Download query results" style="width:20px"
                                  src="${base}/resources/images/download_blue_small.png"/>
                         </a>
@@ -93,7 +93,7 @@
         </div>
 
         <c:if test="${not empty profilesAsGeneSets}">
-            <div id="heatmap-profilesAsGeneSets" class="heatmap-position${isWidget ? '-widget' : ''}" style="display:none">
+            <div id="heatmap-profilesAsGeneSets" class="gxaHeatmapPosition${isWidget ? '-widget' : ''}" style="display:none">
                 <div>
                     <div style="display: inline-block; vertical-align: top;">
                         <span id="geneSetsCount">Showing ${profilesAsGeneSets.size()} of ${profilesAsGeneSets.getTotalResultCount()} gene sets found:</span>
@@ -105,7 +105,7 @@
                         <a id="download-profiles-link"
                            title="Top 50 genes displayed on page. Download results to see the rest."
                            href="${pageContext.request.contextPath}${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
-                           class="button-image" target="_blank">
+                           class="gxaButtonImage" target="_blank">
                             <img id="download-profiles" alt="Download query results" style="width:20px"
                                  src="${base}/resources/images/download_blue_small.png"/>
                         </a>
@@ -120,7 +120,7 @@
             </div>
         </c:if>
 
-        <div id="heatmap-react-baseline" class="heatmap-position"></div>
+        <div id="heatmap-react-baseline" class="gxaHeatmapPosition"></div>
 
     </c:otherwise>
 </c:choose>

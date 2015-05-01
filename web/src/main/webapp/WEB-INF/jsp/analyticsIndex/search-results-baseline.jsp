@@ -14,13 +14,13 @@
 <%@ include file="../includes/heatmap-js.jsp" %>
 <%@ include file="../includes/anatomogram.jsp" %>
 
-<section class="grid_23 extra-padding">
+<section class="grid_23 gxaExtraPadding">
     <%@ include file="includes/search-form.jsp" %>
 </section>
 
 <c:if test="${not empty searchDescription}" >
-    <section class="grid_23 extra-padding">
-        <section class="grid_12 alpha extra-padding">
+    <section class="grid_23 gxaExtraPadding">
+        <section class="grid_12 alpha gxaExtraPadding">
             <div style="font-weight: bold">
             <c:if test="${hasBaselineResults}">
                 Baseline
@@ -31,7 +31,7 @@
             </div>
         </section>
 
-        <section class="grid_11 extra-padding">
+        <section class="grid_11 gxaExtraPadding">
             <c:if test="${hasDifferentialResults}">
                 <a href="${pageContext.request.contextPath}/search/differential?geneQuery=${geneQuery.asUrlQueryParameter()}">Differential</a>
             </c:if>
@@ -41,7 +41,7 @@
         </section>
     </section>
 
-    <section class="grid_17 alpha extra-padding">
+    <section class="grid_17 alpha gxaExtraPadding">
         <h5 class="strapline">
             Baseline results for <span class="searchterm">${searchDescription}</span>
         </h5>
@@ -50,7 +50,7 @@
 </c:if>
 
 
-<section class="grid_23 extra-padding">
+<section class="grid_23 gxaExtraPadding">
     <c:if test="${!hasBaselineResults}">
         No baseline results
     </c:if>
