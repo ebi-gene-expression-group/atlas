@@ -156,7 +156,7 @@
                         </c:when>
                     </c:choose>
 
-                    <div class="hide_cell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
+                    <div class="gxaHideCell" ${type.isMicroarray() ? 'data-tstatistic="'.concat(tstatistic).concat('"'):""}
                         ${!type.isBaseline() ? 'data-pValue="'.concat(pValue).concat('"'):""}
                          data-organism-part="${columnHeader}" data-color="${cellColour}"
                          ${type.isBaseline() ? 'data-svg-path-id=\"'.concat(queryFactor.valueOntologyTermId).concat('\"') : ''}>
