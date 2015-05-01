@@ -495,7 +495,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public boolean hasAnatomogram() {
-        return !driver.findElements(By.cssSelector("#anatomogram gxaSvg")).isEmpty();
+        return !driver.findElements(By.cssSelector("#anatomogram svg")).isEmpty();
     }
 
     public boolean hasEnsemblLauncher() {

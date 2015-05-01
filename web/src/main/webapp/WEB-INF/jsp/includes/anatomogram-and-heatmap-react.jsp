@@ -68,7 +68,7 @@
 
         <div id="ensembl-launcher" class="gxaAside" style="display:inline"></div>
 
-        <div id="heatmap-react" class="heatmap-position${isWidget ? '-widget' : ''}"></div>
+        <div id="heatmap-react" class="gxaHeatmapPosition${isWidget ? '-widget' : ''}"></div>
 
     </div>
 </c:if>
