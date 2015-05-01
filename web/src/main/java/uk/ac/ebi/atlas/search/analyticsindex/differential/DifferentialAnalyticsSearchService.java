@@ -19,7 +19,7 @@ public class DifferentialAnalyticsSearchService {
 
     String fetchDifferentialGeneQueryFacetsAsJson(GeneQuery geneQuery) {
         String jsonResponse = differentialAnalyticsSearchDao.fetchFacets(geneQuery);
-            return differentialAnalyticsFacetsReader.generateFacetsTreeJson(jsonResponse);
+        return differentialAnalyticsFacetsReader.generateFacetsTreeJson(jsonResponse);
     }
 
     String fetchDifferentialGeneQueryResultsAsJson(GeneQuery geneQuery) {

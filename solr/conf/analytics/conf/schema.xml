@@ -91,7 +91,7 @@
         -->
         <field name="bioentity_identifier" type="string" indexed="true" stored="true" required="true"/>
         <field name="species" type="string" indexed="true" stored="true" required="true"/>
-        <field name="kingdom" type="kingdomEnum" indexed="true" stored="true" required="true"/>
+        <field name="kingdom" type="string" indexed="true" stored="true" required="true" />
         <field name="experimentAccession" type="string" indexed="true" stored="true" required="true"/>
         <field name="experimentType" type="string" indexed="true" stored="true" required="true"/>
         <field name="defaultQueryFactorType" type="string" indexed="true" stored="true"/>
@@ -101,9 +101,9 @@
         <field name="expressionLevel" type="tdouble4" indexed="true" stored="true"/>
         <field name="contrastId" type="string" indexed="true" stored="true"/>
         <field name="factors" type="string" indexed="true" stored="false" multiValued="true"/>
-        <field name="numReplicates" type="tint4" indexed="true" stored="true"/>
+        <field name="numReplicates" type="string" indexed="true" stored="true"/>
         <field name="foldChange" type="tdouble4" indexed="true" stored="true"/>
-        <field name="regulation" type="regulationEnum" indexed="true" stored="false"/>
+        <field name="regulation" type="string" indexed="true" stored="false" />
 
         <field name="_version_" type="long" indexed="true" stored="true"/>
 
