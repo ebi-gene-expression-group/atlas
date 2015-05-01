@@ -102,7 +102,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     $(this.refs.countAndLegend.getDOMNode()).width(heatMapTableWidth);
                 }
 
-                if (!type.isMultiExperiment) {
+                if (!this.props.isWidget && !type.isMultiExperiment) {
                    makeTableHeaderSticky.call(this);
                 }
 
