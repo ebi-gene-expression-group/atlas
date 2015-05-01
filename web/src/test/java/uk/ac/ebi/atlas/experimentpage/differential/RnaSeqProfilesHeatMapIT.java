@@ -32,7 +32,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 public class RnaSeqProfilesHeatMapIT {
 
     private static final String E_GEOD_38400 = "E-GEOD-38400";
-    private static final String E_MTAB_698 = "E-MTAB-698";
+    private static final String E_GEOD_21860 = "E-GEOD-21860";
 
     @Inject
     private RnaSeqDiffExperimentsCache experimentsCache;
@@ -67,8 +67,9 @@ public class RnaSeqProfilesHeatMapIT {
         assertThat(g1_g2Expression.getPValue(), is(4.2479998366313E-5));
         assertThat(g1_g2Expression.getFoldChange(), is(6.89620951324986));
 
-        assertThat(profiles.getTotalResultCount(), is(51));
         System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
+
+        assertThat(profiles.getTotalResultCount(), is(51));
         assertThat(profiles.extractGeneNames(), (Matcher)contains("AT3G48131", "F14M2.2", "AT1G33840", "AT5G35207", "RSU1", "AT5G27845", "T5N23_130", "AT5G35205", "T5N23_90", "AT2G16310", "AT4G04293", "AT2G05200", "AT5G24240", "AT1G11785", "AT4G04223", "NRPD1B", "ATMG00510", "ANAC003", "AT5G62920", "GRXS4", "AT5G35935", "AT5G52070", "PSBE", "GRXS5", "GRXS10", "F21F23.9", "ATMG00410", "AT1G12730", "AT3G59765", "AT5G27850", "ATPF", "AT5G11090", "AT2G07733", "AT5G28300", "F13F21.6", "AT5G40450", "GRXS8", "GRXS3", "GRXS13", "AT5G24150", "AT1G62310", "AT5G26220", "ATCG00490", "MYR1", "SEN1", "AT2G35382", "ATMRU1", "AT5G61190", "ATMSRB6", "DML1"));
     }
 
@@ -90,12 +91,13 @@ public class RnaSeqProfilesHeatMapIT {
     @Test
     public void geneQuery_ProteinCoding() throws GenesNotFoundException {
         setGeneQuery("protein_coding");
-        RnaSeqRequestContext requestContext = populateRequestContext(E_MTAB_698);
+        RnaSeqRequestContext requestContext = populateRequestContext(E_GEOD_21860);
         DifferentialProfilesList profiles = subject.fetch(requestContext);
 
-        assertThat(profiles.getTotalResultCount(), is(15));
-        // System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
-        assertThat(profiles.extractGeneNames(), (Matcher)contains("Ddx3y", "Eif2s3y", "Kdm5d", "Uty", "Scgb1b27", "Scgb2b27", "Prss33", "Dnase1", "Gpx6", "Cyp1a2", "Cnga2", "Hbb-b2", "Pcolce2", "Stoml3", "Vmn2r121"));
+        System.out.println("\"" + Joiner.on("\", \"").join(profiles.extractGeneNames()) + "\"");
+
+        assertThat(profiles.getTotalResultCount(), is(108));
+        assertThat(profiles.extractGeneNames(), (Matcher)contains("Lactbl1", "Prok1", "Gpr26", "Lrrc55", "Tph1", "Cldn8", "Fmo1", "Sftpd", "Lonrf3", "Neb", "Tnfrsf11b", "Fmo4", "Mctp1", "Tph2", "Ivd", "Matn2", "Dnahc8", "Cspg5", "Gbp8", "Cish", "Ehhadh", "Reg3b", "Cartpt", "Grem2", "Chgb", "Reg3a", "Tmem255a", "Ikzf4", "Gm16314", "Grp", "Ovol2", "Cntn3", "Synpr", "Npas4", "Txnrd2", "Acvr1c", "Rnf182", "Syce2", "Aqp4", "Grhl1", "Wipi1", "Rgs2", "Ogdhl", "Gas2", "Dnmt3b", "Hspa1b", "Vip", "Igfals", "Dhcr7", "Reg3d"));
     }
 
     // http://localhost:8080/gxa/experiments/E-GEOD-38400?regulation=UP
