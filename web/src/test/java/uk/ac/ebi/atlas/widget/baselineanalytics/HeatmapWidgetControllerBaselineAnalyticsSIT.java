@@ -38,8 +38,8 @@ public class HeatmapWidgetControllerBaselineAnalyticsSIT extends RestAssuredFixt
 
         JsonPath json = response.jsonPath();
 
-        assertThat((String)json.get("profiles.rows[0].id"), is("E-MTAB-1733"));
-        assertThat((String)json.get("profiles.rows[1].id"), is("E-MTAB-513"));
+        assertThat((String)json.get("profiles.rows[0].id"), is("E-MTAB-2836"));
+        assertThat((String)json.get("profiles.rows[1].id"), is("E-MTAB-1733"));
     }
 
     @Test
