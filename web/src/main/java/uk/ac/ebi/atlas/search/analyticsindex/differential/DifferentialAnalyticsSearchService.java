@@ -1,9 +1,11 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 @Named
 public class DifferentialAnalyticsSearchService {
@@ -24,6 +26,12 @@ public class DifferentialAnalyticsSearchService {
 
     String fetchDifferentialGeneQueryResultsAsJson(GeneQuery geneQuery) {
         String differentialResults = differentialAnalyticsSearchDao.fetchDifferentialGeneQueryResultsAboveDefaultFoldChange(geneQuery);
+        return differentialAnalyticsFacetsReader.extractResultsAsJson(differentialResults);
+    }
+
+    String fetchDifferentialGeneQuerySelectionResultsAsJson(GeneQuery geneQuery, List<String> species, List<String> experimentType, List<String> kingdoms, List<String> factors, List<Integer> numReplicates, String regulation) {
+        String differentialResults = differentialAnalyticsSearchDao.fetchDifferentialGeneQueryResultsAboveDefaultFoldChange(geneQuery, species, experimentType, kingdoms, factors, numReplicates, regulation);
+
         return differentialAnalyticsFacetsReader.extractResultsAsJson(differentialResults);
     }
 

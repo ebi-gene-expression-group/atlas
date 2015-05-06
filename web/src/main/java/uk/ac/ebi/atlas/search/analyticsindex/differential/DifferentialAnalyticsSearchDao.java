@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Named
@@ -76,6 +77,13 @@ public class DifferentialAnalyticsSearchDao {
         return fetchDifferentialResultsAboveDefaultFoldChange(buildGeneIdentifierQuery(geneQuery));
     }
 
+    String fetchDifferentialGeneQueryResultsAboveDefaultFoldChange(GeneQuery geneQuery, List<String> species, List<String> experimentType, List<String> kingdom,
+                                                                   List<String> factors, List<Integer> numReplicates, String regulation) {
+        String query = buildGeneIdentifierQuery(geneQuery);
+
+        return fetchDifferentialResultsAboveDefaultFoldChange(query, species, experimentType, kingdom, factors, numReplicates, regulation);
+    }
+
 
     private String fetchDifferentialResultsAboveDefaultFoldChange(String q) {
         Stopwatch stopwatch = Stopwatch.createStarted();
@@ -88,14 +96,56 @@ public class DifferentialAnalyticsSearchDao {
         return result;
     }
 
+    private String fetchDifferentialResultsAboveDefaultFoldChange(String q, List<String> species, List<String> experimentType, List<String> kingdom,
+                                                                            List<String> factors, List<Integer> numReplicates, String regulation) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
+        String result = fetchResponseAsString(buildDifferentialResultsAboveDefaultFoldChangeUrl(q, species, experimentType, kingdom, factors, numReplicates, regulation));
+
+        stopwatch.stop();
+        LOGGER.debug(String.format("fetchDifferentialGeneResults q=%s took %.2f seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+
+        return result;
+    }
+
 
     private String buildGeneIdentifierQuery(GeneQuery geneQuery) {
         return geneQuery.isEmpty() ? "" : String.format("identifierSearch:(\"%s\")", StringUtils.join(geneQuery.terms(), "\" OR \""));
     }
 
+    private String buildParamsQuery(List<String> params, String name) {
+        return (params != null && !params.isEmpty()) ? String.format(" AND %s :(\"%s\")", name, StringUtils.join(params, "\" OR \"")) : "";
+    }
 
     private String buildDifferentialResultsAboveDefaultFoldChangeUrl(String q) {
         String query = q.isEmpty() ? DIFFERENTIAL_ONLY : q + " AND " + DIFFERENTIAL_ONLY;
+
+        return solrBaseUrl + buildQueryParameters(query, DEFAULT_FOLD_CHANGE) + differentialGenePivotQuery;
+    }
+
+    private String buildDifferentialResultsAboveDefaultFoldChangeUrl(String q, List<String> species, List<String> experimentTypes, List<String> kingdoms,
+                                                                     List<String> factors, List<Integer> numReplicates, String regulation) {
+        String query;
+
+        if(q.isEmpty() && experimentTypes == null) {
+            query = DIFFERENTIAL_ONLY;
+        } else if (!q.isEmpty() && experimentTypes == null) {
+            query = q + " AND " + DIFFERENTIAL_ONLY;
+        } else {
+            query = q + buildParamsQuery(experimentTypes, "experimentType");
+        }
+
+        query = query + buildParamsQuery(species, "species");
+        query = query + buildParamsQuery(factors, "factors");
+        query = query + buildParamsQuery(kingdoms, "kingdom");
+
+        if(numReplicates != null) {
+            query = query + String.format(" AND numReplicates:(\"%s\")", StringUtils.join(numReplicates, "\" OR \""));
+        }
+        if(StringUtils.isNotBlank(regulation)) {
+            query = query + " AND regulation:" + regulation;
+        }
+
         return solrBaseUrl + buildQueryParameters(query, DEFAULT_FOLD_CHANGE) + differentialGenePivotQuery;
     }
 
