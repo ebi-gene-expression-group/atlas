@@ -4,10 +4,12 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoException;
 import com.esotericsoftware.kryo.io.Input;
 
+import java.io.Closeable;
+
 /**
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 05/05/15.
  */
-public class KryoReader {
+public class KryoReader implements Closeable {
     private Kryo kryo;
     private Input input;
 
