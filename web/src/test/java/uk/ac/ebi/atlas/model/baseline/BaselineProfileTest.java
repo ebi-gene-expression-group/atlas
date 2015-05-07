@@ -141,7 +141,7 @@ public class BaselineProfileTest {
     }
 
     private BaselineProfile buildProfileWithUnknownExpression() {
-        BaselineExpression unknownExpression1 = new BaselineExpression("NA", new FactorSet().add(factor1));
+        BaselineExpression unknownExpression1 = new BaselineExpression("NT", new FactorSet().add(factor1));
         BaselineProfile profileWithUnknownExpression = new BaselineProfile("OTHER_ID", "OTHER_NAME");
         profileWithUnknownExpression.add(QUERY_FACTOR_TYPE, unknownExpression1);
         return profileWithUnknownExpression;

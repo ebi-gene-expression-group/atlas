@@ -29,7 +29,7 @@ public class BaselineProfilesViewModelBuilderTest {
     private static final String factorType = "organism part";
     private static final String factorValues = "adipose, adrenal, brain, breast";
     private static final String profileLines = "ENSG00000082258\tCCNT2\t0\t9\t5\t11\n" +
-            "ENSG00000047315\tPOLR2B\tFAIL\t47\t0.3\t25";
+            "ENSG00000047315\tPOLR2B\tNA\t47\t0.3\t25";
     private static final double minExpressionLevel = 0.3;
     private static final double maxExpressionLevel = 47;
 
@@ -91,8 +91,8 @@ public class BaselineProfilesViewModelBuilderTest {
                 "      \"expressions\": [\n" +
                 "        {\n" +
                 "          \"factorName\": \"adipose\",\n" +
-                "          \"color\": \"UNKNOWN\",\n" +
-                "          \"value\": \"UNKNOWN\",\n" +
+                "          \"color\": \"\",\n" +
+                "          \"value\": \"\",\n" +
                 "          \"svgPathId\": \"ontologyTerm\"\n" +
                 "        },\n" +
                 "        {\n" +
