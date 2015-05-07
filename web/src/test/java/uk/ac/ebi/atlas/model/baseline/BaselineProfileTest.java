@@ -60,11 +60,8 @@ public class BaselineProfileTest {
 
     @Before
     public void setUp() throws Exception {
-
         subject = new BaselineProfile(GENE_ID, GENE_NAME);
-
         subject.add(QUERY_FACTOR_TYPE, expression_1).add(QUERY_FACTOR_TYPE, expression_2).add(QUERY_FACTOR_TYPE, expression_3);
-
     }
 
     @Test
@@ -144,7 +141,7 @@ public class BaselineProfileTest {
     }
 
     private BaselineProfile buildProfileWithUnknownExpression() {
-        BaselineExpression unknownExpression1 = new BaselineExpression("FAIL", new FactorSet().add(factor1));
+        BaselineExpression unknownExpression1 = new BaselineExpression("NA", new FactorSet().add(factor1));
         BaselineProfile profileWithUnknownExpression = new BaselineProfile("OTHER_ID", "OTHER_NAME");
         profileWithUnknownExpression.add(QUERY_FACTOR_TYPE, unknownExpression1);
         return profileWithUnknownExpression;
@@ -176,8 +173,10 @@ public class BaselineProfileTest {
 
         BaselineProfile baselineProfile = new BaselineProfile("OTHER_ID", "OTHER_NAME");
 
-        return baselineProfile.add(QUERY_FACTOR_TYPE, expression_1).add(QUERY_FACTOR_TYPE, expression_2)
-                                .add(QUERY_FACTOR_TYPE, expression_3).add(QUERY_FACTOR_TYPE, expression_4);
+        return baselineProfile.add(QUERY_FACTOR_TYPE, expression_1)
+                              .add(QUERY_FACTOR_TYPE, expression_2)
+                              .add(QUERY_FACTOR_TYPE, expression_3)
+                              .add(QUERY_FACTOR_TYPE, expression_4);
     }
 
 }

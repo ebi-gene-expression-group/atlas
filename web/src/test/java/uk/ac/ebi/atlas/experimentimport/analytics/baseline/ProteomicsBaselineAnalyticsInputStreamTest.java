@@ -28,8 +28,8 @@ public class ProteomicsBaselineAnalyticsInputStreamTest {
     private static final String TSV_LINE_2 = Joiner.on("\t").join(new String[]{GENE_ID_2, GENE_NAME_2, "80.5", "0", "0", "4", "25", "0.000309075", "0", "0", "2.82E+06", "8.49E-05"});
 
     private static final String TSV_LINE_NO_EXPRESSION = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"});
-    private static final String TSV_LINE_LOWDATA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "0", "5", "0", "0", "0", "LOWDATA", "7.90E-06", "0"});
-    private static final String TSV_LINE_FAIL = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "0", "0", "5", "0", "0", "FAIL", "0", "7.90E-06"});
+    private static final String TSV_LINE_LOWDATA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "0", "5", "0", "0", "0", "NA", "7.90E-06", "0"});
+    private static final String TSV_LINE_FAIL = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "0", "0", "5", "0", "0", "NA", "0", "7.90E-06"});
     private static final String TSV_LINE_NA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "5", "0", "0", "0", "0", "7.90E-06", "NA", "0", "0"});
 
     private static String TSV_CONTENTS = Joiner.on("\n").join(new String[]{TSV_HEADER, TSV_LINE_1, TSV_LINE_2});

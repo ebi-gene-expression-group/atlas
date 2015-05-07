@@ -28,8 +28,8 @@ public class BaselineAnalyticsInputStreamTest {
     private static final String TSV_LINE_1 = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "1", "2", "3", "4", "-0.00248510654802851"});
     private static final String TSV_LINE_2 = Joiner.on("\t").join(new String[]{GENE_ID_2, GENE_NAME_2, "0.00", "0", "1", "0", "1"});
     private static final String TSV_LINE_NO_EXPRESSION = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "0", "0", "0"});
-    private static final String TSV_LINE_LOWDATA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "1", "LOWDATA", "0", "0"});
-    private static final String TSV_LINE_FAIL = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "1", "FAIL", "0", "0"});
+    private static final String TSV_LINE_LOWDATA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "1", "NA", "0", "0"});
+    private static final String TSV_LINE_FAIL = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "1", "NA", "0", "0"});
     private static final String TSV_LINE_NA = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0", "0", "NA", "1", "0"});
     private static final String TSV_LINE_QUARTILES = Joiner.on("\t").join(new String[]{GENE_ID_1, GENE_NAME_1, "0,0,1,0,0", "0,0,2,0,0", "0,0,3,0,0", "0,0,4,0,0", "0,0,-0.00248510654802851,0,0"});
 

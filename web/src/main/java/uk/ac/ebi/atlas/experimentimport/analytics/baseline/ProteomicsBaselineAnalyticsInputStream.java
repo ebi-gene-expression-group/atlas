@@ -120,7 +120,7 @@ public class ProteomicsBaselineAnalyticsInputStream implements ObjectInputStream
             String assayGroupId = sampleAbundanceAssayGroupIds.get(i);
             String expressionLevelString = expressionLevels[i];
 
-            if (!("FAIL".equalsIgnoreCase(expressionLevelString) || "LOWDATA".equalsIgnoreCase(expressionLevelString) || "NA".equalsIgnoreCase(expressionLevelString))) {
+            if ("NA".equalsIgnoreCase(expressionLevelString)) {
                 Double expressionLevel = Double.parseDouble(expressionLevels[i]);
                 if (expressionLevel != 0.0) {
                     builder.add(new BaselineAnalytics(geneId, StringUtils.removeEnd(assayGroupId, SAMPLE_ABUNDANCE_QUALIFIER), expressionLevel));

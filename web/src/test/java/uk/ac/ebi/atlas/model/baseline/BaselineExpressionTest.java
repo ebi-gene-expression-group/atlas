@@ -10,8 +10,6 @@ public class BaselineExpressionTest {
 
     public static final String EXPRESSION_LEVEL_1 = "0";
     public static final String EXPRESSION_LEVEL_2 = "NA";
-    public static final String EXPRESSION_LEVEL_3 = "LOWDATA";
-    public static final String EXPRESSION_LEVEL_4 = "FAIL";
 
     private BaselineExpression subject;
 
@@ -48,42 +46,6 @@ public class BaselineExpressionTest {
 
         assertThat(subject.isKnown(), is(true));
         assertThat(subject.getLevelAsString(), is(EXPRESSION_LEVEL_2));
-
-    }
-
-    @Test
-    public void expressionLevelLOWDATA () {
-        Factor factor1 = new Factor("ORGANISM_PART", "lung");
-        Factor factor2 = new Factor("ORGANISM_PART", "liver");
-        Factor factor3 = new Factor("ORGANISM_PART", "longue");
-
-        FactorSet factorGroup = new FactorSet();
-        factorGroup.add(factor1);
-        factorGroup.add(factor2);
-        factorGroup.add(factor3);
-
-        subject = new BaselineExpression(EXPRESSION_LEVEL_3, factorGroup);
-
-        assertThat(subject.isKnown(), is(false));
-        assertThat(subject.getLevelAsString(), is(EXPRESSION_LEVEL_3));
-
-    }
-
-    @Test
-    public void expressionLevelFAIL () {
-        Factor factor1 = new Factor("ORGANISM_PART", "lung");
-        Factor factor2 = new Factor("ORGANISM_PART", "liver");
-        Factor factor3 = new Factor("ORGANISM_PART", "longue");
-
-        FactorSet factorGroup = new FactorSet();
-        factorGroup.add(factor1);
-        factorGroup.add(factor2);
-        factorGroup.add(factor3);
-
-        subject = new BaselineExpression(EXPRESSION_LEVEL_4, factorGroup);
-
-        assertThat(subject.isKnown(), is(false));
-        assertThat(subject.getLevelAsString(), is(EXPRESSION_LEVEL_4));
 
     }
 

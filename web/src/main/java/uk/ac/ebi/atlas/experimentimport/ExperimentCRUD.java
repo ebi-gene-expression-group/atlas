@@ -77,7 +77,7 @@ public class ExperimentCRUD {
         AnalyticsLoader analyticsLoader = analyticsLoaderFactory.getLoader(configuration.getExperimentType());
         analyticsLoader.loadAnalytics(experimentAccession);
 
-        // TODO Add expression serialization here
+        // TODO If baseline experiment serialize on import here
         // if (configuration.getExperimentType() == ExperimentType.RNASEQ_MRNA_BASELINE || ExperimentType.{a serializable experiment type}...) {
         //     serializeExpressionData(experimentAccession, experimentType);
         // }
