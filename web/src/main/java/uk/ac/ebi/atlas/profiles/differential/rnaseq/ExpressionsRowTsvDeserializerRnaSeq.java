@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.profiles.differential.rnaseq;
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
 
 import java.util.Iterator;
 import java.util.List;
@@ -33,11 +33,11 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class ExpressionsRowDeserializerRnaSeq extends ExpressionsRowDeserializer<DifferentialExpression> {
+public class ExpressionsRowTsvDeserializerRnaSeq extends ExpressionsRowTsvDeserializer<DifferentialExpression> {
 
     private Iterator<Contrast> expectedContrasts;
 
-    ExpressionsRowDeserializerRnaSeq(List<Contrast> orderedContrasts) {
+    ExpressionsRowTsvDeserializerRnaSeq(List<Contrast> orderedContrasts) {
         this.expectedContrasts = Iterables.cycle(orderedContrasts).iterator();
     }
 

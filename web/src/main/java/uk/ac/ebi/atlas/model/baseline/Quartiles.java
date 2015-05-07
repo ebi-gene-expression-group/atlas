@@ -4,6 +4,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 
+import java.lang.reflect.Array;
 import java.util.Iterator;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -25,10 +26,15 @@ public abstract class Quartiles {
         return new AutoValue_Quartiles(min, lower, median, upper, max);
     }
 
-    public static Quartiles createFromCsvString(String csv) {
-        Iterable<String> values = Splitter.on(",").split(csv);
+    public static Quartiles create(Double[] values) {
+        checkArgument(Array.getLength(values) == 5, "expected 5 values for quartiles but got " + values);
+        return Quartiles.create(values[0], values[1], values[2], values[3], values[4]);
+    }
 
-        checkArgument(Iterables.size(values) == 5, "expected 5 values for quartiles but got " + csv);
+    public static Quartiles create(String commaSeparatedValues) {
+        Iterable<String> values = Splitter.on(",").split(commaSeparatedValues);
+
+        checkArgument(Iterables.size(values) == 5, "expected 5 values for quartiles but got " + commaSeparatedValues);
 
         Iterator<String> iterator = values.iterator();
 

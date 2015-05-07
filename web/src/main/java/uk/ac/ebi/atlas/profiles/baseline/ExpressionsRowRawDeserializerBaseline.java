@@ -28,6 +28,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 import uk.ac.ebi.atlas.model.baseline.Quartiles;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.ExpressionsRowRawDeserializer;
 
 import java.util.Iterator;
 import java.util.List;
@@ -35,45 +36,35 @@ import java.util.Queue;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-public class ExpressionsRowDeserializerBaseline extends ExpressionsRowDeserializer<BaselineExpression> {
-
-    private static final String ZERO_CODE = "-";
-    private static final Quartiles ZERO_QUARTILES = Quartiles.create(0.0, 0.0, 0.0, 0.0, 0.0);
+public class ExpressionsRowRawDeserializerBaseline extends ExpressionsRowRawDeserializer<BaselineExpression> {
 
     final int expectedNumberOfValues;
     Iterator<FactorGroup> factorGroups;
 
-    public ExpressionsRowDeserializerBaseline(List<FactorGroup> orderedFactorGroups) {
+    public ExpressionsRowRawDeserializerBaseline(List<FactorGroup> orderedFactorGroups) {
         expectedNumberOfValues = orderedFactorGroups.size();
         factorGroups = Iterables.cycle(orderedFactorGroups).iterator();
     }
 
     @Override
-    public ExpressionsRowDeserializer reload(String... values) {
+    public ExpressionsRowRawDeserializer reload(Double[]... values) {
         checkArgument(values.length == expectedNumberOfValues, String.format("Expected %s values but got [%s]", expectedNumberOfValues, Joiner.on(",").join(values)));
         return super.reload(values);
     }
 
     @Override
-    public BaselineExpression nextExpression(Queue<String> tsvRow) {
-        String expressionLevelString = tsvRow.poll();
+    public BaselineExpression nextExpression(Queue<Double[]> rawValuesRow) {
+        Double[] expressionLevelValues = rawValuesRow.poll();
 
-        if (expressionLevelString == null) {
+        if (expressionLevelValues == null) {
             return null;
+        } else if (expressionLevelValues.length == 0) {
+            return new BaselineExpression("NT", factorGroups.next());
+        }else if (expressionLevelValues.length == 1) {
+            return new BaselineExpression(expressionLevelValues[0], factorGroups.next());
+        } else {
+            return new BaselineExpression(Quartiles.create(expressionLevelValues), factorGroups.next());
         }
-
-        if (expressionLevelString.equals(ZERO_CODE)) {
-            return new BaselineExpression(ZERO_QUARTILES, factorGroups.next());
-        }
-
-        if (expressionLevelString.contains(",")) {
-            Quartiles quartiles = Quartiles.createFromCsvString(expressionLevelString);
-
-            return new BaselineExpression(quartiles, factorGroups.next());
-        }
-
-        return new BaselineExpression(expressionLevelString, factorGroups.next());
     }
-
 
 }

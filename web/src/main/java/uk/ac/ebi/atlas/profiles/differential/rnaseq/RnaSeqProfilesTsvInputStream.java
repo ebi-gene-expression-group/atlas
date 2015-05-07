@@ -28,11 +28,11 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.TsvInputStream;
 
-public class RnaSeqProfileStream extends TsvInputStream<RnaSeqProfile, DifferentialExpression> {
+public class RnaSeqProfilesTsvInputStream extends TsvInputStream<RnaSeqProfile, DifferentialExpression> {
 
     private RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder;
 
-    public RnaSeqProfileStream(CSVReader csvReader, String experimentAccession
+    public RnaSeqProfilesTsvInputStream(CSVReader csvReader, String experimentAccession
             , ExpressionsRowDeserializerRnaSeqBuilder expressionsRowDeserializerRnaSeqBuilder
             , RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder) {
 
@@ -41,18 +41,18 @@ public class RnaSeqProfileStream extends TsvInputStream<RnaSeqProfile, Different
     }
 
     @Override
-    protected RnaSeqProfile createProfile() {
+    public RnaSeqProfile createProfile() {
         RnaSeqProfile profile = rnaSeqProfileReusableBuilder.create();
         return profile.isEmpty() ? null : profile;
     }
 
     @Override
-    protected void addExpressionToBuilder(DifferentialExpression expression) {
+    public void addExpressionToBuilder(DifferentialExpression expression) {
         rnaSeqProfileReusableBuilder.addExpression(expression);
     }
 
     @Override
-    protected void addGeneInfoValueToBuilder(String[] values) {
+    public void addGeneInfoValueToBuilder(String[] values) {
         rnaSeqProfileReusableBuilder.beginNewInstance(values[0], values[1]);
     }
 

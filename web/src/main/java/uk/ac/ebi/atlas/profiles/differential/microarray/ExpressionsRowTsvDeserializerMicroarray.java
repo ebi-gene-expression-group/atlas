@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.profiles.differential.microarray;
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
-import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
 
 import java.util.Iterator;
 import java.util.List;
@@ -34,14 +34,14 @@ import java.util.Queue;
 import static com.google.common.base.Preconditions.checkState;
 
 //ToDo: duplicate code with RnaSeqDiffExpressionsQueue
-public class ExpressionsRowDeserializerMicroarray extends ExpressionsRowDeserializer<MicroarrayExpression> {
+public class ExpressionsRowTsvDeserializerMicroarray extends ExpressionsRowTsvDeserializer<MicroarrayExpression> {
 
 
     private Iterator<Contrast> expectedContrasts;
 
     private List<Contrast> orderedContrasts;
 
-    ExpressionsRowDeserializerMicroarray(List<Contrast> orderedContrasts) {
+    ExpressionsRowTsvDeserializerMicroarray(List<Contrast> orderedContrasts) {
         this.expectedContrasts = Iterables.cycle(orderedContrasts).iterator();
         this.orderedContrasts = orderedContrasts;
     }

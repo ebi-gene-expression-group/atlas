@@ -45,7 +45,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BaselineProfilesInputStreamTest {
+public class BaselineProfilesTsvInputStreamTest {
 
     public static final String RUN_ACCESSION_1 = "RUN_ACCESSION_1";
     public static final String RUN_ACCESSION_2 = "RUN_ACCESSION_2";
@@ -58,12 +58,12 @@ public class BaselineProfilesInputStreamTest {
     private ExpressionsRowDeserializerBaselineBuilder expressionsBufferBuilderMock;
 
     @Mock
-    private ExpressionsRowDeserializerBaseline expressionsBufferMock;
+    private ExpressionsRowTsvDeserializerBaseline expressionsBufferMock;
 
     private String[] expressionLevels = new String[]{"A GENE ID", "A GENE NAME", "2.22222", "0.11111"};
     private String[] expressionLevelsWithoutGeneIdColumn = new String[]{"2.22222", "0.11111"};
 
-    private BaselineProfilesInputStream subject;
+    private BaselineProfilesTsvInputStream subject;
 
 
     @Before
@@ -91,7 +91,7 @@ public class BaselineProfilesInputStreamTest {
         when(baselineProfileReusableBuilder.addExpression(any(BaselineExpression.class))).thenReturn(baselineProfileReusableBuilder);
         when(baselineProfileReusableBuilder.create()).thenReturn(EMPTY_BASELINE_PROFILE);
 
-        subject = new BaselineProfilesInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, baselineProfileReusableBuilder);
+        subject = new BaselineProfilesTsvInputStream(csvReaderMock, "AN_ACCESSION", expressionsBufferBuilderMock, baselineProfileReusableBuilder);
 
     }
 

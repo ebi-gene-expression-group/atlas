@@ -112,7 +112,7 @@ public class BarChartTraderBuilderTest {
         initGeneProfile2();
 
         //Init input stream
-        BaselineExpressionsInputStream inputStream = mock(BaselineExpressionsInputStream.class);
+        BaselineExpressionsTsvInputStream inputStream = mock(BaselineExpressionsTsvInputStream.class);
         when(inputStream.readNext()).thenReturn(GENE_PROFILE_1).thenReturn(GENE_PROFILE_2).thenReturn(null);
 
         //mock stream builder

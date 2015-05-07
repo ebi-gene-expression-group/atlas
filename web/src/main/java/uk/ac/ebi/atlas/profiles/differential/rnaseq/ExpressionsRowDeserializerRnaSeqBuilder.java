@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
-import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
 import uk.ac.ebi.atlas.profiles.differential.ExpressionsRowDeserializerDifferentialBuilder;
 import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
 
@@ -45,8 +45,8 @@ public class ExpressionsRowDeserializerRnaSeqBuilder extends ExpressionsRowDeser
     }
 
     @Override
-    protected ExpressionsRowDeserializer<DifferentialExpression> getBufferInstance(List<Contrast> orderedContrasts) {
-        return new ExpressionsRowDeserializerRnaSeq(orderedContrasts);
+    protected ExpressionsRowTsvDeserializer<DifferentialExpression> getBufferInstance(List<Contrast> orderedContrasts) {
+        return new ExpressionsRowTsvDeserializerRnaSeq(orderedContrasts);
     }
 
 }

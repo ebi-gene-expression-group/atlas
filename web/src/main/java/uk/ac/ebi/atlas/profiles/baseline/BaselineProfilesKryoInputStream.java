@@ -23,37 +23,38 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
 
-import au.com.bytecode.opencsv.CSVReader;
+import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
-import uk.ac.ebi.atlas.profiles.TsvInputStream;
+import uk.ac.ebi.atlas.profiles.KryoInputStream;
+import uk.ac.ebi.atlas.profiles.KryoReader;
 
-public class BaselineProfilesInputStream extends TsvInputStream<BaselineProfile, BaselineExpression> {
+public class BaselineProfilesKryoInputStream extends KryoInputStream<BaselineProfile, BaselineExpression> {
 
     private BaselineProfileReusableBuilder baselineProfileReusableBuilder;
 
 
-    public BaselineProfilesInputStream(CSVReader csvReader, String experimentAccession
-            , ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder
-            , BaselineProfileReusableBuilder baselineProfileReusableBuilder) {
+    public BaselineProfilesKryoInputStream(KryoReader kryoReader, String experimentAccession,
+                                           ExpressionsRowRawDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
+                                           BaselineProfileReusableBuilder baselineProfileReusableBuilder) {
 
-        super(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
+        super(kryoReader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
         this.baselineProfileReusableBuilder = baselineProfileReusableBuilder;
     }
 
     @Override
-    protected BaselineProfile createProfile() {
+    public BaselineProfile createProfile() {
         BaselineProfile baselineProfile = baselineProfileReusableBuilder.create();
         return baselineProfile.isEmpty() ? null : baselineProfile;
     }
 
     @Override
-    protected void addExpressionToBuilder(BaselineExpression expression) {
+    public void addExpressionToBuilder(BaselineExpression expression) {
         baselineProfileReusableBuilder.addExpression(expression);
     }
 
     @Override
-    protected void addGeneInfoValueToBuilder(String[] values) {
+    public void addGeneInfoValueToBuilder(String[] values) {
         baselineProfileReusableBuilder.beginNewInstance(values[0], values[1]);
     }
 

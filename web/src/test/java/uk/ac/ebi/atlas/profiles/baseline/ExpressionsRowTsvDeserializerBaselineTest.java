@@ -44,7 +44,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExpressionsRowDeserializerBaselineTest {
+public class ExpressionsRowTsvDeserializerBaselineTest {
 
     public static final String EXPRESSION_LEVEL_1 = "0";
 
@@ -52,7 +52,7 @@ public class ExpressionsRowDeserializerBaselineTest {
     public static final String EXPRESSION_LEVEL_3 = "0.0001";
     private static final String[] THREE_EXPRESSION_LEVELS = new String[]{EXPRESSION_LEVEL_1, EXPRESSION_LEVEL_2, EXPRESSION_LEVEL_3};
 
-    private ExpressionsRowDeserializerBaseline subject;
+    private ExpressionsRowTsvDeserializerBaseline subject;
 
 
     @Before
@@ -68,7 +68,7 @@ public class ExpressionsRowDeserializerBaselineTest {
         orderedAllFactorValues.add(new FactorSet().add(factor2));
         orderedAllFactorValues.add(new FactorSet().add(factor3));
 
-        subject = new ExpressionsRowDeserializerBaseline(orderedAllFactorValues);
+        subject = new ExpressionsRowTsvDeserializerBaseline(orderedAllFactorValues);
 
     }
 
@@ -146,7 +146,7 @@ public class ExpressionsRowDeserializerBaselineTest {
     public void checkValuesLengthEqualsHeaderLength() {
         ImmutableList<FactorGroup> factorGroups = ImmutableList.of(factorGroup, factorGroup);
 
-        ExpressionsRowDeserializerBaseline baselineExpressionsQueue = new ExpressionsRowDeserializerBaseline(factorGroups);
+        ExpressionsRowTsvDeserializerBaseline baselineExpressionsQueue = new ExpressionsRowTsvDeserializerBaseline(factorGroups);
 
         baselineExpressionsQueue.reload("1");
     }
@@ -165,7 +165,7 @@ public class ExpressionsRowDeserializerBaselineTest {
         FactorGroup factorGroup3 = new FactorSet(factor3);
 
         List<FactorGroup> orderedFactorGroups = ImmutableList.of(factorGroup1, factorGroup2, factorGroup3);
-        subject = new ExpressionsRowDeserializerBaseline(orderedFactorGroups);
+        subject = new ExpressionsRowTsvDeserializerBaseline(orderedFactorGroups);
 
         subject.reload(values);
 

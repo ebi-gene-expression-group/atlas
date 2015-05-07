@@ -8,7 +8,7 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.rnaseq.RnaSeqProfile;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamOptions;
 import uk.ac.ebi.atlas.profiles.differential.DifferentialProfileStreamPipelineBuilder;
-import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStream;
+import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfilesTsvInputStream;
 import uk.ac.ebi.atlas.profiles.differential.rnaseq.RnaSeqProfileStreamFactory;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
 import uk.ac.ebi.atlas.profiles.writer.RnaSeqProfilesTSVWriter;
@@ -36,7 +36,7 @@ public class RnaSeqProfilesWriter extends ProfilesWriter<RnaSeqProfile, Contrast
 
     public long write(PrintWriter outputWriter, RnaSeqRequestContext requestContext) throws GenesNotFoundException {
         loadGeneIdsIntoRequestContext.load(requestContext, requestContext.getFilteredBySpecies());
-        RnaSeqProfileStream inputStream = inputStreamFactory.create(requestContext);
+        RnaSeqProfilesTsvInputStream inputStream = inputStreamFactory.create(requestContext);
         return super.write(outputWriter, inputStream, requestContext, requestContext.getExperiment().getContrasts());
     }
 

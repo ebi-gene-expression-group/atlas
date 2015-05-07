@@ -35,42 +35,42 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class ExpressionsRowDeserializerBaselineBuilder implements ExpressionsRowDeserializerBuilder<String, BaselineExpression> {
+public class ExpressionsRowRawDeserializerBaselineBuilder implements ExpressionsRowDeserializerBuilder<Double[], BaselineExpression> {
 
     private String experimentAccession;
 
     private BaselineExperimentsCache experimentsCache;
 
-    public ExpressionsRowDeserializerBaselineBuilder() {
+    public ExpressionsRowRawDeserializerBaselineBuilder() {
         //for subclassing
     }
 
     @Inject
-    public ExpressionsRowDeserializerBaselineBuilder(BaselineExperimentsCache experimentsCache) {
+    public ExpressionsRowRawDeserializerBaselineBuilder(BaselineExperimentsCache experimentsCache) {
         this.experimentsCache = experimentsCache;
     }
 
     @Override
-    public ExpressionsRowDeserializerBaselineBuilder forExperiment(String experimentAccession) {
+    public ExpressionsRowRawDeserializerBaselineBuilder forExperiment(String experimentAccession) {
         this.experimentAccession = experimentAccession;
         return this;
     }
 
     @Override
-    public ExpressionsRowDeserializerBaselineBuilder withHeaders(String... tsvFileHeaders) {
+    public ExpressionsRowRawDeserializerBaselineBuilder withHeaders(String... tsvFileHeaders) {
         //We don't need to process the headers for Baseline
         //we use orderedFactorGroups from BaselineExperiment instead
         return this;
     }
 
     @Override
-    public ExpressionsRowTsvDeserializerBaseline build() {
+    public ExpressionsRowRawDeserializerBaseline build() {
         checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
 
         BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
         //TODO: ordered factor groups should be passed in from the top, not looked up here
-        return new ExpressionsRowTsvDeserializerBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder());
+        return new ExpressionsRowRawDeserializerBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder());
     }
 
 }

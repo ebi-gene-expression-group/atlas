@@ -26,30 +26,25 @@ package uk.ac.ebi.atlas.profiles;
 import au.com.bytecode.opencsv.CSVReader;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
-import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
 import uk.ac.ebi.atlas.model.Expression;
 
 import java.io.IOException;
 
-public abstract class TsvInputStream<T, K extends Expression> implements ObjectInputStream<T> {
+public abstract class TsvInputStream<T, K extends Expression> implements ExpressionProfileInputStream<T, K> {
 
     private static final Logger LOGGER = Logger.getLogger(TsvInputStream.class);
 
     private CSVReader csvReader;
 
-    private ExpressionsRowDeserializer<K> expressionsRowDeserializer;
+    private ExpressionsRowDeserializer<String, K> expressionsRowTsvDeserializer;
 
-    protected TsvInputStream(CSVReader csvReader, String experimentAccession
-            , ExpressionsRowDeserializerBuilder expressionsRowDeserializerBuilder) {
-
+    protected TsvInputStream(CSVReader csvReader, String experimentAccession, ExpressionsRowDeserializerBuilder expressionsRowDeserializerBuilder) {
         this.csvReader = csvReader;
 
         String[] firstCsvLine = readCsvLine();
         String[] headersWithoutGeneIdColumn = removeGeneIDAndNameColumns(firstCsvLine);
-        expressionsRowDeserializer = expressionsRowDeserializerBuilder.forExperiment(experimentAccession)
-                .withHeaders(headersWithoutGeneIdColumn).build();
+        expressionsRowTsvDeserializer = expressionsRowDeserializerBuilder.forExperiment(experimentAccession).withHeaders(headersWithoutGeneIdColumn).build();
     }
-
 
     @Override
     public T readNext() {
@@ -66,7 +61,6 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
         } while (geneProfile == null);
 
         return geneProfile;
-
     }
 
     private String[] readCsvLine() {
@@ -78,35 +72,23 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
         }
     }
 
-
     protected T buildObjectFromTsvValues(String[] values) {
-
         addGeneInfoValueToBuilder(values);
 
         //we need to reload because the first line can only be used to extract the gene ID
-        getExpressionsRowDeserializer().reload(removeGeneIDAndNameColumns(values));
+        expressionsRowTsvDeserializer.reload(removeGeneIDAndNameColumns(values));
 
         K expression;
 
-        while ((expression = getExpressionsRowDeserializer().next()) != null) {
-
+        while ((expression = expressionsRowTsvDeserializer.next()) != null) {
             addExpressionToBuilder(expression);
-
         }
 
         return createProfile();
-
-
     }
 
-    protected abstract T createProfile();
-
-    protected abstract void addExpressionToBuilder(K expression);
-
-    protected abstract void addGeneInfoValueToBuilder(String[] values);
-
-    protected ExpressionsRowDeserializer<K> getExpressionsRowDeserializer() {
-        return expressionsRowDeserializer;
+    protected ExpressionsRowDeserializer<String, K> getExpressionsRowTsvDeserializer() {
+        return expressionsRowTsvDeserializer;
     }
 
     @Override
@@ -117,4 +99,5 @@ public abstract class TsvInputStream<T, K extends Expression> implements ObjectI
     protected String[] removeGeneIDAndNameColumns(String[] columns) {
         return (String[]) ArrayUtils.subarray(columns, 2, columns.length);
     }
+
 }

@@ -30,7 +30,7 @@ public class RnaSeqProfileStreamFactory {
         this.csvReaderFactory = csvReaderFactory;
     }
 
-    public RnaSeqProfileStream create(DifferentialProfileStreamOptions options) {
+    public RnaSeqProfilesTsvInputStream create(DifferentialProfileStreamOptions options) {
         String experimentAccession = options.getExperimentAccession();
         double pValueCutOff = options.getPValueCutOff();
         double foldChangeCutOff = options.getFoldChangeCutOff();
@@ -39,7 +39,7 @@ public class RnaSeqProfileStreamFactory {
         return create(experimentAccession, pValueCutOff, foldChangeCutOff, regulation);
     }
 
-    public RnaSeqProfileStream create(String experimentAccession, double pValueCutOff, double foldChangeCutOff, Regulation regulation) {
+    public RnaSeqProfilesTsvInputStream create(String experimentAccession, double pValueCutOff, double foldChangeCutOff, Regulation regulation) {
         String tsvFileURL = MessageFormat.format(experimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
 
@@ -50,7 +50,7 @@ public class RnaSeqProfileStreamFactory {
 
         RnaSeqProfileReusableBuilder rnaSeqProfileReusableBuilder = new RnaSeqProfileReusableBuilder(expressionFilter);
 
-        return new RnaSeqProfileStream(csvReader, experimentAccession, expressionsRowDeserializerRnaSeqBuilder, rnaSeqProfileReusableBuilder);
+        return new RnaSeqProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerRnaSeqBuilder, rnaSeqProfileReusableBuilder);
     }
 
 }

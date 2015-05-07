@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.profiles.differential.rnaseq;
+package uk.ac.ebi.atlas.profiles.differential.microarray;
 
 import com.google.common.collect.Lists;
 import org.hamcrest.CoreMatchers;
@@ -31,24 +31,26 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.differential.Contrast;
-import uk.ac.ebi.atlas.model.differential.DifferentialExpression;
+import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExpressionsRowDeserializerRnaSeqTest {
+public class ExpressionsRowTsvDeserializerMicroarrayTest {
 
     public static final String P_VAL_1 = "1";
+    public static final String T_VAL_1 = "0.5";
     public static final String FOLD_CHANGE_1 = "0.474360080385946";
 
     public static final String P_VAL_2 = "1";
+    public static final String T_VAL_2 = "-0.5";
     public static final String FOLD_CHANGE_2 = "-Inf";
 
-    private static final String[] TWO_CONTRASTS = new String[]{P_VAL_1, FOLD_CHANGE_1, P_VAL_2, FOLD_CHANGE_2};
+    private static final String[] TWO_CONTRASTS = new String[]{P_VAL_1, T_VAL_1, FOLD_CHANGE_1, P_VAL_2, T_VAL_2, FOLD_CHANGE_2};
 
-    private ExpressionsRowDeserializerRnaSeq subject;
+    private ExpressionsRowTsvDeserializerMicroarray subject;
 
     @Mock
     private Contrast contrast1Mock;
@@ -57,7 +59,7 @@ public class ExpressionsRowDeserializerRnaSeqTest {
 
     @Before
     public void initializeSubject() {
-        subject = new ExpressionsRowDeserializerRnaSeq(Lists.newArrayList(contrast1Mock, contrast2Mock));
+        subject = new ExpressionsRowTsvDeserializerMicroarray(Lists.newArrayList(contrast1Mock, contrast2Mock));
 
     }
 
@@ -67,15 +69,17 @@ public class ExpressionsRowDeserializerRnaSeqTest {
         subject.reload(TWO_CONTRASTS);
 
         //when
-        DifferentialExpression expression = subject.next();
+        MicroarrayExpression expression = subject.next();
         //then we expect first expression
         assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_1)));
+        assertThat(expression.getTstatistic(), is(Double.valueOf(T_VAL_1)));
         assertThat(expression.getFoldChange(), is(Double.valueOf(FOLD_CHANGE_1)));
         assertThat(expression.getContrast(), is(contrast1Mock));
 
         //given we next again
         expression = subject.next();
         assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_2)));
+        assertThat(expression.getTstatistic(), is(Double.valueOf(T_VAL_2)));
         assertThat(expression.getFoldChange(), is(Double.NEGATIVE_INFINITY));
         assertThat(expression.getContrast(), is(contrast2Mock));
 
@@ -102,16 +106,17 @@ public class ExpressionsRowDeserializerRnaSeqTest {
         subject.reload(TWO_CONTRASTS);
 
         //when we next until exhaustion
-        DifferentialExpression run;
+        MicroarrayExpression run;
         do {
             run = subject.next();
         } while (run != null);
         //and we reload again with new values
-        subject.reload("1", "2");
+        subject.reload("1", "0.5", "2");
         //and we next
-        DifferentialExpression expression = subject.next();
+        MicroarrayExpression expression = subject.next();
         //then we expect to find the new values
         assertThat(expression.getPValue(), is(1d));
+        assertThat(expression.getTstatistic(), is(0.5d));
     }
 
     @Test(expected = IllegalStateException.class)
@@ -130,19 +135,19 @@ public class ExpressionsRowDeserializerRnaSeqTest {
     @Test
     public void skipNALines() {
 
-        subject.reload("NA", "NA");
+        subject.reload("NA", "NA", "NA");
 
-        DifferentialExpression expression = subject.next();
+        MicroarrayExpression expression = subject.next();
 
         assertThat(expression, is(CoreMatchers.nullValue()));
 
-        subject.reload("1", "NA");
+        subject.reload("1", "NA", "NA");
 
         expression = subject.next();
 
         assertThat(expression, is(CoreMatchers.nullValue()));
 
-        subject.reload("NA", "1");
+        subject.reload("NA", "1", "NA");
 
         expression = subject.next();
 
@@ -152,11 +157,12 @@ public class ExpressionsRowDeserializerRnaSeqTest {
     @Test
     public void skipNALinesKeepsCorrespondingContrasts() {
 
-        subject.reload("NA", "1", P_VAL_2, "-Inf");
+        subject.reload("NA", "NA", "1", P_VAL_2, T_VAL_2, "-Inf");
 
-        DifferentialExpression expression = subject.next();
+        MicroarrayExpression expression = subject.next();
 
         assertThat(expression.getPValue(), is(Double.valueOf(P_VAL_2)));
+        assertThat(expression.getTstatistic(), is(Double.valueOf(T_VAL_2)));
         assertThat(expression.getFoldChange(), is(Double.NEGATIVE_INFINITY));
         assertThat(expression.getContrast(), is(contrast2Mock));
     }

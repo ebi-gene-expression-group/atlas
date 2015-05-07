@@ -58,13 +58,13 @@ public class ExpressionsRowDeserializerProteomicsBaselineBuilder extends Express
     }
 
     @Override
-    public ExpressionsRowDeserializerBaseline build() {
+    public ExpressionsRowTsvDeserializerBaseline build() {
         checkState(experimentAccession != null, "Please invoke forExperiment before invoking the build method");
 
         BaselineExperiment baselineExperiment = experimentsCache.getExperiment(experimentAccession);
 
         //TODO: ordered factor groups should be passed in from the top, not looked up here
-        return new ExpressionsRowDeserializerProteomicsBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder(), indicesOfAssayGroups);
+        return new ExpressionsRowTsvDeserializerProteomicsBaseline(baselineExperiment.getExperimentalFactors().getFactorGroupsInOrder(), indicesOfAssayGroups);
 
     }
 

@@ -33,35 +33,37 @@ import uk.ac.ebi.atlas.profiles.TsvInputStream;
 import java.util.List;
 
 
-public class MicroarrayProfileStream extends TsvInputStream<MicroarrayProfile, MicroarrayExpression> {
+public class MicroarrayProfilesTsvInputStream extends TsvInputStream<MicroarrayProfile, MicroarrayExpression> {
 
     private MicroarrayProfileReusableBuilder microarrayProfileBuilder;
 
-    public MicroarrayProfileStream(CSVReader csvReader,
-                                   String experimentAccession,
-                                   ExpressionsRowDeserializerMicroarrayBuilder expressionsRowDeserializerMicroarrayBuilder,
-                                   MicroarrayProfileReusableBuilder microarrayProfileBuilder) {
+    public MicroarrayProfilesTsvInputStream(CSVReader csvReader,
+                                            String experimentAccession,
+                                            ExpressionsRowDeserializerMicroarrayBuilder expressionsRowDeserializerMicroarrayBuilder,
+                                            MicroarrayProfileReusableBuilder microarrayProfileBuilder) {
 
         super(csvReader, experimentAccession, expressionsRowDeserializerMicroarrayBuilder);
         this.microarrayProfileBuilder = microarrayProfileBuilder;
     }
 
     public List<Contrast> getOrderedContrastsPresentInStream() {
-        ExpressionsRowDeserializerMicroarray tsvRowBuffer = (ExpressionsRowDeserializerMicroarray) this.getExpressionsRowDeserializer();
+        ExpressionsRowTsvDeserializerMicroarray tsvRowBuffer = (ExpressionsRowTsvDeserializerMicroarray) this.getExpressionsRowTsvDeserializer();
         return tsvRowBuffer.getOrderedContrasts();
     }
 
-    protected MicroarrayProfile createProfile() {
+    @Override
+    public MicroarrayProfile createProfile() {
         MicroarrayProfile profile = microarrayProfileBuilder.create();
         return profile.isEmpty() ? null : profile;
     }
 
-    protected void addExpressionToBuilder(MicroarrayExpression expression) {
+    @Override
+    public void addExpressionToBuilder(MicroarrayExpression expression) {
         microarrayProfileBuilder.addExpression(expression);
     }
 
     @Override
-    protected void addGeneInfoValueToBuilder(String[] values) {
+    public void addGeneInfoValueToBuilder(String[] values) {
         microarrayProfileBuilder.beginNewInstance(values[0], values[1], values[2]);
     }
 

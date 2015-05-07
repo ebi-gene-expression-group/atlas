@@ -26,12 +26,15 @@ public class RnaSeqBaselineExpressionSerializer implements ExpressionSerializer 
 
     // TODO Refactor constants here and in BaselineAnalyticsInputStream to something like ExperimentTsvFileFormat and maybe some parsing utilities (?)
     private static final int GENE_ID_COLUMN_INDEX = 0;
+    private static final int GENE_NAME_COLUMN_INDEX = 0;
     private static final int FIRST_EXPRESSION_LEVEL_INDEX = 2;
+
+    private static final Double[] NA = new Double[]{0.0};
+    private static final Double[] NT = new Double[]{};
 
     private String serializedFileTemplate;
     private String tsvFileTemplate;
     private CsvReaderFactory csvReaderFactory;
-
 
     @Inject
     public RnaSeqBaselineExpressionSerializer(@Value("#{configuration['experiment.serialized_expression.path.template']}") String serializedFileTemplate,
@@ -41,6 +44,7 @@ public class RnaSeqBaselineExpressionSerializer implements ExpressionSerializer 
         this.tsvFileTemplate = tsvFileTemplate;
         this.csvReaderFactory = csvReaderFactory;
     }
+
 
     // This method will automatically block if the serialization is requested concurrently on the same experiment: it will wait
     // until the current serialization is finished. It can concurrently serialize different experiments, and each call needs its own
@@ -59,7 +63,11 @@ public class RnaSeqBaselineExpressionSerializer implements ExpressionSerializer 
             LOGGER.debug("Parsing " + tsvFilePath);
             LOGGER.debug("Writing to " + serializedFileURL);
 
-            int assayCount = tsvReader.readNext().length - FIRST_EXPRESSION_LEVEL_INDEX; // Header is consumed here
+            // First line contains an array {"Gene ID", "Gene Name", "g1", "g2", "g3",  ...}
+            String[] assays = tsvReader.readNext();
+            kryo.writeObject(output, assays);
+
+            int assayCount = assays.length - FIRST_EXPRESSION_LEVEL_INDEX;
 
             LOGGER.debug("Processing " + assayCount + " assays");
 
@@ -67,8 +75,12 @@ public class RnaSeqBaselineExpressionSerializer implements ExpressionSerializer 
             String[] tsvLine;
             while ((tsvLine = tsvReader.readNext()) != null) {
                 String geneId = tsvLine[GENE_ID_COLUMN_INDEX];
-                double[][] expressionLevels = parseExpressionLevels((String[]) ArrayUtils.subarray(tsvLine, FIRST_EXPRESSION_LEVEL_INDEX, tsvLine.length));
+                String geneName = tsvLine[GENE_NAME_COLUMN_INDEX];
+                Double[][] expressionLevels = parseExpressionLevels((String[]) ArrayUtils.subarray(tsvLine, FIRST_EXPRESSION_LEVEL_INDEX, tsvLine.length));
+                // Second and subsequent lines contain two strings and an array of arrays (null is interpreted as {0, 0, 0, 0, 0}
+                // e.g. "ENSG00000000003", "TSPAN6", {{0.1, 2.3, 3.4, 5.6, 7.8}, {8, 8, 8, 8, 8}, null, ...}
                 kryo.writeObject(output, geneId);
+                kryo.writeObject(output, geneName);
                 kryo.writeObject(output, expressionLevels);
             }
             LOGGER.info("File successfully written in " + NumberFormat.getInstance().format((System.currentTimeMillis() - start)) + " ms");
@@ -80,22 +92,25 @@ public class RnaSeqBaselineExpressionSerializer implements ExpressionSerializer 
     }
 
 
-    private double[][] parseExpressionLevels(String[] tsvLine) {
-        double[][] expressionLevels = new double[tsvLine.length][];
+    private Double[][] parseExpressionLevels(String[] tsvLine) {
+        Double[][] expressionLevels = new Double[tsvLine.length][];
 
         for (int i = 0; i < tsvLine.length; i++) {
             String expressionLevelString = tsvLine[i];
 
-            if ("FAIL".equalsIgnoreCase(expressionLevelString) || "LOWDATA".equalsIgnoreCase(expressionLevelString) || "NA".equalsIgnoreCase(expressionLevelString)) {
-                expressionLevels[i] = null;
+            if ("NA".equalsIgnoreCase(expressionLevelString)) {
+                expressionLevels[i] = NA;
+            }
+            else if ("NT".equalsIgnoreCase(expressionLevelString)) {
+                expressionLevels[i] = NT;
             }
             else {
                 if (expressionLevelString.contains(",")) {
-                    Quartiles quartiles = Quartiles.createFromCsvString(expressionLevelString);
-                    expressionLevels[i] = new double[] {quartiles.min(), quartiles.lower(), quartiles.median(), quartiles.upper(), quartiles.max()};
+                    Quartiles quartiles = Quartiles.create(expressionLevelString);
+                    expressionLevels[i] = new Double[] {quartiles.min(), quartiles.lower(), quartiles.median(), quartiles.upper(), quartiles.max()};
                 }
                 else {
-                    expressionLevels[i] = new double[] {Double.parseDouble(expressionLevelString)};
+                    expressionLevels[i] = new Double[] {Double.parseDouble(expressionLevelString)};
                 }
             }
         }

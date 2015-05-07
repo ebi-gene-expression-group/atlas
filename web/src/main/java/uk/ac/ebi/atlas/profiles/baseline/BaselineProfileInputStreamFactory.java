@@ -3,8 +3,13 @@ package uk.ac.ebi.atlas.profiles.baseline;
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
+import uk.ac.ebi.atlas.profiles.KryoReader;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
+import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,23 +23,36 @@ public class BaselineProfileInputStreamFactory {
     @Value("#{configuration['experiment.magetab.path.template']}")
     protected String baselineExperimentDataFileUrlTemplate;
 
+    @Value("#{configuration['experiment.serialized_expression.path.template']}")
+    protected String baselineExperimentSerializedDataFileUrlTemplate;
+
     private ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder;
+    private ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder;
 
     private CsvReaderFactory csvReaderFactory;
+    private KryoReaderFactory kryoReaderFactory;
 
     public BaselineProfileInputStreamFactory() {
     }
 
     @Inject
     public BaselineProfileInputStreamFactory(ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
-                              CsvReaderFactory csvReaderFactory) {
+                                             ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder,
+                                             CsvReaderFactory csvReaderFactory, KryoReaderFactory kryoReaderFactory) {
         this.expressionsRowDeserializerBaselineBuilder = expressionsRowDeserializerBaselineBuilder;
+        this.expressionsRowRawDeserializerBaselineBuilder = expressionsRowRawDeserializerBaselineBuilder;
+
         this.csvReaderFactory = csvReaderFactory;
+        this.kryoReaderFactory = kryoReaderFactory;
     }
 
-    public BaselineProfilesInputStream createBaselineProfileInputStream(String experimentAccession, String queryFactorType, double cutOff, Set<Factor> filterFactors) {
+    // TODO Try first with kryoReader, and if it fails (e.g. data isn’t serialized yet) use csvReader
+    public ExpressionProfileInputStream<BaselineProfile, BaselineExpression> createBaselineProfileInputStream(String experimentAccession, String queryFactorType, double cutOff, Set<Factor> filterFactors) {
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
+
+        String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, experimentAccession);
+        KryoReader kryoReader = kryoReaderFactory.createKryoReader(serializedFileURL);
 
         IsBaselineExpressionAboveCutoffAndForFilterFactors baselineExpressionFilter = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         baselineExpressionFilter.setCutoff(cutOff);
@@ -42,10 +60,12 @@ public class BaselineProfileInputStreamFactory {
 
         BaselineProfileReusableBuilder baselineProfileReusableBuilder = new BaselineProfileReusableBuilder(baselineExpressionFilter, queryFactorType);
 
-        return new BaselineProfilesInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
+        // TODO Try first with Kryo, default to CSV if the .ser file isn’t available
+        //return new BaselineProfilesKryoInputStream(kryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
+        return new BaselineProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
     }
 
-    public BaselineProfilesInputStream create(BaselineProfileStreamOptions options) {
+    public ExpressionProfileInputStream<BaselineProfile, BaselineExpression> create(BaselineProfileStreamOptions options) {
         String experimentAccession = options.getExperimentAccession();
 
         double cutOff = options.getCutoff();

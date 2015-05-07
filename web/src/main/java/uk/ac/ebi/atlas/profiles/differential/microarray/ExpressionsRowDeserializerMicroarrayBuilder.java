@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExpression;
-import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
 import uk.ac.ebi.atlas.profiles.differential.ExpressionsRowDeserializerDifferentialBuilder;
 import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
 
@@ -45,8 +45,8 @@ public class ExpressionsRowDeserializerMicroarrayBuilder extends ExpressionsRowD
     }
 
     @Override
-    protected ExpressionsRowDeserializer<MicroarrayExpression> getBufferInstance(List<Contrast> orderedContrasts) {
-        return new ExpressionsRowDeserializerMicroarray(orderedContrasts);
+    protected ExpressionsRowTsvDeserializer<MicroarrayExpression> getBufferInstance(List<Contrast> orderedContrasts) {
+        return new ExpressionsRowTsvDeserializerMicroarray(orderedContrasts);
     }
 
 }

@@ -73,9 +73,9 @@ public class BaselineExpressionsInputStreamFactory {
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
 
         if(experiment.getType().isProteomicsBaseline()) {
-            return new BaselineExpressionsInputStream(csvReader, experimentAccession, expressionsRowDeserializerProteomicsBaselineBuilder);
+            return new BaselineExpressionsTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerProteomicsBaselineBuilder);
         } else {
-            return new BaselineExpressionsInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
+            return new BaselineExpressionsTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
         }
     }
 

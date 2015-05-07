@@ -86,11 +86,10 @@ public final class ExperimentDispatcher {
         this.experimentTrader = experimentTrader;
     }
 
-    @RequestMapping(value = {"/experiments/{experimentAccession}",
-            "/experiments/{experimentAccession}/*"})
-    public String dispatch(HttpServletRequest request, HttpServletResponse response, @PathVariable String experimentAccession,
-                           @RequestParam(value = "accessKey",required = false) String accessKey,
-                           Model model) {
+    @RequestMapping(value = {"/experiments/{experimentAccession}", "/experiments/{experimentAccession}/*"})
+    public String dispatch(HttpServletRequest request, HttpServletResponse response,
+                           @PathVariable String experimentAccession,
+                           @RequestParam(value = "accessKey",required = false) String accessKey, Model model) {
 
         if (alreadyForwardedButNoOtherControllerHandledTheRequest(request)) {
             // prevent an infinite loop
@@ -110,7 +109,7 @@ public final class ExperimentDispatcher {
         return StringUtils.startsWith(request.getQueryString(), "type=");
     }
 
-    private String buildForwardURL(HttpServletRequest request, Experiment experiment, String accessKey){
+    private String buildForwardURL(HttpServletRequest request, Experiment experiment, String accessKey) {
         String requestURL = getRequestURL(request);
         requestURL += "?type=" + experiment.getType().getParent();
         if (StringUtils.isNotBlank(accessKey)){

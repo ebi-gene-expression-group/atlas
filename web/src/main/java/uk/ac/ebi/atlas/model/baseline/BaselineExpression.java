@@ -58,9 +58,6 @@ public class BaselineExpression implements Expression {
         this.levelString = expressionLevelString;
 
         switch (expressionLevelString) {
-            //TODO: remove FAIL, LOWDATA - no longer present in the input data
-            case "FAIL":
-            case "LOWDATA":
             case "NT":  //Non-Tissue
                 level = 0;
                 known = false;

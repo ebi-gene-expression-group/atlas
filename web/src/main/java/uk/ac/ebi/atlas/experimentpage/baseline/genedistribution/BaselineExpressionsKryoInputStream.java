@@ -22,27 +22,27 @@
 
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
-import au.com.bytecode.opencsv.CSVReader;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.profiles.TsvInputStream;
+import uk.ac.ebi.atlas.profiles.KryoInputStream;
+import uk.ac.ebi.atlas.profiles.KryoReader;
 import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowDeserializerBaselineBuilder;
 
-public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpressions, BaselineExpression> {
+public class BaselineExpressionsKryoInputStream extends KryoInputStream<BaselineExpressions, BaselineExpression> {
 
-    public BaselineExpressionsInputStream(CSVReader csvReader, String experimentAccession, ExpressionsRowDeserializerBaselineBuilder baselineExpressionsQueueBuilder) {
-        super(csvReader, experimentAccession, baselineExpressionsQueueBuilder);
+    public BaselineExpressionsKryoInputStream(KryoReader kryoReader, String experimentAccession, ExpressionsRowDeserializerBaselineBuilder baselineExpressionsQueueBuilder) {
+        super(kryoReader, experimentAccession, baselineExpressionsQueueBuilder);
     }
 
     @Override
-    protected BaselineExpressions buildObjectFromTsvValues(String[] values) {
+    protected BaselineExpressions buildObjectFromValues(String geneId, String geneName, Double[][] expressionLevels) {
 
         BaselineExpressions baselineExpressions = new BaselineExpressions();
         //we need to reload because the first line can only be used to extract the gene ID
-        getExpressionsRowDeserializer().reload(removeGeneIDAndNameColumns(values));
+        getExpressionsRowRawDeserializer().reload(expressionLevels);
 
         BaselineExpression expression;
 
-        while ((expression = getExpressionsRowDeserializer().next()) != null) {
+        while ((expression = getExpressionsRowRawDeserializer().next()) != null) {
 
             baselineExpressions.addExpression(expression);
         }
@@ -51,17 +51,15 @@ public class BaselineExpressionsInputStream extends TsvInputStream<BaselineExpre
     }
 
     @Override
-    protected BaselineExpressions createProfile() {
+    public BaselineExpressions createProfile() {
         return null;
     }
 
     @Override
-    protected void addExpressionToBuilder(BaselineExpression expression) {
-
+    public void addExpressionToBuilder(BaselineExpression expression) {
     }
 
     @Override
-    protected void addGeneInfoValueToBuilder(String[] values) {
-
+    public void addGeneInfoValueToBuilder(String[] values) {
     }
 }

@@ -44,7 +44,7 @@ public class MicroarrayProfileStreamFactory {
         return create(experimentAccession, pValueCutOff, foldChangeCutOff, regulation, arrayDesignAccessions);
     }
 
-    public MicroarrayProfileStream create(MicroarrayProfileStreamOptions options, String arrayDesign) {
+    public MicroarrayProfilesTsvInputStream create(MicroarrayProfileStreamOptions options, String arrayDesign) {
         String experimentAccession = options.getExperimentAccession();
         double pValueCutOff = options.getPValueCutOff();
         double foldChangeCutOff = options.getFoldChangeCutOff();
@@ -63,11 +63,11 @@ public class MicroarrayProfileStreamFactory {
         return new SequenceObjectInputStream<>(inputStreams.elements());
     }
 
-    public MicroarrayProfileStream create(String experimentAccession, double pValueCutOff, double foldChangeCutOff, Regulation regulation, String arrayDesignAccession) {
+    public MicroarrayProfilesTsvInputStream create(String experimentAccession, double pValueCutOff, double foldChangeCutOff, Regulation regulation, String arrayDesignAccession) {
         MicroarrayProfileReusableBuilder profileBuilder = createProfileBuilder(pValueCutOff, foldChangeCutOff, regulation);
         CSVReader csvReader = createCsvReader(experimentAccession, arrayDesignAccession);
 
-        return new MicroarrayProfileStream(csvReader, experimentAccession, expressionsRowDeserializerMicroarrayBuilder, profileBuilder);
+        return new MicroarrayProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerMicroarrayBuilder, profileBuilder);
     }
 
 

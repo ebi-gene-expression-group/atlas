@@ -14,8 +14,7 @@ public class BaselineAnalyticsLoader implements AnalyticsLoader {
     private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
 
     @Inject
-    public BaselineAnalyticsLoader(BaselineAnalyticsDao baselineAnalyticsDao,
-                                   BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory) {
+    public BaselineAnalyticsLoader(BaselineAnalyticsDao baselineAnalyticsDao, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory) {
         this.baselineAnalyticsDao = baselineAnalyticsDao;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
     }
@@ -27,8 +26,7 @@ public class BaselineAnalyticsLoader implements AnalyticsLoader {
     }
 
     private void loadBaselineExpressions(String accession) {
-        BaselineAnalyticsInputStream baselineAnalyticsInputStream =
-                baselineAnalyticsInputStreamFactory.create(accession);
+        BaselineAnalyticsInputStream baselineAnalyticsInputStream = baselineAnalyticsInputStreamFactory.create(accession);
         baselineAnalyticsDao.loadAnalytics(accession, baselineAnalyticsInputStream);
     }
 

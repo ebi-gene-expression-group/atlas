@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.experimentpage.context.LoadGeneIdsIntoRequestContext;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
+import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
 import uk.ac.ebi.atlas.profiles.baseline.*;
 import uk.ac.ebi.atlas.profiles.writer.BaselineProfilesTSVWriter;
 import uk.ac.ebi.atlas.profiles.writer.ProfilesWriter;
@@ -34,7 +36,7 @@ public class BaselineProfilesWriter extends ProfilesWriter<BaselineProfile, Fact
 
     public long write(PrintWriter outputWriter, BaselineRequestContext requestContext) throws GenesNotFoundException {
         loadGeneIdsIntoRequestContext.load(requestContext, requestContext.getFilteredBySpecies());
-        BaselineProfilesInputStream inputStream = inputStreamFactory.create(requestContext);
+        ExpressionProfileInputStream<BaselineProfile, BaselineExpression> inputStream = inputStreamFactory.create(requestContext);
         return super.write(outputWriter, inputStream, requestContext, requestContext.getAllQueryFactors());
     }
 
@@ -43,7 +45,7 @@ public class BaselineProfilesWriter extends ProfilesWriter<BaselineProfile, Fact
 
         BaselineProfileStreamOptionsWrapperAsGeneSets options = new BaselineProfileStreamOptionsWrapperAsGeneSets(requestContext);
 
-        BaselineProfilesInputStream inputStream = inputStreamFactory.create(options);
+        ExpressionProfileInputStream<BaselineProfile, BaselineExpression> inputStream = inputStreamFactory.create(options);
         return super.write(outputWriter, inputStream, options, options.getAllQueryFactors());
     }
 

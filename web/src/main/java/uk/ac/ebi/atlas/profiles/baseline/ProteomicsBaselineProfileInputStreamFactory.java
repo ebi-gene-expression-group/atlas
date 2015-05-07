@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.profiles.baseline;
 
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
+import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,8 +13,9 @@ public class ProteomicsBaselineProfileInputStreamFactory extends BaselineProfile
 
     @Inject
     public ProteomicsBaselineProfileInputStreamFactory(ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder,
-                                                       CsvReaderFactory csvReaderFactory) {
-        super(expressionsRowDeserializerProteomicsBaselineBuilder, csvReaderFactory);
+                                                       ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder,
+                                                       CsvReaderFactory csvReaderFactory, KryoReaderFactory kryoReaderFactory) {
+        super(expressionsRowDeserializerProteomicsBaselineBuilder, expressionsRowRawDeserializerBaselineBuilder, csvReaderFactory, kryoReaderFactory);
 
     }
 

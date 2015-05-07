@@ -28,7 +28,7 @@ import org.springframework.util.CollectionUtils;
 import uk.ac.ebi.atlas.model.Expression;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
-import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializer;
+import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowDeserializerBuilder;
 import uk.ac.ebi.atlas.trader.cache.ExperimentsCache;
 
@@ -38,7 +38,7 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Expression, K extends DifferentialExperiment> implements ExpressionsRowDeserializerBuilder<T> {
+public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Expression, K extends DifferentialExperiment> implements ExpressionsRowDeserializerBuilder<String, T> {
 
     private static final Logger LOGGER = Logger.getLogger(ExpressionsRowDeserializerDifferentialBuilder.class);
     private ExperimentsCache<K> experimentsCache;
@@ -81,7 +81,7 @@ public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Ex
     }
 
     @Override
-    public ExpressionsRowDeserializer<T> build() {
+    public ExpressionsRowTsvDeserializer<T> build() {
 
         checkState(!CollectionUtils.isEmpty(orderedContrasts), "Builder state not ready for creating the ExpressionBuffer");
 
@@ -89,5 +89,5 @@ public abstract class ExpressionsRowDeserializerDifferentialBuilder<T extends Ex
 
     }
 
-    protected abstract ExpressionsRowDeserializer<T> getBufferInstance(List<Contrast> orderedContrasts);
+    protected abstract ExpressionsRowTsvDeserializer<T> getBufferInstance(List<Contrast> orderedContrasts);
 }
