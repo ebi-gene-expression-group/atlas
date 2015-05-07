@@ -117,8 +117,8 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
 
             String expressionLevelString = expressionLevels[i];
 
-            if ("NA".equalsIgnoreCase(expressionLevelString)) {
-                Double expressionLevel = 0.0;
+            if (!"NA".equalsIgnoreCase(expressionLevelString)) {
+                Double expressionLevel;
                 Optional<Quartiles> quartiles;
                 if (expressionLevelString.contains(",")) {
                     quartiles = Optional.fromNullable(Quartiles.create(expressionLevelString));
