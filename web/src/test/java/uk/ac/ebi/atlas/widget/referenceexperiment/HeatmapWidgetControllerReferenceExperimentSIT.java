@@ -22,19 +22,6 @@ public class HeatmapWidgetControllerReferenceExperimentSIT extends RestAssuredFi
     }
 
     @Test
-    public void unknownExpressionResultsForLowDataGene() {
-        Response response = get("/widgets/heatmap/referenceExperiment?geneQuery=ENSG00000033100");
-
-        response.then().assertThat().statusCode(200);
-        response.then().assertThat().contentType("text/html");
-
-        JsonPath json = response.jsonPath();
-
-        assertThat((String)json.get("profiles.rows[0].name"), is("CHPF2"));
-        assertThat((String)json.get("profiles.rows[0].expressions[0].value"), is("UNKNOWN"));
-    }
-
-    @Test
     public void unknownGene() {
         Response response = get("/widgets/heatmap/referenceExperiment?geneQuery=FOO");
 

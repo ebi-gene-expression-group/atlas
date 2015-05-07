@@ -141,29 +141,6 @@ public class BaselineProfilesHeatMapEMTab1733IT {
         assertThat(baselineProfile0.getKnownExpressionLevel(THYROID), CoreMatchers.is(13D));
     }
 
-    // http://localhost:8080/gxa/experiments/E-MTAB-1733?geneQuery=IPR009025
-    @Test
-    public void eMTab1733_GeneSets_Averaged_Expression_Of_Unknown_Expression_Is_Unknown() throws GenesNotFoundException {
-        setGeneQuery("IPR009025");
-
-        BaselineProfilesList profiles = subject.fetch(baselineRequestContext);
-
-        assertThat(profiles.getTotalResultCount(), is(6));
-        BaselineProfile polr2j2 = profiles.get(0);
-        assertThat(polr2j2.getName(), is("POLR2J2"));
-        assertThat(polr2j2.getConditions(), hasSize(1));
-        assertThat(polr2j2.getExpression(GALL_BLADDER).isKnown(), is(false));
-
-        BaselineProfilesList geneSetProfiles = subject.fetch(asGeneSet(baselineRequestContext));
-
-        assertThat(geneSetProfiles.getTotalResultCount(), is(1));
-        BaselineProfile ipr009025 = geneSetProfiles.get(0);
-        assertThat(ipr009025.getName(), is("IPR009025"));
-        assertThat(ipr009025.getConditions(), hasSize(27));
-        assertThat(ipr009025.getExpression(GALL_BLADDER).isKnown(), is(false));
-
-    }
-
     private BaselineProfileStreamOptions asGeneSet(BaselineRequestContext baselineRequestContext) throws GenesNotFoundException {
         loadGeneIdsIntoRequestContext.load(baselineRequestContext, baselineRequestContext.getFilteredBySpecies());
         return new BaselineProfileStreamOptionsWrapperAsGeneSets(baselineRequestContext);
