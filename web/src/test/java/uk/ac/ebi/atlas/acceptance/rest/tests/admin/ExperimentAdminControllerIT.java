@@ -35,7 +35,6 @@ import static org.junit.Assert.assertThat;
 
 public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture {
 
-
     private static final String EXISTING_EXPERIMENT_ACCESSION = "E-MTAB-599";
     private static final String NEW_EXPERIMENT_ACCESSION = "TEST-BASELINE";
     private static final String DIFFERENTIAL_EXPERIMENT_ACCESSION = "E-GEOD-21860";
@@ -123,7 +122,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
     }
 
     @Test
-    public void updateDifferentialExperiment(){
+    public void updateDifferentialExperiment() {
 
         expect().body(is("Experiment E-GEOD-21860 successfully updated.")).when()
                 .get("updateStatus?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=true");
@@ -151,7 +150,25 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
 
     }
 
-    private int countConditionProperties(String experimentAccession){
+    @Test
+    public void serializeExpressionData() {
+        expect().body(is("Expression data successfully serialized for " + EXISTING_EXPERIMENT_ACCESSION))
+                .when().get("serializeExpressionData?accession=" + EXISTING_EXPERIMENT_ACCESSION);
+    }
+
+    @Test
+    public void serializeAllBaselineExpressionData() {
+        expect().body(is("All baseline experiments expression data successfully serialized")).when().get("serializeAllBaselineExpressionData");
+    }
+
+    @Test
+    public void serializeDifferentialExpressionDataFails() {
+        expect().body(startsWith("UnsupportedOperationException: No expression serializer for experiment type RNASEQ_MRNA_DIFFERENTIAL"))
+                .when().get("serializeExpressionData?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
+    }
+
+
+    private int countConditionProperties(String experimentAccession) {
         Response conditionIndexResponse = queryConditionIndex(experimentAccession);
 
         String responseBody = conditionIndexResponse.body().asString();
@@ -159,7 +176,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
         return Integer.parseInt(StringUtils.substringBetween(responseBody, "\"numFound\":", ","));
     }
 
-    private Response queryConditionIndex(String experimentAccession){
+    private Response queryConditionIndex(String experimentAccession) {
         return RestAssured.get("http://lime:8983/solr/differentialConditions/select?q=experiment_accession:"
                 + experimentAccession + "&wt=json&indent=true");
     }

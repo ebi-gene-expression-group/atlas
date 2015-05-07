@@ -79,10 +79,10 @@ public class ExperimentAdminController {
     @RequestMapping("/serializeAllBaselineExpressionData")
     @ResponseBody
     public String serializeAllBaselineExpressionData() throws IOException {
-        for (String baselineExperimentAccession : trader.getAllBaselineExperimentAccessions()) {
+        for (String baselineExperimentAccession : trader.getBaselineExperimentAccessions()) {
             experimentCRUD.serializeExpressionData(baselineExperimentAccession);
         }
-        return "All baseline experiments expression data successfully serialized.";
+        return "All baseline experiments expression data successfully serialized";
     }
 
     @RequestMapping("/deleteExperiment")
