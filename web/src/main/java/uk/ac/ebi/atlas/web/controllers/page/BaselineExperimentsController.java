@@ -71,6 +71,8 @@ public class BaselineExperimentsController {
         model.addAttribute("experimentLinks", experimentLinks);
         model.addAttribute("experimentDisplayNames", experimentDisplayNames);
 
+        model.addAttribute("mainTitle", "Baseline expression experiments ");
+
         return "baseline-experiments";
     }
 

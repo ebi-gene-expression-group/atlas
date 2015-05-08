@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.bioentity;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.*;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -130,7 +131,7 @@ public class GeneSetPageController extends BioEntityPageController {
     }
 
     @Override
-    protected void initBioentityPropertyService(String identifier) {
+    protected void initBioentityPropertyService(String identifier, Model model) {
         String species = speciesResult.isSingleSpecies() ? speciesResult.firstSpecies() : "";
 
         SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
@@ -166,6 +167,9 @@ public class GeneSetPageController extends BioEntityPageController {
         names.add(identifier);
 
         bioEntityPropertyService.init(species, propertyValuesByType, goTermsByDepth, poTermsByDepth, names, identifier);
+
+        model.addAttribute("mainTitle", "Expression summary for <" + bioEntityPropertyService.getBioEntityDescription() + ">" +
+                (StringUtils.isNotBlank(species) ? "-<" + species + "> " : ""));
     }
 
     @Override

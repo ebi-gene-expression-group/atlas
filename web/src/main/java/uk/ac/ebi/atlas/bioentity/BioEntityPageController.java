@@ -173,7 +173,7 @@ public abstract class BioEntityPageController {
 
     public String showBioentityPage(String identifier, Model model, boolean singleGeneDiffHeatmap) {
 
-        initBioentityPropertyService(identifier.toUpperCase());
+        initBioentityPropertyService(identifier.toUpperCase(), model);
 
         model.addAttribute("searchDescription", identifier);
 
@@ -259,7 +259,7 @@ public abstract class BioEntityPageController {
 
     abstract String getBioentityPropertyName();
 
-    protected void initBioentityPropertyService(String identifier) {
+    protected void initBioentityPropertyService(String identifier, Model model) {
         String species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
 
         SortedSetMultimap<String, String> propertyValuesByType = bioEntityPropertyDao.fetchGenePageProperties(identifier, getPagePropertyTypes());
@@ -267,6 +267,8 @@ public abstract class BioEntityPageController {
         if (entityNames.isEmpty()) {
             entityNames.add(identifier);
         }
+
+        model.addAttribute("mainTitle", "Expression summary for <" + entityNames.first() + ">-<" + species + "> ");
 
         ImmutableSetMultimap<Integer, GoPoTerm> goTerms = mapGoTermsByDepth(propertyValuesByType.get("go"));
         ImmutableSetMultimap<Integer, GoPoTerm> poTerms = mapPoTermsByDepth(propertyValuesByType.get("po"));

@@ -83,6 +83,8 @@ public class PlantExperimentsController {
         model.addAttribute("experimentDisplayNames", experimentDisplayNames);
         model.addAttribute("numberOfPlantExperiments", numberOfPlantExperiments);
 
+        model.addAttribute("mainTitle", "Plant experiments ");
+
         return "plant-experiments";
     }
 

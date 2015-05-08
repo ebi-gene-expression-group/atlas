@@ -25,6 +25,8 @@ public class ExperimentsController {
         model.addAttribute("kingdom", kingdom);
         model.addAttribute("organism", organism);
 
+        model.addAttribute("mainTitle", "Experiments ");
+
         return "experiments";
     }
 
