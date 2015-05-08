@@ -119,7 +119,7 @@ public class ExperimentsTablePage extends AtlasPage {
 
     // wait for the ajax table to load
     private void waitForExperimentTableToLoad() {
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+        Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(30, TimeUnit.SECONDS)
                 .pollingEvery(1, TimeUnit.SECONDS)
                 .ignoring(NoSuchElementException.class);

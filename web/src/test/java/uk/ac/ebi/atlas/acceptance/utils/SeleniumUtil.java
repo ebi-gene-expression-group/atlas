@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -31,7 +32,7 @@ public class SeleniumUtil {
     }
 
     public static WebElement findElementWaitingUntilAvailable(final WebDriver driver, final By locator) {
-        FluentWait<WebDriver> wait = new FluentWait<>(driver)
+        Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
@@ -48,7 +49,7 @@ public class SeleniumUtil {
     }
 
     public static void waitUntilElementVisible(final WebDriver driver, final By locator) {
-        FluentWait<WebDriver> wait = new FluentWait<>(driver)
+        Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
@@ -57,7 +58,7 @@ public class SeleniumUtil {
     }
 
     public static WebElement findElementByCssWaitingUntilAvailable(final WebDriver driver, final String css) {
-        FluentWait<WebDriver> wait = new FluentWait<>(driver)
+        Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
@@ -70,7 +71,7 @@ public class SeleniumUtil {
     }
 
     public static WebElement findChildElementWaitingUntilAvailable(final WebDriver driver, final WebElement parent, final By by) {
-        FluentWait<WebDriver> wait = new FluentWait<>(driver)
+        Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
                 .pollingEvery(250, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
@@ -86,29 +87,6 @@ public class SeleniumUtil {
         return element.findElements(By.xpath("./*"));
     }
 
-    public static void waitForNumberOfWindowsToBe(final WebDriver driver, final int numberOfWindows) {
-        FluentWait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
-                .pollingEvery(250, TimeUnit.MILLISECONDS);
-
-        wait.until(numberOfWindowsToBe(numberOfWindows));
-    }
-
-    public static void waitForPageTitle(final WebDriver driver) {
-        FluentWait<WebDriver> wait = new FluentWait<>(driver)
-                .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
-                .pollingEvery(250, TimeUnit.MILLISECONDS);
-
-        wait.until(new ExpectedCondition<Boolean>() {
-            @Nullable
-            @Override
-            public Boolean apply(@Nullable WebDriver input) {
-                return StringUtils.isNotBlank(driver.getTitle());
-            }
-        });
-    }
-
-
     public static ExpectedCondition<Boolean> numberOfWindowsToBe(final int numberOfWindows) {
 
         return new ExpectedCondition<Boolean>() {
@@ -118,28 +96,6 @@ public class SeleniumUtil {
                 return driver.getWindowHandles().size() == numberOfWindows;
             }
         };
-
-    }
-
-    public static void switchToOpenedWindow(final WebDriver driver) {
-        waitForNumberOfWindowsToBe(driver, 2);
-
-        String currentWindowHandle = driver.getWindowHandle();
-        String firstOtherWindowHandle = SeleniumUtil.firstOtherWindowHandle(driver, currentWindowHandle);
-        driver.switchTo().window(firstOtherWindowHandle);
-    }
-
-    public static String firstOtherWindowHandle(final WebDriver driver, String currentWindowHandle) {
-
-        Set<String> allWindowHandles = driver.getWindowHandles();
-
-        for (String windowHandle : allWindowHandles) {
-            if (!windowHandle.equals(currentWindowHandle)) {
-                return windowHandle;
-            }
-        }
-
-        throw new RuntimeException("No window handle other than " + currentWindowHandle);
 
     }
 

@@ -28,6 +28,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
@@ -103,7 +104,7 @@ public class Geod26284HeatmapTablePage extends HeatmapTablePage {
         final WebElement lastMenuElement = menuElements.get(menuElements.size() - 1);
 
         // wait until jQuery has rendered the menu
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 10);
         wait.until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {
