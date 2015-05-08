@@ -170,6 +170,7 @@
                         <argLine>${jacoco.agent.argLine},destfile=${sonar.jacoco.reportPath}</argLine>
                         <excludes>
                             <exclude>${test.acceptance.pattern}</exclude>
+                            <exclude>**/*SIT.java</exclude>
                         </excludes>
                     </configuration>
                     <dependencies>
