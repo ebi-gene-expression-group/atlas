@@ -33,6 +33,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -361,7 +362,7 @@ public class HeatmapTablePage extends TablePage {
         hoverOnElement(firstGeneProfileCell);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
-        FluentWait wait = new WebDriverWait(driver, 4L).pollingEvery(1, TimeUnit.SECONDS);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 4L).pollingEvery(1, TimeUnit.SECONDS);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
@@ -370,7 +371,7 @@ public class HeatmapTablePage extends TablePage {
         hoverOnElement(getGeneProfileCell(0, zeroBasedExpressionLevelIndex));
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//td[" + (zeroBasedTooltipTableCellIndex + 1) + "]");
-        FluentWait wait = new WebDriverWait(driver, 4L).pollingEvery(1, TimeUnit.SECONDS);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 4L).pollingEvery(1, TimeUnit.SECONDS);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
@@ -380,7 +381,7 @@ public class HeatmapTablePage extends TablePage {
         hoverOnElement(geneProfileHeaderCell);
 
         By byTooltipClass = By.className("gxaGeneNameTooltip");
-        WebDriverWait wait = new WebDriverWait(driver, 8L);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 8L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
@@ -389,7 +390,7 @@ public class HeatmapTablePage extends TablePage {
         hoverOnHeaderColumn(1);
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//th[" + (zeroBasedTooltipTableHeaderIndex + 1) + "]");
-        WebDriverWait wait = new WebDriverWait(driver, 10L);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 10L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
     }
@@ -400,7 +401,7 @@ public class HeatmapTablePage extends TablePage {
 
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//tr[" + (zeroBasedTooltipTableRowIndex + 1)
                 + "]//td[" + (zeroBasedTooltipTableColumnIndex + 1) + "]");
-        FluentWait wait = new WebDriverWait(driver, 6L)
+        Wait<WebDriver> wait = new WebDriverWait(driver, 6L)
                 .pollingEvery(50, TimeUnit.MILLISECONDS);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         return driver.findElement(byTooltipClass).getText();
@@ -458,7 +459,7 @@ public class HeatmapTablePage extends TablePage {
 
     public List<String> getGenePropertyTooltipHighlightedTerms(int zeroBasedProfileIndex) {
         By byTooltipClass = By.xpath("//div[@class='ui-tooltip-content']//span[@class='gxaHighlight']");
-        WebDriverWait wait = new WebDriverWait(driver, 3L);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 3L);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byTooltipClass));
         List<WebElement> highlightedTermElements = driver.findElements(byTooltipClass);
         List<String> highlightedTerms = Lists.newArrayList();
@@ -488,7 +489,7 @@ public class HeatmapTablePage extends TablePage {
         geneNames.get(zeroBasedGeneNameIndex).click();
 
 
-        WebDriverWait wait = new WebDriverWait(driver, 15L);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 15L);
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("accordion")));
 
         return new BioEntityPage(driver);

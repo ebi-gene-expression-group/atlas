@@ -29,7 +29,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -85,7 +85,7 @@ public class BioEntitiesPage extends BioEntityPage {
         List<BaselineBioEntitiesSearchResult> baselineCounts = Lists.newArrayList();
 
         By byBaselineCountsTableId = By.id("baselineCountsTable");
-        FluentWait wait = new WebDriverWait(driver, 25L).pollingEvery(20, TimeUnit.MILLISECONDS);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 25L).pollingEvery(20, TimeUnit.MILLISECONDS);
         wait.until(ExpectedConditions.visibilityOfElementLocated(byBaselineCountsTableId));
 
         List<WebElement> linkElements = driver.findElements(By.cssSelector("#baselineCountsTable a.gxaBioEntityCardLink"));

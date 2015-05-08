@@ -24,14 +24,13 @@ package uk.ac.ebi.atlas.bioentity.widget;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
-
-import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -54,8 +53,8 @@ public class GenePageControllerBaselineWidgetGallusGallusSIT extends SinglePageS
         String widgetBody = subject.getBaselinePaneHeaderResultsMessage();
         assertThat(widgetBody, is("Results in tissues"));
 
-        FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
-        WebElement bioEntityCardDifferentialSummary = driver.findElement(By.cssSelector("div.gxaBioEntityCardDifferentialSummary"));
+        Wait<WebDriver> wait = new WebDriverWait(driver, 10L);
+        WebElement bioEntityCardDifferentialSummary = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.gxaBioEntityCardDifferentialSummary")));
         wait.until(ExpectedConditions.textToBePresentInElement(bioEntityCardDifferentialSummary, "Within Sample Abundance (Proteomics) > 0"));
 
         assertThat(subject.isBaselinePaneExpanded(), is(true));

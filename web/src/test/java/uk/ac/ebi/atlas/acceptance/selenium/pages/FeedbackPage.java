@@ -27,6 +27,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 abstract class FeedbackPage extends AtlasPage {
@@ -84,7 +85,7 @@ abstract class FeedbackPage extends AtlasPage {
         // to prevent spamming the feedback email
         ((JavascriptExecutor) driver).executeScript("$('#sendemail').val('false')");
         send.click();
-        WebDriverWait wait = new WebDriverWait(driver, 15);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 15);
         wait.until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {
@@ -96,7 +97,7 @@ abstract class FeedbackPage extends AtlasPage {
 
     public void clickCancelButton() {
         cancel.click();
-        WebDriverWait wait = new WebDriverWait(driver, 15);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 15);
         wait.until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver webDriver) {

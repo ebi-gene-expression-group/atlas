@@ -29,6 +29,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.ac.ebi.atlas.acceptance.utils.SeleniumUtil;
 
@@ -169,7 +170,7 @@ public class BioEntityPage extends HeatmapTableWidgetPage {
 
         if (!expectToOpen) {
             By infoCardBodyId = By.id("infoBody");
-            WebDriverWait wait = new WebDriverWait(driver, 10L);
+            Wait<WebDriver> wait = new WebDriverWait(driver, 10L);
             wait.until(ExpectedConditions.invisibilityOfElementLocated(infoCardBodyId));
         }
     }
@@ -256,17 +257,6 @@ public class BioEntityPage extends HeatmapTableWidgetPage {
         return tooltipContrastDescription();
     }
 
-    public String getLinkInDiffTableRow(int oneBasedExpressionLevelIndex) {
-        WebElement firstContrastDescriptionCell = getCell(diffHeatmapTable, oneBasedExpressionLevelIndex, getContrastColumnIndex());
-        return firstContrastDescriptionCell.findElements(By.tagName("a")).get(0).getAttribute("href").toString();
-    }
-
-    public String getWidgetBody() {
-        WebDriverWait wait = new WebDriverWait(driver, 3L);
-        wait.until(ExpectedConditions.visibilityOf(widgetBody));
-        return widgetBody.getText();
-    }
-
     public int getPropertiesTableSize() {
         return table.findElements(By.tagName("tr")).size();
     }
@@ -297,7 +287,7 @@ public class BioEntityPage extends HeatmapTableWidgetPage {
 
     public BioEntityPage clickShowMoreDataWidget() {
         showMoreDataWidget.click();
-        WebDriverWait wait = new WebDriverWait(driver, 10L);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 10L);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#global-search-results > li > a")));
         return this;
     }
