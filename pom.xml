@@ -200,6 +200,9 @@
                             <include>${test.acceptance.pattern}</include>
                             <include>${test.integration.pattern}</include>
                         </includes>
+                        <excludes>
+                            <exclude>**/*SIT.java</exclude>
+                        </excludes>
                     </configuration>
                     <executions>
                         <execution>
@@ -220,14 +223,14 @@
                     <configuration>
                         <!-- http port -->
                         <port>9090</port>
-                        <!-- optionnal path to a context file -->
+                        <!-- optional path to a context file -->
                         <contextFile/>
-                        <!-- optionnal system propoerties you want to add -->
+                        <!-- optional system propoerties you want to add -->
                         <systemProperties>
                         </systemProperties>
                         <!-- if you want to use test dependencies rather than only runtime -->
                         <useTestClasspath>false</useTestClasspath>
-                        <!-- optionnal if you want to add some extra directories in the class loader -->
+                        <!-- optional if you want to add some extra directories in the class loader -->
                         <additionalClasspathDirs>
                             <additionalClasspathDir/>
                         </additionalClasspathDirs>
