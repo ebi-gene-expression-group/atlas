@@ -200,6 +200,9 @@
                             <include>${test.acceptance.pattern}</include>
                             <include>${test.integration.pattern}</include>
                         </includes>
+                        <excludes>
+                            <exclude>${failsafe.excludes}</exclude>
+                        </excludes>
                     </configuration>
                     <executions>
                         <execution>
