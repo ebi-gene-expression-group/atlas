@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.bioentity.widget;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -54,13 +55,13 @@ public class GenePageControllerBaselineWidgetGallusGallusSIT extends SinglePageS
         assertThat(widgetBody, is("Results in tissues"));
 
         FluentWait wait = new WebDriverWait(driver, 10L).pollingEvery(1, TimeUnit.SECONDS);
-        wait.until(ExpectedConditions.textToBePresentInElement(By.cssSelector("div.gxaBioEntityCardDifferentialSummary"), "Within Sample Abundance (Proteomics) > 0"));
+        WebElement bioEntityCardDifferentialSummary = driver.findElement(By.cssSelector("div.gxaBioEntityCardDifferentialSummary"));
+        wait.until(ExpectedConditions.textToBePresentInElement(bioEntityCardDifferentialSummary, "Within Sample Abundance (Proteomics) > 0"));
 
         assertThat(subject.isBaselinePaneExpanded(), is(true));
 
         assertThat(subject.getGeneNames().size(), is(1));
         assertThat(subject.getGeneNames(), contains("Vertebrate tissues"));
-
     }
 
 }
