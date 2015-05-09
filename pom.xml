@@ -36,8 +36,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <org.springframework.version>3.2.2.RELEASE</org.springframework.version>
         <json-path.version>1.1.0</json-path.version>
-        <!--<test.integration.pattern>**/*IT.java</test.integration.pattern>-->
-        <!--<test.acceptance.pattern>**/acceptance/**/*.java</test.acceptance.pattern>-->
+        <test.integration.pattern>**/*IT.java</test.integration.pattern>
+        <test.acceptance.pattern>**/acceptance/**/*.java</test.acceptance.pattern>
 
         <!-- default values for configuration properties,
         they are set to local development machine defaults
