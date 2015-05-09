@@ -18,14 +18,14 @@ import java.util.concurrent.TimeUnit;
 
 public class SeleniumUtil {
 
-    public static final int TIMEOUT_DURATION = 15;
+    public static final int TIMEOUT_DURATION = 20;
 
     public static boolean elementExists(WebDriver driver, By by) {
         return !driver.findElements(by).isEmpty();
     }
 
     /*
-    Find an element by ID, but wait until the element is available first, ignoringNoSuchElementException errors.
+    Find an element by ID, but wait until the el0ement is available first, ignoringNoSuchElementException errors.
     */
     public static WebElement findElementByIdWaitingUntilAvailable(final WebDriver driver, final String id) {
         return findElementWaitingUntilAvailable(driver, By.id(id));
@@ -34,7 +34,7 @@ public class SeleniumUtil {
     public static WebElement findElementWaitingUntilAvailable(final WebDriver driver, final By locator) {
         Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(TIMEOUT_DURATION, TimeUnit.SECONDS)
-                .pollingEvery(250, TimeUnit.MILLISECONDS)
+                .pollingEvery(500, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class);
 
         return wait.until(new Function<WebDriver, WebElement>() {
