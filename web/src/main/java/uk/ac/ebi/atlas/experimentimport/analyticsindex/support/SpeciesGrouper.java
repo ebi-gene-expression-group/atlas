@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.support;
 
 import com.google.common.collect.ImmutableMap;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -12,9 +11,7 @@ import java.util.Set;
 
 public final class SpeciesGrouper {
 
-    private SpeciesGrouper() {
-
-    }
+    private SpeciesGrouper() {}
 
     public static ImmutableMap<String, String> buildEnsemblSpeciesGroupedByAssayGroupId(BaselineExperiment experiment) {
         if (experiment.isMultiOrganismExperiment()) {
@@ -75,11 +72,7 @@ public final class SpeciesGrouper {
 
     private static ImmutableMap<String, String> buildMultipleEnsemblSpeciesGroupedByContrastId(DifferentialExperiment experiment) {
         //TODO: eg: example multi-species diff experiment: http://wwwdev.ebi.ac.uk/gxa/experiments/E-GEOD-6404/experiment-design
-
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
-
-
-
 
 }

@@ -54,7 +54,7 @@ public class RnaSeqExperimentMageTabParser extends MageTabParser<ScanNode> {
                 // have an ENA_RUN comment. Im such cases, we take the RUN_NAME comment column as the assay node.
                 assayNodes = scanNode.comments.get(RUN_NAME);
             }
-            namedSdrfNodes.add(new NamedSdrfNode(assayNodes.iterator().next(), scanNode));
+            namedSdrfNodes.add(new NamedSdrfNode<>(assayNodes.iterator().next(), scanNode));
         }
         return namedSdrfNodes;
     }

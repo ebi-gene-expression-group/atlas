@@ -47,7 +47,7 @@ public class ExpressionsRowRawDeserializerBaseline extends ExpressionsRowRawDese
     }
 
     @Override
-    public ExpressionsRowRawDeserializer reload(Double[]... values) {
+    public ExpressionsRowRawDeserializer<BaselineExpression> reload(Double[]... values) {
         checkArgument(values.length == expectedNumberOfValues, String.format("Expected %s values but got [%s]", expectedNumberOfValues, Joiner.on(",").join(values)));
         return super.reload(values);
     }

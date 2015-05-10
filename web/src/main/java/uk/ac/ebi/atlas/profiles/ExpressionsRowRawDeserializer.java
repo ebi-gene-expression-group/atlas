@@ -51,7 +51,7 @@ public abstract class ExpressionsRowRawDeserializer<T extends Expression> implem
     private Queue<Double[]> rawValuesRow = new LinkedList<>();
 
     @Override
-    public ExpressionsRowRawDeserializer reload(Double[]... values) {
+    public ExpressionsRowRawDeserializer<T> reload(Double[]... values) {
         checkState(this.rawValuesRow.isEmpty(), "Reload must be invoked only when readNext returns null");
 
         Collections.addAll(this.rawValuesRow, values);

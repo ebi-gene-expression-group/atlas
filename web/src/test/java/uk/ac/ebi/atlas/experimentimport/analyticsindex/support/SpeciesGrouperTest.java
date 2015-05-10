@@ -123,5 +123,4 @@ public class SpeciesGrouperTest {
         assertThat(speciesGroupedByAssayGroupId, hasEntry(G2, Species.convertToEnsemblSpecies(MUS_MUSCULUS)));
     }
 
-
 }

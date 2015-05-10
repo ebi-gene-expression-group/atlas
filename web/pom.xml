@@ -63,7 +63,7 @@
                             <targetPath>resources/biojs</targetPath>
                             <filtering>true</filtering>
                         </resource>
-                    </webResourcqes>
+                    </webResources>
                 </configuration>
             </plugin>
 

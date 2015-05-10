@@ -26,9 +26,9 @@ import uk.ac.ebi.atlas.model.Expression;
 
 public interface ExpressionsRowDeserializerBuilder<V, T extends Expression> {
 
-    ExpressionsRowDeserializerBuilder forExperiment(String experimentAccession);
+    ExpressionsRowDeserializerBuilder<V, T> forExperiment(String experimentAccession);
 
-    ExpressionsRowDeserializerBuilder withHeaders(String... tsvFileHeaders);
+    ExpressionsRowDeserializerBuilder<V, T> withHeaders(String... tsvFileHeaders);
 
     ExpressionsRowDeserializer<V, T> build();
 
