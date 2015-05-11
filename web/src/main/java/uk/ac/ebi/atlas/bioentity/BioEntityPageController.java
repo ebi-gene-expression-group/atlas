@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.bioentity;
 import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
 import com.google.common.collect.*;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.ui.Model;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
 import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
@@ -268,7 +269,7 @@ public abstract class BioEntityPageController {
             entityNames.add(identifier);
         }
 
-        model.addAttribute("mainTitle", "Expression summary for " + entityNames.first() + " - " + species);
+        model.addAttribute("mainTitle", "Expression summary for " + entityNames.first() + " - " + StringUtils.capitalize(species));
 
         ImmutableSetMultimap<Integer, GoPoTerm> goTerms = mapGoTermsByDepth(propertyValuesByType.get("go"));
         ImmutableSetMultimap<Integer, GoPoTerm> poTerms = mapPoTermsByDepth(propertyValuesByType.get("po"));
