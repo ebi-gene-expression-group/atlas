@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -34,7 +33,7 @@ import javax.inject.Inject;
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -49,13 +48,12 @@ public class TwoColourExperimentMageTabParserIT {
 
     @Test
     public void cultureConditionFactorValuesAreSelectedForTheCorrectChannel() throws IOException {
-//        ExperimentDesign experimentDesign = subject.parse(TWO_COLOUR_EXPERIMENT_ACCESSION).getExperimentDesign();
-//
-//        assertThat(experimentDesign.asTableData().size(), is(12));
-//        assertThat(experimentDesign.asTableData().get(0), arrayContaining("GSM1055612.Cy3", "A-AGIL-28", "Homo sapiens", "Caco-2", "Conventional", "Conventional"));
-//        assertThat(experimentDesign.asTableData().get(1), arrayContaining("GSM1055612.Cy5", "A-AGIL-28", "Homo sapiens", "Caco-2", "Apical anaerobic", "Apical anaerobic"));
-//        assertThat(experimentDesign.asTableData().get(10), arrayContaining("GSM1055617.Cy3","A-AGIL-28","Homo sapiens","Caco-2","Conventional","Conventional"));
-//        assertThat(experimentDesign.asTableData().get(11), arrayContaining("GSM1055617.Cy5","A-AGIL-28","Homo sapiens","Caco-2","Apical anaerobic","Apical anaerobic"));
-
+        ExperimentDesign experimentDesign = subject.parse(TWO_COLOUR_EXPERIMENT_ACCESSION).getExperimentDesign();
+        // http://lime:14092/gxa/experiments/E-GEOD-43049/experiment-design
+        assertThat(experimentDesign.asTableData().size(), is(12));
+        assertThat(experimentDesign.asTableData().get(0), arrayContainingInAnyOrder("GSM1055612.Cy3", "A-AGIL-28", "Homo sapiens", "Caco-2", "Conventional", "Conventional"));
+        assertThat(experimentDesign.asTableData().get(1), arrayContainingInAnyOrder("GSM1055612.Cy5", "A-AGIL-28", "Homo sapiens", "Caco-2", "Apical anaerobic", "Apical anaerobic"));
+        assertThat(experimentDesign.asTableData().get(10), arrayContainingInAnyOrder("GSM1055617.Cy3", "A-AGIL-28", "Homo sapiens","Caco-2", "Conventional", "Conventional"));
+        assertThat(experimentDesign.asTableData().get(11), arrayContainingInAnyOrder("GSM1055617.Cy5", "A-AGIL-28", "Homo sapiens","Caco-2", "Apical anaerobic", "Apical anaerobic"));
     }
 }
