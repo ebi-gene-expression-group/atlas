@@ -168,8 +168,8 @@ public class GeneSetPageController extends BioEntityPageController {
 
         bioEntityPropertyService.init(species, propertyValuesByType, goTermsByDepth, poTermsByDepth, names, identifier);
 
-        model.addAttribute("mainTitle", "Expression summary for <" + bioEntityPropertyService.getBioEntityDescription() + ">" +
-                (StringUtils.isNotBlank(species) ? "-<" + species + "> " : ""));
+        model.addAttribute("mainTitle", "Expression summary for " + bioEntityPropertyService.getBioEntityDescription() +
+                (StringUtils.isNotBlank(species) ? " - " + species : ""));
     }
 
     @Override

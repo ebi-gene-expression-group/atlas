@@ -268,7 +268,7 @@ public abstract class BioEntityPageController {
             entityNames.add(identifier);
         }
 
-        model.addAttribute("mainTitle", "Expression summary for <" + entityNames.first() + ">-<" + species + "> ");
+        model.addAttribute("mainTitle", "Expression summary for " + entityNames.first() + " - " + species);
 
         ImmutableSetMultimap<Integer, GoPoTerm> goTerms = mapGoTermsByDepth(propertyValuesByType.get("go"));
         ImmutableSetMultimap<Integer, GoPoTerm> poTerms = mapPoTermsByDepth(propertyValuesByType.get("po"));
