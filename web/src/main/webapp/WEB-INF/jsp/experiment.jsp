@@ -128,7 +128,7 @@
                     $('#geneQuery').tagEditor('addTag', gene);
                 }
             };
-            window.location.hash = Math.random();
+//            window.location.hash = Math.random();
 
         });
     })(jQuery);
