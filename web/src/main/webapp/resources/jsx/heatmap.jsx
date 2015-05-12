@@ -434,7 +434,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}> &#10004; </span>: null ;
                     var thClass = "rotated_cell gxaHoverableHeader " + (this.props.selected ? "gxaVerticalHeaderCell-selected " : "gxaVerticalHeaderCell ") + (enableEnsemblLauncher ? "gxaSelectableHeader" : "");
                     var divClass = "rotate_text factor-header";
-                    var factorName = csstransforms ? restrictLabelSize(this.props.factorName, 17) : this.props.factorName;
+                    var factorName = csstransforms ? restrictLabelSize(this.props.factorName, 14) : this.props.factorName;
 
                     return (
                         <th className={thClass} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined} rowSpan="2">

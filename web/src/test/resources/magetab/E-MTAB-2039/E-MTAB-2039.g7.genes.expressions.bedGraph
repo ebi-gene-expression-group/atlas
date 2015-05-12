@@ -1,7 +1,0 @@
-track type=bedGraph name="seed 5 days after pollination" description="For more information please visit http://www.ebi.ac.uk/gxa/experiments/E-MTAB-2039?queryFactorValues=seed 5 days after pollination&specific=false"  visibility=full
-1	2630	2759	0
-1	2982	10814	7
-1	11217	12434	0.7
-1	11371	12283	0
-1	12720	15684	11
-
