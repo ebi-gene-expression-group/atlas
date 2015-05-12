@@ -282,14 +282,6 @@ div.gxaExperimentRequestPreferencesBarchartTooltip {
     padding: 2px !important;
 
 }
-/*/!* TODO: This class is used in jquery-ui-1.10.2.custom.css - move out to a separate css file *!/*/
-#download-profiles-link .ui-button-text {
-    padding: 2px !important;
-}
-
-.gxaVerticalHeaderCell .ui-button-text {
-    padding: 2px !important;
-}
 
 /****  STYLING FOR BUTTONS IN GENE SET TYPE ANALYSIS PLOTS *****/
 
