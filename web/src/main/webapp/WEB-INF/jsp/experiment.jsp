@@ -120,7 +120,7 @@
             $('#anatomogram').hcSticky({responsive: true});
             $('#ensembl-launcher').hcSticky({responsive: true});
 
-            window.onhashchange = function() {
+            window.onload = function() {
                 var slices = window.location.search.split('&');
                 var geneQueryStr = slices[7];
                 var gene = geneQueryStr.substring(geneQueryStr.lastIndexOf("=") + 1, geneQueryStr.length);
