@@ -123,12 +123,13 @@
             window.onload = function() {
                 var slices = window.location.search.split('&');
                 var geneQueryStr = slices[7];
-                var gene = geneQueryStr.substring(geneQueryStr.lastIndexOf("=") + 1, geneQueryStr.length);
-                if (gene != "") {
-                    $('#geneQuery').tagEditor('addTag', gene);
+                if(geneQueryStr != undefined) {
+                    var gene = geneQueryStr.substring(geneQueryStr.lastIndexOf("=") + 1, geneQueryStr.length);
+                    if (gene != "") {
+                        $('#geneQuery').tagEditor('addTag', gene);
+                    }
                 }
             };
-//            window.location.hash = Math.random();
 
         });
     })(jQuery);
