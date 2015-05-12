@@ -34,21 +34,18 @@
 <head>
 
     <link rel="stylesheet" type="text/css" href="${base}/resources/css/atlas.css">
-    <link rel="stylesheet" type="text/css"
-          href="${base}/resources/js/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css">
     <link rel="stylesheet" type="text/css" href="${base}/resources/css/table-grid.css">
     <link rel="stylesheet" type="text/css" href="${base}/resources/css/heatmap-and-anatomogram.css">
 
     <script language="JavaScript" type="text/javascript" src="${base}/resources/js/json2.js"></script>
     <script language="JavaScript" type="text/javascript" src="${base}/resources/js/jquery-1.9.1.min.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${base}/resources/js/jquery-migrate-1.2.0.min.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${base}/resources/js/jquery-ui-1.10.3.fix-8740.0520a49/dist/jquery-ui.min.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${base}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
-    <script language="JavaScript" type="text/javascript"
-            src="${base}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${base}/resources/js/jquery-migrate-1.2.0.min.js"></script>
+    <!-- jQuery UI start -->
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/jquery-ui-1.11.4.custom/jquery-ui.min.css">
+    <!-- jQuery UI end -->
+    <script language="JavaScript" type="text/javascript" src="${base}/resources/js/jquery.svg.package-1.4.5/jquery.svg.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${base}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
     <script language="JavaScript" type="text/javascript" src="${base}/resources/js/helpTooltipsModule.js"></script>
     <script language="JavaScript" type="text/javascript" src="${base}/resources/js/anatomogramModule.js"></script>
 

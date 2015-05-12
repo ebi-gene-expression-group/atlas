@@ -41,21 +41,13 @@
     <%@ include file="includes/anatomogram-and-heatmap-react.jsp" %>
 </section>
 
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
-<link rel="stylesheet" type="text/css"
-      href="${pageContext.request.contextPath}/resources/js/chosen/chosen.css">
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/chosen/chosen.css">
 
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/jquery-watermark/jquery.watermark.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-hcsticky/jquery.hc-sticky.min.js"></script>
 
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/jquery-hcsticky/jquery.hc-sticky.min.js"></script>
-
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/geneDistribution.js"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneDistribution.js"></script>
 
 
 <%@ include file="includes/flot.jsp" %>
