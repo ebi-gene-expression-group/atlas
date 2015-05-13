@@ -147,7 +147,7 @@ http://wiki.apache.org/solr/SchemaXml
              fields or fields that need an index-time boost need norms.
              ]]> -->
 
-        <field name="bioentity_identifier" type="string" indexed="true" stored="true"/>
+        <field name="bioentity_identifier" type="text_standard" indexed="true" stored="true"/>
 
         <field name="bioentity_type" type="string" indexed="true" stored="true"/>
 

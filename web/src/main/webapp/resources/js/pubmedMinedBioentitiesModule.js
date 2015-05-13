@@ -10,6 +10,7 @@ var pubmedMinedBioentitiesModule = (function($, europepmcUrl) {
         $.ajax({
             dataType: "json",
             url: restURL,
+            // TODO Is there any reason to have a sync call instead of async?
             async: false,
             success: parseEuropePMCJSONResponse
         }).done(function() {

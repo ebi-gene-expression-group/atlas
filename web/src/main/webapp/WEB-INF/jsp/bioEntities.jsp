@@ -50,7 +50,7 @@
         <c:if test="${showBioentityPropertiesPane}">
             <ul id="infoHeader" class="gxaBioEntityCardHeader">
                 <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
-                     src="resources/images/bioentity_info_transparent_bkg.png"/>
+                     src="/gxa/resources/images/bioentity_info_transparent_bkg.png"/>
                         <span class="gxaBioEntityCardBioentityName">
                             <c:forEach var="entityName" varStatus="loopStatus"
                                        items="${bioEntityPropertyService.entityNames}">
@@ -172,7 +172,7 @@
         <ul id="baselineProfileHeader" class="gxaBioEntityCardHeader">
             <img id="baseline-info-image" title="Baseline Expression"
                  style="position: absolute; left: 0.5em; "
-                 src="resources/images/allup2_transparent_bkg.png"/>
+                 src="/gxa/resources/images/allup2_transparent_bkg.png"/>
             <span class="gxaBioEntityCardBioentityName">Baseline Expression</span>
             <c:choose>
                 <c:when test="${showWidget}">
@@ -236,7 +236,7 @@
         <ul id="diffProfileHeader" class="gxaBioEntityCardHeader">
             <img id="differential-info-image" title="Differential Expression"
                  style="position: absolute; left: 0.5em; "
-                 src="resources/images/updown_transparent_bkg.png"/>
+                 src="/gxa/resources/images/updown_transparent_bkg.png"/>
             <span class="gxaBioEntityCardBioentityName">Differential Expression</span>
             <c:choose>
                 <c:when test="${not empty bioentities}">
