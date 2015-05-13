@@ -525,3 +525,8 @@ div.gxaExperimentsPageHeading {
 #experiments-table .nowrap {
     white-space: nowrap;
 }
+
+/* TODO: This class is used in jquery-ui-1.10.2.custom.css - move out to a separate css file */
+#gxaExperimentHeader .ui-button-text {
+    padding: 2px !important;
+}
