@@ -1,0 +1,13 @@
+#gene-distribution > div.legend > table {
+    position: absolute !important;;
+    top: 9px !important;
+    right: 16px !important;
+    font-size: smaller !important;
+    color: #545454 !important;
+    margin-left: 400px !important;
+    width: 520px !important;
+}
+
+#gene-distribution > div.legend > div {
+    height: 15px !important;
+}

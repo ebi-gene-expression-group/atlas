@@ -43,6 +43,7 @@
 
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/chosen/chosen.jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/chosen/chosen.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/jquery.flot-override.css">
 
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-hcsticky/jquery.hc-sticky.min.js"></script>
 
