@@ -6,7 +6,7 @@
     <c:set var="accessKeyQueryString" value="?accessKey=${param.accessKey}"></c:set>
 </c:if>
 
-<section class="gxaExtraPadding">
+<section class="gxaExtraPadding" id="gxaExperimentHeader">
 
     <div id="helpContentTooltip" style='display:none'></div>
     <table width="100%">

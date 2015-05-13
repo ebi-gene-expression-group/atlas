@@ -233,16 +233,11 @@
     </table>
 </section>
 
-<script language="JavaScript" type="text/javascript"
-        src="${base}/resources/js/highlight.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${base}/resources/js/genePropertiesTooltipModule.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${base}/resources/js/heatmapModuleDeprecated.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${base}/resources/js/deprecated/contrastInfoTooltipModule.js"></script>
-<script language="JavaScript" type="text/javascript"
-        src="${base}/resources/js/deprecated/factorInfoTooltipModule.js"></script>
+<script language="JavaScript" type="text/javascript" src="${base}/resources/js/lib/highlight.js"></script>
+<script language="JavaScript" type="text/javascript" src="${base}/resources/js/genePropertiesTooltipModule.js"></script>
+<script language="JavaScript" type="text/javascript" src="${base}/resources/js/heatmapModuleDeprecated.js"></script>
+<script language="JavaScript" type="text/javascript" src="${base}/resources/js/deprecated/contrastInfoTooltipModule.js"></script>
+<script language="JavaScript" type="text/javascript" src="${base}/resources/js/deprecated/factorInfoTooltipModule.js"></script>
 
 <script type="text/javascript">
     (function ($, heatmapModuleDeprecated) { //self invoking wrapper function that prevents $ namespace conflicts

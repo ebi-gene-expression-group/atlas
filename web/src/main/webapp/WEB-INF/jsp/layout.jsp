@@ -115,12 +115,12 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/arrayQualityMetrics.css" media="screen">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/ae-autocomplete.css" media="screen">
 
-    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/json2.js"></script>
-    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-1.9.1.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-migrate-1.2.0.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/json2.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-migrate-1.2.0.min.js"></script>
     <!-- jQuery UI start -->
-    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/jquery-ui-1.11.4.custom/jquery-ui.min.css">
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.11.4.custom/jquery-ui.min.css">
     <!-- jQuery UI end -->
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-tagEditor/jquery.tag-editor.js"></script>
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
@@ -128,8 +128,8 @@
     <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/geneQueryTagEditorModule.js"></script>
 
     <!-- fancybox start -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css" type="text/css" media="screen"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/lib/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css" type="text/css" media="screen"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
     <!-- fancybox end -->
 
     <script>

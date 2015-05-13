@@ -74,10 +74,8 @@
 
 </form:form>
 
-<script type="text/javascript" language="javascript"
-        src="${pageContext.request.contextPath}/resources/js/datatables-1.9.4/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" language="javascript"
-        src="${pageContext.request.contextPath}/resources/js/experimentDesignModule.js"></script>
+<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/lib/datatables-1.9.4/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/experimentDesignModule.js"></script>
 
 <script>
 

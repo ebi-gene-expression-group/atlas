@@ -1,7 +1,7 @@
 /*
  * jQuery Autocomplete plugin 1.1-ma
  *
- * Copyright (c) 2009 J�rn Zaefferer
+ * Copyright (c) 2009 Jörn Zaefferer
  * Portions written by European Molecular Biology Laboratory
  *
  * Dual licensed under the MIT and GPL licenses:
