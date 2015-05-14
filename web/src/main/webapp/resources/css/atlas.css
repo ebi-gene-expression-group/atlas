@@ -241,7 +241,8 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 }
 
 .ui-button {
-    border-bottom: solid #cccccc !important;
+    border-bottom-color: #cccccc !important;
+    border-bottom-style: solid !important;
     /* Contrary to what Idea suggests, the following line renders a border-bottom twice as thick */
     /* border-bottom: solid #cccccc !important; */
 }
