@@ -378,7 +378,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
         function restrictLabelSize(label, maxSize) {
             var result = label;
-            if (result.length > maxSize) {
+            if (result.length > maxSize + 1) {  // +1 to account for the extra ellipsis character appended
                 result = result.substring(0, maxSize);
                 if (result.lastIndexOf(" ") > maxSize - 5) {
                     result = result.substring(0, result.lastIndexOf(" "));
