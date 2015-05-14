@@ -99,4 +99,4 @@ var geneQueryTagEditorModule = (function($) {
         init: initAutocomplete
     };
 
-    }(jQuery));
+}(jQuery));

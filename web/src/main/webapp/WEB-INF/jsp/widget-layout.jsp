@@ -41,7 +41,7 @@
     <script language="JavaScript" type="text/javascript" src="${base}/resources/js/lib/jquery-1.9.1.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="${base}/resources/js/lib/jquery-migrate-1.2.0.min.js"></script>
     <!-- jQuery UI start -->
-    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.11.4.custom/jquery-ui.min.css">
     <!-- jQuery UI end -->
     <script language="JavaScript" type="text/javascript" src="${base}/resources/js/lib/jquery.svg.package-1.4.5/jquery.svg.js"></script>

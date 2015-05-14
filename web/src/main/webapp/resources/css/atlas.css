@@ -180,10 +180,6 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     margin: 0px;
 }
 
-#filterby-menu a {
-    border-bottom: 0px none;
-}
-
 /* ebi css and ebi-visual.css override: end */
 
 .gxaHelpTooltip {
@@ -199,7 +195,7 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 
 /* JQuery UI overrides: start */
 .ui-tooltip {
-    background: #fafafa;
+    background: #FAFAFA;
     border: 1px solid #2777A5 !important;
     padding: 4px;
     max-width: 400px !important;
@@ -209,36 +205,45 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     box-shadow: 0 0 7px gray;
 }
 
-#filterby-menu #filterBy {
-    height: 26px;
-    width: 137px;
-}
-
 #filterby-menu .ui-menu {
     width: 150px;
-    z-index: 100 !important;
 }
 
-#filterby-menu .ui-state-focus {
-    border: 1px solid #FBCB09 !important;
-}
-
-#filterby-menu .ui-state-active {
-    border: 1px solid #FBD850 !important;
-}
-
+#filterby-menu .ui-menu,
 .ui-autocomplete {
-    z-index:600 !important;
+    z-index: 600;
+    border-radius: 4px;
+    background: #FFF none !important;
 }
 
-.ui-menu a:hover {
-    color: #eb8f00 !important;
-    border: 1px solid #fbd850 !important;
+#filterby-menu .ui-state-focus,
+#filterby-menu .ui-state-active,
+.ui-autocomplete .ui-state-focus,
+.ui-autocomplete .ui-state-active {
+    color: #EB8F00;
+    font-weight: normal;
+    background: #E0EAF1 none !important;
+}
+
+#filterby-menu li,
+.ui-autocomplete li {
+    border-radius: 4px;
+}
+
+.ui-autocomplete li {
+    font-size: 85%;
+}
+
+#filterby-menu li a,
+.ui-autocomplete li a {
+    border: none;
+    color: #46799B;
 }
 
 .ui-button {
-    border-bottom-color: #cccccc !important;
-    border-bottom-style: solid !important;
+    border-bottom: solid #cccccc !important;
+    /* Contrary to what Idea suggests, the following line renders a border-bottom twice as thick */
+    /* border-bottom: solid #cccccc !important; */
 }
 
 .ui-button:hover, .ui-button:active {
@@ -405,10 +410,6 @@ span.gxaGenePropertyLabel {
     font-size: 12px;
     font-family: Verdana, Helvetica, Arial, sans-serif !important;
     color: white;
-}
-
-#filterBy li {
-    padding-bottom: 4px;
 }
 
 div.gxaBioEntityCard {
