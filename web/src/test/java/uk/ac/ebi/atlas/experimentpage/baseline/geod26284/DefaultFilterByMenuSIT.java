@@ -45,7 +45,7 @@ public class DefaultFilterByMenuSIT extends SingleDriverSeleniumFixture {
     public static final String LONG_POLYA_RNA = "long polyA RNA";
     public static final String SK_N_SH_RA = "SK-N-SH_RA";
     public static final String A_549 = "A549";
-    public static final String H_MSC_AT_CELL_LINE = "hMSC-AT cell line";
+    public static final String H_MSC_AT_CELL_LINE = "hMSC-AT cell…";
 
     protected static Geod26284HeatmapTablePage subject;
 
@@ -134,7 +134,7 @@ public class DefaultFilterByMenuSIT extends SingleDriverSeleniumFixture {
         //given that we selected the default filterFactorValues RNA Type : total RNA and cellular component : whole cell
 
         //then
-        Assert.assertThat(subject.getFactorValueHeaders(), contains("CD34-positive…", "HFDPC cell line", "HPC-PL cell line", "IMR-90", H_MSC_AT_CELL_LINE));
+        Assert.assertThat(subject.getFactorValueHeaders(), contains("CD34-positive…", "HFDPC cell…", "HPC-PL cell…", "IMR-90", H_MSC_AT_CELL_LINE));
     }
 
     @Test
@@ -173,15 +173,13 @@ public class DefaultFilterByMenuSIT extends SingleDriverSeleniumFixture {
         subject.clickFilterByMenuElement(new int[]{1, 5, 1, 0});
 
         //then
-        Assert.assertThat(subject.getFactorValueHeaders(), contains(A_549, "AG445", "BJ", "CD14-positive…", "CD20-positive B…", "GM12878", "H1-hESC", "HMEC cell line", "HSMM cell line", "HUVEC cell line", "HeLa-S3", "HepG2", "K562", "MCF-7", "NHEK cell line", "NHLF cell line", SK_N_SH_RA));
+        Assert.assertThat(subject.getFactorValueHeaders(), contains(A_549, "AG445", "BJ", "CD14-positive…", "CD20-positive…", "GM12878", "H1-hESC", "HMEC cell line", "HSMM cell line", "HUVEC cell…", "HeLa-S3", "HepG2", "K562", "MCF-7", "NHEK cell line", "NHLF cell line", SK_N_SH_RA));
 
         //when we extract top 9 from heatmap
         List<String> selectedGenes = subject.getGeneNames().subList(0, 9);
 
         //then
-        Assert.assertThat(selectedGenes, contains(
-                "TMEM176A", "MARCO", "TFAP2B", "GABRA1", "INSRR", "SOX8", "CD6", "MPO", "LGALS14"
-        ));
+        Assert.assertThat(selectedGenes, contains("TMEM176A", "MARCO", "TFAP2B", "GABRA1", "INSRR", "SOX8", "CD6", "MPO", "LGALS14"));
     }
 
     @Test
@@ -193,7 +191,7 @@ public class DefaultFilterByMenuSIT extends SingleDriverSeleniumFixture {
         subject.clickFilterByMenuElement(new int[]{2, 2, 1, 3});
 
         //then
-        Assert.assertThat(subject.getFactorValueHeaders(), contains("CD34-positive…", "HFDPC cell line", "HPC-PL cell line", "IMR-90", "hMSC-AT cell line"));
+        Assert.assertThat(subject.getFactorValueHeaders(), contains("CD34-positive…", "HFDPC cell…", "HPC-PL cell…", "IMR-90", "hMSC-AT cell…"));
 
         //when we extract top 9 from heatmap
         List<String> selectedGenes = subject.getGeneNames().subList(0, 9);

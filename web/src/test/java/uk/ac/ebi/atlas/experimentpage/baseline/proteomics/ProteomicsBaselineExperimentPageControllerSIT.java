@@ -48,7 +48,7 @@ public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixtu
         subject = new HeatmapTablePage(driver, E_PROT_1, "displayLevels=true" + E_PROT_1_ACCESS_KEY);
         subject.get();
 
-        assertThat(subject.getFactorValueHeaders(), contains("B cell", "CD4-positive T…", "CD8-positive T…", "adrenal gland", "colon", "esophagus", "frontal cortex", "gallbladder", "heart", "kidney", "liver", "lung", "monocyte", "natural killer…", "ovary", "pancreas", "platelet", "prostate", "rectum", "retina", "spinal cord", "testis", "urinary bladder"));
+        assertThat(subject.getFactorValueHeaders(), contains("B cell", "CD4-positive…", "CD8-positive…", "adrenal gland", "colon", "esophagus", "frontal cortex", "gallbladder", "heart", "kidney", "liver", "lung", "monocyte", "natural killer…", "ovary", "pancreas", "platelet", "prostate", "rectum", "retina", "spinal cord", "testis", "urinary bladder"));
 
         List<String> first5Genes = subject.getGeneNames().subList(0, 5);
         assertThat(first5Genes, contains("RHBDD2","TMEM132A", "GABRA3", "CXorf56", "BTN3A1"));

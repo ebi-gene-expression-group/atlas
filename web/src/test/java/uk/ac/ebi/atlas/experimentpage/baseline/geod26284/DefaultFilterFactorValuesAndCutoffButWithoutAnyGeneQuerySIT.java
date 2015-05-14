@@ -46,7 +46,7 @@ public class DefaultFilterFactorValuesAndCutoffButWithoutAnyGeneQuerySIT extends
 
     @Override
     protected String[] getHeatmapHeader() {
-        return new String[]{"A549", "AG445", "BJ", "CD20-positive B…", "GM12878", "H1-hESC", "HMEC cell line", "HSMM cell line", "HUVEC cell line", "HeLa-S3", "HepG2", "IMR-90", "K562", "MCF-7", "NHEK cell line", "NHLF cell line", "SK-N-SH", "SK-N-SH_RA"};
+        return new String[]{"A549", "AG445", "BJ", "CD20-positive…", "GM12878", "H1-hESC", "HMEC cell line", "HSMM cell line", "HUVEC cell line", "HeLa-S3", "HepG2", "IMR-90", "K562", "MCF-7", "NHEK cell line", "NHLF cell line", "SK-N-SH", "SK-N-SH_RA"};
     }
 
     @Override
