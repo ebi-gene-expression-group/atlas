@@ -29,6 +29,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
@@ -49,7 +51,7 @@ public class GenePageController extends BioEntityPageController {
     // If it is a transcript/protein/mirna ID, the corresponding gene page will display
     // If it is an MGI term, then will redirect to the gene query page
     @RequestMapping(value = "/genes/{identifier:.*}")
-    public String showGenePage(@PathVariable String identifier, Model model) {
+    public String showGenePage(@PathVariable String identifier, Model model, RedirectAttributes redirectAttributes) {
 
         if(identifier.startsWith("MGI:")){
             return "forward:/query?geneQuery=" + identifier;
@@ -63,12 +65,10 @@ public class GenePageController extends BioEntityPageController {
         checkIdentifierDoesNotContainColon(identifier);
 
         model.addAttribute("disableGeneLinks", true);
-
         model.addAttribute("isSingleGene", true);
 
-        addBaselineResults(ImmutableSet.of(identifier.toUpperCase()), model);
-
-        loadDifferentialResults(identifier.toUpperCase(), model);
+        addBaselineResults(ImmutableSet.of(identifier), model);
+        loadDifferentialResults(identifier, model);
 
         return showBioentityPage(identifier, model, true);
     }

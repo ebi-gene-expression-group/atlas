@@ -174,9 +174,12 @@ public abstract class BioEntityPageController {
 
     public String showBioentityPage(String identifier, Model model, boolean singleGeneDiffHeatmap) {
 
-        initBioentityPropertyService(identifier.toUpperCase(), model);
+        initBioentityPropertyService(identifier, model);
 
-        model.addAttribute("searchDescription", identifier);
+        // It may have been already added if we got here from BioentitiesSearchController L103
+        if (!model.containsAttribute("searchDescription")) {
+            model.addAttribute("searchDescription", identifier);
+        }
 
         model.addAttribute("geneQuery", GeneQuery.create(identifier));
 

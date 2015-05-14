@@ -35,7 +35,9 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
 import uk.ac.ebi.atlas.search.EFO.ConditionSearchEFOExpander;
 import uk.ac.ebi.atlas.search.baseline.BaselineExperimentAssayGroup;
@@ -83,7 +85,7 @@ public class BioentitiesSearchController {
     }
 
     @RequestMapping(value = "/query")
-    public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model, BindingResult result) {
+    public String showGeneQueryResultPage(@Valid GeneQuerySearchRequestParameters requestParameters, Model model, BindingResult result, RedirectAttributes redirectAttributes) {
 
         checkArgument(requestParameters.hasGeneQuery() || requestParameters.hasCondition(), "Please specify a gene query or condition!");
 
@@ -98,14 +100,13 @@ public class BioentitiesSearchController {
             //If Query just for a single bioentityID
             Optional<String> geneIdRedirectString = getGeneIdRedirectString(geneQuery, selectedSpecies, requestParameters.isExactMatch());
             if (geneIdRedirectString.isPresent()) {
+                redirectAttributes.addFlashAttribute("searchDescription", geneQuery);
                 return geneIdRedirectString.get();
             }
         }
 
         model.addAttribute("geneQuery", requestParameters.getGeneQuery());
-
         model.addAttribute("searchDescription", requestParameters.getDescription());
-
         model.addAttribute("mainTitle", "Expression summary for " + requestParameters.getDescription());
 
         String condition = efoExpander.addEfoAccessions(requestParameters.getConditionQuery()).asString();
@@ -130,11 +131,8 @@ public class BioentitiesSearchController {
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(geneQuery, condition, selectedSpecies, requestParameters.isExactMatch());
 
         model.addAttribute("bioentities", bioentityExpressions);
-
         model.addAttribute("preferences", new DifferentialRequestPreferences());
-
         model.addAttribute("requestParameters", requestParameters);
-
         model.addAttribute("exactMatch", requestParameters.isExactMatch());
 
         String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery, requestParameters.getConditionQuery());
@@ -144,7 +142,7 @@ public class BioentitiesSearchController {
         return "bioEntities";
     }
 
-    private Optional<String> getGeneIdRedirectString(String geneQuery, String specie, boolean isExactMatch) {
+    private Optional<String> getGeneIdRedirectString(String geneQuery, String species, boolean isExactMatch) {
 
         boolean singleTerm = !StringUtils.containsWhitespace(geneQuery);
         if (singleTerm && GeneSetUtil.isGeneSet(geneQuery.toUpperCase())) {
@@ -155,12 +153,14 @@ public class BioentitiesSearchController {
 
         if (bioentityProperty != null) {
             String bioentityPageName = BioentityType.get(bioentityProperty.getBioentityType()).getBioentityPageName();
+            if (bioentityPageName.equalsIgnoreCase("genes")) {
+                return Optional.of("redirect:/" + bioentityPageName + "/" + bioentityProperty.getBioentityIdentifier());
+            }
             return Optional.of("redirect:/" + bioentityPageName + "/" + geneQuery);
         }
 
-        String species = "";
-        if (StringUtils.isNotBlank(specie)) {
-           species = specie;
+        if (StringUtils.isBlank(species)) {
+           species = "";
         }
         Optional<Set<String>> geneIdsOrSets = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
 
