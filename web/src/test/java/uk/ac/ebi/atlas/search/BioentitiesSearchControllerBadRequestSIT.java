@@ -11,7 +11,7 @@ public class BioentitiesSearchControllerBadRequestSIT extends RestAssuredFixture
 
     @Test
     public void geneIdWithUnmatchedQuote_returnsResults(){
-        String url = "/query?geneQuery=ENSG00000161547\"";
+        String url = "/query?geneQuery=ENSMUSG00000021789\"";
 
         Response response = get(url);
 

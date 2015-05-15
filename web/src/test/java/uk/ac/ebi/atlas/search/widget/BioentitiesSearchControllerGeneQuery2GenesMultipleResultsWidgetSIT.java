@@ -35,20 +35,20 @@ public class BioentitiesSearchControllerGeneQuery2GenesMultipleResultsWidgetSIT 
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "geneQuery=ENSG00000161547%09ENSG00000211855");
+        subject = BioEntitiesPage.search(driver, "geneQuery=ENSG00000004948%09ENSG00000030304");
         subject.get();
     }
 
     @Test
     public void displaysWidget() {
         assertThat(subject.isBaselinePaneExpanded(), is(true));
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results found"));
 
         // wait for ajax widget to load
         subject.waitForHeatmapToBeVisible();
-        assertThat(subject.getGeneNames(), contains("Twenty seven tissues", "Illumina Body Map"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-1733?geneQuery=ENSG00000161547%09ENSG00000211855"));
-        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-513?geneQuery=ENSG00000161547%09ENSG00000211855"));
+        assertThat(subject.getGeneNames(), contains("Thirty two tissues", "Twenty seven tissues"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-2836?geneQuery=ENSG00000004948%09ENSG00000030304"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-1733?geneQuery=ENSG00000004948%09ENSG00000030304"));
     }
 
 }

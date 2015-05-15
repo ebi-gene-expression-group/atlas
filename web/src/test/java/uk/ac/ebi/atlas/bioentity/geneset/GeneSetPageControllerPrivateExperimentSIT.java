@@ -42,7 +42,7 @@ import static org.hamcrest.Matchers.*;
 
 public class GeneSetPageControllerPrivateExperimentSIT extends SinglePageSeleniumFixture {
 
-    private static final String GENESET_IDENTIFIER = "REACT_115202";
+    private static final String GENESET_IDENTIFIER = "REACT_1619";
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-1733";
 
     private BioEntitiesPage subject;
@@ -73,12 +73,13 @@ public class GeneSetPageControllerPrivateExperimentSIT extends SinglePageSeleniu
     public void privateExperimentsAreNotShown() {
         subject.get();
 
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("2 results"));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results found"));
 
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
-        assertThat(baselineCounts, hasSize(2));
+        assertThat(baselineCounts, hasSize(20));
 
         List<String> accessions = extract(baselineCounts, on(BaselineBioEntitiesSearchResult.class).getExperimentAccession());
-        assertThat(accessions, hasItems("E-MTAB-599", "E-GEOD-30352"));
+        assertThat(accessions, hasItems("E-GEOD-26284", "E-MTAB-2980"));
+        assertThat(accessions, not(hasItem("E-MTAB-1733")));
     }
 }

@@ -62,7 +62,7 @@ public class GenePageControllerHomoSapiensGeneBaselineWidgetSIT extends SinglePa
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
         List<String> factorValueHeaders = subject.getFactorValueHeaders();
-        assertThat(factorValueHeaders, contains("adipose", "adipose tissue", "adrenal gland", "animal ovary", "appendix", "bladder", "bone marrow", "brain", "breast", "cerebellum", "cerebral cortex", "colon", "duodenum", "endometrium", "esophagus", "frontal lobe", "gall bladder", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "pancreas", "placenta", "prefrontal cortex", "prostate", "salivary gland", "skeletal muscle", "skin", "small intestine", "spleen", "stomach", "temporal lobe", "testis", "thyroid"));
+        assertThat(factorValueHeaders, contains("adipose", "adipose tissue", "adrenal gland", "animal ovary", "appendix", "bladder", "bone marrow", "brain", "breast", "cerebellum", "cerebral cortex", "colon", "duodenum", "endometrium", "esophagus", "frontal lobe", "gall bladder", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "pancreas", "placenta", "prefrontal…", "prostate", "salivary gland", "skeletal muscle", "skin", "small intestine", "spleen", "stomach", "temporal lobe", "testis", "thyroid"));
 
         assertThat(subject.getGeneNames().size(), is(3));
         assertThat(subject.getGeneNames(), contains("Twenty seven tissues","Illumina Body Map","Vertebrate tissues"));

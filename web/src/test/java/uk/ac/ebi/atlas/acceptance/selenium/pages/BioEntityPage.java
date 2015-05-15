@@ -64,7 +64,7 @@ public class BioEntityPage extends HeatmapTableWidgetPage {
     @FindBy(id = "baselineProfileHeader")
     private WebElement baselinePaneHeader;
 
-    @FindBy(css = "#baselineProfileHeader span:nth-child(4)")
+    @FindBy(css = "#baselineProfileHeader > span:nth-child(4)")
     private WebElement baselinePaneHeaderSpan;
 
     @FindBy(id = "diffProfileHeader")

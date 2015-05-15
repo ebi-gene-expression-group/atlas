@@ -59,8 +59,8 @@ public class GenePageControllerPropertiesSIT extends SinglePageSeleniumFixture {
         assertThat(subject.getBioEntityCardTitle(), is("Gpnmb Mus musculus glycoprotein (transmembrane) nmb"));
         assertThat(subject.getPropertiesTableSize(), is(12));
         assertThat(subject.getPropertiesTableRow(0), hasItems("Synonyms", "Dchil, Osteoactivin"));
-        assertThat(subject.getPropertiesTableRow(1), hasItems("Orthologs", "BT.99652 (Bos taurus), GPNMB (Canis familiaris), gpnmb (Danio rerio), GPNMB (Equus caballus), GPNMB (Homo sapiens), GPNMB (Gallus gallus), GPNMB (Macaca mulatta), Gpnmb (Rattus norvegicus), gpnmb (Xenopus tropicalis)"));
-        assertThat(subject.getPropertiesTableRow(2), hasItems("Gene Ontology", "melanosome, osteoblast differentiation, integrin binding, cytoplasmic membrane-bounded vesicle, bone mineralization, cytoplasmic vesicle membrane (... and 3 more)"));
+        assertThat(subject.getPropertiesTableRow(1), hasItems("Orthologs", "GPNMB (Bos taurus), GPNMB (Canis familiaris), gpnmb (Danio rerio), GPNMB (Equus caballus), GPNMB (Homo sapiens), GPNMB (Gallus gallus), GPNMB (Macaca mulatta), Gpnmb (Rattus norvegicus), gpnmb (Xenopus tropicalis)"));
+        assertThat(subject.getPropertiesTableRow(2), hasItems("Gene Ontology", "osteoblast differentiation, integrin binding, cytoplasmic membrane-bounded vesicle, bone mineralization (... and 12 more)"));
         assertThat(subject.getPropertiesTableRow(3), hasItems("InterPro", "PKD domain (domain), PKD/Chitinase domain (domain)"));
         assertThat(subject.getPropertiesTableRow(4), hasItems("Ensembl Family", "TRANSMEMBRANE GLYCOPROTEIN NMB PRECURSOR"));
         assertThat(subject.getPropertiesTableRow(5), hasItems("Ensembl Gene", "ENSMUSG00000029816"));
@@ -72,7 +72,7 @@ public class GenePageControllerPropertiesSIT extends SinglePageSeleniumFixture {
         assertThat(subject.getPropertiesTableRow(11), hasItems("Design Element", "10538187, 108822_at, 1448303_at, 4386581, 4444155, 4619897, 4701136, 4723852, 4992000, 5030507, 5044337, 5052678, 5182097, 5192219, 5246058, 5345790, 5526274, 5548029, 5605047, 5610568, A_51_P438967, A_52_P417819"));
 
         assertThat(subject.getLinksInTableRow(1).get(0), containsString("/gxa/genes/ENS"));
-        assertThat(subject.getLinksInTableRow(2).get(0), is("http://amigo.geneontology.org/amigo/term/GO%3A0042470"));
+        assertThat(subject.getLinksInTableRow(2).get(0), is("http://amigo.geneontology.org/amigo/term/GO%3A0001649"));
         assertThat(subject.getLinksInTableRow(3).get(0), startsWith("http://www.ebi.ac.uk/interpro/entry/IPR000601"));
         assertThat(subject.getLinksInTableRow(4).get(0), is("http://www.ensembl.org/mus_musculus/Search/Details?db=core;end=1;idx=Family;q=TRANSMEMBRANE+GLYCOPROTEIN+NMB+PRECURSOR;species=mus_musculus"));
         assertThat(subject.getLinksInTableRow(5).get(0), is("http://www.ensemblgenomes.org/id-gene/ENSMUSG00000029816"));
@@ -82,10 +82,10 @@ public class GenePageControllerPropertiesSIT extends SinglePageSeleniumFixture {
     @Test
     public void showMoreAndLessGeneOntologyTerms() {
         subject.clickShowMoreGoLinks();
-        assertThat(subject.getPropertiesTableRow(2), hasItems("melanosome, osteoblast differentiation, integrin binding, cytoplasmic membrane-bounded vesicle, bone mineralization, cytoplasmic vesicle membrane, integral component of plasma membrane, heparin binding, cell adhesion (show less)"));
+        assertThat(subject.getPropertiesTableRow(2), hasItems("Gene Ontology", "osteoblast differentiation, integrin binding, cytoplasmic membrane-bounded vesicle, bone mineralization, cytoplasm, integral component of plasma membrane, heparin binding, intracellular, plasma membrane, cell adhesion, ion binding, cell, organelle, molecular function, cellular component, biological process (show less)"));
 
         subject.clickShowLessGoLinks();
-        assertThat(subject.getPropertiesTableRow(2), hasItems("Gene Ontology", "melanosome, osteoblast differentiation, integrin binding, cytoplasmic membrane-bounded vesicle, bone mineralization, cytoplasmic vesicle membrane (... and 3 more)"));
+        assertThat(subject.getPropertiesTableRow(2), hasItems("Gene Ontology", "osteoblast differentiation, integrin binding, cytoplasmic membrane-bounded vesicle, bone mineralization (... and 12 more)"));
     }
 
 }

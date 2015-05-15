@@ -22,16 +22,10 @@
 
 package uk.ac.ebi.atlas.bioentity.geneset;
 
-import com.google.common.base.Joiner;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
-import java.util.List;
-
-import static ch.lambdaj.Lambda.extract;
-import static ch.lambdaj.Lambda.on;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -70,7 +64,7 @@ public class GeneSetPageControllerPoTermSIT extends SinglePageSeleniumFixture {
     public void hasDifferentialResults() {
         subject.clickDifferentialPane();
         subject.clickDiffResultsDisplayLevelsButton();
-        assertThat(subject.getDiffPaneHeaderResultsMessage(), is("2150 results"));
+        assertThat(subject.getDiffPaneHeaderResultsMessage(), is("2152 results"));
 
         assertThat(subject.getDiffHeatmapHeaders(), contains("Gene", "Organism", "Comparison", "Log2-fold change"));
         assertThat(subject.getDiffHeatmapRow(1), contains("BAG6", "Arabidopsis thaliana", "'37 degrees celsius' vs '20 degrees celsius'", "7.9"));

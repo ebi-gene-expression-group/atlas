@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.search;
 
-import com.google.common.base.Joiner;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
@@ -63,11 +62,10 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
     @Test
     public void differentialPaneHasResults() {
         subject.clickDifferentialPane();
-        assertThat(subject.diffExpressionResultCount(), is("Showing 32 results"));
 
-        System.out.println("\"" + Joiner.on("\", \"").join(subject.getDiffHeatmapTableGeneColumn()) + "\"");
-
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("LMO2", "HIBADH", "ASNS", "LMO2", "HIBADH", "CTBP1", "PHYH", "PHYH", "ACLY", "HIF1AN", "ACLY", "ATCAD1", "TKT", "CTBP1", "AHCY", "UROS", "AHCY", "CTBP2", "GRHPR", "ATCAD1", "HIF1AN", "SUCLG1", "CG5599", "AHCYL2", "PHGDH", "SUCLG1", "GRHPR", "UROS", "DBT", "TKT", "DBT", "HACL1"));
+        assertThat(subject.diffExpressionResultCount(), is("Showing 18 results"));
+        // System.out.println("\"" + Joiner.on("\", \"").join(subject.getDiffHeatmapTableGeneColumn()) + "\"");
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("LMO2", "ASNS", "LMO2", "PHYH", "PHYH", "ACLY", "HIF1AN", "ACLY", "ATCAD1", "TKT", "UROS", "ATCAD1", "HIF1AN", "SUCLG1", "SUCLG1", "UROS", "TKT", "HACL1"));
 
     }
 

@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.*;
 
 public class GeneSetPageControllerGoTermResultsBaselineCountsSingleSpeciesSIT extends SinglePageSeleniumFixture {
 
-    private static final String IDENTIFIER = "GO:0005527";
+    private static final String IDENTIFIER = "GO:0000031";
 
     private BioEntitiesPage subject;
 
@@ -48,10 +48,10 @@ public class GeneSetPageControllerGoTermResultsBaselineCountsSingleSpeciesSIT ex
 
     @Test
     public void infoCard() {
-        assertThat(subject.getBioEntityCardTitle(), is("GO:0005527 Homo sapiens macrolide binding"));
+        assertThat(subject.getBioEntityCardTitle(), is("GO:0000031 Saccharomyces cerevisiae mannosylphosphate transferase activity"));
         assertThat(subject.getPropertiesTableSize(), is(1));
-        assertThat(subject.getPropertiesTableRow(0), hasItems("Gene Ontology", "macrolide binding"));
-        assertThat(subject.getLinksInTableRow(0).get(0), is("http://amigo.geneontology.org/amigo/term/GO%3A0005527"));
+        assertThat(subject.getPropertiesTableRow(0), hasItems("Gene Ontology", "mannosylphosphate transferase activity"));
+        assertThat(subject.getLinksInTableRow(0).get(0), is("http://amigo.geneontology.org/amigo/term/GO%3A0000031"));
     }
 
     //TODO: add a method to check the baseline widget results

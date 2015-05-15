@@ -5,6 +5,7 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.endsWith;
 
 public class BioentitiesSearchControllerRedirectsSIT extends RestAssuredFixture {
@@ -14,28 +15,28 @@ public class BioentitiesSearchControllerRedirectsSIT extends RestAssuredFixture 
         Response response = given().redirects().follow(false).get(from);
 
         response.then().assertThat().statusCode(302);
-        response.then().assertThat().header("Location", endsWith(to));
+        response.then().assertThat().header("Location", containsString(to));
     }
 
     @Test
     public void geneId(){
-        assertRedirect("/query?geneQuery=ENSG00000161547", "genes/ENSG00000161547");
+        assertRedirect("/query?geneQuery=ENSMUSG00000021789", "genes/ENSMUSG00000021789");
     }
 
     @Test
     public void geneIdWithLeadingAndTrailingSpace(){
-        String from = "/query?geneQuery=+ENSG00000161547+";
-        String to = "genes/ENSG00000161547";
+        String from = "/query?geneQuery=+ENSMUSG00000021789+";
+        String to = "genes/ENSMUSG00000021789";
 
         Response response = given().redirects().follow(false).urlEncodingEnabled(false).get(from);
 
         response.then().assertThat().statusCode(302);
-        response.then().assertThat().header("Location", endsWith(to));
+        response.then().assertThat().header("Location", containsString(to));
     }
 
     @Test
     public void proteinId() {
-        assertRedirect("/query?geneQuery=ENSP00000355434", "proteins/ENSP00000355434");
+        assertRedirect("/query?geneQuery=ENSPPYP00000006717", "proteins/ENSPPYP00000006717");
     }
 
     @Test

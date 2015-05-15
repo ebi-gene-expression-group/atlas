@@ -135,11 +135,11 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
         response.then().assertThat().statusCode(200).contentType(ContentType.TEXT);
 
         String[] lines = response.body().asString().split("\n");
-        assertThat(lines.length, is(15));
+        assertThat(lines.length, is(26));
 
         String firstGene = lines[4];
         assertThat(firstGene,
-                is("FAS\tHomo sapiens\tE-GEOD-12108\t'Francisella tularensis novicida' vs 'uninfected'\t0.00141996014524383\t3.02983011666667\t6.21178806331197"));
+                is("TNF\tHomo sapiens\tE-GEOD-12108\t'Francisella tularensis Schu S4' vs 'uninfected'\t2.38048452945751E-7\t5.73066106666667\t23.5437632875897"));
     }
 
 

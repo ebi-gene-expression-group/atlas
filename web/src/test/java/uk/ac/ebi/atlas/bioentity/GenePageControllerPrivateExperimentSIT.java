@@ -37,7 +37,7 @@ import static org.hamcrest.Matchers.*;
 
 public class GenePageControllerPrivateExperimentSIT extends SinglePageSeleniumFixture {
 
-    private static final String GENE_IDENTIFIER = "ENSG00000161547";
+    private static final String GENE_IDENTIFIER = "ENSG00000187003";
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-1733";
 
     private BioEntityPage subject;
@@ -70,8 +70,8 @@ public class GenePageControllerPrivateExperimentSIT extends SinglePageSeleniumFi
         subject.waitForHeatmapToBeVisible();
 
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
-        assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
-        assertThat(subject.getGeneNames(), contains("Illumina Body Map"));
-        assertThat(subject.getGeneLink(0), endsWith("experiments/E-MTAB-513?geneQuery=ENSG00000161547"));
+        assertThat(subject.getGeneCount(), is("Showing 2 of 2 experiments found:"));
+        assertThat(subject.getGeneNames(), contains("Illumina Body Map", "Vertebrate tissues"));
+        assertThat(subject.getGeneLink(0), endsWith("experiments/E-MTAB-513?geneQuery=" + GENE_IDENTIFIER));
     }
 }

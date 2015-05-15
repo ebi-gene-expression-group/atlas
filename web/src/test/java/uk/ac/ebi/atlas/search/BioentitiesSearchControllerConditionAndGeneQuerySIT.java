@@ -46,24 +46,23 @@ public class BioentitiesSearchControllerConditionAndGeneQuerySIT extends SingleP
     public void checkBaselineExperimentCounts() {
         List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
 
-        assertThat(baselineCounts, hasSize(1));
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Six tissues"));
-        assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=apoptotic+process&exactMatch=true"));
+        assertThat(baselineCounts, hasSize(8));
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-2812"));
+        assertThat(baselineCounts.get(0).getExperimentName(), is("Developmental stages - hermaphrodite, NSM"));
+        assertThat(baselineCounts.get(0).getSpecies(), is("Caenorhabditis elegans"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-2812?_specific=on&queryFactorType=DEVELOPMENTAL_STAGE&queryFactorValues=L1%20larva%20Ce&geneQuery=apoptotic+process&exactMatch=true&serializedFilterFactors=SEX:hermaphrodite,ORGANISM_PART:NSM"));
     }
 
     @Test
     public void checkDifferentialProfiles() {
         subject.clickDifferentialPane();
         subject.clickDiffResultsDisplayLevelsButton();
-        assertThat(subject.diffExpressionResultCount(), is("Showing 16 results"));
-        assertThat(subject.getContrastColumn(), hasItem(
-                "compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36"));
-        assertThat(subject.getFoldChange(), hasItems("3.5", "1"));
+        assertThat(subject.diffExpressionResultCount(), is("Showing 8 results"));
+        assertThat(subject.getContrastColumn(), hasItem("compound treatment:'10 micromole per kilogram dibenzazepine' vs 'none' on A-AFFY-36"));
+        assertThat(subject.getFoldChange(), hasItems("1.9", "1"));
 
         //System.out.println("\"" + Joiner.on("\", \"").join(subject.getDiffHeatmapTableGeneColumn()) + "\"");
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Lcn2", "Tnfrsf12a", "Trp53inp1", "Apip", "Tao", "Gja1", "Srgn", "Eif2ak3", "Mknk2", "Kras", "wgn", "Arf6", "Tgfbr1", "Sgms1", "Mef2a", "Dab2"));
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Trp53inp1", "Apip", "Gja1", "Zfp36l1", "Tgfbr1", "Sgms1", "Mef2a", "Dab2"));
     }
 
 }
