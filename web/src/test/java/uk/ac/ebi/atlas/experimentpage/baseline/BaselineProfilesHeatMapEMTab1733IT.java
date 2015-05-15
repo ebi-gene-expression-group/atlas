@@ -58,7 +58,7 @@ public class BaselineProfilesHeatMapEMTab1733IT {
     public static final Factor ESOPHAGUS = new Factor(ORGANISM_PART, "esophagus");
     public static final Factor DUODENUM = new Factor(ORGANISM_PART, "duodenum");
     public static final Factor COLON = new Factor(ORGANISM_PART, "colon");
-    public static final Factor CELEBRAL_CORTEX = new Factor(ORGANISM_PART, "cerebral cortex");
+    public static final Factor CEREBRAL_CORTEX = new Factor(ORGANISM_PART, "cerebral cortex");
     public static final Factor BONE_MARROW = new Factor(ORGANISM_PART, "bone marrow");
     public static final Factor BLADDER = new Factor(ORGANISM_PART, "bladder");
     public static final Factor ANIMAL_OVARY = new Factor(ORGANISM_PART, "animal ovary");
@@ -118,7 +118,7 @@ public class BaselineProfilesHeatMapEMTab1733IT {
         assertThat(baselineProfile0.getKnownExpressionLevel(APPENDIX), CoreMatchers.is(23D));
         assertThat(baselineProfile0.getKnownExpressionLevel(BLADDER), CoreMatchers.is(23D));
         assertThat(baselineProfile0.getKnownExpressionLevel(BONE_MARROW), CoreMatchers.is(20D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(CELEBRAL_CORTEX), CoreMatchers.is(7D));
+        assertThat(baselineProfile0.getKnownExpressionLevel(CEREBRAL_CORTEX), CoreMatchers.is(7D));
         assertThat(baselineProfile0.getKnownExpressionLevel(COLON), CoreMatchers.is(17D));
         assertThat(baselineProfile0.getKnownExpressionLevel(DUODENUM), CoreMatchers.is(19D));
         assertThat(baselineProfile0.getKnownExpressionLevel(ENDOMETRIUM), CoreMatchers.is(14D));
