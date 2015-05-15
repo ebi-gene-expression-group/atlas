@@ -62,7 +62,7 @@ public class MultiTermSuggestionServiceIT {
     public void mitochondrial_enc() {
         List<TermSourceSuggestion> suggestions = subject.fetchMultiTermSuggestions("mitochondrial enc");
 
-        assertThat(suggestions.get(0).term, is("Mitochondrial-encoded proline-accepting tRNA. [Source:TAIR_LOCUS;Acc:ATMG00350]"));
+        assertThat(suggestions.get(0).term, is("Mitochondrial-encoded proline-accepting tRNA. [Source:TAIR;Acc:ATMG00350]"));
         assertThat(suggestions.get(0).source, is(""));
 
     }

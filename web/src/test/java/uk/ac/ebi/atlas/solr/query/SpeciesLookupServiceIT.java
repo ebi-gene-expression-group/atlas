@@ -41,37 +41,22 @@ public class SpeciesLookupServiceIT {
     public void interPro_multiSpeciesGeneSet() {
         SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("IPR027417");
         assertThat(result.isMultiSpecies(), is(true));
-        assertThat(result.firstSpecies(), is("homo sapiens"));
-    }
-
-    @Test
-    public void interPro_singleSpeciesGeneSet() {
-        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("IPR016970");
-        assertThat(result.isMultiSpecies(), is(false));
-        assertThat(result.firstSpecies(), is("arabidopsis thaliana"));
+        assertThat(result.firstSpecies(), is("triticum aestivum"));
     }
 
     @Test
     public void GO_multiSpeciesGeneSet() {
         SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("GO:0003674");
         assertThat(result.isMultiSpecies(), is(true));
-        assertThat(result.firstSpecies(), is("arabidopsis thaliana"));
+        assertThat(result.firstSpecies(), is("homo sapiens"));
     }
 
-    @Test
-    public void GO_singleSpeciesGeneSet() {
-        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("GO:0001962");
-        assertThat(result.isMultiSpecies(), is(false));
-        assertThat(result.firstSpecies(), is("rattus norvegicus"));
-    }
-
-    // TODO Add in Solr PO: documents to other plant species for the following test to pass
-    // @Test
-    // public void PO_multiSpeciesGeneSet() {
-    //     SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("PO:0009005");
-    //     assertThat(result.isMultiSpecies(), is(true));
-    //     assertThat(result.firstSpecies(), is("arabidopsis thaliana"));
-    // }
+     @Test
+     public void PO_multiSpeciesGeneSet() {
+         SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("PO:0009005");
+         assertThat(result.isMultiSpecies(), is(true));
+         assertThat(result.firstSpecies(), is("arabidopsis thaliana"));
+     }
 
     @Test
     public void PO_singleSpeciesGeneSet() {

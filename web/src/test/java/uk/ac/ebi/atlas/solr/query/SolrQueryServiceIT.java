@@ -117,45 +117,36 @@ public class SolrQueryServiceIT {
 
     @Test
     public void expandGeneQueryIntoGeneIds() throws SolrServerException, GenesNotFoundException {
-
         // given
         Set<String> aspm = subject.expandGeneQueryIntoGeneIds("aspm", "", true).get();
 
-        System.out.println("\"" + Joiner.on("\", \"").join(aspm));
-
         // then
-        assertThat(aspm, hasSize(13));
-        assertThat(aspm, contains("ENSBTAG00000007860", "ENSPTRG00000001807", "ENSCAFG00000011403", "ENSGALG00000002338", "ENSGGOG00000025635", "ENSG00000066279", "ENSSSCG00000010896", "ENSDARG00000071442", "ENSRNOG00000012318", "ENSPPYG00000000389", "ENSOANG00000011184", "ENSMODG00000012671", "ENSMUSG00000033952"));
+        assertThat(aspm, hasSize(19));
+        //System.out.println("\"" + Joiner.on("\", \"").join(aspm) + "\"");
+        assertThat(aspm, contains("ENSBTAG00000007860", "ENSPANG00000018539", "ENSG00000066279", "ENSSSCG00000010896", "ENSOCUG00000014733", "ENSDARG00000071442", "ENSPPYG00000000389", "ENSECAG00000020645", "ENSMUSG00000033952", "ENSOARG00000014713", "ENSPTRG00000001807", "ENSDNOG00000001112", "ENSCAFG00000011403", "ENSGALG00000002338", "ENSTNIG00000012330", "ENSGGOG00000025635", "ENSMMUG00000000245", "ENSRNOG00000012318", "ENSMODG00000012671"));
 
     }
 
     @Test
     public void testFetchGeneIdentifiersFromSolr() throws SolrServerException, GenesNotFoundException {
-
         // given
         Set<String> geneQueryResponse = subject.findGeneIdsOrSets("aspm", false, "homo sapiens");
-
         // then
         assertThat(geneQueryResponse, contains("ENSG00000066279"));
-
     }
 
     @Test
     public void testFetchGeneIdentifiersFromSolrMany() throws SolrServerException, GenesNotFoundException {
-
         // given
         Set<String> geneQueryResponse = subject.findGeneIdsOrSets("protein", false, "homo sapiens");
-
         // then
         assertThat(geneQueryResponse.size(), lessThan(200000));
         assertThat(geneQueryResponse, hasItems("ENSG00000126773", "ENSG00000183878"));
-
     }
 
 
     @Test
     public void findGenesFromMirBaseIDs()  {
-
         List<String> identifiers = Lists.newArrayList("hsa-mir-636");
 
         Set<String> ensemblIDs = subject.findGenesFromMirBaseIDs(identifiers);
@@ -165,11 +156,10 @@ public class SolrQueryServiceIT {
 
     @Test
     public void fetchCaseSensitiveGeneId() {
-
-        Set<String> geneIds = subject.fetchGeneIds("CG11255", true, "");
+        Set<String> geneIds = subject.fetchGeneIds("CG17707", true, "");
 
         assertThat(geneIds, hasSize(1));
-        assertThat(geneIds.iterator().next(), is("FBgn0036337")); //should be case sensitive, NOT all uppercase
+        assertThat(geneIds.iterator().next(), is("FBgn0025835")); //should be case sensitive, NOT all uppercase
     }
 
 }

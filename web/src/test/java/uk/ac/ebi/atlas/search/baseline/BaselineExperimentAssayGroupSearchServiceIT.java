@@ -39,8 +39,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
-
-        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352"));
+        // System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
+        assertThat(experimentAccessions, containsInAnyOrder("E-MTAB-513", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352", "E-MTAB-2800", "E-MTAB-2800", "E-MTAB-2800"));
     }
 
     @Test
@@ -52,8 +52,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
-
-        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-1733"));
+        // System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
+        assertThat(experimentAccessions, contains("E-MTAB-513", "E-MTAB-1733", "E-MTAB-599", "E-MTAB-2800", "E-MTAB-2800", "E-MTAB-2800"));
     }
 
     @Test
@@ -80,8 +80,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         List<String> experimentAccessions = getExperimentAccessions(results);
         ImmutableList<String> descriptions = toStrings(results);
 
-        System.out.println("\"" + Joiner.on("\", \"").join(descriptions) + "\"");
-
+        // System.out.println("\"" + Joiner.on("\", \"").join(descriptions) + "\"");
         assertThat(experimentAccessions, contains("E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-PROT-1", "E-MTAB-513", "E-MTAB-2836", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352"));
         assertThat(descriptions, contains("Homo sapiens - ENCODE cell lines - long non-polyA RNA, cytosol", "Homo sapiens - ENCODE cell lines - long non-polyA RNA, nucleus", "Homo sapiens - ENCODE cell lines - long non-polyA RNA, whole cell", "Homo sapiens - ENCODE cell lines - long polyA RNA, cytosol", "Homo sapiens - ENCODE cell lines - long polyA RNA, nucleus", "Homo sapiens - ENCODE cell lines - long polyA RNA, whole cell", "Homo sapiens - ENCODE cell lines - total RNA, chromatin", "Homo sapiens - ENCODE cell lines - total RNA, nucleolus", "Homo sapiens - ENCODE cell lines - total RNA, nucleoplasm", "Homo sapiens - ENCODE cell lines - total RNA, whole cell", "Homo sapiens - Human Proteome Map - adult", "Homo sapiens - Illumina Body Map", "Homo sapiens - Thirty two tissues", "Homo sapiens - Twenty seven tissues", "Mus musculus - Six tissues", "Pan paniscus - Vertebrate tissues", "Pan troglodytes - Vertebrate tissues", "Pongo pygmaeus - Vertebrate tissues"));
     }
@@ -96,9 +95,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
-
-        assertThat(experimentAccessions, contains("E-GEOD-30352", "E-GEOD-30352", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-PROT-1", "E-PROT-1", "E-MTAB-513", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2836", "E-MTAB-1733", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-MTAB-2800", "E-MTAB-2800", "E-MTAB-2800"));
+        // System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
+        assertThat(experimentAccessions, contains("E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-PROT-1", "E-PROT-1", "E-MTAB-513", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2836", "E-MTAB-1733", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352", "E-MTAB-2800", "E-MTAB-2800", "E-MTAB-2800"));
     }
 
     @Test
@@ -111,7 +109,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, hasSize(35));
+        assertThat(experimentAccessions, hasSize(47));
     }
 
     @Test
@@ -176,7 +174,6 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         BaselineExperimentAssayGroup eMtab1733 = results.iterator().next();
 
         assertThat(experimentAccessions, contains("E-MTAB-1733"));
-
         assertThat(eMtab1733.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "heart", OntologyTerm.create("UBERON:0000948"))));
     }
 
@@ -192,10 +189,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
         BaselineExperimentAssayGroup first = results.iterator().next();
 
-        System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
-
+        // System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
         assertThat(experimentAccessions, contains("E-GEOD-26284", "E-GEOD-26284", "E-PROT-1", "E-PROT-1", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2836", "E-MTAB-1733", "E-MTAB-599"));
-
         assertThat(first.getFilterFactors(), contains(new Factor("RNA", "long non-polyA RNA"), new Factor("CELLULAR_COMPONENT", "whole cell")));
     }
 
@@ -209,9 +204,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-
-        System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
-
+        // System.out.println("\"" + Joiner.on("\", \"").join(experimentAccessions) + "\"");
         assertThat(experimentAccessions, contains("E-GEOD-26284", "E-GEOD-26284", "E-PROT-1", "E-PROT-1", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2836", "E-MTAB-1733"));
     }
 
@@ -238,7 +231,8 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
     @Test
     public void buildResults_MTAB513() {
-        ImmutableSetMultimap<String, String> assayGroupsWithExpressionByExperiment = new ImmutableSetMultimap.Builder<String, String>()
+        ImmutableSetMultimap<String, String> assayGroupsWithExpressionByExperiment =
+                new ImmutableSetMultimap.Builder<String, String>()
                 .putAll("E-MTAB-513", "g12", "g14", "g16", "g8", "g2", "g4", "g9")
                 .build();
         String species = "";
@@ -286,7 +280,6 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
         BaselineExperimentAssayGroup eMtab599 = resultsArray[0];
         assertThat(eMtab599.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("ORGANISM_PART", "heart", OntologyTerm.create("UBERON:0000948"))));
-
     }
 
     @Test
@@ -302,7 +295,6 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         BaselineExperimentAssayGroup eMtab2812_hermaphroditeNSM = results.iterator().next();
 
         assertThat(experimentAccessions, contains("E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-2812", "E-MTAB-599", "E-GEOD-30352"));
-
         assertThat(eMtab2812_hermaphroditeNSM.getDefaultFactorsForSpecificAssayGroupsWithCondition(), contains(new Factor("DEVELOPMENTAL_STAGE", "L1 larva Ce")));
 
         BaselineExperimentAssayGroup eMtab599 = Iterables.skip(results, 7).iterator().next();
@@ -333,7 +325,6 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         List<String> experimentAccessions = getExperimentAccessions(results);
 
         assertThat(experimentAccessions, contains("E-MTAB-1733", "E-MTAB-599"));
-
         assertThat(results.size(), is(2));
     }
 

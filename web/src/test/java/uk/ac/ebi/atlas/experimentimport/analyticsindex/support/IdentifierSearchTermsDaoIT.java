@@ -45,20 +45,18 @@ public class IdentifierSearchTermsDaoIT {
     @Inject
     private IdentifierSearchTermsDao subject;
 
-
     @Test
     public void fetchSearchTerms() {
         Set<String> properties = subject.fetchSearchTerms("ENSMODG00000012671");
 
-        System.out.println("\"" + Joiner.on("\", \"").join(properties) + "\"");
+        assertThat(properties.size(), is(38));
+        //System.out.println("\"" + Joiner.on("\", \"").join(properties) + "\"");
+        assertThat(properties, contains("oogenesis", "developmental growth", "microtubule", "negative regulation of asymmetric cell division", "ASP", "IQ motif, EF-hand binding site", "neuron migration", "Calmbp1", "FLJ10549", "Calponin homology domain", "forebrain neuroblast division", "calmodulin binding", "F6VH23", "cytoplasm", "mitotic spindle pole", "ASPM", "positive regulation of neuroblast proliferation", "spindle pole", "positive regulation of canonical Wnt signaling pathway", "neuronal stem cell maintenance", "P-loop containing nucleoside triphosphate hydrolase", "maintenance of centrosome location", "male gonad development", "protein_coding", "asp (abnormal spindle) homolog, microcephaly associated (Drosophila) [Source:HGNC Symbol;Acc:HGNC:19048]", "negative regulation of neuron differentiation", "protein binding", "MCPH5", "Calmodulin-regulated spectrin-associated protein, CH domain", "FLJ10517", "binding", "spermatogenesis", "brain development", "cerebral cortex development", "spindle assembly involved in meiosis", "midbody", "Armadillo-type fold", "meiotic spindle"));
 
-        assertThat(properties.size(), Matchers.is(27));
-        assertThat(properties, contains("oogenesis", "developmental growth", "negative regulation of asymmetric cell division", "IQ motif, EF-hand binding site", "ASP", "neuron migration", "Calmbp1", "Calponin homology domain", "FLJ10549", "forebrain neuroblast division", "ASPM", "positive regulation of neuroblast proliferation", "spindle pole", "maintenance of centrosome location", "protein_coding", "asp (abnormal spindle) homolog, microcephaly associated (Drosophila) [Source:HGNC Symbol;Acc:19048]", "protein binding", "negative regulation of neuron differentiation", "MCPH5", "Calmodulin-regulated spectrin-associated protein, CH domain", "FLJ10517", "binding", "spermatogenesis", "brain development", "Armadillo-type fold", "midbody", "positive regulation of canonical Wnt receptor signaling pathway"));
-
-                ///assertThat(properties.get("synonym").size(), Matchers.is(5));
-        //assertThat(properties.get("synonym"), Matchers.hasItems("Calmbp1", "MCPH5", "ASP"));
-        //assertThat(properties.get("goterm"), Matchers.hasItems("oogenesis", "developmental growth", "positive regulation of neuroblast proliferation"));
-        //assertThat(properties.get("interproterm"), Matchers.hasItems("Calmodulin-regulated spectrin-associated protein, CH domain", "Armadillo-type fold", "IQ motif, EF-hand binding site"));
+        //assertThat(properties.get("synonym").size(), is(5));
+        //assertThat(properties.get("synonym"), hasItems("Calmbp1", "MCPH5", "ASP"));
+        //assertThat(properties.get("goterm"), hasItems("oogenesis", "developmental growth", "positive regulation of neuroblast proliferation"));
+        //assertThat(properties.get("interproterm"), hasItems("Calmodulin-regulated spectrin-associated protein, CH domain", "Armadillo-type fold", "IQ motif, EF-hand binding site"));
     }
 
     @Test

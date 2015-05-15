@@ -98,7 +98,7 @@ public class BaselineAnalyticsIndexerServiceIT {
         assertThat(document.getExperimentAccession(), is("E-MTAB-2039"));
         assertThat(document.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(document.getDefaultQueryFactorType(), is("ORGANISM_PART"));
-        assertThat(document.getIdentifierSearch(), is("OS12G0515800 Os.12120.1.S1_at Expressed protein; cDNA clone:J013098I09, full insert sequence  [Source:UniProt/SPTREMBL;Acc:Q2QPV9] Q2QPV9"));
+        assertThat(document.getIdentifierSearch(), is("OS12G0515800 Os.12120.1.S1_at Expressed protein; cDNA clone:J013098I09, full insert sequence  [Source:UniProtKB/TrEMBL;Acc:Q2QPV9] Q2QPV9 protein_coding"));
         assertThat(document.getConditionsSearch(), is("emerging inflorescence 60 days after sowing Oryza sativa Japonica Group Nipponbare NCBITaxon:39947 whole post-emergence inflorescence"));
         assertThat(document.getAssayGroupId(), is("g2"));
         assertThat(document.getExpressionLevel(), is(0.2));
@@ -128,7 +128,7 @@ public class BaselineAnalyticsIndexerServiceIT {
         assertThat(document2.getExperimentAccession(), is("E-GEOD-30352"));
         assertThat(document2.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(document2.getDefaultQueryFactorType(), is("ORGANISM_PART"));
-        assertThat(document2.getIdentifierSearch(), is("ENSMMUG00000032178 Endonuclease/exonuclease/phosphatase Uncharacterized protein  [Source:UniProtKB/TrEMBL;Acc:F7FU52] F7FU52 protein_coding"));
+        assertThat(document2.getIdentifierSearch(), is("ENSMMUG00000032178 Endonuclease/exonuclease/phosphatase Uncharacterized protein  [Source:UniProtKB/TrEMBL;Acc:F7FU52] protein_coding F7FU52"));
         assertThat(document2.getConditionsSearch(), is("UBERON:0002037 8 year EFO female EFO:0001265 Macaque facility in Souzhou, China Macaca mulatta cerebellum EFO:0001266 male"));
         assertThat(document2.getAssayGroupId(), is("g27"));
         assertThat(document2.getExpressionLevel(), is(17.0));
@@ -147,7 +147,7 @@ public class BaselineAnalyticsIndexerServiceIT {
         assertThat(document.getExperimentAccession(), is("E-PROT-1"));
         assertThat(document.getExperimentType(), is(ExperimentType.PROTEOMICS_BASELINE));
         assertThat(document.getDefaultQueryFactorType(), is("ORGANISM_PART"));
-        assertThat(document.getIdentifierSearch(), is("ENSG00000000003 8173941 g2995860_3p_at g4099210_3p_a_at TSPAN6 integral to membrane 209108_at O43657 signal transduction 39361_f_at 4015421 4015403 Tetraspanin/Peripherin 4015420 209109_s_at 4015402 signal transducer activity 4015401 4015400 4015423 A_23_P171143 tetraspanin 6 [Source:HGNC Symbol;Acc:11858] TSPAN-6 4015409 4015408 4015407 4015406 4015405 4015404 Tetraspanin, EC2 domain positive regulation of I-kappaB kinase/NF-kappaB cascade T245 protein_coding 4015412 TM4SF6 4015414 4015413 39362_r_at 4015410 4015419 4015416 4015415 Tetraspanin 4015418 4015417"));
+        assertThat(document.getIdentifierSearch(), is("ENSG00000000003 biological_process g2995860_3p_at TSPAN6 O43657 39361_f_at negative regulation of viral-induced cytoplasmic pattern recognition receptor signaling pathway 4015421 209109_s_at 4015420 Tetraspanin/Peripherin signal transducer activity 64593_at 4015423 4015422 TSPAN-6 negative regulation of NIK/NF-kappaB signaling Tetraspanin, EC2 domain TM4SF6 A_24_P83262 39362_r_at A0A087WYV6 Tetraspanin extracellular vesicular exosome 8173941 g4099210_3p_a_at organelle 209108_at signal transduction 4015403 4015402 4015401 4015400 molecular_function A_23_P171143 A0A087WZU5 4015409 4015408 4015407 4015406 4015405 4015404 T245 extracellular region protein_coding tetraspanin 6 [Source:HGNC Symbol;Acc:HGNC:11858] 4015412 integral component of membrane protein binding 4015414 4015413 4015410 4015419 cellular_component 4015416 4015415 4015418 positive regulation of I-kappaB kinase/NF-kappaB signaling 4015417"));
         assertThat(document.getConditionsSearch(), is("EFO_0000399 EFO_0000635 EFO_0000001 EFO_0001272 colon adult UBERON_0001155 OBI_0100026 snap#MaterialEntity NCBITaxon_9606 EFO_0000786 EFO_0000787 NCBITaxon_2759 Homo sapiens span#ProcessualEntity"));
         assertThat(document.getAssayGroupId(), is("g5"));
         assertThat(document.getExpressionLevel(), is(9.94E06));
