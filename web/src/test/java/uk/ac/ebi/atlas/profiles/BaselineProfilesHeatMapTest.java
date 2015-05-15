@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesEMTAB513React71;
+import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesEMTab513React71;
 import uk.ac.ebi.atlas.experimentpage.baseline.BaselineProfilesHeatMap;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
 import uk.ac.ebi.atlas.model.baseline.*;
@@ -39,7 +39,7 @@ public class BaselineProfilesHeatMapTest {
     private RankBaselineProfilesFactory rankProfilesFactory = new RankBaselineProfilesFactory(baselineProfileComparatorFactory, geneProfilesListBuilder);
     private BaselineProfilesHeatMap subject = new BaselineProfilesHeatMap(baselineProfileStreamPipelineBuilder, rankProfilesFactory, null, null);
 
-    private BaselineProfilesEMTAB513React71 eMTab513react71InputStream = new BaselineProfilesEMTAB513React71(0.5);
+    private BaselineProfilesEMTab513React71 eMTab513react71InputStream = new BaselineProfilesEMTab513React71(0.5);
 
     private ImmutableSetMultimap<String, String> react71GeneIds = ImmutableSetMultimap.<String, String>builder().putAll("react_71", "ENSG00000196652", "ENSG00000082258", "ENSG00000047315", "ENSG00000077312", "ENSG00000198939", "ENSG00000178665", "ENSG00000161547").build();
 
