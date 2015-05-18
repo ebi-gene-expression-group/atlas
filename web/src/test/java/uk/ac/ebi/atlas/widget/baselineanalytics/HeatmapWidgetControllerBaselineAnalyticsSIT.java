@@ -18,15 +18,15 @@ public class HeatmapWidgetControllerBaselineAnalyticsSIT extends RestAssuredFixt
 
     @Test
     public void singleSpeciesGeneAccessionWithExpression() {
-        Response response = get("/widgets/heatmap/baselineAnalytics?geneQuery=ENSG00000163331");
+        Response response = get("/widgets/heatmap/baselineAnalytics?geneQuery=ENSG00000027644");
 
         response.then().assertThat().statusCode(200);
         response.then().assertThat().contentType("text/html");
 
         JsonPath json = response.jsonPath();
 
-        assertThat((String)json.get("profiles.rows[0].id"), is("E-MTAB-1733"));
-        assertThat((String)json.get("profiles.rows[1].id"), is("E-MTAB-513"));
+        assertThat((String)json.get("profiles.rows[0].id"), is("E-MTAB-2836"));
+        assertThat((String)json.get("profiles.rows[1].id"), is("E-MTAB-1733"));
     }
 
     @Test
