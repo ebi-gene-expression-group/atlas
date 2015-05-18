@@ -134,17 +134,18 @@
                                               type="number"
                                               maxFractionDigits="0"
                                               var="formattedCutoff"/>
-                            <form:input style="height:27px; border: 1px solid #AAA; padding-left: 4px; box-sizing: border-box" size="10" path="cutoff" value="${formattedCutoff}" id="cutoff"/>
+                            <%--height value set after Chosen input box to the left--%>
+                            <form:input style="height:27px; border: 1px solid #AAA; padding: 0px 5px;" size="10" path="cutoff" value="${formattedCutoff}" id="cutoff"/>
                         </c:when>
                         <c:otherwise>
-                            <form:input style="height:27px; border: 1px solid #AAA; padding-left: 4px; box-sizing: border-box" size="10" path="cutoff" id="cutoff"/>
+                            <form:input style="height:27px; border: 1px solid #AAA; padding: 0px 5px;" size="10" path="cutoff" id="cutoff"/>
                         </c:otherwise>
                     </c:choose>
                 </td>
 
                 <c:if test="${!type.isBaseline()}">
                     <td class="gxaExperimentRequestPreferencesFluidTableColumn">
-                        <form:input style="height:27px; border: 1px solid #AAA; padding-left: 4px; box-sizing: border-box" size="10" path="foldChangeCutOff" id="foldChangeCutOff"/>
+                        <form:input style="height:27px; border: 1px solid #AAA; padding: 0px 5px;" size="10" path="foldChangeCutOff" id="foldChangeCutOff"/>
                     </td>
                 </c:if>
             </tr>
