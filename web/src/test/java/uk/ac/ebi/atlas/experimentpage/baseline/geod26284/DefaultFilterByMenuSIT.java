@@ -45,7 +45,7 @@ public class DefaultFilterByMenuSIT extends SingleDriverSeleniumFixture {
     public static final String LONG_POLYA_RNA = "long polyA RNA";
     public static final String SK_N_SH_RA = "SK-N-SH_RA";
     public static final String A_549 = "A549";
-    public static final String H_MSC_AT_CELL_LINE = "hMSC-AT cell…";
+    public static final String H_MSC_AT_CELL_LINE = "hMSC-AT cell line";
 
     protected static Geod26284HeatmapTablePage subject;
 
