@@ -17,16 +17,16 @@
   },
   "devDependencies": {
     "chai": "^2.1.2",
-    "jquery": "^1.8.3",
-    "jsx-loader": "^0.12.2",
     "expose-loader": "^0.6.0",
+    "globule": "^0.2.0",
+    "jquery": "^1.8.3",
+    "jsdom": "^3.1.1",
+    "jsx-loader": "^0.12.2",
+    "mocha": "^2.0.1",
     "mocha-loader": "^0.7.1",
     "react-addons": "^0.9.0",
-    "source-map-support": "^0.2.10",
-    "webpack": "^1.7.3",
-    "jsdom": "^3.1.1",
-    "mocha": "^2.0.1",
     "react-tools": "^0.12.2",
-    "globule": "^0.2.0"
+    "source-map-support": "^0.2.10",
+    "webpack": "^1.7.3"
   }
 }

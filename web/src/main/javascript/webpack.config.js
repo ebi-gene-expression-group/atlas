@@ -9,6 +9,10 @@ module.exports = {
     entry: {
         "search-results-differential-page": "./src/search-results/differential-page.js"
         ,"search-results-baseline-page": "./src/search-results/baseline-page.js"
+        ,"webpack_example_with_plain_JS_scriptA-page": "./src/webpack_example/with_plain_JS/scriptA-page.js"
+        ,"webpack_example_with_JS_2_modules-page": "./src/webpack_example/with_plain_JS/moduleC-page.js"
+        ,"webpack_example_with_jQuery-page": "./src/webpack_example/with_plain_JS/jQueryModule-page.js"
+        ,"webpack_example_with_JSX-page": "./src/webpack_example/with_JSX/component-page.js"
         ,vendor: ["jquery", "react"]
     },
 
