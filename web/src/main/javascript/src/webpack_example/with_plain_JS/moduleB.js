@@ -17,5 +17,5 @@
 
 // This is the Webpack good way:
 exports.init = function() {
-    return "Hola mundo desde B";
+    return "Hello world from B";
 }

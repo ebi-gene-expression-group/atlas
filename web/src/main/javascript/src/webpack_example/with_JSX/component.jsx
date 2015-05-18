@@ -1,12 +1,9 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 
-/*global React */
 var SimpleComponent = React.createClass({
 
     render: function () {
-        var message = "Hola mundo";
+        var message = "Hello world";
         return (
             <p>{message}</p>
         );

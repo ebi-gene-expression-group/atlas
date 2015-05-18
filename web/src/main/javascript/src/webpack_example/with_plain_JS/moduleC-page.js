@@ -19,5 +19,5 @@ var moduleB = require('./moduleB.js');
 
 // This is the Webpack good way:
 exports.init = function() {
-    return 'Hola mundo desde C; el module B dice "' + moduleB.init() + '"';
+    return 'Hello world from C; module B says "' + moduleB.init() + '"';
 };

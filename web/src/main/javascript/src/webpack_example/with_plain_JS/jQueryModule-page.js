@@ -30,7 +30,7 @@ var $ = require('jquery');
 var message;
 
 exports.init = function(msg) {
-    message = msg == null ? "¡Vamos que nos vamos!" : msg;
+    message = msg == null ? "Let’s go!" : msg;
 };
 
 exports.displayMessage = function() {

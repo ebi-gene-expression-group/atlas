@@ -3,5 +3,5 @@
  */
 
 module.exports = function() {
-    return "Hola mundo con Webpack";
+    return "Hello world, with Webpack";
 };
