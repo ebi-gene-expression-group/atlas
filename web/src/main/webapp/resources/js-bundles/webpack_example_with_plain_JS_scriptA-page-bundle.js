@@ -1,8 +1,8 @@
-webpackJsonp([0,7],[/*!***********************************************************!*\
+webpackJsonp([0,9],{0:/*!***********************************************************!*\
   !*** ./src/webpack_example/with_plain_JS/scriptA-page.js ***!
   \***********************************************************/
-function(e,t,n){(function(t){e.exports=t.$page=n(/*! -!./src/webpack_example/with_plain_JS/scriptA-page.js */3)}).call(t,function(){return this}())},,,/*!***********************************************************!*\
+function(n,t,o){(function(t){n.exports=t.$page=o(/*! -!./src/webpack_example/with_plain_JS/scriptA-page.js */5)}).call(t,function(){return this}())},5:/*!***********************************************************!*\
   !*** ./src/webpack_example/with_plain_JS/scriptA-page.js ***!
   \***********************************************************/
-function(e,t,n){e.exports=function(){return"Hello world, with Webpack"}}]);
+function(n,t,o){n.exports=function(){return"Hello world, with Webpack"}}});
 //# sourceMappingURL=webpack_example_with_plain_JS_scriptA-page-bundle.js.map
