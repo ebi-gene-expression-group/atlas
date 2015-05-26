@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
+import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
@@ -47,10 +48,7 @@ import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 public abstract class BaselineExperimentPageController extends BaselineExperimentController {
 
@@ -116,7 +114,14 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
-        SortedSet<AssayGroupFactor> filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors);
+//        SortedSet<AssayGroupFactor> filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors);
+
+        Set<AssayGroupFactor> filteredAssayGroupFactors;
+        if(!experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
+            filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactorsByXML(selectedFilterFactors);
+        } else {
+            filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors);
+        }
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
         // It is in order.
@@ -175,7 +180,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         return null;
     }
 
-    private ImmutableSet<String> extractOntologyTerm(SortedSet<AssayGroupFactor> filteredAssayGroupFactors) {
+    private ImmutableSet<String> extractOntologyTerm(Set<AssayGroupFactor> filteredAssayGroupFactors) {
         ImmutableSet.Builder<String> builder = ImmutableSet.builder();
 
         for (AssayGroupFactor assayGroupFactor : filteredAssayGroupFactors) {
@@ -203,7 +208,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
     }
 
 
-    private void addJsonForHeatMap(BaselineProfilesList baselineProfiles, BaselineProfilesList geneSetProfiles, SortedSet<AssayGroupFactor> filteredAssayGroupFactors, SortedSet<Factor> orderedFactors, Model model) {
+    private void addJsonForHeatMap(BaselineProfilesList baselineProfiles, BaselineProfilesList geneSetProfiles, Set<AssayGroupFactor> filteredAssayGroupFactors, SortedSet<Factor> orderedFactors, Model model) {
         if (baselineProfiles.isEmpty()) {
             return;
         }
@@ -239,8 +244,12 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         //ToDo: this stuff should be refactored, menu should be a separate REST service
         SortedSet<String> menuFactorNames = experimentalFactors.getMenuFilterFactorNames();
         if (!menuFactorNames.isEmpty()) {
-
-            Set<Factor> menuFactors = experimentalFactors.getAllFactors();
+            Set<Factor> menuFactors;
+            if(!experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
+                menuFactors = experimentalFactors.getAllFactorsOrderedByXML();
+            } else {
+                menuFactors = experimentalFactors.getAllFactors();
+            }
 
             SortedSet<FilterFactorMenuVoice> filterFactorMenu = filterFactorMenuBuilder
                     .withExperimentalFactors(experimentalFactors)
@@ -250,6 +259,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
             model.addAttribute("filterFactorMenu", filterFactorMenu);
 
             model.addAttribute("menuFactorNames", menuFactorNames);
+
         }
 
         //ToDo: looks bad, a custom EL function or jsp tag function to resolve names would be much better

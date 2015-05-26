@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-
 //This class is wired into CacheConfiguration. Guava CacheBuilder, that is the one only client of this class, is not spring managed and only accepts an initial instance
 //of BaselineExperimentsCacheLoader, hence BaselineExperimentsCacheLoader is a singleton. However BaselineExperimentsCacheLoader uses ExperimentBuilder and ExperimentalFactorsBuilder
 //which have a prototype scope. To get around this BaselineExperimentsCacheLoader uses lookup-method injection to get a new prototypical instance of
@@ -79,9 +78,18 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
             }
         }
 
-        String[] orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
+        String[] orderedAssayGroupIds;
+        boolean orderNatural;
 
-        ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
+        if(factorsConfig.getOrderFactor() != null && factorsConfig.getOrderFactor().equals("natural")) {
+            orderNatural = true;
+            orderedAssayGroupIds = assayGroups.getAssayGroupIds().toArray(new String[assayGroups.getAssayGroupIds().size()]);
+        } else {
+            orderNatural = false;
+            orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
+        }
+
+        ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds, orderNatural);
 
         return createExperimentBuilder().forOrganisms(experimentDTO.getSpecies())
                 .ofKingdom(kingdom)
@@ -101,7 +109,18 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
     }
 
-    private ExperimentalFactors createExperimentalFactors(ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig, AssayGroups assayGroups, String[] orderedAssayGroupIds) {
+    private ExperimentalFactors createExperimentalFactors(ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig,
+                                                          AssayGroups assayGroups, String[] orderedAssayGroupIds, boolean orderNatural) {
+        if(!orderNatural){
+            return createExperimentalFactorFromTSV(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
+        } else {
+            return createExperimentalFactorFromXML(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
+        }
+
+    }
+
+    private ExperimentalFactors createExperimentalFactorFromTSV(ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig,
+                                                                AssayGroups assayGroups, String[] orderedAssayGroupIds) {
         String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
         Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
         Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
@@ -121,6 +140,29 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
                 .withDefaultFilterFactors(defaultFilterFactors)
                 .create();
     }
+
+    private ExperimentalFactors createExperimentalFactorFromXML(ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig,
+                                                                AssayGroups assayGroups, String[] orderedAssayGroupIds) {
+        String defaultQueryFactorType = factorsConfig.getDefaultQueryFactorType();
+        Set<Factor> defaultFilterFactors = factorsConfig.getDefaultFilterFactors();
+        Set<String> requiredFactorTypes = getRequiredFactorTypes(defaultQueryFactorType, defaultFilterFactors);
+        Map<String, String> factorNamesByType = getFactorDisplayNameByType(experimentDesign.getFactorHeaders(), requiredFactorTypes);
+
+        List<FactorGroup> orderedFactorGroups = extractOrderedFactorGroups(orderedAssayGroupIds, assayGroups, experimentDesign);
+        Map<String, FactorGroup> orderedFactorGroupsByAssayGroup = extractOrderedFactorGroupsByAssayGroup(orderedAssayGroupIds, assayGroups, experimentDesign);
+
+        ExperimentalFactorsBuilder experimentalFactorsBuilder = createExperimentalFactorsBuilder();
+
+        return experimentalFactorsBuilder
+                .withOrderedFactorGroups(orderedFactorGroups)
+                .withOrderedFactorGroupsByAssayGroupId(orderedFactorGroupsByAssayGroup)
+                .withMenuFilterFactorTypes(factorsConfig.getMenuFilterFactorTypes())
+                .withFactorNamesByType(factorNamesByType)
+                .withDefaultQueryType(factorsConfig.getDefaultQueryFactorType())
+                .withDefaultFilterFactors(defaultFilterFactors)
+                .createFromXML();
+    }
+
 
     Set<String> getRequiredFactorTypes(String defaultQueryFactorType, Set<Factor> defaultFilterFactors) {
         Set<String> requiredFactorTypes = Sets.newHashSet(defaultQueryFactorType);

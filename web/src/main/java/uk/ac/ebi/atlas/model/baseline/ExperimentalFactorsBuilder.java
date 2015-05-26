@@ -22,16 +22,14 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Named;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -87,11 +85,22 @@ public class ExperimentalFactorsBuilder {
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
         checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
 
-
         SortedSetMultimap<String, Factor> factorsByType = buildFactorsByType();
         SortedSetMultimap<Factor, Factor> coOccurringFactors = buildCoOccurringFactors();
 
         return new ExperimentalFactors(factorsByType, factorNamesByType, orderedFactorGroups,
+                coOccurringFactors, menuFilterFactorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
+    }
+
+    public ExperimentalFactors createFromXML() {
+        checkState(menuFilterFactorTypes != null, "Please provide a set of menu filter factor types");
+        checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
+        checkState(defaultFilterFactors != null, "Please provide a set of filter factors");
+
+        LinkedHashMultimap<String, Factor> xmlFactorsByType = buildXmlFactorsByType();
+        LinkedHashMultimap<Factor, Factor> coOccurringFactors = buildXmlCoOccurringFactors();
+
+        return new ExperimentalFactors(xmlFactorsByType, factorNamesByType, orderedFactorGroups,
                 coOccurringFactors, menuFilterFactorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
     }
 
@@ -108,6 +117,19 @@ public class ExperimentalFactorsBuilder {
             }
         }
         return factorsByType;
+    }
+
+    LinkedHashMultimap<String, Factor> buildXmlFactorsByType() {
+        LinkedHashMultimap<String, Factor> xmlFactorsByType = LinkedHashMultimap.create();
+
+        for(FactorGroup factorGroup : orderedFactorGroups) {
+            for (Factor factor : factorGroup) {
+                xmlFactorsByType.put(factor.getType(), factor);
+            }
+        }
+
+        return xmlFactorsByType;
+
     }
 
 
@@ -127,6 +149,24 @@ public class ExperimentalFactorsBuilder {
             }
         }
         return coOccurringFactors;
+    }
+
+    LinkedHashMultimap<Factor, Factor> buildXmlCoOccurringFactors() {
+
+        LinkedHashMultimap<Factor, Factor> xmlCoOccurringFactors = LinkedHashMultimap.create();
+
+        for (FactorGroup factorGroup : orderedFactorGroups) {
+
+            for (Factor factor : factorGroup) {
+
+                for (Factor value : factorGroup) {
+                    if (!value.equals(factor)) {
+                        xmlCoOccurringFactors.put(factor, value);
+                    }
+                }
+            }
+        }
+        return xmlCoOccurringFactors;
     }
 
 }

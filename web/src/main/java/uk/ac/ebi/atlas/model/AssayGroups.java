@@ -4,17 +4,14 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class AssayGroups implements Iterable<AssayGroup> {
 
     private Map<String, AssayGroup> assayGroupsById;
 
     public AssayGroups(Collection<AssayGroup> assayGroups) {
-        this.assayGroupsById = Maps.newHashMap();
+        this.assayGroupsById = Maps.newLinkedHashMap();
         for (AssayGroup assayGroup : assayGroups) {
             assayGroupsById.put(assayGroup.getId(), assayGroup);
         }

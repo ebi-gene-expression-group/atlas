@@ -50,9 +50,13 @@ public class ExperimentalFactors implements Serializable {
 
     private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
 
+    private LinkedHashMultimap<String, Factor> xmFactorsByType = LinkedHashMultimap.create();
+
     private BiMap<String, String> factorDisplayNamesByType = HashBiMap.create();
 
     private SortedSetMultimap<Factor, Factor> coOccurringFactors = TreeMultimap.create();
+
+    private LinkedHashMultimap<Factor, Factor> xmlCoOcurringFactors = LinkedHashMultimap.create();
 
     private Set<String> menuFilterFactorTypes;
 
@@ -73,6 +77,24 @@ public class ExperimentalFactors implements Serializable {
         this.factorDisplayNamesByType.putAll(factorDisplayNamesByType);
         this.orderedFactorGroups = orderedFactorGroups;
         this.coOccurringFactors = coOccurringFactors;
+        this.menuFilterFactorTypes = menuFilterFactorTypes;
+        this.defaultQueryFactorType = defaultQueryFactorType;
+        this.defaultFilterFactors = defaultFilterFactors;
+    }
+
+    ExperimentalFactors(LinkedHashMultimap<String, Factor> factorsByType,
+                        Map<String, String> factorDisplayNamesByType,
+                        List<FactorGroup> orderedFactorGroups,
+                        LinkedHashMultimap<Factor, Factor> coOccurringFactors,
+                        Set<String> menuFilterFactorTypes,
+                        Map<String, FactorGroup> orderedFactorGroupsByAssayGroupId,
+                        String defaultQueryFactorType,
+                        Set<Factor> defaultFilterFactors) {
+        this.xmFactorsByType = factorsByType;
+        this.orderedFactorGroupsByAssayGroupId = orderedFactorGroupsByAssayGroupId;
+        this.factorDisplayNamesByType.putAll(factorDisplayNamesByType);
+        this.orderedFactorGroups = orderedFactorGroups;
+        this.xmlCoOcurringFactors = coOccurringFactors;
         this.menuFilterFactorTypes = menuFilterFactorTypes;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
@@ -103,6 +125,10 @@ public class ExperimentalFactors implements Serializable {
     //ToDo: this is only used to build factor filter menu, maybe should be encapsulated in a menu builder and the menu builder could be used by a menu cache loader
     public SortedSet<Factor> getCoOccurringFactors(Factor factor) {
         return coOccurringFactors.get(factor);
+    }
+
+    public Set<Factor> getCoOccurringFactorsByXML(Factor factor) {
+        return xmlCoOcurringFactors.get(factor);
     }
 
     public ImmutableSortedSet<Factor> getFactors(String type) {
@@ -188,6 +214,24 @@ public class ExperimentalFactors implements Serializable {
         return result;
     }
 
+    public Set<AssayGroupFactor> getComplementAssayGroupFactorsByXML(final Set<Factor> filterFactors) {
+        LinkedHashSet<AssayGroupFactor> result = Sets.newLinkedHashSet();
+
+        for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
+            List<Factor> remainingFactors;
+
+            if (CollectionUtils.isNotEmpty(filterFactors)) {
+                remainingFactors = orderedFactorGroupsByAssayGroupId.get(groupId).remove(filterFactors);
+            } else {
+                remainingFactors = Lists.newArrayList(orderedFactorGroupsByAssayGroupId.get(groupId).iterator());
+            }
+            if (remainingFactors.size() == 1) {
+                result.add(new AssayGroupFactor(groupId, remainingFactors.get(0)));
+            }
+        }
+
+        return result;
+    }
 
     public FactorGroup getFactorGroup(String assayGroupId) {
         return orderedFactorGroupsByAssayGroupId.get(assayGroupId);
@@ -218,6 +262,10 @@ public class ExperimentalFactors implements Serializable {
 
     public SortedSet<Factor> getAllFactors() {
         return ImmutableSortedSet.copyOf(factorsByType.values());
+    }
+
+    public ImmutableSet<Factor> getAllFactorsOrderedByXML() {
+        return ImmutableSet.copyOf(xmFactorsByType.values());
     }
 
     // ordered the same as the assay group ids in the expression levels .tsv

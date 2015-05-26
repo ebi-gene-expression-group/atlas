@@ -80,6 +80,11 @@ public class BaselineExperimentConfiguration {
         return defaultQueryFactorType;
     }
 
+    public String getOrderFactor() {
+        String orderFactor = config.getString("orderFactor");
+        return orderFactor;
+    }
+
     public Set<String> getMenuFilterFactorTypes() {
 
         Set<String> results = new HashSet<>();

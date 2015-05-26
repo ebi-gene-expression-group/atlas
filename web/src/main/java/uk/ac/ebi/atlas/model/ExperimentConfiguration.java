@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.model;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -36,6 +37,7 @@ import uk.ac.ebi.atlas.model.differential.Contrast;
 
 import javax.xml.xpath.*;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 
 public class ExperimentConfiguration {
@@ -141,7 +143,7 @@ public class ExperimentConfiguration {
     }
 
     public AssayGroups getAssayGroups() {
-        Set<AssayGroup> assayGroups = Sets.newHashSet();
+        List<AssayGroup> assayGroups = Lists.newArrayList();
 
         String[] assayGoupIds = xmlConfiguration.getStringArray("/analytics/assay_groups/assay_group/@id");
 
