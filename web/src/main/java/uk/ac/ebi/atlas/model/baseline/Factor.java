@@ -35,10 +35,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Factor implements Comparable<Factor>, Serializable {
 
-    private final String header;
-    private final String type;
-    private final String value;
-    private final Set<OntologyTerm> valueOntologyTerms;
+    private String header;
+    private String type;
+    private String value;
+    private Set<OntologyTerm> valueOntologyTerms;
+
+    public Factor() {}
 
     public Factor(String header, String value) {
         this(header, value, new OntologyTerm[0]);

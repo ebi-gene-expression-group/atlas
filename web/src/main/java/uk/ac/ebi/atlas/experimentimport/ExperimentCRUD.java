@@ -119,4 +119,9 @@ public class ExperimentCRUD {
     public void serializeExpressionData(String experimentAccession) {
         expressionSerializerService.serializeExpressionData(experimentAccession);
     }
+
+    public void deserializeExpressionData(String experimentAccession) {
+        expressionSerializerService.deserializeExpressionData(experimentAccession);
+    }
+
 }

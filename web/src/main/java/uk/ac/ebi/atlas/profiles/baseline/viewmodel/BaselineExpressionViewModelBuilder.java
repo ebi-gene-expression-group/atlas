@@ -41,7 +41,7 @@ public class BaselineExpressionViewModelBuilder {
     private BaselineExpressionViewModel createBaselineExpressionViewModel(Profile<Factor, BaselineExpression> profile, Factor factor, double minExpressionLevel, double maxExpressionLevel) {
         String factorName = factor.getValue();
         BaselineExpression expression = profile.getExpression(factor);
-        Optional<Quartiles> quartiles = (expression == null) ? Optional.<Quartiles>absent() : expression.getQuartiles();
+        double[] quartiles = (expression == null) ? new double[]{} : expression.getQuartiles();
 
         String value = (expression == null) ? "" : (expression.getLevelAsString().equals("NT")) ? "NT" : (!expression.isKnown() ? "UNKNOWN" : baselineExpressionLevelRounder.format(expression.getLevel()));
         String color = (expression == null) ? "" : (expression.isKnown() && !expression.getLevelAsString().equals("NT") ?

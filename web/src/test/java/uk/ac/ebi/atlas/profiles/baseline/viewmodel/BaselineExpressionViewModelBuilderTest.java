@@ -84,7 +84,7 @@ public class BaselineExpressionViewModelBuilderTest {
     public void buildExpressionViewModelWithQuartiles () {
         BaselineProfile profile = new BaselineProfile("Factor_ID", "Factor_NAME");
         profile.add("ORGANISM_PART", new BaselineExpression(NT, new FactorSet(ADIPOSE)));
-        profile.add("ORGANISM_PART", new BaselineExpression(Quartiles.create(0.1,0.2,0.3,0.4,0.5), new FactorSet(ADRENAL)));
+        profile.add("ORGANISM_PART", new BaselineExpression(new double[]{0.1,0.2,0.3,0.4,0.5}, new FactorSet(ADRENAL)));
 
         BaselineExpressionViewModel[] expressions = subject.buildExpressions(profile, orderedFactors, minExpressionLevel, maxExpressionLevel);
 

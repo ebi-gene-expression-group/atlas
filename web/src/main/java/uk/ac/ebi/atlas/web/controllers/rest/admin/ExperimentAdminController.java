@@ -76,6 +76,13 @@ public class ExperimentAdminController {
         return "Expression data successfully serialized for " + experimentAccession;
     }
 
+    @RequestMapping("/deserializeExpressionData")
+    @ResponseBody
+    public String deserializeExpressionData(@RequestParam("accession") String experimentAccession) throws IOException {
+        experimentCRUD.deserializeExpressionData(experimentAccession);
+        return "Expression data successfully deserialized for " + experimentAccession;
+    }
+
     @RequestMapping("/serializeAllBaselineExpressionData")
     @ResponseBody
     public String serializeAllBaselineExpressionData() throws IOException {

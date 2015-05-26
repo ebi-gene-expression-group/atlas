@@ -34,16 +34,10 @@ public class BaselineExpressionsKryoInputStream extends KryoInputStream<Baseline
     }
 
     @Override
-    protected BaselineExpressions buildObjectFromValues(String geneId, String geneName, Double[][] expressionLevels) {
+    protected BaselineExpressions buildObjectFromValues(String geneId, String geneName, BaselineExpression[] expressions) {
 
         BaselineExpressions baselineExpressions = new BaselineExpressions();
-        //we need to reload because the first line can only be used to extract the gene ID
-        getExpressionsRowRawDeserializer().reload(expressionLevels);
-
-        BaselineExpression expression;
-
-        while ((expression = getExpressionsRowRawDeserializer().next()) != null) {
-
+        for (BaselineExpression expression : expressions) {
             baselineExpressions.addExpression(expression);
         }
 

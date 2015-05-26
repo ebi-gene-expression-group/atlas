@@ -141,4 +141,9 @@
         <location>/WEB-INF/jsp/error/layout-error-page.jsp</location>
     </error-page>
 
+    <!-- Disable JSessionID -->
+    <session-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
 </web-app>

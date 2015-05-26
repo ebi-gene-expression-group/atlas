@@ -35,7 +35,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Named
 @Scope("prototype")
-public class ExpressionsRowRawDeserializerBaselineBuilder implements ExpressionsRowDeserializerBuilder<Double[], BaselineExpression> {
+public class ExpressionsRowRawDeserializerBaselineBuilder implements ExpressionsRowDeserializerBuilder<BaselineExpression, BaselineExpression> {
 
     private String experimentAccession;
 

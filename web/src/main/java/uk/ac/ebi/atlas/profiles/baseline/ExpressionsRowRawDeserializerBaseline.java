@@ -47,24 +47,27 @@ public class ExpressionsRowRawDeserializerBaseline extends ExpressionsRowRawDese
     }
 
     @Override
-    public ExpressionsRowRawDeserializer<BaselineExpression> reload(Double[]... values) {
-        checkArgument(values.length == expectedNumberOfValues, String.format("Expected %s values but got [%s]", expectedNumberOfValues, Joiner.on(",").join(values)));
+    public ExpressionsRowRawDeserializer<BaselineExpression> reload(BaselineExpression... values) {
+        if (values.length != expectedNumberOfValues) {
+            throw new IllegalArgumentException(String.format("Expected %s values but got [%s]", expectedNumberOfValues, Joiner.on(",").join(values)));
+        }
         return super.reload(values);
     }
 
     @Override
-    public BaselineExpression nextExpression(Queue<Double[]> rawValuesRow) {
-        Double[] expressionLevelValues = rawValuesRow.poll();
+    public BaselineExpression nextExpression(Queue<BaselineExpression> rawValuesRow) {
+//        Double[] expressionLevelValues = rawValuesRow.poll();
+//        if (expressionLevelValues == null) {
+//            return null;
+//        } else if (expressionLevelValues.length == 0) {
+//            return new BaselineExpression("NT", factorGroups.next());
+//        }else if (expressionLevelValues.length == 1) {
+//            return new BaselineExpression(expressionLevelValues[0], factorGroups.next());
+//        } else {
+//            return new BaselineExpression(Quartiles.create(expressionLevelValues), factorGroups.next());
+//        }
 
-        if (expressionLevelValues == null) {
-            return null;
-        } else if (expressionLevelValues.length == 0) {
-            return new BaselineExpression("NT", factorGroups.next());
-        }else if (expressionLevelValues.length == 1) {
-            return new BaselineExpression(expressionLevelValues[0], factorGroups.next());
-        } else {
-            return new BaselineExpression(Quartiles.create(expressionLevelValues), factorGroups.next());
-        }
+        return rawValuesRow.poll();
     }
 
 }

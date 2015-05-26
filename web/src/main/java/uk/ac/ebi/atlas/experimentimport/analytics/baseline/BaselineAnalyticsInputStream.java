@@ -119,13 +119,13 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
 
             if (!"NA".equalsIgnoreCase(expressionLevelString)) {
                 Double expressionLevel;
-                Optional<Quartiles> quartiles;
+                double[] quartiles;
                 if (expressionLevelString.contains(",")) {
-                    quartiles = Optional.fromNullable(Quartiles.create(expressionLevelString));
-                    expressionLevel = quartiles.get().median();
+                    quartiles = Quartiles.create(expressionLevelString);
+                    expressionLevel = quartiles[2];
                 }
                 else {
-                    quartiles = Optional.absent();
+                    quartiles = new double[]{};
                     expressionLevel = Double.parseDouble(expressionLevels[i]);
                 }
 
