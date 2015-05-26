@@ -86,11 +86,11 @@ public class BaselineExperimentAssayGroupsLinesTest {
 
         print(subject);
 
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G2, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_ONTOLOGY_ID2}));
-        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G2, FACTOR, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_ID2}));
-
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G1, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE1, HTTP_OBO + SAMPLE_ONTOLOGY_ID1}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G1, FACTOR, FACTOR_HEADER, FACTOR_VALUE1, HTTP_OBO + FACTOR_ONTOLOGY_ID1}));
+
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G2, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE2, SAMPLE_ONTOLOGY_ID2}));
+        assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G2, FACTOR, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_ID2}));
 
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G3, CHARACTERISTIC, SAMPLE_HEADER, SAMPLE_VALUE3, ""}));
         assertThat(lines.next(), is(new String[]{EXPERIMENT_ACCESSION, G3, FACTOR, FACTOR_HEADER, FACTOR_VALUE3, ""}));

@@ -79,17 +79,17 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
         }
 
         String[] orderedAssayGroupIds;
-        boolean orderNatural;
+        boolean orderCurated;
 
-        if(factorsConfig.getOrderFactor() != null && factorsConfig.getOrderFactor().equals("natural")) {
-            orderNatural = true;
+        if(factorsConfig.getOrderFactor() != null && factorsConfig.getOrderFactor().equals("curated")) {
+            orderCurated = true;
             orderedAssayGroupIds = assayGroups.getAssayGroupIds().toArray(new String[assayGroups.getAssayGroupIds().size()]);
         } else {
-            orderNatural = false;
+            orderCurated = false;
             orderedAssayGroupIds = expressionLevelFile.readOrderedAssayGroupIds(experimentAccession);
         }
 
-        ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds, orderNatural);
+        ExperimentalFactors experimentalFactors = createExperimentalFactors(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds, orderCurated);
 
         return createExperimentBuilder().forOrganisms(experimentDTO.getSpecies())
                 .ofKingdom(kingdom)
@@ -110,8 +110,8 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
     }
 
     private ExperimentalFactors createExperimentalFactors(ExperimentDesign experimentDesign, BaselineExperimentConfiguration factorsConfig,
-                                                          AssayGroups assayGroups, String[] orderedAssayGroupIds, boolean orderNatural) {
-        if(!orderNatural){
+                                                          AssayGroups assayGroups, String[] orderedAssayGroupIds, boolean orderCurated) {
+        if(!orderCurated){
             return createExperimentalFactorFromTSV(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
         } else {
             return createExperimentalFactorFromXML(experimentDesign, factorsConfig, assayGroups, orderedAssayGroupIds);
