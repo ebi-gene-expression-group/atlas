@@ -30,7 +30,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-public class MicroArray2ArrayDesignsHeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends SeleniumFixture {
+public class MicroArray2ArrayDesignsHeatmapTableWithDifferentRegulationsButDefaultQueryParamsSIT extends SeleniumFixture {
 
     private static final String E_GEOD_3779_ACCESSION = "E-GEOD-3779";
     protected HeatmapTablePage subject;

@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
-public class MicroArray1ArrayDesignHeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends SeleniumFixture {
+public class MicroArray1ArrayDesignHeatmapTableWithDifferentRegulationsButDefaultQueryParamsSIT extends SeleniumFixture {
 
     private static final String E_MTAB_1066_ACCESSION = "E-MTAB-1066";
     protected HeatmapTablePage subject;

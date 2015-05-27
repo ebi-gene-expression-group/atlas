@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class ColorGradientWithDifferentQueryParamsIT extends SeleniumFixture {
+public class ColorGradientWithDifferentQueryParamsSIT extends SeleniumFixture {
 
     private static final String E_GEOD_22351_ACCESSION = "E-GEOD-22351";
     protected HeatmapTablePage subject;

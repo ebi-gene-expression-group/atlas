@@ -31,7 +31,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-public class HeatmapTableForDifferentOrganismsAndDefaultQueryParamsIT extends SeleniumFixture {
+public class HeatmapTableForDifferentOrganismsAndDefaultQueryParamsSIT extends SeleniumFixture {
 
     private static final String E_GEOD_30352_ACCESSION = "E-GEOD-30352";
     public static final String ORGANISM_PART = "Organism part";

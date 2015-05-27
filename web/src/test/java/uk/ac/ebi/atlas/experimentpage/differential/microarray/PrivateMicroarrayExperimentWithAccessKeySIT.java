@@ -1,46 +1,30 @@
-/*
- * Copyright 2008-2013 Microarray Informatics Team, EMBL-European Bioinformatics Institute
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- *
- * For further details of the Gene Expression Atlas project, including source code,
- * downloads and documentation, please see:
- *
- * http://gxa.github.com/gxa
- */
+package uk.ac.ebi.atlas.experimentpage.differential.microarray;
 
-package uk.ac.ebi.atlas.experimentpage.differential.rnaseq;
-
+import com.jayway.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
+import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentAnalysisMethodsPage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.ExperimentDesignTablePage;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.QCReportPage;
 
-import static com.jayway.restassured.RestAssured.expect;
-import static com.jayway.restassured.RestAssured.given;
+import java.text.MessageFormat;
+
+import static com.jayway.restassured.RestAssured.*;
 import static com.jayway.restassured.path.json.JsonPath.from;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
+public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture {
 
-    private static final String EXPERIMENT_ACCESSION = "E-MTAB-698";
+    private static final String EXPERIMENT_ACCESSION = "E-GEOD-3779";
+    public static final String ARRAY_DESIGN = "A-AFFY-23";
 
     private HeatmapTablePage subject;
 
@@ -80,7 +64,7 @@ public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
 
     @Test
     public void pageShouldBeAvailableWithAccessKey() {
-        assertThat(subject.getExperimentDescription(), is("RNA-seq of vomeronasal tissue from adult male and female mice"));
+        assertThat(subject.getExperimentDescription(), is("Transcription profiling by array of mouse neurospheres cultured from p107-/- embryos and their wildtype littermates"));
     }
 
     @Test
@@ -89,8 +73,9 @@ public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
         assertThat(subject.getDownloadAnalyticsLink(), endsWith("?accessKey=" + accessKey));
         assertThat(subject.getDisplayExperimentDesignLink(), endsWith("?accessKey=" + accessKey));
         assertThat(subject.getDisplayExperimentAnalysisLink(), endsWith("?accessKey=" + accessKey));
-        assertThat(subject.getDownloadRawCountsLink(), endsWith("?accessKey=" + accessKey));
+        assertThat(subject.getDownloadNormalizedLink(), endsWith("?accessKey=" + accessKey));
         assertThat(subject.getDownloadAnalyticsLink(), endsWith("?accessKey=" + accessKey));
+        assertThat(subject.getQCReportLink(), endsWith("?accessKey=" + accessKey));
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -106,6 +91,41 @@ public class PrivateExperimentWithAccessKeyIT extends SeleniumFixture {
                 new ExperimentDesignTablePage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
         experimentDesignPage.get();
         experimentDesignPage.getExperimentDescription();
+    }
+
+    @Test
+    public void analysisMethodsPageWillBeAvailableWithAccessKey() {
+        ExperimentAnalysisMethodsPage analysisMethodsPage =
+                new ExperimentAnalysisMethodsPage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
+        analysisMethodsPage.get();
+        analysisMethodsPage.getExperimentDescription();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void qcReportPageWillFailWithoutAccessKey() {
+        QCReportPage qcReportPage =
+                new QCReportPage(driver, EXPERIMENT_ACCESSION, ARRAY_DESIGN);
+        qcReportPage.get();
+        qcReportPage.getExperimentDescription();
+    }
+
+    @Test
+    public void qcReportPageWillBeAvailableWithAccessKey() {
+        QCReportPage qcReportPage =
+                new QCReportPage(driver, EXPERIMENT_ACCESSION, ARRAY_DESIGN, "accessKey=" + accessKey);
+        qcReportPage.get();
+        qcReportPage.getExperimentDescription();
+    }
+
+    @Test
+    public void qcReportResourcesAvailableWithoutAccessKey(){
+        RestAssuredFixture.initRestAssured();
+
+        Response response = get(MessageFormat.format("/experiments/{0}/qc/{1}/box.png", EXPERIMENT_ACCESSION, ARRAY_DESIGN));
+
+        response.then().assertThat().statusCode(200);
+
+        RestAssuredAuthenticatedFixture.initRestAssured();
     }
 
 }
