@@ -31,7 +31,7 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
-public class RnaSeqHeatmapTableWithDifferentRegulationsButDefaultQueryParamsIT extends SeleniumFixture {
+public class RnaSeqHeatmapTableWithDifferentRegulationsButDefaultQueryParamsSIT extends SeleniumFixture {
 
     private static final String E_GEOD_22351_ACCESSION = "E-GEOD-22351";
     protected HeatmapTablePage subject;

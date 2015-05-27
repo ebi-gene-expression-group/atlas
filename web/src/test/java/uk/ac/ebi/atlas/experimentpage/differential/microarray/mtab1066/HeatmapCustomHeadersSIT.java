@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class HeatmapCustomHeadersIT extends SinglePageSeleniumFixture {
+public class HeatmapCustomHeadersSIT extends SinglePageSeleniumFixture {
 
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-1066";
 
