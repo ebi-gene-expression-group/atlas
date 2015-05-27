@@ -8,7 +8,7 @@
 <c:set var="atlasHost" value="${pageContext.request.serverName == 'localhost' ? 'wwwdev' : pageContext.request.serverName.concat(serverPort)}"/>
 
 <c:set var="toggleButtonImage" value="/resources/images/male_selected.png"/>
-<c:if test="${species.equals('oryza sativa')}">
+<c:if test="${species.equals('oryza sativa') || species.equals('oryza sativa japonica group')}">
     <c:set var="toggleButtonImage" value="/resources/images/plant_switch_buttons_1.png"/>
 </c:if>
 
