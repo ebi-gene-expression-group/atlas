@@ -41,10 +41,10 @@ public class BaselineExperimentAssayGroupsLinesIT {
         assertThat(lines.hasNext(), is(true));
         assertThat(line1.length, is(6));
         assertThat(line1[0], is("E-GEOD-30352"));
-        assertThat(line1[1], is("g37"));
+        assertThat(line1[1], is("g1"));
         assertThat(line1[2], is("characteristic"));
         assertThat(line1[3], is("biosource provider"));
-        assertThat(line1[4], is("Opossum colonies from the Museum of Natural History, Berlin, Germany"));
+        assertThat(line1[4], is("National Disease Research Interchange, USA (NDRI)"));
         assertThat(line1[5], is(""));
 
         String[] line2 = lines.next();
@@ -52,11 +52,11 @@ public class BaselineExperimentAssayGroupsLinesIT {
         assertThat(lines.hasNext(), is(true));
         assertThat(line2.length, is(6));
         assertThat(line2[0], is("E-GEOD-30352"));
-        assertThat(line2[1], is("g37"));
+        assertThat(line2[1], is("g1"));
         assertThat(line2[2], is("characteristic"));
         assertThat(line2[3], is("sex"));
-        assertThat(line2[4], is("female"));
-        assertThat(line2[5], is("NCBITaxon/NCBITaxon:13616"));
+        assertThat(line2[4], is("male"));
+        assertThat(line2[5], is("NCBITaxon/NCBITaxon:9606"));
     }
 
 }

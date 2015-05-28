@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
+import autovalue.shaded.com.google.common.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -37,9 +38,12 @@ public class ProteomicsBaselineDesignPageControllerIT {
 
     private static final String EXPERIMENT_ACCESSION = "E-PROT-1";
 
-    private static final Set<String> RUNS = Sets.newHashSet("Adult_Bcells","Fetal_Heart","Adult_Monocytes","Adult_Adrenalgland","Adult_Liver","Adult_Platelets","Adult_Heart","Adult_Urinarybladder","Adult_Pancreas","Fetal_Brain",
-            "Fetal_Placenta","Adult_Lung","Adult_Spinalcord","Fetal_Ovary","Fetal_Liver","Adult_Colon","Adult_Gallbladder","Adult_Rectum","Fetal_Gut","Adult_Retina","Adult_Testis","Adult_NKcells","Adult_Prostate","Adult_CD4Tcells",
-            "Adult_Ovary","Fetal_Testis","Adult_Frontalcortex","Adult_CD8Tcells","Adult_Esophagus","Adult_Kidney");
+    private static final List<String> RUNS = Lists.newArrayList("Adult_Bcells", "Fetal_Heart", "Adult_Adrenalgland", "Adult_Monocytes", "Adult_Liver",
+            "Adult_Platelets", "Adult_Heart", "Adult_Pancreas", "Adult_Urinarybladder", "Fetal_Brain", "Fetal_Placenta", "Adult_Lung", "Adult_Spinalcord",
+            "Fetal_Ovary", "Fetal_Liver", "Adult_Colon", "Adult_Gallbladder", "Adult_Rectum", "Fetal_Gut", "Adult_Retina", "Adult_Testis", "Adult_NKcells",
+            "Adult_Prostate", "Adult_CD4Tcells", "Adult_Ovary", "Fetal_Testis", "Adult_Frontalcortex", "Adult_CD8Tcells", "Adult_Esophagus", "Adult_Kidney");
+
+    private static final Set<String> runSet = Sets.newLinkedHashSet();
 
     @Inject
     private BaselineDesignPageController subject;
@@ -67,13 +71,13 @@ public class ProteomicsBaselineDesignPageControllerIT {
         subject.showProteomicsExperimentDesign(model, requestMock);
 
         Gson gson = new Gson();
-
+        runSet.addAll(RUNS);
         // then
         Map<String, Object> map = model.asMap();
         assertThat(((String) map.get("assayHeaders")), is("[\"Run\"]"));
 
         // and
-        assertThat((String) map.get("runAccessions"), is(gson.toJson(RUNS)));
+        assertThat((String) map.get("runAccessions"), is(gson.toJson(runSet)));
 
         // and
         assertThat((String) map.get("experimentAccession"), is(EXPERIMENT_ACCESSION));

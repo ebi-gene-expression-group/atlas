@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentpage.experimentdesign;
 
+import autovalue.shaded.com.google.common.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -36,7 +37,10 @@ import static org.mockito.Mockito.when;
 public class BaselineDesignPageControllerIT {
     private static final String EXPERIMENT_ACCESSION = "E-MTAB-513";
 
-    private static final Set<String> RUNS = Sets.newHashSet("ERR030887","ERR030879","ERR030886","ERR030885","ERR030878","ERR030884", "ERR030877","ERR030883","ERR030882","ERR030881","ERR030880","ERR030872","ERR030875","ERR030876","ERR030873","ERR030874");
+    private static final List<String> RUNS = Lists.newArrayList("ERR030872", "ERR030875", "ERR030876", "ERR030873", "ERR030874", "ERR030887", "ERR030879", "ERR030886", "ERR030885", "ERR030878", "ERR030884", "ERR030877", "ERR030883", "ERR030882", "ERR030881", "ERR030880");
+
+    private static final Set<String> runSet = Sets.newLinkedHashSet();
+
 
     @Inject
     private BaselineDesignPageController subject;
@@ -63,13 +67,14 @@ public class BaselineDesignPageControllerIT {
         subject.showRnaSeqExperimentDesign(model, requestMock);
 
         Gson gson = new Gson();
+        runSet.addAll(RUNS);
 
         // then
         Map<String, Object> map = model.asMap();
         assertThat(((String) map.get("assayHeaders")), is("[\"Run\"]"));
 
         // and
-        assertThat((String) map.get("runAccessions"), is(gson.toJson(RUNS)));
+        assertThat((String) map.get("runAccessions"), is(gson.toJson(runSet)));
 
         // and
         assertThat((String) map.get("experimentAccession"), is(EXPERIMENT_ACCESSION));
