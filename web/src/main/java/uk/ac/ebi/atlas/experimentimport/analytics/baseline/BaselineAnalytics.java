@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Optional;
-import uk.ac.ebi.atlas.model.baseline.Quartiles;
 
 /*
  * Used for loading baseline expressions from the TSV file into the database

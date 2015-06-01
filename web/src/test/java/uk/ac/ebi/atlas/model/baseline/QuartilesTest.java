@@ -11,12 +11,12 @@ public class QuartilesTest {
 
     @Test
     public void createFromCsvString() {
-        assertThat(Arrays.equals(Quartiles.create("0.1, 0.2, 0.3, 0.4, 0.5"), new double[]{0.1,0.2,0.3,0.4,0.5}), is(true));
+        assertThat(Arrays.equals(QuartilesArrayBuilder.create("0.1, 0.2, 0.3, 0.4, 0.5"), new double[]{0.1,0.2,0.3,0.4,0.5}), is(true));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void createFromInvalidCsvString() {
-        Quartiles.create("0.2, 0.3, 0.4, 0.5");
+        QuartilesArrayBuilder.create("0.2, 0.3, 0.4, 0.5");
     }
 
 }

@@ -34,7 +34,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.baseline.Quartiles;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.util.Arrays;

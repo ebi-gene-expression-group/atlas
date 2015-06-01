@@ -11,7 +11,7 @@ import uk.ac.ebi.atlas.commons.serializers.OntologyTermSerializer;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.baseline.Quartiles;
+import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 
 import javax.inject.Inject;
@@ -20,8 +20,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 01/04/15.
@@ -121,7 +119,7 @@ public class RnaSeqBaselineExpressionSerializer implements ExpressionSerializer 
             String expressionLevelString = tsvLine[i];
 
             if (expressionLevelString.contains(",")) {
-                double[] quartiles = Quartiles.create(expressionLevelString);
+                double[] quartiles = QuartilesArrayBuilder.create(expressionLevelString);
                 baselineExpressions[i] = new BaselineExpression(quartiles, null);
             }
             else {

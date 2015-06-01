@@ -26,7 +26,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.baseline.Quartiles;
+import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
 
 import java.util.Iterator;
@@ -69,7 +69,7 @@ public class ExpressionsRowTsvDeserializerBaseline extends ExpressionsRowTsvDese
         }
 
         if (expressionLevelString.contains(",")) {
-            double[] quartiles = Quartiles.create(expressionLevelString);
+            double[] quartiles = QuartilesArrayBuilder.create(expressionLevelString);
             return new BaselineExpression(quartiles, factorGroups.next());
         }
 
