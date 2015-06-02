@@ -23,7 +23,7 @@ public class BaselineProfileInputStreamFactory {
     @Value("#{configuration['experiment.magetab.path.template']}")
     protected String baselineExperimentDataFileUrlTemplate;
 
-    @Value("#{configuration['experiment.serialized_expression.path.template']}")
+    @Value("#{configuration['experiment.kryo_expressions.path.template']}")
     protected String baselineExperimentSerializedDataFileUrlTemplate;
 
     private ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder;

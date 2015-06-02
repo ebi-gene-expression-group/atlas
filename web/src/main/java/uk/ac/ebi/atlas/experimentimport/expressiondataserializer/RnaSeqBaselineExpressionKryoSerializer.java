@@ -34,15 +34,18 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
     private static final int GENE_NAME_COLUMN_INDEX = 1;
     private static final int FIRST_EXPRESSION_LEVEL_INDEX = 2;
 
-    private String serializedFileTemplate;
+    private String serializedExpressionsFileTemplate;
+    private String serializedExpressionLevelsFileTemplate;
     private String tsvFileTemplate;
     private CsvReaderFactory csvReaderFactory;
 
     @Inject
-    public RnaSeqBaselineExpressionKryoSerializer(@Value("#{configuration['experiment.kryo_expressions.path.template']}") String serializedFileTemplate,
+    public RnaSeqBaselineExpressionKryoSerializer(@Value("#{configuration['experiment.kryo_expressions.path.template']}") String serializedExpressionsFileTemplate,
+                                                  @Value("#{configuration['experiment.kryo_expression_levels.path.template']}") String serializedExpressionLevelsFileTemplate,
                                                   @Value("#{configuration['experiment.magetab.path.template']}") String tsvFileTemplate,
                                                   CsvReaderFactory csvReaderFactory) {
-        this.serializedFileTemplate = serializedFileTemplate;
+        this.serializedExpressionsFileTemplate = serializedExpressionsFileTemplate;
+        this.serializedExpressionLevelsFileTemplate = serializedExpressionLevelsFileTemplate;
         this.tsvFileTemplate = tsvFileTemplate;
         this.csvReaderFactory = csvReaderFactory;
     }
@@ -57,57 +60,77 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
         OntologyTermKryoSerializer.registerSerializers(kryo);
 
         String tsvFilePath = MessageFormat.format(tsvFileTemplate, experimentAccession);
-        String serializedFileURL = MessageFormat.format(serializedFileTemplate, experimentAccession);
+        String serializedExpressionsFileURL = MessageFormat.format(serializedExpressionsFileTemplate, experimentAccession);
+        String serializedExpressionLevelsFileURL = MessageFormat.format(serializedExpressionLevelsFileTemplate, experimentAccession);
 
-        try (FileOutputStream fos = new FileOutputStream(serializedFileURL);
-             UnsafeOutput output = new UnsafeOutput(fos);
+        try (FileOutputStream expressionsOutputStream = new FileOutputStream(serializedExpressionsFileURL);
+             UnsafeOutput expressionsOutput = new UnsafeOutput(expressionsOutputStream);
+             FileOutputStream expressionLevelsOutputStream = new FileOutputStream(serializedExpressionLevelsFileURL);
+             UnsafeOutput expressionLevelsOutput = new UnsafeOutput(expressionLevelsOutputStream);
              CSVReader tsvReaderForLineCount = csvReaderFactory.createTsvReader(tsvFilePath);
              CSVReader tsvReader = csvReaderFactory.createTsvReader(tsvFilePath)) {
 
             LOGGER.debug("Parsing " + tsvFilePath);
-            LOGGER.info("Writing to " + serializedFileURL);
+            LOGGER.debug("Writing full baseline expressions to " + serializedExpressionsFileURL);
+            LOGGER.debug("Writing expression levels to " + serializedExpressionLevelsFileURL);
 
+            // Count number of genes (lines except the header)
             int geneCount = 0;
-            // Count number of lines (gene expressions)
             while (tsvReaderForLineCount.readNext() != null) {
                 geneCount++;
             }
             geneCount--;
-            kryo.writeObject(output, geneCount);
+            kryo.writeObject(expressionsOutput, geneCount);
+            kryo.writeObject(expressionLevelsOutput, geneCount);
 
             // First line contains an array {"Gene ID", "Gene Name", "g1", "g2", "g3",  ...}
             String[] assays = tsvReader.readNext();
             assays = (String[]) ArrayUtils.subarray(assays, FIRST_EXPRESSION_LEVEL_INDEX, assays.length);
-            kryo.writeObject(output, assays);
+            kryo.writeObject(expressionsOutput, assays);
+            kryo.writeObject(expressionLevelsOutput, assays);
 
             FactorGroup[] factorGroups = new FactorGroup[assays.length];
             for (int i = 0 ; i < assays.length ; i++) {
                 factorGroups[i] = experimentalFactors.getFactorGroup(assays[i]);
             }
-            kryo.writeObject(output, factorGroups);
+            kryo.writeObject(expressionsOutput, factorGroups);
 
-            LOGGER.debug("Processing " + assays.length + " assays and " + geneCount + " genes");
+            LOGGER.debug("Writing " + geneCount + " genes with " + assays.length + " assays each");
 
             long start = System.currentTimeMillis();
 
             String[] tsvLine;
+
             while ((tsvLine = tsvReader.readNext()) != null) {
                 String geneId = tsvLine[GENE_ID_COLUMN_INDEX];
                 String geneName = tsvLine[GENE_NAME_COLUMN_INDEX];
                 BaselineExpression[] baselineExpressions = parseBaselineExpressions((String[]) ArrayUtils.subarray(tsvLine, FIRST_EXPRESSION_LEVEL_INDEX, tsvLine.length));
                 // Second and subsequent lines contain two strings and an array of arrays (null is interpreted as {0, 0, 0, 0, 0}
                 // e.g. "ENSG00000000003", "TSPAN6", {{0.1, 2.3, 3.4, 5.6, 7.8}, {8, 8, 8, 8, 8}, null, ...}
-                kryo.writeObject(output, geneId);
-                kryo.writeObject(output, geneName);
-                kryo.writeObject(output, baselineExpressions);
+                kryo.writeObject(expressionsOutput, geneId);
+                kryo.writeObject(expressionsOutput, geneName);
+                kryo.writeObject(expressionsOutput, baselineExpressions);
+
+                double[] expressionLevels = new double[assays.length];
+                for (int i = 0 ; i < assays.length ; i++) {
+                    expressionLevels[i] = baselineExpressions[i].getLevel();
+                }
+                kryo.writeObject(expressionLevelsOutput, geneId);
+                kryo.writeObject(expressionLevelsOutput, geneName);
+                kryo.writeObject(expressionLevelsOutput, expressionLevels);
             }
-            LOGGER.info("File successfully written in " + NumberFormat.getInstance().format((System.currentTimeMillis() - start)) + " ms");
+            LOGGER.info("Files successfully written in " + NumberFormat.getInstance().format((System.currentTimeMillis() - start)) + " ms");
 
         }
         catch (IOException exception) {
             LOGGER.error(exception.getMessage(), exception);
-            throw new IllegalStateException("Cannot write serialised TSV file", exception);
+            throw new IllegalStateException("Cannot write serialized file", exception);
         }
+    }
+
+    @Override
+    public void serializeExpressionLevels(String experimentAccession) {
+
     }
 
 
