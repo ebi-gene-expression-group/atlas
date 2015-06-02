@@ -42,7 +42,7 @@ public class ExpressionsRowTsvDeserializerProteomicsBaseline extends Expressions
 
     @Override
     public ExpressionsRowTsvDeserializer reload(String... values) {
-        if (values.length != expectedNumberOfValues) {
+        if (values.length < expectedNumberOfValues) {
             throw new IllegalArgumentException(String.format("Expected %s values but got [%s]", expectedNumberOfValues, Joiner.on(",").join(values)));
         }
         String[] filtered = StringArrayUtil.filterByIndices(values, orderedAssayGroupIndices);

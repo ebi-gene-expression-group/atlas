@@ -61,7 +61,6 @@ public class BaselineProfileInputStreamFactory {
         try {
             KryoReader kryoReader = kryoReaderFactory.createKryoReader(serializedFileURL);
             return new BaselineProfilesKryoInputStream(kryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
-            //return new BaselineProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         } catch (IllegalArgumentException e) {
             // TSV file fallback if the serialized file doesn’t exist (or any other problem)
             return new BaselineProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);

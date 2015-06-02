@@ -17,6 +17,7 @@ import java.io.Closeable;
 public class KryoReader implements Closeable {
     private Kryo kryo;
     private Input input;
+    private boolean closed;
 
     private int totalNumberOfGenes;
     private int geneCount;
@@ -30,11 +31,14 @@ public class KryoReader implements Closeable {
     public KryoReader(Kryo kryo, Input input) {
         this.kryo = kryo;
         this.input = input;
+        this.closed = false;
         ImmutableSetSerializer.registerSerializers(this.kryo);
         OntologyTermSerializer.registerSerializers(this.kryo);
     }
 
     public String[] rewindAndReadAssays() {
+        checkInputStreamOpen();
+
         input.rewind();
         totalNumberOfGenes = kryo.readObject(input, Integer.class);
         geneCount = 0;
@@ -44,7 +48,8 @@ public class KryoReader implements Closeable {
     }
 
     public boolean readLine() {
-        //if (input.eof()) {
+        checkInputStreamOpen();
+
         if (geneCount < totalNumberOfGenes) {
             geneId = kryo.readObject(input, String.class);
             geneName = kryo.readObject(input, String.class);
@@ -61,6 +66,8 @@ public class KryoReader implements Closeable {
     }
 
     public void readAll() {
+        checkInputStreamOpen();
+
         //if (input.eof()) {
         while (geneCount < totalNumberOfGenes) {
             geneId = kryo.readObject(input, String.class);
@@ -74,18 +81,31 @@ public class KryoReader implements Closeable {
     }
 
     public String getGeneId() {
+        checkInputStreamOpen();
+
         return geneId;
     }
 
     public String getGeneName() {
+        checkInputStreamOpen();
+
         return geneName;
     }
 
     public BaselineExpression[] getExpressions() {
+        checkInputStreamOpen();
+
         return expressions;
     }
 
     public void close() throws KryoException {
         input.close();
+        closed = true;
+    }
+
+    private void checkInputStreamOpen() {
+        if (closed) {
+            throw new IllegalStateException("Kryo input stream is closed");
+        }
     }
 }
