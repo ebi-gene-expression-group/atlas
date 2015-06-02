@@ -29,7 +29,6 @@ import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.Objects;
 import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.atlas.model.Expression;
-import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -43,7 +42,8 @@ public class BaselineExpression implements Expression, KryoSerializable {
     private double[] quartiles;
     public static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
 
-    public BaselineExpression() {}
+    // No-arg constructor required by Kryo. Can be private because Kryo uses reflection.
+    private BaselineExpression() {}
 
     public BaselineExpression(double level, FactorGroup factorGroup) {
         this(level, factorGroup, new double[]{});

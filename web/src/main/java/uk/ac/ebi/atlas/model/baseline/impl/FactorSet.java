@@ -36,7 +36,8 @@ public class FactorSet implements FactorGroup {
 
     private Map<String, Factor> factorsByType = new HashMap<>();
 
-    public FactorSet() {}
+    // No-arg constructor required by Kryo. Can be private because Kryo uses reflection.
+    private FactorSet() {}
 
     FactorSet(Map<String, Factor> factorsByType) {
         this.factorsByType = factorsByType;
@@ -185,4 +186,5 @@ public class FactorSet implements FactorGroup {
     public boolean containsOnlyOrganism() {
         return size() == 1 && getFactorByType("ORGANISM") != null;
     }
+
 }
