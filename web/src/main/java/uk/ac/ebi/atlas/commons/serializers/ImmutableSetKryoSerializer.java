@@ -13,12 +13,12 @@ import com.google.common.collect.*;
 /**
  * A kryo {@link Serializer} for guava-libraries {@link ImmutableList}.
  */
-public class ImmutableSetSerializer extends Serializer<ImmutableSet<Object>> {
+public class ImmutableSetKryoSerializer extends Serializer<ImmutableSet<Object>> {
 
     private static final boolean DOES_NOT_ACCEPT_NULL = false;
     private static final boolean IMMUTABLE = true;
 
-    public ImmutableSetSerializer() {
+    public ImmutableSetKryoSerializer() {
         super(DOES_NOT_ACCEPT_NULL, IMMUTABLE);
     }
 
@@ -41,7 +41,7 @@ public class ImmutableSetSerializer extends Serializer<ImmutableSet<Object>> {
     }
 
     /**
-     * Creates a new {@link ImmutableSetSerializer} and registers its serializer
+     * Creates a new {@link ImmutableSetKryoSerializer} and registers its serializer
      * for the several ImmutableSet related classes.
      *
      * @param kryo the {@link Kryo} instance to set the serializer on
@@ -56,7 +56,7 @@ public class ImmutableSetSerializer extends Serializer<ImmutableSet<Object>> {
         //  +- Values (ImmutableTable values)
         //      Used by return value of #values() when there are multiple cells
 
-        final ImmutableSetSerializer serializer = new ImmutableSetSerializer();
+        final ImmutableSetKryoSerializer serializer = new ImmutableSetKryoSerializer();
 
         kryo.register(ImmutableSet.class, serializer);
 

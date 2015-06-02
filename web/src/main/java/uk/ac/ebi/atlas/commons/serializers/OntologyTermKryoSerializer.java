@@ -9,8 +9,8 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 /**
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 28/05/15.
  */
-public class OntologyTermSerializer extends Serializer<OntologyTerm>  {
-    public OntologyTermSerializer() {
+public class OntologyTermKryoSerializer extends Serializer<OntologyTerm>  {
+    public OntologyTermKryoSerializer() {
         super();
     }
 
@@ -26,7 +26,7 @@ public class OntologyTermSerializer extends Serializer<OntologyTerm>  {
     }
 
     public static void registerSerializers(final Kryo kryo) {
-        final OntologyTermSerializer serializer = new OntologyTermSerializer();
+        final OntologyTermKryoSerializer serializer = new OntologyTermKryoSerializer();
         kryo.register(OntologyTerm.create("").getClass(), serializer);
     }
 }

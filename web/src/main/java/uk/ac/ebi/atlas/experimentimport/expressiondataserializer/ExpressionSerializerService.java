@@ -1,12 +1,11 @@
 package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.UnsafeInput;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.serializers.ImmutableSetSerializer;
-import uk.ac.ebi.atlas.commons.serializers.OntologyTermSerializer;
+import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
+import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.profiles.KryoReader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
@@ -39,23 +38,21 @@ public class ExpressionSerializerService {
         this.baselineExperimentsCache = baselineExperimentsCache;
     }
 
-    public void serializeExpressionData(String experimentAccession) {
+    public void kryoSerializeExpressionData(String experimentAccession) {
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-        expressionSerializerFactory.getSerializer(experiment.getType())
+        expressionSerializerFactory.getKryoSerializer(experiment.getType())
                                    .serializeExpressionData(experimentAccession, baselineExperimentsCache.getExperiment(experimentAccession).getExperimentalFactors());
     }
 
-    public void deserializeExpressionData(String experimentAccession) {
-        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-
-        LOGGER.info("Starting to read serialized file...");
+    public void kryoDeserializeExpressionData(String experimentAccession) {
+        LOGGER.info("Starting to read Kryo-serialized file for " + experimentAccession);
 
         String serializedBaselineExpressionFileName = "/Users/amunoz/ATLAS3.TEST/integration-test-data/serialized_expression/E-MTAB-2706.ser";
         try (FileInputStream fis = new FileInputStream(serializedBaselineExpressionFileName)) {
             UnsafeInput input = new UnsafeInput(fis);
             Kryo kryo = new Kryo();
-            ImmutableSetSerializer.registerSerializers(kryo);
-            OntologyTermSerializer.registerSerializers(kryo);
+            ImmutableSetKryoSerializer.registerSerializers(kryo);
+            OntologyTermKryoSerializer.registerSerializers(kryo);
             KryoReader kryoReader = new KryoReader(kryo, input);
 
             kryoReader.rewindAndReadAssays();
@@ -68,5 +65,4 @@ public class ExpressionSerializerService {
         }
 
     }
-
 }

@@ -2,12 +2,10 @@ package uk.ac.ebi.atlas.profiles;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoException;
-import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.UnsafeInput;
-import uk.ac.ebi.atlas.commons.serializers.ImmutableSetSerializer;
-import uk.ac.ebi.atlas.commons.serializers.OntologyTermSerializer;
+import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
+import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
-import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 
 import java.io.Closeable;
@@ -33,8 +31,8 @@ public class KryoReader implements Closeable {
         this.kryo = kryo;
         this.input = input;
         this.closed = false;
-        ImmutableSetSerializer.registerSerializers(this.kryo);
-        OntologyTermSerializer.registerSerializers(this.kryo);
+        ImmutableSetKryoSerializer.registerSerializers(this.kryo);
+        OntologyTermKryoSerializer.registerSerializers(this.kryo);
     }
 
     public String[] rewindAndReadAssays() {
