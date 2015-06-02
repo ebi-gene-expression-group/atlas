@@ -46,7 +46,6 @@ public class BaselineProfileInputStreamFactory {
         this.kryoReaderFactory = kryoReaderFactory;
     }
 
-    // TODO Try first with kryoReader, and if it fails (e.g. data isn’t serialized yet) use csvReader
     public ExpressionProfileInputStream<BaselineProfile, BaselineExpression> createBaselineProfileInputStream(String experimentAccession, String queryFactorType, double cutOff, Set<Factor> filterFactors) {
         IsBaselineExpressionAboveCutoffAndForFilterFactors baselineExpressionFilter = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         baselineExpressionFilter.setCutoff(cutOff);
@@ -61,8 +60,9 @@ public class BaselineProfileInputStreamFactory {
         try {
             KryoReader kryoReader = kryoReaderFactory.createKryoReader(serializedFileURL);
             return new BaselineProfilesKryoInputStream(kryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
-        } catch (IllegalArgumentException e) {
-            // TSV file fallback if the serialized file doesn’t exist (or any other problem)
+        }
+        catch (IllegalArgumentException e) {
+            // TSV file fallback if the serialized file doesnt exist (or any other problem)
             return new BaselineProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
     }
