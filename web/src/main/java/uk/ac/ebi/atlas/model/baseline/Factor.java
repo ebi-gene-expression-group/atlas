@@ -28,12 +28,11 @@ import org.apache.velocity.util.StringUtils;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.annotation.Nullable;
-import java.io.Serializable;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class Factor implements Comparable<Factor>, Serializable {
+public class Factor implements Comparable<Factor> {
 
     private String header;
     private String type;
@@ -151,7 +150,5 @@ public class Factor implements Comparable<Factor>, Serializable {
         }
 
         return sb.toString();
-
     }
-
 }
