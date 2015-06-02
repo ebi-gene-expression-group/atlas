@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 import au.com.bytecode.opencsv.CSVReader;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.kryo.io.UnsafeOutput;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,13 +61,12 @@ public class RnaSeqBaselineExpressionSerializer implements ExpressionSerializer 
         String serializedFileURL = MessageFormat.format(serializedFileTemplate, experimentAccession);
 
         try (FileOutputStream fos = new FileOutputStream(serializedFileURL);
-             Output output = new Output(fos);
+             UnsafeOutput output = new UnsafeOutput(fos);
              CSVReader tsvReaderForLineCount = csvReaderFactory.createTsvReader(tsvFilePath);
              CSVReader tsvReader = csvReaderFactory.createTsvReader(tsvFilePath)) {
 
             LOGGER.debug("Parsing " + tsvFilePath);
             LOGGER.info("Writing to " + serializedFileURL);
-
 
             int geneCount = 0;
             // Count number of lines (gene expressions)

@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.profiles;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoException;
 import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.UnsafeInput;
 import uk.ac.ebi.atlas.commons.serializers.ImmutableSetSerializer;
 import uk.ac.ebi.atlas.commons.serializers.OntologyTermSerializer;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
@@ -16,7 +17,7 @@ import java.io.Closeable;
  */
 public class KryoReader implements Closeable {
     private Kryo kryo;
-    private Input input;
+    private UnsafeInput input;
     private boolean closed;
 
     private int totalNumberOfGenes;
@@ -28,7 +29,7 @@ public class KryoReader implements Closeable {
     private String geneName;
     private BaselineExpression[] expressions;
 
-    public KryoReader(Kryo kryo, Input input) {
+    public KryoReader(Kryo kryo, UnsafeInput input) {
         this.kryo = kryo;
         this.input = input;
         this.closed = false;

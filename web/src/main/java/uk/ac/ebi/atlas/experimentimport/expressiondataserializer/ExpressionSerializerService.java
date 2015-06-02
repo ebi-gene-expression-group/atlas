@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.expressiondataserializer;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.UnsafeInput;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.serializers.ImmutableSetSerializer;
@@ -51,7 +52,7 @@ public class ExpressionSerializerService {
 
         String serializedBaselineExpressionFileName = "/Users/amunoz/ATLAS3.TEST/integration-test-data/serialized_expression/E-MTAB-2706.ser";
         try (FileInputStream fis = new FileInputStream(serializedBaselineExpressionFileName)) {
-            Input input = new Input(fis);
+            UnsafeInput input = new UnsafeInput(fis);
             Kryo kryo = new Kryo();
             ImmutableSetSerializer.registerSerializers(kryo);
             OntologyTermSerializer.registerSerializers(kryo);
