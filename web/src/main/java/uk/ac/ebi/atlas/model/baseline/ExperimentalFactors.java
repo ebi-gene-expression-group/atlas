@@ -192,6 +192,27 @@ public class ExperimentalFactors implements Serializable {
 
     }
 
+    public Set<Factor> getComplementFactorByXML(final Set<Factor> filterFactors) {
+
+        if (CollectionUtils.isEmpty(filterFactors)) {
+            return getAllFactorsOrderedByXML();
+        }
+
+        LinkedHashSet<Factor> filteredFactors = Sets.newLinkedHashSet();
+
+        for (FactorGroup factorGroup : orderedFactorGroups) {
+
+            List<Factor> remainingFactors = factorGroup.remove(filterFactors);
+            if (remainingFactors.size() == 1) {
+                filteredFactors.add(remainingFactors.get(0));
+            }
+        }
+
+        return filteredFactors;
+
+    }
+
+
     // match each FactorGroup with the filterFactors, and for each match return the remaining single factor
     // (if there is one and only one)
     public SortedSet<AssayGroupFactor> getComplementAssayGroupFactors(final Set<Factor> filterFactors) {

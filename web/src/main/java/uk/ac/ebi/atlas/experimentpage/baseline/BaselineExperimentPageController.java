@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContext;
 import uk.ac.ebi.atlas.experimentpage.context.BaselineRequestContextBuilder;
 import uk.ac.ebi.atlas.experimentpage.context.GenesNotFoundException;
-import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineProfileStreamOptionsWrapperAsGeneSets;
 import uk.ac.ebi.atlas.profiles.baseline.viewmodel.AssayGroupFactorViewModel;
@@ -114,11 +113,14 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
 
+        Set<Factor> orderedFactors;
         Set<AssayGroupFactor> filteredAssayGroupFactors;
         if(experimentalFactors.getAllFactorsOrderedByXML() != null && !experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
             filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactorsByXML(selectedFilterFactors);
+            orderedFactors = experimentalFactors.getComplementFactorByXML(selectedFilterFactors);
         } else {
             filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors);
+            orderedFactors = experimentalFactors.getComplementFactors(selectedFilterFactors);
         }
 
         // this is currently required for the request requestPreferences filter drop-down multi-selection box
@@ -157,7 +159,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
                     model.addAttribute("profilesAsGeneSets", profilesAsGeneSets);
                 }
 
-                addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, experimentalFactors.getComplementFactors(selectedFilterFactors), model);
+                addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, model);
 
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
                     ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);
@@ -205,8 +207,8 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         model.addAttribute("allSvgPathIds", jsonAllSvgPathIds);
     }
 
-
-    private void addJsonForHeatMap(BaselineProfilesList baselineProfiles, BaselineProfilesList geneSetProfiles, Set<AssayGroupFactor> filteredAssayGroupFactors, SortedSet<Factor> orderedFactors, Model model) {
+    private void addJsonForHeatMap(BaselineProfilesList baselineProfiles, BaselineProfilesList geneSetProfiles,
+                                   Set<AssayGroupFactor> filteredAssayGroupFactors, Set<Factor> orderedFactors, Model model) {
         if (baselineProfiles.isEmpty()) {
             return;
         }

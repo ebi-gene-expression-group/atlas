@@ -11,7 +11,7 @@ import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.SortedSet;
+import java.util.Set;
 
 @Named
 @Scope("singleton")
@@ -26,7 +26,7 @@ public class BaselineExpressionViewModelBuilder {
         this.baselineExpressionLevelRounder = baselineExpressionLevelRounder;
     }
 
-    public BaselineExpressionViewModel[] buildExpressions(Profile<Factor, BaselineExpression> profile, SortedSet<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
+    public BaselineExpressionViewModel[] buildExpressions(Profile<Factor, BaselineExpression> profile, Set<Factor> orderedFactors, double minExpressionLevel, double maxExpressionLevel) {
         BaselineExpressionViewModel[] expressionViewModels = new BaselineExpressionViewModel[orderedFactors.size()];
 
         int i = 0;
