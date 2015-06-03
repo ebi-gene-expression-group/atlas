@@ -23,14 +23,14 @@
 package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
+import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.profiles.KryoInputStream;
-import uk.ac.ebi.atlas.profiles.KryoReader;
 import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowDeserializerBaselineBuilder;
 
 public class BaselineExpressionsKryoInputStream extends KryoInputStream<BaselineExpressions, BaselineExpression> {
 
-    public BaselineExpressionsKryoInputStream(KryoReader kryoReader, String experimentAccession, ExpressionsRowDeserializerBaselineBuilder baselineExpressionsQueueBuilder) {
-        super(kryoReader, experimentAccession, baselineExpressionsQueueBuilder);
+    public BaselineExpressionsKryoInputStream(BaselineExpressionsKryoReader baselineExpressionsKryoReader, String experimentAccession, ExpressionsRowDeserializerBaselineBuilder baselineExpressionsQueueBuilder) {
+        super(baselineExpressionsKryoReader, experimentAccession, baselineExpressionsQueueBuilder);
     }
 
     @Override
