@@ -30,6 +30,7 @@ import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowDeserializerBaselineBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowDeserializerProteomicsBaselineBuilder;
+import uk.ac.ebi.atlas.profiles.baseline.ExpressionsRowRawDeserializerBaselineBuilder;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
@@ -48,7 +49,7 @@ public class BaselineExpressionsInputStreamFactory {
     @Value("#{configuration['experiment.kryo_expressions.path.template']}")
     private String serializedBaselineExperimentDataFileUrlTemplate;
 
-    private ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder;
+    private ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder;
     private ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder;
     private CsvReaderFactory csvReaderFactory;
     private KryoReaderFactory kryoReaderFactory;
@@ -57,13 +58,13 @@ public class BaselineExpressionsInputStreamFactory {
     private BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader;
 
     @Inject
-    public BaselineExpressionsInputStreamFactory(ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
+    public BaselineExpressionsInputStreamFactory(ExpressionsRowRawDeserializerBaselineBuilder expressionsRowRawDeserializerBaselineBuilder,
                                                  ExpressionsRowDeserializerProteomicsBaselineBuilder expressionsRowDeserializerProteomicsBaselineBuilder,
                                                  CsvReaderFactory csvReaderFactory,
                                                  KryoReaderFactory kryoReaderFactory,
                                                  ExperimentTrader experimentTrader,
                                                  BarChartExperimentAccessKeyTrader barChartExperimentAccessKeyTrader) {
-        this.expressionsRowDeserializerBaselineBuilder = expressionsRowDeserializerBaselineBuilder;
+        this.expressionsRowRawDeserializerBaselineBuilder = expressionsRowRawDeserializerBaselineBuilder;
         this.expressionsRowDeserializerProteomicsBaselineBuilder = expressionsRowDeserializerProteomicsBaselineBuilder;
         this.csvReaderFactory = csvReaderFactory;
         this.kryoReaderFactory = kryoReaderFactory;
@@ -79,12 +80,13 @@ public class BaselineExpressionsInputStreamFactory {
 
         String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
-        BaselineExpressionsKryoReader kryoReader = kryoReaderFactory.createBaselineExpressionsKryoReader(serializedBaselineExperimentDataFileUrlTemplate);
+        String serializedFileURL = MessageFormat.format(serializedBaselineExperimentDataFileUrlTemplate, experimentAccession);
+        BaselineExpressionsKryoReader kryoReader = kryoReaderFactory.createBaselineExpressionsKryoReader(serializedFileURL);
 
         if(experiment.getType().isProteomicsBaseline()) {
             return new BaselineExpressionsTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerProteomicsBaselineBuilder);
         } else {
-            return new BaselineExpressionsKryoInputStream(kryoReader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
+            return new BaselineExpressionsKryoInputStream(kryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder);
         }
     }
 
