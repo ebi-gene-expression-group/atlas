@@ -118,9 +118,10 @@
                 var geneQueryStr = slices[7];
                 if(geneQueryStr != undefined) {
                     var gene = geneQueryStr.substring(geneQueryStr.lastIndexOf("=") + 1, geneQueryStr.length);
-                    if (gene != "") {
-                        $('#geneQuery').tagEditor('addTag', gene);
-                    }
+                    var geneTerms = gene.split("%09");
+                    geneTerms.forEach(function(geneTerm) {
+                        $('#geneQuery').tagEditor('addTag', decodeURIComponent(geneTerm.replace("+", "%20")));
+                    });
                 }
             };
 
