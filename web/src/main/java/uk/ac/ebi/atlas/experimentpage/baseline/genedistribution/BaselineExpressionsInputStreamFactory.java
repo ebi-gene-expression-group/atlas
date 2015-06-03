@@ -78,14 +78,14 @@ public class BaselineExpressionsInputStreamFactory {
 
         Experiment experiment = experimentTrader.getExperiment(experimentAccession, accessKey);
 
-        String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
-        String serializedFileURL = MessageFormat.format(serializedBaselineExperimentDataFileUrlTemplate, experimentAccession);
-        BaselineExpressionsKryoReader kryoReader = kryoReaderFactory.createBaselineExpressionsKryoReader(serializedFileURL);
-
         if(experiment.getType().isProteomicsBaseline()) {
+            String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
+            CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
             return new BaselineExpressionsTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerProteomicsBaselineBuilder);
-        } else {
+        }
+        else {
+            String serializedFileURL = MessageFormat.format(serializedBaselineExperimentDataFileUrlTemplate, experimentAccession);
+            BaselineExpressionsKryoReader kryoReader = kryoReaderFactory.createBaselineExpressionsKryoReader(serializedFileURL);
             return new BaselineExpressionsKryoInputStream(kryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder);
         }
     }
