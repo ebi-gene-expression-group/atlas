@@ -21,7 +21,7 @@
 //
 //    @Test
 //    public void serializedDataMatchesTSVData() {
-//        subject.serializeExpressionData(E_MTAB_1733);
+//        subject.kryoSerializeExpressionData(E_MTAB_1733);
 //    }
 //
 //}

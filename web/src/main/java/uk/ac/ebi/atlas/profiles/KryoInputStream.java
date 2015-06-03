@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.profiles;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 
 import java.io.IOException;
 
@@ -34,12 +35,12 @@ public abstract class KryoInputStream<T, K extends Expression> implements Expres
 
     private KryoReader kryoReader;
 
-    private ExpressionsRowDeserializer<Double[], K> expressionsRowRawDeserializer;
+    private ExpressionsRowDeserializer<BaselineExpression, K> expressionsRowRawDeserializer;
 
     protected KryoInputStream(KryoReader kryoReader, String experimentAccession, ExpressionsRowDeserializerBuilder expressionsRowDeserializerBuilder) {
         this.kryoReader = kryoReader;
 
-        String[] firstLine = kryoReader.rewindAndreadFirstLine();
+        String[] firstLine = kryoReader.rewindAndReadAssays();
         String[] headersWithoutGeneIdColumn = removeGeneIDAndNameColumns(firstLine);
         expressionsRowRawDeserializer = expressionsRowDeserializerBuilder.forExperiment(experimentAccession).withHeaders(headersWithoutGeneIdColumn).build();
     }
@@ -52,31 +53,35 @@ public abstract class KryoInputStream<T, K extends Expression> implements Expres
             if (!kryoReader.readLine()) {
                 return null;
             }
-            geneProfile =  buildObjectFromValues(kryoReader.getGeneId(), kryoReader.getGeneName(), kryoReader.getExpressionLevels());
+            geneProfile =  buildObjectFromValues(kryoReader.getGeneId(), kryoReader.getGeneName(), kryoReader.getExpressions());
 
         } while (geneProfile == null);
 
         return geneProfile;
     }
 
-    protected T buildObjectFromValues(String geneId, String geneName, Double[][] expressionLevels) {
+    protected T buildObjectFromValues(String geneId, String geneName, BaselineExpression[] expressions) {
         addGeneInfoValueToBuilder(new String[]{geneId, geneName});
 
         //we need to reload because the first line can only be used to extract the gene ID
-        expressionsRowRawDeserializer.reload(expressionLevels);
+        expressionsRowRawDeserializer.reload(expressions);
 
         K expression;
 
         while ((expression = expressionsRowRawDeserializer.next()) != null) {
-            addExpressionToBuilder(expression);
+             addExpressionToBuilder(expression);
         }
+
+//        for (K bslnExpression : expressions) {
+//            addExpressionToBuilder(bslnExpression);
+//        }
 
         return createProfile();
     }
 
     // Used by BaselineExpressionsInputStream
-    protected ExpressionsRowDeserializer<Double[], K> getExpressionsRowRawDeserializer() {
-        return expressionsRowRawDeserializer;
+    protected ExpressionsRowDeserializer<BaselineExpression, K> getExpressionsRowRawDeserializer() {
+         return expressionsRowRawDeserializer;
     }
 
     @Override

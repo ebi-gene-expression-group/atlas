@@ -37,8 +37,7 @@ public class BaselineProfileReusableBuilder {
 
     private Predicate<BaselineExpression> baselineExpressionFilter;
 
-    public BaselineProfileReusableBuilder(Predicate<BaselineExpression> baselineExpressionFilter,
-                                          String queryFactorType) {
+    public BaselineProfileReusableBuilder(Predicate<BaselineExpression> baselineExpressionFilter, String queryFactorType) {
         this.baselineExpressionFilter = baselineExpressionFilter;
         this.queryFactorType = queryFactorType;
     }

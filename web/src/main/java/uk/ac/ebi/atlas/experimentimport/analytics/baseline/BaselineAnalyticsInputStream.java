@@ -1,13 +1,12 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.commons.streams.ObjectInputStream;
-import uk.ac.ebi.atlas.model.baseline.Quartiles;
+import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -119,13 +118,13 @@ public class BaselineAnalyticsInputStream implements ObjectInputStream<BaselineA
 
             if (!"NA".equalsIgnoreCase(expressionLevelString)) {
                 Double expressionLevel;
-                Optional<Quartiles> quartiles;
+                double[] quartiles;
                 if (expressionLevelString.contains(",")) {
-                    quartiles = Optional.fromNullable(Quartiles.create(expressionLevelString));
-                    expressionLevel = quartiles.get().median();
+                    quartiles = QuartilesArrayBuilder.create(expressionLevelString);
+                    expressionLevel = quartiles[2];
                 }
                 else {
-                    quartiles = Optional.absent();
+                    quartiles = new double[]{};
                     expressionLevel = Double.parseDouble(expressionLevels[i]);
                 }
 

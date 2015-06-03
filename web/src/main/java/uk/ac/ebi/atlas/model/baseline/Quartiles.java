@@ -26,8 +26,8 @@ public abstract class Quartiles {
         return new AutoValue_Quartiles(min, lower, median, upper, max);
     }
 
-    public static Quartiles create(Double[] values) {
-        checkArgument(Array.getLength(values) == 5, "expected 5 values for quartiles but got " + values);
+    public static Quartiles create(double[] values) {
+        checkArgument(values.length == 5, "expected 5 values for quartiles but got " + values);
         return Quartiles.create(values[0], values[1], values[2], values[3], values[4]);
     }
 

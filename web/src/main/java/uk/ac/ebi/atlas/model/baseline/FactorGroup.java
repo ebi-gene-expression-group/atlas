@@ -31,7 +31,7 @@ import java.util.Set;
 /*
     A group of factors. Will be associated with an assay group
  */
-public interface FactorGroup extends Iterable<Factor>, Serializable, Comparable<FactorGroup> {
+public interface FactorGroup extends Iterable<Factor>, Comparable<FactorGroup> {
 
     Factor getFactorByType(String type);
 

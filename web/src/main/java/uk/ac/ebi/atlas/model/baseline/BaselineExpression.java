@@ -22,31 +22,38 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.KryoSerializable;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 import com.google.common.base.Objects;
-import com.google.common.base.Optional;
+import org.apache.commons.lang.ArrayUtils;
 import uk.ac.ebi.atlas.model.Expression;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Set;
 
-public class BaselineExpression implements Expression {
-    private final double level;
-    private final String levelString;
+public class BaselineExpression implements Expression, KryoSerializable {
+    private double level;
+    private String levelString;
     private FactorGroup factorGroup;
-    private final boolean known;
-    private final Optional<Quartiles> quartiles;
+    private boolean known;
+    private double[] quartiles;
     public static final NumberFormat FOUR_DP = new DecimalFormat("0.####");
 
+    // No-arg constructor required by Kryo. Can be private because Kryo uses reflection.
+    private BaselineExpression() {}
+
     public BaselineExpression(double level, FactorGroup factorGroup) {
-        this(level, factorGroup, Optional.<Quartiles>absent());
+        this(level, factorGroup, new double[]{});
     }
 
-    public BaselineExpression(Quartiles quartiles, FactorGroup factorGroup) {
-        this(quartiles.median(), factorGroup, Optional.of(quartiles));
+    public BaselineExpression(double[] quartiles, FactorGroup factorGroup) {
+        this(quartiles[2], factorGroup, quartiles);
     }
 
-    private BaselineExpression(double level, FactorGroup factorGroup, Optional<Quartiles> quartiles) {
+    private BaselineExpression(double level, FactorGroup factorGroup, double[] quartiles) {
         this.level = level;
         this.factorGroup = factorGroup;
         this.levelString = removeTrailingZero(level);
@@ -73,10 +80,10 @@ public class BaselineExpression implements Expression {
                 break;
         }
         this.factorGroup = factorGroup;
-        this.quartiles = Optional.absent();
+        this.quartiles = new double[]{};
     }
 
-    public Optional<Quartiles> getQuartiles() {
+    public double[] getQuartiles() {
         return quartiles;
     }
 
@@ -102,6 +109,10 @@ public class BaselineExpression implements Expression {
 
     public boolean isGreaterThan(double level) {
         return Double.compare(getLevel(), level) > 0;
+    }
+
+    public void setFactorGroup(FactorGroup factorGroup) {
+        this.factorGroup = factorGroup;
     }
 
     public Factor getFactor(String type) {
@@ -150,4 +161,22 @@ public class BaselineExpression implements Expression {
     }
 
 
+    @Override
+    public void write(Kryo kryo, Output output) {
+        output.writeDouble(level);
+        output.writeString(levelString);
+        output.writeBoolean(known);
+        boolean hasQuartiles = !ArrayUtils.isEmpty(quartiles);
+        output.writeBoolean(hasQuartiles);
+        output.writeDoubles(quartiles);
+    }
+
+    @Override
+    public void read(Kryo kryo, Input input) {
+        level = input.readDouble();
+        levelString = input.readString();
+        known = input.readBoolean();
+        boolean hasQuartiles = input.readBoolean();
+        quartiles = hasQuartiles ? input.readDoubles(5) : input.readDoubles(0);
+    }
 }

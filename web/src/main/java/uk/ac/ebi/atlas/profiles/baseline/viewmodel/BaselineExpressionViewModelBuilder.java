@@ -6,6 +6,7 @@ import uk.ac.ebi.atlas.model.Profile;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.Quartiles;
+import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
 import uk.ac.ebi.atlas.profiles.baseline.BaselineExpressionLevelRounder;
 import uk.ac.ebi.atlas.utils.ColourGradient;
 
@@ -41,7 +42,7 @@ public class BaselineExpressionViewModelBuilder {
     private BaselineExpressionViewModel createBaselineExpressionViewModel(Profile<Factor, BaselineExpression> profile, Factor factor, double minExpressionLevel, double maxExpressionLevel) {
         String factorName = factor.getValue();
         BaselineExpression expression = profile.getExpression(factor);
-        Optional<Quartiles> quartiles = (expression == null) ? Optional.<Quartiles>absent() : expression.getQuartiles();
+        Optional<Quartiles> quartiles = (expression == null || expression.getQuartiles().length == 0) ? Optional.<Quartiles>absent() : Optional.of(Quartiles.create(expression.getQuartiles()));
 
         String value = (expression == null) ? "" : (expression.getLevelAsString().equals("NT")) ? "NT" : (!expression.isKnown() ? "UNKNOWN" : baselineExpressionLevelRounder.format(expression.getLevel()));
         String color = (expression == null) ? "" : (expression.isKnown() && !expression.getLevelAsString().equals("NT") ?

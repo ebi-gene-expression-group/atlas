@@ -23,7 +23,7 @@ public class BaselineProfileInputStreamFactory {
     @Value("#{configuration['experiment.magetab.path.template']}")
     protected String baselineExperimentDataFileUrlTemplate;
 
-    @Value("#{configuration['experiment.serialized_expression.path.template']}")
+    @Value("#{configuration['experiment.kryo_expressions.path.template']}")
     protected String baselineExperimentSerializedDataFileUrlTemplate;
 
     private ExpressionsRowDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder;
@@ -46,7 +46,6 @@ public class BaselineProfileInputStreamFactory {
         this.kryoReaderFactory = kryoReaderFactory;
     }
 
-    // TODO Try first with kryoReader, and if it fails (e.g. data isn’t serialized yet) use csvReader
     public ExpressionProfileInputStream<BaselineProfile, BaselineExpression> createBaselineProfileInputStream(String experimentAccession, String queryFactorType, double cutOff, Set<Factor> filterFactors) {
         IsBaselineExpressionAboveCutoffAndForFilterFactors baselineExpressionFilter = new IsBaselineExpressionAboveCutoffAndForFilterFactors();
         baselineExpressionFilter.setCutoff(cutOff);
@@ -58,14 +57,14 @@ public class BaselineProfileInputStreamFactory {
         CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
 
         String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, experimentAccession);
-        // try {
-            // KryoReader kryoReader = kryoReaderFactory.createKryoReader(serializedFileURL);
-            //return new BaselineProfilesKryoInputStream(kryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
-            // return new BaselineProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
-        // } catch (IllegalArgumentException e) {
-            // TSV file fallback if the serialized file doesn’t exist (or any other problem)
+        try {
+            KryoReader kryoReader = kryoReaderFactory.createKryoReader(serializedFileURL);
+            return new BaselineProfilesKryoInputStream(kryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
+        }
+        catch (IllegalArgumentException e) {
+            // TSV file fallback if the serialized file doesn’t exist
             return new BaselineProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
-        // }
+        }
     }
 
     public ExpressionProfileInputStream<BaselineProfile, BaselineExpression> create(BaselineProfileStreamOptions options) {

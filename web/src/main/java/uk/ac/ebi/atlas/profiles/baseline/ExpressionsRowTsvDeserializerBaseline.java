@@ -26,7 +26,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.baseline.Quartiles;
+import uk.ac.ebi.atlas.model.baseline.QuartilesArrayBuilder;
 import uk.ac.ebi.atlas.profiles.ExpressionsRowTsvDeserializer;
 
 import java.util.Iterator;
@@ -38,7 +38,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class ExpressionsRowTsvDeserializerBaseline extends ExpressionsRowTsvDeserializer<BaselineExpression> {
 
     private static final String ZERO_CODE = "-";
-    private static final Quartiles ZERO_QUARTILES = Quartiles.create(0.0, 0.0, 0.0, 0.0, 0.0);
+    private static final double[] ZERO_QUARTILES = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
 
     final int expectedNumberOfValues;
     Iterator<FactorGroup> factorGroups;
@@ -50,7 +50,9 @@ public class ExpressionsRowTsvDeserializerBaseline extends ExpressionsRowTsvDese
 
     @Override
     public ExpressionsRowTsvDeserializer reload(String... values) {
-        checkArgument(values.length == expectedNumberOfValues, String.format("Expected %s values but got [%s]", expectedNumberOfValues, Joiner.on(",").join(values)));
+        if (values.length != expectedNumberOfValues) {
+            throw new IllegalArgumentException(String.format("Expected %s values but got [%s]", expectedNumberOfValues, Joiner.on(",").join(values)));
+        }
         return super.reload(values);
     }
 
@@ -67,8 +69,7 @@ public class ExpressionsRowTsvDeserializerBaseline extends ExpressionsRowTsvDese
         }
 
         if (expressionLevelString.contains(",")) {
-            Quartiles quartiles = Quartiles.create(expressionLevelString);
-
+            double[] quartiles = QuartilesArrayBuilder.create(expressionLevelString);
             return new BaselineExpression(quartiles, factorGroups.next());
         }
 

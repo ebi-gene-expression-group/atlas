@@ -28,17 +28,18 @@ import org.apache.velocity.util.StringUtils;
 import uk.ac.ebi.atlas.model.OntologyTerm;
 
 import javax.annotation.Nullable;
-import java.io.Serializable;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class Factor implements Comparable<Factor>, Serializable {
+public class Factor implements Comparable<Factor> {
 
-    private final String header;
-    private final String type;
-    private final String value;
-    private final Set<OntologyTerm> valueOntologyTerms;
+    private String header;
+    private String type;
+    private String value;
+    private Set<OntologyTerm> valueOntologyTerms;
+
+    public Factor() {}
 
     public Factor(String header, String value) {
         this(header, value, new OntologyTerm[0]);
@@ -132,24 +133,6 @@ public class Factor implements Comparable<Factor>, Serializable {
 
     public Set<OntologyTerm> getValueOntologyTerms() {
         return valueOntologyTerms;
-    }
-
-    public @Nullable String getValueOntologyTermId() {
-        if (valueOntologyTerms.isEmpty()) {
-            return null;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (OntologyTerm valueOntologyTerm : valueOntologyTerms) {
-            sb.append(valueOntologyTerm.id()).append(" ");
-        }
-
-        if (sb.length() > 0) {
-            sb.deleteCharAt(sb.length() - 1);
-        }
-
-        return sb.toString();
-
     }
 
 }

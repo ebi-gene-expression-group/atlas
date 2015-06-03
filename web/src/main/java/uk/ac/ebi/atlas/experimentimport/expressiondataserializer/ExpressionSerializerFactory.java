@@ -10,16 +10,16 @@ import javax.inject.Named;
 @Scope("singleton")
 public class ExpressionSerializerFactory {
 
-    private RnaSeqBaselineExpressionSerializer rnaSeqBaselineExpressionSerializer;
+    private RnaSeqBaselineExpressionKryoSerializer rnaSeqBaselineExpressionKryoSerializer;
 
     @Inject
-    public ExpressionSerializerFactory(RnaSeqBaselineExpressionSerializer rnaSeqBaselineExpressionSerializer) {
-        this.rnaSeqBaselineExpressionSerializer = rnaSeqBaselineExpressionSerializer;
+    public ExpressionSerializerFactory(RnaSeqBaselineExpressionKryoSerializer rnaSeqBaselineExpressionKryoSerializer) {
+        this.rnaSeqBaselineExpressionKryoSerializer = rnaSeqBaselineExpressionKryoSerializer;
     }
 
-    public ExpressionSerializer getSerializer(ExperimentType experimentType) {
+    public ExpressionSerializer getKryoSerializer(ExperimentType experimentType) {
         if (experimentType == ExperimentType.RNASEQ_MRNA_BASELINE) {
-            return rnaSeqBaselineExpressionSerializer;
+            return rnaSeqBaselineExpressionKryoSerializer;
         }
 
         throw new UnsupportedOperationException("No expression serializer for experiment type " + experimentType);

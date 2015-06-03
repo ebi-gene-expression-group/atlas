@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics.baseline;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Optional;
-import uk.ac.ebi.atlas.model.baseline.Quartiles;
 
 /*
  * Used for loading baseline expressions from the TSV file into the database
@@ -14,15 +12,15 @@ public class BaselineAnalytics {
     private String assayGroupId;
 
     private double expressionLevel;
-    private Optional<Quartiles> quartiles;
+    private double[] quartiles;
 
 
     public BaselineAnalytics(String geneId, String assayGroupId, double expressionLevel) {
-        this(geneId, assayGroupId, expressionLevel, Optional.<Quartiles>absent());
+        this(geneId, assayGroupId, expressionLevel, new double[]{});
     }
 
 
-    public BaselineAnalytics(String geneId, String assayGroupId, double expressionLevel, Optional<Quartiles> quartiles) {
+    public BaselineAnalytics(String geneId, String assayGroupId, double expressionLevel, double[] quartiles) {
         this.geneId = geneId;
         this.assayGroupId = assayGroupId;
         this.expressionLevel = expressionLevel;
@@ -45,7 +43,7 @@ public class BaselineAnalytics {
     }
 
 
-    public Optional<Quartiles> getQuartiles() {
+    public double[] getQuartiles() {
         return quartiles;
     }
 

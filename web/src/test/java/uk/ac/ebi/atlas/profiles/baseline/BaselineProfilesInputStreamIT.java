@@ -88,7 +88,7 @@ public class BaselineProfilesInputStreamIT {
 
 
     @Test
-    public void readNextShouldReturnNullGivenAllExpressionLevelsHaveBeenRead() throws Exception {
+    public void readNextShouldReturnFalseGivenAllExpressionLevelsHaveBeenRead() throws Exception {
         long countProfiles = 0;
         while (subject.readNext() != null) {
             ++countProfiles;

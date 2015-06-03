@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang.ArrayUtils;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.Is;
 import org.junit.Before;
@@ -33,9 +34,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
-import uk.ac.ebi.atlas.model.baseline.Quartiles;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -174,15 +175,15 @@ public class ExpressionsRowTsvDeserializerBaselineTest {
         BaselineExpression baselineExpression3 = subject.next();
         assertThat(subject.next(), Is.is(nullValue()));
 
-        assertThat(baselineExpression1.getQuartiles().get(), is(Quartiles.create(1, 2, 3, 4, 5)));
+        assertThat(Arrays.equals(baselineExpression1.getQuartiles(), new double[]{1, 2, 3, 4, 5}), is(true));
         assertThat(baselineExpression1.getLevel(), is(3D));
         assertThat(baselineExpression1.getFactorGroup(), is(factorGroup1));
 
-        assertThat(baselineExpression2.getQuartiles().get(), is(Quartiles.create(0.1, 0.2, 0.3, 0.4, 0.5)));
+        assertThat(Arrays.equals(baselineExpression2.getQuartiles(), new double[]{0.1, 0.2, 0.3, 0.4, 0.5}), is(true));
         assertThat(baselineExpression2.getLevel(), is(0.3D));
         assertThat(baselineExpression2.getFactorGroup(), is(factorGroup2));
 
-        assertThat(baselineExpression3.getQuartiles().isPresent(), is(false));
+        assertThat(ArrayUtils.isEmpty(baselineExpression3.getQuartiles()), is(true));
         assertThat(baselineExpression3.getLevelAsString(), is("NA"));
         assertThat(baselineExpression3.getFactorGroup(), is(factorGroup3));
     }

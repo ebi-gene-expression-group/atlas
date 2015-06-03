@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.profiles;
 
 import uk.ac.ebi.atlas.model.Expression;
+import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -46,12 +47,12 @@ import static com.google.common.base.Preconditions.checkState;
  *
  * Implemented as a iterator, from which the next expression in pulled off one by one
  */
-public abstract class ExpressionsRowRawDeserializer<T extends Expression> implements ExpressionsRowDeserializer<Double[], T> {
+public abstract class ExpressionsRowRawDeserializer<T extends Expression> implements ExpressionsRowDeserializer<BaselineExpression, T> {
 
-    private Queue<Double[]> rawValuesRow = new LinkedList<>();
+    private Queue<BaselineExpression> rawValuesRow = new LinkedList<>();
 
     @Override
-    public ExpressionsRowRawDeserializer<T> reload(Double[]... values) {
+    public ExpressionsRowRawDeserializer<T> reload(BaselineExpression... values) {
         checkState(this.rawValuesRow.isEmpty(), "Reload must be invoked only when readNext returns null");
 
         Collections.addAll(this.rawValuesRow, values);
@@ -65,5 +66,5 @@ public abstract class ExpressionsRowRawDeserializer<T extends Expression> implem
     }
 
     @Override
-    public abstract T nextExpression(Queue<Double[]> expressionLevelsBuffer);
+    public abstract T nextExpression(Queue<BaselineExpression> expressionLevelsBuffer);
 }
