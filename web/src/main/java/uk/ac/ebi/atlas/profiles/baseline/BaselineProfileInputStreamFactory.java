@@ -7,7 +7,7 @@ import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.profiles.ExpressionProfileInputStream;
-import uk.ac.ebi.atlas.profiles.KryoReader;
+import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.utils.CsvReaderFactory;
 import uk.ac.ebi.atlas.utils.KryoReaderFactory;
 
@@ -44,6 +44,7 @@ public class BaselineProfileInputStreamFactory {
 
         this.csvReaderFactory = csvReaderFactory;
         this.kryoReaderFactory = kryoReaderFactory;
+        //this.kryoReaderFactory.initializeKryo();
     }
 
     public ExpressionProfileInputStream<BaselineProfile, BaselineExpression> createBaselineProfileInputStream(String experimentAccession, String queryFactorType, double cutOff, Set<Factor> filterFactors) {
@@ -58,8 +59,8 @@ public class BaselineProfileInputStreamFactory {
 
         String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, experimentAccession);
         try {
-            KryoReader kryoReader = kryoReaderFactory.createKryoReader(serializedFileURL);
-            return new BaselineProfilesKryoInputStream(kryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
+            BaselineExpressionsKryoReader baselineExpressionsKryoReader = kryoReaderFactory.createBaselineExpressionsKryoReader(serializedFileURL);
+            return new BaselineProfilesKryoInputStream(baselineExpressionsKryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
         catch (IllegalArgumentException e) {
             // TSV file fallback if the serialized file doesn’t exist

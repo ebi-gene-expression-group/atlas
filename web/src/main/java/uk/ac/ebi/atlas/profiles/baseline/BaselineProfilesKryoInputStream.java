@@ -25,18 +25,18 @@ package uk.ac.ebi.atlas.profiles.baseline;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.BaselineProfile;
 import uk.ac.ebi.atlas.profiles.KryoInputStream;
-import uk.ac.ebi.atlas.profiles.KryoReader;
+import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 
 public class BaselineProfilesKryoInputStream extends KryoInputStream<BaselineProfile, BaselineExpression> {
 
     private BaselineProfileReusableBuilder baselineProfileReusableBuilder;
 
 
-    public BaselineProfilesKryoInputStream(KryoReader kryoReader, String experimentAccession,
+    public BaselineProfilesKryoInputStream(BaselineExpressionsKryoReader baselineExpressionsKryoReader, String experimentAccession,
                                            ExpressionsRowRawDeserializerBaselineBuilder expressionsRowDeserializerBaselineBuilder,
                                            BaselineProfileReusableBuilder baselineProfileReusableBuilder) {
 
-        super(kryoReader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
+        super(baselineExpressionsKryoReader, experimentAccession, expressionsRowDeserializerBaselineBuilder);
         this.baselineProfileReusableBuilder = baselineProfileReusableBuilder;
     }
 
