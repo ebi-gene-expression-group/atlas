@@ -7,5 +7,4 @@ import uk.ac.ebi.atlas.model.baseline.ExperimentalFactors;
  */
 public interface ExpressionSerializer {
     void serializeExpressionData(String experimentAccession, ExperimentalFactors experimentalFactors);
-    void serializeExpressionLevels(String experimentAccession);
 }

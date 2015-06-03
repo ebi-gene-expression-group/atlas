@@ -62,7 +62,7 @@ public class BaselineProfileInputStreamFactory {
             return new BaselineProfilesKryoInputStream(kryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
         catch (IllegalArgumentException e) {
-            // TSV file fallback if the serialized file doesnt exist (or any other problem)
+            // TSV file fallback if the serialized file doesn’t exist
             return new BaselineProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
     }

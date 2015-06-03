@@ -95,7 +95,7 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
             }
             kryo.writeObject(expressionsOutput, factorGroups);
 
-            LOGGER.debug("Writing " + geneCount + " genes with " + assays.length + " assays each");
+            LOGGER.debug("Writing " + geneCount + " genes with " + assays.length + " assay groups each");
 
             long start = System.currentTimeMillis();
 
@@ -127,12 +127,6 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
             throw new IllegalStateException("Cannot write serialized file", exception);
         }
     }
-
-    @Override
-    public void serializeExpressionLevels(String experimentAccession) {
-
-    }
-
 
     private BaselineExpression[] parseBaselineExpressions(String[] tsvLine) {
         BaselineExpression[] baselineExpressions = new BaselineExpression[tsvLine.length];

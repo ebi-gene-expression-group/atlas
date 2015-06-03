@@ -35,7 +35,7 @@ import java.util.Set;
 
 @Named
 @Scope("prototype")
-public class IsBaselineExpressionAboveCutoffAndForFilterFactors implements Predicate<BaselineExpression>, Serializable {
+public class IsBaselineExpressionAboveCutoffAndForFilterFactors implements Predicate<BaselineExpression> {
 
     private double cutoff;
 
@@ -60,8 +60,7 @@ public class IsBaselineExpressionAboveCutoffAndForFilterFactors implements Predi
     }
 
     protected boolean checkFilterFactors(BaselineExpression expression) {
-        return (CollectionUtils.isEmpty(filterFactors)
-        || expression.containsAll(filterFactors));
+        return (CollectionUtils.isEmpty(filterFactors) || expression.containsAll(filterFactors));
     }
 
 
