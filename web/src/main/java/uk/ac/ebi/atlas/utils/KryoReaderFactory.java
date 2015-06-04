@@ -3,10 +3,8 @@ package uk.ac.ebi.atlas.utils;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.UnsafeInput;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Required;
 import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
 import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
-import uk.ac.ebi.atlas.profiles.BaselineExpressionLevelsKryoReader;
 import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 
 import javax.inject.Named;
@@ -42,20 +40,5 @@ public class KryoReaderFactory {
 
     public static BaselineExpressionsKryoReader createBaselineExpressionsKryoReader(UnsafeInput source) {
         return new BaselineExpressionsKryoReader(createKryo(), source);
-    }
-
-    public BaselineExpressionLevelsKryoReader createBaselineExpressionLevelsKryoReader(String serializedFilePath) {
-        try {
-            Path filePath = FileSystems.getDefault().getPath(checkNotNull(serializedFilePath));
-            InputStream inputStream = Files.newInputStream(filePath);
-            return createBaselineExpressionLevelsKryoReader(new UnsafeInput(inputStream));
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalArgumentException("Error trying to open " + serializedFilePath, e);
-        }
-    }
-
-    public static BaselineExpressionLevelsKryoReader createBaselineExpressionLevelsKryoReader(UnsafeInput source) {
-        return new BaselineExpressionLevelsKryoReader(createKryo(), source);
     }
 }
