@@ -94,6 +94,7 @@ public class RnaSeqBaselineExpressionKryoSerializer implements ExpressionSeriali
                 factorGroups[i] = experimentalFactors.getFactorGroup(assays[i]);
             }
             kryo.writeObject(expressionsOutput, factorGroups);
+            kryo.writeObject(expressionLevelsOutput, factorGroups);
 
             LOGGER.debug("Writing " + geneCount + " genes with " + assays.length + " assay groups each");
 

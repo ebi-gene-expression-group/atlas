@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
 import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.profiles.KryoReader;
+import uk.ac.ebi.atlas.profiles.BaselineExpressionsKryoReader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 
@@ -53,7 +53,7 @@ public class ExpressionSerializerService {
             Kryo kryo = new Kryo();
             ImmutableSetKryoSerializer.registerSerializers(kryo);
             OntologyTermKryoSerializer.registerSerializers(kryo);
-            KryoReader kryoReader = new KryoReader(kryo, input);
+            BaselineExpressionsKryoReader kryoReader = new BaselineExpressionsKryoReader(kryo, input);
 
             kryoReader.rewindAndReadAssays();
             while (kryoReader.readLine()) {

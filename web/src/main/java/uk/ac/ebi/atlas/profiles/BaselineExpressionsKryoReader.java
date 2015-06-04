@@ -3,8 +3,6 @@ package uk.ac.ebi.atlas.profiles;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.KryoException;
 import com.esotericsoftware.kryo.io.UnsafeInput;
-import uk.ac.ebi.atlas.commons.serializers.ImmutableSetKryoSerializer;
-import uk.ac.ebi.atlas.commons.serializers.OntologyTermKryoSerializer;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
 import uk.ac.ebi.atlas.model.baseline.FactorGroup;
 
@@ -13,7 +11,7 @@ import java.io.Closeable;
 /**
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 05/05/15.
  */
-public class KryoReader implements Closeable {
+public class BaselineExpressionsKryoReader implements Closeable {
     private Kryo kryo;
     private UnsafeInput input;
     private boolean closed;
@@ -27,12 +25,10 @@ public class KryoReader implements Closeable {
     private String geneName;
     private BaselineExpression[] expressions;
 
-    public KryoReader(Kryo kryo, UnsafeInput input) {
+    public BaselineExpressionsKryoReader(Kryo kryo, UnsafeInput input) {
         this.kryo = kryo;
         this.input = input;
         this.closed = false;
-        ImmutableSetKryoSerializer.registerSerializers(this.kryo);
-        OntologyTermKryoSerializer.registerSerializers(this.kryo);
     }
 
     public String[] rewindAndReadAssays() {
