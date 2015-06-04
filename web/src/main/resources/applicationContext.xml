@@ -62,8 +62,6 @@
         <lookup-method name="createBarChartTraderBuilder" bean="barChartTraderBuilder"/>
     </bean>
 
-    <bean id="KryoReaderFactory" class="uk.ac.ebi.atlas.utils.KryoReaderFactory" init-method="initializeKryo"/>
-
     <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
         <property name="customEditors">
             <map>
