@@ -66,9 +66,15 @@ public abstract class BaselineExperimentController {
     }
 
     private boolean allFactorsInSliceSelected(BaselineRequestPreferences preferences, BaselineExperiment experiment) {
-
         Set<Factor> selectedFilterFactors = filterFactorsConverter.deserialize(preferences.getSerializedFilterFactors());
-        SortedSet<Factor> allFactorsInSlice = experiment.getExperimentalFactors().getComplementFactors(selectedFilterFactors);
+
+        Set<Factor> allFactorsInSlice;
+        if(experiment.getExperimentalFactors().getAllFactorsOrderedByXML() != null &&
+                !experiment.getExperimentalFactors().getAllFactorsOrderedByXML().isEmpty()) {
+            allFactorsInSlice = experiment.getExperimentalFactors().getComplementFactorByXML(selectedFilterFactors);
+        } else {
+            allFactorsInSlice = experiment.getExperimentalFactors().getComplementFactors(selectedFilterFactors);
+        }
 
         return (preferences.getQueryFactorValues().size() == allFactorsInSlice.size());
     }
