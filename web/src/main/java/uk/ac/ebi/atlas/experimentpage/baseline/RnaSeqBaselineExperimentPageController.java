@@ -83,8 +83,8 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
     }
 
     @RequestMapping(value = "/widgets/heatmap/protein", params = "type=RNASEQ_MRNA_BASELINE")
-    public String showGeneProfilesWidget(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
-            , @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request) {
+    public String showGeneProfilesWidget(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
+                                         @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request) {
 
         //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax
         // ideally we should move queryStringToTags to javascript, and keep the former space separated syntax
@@ -99,8 +99,8 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
     }
 
     @RequestMapping(value = "/widgets/heatmap/referenceExperiment", params = "type=RNASEQ_MRNA_BASELINE")
-    public String fetchReferenceExperimentProfilesJson(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences
-            , @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request,
+    public String fetchReferenceExperimentProfilesJson(@ModelAttribute("preferences") @Valid BaselineRequestPreferences preferences,
+                                                       @RequestParam(value = "disableGeneLinks", required = false) boolean disableGeneLinks, BindingResult result, Model model, HttpServletRequest request,
                                                        HttpServletResponse response) {
 
         //TODO: hacky work around to support clients using the geneQuery=A1A4S6+Q13177 syntax

@@ -135,4 +135,21 @@ public class Factor implements Comparable<Factor> {
         return valueOntologyTerms;
     }
 
+    // Used by heatmap-widget.jsp
+    public @Nullable String getValueOntologyTermId() {
+        if (valueOntologyTerms.isEmpty()) {
+            return null;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (OntologyTerm valueOntologyTerm : valueOntologyTerms) {
+            sb.append(valueOntologyTerm.id()).append(" ");
+        }
+
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        return sb.toString();
+    }
 }
