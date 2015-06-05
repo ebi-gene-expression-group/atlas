@@ -96,12 +96,15 @@
 
     <!-- compliance style end -->
 
-    <c:set var="mainTitle" value="${mainTitle}"/>  
+    <c:set var="mainTitle" value="${mainTitle}"/>
+
      <c:if test="${mainTitle != null}"> 
          <c:set var="completeTitle" value="${mainTitle.concat(' < Expression Atlas < EMBL-EBI ')}"/> 
         <title>${completeTitle}</title>
      </c:if>
-   <title><tiles:insertAttribute name="title" ignore="true"/> &lt; EMBL-EBI</title>
+    <c:if test="${mainTitle == null}"> 
+        <title><tiles:insertAttribute name="title" ignore="true"/> &lt; EMBL-EBI</title>
+    </c:if>
 
 
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css">
