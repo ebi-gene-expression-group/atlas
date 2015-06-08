@@ -108,6 +108,9 @@
                     <exclude>
                         oracleContext.xml
                     </exclude>
+                    <exclude>
+                        oracleUcpContext.xml
+                    </exclude>
                 </excludes>
             </resource>
         </resources>
@@ -485,6 +488,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ucp</artifactId>
+            <version>11.2.0.3.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>uk.ac.ebi.fg</groupId>
             <artifactId>ae-efo-loader</artifactId>
             <version>1.0.1</version>
@@ -614,7 +623,7 @@
         <profile>
             <!-- used for build that is deployed to ves-hx-77 -->
             <id>acceptance</id>
-            <!-- oracleContext.xml is located on the filesystem and specified in tomcat's context xml -->
+            <!-- oracleContext.xml and oracleUcpContext.xml are located on the filesystem and specified in tomcat's context xml -->
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
             </properties>
@@ -622,7 +631,7 @@
         <profile>
             <!--build used for staging and production -->
             <id>production</id>
-            <!-- oracleContext.xml is located on the filesystem and specified in tomcat's context xml -->
+            <!-- oracleContext.xml and OracleUcpContext.xml are located on the filesystem and specified in tomcat's context xml -->
             <properties>
                 <resources.host>www.ebi.ac.uk</resources.host>
                 <arrayexpress.ac.url>/arrayexpress</arrayexpress.ac.url>
@@ -642,6 +651,9 @@
                         <includes>
                             <include>
                                 oracleContext.xml
+                            </include>
+                            <include>
+                                oracleUcpContext.xml
                             </include>
                         </includes>
                     </resource>
@@ -670,6 +682,9 @@
                             <include>
                                 oracleContext.xml
                             </include>
+                            <include>
+                                oracleUcpContext.xml
+                            </include>
                         </includes>
                     </resource>
                 </resources>
@@ -684,29 +699,6 @@
         </profile>
         <profile>
             <!-- for development -->
-            <id>dev.using.production</id>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <includes>
-                            <include>
-                                oracleContext.xml
-                            </include>
-                        </includes>
-                    </resource>
-                </resources>
-            </build>
-            <properties>
-                <solr.host>lime</solr.host>
-                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
-                <oracle.jdbc.url>jdbc:oracle:thin:@ora-oyvm-009.ebi.ac.uk:1531:ATLASPUB</oracle.jdbc.url>
-                <oracle.jdbc.username>atlasprd3</oracle.jdbc.username>
-                <oracle.jdbc.password>atla5p4d3</oracle.jdbc.password>
-            </properties>
-        </profile>
-        <profile>
-            <!-- for development -->
             <id>dev.local.vm</id>
             <build>
                 <resources>
@@ -715,6 +707,9 @@
                         <includes>
                             <include>
                                 oracleContext.xml
+                            </include>
+                            <include>
+                                oracleUcpContext.xml
                             </include>
                         </includes>
                     </resource>
@@ -740,6 +735,9 @@
                             <include>
                                 oracleContext.xml
                             </include>
+                            <include>
+                                oracleUcpContext.xml
+                            </include>
                         </includes>
                     </resource>
                 </resources>
@@ -762,6 +760,9 @@
                         <includes>
                             <include>
                                 oracleContext.xml
+                            </include>
+                            <include>
+                                oracleUcpContext.xml
                             </include>
                         </includes>
                     </resource>
@@ -786,6 +787,9 @@
                             <include>
                                 oracleContext.xml
                             </include>
+                            <include>
+                                oracleUcpContext.xml
+                            </include>
                         </includes>
                     </resource>
                 </resources>
@@ -798,7 +802,56 @@
                 <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
             </properties>
         </profile>
-
+        <profile>
+            <id>dev.using.production-oy-76</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>
+                                oracleContext.xml
+                            </include>
+                            <include>
+                                oracleUcpContext.xml
+                            </include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <solr.host>ves-oy-76:8983</solr.host>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@ora-oyvm-009.ebi.ac.uk:1531:ATLASPUB</oracle.jdbc.url>
+                <oracle.jdbc.username>atlasprd3</oracle.jdbc.username>
+                <oracle.jdbc.password>atla5p4d3</oracle.jdbc.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev.using.production-pg-76</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>
+                                oracleContext.xml
+                            </include>
+                            <include>
+                                oracleUcpContext.xml
+                            </include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <solr.host>ves-pg-76:8983</solr.host>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@ora-pgvm-009.ebi.ac.uk:1531:ATLASPUB</oracle.jdbc.url>
+                <oracle.jdbc.username>atlasprd3</oracle.jdbc.username>
+                <oracle.jdbc.password>atla5p4d3</oracle.jdbc.password>
+            </properties>
+        </profile>
         <!-- execution profiles -->
 
     </profiles>
