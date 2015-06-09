@@ -29,7 +29,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml", "classpath:oracleUcpContext.xml"})
 public class MicroarrayProfilesHeatMapIT {
 
     public static final String E_GEOD_8122 = "E-GEOD-8122";

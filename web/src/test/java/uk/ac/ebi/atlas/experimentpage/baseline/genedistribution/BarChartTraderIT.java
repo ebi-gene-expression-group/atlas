@@ -39,7 +39,7 @@ import static org.hamcrest.Matchers.hasEntry;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml", "classpath:oracleUcpContext.xml"})
 public class BarChartTraderIT {
 
     private static final String ORGANISM_PART = "ORGANISM_PART";

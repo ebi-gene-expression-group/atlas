@@ -1,7 +1,6 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.junit.Before;
@@ -35,7 +34,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml", "classpath:oracleUcpContext.xml"})
 public class DiffAnalyticsSearchServiceIT {
 
     DiffAnalyticsSearchService diffAnalyticsSearchService;
