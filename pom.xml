@@ -490,7 +490,7 @@
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ucp</artifactId>
-            <version>11.2.0.3.0</version>
+            <version>11.2.0.3</version>
         </dependency>
 
         <dependency>
@@ -551,6 +551,11 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>codelds</id>
+            <url>https://dev.lds.org/nexus/content/repositories/thirdparty/</url>
+        </repository>
+
     </repositories>
 
     <pluginRepositories>
