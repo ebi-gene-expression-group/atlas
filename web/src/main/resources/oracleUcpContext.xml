@@ -33,15 +33,17 @@
 
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
-    <bean id="dataSourceOracleUcp" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource">
-        <property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource"/>
-        <property name="dataSourceName" value="ds"/>
-        <property name="URL" value="${oracle.jdbc.url}"/>
-        <property name="user" value="${oracle.jdbc.username}"/>
-        <property name="password" value="${oracle.jdbc.password}"/>
-        <property name="connectionPoolName" value="defaultPool"/>
-        <property name="maxPoolSize" value="10"/>
-        <property name="initialPoolSize" value="5"/>
-    </bean>
+    <!--<bean id="dataSourceOracleUcp" class="oracle.ucp.jdbc.PoolDataSourceFactory" factory-method="getPoolDataSource"  lazy-init="true">-->
+        <!--<property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleConnectionPoolDataSource"/>-->
+        <!--<property name="dataSourceName" value="ds"/>-->
+        <!--<property name="URL" value="${oracle.jdbc.url}"/>-->
+        <!--<property name="user" value="${oracle.jdbc.username}"/>-->
+        <!--<property name="password" value="${oracle.jdbc.password}"/>-->
+        <!--<property name="connectionPoolName" value="defaultPool"/>-->
+        <!--<property name="connectionWaitTimeout" value="30" />-->
+        <!--<property name="minPoolSize" value="1"/>-->
+        <!--<property name="maxPoolSize" value="10"/>-->
+        <!--<property name="initialPoolSize" value="5"/>-->
+    <!--</bean>-->
 
 </beans>

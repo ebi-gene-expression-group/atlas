@@ -38,6 +38,18 @@
         <property name="URL" value="${oracle.jdbc.url}"/>
         <property name="user" value="${oracle.jdbc.username}"/>
         <property name="password" value="${oracle.jdbc.password}"/>
+        <property name="connectionCachingEnabled" value="true"/>
+        <property name="connectionProperties">
+            <props>
+                <prop key="MinLimit">1</prop>
+                <prop key="MaxLimit">10</prop>
+                <prop key="InactivityTimeout">2</prop>
+                <prop key="InitialLimit">0</prop>
+                <prop key="ConnectionWaitTimeout">10</prop>
+                <prop key="ValidateConnection">true</prop>
+            </props>
+        </property>
+
     </bean>
 
 </beans>
