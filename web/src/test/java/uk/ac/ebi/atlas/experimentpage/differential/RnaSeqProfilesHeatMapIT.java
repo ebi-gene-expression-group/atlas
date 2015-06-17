@@ -28,7 +28,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml", "classpath:oracleUcpContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class RnaSeqProfilesHeatMapIT {
 
     private static final String E_GEOD_38400 = "E-GEOD-38400";

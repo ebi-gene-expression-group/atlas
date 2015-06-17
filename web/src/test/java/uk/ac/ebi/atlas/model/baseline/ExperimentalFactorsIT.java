@@ -46,7 +46,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml", "classpath:oracleUcpContext.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class ExperimentalFactorsIT {
 
     private static final String BASELINE_EXPERIMENT_ACCESSION = "E-GEOD-26284";
