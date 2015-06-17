@@ -108,9 +108,6 @@
                     <exclude>
                         oracleContext.xml
                     </exclude>
-                    <exclude>
-                        oracleUcpContext.xml
-                    </exclude>
                 </excludes>
             </resource>
         </resources>
@@ -628,7 +625,7 @@
         <profile>
             <!-- used for build that is deployed to ves-hx-77 -->
             <id>acceptance</id>
-            <!-- oracleContext.xml and oracleUcpContext.xml are located on the filesystem and specified in tomcat's context xml -->
+            <!-- oracleContext.xml is located on the filesystem and specified in tomcat's context xml -->
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
             </properties>
@@ -636,7 +633,7 @@
         <profile>
             <!--build used for staging and production -->
             <id>production</id>
-            <!-- oracleContext.xml and OracleUcpContext.xml are located on the filesystem and specified in tomcat's context xml -->
+            <!-- oracleContext.xml is located on the filesystem and specified in tomcat's context xml -->
             <properties>
                 <resources.host>www.ebi.ac.uk</resources.host>
                 <arrayexpress.ac.url>/arrayexpress</arrayexpress.ac.url>
@@ -656,9 +653,6 @@
                         <includes>
                             <include>
                                 oracleContext.xml
-                            </include>
-                            <include>
-                                oracleUcpContext.xml
                             </include>
                         </includes>
                     </resource>
@@ -687,9 +681,6 @@
                             <include>
                                 oracleContext.xml
                             </include>
-                            <include>
-                                oracleUcpContext.xml
-                            </include>
                         </includes>
                     </resource>
                 </resources>
@@ -712,9 +703,6 @@
                         <includes>
                             <include>
                                 oracleContext.xml
-                            </include>
-                            <include>
-                                oracleUcpContext.xml
                             </include>
                         </includes>
                     </resource>
@@ -740,9 +728,6 @@
                             <include>
                                 oracleContext.xml
                             </include>
-                            <include>
-                                oracleUcpContext.xml
-                            </include>
                         </includes>
                     </resource>
                 </resources>
@@ -765,9 +750,6 @@
                         <includes>
                             <include>
                                 oracleContext.xml
-                            </include>
-                            <include>
-                                oracleUcpContext.xml
                             </include>
                         </includes>
                     </resource>
@@ -792,9 +774,6 @@
                             <include>
                                 oracleContext.xml
                             </include>
-                            <include>
-                                oracleUcpContext.xml
-                            </include>
                         </includes>
                     </resource>
                 </resources>
@@ -817,9 +796,6 @@
                             <include>
                                 oracleContext.xml
                             </include>
-                            <include>
-                                oracleUcpContext.xml
-                            </include>
                         </includes>
                     </resource>
                 </resources>
@@ -841,9 +817,6 @@
                         <includes>
                             <include>
                                 oracleContext.xml
-                            </include>
-                            <include>
-                                oracleUcpContext.xml
                             </include>
                         </includes>
                     </resource>
