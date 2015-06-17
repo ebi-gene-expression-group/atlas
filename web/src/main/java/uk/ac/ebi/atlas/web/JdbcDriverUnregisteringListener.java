@@ -23,10 +23,6 @@
 package uk.ac.ebi.atlas.web;
 
 
-import oracle.ucp.UniversalConnectionPoolException;
-import oracle.ucp.admin.UniversalConnectionPoolManager;
-import oracle.ucp.admin.UniversalConnectionPoolManagerImpl;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.sql.Driver;
@@ -45,22 +41,6 @@ public class JdbcDriverUnregisteringListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent event) {
         deregisterDrivers(getDrivers());
-
-        // Shutdown UCP if present, to avoid warnings about thread leaks
-        UniversalConnectionPoolManager ucpManager;
-        try {
-            ucpManager = UniversalConnectionPoolManagerImpl.getUniversalConnectionPoolManager();
-            if (ucpManager != null) {
-                String[] poolNames = ucpManager.getConnectionPoolNames();
-                if (poolNames != null) {
-                    for (String poolName : poolNames) {
-                        ucpManager.destroyConnectionPool(poolName);
-                    }
-                }
-            }
-        } catch (UniversalConnectionPoolException e) {
-            throw new Error("UniversalConnectionPoolException", e);
-        }
     }
 
     /**
