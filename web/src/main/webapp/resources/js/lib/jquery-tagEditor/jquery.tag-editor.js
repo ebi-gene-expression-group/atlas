@@ -53,19 +53,19 @@
 
         // delete selected tags on backspace, delete, ctrl+x
         function delete_selected_tags(e){
-            if (e.which == 8 || e.which == 46 || e.ctrlKey && e.which == 88) {
-                try {
-                    var sel = getSelection(), el = $(sel.getRangeAt(0).commonAncestorContainer);
-                } catch(e){ el = 0; }
-                if (el && el.hasClass('tag-editor')) {
-                    var tags = [], splits = sel.toString().split(el.prev().data('options').dregex);
-                    for (i=0; i<splits.length; i++){ var tag = $.trim(splits[i]); if (tag) tags.push(tag); }
-                    $('.tag-editor-tag', el).each(function(){
-                        if (~$.inArray($(this).html(), tags)) $(this).closest('li').find('.tag-editor-delete').click();
-                    });
-                    return false;
-                }
-            }
+            //if (e.which == 8 || e.which == 46 || e.ctrlKey && e.which == 88) {
+            //    try {
+            //        var sel = getSelection(), el = $(sel.getRangeAt(0).commonAncestorContainer);
+            //    } catch(e){ el = 0; }
+            //    if (el && el.hasClass('tag-editor')) {
+            //        var tags = [], splits = sel.toString().split(el.prev().data('options').dregex);
+            //        for (i=0; i<splits.length; i++){ var tag = $.trim(splits[i]); if (tag) tags.push(tag); }
+            //        $('.tag-editor-tag', el).each(function(){
+            //            if (~$.inArray($(this).html(), tags)) $(this).closest('li').find('.tag-editor-delete').click();
+            //        });
+            //        return false;
+            //    }
+            //}
         }
         if (window.getSelection) $(document).off('keydown.tag-editor').on('keydown.tag-editor', delete_selected_tags);
 
