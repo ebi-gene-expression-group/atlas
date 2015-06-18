@@ -114,17 +114,14 @@
             $('#ensembl-launcher').hcSticky({responsive: true});
 
             window.onload = function() {
-                var slices = window.location.search.split('&');
-                var geneQueryStr = slices[7];
-                if(geneQueryStr != undefined) {
-                    var gene = geneQueryStr.substring(geneQueryStr.lastIndexOf("=") + 1, geneQueryStr.length);
-                    var geneTerms = gene.split("%09");
+                var geneQueryStr = $.url('?geneQuery');
+                if(geneQueryStr) {
+                    var geneTerms = geneQueryStr.split("%09");
                     geneTerms.forEach(function(geneTerm) {
-                        $('#geneQuery').tagEditor('addTag', decodeURIComponent(geneTerm.replace("+", "%20")));
+                        $('#geneQuery').tagEditor('addTag', decodeURIComponent(geneTerm.replace(/\+/g, "%20")));
                     });
                 }
             };
-
         });
     })(jQuery);
 
