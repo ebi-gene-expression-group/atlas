@@ -139,7 +139,7 @@ public class DifferentialAnalyticsSearchDao {
         query = query + buildParamsQuery(factors, "factors");
         query = query + buildParamsQuery(kingdoms, "kingdom");
 
-        if(numReplicates != null) {
+        if(numReplicates != null && numReplicates.size()!=0) {
             query = query + String.format(" AND numReplicates:(\"%s\")", StringUtils.join(numReplicates, "\" OR \""));
         }
         if(StringUtils.isNotBlank(regulation)) {

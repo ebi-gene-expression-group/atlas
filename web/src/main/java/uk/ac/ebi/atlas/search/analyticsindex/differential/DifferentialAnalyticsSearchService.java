@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;

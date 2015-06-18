@@ -3,7 +3,7 @@
 /*global require */
 var React = require('react');
 
-var DifferentialResults = React.createClass({
+var DifferentialResults = React.createClass({displayName: 'DifferentialResults',
 
     propTypes: {
         /*
@@ -39,33 +39,33 @@ var DifferentialResults = React.createClass({
 
     render: function () {
         var differentialResultRows = this.props.diffResultsData.map(function (diffResult) {
-            return <DifferentialResultRow
-                key={diffResult.experimentAccession + diffResult.contrastId}
-                geneCount={diffResult.geneCount} organism={diffResult.organism} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
-                contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession}
-            />;
+            return DifferentialResultRow({
+                key: diffResult.experimentAccession + diffResult.contrastId, 
+                geneCount: diffResult.geneCount, organism: diffResult.organism, comparison: diffResult.comparison, experimentName: diffResult.experimentName, 
+                contrastId: diffResult.contrastId, experimentAccession: diffResult.experimentAccession}
+            );
         }.bind(this));
 
         return (
-            <table>
-                <thead>
-                    <tr>
-                        <th>Gene count</th>
-                        <th>Species</th>
-                        <th>Comparison</th>
-                        <th>Experiment name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        {differentialResultRows}
-                </tbody>
-            </table>
+            React.DOM.table(null, 
+                React.DOM.thead(null, 
+                    React.DOM.tr(null, 
+                        React.DOM.th(null, "Gene count"), 
+                        React.DOM.th(null, "Species"), 
+                        React.DOM.th(null, "Comparison"), 
+                        React.DOM.th(null, "Experiment name")
+                    )
+                ), 
+                React.DOM.tbody(null, 
+                        differentialResultRows
+                )
+            )
         );
     }
 });
 
 
-var DifferentialResultRow = React.createClass({
+var DifferentialResultRow = React.createClass({displayName: 'DifferentialResultRow',
     propTypes: {
         geneCount: React.PropTypes.number.isRequired,
         organism: React.PropTypes.string.isRequired,
@@ -78,12 +78,12 @@ var DifferentialResultRow = React.createClass({
     // TODO Use this.props.contrastId and this.props.experimentAccession to add link to the relevant experiment/comparison
     render: function () {
         return (
-            <tr>
-                <td>{this.props.geneCount}</td>
-                <td>{this.props.organism}</td>
-                <td>{this.props.comparison}</td>
-                <td>{this.props.experimentName}</td>
-            </tr>
+            React.DOM.tr(null, 
+                React.DOM.td(null, this.props.geneCount), 
+                React.DOM.td(null, this.props.organism), 
+                React.DOM.td(null, this.props.comparison), 
+                React.DOM.td(null, this.props.experimentName)
+            )
         );
     }
 });
