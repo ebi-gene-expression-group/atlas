@@ -1,6 +1,8 @@
 package uk.ac.ebi.atlas.profiles.baseline;
 
 import au.com.bytecode.opencsv.CSVReader;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExpression;
@@ -16,9 +18,11 @@ import javax.inject.Named;
 import java.text.MessageFormat;
 import java.util.Set;
 
-@Named
+@Named("baselineProfileInputStreamFactory")
 @Scope("prototype")
 public class BaselineProfileInputStreamFactory {
+
+    private static final Logger LOGGER = Logger.getLogger(BaselineProfileInputStreamFactory.class);
 
     @Value("#{configuration['experiment.magetab.path.template']}")
     protected String baselineExperimentDataFileUrlTemplate;
@@ -44,7 +48,6 @@ public class BaselineProfileInputStreamFactory {
 
         this.csvReaderFactory = csvReaderFactory;
         this.kryoReaderFactory = kryoReaderFactory;
-        //this.kryoReaderFactory.initializeKryo();
     }
 
     public ExpressionProfileInputStream<BaselineProfile, BaselineExpression> createBaselineProfileInputStream(String experimentAccession, String queryFactorType, double cutOff, Set<Factor> filterFactors) {
@@ -63,7 +66,7 @@ public class BaselineProfileInputStreamFactory {
             return new BaselineProfilesKryoInputStream(baselineExpressionsKryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
         catch (IllegalArgumentException e) {
-            // TSV file fallback if the serialized file doesn’t exist
+            LOGGER.error("Could not read serialized file " + serializedFileURL);
             return new BaselineProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
     }
