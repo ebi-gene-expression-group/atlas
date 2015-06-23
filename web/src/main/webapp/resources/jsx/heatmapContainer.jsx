@@ -34,25 +34,39 @@ var Anatomogram = (function (React) {
                 return s.indexOf("human") > -1;
             }
 
+            function replaceSpaces (value) {
+                var result = value.replace(" ","_");
+                return result.trim();
+            }
+
             var height = containsHuman(this.props.anatomogram.maleAnatomogramFile) ? 360 : 250;
             var sexToggleImageSrc =this.props.anatomogram.contextRoot + this.props.anatomogram.toggleButtonImage;
 
+            var heatmapKeyTrimmed = this.props.heatmapKey ? replaceSpaces(this.props.heatmapKey) : null;
+
+            var anatomogram = this.props.heatmapKey ? "anatomogram" + heatmapKeyTrimmed : "anatomogram";
+            var sexToggle = this.props.heatmapKey ? "sex-toggle" + heatmapKeyTrimmed : "sex-toggle";
+            var sexToggleImage = this.props.heatmapKey ? "sex-toggle-image" + heatmapKeyTrimmed : "sex-toggle-image";
+            var keyId = this.props.heatmapKey ? "anatomogramBody" + heatmapKeyTrimmed : "anatomogramBody";
+
             return (
-                <div id="anatomogram" className="gxaAside gxaDoubleClickNoSelection" style={{display: "inline"}}>
+                <div id={anatomogram} className="gxaAside gxaDoubleClickNoSelection" style={{display: "inline"}}>
                     <table>
+                        <tbody>
                         <tr>
                             <td style={{"padding-top": "15px", "vertical-align":"top"}}>
-                                <span id="sex-toggle">
-                                    <img id="sex-toggle-image" title="Switch anatomogram" className="gxaButtonImage"
+                                <span id={sexToggle}>
+                                    <img id={sexToggleImage} title="Switch anatomogram" className="gxaButtonImage"
                                         style={{"width":"20px", "height":"38px", "padding":"2px"}}
                                         src={sexToggleImageSrc}/>
                                 </span>
                             </td>
                             <td>
-                                <div id="anatomogramBody" style={{"display":"inline-block", "width": "230px", "height":height}}>
+                                <div id={keyId} style={{"display":"inline-block", "width": "230px", "height":height}}>
                                 </div>
                             </td>
                         </tr>
+                        </tbody>
                     </table>
                     <div id="anatomogram-ensembl-launcher"></div>
                 </div>
@@ -67,7 +81,6 @@ var HeatmapContainer = (function (React) {
     return React.createClass({
 
         componentDidMount: function() {
-            debugger;
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-37676851-1']);
             _gaq.push(['_trackPageview']);
@@ -92,7 +105,7 @@ var HeatmapContainer = (function (React) {
 
                         <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
-                            { this.props.anatomogram ? Anatomogram( {anatomogram:this.props.anatomogram} ) : null}
+                            { this.props.anatomogram ? Anatomogram( {anatomogram:this.props.anatomogram, heatmapKey: this.props.heatmapKey} ) : null}
 
                             <div id="ensembl-launcher" className="gxaAside" style={{"display":"inline"}}></div>
 

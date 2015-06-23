@@ -99,8 +99,8 @@ Biojs.AtlasHeatmap = Biojs.extend({
 
             overrideContextRoot(data, opt.gxaBaseUrl);
 
-            if (opt.isMultiExperiment) {
-                self.drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildMultiExperiment);
+            if (opt.isMultiExperiment) { console.log("HEATMAP ANATOMOGRAM KEY:" + opt.heatmapKey);
+                self.drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildMultiExperiment, opt.heatmapKey);
             } else {
                 self.drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildBaseline);
             }
@@ -116,26 +116,26 @@ Biojs.AtlasHeatmap = Biojs.extend({
 
     },
 
-    drawHeatmap:function (data, targetElement, heatmapClass, heatmapBuilder) {
+    drawHeatmap:function (data, targetElement, heatmapClass, heatmapBuilder, heatmapKey) {
 
-        (function ($, React, HeatmapContainer, heatmapBuilder, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData, experimentData) {
+        (function ($, React, HeatmapContainer, heatmapBuilder, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData, experimentData, heatmapKey) {
 
             $(document).ready(function () {
                 // call this inside ready() so all scripts load first in IE8
                 var Heatmap = heatmapBuilder(heatmapConfig).Heatmap;
 
-                React.renderComponent(HeatmapContainer({Heatmap: Heatmap, isWidget: true, heatmapClass: heatmapClass, experiment: experimentData, anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}),
+                React.renderComponent(HeatmapContainer({Heatmap: Heatmap, isWidget: true, heatmapClass: heatmapClass, experiment: experimentData, anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey}),
                     targetElement
                 );
 
                 // load anatomogram after heatmap is rendered so wiring works
                 if (anatomogramData) {
-                    anatomogramModule.init(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile, anatomogramData.contextRoot, heatmapConfig.species, heatmapConfig.isSingleGene);
+                    anatomogramModule.init(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile, anatomogramData.contextRoot, heatmapConfig.species, heatmapConfig.isSingleGene, heatmapKey);
                 }
             });
 
         })(jQuery, React, HeatmapContainer, heatmapBuilder, data.config,
-            data.columnHeaders, data.profiles, data.geneSetProfiles, data.anatomogram, data.experiment);
+            data.columnHeaders, data.profiles, data.geneSetProfiles, data.anatomogram, data.experiment, heatmapKey);
 
     },
 

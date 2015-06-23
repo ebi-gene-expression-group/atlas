@@ -26,7 +26,8 @@ var BioJSAtlasHeatmap = (function(React) {
                 isMultiExperiment: true,
                 target: this.refs.widgetBody.getDOMNode(),
                 heatmapClass: "gxaHeatmapPosition",
-                heatmapUrl: "/widgets/heatmap/baselineAnalytics"
+                heatmapUrl: "/widgets/heatmap/baselineAnalytics",
+                heatmapKey:this.props.key
             });
         },
 

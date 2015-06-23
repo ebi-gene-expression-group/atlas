@@ -109,6 +109,8 @@ var anatomogramModule = (function ($) {
         }
     }
 
+    //TODO: When widget is used by faceting we need to create the ids dynamically for
+    //TODO: the widget to be load with a proper scale
     function scaleAnatomogram(svg) {
         var elementById = svg.getElementById('group_all');
         // this is in case anatomogram is hidden
@@ -131,8 +133,8 @@ var anatomogramModule = (function ($) {
     }
 
     //load anatomogram from given location and display given organism parts
-    function loadAnatomogram(location, allSvgPathIds, isSingleGene) {
-        var svg = $('#anatomogramBody').svg('get');
+    function loadAnatomogram(anatomogramBodyId, location, allSvgPathIds, isSingleGene) {
+        var svg = $(anatomogramBodyId).svg('get');
 
         svg.load(location, {
             onLoad:function(){
@@ -171,15 +173,32 @@ var anatomogramModule = (function ($) {
 
     }
 
-    function init(allSvgPathIds, fileNameMale, fileNameFemale, contextRoot, species, isSingleGene) {
-        if ($('#anatomogramBody').length === 0) {
+    function replaceSpaces (value) {
+        var result = value.replace(" ","_");
+        return result.trim();
+    }
+
+    function init(allSvgPathIds, fileNameMale, fileNameFemale, contextRoot, species, isSingleGene, heatmapkey) {
+        var anatomogramBody = "#anatomogramBody";
+        var sexToggle = "#sex-toggle";
+        var sexToggleImage = "#sex-toggle-image";
+
+        if(heatmapkey != null) {
+            var heatmapKeyTrimmed = replaceSpaces(heatmapkey);
+
+            anatomogramBody = anatomogramBody + heatmapKeyTrimmed;
+            sexToggle = sexToggle + heatmapKeyTrimmed;
+            sexToggleImage = sexToggleImage + heatmapKeyTrimmed;
+        }
+
+        if ($(anatomogramBody).length === 0) {
             return;
         }
 
         //init svg
-        $('#anatomogramBody').svg();
+        $(anatomogramBody).svg();
 
-        var svg = loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
+        var svg = loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
 
         //hover on gene name, to highlight all organism parts involved on a single gene profile
         $("#heatmap-table td:first-child").on("hover", function (evt) { //hover on cells of the first table column
@@ -206,21 +225,23 @@ var anatomogramModule = (function ($) {
             }
         });
 
+
+
         if (fileNameMale !== fileNameFemale) {
             //switch sex toggle button
-            $("#sex-toggle-image").button().toggle(
+            $(sexToggleImage).button().toggle(
                 function () {
 
                     $(this).attr("src", contextRoot + selectFemaleImageToggle(species));
-                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameFemale, allSvgPathIds, isSingleGene);
+                    loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameFemale, allSvgPathIds, isSingleGene);
                 },
                 function () {
                     $(this).attr("src", contextRoot + selectMaleImageToggle(species));
-                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
+                    loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
                 }
             ).tooltip();
         } else {
-            $("#sex-toggle").hide();
+            $(sexToggle).hide();
         }
     }
 
