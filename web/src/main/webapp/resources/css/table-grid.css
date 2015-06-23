@@ -29,7 +29,7 @@
     empty-cells: show;
     /*width: 100% !important;*/
     height: 100%;
-    font-size: 93%;
+    /*font-size: 100% !important;*/
     text-align: left;
 }
 
@@ -40,7 +40,7 @@
 
 .gxaTableGrid, .gxaAnalysisGrid {
     width: auto;
-    border-collapse: collapse;
+    /*border-collapse: collapse;*/
 }
 
 .gxaFormGrid label, .gxaAnalysisGrid label {
@@ -67,24 +67,26 @@
     white-space: nowrap;
 }
 
-.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {
+th.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {
     font-weight: normal;
     background-color: rgb(237, 246, 246) !important;
 }
 
-.gxaHoverableHeader:hover, .gxaHeaderHover {
+th.gxaHoverableHeader:hover, .gxaHeaderHover {
     background-color: #deebeb !important;
 }
 
-.gxaSelectableHeader:hover {
+th.gxaSelectableHeader:hover {
     cursor: pointer;
 }
 
-.gxaVerticalHeaderCell-selected, .gxaVerticalHeaderCell-selected:hover, .gxaHorizontalHeaderCell-selected, .gxaHorizontalHeaderCell-selected:hover {
+th.gxaVerticalHeaderCell-selected, th.gxaVerticalHeaderCell-selected:hover, th.gxaHorizontalHeaderCell-selected, th.gxaHorizontalHeaderCell-selected:hover {
     background-color: rgb(181, 234, 234) !important;
+    border: 1px solid #cdcdcd;
+    padding:5px;
 }
 
-.gxaHorizontalHeaderCell {
+th.gxaHorizontalHeaderCell {
     border: 1px solid #cdcdcd;
     white-space: nowrap;
     padding:5px;
@@ -179,6 +181,11 @@ tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomics
     width: 70px
 }
 
+th.gxaHeatmapTableDesignElement {
+    font-weight: normal;
+    text-align: left;
+    border: 1px solid #CDCDCD;
+}
 
 
 
@@ -187,24 +194,22 @@ tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomics
     overflow-y: hidden;
     position: relative;
 }
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyHead,
+    #gxaExperimentPageHeatmapTableStickyWrapperStickyHeader,
     #gxaExperimentPageHeatmapTableStickyWrapperStickyColumn,
     #gxaExperimentPageHeatmapTableStickyWrapperStickyIntersect {
-        opacity: 0;
         position: absolute;
-        top: 0;
-        left: 0;
         width: auto; /* Prevent table from stretching to full size */
     }
     #gxaExperimentPageHeatmapTableStickyWrapperStickyColumn,
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyHead {
-        z-index: -50;
+    #gxaExperimentPageHeatmapTableStickyWrapperStickyHeader {
+        z-index: 50;
     }
     #gxaExperimentPageHeatmapTableStickyWrapperStickyIntersect {
-        z-index: 150;
+        z-index: 60;
     }
 
     #gxaExperimentPageHeatmapTableStickyWrapper td,
-    #gxaExperimentPageHeatmapTableStickyWrapper th {
+    #gxaExperimentPageHeatmapTableStickyWrapper th,
+    #gxaExperimentPageHeatmapTableStickyWrapper tr {
         box-sizing: border-box;
     }

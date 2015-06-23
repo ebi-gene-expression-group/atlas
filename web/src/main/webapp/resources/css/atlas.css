@@ -25,10 +25,7 @@
 }
 
 td.gxaSearchFormFullWidthColumn {
-    /*border: none;*/
-    /*vertical-align: top;*/
     width: 100%;
-    /*padding: 5px;*/
 }
 
 td.gxaHomeSearchFluidTableColumn {
@@ -86,6 +83,11 @@ td.gxaExperimentRequestPreferencesFluidNarrowTableColumn {
 
 /* ebi css override: start */
 
+    /* */
+th, body.table-layout table.data th, td, body.table-layout table.data td {
+    font-size: 95%
+}
+
 #global-footer.grid_24 {
     width: 100%;
     margin-left: auto;
@@ -131,7 +133,6 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 
 #atlas-content th {
     background-color: transparent;
-    text-align: center;
 }
 
 #atlas-content td, .rotated-cell {
