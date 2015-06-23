@@ -40,7 +40,7 @@
 
 .gxaTableGrid, .gxaAnalysisGrid {
     width: auto;
-    /*border-collapse: collapse;*/
+    border-collapse: collapse;
 }
 
 .gxaFormGrid label, .gxaAnalysisGrid label {
