@@ -39,7 +39,8 @@ abstract class TablePage extends GlobalSearchPage {
     private static final String ROW_CELLS_XPATH_TEMPLATE = "tbody/tr[%d]/td";
     private static final String LAST_ROW_CELLS_XPATH = "tbody/tr[last()]/td";
     private static final String LAST_COLUMN_CELLS_XPATH = "tbody//td[last()]";
-    private static final String FIRST_COLUMN_CELLS_XPATH = "tbody//th[1]";
+    private static final String FIRST_COLUMN_HEADERS_XPATH = "tbody//th[1]";
+    private static final String FIRST_COLUMN_CELLS_XPATH = "tbody//td[1]";
     private static final String GENE_ANCHOR_XPATH_TEMPLATE = "tbody/tr[%d]/th/div/span/a";
     private static final String SECOND_COLUMN_CELLS_XPATH = "tbody//td[2]";
     private static final String COLUMN_CELLS_XPATH = "tbody//td[%d]";
@@ -77,11 +78,21 @@ abstract class TablePage extends GlobalSearchPage {
         return table.findElements(By.xpath(ALL_TABLE_ROWS_XPATH)).get(index);
     }
 
+    protected List<String> getFirstColumnHeaderValues(WebElement table) {
+        List<WebElement> tableCells = getFirstColumnHeaderElements(table);
+        return toStrings(tableCells);
+    }
+
     protected List<String> getFirstColumnValues(WebElement table) {
         List<WebElement> tableCells = getFirstColumnElements(table);
         return toStrings(tableCells);
     }
 
+    protected List<WebElement> getFirstColumnHeaderElements(WebElement table) {
+        return table.findElements(By.xpath(FIRST_COLUMN_HEADERS_XPATH));
+    }
+
+    // TODO: Remove this and related tests for non-React widget
     protected List<WebElement> getFirstColumnElements(WebElement table) {
         return table.findElements(By.xpath(FIRST_COLUMN_CELLS_XPATH));
     }
@@ -158,10 +169,6 @@ abstract class TablePage extends GlobalSearchPage {
     protected List<String> getTableHeaders(WebElement table) {
         List<WebElement> tableCells = table.findElements(By.xpath(TABLE_HEADERS_XPATH));
         return toStrings(tableCells);
-    }
-
-    protected int getTableColumnsCount(WebElement table) {
-        return getTableHeaders(table).size();
     }
 
     private String getCellValue(WebElement table, String xPath) {
