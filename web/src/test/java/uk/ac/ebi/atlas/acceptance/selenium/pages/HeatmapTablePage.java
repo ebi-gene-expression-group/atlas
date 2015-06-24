@@ -248,23 +248,15 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public List<String> getFirstGeneProfile() {
-        List<String> firstTableRow = getRowValues(getHeatmapTable(), 1);
-        return firstTableRow.subList(getGeneExpressionStartingRowIndex(), firstTableRow.size());
+        return getRowValues(getHeatmapTable(), 1);
     }
 
     public List<String> getGeneProfile(int oneBasedRowIndex) {
-        List<String> rowValues = getRowValues(getHeatmapTable(), oneBasedRowIndex);
-        return rowValues.subList(getGeneExpressionStartingRowIndex(), rowValues.size());
-    }
-
-    public List<String> getHeatmapRow(int oneBasedRowIndex) {
         return getRowValues(getHeatmapTable(), oneBasedRowIndex);
     }
 
-
     public List<String> getLastGeneProfile() {
-        List<String> firstTableRow = getLastRowValues(getHeatmapTable());
-        return firstTableRow.subList(getGeneExpressionStartingRowIndex(), firstTableRow.size());
+        return getLastRowValues(getHeatmapTable());
     }
 
     public String getGeneCount() {
@@ -301,7 +293,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public Boolean areExpressionLevelsHidden() {
-        WebElement firstExpressionLevelCell = getNonEmptyCellsFromFirstTableRow(getHeatmapTable()).get(getGeneExpressionStartingRowIndex());
+        WebElement firstExpressionLevelCell = getNonEmptyCellsFromFirstTableRow(getHeatmapTable()).get(0);
         WebElement div = firstExpressionLevelCell.findElement(By.tagName("div"));
         return SeleniumUtil.isVisibilityHidden(div);
     }
@@ -341,7 +333,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     protected WebElement getGeneProfileCell(int profileIndex, int expressionIndex) {
-        return getCell(getHeatmapTable(), profileIndex + 1, expressionIndex + getGeneExpressionStartingRowIndex() + 1);
+        return getCell(getHeatmapTable(), profileIndex + 1, expressionIndex + 1);
     }
 
     public WebElement getGeneAnchor(int profileIndex) {
