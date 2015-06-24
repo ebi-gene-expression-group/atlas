@@ -99,7 +99,7 @@ Biojs.AtlasHeatmap = Biojs.extend({
 
             overrideContextRoot(data, opt.gxaBaseUrl);
 
-            if (opt.isMultiExperiment) { console.log("HEATMAP ANATOMOGRAM KEY:" + opt.heatmapKey);
+            if (opt.isMultiExperiment) {
                 self.drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildMultiExperiment, opt.heatmapKey);
             } else {
                 self.drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildBaseline);
@@ -124,7 +124,8 @@ Biojs.AtlasHeatmap = Biojs.extend({
                 // call this inside ready() so all scripts load first in IE8
                 var Heatmap = heatmapBuilder(heatmapConfig).Heatmap;
 
-                React.renderComponent(HeatmapContainer({Heatmap: Heatmap, isWidget: true, heatmapClass: heatmapClass, experiment: experimentData, anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey}),
+                React.renderComponent(HeatmapContainer({Heatmap: Heatmap, isWidget: true, heatmapClass: heatmapClass, experiment: experimentData, anatomogram: anatomogramData,
+                        columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig:heatmapConfig}),
                     targetElement
                 );
 

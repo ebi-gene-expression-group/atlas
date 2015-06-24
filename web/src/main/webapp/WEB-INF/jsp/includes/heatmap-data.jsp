@@ -5,7 +5,7 @@
 
 <c:set var="geneQuery" value="${empty preferences ? geneQuery : preferences.geneQuery}" />
 <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
-<c:set var="atlasHost" value="${pageContext.request.serverName == 'localhost' ? 'wwwdev' : pageContext.request.serverName.concat(serverPort)}"/>
+<c:set var="atlasHost" value="${pageContext.request.serverName == 'localhost' ? 'wwwdev.ebi.ac.uk' : pageContext.request.serverName.concat(serverPort)}"/>
 
 <c:set var="toggleButtonImage" value="/resources/images/male_selected.png"/>
 <c:if test="${species.equals('oryza sativa') || species.equals('oryza sativa japonica group')}">

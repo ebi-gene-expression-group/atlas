@@ -98,6 +98,12 @@ var HeatmapContainer = (function (React) {
             var Heatmap = this.props.Heatmap;
             var heatmapClass = this.props.heatmapClass ? this.props.heatmapClass : "gxaHeatmapPosition" + (this.props.isWidget ? "-widget" : "");
 
+            var heatmapConfig = this.props.heatmapConfig;
+
+            var geneURL = "http://" + heatmapConfig.atlasHost + heatmapConfig.contextRoot +  'query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch='
+                + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
+
+
             return (
                     React.DOM.div({className: "gxaBlock"}, 
 
@@ -121,7 +127,8 @@ var HeatmapContainer = (function (React) {
 
                         ), 
 
-                         !this.props.heatmapClass ? React.DOM.div({id: "disclaimer-message"}, " ", React.DOM.p(null, "This expression view is provided by ", React.DOM.a({href: "http://www.ebi.ac.uk/gxa"}, "Expression Atlas"), ".", 
+                         !this.props.heatmapClass ? React.DOM.div({id: "disclaimer-message"}, React.DOM.p(null, React.DOM.a({href: geneURL}, "See more expression data at Expression Atlas"), 
+                            React.DOM.br(null), "This expression view is provided by ", React.DOM.a({href: "http://www.ebi.ac.uk/gxa"}, "Expression Atlas"), ".", 
                             React.DOM.br(null), "Please direct any queries or feedback to ", React.DOM.a({href: "mailto:arrayexpress-atlas@ebi.ac.uk"}, "arrayexpress-atlas@ebi.ac.uk"))) : null
 
                     )
