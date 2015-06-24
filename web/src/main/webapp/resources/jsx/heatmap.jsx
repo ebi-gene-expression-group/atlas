@@ -267,7 +267,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 render: function () {
                     return (
                         <a id="download-profiles-link" ref="downloadProfilesLink"
-                           title="Up to 50 of top genes displayed on page. Download results to see the rest."
+                           title="Download all results."
                            href={contextRoot + downloadProfilesURL} className="gxaButtonImage" target="_blank">
                            <img id="download-profiles" alt="Download query results" style={{width: "20px"}}
                                 src={contextRoot + "/resources/images/download_blue_small.png"}/>
