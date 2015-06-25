@@ -75,7 +75,7 @@
                     </div>
                     <div style="display: inline-block; padding-left: 10px; vertical-align: top">
                         <a id="download-profiles-link"
-                           title="Up to 50 of top genes displayed on page. Download results to see the rest."
+                           title="Download all results."
                            href="${pageContext.request.contextPath}${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
                            class="gxaButtonImage" target="_blank">
                             <img id="download-profiles" alt="Download query results" style="width:20px"
@@ -103,7 +103,7 @@
                     </div>
                     <div style="display: inline-block; padding-left: 10px; vertical-align: top">
                         <a id="download-profiles-link"
-                           title="Top 50 genes displayed on page. Download results to see the rest."
+                           title="Download all results."
                            href="${pageContext.request.contextPath}${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
                            class="gxaButtonImage" target="_blank">
                             <img id="download-profiles" alt="Download query results" style="width:20px"

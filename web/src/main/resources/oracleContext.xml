@@ -33,22 +33,15 @@
 
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
-    <!--<bean id="dataSourceOracle" class="oracle.jdbc.pool.OracleDataSource">-->
-        <!--<property name="dataSourceName" value="ds"/>-->
-        <!--<property name="URL" value="${oracle.jdbc.url}"/>-->
-        <!--<property name="user" value="${oracle.jdbc.username}"/>-->
-        <!--<property name="password" value="${oracle.jdbc.password}"/>-->
-    <!--</bean>-->
-
-    <bean id="dataSourceOracle" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-        <property name="url" value="${oracle.jdbc.url}" />
-        <property name="username" value="${oracle.jdbc.username}" />
+    <bean id="dataSourceOracle" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="jdbcUrl" value="${oracle.jdbc.url}" />
+        <property name="user" value="${oracle.jdbc.username}" />
         <property name="password" value="${oracle.jdbc.password}" />
-        <property name="initialSize" value="5" />
-        <property name="maxActive" value="10" />
-        <property name="maxIdle" value="5" />
-        <property name="minIdle" value="2" />
+        <property name="initialPoolSize" value="5" />
+        <property name="maxIdleTime" value="5" />
+        <property name="maxPoolSize" value="20" />
+        <property name="minPoolSize" value="10" />
     </bean>
 
 </beans>

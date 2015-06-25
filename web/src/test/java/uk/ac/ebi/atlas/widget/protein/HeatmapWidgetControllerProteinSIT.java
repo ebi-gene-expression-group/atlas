@@ -72,7 +72,7 @@ public class HeatmapWidgetControllerProteinSIT extends SeleniumFixture {
 
     @Test
     public void testGeneName() {
-        String firstGeneName = heatmapTablePage.getGeneNames().get(0);
+        String firstGeneName = heatmapTablePage.getGeneNamesJsp().get(0);
         assertThat(firstGeneName, is("LGALS14"));
     }
 

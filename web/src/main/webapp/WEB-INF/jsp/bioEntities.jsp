@@ -280,7 +280,7 @@
                             </div>
                             <div style="display: inline-block; vertical-align: top">
                                 <a id="download-profiles-link"
-                                   title="Up to 50 of top genes displayed on page. Download results to see the rest."
+                                   title="Download all results."
                                    href="${pageContext.request.contextPath}${applicationProperties.buildDownloadURL(pageContext.request)}"
                                    class="button-image" target="_blank">
                                     <img id="download-profiles" alt="Download query results" style="width:20px"
