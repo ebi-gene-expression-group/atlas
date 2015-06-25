@@ -157,7 +157,7 @@ var anatomogramModule = (function ($) {
 
     function highlightExpressedOrganismsPartsOnly(svg, isSingleGene) {
 
-        var geneExpressions = $("#heatmap-table td:first-child").parent("tr").find('div[data-svg-path-id!=‘’]');
+        var geneExpressions = $("#heatmap-table tbody tr td").parent("tr").find('div[data-svg-path-id!=‘’]');
 
         var factorValues = geneExpressions.map(function () {
             if( $(this).find("span").text() != "NA" ){
@@ -201,7 +201,7 @@ var anatomogramModule = (function ($) {
         var svg = loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
 
         //hover on gene name, to highlight all organism parts involved on a single gene profile
-        $("#heatmap-table td:first-child").on("hover", function (evt) { //hover on cells of the first table column
+        $("#heatmap-table td").on("hover", function (evt) { //hover on cells of the first table column
             var geneExpressions = $(this).parent("tr").find("div[data-svg-path-id!='']");
 
             var factorValues = geneExpressions.map(function () {
