@@ -60,9 +60,9 @@ public class HeatmapWidgetControllerMultiSpeciesExperimentSIT extends SeleniumFi
 
     @Test
     public void heatmap() {
-        assertThat(subject.getGeneNames(), hasSize(1));
+        assertThat(subject.getGeneNamesJsp(), hasSize(1));
 
-        String firstGeneName = subject.getGeneNames().get(0);
+        String firstGeneName = subject.getGeneNamesJsp().get(0);
         assertThat(firstGeneName, is("TNNI2"));
     }
 }

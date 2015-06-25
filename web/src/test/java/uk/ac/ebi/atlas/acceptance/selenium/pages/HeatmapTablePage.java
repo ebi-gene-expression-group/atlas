@@ -165,6 +165,11 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public List<String> getGeneNames() {
+        return getFirstColumnHeaderValues(getHeatmapTable());
+    }
+
+    // TODO: Remove this and related tests for non-React widget
+    public List<String> getGeneNamesJsp() {
         return getFirstColumnValues(getHeatmapTable());
     }
 

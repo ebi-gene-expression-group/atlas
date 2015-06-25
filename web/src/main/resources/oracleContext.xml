@@ -42,7 +42,6 @@
         <property name="maxIdleTime" value="5" />
         <property name="maxPoolSize" value="20" />
         <property name="minPoolSize" value="10" />
-        <property name="maxStatements" value="200" />
     </bean>
 
 </beans>
