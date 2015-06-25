@@ -489,12 +489,6 @@
         </dependency>
 
         <dependency>
-            <groupId>c3p0</groupId>
-            <artifactId>c3p0</artifactId>
-            <version>0.9.1.2</version>
-        </dependency>
-
-        <dependency>
             <groupId>uk.ac.ebi.fg</groupId>
             <artifactId>ae-efo-loader</artifactId>
             <version>1.0.1</version>
