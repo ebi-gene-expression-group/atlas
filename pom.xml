@@ -60,9 +60,7 @@
         <mail.smtp.password>324c3bac45dfb398</mail.smtp.password>
         <mail.smtp.auth>true</mail.smtp.auth>
 
-        <sonar.jdbc.url>
-            jdbc:h2:tcp://lime:9092/sonar
-        </sonar.jdbc.url>
+        <sonar.jdbc.url>jdbc:h2:tcp://lime:9092/sonar</sonar.jdbc.url>
         <sonar.jdbc.driver>org.h2.Driver</sonar.jdbc.driver>
         <sonar.jdbc.username>sonar</sonar.jdbc.username>
         <sonar.jdbc.password>sonar</sonar.jdbc.password>
@@ -225,9 +223,8 @@
                         <port>9090</port>
                         <!-- optional path to a context file -->
                         <contextFile/>
-                        <!-- optional system propoerties you want to add -->
-                        <systemProperties>
-                        </systemProperties>
+                        <!-- optional system properties you want to add -->
+                        <systemProperties/>
                         <!-- if you want to use test dependencies rather than only runtime -->
                         <useTestClasspath>false</useTestClasspath>
                         <!-- optional if you want to add some extra directories in the class loader -->
@@ -479,15 +476,22 @@
 
         <dependency>
             <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>11.2.0.3.0</version>
+            <artifactId>ojdbc7</artifactId>
+            <version>12.1.0.2</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>com.mchange</groupId>
+            <groupId>com.oracle</groupId>
+            <artifactId>ucp</artifactId>
+            <version>12.1.0.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>
-            <version>0.9.5.1</version>
+            <version>0.9.1.2</version>
         </dependency>
 
         <dependency>
