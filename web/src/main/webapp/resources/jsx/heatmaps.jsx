@@ -11,7 +11,7 @@ var Heatmaps = (function (React) {
             return (
                 <div>
                     {this.props.heatmaps.map(function (heatmapParameters) {
-                        return <BioJSAtlasHeatmap key={heatmapParameters.species + heatmapParameters.factor} gxaBaseUrl={"/gxa"}
+                        return <AtlasHeatmapWidget  key={heatmapParameters.species + heatmapParameters.factor} gxaBaseUrl={"/gxa"}
                             geneQuery={geneQuery} species={heatmapParameters.species} factor={heatmapParameters.factor} />;
                     })}
                 </div>

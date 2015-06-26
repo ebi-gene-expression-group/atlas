@@ -305,8 +305,7 @@
 <div id="help-placeholder" style="display: none"></div>
 
 <c:if test="${showWidget}">
-    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/AtlasHeatmapReact.js"></script>
 
     <%@ include file="includes/react.jsp" %>
     <%@ include file="includes/heatmap-js.jsp" %>
@@ -369,7 +368,7 @@
 
         var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
 
-        new Biojs.AtlasHeatmap({
+        AtlasHeatmapModule.build({
             gxaBaseUrl: '${pageContext.request.contextPath}',
             params: 'geneQuery=${geneQuery.asUrlQueryParameter()}' + widgetParameters,
             isMultiExperiment: true,

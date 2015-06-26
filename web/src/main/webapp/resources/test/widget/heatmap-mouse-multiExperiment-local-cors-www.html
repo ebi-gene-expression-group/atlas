@@ -32,8 +32,7 @@
 
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
 
-    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/AtlasHeatmapReact.js"></script>
 
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/lib/highcharts-4.1.5/js/highcharts.js"></script>
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/lib/highcharts-4.1.5/js/highcharts-more.js"></script>
@@ -54,7 +53,7 @@
 
 <script language="JavaScript" type="text/javascript">
     $(document).ready(function() {
-        new Biojs.AtlasHeatmap({
+        AtlasHeatmapModule.build({
             gxaBaseUrl: "http://www.ebi.ac.uk/gxa/",
             params: 'geneQuery=ASPM&species=mus%20musculus',
             isMultiExperiment: true,

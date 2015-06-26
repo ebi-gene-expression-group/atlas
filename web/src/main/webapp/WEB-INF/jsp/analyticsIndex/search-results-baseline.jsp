@@ -7,8 +7,7 @@
 
 <link type="text/css" rel="stylesheet" href="/gxa/resources/css/facets.css" />
 
-<script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
-<script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
+<script language="JavaScript" type="text/javascript" src="/gxa/resources/js/AtlasHeatmapReact.js"></script>
 
 <%@ include file="../includes/react.jsp" %>
 <%@ include file="../includes/heatmap-js.jsp" %>
@@ -66,7 +65,7 @@
 <script src="${pageContext.request.contextPath}/resources/jsx/heatmapsRouter.js"></script>
 
 
-<script src="${pageContext.request.contextPath}/resources/jsx/bioJSAtlasHeatmap.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jsx/atlasHeatmap.js"></script>
 <script src="${pageContext.request.contextPath}/resources/jsx/heatmapContainer.js"></script>
 
 

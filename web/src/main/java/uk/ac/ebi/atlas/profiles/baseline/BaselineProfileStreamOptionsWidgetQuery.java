@@ -13,7 +13,7 @@ import java.util.Set;
 
 /*
  * This will load baseline profiles in the same way as when baseline profiles are loaded
- * via the /widgets/heatmap/protein controller.
+ * via the /widgets/heatmap/referenceExperiment controller.
  * This is used by BioEntityPageController to check the number of gene profiles that
  * will be loaded by the widget.
  */

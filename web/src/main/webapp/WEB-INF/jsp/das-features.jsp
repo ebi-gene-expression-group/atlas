@@ -69,14 +69,6 @@
                 <NOTE>${factorValues_PHENOTYPE}</NOTE>
                 <LINK href="${geneFactorTypeUrl}&quot;phenotype&quot;">View all</LINK>
             </FEATURE>
-            <%--      <FEATURE id="Anatomogram" label="ENSG00000012048">
-                    <TYPE id="html" category="html">html</TYPE>
-                    <METHOD id="html">html</METHOD>
-                    <SCORE>0.0</SCORE>
-                    <NOTE>anatomogram</NOTE>
-                    <LINK href="http://www.ebi.ac.uk/gxa/widgets/heatmap/protein?geneQuery=%20ENSG00000124233&amp;propertyType=bioentity_identifier&amp;rootContext=">Expression in healthy or untreated tissues</LINK>
-                  </FEATURE>
-            --%>
             <FEATURE id="Provenance" label="Provenance">
                 <TYPE id="atlas-provenance" cvId="description" category="description">provenance</TYPE>
                 <METHOD id="provenance" cvId="provenance">provenance</METHOD>

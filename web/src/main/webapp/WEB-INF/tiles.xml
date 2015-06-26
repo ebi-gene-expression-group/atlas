@@ -139,10 +139,6 @@
         <put-attribute name="body" value="/WEB-INF/jsp/baselineCounts-widget.jsp"/>
     </definition>
 
-    <definition name="heatmap-widget" extends="widget.base.definition">
-        <put-attribute name="body" value="/WEB-INF/jsp/heatmap-widget.jsp"/>
-    </definition>
-
     <definition name="heatmap-data" template="/WEB-INF/jsp/includes/heatmap-data.jsp">
     </definition>
 

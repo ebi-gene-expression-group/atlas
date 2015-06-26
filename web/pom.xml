@@ -56,11 +56,11 @@
                     <escapeString>\</escapeString>
                     <webResources>
                         <resource>
-                            <directory>src/main/webapp/resources/biojs</directory>
+                            <directory>src/main/webapp/resources/js</directory>
                             <includes>
-                                <include>AtlasHeatmap.js</include>
+                                <include>AtlasHeatmapReact.js</include>
                             </includes>
-                            <targetPath>resources/biojs</targetPath>
+                            <targetPath>resources/js</targetPath>
                             <filtering>true</filtering>
                         </resource>
                     </webResources>

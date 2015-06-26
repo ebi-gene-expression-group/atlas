@@ -25,16 +25,7 @@
  * baseline expression of genes based on RNA-seq experiments in the ExpressionAtlas
  * database.
  *
- * @class Biojs.AtlasHeatmap
- * @extends Biojs
- *
- * @author <a href="mailto:atlas-developers@ebi.ac.uk">ExpressionAtlas Team</a>
- * @version 1.0.2
- * @category 1
- *
- * @requires <a href='http://code.jquery.com/jquery-1.6.4.js'>jQuery Core 1.6.4</a>
- * @dependency <script language="JavaScript" type="text/javascript" src="../biojs/dependencies/jquery/jquery-1.6.4.min.js"></script>
- *
+ * @class AtlasHeatmap
  * @param {Object} options An object with the options for AtlasHeatmap component.
  *
  * @option {string} featuresUrl
@@ -49,25 +40,15 @@
  *    Specifies the root context path to be used by the widget content,
  *    i.e. this is the location of the content proxy for Ajax calls
  *
- * @example
- * var instance = new Biojs.Heatmap({
- * featuresUrl: '/gxa/widgets/heatmap/protein?geneQuery=P00846',
- * target : "YourOwnDivId"
- * });
- *
  */
 
 /*global jQuery,React */
-Biojs.AtlasHeatmap = Biojs.extend({
+var AtlasHeatmapModule =  (function (){
 
-    constructor:function () {
+    function build (opt) {
 
-        var self = this;
-
-        var targetElement = (typeof self.opt.target == 'string') ? document.getElementById(self.opt.target) : self.opt.target;
+        var targetElement = (typeof opt.target == 'string') ? document.getElementById(opt.target) : opt.target;
         var $targetElement = jQuery(targetElement);
-
-        var opt = self.opt;
 
         var endpoint = opt.heatmapUrl ? opt.heatmapUrl : opt.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
         var url = opt.gxaBaseUrl + endpoint + '?' + opt.params;
@@ -100,12 +81,11 @@ Biojs.AtlasHeatmap = Biojs.extend({
             overrideContextRoot(data, opt.gxaBaseUrl);
 
             if (opt.isMultiExperiment) {
-                self.drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildMultiExperiment, opt.heatmapKey);
+                drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildMultiExperiment, opt.heatmapKey);
             } else {
-                self.drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildBaseline);
+                drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildBaseline);
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
-            Biojs.console.log("ERROR: " + jqXHR.status);
             //containerDiv.html("An error occurred while retrieving the data: " + jqXHR.status + " - " + jqXHR.statusText);
             if (textStatus === "parsererror") {
                 $targetElement.html("<div class='error'>Could not parse JSON response</div>");
@@ -114,9 +94,9 @@ Biojs.AtlasHeatmap = Biojs.extend({
             }
         });
 
-    },
+    };
 
-    drawHeatmap:function (data, targetElement, heatmapClass, heatmapBuilder, heatmapKey) {
+    function drawHeatmap (data, targetElement, heatmapClass, heatmapBuilder, heatmapKey) {
 
         (function ($, React, HeatmapContainer, heatmapBuilder, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData, experimentData, heatmapKey) {
 
@@ -138,41 +118,10 @@ Biojs.AtlasHeatmap = Biojs.extend({
         })(jQuery, React, HeatmapContainer, heatmapBuilder, data.config,
             data.columnHeaders, data.profiles, data.geneSetProfiles, data.anatomogram, data.experiment, heatmapKey);
 
-    },
+    };
 
-    opt:{
-        gxaBaseUrl: 'http://www.ebi.ac.uk/gxa',
+    return {
+        build: build
+    };
 
-        /* params
-         This mandatory parameter consists of the query for a particular
-         gene or genes by given their properties. For a single gene query,
-         please use a unique accession (e.g. ENSEMBL gene id or UniProt id).
-         For example search with UniProt id P00846 returns the gene mt-atp6,
-         a search for REACT_6900 returns genes belonging to this pathway.
-         For multiple identifiers of the same species please use:
-         geneQuery=ENSG00000187003+ENSG00000185264&propertyType=identifier
-         or when using a gene name that exists for multiple species, specify
-         the species, eg: geneQuery=ACTL7A&species=homo+sapiens
-         */
-        params:'geneQuery=REACT_1309',
-
-        /*  if false (default, deprecated), show expression data for individual genes from the reference baseline expression
-            experiment only. This allows comparing individual genes when params specifies a pathway or multiple genes.
-            When params is a pathway (eg: REACT_6900) then the widget with display "show by gene set" toggle for
-            displaying expression levels aggregated for the entire pathway.
-            To see an example: http://wwwdev.ebi.ac.uk/gxa/resources/biojs/test/heatmap-referenceExperiment.html?geneQuery=REACT_6900
-
-            if true (recommended), show expression for all genes by experiment, across all experiments in GXA. It allows the user to
-            see patterns of expression of a given gene in the same tissue across multiple experiments, further
-            strengthening the evidence of that gene’s expression in that tissue.
-            To see an example: http://wwwdev.ebi.ac.uk/gxa/resources/biojs/test/heatmap-multiExperiment.html?geneQuery=Brca1
-        */
-        isMultiExperiment: false,
-
-        /* Target DIV
-         This mandatory parameter is the identifier of the DIV tag where the
-         component should be displayed, or a DOMElement. Use this value to draw your
-         component into. */
-        target:"YourOwnDivId"
-    }
-});
+}());

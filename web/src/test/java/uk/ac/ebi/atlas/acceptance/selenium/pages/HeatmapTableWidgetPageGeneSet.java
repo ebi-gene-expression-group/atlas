@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class HeatmapTableWidgetPageGeneSet extends HeatmapTableWidgetPage {
-    private static final String PAGE_LOCATION = "/gxa/widgets/heatmap/protein";
+    private static final String PAGE_LOCATION = "/gxa/widgets/heatmap/referenceExperiment";
 
     @FindBy(id = "showIndividualGenes")
     private WebElement showIndividualGenes;

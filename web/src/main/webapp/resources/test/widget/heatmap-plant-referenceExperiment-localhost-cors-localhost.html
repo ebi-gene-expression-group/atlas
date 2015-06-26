@@ -35,8 +35,7 @@
 
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
 
-    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
-    <script language="JavaScript" type="text/javascript" src="//localhost:8080/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
+    <script language="JavaScript" type="text/javascript" src="//localhost:8080/gxa/resources/js/AtlasHeatmapReact.js"></script>
     <script language="JavaScript" type="text/javascript" src="//localhost:8080/gxa/resources/jsx/heatmap.js"></script>
     <script language="JavaScript" type="text/javascript" src="//localhost:8080/gxa/resources/jsx/heatmapContainer.js"></script>
 </head>
@@ -50,7 +49,7 @@
 
 <script language="JavaScript" type="text/javascript">
     $(document).ready(function() {
-        new Biojs.AtlasHeatmap({
+        AtlasHeatmapModule.build({
             gxaBaseUrl: 'http://localhost:8080/gxa/',
             params: 'geneQuery=OS05G0595000',
             isMultiExperiment: false,

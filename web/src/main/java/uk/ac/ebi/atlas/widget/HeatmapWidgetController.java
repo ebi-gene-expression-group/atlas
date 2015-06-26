@@ -110,11 +110,7 @@ public final class HeatmapWidgetController {
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
     }
 
-    // similar to ExperimentDispatcher but for the widget, ie: loads baseline experiment into model and request
-    // /widgets/heatmap/protein is deprecated
-    //ToDo: (OMannion) remove /widgets/heatmap/protein (still being used by http://www.ebi.ac.uk/Tools/biojs/registry/Biojs.ExpressionAtlasBaselineSummary.html)
-    // in favour of /widgets/heatmap/referenceExperiment
-    @RequestMapping(value = {"/widgets/heatmap/protein", "/widgets/heatmap/referenceExperiment"})
+    @RequestMapping(value = {"/widgets/heatmap/referenceExperiment"})
     public String dispatchWidget(HttpServletRequest request,
                                  @RequestParam(value = "geneQuery", required = true) String bioEntityAccession,
                                  @RequestParam(value = "propertyType", required = false) String propertyType,
@@ -151,8 +147,8 @@ public final class HeatmapWidgetController {
         //TODO: hacky, fix this, see RnaSeqBaselineExperimentPageController
         request.setAttribute(ORIGINAL_GENEQUERY, bioEntityAccession);
 
-        // forward to /widgets/heatmap/protein?type=RNASEQ_MRNA_BASELINE in BaselineExperimentPageController
-        // eg: forward:/widgets/heatmap/protein?type=RNASEQ_MRNA_BASELINE&serializedFilterFactors=ORGANISM:Monodelphis domestica&disableGeneLinks=true
+        // forward to /widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE in BaselineExperimentPageController
+        // eg: forward:/widgets/heatmap/referenceExperiment?type=RNASEQ_MRNA_BASELINE&serializedFilterFactors=ORGANISM:Monodelphis domestica&disableGeneLinks=true
         // existing request parameters to this method (ie: geneQuery, propertyType, rootContext) are also passed along by the forward,
         // plus type and serializedFilterFactors
         // the model attributes are also preserved by a forward
