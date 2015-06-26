@@ -2,8 +2,6 @@
 
 /*global React */
 
-
-
 var ExperimentDescription = (function (React) {
 
     return React.createClass({
@@ -25,7 +23,7 @@ var ExperimentDescription = (function (React) {
 
 })(React);
 
-var Anatomogram = (function (React) {
+var Anatomogram = (function (React, $) {
 
     return React.createClass({
 
@@ -50,7 +48,7 @@ var Anatomogram = (function (React) {
             var keyId = this.props.heatmapKey ? "anatomogramBody" + heatmapKeyTrimmed : "anatomogramBody";
 
             return (
-                React.DOM.div({id: anatomogram, className: "gxaAside gxaDoubleClickNoSelection", style: {display: "inline"}}, 
+                React.DOM.div({ref: "anatomogram", id: anatomogram, className: "gxaAside gxaDoubleClickNoSelection", style: {display: "inline"}}, 
                     React.DOM.table(null, 
                         React.DOM.tbody(null, 
                         React.DOM.tr(null, 
@@ -71,10 +69,17 @@ var Anatomogram = (function (React) {
                     React.DOM.div({id: "anatomogram-ensembl-launcher"})
                 )
             );
+        },
+
+        componentDidMount: function() {
+            if ($.fn.hcSticky) {
+                var $anatomogram = $(this.refs.anatomogram.getDOMNode());
+                $anatomogram.hcSticky({responsive: true});
+            }
         }
     });
 
-})(React);
+})(React, jQuery);
 
 var HeatmapContainer = (function (React) {
 
@@ -96,7 +101,7 @@ var HeatmapContainer = (function (React) {
 
         render: function () {
             var Heatmap = this.props.Heatmap;
-            var heatmapClass = this.props.heatmapClass ? this.props.heatmapClass : "gxaHeatmapPosition" + (this.props.isWidget ? "-widget" : "");
+            var heatmapClass = this.props.heatmapClass ? this.props.heatmapClass : "gxaHeatmapPosition";
 
             var heatmapConfig = this.props.heatmapConfig;
 
