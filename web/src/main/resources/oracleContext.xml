@@ -38,7 +38,6 @@
         <property name="user" value="${oracle.jdbc.username}"/>
         <property name="password" value="${oracle.jdbc.password}"/>
         <property name="connectionFactoryClassName" value="oracle.jdbc.pool.OracleDataSource"/>
-        <property name="connectionPoolName" value="${oracle.ucp.poolname}"/>
         <property name="initialPoolSize" value="3"/>
         <property name="minPoolSize" value="3"/>
         <property name="maxPoolSize" value="20"/>
