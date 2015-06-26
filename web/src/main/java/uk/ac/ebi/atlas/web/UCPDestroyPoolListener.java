@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.web;
 
-
 import oracle.ucp.UniversalConnectionPoolException;
 import oracle.ucp.admin.UniversalConnectionPoolManager;
 import oracle.ucp.admin.UniversalConnectionPoolManagerImpl;
