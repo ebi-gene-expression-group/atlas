@@ -32,7 +32,6 @@ import javax.servlet.ServletContextListener;
 
 public class UCPDestroyPoolListener implements ServletContextListener {
 
-
     @Override
     public void contextInitialized(ServletContextEvent event) {
     }
