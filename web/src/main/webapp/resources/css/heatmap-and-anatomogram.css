@@ -80,9 +80,9 @@
 }
 
 #gxaExperimentPageHeatmapCountAndLegend {
-    width: 100%;
-    max-width: 1040px;
+    background-color: white;
     z-index: 90; /* A high enough number to stay above the table when it becomes hcSticky() but low enough to be below Chosen plugin (100) */
+
 }
 
 /* TODO: This class is used in jQuery UI - move out to a separate css file */

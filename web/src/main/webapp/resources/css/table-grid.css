@@ -188,28 +188,31 @@ th.gxaHeatmapTableDesignElement {
 }
 
 
+.gxaHeatmapTableStickyWrapper td,
+.gxaHeatmapTableStickyWrapper th,
+.gxaHeatmapTableStickyWrapper tr {
+    box-sizing: border-box;
+}
 
-#gxaExperimentPageHeatmapTableStickyWrapper {
+.gxaHeatmapTableStickyWrapper {
     overflow-x: scroll;
     overflow-y: hidden;
     position: relative;
 }
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyHeader,
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyColumn,
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyIntersect {
+    .gxaHeatmapTableStickyWrapperStickyHeader,
+    .gxaHeatmapTableStickyWrapperStickyColumn,
+    .gxaHeatmapTableStickyWrapperStickyIntersect {
+        top: 0;
+        opacity: 0;
         position: absolute;
         width: auto; /* Prevent table from stretching to full size */
     }
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyColumn,
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyHeader {
+    .gxaHeatmapTableStickyWrapperStickyColumn,
+    .gxaHeatmapTableStickyWrapperStickyHeader {
         z-index: 50;
     }
-    #gxaExperimentPageHeatmapTableStickyWrapperStickyIntersect {
+    .gxaHeatmapTableStickyWrapperStickyIntersect {
         z-index: 60;
     }
 
-    #gxaExperimentPageHeatmapTableStickyWrapper td,
-    #gxaExperimentPageHeatmapTableStickyWrapper th,
-    #gxaExperimentPageHeatmapTableStickyWrapper tr {
-        box-sizing: border-box;
-    }
+
