@@ -57,9 +57,6 @@ public class BaselineProfileInputStreamFactory {
 
         BaselineProfileReusableBuilder baselineProfileReusableBuilder = new BaselineProfileReusableBuilder(baselineExpressionFilter, queryFactorType);
 
-        String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
-        CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
-
         String serializedFileURL = MessageFormat.format(baselineExperimentSerializedDataFileUrlTemplate, experimentAccession);
         try {
             BaselineExpressionsKryoReader baselineExpressionsKryoReader = kryoReaderFactory.createBaselineExpressionsKryoReader(serializedFileURL);
@@ -67,6 +64,8 @@ public class BaselineProfileInputStreamFactory {
         }
         catch (IllegalArgumentException e) {
             LOGGER.error("Could not read serialized file " + serializedFileURL);
+            String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
+            CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
             return new BaselineProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
     }
