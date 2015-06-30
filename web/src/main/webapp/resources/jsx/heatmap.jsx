@@ -220,6 +220,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         repositionStickyCol();
                     })
                     .scroll(repositionStickyHeader);
+                $w.resize();
             },
 
             legendType: function () {

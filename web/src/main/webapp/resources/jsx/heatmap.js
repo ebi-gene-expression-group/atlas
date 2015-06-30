@@ -218,9 +218,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         setSizeOfStickyElements();
                         repositionStickyHeader();
                         repositionStickyCol();
-                        //$countAndLegend.hcSticky();
                     })
                     .scroll(repositionStickyHeader);
+                $w.resize();
             },
 
             legendType: function () {
