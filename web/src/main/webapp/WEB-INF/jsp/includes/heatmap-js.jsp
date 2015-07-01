@@ -1,4 +1,8 @@
 <%-- heatmap.js and dependencies --%>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-hcsticky/jquery.hc-sticky.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-browser/dist/jquery.browser.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-throttle-debounce/jquery.ba-throttle-debounce.min.js"></script>
+
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/highlight.js"></script>
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/genePropertiesTooltipModule.js"></script>
 
