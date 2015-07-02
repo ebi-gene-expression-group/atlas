@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 /*global React */
-var AtlasHeatmapWidget = (function(React) {
+var BioJSAtlasHeatmap = (function(React) {
 
     return React.createClass({
     //    <Heatmaps gxaBaseUrl='/gxa/' geneQuery='blood' heatmaps={[
@@ -20,14 +20,13 @@ var AtlasHeatmapWidget = (function(React) {
     //    ]} />
 
         componentDidMount: function() {
-            AtlasHeatmapModule.build({
+            new Biojs.AtlasHeatmap({
                 gxaBaseUrl: this.props.gxaBaseUrl,
                 params: 'geneQuery=' + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
                 isMultiExperiment: true,
                 target: this.refs.widgetBody.getDOMNode(),
                 heatmapClass: "gxaHeatmapPosition",
-                heatmapUrl: "/widgets/heatmap/baselineAnalytics",
-                heatmapKey:this.props.key
+                heatmapUrl: "/widgets/heatmap/baselineAnalytics"
             });
         },
 

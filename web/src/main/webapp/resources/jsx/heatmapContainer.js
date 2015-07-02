@@ -2,6 +2,8 @@
 
 /*global React */
 
+
+
 var ExperimentDescription = (function (React) {
 
     return React.createClass({
@@ -23,7 +25,7 @@ var ExperimentDescription = (function (React) {
 
 })(React);
 
-var Anatomogram = (function (React, $) {
+var Anatomogram = (function (React) {
 
     return React.createClass({
 
@@ -32,60 +34,40 @@ var Anatomogram = (function (React, $) {
                 return s.indexOf("human") > -1;
             }
 
-            function replaceSpaces (value) {
-                var result = value.replace(" ","_");
-                return result.trim();
-            }
-
             var height = containsHuman(this.props.anatomogram.maleAnatomogramFile) ? 360 : 250;
             var sexToggleImageSrc =this.props.anatomogram.contextRoot + this.props.anatomogram.toggleButtonImage;
 
-            var heatmapKeyTrimmed = this.props.heatmapKey ? replaceSpaces(this.props.heatmapKey) : null;
-
-            var anatomogram = this.props.heatmapKey ? "anatomogram" + heatmapKeyTrimmed : "anatomogram";
-            var sexToggle = this.props.heatmapKey ? "sex-toggle" + heatmapKeyTrimmed : "sex-toggle";
-            var sexToggleImage = this.props.heatmapKey ? "sex-toggle-image" + heatmapKeyTrimmed : "sex-toggle-image";
-            var keyId = this.props.heatmapKey ? "anatomogramBody" + heatmapKeyTrimmed : "anatomogramBody";
-
             return (
-                React.DOM.div({ref: "anatomogram", id: anatomogram, className: "gxaAside gxaDoubleClickNoSelection", style: {display: "inline"}}, 
+                React.DOM.div({id: "anatomogram", className: "gxaAside gxaDoubleClickNoSelection", style: {display: "inline"}}, 
                     React.DOM.table(null, 
-                        React.DOM.tbody(null, 
                         React.DOM.tr(null, 
                             React.DOM.td({style: {"padding-top": "15px", "vertical-align":"top"}}, 
-                                React.DOM.span({id: sexToggle}, 
-                                    React.DOM.img({id: sexToggleImage, title: "Switch anatomogram", className: "gxaButtonImage", 
+                                React.DOM.span({id: "sex-toggle"}, 
+                                    React.DOM.img({id: "sex-toggle-image", title: "Switch anatomogram", className: "gxaButtonImage", 
                                         style: {"width":"20px", "height":"38px", "padding":"2px"}, 
                                         src: sexToggleImageSrc})
                                 )
                             ), 
                             React.DOM.td(null, 
-                                React.DOM.div({id: keyId, style: {"display":"inline-block", "width": "230px", "height":height}}
+                                React.DOM.div({id: "anatomogramBody", style: {"display":"inline-block", "width": "230px", "height":height}}
                                 )
                             )
-                        )
                         )
                     ), 
                     React.DOM.div({id: "anatomogram-ensembl-launcher"})
                 )
             );
-        },
-
-        componentDidMount: function() {
-            if ($.fn.hcSticky) {
-                var $anatomogram = $(this.refs.anatomogram.getDOMNode());
-                $anatomogram.hcSticky({responsive: true});
-            }
         }
     });
 
-})(React, jQuery);
+})(React);
 
 var HeatmapContainer = (function (React) {
 
     return React.createClass({
 
         componentDidMount: function() {
+            debugger;
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-37676851-1']);
             _gaq.push(['_trackPageview']);
@@ -101,13 +83,7 @@ var HeatmapContainer = (function (React) {
 
         render: function () {
             var Heatmap = this.props.Heatmap;
-            var heatmapClass = this.props.heatmapClass ? this.props.heatmapClass : "gxaHeatmapPosition";
-
-            var heatmapConfig = this.props.heatmapConfig;
-
-            var geneURL = "http://" + heatmapConfig.atlasHost + heatmapConfig.contextRoot +  'query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch='
-                + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
-
+            var heatmapClass = this.props.heatmapClass ? this.props.heatmapClass : "gxaHeatmapPosition" + (this.props.isWidget ? "-widget" : "");
 
             return (
                     React.DOM.div({className: "gxaBlock"}, 
@@ -116,7 +92,7 @@ var HeatmapContainer = (function (React) {
 
                         React.DOM.div({id: "heatmap-anatomogram", className: "gxaHeatmapAnatomogramRow"}, 
 
-                             this.props.anatomogram ? Anatomogram( {anatomogram:this.props.anatomogram, heatmapKey: this.props.heatmapKey} ) : null, 
+                             this.props.anatomogram ? Anatomogram( {anatomogram:this.props.anatomogram} ) : null, 
 
                             React.DOM.div({id: "ensembl-launcher", className: "gxaAside", style: {"display":"inline"}}), 
 
@@ -132,8 +108,7 @@ var HeatmapContainer = (function (React) {
 
                         ), 
 
-                         !this.props.heatmapClass ? React.DOM.div({id: "disclaimer-message"}, React.DOM.p(null, React.DOM.a({href: geneURL}, "See more expression data at Expression Atlas"), 
-                            React.DOM.br(null), "This expression view is provided by ", React.DOM.a({href: "http://www.ebi.ac.uk/gxa"}, "Expression Atlas"), ".", 
+                         !this.props.heatmapClass ? React.DOM.div({id: "disclaimer-message"}, " ", React.DOM.p(null, "This expression view is provided by ", React.DOM.a({href: "http://www.ebi.ac.uk/gxa"}, "Expression Atlas"), ".", 
                             React.DOM.br(null), "Please direct any queries or feedback to ", React.DOM.a({href: "mailto:arrayexpress-atlas@ebi.ac.uk"}, "arrayexpress-atlas@ebi.ac.uk"))) : null
 
                     )

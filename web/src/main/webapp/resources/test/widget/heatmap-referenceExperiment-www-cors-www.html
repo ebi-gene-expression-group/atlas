@@ -16,9 +16,6 @@
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/js/lib/jquery-migrate-1.2.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//www.ebi.ac.uk/gxa/resources/js/lib/jquery-ui-1.11.4.custom/jquery-ui.min.css"></script>
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/js/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/js/lib/jquery-hcsticky/jquery.hc-sticky.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/js/lib/jquery-throttle-debounce/jquery.ba-throttle-debounce.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/js/lib/jquery-browser/dist/jquery.browser.min.js"></script>
 
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/jsx/factorTooltip.js"></script>
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/js/factorTooltipModule.js"></script>
@@ -33,13 +30,17 @@
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/js/lib/highcharts-4.1.5/js/highcharts-more.js"></script>
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/js/lib/highcharts-4.1.5/js/modules/exporting.js"></script>
 
-    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/jsx/cellBaselineVariance.js"></script>
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/js/lib/jquery.svg.package-1.4.5/jquery.svg.js"></script>
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/js/lib/EventEmitter-4.2.7.js"></script>
 
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
 
+    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
+
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/js/AtlasHeatmapReact.js"></script>
+    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/js/lib/react-radiogroup.js"></script>
+    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/jsx/cellBaselineVariance.js"></script>
+
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/jsx/heatmap.js"></script>
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/gxa/resources/jsx/heatmapContainer.js"></script>
 </head>
@@ -53,7 +54,7 @@
 
 <script language="JavaScript" type="text/javascript">
     $(document).ready(function() {
-        AtlasHeatmapModule.build({
+        new Biojs.AtlasHeatmap({
             gxaBaseUrl: 'http://www.ebi.ac.uk/gxa/',
             params: 'geneQuery=REACT_1309',
             target: "heatmapContainer"

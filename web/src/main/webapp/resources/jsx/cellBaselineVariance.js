@@ -12,9 +12,13 @@ var baselineVarianceModule  = (function ($, React) {
             render: function () {
                 var boxPlotStyle = {"height": "100px", "margin": "0px", "min-width": "80px", "max-width": "120px"};
                 return (
+
                     React.DOM.td(null, 
                         React.DOM.div({id: "container", ref: "container", style: boxPlotStyle})
                     )
+
+
+
                 );
             },
 
@@ -91,7 +95,10 @@ var baselineVarianceModule  = (function ($, React) {
 
                     });
                 }
+
             }
+
+
         });
 
         return {
@@ -105,4 +112,6 @@ var baselineVarianceModule  = (function ($, React) {
             return build();
         }
     };
+
+
 })(jQuery, React);

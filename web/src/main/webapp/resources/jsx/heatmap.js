@@ -57,13 +57,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 });
             },
 
-            selectGene: function (geneId) {
-                var selectedGeneId = (geneId === this.state.selectedGeneId) ? null : geneId;
-                this.setState({selectedGeneId: selectedGeneId}, function() {
-                    eventEmitter.emitEvent('onGeneSelectionChange', [selectedGeneId]);
-                });
-            },
-
             toggleGeneSets: function () {
                 var newProfiles = this.state.showGeneSetProfiles ? this.props.profiles : this.props.geneSetProfiles;
                 this.setState({showGeneSetProfiles: !this.state.showGeneSetProfiles, profiles: newProfiles});
@@ -102,128 +95,125 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             },
 
             componentDidMount: function() {
-                // Default settings
-                var settings = {
-                    scrollThrottle: 10,
-                    resizeThrottle: 250
-                };
+                var heatMapTableWidth = $(this.refs.heatmapTable.getDOMNode()).width(),
+                    countAndLegendWidth = $(this.refs.countAndLegend.getDOMNode()).width();
 
-                var $w	            = $(window),
-                    $t	            = $(this.refs.heatmapTable.getDOMNode()),
-                    $stickyInsct    = $(this.refs.stickyIntersect.getDOMNode()),
-                    $stickyCol      = $(this.refs.stickyColumn.getDOMNode()),
-                    $stickyHead     = $(this.refs.stickyHeader.getDOMNode()),
-                    $stickyWrap     = $(this.refs.stickyWrap.getDOMNode()),
-                    $countAndLegend = $(this.refs.countAndLegend.getDOMNode());
+                if (heatMapTableWidth > countAndLegendWidth) {
+                    $(this.refs.countAndLegend.getDOMNode()).width(heatMapTableWidth);
+                }
 
-                if($t.hasClass('overflow-y')) $t.removeClass('overflow-y').parent().addClass('overflow-y');
+                if (!this.props.isWidget && !type.isMultiExperiment) {
+                   makeTableHeaderSticky.call(this);
+                }
 
-                // Set widths
-                var setWidths = function () {
-                        $t
-                            .find('thead th').each(function (i) {
-                                $stickyHead.find('th').eq(i).width($(this).width());
-                            })
-                            .end()
-                            .find('tr').each(function (i) {
-                                $stickyCol.find('tr').eq(i).height($(this).height());
+                function makeTableHeaderSticky() {
+                    var $countAndLegend = $(this.refs.countAndLegend.getDOMNode());
+                    if ($.fn.hcSticky) {
+                        $countAndLegend.hcSticky({responsive: true});
+                    }
+
+                    var $w	         = $(window),
+                        $t	         = $('#heatmap-table'),
+                        $stickyHead  = $('#gxaExperimentPageHeatmapTableStickyWrapperStickyHead'),
+                        $stickyWrap  = $t.parent('#gxaExperimentPageHeatmapTableStickyWrapper');
+
+                    // Resize sticky header width to match actual headers
+                    var setWidths = function () {
+                            $stickyHead.find('thead th').each(function (i) {
+                                // Breaks in Chrome
+                                //$(this).css({width: $t.find('thead th').eq(i).css("width")});
+                                var $originalHeader = $t.find('thead th').eq(i),
+                                    widthDiff = $originalHeader.width() - $(this).width();
+
+                                if (widthDiff !== 0) {
+                                    // Changing the width for elements that have an inner div has no effect (and no, outerWidth and outerHeight don’t work either)
+                                    if ($(this).find('div').length) {
+                                        var $thisDiv = $(this).find('div');
+                                        $thisDiv.width($thisDiv.width() + widthDiff);
+                                    } else {
+                                        $(this).width($(this).width() + widthDiff);
+                                    }
+                                }
+                            });
+                            // Breaks in Chrome
+                            //$stickyHead.width($t.width());
+                        },
+                        repositionStickyHead = function () {
+                            var allowance = calcAllowance();
+
+                            // Check if wrapper parent is overflowing along the y-axis
+                            if($t.height() > $stickyWrap.height()) {
+                                // If it is overflowing (advanced layout)
+                                // Position sticky header based on wrapper scrollTop()
+                                if($stickyWrap.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() > 0) {
+                                    // When top of wrapping parent is out of view
+                                    $stickyHead.add($stickyInsct).css({
+                                        "opacity": 1,
+                                        "z-index": 50,
+                                        "top": $stickyWrap.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() + parseInt($stickyWrap.css("padding-top").replace("px", ""))
+                                    });
+                                } else {
+                                    // When top of wrapping parent is in view
+                                    $stickyHead.css({
+                                        "opacity": 0,
+                                        "z-index": -50,
+                                        "top": 0
+                                    });
+                                }
+                            } else {
+                                // If it is not overflowing (basic layout)
+                                // Position sticky header based on viewport scrollTop
+                                if($w.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() > $t.offset().top && $w.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() < $t.offset().top + $t.outerHeight() - allowance) {
+                                    // When top of viewport is in the table itself
+                                    $stickyHead.css({
+                                        "opacity": 1,
+                                        "z-index": 50,
+                                        "top": $w.scrollTop() - $t.offset().top + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() + parseInt($stickyWrap.css("padding-top").replace("px", ""))
+                                    });
+                                } else if ($t.offset().top && $w.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() > $t.offset().top + $t.outerHeight() - allowance) {
+                                    // Sticky header past allowance. Keep calm and continue scrolling.
+                                } else {
+                                    // When top of viewport is above or below table
+                                    $stickyHead.css({
+                                        "opacity": 0,
+                                        "z-index": -50,
+                                        "top": 0
+                                    });
+                                }
+                            }
+                        },
+                        calcAllowance = function () {
+                            var a = 0;
+                            // Calculate allowance: number of bottom rows from which the sticky head disappears/scrolls up again
+                            $t.find('tbody tr:lt(3)').each(function () {
+                                a += $(this).height();
                             });
 
-                        // Set width of sticky header table and intersect. WebKit does it wrong...
-                        if ($.browser.webkit) {
-                            $stickyHead
-                                .width($stickyWrap.width())
-                                .find('table')
-                                .width($t.outerWidth());
-                            $stickyInsct.find('table').width($t.find('thead th').eq(0).outerWidth() + 1);
-                            $stickyCol.find('table').width($t.find('thead th').eq(0).outerWidth() + 1);
-                        } else {
-                            $stickyHead
-                                .width($stickyWrap.width())
-                                .find('table')
-                                .width($t.width());
-                            $stickyInsct.find('table').width($t.find('thead th').eq(0).outerWidth());
-                            $stickyCol.find('table').width($t.find('thead th').eq(0).outerWidth());
-                        }
+                            // Set fail safe limit (last three row might be too tall)
+                            // Set arbitrary limit at 0.25 of viewport height, or you can use an arbitrary pixel value
+                            if(a > $w.height()*0.25) {
+                                a = $w.height()*0.25;
+                            }
 
-                        // Set width of sticky table col
-                        $stickyInsct.find('tr:nth-child(2) th').each(function(i) {
-                            $(this).width($t.find('tr:nth-child(2) th').eq(i).width());
-                        });
+                            // Add the height of sticky header
+                            a += $stickyHead.height();
+                            return a;
+                        };
 
-                        // Set position sticky col
-                        $stickyHead.add($stickyInsct).add($stickyCol).css({
-                            left: $stickyWrap.offset().left,
-                            top: $stickyWrap.offset().top,
-                        });
-                    },
-                    repositionSticky = function () {
-                        // Return value of calculated allowance
-                        var allowance = calcAllowance();
+                    // The number of times the functions are called can be controlled with jquery.ba-throttle-debounce if needed
+                    setWidths();
+                    $t.parent('#gxaExperimentPageHeatmapTableStickyWrapper').scroll(function() {
+                        repositionStickyHead();
+                    });
 
-                        $stickyHead.find('table').css({
-                            left: -$stickyWrap.scrollLeft()
-                        });
-                        $stickyCol.css({
-                            top: $stickyWrap.offset().top - $w.scrollTop(),
-                            left: $stickyWrap.offset().left
-                        });
-
-                        // 1. Position sticky header based on viewport scrollTop
-                        if ($w.scrollTop() + $countAndLegend.outerHeight() > $t.offset().top &&
-                            $w.scrollTop() + $countAndLegend.outerHeight() < $t.offset().top + $t.outerHeight() - allowance) {
-                            // When top of viewport is in the table itself
-                            $stickyHead.add($stickyInsct).css({
-                                opacity: 1,
-                                top: $countAndLegend.outerHeight()
-                            });
-                        } else if ($w.scrollTop() + $countAndLegend.outerHeight() > $t.offset().top + $t.outerHeight() - allowance) {
-                            $stickyHead.add($stickyInsct).css({
-                                opacity: 1,
-                                top: $t.offset().top + $t.outerHeight() - allowance - $w.scrollTop()
-                            });
-                        } else {
-                            // When top of viewport is above or below table
-                            $stickyHead.add($stickyInsct).css({
-                                opacity: 0,
-                                top: $stickyWrap.offset().top - $w.scrollTop()
-                            });
-                        }
-
-                        // 2. Now deal with positioning of sticky column
-                        if($stickyWrap.scrollLeft() > 0) {
-                            // When left of wrapping parent is out of view
-                            $stickyCol.css({
-                                opacity: 1,
-                                "z-index": 40
-                            });
-                        } else {
-                            $stickyCol.css({
-                                opacity: 0,
-                                "z-index": -5
-                            });
-                        }
-                    },
-                    calcAllowance = function () {
-                        var rowHeight = 0;
-                        // Calculate allowance
-                        $t.find('tbody tr:lt(1)').each(function () {
-                            rowHeight += $(this).height();
-                        });
-                        return rowHeight + $stickyHead.height();
-                    };
-
-                $t.parent('.gxaStickyTableWrap').scroll(repositionSticky);
-                $w
-                    .load(setWidths)
-                    .resize($.debounce(settings.resizeThrottle, function () {
-                        setWidths();
-                        repositionSticky();
-                    }))
-                    .scroll(repositionSticky);
-
-                $(this.refs.countAndLegend.getDOMNode()).hcSticky({bottomEnd: calcAllowance()});
-                $w.resize();
+                    $w
+                        .load(setWidths)
+                        .resize(function () {
+                            setWidths();
+                            repositionStickyHead();
+                        })
+                        .scroll(repositionStickyHead);
+                }
             },
 
             legendType: function () {
@@ -233,12 +223,9 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             },
 
             render: function () {
-                var paddingMargin = "15px";
-
-                // TODO id="heatmap-table" used to highlight the anatomogram in anatomogramModule.js ; this will need to change for the faceted search with multiple anatomograms
                 return (
                     React.DOM.div(null, 
-                        React.DOM.div({ref: "countAndLegend", className: "gxaHeatmapCountAndLegend", style: {"padding-bottom": paddingMargin}}, 
+                        React.DOM.div({ref: "countAndLegend", style: {"background-color": "white", "padding-bottom": "1em"}, id: "gxaExperimentPageHeatmapCountAndLegend"}, 
                             React.DOM.div({style: {display: "inline-block", 'vertical-align': "top"}}, 
                                 type.isMultiExperiment ? React.DOM.span({id: "geneCount"}, "Showing ", this.state.profiles.rows.length, " of ", this.state.profiles.searchResultTotal, " experiments found: ") :
                                                           React.DOM.span({id: "geneCount"}, "Showing ", this.state.profiles.rows.length, " of ", this.state.profiles.searchResultTotal, " ", this.state.showGeneSetProfiles ? 'gene sets' : 'genes', " found: "), 
@@ -250,29 +237,15 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                             this.legendType()
                         ), 
 
-                        React.DOM.div({ref: "stickyWrap", className: "gxaStickyTableWrap", style: {"margin-top": paddingMargin}}, 
-                            React.DOM.table({ref: "heatmapTable", className: "gxaTableGrid gxaStickyEnabled", id: "heatmap-table"}, 
-                                HeatmapTableHeader({ref: "heatmapTableHeader", isMicroarray: this.isMicroarray(), hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: true}), 
-                                HeatmapTableRows({profiles: this.state.profiles.rows, selectedGeneId: this.state.selectedGeneId, selectGene: this.selectGene, displayLevels: this.state.displayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), renderExpressionCells: true})
+                        React.DOM.div({id: "gxaExperimentPageHeatmapTableStickyWrapper", style: {"padding-top": "10px"}}, 
+                            React.DOM.table({ref: "heatmapTable", id: "heatmap-table", className: "gxaTableGrid"}, 
+                                HeatmapTableHeader({ref: "heatmapTableHeader", isMicroarray: this.isMicroarray(), hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, sticky: ""}), 
+                                HeatmapTableRows({profiles: this.state.profiles.rows, displayLevels: this.state.displayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult()})
                             ), 
-                            React.DOM.div({ref: "stickyIntersect", className: "gxaStickyTableIntersect"}, 
-                                React.DOM.table(null, 
-                                    HeatmapTableHeader({isMicroarray: this.isMicroarray(), hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: false})
-                                )
-                            ), 
-                            React.DOM.div({ref: "stickyColumn", className: "gxaStickyTableColumn"}, 
-                                React.DOM.table(null, 
-                                    HeatmapTableHeader({isMicroarray: this.isMicroarray(), hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: false}), 
-                                    HeatmapTableRows({profiles: this.state.profiles.rows, selectedGeneId: this.state.selectedGeneId, selectGene: this.selectGene, displayLevels: this.state.displayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), renderExpressionCells: false})
-                                )
-                            ), 
-                            React.DOM.div({ref: "stickyHeader", className: "gxaStickyTableHeader"}, 
-                                React.DOM.table(null, 
-                                    HeatmapTableHeader({isMicroarray: this.isMicroarray(), hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: true})
-                                )
+                            React.DOM.table({className: "gxaTableGrid", id: "gxaExperimentPageHeatmapTableStickyWrapperStickyHead"}, 
+                                HeatmapTableHeader({ref: "heatmapTableStickyHeader", isMicroarray: this.isMicroarray(), hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, sticky: "Sticky"})
                             )
                         )
-
                     )
                 );
             }
@@ -283,7 +256,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 render: function () {
                     return (
                         React.DOM.a({id: "download-profiles-link", ref: "downloadProfilesLink", 
-                           title: "Download all results.", 
+                           title: "Up to 50 of top genes displayed on page. Download results to see the rest.", 
                            href: contextRoot + downloadProfilesURL, className: "gxaButtonImage", target: "_blank"}, 
                            React.DOM.img({id: "download-profiles", alt: "Download query results", style: {width: "20px"}, 
                                 src: contextRoot + "/resources/images/download_blue_small.png"})
@@ -368,7 +341,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
         var HeatmapTableHeader = React.createClass({displayName: 'HeatmapTableHeader',
 
-            renderContrastFactorHeaders: function () {
+            legendType: function () {
                 if (type.isBaseline) {
                     return (FactorHeaders({assayGroupFactors: this.props.columnHeaders, selectedColumnId: this.props.selectedColumnId, selectColumn: this.props.selectColumn, experimentAccession: heatmapConfig.experimentAccession}) );
                 }
@@ -376,27 +349,26 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     return (ContrastHeaders({contrasts: this.props.columnHeaders, selectedColumnId: this.props.selectedColumnId, selectColumn: this.props.selectColumn, experimentAccession: heatmapConfig.experimentAccession, showMaPlotButton: heatmapConfig.showMaPlotButton, gseaPlots: heatmapConfig.gseaPlots}));
                 }
                 else if (type.isMultiExperiment) {
-                     return (FactorHeaders({assayGroupFactors: this.props.columnHeaders, selectedColumnId: this.props.selectedColumnId, selectColumn: this.props.selectColumn}));
+                     return (FactorHeaders({assayGroupFactors: this.props.columnHeaders, selectedColumnId: this.props.selectedColumnId, selectColumn: this.props.selectColumn}) );
                 }
             },
 
             render: function () {
                 var showGeneProfile = this.props.showGeneSetProfiles ? 'Gene set' : 'Gene';
-                var showExperimentProfile = type.isMultiExperiment ? 'Experiment' : showGeneProfile;
+                var showExperimentProfile = type.isMultiExperiment ? "Experiment" : showGeneProfile;
 
+                // TODO Put all <th> inside <tr> elements (needs quite a lot of restructuring)
                 return (
                     React.DOM.thead(null, 
-                        React.DOM.tr(null, 
-                            React.DOM.th({className: "gxaHorizontalHeaderCell gxaHeatmapTableIntersect", colSpan: this.props.isMicroarray ? 2 : undefined}, 
-                                TopLeftCorner({hasQuartiles: this.props.hasQuartiles, isSingleGeneResult: this.props.isSingleGeneResult, displayLevels: this.props.displayLevels, toggleDisplayLevels: this.props.toggleDisplayLevels, selectedRadioButton: this.props.selectedRadioButton, toggleRadioButton: this.props.toggleRadioButton})
-                            ), 
-
-                             this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null
+                        React.DOM.th({className: "gxaHorizontalHeaderCell", colSpan: this.props.isMicroarray ? 2 : undefined}, 
+                            TopLeftCorner({hasQuartiles: this.props.hasQuartiles, isSingleGeneResult: this.props.isSingleGeneResult, displayLevels: this.props.displayLevels, toggleDisplayLevels: this.props.toggleDisplayLevels, selectedRadioButton: this.props.selectedRadioButton, toggleRadioButton: this.props.toggleRadioButton, sticky: this.props.sticky})
                         ), 
 
+                         this.legendType(), 
+
                         React.DOM.tr(null, 
-                            React.DOM.th({className: "gxaHorizontalHeaderCell gxaHeatmapTableIntersect", style:  this.props.isMicroarray ? {width:"166px"} : undefined}, React.DOM.div(null, showExperimentProfile )), 
-                             this.props.isMicroarray ? React.DOM.th({className: "gxaHorizontalHeaderCell gxaHeatmapTableIntersect"}, React.DOM.div(null, "Design Element")) : null
+                            React.DOM.th({className: "gxaHorizontalHeaderCell", style:  this.props.isMicroarray ? {width:"166px"} : undefined}, showExperimentProfile ), 
+                             this.props.isMicroarray ? React.DOM.th({className: "gxaHorizontalHeaderCell"}, "Design Element") : null
                         )
                     )
                 );
@@ -426,7 +398,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                 return (
                     React.DOM.div(null, factorHeaders)
-                );
+                    );
             }
 
         });
@@ -460,7 +432,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.DOM.span({style: {position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}, "  select") : null;
                     var showTickWhenSelected = this.props.selected ? React.DOM.span({className: "rotate_tick", style: {position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}, " ✔ "): null ;
-                    var thClass = "rotated_cell gxaHoverableHeader" + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (enableEnsemblLauncher ? " gxaSelectableHeader" : "");
+                    var thClass = "rotated_cell gxaHoverableHeader " + (this.props.selected ? "gxaVerticalHeaderCell-selected " : "gxaVerticalHeaderCell ") + (enableEnsemblLauncher ? "gxaSelectableHeader" : "");
                     var divClass = "rotate_text factor-header";
                     var factorName = csstransforms ? restrictLabelSize(this.props.factorName, 14) : this.props.factorName;
 
@@ -490,7 +462,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                 return (
                     React.DOM.div(null, contrastHeaders)
-                );
+                    );
             }
 
         });
@@ -585,7 +557,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.DOM.span({style: {position: "absolute", width:"10px", right:"0px", left:"95px", bottom:"-35px", color:"green"}}, "  select") : null;
                     var showTickWhenSelected = this.props.selected ? React.DOM.span({className: "rotate_tick", style: {position:"absolute", width:"5px", right:"0px", left:"125px", bottom:"-35px", color:"green"}}, " ✔ "): null;
-                    var thClass = "rotated_cell gxaHoverableHeader" + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (enableEnsemblLauncher ? " gxaSelectableHeader " : "");
+                    var thClass = "rotated_cell gxaHoverableHeader " + (this.props.selected ? "gxaVerticalHeaderCell-selected " : "gxaVerticalHeaderCell ") + (enableEnsemblLauncher ? "gxaSelectableHeader" : "");
                     var divClass = "rotate_text factor-header";
                     var contrastName = csstransforms ? restrictLabelSize(this.props.contrastName, 17) : this.props.contrastName;
 
@@ -599,7 +571,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                                 this.showPlotsButton() ? plotsButton : null, 
                                 this.showPlotsButton() ? React.DOM.div({ref: "plotsToolBarContent", style: {display: "none"}}, "placeholder") : null
                         )
-                    );
+                        );
                 }
             });
         })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
@@ -720,7 +692,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 displayLevelsBaseline: function() {
                     var displayLevelsButton = type.isDifferential ? DisplayLevelsButtonDifferential : DisplayLevelsButtonBaseline;
                     return ( this.props.hasQuartiles && this.props.isSingleGeneResult ?
-                        LevelsRadioGroup({selectedRadioButton: this.props.selectedRadioButton, toggleRadioButton: this.props.toggleRadioButton}) :
+                        LevelsRadioGroup({selectedRadioButton: this.props.selectedRadioButton, toggleRadioButton: this.props.toggleRadioButton, sticky: this.props.sticky}) :
                         displayLevelsButton({displayLevels: this.props.displayLevels, toggleDisplayLevels: this.props.toggleDisplayLevels})
                     );
                 },
@@ -776,7 +748,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
             render: function() {
                 return (
-                    RadioGroup({name: "displayLevelsGroup", value: this.props.selectedRadioButton, onChange: this.handleChange}, 
+                    RadioGroup({name: "displayLevelsGroup" + this.props.sticky, value: this.props.selectedRadioButton, onChange: this.handleChange}, 
                         React.DOM.div({style: {"margin-left": "10px", "margin-top": "8px"}}, 
                             React.DOM.input({type: "radio", value: "gradients"}), "Display gradients", React.DOM.br(null), 
                             React.DOM.input({type: "radio", value: "levels"}), "Display levels", React.DOM.br(null), 
@@ -799,12 +771,25 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
         var HeatmapTableRows = React.createClass({displayName: 'HeatmapTableRows',
 
+            getInitialState: function () {
+                return ({selectedGeneId: null});
+            },
+
+            selectGene: function (geneId) {
+                var selectedGeneId = (geneId === this.state.selectedGeneId) ? null : geneId;
+                this.setState({selectedGeneId: selectedGeneId}, function() {
+                    eventEmitter.emitEvent('onGeneSelectionChange', [selectedGeneId]);
+                });
+
+            },
+
             profileRowType: function (profile)  {
                 return (type.isMultiExperiment ?
-                    GeneProfileRow({id: profile.id, name: profile.name, experimentType: profile.experimentType, expressions: profile.expressions, serializedFilterFactors: profile.serializedFilterFactors, displayLevels: this.props.displayLevels, renderExpressionCells: this.props.renderExpressionCells})
+                    GeneProfileRow({id: profile.id, name: profile.name, experimentType: profile.experimentType, expressions: profile.expressions, serializedFilterFactors: profile.serializedFilterFactors, displayLevels: this.props.displayLevels})
                     :
-                    GeneProfileRow({selected: profile.id === this.props.selectedGeneId, selectGene: this.props.selectGene, designElement: profile.designElement, id: profile.id, name: profile.name, expressions: profile.expressions, displayLevels: this.props.displayLevels, showGeneSetProfiles: this.props.showGeneSetProfiles, selectedRadioButton: this.props.selectedRadioButton, hasQuartiles: this.props.hasQuartiles, isSingleGeneResult: this.props.isSingleGeneResult, renderExpressionCells: this.props.renderExpressionCells})
+                    GeneProfileRow({selected: profile.id === this.state.selectedGeneId, selectGene: this.selectGene, designElement: profile.designElement, id: profile.id, name: profile.name, expressions: profile.expressions, displayLevels: this.props.displayLevels, showGeneSetProfiles: this.props.showGeneSetProfiles, selectedRadioButton: this.props.selectedRadioButton, hasQuartiles: this.props.hasQuartiles, isSingleGeneResult: this.props.isSingleGeneResult})
                 );
+
             },
 
             render: function () {
@@ -816,7 +801,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     React.DOM.tbody(null, 
                         geneProfilesRows
                     )
-                );
+                    );
             }
         });
 
@@ -890,12 +875,12 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     }
                     else if (type.isDifferential) {
                         return (
-                                CellDifferential({color: expression.color, foldChange: expression.foldChange, pValue: expression.pValue, tStat: expression.tStat, displayLevels: this.props.displayLevels, id: this.props.id, name: this.props.name})
+                            CellDifferential({color: expression.color, foldChange: expression.foldChange, pValue: expression.pValue, tStat: expression.tStat, displayLevels: this.props.displayLevels, id: this.props.id, name: this.props.name})
                             );
                     }
                     else if (type.isMultiExperiment) {
                         return (
-                                CellMultiExperiment({factorName: expression.factorName, serializedFilterFactors: this.props.serializedFilterFactors, color: expression.color, value: expression.value, displayLevels: this.props.displayLevels, svgPathId: expression.svgPathId, id: this.props.id, name: this.props.name})
+                            CellMultiExperiment({factorName: expression.factorName, serializedFilterFactors: this.props.serializedFilterFactors, color: expression.color, value: expression.value, displayLevels: this.props.displayLevels, svgPathId: expression.svgPathId, id: this.props.id, name: this.props.name})
                             );
                     }
                 },
@@ -914,23 +899,23 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                 render: function () {
                     var showSelectTextOnHover = this.state.hover && !this.props.selected ? React.DOM.span({style: {"padding-top": "5px", "float": "right", "color": "green"}}, "select") : null;
-                    var showTickWhenSelected = this.props.selected ? React.DOM.span({style: {"padding-top": "2px", "float": "right", "color": "green"}}, " ✔ "): null ;
+                    var showTickWhenSelected = this.props.selected ? React.DOM.span({style: {"padding-top": "5px", "float": "right", "color": "green"}}, " ✔ "): null ;
                     var className = (this.props.selected ? "gxaHorizontalHeaderCell-selected gxaHoverableHeader" : "gxaHorizontalHeaderCell gxaHoverableHeader") + (enableEnsemblLauncher ? " gxaSelectableHeader" : "");
                     var rowClassName = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "gxaProteomicsExperiment" : "gxaTranscriptomicsExperiment" ) : "";
 
+                    // NB: empty title tag below is required for tooltip to work
                     return (
                         React.DOM.tr({className: rowClassName}, 
-                            React.DOM.th({className: className, onMouseEnter: enableEnsemblLauncher ? this.onMouseEnter : undefined, onMouseLeave: enableEnsemblLauncher ? this.onMouseLeave : undefined, onClick: enableEnsemblLauncher ? this.onClick : undefined}, 
-                                React.DOM.div(null, 
+                            React.DOM.td({className: className, onMouseEnter: enableEnsemblLauncher ? this.onMouseEnter : undefined, onMouseLeave: enableEnsemblLauncher ? this.onMouseLeave : undefined, onClick: enableEnsemblLauncher ? this.onClick : undefined}, 
                                  enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked(), 
                                 showSelectTextOnHover, 
                                 showTickWhenSelected
-                                )
                             ), 
-                            this.props.designElement ? React.DOM.th({className: "gxaHeatmapTableDesignElement"}, this.props.designElement) : null, 
-                            this.props.renderExpressionCells ? this.cells(this.props.expressions) : null
+                            this.props.designElement ?  React.DOM.td({className: "design-element"}, this.props.designElement) : null, 
+                            this.cells(this.props.expressions)
+
                         )
-                    );
+                        );
                 },
 
                 componentDidMount: function () {
@@ -1052,7 +1037,6 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             return React.createClass({
 
                 render: function () {
-
                     if (noExpression(this.props.value)) {
                         return (React.DOM.td(null));
                     }

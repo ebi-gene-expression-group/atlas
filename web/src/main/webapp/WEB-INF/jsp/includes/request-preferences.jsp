@@ -163,7 +163,7 @@
         <div style="display:inline-block">
             <div id="gene-distribution-button" style="float:left">
                 <a id="display-chart" title="Display gene distribution" class="gxaButtonImage" href="#">
-                    <img alt="Display gene distribution" src="resources/images/yellow-chart-icon-16.png"/>
+                    <img alt="Display gene distribution" src="resources/latest/images/yellow-chart-icon-16.png"/>
                 </a>
             </div>
             <div id="slider-range-max"

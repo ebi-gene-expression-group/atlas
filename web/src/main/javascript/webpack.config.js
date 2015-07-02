@@ -19,7 +19,7 @@ module.exports = {
     },
 
     output: {
-        path: path.resolve(__dirname, "../webapp/resources/js-bundles")
+        path: path.resolve(__dirname, "../webapp/resources/latest/js-bundles")
         ,filename: '[name]-bundle.js' // [name] is substituted for the entry name, eg: search-results-differential-page-bundle.js
 
     },

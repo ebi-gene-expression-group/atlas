@@ -65,8 +65,8 @@
     <tbody/>
 </table>
 
-<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/lib/datatables-1.9.4/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/js/experimentsPageModule.js"></script>
+<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/latest/js/lib/datatables-1.9.4/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/resources/latest/js/experimentsPageModule.js"></script>
 
 <script>
 

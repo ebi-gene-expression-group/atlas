@@ -49,7 +49,7 @@
     %>
 </div>
 
-<script src="${pageContext.request.contextPath}/resources/js/lib/query-string.js"></script>
+<script src="${pageContext.request.contextPath}/resources/latest/js/lib/query-string.js"></script>
 
 <script>
     (function ($) {

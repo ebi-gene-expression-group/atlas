@@ -32,7 +32,7 @@
         </div>
         <div class="grid_26 alpha" style="padding-top: 20px">
             <div class="grid_4 alpha">
-                <p><div><img src="${pageContext.request.contextPath}/resources/images/gramene_logo.png"/></div></p>
+                <p><div><img src="${pageContext.request.contextPath}/resources/latest/images/gramene_logo.png"/></div></p>
 
                 <p><div class="icon icon-functional" data-icon="1"><a href="/gxa/home">Search Atlas</a></div></p>
             </div>

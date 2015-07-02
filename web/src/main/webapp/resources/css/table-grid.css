@@ -29,7 +29,7 @@
     empty-cells: show;
     /*width: 100% !important;*/
     height: 100%;
-    /*font-size: 100% !important;*/
+    font-size: 93%;
     text-align: left;
 }
 
@@ -67,26 +67,24 @@
     white-space: nowrap;
 }
 
-th.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {
+.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {
     font-weight: normal;
     background-color: rgb(237, 246, 246) !important;
 }
 
-th.gxaHoverableHeader:hover, .gxaHeaderHover {
+.gxaHoverableHeader:hover, .gxaHeaderHover {
     background-color: #deebeb !important;
 }
 
-th.gxaSelectableHeader:hover {
+.gxaSelectableHeader:hover {
     cursor: pointer;
 }
 
-th.gxaVerticalHeaderCell-selected, th.gxaVerticalHeaderCell-selected:hover, th.gxaHorizontalHeaderCell-selected, th.gxaHorizontalHeaderCell-selected:hover {
+.gxaVerticalHeaderCell-selected, .gxaVerticalHeaderCell-selected:hover, .gxaHorizontalHeaderCell-selected, .gxaHorizontalHeaderCell-selected:hover {
     background-color: rgb(181, 234, 234) !important;
-    border: 1px solid #cdcdcd;
-    padding:5px;
 }
 
-th.gxaHorizontalHeaderCell {
+.gxaHorizontalHeaderCell {
     border: 1px solid #cdcdcd;
     white-space: nowrap;
     padding:5px;
@@ -181,67 +179,32 @@ tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomics
     width: 70px
 }
 
-th.gxaHeatmapTableDesignElement {
-    font-weight: normal;
-    text-align: left;
-    border: 1px solid #CDCDCD;
-}
 
-.gxaStickyTableWrap {
-    overflow-x: auto;
+
+
+#gxaExperimentPageHeatmapTableStickyWrapper {
+    overflow-x: scroll;
     overflow-y: hidden;
     position: relative;
-    width: 100%;
 }
-
-.gxaStickyTableWrap div[class^='gxaSticky'] {
-    overflow: hidden;
-}
-.gxaStickyTableWrap tfoot {
-    display: none;
-}
-.gxaStickyTableWrap div table {
-    margin: 0;
-    position: relative;
-    width: auto; /* Prevent table from stretching to full size */
-    border-collapse: collapse;
-}
-.gxaStickyTableWrap .gxaStickyTableHeader,
-.gxaStickyTableWrap .gxaStickyTableColumn,
-.gxaStickyTableWrap .gxaStickyTableIntersect {
-    opacity: 0;
-    position: fixed;
-    z-index: 40;
-}
-.gxaStickyTableWrap .gxaStickyTableHeader {
-    z-index: 50;
-    width: 100%; /* Force stretch */
-}
-.gxaStickyTableWrap .gxaStickyTableIntersect {
-    z-index: 60;
-}
-.gxaStickyTableWrap td,
-.gxaStickyTableWrap th {
-    box-sizing: border-box;
-}
-.gxaStickyTableWrap thead th {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-.gxaStickyEnabled {
-    margin: 0;
-    width: auto;
-}
-
-.gxaHeatmapCountAndLegend {
-    z-index: 45;
-    background-color: white;
-}
-
-/* To hide sticky column and intersect when screen gets too narrow */
-@media only screen and (max-width: 768px) {
-    .gxaStickyTableColumn, .gxaStickyTableIntersect {
-        display: none;
+    #gxaExperimentPageHeatmapTableStickyWrapperStickyHead,
+    #gxaExperimentPageHeatmapTableStickyWrapperStickyColumn,
+    #gxaExperimentPageHeatmapTableStickyWrapperStickyIntersect {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: auto; /* Prevent table from stretching to full size */
     }
-}
+    #gxaExperimentPageHeatmapTableStickyWrapperStickyColumn,
+    #gxaExperimentPageHeatmapTableStickyWrapperStickyHead {
+        z-index: -50;
+    }
+    #gxaExperimentPageHeatmapTableStickyWrapperStickyIntersect {
+        z-index: 150;
+    }
+
+    #gxaExperimentPageHeatmapTableStickyWrapper td,
+    #gxaExperimentPageHeatmapTableStickyWrapper th {
+        box-sizing: border-box;
+    }

@@ -109,8 +109,6 @@ var anatomogramModule = (function ($) {
         }
     }
 
-    //TODO: When widget is used by faceting we need to create the ids dynamically for
-    //TODO: the widget to be load with a proper scale
     function scaleAnatomogram(svg) {
         var elementById = svg.getElementById('group_all');
         // this is in case anatomogram is hidden
@@ -133,8 +131,8 @@ var anatomogramModule = (function ($) {
     }
 
     //load anatomogram from given location and display given organism parts
-    function loadAnatomogram(anatomogramBodyId, location, allSvgPathIds, isSingleGene) {
-        var svg = $(anatomogramBodyId).svg('get');
+    function loadAnatomogram(location, allSvgPathIds, isSingleGene) {
+        var svg = $('#anatomogramBody').svg('get');
 
         svg.load(location, {
             onLoad:function(){
@@ -157,7 +155,7 @@ var anatomogramModule = (function ($) {
 
     function highlightExpressedOrganismsPartsOnly(svg, isSingleGene) {
 
-        var geneExpressions = $("#heatmap-table tbody tr td").parent("tr").find('div[data-svg-path-id!=‘’]');
+        var geneExpressions = $("#heatmap-table td:first-child").parent("tr").find('div[data-svg-path-id!=‘’]');
 
         var factorValues = geneExpressions.map(function () {
             if( $(this).find("span").text() != "NA" ){
@@ -173,35 +171,18 @@ var anatomogramModule = (function ($) {
 
     }
 
-    function replaceSpaces (value) {
-        var result = value.replace(" ","_");
-        return result.trim();
-    }
-
-    function init(allSvgPathIds, fileNameMale, fileNameFemale, contextRoot, species, isSingleGene, heatmapkey) {
-        var anatomogramBody = "#anatomogramBody";
-        var sexToggle = "#sex-toggle";
-        var sexToggleImage = "#sex-toggle-image";
-
-        if(heatmapkey != null) {
-            var heatmapKeyTrimmed = replaceSpaces(heatmapkey);
-
-            anatomogramBody = anatomogramBody + heatmapKeyTrimmed;
-            sexToggle = sexToggle + heatmapKeyTrimmed;
-            sexToggleImage = sexToggleImage + heatmapKeyTrimmed;
-        }
-
-        if ($(anatomogramBody).length === 0) {
+    function init(allSvgPathIds, fileNameMale, fileNameFemale, contextRoot, species, isSingleGene) {
+        if ($('#anatomogramBody').length === 0) {
             return;
         }
 
         //init svg
-        $(anatomogramBody).svg();
+        $('#anatomogramBody').svg();
 
-        var svg = loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
+        var svg = loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
 
         //hover on gene name, to highlight all organism parts involved on a single gene profile
-        $("#heatmap-table tbody > tr > th:first-child").add("").on("hover", function (evt) { //hover on cells of the first table column
+        $("#heatmap-table td:first-child").on("hover", function (evt) { //hover on cells of the first table column
             var geneExpressions = $(this).parent("tr").find("div[data-svg-path-id!='']");
 
             var factorValues = geneExpressions.map(function () {
@@ -225,23 +206,21 @@ var anatomogramModule = (function ($) {
             }
         });
 
-
-
         if (fileNameMale !== fileNameFemale) {
             //switch sex toggle button
-            $(sexToggleImage).button().toggle(
+            $("#sex-toggle-image").button().toggle(
                 function () {
 
                     $(this).attr("src", contextRoot + selectFemaleImageToggle(species));
-                    loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameFemale, allSvgPathIds, isSingleGene);
+                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameFemale, allSvgPathIds, isSingleGene);
                 },
                 function () {
                     $(this).attr("src", contextRoot + selectMaleImageToggle(species));
-                    loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
+                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
                 }
             ).tooltip();
         } else {
-            $(sexToggle).hide();
+            $("#sex-toggle").hide();
         }
     }
 

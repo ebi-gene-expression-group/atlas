@@ -33,27 +33,27 @@
 <html>
 <head>
 
-    <link rel="stylesheet" type="text/css" href="${base}/resources/css/atlas.css">
-    <link rel="stylesheet" type="text/css" href="${base}/resources/css/table-grid.css">
-    <link rel="stylesheet" type="text/css" href="${base}/resources/css/heatmap-and-anatomogram.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resources/latest/css/atlas.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resources/latest/css/table-grid.css">
+    <link rel="stylesheet" type="text/css" href="${base}/resources/latest/css/heatmap-and-anatomogram.css">
 
-    <script language="JavaScript" type="text/javascript" src="${base}/resources/js/lib/json2.js"></script>
-    <script language="JavaScript" type="text/javascript" src="${base}/resources/js/lib/jquery-1.9.1.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="${base}/resources/js/lib/jquery-migrate-1.2.0.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${base}/resources/latest/js/lib/json2.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${base}/resources/latest/js/lib/jquery-1.9.1.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${base}/resources/latest/js/lib/jquery-migrate-1.2.0.min.js"></script>
     <!-- jQuery UI start -->
-    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/jquery-ui-1.11.4.custom/jquery-ui.min.css">
+    <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/latest/js/lib/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/latest/js/lib/jquery-ui-1.11.4.custom/jquery-ui.min.css">
     <!-- jQuery UI end -->
-    <script language="JavaScript" type="text/javascript" src="${base}/resources/js/lib/jquery.svg.package-1.4.5/jquery.svg.js"></script>
-    <script language="JavaScript" type="text/javascript" src="${base}/resources/js/experiment-page-buttons-and-tooltips.js"></script>
-    <script language="JavaScript" type="text/javascript" src="${base}/resources/js/helpTooltipsModule.js"></script>
-    <script language="JavaScript" type="text/javascript" src="${base}/resources/js/anatomogramModule.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${base}/resources/latest/js/lib/jquery.svg.package-1.4.5/jquery.svg.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${base}/resources/latest/js/experiment-page-buttons-and-tooltips.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${base}/resources/latest/js/helpTooltipsModule.js"></script>
+    <script language="JavaScript" type="text/javascript" src="${base}/resources/latest/js/anatomogramModule.js"></script>
 
     <script src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
 
     <!-- fancybox start -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/js/lib/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css" media="screen"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/latest/js/lib/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.css" media="screen"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/latest/js/lib/fancyapps-fancyBox-0ffc358/source/jquery.fancybox.pack.js"></script>
     <!-- fancybox end -->
 
 </head>

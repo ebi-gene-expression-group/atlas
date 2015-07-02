@@ -1,0 +1,92 @@
+/* autocomplete-related classes */
+.ac_results {
+    padding: 0;
+    background-color: #FFF;
+    overflow: hidden;
+    z-index: 99999;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+.ac_results ul {
+    width: 100%;
+    list-style-position: outside;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ac_results li {
+    margin: 0;
+    padding: 0 3px;
+    cursor: default;
+    display: block;
+    height: 16px;
+    overflow: hidden;
+    position: relative;
+}
+
+.ac_tree_level
+, .ac_tree_control {
+    float: left;
+    width: 16px;
+    height: 16px;
+}
+
+.ac_tree_control div {
+    width: 9px;
+    height: 9px;
+    margin: 3px 3px 3px 3px;
+    overflow: hidden;
+}
+
+.ac_tree_collapsed .ac_tree_control div {
+    background: url(../images/btn_toc_expand.gif) 0 0 no-repeat;
+}
+
+.ac_tree_expanded .ac_tree_control div {
+    background: url(../images/btn_toc_collapse.gif) 0 0 no-repeat;
+}
+
+.ac_loading {
+    background: #FFF url('../images/busy.gif') right center no-repeat;
+}
+
+.ac_over {
+    background-color: #5E8CC0;
+    color: #FFF;
+}
+
+.ac_over .ac_efo
+, .ac_over .ac_field {
+    color: #FFF;
+}
+
+.ac_outer {
+    background-color: #FFF;
+    color: #000;
+    cursor: default;
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+}
+
+.ac_outer > div {
+    padding: 1px;
+}
+
+.ac_field
+, .ac_efo {
+    position: absolute;
+    top: 0;
+    right: 2px;
+    color: #5E8CC0;
+}
+
+.ac_field {
+    font-style: italic;
+}
+
+.ac_efo {
+    font-weight: bold;
+}

@@ -54,7 +54,7 @@
         <div class="grid_12 alpha" id="local-title">
             <h1 style="color: #000000; text-shadow: 0px 0px #E1EEE9">
                 <a href="${pageContext.request.contextPath}" title="Back to Expression Atlas homepage">
-                    <img src="${pageContext.request.contextPath}/resources/images/ExpressionAtlas_logo_web.png"
+                    <img src="${pageContext.request.contextPath}/resources/latest/images/ExpressionAtlas_logo_web.png"
                          alt="Expression Atlas logo" width="64" height="64" style="vertical-align: bottom">Expression
                     Atlas
                 </a>
