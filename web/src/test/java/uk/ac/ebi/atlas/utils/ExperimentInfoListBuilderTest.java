@@ -35,10 +35,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.*;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -80,6 +77,9 @@ public class ExperimentInfoListBuilderTest {
 
     @Mock
     private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCacheMock;
+
+    @Mock
+    private ExperimentTypesCache experimentTypesCacheMock;
 
     @Mock
     private DifferentialExperiment differentialExperimentMock;
@@ -140,6 +140,7 @@ public class ExperimentInfoListBuilderTest {
                 baselineExperimentsCacheMock,
                 proteomicsBaselineExperimentsCacheMock, rnaSeqDiffExperimentsCacheMock,
                 microarrayExperimentsCacheMock,
+                experimentTypesCacheMock,
                 arrayDesignTraderMock);
     }
 

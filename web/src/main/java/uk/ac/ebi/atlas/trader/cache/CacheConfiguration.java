@@ -28,14 +28,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTrader;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader;
+import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
-import uk.ac.ebi.atlas.trader.loader.BaselineExperimentsCacheLoader;
-import uk.ac.ebi.atlas.trader.loader.DifferentialExperimentsCacheLoader;
-import uk.ac.ebi.atlas.trader.loader.MicroarrayExperimentsCacheLoader;
-import uk.ac.ebi.atlas.trader.loader.ProteomicsBaselineExperimentsCacheLoader;
+import uk.ac.ebi.atlas.trader.loader.*;
 
 import javax.inject.Inject;
 
@@ -83,4 +82,11 @@ public class CacheConfiguration {
 
     }
 
+    @Bean(name="experimentTypesLoadingCache")
+    @Inject
+    public LoadingCache<String, ExperimentType> experimentTypesCache(ExperimentTypesCacheLoader cacheLoader) {
+
+        return CacheBuilder.newBuilder().build(cacheLoader);
+
+    }
 }
