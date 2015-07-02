@@ -2,6 +2,7 @@
     <defaultFilterFactors/>
     <defaultQueryFactorType>ORGANISM_PART</defaultQueryFactorType>
     <menuFilterFactorTypes/>
-    <landingPageDisplayName>Nine tissues</landingPageDisplayName>
+    <landingPageDisplayName>Tissues - 9 Davidson</landingPageDisplayName>
     <speciesMapping/>
+    <orderFactor>curated</orderFactor> 
 </factors-definition>

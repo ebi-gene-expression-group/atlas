@@ -50,7 +50,7 @@ public class ExperimentalFactors implements Serializable {
 
     private SortedSetMultimap<String, Factor> factorsByType = TreeMultimap.create();
 
-    private LinkedHashMultimap<String, Factor> xmFactorsByType = LinkedHashMultimap.create();
+    private LinkedHashMultimap<String, Factor> xmlFactorsByType = LinkedHashMultimap.create();
 
     private BiMap<String, String> factorDisplayNamesByType = HashBiMap.create();
 
@@ -82,6 +82,8 @@ public class ExperimentalFactors implements Serializable {
         this.defaultFilterFactors = defaultFilterFactors;
     }
 
+    // TODO It might be better to have a general LinkedHashMultiMap for the factors and, depending on the XML, order it
+    // or not. So we can have a single interface for ExperimentalFactors and avoid bugs such as https://www.pivotaltracker.com/story/show/97196678
     ExperimentalFactors(LinkedHashMultimap<String, Factor> factorsByType,
                         Map<String, String> factorDisplayNamesByType,
                         List<FactorGroup> orderedFactorGroups,
@@ -90,7 +92,7 @@ public class ExperimentalFactors implements Serializable {
                         Map<String, FactorGroup> orderedFactorGroupsByAssayGroupId,
                         String defaultQueryFactorType,
                         Set<Factor> defaultFilterFactors) {
-        this.xmFactorsByType = factorsByType;
+        this.xmlFactorsByType = factorsByType;
         this.orderedFactorGroupsByAssayGroupId = orderedFactorGroupsByAssayGroupId;
         this.factorDisplayNamesByType.putAll(factorDisplayNamesByType);
         this.orderedFactorGroups = orderedFactorGroups;
@@ -165,7 +167,6 @@ public class ExperimentalFactors implements Serializable {
         return factorGroup.removeType(getDefaultQueryFactorType());
     }
 
-
     // return factors for the slice specified
     public SortedSet<Factor> getComplementFactors(final FactorGroup slice) {
         TreeSet<Factor> factors = Sets.newTreeSet(slice);
@@ -192,7 +193,12 @@ public class ExperimentalFactors implements Serializable {
 
     }
 
-    public Set<Factor> getComplementFactorByXML(final Set<Factor> filterFactors) {
+    public Set<Factor> getComplementFactorsByXML(final FactorGroup slice) {
+        TreeSet<Factor> factors = Sets.newTreeSet(slice);
+        return getComplementFactorsByXML(factors);
+    }
+
+    public Set<Factor> getComplementFactorsByXML(final Set<Factor> filterFactors) {
 
         if (CollectionUtils.isEmpty(filterFactors)) {
             return getAllFactorsOrderedByXML();
@@ -282,11 +288,16 @@ public class ExperimentalFactors implements Serializable {
     }
 
     public SortedSet<Factor> getAllFactors() {
-        return ImmutableSortedSet.copyOf(factorsByType.values());
+        if (!xmlFactorsByType.isEmpty()) {
+            return ImmutableSortedSet.copyOf(xmlFactorsByType.values());
+        }
+        else {
+            return ImmutableSortedSet.copyOf(factorsByType.values());
+        }
     }
 
     public ImmutableSet<Factor> getAllFactorsOrderedByXML() {
-        return ImmutableSet.copyOf(xmFactorsByType.values());
+        return ImmutableSet.copyOf(xmlFactorsByType.values());
     }
 
     // ordered the same as the assay group ids in the expression levels .tsv

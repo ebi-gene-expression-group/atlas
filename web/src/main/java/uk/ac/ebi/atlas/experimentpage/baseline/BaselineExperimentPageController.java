@@ -117,7 +117,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         Set<AssayGroupFactor> filteredAssayGroupFactors;
         if(experimentalFactors.getAllFactorsOrderedByXML() != null && !experimentalFactors.getAllFactorsOrderedByXML().isEmpty()) {
             filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactorsByXML(selectedFilterFactors);
-            orderedFactors = experimentalFactors.getComplementFactorByXML(selectedFilterFactors);
+            orderedFactors = experimentalFactors.getComplementFactorsByXML(selectedFilterFactors);
         } else {
             filteredAssayGroupFactors = experimentalFactors.getComplementAssayGroupFactors(selectedFilterFactors);
             orderedFactors = experimentalFactors.getComplementFactors(selectedFilterFactors);

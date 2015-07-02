@@ -91,7 +91,7 @@ public class BaselineRequestContextBuilder {
 
         if(experiment.getExperimentalFactors().getAllFactorsOrderedByXML() != null &&
                 !experiment.getExperimentalFactors().getAllFactorsOrderedByXML().isEmpty()) {
-            Set<Factor> allQueryFactors = experiment.getExperimentalFactors().getComplementFactorByXML(selectedFilterFactors);
+            Set<Factor> allQueryFactors = experiment.getExperimentalFactors().getComplementFactorsByXML(selectedFilterFactors);
             checkState(!allQueryFactors.isEmpty(), "Cannot determine query factors. Check selected filter factors are correct: " + selectedFilterFactors);
             requestContext.setAllQueryFactors(allQueryFactors);
         } else {
