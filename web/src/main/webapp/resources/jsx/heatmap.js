@@ -235,6 +235,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
             render: function () {
                 var paddingMargin = "15px";
 
+                // TODO id="heatmap-table" used to highlight the anatomogram in anatomogramModule.js ; this will need to change for the faceted search with multiple anatomograms
                 return (
                     React.DOM.div(null, 
                         React.DOM.div({ref: "countAndLegend", className: "gxaHeatmapCountAndLegend", style: {"padding-bottom": paddingMargin}}, 
@@ -250,7 +251,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         ), 
 
                         React.DOM.div({ref: "stickyWrap", className: "gxaStickyTableWrap", style: {"margin-top": paddingMargin}}, 
-                            React.DOM.table({ref: "heatmapTable", className: "gxaTableGrid gxaStickyEnabled"}, 
+                            React.DOM.table({ref: "heatmapTable", className: "gxaTableGrid gxaStickyEnabled", id: "heatmap-table"}, 
                                 HeatmapTableHeader({ref: "heatmapTableHeader", isMicroarray: this.isMicroarray(), hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: true}), 
                                 HeatmapTableRows({profiles: this.state.profiles.rows, selectedGeneId: this.state.selectedGeneId, selectGene: this.selectGene, displayLevels: this.state.displayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), renderExpressionCells: true})
                             ), 

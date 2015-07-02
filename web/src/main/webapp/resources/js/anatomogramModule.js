@@ -201,7 +201,7 @@ var anatomogramModule = (function ($) {
         var svg = loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
 
         //hover on gene name, to highlight all organism parts involved on a single gene profile
-        $("#heatmap-table td").on("hover", function (evt) { //hover on cells of the first table column
+        $("#heatmap-table tbody > tr > th:first-child").add("").on("hover", function (evt) { //hover on cells of the first table column
             var geneExpressions = $(this).parent("tr").find("div[data-svg-path-id!='']");
 
             var factorValues = geneExpressions.map(function () {
