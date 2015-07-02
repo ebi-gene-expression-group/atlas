@@ -273,8 +273,6 @@ CREATE TABLE DATAPROCESSING_JOB_LOCK(
     DATE_STARTED DATE DEFAULT sysdate,
     JOBTYPE VARCHAR(255) NOT NULL,
     EXPERIMENT_IRAP_DIR VARCHAR(255) NULL,
-    -- This column is used to indicate that the experiment has been processed via irap_single_lib instead of the usual irap route
-    ENA_STUDY_ID VARCHAR(255) NULL
 );
 
 -- Species table
