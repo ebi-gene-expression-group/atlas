@@ -43,6 +43,7 @@ public class ExperimentTypesCacheLoader extends CacheLoader<String, ExperimentTy
     @Override
     public ExperimentType load(String experimentAccession) {
         ExperimentDTO experimentDTO = experimentDAO.findPublicExperiment(experimentAccession);
+
         return experimentDTO.getExperimentType();
     }
 }
