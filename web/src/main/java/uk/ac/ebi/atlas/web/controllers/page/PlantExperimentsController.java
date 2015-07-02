@@ -141,7 +141,7 @@ public class PlantExperimentsController {
             experimentDisplayNames.put(experimentAccession, displayName + " (" + numberOfAssays + " assays)");
         }
 
-        numDifferentialExperimentsBySpecies = new TreeMap<String, Integer>();
+        numDifferentialExperimentsBySpecies = new TreeMap<>();
         long start = System.currentTimeMillis();
         populateExperimentAccessionToSpecies(ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL);
         populateExperimentAccessionToSpecies(ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL);

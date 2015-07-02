@@ -30,10 +30,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -48,6 +45,7 @@ public class ExperimentTrader {
     private MicroarrayExperimentsCache microarrayExperimentsCache;
     private ExperimentDAO experimentDAO;
     private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache;
+    private ExperimentTypesCache experimentTypesCache;
 
 
     @Inject
@@ -55,27 +53,24 @@ public class ExperimentTrader {
                             BaselineExperimentsCache baselineExperimentsCache,
                             RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                             MicroarrayExperimentsCache microarrayExperimentsCache,
-                            ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache) {
+                            ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache,
+                            ExperimentTypesCache experimentTypesCache) {
 
         this.experimentDAO = experimentDAO;
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
         this.proteomicsBaselineExperimentsCache = proteomicsBaselineExperimentsCache;
+        this.experimentTypesCache = experimentTypesCache;
     }
 
 
     public Experiment getPublicExperiment(String experimentAccession) {
-        //TODO: this is a bottleneck because it goes back to the database each time - to improve perf,
-        //we need to lookup the experiment type from a cache and then get the experiment from the appropriate cache
-        ExperimentDTO experimentDTO = experimentDAO.findPublicExperiment(experimentAccession);
-
-        return getExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
+        return getExperimentFromCache(experimentAccession, experimentTypesCache.getExperimentType(experimentAccession));
     }
 
 
     public Experiment getExperiment(String experimentAccession, String accessKey) {
-
         if (StringUtils.isBlank(accessKey)){
             return getPublicExperiment(experimentAccession);
         }
@@ -105,6 +100,7 @@ public class ExperimentTrader {
             default:
                 throw new IllegalStateException("invalid enum value: " + type);
         }
+        experimentTypesCache.evictExperiment(experimentAccession);
 
     }
 
@@ -113,6 +109,8 @@ public class ExperimentTrader {
         baselineExperimentsCache.evictAll();
         rnaSeqDiffExperimentsCache.evictAll();
         microarrayExperimentsCache.evictAll();
+        proteomicsBaselineExperimentsCache.evictAll();
+        experimentTypesCache.evictAll();
     }
 
 

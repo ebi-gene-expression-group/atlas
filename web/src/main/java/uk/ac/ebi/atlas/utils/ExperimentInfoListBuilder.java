@@ -31,10 +31,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
-import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.MicroarrayExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
-import uk.ac.ebi.atlas.trader.cache.RnaSeqDiffExperimentsCache;
+import uk.ac.ebi.atlas.trader.cache.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -54,6 +51,8 @@ public class ExperimentInfoListBuilder {
 
     private MicroarrayExperimentsCache microarrayExperimentsCache;
 
+    private ExperimentTypesCache experimentTypesCache;
+
     private ExperimentTrader experimentTrader;
 
     private ArrayDesignTrader arrayDesignTrader;
@@ -65,12 +64,14 @@ public class ExperimentInfoListBuilder {
                                      ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache,
                                      RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                                      MicroarrayExperimentsCache microarrayExperimentsCache,
+                                     ExperimentTypesCache experimentTypesCache,
                                      ArrayDesignTrader arrayDesignTrader) {
         this.experimentTrader = experimentTrader;
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.proteomicsBaselineExperimentsCache = proteomicsBaselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
+        this.experimentTypesCache = experimentTypesCache;
         this.arrayDesignTrader = arrayDesignTrader;
     }
 
@@ -81,6 +82,10 @@ public class ExperimentInfoListBuilder {
         experimentInfos.addAll(extractProteomicsBaselineExperiments());
         experimentInfos.addAll(extractRnaSeqDiffExperiments());
         experimentInfos.addAll(extractMicrorarryExperiments());
+
+        for (ExperimentInfo experimentInfo : experimentInfos) {
+            experimentTypesCache.getExperimentType(experimentInfo.getExperimentAccession());
+        }
 
         return experimentInfos;
     }
