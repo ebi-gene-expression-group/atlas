@@ -179,7 +179,7 @@ var anatomogramModule = (function ($) {
         //init svg
         $('#anatomogramBody').svg();
 
-        var svg = loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
+        var svg = loadAnatomogram(contextRoot + "resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
 
         //hover on gene name, to highlight all organism parts involved on a single gene profile
         $("#heatmap-table td:first-child").on("hover", function (evt) { //hover on cells of the first table column
@@ -212,11 +212,11 @@ var anatomogramModule = (function ($) {
                 function () {
 
                     $(this).attr("src", contextRoot + selectFemaleImageToggle(species));
-                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameFemale, allSvgPathIds, isSingleGene);
+                    loadAnatomogram(contextRoot + "resources/svg/" + fileNameFemale, allSvgPathIds, isSingleGene);
                 },
                 function () {
                     $(this).attr("src", contextRoot + selectMaleImageToggle(species));
-                    loadAnatomogram(contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
+                    loadAnatomogram(contextRoot + "resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
                 }
             ).tooltip();
         } else {
