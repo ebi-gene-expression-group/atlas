@@ -541,10 +541,10 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                     var content =
                         React.DOM.div(null, 
-                            this.props.showMaPlotButton ? React.DOM.a({href: maPlotURL, id: "maButtonID", title: "Click to view MA plot for the contrast across all genes", onClick: this.clickButton}, React.DOM.img({src: contextRoot + '/resources/latest/images/maplot-button.png'})) : null,
-                            this.props.showGseaGoPlot ? React.DOM.a({href: gseaGoPlotUrl, id: "goButtonID", title: "Click to view GO terms enrichment analysis plot", onClick: this.clickButton}, React.DOM.img({src: contextRoot + '/resources/latest/images/gsea-go-button.png'})) : null,
-                            this.props.showGseaInterproPlot ? React.DOM.a({href: gseaInterproPlotUrl, id: "interproButtonID", title: "Click to view Interpro domains enrichment analysis plot", onClick: this.clickButton}, React.DOM.img({src: contextRoot + '/resources/latest/images/gsea-interpro-button.png'})) : null,
-                            this.props.showGseaReactomePlot ? React.DOM.a({href: gseaReactomePlotUrl, id: "reactomeButtonID", title: "Click to view Reactome pathways enrichment analysis plot", onClick: this.clickButton}, React.DOM.img({src: contextRoot + '/resources/latest/images/gsea-reactome-button.png'})) : null
+                            this.props.showMaPlotButton ? React.DOM.a({href: maPlotURL, id: "maButtonID", title: "Click to view MA plot for the contrast across all genes", onClick: this.clickButton}, React.DOM.img({src: contextRoot + '/resources/images/maplot-button.png'})) : null, 
+                            this.props.showGseaGoPlot ? React.DOM.a({href: gseaGoPlotUrl, id: "goButtonID", title: "Click to view GO terms enrichment analysis plot", onClick: this.clickButton}, React.DOM.img({src: contextRoot + '/resources/images/gsea-go-button.png'})) : null, 
+                            this.props.showGseaInterproPlot ? React.DOM.a({href: gseaInterproPlotUrl, id: "interproButtonID", title: "Click to view Interpro domains enrichment analysis plot", onClick: this.clickButton}, React.DOM.img({src: contextRoot + '/resources/images/gsea-interpro-button.png'})) : null, 
+                            this.props.showGseaReactomePlot ? React.DOM.a({href: gseaReactomePlotUrl, id: "reactomeButtonID", title: "Click to view Reactome pathways enrichment analysis plot", onClick: this.clickButton}, React.DOM.img({src: contextRoot + '/resources/images/gsea-reactome-button.png'})) : null
                         );
 
                     // the tool bar content will be copied around the DOM by the toolbar plugin
@@ -579,7 +579,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
 
                     var plotsButton = (
                         React.DOM.div({style: {"text-align":"right", "padding-right":"3px"}}, 
-                            React.DOM.a({href: "#", ref: "plotsButton", onClick: this.clickButton, className: "gxaButtonImage", title: "Click to view plots"}, React.DOM.img({src: contextRoot + '/resources/latest/images/yellow-chart-icon.png'}))
+                            React.DOM.a({href: "#", ref: "plotsButton", onClick: this.clickButton, className: "gxaButtonImage", title: "Click to view plots"}, React.DOM.img({src: contextRoot + '/resources/images/yellow-chart-icon.png'}))
                         )
                     );
 
@@ -695,13 +695,13 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                         React.DOM.div({id: "ensembl-launcher-box", style: {width: "245px"}}, 
                             React.DOM.div({id: "ensembl-launcher-box-ensembl"}, 
                                 React.DOM.label(null, "Ensembl Genome Browser"), 
-                                React.DOM.img({src: "/gxa/resources/latest/images/ensembl.gif", style: {padding: "0px 5px"}}),
+                                React.DOM.img({src: "/gxa/resources/images/ensembl.gif", style: {padding: "0px 5px"}}), 
                                 React.DOM.button({ref: "ensemblButton", onClick: this.openEnsemblWindow.bind(this, ensemblHost)}, "Open")
                             ), 
                              heatmapConfig.ensemblDB == "plants" ?
                                 React.DOM.div({id: "ensembl-launcher-box-gramene"}, 
                                     React.DOM.label(null, "Gramene Genome Browser"), 
-                                    React.DOM.img({src: "/gxa/resources/latest/images/gramene.png", style: {padding: "0px 5px"}}),
+                                    React.DOM.img({src: "/gxa/resources/images/gramene.png", style: {padding: "0px 5px"}}), 
                                     React.DOM.button({ref: "grameneButton", onClick: this.openEnsemblWindow.bind(this, grameneHost)}, "Open")
                                 )
                                 : null, 
