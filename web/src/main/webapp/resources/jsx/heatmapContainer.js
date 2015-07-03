@@ -67,7 +67,6 @@ var HeatmapContainer = (function (React) {
     return React.createClass({
 
         componentDidMount: function() {
-            debugger;
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-37676851-1']);
             _gaq.push(['_trackPageview']);
