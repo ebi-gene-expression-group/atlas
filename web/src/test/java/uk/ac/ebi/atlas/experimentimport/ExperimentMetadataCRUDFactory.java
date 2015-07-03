@@ -31,7 +31,7 @@ public class ExperimentMetadataCRUDFactory {
     MicroarrayExperimentsCache microarrayExperimentsCache;
 
     @Inject
-    ExperimentTypesCache experimentTypesCache;
+    PublicExperimentTypesCache publicExperimentTypesCache;
 
     @Inject
     ExperimentDTOBuilder experimentDTOBuilder;
@@ -52,7 +52,7 @@ public class ExperimentMetadataCRUDFactory {
         ProteomicsBaselineExperimentsCacheLoader loader = loaderFactory.create(experimentDao);
         LoadingCache<String, ProteomicsBaselineExperiment> loadingCache = CacheBuilder.newBuilder().maximumSize(1).build(loader);
         ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache = new ProteomicsBaselineExperimentsCache(loadingCache);
-        ExperimentTrader experimentTrader = new ExperimentTrader(experimentDao, baselineExperimentsCache, rnaSeqDiffExperimentsCache, microarrayExperimentsCache, proteomicsBaselineExperimentsCache, experimentTypesCache);
+        ExperimentTrader experimentTrader = new ExperimentTrader(experimentDao, baselineExperimentsCache, rnaSeqDiffExperimentsCache, microarrayExperimentsCache, proteomicsBaselineExperimentsCache, publicExperimentTypesCache);
         return new ExperimentMetadataCRUD(experimentDao, experimentDesignFileWriterBuilder,
                 experimentTrader, experimentDTOBuilder, mageTabParserFactory, conditionsIndexTrader, efoParentsLookupService);
     }

@@ -67,7 +67,7 @@ public class ExperimentTraderTest {
     @Mock
     private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCacheMock;
     @Mock
-    private ExperimentTypesCache experimentTypesCacheMock;
+    private PublicExperimentTypesCache publicExperimentTypesCacheMock;
 
     @Mock
     ExperimentDTO experimentDTOMock;
@@ -93,7 +93,7 @@ public class ExperimentTraderTest {
                                         rnaSeqDiffExperimentsCacheMock,
                                         microarrayExperimentsCacheMock,
                                         proteomicsBaselineExperimentsCacheMock,
-                                        experimentTypesCacheMock);
+                publicExperimentTypesCacheMock);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class ExperimentTraderTest {
 
     @Test
     public void getExperimentShouldUseTheCache(){
-        given(experimentTypesCacheMock.getExperimentType(E_GEOD_21860)).willReturn(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
+        given(publicExperimentTypesCacheMock.getExperimentType(E_GEOD_21860)).willReturn(ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL);
         subject.getPublicExperiment(E_GEOD_21860);
         verify(baselineExperimentsCacheMock,times(0)).getExperiment(E_GEOD_21860);
         verify(rnaSeqDiffExperimentsCacheMock, times(0)).getExperiment(E_GEOD_21860);

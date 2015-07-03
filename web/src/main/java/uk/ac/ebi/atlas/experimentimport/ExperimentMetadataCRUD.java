@@ -175,8 +175,8 @@ public class ExperimentMetadataCRUD {
 
         if (!isPrivate) {
             ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
-
             updateExperimentDesign(experimentDTO);
+            experimentTrader.removeExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
         }
     }
 

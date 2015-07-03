@@ -31,6 +31,7 @@ import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.cache.*;
+import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -45,7 +46,7 @@ public class ExperimentTrader {
     private MicroarrayExperimentsCache microarrayExperimentsCache;
     private ExperimentDAO experimentDAO;
     private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache;
-    private ExperimentTypesCache experimentTypesCache;
+    private PublicExperimentTypesCache publicExperimentTypesCache;
 
 
     @Inject
@@ -54,19 +55,23 @@ public class ExperimentTrader {
                             RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                             MicroarrayExperimentsCache microarrayExperimentsCache,
                             ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache,
-                            ExperimentTypesCache experimentTypesCache) {
+                            PublicExperimentTypesCache publicExperimentTypesCache) {
 
         this.experimentDAO = experimentDAO;
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
         this.proteomicsBaselineExperimentsCache = proteomicsBaselineExperimentsCache;
-        this.experimentTypesCache = experimentTypesCache;
+        this.publicExperimentTypesCache = publicExperimentTypesCache;
     }
 
 
     public Experiment getPublicExperiment(String experimentAccession) {
-        return getExperimentFromCache(experimentAccession, experimentTypesCache.getExperimentType(experimentAccession));
+        try {
+            return getExperimentFromCache(experimentAccession, publicExperimentTypesCache.getExperimentType(experimentAccession));
+        } catch (ResourceNotFoundException e) {
+             throw e;
+        }
     }
 
 
@@ -100,7 +105,7 @@ public class ExperimentTrader {
             default:
                 throw new IllegalStateException("invalid enum value: " + type);
         }
-        experimentTypesCache.evictExperiment(experimentAccession);
+        publicExperimentTypesCache.evictExperiment(experimentAccession);
 
     }
 
@@ -110,7 +115,7 @@ public class ExperimentTrader {
         rnaSeqDiffExperimentsCache.evictAll();
         microarrayExperimentsCache.evictAll();
         proteomicsBaselineExperimentsCache.evictAll();
-        experimentTypesCache.evictAll();
+        publicExperimentTypesCache.evictAll();
     }
 
 

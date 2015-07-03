@@ -51,7 +51,7 @@ public class ExperimentInfoListBuilder {
 
     private MicroarrayExperimentsCache microarrayExperimentsCache;
 
-    private ExperimentTypesCache experimentTypesCache;
+    private PublicExperimentTypesCache publicExperimentTypesCache;
 
     private ExperimentTrader experimentTrader;
 
@@ -64,14 +64,14 @@ public class ExperimentInfoListBuilder {
                                      ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache,
                                      RnaSeqDiffExperimentsCache rnaSeqDiffExperimentsCache,
                                      MicroarrayExperimentsCache microarrayExperimentsCache,
-                                     ExperimentTypesCache experimentTypesCache,
+                                     PublicExperimentTypesCache publicExperimentTypesCache,
                                      ArrayDesignTrader arrayDesignTrader) {
         this.experimentTrader = experimentTrader;
         this.baselineExperimentsCache = baselineExperimentsCache;
         this.proteomicsBaselineExperimentsCache = proteomicsBaselineExperimentsCache;
         this.rnaSeqDiffExperimentsCache = rnaSeqDiffExperimentsCache;
         this.microarrayExperimentsCache = microarrayExperimentsCache;
-        this.experimentTypesCache = experimentTypesCache;
+        this.publicExperimentTypesCache = publicExperimentTypesCache;
         this.arrayDesignTrader = arrayDesignTrader;
     }
 
@@ -84,7 +84,7 @@ public class ExperimentInfoListBuilder {
         experimentInfos.addAll(extractMicrorarryExperiments());
 
         for (ExperimentInfo experimentInfo : experimentInfos) {
-            experimentTypesCache.getExperimentType(experimentInfo.getExperimentAccession());
+            publicExperimentTypesCache.getExperimentType(experimentInfo.getExperimentAccession());
         }
 
         return experimentInfos;

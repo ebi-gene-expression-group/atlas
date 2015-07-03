@@ -28,7 +28,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTrader;
 import uk.ac.ebi.atlas.experimentpage.baseline.genedistribution.BarChartTradersCacheLoader;
-import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
@@ -82,9 +81,9 @@ public class CacheConfiguration {
 
     }
 
-    @Bean(name="experimentTypesLoadingCache")
+    @Bean(name="publicExperimentTypesLoadingCache")
     @Inject
-    public LoadingCache<String, ExperimentType> experimentTypesCache(ExperimentTypesCacheLoader cacheLoader) {
+    public LoadingCache<String, ExperimentType> experimentTypesCache(PublicExperimentTypesCacheLoader cacheLoader) {
 
         return CacheBuilder.newBuilder().build(cacheLoader);
 

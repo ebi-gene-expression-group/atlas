@@ -79,7 +79,7 @@ public class ExperimentInfoListBuilderTest {
     private ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCacheMock;
 
     @Mock
-    private ExperimentTypesCache experimentTypesCacheMock;
+    private PublicExperimentTypesCache publicExperimentTypesCacheMock;
 
     @Mock
     private DifferentialExperiment differentialExperimentMock;
@@ -140,7 +140,7 @@ public class ExperimentInfoListBuilderTest {
                 baselineExperimentsCacheMock,
                 proteomicsBaselineExperimentsCacheMock, rnaSeqDiffExperimentsCacheMock,
                 microarrayExperimentsCacheMock,
-                experimentTypesCacheMock,
+                publicExperimentTypesCacheMock,
                 arrayDesignTraderMock);
     }
 

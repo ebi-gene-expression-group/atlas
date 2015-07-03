@@ -31,12 +31,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-public class ExperimentTypesCacheLoader extends CacheLoader<String, ExperimentType> {
+public class PublicExperimentTypesCacheLoader extends CacheLoader<String, ExperimentType> {
 
     private final ExperimentDAO experimentDAO;
 
     @Inject
-    public ExperimentTypesCacheLoader(ExperimentDAO experimentDAO) {
+    public PublicExperimentTypesCacheLoader(ExperimentDAO experimentDAO) {
         this.experimentDAO = experimentDAO;
     }
 

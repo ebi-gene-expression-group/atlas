@@ -26,7 +26,6 @@ import com.google.common.cache.LoadingCache;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.ExperimentType;
-import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,16 +33,16 @@ import java.util.concurrent.ExecutionException;
 
 @Named
 @Scope("singleton")
-public class ExperimentTypesCache {
+public class PublicExperimentTypesCache {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentTypesCache.class);
+    private static final Logger LOGGER = Logger.getLogger(PublicExperimentTypesCache.class);
 
     private LoadingCache<String, ExperimentType> experiments;
 
     @Inject
-    @Named("experimentTypesLoadingCache")
+    @Named("publicExperimentTypesLoadingCache")
     //this is the name of the implementation being injected, required because LoadingCache is an interface
-    public ExperimentTypesCache(LoadingCache<String, ExperimentType> experiments) {
+    public PublicExperimentTypesCache(LoadingCache<String, ExperimentType> experiments) {
         this.experiments = experiments;
     }
 
