@@ -1,0 +1,87 @@
+.gxaSvg #anatomogram {
+    display:inline
+}
+
+.gxaHeatmapAnatomogramRow {
+    position: relative;
+}
+
+.gxaHeatmapAnatomogramRow:after {
+    clear: both;
+    content: ".";
+    display: block;
+    visibility: hidden;
+}
+
+.gxaHeatmapPosition {
+    position: relative;
+    margin-left: 270px;
+    overflow: hidden;
+}
+
+.gxaHeatmapPositionWidget {
+    margin-left: 270px;
+}
+
+.gxaAside {
+    float: left;
+    /*padding: 0 20px;*/
+}
+
+.gxaGradientLevelMin {
+    text-align: right;
+}
+
+.gxaGradientLevelMax {
+    text-align: left;
+}
+
+.gxaHeatmapMatrixTopLeftCorner {
+    position: relative;
+    display: table;
+    height: 110px;
+    width: 100%;
+    text-align: center;
+    min-width: 160px;
+}
+
+#display-levels {
+    margin-top: 40px;
+}
+
+#tooltip-span {
+    display: block;
+    position: absolute;
+    top: 0%;
+    margin: 5px;
+}
+
+.gxaPvalueTooltipStyling {
+    padding: 2px !important;
+    margin: 0px !important;
+}
+
+#ensembl-launcher-box {
+    border: 1px solid #cdcdcd;
+}
+
+#ensembl-launcher-box-ensembl, #ensembl-launcher-box-gramene {
+    padding: 4px 9px;
+}
+
+#ensembl-launcher-box-ensembl label, #ensembl-launcher-box-gramene label {
+    font-weight: bold;
+    font-family: Helvetica, sans-serif;
+}
+
+#ensembl-launcher-box-ensembl button, #ensembl-launcher-box-gramene button {
+    display: table;
+    margin: 0 auto;
+}
+
+/* TODO: This class is used in jQuery UI - move out to a separate css file */
+#download-profiles-link .ui-button-text,
+.gxaVerticalHeaderCell .ui-button-text,
+#gene-distribution-button .ui-button-text {
+    padding: 0px !important;
+}

@@ -5,9 +5,9 @@
 
 <c:set var="thisPage" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
-<link type="text/css" rel="stylesheet" href="/gxa/resources/latest/css/facets.css" />
+<link type="text/css" rel="stylesheet" href="/gxa/resources/css/facets.css" />
 
-<script language="JavaScript" type="text/javascript" src="/gxa/resources/latest/js/AtlasHeatmapReact.js"></script>
+<script language="JavaScript" type="text/javascript" src="/gxa/resources/widget/latest/js/AtlasHeatmapReact.js"></script>
 
 <%@ include file="../includes/react.jsp" %>
 <%@ include file="../includes/heatmap-js.jsp" %>
@@ -59,14 +59,14 @@
 </section>
 
 
-<script src="${pageContext.request.contextPath}/resources/latest/js/lib/query-string.js"></script>
-<script src="${pageContext.request.contextPath}/resources/latest/jsx/heatmaps.js"></script>
-<script src="${pageContext.request.contextPath}/resources/latest/jsx/facets.js"></script>
-<script src="${pageContext.request.contextPath}/resources/latest/jsx/heatmapsRouter.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/query-string.js"></script>
+<script src="${pageContext.request.contextPath}/resources/widget/latest/jsx/heatmaps.js"></script>
+<script src="${pageContext.request.contextPath}/resources/widget/latest/jsx/facets.js"></script>
+<script src="${pageContext.request.contextPath}/resources/widget/latest/jsx/heatmapsRouter.js"></script>
 
 
-<script src="${pageContext.request.contextPath}/resources/latest/jsx/atlasHeatmap.js"></script>
-<script src="${pageContext.request.contextPath}/resources/latest/jsx/heatmapContainer.js"></script>
+<script src="${pageContext.request.contextPath}/resources/widget/latest/jsx/atlasHeatmap.js"></script>
+<script src="${pageContext.request.contextPath}/resources/widget/latest/jsx/heatmapContainer.js"></script>
 
 
 <script>

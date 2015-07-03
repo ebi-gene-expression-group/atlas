@@ -40,7 +40,7 @@
 
 <%@ include file="../../includes/condition-autocomplete-js.jsp" %>
 <script language="JavaScript" type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/latest/js/searchFormModule.js"></script>
+        src="${pageContext.request.contextPath}/resources/js/searchFormModule.js"></script>
 <script type="text/javascript">
 
     (function ($) { //self invoking wrapper function that prevents $ namespace conflicts

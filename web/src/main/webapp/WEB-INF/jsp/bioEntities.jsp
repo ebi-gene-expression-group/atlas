@@ -50,7 +50,7 @@
         <c:if test="${showBioentityPropertiesPane}">
             <ul id="infoHeader" class="gxaBioEntityCardHeader">
                 <img id="bioentity-info-image" title="Bio-Entity information" style="position: absolute; left: 0.5em; "
-                     src="/gxa/resources/latest/images/bioentity_info_transparent_bkg.png"/>
+                     src="/gxa/resources/images/bioentity_info_transparent_bkg.png"/>
                         <span class="gxaBioEntityCardBioentityName">
                             <c:forEach var="entityName" varStatus="loopStatus"
                                        items="${bioEntityPropertyService.entityNames}">
@@ -172,7 +172,7 @@
         <ul id="baselineProfileHeader" class="gxaBioEntityCardHeader">
             <img id="baseline-info-image" title="Baseline Expression"
                  style="position: absolute; left: 0.5em; "
-                 src="/gxa/resources/latest/images/allup2_transparent_bkg.png"/>
+                 src="/gxa/resources/images/allup2_transparent_bkg.png"/>
             <span class="gxaBioEntityCardBioentityName">Baseline Expression</span>
             <c:choose>
                 <c:when test="${showWidget}">
@@ -236,7 +236,7 @@
         <ul id="diffProfileHeader" class="gxaBioEntityCardHeader">
             <img id="differential-info-image" title="Differential Expression"
                  style="position: absolute; left: 0.5em; "
-                 src="/gxa/resources/latest/images/updown_transparent_bkg.png"/>
+                 src="/gxa/resources/images/updown_transparent_bkg.png"/>
             <span class="gxaBioEntityCardBioentityName">Differential Expression</span>
             <c:choose>
                 <c:when test="${not empty bioentities}">
@@ -284,7 +284,7 @@
                                    href="${pageContext.request.contextPath}${applicationProperties.buildDownloadURL(pageContext.request)}"
                                    class="button-image" target="_blank">
                                     <img id="download-profiles" alt="Download query results" style="width:20px"
-                                         src="${pageContext.request.contextPath}/resources/latest/images/download_blue_small.png">
+                                         src="${pageContext.request.contextPath}/resources/images/download_blue_small.png">
                                 </a>
                             </div>
                         </div>
@@ -305,13 +305,13 @@
 <div id="help-placeholder" style="display: none"></div>
 
 <c:if test="${showWidget}">
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/latest/js/AtlasHeatmapReact.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/widget/latest/js/AtlasHeatmapReact.js"></script>
 
     <%@ include file="includes/react.jsp" %>
     <%@ include file="includes/heatmap-js.jsp" %>
     <%@ include file="includes/anatomogram.jsp" %>
 
-    <script src="${pageContext.request.contextPath}/resources/latest/jsx/heatmapContainer.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/widget/latest/jsx/heatmapContainer.js"></script>
 </c:if>
 
 <c:set var="hasBaselineResults" value="${showWidget || not empty firstBaselineCounts}"/>

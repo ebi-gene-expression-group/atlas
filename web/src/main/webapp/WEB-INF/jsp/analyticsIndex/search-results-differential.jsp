@@ -77,10 +77,10 @@
     <div id="atlasAnalyticsSearchDiffResultsContainer"></div>
 </section>
 
-<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/latest/css/facets.css" />
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/facets.css" />
 
-<script src="${pageContext.request.contextPath}/resources/latest/js-bundles/vendor-bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/latest/js-bundles/search-results-differential-page-bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/vendor-bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/search-results-differential-page-bundle.js"></script>
 
 <c:if test="${hasDifferentialResults}">
     <script>

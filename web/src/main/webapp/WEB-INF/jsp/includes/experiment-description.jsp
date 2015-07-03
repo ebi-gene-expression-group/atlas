@@ -47,7 +47,7 @@
             <a id="extra-info"
                href="${applicationProperties.buildServerURL(pageContext.request)}/external-resources/${experimentAccession}/extra-info.png">
                 <img alt="more information"
-                     src="${applicationProperties.buildServerURL(pageContext.request)}/resources/latest/images/overview_button.png">
+                     src="${applicationProperties.buildServerURL(pageContext.request)}/resources/images/overview_button.png">
             </a>
         </c:if>
     </div>
@@ -85,7 +85,7 @@
     var europepmcUrl = "${configuration['europepmc.base.url']}" + "webservices/rest/MED/%pubmedId%/textMinedTerms/GENE_PROTEIN/1/json";
 </script>
 
-<script src="${pageContext.request.contextPath}/resources/latest/js/pubmedMinedBioentitiesModule.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/pubmedMinedBioentitiesModule.js"></script>
 <script>
     (function ($, pubmedMinedBioentitiesModule) {
         $(document).ready(function () {

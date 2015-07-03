@@ -29,9 +29,9 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
-<c:set var="pathImage" value="${base.concat('/resources/latest/images/male_selected.png')}"/>
+<c:set var="pathImage" value="${base.concat('/resources/images/male_selected.png')}"/>
 <c:if test="${species.equals('oryza sativa japonica group')}">
-    <c:set var="pathImage" value="${base.concat('/resources/latest/images/plant_switch_buttons_1.png')}"/>
+    <c:set var="pathImage" value="${base.concat('/resources/images/plant_switch_buttons_1.png')}"/>
 </c:if>
 
 <%-- TODO: replace this file with heatmapContainer.jsx (which duplicates this page)dd  --%>

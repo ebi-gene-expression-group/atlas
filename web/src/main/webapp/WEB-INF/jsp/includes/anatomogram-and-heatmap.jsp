@@ -46,7 +46,7 @@
                         <td style="padding-top: 15px; vertical-align:top">
                             <span id="sex-toggle">
                                 <img id="sex-toggle-image" title="Switch anatomogram" class="gxaButtonImage"
-                                     style="width:20px;height:38px;padding:2px" src="${base}/resources/latest/images/male_selected.png"/>
+                                     style="width:20px;height:38px;padding:2px" src="${base}/resources/images/male_selected.png"/>
                             </span>
                             <!--
                             <span data-help-loc="#anatomogram"/>
@@ -79,7 +79,7 @@
                            href="${pageContext.request.contextPath}${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
                            class="gxaButtonImage" target="_blank">
                             <img id="download-profiles" alt="Download query results" style="width:20px"
-                                 src="${base}/resources/latest/images/download_blue_small.png"/>
+                                 src="${base}/resources/images/download_blue_small.png"/>
                         </a>
                     </div>
                     <div style="display: inline-block; padding-left: 20px">
@@ -107,7 +107,7 @@
                            href="${pageContext.request.contextPath}${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
                            class="gxaButtonImage" target="_blank">
                             <img id="download-profiles" alt="Download query results" style="width:20px"
-                                 src="${base}/resources/latest/images/download_blue_small.png"/>
+                                 src="${base}/resources/images/download_blue_small.png"/>
                         </a>
                     </div>
                     <div style="display: inline-block; padding-left: 20px">
