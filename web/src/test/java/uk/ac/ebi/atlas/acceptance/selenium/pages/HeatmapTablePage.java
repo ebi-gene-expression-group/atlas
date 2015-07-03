@@ -101,7 +101,7 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(id = "anatomogram")
     private WebElement anatomogram;
 
-    @FindBy(css = "#gxaExperimentPageHeatmapCountAndLegend > div > div")
+    @FindBy(css = ".gxaHeatmapCountAndLegend > div > div")
     private WebElement diffHeatmapTableLegend;
 
     @FindBy(xpath = "id('heatmap-table')/thead/tr[2]/th")
