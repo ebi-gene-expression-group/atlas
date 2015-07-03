@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class HeatmapTableWithSearchFormPageAsGeneSets extends HeatmapTableWithSearchFormPage {
 
-    @FindBy(css = "#gxaExperimentPageHeatmapCountAndLegend div > a")
+    @FindBy(css = ".gxaHeatmapCountAndLegend div > a")
     private WebElement showGeneSetProfiles;
 
     public HeatmapTableWithSearchFormPageAsGeneSets(WebDriver driver, String experimentAccession) {

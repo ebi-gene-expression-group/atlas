@@ -66,7 +66,7 @@ public class BioentitiesSearchControllerConditionQuery2TermsBaselineSIT extends 
         assertThat(baselineCounts, hasSize(1));
 
         BaselineBioEntitiesSearchResult result1 = selectResult(baselineCounts, "E-MTAB-2039");
-        assertThat(result1.getExperimentName(), is("Nine tissues"));
+        assertThat(result1.getExperimentName(), is("Tissues - 9 Davidson"));
         assertThat(result1.getSpecies(), is("Oryza sativa Japonica Group"));
         assertThat(result1.getHref(), endsWith("E-MTAB-2039?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=emerging%20inflorescence&geneQuery=&exactMatch=true"));
     }
