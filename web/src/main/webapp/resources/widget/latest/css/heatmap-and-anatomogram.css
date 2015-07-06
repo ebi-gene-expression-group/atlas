@@ -82,6 +82,7 @@
 /* TODO: This class is used in jQuery UI - move out to a separate css file */
 #download-profiles-link .ui-button-text,
 .gxaVerticalHeaderCell .ui-button-text,
+.gxaVerticalHeaderCell-selected .ui-button-text,
 #gene-distribution-button .ui-button-text {
     padding: 0px !important;
 }
