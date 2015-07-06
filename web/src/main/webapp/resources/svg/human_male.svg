@@ -789,6 +789,9 @@
            id="ellipse6357"
            style="fill:none;stroke:none" />
       </g>
+      <use
+         id="UBERON_0000966"
+         xlink:href="#UBERON_0000970" />
       <rect
          inkscape:label="nasal septum"
          y="99.526825"
