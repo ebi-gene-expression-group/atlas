@@ -37,15 +37,15 @@ public class BaselineProfileStreamPipelineBuilder implements ProfileStreamPipeli
             profilesPipeline = ProfileStreamFilters.filterByGeneIds(profilesPipeline, uppercaseGeneIDs);
         }
 
-        if (asGeneSets) {
-            ImmutableSetMultimap<String,String> geneSetIdsToGeneIds = options.getGeneSetIdsToGeneIds();
-            profilesPipeline = geneSetBaselineProfilesBuilder.averageIntoGeneSets(profilesPipeline, geneSetIdsToGeneIds);
-        }
-
         if (!queryFactors.isEmpty()) {
             profilesPipeline = isSpecific ?
                     filterByQueryFactorSpecificity(profilesPipeline, queryFactors, allQueryFactors) :
                     ProfileStreamFilters.filterByQueryFactors(profilesPipeline, queryFactors);
+        }
+
+        if (asGeneSets) {
+            ImmutableSetMultimap<String,String> geneSetIdsToGeneIds = options.getGeneSetIdsToGeneIds();
+            profilesPipeline = geneSetBaselineProfilesBuilder.averageIntoGeneSets(profilesPipeline, geneSetIdsToGeneIds);
         }
 
         return profilesPipeline;
