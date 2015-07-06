@@ -851,7 +851,7 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                     // don't render id for gene sets to prevent tooltips
                     // The vertical align in the <a> element is needed because the kerning in the font used in icon-conceptual is vertically off
                     return (
-                        <span title={titleTooltip} style={{"float": "left"}}>
+                        <span title={titleTooltip} style={{"display": "table-cell"}}>
                             <span className="icon icon-conceptual icon-c2" data-icon={type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}></span>
                             <a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked} style={{"vertical-align": "15%"}}>{this.props.name}</a>
                         </span>
@@ -913,18 +913,21 @@ var heatmapModule = (function($, React, genePropertiesTooltipModule, factorToolt
                 },
 
                 render: function () {
-                    var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{"padding-top": "5px", "float": "right", "color": "green"}}>select</span> : null;
-                    var showTickWhenSelected = this.props.selected ? <span style={{"padding-top": "2px", "float": "right", "color": "green"}}> &#10004; </span>: null ;
+                    var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{"display": "table-cell", "text-align": "right", "padding-left": "10px", "color": "green", "visibility": "visible"}}>select</span> :
+                                                                                           <span style={{"display": "table-cell", "text-align": "right", "padding-left": "10px", "color": "green", "visibility": "hidden"}}>select</span>;
+                    var showTickWhenSelected = this.props.selected ? <span style={{"float": "right", "color": "green"}}> &#10004; </span>: null ;
                     var className = (this.props.selected ? "gxaHorizontalHeaderCell-selected gxaHoverableHeader" : "gxaHorizontalHeaderCell gxaHoverableHeader") + (enableEnsemblLauncher ? " gxaSelectableHeader" : "");
                     var rowClassName = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "gxaProteomicsExperiment" : "gxaTranscriptomicsExperiment" ) : "";
 
                     return (
                         <tr className={rowClassName}>
                             <th className={className} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
-                                <div>
-                                { enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked()}
-                                {showSelectTextOnHover}
-                                {showTickWhenSelected}
+                                <div style={{"display": "table", "width": "100%"}}>
+                                    <div style={{"display": "table-row"}}>
+                                        { enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked()}
+                                        {showSelectTextOnHover}
+                                        {showTickWhenSelected}
+                                    </div>
                                 </div>
                             </th>
                             {this.props.designElement ? <th className="gxaHeatmapTableDesignElement">{this.props.designElement}</th> : null}
