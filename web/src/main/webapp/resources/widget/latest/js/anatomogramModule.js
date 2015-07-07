@@ -111,8 +111,12 @@ var anatomogramModule = (function ($) {
 
     //TODO: When widget is used by faceting we need to create the ids dynamically for
     //TODO: the widget to be load with a proper scale
-    function scaleAnatomogram(svg) {
-        var elementById = svg.getElementById('group_all');
+    function scaleAnatomogram(svg, anatomogramBodyId) {
+        var anatomogramBody = anatomogramBodyId.replace("#","");
+        var path = svg.getElementById(anatomogramBody);
+        var ps = path.getElementsByTagName('g');
+        var elementById = ps['group_all'];
+
         // this is in case anatomogram is hidden
         if (typeof elementById !== 'undefined') {
             elementById.setAttribute('transform', 'scale(1.6)');
@@ -138,7 +142,7 @@ var anatomogramModule = (function ($) {
 
         svg.load(location, {
             onLoad:function(){
-                scaleAnatomogram(svg);
+                scaleAnatomogram(svg, anatomogramBodyId);
                 if(isSingleGene) {
                     highlightAllOrganismParts(svg, isSingleGene, allSvgPathIds);
                     highlightExpressedOrganismsPartsOnly(svg, isSingleGene);
