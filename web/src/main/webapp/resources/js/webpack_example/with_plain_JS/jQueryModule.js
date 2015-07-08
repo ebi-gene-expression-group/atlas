@@ -9,11 +9,11 @@ var jQueryModule = (function ($) {
     var message;
 
     function init(msg) {
-        message = msg == null ? "¡Vamos que nos vamos!" : msg;
+        message = msg == null ? "Let’s go!" : msg;
     }
 
-    function displayMessage() {
-        $("#main").text(message);
+    function displayMessage(element) {
+        $(element).text(message);
     }
 
     return {

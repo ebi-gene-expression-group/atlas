@@ -12,13 +12,14 @@
 //                jqm.init();
 //                jqm.displayMessage();
 //            });
+        "use strict";
 
-        jQueryModule_page = window.$page;
-        var $ = jQueryModule_page.$;
+        var jQueryModule_page = window.$page,
+            $ = jQueryModule_page.$;
 
         $(document).ready(function() {
             jQueryModule_page.init("Resistance is futile");
-            jQueryModule_page.displayMessage();
+            jQueryModule_page.displayMessage("#main");
         });
     </script>
 

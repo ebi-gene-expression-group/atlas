@@ -33,8 +33,8 @@ exports.init = function(msg) {
     message = msg == null ? "Let’s go!" : msg;
 };
 
-exports.displayMessage = function() {
-    $("#main").text(message);
+exports.displayMessage = function(element) {
+    $(element).text(message);
 };
 
 exports.$ = $;
