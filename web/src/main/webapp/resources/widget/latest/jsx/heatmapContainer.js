@@ -38,13 +38,17 @@ var Anatomogram = (function (React, $) {
             }
 
             var height = containsHuman(this.props.anatomogram.maleAnatomogramFile) ? 360 : 250;
-            var sexToggleImageSrc =this.props.anatomogram.contextRoot + this.props.anatomogram.toggleButtonImage;
+            var maleToggleImageSrc =this.props.anatomogram.contextRoot + this.props.anatomogram.toggleButtonMaleImage;
+            var femaleToggleImageSrc =this.props.anatomogram.contextRoot + this.props.anatomogram.toggleButtonFemaleImage;
+            var brainToggleImageSrc =this.props.anatomogram.contextRoot + this.props.anatomogram.toggleButtonBrainImage;
 
             var heatmapKeyTrimmed = this.props.heatmapKey ? replaceSpaces(this.props.heatmapKey) : null;
 
             var anatomogram = this.props.heatmapKey ? "anatomogram" + heatmapKeyTrimmed : "anatomogram";
             var sexToggle = this.props.heatmapKey ? "sex-toggle" + heatmapKeyTrimmed : "sex-toggle";
-            var sexToggleImage = this.props.heatmapKey ? "sex-toggle-image" + heatmapKeyTrimmed : "sex-toggle-image";
+            var maleToggleImage = this.props.heatmapKey ? "male-toggle-image" + heatmapKeyTrimmed : "male-toggle-image";
+            var femaleToggleImage = this.props.heatmapKey ? "female-toggle-image" + heatmapKeyTrimmed : "female-toggle-image";
+            var brainToggleImage = this.props.heatmapKey ? "brain-toggle-image" + heatmapKeyTrimmed : "brain-toggle-image";
             var keyId = this.props.heatmapKey ? "anatomogramBody" + heatmapKeyTrimmed : "anatomogramBody";
 
             return (
@@ -54,9 +58,15 @@ var Anatomogram = (function (React, $) {
                         React.DOM.tr(null, 
                             React.DOM.td({style: {"padding-top": "15px", "vertical-align":"top"}}, 
                                 React.DOM.span({id: sexToggle}, 
-                                    React.DOM.img({id: sexToggleImage, title: "Switch anatomogram", className: "gxaButtonImage", 
-                                        style: {"width":"20px", "height":"38px", "padding":"2px"}, 
-                                        src: sexToggleImageSrc})
+                                    React.DOM.img({id: maleToggleImage, title: "Switch anatomogram", className: "gxaButtonImage", 
+                                        style: {"width":"20px", "height":"20px", "padding":"2px", "display":"none"}, 
+                                        src: maleToggleImageSrc}), React.DOM.br(null), 
+                                    React.DOM.img({id: femaleToggleImage, title: "Switch anatomogram", className: "gxaButtonImage", 
+                                         style: {"width":"20px", "height":"20px", "padding":"2px", "display":"none"}, 
+                                         src: femaleToggleImageSrc}), React.DOM.br(null), 
+                                    React.DOM.img({id: brainToggleImage, title: "Switch anatomogram", className: "gxaButtonImage", 
+                                         style: {"width":"20px", "height":"20px", "padding":"2px", "display":"none"}, 
+                                         src: brainToggleImageSrc}), React.DOM.br(null)
                                 )
                             ), 
                             React.DOM.td(null, 
