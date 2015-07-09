@@ -335,7 +335,7 @@
 
         var openPanelIndex = ${param.openPanelIndex != null ? param.openPanelIndex : defaultPanelIndex};
 
-        $('head').append('<meta name="description" content="Baseline and differential expression for ${fullQueryDescription}" />');
+        $('head').append('<meta name="description" content="Baseline and differential expression for ${he.encode(fullQueryDescription)}" />');
 
         $("#bioentity-info-image").tooltip();
         $("#differential-info-image").tooltip();
