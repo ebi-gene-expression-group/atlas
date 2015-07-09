@@ -44,11 +44,15 @@
 
 "use strict";
 
-var React = require('react'),
-    $ = require('jquery');
+var React = require('react');
+
+var $ = require('jquery');
+var jQuery = $;
+require('./lib/jquery.xdomainrequest.js');
 
 var heatmapModule = require('./heatmap.jsx'),
-    HeatmapContainer = require('./heatmapContainer.jsx');
+    HeatmapContainer = require('./heatmapContainer.jsx'),
+    anatomogramModule = require('./anatomogramModule.js');
 
 
 function drawHeatmap (data, targetElement, heatmapClass, heatmapBuilder, heatmapKey) {
@@ -60,7 +64,7 @@ function drawHeatmap (data, targetElement, heatmapClass, heatmapBuilder, heatmap
             // call this inside ready() so all scripts load first in IE8
             var Heatmap = heatmapBuilder(heatmapConfig).Heatmap;
 
-            React.renderComponent(HeatmapContainer({Heatmap: Heatmap, isWidget: true, heatmapClass: heatmapClass, experiment: experimentData, anatomogram: anatomogramData,
+            React.render(HeatmapContainer({Heatmap: Heatmap, isWidget: true, heatmapClass: heatmapClass, experiment: experimentData, anatomogram: anatomogramData,
                     columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig:heatmapConfig}),
                 targetElement
             );

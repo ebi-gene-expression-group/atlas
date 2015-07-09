@@ -1,4 +1,4 @@
-webpackJsonp([7,9],{
+webpackJsonp([6,9],{
 
 /***/ 0:
 /*!***********************************************************!*\
@@ -10376,7 +10376,7 @@ webpackJsonp([7,9],{
 	"use strict";
 	
 	var $ = __webpack_require__(/*! jquery */ 1);
-	var Highcharts = __webpack_require__(/*! highcharts-commonjs */ 14);
+	var Highcharts = __webpack_require__(/*! highcharts-commonjs */ 16);
 	
 	exports.display = function() {
 	
@@ -10439,7 +10439,7 @@ webpackJsonp([7,9],{
 
 /***/ },
 
-/***/ 14:
+/***/ 16:
 /*!****************************************!*\
   !*** ./~/highcharts-commonjs/index.js ***!
   \****************************************/
@@ -10447,7 +10447,7 @@ webpackJsonp([7,9],{
 
 	'use strict';
 	
-	var Highcharts = __webpack_require__(/*! ./src/highcharts.src.js */ 45);
+	var Highcharts = __webpack_require__(/*! ./src/highcharts.src.js */ 49);
 	
 	module.exports = {
 	  createChart: function(div, options, callback) {
@@ -10463,7 +10463,7 @@ webpackJsonp([7,9],{
 
 /***/ },
 
-/***/ 45:
+/***/ 49:
 /*!*****************************************************!*\
   !*** ./~/highcharts-commonjs/src/highcharts.src.js ***!
   \*****************************************************/
@@ -10471,7 +10471,7 @@ webpackJsonp([7,9],{
 
 	/*eslint-disable*/
 	'use strict';
-	var jquery = __webpack_require__(/*! jquery */ 157);
+	var jquery = __webpack_require__(/*! jquery */ 169);
 	var Highcharts;
 	var HighchartsAdapter;
 	
@@ -28947,7 +28947,7 @@ webpackJsonp([7,9],{
 
 /***/ },
 
-/***/ 157:
+/***/ 169:
 /*!*******************************************************!*\
   !*** ./~/highcharts-commonjs/~/jquery/dist/jquery.js ***!
   \*******************************************************/

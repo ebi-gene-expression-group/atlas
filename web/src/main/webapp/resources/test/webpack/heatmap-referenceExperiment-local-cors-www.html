@@ -15,19 +15,18 @@
 
 <body>
     <div>
-        <h2>Resources loaded locally, request done locally</h2>
+        <h2>Resources loaded locally, request done to <code>http://www.ebi.ac.uk/gxa/</code></h2>
     </div>
     <div id="heatmapContainer"></div>
 </body>
 
 <script language="JavaScript" type="text/javascript">
-        var atlasHeatmapBuild = window.$page;
-        atlasHeatmapBuild({
-            gxaBaseUrl: "/gxa/",
-            params: 'geneQuery=ASPM&species=mus%20musculus',
-            isMultiExperiment: true,
-            target: "heatmapContainer"
-        });
+    var atlasHeatmapBuild = window.$page;
+    atlasHeatmapBuild({
+        gxaBaseUrl: 'http://www.ebi.ac.uk/gxa/',
+        params: 'geneQuery=REACT_1309',
+        target: "heatmapContainer"
+    });
 </script>
 
 </html>

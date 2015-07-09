@@ -21,7 +21,7 @@ webpackJsonp([2,9],{
 	 * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 18/05/15.
 	 */
 	
-	var moduleB = __webpack_require__(/*! ./moduleB.js */ 13);
+	var moduleB = __webpack_require__(/*! ./moduleB.js */ 15);
 	
 	// This is the evil way:
 	//module.exports = function (modB) {
@@ -44,7 +44,7 @@ webpackJsonp([2,9],{
 
 /***/ },
 
-/***/ 13:
+/***/ 15:
 /*!******************************************************!*\
   !*** ./src/webpack_example/with_plain_JS/moduleB.js ***!
   \******************************************************/

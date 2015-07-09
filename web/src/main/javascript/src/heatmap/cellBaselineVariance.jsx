@@ -1,4 +1,5 @@
 var $ = require('jquery');
+var jQuery = $;
 var React = require('react');
 var Highcharts = require('highcharts-commonjs');
 

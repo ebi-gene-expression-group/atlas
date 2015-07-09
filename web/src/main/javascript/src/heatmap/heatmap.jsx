@@ -1,10 +1,21 @@
 "use strict";
 
-var React = require('react'),
-    $ = require('jquery'),
-    jquery_ui = require('jquery-ui');
+var React = require('react');
+var RadioGroup = require('react-radio-group');
 
-//var EventEmitter = require('eventemitter4');
+var $ = require('jquery');
+var jQuery = $;
+require('jquery-ui');
+require('jquery.browser');
+var td = require('throttle-debounce');
+
+var EventEmitter = require('eventemitter4');
+require('script-loader');
+//var Modernizr = require('script!./lib/modernizr.js');
+//require('script!./lib/jquery.hc-sticky.js');
+var Modernizr = require('./lib/modernizr.js');
+
+console.log("Modernizr.csstransforms = " + Modernizr.csstransforms);
 
 var genePropertiesTooltipModule = require('./genePropertiesTooltipModule.js');
 var factorTooltipModule = require('./factorTooltipModule.js');
@@ -12,8 +23,7 @@ var contrastTooltipModule = require('./contrastTooltipModule.js');
 var helpTooltipsModule = require('./helpTooltipsModule.js');
 var baselineVarianceModule = require('./cellBaselineVariance.jsx');
 
-/* Parameters that affect how the DOM is generated are passed in as props. */
-/* State stores: Levels/Quartiles displayed and checked columns */
+
 
 var TypeEnum = {
     BASELINE: { isBaseline: true, heatmapTooltip: '#heatMapTableCellInfo', legendTooltip: '#gradient-base' },
@@ -63,6 +73,13 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             });
         },
 
+        selectGene: function (geneId) {
+            var selectedGeneId = (geneId === this.state.selectedGeneId) ? null : geneId;
+            this.setState({selectedGeneId: selectedGeneId}, function() {
+                eventEmitter.emitEvent('onGeneSelectionChange', [selectedGeneId]);
+            });
+        },
+
         toggleGeneSets: function () {
             var newProfiles = this.state.showGeneSetProfiles ? this.props.profiles : this.props.geneSetProfiles;
             this.setState({showGeneSetProfiles: !this.state.showGeneSetProfiles, profiles: newProfiles});
@@ -101,125 +118,128 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         },
 
         componentDidMount: function() {
-            var heatMapTableWidth = $(this.refs.heatmapTable.getDOMNode()).width(),
-                countAndLegendWidth = $(this.refs.countAndLegend.getDOMNode()).width();
+            // Default settings
+            var settings = {
+                scrollThrottle: 10,
+                resizeThrottle: 250
+            };
 
-            if (heatMapTableWidth > countAndLegendWidth) {
-                $(this.refs.countAndLegend.getDOMNode()).width(heatMapTableWidth);
-            }
+            var $w	            = $(window),
+                $t	            = $(this.refs.heatmapTable.getDOMNode()),
+                $stickyInsct    = $(this.refs.stickyIntersect.getDOMNode()),
+                $stickyCol      = $(this.refs.stickyColumn.getDOMNode()),
+                $stickyHead     = $(this.refs.stickyHeader.getDOMNode()),
+                $stickyWrap     = $(this.refs.stickyWrap.getDOMNode()),
+                $countAndLegend = $(this.refs.countAndLegend.getDOMNode());
 
-            if (!this.props.isWidget && !type.isMultiExperiment) {
-               makeTableHeaderSticky.call(this);
-            }
+            if($t.hasClass('overflow-y')) $t.removeClass('overflow-y').parent().addClass('overflow-y');
 
-            function makeTableHeaderSticky() {
-                var $countAndLegend = $(this.refs.countAndLegend.getDOMNode());
-                if ($.fn.hcSticky) {
-                    $countAndLegend.hcSticky({responsive: true});
-                }
-
-                var $w	         = $(window),
-                    $t	         = $('#heatmap-table'),
-                    $stickyHead  = $('#gxaExperimentPageHeatmapTableStickyWrapperStickyHead'),
-                    $stickyWrap  = $t.parent('#gxaExperimentPageHeatmapTableStickyWrapper');
-
-                // Resize sticky header width to match actual headers
-                var setWidths = function () {
-                        $stickyHead.find('thead th').each(function (i) {
-                            // Breaks in Chrome
-                            //$(this).css({width: $t.find('thead th').eq(i).css("width")});
-                            var $originalHeader = $t.find('thead th').eq(i),
-                                widthDiff = $originalHeader.width() - $(this).width();
-
-                            if (widthDiff !== 0) {
-                                // Changing the width for elements that have an inner div has no effect (and no, outerWidth and outerHeight don’t work either)
-                                if ($(this).find('div').length) {
-                                    var $thisDiv = $(this).find('div');
-                                    $thisDiv.width($thisDiv.width() + widthDiff);
-                                } else {
-                                    $(this).width($(this).width() + widthDiff);
-                                }
-                            }
-                        });
-                        // Breaks in Chrome
-                        //$stickyHead.width($t.width());
-                    },
-                    repositionStickyHead = function () {
-                        var allowance = calcAllowance();
-
-                        // Check if wrapper parent is overflowing along the y-axis
-                        if($t.height() > $stickyWrap.height()) {
-                            // If it is overflowing (advanced layout)
-                            // Position sticky header based on wrapper scrollTop()
-                            if($stickyWrap.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() > 0) {
-                                // When top of wrapping parent is out of view
-                                $stickyHead.add($stickyInsct).css({
-                                    "opacity": 1,
-                                    "z-index": 50,
-                                    "top": $stickyWrap.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() + parseInt($stickyWrap.css("padding-top").replace("px", ""))
-                                });
-                            } else {
-                                // When top of wrapping parent is in view
-                                $stickyHead.css({
-                                    "opacity": 0,
-                                    "z-index": -50,
-                                    "top": 0
-                                });
-                            }
-                        } else {
-                            // If it is not overflowing (basic layout)
-                            // Position sticky header based on viewport scrollTop
-                            if($w.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() > $t.offset().top && $w.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() < $t.offset().top + $t.outerHeight() - allowance) {
-                                // When top of viewport is in the table itself
-                                $stickyHead.css({
-                                    "opacity": 1,
-                                    "z-index": 50,
-                                    "top": $w.scrollTop() - $t.offset().top + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() + parseInt($stickyWrap.css("padding-top").replace("px", ""))
-                                });
-                            } else if ($t.offset().top && $w.scrollTop() + $('#gxaExperimentPageHeatmapCountAndLegend').outerHeight() > $t.offset().top + $t.outerHeight() - allowance) {
-                                // Sticky header past allowance. Keep calm and continue scrolling.
-                            } else {
-                                // When top of viewport is above or below table
-                                $stickyHead.css({
-                                    "opacity": 0,
-                                    "z-index": -50,
-                                    "top": 0
-                                });
-                            }
-                        }
-                    },
-                    calcAllowance = function () {
-                        var a = 0;
-                        // Calculate allowance: number of bottom rows from which the sticky head disappears/scrolls up again
-                        $t.find('tbody tr:lt(3)').each(function () {
-                            a += $(this).height();
+            // Set widths
+            var setWidths = function () {
+                    $t
+                        .find('thead th').each(function (i) {
+                            $stickyHead.find('th').eq(i).width($(this).width());
+                        })
+                        .end()
+                        .find('tr').each(function (i) {
+                            $stickyCol.find('tr').eq(i).height($(this).height());
                         });
 
-                        // Set fail safe limit (last three row might be too tall)
-                        // Set arbitrary limit at 0.25 of viewport height, or you can use an arbitrary pixel value
-                        if(a > $w.height()*0.25) {
-                            a = $w.height()*0.25;
-                        }
+                    // Set width of sticky header table and intersect. WebKit does it wrong...
+                    if ($.browser.webkit) {
+                        $stickyHead
+                            .width($stickyWrap.width())
+                            .find('table')
+                            .width($t.outerWidth());
+                        $stickyInsct.find('table').width($t.find('thead th').eq(0).outerWidth() + 1);
+                        $stickyCol.find('table').width($t.find('thead th').eq(0).outerWidth() + 1);
+                    } else {
+                        $stickyHead
+                            .width($stickyWrap.width())
+                            .find('table')
+                            .width($t.width());
+                        $stickyInsct.find('table').width($t.find('thead th').eq(0).outerWidth());
+                        $stickyCol.find('table').width($t.find('thead th').eq(0).outerWidth());
+                    }
 
-                        // Add the height of sticky header
-                        a += $stickyHead.height();
-                        return a;
-                    };
+                    // Set width of sticky table col
+                    $stickyInsct.find('tr:nth-child(2) th').each(function(i) {
+                        $(this).width($t.find('tr:nth-child(2) th').eq(i).width());
+                    });
 
-                // The number of times the functions are called can be controlled with jquery.ba-throttle-debounce if needed
-                setWidths();
-                $t.parent('#gxaExperimentPageHeatmapTableStickyWrapper').scroll(function() {
-                    repositionStickyHead();
-                });
+                    // Set position sticky col
+                    $stickyHead.add($stickyInsct).add($stickyCol).css({
+                        left: $stickyWrap.offset().left,
+                        top: $stickyWrap.offset().top,
+                    });
+                },
+                repositionSticky = function () {
+                    // Return value of calculated allowance
+                    var allowance = calcAllowance();
 
-                $w
-                    .load(setWidths)
-                    .resize(function () {
-                        setWidths();
-                        repositionStickyHead();
-                    })
-                    .scroll(repositionStickyHead);
-            }
+                    $stickyHead.find('table').css({
+                        left: -$stickyWrap.scrollLeft()
+                    });
+                    $stickyCol.css({
+                        top: $stickyWrap.offset().top - $w.scrollTop(),
+                        left: $stickyWrap.offset().left
+                    });
+
+                    // 1. Position sticky header based on viewport scrollTop
+                    if ($w.scrollTop() + $countAndLegend.outerHeight() > $t.offset().top &&
+                        $w.scrollTop() + $countAndLegend.outerHeight() < $t.offset().top + $t.outerHeight() - allowance) {
+                        // When top of viewport is in the table itself
+                        $stickyHead.add($stickyInsct).css({
+                            opacity: 1,
+                            top: $countAndLegend.outerHeight()
+                        });
+                    } else if ($w.scrollTop() + $countAndLegend.outerHeight() > $t.offset().top + $t.outerHeight() - allowance) {
+                        $stickyHead.add($stickyInsct).css({
+                            opacity: 1,
+                            top: $t.offset().top + $t.outerHeight() - allowance - $w.scrollTop()
+                        });
+                    } else {
+                        // When top of viewport is above or below table
+                        $stickyHead.add($stickyInsct).css({
+                            opacity: 0,
+                            top: $stickyWrap.offset().top - $w.scrollTop()
+                        });
+                    }
+
+                    // 2. Now deal with positioning of sticky column
+                    if($stickyWrap.scrollLeft() > 0) {
+                        // When left of wrapping parent is out of view
+                        $stickyCol.css({
+                            opacity: 1,
+                            "z-index": 40
+                        });
+                    } else {
+                        $stickyCol.css({
+                            opacity: 0,
+                            "z-index": -5
+                        });
+                    }
+                },
+                calcAllowance = function () {
+                    var rowHeight = 0;
+                    // Calculate allowance
+                    $t.find('tbody tr:lt(1)').each(function () {
+                        rowHeight += $(this).height();
+                    });
+                    return rowHeight + $stickyHead.height();
+                };
+
+            $t.parent('.gxaStickyTableWrap').scroll(repositionSticky);
+            $w
+                .load(setWidths)
+                .resize(td.debounce(settings.resizeThrottle, function () {
+                    setWidths();
+                    repositionSticky();
+                }))
+                .scroll(repositionSticky);
+
+            //$(this.refs.countAndLegend.getDOMNode()).hcSticky({bottomEnd: calcAllowance()});
+            $w.resize();
         },
 
         legendType: function () {
@@ -229,29 +249,46 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         },
 
         render: function () {
+            var paddingMargin = "15px";
+
+            // TODO id="heatmap-table" used to highlight the anatomogram in anatomogramModule.js ; this will need to change for the faceted search with multiple anatomograms
             return (
                 <div>
-                    <div ref="countAndLegend" style={{"background-color": "white", "padding-bottom": "1em"}} id="gxaExperimentPageHeatmapCountAndLegend">
-                        <div style={{display: "inline-block", 'vertical-align': "top"}}>
+                    <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{"paddingBottom": paddingMargin}}>
+                        <div style={{display: "inline-block", 'verticalAlign': "top"}}>
                             {type.isMultiExperiment ? <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} experiments found: </span> :
                                                       <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span> }
                             {this.props.geneSetProfiles && !type.isMultiExperiment ? <a href="javascript:void(0)" onClick={this.toggleGeneSets}>{this.state.showGeneSetProfiles ? '(show individual genes)' : '(show by gene set)'}</a> : ''}
                         </div>
-                        <div style={{display: "inline-block", "padding-left": "10px", "vertical-align": "top"}}>
+                        <div style={{display: "inline-block", "paddingLeft": "10px", "verticalAlign": "top"}}>
                             <DownloadProfilesButton ref="downloadProfilesButton"/>
                         </div>
                         {this.legendType()}
                     </div>
 
-                    <div id="gxaExperimentPageHeatmapTableStickyWrapper" style={{"padding-top": "10px"}}>
-                        <table ref="heatmapTable" id="heatmap-table" className="gxaTableGrid">
-                            <HeatmapTableHeader ref="heatmapTableHeader" isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} sticky={""}/>
-                            <HeatmapTableRows profiles={this.state.profiles.rows} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} />
+                    <div ref="stickyWrap" className="gxaStickyTableWrap" style={{"marginTop": paddingMargin}}>
+                        <table ref="heatmapTable" className="gxaTableGrid gxaStickyEnabled" id="heatmap-table">
+                            <HeatmapTableHeader ref="heatmapTableHeader" isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} renderContrastFactorHeaders={true}/>
+                            <HeatmapTableRows profiles={this.state.profiles.rows} selectedGeneId={this.state.selectedGeneId} selectGene={this.selectGene} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} renderExpressionCells={true}/>
                         </table>
-                        <table className="gxaTableGrid" id="gxaExperimentPageHeatmapTableStickyWrapperStickyHead">
-                            <HeatmapTableHeader ref="heatmapTableStickyHeader" isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} sticky={"Sticky"}/>
-                        </table>
+                        <div ref="stickyIntersect" className="gxaStickyTableIntersect">
+                            <table>
+                                <HeatmapTableHeader isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} renderContrastFactorHeaders={false}/>
+                            </table>
+                        </div>
+                        <div ref="stickyColumn" className="gxaStickyTableColumn">
+                            <table>
+                                <HeatmapTableHeader isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} renderContrastFactorHeaders={false}/>
+                                <HeatmapTableRows profiles={this.state.profiles.rows} selectedGeneId={this.state.selectedGeneId} selectGene={this.selectGene} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} renderExpressionCells={false}/>
+                            </table>
+                        </div>
+                        <div ref="stickyHeader" className="gxaStickyTableHeader">
+                            <table>
+                                <HeatmapTableHeader isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} renderContrastFactorHeaders={true}/>
+                            </table>
+                        </div>
                     </div>
+
                 </div>
             );
         }
@@ -262,7 +299,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             render: function () {
                 return (
                     <a id="download-profiles-link" ref="downloadProfilesLink"
-                       title="Up to 50 of top genes displayed on page. Download results to see the rest."
+                       title="Download all results."
                        href={contextRoot + downloadProfilesURL} className="gxaButtonImage" target="_blank">
                        <img id="download-profiles" alt="Download query results" style={{width: "20px"}}
                             src={contextRoot + "/resources/images/download_blue_small.png"}/>
@@ -287,11 +324,11 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         return React.createClass({
             render: function () {
                 return (
-                    <div style={{display: "inline-block", "padding-left": "20px"}} className="gxaHeatmapLegendGradient">
+                    <div style={{display: "inline-block", "paddingLeft": "20px"}} className="gxaHeatmapLegendGradient">
                         <div style={{display: "inline-table"}}>
                             <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={formatBaselineExpression(this.props.minExpressionLevel)} highExpressionLevel={formatBaselineExpression(this.props.maxExpressionLevel)} lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
                         </div>
-                        <div ref="legendHelp" data-help-loc={type.legendTooltip} style={{display: "inline-block", "vertical-align": "top", "padding-left": "2px"}}/>
+                        <div ref="legendHelp" data-help-loc={type.legendTooltip} style={{display: "inline-block", "verticalAlign": "top", "paddingLeft": "2px"}}/>
                     </div>
                     );
             },
@@ -307,12 +344,12 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         return React.createClass({
             render: function () {
                 return (
-                    <div style={{display: "inline-block", "padding-left": "20px"}} className="gxaHeatmapLegendGradient">
+                    <div style={{display: "inline-block", "paddingLeft": "20px"}} className="gxaHeatmapLegendGradient">
                         <div style={{display: "inline-table"}}>
                             {!isNaN(this.props.minDownLevel) && !isNaN(this.props.maxDownLevel) ? <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minDownLevel} highExpressionLevel={this.props.maxDownLevel} lowValueColour="#C0C0C0" highValueColour="#0000FF"/> : null }
                             {!isNaN(this.props.minUpLevel) && !isNaN(this.props.maxUpLevel) ? <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minUpLevel} highExpressionLevel={this.props.maxUpLevel} lowValueColour="#FFAFAF" highValueColour="#FF0000"/> : null }
                         </div>
-                        <div ref="legendHelp" data-help-loc="#gradient-differential" style={{display: "inline-block", 'vertical-align': "top", "padding-left": "2px"}}/>
+                        <div ref="legendHelp" data-help-loc="#gradient-differential" style={{display: "inline-block", 'verticalAalign': "top", "paddingLeft": "2px"}}/>
                     </div>
                 );
             },
@@ -326,7 +363,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
     var LegendRow = React.createClass({
         render: function () {
-            var BACKGROUND_IMAGE_TEMPLATE = "-webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));background-image: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});background-image: -ms-linear-gradient(left, ${lowValueColour}, ${highValueColour}); background-image: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour})";
+            var BACKGROUND_IMAGE_TEMPLATE = "-webkit-gradient(linear, left top, right top,color-stop(0, ${lowValueColour}), color-stop(1, ${highValueColour}));backgroundImage: -moz-linear-gradient(left, ${lowValueColour}, ${highValueColour});backgroundImage: -ms-linear-gradient(left, ${lowValueColour}, ${highValueColour}); backgroundImage: -o-linear-gradient(left, ${lowValueColour}, ${highValueColour})";
             var backgroundImage = BACKGROUND_IMAGE_TEMPLATE.replace(/\${lowValueColour}/g, this.props.lowValueColour).replace(/\${highValueColour}/g, this.props.highValueColour);
 
             // for IE8 and 9
@@ -335,11 +372,11 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
             return (
                 <div style={{display: "table-row"}}>
-                    <div style={this.props.displayLevels ? {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "table-cell"} : {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "table-cell", visibility: "hidden"}} className="gxaGradientLevelMin">{this.props.lowExpressionLevel}</div>
+                    <div style={this.props.displayLevels ? {'whiteSpace': "nowrap", "fontSize": "10px", 'verticalAlign': "middle", display: "table-cell"} : {'whiteSpace': "nowrap", "fontSize": "10px", 'verticalAlign': "middle", display: "table-cell", visibility: "hidden"}} className="gxaGradientLevelMin">{this.props.lowExpressionLevel}</div>
                     <div style={{display: "table-cell"}}>
-                        <span className="color-gradient" style={{overflow: "auto", 'vertical-align': "middle", "background-image": backgroundImage, filter: lt_ie10_filter, width: "200px", height: "15px", margin: "2px 6px 2px 6px", display: "inline-block"}} />
+                        <span className="color-gradient" style={{overflow: "auto", 'verticalAlign': "middle", "backgroundImage": backgroundImage, filter: lt_ie10_filter, width: "200px", height: "15px", margin: "2px 6px 2px 6px", display: "inline-block"}} />
                     </div>
-                    <div style={this.props.displayLevels ? {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "table-cell"} : {'white-space': "nowrap", "font-size": "10px", 'vertical-align': "middle", display: "none", visibility: "hidden"}} className="gxaGradientLevelMax">{this.props.highExpressionLevel}</div>
+                    <div style={this.props.displayLevels ? {'whiteSpace': "nowrap", "fontSize": "10px", 'verticalAlign': "middle", display: "table-cell"} : {'whiteSpace': "nowrap", "fontSize": "10px", 'verticalAlign': "middle", display: "none", visibility: "hidden"}} className="gxaGradientLevelMax">{this.props.highExpressionLevel}</div>
                 </div>
             );
         }
@@ -347,7 +384,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
     var HeatmapTableHeader = React.createClass({
 
-        legendType: function () {
+        renderContrastFactorHeaders: function () {
             if (type.isBaseline) {
                 return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} selectedColumnId={this.props.selectedColumnId} selectColumn={this.props.selectColumn} experimentAccession={heatmapConfig.experimentAccession}/> );
             }
@@ -355,26 +392,27 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 return (<ContrastHeaders contrasts={this.props.columnHeaders} selectedColumnId={this.props.selectedColumnId} selectColumn={this.props.selectColumn} experimentAccession={heatmapConfig.experimentAccession} showMaPlotButton={heatmapConfig.showMaPlotButton} gseaPlots={heatmapConfig.gseaPlots}/>);
             }
             else if (type.isMultiExperiment) {
-                 return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} selectedColumnId={this.props.selectedColumnId} selectColumn={this.props.selectColumn}/> );
+                 return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} selectedColumnId={this.props.selectedColumnId} selectColumn={this.props.selectColumn}/>);
             }
         },
 
         render: function () {
             var showGeneProfile = this.props.showGeneSetProfiles ? 'Gene set' : 'Gene';
-            var showExperimentProfile = type.isMultiExperiment ? "Experiment" : showGeneProfile;
+            var showExperimentProfile = type.isMultiExperiment ? 'Experiment' : showGeneProfile;
 
-            // TODO Put all <th> inside <tr> elements (needs quite a lot of restructuring)
             return (
                 <thead>
-                    <th className="gxaHorizontalHeaderCell" colSpan={this.props.isMicroarray ? 2 : undefined}>
-                        <TopLeftCorner hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels} selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton} sticky={this.props.sticky}/>
-                    </th>
+                    <tr>
+                        <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" colSpan={this.props.isMicroarray ? 2 : undefined}>
+                            <TopLeftCorner hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels} selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton}/>
+                        </th>
 
-                    { this.legendType() }
+                        { this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null }
+                    </tr>
 
                     <tr>
-                        <th className="gxaHorizontalHeaderCell" style={ this.props.isMicroarray ? {width:"166px"} : undefined}>{ showExperimentProfile }</th>
-                        { this.props.isMicroarray ? <th className="gxaHorizontalHeaderCell">Design Element</th> : null}
+                        <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" style={ this.props.isMicroarray ? {width:"166px"} : undefined}><div>{ showExperimentProfile }</div></th>
+                        { this.props.isMicroarray ? <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect"><div>Design Element</div></th> : null}
                     </tr>
                 </thead>
             );
@@ -398,13 +436,13 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
         render: function () {
             var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
-                return <FactorHeader factorName={assayGroupFactor.factorValue} svgPathId={assayGroupFactor.factorValueOntologyTermId} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={this.props.experimentAccession}
-                        selectColumn={this.props.selectColumn} selected={assayGroupFactor.assayGroupId === this.props.selectedColumnId} />;
+                return <FactorHeader key={assayGroupFactor.factorValue} factorName={assayGroupFactor.factorValue} svgPathId={assayGroupFactor.factorValueOntologyTermId} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={this.props.experimentAccession}
+                        selectColumn={this.props.selectColumn} selected={assayGroupFactor.assayGroupId === this.props.selectedColumnId}/>;
             }.bind(this));
 
             return (
                 <div>{factorHeaders}</div>
-                );
+            );
         }
 
     });
@@ -435,10 +473,9 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             },
 
             render: function () {
-
                 var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}>  select</span> : null;
                 var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}> &#10004; </span>: null ;
-                var thClass = "rotated_cell gxaHoverableHeader " + (this.props.selected ? "gxaVerticalHeaderCell-selected " : "gxaVerticalHeaderCell ") + (enableEnsemblLauncher ? "gxaSelectableHeader" : "");
+                var thClass = "rotated_cell gxaHoverableHeader" + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (enableEnsemblLauncher ? " gxaSelectableHeader" : "");
                 var divClass = "rotate_text factor-header";
                 var factorName = csstransforms ? restrictLabelSize(this.props.factorName, 14) : this.props.factorName;
 
@@ -460,7 +497,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         render: function () {
             var contrastHeaders = this.props.contrasts.map(function (contrast) {
                 var gseaPlotsThisContrast = this.props.gseaPlots ? this.props.gseaPlots[contrast.id] : {go: false, interpro: false, reactome: false};
-                return <ContrastHeader selectColumn={this.props.selectColumn} selected={contrast.id === this.props.selectedColumnId} contrastName={contrast.displayName} arrayDesignAccession={contrast.arrayDesignAccession} contrastId={contrast.id} experimentAccession={this.props.experimentAccession} showMaPlotButton={this.props.showMaPlotButton}
+                return <ContrastHeader key={contrast.id} selectColumn={this.props.selectColumn} selected={contrast.id === this.props.selectedColumnId} contrastName={contrast.displayName} arrayDesignAccession={contrast.arrayDesignAccession} contrastId={contrast.id} experimentAccession={this.props.experimentAccession} showMaPlotButton={this.props.showMaPlotButton}
                 showGseaGoPlot={gseaPlotsThisContrast.go}
                 showGseaInterproPlot={gseaPlotsThisContrast.interpro}
                 showGseaReactomePlot={gseaPlotsThisContrast.reactome}/>;
@@ -468,7 +505,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
             return (
                 <div>{contrastHeaders}</div>
-                );
+            );
         }
 
     });
@@ -528,7 +565,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 // the tool bar content will be copied around the DOM by the toolbar plugin
                 // so we render using static markup because otherwise when copied, we'll end up with
                 // duplicate data-reactids
-                $contentNode.html(React.renderComponentToStaticMarkup(content));
+                $contentNode.html(React.renderToStaticMarkup(content));
 
                 $contentNode.find('a').tooltip();
 
@@ -556,14 +593,14 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
                 var plotsButton = (
-                    <div style={{"text-align":"right", "padding-right":"3px"}} >
+                    <div style={{"text-align":"right", "paddingRight":"3px"}} >
                         <a href="#" ref="plotsButton" onClick={this.clickButton} className='gxaButtonImage' title='Click to view plots'><img src={contextRoot + '/resources/images/yellow-chart-icon.png'}/></a>
                     </div>
                 );
 
                 var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", bottom:"-35px", color:"green"}}>  select</span> : null;
                 var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position:"absolute", width:"5px", right:"0px", left:"125px", bottom:"-35px", color:"green"}}> &#10004; </span>: null;
-                var thClass = "rotated_cell gxaHoverableHeader " + (this.props.selected ? "gxaVerticalHeaderCell-selected " : "gxaVerticalHeaderCell ") + (enableEnsemblLauncher ? "gxaSelectableHeader" : "");
+                var thClass = "rotated_cell gxaHoverableHeader" + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (enableEnsemblLauncher ? " gxaSelectableHeader " : "");
                 var divClass = "rotate_text factor-header";
                 var contrastName = csstransforms ? restrictLabelSize(this.props.contrastName, 17) : this.props.contrastName;
 
@@ -577,7 +614,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                             {this.showPlotsButton() ? plotsButton : null}
                             {this.showPlotsButton() ? <div ref="plotsToolBarContent" style={{display: "none"}}>placeholder</div> : null}
                     </th>
-                    );
+                );
             }
         });
     })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
@@ -698,8 +735,8 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             displayLevelsBaseline: function() {
                 var DisplayLevelsButton = type.isDifferential ? DisplayLevelsButtonDifferential : DisplayLevelsButtonBaseline;
                 return ( this.props.hasQuartiles && this.props.isSingleGeneResult ?
-                    <LevelsRadioGroup selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton} sticky={this.props.sticky}/> :
-                    <DisplayLevelsButton displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels}/>
+                    <LevelsRadioGroup selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton}/> :
+                    <DisplayLevelsButton displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels} />
                 );
             },
 
@@ -754,8 +791,8 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
         render: function() {
             return (
-                <RadioGroup name={"displayLevelsGroup" + this.props.sticky} value={this.props.selectedRadioButton} onChange={this.handleChange}>
-                    <div style={{"margin-left": "10px", "margin-top": "8px"}}>
+                <RadioGroup name={"displayLevelsGroup"} value={this.props.selectedRadioButton} onChange={this.handleChange}>
+                    <div style={{"marginLeft": "10px", "marginTop": "8px"}}>
                         <input type="radio" value="gradients"/>Display gradients<br />
                         <input type="radio" value="levels"/>Display levels<br />
                         <input type="radio" value="variance"/>Display variance
@@ -777,25 +814,12 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
     var HeatmapTableRows = React.createClass({
 
-        getInitialState: function () {
-            return ({selectedGeneId: null});
-        },
-
-        selectGene: function (geneId) {
-            var selectedGeneId = (geneId === this.state.selectedGeneId) ? null : geneId;
-            this.setState({selectedGeneId: selectedGeneId}, function() {
-                eventEmitter.emitEvent('onGeneSelectionChange', [selectedGeneId]);
-            });
-
-        },
-
         profileRowType: function (profile)  {
             return (type.isMultiExperiment ?
-                <GeneProfileRow id={profile.id} name={profile.name} experimentType={profile.experimentType} expressions={profile.expressions} serializedFilterFactors={profile.serializedFilterFactors} displayLevels={this.props.displayLevels} />
+                <GeneProfileRow key={profile.name} id={profile.id} name={profile.name} experimentType={profile.experimentType} expressions={profile.expressions} serializedFilterFactors={profile.serializedFilterFactors} displayLevels={this.props.displayLevels} renderExpressionCells={this.props.renderExpressionCells}/>
                 :
-                <GeneProfileRow selected={profile.id === this.state.selectedGeneId} selectGene={this.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles} selectedRadioButton={this.props.selectedRadioButton} hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} />
+                <GeneProfileRow key={profile.name} selected={profile.id === this.props.selectedGeneId} selectGene={this.props.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles} selectedRadioButton={this.props.selectedRadioButton} hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} renderExpressionCells={this.props.renderExpressionCells}/>
             );
-
         },
 
         render: function () {
@@ -807,7 +831,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 <tbody>
                     {geneProfilesRows}
                 </tbody>
-                );
+            );
         }
     });
 
@@ -842,9 +866,9 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 // don't render id for gene sets to prevent tooltips
                 // The vertical align in the <a> element is needed because the kerning in the font used in icon-conceptual is vertically off
                 return (
-                    <span title={titleTooltip} style={{"float": "left"}}>
+                    <span title={titleTooltip} style={{"display": "table-cell"}}>
                         <span className="icon icon-conceptual icon-c2" data-icon={type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}></span>
-                        <a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked} style={{"vertical-align": "15%"}}>{this.props.name}</a>
+                        <a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
                     </span>
                 );
             },
@@ -875,18 +899,18 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                     }
                     else {
                         return (
-                            <CellBaseline factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.displayLevelsRadio()} svgPathId={expression.svgPathId} geneSetProfiles={this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
+                            <CellBaseline key={this.props.id + expression.factorName} factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.displayLevelsRadio()} svgPathId={expression.svgPathId} geneSetProfiles={this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
                         );
                     }
                 }
                 else if (type.isDifferential) {
                     return (
-                        <CellDifferential color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={this.props.displayLevels} id={this.props.id} name={this.props.name}/>
+                            <CellDifferential key={this.props.id + this.props.name} color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={this.props.displayLevels} id={this.props.id} name={this.props.name}/>
                         );
                 }
                 else if (type.isMultiExperiment) {
                     return (
-                        <CellMultiExperiment factorName={expression.factorName} serializedFilterFactors={this.props.serializedFilterFactors} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} id={this.props.id} name={this.props.name}/>
+                            <CellMultiExperiment key={this.props.id + expression.factorName} factorName={expression.factorName} serializedFilterFactors={this.props.serializedFilterFactors} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} id={this.props.id} name={this.props.name}/>
                         );
                 }
             },
@@ -899,28 +923,32 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
             varianceExpressionCell: function (expression) {
                 var CellBaselineVariance = baselineVarianceModule.build().CellBaselineVariance;
-                return (<CellBaselineVariance quartiles={expression.quartiles} /> );
+                return (<CellBaselineVariance quartiles={expression.quartiles}/> );
+
             },
 
             render: function () {
-                var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{"padding-top": "5px", "float": "right", "color": "green"}}>select</span> : null;
-                var showTickWhenSelected = this.props.selected ? <span style={{"padding-top": "5px", "float": "right", "color": "green"}}> &#10004; </span>: null ;
+                var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{"display": "table-cell", "textAlign": "right", "paddingLeft": "10px", "color": "green", "visibility": "visible"}}>select</span> :
+                                                                                       <span style={{"display": "table-cell", "textAlign": "right", "paddingLeft": "10px", "color": "green", "visibility": "hidden"}}>select</span>;
+                var showTickWhenSelected = this.props.selected ? <span style={{"float": "right", "color": "green"}}> &#10004; </span>: null ;
                 var className = (this.props.selected ? "gxaHorizontalHeaderCell-selected gxaHoverableHeader" : "gxaHorizontalHeaderCell gxaHoverableHeader") + (enableEnsemblLauncher ? " gxaSelectableHeader" : "");
                 var rowClassName = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "gxaProteomicsExperiment" : "gxaTranscriptomicsExperiment" ) : "";
 
-                // NB: empty title tag below is required for tooltip to work
                 return (
                     <tr className={rowClassName}>
-                        <td className={className} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
-                            { enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked()}
-                            {showSelectTextOnHover}
-                            {showTickWhenSelected}
-                        </td>
-                        {this.props.designElement ?  <td className="design-element">{this.props.designElement}</td> : null}
-                        {this.cells(this.props.expressions)}
-
+                        <th className={className} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
+                            <div style={{"display": "table", "width": "100%"}}>
+                                <div style={{"display": "table-row"}}>
+                                    { enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked()}
+                                    {showSelectTextOnHover}
+                                    {showTickWhenSelected}
+                                </div>
+                            </div>
+                        </th>
+                        {this.props.designElement ? <th className="gxaHeatmapTableDesignElement">{this.props.designElement}</th> : null}
+                        {this.props.renderExpressionCells ? this.cells(this.props.expressions) : null}
                     </tr>
-                    );
+                );
             },
 
             componentDidMount: function () {
@@ -948,7 +976,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
         return (
             <span>
-                {(mantissa !== "1") ? mantissa + " \u00D7 " : ''}10<span style={{'vertical-align': 'super'}}>{exponent}</span>
+                {(mantissa !== "1") ? mantissa + " \u00D7 " : ''}10<span style={{'verticalAlign': 'super'}}>{exponent}</span>
             </span>
         );
     }
@@ -985,7 +1013,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                     return (<td></td>);
                 }
 
-                var style = {"background-color": isUnknownExpression(this.props.value) ? "white" : this.props.color};
+                var style = {"backgroundColor": isUnknownExpression(this.props.value) ? "white" : this.props.color};
 
                 return (
                     <td style={style}>
@@ -1042,11 +1070,12 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         return React.createClass({
 
             render: function () {
+
                 if (noExpression(this.props.value)) {
                     return (<td></td>);
                 }
 
-                var style = {"background-color": this.props.color};
+                var style = {"backgroundColor": this.props.color};
 
                 return (
                     <td style={style}>
@@ -1076,7 +1105,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 }
 
                 return (
-                    <td style={{"background-color": this.props.color}}>
+                    <td style={{"backgroundColor": this.props.color}}>
                         <div className={this.props.displayLevels ? "gxaShowCell" : "gxaHideCell"}>
                             {this.props.foldChange}
                         </div>
@@ -1098,7 +1127,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                     return "<table class='gxaTableGrid' style='margin: 0; padding: 0;'><thead><th class='gxaHeaderCell'>Adjusted <i>p</i>-value</th>" +
                         (tstatistic !== undefined ? "<th class='gxaHeaderCell'><i>t</i>-statistic</th>" : "") +
                         "<th class='gxaHeaderCell'>Log<sub>2</sub>-fold change</th></thead>" +
-                        "<tbody><tr><td style='padding:6px'>" + React.renderComponentToStaticMarkup(formatScientificNotation(pValue)) + "</td>" +
+                        "<tbody><tr><td style='padding:6px'>" + React.renderToStaticMarkup(formatScientificNotation(pValue)) + "</td>" +
                         (tstatistic !== undefined ? "<td style='padding:6px'>" + tstatistic + "</td>" : "") +
                         "<td style='padding:6px'>" + foldChange + "</td></tr></tbody>" +
                         "</table>";
@@ -1127,7 +1156,6 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         EnsemblLauncher: heatmapConfig.enableEnsemblLauncher ? EnsemblLauncher : undefined
     };
 };
-
 
 
 exports.buildBaseline =

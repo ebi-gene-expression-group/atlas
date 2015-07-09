@@ -1,7 +1,9 @@
 "use strict";
 
-var React = require('react'),
-    $ = require('jquery');
+var React = require('react');
+var $ = require('jquery');
+var jQuery = $;
+//require('./lib/jquery.hc-sticky.js');
 
 
 var ExperimentDescription = React.createClass({
@@ -50,7 +52,7 @@ var Anatomogram = React.createClass({
                 <table>
                     <tbody>
                     <tr>
-                        <td style={{"padding-top": "15px", "vertical-align":"top"}}>
+                        <td style={{"paddingTop": "15px", "verticalAlign":"top"}}>
                             <span id={sexToggle}>
                                 <img id={sexToggleImage} title="Switch anatomogram" className="gxaButtonImage"
                                     style={{"width":"20px", "height":"38px", "padding":"2px"}}
@@ -108,11 +110,11 @@ var HeatmapContainer = React.createClass({
         return (
                 <div className="gxaBlock">
 
-                    { this.props.experiment ? ExperimentDescription( {experiment: this.props.experiment} ) : null }
+                    { this.props.experiment ? <ExperimentDescription experiment={this.props.experiment} /> : null }
 
                     <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
-                        { this.props.anatomogram ? Anatomogram( {anatomogram:this.props.anatomogram, heatmapKey: this.props.heatmapKey} ) : null}
+                        { this.props.anatomogram ? <Anatomogram anatomogram={this.props.anatomogram} heatmapKey={this.props.heatmapKey} /> : null}
 
                         <div id="ensembl-launcher" className="gxaAside" style={{"display":"inline"}}></div>
 

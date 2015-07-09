@@ -23,6 +23,7 @@
 "use strict";
 
 var $ = require('jquery');
+var jQuery = $;
 
 var _contextRoot;
 

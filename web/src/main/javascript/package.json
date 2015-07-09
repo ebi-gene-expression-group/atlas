@@ -14,10 +14,16 @@
   "dependencies": {
     "eventemitter4": "^0.2.4",
     "expose-loader": "^0.6.0",
+    "jquery-highlight": "^3.2.2",
     "jquery-ui": "^1.10.5",
+    "jquery.browser": "0.0.8",
     "modernizr": "^3.0.0-alpha.4",
     "query-string": "1.0.0",
-    "react": "^0.12.1"
+    "react": "^0.12.1",
+    "react-radio-group": "^1.1.0",
+    "react-sticky": "^2.3.0",
+    "script-loader": "^0.6.1",
+    "throttle-debounce": "^0.1.1"
   },
   "devDependencies": {
     "chai": "^2.1.2",

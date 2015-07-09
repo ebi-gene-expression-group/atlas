@@ -23,6 +23,7 @@
 "use strict";
 
 var $ = require('jquery');
+var jQuery = $;
 var React = require('react');
 
 var FactorTooltip = require('./factorTooltip.jsx');
@@ -53,7 +54,7 @@ function initTooltip(contextRoot, accessKey, elements) {
                 },
                 type:"GET",
                 success:function (data) {
-                    var html = React.renderComponentToString(FactorTooltip({properties: data.properties, replicates: data.replicates}));
+                    var html = React.renderToString(FactorTooltip({properties: data.properties, replicates: data.replicates}));
                     callback(html);
                 }
             }).fail(function (data) {

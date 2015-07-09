@@ -23,6 +23,7 @@
 "use strict";
 
 var $ = require('jquery');
+var jQuery = $;
 var React = require('react');
 
 var ContrastTooltip = require('./contrastTooltip.jsx');
@@ -54,7 +55,7 @@ function initTooltip(contextRoot, accessKey, elements) {
                 },
                 type:"GET",
                 success:function (data) {
-                    var html = React.renderComponentToString(ContrastTooltip({
+                    var html = React.renderToString(ContrastTooltip({
                                             experimentDescription: data.experimentDescription,
                                             contrastDescription: data.contrastDescription,
                                             testReplicates: data.testReplicates,

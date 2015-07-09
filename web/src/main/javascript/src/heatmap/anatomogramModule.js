@@ -1,10 +1,10 @@
 "use strict";
 
 var $ = require('jquery');
+var jQuery = $;
+require('./lib/jquery.svg.js');
 
-var anatomogramModule = (function ($) {
-
-    "use strict";
+module.exports = function () {
 
     function setHilighting(path, color, opacity) {
         path.style.fill = color;
@@ -16,10 +16,6 @@ var anatomogramModule = (function ($) {
     }
 
     function togglePathColor(path, evtType, isSingleGene, svgPathId, color) {
-
-        "use strict";
-
-
         if(isSingleGene && evtType === undefined && color === "red") { //We highlight the whole anatomogram with paths expressed in the gene
             setHilighting(path, "red", 0.7);
         } else if(isSingleGene && (evtType === 'mouseenter' || evtType === 'mouseover')) { //highlight in different colors when onmouseover
@@ -38,9 +34,6 @@ var anatomogramModule = (function ($) {
     }
 
     function toggleOrganismPartColor(svg, isSingleGene, svgPathId, evt, color) {
-
-        "use strict";
-
         var element = svg.getElementById(svgPathId);
         var evtType = (typeof evt === 'undefined') ? evt : evt.type;
 
@@ -52,9 +45,7 @@ var anatomogramModule = (function ($) {
             } else {
                 togglePathColor(element, evtType, isSingleGene, svgPathId, color);
             }
-
         }
-
     }
 
 
@@ -243,4 +234,4 @@ var anatomogramModule = (function ($) {
 
     };
 
-}(jQuery));
+}();
