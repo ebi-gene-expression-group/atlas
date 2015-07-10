@@ -5,9 +5,9 @@ package uk.ac.ebi.atlas.model;
  */
 public enum AnatomogramType {
 
-    HOMO_SAPIENS_MALE("homo_sapiens_male"),
-    HOMO_SAPIENS_FEMALE("homo_sapiens_female"),
-    HOMO_SAPIENS_BRAIN("homo_sapiens_brain");
+    MALE("male"),
+    FEMALE("female"),
+    BRAIN("brain");
 
     private AnatomogramType anatomogramType;
     private String description;

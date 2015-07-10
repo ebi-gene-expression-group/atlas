@@ -196,13 +196,13 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
     private void addAnatomogram(ImmutableSet<String> allSvgPathIds, Model model, String species) {
         //ToDo: check if this can be externalized in the view with a cutom EL or tag function
-        String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.HOMO_SAPIENS_MALE);
+        String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.MALE);
         model.addAttribute("maleAnatomogramFile", maleAnatomogramFileName);
 
-        String femaleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.HOMO_SAPIENS_FEMALE);
+        String femaleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.FEMALE);
         model.addAttribute("femaleAnatomogramFile", femaleAnatomogramFileName);
 
-        String brainAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.HOMO_SAPIENS_BRAIN);
+        String brainAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.BRAIN);
         model.addAttribute("brainAnatomogramFile", brainAnatomogramFileName);
 
         model.addAttribute("hasAnatomogram", maleAnatomogramFileName != null || femaleAnatomogramFileName != null || brainAnatomogramFileName != null);

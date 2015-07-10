@@ -63,16 +63,15 @@ public class ApplicationProperties {
     public String getAnatomogramFileName(String specie, AnatomogramType anatomogramType) {
         String key = "organism.anatomogram." + specie.toLowerCase();
         String ending = "";
-        if(anatomogramType.equals(AnatomogramType.HOMO_SAPIENS_MALE)) {
+        if(anatomogramType.equals(AnatomogramType.MALE)) {
             ending = ".male";
-        } else if (anatomogramType.equals(AnatomogramType.HOMO_SAPIENS_FEMALE)) {
+        } else if (anatomogramType.equals(AnatomogramType.FEMALE)) {
             ending = ".female";
-        } else if (anatomogramType.equals(AnatomogramType.HOMO_SAPIENS_BRAIN)) {
+        } else if (anatomogramType.equals(AnatomogramType.BRAIN)) {
             ending = ".brain";
         }
 
         String fileName = configurationProperties.getProperty(key + ending);
-//        String fileName = configurationProperties.getProperty(key + (isMale ? ".male" : ".female"));
         return fileName != null ? fileName : configurationProperties.getProperty(key);
     }
 

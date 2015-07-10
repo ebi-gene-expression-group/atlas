@@ -125,10 +125,10 @@ public class ApplicationPropertiesTest {
 
     @Test
     public void testGetAnatomogramFileName() throws Exception {
-        String fileNameMale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, AnatomogramType.HOMO_SAPIENS_MALE);
-        String fileNameFemale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, AnatomogramType.HOMO_SAPIENS_FEMALE);
-        String fileNameMouseMale = subject.getAnatomogramFileName(MOUSE_SPECIE, AnatomogramType.HOMO_SAPIENS_MALE);
-        String fileNameMouseFemale = subject.getAnatomogramFileName(MOUSE_SPECIE, AnatomogramType.HOMO_SAPIENS_FEMALE);
+        String fileNameMale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, AnatomogramType.MALE);
+        String fileNameFemale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, AnatomogramType.FEMALE);
+        String fileNameMouseMale = subject.getAnatomogramFileName(MOUSE_SPECIE, AnatomogramType.MALE);
+        String fileNameMouseFemale = subject.getAnatomogramFileName(MOUSE_SPECIE, AnatomogramType.FEMALE);
 
         assertThat(fileNameMale, is(HOMO_SAPIENS_FILE_NAME));
         assertThat(fileNameFemale, is(FEMALE_SAPIENS_FILE_NAME));
