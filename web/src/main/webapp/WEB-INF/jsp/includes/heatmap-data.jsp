@@ -7,11 +7,6 @@
 <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
 <c:set var="atlasHost" value="${pageContext.request.serverName == 'localhost' ? 'wwwdev.ebi.ac.uk' : pageContext.request.serverName.concat(serverPort)}"/>
 
-<c:set var="toggleButtonImage" value="/resources/images/male_selected.png"/>
-<c:if test="${species.equals('oryza sativa') || species.equals('oryza sativa japonica group')}">
-    <c:set var="toggleButtonImage" value="/resources/images/plant_switch_buttons_1.png"/>
-</c:if>
-
 <c:choose>
     <c:when test="${empty jsonProfiles}">
         {
@@ -52,9 +47,12 @@
                     {
                     "maleAnatomogramFile": "${maleAnatomogramFile}",
                     "femaleAnatomogramFile":  "${femaleAnatomogramFile}",
+                    "brainAnatomogramFile": "${brainAnatomogramFile}",
                     "allSvgPathIds": ${empty allSvgPathIds ? "null" : allSvgPathIds},
                     "contextRoot": "${pageContext.request.contextPath}",
-                    "toggleButtonImage": "${toggleButtonImage}"
+                    "toggleButtonMaleImage": "${toggleButtonMaleImage}",
+                    "toggleButtonFemaleImage": "${toggleButtonFemaleImage}",
+                    "toggleButtonBrainImage": "${toggleButtonBrainImage}"
                     }
                 </c:when>
                 <c:otherwise>

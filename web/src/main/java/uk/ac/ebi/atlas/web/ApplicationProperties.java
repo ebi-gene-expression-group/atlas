@@ -26,6 +26,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.model.AnatomogramType;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 
 import javax.inject.Inject;
@@ -59,9 +60,18 @@ public class ApplicationProperties {
         this.arrayDesignTrader = arrayDesignTrader;
     }
 
-    public String getAnatomogramFileName(String specie, boolean isMale) {
+    public String getAnatomogramFileName(String specie, AnatomogramType anatomogramType) {
         String key = "organism.anatomogram." + specie.toLowerCase();
-        String fileName = configurationProperties.getProperty(key + (isMale ? ".male" : ".female"));
+        String ending = "";
+        if(anatomogramType.equals(AnatomogramType.MALE)) {
+            ending = ".male";
+        } else if (anatomogramType.equals(AnatomogramType.FEMALE)) {
+            ending = ".female";
+        } else if (anatomogramType.equals(AnatomogramType.BRAIN)) {
+            ending = ".brain";
+        }
+
+        String fileName = configurationProperties.getProperty(key + ending);
         return fileName != null ? fileName : configurationProperties.getProperty(key);
     }
 

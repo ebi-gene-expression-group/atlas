@@ -29,11 +29,6 @@
     <c:set var="base" value="${preferences.rootContext}"/>
 </c:if>
 
-<c:set var="pathImage" value="${base.concat('/resources/images/male_selected.png')}"/>
-<c:if test="${species.equals('oryza sativa japonica group')}">
-    <c:set var="pathImage" value="${base.concat('/resources/images/plant_switch_buttons_1.png')}"/>
-</c:if>
-
 <%-- TODO: replace this file with heatmapContainer.jsx (which duplicates this page)dd  --%>
 <c:if test="${not empty jsonProfiles}">
     <%@ include file="anatomogram.jsp" %>
@@ -45,8 +40,12 @@
                 <tr>
                     <td style="padding-top: 15px; vertical-align:top">
                         <span id="sex-toggle">
-                            <img id="sex-toggle-image" title="Switch anatomogram" class="gxaButtonImage"
-                                 style="width:20px;height:38px;padding:2px" src="${pathImage}"/>
+                            <img id="male-toggle-image" title="Switch anatomogram" class="gxaButtonImage"
+                                 style="width:20px;height:20px;padding:2px;display:none" src="${base.concat(toggleButtonMaleImage)}"/> <br/>
+                            <img id="female-toggle-image" title="Switch anatomogram" class="gxaButtonImage"
+                                 style="width:20px;height:20px;padding:2px;display:none" src="${base.concat(toggleButtonFemaleImage)}"/> <br/>
+                            <img id="brain-toggle-image" title="Switch anatomogram" class="gxaButtonImage"
+                                 style="width:20px;height:20px;padding:2px;display:none" src="${base.concat(toggleButtonBrainImage)}"/>
                         </span>
                         <!--
                         <span data-help-loc="#anatomogram"/>

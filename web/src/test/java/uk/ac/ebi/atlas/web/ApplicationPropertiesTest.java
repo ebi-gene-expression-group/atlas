@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.ac.ebi.atlas.model.AnatomogramType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.trader.ArrayDesignTrader;
 import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
@@ -124,10 +125,10 @@ public class ApplicationPropertiesTest {
 
     @Test
     public void testGetAnatomogramFileName() throws Exception {
-        String fileNameMale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, true);
-        String fileNameFemale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, false);
-        String fileNameMouseMale = subject.getAnatomogramFileName(MOUSE_SPECIE, true);
-        String fileNameMouseFemale = subject.getAnatomogramFileName(MOUSE_SPECIE, false);
+        String fileNameMale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, AnatomogramType.MALE);
+        String fileNameFemale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, AnatomogramType.FEMALE);
+        String fileNameMouseMale = subject.getAnatomogramFileName(MOUSE_SPECIE, AnatomogramType.MALE);
+        String fileNameMouseFemale = subject.getAnatomogramFileName(MOUSE_SPECIE, AnatomogramType.FEMALE);
 
         assertThat(fileNameMale, is(HOMO_SAPIENS_FILE_NAME));
         assertThat(fileNameFemale, is(FEMALE_SAPIENS_FILE_NAME));

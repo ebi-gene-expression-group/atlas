@@ -34,6 +34,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import uk.ac.ebi.atlas.model.AnatomogramType;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.model.baseline.AssayGroupFactor;
@@ -217,6 +218,7 @@ public final class HeatmapWidgetController {
 
         ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);
         addAnatomogram(allSvgPathIds, model, ensemblSpecies);
+        setToggleImageButton(model, ensemblSpecies);
 
         BaselineExperimentProfilesList experimentProfiles = searchResult.getExperimentProfiles();
         addJsonForHeatMap(experimentProfiles, filteredAssayGroupFactors, orderedFactors, model);
@@ -244,18 +246,31 @@ public final class HeatmapWidgetController {
     private void addAnatomogram(ImmutableSet<String> allSvgPathIds, Model model, String species) {
         //TODO: check if this can be externalized in the view with a cutom EL or tag function
         //or another code block because it's repeated with BaselineExperimentPageController
-        String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, true);
+        String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.MALE);
         model.addAttribute("maleAnatomogramFile", maleAnatomogramFileName);
 
-        String femaleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, false);
+        String femaleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.FEMALE);
         model.addAttribute("femaleAnatomogramFile", femaleAnatomogramFileName);
 
-        model.addAttribute("hasAnatomogram", maleAnatomogramFileName != null || femaleAnatomogramFileName != null);
+        String brainAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.BRAIN);
+        model.addAttribute("brainAnatomogramFile", brainAnatomogramFileName);
+
+        model.addAttribute("hasAnatomogram", maleAnatomogramFileName != null || femaleAnatomogramFileName != null || brainAnatomogramFileName != null);
 
         String jsonAllSvgPathIds = new Gson().toJson(allSvgPathIds);
         model.addAttribute("allSvgPathIds", jsonAllSvgPathIds);
     }
 
+    private void setToggleImageButton(Model model, String species) {
+        if(species.equals("oryza sativa") || species.equals("oryza sativa japonica group")){
+            model.addAttribute("toggleButtonMaleImage", "/resources/images/plant_switch_buttons_1.png");
+        }
+        else {
+            model.addAttribute("toggleButtonMaleImage", "/resources/images/male_selected.png");
+            model.addAttribute("toggleButtonFemaleImage", "/resources/images/female_unselected.png");
+            model.addAttribute("toggleButtonBrainImage", "/resources/images/brain_unselected.png");
+        }
+    }
 
     private SortedSet<AssayGroupFactor> convert(SortedSet<Factor> orderedFactors) {
         ImmutableSortedSet.Builder<AssayGroupFactor> builder = ImmutableSortedSet.naturalOrder();
