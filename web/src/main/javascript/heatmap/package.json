@@ -1,0 +1,28 @@
+{
+  "name": "expression-atlas-heatmap",
+  "version": "1.0.0",
+  "description": "Heatmap and anatomogram visualization of baseline expression and differential expression experiments from the Expression Atlas project (http://www.ebi.ac.uk/gxa).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "expose-loader": "^0.7.0",
+    "heatmap-baseline-cell-variance": "file:../heatmap-baseline-cell-variance",
+    "jquery": "^2.1.4",
+    "jquery-highlight": "^3.2.2",
+    "jquery-ui": "^1.10.5",
+    "jquery.browser": "0.0.8",
+    "jsx-loader": "^0.12.2",
+    "modernizr": "^3.0.0-alpha.3",
+    "node-libs-browser": "^0.5.2",
+    "react": "^0.12.2",
+    "react-radio-group": "^1.1.0",
+    "throttle-debounce": "^0.1.1",
+    "webpack": "^1.10.1",
+    "wolfy87-eventemitter": "^4.2.11"
+  }
+}

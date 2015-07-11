@@ -80,14 +80,14 @@
 <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/facets.css" />
 
 <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor-bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/search-results-differential-page-bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/faceted-search-results-bundle.js"></script>
 
 <c:if test="${hasDifferentialResults}">
     <script>
         var facetsData = ${empty jsonDifferentialGeneQueryFacets ? 'null' : jsonDifferentialGeneQueryFacets};
         <%--var diffResultsData = ${empty jsonDifferentialGeneQueryResults ? 'null': jsonDifferentialGeneQueryResults};--%>
     
-        var differential_page_js = window.$page;
+        var differential_page_js = window.exposed;
     
         differential_page_js(facetsData, 'atlasAnalyticsSearchFacetContainer', 'atlasAnalyticsSearchDiffResultsContainer');
     </script>

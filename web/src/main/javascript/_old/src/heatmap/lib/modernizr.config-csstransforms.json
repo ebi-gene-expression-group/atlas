@@ -1,0 +1,26 @@
+{
+  "classPrefix": "",
+  "options": [
+    "addTest",
+    "atRule",
+    "domPrefixes",
+    "fnBind",
+    "hasEvent",
+    "html5shiv",
+    "html5printshiv",
+    "load",
+    "mq",
+    "prefixed",
+    "prefixes",
+    "prefixedCSS",
+    "setClasses",
+    "testAllProps",
+    "testProp",
+    "testStyles"
+  ],
+  "feature-detects": [
+    "css/transforms",
+    "css/transforms3d",
+    "css/transformstylepreserve3d"
+  ]
+}

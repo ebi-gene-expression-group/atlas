@@ -1,0 +1,39 @@
+{
+  "name": "react-webpack-template",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test --recursive --compilers .jsx:build-util/jsxcompiler.js",
+    "tdd": "webpack-dev-server --progress --colors --port 9000 --config webpack.config.tdd.js",
+    "dev": "webpack --progress --colors --watch --debug --output-pathinfo --display-chunks --display-modules",
+    "prod": "webpack --progress --colors --optimize-minimize --output-pathinfo --display-chunks --display-modules"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "eventemitter4": "^0.2.4",
+    "expose-loader": "^0.6.0",
+    "jquery-highlight": "^3.2.2",
+    "jquery-ui": "^1.10.5",
+    "jquery.browser": "0.0.8",
+    "modernizr": "^3.0.0-alpha.3",
+    "query-string": "1.0.0",
+    "react": "^0.12.1",
+    "react-radio-group": "^1.1.0",
+    "react-sticky": "^2.3.0",
+    "throttle-debounce": "^0.1.1"
+  },
+  "devDependencies": {
+    "chai": "^2.1.2",
+    "globule": "^0.2.0",
+    "jquery": "^1.8.3",
+    "jsx-loader": "^0.12.1",
+    "mocha": "^2.0.1",
+    "mocha-loader": "^0.7.1",
+    "react-addons": "^0.9.0",
+    "react-tools": "^0.12.1",
+    "source-map-support": "^0.2.10",
+    "webpack": "^1.7.3"
+  }
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Heatmap demo</title>
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/gxa/resources/css/atlas.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/gxa/resources/widget/latest/css/table-grid.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/gxa/resources/widget/latest/css/heatmap-and-anatomogram.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/gxa/resources/js/lib/jquery-ui-1.11.4.custom/jquery-ui.min.css">
+
+    <script src="/dev-server/vendor.bundle.js"></script>
+    <script src="/dev-server/demo.bundle.js"></script>
+</head>
+<body>
+    <div id="heatmapContainer">
+
+    </div>
+</body>
+
+<script language="JavaScript" type="text/javascript">
+    var AtlasHeatmapBuilder = window.exposed;
+    AtlasHeatmapBuilder({
+        gxaBaseUrl: "http://www.ebi.ac.uk/gxa/",
+        params: "geneQuery=REACT_1619",
+        isMultiExperiment: true,
+        target: "heatmapContainer"
+    });
+</script>
+
+</html>

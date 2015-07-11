@@ -1,0 +1,19 @@
+{
+  "name": "faceted-search-results",
+  "version": "1.0.0",
+  "description": "Differential and baseline faceted search results",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^2.1.4",
+    "query-string": "^2.3.0",
+    "react": "^0.12.2"
+  },
+  "devDependencies": {
+    "jsx-loader": "^0.12.2"
+  }
+}

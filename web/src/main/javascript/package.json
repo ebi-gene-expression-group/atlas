@@ -1,41 +1,21 @@
 {
-  "name": "react-webpack-template",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "expression-atlas-webpack-bundles",
+  "version": "1.0.0",
+  "description": "Expression Atlas JavaScript Webpack bundles ",
+  "main": "webpack.config.js",
   "scripts": {
-    "test": "mocha test --recursive --compilers .jsx:build-util/jsxcompiler.js",
-    "tdd": "webpack-dev-server --progress --colors --port 9000 --config webpack.config.tdd.js",
     "dev": "webpack --progress --colors --watch --debug --output-pathinfo --display-chunks --display-modules",
     "prod": "webpack --progress --colors --optimize-minimize --output-pathinfo --display-chunks --display-modules"
   },
-  "author": "",
-  "license": "BSD-2-Clause",
-  "dependencies": {
-    "eventemitter4": "^0.2.4",
-    "expose-loader": "^0.6.0",
-    "jquery-highlight": "^3.2.2",
-    "jquery-ui": "^1.10.5",
-    "jquery.browser": "0.0.8",
-    "modernizr": "^3.0.0-alpha.4",
-    "query-string": "1.0.0",
-    "react": "^0.12.1",
-    "react-radio-group": "^1.1.0",
-    "react-sticky": "^2.3.0",
-    "script-loader": "^0.6.1",
-    "throttle-debounce": "^0.1.1"
-  },
+  "author": "Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
+  "license": "MIT",
+  "private": true,
   "devDependencies": {
-    "chai": "^2.1.2",
-    "globule": "^0.2.0",
-    "jquery": "^1.8.3",
-    "jsdom": "^3.1.1",
-    "jsx-loader": "^0.12.1",
-    "mocha": "^2.0.1",
-    "mocha-loader": "^0.7.1",
-    "react-addons": "^0.9.0",
-    "react-tools": "^0.12.1",
-    "source-map-support": "^0.2.10",
-    "webpack": "^1.7.3"
+    "expose-loader": "^0.7.0",
+    "jquery": "^2.1.4",
+    "jquery-ui": "^1.10.5",
+    "react": "^0.13.3",
+    "react-radio-group": "^2.0.2",
+    "webpack": "^1.10.1"
   }
 }
