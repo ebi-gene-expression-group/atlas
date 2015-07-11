@@ -6,9 +6,9 @@ module.exports = {
 
     // define the bundles we want
     entry: {
-        "expression-atlas-heatmap": "./heatmap/index.js",
-        "faceted-search-results": "./faceted-search-results/index.js",
-        "vendor": ["react"]
+        "expression-atlas-heatmap": "./heatmap",
+        "faceted-search-results": "./faceted-search-results",
+        "vendor": ["react", "jquery"]
     },
 
     output: {
@@ -18,7 +18,7 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor-bundle.js")
+        new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor-bundle.js")
     ],
 
     module: {

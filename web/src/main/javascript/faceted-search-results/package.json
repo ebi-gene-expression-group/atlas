@@ -8,12 +8,15 @@
   },
   "author": "Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
   "license": "MIT",
+  "private": true,
   "dependencies": {
     "jquery": "^2.1.4",
     "query-string": "^2.3.0",
     "react": "^0.12.2"
   },
   "devDependencies": {
-    "jsx-loader": "^0.12.2"
+    "expose-loader": "^0.7.0",
+    "jsx-loader": "^0.12.2",
+    "webpack": "^1.10.1"
   }
 }
