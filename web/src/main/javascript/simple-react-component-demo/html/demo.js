@@ -6,17 +6,12 @@ var React = require('react');
 
 //*------------------------------------------------------------------*
 
-var SimpleComponent = React.createClass({
-
-    render: function () {
-        var message = "Hello world, I’m sooooo hot!";
-        return (
-            <p>{message}</p>
-        );
-    }
-
-});
+var SimpleComponent = require('../src/SimpleComponent.jsx');
 
 //*------------------------------------------------------------------*
 
-module.exports = SimpleComponent;
+exports.render = function(mountNode) {
+    React.render(
+        React.createElement(SimpleComponent), mountNode
+    );
+};

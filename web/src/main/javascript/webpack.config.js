@@ -27,5 +27,9 @@ module.exports = {
             {test: /\-page.js$/, loader: 'expose?exposed'},
             {test: /index.js$/, loader: 'expose?exposed'}
         ]
+    },
+
+    devServer: {
+        port: 9000
     }
 };

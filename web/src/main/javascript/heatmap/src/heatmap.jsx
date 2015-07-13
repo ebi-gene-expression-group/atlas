@@ -9,7 +9,7 @@ var $ = require('jquery');
 var jQuery = $;
 require('jquery-ui');
 require('jquery.browser');
-//require('./lib/jquery.hc-sticky.js')
+//require('../lib/jquery.hc-sticky.js')
 
 var td = require('throttle-debounce');
 var EventEmitter = require('wolfy87-eventemitter');
@@ -255,7 +255,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             // TODO id="heatmap-table" used to highlight the anatomogram in anatomogramModule.js ; this will need to change for the faceted search with multiple anatomograms
             return (
                 <div>
-                    <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{"paddingBottom": paddingMargin}}>
+                    <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{"paddingBottom": paddingMargin, "position": "sticky"}}>
                         <div style={{display: "inline-block", 'verticalAlign': "top"}}>
                             {type.isMultiExperiment ? <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} experiments found: </span> :
                                                       <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} {this.state.showGeneSetProfiles ? 'gene sets' : 'genes' } found: </span> }
