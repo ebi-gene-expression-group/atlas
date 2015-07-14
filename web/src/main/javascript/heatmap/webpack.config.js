@@ -1,4 +1,5 @@
 var webpack = require("webpack");
+var path = require("path");
 
 module.exports = {
     context: __dirname,
@@ -19,11 +20,13 @@ module.exports = {
     },
 
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js")
     ],
 
     module: {
         loaders: [
+            {test: /\.jsx?$/, loaders: ['react-hot', 'jsx?harmony'], include: path.join(__dirname, 'src')},
             {test: /\.jsx$/, loader: 'jsx-loader'},
             {test: /demo.js$/, loader: 'expose?exposed'}
         ]
