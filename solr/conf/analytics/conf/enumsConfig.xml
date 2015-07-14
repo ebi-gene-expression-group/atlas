@@ -14,8 +14,7 @@
     </enum>
     <enum name="kingdom">
         <value>plants</value>
-        <value>metazoa</value>
-        <value>ensembl</value> <!-- ensembl and metazoa are all animals -->
+        <value>animals</value>
         <value>fungi</value>
     </enum>
 </enumsConfig>
