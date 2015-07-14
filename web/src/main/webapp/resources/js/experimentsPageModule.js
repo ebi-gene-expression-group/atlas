@@ -268,7 +268,7 @@ var experimentsPageModule = (function ($) {
                 oTable.fnFilter('plants', 9);
             }
             else if (hiddenKingdomSelected == 'animals-fungi') {
-                oTable.fnFilter('metazoa|ensembl|fungi', 9, true);
+                oTable.fnFilter('animals|fungi', 9, true);
             }
             else {
                 oTable.fnFilter('', 9);

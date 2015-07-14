@@ -14,8 +14,8 @@ import java.util.Map;
 @Scope("singleton")
 public class OrganismEnsemblDAO {
 
-    private static final String SELECT_ENSEMBLDB = "SELECT ORGANISM_ENSEMBLDB.ENSEMBLDB, BIOENTITY_ORGANISM.NAME FROM ORGANISM_ENSEMBLDB" +
-                                                   " JOIN BIOENTITY_ORGANISM ON ORGANISM_ENSEMBLDB.ORGANISMID=BIOENTITY_ORGANISM.ORGANISMID";
+    private static final String SELECT_KINGDOM = "SELECT ORGANISM_KINGDOM.KINGDOM, BIOENTITY_ORGANISM.NAME FROM ORGANISM_KINGDOM" +
+                                                   " JOIN BIOENTITY_ORGANISM ON ORGANISM_KINGDOM.ORGANISMID=BIOENTITY_ORGANISM.ORGANISMID";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -28,12 +28,12 @@ public class OrganismEnsemblDAO {
 
         ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder<>();
 
-        List<Map<String, Object>> ensemblNames = jdbcTemplate.queryForList(SELECT_ENSEMBLDB);
+        List<Map<String, Object>> ensemblNames = jdbcTemplate.queryForList(SELECT_KINGDOM);
 
         for (Map<String, Object> it : ensemblNames) {
             String name = (String) it.get("NAME");
-            String ensembldb = (String)it.get("ENSEMBLDB");
-            mapBuilder.put(name.toLowerCase(), ensembldb);
+            String kingdom = (String)it.get("KINGDOM");
+            mapBuilder.put(name.toLowerCase(), kingdom);
         }
 
         return mapBuilder.build();

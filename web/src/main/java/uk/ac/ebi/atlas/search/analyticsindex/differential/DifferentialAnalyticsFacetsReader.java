@@ -60,7 +60,6 @@ public class DifferentialAnalyticsFacetsReader {
         return differentialResults.toString();
     }
 
-    // TODO Merge Metazoa and Ensembl into "Animals"
     // TODO Prettify fields with a Hashmap: <Field as it is stored in Solr> -> <Pretty field>
     public String generateFacetsTreeJson(String solrResponseAsJson) {
         JsonObject facets = new JsonObject();
