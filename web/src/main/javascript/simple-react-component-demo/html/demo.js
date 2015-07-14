@@ -12,6 +12,6 @@ var SimpleComponent = require('../src/SimpleComponent.jsx');
 
 exports.render = function(mountNode) {
     React.render(
-        React.createElement(SimpleComponent), mountNode
+        React.createElement(SimpleComponent, {message: "So sexy!"}), mountNode
     );
 };

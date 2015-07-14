@@ -13,12 +13,12 @@ module.exports = {
 
     output: {
         path: path.resolve(__dirname, "../webapp/resources/js-bundles"),
-        filename: '[name]-bundle.js' // [name] is substituted for the entry name, eg: search-results-differential-page-bundle.js
+        filename: '[name].bundle.js' // [name] is substituted for the entry name, eg: search-results-differential-page-bundle.js
 
     },
 
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor-bundle.js")
+        new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js")
     ],
 
     module: {
