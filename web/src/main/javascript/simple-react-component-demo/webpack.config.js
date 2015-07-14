@@ -4,12 +4,7 @@ var path = require("path");
 module.exports = {
     context: __dirname,
     entry: {
-	"simple-component":
-            [
-                "webpack-dev-server/client?http://localhost:9000", // WebpackDevServer host and port
-                "webpack/hot/only-dev-server",
-                "./index.js"
-            ],
+	    "simple-component": "./index.js"    ,
         "demo" : 
 	        [
                 "webpack-dev-server/client?http://localhost:9000", // WebpackDevServer host and port

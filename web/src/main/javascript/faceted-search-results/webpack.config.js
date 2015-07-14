@@ -4,7 +4,12 @@ module.exports = {
     context: __dirname,
     entry: {
         "atlas-heatmap": "./index.js",
-        "demo" : "./html/demo.js",
+        "demo" :
+            [
+                "webpack-dev-server/client?http://localhost:9000", // WebpackDevServer host and port
+                "webpack/hot/only-dev-server",
+                "./html/demo.js"
+            ],
         "vendor": ["react", "react-radio-group", "jquery", "jquery-ui"]
     },
     output: {

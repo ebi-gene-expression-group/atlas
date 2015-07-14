@@ -16,6 +16,7 @@
   "devDependencies": {
     "expose-loader": "^0.7.0",
     "jsx-loader": "^0.13.2",
+    "react-hot-loader": "^1.2.8",
     "webpack": "^1.10.1"
   }
 }
