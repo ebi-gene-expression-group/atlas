@@ -17,7 +17,6 @@
     "expose-loader": "^0.7.0",
     "jsdom": "^5.6.1",
     "jsx-loader": "^0.12.2",
-    "mocha-jsdom": "^1.0.0",
     "mocha-loader": "^0.7.1",
     "react-hot-loader": "^1.2.8",
     "react-tools": "^0.12.2",

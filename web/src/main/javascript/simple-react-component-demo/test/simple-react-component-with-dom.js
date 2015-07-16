@@ -29,7 +29,7 @@ describe("SimpleComponent", function() {
     });
 
     it("should render on the page", function() {
-        expect(ReactTestUtils.renderIntoDocument(subject).getDOMNode().innerHTML).to.equal("Hello world, I’m super super super hot!");
+        expect(ReactTestUtils.renderIntoDocument(subject).getDOMNode().innerHTML).to.equal("Hello world, I’m not hot!");
     });
 });
 

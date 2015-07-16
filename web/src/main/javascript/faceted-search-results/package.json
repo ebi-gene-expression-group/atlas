@@ -4,7 +4,7 @@
   "description": "Differential and baseline faceted search results",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --compilers .jsx:lib/mocha-jsx-compiler.js test/test.js"
   },
   "author": "Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
   "license": "MIT",
@@ -15,9 +15,14 @@
     "react": "^0.12.2"
   },
   "devDependencies": {
+    "chai": "^3.0.0",
     "expose-loader": "^0.7.0",
     "jsx-loader": "^0.12.2",
+    "mocha": "^2.2.5",
+    "mocha-loader": "^0.7.1",
     "react-hot-loader": "^1.2.8",
+    "react-tools": "^0.13.3",
+    "testdom": "^1.1.0",
     "webpack": "^1.10.1",
     "webpack-dev-server": "^1.10.1"
   }
