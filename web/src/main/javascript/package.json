@@ -5,20 +5,20 @@
   "main": "webpack.config.js",
   "scripts": {
     "dev": "webpack --progress --colors --watch --debug --output-pathinfo --display-chunks --display-modules",
-    "prod": "webpack --progress --colors --optimize-minimize --optimize-dedupe --output-pathinfo --display-chunks --display-modules"
+    "prod": "webpack --progress --colors --optimize-minimize --output-pathinfo --display-chunks --display-modules"
   },
   "author": "Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
   "license": "MIT",
   "private": true,
   "devDependencies": {
     "expose-loader": "^0.7.0",
-    "jquery": "^2.1.4",
     "jsx-loader": "^0.12.2",
-    "react": "^0.12.2",
     "webpack": "^1.10.1"
   },
   "dependencies": {
+    "jquery": "^2.1.4",
+    "react": "^0.12.2",
     "jquery-ui": "^1.10.5",
-    "react-radio-group": "^2.0.2"
+    "react-radio-group": "^1.1.0"
   }
 }
