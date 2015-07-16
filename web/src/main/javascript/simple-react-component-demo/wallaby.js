@@ -1,7 +1,13 @@
+var path = require('path');
+
 module.exports = function () {
     return {
         env: {
-            type: 'node'
+            type: 'node',
+            runner: path.resolve(process.env.HOME, '.nvm/versions/io.js/v2.3.4/bin/node'),
+            params: {
+                runner: '--harmony --harmony_arrow_functions'
+            }
         },
 
         files: [

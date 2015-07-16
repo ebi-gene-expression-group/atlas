@@ -4,7 +4,7 @@
   "description": "A very simple React component to use with Webpack and expose-loader",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --watch --reporter nyan --compilers .jsx:lib/mocha-jsx-compiler.js test/test.js"
+    "test": "mocha --compilers .jsx:lib/mocha-jsx-compiler.js test/test.js"
   },
   "author": "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
   "license": "MIT",
