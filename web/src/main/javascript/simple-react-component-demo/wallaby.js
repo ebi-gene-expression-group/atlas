@@ -11,7 +11,7 @@ module.exports = function () {
         ],
 
         tests: [
-            'test/*Spec.js'
+            'test/*.js'
         ],
 
         testFramework: "mocha",

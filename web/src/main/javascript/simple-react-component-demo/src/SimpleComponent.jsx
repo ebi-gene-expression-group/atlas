@@ -11,7 +11,7 @@ var SimpleComponent = React.createClass({
     render: function () {
         var message = "Hello world, I’m super super super hot!";
         return (
-            <p>{message}</p>
+            <div>{message}</div>
         );
     }
 
