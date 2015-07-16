@@ -9,7 +9,8 @@ var $ = require('jquery');
 var jQuery = $;
 require('jquery-ui');
 require('jquery.browser');
-//require('../lib/jquery.hc-sticky.js')
+require('../lib/jquery.hc-sticky.js');
+
 
 var td = require('throttle-debounce');
 var EventEmitter = require('wolfy87-eventemitter');
@@ -238,8 +239,9 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                     repositionSticky();
                 }))
                 .scroll(repositionSticky);
+            ;
 
-            //$(this.refs.countAndLegend.getDOMNode()).hcSticky({bottomEnd: calcAllowance()});
+            $(this.refs.countAndLegend.getDOMNode()).hcSticky({bottomEnd: calcAllowance()});
             $w.resize();
         },
 

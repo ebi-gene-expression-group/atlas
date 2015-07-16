@@ -24,7 +24,7 @@ function drawHeatmap (data, targetElement, heatmapClass, heatmapBuilder, heatmap
         $(document).ready(function () {
             // call this inside ready() so all scripts load first in IE8
             var Heatmap = heatmapBuilder(heatmapConfig).Heatmap;
-console.log(anatomogramData);
+
             React.render(HeatmapContainer({Heatmap: Heatmap, isWidget: true, heatmapClass: heatmapClass, experiment: experimentData, anatomogram: anatomogramData,
                     columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig:heatmapConfig}),
                 targetElement

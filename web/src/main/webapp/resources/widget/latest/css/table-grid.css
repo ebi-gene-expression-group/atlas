@@ -239,6 +239,10 @@ th.gxaHeatmapTableDesignElement {
     background-color: white;
 }
 
+.sticky-active {
+    z-index: 45;
+}
+
 /* To hide sticky column and intersect when screen gets too narrow */
 @media only screen and (max-width: 768px) {
     .gxaStickyTableColumn, .gxaStickyTableIntersect {
