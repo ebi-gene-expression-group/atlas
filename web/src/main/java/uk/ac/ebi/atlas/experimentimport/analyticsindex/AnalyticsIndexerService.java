@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 import com.google.common.collect.*;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.commons.comparators.NaturalStringComparator;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline.BaselineAnalyticsIndexerService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.DiffAnalyticsIndexerService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.MicroArrayDiffAnalyticsIndexerService;
@@ -40,7 +39,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import java.util.Collections;
-import java.util.SortedSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -100,7 +98,7 @@ public class AnalyticsIndexerService {
     }
 
     public void indexAllPublicExperiments() throws InterruptedException {
-        TreeMultimap<Long, String> docsExperimentMap = TreeMultimap.create(Collections.reverseOrder(), new NaturalStringComparator());
+        TreeMultimap<Long, String> docsExperimentMap = TreeMultimap.create(Collections.reverseOrder(), Ordering.natural());
         for (ExperimentType experimentType : ExperimentType.values()) {
             for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
                 docsExperimentMap.put(analyticsIndexDao.getDocumentCount(experimentAccession), experimentAccession);
