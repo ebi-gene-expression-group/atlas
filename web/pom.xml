@@ -40,7 +40,7 @@
         <selenium.version>2.44.0</selenium.version>
         <tiles.version>2.2.2</tiles.version>
         <jasmine.js.src.location>src/main/webapp/resources/js</jasmine.js.src.location>
-        <solr.version>4.5.0</solr.version>
+        <solr.version>5.1.0</solr.version>
     </properties>
 
 

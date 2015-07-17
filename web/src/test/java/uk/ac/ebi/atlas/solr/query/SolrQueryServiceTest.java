@@ -68,7 +68,7 @@ public class SolrQueryServiceTest {
     private FacetedPropertyValueQueryBuilder facetedPropertyValueQueryBuilderMock;
 
     @Mock
-    private GxaSolrServer gxaSolrServerMock;
+    private GxaSolrClient gxaSolrClientMock;
 
     @Mock
     private SolrQuery solrQueryMock;
@@ -79,20 +79,20 @@ public class SolrQueryServiceTest {
     @Before
     public void initSubject() throws Exception {
 
-        given(gxaSolrServerMock.query(solrQueryMock, PROPERTY_VALUE_FIELD, false)).willReturn(Sets.newHashSet("symbol"));
+        given(gxaSolrClientMock.query(solrQueryMock, PROPERTY_VALUE_FIELD, false)).willReturn(Sets.newHashSet("symbol"));
         given(facetedPropertyValueQueryBuilderMock.withPropertyNames(SYMBOL)).willReturn(facetedPropertyValueQueryBuilderMock);
         given(facetedPropertyValueQueryBuilderMock.withPropertyNames(GENE_PAGE_PROPERTY_NAMES)).willReturn(facetedPropertyValueQueryBuilderMock);
         given(facetedPropertyValueQueryBuilderMock.buildBioentityQuery(BIOENTITY_IDENTIFIER)).willReturn(solrQueryMock);
         given(solrQueryBuilderFactoryMock.createFacetedPropertyValueQueryBuilder()).willReturn(facetedPropertyValueQueryBuilderMock);
         given(bioentityPropertyValueTokenizerMock.split(BIOENTITY_IDENTIFIER)).willReturn(Lists.newArrayList(BIOENTITY_IDENTIFIER));
 
-        subject = new BioEntityPropertyDao(solrQueryBuilderFactoryMock, gxaSolrServerMock, TOOLTIP_PROPERTY_TYPES);
+        subject = new BioEntityPropertyDao(solrQueryBuilderFactoryMock, gxaSolrClientMock, TOOLTIP_PROPERTY_TYPES);
     }
 
     @Test(expected = BioentityNotFoundException.class)
     public void shouldThrowException() throws Exception {
         SortedSetMultimap<String, String> emptyPropertyValues = TreeMultimap.create();
-        given(gxaSolrServerMock.queryForProperties(solrQueryMock)).willReturn(emptyPropertyValues);
+        given(gxaSolrClientMock.queryForProperties(solrQueryMock)).willReturn(emptyPropertyValues);
 
         subject.fetchGenePageProperties(BIOENTITY_IDENTIFIER, GENE_PAGE_PROPERTY_NAMES);
     }
@@ -101,7 +101,7 @@ public class SolrQueryServiceTest {
     public void shouldReturnSpecies() throws Exception {
         SortedSetMultimap<String, String> expectedPropertyValues = TreeMultimap.create();
         expectedPropertyValues.put("species", "cat");
-        given(gxaSolrServerMock.queryForProperties(solrQueryMock)).willReturn(expectedPropertyValues);
+        given(gxaSolrClientMock.queryForProperties(solrQueryMock)).willReturn(expectedPropertyValues);
         SortedSetMultimap<String, String> propertyValues = subject.fetchGenePageProperties(BIOENTITY_IDENTIFIER, GENE_PAGE_PROPERTY_NAMES);
         assertThat(propertyValues, is(expectedPropertyValues));
     }

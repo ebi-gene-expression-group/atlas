@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.solr.query.BioentityNotFoundException;
-import uk.ac.ebi.atlas.solr.query.GxaSolrServer;
+import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
 import uk.ac.ebi.atlas.solr.query.builders.SolrQueryBuilderFactory;
 
 import javax.inject.Inject;
@@ -18,7 +18,7 @@ public class BioEntityPropertyDao {
     private static final Logger LOGGER = Logger.getLogger(BioEntityPropertyDao.class);
 
     private final SolrQueryBuilderFactory solrQueryBuilderFactory;
-    private final GxaSolrServer solrServer;
+    private final GxaSolrClient solrServer;
     private final String[] tooltipPropertyTypes;
 
     private static final String PROPERTY_NAME_FIELD = "property_name";
@@ -26,7 +26,7 @@ public class BioEntityPropertyDao {
     private static final int PROPERTY_VALUES_LIMIT = 1000;
 
     @Inject
-    public BioEntityPropertyDao(SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrServer solrServer, @Value("#{configuration['index.property_names.tooltip']}") String[] tooltipPropertyTypes) {
+    public BioEntityPropertyDao(SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrClient solrServer, @Value("#{configuration['index.property_names.tooltip']}") String[] tooltipPropertyTypes) {
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
         this.solrServer = solrServer;
         this.tooltipPropertyTypes = tooltipPropertyTypes;

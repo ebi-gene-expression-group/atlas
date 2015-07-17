@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.model.Species;
 import uk.ac.ebi.atlas.solr.BioentityType;
-import uk.ac.ebi.atlas.solr.query.GxaSolrServer;
+import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
 
 import javax.inject.Inject;
 
@@ -29,7 +29,7 @@ public class AutocompleteGroupedPropertyValueQueryBuilderIT {
     private SolrQueryBuilderFactory solrQueryBuilderFactory;
 
     @Inject
-    private GxaSolrServer solrServer;
+    private GxaSolrClient solrServer;
 
     @Test
     public void asp() {

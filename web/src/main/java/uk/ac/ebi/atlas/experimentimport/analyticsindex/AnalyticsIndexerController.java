@@ -47,6 +47,23 @@ public class AnalyticsIndexerController {
         this.analyticsIndexerService = analyticsIndexerService;
     }
 
+    @RequestMapping("/analyticsIndex/indexAllExperiments")
+    @ResponseBody
+    public String indexAllPublicExperiments() {
+        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
+        stopWatch.start();
+
+        try {
+            analyticsIndexerService.indexAllPublicExperiments();
+        } catch (InterruptedException e) {
+            return e.getStackTrace().toString();
+        }
+
+        stopWatch.stop();
+
+        return String.format("All experiments (re)indexed in %s seconds", stopWatch.getTotalTimeSeconds());
+    }
+
     @RequestMapping("/analyticsIndex/indexExperiment")
     @ResponseBody
     public String indexExperiment(@RequestParam("accession") String experimentAccession) {

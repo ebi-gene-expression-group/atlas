@@ -26,8 +26,8 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
@@ -36,34 +36,32 @@ import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.util.Set;
 
 @Named
 @Scope("singleton")
-public class GxaSolrServer {
-    private static final Logger LOGGER = Logger.getLogger(GxaSolrServer.class);
+public class GxaSolrClient {
+    private static final Logger LOGGER = Logger.getLogger(GxaSolrClient.class);
 
     public static final String PROPERTY_NAME_FIELD = "property_name";
     private static final String PROPERTY_VALUE_FIELD = "property_value";
 
-    private SolrServer solrServer;
+    private SolrClient solrClient;
 
     @Inject
-    public GxaSolrServer(SolrServer solrServer){
-        this.solrServer = solrServer;
+    public GxaSolrClient(SolrClient solrClient){
+        this.solrClient = solrClient;
     }
 
     public QueryResponse query(SolrQuery solrQuery) {
         try {
-            QueryResponse queryResponse = solrServer.query(solrQuery);
+            QueryResponse queryResponse = solrClient.query(solrQuery);
             //LOGGER.debug("<query> Solr query time: " + queryResponse.getQTime() + "ms, status code: " + queryResponse.getStatus());
             return queryResponse;
-        } catch (SolrServerException e) {
+        } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new SolrException(SolrException.ErrorCode.UNKNOWN, e);
-        } catch (SolrException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw e;
         }
     }
 

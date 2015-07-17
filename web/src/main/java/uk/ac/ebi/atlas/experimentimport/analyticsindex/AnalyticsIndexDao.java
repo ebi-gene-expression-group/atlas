@@ -1,7 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -15,18 +15,18 @@ import java.io.IOException;
 public class AnalyticsIndexDao {
     private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexDao.class);
 
-    private SolrServer solrServer;
+    private SolrClient solrClient;
 
     @Inject
-    public AnalyticsIndexDao(@Qualifier("analyticsSolrServer") SolrServer solrServer) {
-        this.solrServer = solrServer;
+    public AnalyticsIndexDao(@Qualifier("analyticsSolrClient") SolrClient solrClient) {
+        this.solrClient = solrClient;
     }
 
     public void addDocument(AnalyticsDocument analyticsDocument) {
         try {
-            solrServer.addBean(analyticsDocument);
+            solrClient.addBean(analyticsDocument);
 
-            solrServer.commit();
+            solrClient.commit();
         } catch (IOException | SolrServerException e) {
             LOGGER.error(e);
             rollBack();
@@ -42,11 +42,11 @@ public class AnalyticsIndexDao {
         try {
 
             for (AnalyticsDocument document : documents) {
-                solrServer.addBean(document);
+                solrClient.addBean(document);
                 count++;
             }
 
-            solrServer.commit();
+            solrClient.commit();
         } catch (Exception e) {
             LOGGER.error(e);
             rollBack();
@@ -59,8 +59,8 @@ public class AnalyticsIndexDao {
     public void deleteDocumentsForExperiment(String accession) {
 
         try {
-            solrServer.deleteByQuery("experimentAccession:" + accession);
-            solrServer.commit();
+            solrClient.deleteByQuery("experimentAccession:" + accession);
+            solrClient.commit();
         } catch (IOException | SolrServerException e) {
             LOGGER.error(e);
             rollBack();
@@ -70,7 +70,7 @@ public class AnalyticsIndexDao {
 
     private void rollBack() {
         try {
-            solrServer.rollback();
+            solrClient.rollback();
         } catch (IOException | SolrServerException e) {
             LOGGER.error(e);
         }
@@ -80,5 +80,13 @@ public class AnalyticsIndexDao {
         public AnalyticsIndexerException(Exception e) {
             super(e);
         }
+    }
+
+    public int getDocumentCount(String accession) {
+
+        int documentCount = 0;
+
+
+        return documentCount;
     }
 }

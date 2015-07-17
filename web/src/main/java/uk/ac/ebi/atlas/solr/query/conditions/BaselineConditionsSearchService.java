@@ -27,17 +27,16 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrRequest;
-import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.*;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,20 +44,20 @@ import java.util.List;
 @Scope("singleton")
 public class BaselineConditionsSearchService {
 
-    private SolrServer baselineConditionsSolrServer;
+    private SolrClient baselineConditionsSolrClient;
 
     private ConditionsSolrQueryBuilder queryBuilder;
 
     @Inject
-    public BaselineConditionsSearchService(@Qualifier("baselineConditionsSolrServer") SolrServer baselineConditionsSolrServer, ConditionsSolrQueryBuilder queryBuilder) {
-        this.baselineConditionsSolrServer = baselineConditionsSolrServer;
+    public BaselineConditionsSearchService(@Qualifier("baselineConditionsSolrClient") SolrClient baselineConditionsSolrClient, ConditionsSolrQueryBuilder queryBuilder) {
+        this.baselineConditionsSolrClient = baselineConditionsSolrClient;
         this.queryBuilder = queryBuilder;
     }
 
     Collection<IndexedAssayGroup> findAssayGroups(String queryString) {
 
         try {
-            QueryResponse queryResponse = baselineConditionsSolrServer.query(queryBuilder.build(queryString));
+            QueryResponse queryResponse = baselineConditionsSolrClient.query(queryBuilder.build(queryString));
             List<Condition> beans = queryResponse.getBeans(Condition.class);
 
             Collection<IndexedAssayGroup> result = Collections2.transform(beans, new Function<Condition, IndexedAssayGroup>() {
@@ -71,6 +70,8 @@ public class BaselineConditionsSearchService {
             return Sets.newHashSet(result);
         } catch (SolrServerException e) {
             throw new IllegalStateException("Conditions index query failed!", e);
+        } catch (IOException e) {
+            throw new SolrException(SolrException.ErrorCode.UNKNOWN, e);
         }
     }
 
@@ -78,7 +79,7 @@ public class BaselineConditionsSearchService {
 
            try {
                SolrQuery solrQuery = queryBuilder.build(queryString);
-               QueryResponse queryResponse = baselineConditionsSolrServer.query(solrQuery, SolrRequest.METHOD.POST);
+               QueryResponse queryResponse = baselineConditionsSolrClient.query(solrQuery, SolrRequest.METHOD.POST);
                List<Condition> beans = queryResponse.getBeans(Condition.class);
 
                SetMultimap<String, String> result = HashMultimap.create();
@@ -89,6 +90,8 @@ public class BaselineConditionsSearchService {
                return result;
            } catch (SolrServerException e) {
                throw new IllegalStateException("Conditions index query failed!", e);
+           } catch (IOException e) {
+               throw new SolrException(SolrException.ErrorCode.UNKNOWN, e);
            }
        }
 }

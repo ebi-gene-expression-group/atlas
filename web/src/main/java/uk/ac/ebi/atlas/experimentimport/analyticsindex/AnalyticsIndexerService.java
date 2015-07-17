@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
+import com.google.common.collect.ImmutableSet;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline.BaselineAnalyticsIndexerService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.DiffAnalyticsIndexerService;
@@ -36,17 +38,25 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Named
 @Scope("singleton")
 public class AnalyticsIndexerService {
 
+    private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerService.class);
+
     private final AnalyticsIndexDao analyticsIndexDao;
     private final BaselineAnalyticsIndexerService baselineAnalyticsIndexerService;
     private final DiffAnalyticsIndexerService diffAnalyticsIndexerService;
     private final MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService;
     private final ExperimentTrader experimentTrader;
+
+    private static final int INDEXING_THREADS = 10;
 
     @Inject
     public AnalyticsIndexerService(AnalyticsIndexDao analyticsIndexDao, BaselineAnalyticsIndexerService baselineAnalyticsIndexerService, DiffAnalyticsIndexerService diffAnalyticsIndexerService, MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService, ExperimentTrader experimentTrader) {
@@ -84,9 +94,37 @@ public class AnalyticsIndexerService {
         throw new UnsupportedOperationException("No analytics loader for experiment type " + experimentType);
     }
 
-
     public void deleteExperimentFromIndex(String accession) {
         analyticsIndexDao.deleteDocumentsForExperiment(accession);
+    }
+
+    public void indexAllPublicExperiments() throws InterruptedException {
+        ImmutableSet.Builder<String> builder = ImmutableSet.builder();
+        for (ExperimentType experimentType : ExperimentType.values()) {
+            builder.addAll(experimentTrader.getPublicExperimentAccessions(experimentType));
+        }
+
+        ExecutorService pool = Executors.newFixedThreadPool(INDEXING_THREADS);
+        for (String experimentAccession : builder.build()) {
+            pool.execute(new ReindexTask(experimentAccession));
+        }
+
+        pool.awaitTermination(10, TimeUnit.MINUTES);
+    }
+
+    private class ReindexTask implements Runnable {
+        private final String experimentAccession;
+
+        public ReindexTask(String experimentAccession) {
+            this.experimentAccession = experimentAccession;
+        }
+
+        public void run() {
+            LOGGER.debug(String.format("ReindexTask started for %s", experimentAccession));
+            deleteExperimentFromIndex(experimentAccession);
+            index(experimentAccession);
+            LOGGER.debug(String.format("ReindexTask finished for %s", experimentAccession));
+        }
     }
 
 }
