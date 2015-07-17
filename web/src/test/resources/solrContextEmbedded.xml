@@ -33,7 +33,7 @@
     <bean id="embeddedSolrServerFactory" class="uk.ac.ebi.atlas.solr.EmbeddedSolrServerFactory">
     </bean>
 
-    <bean id="solrServer" class="org.apache.solr.client.solrj.embedded.EmbeddedSolrServer"
+    <bean id="solrClient" class="org.apache.solr.client.solrj.embedded.EmbeddedSolrServer"
           factory-bean="embeddedSolrServerFactory" factory-method="createEmbeddedSolrServerInstance" >
     </bean>
 

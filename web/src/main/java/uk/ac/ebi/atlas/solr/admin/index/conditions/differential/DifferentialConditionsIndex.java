@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions.differential;
 
-import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -14,7 +14,7 @@ import javax.inject.Named;
 public class DifferentialConditionsIndex extends ConditionsIndex<DifferentialExperiment> {
 
     @Inject
-    public DifferentialConditionsIndex(@Qualifier("differentialConditionsSolrServer") SolrServer solrServer, DifferentialConditionsBuilder propertiesBuilder) {
-        super(solrServer, propertiesBuilder);
+    public DifferentialConditionsIndex(@Qualifier("differentialConditionsSolrClient") SolrClient solrClient, DifferentialConditionsBuilder propertiesBuilder) {
+        super(solrClient, propertiesBuilder);
     }
 }

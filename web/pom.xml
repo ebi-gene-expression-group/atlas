@@ -225,7 +225,7 @@
         </dependency>
 
 
-        <!--limpopo MAGET-Tab investigation-->
+        <!--limpopo MAGE-Tab investigation-->
         <dependency>
             <groupId>uk.ac.ebi.arrayexpress2</groupId>
             <artifactId>limpopo</artifactId>

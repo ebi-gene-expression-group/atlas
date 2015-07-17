@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.solr.admin.index.conditions.baseline;
 
-import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
@@ -14,7 +14,7 @@ import javax.inject.Named;
 public class BaselineConditionsIndex extends ConditionsIndex<BaselineExperiment> {
 
     @Inject
-    public BaselineConditionsIndex(@Qualifier("baselineConditionsSolrServer") SolrServer factorSolrServer, BaselineConditionsBuilder propertiesBuilder) {
-        super(factorSolrServer, propertiesBuilder);
+    public BaselineConditionsIndex(@Qualifier("baselineConditionsSolrClient") SolrClient factorSolrClient, BaselineConditionsBuilder propertiesBuilder) {
+        super(factorSolrClient, propertiesBuilder);
     }
 }

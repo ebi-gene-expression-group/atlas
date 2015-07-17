@@ -22,16 +22,16 @@
 
 package uk.ac.ebi.atlas.solr;
 
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 
 import java.util.Collection;
 
 import static org.mockito.Mockito.mock;
 
-public class DummyUpdateSolrServer extends HttpSolrServer{
+public class DummyUpdateSolrClient extends HttpSolrClient {
 
-    public DummyUpdateSolrServer(String baseUrl){
+    public DummyUpdateSolrClient(String baseUrl){
         super(baseUrl);
     }
 
