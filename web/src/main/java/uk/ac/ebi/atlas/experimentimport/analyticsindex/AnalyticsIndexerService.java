@@ -22,9 +22,10 @@
 
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.*;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.commons.comparators.NaturalStringComparator;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline.BaselineAnalyticsIndexerService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.DiffAnalyticsIndexerService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.differential.MicroArrayDiffAnalyticsIndexerService;
@@ -38,6 +39,8 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import java.util.Collections;
+import java.util.SortedSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -70,9 +73,7 @@ public class AnalyticsIndexerService {
 
     public int index(String experimentAccession) {
         checkNotNull(experimentAccession);
-
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-
         return index(experiment);
     }
 
@@ -99,17 +100,21 @@ public class AnalyticsIndexerService {
     }
 
     public void indexAllPublicExperiments() throws InterruptedException {
-        ImmutableSet.Builder<String> builder = ImmutableSet.builder();
+        TreeMultimap<Long, String> docsExperimentMap = TreeMultimap.create(Collections.reverseOrder(), new NaturalStringComparator());
         for (ExperimentType experimentType : ExperimentType.values()) {
-            builder.addAll(experimentTrader.getPublicExperimentAccessions(experimentType));
+            for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
+                docsExperimentMap.put(analyticsIndexDao.getDocumentCount(experimentAccession), experimentAccession);
+            }
         }
 
-        ExecutorService pool = Executors.newFixedThreadPool(INDEXING_THREADS);
-        for (String experimentAccession : builder.build()) {
-            pool.execute(new ReindexTask(experimentAccession));
+        ExecutorService threadPool = Executors.newFixedThreadPool(INDEXING_THREADS);
+
+        for (String experimentAccession : docsExperimentMap.values()) {
+            threadPool.execute(new ReindexTask(experimentAccession));
         }
 
-        pool.awaitTermination(10, TimeUnit.MINUTES);
+        threadPool.shutdown();
+        threadPool.awaitTermination(1, TimeUnit.HOURS);
     }
 
     private class ReindexTask implements Runnable {
@@ -126,5 +131,4 @@ public class AnalyticsIndexerService {
             LOGGER.debug(String.format("ReindexTask finished for %s", experimentAccession));
         }
     }
-
 }

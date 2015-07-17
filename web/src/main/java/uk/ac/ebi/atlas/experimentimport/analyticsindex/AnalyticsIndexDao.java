@@ -2,7 +2,9 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 
@@ -82,11 +84,21 @@ public class AnalyticsIndexDao {
         }
     }
 
-    public int getDocumentCount(String accession) {
+    public long getDocumentCount(String accession) {
 
-        int documentCount = 0;
+        SolrQuery parameters = new SolrQuery();
+        parameters.set("q", "experimentAccession:" + accession);
+        parameters.set("rows", 0);
 
+        try {
+            SolrDocumentList list = solrClient.query(parameters).getResults();
+            return list.getNumFound();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SolrServerException e) {
+            e.printStackTrace();
+        }
 
-        return documentCount;
+        return 0;
     }
 }
