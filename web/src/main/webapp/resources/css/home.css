@@ -22,8 +22,17 @@
 
 
 #species-nav h2 small {color:grey;font-size: 76%;}
-#species-nav .specie_item {min-height: 160px; text-align: center;}
+#species-nav .specie_item {min-height: 338px; text-align: center;}
 #species-nav .specie_item h2 {color:black;font-size: 140%;padding-left:0;
     margin-left:0;font-weight: bold;/*display: inline;*/}
-#species-nav .specie_item span {font-size: 500%;}
-#species-nav .specie_item span:before {color:#d9534f;}
+#species-nav .specie_item h3 {text-align: center; font-size: 151%; color:black;font-weight: bold;}
+#species-nav .specie_item ul li{text-align: center;}
+#species-nav .specie_item span {font-size: 700%;}
+#species-nav .specie_item span.red:before {color:#d9534f;} /*animal*/
+#species-nav .specie_item span.green:before {color:#5cb85c;}/*plants*/
+#species-nav .specie_item span.blue:before {color:#5bc0de;}/*other*/
+/*FEED NEWS*/
+.bloc_blog  ul {padding: 0 9px;}
+.bloc_blog ul li {list-style: none;}
+.bloc_blog .rssRow div  {color:#777; font-size: 90%;}
+.bloc_blog h3 { margin: 9px 0; clear: both; line-height:1.2;}

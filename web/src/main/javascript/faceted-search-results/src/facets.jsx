@@ -5,7 +5,7 @@
 var React = require('react');
 
 //*------------------------------------------------------------------*
-
+require('../css/facets.css');
 var Facets = React.createClass({
     propTypes: {
 
@@ -53,9 +53,9 @@ var Facets = React.createClass({
         }.bind(this));
 
         return (
-            <ul>
-                        {facets}
-            </ul>
+            <div className="filter_container hidden-xs"><h3>Filter your results</h3>
+                {facets}
+            </div>
         );
     }
 });
@@ -90,12 +90,12 @@ var Facet = React.createClass({
         }.bind(this));
 
         return (
-            <li className="atlasAnalyticsSearchFacet">
-                <span>{this.props.facetName}</span>
-                <ul>
-                            {facetItems}
+            <div className="facet_item atlasAnalyticsSearchFacet">
+                <h4>{this.props.facetName}</h4>
+                <ul >
+                    {facetItems}
                 </ul>
-            </li>
+            </div>
         );
     }
 });

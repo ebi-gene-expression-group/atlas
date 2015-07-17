@@ -26,7 +26,8 @@ module.exports = {
         loaders: [
             {test: /\.jsx$/, loader: 'jsx-loader'},
             {test: /\-page.js$/, loader: 'expose?exposed'},
-            {test: /index.js$/, loader: 'expose?exposed'}
+            {test: /index.js$/, loader: 'expose?exposed'},
+            {test: /\.css$/, loader: 'style-loader!css-loader'}
         ]
     },
 

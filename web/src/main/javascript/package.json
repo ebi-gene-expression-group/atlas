@@ -11,8 +11,10 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "css-loader": "^0.15.4",
     "expose-loader": "^0.7.0",
     "jsx-loader": "^0.12.2",
+    "style-loader": "^0.12.3",
     "webpack": "^1.10.1"
   },
   "dependencies": {
