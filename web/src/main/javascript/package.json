@@ -15,6 +15,9 @@
     "expose-loader": "^0.7.0",
     "jsx-loader": "^0.12.2",
     "style-loader": "^0.12.3",
+    "file-loader": "^0.8.4",
+    "image-webpack-loader": "^1.6.1",
+    "imagemin": "^3.2.0",
     "webpack": "^1.10.1"
   },
   "dependencies": {

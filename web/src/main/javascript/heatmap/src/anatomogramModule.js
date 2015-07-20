@@ -8,6 +8,10 @@ require('../lib/jquery.svg.js');
 
 //*------------------------------------------------------------------*
 
+require('../css/table-grid.css');
+
+//*------------------------------------------------------------------*
+
 module.exports = function () {
 
     function setHilighting(path, color, opacity) {

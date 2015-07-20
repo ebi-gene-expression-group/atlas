@@ -25,6 +25,9 @@ var factorTooltipModule = require('./factorTooltipModule.js');
 var contrastTooltipModule = require('./contrastTooltipModule.js');
 var helpTooltipsModule = require('./helpTooltipsModule.js');
 
+require('../css/table-grid.css');
+require('../css/jquery-ui.min.css');
+
 //*------------------------------------------------------------------*
 
 var TypeEnum = {

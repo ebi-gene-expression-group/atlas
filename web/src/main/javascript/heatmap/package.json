@@ -23,7 +23,11 @@
   },
   "devDependencies": {
     "chai": "^3.0.0",
+    "css-loader": "^0.15.4",
     "expose-loader": "^0.7.0",
+    "file-loader": "^0.8.4",
+    "image-webpack-loader": "^1.6.1",
+    "imagemin": "^3.2.0",
     "jsdom": "^5.6.1",
     "jsx-loader": "^0.12.2",
     "mocha": "^2.2.5",

@@ -9,6 +9,8 @@ var React = require('react');
 //*------------------------------------------------------------------*
 
 var ContrastTooltip = require('./contrastTooltip.jsx');
+require('../css/atlas.css');
+require('../css/heatmap-and-anatomogram.css');
 
 //*------------------------------------------------------------------*
 

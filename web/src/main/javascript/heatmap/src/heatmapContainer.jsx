@@ -9,6 +9,11 @@ var jQuery = $;
 
 //*------------------------------------------------------------------*
 
+require('../css/atlas.css');
+require('../css/heatmap-and-anatomogram.css');
+
+//*------------------------------------------------------------------*
+
 var ExperimentDescription = React.createClass({
 
     render: function () {

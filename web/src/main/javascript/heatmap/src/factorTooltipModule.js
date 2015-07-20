@@ -9,6 +9,8 @@ var React = require('react');
 //*------------------------------------------------------------------*
 
 var FactorTooltip = require('./factorTooltip.jsx');
+require('../css/atlas.css');
+require('../css/heatmap-and-anatomogram.css');
 
 //*------------------------------------------------------------------*
 

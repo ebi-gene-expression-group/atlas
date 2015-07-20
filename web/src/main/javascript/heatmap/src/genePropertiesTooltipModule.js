@@ -8,6 +8,10 @@ require('jquery-highlight');
 
 //*------------------------------------------------------------------*
 
+require('../css/atlas.css');
+
+//*------------------------------------------------------------------*
+
 function splitIntoWords(geneQuery){
     var words = [];
     geneQuery.replace(/"([^"]*)"|(\S+)/g,
