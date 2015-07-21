@@ -1,25 +1,15 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
-import com.google.common.collect.Ordering;
 import com.google.common.collect.TreeMultimap;
-import org.apache.hadoop.hdfs.server.datanode.DirectoryScanner;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.ExperimentSorter;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.*;
-import java.text.MessageFormat;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

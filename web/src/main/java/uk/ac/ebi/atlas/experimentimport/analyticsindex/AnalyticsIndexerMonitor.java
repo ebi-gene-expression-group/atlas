@@ -1,15 +1,10 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
-import apple.laf.JRSUIUtils;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.TreeMultimap;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.model.Experiment;
-import uk.ac.ebi.atlas.utils.ExperimentSorter;
 
-import javax.inject.Inject;
 import javax.inject.Named;
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Observable;
