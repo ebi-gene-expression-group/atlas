@@ -24,7 +24,7 @@ import static org.hamcrest.core.Is.is;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class ExperimentSorterIT {
 
-    private static final String BIGGEST_TEST_EXPERIMENT_ACCESSION_E_TABM_51 = "E-TABM-51";
+    private static final String BIGGEST_TEST_EXPERIMENT_ACCESSION_E_GEOD_12108 = "E-GEOD-12108";
     private static final String SMALLEST_TEST_EXPERIMENT_ACCESSION_E_MTAB_2039 = "E-MTAB-2039";
 
     @Inject
@@ -36,7 +36,7 @@ public class ExperimentSorterIT {
         Iterator<String> iterator = experimentAccessionsPerSizeDescending.iterator();
 
         String firstExperiment = iterator.next();
-        assertThat(firstExperiment, is(BIGGEST_TEST_EXPERIMENT_ACCESSION_E_TABM_51));
+        assertThat(firstExperiment, is(BIGGEST_TEST_EXPERIMENT_ACCESSION_E_GEOD_12108));
 
         String lastExperiment = firstExperiment;
         while (iterator.hasNext()) {

@@ -20,17 +20,17 @@ public class SpeciesKingdomTraderIT {
     private SpeciesKingdomTrader subject;
 
     @Test
-    public void caenorhabditisElegansReturnsMetazoa() throws Exception {
-        assertThat(subject.getKingdom("caenorhabditis elegans"), is("metazoa"));
+    public void caenorhabditisElegansKingomIsAnimals() throws Exception {
+        assertThat(subject.getKingdom("caenorhabditis elegans"), is("animals"));
     }
 
     @Test
-    public void bosTaurusReturnsEnsembl() throws Exception {
-        assertThat(subject.getKingdom("bos taurus"), is("ensembl"));
+    public void bosTaurusKingdomIsAnimals() throws Exception {
+        assertThat(subject.getKingdom("bos taurus"), is("animals"));
     }
 
     @Test
-    public void oryzaSativaJaponicaGroupReturnsPlants() throws Exception {
+    public void oryzaSativaJaponicaGroupKingodmIsPlants() throws Exception {
         assertThat(subject.getKingdom("oryza sativa japonica group"), is("plants"));
     }
 
