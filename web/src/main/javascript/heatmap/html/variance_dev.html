@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Heatmap demo</title>
+
+    <script src="/dev-server/vendor.bundle.js"></script>
+    <script src="/dev-server/demo.bundle.js"></script>
+</head>
+<body>
+<div id="heatmapContainer">
+
+</div>
+</body>
+
+<script language="JavaScript" type="text/javascript">
+    var AtlasHeatmapBuilder = window.exposed;
+    AtlasHeatmapBuilder({
+        gxaBaseUrl: "http://wwwdev.ebi.ac.uk/gxa/",
+        params: "geneQuery=CALCR&species=homo%20sapiens",
+        isMultiExperiment: false,
+        target: "heatmapContainer"
+    });
+</script>
+
+</html>
