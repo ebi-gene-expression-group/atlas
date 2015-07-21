@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
-import com.google.common.collect.*;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.baseline.BaselineAnalyticsIndexerService;
@@ -38,26 +37,15 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import java.util.Collections;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-
 @Named
 @Scope("singleton")
 public class AnalyticsIndexerService {
-
     private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerService.class);
 
     private final AnalyticsIndexDao analyticsIndexDao;
     private final BaselineAnalyticsIndexerService baselineAnalyticsIndexerService;
     private final DiffAnalyticsIndexerService diffAnalyticsIndexerService;
     private final MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService;
-    private final ExperimentTrader experimentTrader;
-
-    private static final int INDEXING_THREADS = 10;
 
     @Inject
     public AnalyticsIndexerService(AnalyticsIndexDao analyticsIndexDao, BaselineAnalyticsIndexerService baselineAnalyticsIndexerService, DiffAnalyticsIndexerService diffAnalyticsIndexerService, MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService, ExperimentTrader experimentTrader) {
@@ -65,17 +53,9 @@ public class AnalyticsIndexerService {
         this.baselineAnalyticsIndexerService = baselineAnalyticsIndexerService;
         this.diffAnalyticsIndexerService = diffAnalyticsIndexerService;
         this.microArrayDiffAnalyticsIndexerService = microArrayDiffAnalyticsIndexerService;
-
-        this.experimentTrader = experimentTrader;
     }
 
-    public int index(String experimentAccession) {
-        checkNotNull(experimentAccession);
-        Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
-        return index(experiment);
-    }
-
-    private int index(Experiment experiment) {
+    public int index(Experiment experiment) {
        ExperimentType experimentType = experiment.getType();
 
         if (experimentType == ExperimentType.RNASEQ_MRNA_BASELINE) {
@@ -94,39 +74,8 @@ public class AnalyticsIndexerService {
     }
 
     public void deleteExperimentFromIndex(String accession) {
+        LOGGER.info("Deleting documents for " + accession);
         analyticsIndexDao.deleteDocumentsForExperiment(accession);
-    }
-
-    public void indexAllPublicExperiments() throws InterruptedException {
-        TreeMultimap<Long, String> docsExperimentMap = TreeMultimap.create(Collections.reverseOrder(), Ordering.natural());
-        for (ExperimentType experimentType : ExperimentType.values()) {
-            for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {
-                docsExperimentMap.put(analyticsIndexDao.getDocumentCount(experimentAccession), experimentAccession);
-            }
-        }
-
-        ExecutorService threadPool = Executors.newFixedThreadPool(INDEXING_THREADS);
-
-        for (String experimentAccession : docsExperimentMap.values()) {
-            threadPool.execute(new ReindexTask(experimentAccession));
-        }
-
-        threadPool.shutdown();
-        threadPool.awaitTermination(1, TimeUnit.HOURS);
-    }
-
-    private class ReindexTask implements Runnable {
-        private final String experimentAccession;
-
-        public ReindexTask(String experimentAccession) {
-            this.experimentAccession = experimentAccession;
-        }
-
-        public void run() {
-            LOGGER.debug(String.format("ReindexTask started for %s", experimentAccession));
-            deleteExperimentFromIndex(experimentAccession);
-            index(experimentAccession);
-            LOGGER.debug(String.format("ReindexTask finished for %s", experimentAccession));
-        }
+        LOGGER.info("Done deleting documents for " + accession);
     }
 }

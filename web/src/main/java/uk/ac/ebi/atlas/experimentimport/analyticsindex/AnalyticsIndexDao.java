@@ -2,9 +2,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 
@@ -18,6 +16,8 @@ public class AnalyticsIndexDao {
     private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexDao.class);
 
     private SolrClient solrClient;
+
+    private static final int COMMIT_TIME_IN_MILISECONDS = 15 * 60 * 1000;  // 15 minutes
 
     @Inject
     public AnalyticsIndexDao(@Qualifier("analyticsSolrClient") SolrClient solrClient) {
@@ -39,12 +39,10 @@ public class AnalyticsIndexDao {
 
     public int addDocuments(Iterable<AnalyticsDocument> documents) {
         int count = 0;
-        //TODO: determine best commit size
 
         try {
-
             for (AnalyticsDocument document : documents) {
-                solrClient.addBean(document);
+                solrClient.addBean(document, COMMIT_TIME_IN_MILISECONDS);
                 count++;
             }
 
@@ -59,7 +57,6 @@ public class AnalyticsIndexDao {
     }
 
     public void deleteDocumentsForExperiment(String accession) {
-
         try {
             solrClient.deleteByQuery("experimentAccession:" + accession);
             solrClient.commit();
@@ -84,21 +81,4 @@ public class AnalyticsIndexDao {
         }
     }
 
-    public long getDocumentCount(String accession) {
-
-        SolrQuery parameters = new SolrQuery();
-        parameters.set("q", "experimentAccession:" + accession);
-        parameters.set("rows", 0);
-
-        try {
-            SolrDocumentList list = solrClient.query(parameters).getResults();
-            return list.getNumFound();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SolrServerException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
 }

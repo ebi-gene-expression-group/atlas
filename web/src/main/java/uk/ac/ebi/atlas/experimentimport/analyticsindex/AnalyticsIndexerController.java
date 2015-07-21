@@ -40,39 +40,44 @@ public class AnalyticsIndexerController {
 
     private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerController.class);
 
-    private AnalyticsIndexerService analyticsIndexerService;
+    private AnalyticsIndexerManager analyticsIndexerManager;
+    private AnalyticsIndexerMonitor analyticsIndexerMonitor;
 
     @Inject
-    public AnalyticsIndexerController(AnalyticsIndexerService analyticsIndexerService) {
-        this.analyticsIndexerService = analyticsIndexerService;
+    public AnalyticsIndexerController(AnalyticsIndexerManager analyticsIndexerManager, AnalyticsIndexerMonitor analyticsIndexerMonitor) {
+        this.analyticsIndexerManager = analyticsIndexerManager;
+        this.analyticsIndexerMonitor = analyticsIndexerMonitor;
     }
 
     @RequestMapping("/analyticsIndex/indexAllExperiments")
     @ResponseBody
-    public String indexAllPublicExperiments() {
-        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-        stopWatch.start();
+    public String indexAllPublicExperiments(@RequestParam(value = "threads", required = false) Integer numThreads) {
+        analyticsIndexerManager.addObserver(analyticsIndexerMonitor);
 
         try {
-            analyticsIndexerService.indexAllPublicExperiments();
+            analyticsIndexerManager.indexAllPublicExperiments(numThreads);
         } catch (InterruptedException e) {
             return e.getStackTrace().toString();
         }
 
-        stopWatch.stop();
+        analyticsIndexerManager.deleteObservers();
 
-        return String.format("All experiments (re)indexed in %s seconds", stopWatch.getTotalTimeSeconds());
+        return analyticsIndexerMonitor.toString();
+    }
+
+    @RequestMapping("/analyticsIndex/indexAllExperiments/status")
+    @ResponseBody
+    public String indexAllPublicExperimentsStatus() {
+        return analyticsIndexerMonitor.toString();
     }
 
     @RequestMapping("/analyticsIndex/indexExperiment")
     @ResponseBody
     public String indexExperiment(@RequestParam("accession") String experimentAccession) {
-        analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
-
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        int count = analyticsIndexerService.index(experimentAccession);
+        int count = analyticsIndexerManager.addToAnalyticsIndex(experimentAccession);
 
         stopWatch.stop();
 
@@ -85,7 +90,7 @@ public class AnalyticsIndexerController {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
+        analyticsIndexerManager.deleteFromAnalyticsIndex(experimentAccession);
 
         stopWatch.stop();
 
