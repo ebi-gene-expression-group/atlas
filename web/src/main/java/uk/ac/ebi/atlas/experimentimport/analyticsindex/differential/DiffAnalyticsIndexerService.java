@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.SpeciesGrouper;
@@ -45,6 +46,7 @@ import java.util.Set;
 @Named
 @Scope("singleton")
 public class DiffAnalyticsIndexerService {
+    private static final Logger LOGGER = Logger.getLogger(DiffAnalyticsIndexerService.class);
 
     private final EFOParentsLookupService efoParentsLookupService;
     private final DifferentialConditionsBuilder diffConditionsBuilder;
@@ -59,6 +61,9 @@ public class DiffAnalyticsIndexerService {
 
     public int index(DifferentialExperiment experiment) {
         String experimentAccession = experiment.getAccession();
+
+        LOGGER.info("Preparing " + experimentAccession);
+
         ExperimentType experimentType = experiment.getType();
 
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();

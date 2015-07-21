@@ -77,6 +77,9 @@ public class BaselineAnalyticsIndexerService {
 
     public int index(BaselineExperiment experiment) {
         String experimentAccession = experiment.getAccession();
+
+        LOGGER.info("Preparing " + experiment);
+
         ExperimentType experimentType = experiment.getType();
 
         String defaultQueryFactorType = experiment.getExperimentalFactors().getDefaultQueryFactorType();
