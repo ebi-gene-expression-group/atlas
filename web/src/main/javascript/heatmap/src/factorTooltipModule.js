@@ -15,7 +15,7 @@ require('../css/heatmap-and-anatomogram.css');
 //*------------------------------------------------------------------*
 
 function initTooltip(contextRoot, accessKey, elements) {
-
+debugger;
     $(elements).attr("title", "").tooltip({
 
         hide:false,

@@ -193,7 +193,9 @@ module.exports = function () {
             var geneExpressions = $(this).parent("tr").find("div[data-svg-path-id!='']");
 
             var factorValues = geneExpressions.map(function () {
-                return $(this).attr('data-svg-path-id');
+                if( $(this).find("span").text() != "NA" ){
+                    return $(this).attr('data-svg-path-id');
+                }
             }).get();
 
 
@@ -212,7 +214,6 @@ module.exports = function () {
                 toggleOrganismPartColor(svg, isSingleGene, organismPart, evt);
             }
         });
-
 
         if (fileNameMale !== fileNameFemale) {
             //switch sex toggle button
