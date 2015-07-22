@@ -22,7 +22,7 @@ public class AnalyticsIndexerMonitor implements Observer {
     private long processedMagetabFilesSize;
     private int processedExperimentsCount;
     private Map<String, Long> experimentAccessionsToFileSize;
-    private StringBuilder stringBuilder = new StringBuilder("No builds run on the current Atlas session.");
+    private StringBuilder stringBuilder = new StringBuilder("No builds have been run in this session.");
 
     private String progressTemplate;
 

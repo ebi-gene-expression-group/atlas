@@ -36,6 +36,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 @Scope("request")
@@ -47,12 +49,16 @@ public class BioentitiesSearchDifferentialDownloadController {
     private DiffAnalyticsTSVWriter tsvWriter;
     private ConditionSearchEFOExpander efoExpander;
 
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMdd-HHmmss");
+
+
     @Inject
     public BioentitiesSearchDifferentialDownloadController(DiffAnalyticsSearchService diffAnalyticsSearchService, DiffAnalyticsTSVWriter tsvWriter, ConditionSearchEFOExpander efoExpander) {
         this.diffAnalyticsSearchService = diffAnalyticsSearchService;
         this.tsvWriter = tsvWriter;
         this.efoExpander = efoExpander;
     }
+
 
     @RequestMapping(value = "/query.tsv")
     public void downloadGeneQueryDifferentialExpressions(@Valid GeneQuerySearchRequestParameters requestParameters, HttpServletResponse response) throws IOException {
@@ -76,7 +82,11 @@ public class BioentitiesSearchDifferentialDownloadController {
 
     private void downloadExpressions(HttpServletResponse response, GeneQuerySearchRequestParameters requestParameters) throws IOException {
 
-        setDownloadHeaders(response, requestParameters.getDescription() + ".tsv");
+        if (requestParameters.getGeneQuery().size() > 1) {
+            setDownloadHeaders(response, "expression-atlas_differential_results_" + dateFormat.format(new Date()) + ".tsv");
+        } else {
+            setDownloadHeaders(response, "expression-atlas_" + requestParameters.getDescription().replaceAll(" ", "_") + ".tsv");
+        }
 
         try (DiffAnalyticsTSVWriter writer = tsvWriter) {
             writer.setResponseWriter(response.getWriter());

@@ -75,7 +75,7 @@
                     </div>
                     <div style="display: inline-block; padding-left: 10px; vertical-align: top">
                         <a id="download-profiles-link"
-                           title="Download all results."
+                           title="Download all results"
                            href="${pageContext.request.contextPath}${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
                            class="gxaButtonImage" target="_blank">
                             <img id="download-profiles" alt="Download query results" style="width:20px"
@@ -103,7 +103,7 @@
                     </div>
                     <div style="display: inline-block; padding-left: 10px; vertical-align: top">
                         <a id="download-profiles-link"
-                           title="Download all results."
+                           title="Download all results"
                            href="${pageContext.request.contextPath}${isWidget ? applicationProperties.buildDownloadURLForWidget(pageContext.request, experimentAccession) : applicationProperties.buildDownloadURL(pageContext.request)}"
                            class="gxaButtonImage" target="_blank">
                             <img id="download-profiles" alt="Download query results" style="width:20px"
