@@ -40,22 +40,44 @@ public class AnalyticsIndexerController {
 
     private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerController.class);
 
-    private AnalyticsIndexerService analyticsIndexerService;
+    private AnalyticsIndexerManager analyticsIndexerManager;
+    private AnalyticsIndexerMonitor analyticsIndexerMonitor;
 
     @Inject
-    public AnalyticsIndexerController(AnalyticsIndexerService analyticsIndexerService) {
-        this.analyticsIndexerService = analyticsIndexerService;
+    public AnalyticsIndexerController(AnalyticsIndexerManager analyticsIndexerManager, AnalyticsIndexerMonitor analyticsIndexerMonitor) {
+        this.analyticsIndexerManager = analyticsIndexerManager;
+        this.analyticsIndexerMonitor = analyticsIndexerMonitor;
+    }
+
+    @RequestMapping("/analyticsIndex/buildIndex")
+    @ResponseBody
+    public String analyticsIndexBuild(@RequestParam(value = "threads", required = false) Integer numThreads) {
+        analyticsIndexerManager.addObserver(analyticsIndexerMonitor);
+
+        try {
+            analyticsIndexerManager.indexAllPublicExperiments(numThreads);
+        } catch (InterruptedException e) {
+            return e.getStackTrace().toString();
+        }
+
+        analyticsIndexerManager.deleteObservers();
+
+        return analyticsIndexerMonitor.toString();
+    }
+
+    @RequestMapping("/analyticsIndex/buildIndex/status")
+    @ResponseBody
+    public String analyticsIndexBuildStatus() {
+        return analyticsIndexerMonitor.toString();
     }
 
     @RequestMapping("/analyticsIndex/indexExperiment")
     @ResponseBody
     public String indexExperiment(@RequestParam("accession") String experimentAccession) {
-        analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
-
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        int count = analyticsIndexerService.index(experimentAccession);
+        int count = analyticsIndexerManager.addToAnalyticsIndex(experimentAccession);
 
         stopWatch.stop();
 
@@ -68,7 +90,7 @@ public class AnalyticsIndexerController {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
+        analyticsIndexerManager.deleteFromAnalyticsIndex(experimentAccession);
 
         stopWatch.stop();
 

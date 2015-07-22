@@ -26,19 +26,19 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean scope="singleton" id="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+    <bean scope="singleton" id="solrClient" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
         <constructor-arg value="http://${solr.host}:8983/solr/gxa"/>
     </bean>
 
-    <bean scope="singleton" id="analyticsSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+    <bean scope="singleton" id="analyticsSolrClient" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
         <constructor-arg value="http://${solr.host}:8983/solr/analytics"/>
     </bean>
 
-    <bean scope="singleton" id="differentialConditionsSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+    <bean scope="singleton" id="differentialConditionsSolrClient" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
         <constructor-arg value="http://${solr.host}:8983/solr/differentialConditions"/>
     </bean>
 
-    <bean scope="singleton" id="baselineConditionsSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+    <bean scope="singleton" id="baselineConditionsSolrClient" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
         <constructor-arg value="http://${solr.host}:8983/solr/baselineConditions"/>
     </bean>
 

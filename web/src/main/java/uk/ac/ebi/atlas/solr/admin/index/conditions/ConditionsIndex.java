@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.solr.admin.index.conditions;
 
 import com.google.common.collect.SetMultimap;
 import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import uk.ac.ebi.atlas.model.Experiment;
 
@@ -13,13 +13,13 @@ public abstract class ConditionsIndex<T extends Experiment> {
 
     private static final Logger LOGGER = Logger.getLogger(ConditionsIndex.class);
 
-    private SolrServer solrServer;
+    private SolrClient solrClient;
 
     private ConditionsBuilder<T> propertiesBuilder;
 
 
-    public ConditionsIndex(SolrServer solrServer, ConditionsBuilder<T> propertiesBuilder) {
-        this.solrServer = solrServer;
+    public ConditionsIndex(SolrClient solrClient, ConditionsBuilder<T> propertiesBuilder) {
+        this.solrClient = solrClient;
         this.propertiesBuilder = propertiesBuilder;
     }
 
@@ -42,8 +42,8 @@ public abstract class ConditionsIndex<T extends Experiment> {
 
             Collection propertiesBeans = propertiesBuilder.buildProperties(experiment, ontologyTermIdsByAssayAccession);
 
-            solrServer.addBeans(propertiesBeans);
-            solrServer.commit();
+            solrClient.addBeans(propertiesBeans);
+            solrClient.commit();
 
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);
@@ -53,8 +53,8 @@ public abstract class ConditionsIndex<T extends Experiment> {
 
     public void removeConditions(String accession) {
         try {
-            solrServer.deleteByQuery("experiment_accession:" + accession);
-            solrServer.commit();
+            solrClient.deleteByQuery("experiment_accession:" + accession);
+            solrClient.commit();
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
@@ -63,7 +63,7 @@ public abstract class ConditionsIndex<T extends Experiment> {
 
     void optimize() {
         try {
-            solrServer.optimize();
+            solrClient.optimize();
 
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);

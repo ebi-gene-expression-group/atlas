@@ -23,7 +23,7 @@
 package uk.ac.ebi.atlas.solr.admin.index;
 
 import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.solr.BioentityProperty;
@@ -47,20 +47,20 @@ public class BioentityIndex {
     private BioentityIndexMonitor bioentityIndexMonitor;
     private final BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder;
 
-    private SolrServer solrServer;
+    private SolrClient solrClient;
 
     @Inject
-    public BioentityIndex(BioentityIndexMonitor bioentityIndexMonitor, SolrServer solrServer, BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder) {
+    public BioentityIndex(BioentityIndexMonitor bioentityIndexMonitor, SolrClient solrClient, BioentityPropertiesStreamBuilder bioentityPropertiesStreamBuilder) {
         this.bioentityIndexMonitor = bioentityIndexMonitor;
         this.bioentityPropertiesStreamBuilder = bioentityPropertiesStreamBuilder;
-        this.solrServer = solrServer;
+        this.solrClient = solrClient;
     }
 
     public void indexAll(final DirectoryStream<Path> directoryStream) {
         try {
             indexDirectory(directoryStream, false);
 
-            solrServer.commit();
+            solrClient.commit();
 
             optimize();
 
@@ -104,7 +104,7 @@ public class BioentityIndex {
 
                 while ((documents = bioentityBioentityPropertiesStream.next()) != null) {
 
-                    solrServer.addBeans(documents);
+                    solrClient.addBeans(documents);
 
                 }
 
@@ -119,8 +119,8 @@ public class BioentityIndex {
 
     public void deleteAll() {
         try {
-            solrServer.deleteByQuery("*:*");
-            solrServer.commit();
+            solrClient.deleteByQuery("*:*");
+            solrClient.commit();
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException(e);
@@ -130,7 +130,7 @@ public class BioentityIndex {
     void optimize() {
         try {
 
-            solrServer.optimize();
+            solrClient.optimize();
 
         } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);

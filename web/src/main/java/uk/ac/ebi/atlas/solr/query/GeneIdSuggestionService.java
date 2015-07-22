@@ -24,7 +24,6 @@ package uk.ac.ebi.atlas.solr.query;
 
 import com.google.common.collect.Lists;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -53,10 +52,10 @@ public class GeneIdSuggestionService {
 
     private final SolrQueryBuilderFactory solrQueryBuilderFactory;
 
-    private GxaSolrServer solrServer;
+    private GxaSolrClient solrServer;
 
     @Inject
-    public GeneIdSuggestionService(SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrServer solrServer) {
+    public GeneIdSuggestionService(SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrClient solrServer) {
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
         this.solrServer = solrServer;
     }

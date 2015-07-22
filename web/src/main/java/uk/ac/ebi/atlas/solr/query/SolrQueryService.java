@@ -67,14 +67,14 @@ public class SolrQueryService {
 
     private BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer;
 
-    private GxaSolrServer solrServer;
+    private GxaSolrClient solrServer;
 
     private SolrQueryBuilderFactory solrQueryBuilderFactory;
     private BioEntityPropertyDao bioEntityPropertyDao;
 
     @Inject
     public SolrQueryService(BioentityPropertyValueTokenizer bioentityPropertyValueTokenizer,
-                            GxaSolrServer solrServer,
+                            GxaSolrClient solrServer,
                             SolrQueryBuilderFactory solrQueryBuilderFactory, BioEntityPropertyDao bioEntityPropertyDao) {
         this.bioentityPropertyValueTokenizer = bioentityPropertyValueTokenizer;
         this.solrServer = solrServer;

@@ -2,8 +2,8 @@ package uk.ac.ebi.atlas.search.analyticsindex;
 
 import com.google.common.collect.ImmutableSet;
 import org.apache.log4j.Logger;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrException;
@@ -13,6 +13,7 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 
 @Named
 public class AnalyticsSearchDao {
@@ -20,11 +21,11 @@ public class AnalyticsSearchDao {
 
     private static final Logger LOGGER = Logger.getLogger(AnalyticsSearchDao.class);
 
-    private SolrServer analyticsSolrServer;
+    private SolrClient analyticsSolrClient;
 
     @Inject
-    public AnalyticsSearchDao(@Qualifier("analyticsSolrServer") SolrServer analyticsSolrServer) {
-        this.analyticsSolrServer = analyticsSolrServer;
+    public AnalyticsSearchDao(@Qualifier("analyticsSolrClient") SolrClient analyticsSolrClient) {
+        this.analyticsSolrClient = analyticsSolrClient;
     }
 
 
@@ -39,15 +40,12 @@ public class AnalyticsSearchDao {
 
     public QueryResponse query(SolrQuery solrQuery) {
         try {
-            QueryResponse queryResponse = analyticsSolrServer.query(solrQuery);
+            QueryResponse queryResponse = analyticsSolrClient.query(solrQuery);
             //LOGGER.debug("<query> Solr query time: " + queryResponse.getQTime() + "ms, status code: " + queryResponse.getStatus());
             return queryResponse;
-        } catch (SolrServerException e) {
+        } catch (SolrServerException | IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new SolrException(SolrException.ErrorCode.UNKNOWN, e);
-        } catch (SolrException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw e;
         }
     }
 

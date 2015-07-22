@@ -48,10 +48,10 @@ public class SpeciesLookupService {
     public static final String BIOENTITY_IDENTIFIER_FIELD = "bioentity_identifier";
     public static final String PROPERTY_LOWER_FIELD = "property_value_lower";
 
-    private GxaSolrServer solrServer;
+    private GxaSolrClient solrServer;
 
     @Inject
-    public SpeciesLookupService(GxaSolrServer solrServer) {
+    public SpeciesLookupService(GxaSolrClient solrServer) {
         this.solrServer = solrServer;
     }
 
