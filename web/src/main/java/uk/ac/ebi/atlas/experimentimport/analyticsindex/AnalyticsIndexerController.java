@@ -49,9 +49,9 @@ public class AnalyticsIndexerController {
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
     }
 
-    @RequestMapping("/analyticsIndex/indexAllExperiments")
+    @RequestMapping("/analyticsIndex/buildIndex")
     @ResponseBody
-    public String indexAllPublicExperiments(@RequestParam(value = "threads", required = false) Integer numThreads) {
+    public String analyticsIndexBuild(@RequestParam(value = "threads", required = false) Integer numThreads) {
         analyticsIndexerManager.addObserver(analyticsIndexerMonitor);
 
         try {
@@ -65,9 +65,9 @@ public class AnalyticsIndexerController {
         return analyticsIndexerMonitor.toString();
     }
 
-    @RequestMapping("/analyticsIndex/indexAllExperiments/status")
+    @RequestMapping("/analyticsIndex/buildIndex/status")
     @ResponseBody
-    public String indexAllPublicExperimentsStatus() {
+    public String analyticsIndexBuildStatus() {
         return analyticsIndexerMonitor.toString();
     }
 
