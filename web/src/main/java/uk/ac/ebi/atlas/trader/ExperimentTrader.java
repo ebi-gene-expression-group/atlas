@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.trader;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import com.google.common.util.concurrent.UncheckedExecutionException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
@@ -67,11 +68,14 @@ public class ExperimentTrader {
 
 
     public Experiment getPublicExperiment(String experimentAccession) {
+        ExperimentType experimentType;
         try {
-            return getExperimentFromCache(experimentAccession, publicExperimentTypesCache.getExperimentType(experimentAccession));
-        } catch (ResourceNotFoundException e) {
-             throw e;
+            experimentType = publicExperimentTypesCache.getExperimentType(experimentAccession);
+        } catch (NullPointerException e) {
+            throw new ResourceNotFoundException("Experiment: " + experimentAccession + " not found");
         }
+
+        return getExperimentFromCache(experimentAccession, experimentType);
     }
 
 

@@ -37,13 +37,13 @@ public class PublicExperimentTypesCache {
 
     private static final Logger LOGGER = Logger.getLogger(PublicExperimentTypesCache.class);
 
-    private LoadingCache<String, ExperimentType> experiments;
+    private LoadingCache<String, ExperimentType> experimentTypes;
 
     @Inject
     @Named("publicExperimentTypesLoadingCache")
     //this is the name of the implementation being injected, required because LoadingCache is an interface
-    public PublicExperimentTypesCache(LoadingCache<String, ExperimentType> experiments) {
-        this.experiments = experiments;
+    public PublicExperimentTypesCache(LoadingCache<String, ExperimentType> experimentTypes) {
+        this.experimentTypes = experimentTypes;
     }
 
     /*
@@ -52,7 +52,7 @@ public class PublicExperimentTypesCache {
      */
     public ExperimentType getExperimentType(String experimentAccession) {
         try {
-            return experiments.get(experimentAccession);
+            return experimentTypes.get(experimentAccession);
         } catch (ExecutionException e) {
             LOGGER.error(e.getMessage(), e);
             throw new IllegalStateException("Exception while retrieving experiment type: " + e.getMessage(), e.getCause());
@@ -60,11 +60,11 @@ public class PublicExperimentTypesCache {
     }
 
     public void evictExperiment(String experimentAccession) {
-        experiments.invalidate(experimentAccession);
+        experimentTypes.invalidate(experimentAccession);
     }
 
     public void evictAll() {
-        experiments.invalidateAll();
+        experimentTypes.invalidateAll();
     }
 
 }
