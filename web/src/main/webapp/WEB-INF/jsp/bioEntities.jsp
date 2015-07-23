@@ -278,11 +278,11 @@
                             <div class="gxaHeatmapLegendGradient" style="display: inline-block; padding-left: 20px">
                                 <h:heatmap-differential-legend geneProfiles="${bioentities}"/>
                             </div>
-                            <div style="display: inline-block; vertical-align: top">
+                            <div style="display: inline-block; vertical-align: top; padding-left: 10px">
                                 <a id="download-profiles-link"
-                                   title="Download all results."
+                                   title="Download all results"
                                    href="${pageContext.request.contextPath}${applicationProperties.buildDownloadURL(pageContext.request)}"
-                                   class="button-image" target="_blank">
+                                   class="gxaButtonImage" target="_blank">
                                     <img id="download-profiles" alt="Download query results" style="width:20px"
                                          src="${pageContext.request.contextPath}/resources/images/download_blue_small.png">
                                 </a>

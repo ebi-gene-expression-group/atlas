@@ -36,6 +36,7 @@ public class AnalyticsIndexerManager extends Observable {
     private final ExperimentSorter experimentSorter;
 
     private static final int INDEXING_THREADS = 4;
+    private static final int HALF_AN_HOUR_IN_MILLISECONDS = 1000 * 60 * 30;
 
     @Inject
     public AnalyticsIndexerManager(AnalyticsIndexerService analyticsIndexerService, ExperimentTrader experimentTrader, ExperimentSorter experimentSorter) {
@@ -66,8 +67,11 @@ public class AnalyticsIndexerManager extends Observable {
             threadPool.execute(new ReindexTask(experimentAccession));
         }
 
-        threadPool.shutdown();
-        threadPool.awaitTermination(12, TimeUnit.HOURS);    // ~ twice the time of the biggest experiment
+//        threadPool.shutdown();
+//        while (!threadPool.isTerminated()) {
+//            Thread.sleep(HALF_AN_HOUR_IN_MILLISECONDS);
+//        }
+        threadPool.awaitTermination(48, TimeUnit.HOURS);
 
         setChanged();
         notifyObservers();
