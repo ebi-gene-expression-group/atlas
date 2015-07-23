@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
+import com.google.common.collect.ImmutableList;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.util.Iterator;
 
 @Named
 @Scope("prototype")
@@ -17,7 +19,8 @@ public class AnalyticsIndexDao {
 
     private SolrClient solrClient;
 
-    private static final int COMMIT_TIME_IN_MILISECONDS = 15 * 60 * 1000;  // 15 minutes
+    private static final int DOCUMENT_BATCH_SIZE = 5000;
+    private static final int COMMIT_TIME_IN_MILLISECONDS = 15 * 60 * 1000;  // 15 minutes
 
     @Inject
     public AnalyticsIndexDao(@Qualifier("analyticsSolrClient") SolrClient solrClient) {
@@ -41,12 +44,23 @@ public class AnalyticsIndexDao {
         int count = 0;
 
         try {
-            for (AnalyticsDocument document : documents) {
-                solrClient.addBean(document, COMMIT_TIME_IN_MILISECONDS);
-                count++;
+            Iterator<AnalyticsDocument> iterator = documents.iterator();
+
+            ImmutableList.Builder<AnalyticsDocument> builder;
+            int thisBatchSize;
+
+            while (iterator.hasNext()) {
+                builder = new ImmutableList.Builder<>();
+                thisBatchSize = 0;
+                while (iterator.hasNext() && thisBatchSize < DOCUMENT_BATCH_SIZE) {
+                    builder.add(iterator.next());
+                    thisBatchSize++;
+                }
+                solrClient.addBeans(builder.build(), COMMIT_TIME_IN_MILLISECONDS);
+                count += thisBatchSize;
             }
 
-            solrClient.commit();
+//            solrClient.commit();
         } catch (Exception e) {
             LOGGER.error(e);
             rollBack();
@@ -58,8 +72,8 @@ public class AnalyticsIndexDao {
 
     public void deleteDocumentsForExperiment(String accession) {
         try {
-            solrClient.deleteByQuery("experimentAccession:" + accession);
-            solrClient.commit();
+            solrClient.deleteByQuery("experimentAccession:" + accession, COMMIT_TIME_IN_MILLISECONDS);
+//            solrClient.commit();
         } catch (IOException | SolrServerException e) {
             LOGGER.error(e);
             rollBack();
@@ -80,5 +94,4 @@ public class AnalyticsIndexDao {
             super(e);
         }
     }
-
 }

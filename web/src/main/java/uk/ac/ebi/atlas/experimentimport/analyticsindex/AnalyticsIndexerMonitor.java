@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.TreeMultimap;
 import org.springframework.context.annotation.Scope;
 
+import javax.annotation.Nullable;
 import javax.inject.Named;
 import java.util.Date;
 import java.util.Map;
@@ -45,23 +46,23 @@ public class AnalyticsIndexerMonitor implements Observer {
                            String.format("%,d experiments",  experimentAccessionsToFileSize.size()) +
                            " ; %,d / " +
                            String.format("%,d bytes ", magetabFilesTotalSize) +
-                           "indexed - %.2f %%%n";
+                           "indexed - %.2f%%%n";
 
-        stringBuilder.append(String.format("--- Full Analytics index build started at %s --- %n", new Date()));
+        stringBuilder.append(String.format("--- Full Analytics index build started %s --- %n", new Date()));
         stringBuilder.append(String.format(
                 progressTemplate,
                 "", processedExperimentsCount, processedMagetabFilesSize, 0D));
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, @Nullable Object arg) {
         if (arg == null) {
-            stringBuilder.append(String.format("--- Full Analytics index build finished at %s --- %n", new Date()));
+            stringBuilder.append(String.format("--- Full Analytics index build finished %s --- %n", new Date()));
         }
         else if (arg instanceof TreeMultimap) {
             @SuppressWarnings("unchecked")
-            TreeMultimap<Long, String> blah = (TreeMultimap<Long, String>) arg;
-            initializeMonitor(blah);
+            TreeMultimap<Long, String> descendingExperimentSizeToExperimentAccessions = (TreeMultimap<Long, String>) arg;
+            initializeMonitor(descendingExperimentSizeToExperimentAccessions);
         }
         else if (arg instanceof String) {
             String experimentAccession = (String) arg;
