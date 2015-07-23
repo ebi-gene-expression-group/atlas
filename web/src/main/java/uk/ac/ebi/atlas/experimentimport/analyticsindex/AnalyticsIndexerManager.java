@@ -36,7 +36,6 @@ public class AnalyticsIndexerManager extends Observable {
     private final ExperimentSorter experimentSorter;
 
     private static final int INDEXING_THREADS = 4;
-    private static final int HALF_AN_HOUR_IN_MILLISECONDS = 1000 * 60 * 30;
 
     @Inject
     public AnalyticsIndexerManager(AnalyticsIndexerService analyticsIndexerService, ExperimentTrader experimentTrader, ExperimentSorter experimentSorter) {
@@ -45,18 +44,18 @@ public class AnalyticsIndexerManager extends Observable {
         this.experimentSorter = experimentSorter;
     }
 
-    public int addToAnalyticsIndex(String experimentAccession) {
+    public int addToAnalyticsIndex(String experimentAccession, @Nullable Integer batchSize) {
         checkNotNull(experimentAccession);
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
         analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
-        return analyticsIndexerService.index(experiment);
+        return analyticsIndexerService.index(experiment, batchSize);
     }
 
     public void deleteFromAnalyticsIndex(String experimentAccession) {
         analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
     }
 
-    public void indexAllPublicExperiments(@Nullable Integer numThreads) throws InterruptedException {
+    public void indexAllPublicExperiments(@Nullable Integer numThreads, @Nullable Integer batchSize) throws InterruptedException {
         ExecutorService threadPool = Executors.newFixedThreadPool(numThreads != null && numThreads > 0 ? numThreads : INDEXING_THREADS);
 
         TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortExperimentsPerSize();
@@ -64,13 +63,10 @@ public class AnalyticsIndexerManager extends Observable {
         notifyObservers(descendingFileSizeToExperimentAccessions);
 
         for (String experimentAccession : descendingFileSizeToExperimentAccessions.values()) {
-            threadPool.execute(new ReindexTask(experimentAccession));
+            threadPool.execute(new ReindexTask(experimentAccession, batchSize));
         }
 
-//        threadPool.shutdown();
-//        while (!threadPool.isTerminated()) {
-//            Thread.sleep(HALF_AN_HOUR_IN_MILLISECONDS);
-//        }
+        threadPool.shutdown();
         threadPool.awaitTermination(48, TimeUnit.HOURS);
 
         setChanged();
@@ -79,13 +75,15 @@ public class AnalyticsIndexerManager extends Observable {
 
     private class ReindexTask implements Runnable {
         private final String experimentAccession;
+        private final Integer batchSize;
 
-        public ReindexTask(String experimentAccession) {
+        public ReindexTask(String experimentAccession, @Nullable Integer batchSize) {
             this.experimentAccession = experimentAccession;
+            this.batchSize = batchSize;
         }
 
         public void run() {
-            addToAnalyticsIndex(experimentAccession);
+            addToAnalyticsIndex(experimentAccession, batchSize);
 
             AnalyticsIndexerManager.this.setChanged();
             AnalyticsIndexerManager.this.notifyObservers(experimentAccession);

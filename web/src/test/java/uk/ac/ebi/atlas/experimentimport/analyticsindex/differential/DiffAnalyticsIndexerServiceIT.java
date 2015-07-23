@@ -75,7 +75,7 @@ public class DiffAnalyticsIndexerServiceIT {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        when(analyticsIndexDaoMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any())).thenAnswer(storeDocuments());
+        when(analyticsIndexDaoMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), null)).thenAnswer(storeDocuments());
         Reader reader38400 = new StringReader(tsv38400);
         CSVReader csvReader38400 = new CSVReader(reader38400, '\t');
         RnaSeqDifferentialAnalyticsInputStream inputStream38400 = new RnaSeqDifferentialAnalyticsInputStream(csvReader38400, "38400 mock");
@@ -111,7 +111,7 @@ public class DiffAnalyticsIndexerServiceIT {
     public void index() {
 
         DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment("E-GEOD-38400");
-        subject.index(experiment);
+        subject.index(experiment, null);
         assertThat(documents, hasSize(12));
 
         AnalyticsDocument document = documents.get(0);
@@ -147,6 +147,5 @@ public class DiffAnalyticsIndexerServiceIT {
         assertThat(document4.getFoldChange(), is(0.0836848323581764));
 
     }
-
 
 }

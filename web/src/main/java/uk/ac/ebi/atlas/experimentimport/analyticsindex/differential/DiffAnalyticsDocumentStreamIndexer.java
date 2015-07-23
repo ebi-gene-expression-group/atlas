@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDao;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -37,7 +38,8 @@ public class DiffAnalyticsDocumentStreamIndexer {
                      Set<String> factors,
                      SetMultimap<String, String> conditionSearchTermsByContrastGroupId,
                      ImmutableMap<String, String> ensemblSpeciesGroupedByContrastId,
-                     Map<String, Integer> numReplicatesByContrastId) {
+                     Map<String, Integer> numReplicatesByContrastId,
+                     @Nullable Integer batchSize) {
 
 
 
@@ -52,7 +54,7 @@ public class DiffAnalyticsDocumentStreamIndexer {
             DiffAnalyticsDocumentStream analyticsDocuments = streamFactory.create(experimentAccession, experimentType, factors, ensemblSpeciesGroupedByContrastId,
                     iterableInputStream, conditionSearchTermsByContrastGroupId, numReplicatesByContrastId);
 
-            int count = analyticsIndexDao.addDocuments(analyticsDocuments);
+            int count = analyticsIndexDao.addDocuments(analyticsDocuments, batchSize);
 
             stopWatch.stop();
             LOGGER.info(String.format("Done indexing %s, indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds()));

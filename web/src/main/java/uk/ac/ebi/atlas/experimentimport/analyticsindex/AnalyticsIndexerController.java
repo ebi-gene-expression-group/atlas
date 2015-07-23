@@ -51,11 +51,12 @@ public class AnalyticsIndexerController {
 
     @RequestMapping("/analyticsIndex/buildIndex")
     @ResponseBody
-    public String analyticsIndexBuild(@RequestParam(value = "threads", required = false) Integer numThreads) {
+    public String analyticsIndexBuild(@RequestParam(value = "threads", required = false) Integer numThreads,
+                                      @RequestParam(value = "batchSize", required = false) Integer batchSize) {
         analyticsIndexerManager.addObserver(analyticsIndexerMonitor);
 
         try {
-            analyticsIndexerManager.indexAllPublicExperiments(numThreads);
+            analyticsIndexerManager.indexAllPublicExperiments(numThreads, batchSize);
         } catch (InterruptedException e) {
             return e.getStackTrace().toString();
         }
@@ -77,7 +78,7 @@ public class AnalyticsIndexerController {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        int count = analyticsIndexerManager.addToAnalyticsIndex(experimentAccession);
+        int count = analyticsIndexerManager.addToAnalyticsIndex(experimentAccession, null);
 
         stopWatch.stop();
 

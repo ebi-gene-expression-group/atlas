@@ -37,6 +37,7 @@ import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialCondition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.differential.DifferentialConditionsBuilder;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
@@ -57,7 +58,7 @@ public class MicroArrayDiffAnalyticsIndexerService {
         this.microArrayDiffAnalyticsDocumentStreamIndexer = microArrayDiffAnalyticsDocumentStreamIndexer;
     }
 
-    public int index(MicroarrayExperiment experiment) {
+    public int index(MicroarrayExperiment experiment, @Nullable Integer batchSize) {
         String experimentAccession = experiment.getAccession();
 
         LOGGER.info("Preparing " + experimentAccession);
@@ -79,7 +80,7 @@ public class MicroArrayDiffAnalyticsIndexerService {
         Map<String, Integer> numReplicatesByContrastId = buildNumReplicatesByContrastId(experiment);
 
         return  microArrayDiffAnalyticsDocumentStreamIndexer.index(experimentAccession, arrayDesignAccessions, experimentType, factors,
-                conditionSearchTermsByContrastId, ensemblSpeciesGroupedByContrastId, numReplicatesByContrastId);
+                conditionSearchTermsByContrastId, ensemblSpeciesGroupedByContrastId, numReplicatesByContrastId, batchSize);
     }
 
     private Map<String, Integer> buildNumReplicatesByContrastId(DifferentialExperiment experiment) {
