@@ -24,12 +24,30 @@ function splitIntoWords(geneQuery){
 }
 
 function initTooltip(contextRoot, highlightedWords, element){
-
     $(element).tooltip({
         tooltipClass:"gxaGeneNameTooltip",
         position: { my: "left+120 top", at: "left top", collision: "flipfit" },
         hide:false,
         show:false,
+
+        open: function() {
+            var actual = $(this);
+
+            $('.ui-tooltip').each(function( index ) {
+                if(actual.attr("aria-describedby") != undefined) {
+                    if(actual.attr("aria-describedby") != $(this).attr("id")) {
+                        $(this).remove();
+                    }
+                }
+
+            }, actual);
+        },
+
+        close: function() {
+            $('.ui-tooltip').each(function() {
+               $(this).remove();
+            });
+        },
 
         content:function (callback) {
 
@@ -64,6 +82,10 @@ function initTooltip(contextRoot, highlightedWords, element){
 
             }
         }
+    });
+
+    $('.ui-tooltip').each(function() {
+        $(this).remove();
     });
 }
 

@@ -15,11 +15,23 @@ require('../css/heatmap-and-anatomogram.css');
 //*------------------------------------------------------------------*
 
 function initTooltip(contextRoot, accessKey, elements) {
-debugger;
-    $(elements).attr("title", "").tooltip({
 
+    $(elements).attr("title", "").tooltip({
         hide:false,
         show:false,
+
+        open: function(){
+            // make sure all other tooltips are closed when opening a new one
+            $.each($(elements).parent("tr").find("th"), function (index, element) {
+                if($(this).attr("aria-describedby") != undefined) {
+                    if(!elements.isEqualNode(this)) {
+                        $(element).attr("title", "").tooltip("close");
+                    }
+                }
+
+            });
+        },
+
         tooltipClass:"gxaHelpTooltip gxaPvalueTooltipStyling",
         content:function (callback) {
 
@@ -50,7 +62,7 @@ debugger;
             });
         }
     });
-};
+}
 
 //*------------------------------------------------------------------*
 
