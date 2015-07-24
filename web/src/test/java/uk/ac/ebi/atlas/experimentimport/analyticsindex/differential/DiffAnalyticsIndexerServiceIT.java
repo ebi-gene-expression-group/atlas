@@ -75,7 +75,7 @@ public class DiffAnalyticsIndexerServiceIT {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        when(analyticsIndexDaoMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), null)).thenAnswer(storeDocuments());
+        when(analyticsIndexDaoMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), Matchers.<Integer>any())).thenAnswer(storeDocuments());
         Reader reader38400 = new StringReader(tsv38400);
         CSVReader csvReader38400 = new CSVReader(reader38400, '\t');
         RnaSeqDifferentialAnalyticsInputStream inputStream38400 = new RnaSeqDifferentialAnalyticsInputStream(csvReader38400, "38400 mock");

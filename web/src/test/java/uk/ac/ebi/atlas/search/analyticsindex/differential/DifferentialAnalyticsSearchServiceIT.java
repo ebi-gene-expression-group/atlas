@@ -35,7 +35,7 @@ public class DifferentialAnalyticsSearchServiceIT extends TestCase {
         experimentTypes.add("rnaseq_mrna_differential");
 
         List<String> kingdoms = Lists.newArrayList();
-        kingdoms.add("ensembl");
+        kingdoms.add("animals");
 
         List<String> factors = Lists.newArrayList();
         factors.add("genotype");
@@ -47,8 +47,8 @@ public class DifferentialAnalyticsSearchServiceIT extends TestCase {
 
         assertTrue(!json.isEmpty());
 
-        assertThat(json, is("[{\"geneCount\":79,\"organism\":\"mus musculus\",\"contrastId\":\"g1_g2\",\"comparison\":\"genotype:'expressing human TDP-43' vs 'non transgenic'\"," +
-                "\"experimentAccession\":\"E-GEOD-22351\",\"experimentName\":\"RNA-seq of mouse spinal cord expressing wild type human TDP-43\"},{\"geneCount\":35,\"organism\":\"mus musculus\"," +
+        assertThat(json, is("[{\"geneCount\":41,\"organism\":\"mus musculus\",\"contrastId\":\"g1_g2\",\"comparison\":\"genotype:'expressing human TDP-43' vs 'non transgenic'\"," +
+                "\"experimentAccession\":\"E-GEOD-22351\",\"experimentName\":\"RNA-seq of mouse spinal cord expressing wild type human TDP-43\"},{\"geneCount\":28,\"organism\":\"mus musculus\"," +
                 "\"contrastId\":\"g1_g2\",\"comparison\":\"sex:'male' vs 'female'\",\"experimentAccession\":\"E-MTAB-698\",\"experimentName\":\"RNA-seq of vomeronasal tissue from adult male and female mice\"}]"));
     }
 }

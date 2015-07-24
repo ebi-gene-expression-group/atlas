@@ -154,20 +154,20 @@ public class BaselineAnalyticsSearchServiceIT {
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
-        assertThat(baselineProfilesList, hasSize(7));
-        assertThat(baselineProfilesList.getTotalResultCount(), is(7));
+        assertThat(baselineProfilesList, hasSize(13));
+        assertThat(baselineProfilesList.getTotalResultCount(), is(13));
 
         BaselineExperimentProfile baselineProfile = baselineProfilesList.get(0);
         assertThat(baselineProfile.getId(), is("E-GEOD-26284"));
         assertThat(baselineProfile.getName(), is("ENCODE cell lines - long polyA RNA, whole cell"));
         assertThat(baselineProfile.getFilterFactors(), is((FactorGroup) new FactorSet(new Factor("RNA", "long polyA RNA"), new Factor("CELLULAR_COMPONENT", "whole cell"))));
-        assertThat(baselineProfile.getConditions(), hasSize(6));
+        assertThat(baselineProfile.getConditions(), hasSize(32));
         assertThat(baselineProfile.getMinExpressionLevel(), is(7D));
         assertThat(baselineProfile.getMaxExpressionLevel(), is(7D));
         assertThat(baselineProfile.getKnownExpressionLevel(H1_hESC), is(7D));
 
         SortedSet<Factor> factors = result.getFactorsAcrossAllExperiments();
-        assertThat(factors, hasSize(23));
+        assertThat(factors, hasSize(49));
 //        ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
 //        ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab1733Tissues()).build();
 //        assertThat(factors, contains(allFactors.toArray()));

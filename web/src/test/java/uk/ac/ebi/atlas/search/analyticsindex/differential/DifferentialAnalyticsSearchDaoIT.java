@@ -40,7 +40,7 @@ public class DifferentialAnalyticsSearchDaoIT {
         experimentTypes.add(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL.getDescription());
 
         List<String> kingdoms = Lists.newArrayList();
-        kingdoms.add("ensembl"); kingdoms.add("plants");
+        kingdoms.add("animals"); kingdoms.add("plants");
 
         List<String> factors = Lists.newArrayList();
         factors.add("genotype");
@@ -53,7 +53,7 @@ public class DifferentialAnalyticsSearchDaoIT {
         List<String> speciesJson = jsonCtx.read("$.facets.species.buckets[*].val");//   mus musculus
         List<String> experimentType = jsonCtx.read("$.facets.species.buckets[*].experimentType.buckets[*].val"); // rnaseq_mrna_differential
 
-        assertThat(count, is(79));
+        assertThat(count, is(41));
         assertThat(speciesJson, contains("mus musculus"));
         assertThat(experimentType, contains("rnaseq_mrna_differential"));
 
