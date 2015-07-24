@@ -38,7 +38,6 @@ import java.text.MessageFormat;
 public class TsvReaderBuilder {
 
     private String experimentAccession;
-
     private String tsvFilePathTemplate;
 
     TsvReaderBuilder() {
@@ -64,6 +63,5 @@ public class TsvReaderBuilder {
             throw new IllegalStateException("Cannot read Tsv file from path " + tsvFileSystemPath.toString(), e);
         }
     }
-
 
 }
