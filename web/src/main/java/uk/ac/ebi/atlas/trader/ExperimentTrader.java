@@ -71,7 +71,7 @@ public class ExperimentTrader {
         ExperimentType experimentType;
         try {
             experimentType = publicExperimentTypesCache.getExperimentType(experimentAccession);
-        } catch (NullPointerException e) {
+        } catch (UncheckedExecutionException | NullPointerException e) {
             throw new ResourceNotFoundException("Experiment: " + experimentAccession + " not found");
         }
 
