@@ -124,12 +124,13 @@ public class ExperimentDesignParser {
         }
 
         ImmutableList.Builder<OntologyTerm> ontologyTermBuilder = new ImmutableList.Builder<>();
-
         String uriField = line[ontologyTermIndex];
         for (String uri : uriField.split(ONTOLOGY_TERM_DELIMITER)) {
             ontologyTermBuilder.add(OntologyTerm.createFromUri(uri));
         }
-        return ontologyTermBuilder.build().toArray(new OntologyTerm[0]);
+        List<OntologyTerm> ontologyTermList = ontologyTermBuilder.build();
+
+        return ontologyTermList.toArray(new OntologyTerm[ontologyTermList.size()]);
     }
 
     protected Map<String, Integer> extractHeaderIndexes(String[] columnHeaders, Pattern columnHeaderPattern) {
