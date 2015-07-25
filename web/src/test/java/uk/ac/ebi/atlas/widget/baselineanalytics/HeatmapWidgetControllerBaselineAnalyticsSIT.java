@@ -53,11 +53,11 @@ public class HeatmapWidgetControllerBaselineAnalyticsSIT extends RestAssuredFixt
 
         assertThat((String)json.get("profiles.rows[0].id"), is("E-GEOD-26284"));
         assertThat((String)json.get("profiles.rows[0].name"), is("ENCODE cell lines - long polyA RNA, whole cell"));
-        assertThat(((Collection)json.get("profiles.rows[0].expressions")).size(), is(23));
+        assertThat(((Collection)json.get("profiles.rows[0].expressions")).size(), is(49));
 
         assertThat((String)json.get("profiles.rows[1].id"), is("E-GEOD-26284"));
-        assertThat((String)json.get("profiles.rows[1].name"), is("ENCODE cell lines - long non-polyA RNA, whole cell"));
-        assertThat(((Collection)json.get("profiles.rows[1].expressions")).size(), is(23));
+        assertThat((String)json.get("profiles.rows[1].name"), is("ENCODE cell lines - long polyA RNA, cytosol"));
+        assertThat(((Collection)json.get("profiles.rows[1].expressions")).size(), is(49));
     }
 
     @Test

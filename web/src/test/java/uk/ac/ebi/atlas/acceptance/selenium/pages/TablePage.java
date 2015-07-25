@@ -41,7 +41,7 @@ abstract class TablePage extends GlobalSearchPage {
     private static final String LAST_COLUMN_CELLS_XPATH = "tbody//td[last()]";
     private static final String FIRST_COLUMN_HEADERS_XPATH = "tbody//th[1]";
     private static final String FIRST_COLUMN_CELLS_XPATH = "tbody//td[1]";
-    private static final String GENE_ANCHOR_XPATH_TEMPLATE = "tbody/tr[%d]/th/div/span/a";
+    private static final String GENE_ANCHOR_XPATH_TEMPLATE = "tbody/tr[%d]/th/div/div/span/a";
     private static final String SECOND_COLUMN_CELLS_XPATH = "tbody//td[2]";
     private static final String COLUMN_CELLS_XPATH = "tbody//td[%d]";
     protected static final String TABLE_HEADERS_XPATH = "thead[1]/tr/th";
