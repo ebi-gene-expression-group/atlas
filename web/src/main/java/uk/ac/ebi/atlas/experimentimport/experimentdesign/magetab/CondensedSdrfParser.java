@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab;
 
-import autovalue.shaded.com.google.common.common.collect.ImmutableList;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.*;
@@ -58,19 +57,17 @@ public class CondensedSdrfParser {
     private static final String FACTOR = "factor";
     private static final String CHARACTERISTIC = "characteristic";
 
-    private TsvReaderBuilder sdrfReaderBuilder;
-    private TsvReaderBuilder idfReaderBuilder;
+    private TsvReaderBuilder tsvReaderBuilder;
 
     @Inject
-    public CondensedSdrfParser(TsvReaderBuilder sdrfReaderBuilder, TsvReaderBuilder idfReaderBuilder) {
-        this.sdrfReaderBuilder = sdrfReaderBuilder.forTsvFilePathTemplate(sdrfPathTemplate);
-        this.idfReaderBuilder = idfReaderBuilder.forTsvFilePathTemplate(idfPathTemplate);
+    public CondensedSdrfParser(TsvReaderBuilder tsvReaderBuilder) {
+        this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(sdrfPathTemplate);
     }
 
     public CondensedSdrfParserOutput parse(String experimentAccession) throws IOException, CondensedSdrfParserException {
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
-        TsvReader tsvReader = sdrfReaderBuilder.withExperimentAccession(experimentAccession).build();
+        TsvReader tsvReader = tsvReaderBuilder.forTsvFilePathTemplate(sdrfPathTemplate).withExperimentAccession(experimentAccession).build();
 
         ImmutableList.Builder<String[]> factorsBuilder = new ImmutableList.Builder<>();
         ImmutableList.Builder<String[]> sampleCharacteristicsBuilder = new ImmutableList.Builder<>();
@@ -95,7 +92,7 @@ public class CondensedSdrfParser {
 
         String title = "";
         ImmutableSet.Builder<String> idfPubmedIdsBuilder = new ImmutableSet.Builder<>();
-        TsvReader idfReader = idfReaderBuilder.withExperimentAccession(experimentAccession).build();
+        TsvReader idfReader = tsvReaderBuilder.forTsvFilePathTemplate(idfPathTemplate).withExperimentAccession(experimentAccession).build();
         for (String tsvLine[]: idfReader.readAll()) {
             if (tsvLine[0].equalsIgnoreCase(INVESTIGATION_TITLE_ID)) {
                 title = tsvLine[1];
