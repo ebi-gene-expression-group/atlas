@@ -7,10 +7,7 @@ import com.google.common.collect.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.sdrf.node.attribute.UnitAttribute;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
-import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
+import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
 import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -18,20 +15,27 @@ import uk.ac.ebi.atlas.model.OntologyTerm;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Set;
 
 /**
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 24/07/15.
  */
+
+@Named
+@Scope("prototype")
 public class CondensedSdrfParser {
 
     private static final Logger LOGGER = Logger.getLogger(CondensedSdrfParser.class);
 
     @Value("#{configuration['experiment.condensed-sdrf.path.template']}")
     private String sdrfPathTemplate;
+
+    @Value("#{configuration['experiment.magetab.idf.path.template']}")
+    private String idfPathTemplate;
+
 
     private static final Set<String> FACTORS_NEEDING_DOSE = Sets.newHashSet("compound", "irradiate");
 
@@ -48,25 +52,25 @@ public class CondensedSdrfParser {
     private static final int CHARACTERISTIC_VALUE_INDEX = 5;
     private static final int ONTOLOGY_TERMS_INDEX = 6;
 
+    private static final String INVESTIGATION_TITLE_ID = "Investigation Title";
+    private static final String PUBMED_ID = "PubMed ID";
+
     private static final String FACTOR = "factor";
     private static final String CHARACTERISTIC = "characteristic";
 
-    private TsvReaderBuilder tsvReaderBuilder;
-
-    private MageTabLimpopoUtils mageTabLimpopoUtils;
-    private ValueAndUnitJoiner valueAndUnitJoiner;
+    private TsvReaderBuilder sdrfReaderBuilder;
+    private TsvReaderBuilder idfReaderBuilder;
 
     @Inject
-    public CondensedSdrfParser(TsvReaderBuilder tsvReaderBuilder, MageTabLimpopoUtils mageTabLimpopoUtils, ValueAndUnitJoiner valueAndUnitJoiner) {
-        this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(sdrfPathTemplate);
-        this.mageTabLimpopoUtils = mageTabLimpopoUtils;
-        this.valueAndUnitJoiner = valueAndUnitJoiner;
+    public CondensedSdrfParser(TsvReaderBuilder sdrfReaderBuilder, TsvReaderBuilder idfReaderBuilder) {
+        this.sdrfReaderBuilder = sdrfReaderBuilder.forTsvFilePathTemplate(sdrfPathTemplate);
+        this.idfReaderBuilder = idfReaderBuilder.forTsvFilePathTemplate(idfPathTemplate);
     }
 
-    CondensedSdrfParserOutput parse(String experimentAccession) throws IOException, CondensedSdrfParserException {
+    public CondensedSdrfParserOutput parse(String experimentAccession) throws IOException, CondensedSdrfParserException {
         ExperimentDesign experimentDesign = new ExperimentDesign();
 
-        TsvReader tsvReader = tsvReaderBuilder.withExperimentAccession(experimentAccession).build();
+        TsvReader tsvReader = sdrfReaderBuilder.withExperimentAccession(experimentAccession).build();
 
         ImmutableList.Builder<String[]> factorsBuilder = new ImmutableList.Builder<>();
         ImmutableList.Builder<String[]> sampleCharacteristicsBuilder = new ImmutableList.Builder<>();
@@ -89,11 +93,20 @@ public class CondensedSdrfParser {
 
         addArrays(experimentDesign, assayRunToTsvLines);
 
-        MAGETABInvestigation investigation = readMageTabFiles(experimentAccession);
-        String title = mageTabLimpopoUtils.extractInvestigationTitle(investigation);
-        ImmutableSet<String> pubmedIds = ImmutableSet.copyOf(mageTabLimpopoUtils.extractPubMedIdsFromIDF(investigation));
+        String title = "";
+        ImmutableSet.Builder<String> idfPubmedIdsBuilder = new ImmutableSet.Builder<>();
+        TsvReader idfReader = idfReaderBuilder.withExperimentAccession(experimentAccession).build();
+        for (String tsvLine[]: idfReader.readAll()) {
+            if (tsvLine[0].equalsIgnoreCase(INVESTIGATION_TITLE_ID)) {
+                title = tsvLine[1];
+            } else if (tsvLine[0].equalsIgnoreCase(PUBMED_ID)) {
+                for (int i = 1 ; i < tsvLine.length ; i++) {
+                    idfPubmedIdsBuilder.add(tsvLine[i]);
+                }
+            }
+        }
 
-        return new CondensedSdrfParserOutput(title, pubmedIds, experimentDesign);
+        return new CondensedSdrfParserOutput(title, idfPubmedIdsBuilder.build(), experimentDesign);
     }
 
     private void addCharacteristicToExperimentDesign(ExperimentDesign experimentDesign, List<String[]> sampleCharacteristicsTsvLines) {
@@ -167,19 +180,6 @@ public class CondensedSdrfParser {
         return DOSE.equals(factorName.toLowerCase());
     }
 
-    protected String cleanValueAndUnitIfNeeded(String value, UnitAttribute unit) {
-        if (!StringUtils.isEmpty(value)) {
-            value.replaceAll("( )+", " ").replaceAll("(_)+", "_").trim();
-            if (unit != null) {
-                if (StringUtils.isEmpty(unit.getAttributeType())) {
-                    throw new IllegalStateException("Unable to find unit value for factor value: " + value);
-                }
-                value = valueAndUnitJoiner.pluraliseAndJoin(value, unit.getAttributeValue());
-            }
-        }
-        return value;
-    }
-
     private OntologyTerm[] parseOntologyTerms(String ontologyTermTsvField) {
         ImmutableSet.Builder<OntologyTerm> ontologyTermsBuilder = new ImmutableSet.Builder<>();
 
@@ -204,15 +204,6 @@ public class CondensedSdrfParser {
             }
 
             experimentDesign.putArrayDesign(assayRun, assayDesign);
-        }
-    }
-
-
-    private MAGETABInvestigation readMageTabFiles(String experimentAccession) throws IOException {
-        try {
-            return mageTabLimpopoUtils.parseInvestigation(experimentAccession);
-        } catch (ParseException | MalformedURLException e) {
-            throw new IOException("Cannot read or parse SDRF file: ", e);
         }
     }
 

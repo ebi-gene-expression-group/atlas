@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParserFactory;
 import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.ConditionsIndexTrader;
@@ -40,6 +41,9 @@ public class ExperimentMetadataCRUDFactory {
     MageTabParserFactory mageTabParserFactory;
 
     @Inject
+    CondensedSdrfParser condensedSdrfParser;
+
+    @Inject
     ProteomicsBaselineExperimentsCacheLoaderFactory loaderFactory;
 
     @Inject
@@ -54,6 +58,6 @@ public class ExperimentMetadataCRUDFactory {
         ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache = new ProteomicsBaselineExperimentsCache(loadingCache);
         ExperimentTrader experimentTrader = new ExperimentTrader(experimentDao, baselineExperimentsCache, rnaSeqDiffExperimentsCache, microarrayExperimentsCache, proteomicsBaselineExperimentsCache, publicExperimentTypesCache);
         return new ExperimentMetadataCRUD(experimentDao, experimentDesignFileWriterBuilder,
-                experimentTrader, experimentDTOBuilder, mageTabParserFactory, conditionsIndexTrader, efoParentsLookupService);
+                experimentTrader, experimentDTOBuilder, condensedSdrfParser, mageTabParserFactory, conditionsIndexTrader, efoParentsLookupService);
     }
 }

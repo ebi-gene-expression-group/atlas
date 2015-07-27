@@ -38,6 +38,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParserFactory;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParserOutput;
@@ -124,6 +125,9 @@ public class ExperimentMetadataCRUDTest {
     private MageTabParserFactory mageTabParserFactory;
 
     @Mock
+    private CondensedSdrfParser condensedSdrfParserMock;
+
+    @Mock
     private MageTabParser mageTabParser;
 
     @Mock
@@ -163,7 +167,7 @@ public class ExperimentMetadataCRUDTest {
         when(efoParentsLookupServiceMock.getAllParents(anySet())).thenReturn(EXPANDED_EFO_TERMS);
 
         subject = new ExperimentMetadataCRUD(experimentDAOMock,
-                experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock, mageTabParserFactory, conditionsIndexTrader, efoParentsLookupServiceMock);
+                experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock, condensedSdrfParserMock, mageTabParserFactory, conditionsIndexTrader, efoParentsLookupServiceMock);
     }
 
     @Test
