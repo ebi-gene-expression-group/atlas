@@ -66,8 +66,21 @@ public class AnalyticsIndexerManager extends Observable {
             threadPool.execute(new ReindexTask(experimentAccession, batchSize));
         }
 
+        // From http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html
         threadPool.shutdown();
-        threadPool.awaitTermination(48, TimeUnit.HOURS);
+        try {
+            if (!threadPool.awaitTermination(12, TimeUnit.HOURS)) {
+                threadPool.shutdownNow();
+                // Wait a while for tasks to respond to being cancelled
+                if (!threadPool.awaitTermination(10, TimeUnit.MINUTES)) {
+                    System.err.println("Pool did not terminate");
+                }
+            }
+        } catch (InterruptedException ie) {
+            // (Re-)Cancel if current thread also interrupted
+            threadPool.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
 
         setChanged();
         notifyObservers();
