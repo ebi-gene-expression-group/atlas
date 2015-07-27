@@ -46,7 +46,7 @@ public class HeatmapWidgetDownloadControllerBaselineAnalyticsSIT extends RestAss
 
         response.then().assertThat().body(containsString("# Query: Experiments with expression for blood exactly, given the False Discovery Rate cutoff: 0.05"));
         response.then().assertThat().body(containsString("ENCODE cell lines - long polyA RNA, whole cell"));
-        response.then().assertThat().body(containsString("ENCODE cell lines - long non-polyA RNA, whole cell"));
+        response.then().assertThat().body(containsString("ENCODE cell lines - long polyA RNA, cytosol"));
         response.then().assertThat().body(containsString("ENCODE cell lines - long polyA RNA, nucleus"));
         response.then().assertThat().body(containsString("ENCODE cell lines - long non-polyA RNA, nucleus"));
         response.then().assertThat().body(containsString("ENCODE cell lines - total RNA, whole cell"));

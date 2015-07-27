@@ -28,9 +28,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParser;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParserFactory;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParserOutput;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.*;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -54,14 +52,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ExperimentMetadataCRUD {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentMetadataCRUD.class);
+
+    private ExperimentDAO experimentDAO;
+    private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
+    private ExperimentTrader experimentTrader;
+    private ExperimentDTOBuilder experimentDTOBuilder;
+    private final CondensedSdrfParser condensedSdrfParser;
     private final MageTabParserFactory mageTabParserFactory;
     private final ConditionsIndexTrader conditionsIndexTrader;
-    private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
-    private ExperimentDAO experimentDAO;
-    private ExperimentTrader experimentTrader;
     private EFOParentsLookupService efoParentsLookupService;
-
-    private ExperimentDTOBuilder experimentDTOBuilder;
 
     //TODO: refactor this class - it has too many collaborators
     @Inject
@@ -69,6 +68,7 @@ public class ExperimentMetadataCRUD {
                                   ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder,
                                   ExperimentTrader experimentTrader,
                                   ExperimentDTOBuilder experimentDTOBuilder,
+                                  CondensedSdrfParser condensedSdrfParser,
                                   MageTabParserFactory mageTabParserFactory,
                                   ConditionsIndexTrader conditionsIndexTrader,
                                   EFOParentsLookupService efoParentsLookupService) {
@@ -76,6 +76,7 @@ public class ExperimentMetadataCRUD {
         this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;
         this.experimentDTOBuilder = experimentDTOBuilder;
+        this.condensedSdrfParser = condensedSdrfParser;
         this.mageTabParserFactory = mageTabParserFactory;
         this.conditionsIndexTrader = conditionsIndexTrader;
         this.efoParentsLookupService = efoParentsLookupService;
@@ -88,6 +89,13 @@ public class ExperimentMetadataCRUD {
         //TODO push accession and experimentType into MageTabParserOutput
         ExperimentType experimentType = experimentConfiguration.getExperimentType();
         MageTabParserOutput mageTabParserOutput = readMageTab(accession, experimentType);
+
+        try {
+            CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(accession);
+            ExperimentDesign tempExperimentDesign = condensedSdrfParserOutput.getExperimentDesign();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
         writeExperimentDesignFile(accession, experimentType, experimentDesign);
@@ -199,6 +207,13 @@ public class ExperimentMetadataCRUD {
         ExperimentType type = experimentDTO.getExperimentType();
         try {
             experimentTrader.removeExperimentFromCache(accession, type);
+
+            try {
+                CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(accession);
+                ExperimentDesign tempExperimentDesign = condensedSdrfParserOutput.getExperimentDesign();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             MageTabParserOutput mageTabParserOutput = readMageTab(accession, type);
             ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();

@@ -107,10 +107,6 @@ public class BaselineExperimentSearchResultProducer {
                 String experimentAccession = input.experimentAccession();
                 String assayGroupId = input.assayGroupId();
 
-                //TODO: this is a bottleneck because it goes back to the database each time - to improve perf,
-                //we need to lookup the experiment type from a cache and then get the experiment from the appropriate cachee
-                //eg: http://localhost:8080/gxa/widgets/heatmap/baselineAnalytics?geneQuery=ccnt2&species=Homo%20sapiens&source=ORGANISM_PART
-                // takes 800ms, should be much faster than this
                 BaselineExperiment experiment = (BaselineExperiment) (experimentTrader.getPublicExperiment(experimentAccession));
                 FactorGroup filterFactors = experiment.getExperimentalFactors().getNonDefaultFactors(assayGroupId);
 

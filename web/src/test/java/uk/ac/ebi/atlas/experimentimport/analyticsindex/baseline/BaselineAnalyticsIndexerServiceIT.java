@@ -24,6 +24,7 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 
+import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -62,7 +63,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        when(analyticsIndexDaoMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any())).thenAnswer(storeDocuments());
+        when(analyticsIndexDaoMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), Matchers.<Integer>any())).thenAnswer(storeDocuments());
         subject = new BaselineAnalyticsIndexerService(streamFactory, efoParentsLookupService, baselineAnalyticsInputStreamFactory, proteomicsBaselineAnalyticsInputStreamFactory, analyticsIndexDaoMock, baselineConditionsBuilder);
     }
 
@@ -89,7 +90,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Test
     public void indexBaselineExperimentAnalytics() {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-MTAB-2039");
-        subject.index(experiment);
+        subject.index(experiment, null);
         assertThat(documents, hasSize(14));
 
         AnalyticsDocument document = documents.get(0);
@@ -107,7 +108,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Test
     public void indexMultiSpeciesBaselineExperimentAnalytics() {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-GEOD-30352");
-        subject.index(experiment);
+        subject.index(experiment, null);
 
         assertThat(documents, hasSize(2179));
 
@@ -137,7 +138,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Test
     public void indexProteomicsBaselineExperimentAnalytics() {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1");
-        subject.index(experiment);
+        subject.index(experiment, null);
 
         assertThat(documents, hasSize(3366));
 

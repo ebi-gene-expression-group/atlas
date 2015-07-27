@@ -7,6 +7,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -40,8 +41,12 @@ public class AnalyticsIndexDao {
 
     }
 
-    public int addDocuments(Iterable<AnalyticsDocument> documents) {
+    public int addDocuments(Iterable<AnalyticsDocument> documents, @Nullable Integer batchSize) {
         int count = 0;
+
+        if (batchSize == null) {
+            batchSize = DOCUMENT_BATCH_SIZE;
+        }
 
         try {
             Iterator<AnalyticsDocument> iterator = documents.iterator();
@@ -52,7 +57,7 @@ public class AnalyticsIndexDao {
             while (iterator.hasNext()) {
                 builder = new ImmutableList.Builder<>();
                 thisBatchSize = 0;
-                while (iterator.hasNext() && thisBatchSize < DOCUMENT_BATCH_SIZE) {
+                while (iterator.hasNext() && thisBatchSize < batchSize) {
                     builder.add(iterator.next());
                     thisBatchSize++;
                 }

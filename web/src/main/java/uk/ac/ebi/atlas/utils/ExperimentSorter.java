@@ -40,10 +40,34 @@ public class ExperimentSorter {
         this.experimentTrader = experimentTrader;
     }
 
-    public TreeMultimap<Long, String> reverseSortExperimentsPerSize() {
+    public TreeMultimap<Long, String> reverseSortAllExperimentsPerSize() {
+        return reverseSortExperimentsPerSize(
+                ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
+                ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL,
+                ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
+                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL,
+                ExperimentType.RNASEQ_MRNA_BASELINE,
+                ExperimentType.PROTEOMICS_BASELINE);
+    }
+
+    public TreeMultimap<Long, String> reverseSortBaselineExperimentsPerSize() {
+        return reverseSortExperimentsPerSize(
+                ExperimentType.RNASEQ_MRNA_BASELINE,
+                ExperimentType.PROTEOMICS_BASELINE);
+    }
+
+    public TreeMultimap<Long, String> reverseSortDifferentialExperimentsPerSize() {
+        return reverseSortExperimentsPerSize(
+                ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL,
+                ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL,
+                ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL,
+                ExperimentType.RNASEQ_MRNA_DIFFERENTIAL);
+    }
+
+    public TreeMultimap<Long, String> reverseSortExperimentsPerSize(ExperimentType... experimentTypes) {
         TreeMultimap<Long, String> fileSizeToExperimentsMap = TreeMultimap.create(Collections.reverseOrder(), Ordering.natural());
 
-        for (ExperimentType experimentType : ExperimentType.values()) {
+        for (ExperimentType experimentType : experimentTypes) {
 
             if (experimentType.isDifferential()) {
                 for (String experimentAccession : experimentTrader.getPublicExperimentAccessions(experimentType)) {

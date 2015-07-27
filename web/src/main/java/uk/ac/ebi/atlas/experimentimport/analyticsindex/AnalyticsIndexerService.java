@@ -34,6 +34,7 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -55,19 +56,19 @@ public class AnalyticsIndexerService {
         this.microArrayDiffAnalyticsIndexerService = microArrayDiffAnalyticsIndexerService;
     }
 
-    public int index(Experiment experiment) {
+    public int index(Experiment experiment, @Nullable Integer batchSize) {
        ExperimentType experimentType = experiment.getType();
 
         if (experimentType == ExperimentType.RNASEQ_MRNA_BASELINE) {
-            return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment);
+            return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment, batchSize);
         } else if (experimentType == ExperimentType.PROTEOMICS_BASELINE) {
-            return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment);
+            return baselineAnalyticsIndexerService.index((BaselineExperiment) experiment, batchSize);
         } else if (experimentType == ExperimentType.RNASEQ_MRNA_DIFFERENTIAL) {
-            return diffAnalyticsIndexerService.index((DifferentialExperiment) experiment);
+            return diffAnalyticsIndexerService.index((DifferentialExperiment) experiment, batchSize);
         } else if (experimentType == ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL ||
                    experimentType == ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL ||
                    experimentType == ExperimentType.MICROARRAY_2COLOUR_MRNA_DIFFERENTIAL) {
-            return microArrayDiffAnalyticsIndexerService.index((MicroarrayExperiment) experiment);
+            return microArrayDiffAnalyticsIndexerService.index((MicroarrayExperiment) experiment, batchSize);
         }
 
         throw new UnsupportedOperationException("No analytics loader for experiment type " + experimentType);

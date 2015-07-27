@@ -43,6 +43,7 @@ import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -75,7 +76,7 @@ public class BaselineAnalyticsIndexerService {
         this.baselineConditionsBuilder = baselineConditionsBuilder;
     }
 
-    public int index(BaselineExperiment experiment) {
+    public int index(BaselineExperiment experiment, @Nullable Integer batchSize) {
         String experimentAccession = experiment.getAccession();
 
         LOGGER.info("Preparing " + experiment);
@@ -102,7 +103,7 @@ public class BaselineAnalyticsIndexerService {
                 proteomicsBaselineAnalyticsInputStreamFactory.create(experimentAccession) : baselineAnalyticsInputStreamFactory.create(experimentAccession);
 
         int count = indexRnaSeqBaselineExperimentAnalytics(experimentAccession, experimentType,
-                defaultQueryFactorType, conditionSearchTermsByAssayGroupId, ensemblSpeciesGroupedByAssayGroupId, inputStream);
+                defaultQueryFactorType, conditionSearchTermsByAssayGroupId, ensemblSpeciesGroupedByAssayGroupId, inputStream, batchSize);
 
         stopWatch.stop();
         LOGGER.info(String.format("Done indexing %s, indexed %,d documents in %s seconds", experimentAccession, count, stopWatch.getTotalTimeSeconds()));
@@ -143,7 +144,8 @@ public class BaselineAnalyticsIndexerService {
                                                       String defaultQueryFactorType,
                                                       SetMultimap<String, String> conditionSearchTermsByAssayGroupId,
                                                       ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId,
-                                                      ObjectInputStream<BaselineAnalytics> inputStream) {
+                                                      ObjectInputStream<BaselineAnalytics> inputStream,
+                                                      @Nullable Integer batchSize) {
 
         try (ObjectInputStream<BaselineAnalytics> closeableInputStream = inputStream) {
 
@@ -153,7 +155,7 @@ public class BaselineAnalyticsIndexerService {
                     defaultQueryFactorType,
                     iterableInputStream, conditionSearchTermsByAssayGroupId);
 
-            return analyticsIndexDao.addDocuments(analyticsDocuments);
+            return analyticsIndexDao.addDocuments(analyticsDocuments, batchSize);
 
         } catch (IOException e) {
             throw new AnalyticsIndexerServiceException(e);

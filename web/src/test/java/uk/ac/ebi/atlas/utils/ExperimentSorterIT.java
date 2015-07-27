@@ -32,7 +32,7 @@ public class ExperimentSorterIT {
 
     @Test
     public void testReverseSortExperimentsPerSize() {
-        Collection<String> experimentAccessionsPerSizeDescending = subject.reverseSortExperimentsPerSize().values();
+        Collection<String> experimentAccessionsPerSizeDescending = subject.reverseSortAllExperimentsPerSize().values();
         Iterator<String> iterator = experimentAccessionsPerSizeDescending.iterator();
 
         String firstExperiment = iterator.next();
@@ -48,7 +48,7 @@ public class ExperimentSorterIT {
 
     @Test
     public void reverseSortExperimentsPerSizeContainsAllExperiments() {
-        Collection<String> experimentAccessionsPerSizeDescending = subject.reverseSortExperimentsPerSize().values();
+        Collection<String> experimentAccessionsPerSizeDescending = subject.reverseSortAllExperimentsPerSize().values();
         assertThat(experimentAccessionsPerSizeDescending.size(), is(NumberOfExperiments.ALL));
     }
 }
