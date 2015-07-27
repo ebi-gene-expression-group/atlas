@@ -22,16 +22,19 @@
 
 package uk.ac.ebi.atlas.experimentimport.analyticsindex;
 
+import com.google.common.base.Strings;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Arrays;
 
 @Controller
 @Scope("request")
@@ -51,14 +54,22 @@ public class AnalyticsIndexerController {
 
     @RequestMapping("/analyticsIndex/buildIndex")
     @ResponseBody
-    public String analyticsIndexBuild(@RequestParam(value = "threads", required = false) Integer numThreads,
+    public String analyticsIndexBuild(@RequestParam(value = "type", required = false, defaultValue = "") String experimentType,
+                                      @RequestParam(value = "threads", required = false) Integer numThreads,
                                       @RequestParam(value = "batchSize", required = false) Integer batchSize) {
         analyticsIndexerManager.addObserver(analyticsIndexerMonitor);
 
         try {
-            analyticsIndexerManager.indexAllPublicExperiments(numThreads, batchSize);
+            if (!Strings.isNullOrEmpty(experimentType)) {
+                if (ExperimentType.get(experimentType) == null) {
+                    throw new IllegalArgumentException("Unknown experiment type " + experimentType);
+                }
+                analyticsIndexerManager.indexPublicExperiments(ExperimentType.get(experimentType), numThreads, batchSize);
+            } else {
+                analyticsIndexerManager.indexAllPublicExperiments(numThreads, batchSize);
+            }
         } catch (InterruptedException e) {
-            return e.getStackTrace().toString();
+            return Arrays.deepToString(e.getStackTrace());
         }
 
         analyticsIndexerManager.deleteObservers();

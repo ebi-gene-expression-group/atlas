@@ -4,6 +4,7 @@ import com.google.common.collect.TreeMultimap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.model.Experiment;
+import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 import uk.ac.ebi.atlas.utils.ExperimentSorter;
 
@@ -58,7 +59,38 @@ public class AnalyticsIndexerManager extends Observable {
     public void indexAllPublicExperiments(@Nullable Integer numThreads, @Nullable Integer batchSize) throws InterruptedException {
         ExecutorService threadPool = Executors.newFixedThreadPool(numThreads != null && numThreads > 0 ? numThreads : INDEXING_THREADS);
 
-        TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortExperimentsPerSize();
+        TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortAllExperimentsPerSize();
+        setChanged();
+        notifyObservers(descendingFileSizeToExperimentAccessions);
+
+        for (String experimentAccession : descendingFileSizeToExperimentAccessions.values()) {
+            threadPool.execute(new ReindexTask(experimentAccession, batchSize));
+        }
+
+        // From http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html
+        threadPool.shutdown();
+        try {
+            if (!threadPool.awaitTermination(12, TimeUnit.HOURS)) {
+                threadPool.shutdownNow();
+                // Wait a while for tasks to respond to being cancelled
+                if (!threadPool.awaitTermination(10, TimeUnit.MINUTES)) {
+                    System.err.println("Pool did not terminate");
+                }
+            }
+        } catch (InterruptedException ie) {
+            // (Re-)Cancel if current thread also interrupted
+            threadPool.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+
+        setChanged();
+        notifyObservers();
+    }
+
+    public void indexPublicExperiments(ExperimentType experimentType, @Nullable Integer numThreads, @Nullable Integer batchSize) throws InterruptedException {
+        ExecutorService threadPool = Executors.newFixedThreadPool(numThreads != null && numThreads > 0 ? numThreads : INDEXING_THREADS);
+
+        TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortExperimentsPerSize(experimentType);
         setChanged();
         notifyObservers(descendingFileSizeToExperimentAccessions);
 

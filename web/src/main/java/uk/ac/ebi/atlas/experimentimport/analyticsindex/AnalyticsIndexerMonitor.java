@@ -6,10 +6,7 @@ import org.springframework.context.annotation.Scope;
 
 import javax.annotation.Nullable;
 import javax.inject.Named;
-import java.util.Date;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * Created by Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk> on 20/07/15.
@@ -49,6 +46,10 @@ public class AnalyticsIndexerMonitor implements Observer {
                            "indexed - %.2f%%%n";
 
         stringBuilder.append(String.format("--- Full Analytics index build started %s --- %n", new Date()));
+        stringBuilder.append("Experiments to index: ")
+                .append(Arrays.deepToString(experimentAccessionsToFileSize.keySet().toArray()))
+                .append(String.format("%n"));
+
         stringBuilder.append(String.format(
                 progressTemplate,
                 "", processedExperimentsCount, processedMagetabFilesSize, 0D));
