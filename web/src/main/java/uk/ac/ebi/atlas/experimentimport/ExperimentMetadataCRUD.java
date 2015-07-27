@@ -208,6 +208,13 @@ public class ExperimentMetadataCRUD {
         try {
             experimentTrader.removeExperimentFromCache(accession, type);
 
+            try {
+                CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(accession);
+                ExperimentDesign tempExperimentDesign = condensedSdrfParserOutput.getExperimentDesign();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             MageTabParserOutput mageTabParserOutput = readMageTab(accession, type);
             ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
 
