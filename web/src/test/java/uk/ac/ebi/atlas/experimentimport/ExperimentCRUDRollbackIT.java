@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParserFactory;
@@ -57,6 +58,8 @@ public class ExperimentCRUDRollbackIT {
     ExperimentMetadataCRUD experimentMetadataCRUD;
     @Inject
     EFOParentsLookupService efoParentsLookupService;
+    @Inject
+    AnalyticsIndexerManager analyticsIndexerManager;
 
     @Mock
     ConditionsIndexTrader conditionsIndexTrader;
@@ -69,7 +72,7 @@ public class ExperimentCRUDRollbackIT {
         when(conditionsIndexTrader.getIndex(any(Experiment.class))).thenThrow(new IllegalStateException("die!"));
         ExperimentMetadataCRUD experimentMetadataCRUDmock = new ExperimentMetadataCRUD(experimentDAO,
                 experimentDesignFileWriterBuilder, experimentTrader, experimentDTOBuilder,
-                condensedSdrfParser, mageTabParserFactory, conditionsIndexTrader, efoParentsLookupService);
+                condensedSdrfParser, mageTabParserFactory, conditionsIndexTrader, efoParentsLookupService, analyticsIndexerManager);
         subject.setExperimentMetadataCRUD(experimentMetadataCRUDmock);
     }
 
