@@ -7,6 +7,7 @@ module.exports = {
     // define the bundles we want
     entry: {
         "expression-atlas-heatmap": './heatmap',
+        "internal-atlas-heatmap": './heatmap/internal-atlas-index.js',
         "faceted-search-results": './faceted-search-results',
         "vendor": [ 'react', 'jquery', 'jquery-ui' ]
     },
@@ -25,8 +26,8 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.jsx$/, loader: 'jsx-loader'},
-            {test: /\-page.js$/, loader: 'expose?exposed'},
-            {test: /index.js$/, loader: 'expose?exposed'},
+            {test: /\-page\.js$/, loader: 'expose?exposed'},
+            {test: /.+index\.js$/, loader: 'expose?exposed'},
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.(jpe?g|png|gif|svg)$/i,
                 loaders: [

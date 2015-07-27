@@ -5,7 +5,7 @@
 var React = require('react');
 var $ = require('jquery');
 var jQuery = $;
-//require('./lib/jquery.hc-sticky.js');
+require('../lib/jquery.hc-sticky.js');
 
 //*------------------------------------------------------------------*
 

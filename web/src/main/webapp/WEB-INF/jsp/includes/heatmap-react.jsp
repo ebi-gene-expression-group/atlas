@@ -8,8 +8,8 @@
     </c:when>
     <c:otherwise>
 
-    <%@ include file="react.jsp" %>
-    <%@ include file="heatmap-js.jsp" %>
+    <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor.bundle.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js-bundles/internal-atlas-heatmap.bundle.js"></script>
 
     <script src="${pageContext.request.contextPath}/resources/js/lib/jquery.toolbar.js"></script>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.toolbars.css" />
@@ -18,33 +18,13 @@
 
         <script type="text/javascript">
             var heatmapData = <%@ include file="heatmap-data.jsp" %>;
-            var heatmapModuleBuild = ${isMultiExperiment ? 'heatmapModule.buildMultiExperiment': (type.differential ? 'heatmapModule.buildDifferential' : (type.proteomicsBaseline ? 'heatmapModule.buildProteomicsBaseline' : 'heatmapModule.buildBaseline'))};
 
-            (function ($, React, build, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData) {
+            var heatmapModule = window.exposed;
 
-                $(document).ready(function () {
-                    // Call this inside ready() so all scripts load first in IE8
-                    var heatmap = build(heatmapConfig, $('#displayLevels'));
+            var multiExperiment = ${isMultiExperiment ? true : false};
 
-                    React.renderComponent(heatmap.Heatmap({columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}),
-                            document.getElementById('heatmap-react')
-                    );
+            heatmapModule(heatmapData, multiExperiment , ${type.differential}, ${type.proteomicsBaseline});
 
-                    if (heatmap.EnsemblLauncher) {
-                        React.renderComponent(heatmap.EnsemblLauncher(),
-                                document.getElementById(anatomogramData ? "anatomogram-ensembl-launcher" : "ensembl-launcher"));
-                    }
-
-                    // Load anatomogram after heatmap is rendered so wiring works
-                    if (anatomogramData) {
-                        anatomogramModule.init(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile,
-                                                anatomogramData.brainAnatomogramFile, anatomogramData.contextRoot, heatmapConfig.species, heatmapConfig.isSingleGene);
-                    } else {
-                        $("#anatomogram").remove();
-                    }
-                });
-
-            })(jQuery, React, heatmapModuleBuild, heatmapData.config, heatmapData.columnHeaders, heatmapData.profiles, heatmapData.geneSetProfiles, heatmapData.anatomogram);
         </script>
     </c:otherwise>
 </c:choose>

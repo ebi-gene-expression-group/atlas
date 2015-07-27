@@ -305,13 +305,10 @@
 <div id="help-placeholder" style="display: none"></div>
 
 <c:if test="${showWidget}">
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/widget/latest/js/AtlasHeatmapReact.js"></script>
 
-    <%@ include file="includes/react.jsp" %>
-    <%@ include file="includes/heatmap-js.jsp" %>
-    <%@ include file="includes/anatomogram.jsp" %>
+    <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor.bundle.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js-bundles/expression-atlas-heatmap.bundle.js"></script>
 
-    <script src="${pageContext.request.contextPath}/resources/widget/latest/jsx/heatmapContainer.js"></script>
 </c:if>
 
 <c:set var="hasBaselineResults" value="${showWidget || not empty firstBaselineCounts}"/>
@@ -368,8 +365,11 @@
 
         var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
 
-        AtlasHeatmapModule.build({
-            gxaBaseUrl: '${pageContext.request.contextPath}',
+
+        var AtlasHeatmapBuilder = window.exposed;
+
+        AtlasHeatmapBuilder({
+            gxaBaseUrl: '${pageContext.request.contextPath}/',
             params: 'geneQuery=${geneQuery.asUrlQueryParameter()}' + widgetParameters,
             isMultiExperiment: true,
             target: "widgetBody",

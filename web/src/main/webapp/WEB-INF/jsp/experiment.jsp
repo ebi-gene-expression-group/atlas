@@ -108,9 +108,6 @@
             geneQueryTagEditorModule.init('#geneQuery', '${species}');
             helpTooltipsModule.init('experiment', '${pageContext.request.contextPath}', $('[data-help-loc]').not('#heatmap-react [data-help-loc]'));
 
-            $('#anatomogram').hcSticky({responsive: true});
-            $('#ensembl-launcher').hcSticky({responsive: true});
-
             window.onload = function() {
                 var geneQueryStr = $.url('?geneQuery');
                 if(geneQueryStr) {
