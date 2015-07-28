@@ -13,6 +13,9 @@ web/bin
 web/.classpath
 web/.project
 web/.settings/
+web/src/test/resources/serialized_expression
 .DS_Store
-node_modules/
 .module-cache
+npm-debug.log
+web/src/main/javascript/**/node_modules
+web/src/main/javascript/**/dist
