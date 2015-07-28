@@ -16,12 +16,14 @@
   },
   "devDependencies": {
     "chai": "^3.0.0",
+    "css-loader": "^0.15.6",
     "expose-loader": "^0.7.0",
     "jsx-loader": "^0.12.2",
     "mocha": "^2.2.5",
     "mocha-loader": "^0.7.1",
     "react-hot-loader": "^1.2.8",
     "react-tools": "^0.13.3",
+    "style-loader": "^0.12.3",
     "testdom": "^1.1.0",
     "webpack": "^1.10.1",
     "webpack-dev-server": "^1.10.1"

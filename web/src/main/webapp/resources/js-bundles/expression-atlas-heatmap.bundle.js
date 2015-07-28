@@ -105,7 +105,7 @@ webpackJsonp([0],[
 
 	    $.ajax(httpRequest).done(function (data) {
 
-	        function overrideContextRoot(data, gxaBaseUrl) {
+	        function overrideContextRoot(data, gxaBaseUrl) { debugger;
 	            data.config.contextRoot = gxaBaseUrl;
 
 	            if (data.anatomogram) {
@@ -418,23 +418,23 @@ webpackJsonp([0],[
 
 	                    React.createElement("div", {ref: "stickyWrap", className: "gxaStickyTableWrap", style: {"marginTop": paddingMargin}}, 
 	                        React.createElement("table", {ref: "heatmapTable", className: "gxaTableGrid gxaStickyEnabled", id: "heatmap-table"}, 
-	                            React.createElement(HeatmapTableHeader, {ref: "heatmapTableHeader", radioId: "table", isMicroarray: this.isMicroarray(), hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: true}), 
+	                            React.createElement(HeatmapTableHeader, {ref: "heatmapTableHeader", radioId: "table", isMicroarray: this.isMicroarray(), hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders.primary, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: true}), 
 	                            React.createElement(HeatmapTableRows, {profiles: this.state.profiles.rows, selectedGeneId: this.state.selectedGeneId, selectGene: this.selectGene, displayLevels: this.state.displayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), renderExpressionCells: true})
 	                        ), 
 	                        React.createElement("div", {ref: "stickyIntersect", className: "gxaStickyTableIntersect"}, 
 	                            React.createElement("table", null, 
-	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), radioId: "intersect", hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: false})
+	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), radioId: "intersect", hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders.primary, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: false})
 	                            )
 	                        ), 
 	                        React.createElement("div", {ref: "stickyColumn", className: "gxaStickyTableColumn"}, 
 	                            React.createElement("table", null, 
-	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), radioId: "column", hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: false}), 
+	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), radioId: "column", hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders.primary, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: false}), 
 	                                React.createElement(HeatmapTableRows, {profiles: this.state.profiles.rows, selectedGeneId: this.state.selectedGeneId, selectGene: this.selectGene, displayLevels: this.state.displayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), renderExpressionCells: false})
 	                            )
 	                        ), 
 	                        React.createElement("div", {ref: "stickyHeader", className: "gxaStickyTableHeader"}, 
 	                            React.createElement("table", null, 
-	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), radioId: "header", hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: true})
+	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), radioId: "header", hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders.primary, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: true})
 	                            )
 	                        )
 	                    )
@@ -533,7 +533,7 @@ webpackJsonp([0],[
 	    });
 
 	    var HeatmapTableHeader = React.createClass({displayName: "HeatmapTableHeader",
-	        renderContrastFactorHeaders: function () {
+	        renderContrastFactorHeaders: function () { debugger;
 	            if (type.isBaseline) {
 	                return (React.createElement(FactorHeaders, {assayGroupFactors: this.props.columnHeaders, selectedColumnId: this.props.selectedColumnId, selectColumn: this.props.selectColumn, experimentAccession: heatmapConfig.experimentAccession}) );
 	            }
@@ -582,8 +582,9 @@ webpackJsonp([0],[
 	    }
 
 	    var FactorHeaders = React.createClass({displayName: "FactorHeaders",
-
 	        render: function () {
+	            debugger;
+
 	            var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
 	                return React.createElement(FactorHeader, {key: assayGroupFactor.factorValue, factorName: assayGroupFactor.factorValue, svgPathId: assayGroupFactor.factorValueOntologyTermId, assayGroupId: assayGroupFactor.assayGroupId, experimentAccession: this.props.experimentAccession, 
 	                        selectColumn: this.props.selectColumn, selected: assayGroupFactor.assayGroupId === this.props.selectedColumnId});
@@ -2922,18 +2923,18 @@ webpackJsonp([0],[
 /*!**********************************!*\
   !*** ./heatmap/~/react/react.js ***!
   \**********************************/
-[529, 7],
+[642, 7],
 /* 7 */
 /*!**************************************!*\
   !*** ./heatmap/~/react/lib/React.js ***!
   \**************************************/
-[530, 9, 12, 18, 21, 28, 35, 25, 27, 24, 36, 50, 51, 80, 41, 61, 76, 34, 125, 150, 79, 26, 74, 152, 54],
+[643, 9, 12, 18, 21, 28, 35, 25, 27, 24, 36, 50, 51, 80, 41, 61, 76, 34, 125, 150, 79, 26, 74, 152, 54],
 /* 8 */,
 /* 9 */
 /*!*****************************************************!*\
   !*** ./heatmap/~/react/lib/ReactInstanceHandles.js ***!
   \*****************************************************/
-[531, 10, 11],
+[644, 10, 11],
 /* 10 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/ReactRootIndex.js ***!
@@ -2948,12 +2949,12 @@ webpackJsonp([0],[
 /*!******************************************************!*\
   !*** ./heatmap/~/react/lib/DOMPropertyOperations.js ***!
   \******************************************************/
-[532, 13, 14, 15, 16],
+[645, 13, 14, 15, 16],
 /* 13 */
 /*!********************************************!*\
   !*** ./heatmap/~/react/lib/DOMProperty.js ***!
   \********************************************/
-[533, 11],
+[646, 11],
 /* 14 */
 /*!*****************************************************!*\
   !*** ./heatmap/~/react/lib/escapeTextForBrowser.js ***!
@@ -2968,7 +2969,7 @@ webpackJsonp([0],[
 /*!****************************************!*\
   !*** ./heatmap/~/react/lib/warning.js ***!
   \****************************************/
-[534, 17],
+[647, 17],
 /* 17 */
 /*!**********************************************!*\
   !*** ./heatmap/~/react/lib/emptyFunction.js ***!
@@ -2978,42 +2979,42 @@ webpackJsonp([0],[
 /*!*************************************************!*\
   !*** ./heatmap/~/react/lib/EventPluginUtils.js ***!
   \*************************************************/
-[535, 19, 11],
+[648, 19, 11],
 /* 19 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/EventConstants.js ***!
   \***********************************************/
-[536, 20],
+[649, 20],
 /* 20 */
 /*!******************************************!*\
   !*** ./heatmap/~/react/lib/keyMirror.js ***!
   \******************************************/
-[537, 11],
+[650, 11],
 /* 21 */
 /*!**********************************************!*\
   !*** ./heatmap/~/react/lib/ReactChildren.js ***!
   \**********************************************/
-[538, 22, 23, 16],
+[651, 22, 23, 16],
 /* 22 */
 /*!********************************************!*\
   !*** ./heatmap/~/react/lib/PooledClass.js ***!
   \********************************************/
-[539, 11],
+[652, 11],
 /* 23 */
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/traverseAllChildren.js ***!
   \****************************************************/
-[540, 24, 9, 11],
+[653, 24, 9, 11],
 /* 24 */
 /*!*********************************************!*\
   !*** ./heatmap/~/react/lib/ReactElement.js ***!
   \*********************************************/
-[541, 25, 27, 16],
+[654, 25, 27, 16],
 /* 25 */
 /*!*********************************************!*\
   !*** ./heatmap/~/react/lib/ReactContext.js ***!
   \*********************************************/
-[542, 26],
+[655, 26],
 /* 26 */
 /*!**********************************************!*\
   !*** ./heatmap/~/react/lib/Object.assign.js ***!
@@ -3028,12 +3029,12 @@ webpackJsonp([0],[
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/ReactComponent.js ***!
   \***********************************************/
-[543, 26, 24, 29, 31, 11, 20],
+[656, 26, 24, 29, 31, 11, 20],
 /* 29 */
 /*!*******************************************!*\
   !*** ./heatmap/~/react/lib/ReactOwner.js ***!
   \*******************************************/
-[544, 30, 11],
+[657, 30, 11],
 /* 30 */
 /*!********************************************!*\
   !*** ./heatmap/~/react/lib/emptyObject.js ***!
@@ -3043,17 +3044,17 @@ webpackJsonp([0],[
 /*!*********************************************!*\
   !*** ./heatmap/~/react/lib/ReactUpdates.js ***!
   \*********************************************/
-[545, 32, 33, 22, 27, 34, 26, 11, 16],
+[658, 32, 33, 22, 27, 34, 26, 11, 16],
 /* 32 */
 /*!********************************************!*\
   !*** ./heatmap/~/react/lib/Transaction.js ***!
   \********************************************/
-[546, 11],
+[659, 11],
 /* 33 */
 /*!**********************************************!*\
   !*** ./heatmap/~/react/lib/CallbackQueue.js ***!
   \**********************************************/
-[547, 22, 26, 11],
+[660, 22, 26, 11],
 /* 34 */
 /*!******************************************!*\
   !*** ./heatmap/~/react/lib/ReactPerf.js ***!
@@ -3063,27 +3064,27 @@ webpackJsonp([0],[
 /*!********************************************************!*\
   !*** ./heatmap/~/react/lib/ReactCompositeComponent.js ***!
   \********************************************************/
-[548, 28, 25, 27, 24, 36, 39, 40, 41, 29, 34, 42, 37, 44, 31, 26, 45, 11, 20, 47, 38, 48, 49, 16],
+[661, 28, 25, 27, 24, 36, 39, 40, 41, 29, 34, 42, 37, 44, 31, 26, 45, 11, 20, 47, 38, 48, 49, 16],
 /* 36 */
 /*!******************************************************!*\
   !*** ./heatmap/~/react/lib/ReactElementValidator.js ***!
   \******************************************************/
-[549, 24, 37, 27, 38, 16],
+[662, 24, 37, 27, 38, 16],
 /* 37 */
 /*!*******************************************************!*\
   !*** ./heatmap/~/react/lib/ReactPropTypeLocations.js ***!
   \*******************************************************/
-[550, 20],
+[663, 20],
 /* 38 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/monitorCodeUse.js ***!
   \***********************************************/
-[551, 11],
+[664, 11],
 /* 39 */
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/ReactEmptyComponent.js ***!
   \****************************************************/
-[552, 24, 11],
+[665, 24, 11],
 /* 40 */
 /*!************************************************!*\
   !*** ./heatmap/~/react/lib/ReactErrorUtils.js ***!
@@ -3093,12 +3094,12 @@ webpackJsonp([0],[
 /*!***************************************************!*\
   !*** ./heatmap/~/react/lib/ReactLegacyElement.js ***!
   \***************************************************/
-[553, 27, 11, 38, 16],
+[666, 27, 11, 38, 16],
 /* 42 */
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/ReactPropTransferer.js ***!
   \****************************************************/
-[554, 26, 17, 11, 43, 16],
+[667, 26, 17, 11, 43, 16],
 /* 43 */
 /*!********************************************!*\
   !*** ./heatmap/~/react/lib/joinClasses.js ***!
@@ -3113,12 +3114,12 @@ webpackJsonp([0],[
 /*!**********************************************************!*\
   !*** ./heatmap/~/react/lib/instantiateReactComponent.js ***!
   \**********************************************************/
-[555, 16, 24, 41, 46, 39],
+[668, 16, 24, 41, 46, 39],
 /* 46 */
 /*!*****************************************************!*\
   !*** ./heatmap/~/react/lib/ReactNativeComponent.js ***!
   \*****************************************************/
-[556, 26, 11],
+[669, 26, 11],
 /* 47 */
 /*!**************************************!*\
   !*** ./heatmap/~/react/lib/keyOf.js ***!
@@ -3138,17 +3139,17 @@ webpackJsonp([0],[
 /*!*****************************************!*\
   !*** ./heatmap/~/react/lib/ReactDOM.js ***!
   \*****************************************/
-[557, 24, 36, 41, 48],
+[670, 24, 36, 41, 48],
 /* 51 */
 /*!**************************************************!*\
   !*** ./heatmap/~/react/lib/ReactDOMComponent.js ***!
   \**************************************************/
-[558, 52, 13, 12, 60, 28, 65, 61, 76, 34, 26, 14, 11, 73, 47, 38],
+[671, 52, 13, 12, 60, 28, 65, 61, 76, 34, 26, 14, 11, 73, 47, 38],
 /* 52 */
 /*!******************************************************!*\
   !*** ./heatmap/~/react/lib/CSSPropertyOperations.js ***!
   \******************************************************/
-[559, 53, 54, 55, 57, 58, 15, 16],
+[672, 53, 54, 55, 57, 58, 15, 16],
 /* 53 */
 /*!********************************************!*\
   !*** ./heatmap/~/react/lib/CSSProperty.js ***!
@@ -3163,7 +3164,7 @@ webpackJsonp([0],[
 /*!**************************************************!*\
   !*** ./heatmap/~/react/lib/camelizeStyleName.js ***!
   \**************************************************/
-[560, 56],
+[673, 56],
 /* 56 */
 /*!*****************************************!*\
   !*** ./heatmap/~/react/lib/camelize.js ***!
@@ -3173,12 +3174,12 @@ webpackJsonp([0],[
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/dangerousStyleValue.js ***!
   \****************************************************/
-[561, 53],
+[674, 53],
 /* 58 */
 /*!***************************************************!*\
   !*** ./heatmap/~/react/lib/hyphenateStyleName.js ***!
   \***************************************************/
-[562, 59],
+[675, 59],
 /* 59 */
 /*!******************************************!*\
   !*** ./heatmap/~/react/lib/hyphenate.js ***!
@@ -3188,22 +3189,22 @@ webpackJsonp([0],[
 /*!***********************************************************!*\
   !*** ./heatmap/~/react/lib/ReactBrowserComponentMixin.js ***!
   \***********************************************************/
-[563, 39, 61, 11],
+[676, 39, 61, 11],
 /* 61 */
 /*!*******************************************!*\
   !*** ./heatmap/~/react/lib/ReactMount.js ***!
   \*******************************************/
-[564, 62, 13, 65, 27, 24, 41, 9, 34, 74, 75, 45, 11, 49, 16],
+[677, 62, 13, 65, 27, 24, 41, 9, 34, 74, 75, 45, 11, 49, 16],
 /* 62 */
 /*!*********************************************!*\
   !*** ./heatmap/~/react/lib/containsNode.js ***!
   \*********************************************/
-[565, 63],
+[678, 63],
 /* 63 */
 /*!*******************************************!*\
   !*** ./heatmap/~/react/lib/isTextNode.js ***!
   \*******************************************/
-[566, 64],
+[679, 64],
 /* 64 */
 /*!***************************************!*\
   !*** ./heatmap/~/react/lib/isNode.js ***!
@@ -3213,22 +3214,22 @@ webpackJsonp([0],[
 /*!*********************************************************!*\
   !*** ./heatmap/~/react/lib/ReactBrowserEventEmitter.js ***!
   \*********************************************************/
-[567, 19, 66, 67, 70, 71, 26, 73],
+[680, 19, 66, 67, 70, 71, 26, 73],
 /* 66 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/EventPluginHub.js ***!
   \***********************************************/
-[568, 67, 18, 68, 69, 11],
+[681, 67, 18, 68, 69, 11],
 /* 67 */
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/EventPluginRegistry.js ***!
   \****************************************************/
-[569, 11],
+[682, 11],
 /* 68 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/accumulateInto.js ***!
   \***********************************************/
-[570, 11],
+[683, 11],
 /* 69 */
 /*!***************************************************!*\
   !*** ./heatmap/~/react/lib/forEachAccumulated.js ***!
@@ -3238,12 +3239,12 @@ webpackJsonp([0],[
 /*!*******************************************************!*\
   !*** ./heatmap/~/react/lib/ReactEventEmitterMixin.js ***!
   \*******************************************************/
-[571, 66],
+[684, 66],
 /* 71 */
 /*!************************************************!*\
   !*** ./heatmap/~/react/lib/ViewportMetrics.js ***!
   \************************************************/
-[572, 72],
+[685, 72],
 /* 72 */
 /*!***********************************************************!*\
   !*** ./heatmap/~/react/lib/getUnboundedScrollPosition.js ***!
@@ -3253,12 +3254,12 @@ webpackJsonp([0],[
 /*!*************************************************!*\
   !*** ./heatmap/~/react/lib/isEventSupported.js ***!
   \*************************************************/
-[573, 54],
+[686, 54],
 /* 74 */
 /*!*******************************************!*\
   !*** ./heatmap/~/react/lib/deprecated.js ***!
   \*******************************************/
-[574, 26, 16],
+[687, 26, 16],
 /* 75 */
 /*!***************************************************************!*\
   !*** ./heatmap/~/react/lib/getReactRootElementInContainer.js ***!
@@ -3268,57 +3269,57 @@ webpackJsonp([0],[
 /*!************************************************!*\
   !*** ./heatmap/~/react/lib/ReactMultiChild.js ***!
   \************************************************/
-[575, 28, 77, 78, 45, 49],
+[688, 28, 77, 78, 45, 49],
 /* 77 */
 /*!***********************************************************!*\
   !*** ./heatmap/~/react/lib/ReactMultiChildUpdateTypes.js ***!
   \***********************************************************/
-[576, 20],
+[689, 20],
 /* 78 */
 /*!************************************************!*\
   !*** ./heatmap/~/react/lib/flattenChildren.js ***!
   \************************************************/
-[577, 79, 23, 16],
+[690, 79, 23, 16],
 /* 79 */
 /*!***************************************************!*\
   !*** ./heatmap/~/react/lib/ReactTextComponent.js ***!
   \***************************************************/
-[578, 12, 28, 24, 26, 14],
+[691, 12, 28, 24, 26, 14],
 /* 80 */
 /*!******************************************************!*\
   !*** ./heatmap/~/react/lib/ReactDefaultInjection.js ***!
   \******************************************************/
-[579, 81, 83, 88, 90, 91, 99, 100, 54, 104, 105, 60, 106, 119, 51, 120, 122, 123, 126, 127, 128, 129, 131, 9, 61, 132, 134, 135, 144, 145, 146],
+[692, 81, 83, 88, 90, 91, 99, 100, 54, 104, 105, 60, 106, 119, 51, 120, 122, 123, 126, 127, 128, 129, 131, 9, 61, 132, 134, 135, 144, 145, 146],
 /* 81 */
 /*!********************************************!*\
   !*** ./heatmap/~/react/lib/ReactDOMImg.js ***!
   \********************************************/
-[580, 35, 19, 82, 60, 24, 50],
+[693, 35, 19, 82, 60, 24, 50],
 /* 82 */
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/LocalEventTrapMixin.js ***!
   \****************************************************/
-[581, 65, 68, 69, 11],
+[694, 65, 68, 69, 11],
 /* 83 */
 /*!*******************************************************!*\
   !*** ./heatmap/~/react/lib/BeforeInputEventPlugin.js ***!
   \*******************************************************/
-[582, 19, 84, 54, 85, 47],
+[695, 19, 84, 54, 85, 47],
 /* 84 */
 /*!*************************************************!*\
   !*** ./heatmap/~/react/lib/EventPropagators.js ***!
   \*************************************************/
-[583, 19, 66, 68, 69],
+[696, 19, 66, 68, 69],
 /* 85 */
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/SyntheticInputEvent.js ***!
   \****************************************************/
-[584, 86],
+[697, 86],
 /* 86 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/SyntheticEvent.js ***!
   \***********************************************/
-[585, 22, 26, 17, 87],
+[698, 22, 26, 17, 87],
 /* 87 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/getEventTarget.js ***!
@@ -3328,7 +3329,7 @@ webpackJsonp([0],[
 /*!**************************************************!*\
   !*** ./heatmap/~/react/lib/ChangeEventPlugin.js ***!
   \**************************************************/
-[586, 19, 66, 84, 54, 31, 86, 73, 89, 47],
+[699, 19, 66, 84, 54, 31, 86, 73, 89, 47],
 /* 89 */
 /*!***************************************************!*\
   !*** ./heatmap/~/react/lib/isTextInputElement.js ***!
@@ -3343,17 +3344,17 @@ webpackJsonp([0],[
 /*!*******************************************************!*\
   !*** ./heatmap/~/react/lib/CompositionEventPlugin.js ***!
   \*******************************************************/
-[587, 19, 84, 54, 92, 98, 95, 47],
+[700, 19, 84, 54, 92, 98, 95, 47],
 /* 92 */
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/ReactInputSelection.js ***!
   \****************************************************/
-[588, 93, 62, 96, 97],
+[701, 93, 62, 96, 97],
 /* 93 */
 /*!**************************************************!*\
   !*** ./heatmap/~/react/lib/ReactDOMSelection.js ***!
   \**************************************************/
-[589, 54, 94, 95],
+[702, 54, 94, 95],
 /* 94 */
 /*!**********************************************************!*\
   !*** ./heatmap/~/react/lib/getNodeForCharacterOffset.js ***!
@@ -3363,7 +3364,7 @@ webpackJsonp([0],[
 /*!*******************************************************!*\
   !*** ./heatmap/~/react/lib/getTextContentAccessor.js ***!
   \*******************************************************/
-[590, 54],
+[703, 54],
 /* 96 */
 /*!******************************************!*\
   !*** ./heatmap/~/react/lib/focusNode.js ***!
@@ -3378,27 +3379,27 @@ webpackJsonp([0],[
 /*!**********************************************************!*\
   !*** ./heatmap/~/react/lib/SyntheticCompositionEvent.js ***!
   \**********************************************************/
-[591, 86],
+[704, 86],
 /* 99 */
 /*!********************************************************!*\
   !*** ./heatmap/~/react/lib/DefaultEventPluginOrder.js ***!
   \********************************************************/
-[592, 47],
+[705, 47],
 /* 100 */
 /*!******************************************************!*\
   !*** ./heatmap/~/react/lib/EnterLeaveEventPlugin.js ***!
   \******************************************************/
-[593, 19, 84, 101, 61, 47],
+[706, 19, 84, 101, 61, 47],
 /* 101 */
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/SyntheticMouseEvent.js ***!
   \****************************************************/
-[594, 102, 71, 103],
+[707, 102, 71, 103],
 /* 102 */
 /*!*************************************************!*\
   !*** ./heatmap/~/react/lib/SyntheticUIEvent.js ***!
   \*************************************************/
-[595, 86, 87],
+[708, 86, 87],
 /* 103 */
 /*!******************************************************!*\
   !*** ./heatmap/~/react/lib/getEventModifierState.js ***!
@@ -3408,72 +3409,72 @@ webpackJsonp([0],[
 /*!******************************************************!*\
   !*** ./heatmap/~/react/lib/HTMLDOMPropertyConfig.js ***!
   \******************************************************/
-[596, 13, 54],
+[709, 13, 54],
 /* 105 */
 /*!*************************************************************!*\
   !*** ./heatmap/~/react/lib/MobileSafariClickEventPlugin.js ***!
   \*************************************************************/
-[597, 19, 17],
+[710, 19, 17],
 /* 106 */
 /*!*****************************************************************!*\
   !*** ./heatmap/~/react/lib/ReactComponentBrowserEnvironment.js ***!
   \*****************************************************************/
-[598, 107, 109, 117, 61, 34, 75, 11, 116],
+[711, 107, 109, 117, 61, 34, 75, 11, 116],
 /* 107 */
 /*!**********************************************************!*\
   !*** ./heatmap/~/react/lib/ReactReconcileTransaction.js ***!
   \**********************************************************/
-[599, 33, 22, 65, 92, 108, 32, 26],
+[712, 33, 22, 65, 92, 108, 32, 26],
 /* 108 */
 /*!******************************************************!*\
   !*** ./heatmap/~/react/lib/ReactPutListenerQueue.js ***!
   \******************************************************/
-[600, 22, 65, 26],
+[713, 22, 65, 26],
 /* 109 */
 /*!*****************************************************!*\
   !*** ./heatmap/~/react/lib/ReactDOMIDOperations.js ***!
   \*****************************************************/
-[601, 52, 110, 12, 61, 34, 11, 116],
+[714, 52, 110, 12, 61, 34, 11, 116],
 /* 110 */
 /*!******************************************************!*\
   !*** ./heatmap/~/react/lib/DOMChildrenOperations.js ***!
   \******************************************************/
-[602, 111, 77, 95, 11],
+[715, 111, 77, 95, 11],
 /* 111 */
 /*!***************************************!*\
   !*** ./heatmap/~/react/lib/Danger.js ***!
   \***************************************/
-[603, 54, 112, 17, 115, 11],
+[716, 54, 112, 17, 115, 11],
 /* 112 */
 /*!******************************************************!*\
   !*** ./heatmap/~/react/lib/createNodesFromMarkup.js ***!
   \******************************************************/
-[604, 54, 113, 115, 11],
+[717, 54, 113, 115, 11],
 /* 113 */
 /*!************************************************!*\
   !*** ./heatmap/~/react/lib/createArrayFrom.js ***!
   \************************************************/
-[605, 114],
+[718, 114],
 /* 114 */
 /*!****************************************!*\
   !*** ./heatmap/~/react/lib/toArray.js ***!
   \****************************************/
-[606, 11],
+[719, 11],
 /* 115 */
 /*!**********************************************!*\
   !*** ./heatmap/~/react/lib/getMarkupWrap.js ***!
   \**********************************************/
-[607, 54, 11],
+[720, 54, 11],
 /* 116 */
 /*!*********************************************!*\
   !*** ./heatmap/~/react/lib/setInnerHTML.js ***!
   \*********************************************/
-[608, 54],
+[721, 54],
 /* 117 */
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/ReactMarkupChecksum.js ***!
   \****************************************************/
-[609, 118],
+[722, 118],
 /* 118 */
 /*!****************************************!*\
   !*** ./heatmap/~/react/lib/adler32.js ***!
@@ -3483,72 +3484,72 @@ webpackJsonp([0],[
 /*!*************************************************************!*\
   !*** ./heatmap/~/react/lib/ReactDefaultBatchingStrategy.js ***!
   \*************************************************************/
-[610, 31, 32, 26, 17],
+[723, 31, 32, 26, 17],
 /* 120 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/ReactDOMButton.js ***!
   \***********************************************/
-[611, 24, 121, 60, 35, 50, 20],
+[724, 24, 121, 60, 35, 50, 20],
 /* 121 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/AutoFocusMixin.js ***!
   \***********************************************/
-[612, 96],
+[725, 96],
 /* 122 */
 /*!*********************************************!*\
   !*** ./heatmap/~/react/lib/ReactDOMForm.js ***!
   \*********************************************/
-[613, 35, 19, 82, 60, 24, 50],
+[726, 35, 19, 82, 60, 24, 50],
 /* 123 */
 /*!**********************************************!*\
   !*** ./heatmap/~/react/lib/ReactDOMInput.js ***!
   \**********************************************/
-[614, 121, 12, 124, 60, 35, 24, 50, 61, 31, 26, 11],
+[727, 121, 12, 124, 60, 35, 24, 50, 61, 31, 26, 11],
 /* 124 */
 /*!*************************************************!*\
   !*** ./heatmap/~/react/lib/LinkedValueUtils.js ***!
   \*************************************************/
-[615, 125, 11],
+[728, 125, 11],
 /* 125 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/ReactPropTypes.js ***!
   \***********************************************/
-[616, 24, 44, 74, 17],
+[729, 24, 44, 74, 17],
 /* 126 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/ReactDOMOption.js ***!
   \***********************************************/
-[617, 60, 35, 24, 50, 16],
+[730, 60, 35, 24, 50, 16],
 /* 127 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/ReactDOMSelect.js ***!
   \***********************************************/
-[618, 24, 121, 124, 60, 35, 50, 31, 26],
+[731, 24, 121, 124, 60, 35, 50, 31, 26],
 /* 128 */
 /*!*************************************************!*\
   !*** ./heatmap/~/react/lib/ReactDOMTextarea.js ***!
   \*************************************************/
-[619, 121, 12, 124, 60, 35, 24, 50, 31, 26, 11, 16],
+[732, 121, 12, 124, 60, 35, 24, 50, 31, 26, 11, 16],
 /* 129 */
 /*!***************************************************!*\
   !*** ./heatmap/~/react/lib/ReactEventListener.js ***!
   \***************************************************/
-[620, 130, 54, 22, 9, 61, 31, 26, 87, 72],
+[733, 130, 54, 22, 9, 61, 31, 26, 87, 72],
 /* 130 */
 /*!**********************************************!*\
   !*** ./heatmap/~/react/lib/EventListener.js ***!
   \**********************************************/
-[621, 17],
+[734, 17],
 /* 131 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/ReactInjection.js ***!
   \***********************************************/
-[622, 65, 13, 66, 28, 35, 39, 46, 34, 10, 31],
+[735, 65, 13, 66, 28, 35, 39, 46, 34, 10, 31],
 /* 132 */
 /*!**************************************************!*\
   !*** ./heatmap/~/react/lib/SelectEventPlugin.js ***!
   \**************************************************/
-[623, 97, 19, 84, 92, 86, 89, 47, 133],
+[736, 97, 19, 84, 92, 86, 89, 47, 133],
 /* 133 */
 /*!*********************************************!*\
   !*** ./heatmap/~/react/lib/shallowEqual.js ***!
@@ -3563,27 +3564,27 @@ webpackJsonp([0],[
 /*!**************************************************!*\
   !*** ./heatmap/~/react/lib/SimpleEventPlugin.js ***!
   \**************************************************/
-[624, 136, 19, 18, 84, 137, 86, 138, 139, 101, 142, 102, 143, 140, 11, 47, 16],
+[737, 136, 19, 18, 84, 137, 86, 138, 139, 101, 142, 102, 143, 140, 11, 47, 16],
 /* 136 */
 /*!***************************************************!*\
   !*** ./heatmap/~/react/lib/SyntheticDragEvent.js ***!
   \***************************************************/
-[625, 101],
+[738, 101],
 /* 137 */
 /*!********************************************************!*\
   !*** ./heatmap/~/react/lib/SyntheticClipboardEvent.js ***!
   \********************************************************/
-[626, 86],
+[739, 86],
 /* 138 */
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/SyntheticFocusEvent.js ***!
   \****************************************************/
-[627, 102],
+[740, 102],
 /* 139 */
 /*!*******************************************************!*\
   !*** ./heatmap/~/react/lib/SyntheticKeyboardEvent.js ***!
   \*******************************************************/
-[628, 102, 140, 141, 103],
+[741, 102, 140, 141, 103],
 /* 140 */
 /*!*************************************************!*\
   !*** ./heatmap/~/react/lib/getEventCharCode.js ***!
@@ -3593,62 +3594,62 @@ webpackJsonp([0],[
 /*!********************************************!*\
   !*** ./heatmap/~/react/lib/getEventKey.js ***!
   \********************************************/
-[629, 140],
+[742, 140],
 /* 142 */
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/SyntheticTouchEvent.js ***!
   \****************************************************/
-[630, 102, 103],
+[743, 102, 103],
 /* 143 */
 /*!****************************************************!*\
   !*** ./heatmap/~/react/lib/SyntheticWheelEvent.js ***!
   \****************************************************/
-[631, 101],
+[744, 101],
 /* 144 */
 /*!*****************************************************!*\
   !*** ./heatmap/~/react/lib/SVGDOMPropertyConfig.js ***!
   \*****************************************************/
-[632, 13],
+[745, 13],
 /* 145 */
 /*!********************************************************!*\
   !*** ./heatmap/~/react/lib/createFullPageComponent.js ***!
   \********************************************************/
-[633, 35, 24, 11],
+[746, 35, 24, 11],
 /* 146 */
 /*!*************************************************!*\
   !*** ./heatmap/~/react/lib/ReactDefaultPerf.js ***!
   \*************************************************/
-[634, 13, 147, 61, 34, 148],
+[747, 13, 147, 61, 34, 148],
 /* 147 */
 /*!*********************************************************!*\
   !*** ./heatmap/~/react/lib/ReactDefaultPerfAnalysis.js ***!
   \*********************************************************/
-[635, 26],
+[748, 26],
 /* 148 */
 /*!***********************************************!*\
   !*** ./heatmap/~/react/lib/performanceNow.js ***!
   \***********************************************/
-[636, 149],
+[749, 149],
 /* 149 */
 /*!********************************************!*\
   !*** ./heatmap/~/react/lib/performance.js ***!
   \********************************************/
-[637, 54],
+[750, 54],
 /* 150 */
 /*!*****************************************************!*\
   !*** ./heatmap/~/react/lib/ReactServerRendering.js ***!
   \*****************************************************/
-[638, 151, 24, 9, 117, 45, 11],
+[751, 151, 24, 9, 117, 45, 11],
 /* 151 */
 /*!****************************************************************!*\
   !*** ./heatmap/~/react/lib/ReactServerRenderingTransaction.js ***!
   \****************************************************************/
-[639, 32, 22, 33, 108, 26, 17],
+[752, 32, 22, 33, 108, 26, 17],
 /* 152 */
 /*!******************************************!*\
   !*** ./heatmap/~/react/lib/onlyChild.js ***!
   \******************************************/
-[640, 24, 11],
+[753, 24, 11],
 /* 153 */
 /*!**********************************************!*\
   !*** ./heatmap/~/react-radio-group/index.js ***!
@@ -3757,7 +3758,7 @@ webpackJsonp([0],[
 /*!******************************************!*\
   !*** ./heatmap/~/jquery-ui/jquery-ui.js ***!
   \******************************************/
-[641, 155],
+[754, 155],
 /* 157 */
 /*!*********************************************************!*\
   !*** ./heatmap/~/jquery.browser/dist/jquery.browser.js ***!

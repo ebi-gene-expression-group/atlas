@@ -25,7 +25,10 @@ package uk.ac.ebi.atlas.widget;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSortedSet;
-import com.google.gson.Gson;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -61,6 +64,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.lang.reflect.Type;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
@@ -291,8 +295,13 @@ public final class HeatmapWidgetController {
         Gson gson = new Gson();
 
         ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = assayGroupFactorViewModelBuilder.build(filteredAssayGroupFactors);
-        String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
-        model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
+
+        JsonObject jsonObject = new JsonObject();
+        Type type = new TypeToken<ImmutableList<AssayGroupFactorViewModel>>() {}.getType();
+        JsonElement jsonElement = gson.toJsonTree(assayGroupFactorViewModels, type);
+        jsonObject.add("primary", jsonElement);
+
+        model.addAttribute("jsonColumnHeaders", jsonObject);
 
         BaselineProfilesViewModel profilesViewModel = baselineExperimentProfilesViewModelBuilder.build(baselineProfiles, orderedFactors);
 

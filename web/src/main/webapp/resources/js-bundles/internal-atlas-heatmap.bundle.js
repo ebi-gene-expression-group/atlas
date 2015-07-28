@@ -294,23 +294,23 @@ webpackJsonp([2],[
 
 	                    React.createElement("div", {ref: "stickyWrap", className: "gxaStickyTableWrap", style: {"marginTop": paddingMargin}}, 
 	                        React.createElement("table", {ref: "heatmapTable", className: "gxaTableGrid gxaStickyEnabled", id: "heatmap-table"}, 
-	                            React.createElement(HeatmapTableHeader, {ref: "heatmapTableHeader", radioId: "table", isMicroarray: this.isMicroarray(), hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: true}), 
+	                            React.createElement(HeatmapTableHeader, {ref: "heatmapTableHeader", radioId: "table", isMicroarray: this.isMicroarray(), hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders.primary, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: true}), 
 	                            React.createElement(HeatmapTableRows, {profiles: this.state.profiles.rows, selectedGeneId: this.state.selectedGeneId, selectGene: this.selectGene, displayLevels: this.state.displayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), renderExpressionCells: true})
 	                        ), 
 	                        React.createElement("div", {ref: "stickyIntersect", className: "gxaStickyTableIntersect"}, 
 	                            React.createElement("table", null, 
-	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), radioId: "intersect", hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: false})
+	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), radioId: "intersect", hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders.primary, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: false})
 	                            )
 	                        ), 
 	                        React.createElement("div", {ref: "stickyColumn", className: "gxaStickyTableColumn"}, 
 	                            React.createElement("table", null, 
-	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), radioId: "column", hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: false}), 
+	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), radioId: "column", hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders.primary, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: false}), 
 	                                React.createElement(HeatmapTableRows, {profiles: this.state.profiles.rows, selectedGeneId: this.state.selectedGeneId, selectGene: this.selectGene, displayLevels: this.state.displayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), renderExpressionCells: false})
 	                            )
 	                        ), 
 	                        React.createElement("div", {ref: "stickyHeader", className: "gxaStickyTableHeader"}, 
 	                            React.createElement("table", null, 
-	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), radioId: "header", hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: true})
+	                                React.createElement(HeatmapTableHeader, {isMicroarray: this.isMicroarray(), radioId: "header", hasQuartiles: this.hasQuartiles(), isSingleGeneResult: this.isSingleGeneResult(), columnHeaders: this.props.columnHeaders.primary, selectedColumnId: this.state.selectedColumnId, selectColumn: this.selectColumn, displayLevels: this.state.displayLevels, toggleDisplayLevels: this.toggleDisplayLevels, showGeneSetProfiles: this.state.showGeneSetProfiles, selectedRadioButton: this.state.selectedRadioButton, toggleRadioButton: this.toggleRadioButton, renderContrastFactorHeaders: true})
 	                            )
 	                        )
 	                    )
@@ -409,7 +409,7 @@ webpackJsonp([2],[
 	    });
 
 	    var HeatmapTableHeader = React.createClass({displayName: "HeatmapTableHeader",
-	        renderContrastFactorHeaders: function () {
+	        renderContrastFactorHeaders: function () { debugger;
 	            if (type.isBaseline) {
 	                return (React.createElement(FactorHeaders, {assayGroupFactors: this.props.columnHeaders, selectedColumnId: this.props.selectedColumnId, selectColumn: this.props.selectColumn, experimentAccession: heatmapConfig.experimentAccession}) );
 	            }
@@ -458,8 +458,9 @@ webpackJsonp([2],[
 	    }
 
 	    var FactorHeaders = React.createClass({displayName: "FactorHeaders",
-
 	        render: function () {
+	            debugger;
+
 	            var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
 	                return React.createElement(FactorHeader, {key: assayGroupFactor.factorValue, factorName: assayGroupFactor.factorValue, svgPathId: assayGroupFactor.factorValueOntologyTermId, assayGroupId: assayGroupFactor.assayGroupId, experimentAccession: this.props.experimentAccession, 
 	                        selectColumn: this.props.selectColumn, selected: assayGroupFactor.assayGroupId === this.props.selectedColumnId});
@@ -40524,7 +40525,7 @@ webpackJsonp([2],[
 	//*------------------------------------------------------------------*
 
 	function drawHeatmapContainer (heatmapData, isMultiExperiment, isDifferential, isProteomicsBaseline) {
-	debugger;
+
 	    (function ($, React, isMultiExperiment, isDifferential, isProteomicsBaseline, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData) {
 
 	        $(document).ready(function () {
@@ -40566,11 +40567,6 @@ webpackJsonp([2],[
 
 	module.exports = drawHeatmapContainer;
 
-	//module.exports = {  buildBaseline: heatmapBuild.buildBaseline,
-	//                    buildProteomicsBaseline: heatmapBuild.buildProteomicsBaseline,
-	//                    buildDifferential: heatmapBuild.buildDifferential,
-	//                    buildMultiExperiment: heatmapBuild.buildMultiExperiment,
-	//                    React: React};
 
 /***/ }
 ]);
