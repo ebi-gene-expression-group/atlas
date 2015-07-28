@@ -55,8 +55,9 @@ public class AnalyticsIndexerController {
     @RequestMapping("/analyticsIndex/buildIndex")
     @ResponseBody
     public String analyticsIndexBuild(@RequestParam(value = "type", required = false, defaultValue = "") String experimentType,
-                                      @RequestParam(value = "threads", required = false) Integer numThreads,
-                                      @RequestParam(value = "batchSize", required = false) Integer batchSize) {
+                                      @RequestParam(value = "threads", required = false, defaultValue =  AnalyticsIndexerManager.DEFAULT_THREADS_8) int numThreads,
+                                      @RequestParam(value = "batchSize", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_BATCH_SIZE_1024) int batchSize,
+                                      @RequestParam(value = "timeout", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_TIMEOUT_IN_HOURS_24) int timeout) {
         analyticsIndexerManager.addObserver(analyticsIndexerMonitor);
 
         try {
@@ -64,9 +65,9 @@ public class AnalyticsIndexerController {
                 if (ExperimentType.get(experimentType) == null) {
                     throw new IllegalArgumentException("Unknown experiment type " + experimentType);
                 }
-                analyticsIndexerManager.indexPublicExperiments(ExperimentType.get(experimentType), numThreads, batchSize);
+                analyticsIndexerManager.indexPublicExperiments(ExperimentType.get(experimentType), numThreads, batchSize, timeout);
             } else {
-                analyticsIndexerManager.indexAllPublicExperiments(numThreads, batchSize);
+                analyticsIndexerManager.indexAllPublicExperiments(numThreads, batchSize, timeout);
             }
         } catch (InterruptedException e) {
             return Arrays.deepToString(e.getStackTrace());
@@ -89,7 +90,7 @@ public class AnalyticsIndexerController {
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
-        int count = analyticsIndexerManager.addToAnalyticsIndex(experimentAccession, null);
+        int count = analyticsIndexerManager.addToAnalyticsIndex(experimentAccession);
 
         stopWatch.stop();
 

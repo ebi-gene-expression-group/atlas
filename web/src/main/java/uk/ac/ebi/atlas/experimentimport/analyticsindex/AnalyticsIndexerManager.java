@@ -11,6 +11,7 @@ import uk.ac.ebi.atlas.utils.ExperimentSorter;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Collection;
 import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,7 +37,9 @@ public class AnalyticsIndexerManager extends Observable {
     private final ExperimentTrader experimentTrader;
     private final ExperimentSorter experimentSorter;
 
-    private static final int INDEXING_THREADS = 4;
+    protected static final String DEFAULT_THREADS_8 = "8";
+    protected static final String DEFAULT_BATCH_SIZE_1024 = "1024";
+    protected static final String DEFAULT_TIMEOUT_IN_HOURS_24 = "24";
 
     @Inject
     public AnalyticsIndexerManager(AnalyticsIndexerService analyticsIndexerService, ExperimentTrader experimentTrader, ExperimentSorter experimentSorter) {
@@ -45,7 +48,11 @@ public class AnalyticsIndexerManager extends Observable {
         this.experimentSorter = experimentSorter;
     }
 
-    public int addToAnalyticsIndex(String experimentAccession, @Nullable Integer batchSize) {
+    public int addToAnalyticsIndex(String experimentAccession) {
+        return addToAnalyticsIndex(experimentAccession, Integer.parseInt(DEFAULT_BATCH_SIZE_1024));
+    }
+
+    public int addToAnalyticsIndex(String experimentAccession, int batchSize) {
         checkNotNull(experimentAccession);
         Experiment experiment = experimentTrader.getPublicExperiment(experimentAccession);
         analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
@@ -56,21 +63,17 @@ public class AnalyticsIndexerManager extends Observable {
         analyticsIndexerService.deleteExperimentFromIndex(experimentAccession);
     }
 
-    public void indexAllPublicExperiments(@Nullable Integer numThreads, @Nullable Integer batchSize) throws InterruptedException {
-        ExecutorService threadPool = Executors.newFixedThreadPool(numThreads != null && numThreads > 0 ? numThreads : INDEXING_THREADS);
+    private void  indexPublicExperimentsConcurrently(Collection<String> experimentAccessions, int threads, int batchSize, int timeout) {
+        ExecutorService threadPool = Executors.newFixedThreadPool(threads);
 
-        TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortAllExperimentsPerSize();
-        setChanged();
-        notifyObservers(descendingFileSizeToExperimentAccessions);
-
-        for (String experimentAccession : descendingFileSizeToExperimentAccessions.values()) {
+        for (String experimentAccession : experimentAccessions) {
             threadPool.execute(new ReindexTask(experimentAccession, batchSize));
         }
 
         // From http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html
         threadPool.shutdown();
         try {
-            if (!threadPool.awaitTermination(12, TimeUnit.HOURS)) {
+            if (!threadPool.awaitTermination(timeout, TimeUnit.HOURS)) {
                 threadPool.shutdownNow();
                 // Wait a while for tasks to respond to being cancelled
                 if (!threadPool.awaitTermination(10, TimeUnit.MINUTES)) {
@@ -87,42 +90,27 @@ public class AnalyticsIndexerManager extends Observable {
         notifyObservers();
     }
 
-    public void indexPublicExperiments(ExperimentType experimentType, @Nullable Integer numThreads, @Nullable Integer batchSize) throws InterruptedException {
-        ExecutorService threadPool = Executors.newFixedThreadPool(numThreads != null && numThreads > 0 ? numThreads : INDEXING_THREADS);
+    public void indexAllPublicExperiments(int threads, int batchSize, int timeout) throws InterruptedException {
+        TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortAllExperimentsPerSize();
+        setChanged();
+        notifyObservers(descendingFileSizeToExperimentAccessions);
 
+        indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), threads, batchSize, timeout);
+    }
+
+    public void indexPublicExperiments(ExperimentType experimentType, int threads, int batchSize, int timeout) throws InterruptedException {
         TreeMultimap<Long, String> descendingFileSizeToExperimentAccessions = experimentSorter.reverseSortExperimentsPerSize(experimentType);
         setChanged();
         notifyObservers(descendingFileSizeToExperimentAccessions);
 
-        for (String experimentAccession : descendingFileSizeToExperimentAccessions.values()) {
-            threadPool.execute(new ReindexTask(experimentAccession, batchSize));
-        }
-
-        // From http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ExecutorService.html
-        threadPool.shutdown();
-        try {
-            if (!threadPool.awaitTermination(12, TimeUnit.HOURS)) {
-                threadPool.shutdownNow();
-                // Wait a while for tasks to respond to being cancelled
-                if (!threadPool.awaitTermination(10, TimeUnit.MINUTES)) {
-                    System.err.println("Pool did not terminate");
-                }
-            }
-        } catch (InterruptedException ie) {
-            // (Re-)Cancel if current thread also interrupted
-            threadPool.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
-
-        setChanged();
-        notifyObservers();
+        indexPublicExperimentsConcurrently(descendingFileSizeToExperimentAccessions.values(), threads, batchSize, timeout);
     }
 
     private class ReindexTask implements Runnable {
         private final String experimentAccession;
         private final Integer batchSize;
 
-        public ReindexTask(String experimentAccession, @Nullable Integer batchSize) {
+        public ReindexTask(String experimentAccession, int batchSize) {
             this.experimentAccession = experimentAccession;
             this.batchSize = batchSize;
         }
