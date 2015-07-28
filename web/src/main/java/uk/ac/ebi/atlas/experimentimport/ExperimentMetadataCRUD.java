@@ -26,6 +26,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSetMultimap;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.*;
@@ -61,6 +62,7 @@ public class ExperimentMetadataCRUD {
     private final MageTabParserFactory mageTabParserFactory;
     private final ConditionsIndexTrader conditionsIndexTrader;
     private EFOParentsLookupService efoParentsLookupService;
+    private final AnalyticsIndexerManager analyticsIndexerManager;
 
     //TODO: refactor this class - it has too many collaborators
     @Inject
@@ -71,7 +73,8 @@ public class ExperimentMetadataCRUD {
                                   CondensedSdrfParser condensedSdrfParser,
                                   MageTabParserFactory mageTabParserFactory,
                                   ConditionsIndexTrader conditionsIndexTrader,
-                                  EFOParentsLookupService efoParentsLookupService) {
+                                  EFOParentsLookupService efoParentsLookupService,
+                                  AnalyticsIndexerManager analyticsIndexerManager) {
         this.experimentDAO = experimentDAO;
         this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;
@@ -80,6 +83,7 @@ public class ExperimentMetadataCRUD {
         this.mageTabParserFactory = mageTabParserFactory;
         this.conditionsIndexTrader = conditionsIndexTrader;
         this.efoParentsLookupService = efoParentsLookupService;
+        this.analyticsIndexerManager = analyticsIndexerManager;
     }
 
     public UUID importExperiment(String accession, ExperimentConfiguration experimentConfiguration, boolean isPrivate, Optional<String> accessKey) throws IOException {
@@ -90,12 +94,12 @@ public class ExperimentMetadataCRUD {
         ExperimentType experimentType = experimentConfiguration.getExperimentType();
         MageTabParserOutput mageTabParserOutput = readMageTab(accession, experimentType);
 
-        try {
-            CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(accession);
-            ExperimentDesign tempExperimentDesign = condensedSdrfParserOutput.getExperimentDesign();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(accession);
+//            ExperimentDesign tempExperimentDesign = condensedSdrfParserOutput.getExperimentDesign();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
         writeExperimentDesignFile(accession, experimentType, experimentDesign);
@@ -162,6 +166,7 @@ public class ExperimentMetadataCRUD {
 
         if (!experimentDTO.isPrivate()) {
             conditionsIndexTrader.getIndex(experimentDTO.getExperimentType()).removeConditions(experimentAccession);
+            analyticsIndexerManager.deleteFromAnalyticsIndex(experimentAccession);
         }
 
         experimentTrader.removeExperimentFromCache(experimentDTO.getExperimentAccession(), experimentDTO.getExperimentType());
@@ -185,6 +190,8 @@ public class ExperimentMetadataCRUD {
             ExperimentDTO experimentDTO = experimentDAO.findExperiment(experimentAccession, true);
             updateExperimentDesign(experimentDTO);
             experimentTrader.removeExperimentFromCache(experimentAccession, experimentDTO.getExperimentType());
+        } else {
+            analyticsIndexerManager.deleteFromAnalyticsIndex(experimentAccession);
         }
     }
 
@@ -208,12 +215,12 @@ public class ExperimentMetadataCRUD {
         try {
             experimentTrader.removeExperimentFromCache(accession, type);
 
-            try {
-                CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(accession);
-                ExperimentDesign tempExperimentDesign = condensedSdrfParserOutput.getExperimentDesign();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(accession);
+//                ExperimentDesign tempExperimentDesign = condensedSdrfParserOutput.getExperimentDesign();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
             MageTabParserOutput mageTabParserOutput = readMageTab(accession, type);
             ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();

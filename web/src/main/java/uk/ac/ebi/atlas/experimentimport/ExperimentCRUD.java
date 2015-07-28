@@ -26,7 +26,6 @@ public class ExperimentCRUD {
     private ConfigurationTrader configurationTrader;
     private ExpressionSerializerService expressionSerializerService;
 
-
     // requires no-arg constructor for @Transactional proxying, hence setter injection of dependencies
     public ExperimentCRUD() {
     }

@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.CondensedSdrfParser;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.MageTabParserFactory;
@@ -52,12 +53,18 @@ public class ExperimentMetadataCRUDFactory {
     @Inject
     EFOParentsLookupService efoParentsLookupService;
 
+    @Inject
+    AnalyticsIndexerManager analyticsIndexerManager;
+
     public ExperimentMetadataCRUD create(ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder, ExperimentDAO experimentDao, ConditionsIndexTrader conditionsIndexTrader) {
         ProteomicsBaselineExperimentsCacheLoader loader = loaderFactory.create(experimentDao);
         LoadingCache<String, ProteomicsBaselineExperiment> loadingCache = CacheBuilder.newBuilder().maximumSize(1).build(loader);
         ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache = new ProteomicsBaselineExperimentsCache(loadingCache);
         ExperimentTrader experimentTrader = new ExperimentTrader(experimentDao, baselineExperimentsCache, rnaSeqDiffExperimentsCache, microarrayExperimentsCache, proteomicsBaselineExperimentsCache, publicExperimentTypesCache);
-        return new ExperimentMetadataCRUD(experimentDao, experimentDesignFileWriterBuilder,
-                experimentTrader, experimentDTOBuilder, condensedSdrfParser, mageTabParserFactory, conditionsIndexTrader, efoParentsLookupService);
+        return new ExperimentMetadataCRUD(
+                experimentDao, experimentDesignFileWriterBuilder,
+                experimentTrader, experimentDTOBuilder, condensedSdrfParser, mageTabParserFactory,
+                conditionsIndexTrader, efoParentsLookupService,
+                analyticsIndexerManager);
     }
 }

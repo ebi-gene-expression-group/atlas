@@ -181,5 +181,4 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
                 + experimentAccession + "&wt=json&indent=true");
     }
 
-
 }
