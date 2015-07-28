@@ -42,7 +42,7 @@ public class AnalyticsIndexerMonitor implements Observer {
         progressTemplate = "%tF %tT " +
                            "%s - %,d / " + String.format("%,d experiments",  experimentAccessionsToFileSize.size()) +
                            " - %,d / " + String.format("%,d bytes", magetabFilesTotalSize) +
-                           " - %.2f%" +
+                           " - %.2f%%" +
                            "%n";
 
         stringBuilder.append(String.format("--- Full Analytics index build started %s --- %n", new Date()));
