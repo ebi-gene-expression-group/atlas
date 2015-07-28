@@ -77,8 +77,8 @@ public class AnalyticsIndexDao {
 
     public void deleteDocumentsForExperiment(String accession) {
         try {
-            solrClient.deleteByQuery("experimentAccession:" + accession, COMMIT_TIME_IN_MILLISECONDS);
-//            solrClient.commit();
+            solrClient.deleteByQuery("experimentAccession:" + accession);
+            solrClient.commit();
         } catch (IOException | SolrServerException e) {
             LOGGER.error(e);
             rollBack();
