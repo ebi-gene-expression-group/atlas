@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Named
-@Scope("singleton")
+@Scope("prototype")
 public class BaselineConditionsBuilder extends ConditionsBuilder<BaselineExperiment> {
     @Override
     public Collection<Condition> buildProperties(BaselineExperiment experiment, SetMultimap<String, String> ontologyTermIdsByAssayAccession) {

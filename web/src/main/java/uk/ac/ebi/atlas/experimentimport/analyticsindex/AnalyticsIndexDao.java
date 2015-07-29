@@ -20,7 +20,6 @@ public class AnalyticsIndexDao {
 
     private SolrClient solrClient;
 
-    private static final int DOCUMENT_BATCH_SIZE = 5000;
     private static final int COMMIT_TIME_IN_MILLISECONDS = 15 * 60 * 1000;  // 15 minutes
 
     @Inject
@@ -28,25 +27,8 @@ public class AnalyticsIndexDao {
         this.solrClient = solrClient;
     }
 
-    public void addDocument(AnalyticsDocument analyticsDocument) {
-        try {
-            solrClient.addBean(analyticsDocument);
-
-            solrClient.commit();
-        } catch (IOException | SolrServerException e) {
-            LOGGER.error(e);
-            rollBack();
-            throw new AnalyticsIndexerException(e);
-        }
-
-    }
-
-    public int addDocuments(Iterable<AnalyticsDocument> documents, @Nullable Integer batchSize) {
+    public int addDocuments(Iterable<AnalyticsDocument> documents, int batchSize) {
         int count = 0;
-
-        if (batchSize == null) {
-            batchSize = DOCUMENT_BATCH_SIZE;
-        }
 
         try {
             Iterator<AnalyticsDocument> iterator = documents.iterator();
