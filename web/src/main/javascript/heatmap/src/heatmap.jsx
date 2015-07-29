@@ -824,7 +824,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             return (type.isMultiExperiment ?
                 <GeneProfileRow key={profile.name} id={profile.id} name={profile.name} experimentType={profile.experimentType} expressions={profile.expressions} serializedFilterFactors={profile.serializedFilterFactors} displayLevels={this.props.displayLevels} renderExpressionCells={this.props.renderExpressionCells}/>
                 :
-                <GeneProfileRow key={profile.name} selected={profile.id === this.props.selectedGeneId} selectGene={this.props.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles} selectedRadioButton={this.props.selectedRadioButton} hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} renderExpressionCells={this.props.renderExpressionCells}/>
+                <GeneProfileRow key={profile.name + profile.designElement} selected={profile.id === this.props.selectedGeneId} selectGene={this.props.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles} selectedRadioButton={this.props.selectedRadioButton} hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} renderExpressionCells={this.props.renderExpressionCells}/>
             );
         },
 

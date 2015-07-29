@@ -26,7 +26,6 @@ function drawHeatmapContainer (heatmapData, isMultiExperiment, isDifferential, i
 
             var heatmap = heatmapModuleBuild(heatmapConfig, $('#displayLevels'));
 
-
             React.render(
                 React.createElement(
                     heatmap.Heatmap, {columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}
@@ -37,7 +36,7 @@ function drawHeatmapContainer (heatmapData, isMultiExperiment, isDifferential, i
             if (heatmap.EnsemblLauncher) {
                 React.render(
                     React.createElement(
-                        heatmap.EnsemblLauncher()
+                        heatmap.EnsemblLauncher
                     ),
                     document.getElementById(anatomogramData ? "anatomogram-ensembl-launcher" : "ensembl-launcher"));
             }
