@@ -22,8 +22,6 @@ import java.util.Set;
 @Scope("prototype")
 public class BaselineProfileInputStreamFactory {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineProfileInputStreamFactory.class);
-
     @Value("#{configuration['experiment.magetab.path.template']}")
     protected String baselineExperimentDataFileUrlTemplate;
 
@@ -63,7 +61,6 @@ public class BaselineProfileInputStreamFactory {
             return new BaselineProfilesKryoInputStream(baselineExpressionsKryoReader, experimentAccession, expressionsRowRawDeserializerBaselineBuilder, baselineProfileReusableBuilder);
         }
         catch (IllegalArgumentException e) {
-            LOGGER.error("Could not read serialized file " + serializedFileURL);
             String tsvFileURL = MessageFormat.format(baselineExperimentDataFileUrlTemplate, experimentAccession);
             CSVReader csvReader = csvReaderFactory.createTsvReader(tsvFileURL);
             return new BaselineProfilesTsvInputStream(csvReader, experimentAccession, expressionsRowDeserializerBaselineBuilder, baselineProfileReusableBuilder);

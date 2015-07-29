@@ -33,7 +33,7 @@ public class KryoReaderFactory {
             InputStream inputStream = Files.newInputStream(filePath);
             return createBaselineExpressionsKryoReader(new UnsafeInput(inputStream));
         } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.warn(e.getMessage(), e);
             throw new IllegalArgumentException("Error trying to open " + serializedFilePath, e);
         }
     }
