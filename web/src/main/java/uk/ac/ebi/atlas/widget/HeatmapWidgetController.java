@@ -301,7 +301,10 @@ public final class HeatmapWidgetController {
         JsonElement jsonElement = gson.toJsonTree(assayGroupFactorViewModels, type);
         jsonObject.add("primary", jsonElement);
 
-        model.addAttribute("jsonColumnHeaders", jsonObject);
+        model.addAttribute("jsonMultipleColumnHeaders", jsonObject);
+
+        String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
+        model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
 
         BaselineProfilesViewModel profilesViewModel = baselineExperimentProfilesViewModelBuilder.build(baselineProfiles, orderedFactors);
 

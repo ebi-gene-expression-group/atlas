@@ -20,7 +20,6 @@ function drawHeatmapContainer (heatmapData, isMultiExperiment, isDifferential, i
 
         $(document).ready(function () {
             // Call this inside ready() so all scripts load first in IE8
-            debugger;
 
             var heatmapModuleBuild = isMultiExperiment ? heatmapBuild.buildMultiExperiment : (isDifferential ? heatmapBuild.buildDifferential
                 : (isProteomicsBaseline ? heatmapBuild.buildProteomicsBaseline : heatmapBuild.buildBaseline));

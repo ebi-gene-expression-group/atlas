@@ -25,6 +25,9 @@ package uk.ac.ebi.atlas.experimentpage.baseline;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -48,6 +51,7 @@ import uk.ac.ebi.atlas.web.FilterFactorsConverter;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Type;
 import java.util.*;
 
 public abstract class BaselineExperimentPageController extends BaselineExperimentController {
@@ -90,7 +94,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         this.tracksUtil = tracksUtil;
     }
 
-    @InitBinder
+    @InitBinder("preferences")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(new BaselineRequestPreferencesValidator());
     }
@@ -230,6 +234,14 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         Gson gson = new Gson();
 
         ImmutableList<AssayGroupFactorViewModel> assayGroupFactorViewModels = assayGroupFactorViewModelBuilder.build(filteredAssayGroupFactors);
+
+        JsonObject jsonObject = new JsonObject();
+        Type type = new TypeToken<ImmutableList<AssayGroupFactorViewModel>>() {}.getType();
+        JsonElement jsonElement = gson.toJsonTree(assayGroupFactorViewModels, type);
+        jsonObject.add("primary", jsonElement);
+
+        model.addAttribute("jsonMultipleColumnHeaders", jsonObject);
+
         String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
         model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
 
