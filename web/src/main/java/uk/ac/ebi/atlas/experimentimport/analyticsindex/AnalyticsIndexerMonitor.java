@@ -45,7 +45,7 @@ public class AnalyticsIndexerMonitor implements Observer {
                            " - %.2f%%" +
                            "%n";
 
-        stringBuilder.append(String.format("--- Full Analytics index build started %s --- %n", new Date()));
+        stringBuilder.append(String.format("--- Analytics index build started %s --- %n", new Date()));
         stringBuilder.append("Experiments to index: ")
                 .append(Arrays.deepToString(experimentAccessionsToFileSize.keySet().toArray()))
                 .append(String.format("%n"));
@@ -59,7 +59,7 @@ public class AnalyticsIndexerMonitor implements Observer {
     @Override
     public void update(Observable o, @Nullable Object arg) {
         if (arg == null) {
-            stringBuilder.append(String.format("--- Full Analytics index build finished %s --- %n", new Date()));
+            stringBuilder.append(String.format("--- Analytics index build finished %s --- %n", new Date()));
         }
         else if (arg instanceof TreeMultimap) {
             @SuppressWarnings("unchecked")

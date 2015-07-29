@@ -58,7 +58,6 @@ public class AnalyticsIndexerController {
                                       @RequestParam(value = "threads", required = false, defaultValue =  AnalyticsIndexerManager.DEFAULT_THREADS_8) int numThreads,
                                       @RequestParam(value = "batchSize", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_BATCH_SIZE_1024) int batchSize,
                                       @RequestParam(value = "timeout", required = false, defaultValue = AnalyticsIndexerManager.DEFAULT_TIMEOUT_IN_HOURS_24) int timeout) {
-        analyticsIndexerManager.addObserver(analyticsIndexerMonitor);
 
         try {
             if (!Strings.isNullOrEmpty(experimentType)) {
@@ -72,8 +71,6 @@ public class AnalyticsIndexerController {
         } catch (InterruptedException e) {
             return Arrays.deepToString(e.getStackTrace());
         }
-
-        analyticsIndexerManager.deleteObservers();
 
         return analyticsIndexerMonitor.toString();
     }

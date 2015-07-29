@@ -56,7 +56,7 @@ public class AnalyticsIndexerService {
         this.microArrayDiffAnalyticsIndexerService = microArrayDiffAnalyticsIndexerService;
     }
 
-    public int index(Experiment experiment, @Nullable Integer batchSize) {
+    public int index(Experiment experiment, int batchSize) {
        ExperimentType experimentType = experiment.getType();
 
         if (experimentType == ExperimentType.RNASEQ_MRNA_BASELINE) {
@@ -74,7 +74,8 @@ public class AnalyticsIndexerService {
         throw new UnsupportedOperationException("No analytics loader for experiment type " + experimentType);
     }
 
-    public void deleteExperimentFromIndex(String accession) {
+    // synchronized necessary because analyticsIndexDao#delete does an explicit commit
+    public synchronized void deleteExperimentFromIndex(String accession) {
         LOGGER.info("Deleting documents for " + accession);
         analyticsIndexDao.deleteDocumentsForExperiment(accession);
         LOGGER.info("Done deleting documents for " + accession);
