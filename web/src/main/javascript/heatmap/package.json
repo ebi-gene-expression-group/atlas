@@ -10,6 +10,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "fancybox": "^3.0.0",
     "heatmap-baseline-cell-variance": "file:../heatmap-baseline-cell-variance",
     "jquery": "^2.1.4",
     "jquery-highlight": "^3.2.2",

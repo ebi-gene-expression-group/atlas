@@ -17,10 +17,10 @@ var FactorTooltip = React.createClass({
             return property.contrastPropertyType === 'FACTOR';
         }
 
-        var style = {'white-space': 'normal'};
+        var style = {'whiteSpace': 'normal'};
 
         if (isFactor(property)) {
-            style['font-weight'] = 'bold';
+            style['fontWeight'] = 'bold';
         } else {
             style['color'] = 'gray';
         }

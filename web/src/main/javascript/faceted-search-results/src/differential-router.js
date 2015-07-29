@@ -30,7 +30,7 @@ module.exports = function (facetsElement, resultsElement, facetData) {
 
     function render(query, pathname) {
 
-        React.renderComponent(Facets({facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
+        React.render(Facets({facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
             facetsElement);
 
         queryToResults(query.geneQuery, query.select);

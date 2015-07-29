@@ -26,16 +26,19 @@ function drawHeatmapContainer (heatmapData, isMultiExperiment, isDifferential, i
 
             var heatmap = heatmapModuleBuild(heatmapConfig, $('#displayLevels'));
 
-            React.renderComponent(heatmap.Heatmap({
-                    columnHeaders: columnHeaders,
-                    profiles: profiles,
-                    geneSetProfiles: geneSetProfiles
-                }),
+
+            React.render(
+                React.createElement(
+                    heatmap.Heatmap, {columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles}
+                ),
                 document.getElementById('heatmap-react')
             );
 
             if (heatmap.EnsemblLauncher) {
-                React.renderComponent(heatmap.EnsemblLauncher(),
+                React.render(
+                    React.createElement(
+                        heatmap.EnsemblLauncher()
+                    ),
                     document.getElementById(anatomogramData ? "anatomogram-ensembl-launcher" : "ensembl-launcher"));
             }
 

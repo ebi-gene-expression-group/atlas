@@ -10,6 +10,8 @@ var jQuery = $;
 require('jquery-ui');
 require('jquery.browser');
 require('../lib/jquery.hc-sticky.js');
+require('../lib/jquery.toolbar.js');
+require('fancybox')($);
 
 
 var td = require('throttle-debounce');
@@ -593,11 +595,11 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             },
 
             render: function () {
-                var thStyle = this.showPlotsButton() ? {"min-width": "80px"} : {};
+                var thStyle = this.showPlotsButton() ? {"minWidth": "80px"} : {};
                 var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
                 var plotsButton = (
-                    <div style={{"text-align":"right", "paddingRight":"3px"}} >
+                    <div style={{"textAlign":"right", "paddingRight":"3px"}} >
                         <a href="#" ref="plotsButton" onClick={this.clickButton} className='gxaButtonImage' title='Click to view plots'><img src={contextRoot + '/resources/images/yellow-chart-icon.png'}/></a>
                     </div>
                 );
@@ -911,7 +913,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 }
                 else if (type.isDifferential) {
                     return (
-                            <CellDifferential key={this.props.id + this.props.name} color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={this.props.displayLevels} id={this.props.id} name={this.props.name}/>
+                            <CellDifferential key={this.props.designElement + this.props.name + expression.contrastName} color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={this.props.displayLevels} id={this.props.id} name={this.props.name}/>
                         );
                 }
                 else if (type.isMultiExperiment) {

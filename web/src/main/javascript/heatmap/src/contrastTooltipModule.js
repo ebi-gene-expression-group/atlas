@@ -40,12 +40,19 @@ function initTooltip(contextRoot, accessKey, elements) {
                 },
                 type:"GET",
                 success:function (data) {
-                    var html = React.renderToString(ContrastTooltip({
-                                            experimentDescription: data.experimentDescription,
-                                            contrastDescription: data.contrastDescription,
-                                            testReplicates: data.testReplicates,
-                                            referenceReplicates: data.referenceReplicates,
-                                            properties: data.properties}));
+                    var html =
+                        React.renderToString(
+                            React.createElement(
+                                ContrastTooltip,
+                                {
+                                    experimentDescription: data.experimentDescription,
+                                    contrastDescription: data.contrastDescription,
+                                    testReplicates: data.testReplicates,
+                                    referenceReplicates: data.referenceReplicates,
+                                    properties: data.properties
+                                }
+                            )
+                        );
                     callback(html);
                 }
             }).fail(function (data) {

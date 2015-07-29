@@ -17,7 +17,7 @@ var ContrastTooltip = (function(React) {
             var style = {'white-space': 'normal'};
 
             if (isFactor(property)) {
-                style['font-weight'] = 'bold';
+                style['fontWeight'] = 'bold';
             } else {
                 style['color'] = 'gray';
             }
