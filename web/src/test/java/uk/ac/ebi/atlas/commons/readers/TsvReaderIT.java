@@ -50,13 +50,13 @@ public class TsvReaderIT {
     private String experimentDesignTemplate;
 
     @Inject
-    private TsvReaderBuilder tsvReaderBuilder;
+    private FileTsvReaderBuilder fileTsvReaderBuilder;
 
     private TsvReader subject;
 
     @Before
     public void setUp() throws Exception {
-        subject = tsvReaderBuilder.forTsvFilePathTemplate(analysisMethodsTemplate)
+        subject = fileTsvReaderBuilder.forTsvFilePathTemplate(analysisMethodsTemplate)
                                   .withExperimentAccession(EXPERIMENT_ACCESSION).build();
     }
 
@@ -83,7 +83,7 @@ public class TsvReaderIT {
     public void readExpDesignAll() {
 
         // given
-        subject = tsvReaderBuilder.forTsvFilePathTemplate(experimentDesignTemplate).build();
+        subject = fileTsvReaderBuilder.forTsvFilePathTemplate(experimentDesignTemplate).build();
         List<String[]> result = subject.readAll();
         String[] firstLine = result.get(0);
         String[] lastLine = result.get(result.size() - 1);

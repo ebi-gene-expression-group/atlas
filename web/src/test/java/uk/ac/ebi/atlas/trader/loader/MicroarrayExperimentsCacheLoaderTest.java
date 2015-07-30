@@ -28,8 +28,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.arrayexpress2.magetab.datamodel.MAGETABInvestigation;
-import uk.ac.ebi.atlas.commons.magetab.MageTabLimpopoUtils;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -69,12 +67,6 @@ public class MicroarrayExperimentsCacheLoaderTest {
     private Contrast contrastMock;
 
     @Mock
-    private MageTabLimpopoUtils mageTabLimpopoUtilsMock;
-
-    @Mock
-    private MAGETABInvestigation investigationMock;
-
-    @Mock
     private ExperimentDAO experimentDAOMock;
 
     @Mock
@@ -96,7 +88,6 @@ public class MicroarrayExperimentsCacheLoaderTest {
         when(speciesKingdomTraderMock.getKingdom(experimentDTOMock.getSpecies())).thenReturn("kingdom");
         when(experimentConfigurationMock.getContrasts()).thenReturn(Sets.newHashSet(contrastMock));
         when(experimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAYDESIGNS)));
-        when(mageTabLimpopoUtilsMock.parseInvestigation(ACCESSION)).thenReturn(investigationMock);
 
         when(experimentDAOMock.findPublicExperiment(ACCESSION)).thenReturn(experimentDTOMock);
     }

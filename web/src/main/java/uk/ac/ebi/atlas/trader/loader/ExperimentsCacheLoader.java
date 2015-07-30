@@ -25,7 +25,6 @@ package uk.ac.ebi.atlas.trader.loader;
 import com.google.common.cache.CacheLoader;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.Experiment;
@@ -74,7 +73,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
     }
 
     @Override
-    public T load(String experimentAccession) throws ParseException, IOException {
+    public T load(String experimentAccession) throws IOException {
 
         LOGGER.info("loading experiment with accession: " + experimentAccession);
 
@@ -96,7 +95,7 @@ public abstract class ExperimentsCacheLoader<T extends Experiment> extends Cache
     }
 
     protected abstract T load(ExperimentDTO experimentDTO, String experimentDescription,
-                              boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException;
+                              boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException;
 
     final String fetchExperimentNameFromArrayExpress(String experimentAccession, ExperimentDTO experimentDTO) {
         try {

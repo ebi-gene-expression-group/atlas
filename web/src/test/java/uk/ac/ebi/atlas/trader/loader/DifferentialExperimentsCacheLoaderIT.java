@@ -27,7 +27,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
@@ -50,7 +49,7 @@ public class DifferentialExperimentsCacheLoaderIT {
 
 
     @Test
-    public void shouldHaveExactlyOneSpecies() throws IOException, ParseException {
+    public void shouldHaveExactlyOneSpecies() throws IOException {
         //given
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 
@@ -59,7 +58,7 @@ public class DifferentialExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void shouldContainOneContrast() throws IOException, ParseException {
+    public void shouldContainOneContrast() throws IOException {
         //given
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 
@@ -69,7 +68,7 @@ public class DifferentialExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void shouldContainGivenContrast() throws IOException, ParseException {
+    public void shouldContainGivenContrast() throws IOException {
         //given
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 
@@ -88,7 +87,7 @@ public class DifferentialExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void shouldHaveDisplayNameEqualsToAccession() throws IOException, ParseException {
+    public void shouldHaveDisplayNameEqualsToAccession() throws IOException {
         //given
         DifferentialExperiment experiment = subject.load(EXPERIMENT_ACCESSION);
 

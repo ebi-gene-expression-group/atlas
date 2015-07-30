@@ -130,7 +130,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
         expect().body(is("Experiment E-GEOD-21860 successfully updated.")).when()
                 .get("updateStatus?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=false");
 
-        assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(4));
+        assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(2));
 
 
     }
@@ -141,12 +141,14 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
         expect().body(is("Experiment E-GEOD-21860 successfully deleted.")).when()
                 .get("deleteExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION);
 
+        get("/deleteInactiveAnalytics").then().assertThat().statusCode(200);
+
         assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(0));
 
         expect().body(startsWith("Experiment " + DIFFERENTIAL_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
                 .get("importExperiment?accession=" + DIFFERENTIAL_EXPERIMENT_ACCESSION + "&private=false");
 
-        assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(4));
+        assertThat(countConditionProperties(DIFFERENTIAL_EXPERIMENT_ACCESSION), is(2));
 
     }
 

@@ -416,7 +416,6 @@
         <!--
             Apache Tiles
         -->
-
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-extras</artifactId>
@@ -435,25 +434,15 @@
         <!--
             Java Mail
         -->
-
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.5</version>
         </dependency>
 
-<!--
-        <dependency>
-            <groupId>com.github.detro.ghostdriver</groupId>
-            <artifactId>phantomjsdriver</artifactId>
-            <version>1.0.3</version>
-            <scope>test</scope>
-        </dependency>
--->
         <!--
             For testing rest services
         -->
-
         <dependency>
             <groupId>com.jayway.restassured</groupId>
             <artifactId>rest-assured</artifactId>

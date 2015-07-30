@@ -23,7 +23,6 @@
 package uk.ac.ebi.atlas.trader.loader;
 
 import org.springframework.beans.factory.annotation.Value;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -60,7 +59,7 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
 
     @Override
     protected MicroarrayExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
-                                        boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
+                                        boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 

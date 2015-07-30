@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.model.AssayGroups;
 import uk.ac.ebi.atlas.model.baseline.*;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
@@ -74,7 +74,7 @@ public class BaselineExperimentsCacheLoaderTest {
     private TsvReader experimentDataTsvReaderMock;
 
     @Mock
-    private TsvReaderBuilder tsvReaderBuilderMock;
+    private FileTsvReaderBuilder fileTsvReaderBuilderMock;
 
     @Mock
     private AssayGroups assayGroupsMock;
@@ -86,10 +86,10 @@ public class BaselineExperimentsCacheLoaderTest {
     @Before
     public void initSubject(){
 
-        when(tsvReaderBuilderMock.forTsvFilePathTemplate(PATH_TEMPLATE_FAKE)).thenReturn(tsvReaderBuilderMock);
-        when(tsvReaderBuilderMock.build()).thenReturn(experimentDataTsvReaderMock);
+        when(fileTsvReaderBuilderMock.forTsvFilePathTemplate(PATH_TEMPLATE_FAKE)).thenReturn(fileTsvReaderBuilderMock);
+        when(fileTsvReaderBuilderMock.build()).thenReturn(experimentDataTsvReaderMock);
 
-        BaselineExperimentExpressionLevelFile baselineExperimentExpressionLevelFile = new BaselineExperimentExpressionLevelFile(tsvReaderBuilderMock, PATH_TEMPLATE_FAKE);
+        BaselineExperimentExpressionLevelFile baselineExperimentExpressionLevelFile = new BaselineExperimentExpressionLevelFile(fileTsvReaderBuilderMock, PATH_TEMPLATE_FAKE);
 
         subject =
                 new BaselineExperimentsCacheLoader(baselineExperimentExpressionLevelFile, configurationTraderMock, speciesKingdomTraderMock) {

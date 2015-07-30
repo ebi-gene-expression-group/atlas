@@ -1,0 +1,135 @@
+E-MTAB-2800		SRR594419	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-2800		SRR594419	characteristic	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594419	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594419	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-2800		SRR594419	factor	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594426	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594426	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-2800		SRR594426	characteristic	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594426	factor	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594426	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-2800		SRR594445	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-2800		SRR594445	characteristic	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594445	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594445	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-2800		SRR594445	factor	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594431	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594431	characteristic	strain	BN/SsNHsd
+E-MTAB-2800		SRR594431	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-2800		SRR594431	factor	strain	BN/SsNHsd
+E-MTAB-2800		SRR594431	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-2800		SRR594424	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594424	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2800		SRR594424	characteristic	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594424	factor	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594424	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2800		SRR594443	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594443	characteristic	organism part	skeletal muscle
+E-MTAB-2800		SRR594443	characteristic	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594443	factor	organism part	skeletal muscle
+E-MTAB-2800		SRR594443	factor	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594440	characteristic	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594440	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-2800		SRR594440	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594440	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-2800		SRR594440	factor	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594444	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-2800		SRR594444	characteristic	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594444	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594444	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-2800		SRR594444	factor	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594433	characteristic	strain	BN/SsNHsd
+E-MTAB-2800		SRR594433	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2800		SRR594433	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594433	factor	strain	BN/SsNHsd
+E-MTAB-2800		SRR594433	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2800		SRR594420	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594420	characteristic	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594420	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-2800		SRR594420	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-2800		SRR594420	factor	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594437	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-2800		SRR594437	characteristic	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594437	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594437	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-2800		SRR594437	factor	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594421	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-2800		SRR594421	characteristic	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594421	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594421	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-2800		SRR594421	factor	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594429	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594429	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-2800		SRR594429	characteristic	strain	BN/SsNHsd
+E-MTAB-2800		SRR594429	factor	strain	BN/SsNHsd
+E-MTAB-2800		SRR594429	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-2800		SRR594436	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594436	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-2800		SRR594436	characteristic	strain	BN/SsNHsd
+E-MTAB-2800		SRR594436	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-2800		SRR594436	factor	strain	BN/SsNHsd
+E-MTAB-2800		SRR594422	characteristic	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594422	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-2800		SRR594422	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594422	factor	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594422	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-2800		SRR594438	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-2800		SRR594438	characteristic	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594438	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594438	factor	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594438	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-2800		SRR594427	characteristic	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594427	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-2800		SRR594427	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594427	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-2800		SRR594427	factor	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594425	characteristic	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594425	characteristic	organism part	skeletal muscle
+E-MTAB-2800		SRR594425	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594425	factor	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594425	factor	organism part	skeletal muscle
+E-MTAB-2800		SRR594442	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594442	characteristic	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594442	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2800		SRR594442	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-2800		SRR594442	factor	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594435	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-2800		SRR594435	characteristic	strain	BN/SsNHsd
+E-MTAB-2800		SRR594435	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594435	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-2800		SRR594435	factor	strain	BN/SsNHsd
+E-MTAB-2800		SRR594441	characteristic	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594441	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-2800		SRR594441	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594441	factor	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594441	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-2800		SRR594439	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594439	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-2800		SRR594439	characteristic	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594439	factor	strain	Sprague Dawley	http://www.ebi.ac.uk/efo/EFO_0001352
+E-MTAB-2800		SRR594439	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-2800		SRR594434	characteristic	strain	BN/SsNHsd
+E-MTAB-2800		SRR594434	characteristic	organism part	skeletal muscle
+E-MTAB-2800		SRR594434	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594434	factor	organism part	skeletal muscle
+E-MTAB-2800		SRR594434	factor	strain	BN/SsNHsd
+E-MTAB-2800		SRR594432	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-2800		SRR594432	characteristic	strain	BN/SsNHsd
+E-MTAB-2800		SRR594432	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594432	factor	strain	BN/SsNHsd
+E-MTAB-2800		SRR594432	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-2800		SRR594423	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594423	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-2800		SRR594423	characteristic	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594423	factor	strain	F344/Cr1	http://www.ebi.ac.uk/efo/EFO_0000176
+E-MTAB-2800		SRR594423	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-2800		SRR594430	characteristic	strain	BN/SsNHsd
+E-MTAB-2800		SRR594430	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-2800		SRR594430	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594430	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-2800		SRR594430	factor	strain	BN/SsNHsd
+E-MTAB-2800		SRR594428	characteristic	organism	Rattus norvegicus	http://purl.obolibrary.org/obo/NCBITaxon_10116
+E-MTAB-2800		SRR594428	characteristic	strain	BN/SsNHsd
+E-MTAB-2800		SRR594428	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-2800		SRR594428	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-2800		SRR594428	factor	strain	BN/SsNHsd

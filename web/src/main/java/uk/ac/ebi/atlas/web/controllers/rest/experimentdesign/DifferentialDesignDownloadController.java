@@ -25,7 +25,7 @@ package uk.ac.ebi.atlas.web.controllers.rest.experimentdesign;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 
 import javax.inject.Inject;
@@ -39,8 +39,8 @@ import java.util.Set;
 public class DifferentialDesignDownloadController extends ExperimentDesignDownloadController<DifferentialExperiment> {
 
     @Inject
-    public DifferentialDesignDownloadController(TsvReaderBuilder tsvReaderBuilder) {
-        super(tsvReaderBuilder);
+    public DifferentialDesignDownloadController(FileTsvReaderBuilder fileTsvReaderBuilder) {
+        super(fileTsvReaderBuilder);
     }
 
     @RequestMapping(value = "/experiments/{experimentAccession}/experiment-design.tsv", params = {"type=RNASEQ_MRNA_DIFFERENTIAL"})

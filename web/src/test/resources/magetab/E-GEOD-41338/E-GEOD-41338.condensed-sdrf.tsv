@@ -1,0 +1,132 @@
+E-GEOD-41338		SRR579552	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579552	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-41338		SRR579552	characteristic	age	adult
+E-GEOD-41338		SRR579552	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-41338		SRR579552	factor	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-41338		SRR579552	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-41338		SRR579549	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-GEOD-41338		SRR579549	characteristic	age	adult
+E-GEOD-41338		SRR579549	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-41338		SRR579549	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579549	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-41338		SRR579549	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-GEOD-41338		SRR579549	factor	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-41338		SRR579555	characteristic	organism part	skeletal muscle
+E-GEOD-41338		SRR579555	characteristic	age	adult
+E-GEOD-41338		SRR579555	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579555	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-41338		SRR579555	factor	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-41338		SRR579555	factor	organism part	skeletal muscle
+E-GEOD-41338		SRR579561	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-41338		SRR579561	characteristic	age	adult
+E-GEOD-41338		SRR579561	characteristic	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-GEOD-41338		SRR579561	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579561	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-41338		SRR579561	factor	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-GEOD-41338		SRR579546	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-41338		SRR579546	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579546	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-GEOD-41338		SRR579546	characteristic	age	adult
+E-GEOD-41338		SRR579546	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-41338		SRR579546	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-GEOD-41338		SRR579546	factor	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-41338		SRR579550	characteristic	organism part	skeletal muscle
+E-GEOD-41338		SRR579550	characteristic	age	adult
+E-GEOD-41338		SRR579550	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-41338		SRR579550	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579550	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-41338		SRR579550	factor	organism part	skeletal muscle
+E-GEOD-41338		SRR579550	factor	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-41338		SRR579560	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-GEOD-41338		SRR579560	characteristic	age	adult
+E-GEOD-41338		SRR579560	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579560	characteristic	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-GEOD-41338		SRR579560	factor	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-GEOD-41338		SRR579560	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-GEOD-41338		SRR579562	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579562	characteristic	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-GEOD-41338		SRR579562	characteristic	age	adult
+E-GEOD-41338		SRR579562	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-GEOD-41338		SRR579562	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-GEOD-41338		SRR579562	factor	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-GEOD-41338		SRR579558	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579558	characteristic	organism	Anolis carolinensis	http://purl.obolibrary.org/obo/NCBITaxon_28377
+E-GEOD-41338		SRR579558	characteristic	age	adult
+E-GEOD-41338		SRR579558	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-GEOD-41338		SRR579558	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-GEOD-41338		SRR579558	factor	organism	Anolis carolinensis	http://purl.obolibrary.org/obo/NCBITaxon_28377
+E-GEOD-41338		SRR579559	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579559	characteristic	organism	Anolis carolinensis	http://purl.obolibrary.org/obo/NCBITaxon_28377
+E-GEOD-41338		SRR579559	characteristic	age	adult
+E-GEOD-41338		SRR579559	characteristic	organism part	skeletal muscle
+E-GEOD-41338		SRR579559	factor	organism	Anolis carolinensis	http://purl.obolibrary.org/obo/NCBITaxon_28377
+E-GEOD-41338		SRR579559	factor	organism part	skeletal muscle
+E-GEOD-41338		SRR579557	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579557	characteristic	organism	Anolis carolinensis	http://purl.obolibrary.org/obo/NCBITaxon_28377
+E-GEOD-41338		SRR579557	characteristic	age	adult
+E-GEOD-41338		SRR579557	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-GEOD-41338		SRR579557	factor	organism	Anolis carolinensis	http://purl.obolibrary.org/obo/NCBITaxon_28377
+E-GEOD-41338		SRR579557	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-GEOD-41338		SRR579563	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-GEOD-41338		SRR579563	characteristic	age	adult
+E-GEOD-41338		SRR579563	characteristic	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-GEOD-41338		SRR579563	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579563	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-GEOD-41338		SRR579563	factor	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-GEOD-41338		SRR579554	characteristic	age	adult
+E-GEOD-41338		SRR579554	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-GEOD-41338		SRR579554	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579554	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-41338		SRR579554	factor	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-41338		SRR579554	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-GEOD-41338		SRR579564	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579564	characteristic	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-GEOD-41338		SRR579564	characteristic	age	adult
+E-GEOD-41338		SRR579564	characteristic	organism part	skeletal muscle
+E-GEOD-41338		SRR579564	factor	organism	Xenopus tropicalis	http://purl.obolibrary.org/obo/NCBITaxon_8364
+E-GEOD-41338		SRR579564	factor	organism part	skeletal muscle
+E-GEOD-41338		SRR579547	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-41338		SRR579547	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-41338		SRR579547	characteristic	age	adult
+E-GEOD-41338		SRR579547	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579547	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-41338		SRR579547	factor	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-41338		SRR579547	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-GEOD-41338		SRR579545	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-GEOD-41338		SRR579545	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-41338		SRR579545	characteristic	age	adult
+E-GEOD-41338		SRR579545	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579545	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-41338		SRR579545	factor	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-41338		SRR579545	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-GEOD-41338		SRR579548	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579548	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-41338		SRR579548	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-GEOD-41338		SRR579548	characteristic	age	adult
+E-GEOD-41338		SRR579548	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-41338		SRR579548	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-GEOD-41338		SRR579548	factor	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-41338		SRR579551	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-41338		SRR579551	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579551	characteristic	age	adult
+E-GEOD-41338		SRR579551	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-GEOD-41338		SRR579551	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-GEOD-41338		SRR579551	factor	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-41338		SRR579553	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579553	characteristic	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-41338		SRR579553	characteristic	age	adult
+E-GEOD-41338		SRR579553	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-GEOD-41338		SRR579553	factor	organism	Gallus gallus	http://purl.obolibrary.org/obo/NCBITaxon_9031
+E-GEOD-41338		SRR579553	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-GEOD-41338		SRR579565	characteristic	age	adult
+E-GEOD-41338		SRR579565	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-GEOD-41338		SRR579565	characteristic	organism	Tetraodon nigroviridis	http://purl.obolibrary.org/obo/NCBITaxon_99883
+E-GEOD-41338		SRR579565	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579565	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-GEOD-41338		SRR579565	factor	organism	Tetraodon nigroviridis	http://purl.obolibrary.org/obo/NCBITaxon_99883
+E-GEOD-41338		SRR579556	characteristic	sex	mixed	http://www.ebi.ac.uk/efo/EFO_0001271
+E-GEOD-41338		SRR579556	characteristic	organism	Anolis carolinensis	http://purl.obolibrary.org/obo/NCBITaxon_28377
+E-GEOD-41338		SRR579556	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-GEOD-41338		SRR579556	characteristic	age	adult
+E-GEOD-41338		SRR579556	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-GEOD-41338		SRR579556	factor	organism	Anolis carolinensis	http://purl.obolibrary.org/obo/NCBITaxon_28377

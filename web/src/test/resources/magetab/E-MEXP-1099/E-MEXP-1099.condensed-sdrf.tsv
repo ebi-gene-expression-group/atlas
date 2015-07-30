@@ -1,0 +1,120 @@
+E-MEXP-1099	A-AFFY-35	homozygote_repl5	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	homozygote_repl5	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	homozygote_repl5	characteristic	genetic modification	induced mutation
+E-MEXP-1099	A-AFFY-35	homozygote_repl5	characteristic	genotype	homozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	homozygote_repl5	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	homozygote_repl5	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	homozygote_repl5	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	homozygote_repl5	factor	genotype	homozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	homozygote_repl1	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	homozygote_repl1	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	homozygote_repl1	characteristic	genetic modification	induced mutation
+E-MEXP-1099	A-AFFY-35	homozygote_repl1	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	homozygote_repl1	characteristic	genotype	homozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	homozygote_repl1	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	homozygote_repl1	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	homozygote_repl1	factor	genotype	homozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	wt_repl2	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	wt_repl2	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	wt_repl2	characteristic	genotype	wild type genotype
+E-MEXP-1099	A-AFFY-35	wt_repl2	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	wt_repl2	characteristic	genetic modification	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MEXP-1099	A-AFFY-35	wt_repl2	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	wt_repl2	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	wt_repl2	factor	genotype	wild type genotype
+E-MEXP-1099	A-AFFY-35	heterozygote_repl5	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	heterozygote_repl5	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	heterozygote_repl5	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	heterozygote_repl5	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	heterozygote_repl5	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	heterozygote_repl5	characteristic	genotype	heterozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl5	characteristic	genetic modification	induced mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl5	factor	genotype	heterozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	wt_repl5	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	wt_repl5	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	wt_repl5	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	wt_repl5	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	wt_repl5	characteristic	genetic modification	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MEXP-1099	A-AFFY-35	wt_repl5	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	wt_repl5	characteristic	genotype	wild type genotype
+E-MEXP-1099	A-AFFY-35	wt_repl5	factor	genotype	wild type genotype
+E-MEXP-1099	A-AFFY-35	heterozygote_repl1	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	heterozygote_repl1	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	heterozygote_repl1	characteristic	genetic modification	induced mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl1	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	heterozygote_repl1	characteristic	genotype	heterozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl1	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	heterozygote_repl1	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	heterozygote_repl1	factor	genotype	heterozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	homozygote_repl4	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	homozygote_repl4	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	homozygote_repl4	characteristic	genetic modification	induced mutation
+E-MEXP-1099	A-AFFY-35	homozygote_repl4	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	homozygote_repl4	characteristic	genotype	homozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	homozygote_repl4	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	homozygote_repl4	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	homozygote_repl4	factor	genotype	homozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	wt_repl3	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	wt_repl3	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	wt_repl3	characteristic	genetic modification	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MEXP-1099	A-AFFY-35	wt_repl3	characteristic	genotype	wild type genotype
+E-MEXP-1099	A-AFFY-35	wt_repl3	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	wt_repl3	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	wt_repl3	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	wt_repl3	factor	genotype	wild type genotype
+E-MEXP-1099	A-AFFY-35	homozygote_repl3	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	homozygote_repl3	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	homozygote_repl3	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	homozygote_repl3	characteristic	genotype	homozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	homozygote_repl3	characteristic	genetic modification	induced mutation
+E-MEXP-1099	A-AFFY-35	homozygote_repl3	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	homozygote_repl3	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	homozygote_repl3	factor	genotype	homozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl3	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	heterozygote_repl3	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	heterozygote_repl3	characteristic	genetic modification	induced mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl3	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	heterozygote_repl3	characteristic	genotype	heterozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl3	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	heterozygote_repl3	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	heterozygote_repl3	factor	genotype	heterozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	wt_repl1	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	wt_repl1	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	wt_repl1	characteristic	genotype	wild type genotype
+E-MEXP-1099	A-AFFY-35	wt_repl1	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	wt_repl1	characteristic	genetic modification	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MEXP-1099	A-AFFY-35	wt_repl1	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	wt_repl1	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	wt_repl1	factor	genotype	wild type genotype
+E-MEXP-1099	A-AFFY-35	homozygote_repl2	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	homozygote_repl2	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	homozygote_repl2	characteristic	genetic modification	induced mutation
+E-MEXP-1099	A-AFFY-35	homozygote_repl2	characteristic	genotype	homozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	homozygote_repl2	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	homozygote_repl2	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	homozygote_repl2	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	homozygote_repl2	factor	genotype	homozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl4	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	heterozygote_repl4	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	heterozygote_repl4	characteristic	genetic modification	induced mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl4	characteristic	genotype	heterozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl4	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	heterozygote_repl4	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	heterozygote_repl4	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	heterozygote_repl4	factor	genotype	heterozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl2	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	heterozygote_repl2	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	heterozygote_repl2	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	heterozygote_repl2	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	heterozygote_repl2	characteristic	genetic modification	induced mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl2	characteristic	genotype	heterozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	heterozygote_repl2	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	heterozygote_repl2	factor	genotype	heterozygous for chico mutation
+E-MEXP-1099	A-AFFY-35	wt_repl4	characteristic	biosource type	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MEXP-1099	A-AFFY-35	wt_repl4	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MEXP-1099	A-AFFY-35	wt_repl4	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MEXP-1099	A-AFFY-35	wt_repl4	characteristic	genotype	wild type genotype
+E-MEXP-1099	A-AFFY-35	wt_repl4	characteristic	genetic modification	none	http://www.ebi.ac.uk/efo/EFO_0001461
+E-MEXP-1099	A-AFFY-35	wt_repl4	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MEXP-1099	A-AFFY-35	wt_repl4	characteristic	age	7 day
+E-MEXP-1099	A-AFFY-35	wt_repl4	factor	genotype	wild type genotype

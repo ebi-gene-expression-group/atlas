@@ -32,7 +32,7 @@ public class GseaPlotsBuilderTestIT {
     private static final ImmutableSortedSet<Contrast> CONTRASTS = ImmutableSortedSet.of(G1_G2, G3_G4);
 
     @Inject
-    GseaPlotsBuilder subject; //= new GseaPlotsBuilder("magetab/{0}/{0}.{1}.{2}.gsea_class_non_dir_both.png");
+    GseaPlotsBuilder subject; //= new GseaPlotsBuilder("condensedSdrf/{0}/{0}.{1}.{2}.gsea_class_non_dir_both.png");
 
     @Test
     public void createMap() {

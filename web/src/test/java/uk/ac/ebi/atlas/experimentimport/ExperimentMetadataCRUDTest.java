@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
@@ -32,14 +33,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.*;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.*;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -106,7 +107,7 @@ public class ExperimentMetadataCRUDTest {
     private ConditionsIndexTrader conditionsIndexTrader;
 
     @Mock
-    private ConditionsIndex conditionsIndex;
+    private ConditionsIndex<Experiment> conditionsIndex;
 
     @Mock
     private ExperimentDTOBuilder experimentDTOBuilderMock;
@@ -115,22 +116,13 @@ public class ExperimentMetadataCRUDTest {
     private ExperimentDesign experimentDesignMock;
 
     @Mock
-    private MageTabParserOutput mageTabParserOutput;
-
-    @Mock
     private ExperimentConfiguration experimentConfiguration;
-
-    @Mock
-    private MageTabParserFactory mageTabParserFactory;
 
     @Mock
     private CondensedSdrfParser condensedSdrfParserMock;
 
     @Mock
     private CondensedSdrfParserOutput condensedSdrfParserOutputMock;
-
-    @Mock
-    private MageTabParser mageTabParser;
 
     @Mock
     private EFOParentsLookupService efoParentsLookupServiceMock;
@@ -155,10 +147,6 @@ public class ExperimentMetadataCRUDTest {
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
 
-        given(mageTabParserFactory.create(Mockito.any(ExperimentType.class))).willReturn(mageTabParser);
-        given(mageTabParser.parse(EXPERIMENT_ACCESSION)).willReturn(mageTabParserOutput);
-        given(mageTabParserOutput.getExperimentDesign()).willReturn(experimentDesignMock);
-
         given(conditionsIndexTrader.getIndex(any(Experiment.class))).willReturn(conditionsIndex);
         given(conditionsIndexTrader.getIndex(any(ExperimentType.class))).willReturn(conditionsIndex);
         doNothing().when(conditionsIndex).removeConditions(anyString());
@@ -167,20 +155,26 @@ public class ExperimentMetadataCRUDTest {
         given(experimentDTOBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE)).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withPrivate(false)).willReturn(experimentDTOBuilderMock);
-        given(experimentDTOBuilderMock.withSpecies(anySet())).willReturn(experimentDTOBuilderMock);
-        given(experimentDTOBuilderMock.withPubMedIds(anySet())).willReturn(experimentDTOBuilderMock);
+        given(experimentDTOBuilderMock.withSpecies(anySetOf(String.class))).willReturn(experimentDTOBuilderMock);
+        given(experimentDTOBuilderMock.withPubMedIds(anySetOf(String.class))).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withTitle(anyString())).willReturn(experimentDTOBuilderMock);
 
-        given(condensedSdrfParserMock.parse(anyString())).willReturn(condensedSdrfParserOutputMock);
+        given(condensedSdrfParserMock.parse(anyString(), any(ExperimentType.class))).willReturn(condensedSdrfParserOutputMock);
+        given(condensedSdrfParserOutputMock.getExperimentDesign()).willReturn(experimentDesignMock);
+
+        given(condensedSdrfParserOutputMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
+        given(condensedSdrfParserOutputMock.getExperimentType()).willReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
+        given(condensedSdrfParserOutputMock.getPubmedIds()).willReturn(new ImmutableSet.Builder<String>().build());
+        given(condensedSdrfParserOutputMock.getTitle()).willReturn("");
 
         ImmutableSetMultimap.Builder<String, String> builder = new ImmutableSetMultimap.Builder<>();
         builder.put(EXPERIMENT_ASSAY, EFO_0000761);
         when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(builder.build());
-        when(efoParentsLookupServiceMock.getAllParents(anySet())).thenReturn(EXPANDED_EFO_TERMS);
+        when(efoParentsLookupServiceMock.getAllParents(anySetOf(String.class))).thenReturn(EXPANDED_EFO_TERMS);
 
         subject = new ExperimentMetadataCRUD(
                 experimentDAOMock, experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock,
-                condensedSdrfParserMock, mageTabParserFactory, conditionsIndexTrader, efoParentsLookupServiceMock,
+                condensedSdrfParserMock, conditionsIndexTrader, efoParentsLookupServiceMock,
                 analyticsIndexerManagerMock);
     }
 
@@ -210,13 +204,13 @@ public class ExperimentMetadataCRUDTest {
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(conditionsIndex).updateConditions(any(Experiment.class), any(SetMultimap.class));
+        verify(conditionsIndex).updateConditions(any(Experiment.class), Matchers.<SetMultimap<String,String>>any());
     }
 
     @Test
     public void importExperimentShouldAddExperimentToIndex() throws Exception {
         subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false, Optional.<String>absent());
-        verify(conditionsIndex).addConditions(any(Experiment.class), any(SetMultimap.class));
+        verify(conditionsIndex).addConditions(any(Experiment.class), Matchers.<SetMultimap<String,String>>any());
     }
 
     @Test

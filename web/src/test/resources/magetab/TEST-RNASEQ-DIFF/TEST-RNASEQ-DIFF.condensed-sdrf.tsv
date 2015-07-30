@@ -1,0 +1,72 @@
+E-GEOD-38400		SRR576328	characteristic	age	2 to 3 week
+E-GEOD-38400		SRR576328	characteristic	ecotype	Col-0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-38400		SRR576328	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-38400		SRR576328	characteristic	genotype	idn2-1
+E-GEOD-38400		SRR576328	characteristic	developmental stage	seedling
+E-GEOD-38400		SRR576328	factor	genotype	idn2-1
+E-GEOD-38400		SRR504182	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-38400		SRR504182	characteristic	genotype	nrpe1
+E-GEOD-38400		SRR504182	characteristic	developmental stage	seedling
+E-GEOD-38400		SRR504182	characteristic	ecotype	Col-0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-38400		SRR504182	characteristic	age	2 to 3 week
+E-GEOD-38400		SRR504182	factor	genotype	nrpe1
+E-GEOD-38400		SRR504187	characteristic	ecotype	Col-0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-38400		SRR504187	characteristic	genotype	swi3b +/-
+E-GEOD-38400		SRR504187	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-38400		SRR504187	characteristic	developmental stage	seedling
+E-GEOD-38400		SRR504187	characteristic	age	2 to 3 week
+E-GEOD-38400		SRR504187	factor	genotype	swi3b +/-
+E-GEOD-38400		SRR504185	characteristic	ecotype	Col-0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-38400		SRR504185	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-38400		SRR504185	characteristic	genotype	swi3b +/-
+E-GEOD-38400		SRR504185	characteristic	developmental stage	seedling
+E-GEOD-38400		SRR504185	characteristic	age	2 to 3 week
+E-GEOD-38400		SRR504185	factor	genotype	swi3b +/-
+E-GEOD-38400		SRR504184	characteristic	ecotype	Col-0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-38400		SRR504184	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-38400		SRR504184	characteristic	genotype	nrpe1
+E-GEOD-38400		SRR504184	characteristic	developmental stage	seedling
+E-GEOD-38400		SRR504184	characteristic	age	2 to 3 week
+E-GEOD-38400		SRR504184	factor	genotype	nrpe1
+E-GEOD-38400		SRR504186	characteristic	age	2 to 3 week
+E-GEOD-38400		SRR504186	characteristic	developmental stage	seedling
+E-GEOD-38400		SRR504186	characteristic	genotype	swi3b +/-
+E-GEOD-38400		SRR504186	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-38400		SRR504186	characteristic	ecotype	Col-0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-38400		SRR504186	factor	genotype	swi3b +/-
+E-GEOD-38400		SRR504180	characteristic	age	2 to 3 week
+E-GEOD-38400		SRR504180	characteristic	ecotype	Col-0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-38400		SRR504180	characteristic	genotype	wild type genotype
+E-GEOD-38400		SRR504180	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-38400		SRR504180	characteristic	developmental stage	seedling
+E-GEOD-38400		SRR504180	factor	genotype	wild type genotype
+E-GEOD-38400		SRR504183	characteristic	age	2 to 3 week
+E-GEOD-38400		SRR504183	characteristic	ecotype	Col-0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-38400		SRR504183	characteristic	developmental stage	seedling
+E-GEOD-38400		SRR504183	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-38400		SRR504183	characteristic	genotype	nrpe1
+E-GEOD-38400		SRR504183	factor	genotype	nrpe1
+E-GEOD-38400		SRR504179	characteristic	age	2 to 3 week
+E-GEOD-38400		SRR504179	characteristic	ecotype	Col-0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-38400		SRR504179	characteristic	genotype	wild type genotype
+E-GEOD-38400		SRR504179	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-38400		SRR504179	characteristic	developmental stage	seedling
+E-GEOD-38400		SRR504179	factor	genotype	wild type genotype
+E-GEOD-38400		SRR576327	characteristic	genotype	idn2-1
+E-GEOD-38400		SRR576327	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-38400		SRR576327	characteristic	developmental stage	seedling
+E-GEOD-38400		SRR576327	characteristic	ecotype	Col-0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-38400		SRR576327	characteristic	age	2 to 3 week
+E-GEOD-38400		SRR576327	factor	genotype	idn2-1
+E-GEOD-38400		SRR504181	characteristic	ecotype	Col-0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-38400		SRR504181	characteristic	genotype	wild type genotype
+E-GEOD-38400		SRR504181	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-38400		SRR504181	characteristic	developmental stage	seedling
+E-GEOD-38400		SRR504181	characteristic	age	2 to 3 week
+E-GEOD-38400		SRR504181	factor	genotype	wild type genotype
+E-GEOD-38400		SRR576329	characteristic	age	2 to 3 week
+E-GEOD-38400		SRR576329	characteristic	developmental stage	seedling
+E-GEOD-38400		SRR576329	characteristic	organism	Arabidopsis thaliana	http://purl.obolibrary.org/obo/NCBITaxon_3702
+E-GEOD-38400		SRR576329	characteristic	genotype	idn2-1
+E-GEOD-38400		SRR576329	characteristic	ecotype	Col-0	http://www.ebi.ac.uk/efo/EFO_0005148
+E-GEOD-38400		SRR576329	factor	genotype	idn2-1

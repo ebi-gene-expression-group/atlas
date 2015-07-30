@@ -30,7 +30,6 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 
 import javax.inject.Inject;
@@ -66,7 +65,7 @@ public class BaselineExperimentsCacheLoaderIT {
 
 
     @Test
-    public void experimentShouldOnlyContainRunsFromDataFile() throws IOException, ParseException {
+    public void experimentShouldOnlyContainRunsFromDataFile() throws IOException {
         BaselineExperiment experiment = subject.load("E-MTAB-513");
 
         assertThat(experiment.getExperimentRunAccessions(), hasItems(
@@ -79,14 +78,14 @@ public class BaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentShouldContainAssayGroups() throws IOException, ParseException {
+    public void experimentShouldContainAssayGroups() throws IOException {
         BaselineExperiment experiment = subject.load("E-MTAB-513");
 
         assertThat(experiment.getAssayGroups().getAssayGroupIds(), hasSize(16));
     }
 
     @Test(expected = IllegalStateException.class)
-    public void loadNonExistentExperimentThrowsIllegalStateException() throws IOException, ParseException {
+    public void loadNonExistentExperimentThrowsIllegalStateException() throws IOException {
         subject.load("FOOBAR");
     }
 

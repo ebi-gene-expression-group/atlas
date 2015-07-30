@@ -1,0 +1,55 @@
+E-MTAB-2039		SRR352189	characteristic	developmental stage	50 days after sowing
+E-MTAB-2039		SRR352189	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
+E-MTAB-2039		SRR352189	characteristic	cultivar	Nipponbare
+E-MTAB-2039		SRR352189	characteristic	organism part	primordial inflorescence	http://www.ebi.ac.uk/efo/EFO_0001029
+E-MTAB-2039		SRR352189	factor	organism part	early inflorescence	http://www.ebi.ac.uk/efo/EFO_0001029
+E-MTAB-2039		SRR352192	characteristic	developmental stage	65 days after sowing
+E-MTAB-2039		SRR352192	characteristic	organism part	pistil	http://www.ebi.ac.uk/efo/EFO_0001051
+E-MTAB-2039		SRR352192	characteristic	cultivar	Nipponbare
+E-MTAB-2039		SRR352192	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
+E-MTAB-2039		SRR352192	factor	organism part	pistil	http://www.ebi.ac.uk/efo/EFO_0001051
+E-MTAB-2039		SRR352207	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-2039		SRR352207	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
+E-MTAB-2039		SRR352207	characteristic	cultivar	Nipponbare
+E-MTAB-2039		SRR352207	characteristic	developmental stage	70 days after sowing, 10 days after pollination
+E-MTAB-2039		SRR352207	factor	organism part	seed 10 days after pollination	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-2039		SRR352187	characteristic	developmental stage	60 days after sowing
+E-MTAB-2039		SRR352187	characteristic	cultivar	Nipponbare
+E-MTAB-2039		SRR352187	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
+E-MTAB-2039		SRR352187	characteristic	organism part	whole post-emergence inflorescence	http://www.ebi.ac.uk/efo/EFO_0001029
+E-MTAB-2039		SRR352187	factor	organism part	emerging inflorescence	http://www.ebi.ac.uk/efo/EFO_0001029
+E-MTAB-2039		SRR352204	characteristic	developmental stage	85 days after sowing, 25 days after pollination
+E-MTAB-2039		SRR352204	characteristic	organism part	embryo	http://purl.obolibrary.org/obo/UBERON_0000922
+E-MTAB-2039		SRR352204	characteristic	cultivar	Nipponbare
+E-MTAB-2039		SRR352204	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
+E-MTAB-2039		SRR352204	factor	organism part	embryo	http://purl.obolibrary.org/obo/UBERON_0000922
+E-MTAB-2039		SRR352184	characteristic	developmental stage	20 days after sowing
+E-MTAB-2039		SRR352184	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
+E-MTAB-2039		SRR352184	characteristic	cultivar	Nipponbare
+E-MTAB-2039		SRR352184	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-2039		SRR352184	factor	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-2039		SRR352211	characteristic	developmental stage	20 days after sowing
+E-MTAB-2039		SRR352211	characteristic	cultivar	Nipponbare
+E-MTAB-2039		SRR352211	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
+E-MTAB-2039		SRR352211	characteristic	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-2039		SRR352211	factor	organism part	leaf	http://www.ebi.ac.uk/efo/EFO_0000993
+E-MTAB-2039		SRR352209	characteristic	cultivar	Nipponbare
+E-MTAB-2039		SRR352209	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
+E-MTAB-2039		SRR352209	characteristic	organism part	endosperm	http://www.ebi.ac.uk/efo/EFO_0001020
+E-MTAB-2039		SRR352209	characteristic	developmental stage	85 days after sowing, 25 days after pollination
+E-MTAB-2039		SRR352209	factor	organism part	endosperm	http://www.ebi.ac.uk/efo/EFO_0001020
+E-MTAB-2039		SRR352206	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
+E-MTAB-2039		SRR352206	characteristic	cultivar	Nipponbare
+E-MTAB-2039		SRR352206	characteristic	organism part	endosperm	http://www.ebi.ac.uk/efo/EFO_0001020
+E-MTAB-2039		SRR352206	characteristic	developmental stage	85 days after sowing, 25 days after pollination
+E-MTAB-2039		SRR352206	factor	organism part	endosperm	http://www.ebi.ac.uk/efo/EFO_0001020
+E-MTAB-2039		SRR352194	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
+E-MTAB-2039		SRR352194	characteristic	cultivar	Nipponbare
+E-MTAB-2039		SRR352194	characteristic	organism part	seed	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-2039		SRR352194	characteristic	developmental stage	65 days after sowing, 5 days after pollination
+E-MTAB-2039		SRR352194	factor	organism part	seed 5 days after pollination	http://www.ebi.ac.uk/efo/EFO_0000991
+E-MTAB-2039		SRR352190	characteristic	developmental stage	65 days after sowing
+E-MTAB-2039		SRR352190	characteristic	organism	Oryza sativa Japonica Group	http://purl.obolibrary.org/obo/NCBITaxon_39947
+E-MTAB-2039		SRR352190	characteristic	cultivar	Nipponbare
+E-MTAB-2039		SRR352190	characteristic	organism part	anther	http://www.ebi.ac.uk/efo/EFO_0005101
+E-MTAB-2039		SRR352190	factor	organism part	anther	http://www.ebi.ac.uk/efo/EFO_0005101
