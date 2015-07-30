@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.experimentpage.fastqc.FastQCReportUtil;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.model.baseline.Factor;
@@ -57,7 +57,7 @@ public class AnalysisMethodsPageController {
     private static final String SPECIES = "species";
     protected static final String ALL_ARRAY_DESIGNS_ATTRIBUTE = "allArrayDesigns";
 
-    private TsvReaderBuilder tsvReaderBuilder;
+    private FileTsvReaderBuilder fileTsvReaderBuilder;
 
     private DownloadURLBuilder downloadURLBuilder;
 
@@ -73,12 +73,12 @@ public class AnalysisMethodsPageController {
     }
 
     @Inject
-    public AnalysisMethodsPageController(TsvReaderBuilder tsvReaderBuilder, DownloadURLBuilder downloadURLBuilder,
+    public AnalysisMethodsPageController(FileTsvReaderBuilder fileTsvReaderBuilder, DownloadURLBuilder downloadURLBuilder,
                                          @Value("#{configuration['experiment.analysis-method.path.template']}") String pathTemplate,
                                          ArrayDesignTrader arrayDesignTrader,
                                          @Value("#{configuration['analysis-methods.pdf.path.template']}") String pdfFileTemplate) {
 
-        this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
+        this.fileTsvReaderBuilder = fileTsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
         this.downloadURLBuilder = downloadURLBuilder;
         this.arrayDesignTrader = arrayDesignTrader;
         this.pdfFileTemplate = pdfFileTemplate;
@@ -137,7 +137,7 @@ public class AnalysisMethodsPageController {
 
     public String analysisMethods(String experimentAccession, Model model, HttpServletRequest request) throws IOException {
 
-        TsvReader tsvReader = tsvReaderBuilder.withExperimentAccession(experimentAccession).build();
+        TsvReader tsvReader = fileTsvReaderBuilder.withExperimentAccession(experimentAccession).build();
 
         model.addAttribute("csvLines", tsvReader.readAll());
 

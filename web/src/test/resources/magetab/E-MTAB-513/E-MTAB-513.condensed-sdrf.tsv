@@ -1,0 +1,240 @@
+E-MTAB-513		ERR030868	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030868	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030868	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030869	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030869	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030869	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030864	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030864	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030864	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030866	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030866	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030866	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030900	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030900	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030900	characteristic	age	58 year
+E-MTAB-513		ERR030900	characteristic	organism part	leukocyte	http://purl.obolibrary.org/obo/CL_0000738
+E-MTAB-513		ERR030900	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030900	factor	organism part	leukocyte	http://purl.obolibrary.org/obo/CL_0000738
+E-MTAB-513		ERR030896	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030896	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030896	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-513		ERR030896	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030896	characteristic	age	65 year
+E-MTAB-513		ERR030896	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-513		ERR030861	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030861	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030861	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030890	characteristic	age	77 year
+E-MTAB-513		ERR030890	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-513		ERR030890	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030890	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030890	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030890	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-513		ERR030887	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030887	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-513		ERR030887	characteristic	age	37 year
+E-MTAB-513		ERR030887	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030887	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030887	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-513		ERR030879	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030879	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030879	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-513		ERR030879	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030879	characteristic	age	65 year
+E-MTAB-513		ERR030879	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-513		ERR030873	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030873	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030873	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030873	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-513		ERR030873	characteristic	age	19 year
+E-MTAB-513		ERR030873	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-513		ERR030880	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030880	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030880	characteristic	age	73 year
+E-MTAB-513		ERR030880	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030880	characteristic	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-513		ERR030880	factor	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-513		ERR030859	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030859	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030859	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030884	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030884	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-513		ERR030884	characteristic	age	68 year
+E-MTAB-513		ERR030884	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030884	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030884	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-513		ERR030871	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030871	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030871	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030865	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030865	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030865	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030863	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030863	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030863	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030858	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030858	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030858	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030886	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030886	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-513		ERR030886	characteristic	age	77 year
+E-MTAB-513		ERR030886	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030886	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030886	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-513		ERR030897	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030897	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030897	characteristic	age	86 year
+E-MTAB-513		ERR030897	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030897	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-513		ERR030897	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-513		ERR030862	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030862	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030862	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030874	characteristic	ethnic group	African American	http://www.ebi.ac.uk/efo/EFO_0003150
+E-MTAB-513		ERR030874	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030874	characteristic	age	47 year
+E-MTAB-513		ERR030874	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030874	characteristic	organism part	animal ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-513		ERR030874	factor	organism part	animal ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-513		ERR030878	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-513		ERR030878	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030878	characteristic	age	86 year
+E-MTAB-513		ERR030878	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030878	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030878	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-513		ERR030901	characteristic	ethnic group	African American	http://www.ebi.ac.uk/efo/EFO_0003150
+E-MTAB-513		ERR030901	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030901	characteristic	age	47 year
+E-MTAB-513		ERR030901	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030901	characteristic	organism part	animal ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-513		ERR030901	factor	organism part	animal ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-513		ERR030889	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030889	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-513		ERR030889	characteristic	age	60 year
+E-MTAB-513		ERR030889	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030889	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030889	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-513		ERR030867	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030867	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030867	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030898	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030898	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030898	characteristic	age	73 year
+E-MTAB-513		ERR030898	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-513		ERR030898	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030898	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-513		ERR030899	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030899	characteristic	organism part	skeletal muscle
+E-MTAB-513		ERR030899	characteristic	age	77 year
+E-MTAB-513		ERR030899	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030899	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030899	factor	organism part	skeletal muscle
+E-MTAB-513		ERR030902	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030902	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030902	characteristic	age	19 year
+E-MTAB-513		ERR030902	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030902	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-513		ERR030902	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-513		ERR030856	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030856	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030856	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030892	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030892	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-513		ERR030892	characteristic	age	68 year
+E-MTAB-513		ERR030892	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030892	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030892	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-513		ERR030881	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030881	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030881	characteristic	age	60 year
+E-MTAB-513		ERR030881	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-513		ERR030881	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030881	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-513		ERR030875	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030875	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030875	characteristic	age	58 year
+E-MTAB-513		ERR030875	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030875	characteristic	organism part	leukocyte	http://purl.obolibrary.org/obo/CL_0000738
+E-MTAB-513		ERR030875	factor	organism part	leukocyte	http://purl.obolibrary.org/obo/CL_0000738
+E-MTAB-513		ERR030857	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030857	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030857	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030882	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030882	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-513		ERR030882	characteristic	age	77 year
+E-MTAB-513		ERR030882	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030882	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030882	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
+E-MTAB-513		ERR030891	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030891	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030891	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030891	characteristic	organism part	breast	http://purl.obolibrary.org/obo/UBERON_0000310
+E-MTAB-513		ERR030891	characteristic	age	29 year
+E-MTAB-513		ERR030891	factor	organism part	breast	http://purl.obolibrary.org/obo/UBERON_0000310
+E-MTAB-513		ERR030888	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030888	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030888	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030888	characteristic	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-513		ERR030888	characteristic	age	73 year
+E-MTAB-513		ERR030888	factor	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-513		ERR030876	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030876	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030876	characteristic	age	77 year
+E-MTAB-513		ERR030876	characteristic	organism part	skeletal muscle
+E-MTAB-513		ERR030876	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030876	factor	organism part	skeletal muscle
+E-MTAB-513		ERR030860	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030860	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030860	factor	organism part	16 tissues mixture
+E-MTAB-513		ERR030872	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030872	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030872	characteristic	age	60 year
+E-MTAB-513		ERR030872	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030872	characteristic	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-513		ERR030872	factor	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-513		ERR030894	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030894	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030894	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-513		ERR030894	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030894	characteristic	age	77 year
+E-MTAB-513		ERR030894	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-513		ERR030885	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030885	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030885	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-513		ERR030885	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030885	characteristic	age	60 year
+E-MTAB-513		ERR030885	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-513		ERR030883	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030883	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030883	characteristic	organism part	breast	http://purl.obolibrary.org/obo/UBERON_0000310
+E-MTAB-513		ERR030883	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030883	characteristic	age	29 year
+E-MTAB-513		ERR030883	factor	organism part	breast	http://purl.obolibrary.org/obo/UBERON_0000310
+E-MTAB-513		ERR030877	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030877	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-513		ERR030877	characteristic	age	73 year
+E-MTAB-513		ERR030877	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030877	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030877	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-513		ERR030893	characteristic	age	60 year
+E-MTAB-513		ERR030893	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-513		ERR030893	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030893	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030893	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030893	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-513		ERR030903	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030903	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030903	characteristic	age	60 year
+E-MTAB-513		ERR030903	characteristic	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-513		ERR030903	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-513		ERR030903	factor	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-513		ERR030895	characteristic	ethnic group	Caucasian	http://www.ebi.ac.uk/efo/EFO_0003156
+E-MTAB-513		ERR030895	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030895	characteristic	age	37 year
+E-MTAB-513		ERR030895	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-513		ERR030895	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-513		ERR030895	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-513		ERR030870	characteristic	organism part	16 tissues mixture
+E-MTAB-513		ERR030870	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-513		ERR030870	factor	organism part	16 tissues mixture

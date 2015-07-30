@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -18,12 +18,12 @@ public class ProteomicsBaselineExperimentExpressionLevelFileTest {
     ProteomicsBaselineExperimentExpressionLevelFile subject;
 
     @Mock
-    private TsvReaderBuilder tsvReaderBuilder;
+    private FileTsvReaderBuilder fileTsvReaderBuilder;
 
     @Before
     public void setup() {
-        when(tsvReaderBuilder.forTsvFilePathTemplate(anyString())).thenReturn(tsvReaderBuilder);
-        subject = new ProteomicsBaselineExperimentExpressionLevelFile(tsvReaderBuilder, "");
+        when(fileTsvReaderBuilder.forTsvFilePathTemplate(anyString())).thenReturn(fileTsvReaderBuilder);
+        subject = new ProteomicsBaselineExperimentExpressionLevelFile(fileTsvReaderBuilder, "");
     }
 
     @Test

@@ -33,13 +33,12 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
-import uk.ac.ebi.atlas.experimentimport.experimentdesign.magetab.*;
+import uk.ac.ebi.atlas.experimentimport.experimentdesign.condensedSdrf.*;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -115,22 +114,13 @@ public class ExperimentMetadataCRUDTest {
     private ExperimentDesign experimentDesignMock;
 
     @Mock
-    private MageTabParserOutput mageTabParserOutput;
-
-    @Mock
     private ExperimentConfiguration experimentConfiguration;
-
-    @Mock
-    private MageTabParserFactory mageTabParserFactory;
 
     @Mock
     private CondensedSdrfParser condensedSdrfParserMock;
 
     @Mock
     private CondensedSdrfParserOutput condensedSdrfParserOutputMock;
-
-    @Mock
-    private MageTabParser mageTabParser;
 
     @Mock
     private EFOParentsLookupService efoParentsLookupServiceMock;
@@ -155,10 +145,6 @@ public class ExperimentMetadataCRUDTest {
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
 
-        given(mageTabParserFactory.create(Mockito.any(ExperimentType.class))).willReturn(mageTabParser);
-        given(mageTabParser.parse(EXPERIMENT_ACCESSION)).willReturn(mageTabParserOutput);
-        given(mageTabParserOutput.getExperimentDesign()).willReturn(experimentDesignMock);
-
         given(conditionsIndexTrader.getIndex(any(Experiment.class))).willReturn(conditionsIndex);
         given(conditionsIndexTrader.getIndex(any(ExperimentType.class))).willReturn(conditionsIndex);
         doNothing().when(conditionsIndex).removeConditions(anyString());
@@ -171,7 +157,7 @@ public class ExperimentMetadataCRUDTest {
         given(experimentDTOBuilderMock.withPubMedIds(anySet())).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withTitle(anyString())).willReturn(experimentDTOBuilderMock);
 
-        given(condensedSdrfParserMock.parse(anyString())).willReturn(condensedSdrfParserOutputMock);
+        given(condensedSdrfParserMock.parse(anyString(), any(ExperimentType.class))).willReturn(condensedSdrfParserOutputMock);
 
         ImmutableSetMultimap.Builder<String, String> builder = new ImmutableSetMultimap.Builder<>();
         builder.put(EXPERIMENT_ASSAY, EFO_0000761);
@@ -180,7 +166,7 @@ public class ExperimentMetadataCRUDTest {
 
         subject = new ExperimentMetadataCRUD(
                 experimentDAOMock, experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock,
-                condensedSdrfParserMock, mageTabParserFactory, conditionsIndexTrader, efoParentsLookupServiceMock,
+                condensedSdrfParserMock, conditionsIndexTrader, efoParentsLookupServiceMock,
                 analyticsIndexerManagerMock);
     }
 

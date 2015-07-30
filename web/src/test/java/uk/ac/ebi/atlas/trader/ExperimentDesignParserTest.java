@@ -32,7 +32,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.util.MatcherAssertionErrors;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 
 import java.util.List;
@@ -72,7 +72,7 @@ public class ExperimentDesignParserTest {
     private static final List<String[]> DATA = Lists.newArrayList(HEADER_LINE, FIRST_LINE, LAST_LINE);
 
     @Mock
-    private TsvReaderBuilder tsvReaderBuilderMock;
+    private FileTsvReaderBuilder fileTsvReaderBuilderMock;
 
     @Mock
     private TsvReader tsvReaderMock;
@@ -81,14 +81,14 @@ public class ExperimentDesignParserTest {
 
     @Before
     public void setUp() throws Exception {
-        when(tsvReaderBuilderMock.forTsvFilePathTemplate(anyString())).thenReturn(tsvReaderBuilderMock);
-        when(tsvReaderBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(tsvReaderBuilderMock);
-        when(tsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
+        when(fileTsvReaderBuilderMock.forTsvFilePathTemplate(anyString())).thenReturn(fileTsvReaderBuilderMock);
+        when(fileTsvReaderBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(fileTsvReaderBuilderMock);
+        when(fileTsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
 
         when(tsvReaderMock.readAll()).thenReturn(DATA);
 
         subject = new ExperimentDesignParser();
-        subject.setTsvReaderBuilder(tsvReaderBuilderMock);
+        subject.setFileTsvReaderBuilder(fileTsvReaderBuilderMock);
     }
 
     @Test

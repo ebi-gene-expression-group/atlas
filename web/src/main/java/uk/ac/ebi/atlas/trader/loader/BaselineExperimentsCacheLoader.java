@@ -26,7 +26,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.velocity.util.StringUtils;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.AssayGroup;
 import uk.ac.ebi.atlas.model.AssayGroups;
@@ -62,7 +61,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
     @Override
     protected BaselineExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
-                                      boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
+                                      boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 

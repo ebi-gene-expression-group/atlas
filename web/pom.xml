@@ -224,36 +224,6 @@
             <scope>provided</scope>
         </dependency>
 
-
-        <!--limpopo MAGE-Tab investigation-->
-        <dependency>
-            <groupId>uk.ac.ebi.arrayexpress2</groupId>
-            <artifactId>limpopo</artifactId>
-            <version>1.1.3</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>log4j</artifactId>
-                    <groupId>log4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>opencsv</artifactId>
-                    <groupId>net.sf.opencsv</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-lang</artifactId>
-                    <groupId>commons-lang</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>fluxion-spi</artifactId>
-                    <groupId>net.sourceforge.fluxion</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <!-- JSR 303 validator implementation -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -416,7 +386,6 @@
         <!--
             Apache Tiles
         -->
-
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-extras</artifactId>
@@ -435,25 +404,15 @@
         <!--
             Java Mail
         -->
-
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.5</version>
         </dependency>
 
-<!--
-        <dependency>
-            <groupId>com.github.detro.ghostdriver</groupId>
-            <artifactId>phantomjsdriver</artifactId>
-            <version>1.0.3</version>
-            <scope>test</scope>
-        </dependency>
--->
         <!--
             For testing rest services
         -->
-
         <dependency>
             <groupId>com.jayway.restassured</groupId>
             <artifactId>rest-assured</artifactId>
@@ -495,12 +454,6 @@
             <artifactId>tomcat-catalina</artifactId>
             <version>7.0.42</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jdbc</artifactId>
-            <version>7.0.39</version>
         </dependency>
 
         <dependency>

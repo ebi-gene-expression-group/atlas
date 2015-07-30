@@ -30,10 +30,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
-import uk.ac.ebi.atlas.web.controllers.rest.experimentdesign.BaselineDesignDownloadController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +62,7 @@ public class BaselineDesignDownloadControllerTest {
     private BaselineExperiment experimentMock;
 
     @Mock
-    private TsvReaderBuilder tsvReaderBuilderMock;
+    private FileTsvReaderBuilder fileTsvReaderBuilderMock;
 
     @Mock
     private TsvReader tsvReaderMock;
@@ -76,11 +75,11 @@ public class BaselineDesignDownloadControllerTest {
     @Before
     public void setUp() throws Exception {
 
-        when(tsvReaderBuilderMock.forTsvFilePathTemplate(anyString())).thenReturn(tsvReaderBuilderMock);
-        when(tsvReaderBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(tsvReaderBuilderMock);
-        when(tsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
+        when(fileTsvReaderBuilderMock.forTsvFilePathTemplate(anyString())).thenReturn(fileTsvReaderBuilderMock);
+        when(fileTsvReaderBuilderMock.withExperimentAccession(EXPERIMENT_ACCESSION)).thenReturn(fileTsvReaderBuilderMock);
+        when(fileTsvReaderBuilderMock.build()).thenReturn(tsvReaderMock);
 
-        subject = new BaselineDesignDownloadController(tsvReaderBuilderMock);
+        subject = new BaselineDesignDownloadController(fileTsvReaderBuilderMock);
         subject.initializeTsvReader();
     }
 

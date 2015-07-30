@@ -10,7 +10,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.model.baseline.ProteomicsBaselineExperiment;
 import uk.ac.ebi.atlas.trader.cache.ProteomicsBaselineExperimentsCache;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
@@ -45,7 +45,7 @@ public class AnalysisMethodsPageControllerIT {
     private HttpServletRequest requestMock;
 
     @Inject
-    private TsvReaderBuilder tsvReaderBuilder;
+    private FileTsvReaderBuilder fileTsvReaderBuilder;
 
     Model model = new BindingAwareModelMap();
 
@@ -63,7 +63,7 @@ public class AnalysisMethodsPageControllerIT {
         //given
         subject.proteomicsAnalysisMethods(EXPERIMENT_ACCESSION, model, requestMock);
 
-        TsvReader tsvReader = tsvReaderBuilder.forTsvFilePathTemplate(analysisMethodsTemplate).withExperimentAccession(EXPERIMENT_ACCESSION).build();
+        TsvReader tsvReader = fileTsvReaderBuilder.forTsvFilePathTemplate(analysisMethodsTemplate).withExperimentAccession(EXPERIMENT_ACCESSION).build();
 
         List<String[]> result = tsvReader.readAll();
         String[] firstLine = result.get(0);

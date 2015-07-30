@@ -1,0 +1,1026 @@
+E-MTAB-1733		ERR315456	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315456	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315456	characteristic	individual	V256
+E-MTAB-1733		ERR315456	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315456	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315456	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315390	characteristic	individual	V193
+E-MTAB-1733		ERR315390	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315390	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315390	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315390	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315390	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315416	characteristic	individual	V83
+E-MTAB-1733		ERR315416	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-1733		ERR315416	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315416	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315416	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315416	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-1733		ERR315360	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315360	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315360	characteristic	individual	V186
+E-MTAB-1733		ERR315360	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315360	characteristic	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315360	factor	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315410	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315410	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315410	characteristic	individual	V12
+E-MTAB-1733		ERR315410	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315410	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315410	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315368	characteristic	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315368	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315368	characteristic	individual	V165
+E-MTAB-1733		ERR315368	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315368	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315368	factor	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315484	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315484	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315484	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315484	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-1733		ERR315484	characteristic	individual	V14
+E-MTAB-1733		ERR315484	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-1733		ERR315476	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315476	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315476	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315476	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315476	characteristic	individual	V223
+E-MTAB-1733		ERR315476	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315439	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315439	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315439	characteristic	individual	V131
+E-MTAB-1733		ERR315439	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315439	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315439	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315374	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315374	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315374	characteristic	individual	V221
+E-MTAB-1733		ERR315374	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315374	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315374	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315392	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315392	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315392	characteristic	individual	V121
+E-MTAB-1733		ERR315392	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-1733		ERR315392	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315392	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-1733		ERR315408	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315408	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315408	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315408	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315408	characteristic	individual	V152
+E-MTAB-1733		ERR315408	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315462	characteristic	individual	V22
+E-MTAB-1733		ERR315462	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-1733		ERR315462	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315462	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315462	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315462	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-1733		ERR315412	characteristic	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315412	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315412	characteristic	individual	V197
+E-MTAB-1733		ERR315412	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315412	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315412	factor	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315438	characteristic	individual	V143
+E-MTAB-1733		ERR315438	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315438	characteristic	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315438	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315438	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315438	factor	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315381	characteristic	individual	V153
+E-MTAB-1733		ERR315381	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315381	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315381	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315381	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315381	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315419	characteristic	individual	V151
+E-MTAB-1733		ERR315419	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315419	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315419	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315419	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315419	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315351	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315351	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315351	characteristic	individual	V134
+E-MTAB-1733		ERR315351	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315351	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315351	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315407	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315407	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315407	characteristic	individual	V128
+E-MTAB-1733		ERR315407	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315407	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315407	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315396	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315396	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315396	characteristic	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315396	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315396	characteristic	individual	V248
+E-MTAB-1733		ERR315396	factor	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315432	characteristic	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-MTAB-1733		ERR315432	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315432	characteristic	individual	V29
+E-MTAB-1733		ERR315432	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315432	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315432	factor	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-MTAB-1733		ERR315399	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315399	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315399	characteristic	individual	V224
+E-MTAB-1733		ERR315399	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315399	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315399	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315409	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315409	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315409	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315409	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315409	characteristic	individual	V156
+E-MTAB-1733		ERR315409	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315459	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315459	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315459	characteristic	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-MTAB-1733		ERR315459	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315459	characteristic	individual	V239
+E-MTAB-1733		ERR315459	factor	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-MTAB-1733		ERR315480	characteristic	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315480	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315480	characteristic	individual	V182
+E-MTAB-1733		ERR315480	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315480	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315480	factor	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315388	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315388	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315388	characteristic	individual	V153
+E-MTAB-1733		ERR315388	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315388	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315388	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315437	characteristic	individual	V154
+E-MTAB-1733		ERR315437	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315437	characteristic	organism part	appendix	http://www.ebi.ac.uk/efo/EFO_0000849
+E-MTAB-1733		ERR315437	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315437	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315437	factor	organism part	appendix	http://www.ebi.ac.uk/efo/EFO_0000849
+E-MTAB-1733		ERR315352	characteristic	individual	V255
+E-MTAB-1733		ERR315352	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315352	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315352	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315352	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315352	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315331	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315331	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315331	characteristic	individual	V237
+E-MTAB-1733		ERR315331	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315331	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315331	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315389	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315389	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315389	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315389	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315389	characteristic	individual	V191
+E-MTAB-1733		ERR315389	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315414	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315414	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315414	characteristic	individual	V111
+E-MTAB-1733		ERR315414	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-1733		ERR315414	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315414	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-1733		ERR315384	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315384	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315384	characteristic	individual	V195
+E-MTAB-1733		ERR315384	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315384	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315384	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315443	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315443	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315443	characteristic	individual	V6
+E-MTAB-1733		ERR315443	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315443	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-1733		ERR315443	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-1733		ERR315370	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315370	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315370	characteristic	individual	V176
+E-MTAB-1733		ERR315370	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315370	characteristic	organism part	bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-1733		ERR315370	factor	organism part	bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-1733		ERR315434	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315434	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315434	characteristic	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-MTAB-1733		ERR315434	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315434	characteristic	individual	V183
+E-MTAB-1733		ERR315434	factor	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-MTAB-1733		ERR315460	characteristic	individual	V247
+E-MTAB-1733		ERR315460	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-1733		ERR315460	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315460	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315460	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315460	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-1733		ERR315455	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315455	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315455	characteristic	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-MTAB-1733		ERR315455	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315455	characteristic	individual	V103
+E-MTAB-1733		ERR315455	factor	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-MTAB-1733		ERR315457	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315457	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315457	characteristic	individual	V150
+E-MTAB-1733		ERR315457	characteristic	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-1733		ERR315457	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315457	factor	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-1733		ERR315347	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315347	characteristic	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315347	characteristic	individual	V182
+E-MTAB-1733		ERR315347	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315347	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315347	factor	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315444	characteristic	individual	V131
+E-MTAB-1733		ERR315444	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315444	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315444	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315444	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315444	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315355	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315355	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315355	characteristic	individual	V176
+E-MTAB-1733		ERR315355	characteristic	organism part	bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-1733		ERR315355	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315355	factor	organism part	bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-1733		ERR315458	characteristic	individual	V234
+E-MTAB-1733		ERR315458	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315458	characteristic	organism part	animal ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-1733		ERR315458	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315458	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315458	factor	organism part	animal ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-1733		ERR315446	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315446	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315446	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315446	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315446	characteristic	individual	V258
+E-MTAB-1733		ERR315446	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315453	characteristic	organism part	bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-1733		ERR315453	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315453	characteristic	individual	V177
+E-MTAB-1733		ERR315453	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315453	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315453	factor	organism part	bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-1733		ERR315492	characteristic	individual	V260
+E-MTAB-1733		ERR315492	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315492	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315492	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315492	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315492	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315482	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315482	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315482	characteristic	organism part	animal ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-1733		ERR315482	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315482	characteristic	individual	V233
+E-MTAB-1733		ERR315482	factor	organism part	animal ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-1733		ERR315431	characteristic	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-1733		ERR315431	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315431	characteristic	individual	V2
+E-MTAB-1733		ERR315431	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315431	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315431	factor	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-1733		ERR315338	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315338	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315338	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315338	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-1733		ERR315338	characteristic	individual	V82
+E-MTAB-1733		ERR315338	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-1733		ERR315415	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315415	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315415	characteristic	individual	V259
+E-MTAB-1733		ERR315415	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315415	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315415	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315451	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-1733		ERR315451	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315451	characteristic	individual	V108
+E-MTAB-1733		ERR315451	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315451	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315451	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-1733		ERR315344	characteristic	individual	V151
+E-MTAB-1733		ERR315344	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315344	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315344	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315344	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315344	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315350	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315350	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315350	characteristic	individual	V134
+E-MTAB-1733		ERR315350	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315350	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315350	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315333	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315333	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315333	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315333	characteristic	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315333	characteristic	individual	V250
+E-MTAB-1733		ERR315333	factor	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315433	characteristic	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315433	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315433	characteristic	individual	V165
+E-MTAB-1733		ERR315433	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315433	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315433	factor	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315335	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315335	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-1733		ERR315335	characteristic	individual	V119
+E-MTAB-1733		ERR315335	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315335	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315335	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-1733		ERR315385	characteristic	individual	V122
+E-MTAB-1733		ERR315385	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315385	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-1733		ERR315385	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315385	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315385	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-1733		ERR315436	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315436	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315436	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315436	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-1733		ERR315436	characteristic	individual	V232
+E-MTAB-1733		ERR315436	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-1733		ERR315364	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315364	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315364	characteristic	individual	V152
+E-MTAB-1733		ERR315364	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315364	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315364	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315468	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315468	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315468	characteristic	individual	V23
+E-MTAB-1733		ERR315468	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315468	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-1733		ERR315468	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-1733		ERR315366	characteristic	individual	V155
+E-MTAB-1733		ERR315366	characteristic	organism part	appendix	http://www.ebi.ac.uk/efo/EFO_0000849
+E-MTAB-1733		ERR315366	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315366	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315366	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315366	factor	organism part	appendix	http://www.ebi.ac.uk/efo/EFO_0000849
+E-MTAB-1733		ERR315387	characteristic	individual	V192
+E-MTAB-1733		ERR315387	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315387	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315387	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315387	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315387	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315371	characteristic	individual	V157
+E-MTAB-1733		ERR315371	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315371	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315371	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315371	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315371	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315397	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315397	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315397	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315397	characteristic	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315397	characteristic	individual	V199
+E-MTAB-1733		ERR315397	factor	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315487	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315487	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315487	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315487	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315487	characteristic	individual	V133
+E-MTAB-1733		ERR315487	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315488	characteristic	individual	V164
+E-MTAB-1733		ERR315488	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315488	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315488	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315488	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315488	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315329	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315329	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315329	characteristic	individual	V193
+E-MTAB-1733		ERR315329	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315329	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315329	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315449	characteristic	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-MTAB-1733		ERR315449	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315449	characteristic	individual	V240
+E-MTAB-1733		ERR315449	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315449	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315449	factor	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-MTAB-1733		ERR315478	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315478	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315478	characteristic	individual	V223
+E-MTAB-1733		ERR315478	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315478	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315478	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315429	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315429	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315429	characteristic	individual	V232
+E-MTAB-1733		ERR315429	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315429	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-1733		ERR315429	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-1733		ERR315422	characteristic	individual	V196
+E-MTAB-1733		ERR315422	characteristic	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315422	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315422	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315422	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315422	factor	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315471	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315471	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315471	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315471	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315471	characteristic	individual	V193
+E-MTAB-1733		ERR315471	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315379	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-1733		ERR315379	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315379	characteristic	individual	V90
+E-MTAB-1733		ERR315379	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315379	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315379	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-1733		ERR315474	characteristic	individual	V179
+E-MTAB-1733		ERR315474	characteristic	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315474	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315474	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315474	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315474	factor	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315450	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315450	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-1733		ERR315450	characteristic	individual	V121
+E-MTAB-1733		ERR315450	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315450	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315450	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-1733		ERR315328	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315328	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315328	characteristic	individual	V191
+E-MTAB-1733		ERR315328	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315328	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315328	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315495	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315495	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315495	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315495	characteristic	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315495	characteristic	individual	V200
+E-MTAB-1733		ERR315495	factor	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315442	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315442	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315442	characteristic	individual	V150
+E-MTAB-1733		ERR315442	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315442	characteristic	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-1733		ERR315442	factor	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-1733		ERR315479	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315479	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-1733		ERR315479	characteristic	individual	V229
+E-MTAB-1733		ERR315479	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315479	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315479	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-1733		ERR315477	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315477	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315477	characteristic	individual	V102
+E-MTAB-1733		ERR315477	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315477	characteristic	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-MTAB-1733		ERR315477	factor	organism part	cerebral cortex	http://purl.obolibrary.org/obo/UBERON_0000956
+E-MTAB-1733		ERR315341	characteristic	individual	V81
+E-MTAB-1733		ERR315341	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315341	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315341	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315341	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315341	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315494	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315494	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315494	characteristic	individual	V5
+E-MTAB-1733		ERR315494	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315494	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-1733		ERR315494	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-1733		ERR315395	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315395	characteristic	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315395	characteristic	individual	V250
+E-MTAB-1733		ERR315395	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315395	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315395	factor	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315386	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315386	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315386	characteristic	individual	V143
+E-MTAB-1733		ERR315386	characteristic	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315386	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315386	factor	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315327	characteristic	individual	V110
+E-MTAB-1733		ERR315327	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-1733		ERR315327	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315327	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315327	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315327	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-1733		ERR315401	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315401	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315401	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-1733		ERR315401	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315401	characteristic	individual	V246
+E-MTAB-1733		ERR315401	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-1733		ERR315337	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315337	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315337	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315337	characteristic	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315337	characteristic	individual	V197
+E-MTAB-1733		ERR315337	factor	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315490	characteristic	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315490	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315490	characteristic	individual	V200
+E-MTAB-1733		ERR315490	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315490	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315490	factor	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315452	characteristic	individual	V119
+E-MTAB-1733		ERR315452	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-1733		ERR315452	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315452	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315452	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315452	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-1733		ERR315339	characteristic	individual	V245
+E-MTAB-1733		ERR315339	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-1733		ERR315339	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315339	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315339	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315339	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-1733		ERR315489	characteristic	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-MTAB-1733		ERR315489	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315489	characteristic	individual	V183
+E-MTAB-1733		ERR315489	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315489	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315489	factor	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-MTAB-1733		ERR315394	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315394	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315394	characteristic	individual	V110
+E-MTAB-1733		ERR315394	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315394	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-1733		ERR315394	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-1733		ERR315334	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315334	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315334	characteristic	organism part	bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-1733		ERR315334	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315334	characteristic	individual	V177
+E-MTAB-1733		ERR315334	factor	organism part	bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-1733		ERR315425	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315425	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315425	characteristic	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315425	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315425	characteristic	individual	V230
+E-MTAB-1733		ERR315425	factor	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315445	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315445	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315445	characteristic	individual	V145
+E-MTAB-1733		ERR315445	characteristic	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-1733		ERR315445	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315445	factor	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-1733		ERR315464	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315464	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315464	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315464	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-1733		ERR315464	characteristic	individual	V246
+E-MTAB-1733		ERR315464	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-1733		ERR315363	characteristic	individual	V198
+E-MTAB-1733		ERR315363	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315363	characteristic	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315363	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315363	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315363	factor	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315463	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-1733		ERR315463	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315463	characteristic	individual	V108
+E-MTAB-1733		ERR315463	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315463	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315463	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-MTAB-1733		ERR315377	characteristic	individual	V221
+E-MTAB-1733		ERR315377	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315377	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315377	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315377	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315377	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315467	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315467	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315467	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-1733		ERR315467	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315467	characteristic	individual	V18
+E-MTAB-1733		ERR315467	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-1733		ERR315426	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315426	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315426	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315426	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315426	characteristic	individual	V192
+E-MTAB-1733		ERR315426	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315427	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315427	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315427	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315427	characteristic	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315427	characteristic	individual	V186
+E-MTAB-1733		ERR315427	factor	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315405	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315405	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-1733		ERR315405	characteristic	individual	V83
+E-MTAB-1733		ERR315405	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315405	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315405	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-1733		ERR315367	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315367	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315367	characteristic	individual	V237
+E-MTAB-1733		ERR315367	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315367	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315367	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315404	characteristic	individual	V249
+E-MTAB-1733		ERR315404	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315404	characteristic	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315404	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315404	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315404	factor	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315413	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315413	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315413	characteristic	individual	V195
+E-MTAB-1733		ERR315413	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315413	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315413	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315348	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315348	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315348	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-1733		ERR315348	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315348	characteristic	individual	V10
+E-MTAB-1733		ERR315348	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-1733		ERR315485	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315485	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-1733		ERR315485	characteristic	individual	V91
+E-MTAB-1733		ERR315485	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315485	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315485	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-1733		ERR315358	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315358	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315358	characteristic	individual	V196
+E-MTAB-1733		ERR315358	characteristic	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315358	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315358	factor	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315353	characteristic	individual	V133
+E-MTAB-1733		ERR315353	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315353	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315353	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315353	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315353	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315330	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315330	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315330	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315330	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315330	characteristic	individual	V127
+E-MTAB-1733		ERR315330	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315418	characteristic	individual	V240
+E-MTAB-1733		ERR315418	characteristic	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-MTAB-1733		ERR315418	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315418	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315418	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315418	factor	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-MTAB-1733		ERR315343	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315343	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315343	characteristic	individual	V20
+E-MTAB-1733		ERR315343	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315343	characteristic	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-1733		ERR315343	factor	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-1733		ERR315400	characteristic	individual	V15
+E-MTAB-1733		ERR315400	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-1733		ERR315400	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315400	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315400	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315400	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-1733		ERR315373	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315373	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315373	characteristic	individual	V157
+E-MTAB-1733		ERR315373	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315373	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315373	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315380	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315380	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315380	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315380	characteristic	organism part	animal ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-1733		ERR315380	characteristic	individual	V233
+E-MTAB-1733		ERR315380	factor	organism part	animal ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-1733		ERR315466	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315466	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315466	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315466	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-1733		ERR315466	characteristic	individual	V229
+E-MTAB-1733		ERR315466	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-MTAB-1733		ERR315417	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315417	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-1733		ERR315417	characteristic	individual	V122
+E-MTAB-1733		ERR315417	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315417	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315417	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-MTAB-1733		ERR315372	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-1733		ERR315372	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315372	characteristic	individual	V247
+E-MTAB-1733		ERR315372	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315372	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315372	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-1733		ERR315447	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315447	characteristic	organism part	bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-1733		ERR315447	characteristic	individual	V177
+E-MTAB-1733		ERR315447	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315447	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315447	factor	organism part	bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-1733		ERR315346	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315346	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315346	characteristic	individual	V80
+E-MTAB-1733		ERR315346	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315346	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315346	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315342	characteristic	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-1733		ERR315342	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315342	characteristic	individual	V20
+E-MTAB-1733		ERR315342	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315342	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315342	factor	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-1733		ERR315441	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315441	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315441	characteristic	individual	V190
+E-MTAB-1733		ERR315441	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315441	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315441	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315340	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315340	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315340	characteristic	individual	V128
+E-MTAB-1733		ERR315340	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315340	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315340	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315362	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315362	characteristic	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-MTAB-1733		ERR315362	characteristic	individual	V184
+E-MTAB-1733		ERR315362	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315362	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315362	factor	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-MTAB-1733		ERR315393	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315393	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315393	characteristic	individual	V164
+E-MTAB-1733		ERR315393	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315393	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315393	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315481	characteristic	organism part	appendix	http://www.ebi.ac.uk/efo/EFO_0000849
+E-MTAB-1733		ERR315481	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315481	characteristic	individual	V160
+E-MTAB-1733		ERR315481	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315481	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315481	factor	organism part	appendix	http://www.ebi.ac.uk/efo/EFO_0000849
+E-MTAB-1733		ERR315375	characteristic	individual	V76
+E-MTAB-1733		ERR315375	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315375	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315375	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315375	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315375	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315349	characteristic	individual	V179
+E-MTAB-1733		ERR315349	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315349	characteristic	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315349	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315349	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315349	factor	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315475	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315475	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315475	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315475	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315475	characteristic	individual	V192
+E-MTAB-1733		ERR315475	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315326	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315326	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315326	characteristic	individual	V130
+E-MTAB-1733		ERR315326	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315326	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315326	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315378	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315378	characteristic	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-1733		ERR315378	characteristic	individual	V2
+E-MTAB-1733		ERR315378	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315378	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315378	factor	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-1733		ERR315325	characteristic	individual	V238
+E-MTAB-1733		ERR315325	characteristic	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-MTAB-1733		ERR315325	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315325	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315325	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315325	factor	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-MTAB-1733		ERR315486	characteristic	individual	V248
+E-MTAB-1733		ERR315486	characteristic	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315486	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315486	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315486	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315486	factor	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315424	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315424	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315424	characteristic	individual	V130
+E-MTAB-1733		ERR315424	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315424	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315424	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-MTAB-1733		ERR315435	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315435	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315435	characteristic	individual	V191
+E-MTAB-1733		ERR315435	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315435	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315435	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315470	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315470	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315470	characteristic	individual	V179
+E-MTAB-1733		ERR315470	characteristic	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315470	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315470	factor	organism part	gall bladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-MTAB-1733		ERR315448	characteristic	individual	V85
+E-MTAB-1733		ERR315448	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-1733		ERR315448	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315448	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315448	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315448	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-1733		ERR315469	characteristic	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315469	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315469	characteristic	individual	V230
+E-MTAB-1733		ERR315469	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315469	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315469	factor	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315356	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315356	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315356	characteristic	individual	V235
+E-MTAB-1733		ERR315356	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315356	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315356	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315354	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315354	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315354	characteristic	individual	V129
+E-MTAB-1733		ERR315354	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315354	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315354	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315461	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315461	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315461	characteristic	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-1733		ERR315461	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315461	characteristic	individual	V145
+E-MTAB-1733		ERR315461	factor	organism part	duodenum	http://purl.obolibrary.org/obo/UBERON_0002114
+E-MTAB-1733		ERR315454	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315454	characteristic	organism part	appendix	http://www.ebi.ac.uk/efo/EFO_0000849
+E-MTAB-1733		ERR315454	characteristic	individual	V160
+E-MTAB-1733		ERR315454	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315454	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315454	factor	organism part	appendix	http://www.ebi.ac.uk/efo/EFO_0000849
+E-MTAB-1733		ERR315383	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315383	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315383	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315383	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-1733		ERR315383	characteristic	individual	V24
+E-MTAB-1733		ERR315383	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-MTAB-1733		ERR315376	characteristic	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-1733		ERR315376	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315376	characteristic	individual	V245
+E-MTAB-1733		ERR315376	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315376	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315376	factor	organism part	skin	http://www.ebi.ac.uk/efo/EFO_0000962
+E-MTAB-1733		ERR315406	characteristic	individual	V249
+E-MTAB-1733		ERR315406	characteristic	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315406	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315406	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315406	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315406	factor	organism part	bone marrow	http://purl.obolibrary.org/obo/UBERON_0002371
+E-MTAB-1733		ERR315361	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315361	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315361	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315361	characteristic	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315361	characteristic	individual	V200
+E-MTAB-1733		ERR315361	factor	organism part	endometrium	http://purl.obolibrary.org/obo/UBERON_0001295
+E-MTAB-1733		ERR315403	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315403	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-1733		ERR315403	characteristic	individual	V11
+E-MTAB-1733		ERR315403	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315403	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315403	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-1733		ERR315483	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315483	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315483	characteristic	individual	V199
+E-MTAB-1733		ERR315483	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315483	characteristic	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315483	factor	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315465	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315465	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315465	characteristic	individual	V154
+E-MTAB-1733		ERR315465	characteristic	organism part	appendix	http://www.ebi.ac.uk/efo/EFO_0000849
+E-MTAB-1733		ERR315465	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315465	factor	organism part	appendix	http://www.ebi.ac.uk/efo/EFO_0000849
+E-MTAB-1733		ERR315411	characteristic	individual	V184
+E-MTAB-1733		ERR315411	characteristic	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-MTAB-1733		ERR315411	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315411	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315411	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315411	factor	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-MTAB-1733		ERR315345	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315345	characteristic	organism part	appendix	http://www.ebi.ac.uk/efo/EFO_0000849
+E-MTAB-1733		ERR315345	characteristic	individual	V155
+E-MTAB-1733		ERR315345	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315345	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315345	factor	organism part	appendix	http://www.ebi.ac.uk/efo/EFO_0000849
+E-MTAB-1733		ERR315428	characteristic	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315428	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315428	characteristic	individual	V198
+E-MTAB-1733		ERR315428	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315428	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315428	factor	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315365	characteristic	individual	V129
+E-MTAB-1733		ERR315365	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315365	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315365	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315365	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315365	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315472	characteristic	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-MTAB-1733		ERR315472	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315472	characteristic	individual	V185
+E-MTAB-1733		ERR315472	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315472	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315472	factor	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-MTAB-1733		ERR315430	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315430	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315430	characteristic	individual	V235
+E-MTAB-1733		ERR315430	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315430	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315430	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-MTAB-1733		ERR315420	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315420	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315420	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315420	characteristic	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-MTAB-1733		ERR315420	characteristic	individual	V239
+E-MTAB-1733		ERR315420	factor	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-MTAB-1733		ERR315332	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315332	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315332	characteristic	individual	V1
+E-MTAB-1733		ERR315332	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315332	characteristic	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-1733		ERR315332	factor	organism part	adipose tissue	http://purl.obolibrary.org/obo/UBERON_0001013
+E-MTAB-1733		ERR315369	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315369	characteristic	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-1733		ERR315369	characteristic	individual	V91
+E-MTAB-1733		ERR315369	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315369	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315369	factor	organism part	stomach	http://purl.obolibrary.org/obo/UBERON_0000945
+E-MTAB-1733		ERR315336	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315336	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315336	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315336	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315336	characteristic	individual	V224
+E-MTAB-1733		ERR315336	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-MTAB-1733		ERR315398	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315398	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315398	characteristic	individual	V185
+E-MTAB-1733		ERR315398	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315398	characteristic	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-MTAB-1733		ERR315398	factor	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-MTAB-1733		ERR315493	characteristic	individual	V190
+E-MTAB-1733		ERR315493	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315493	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315493	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315493	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315493	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315357	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315357	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315357	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315357	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-1733		ERR315357	characteristic	individual	V11
+E-MTAB-1733		ERR315357	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-MTAB-1733		ERR315423	characteristic	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315423	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315423	characteristic	individual	V156
+E-MTAB-1733		ERR315423	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315423	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315423	factor	organism part	small intestine	http://purl.obolibrary.org/obo/UBERON_0002108
+E-MTAB-1733		ERR315402	characteristic	individual	V234
+E-MTAB-1733		ERR315402	characteristic	organism part	animal ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-1733		ERR315402	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315402	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315402	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315402	factor	organism part	animal ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-MTAB-1733		ERR315421	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315421	characteristic	organism part	bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-1733		ERR315421	characteristic	individual	V176
+E-MTAB-1733		ERR315421	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315421	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315421	factor	organism part	bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-MTAB-1733		ERR315440	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315440	characteristic	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315440	characteristic	individual	V190
+E-MTAB-1733		ERR315440	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315440	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315440	factor	organism part	lymph node	http://purl.obolibrary.org/obo/UBERON_0000029
+E-MTAB-1733		ERR315359	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315359	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315359	characteristic	individual	V127
+E-MTAB-1733		ERR315359	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315359	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315359	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-MTAB-1733		ERR315473	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315473	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315473	characteristic	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-1733		ERR315473	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315473	characteristic	individual	V84
+E-MTAB-1733		ERR315473	factor	organism part	spleen	http://purl.obolibrary.org/obo/UBERON_0002106
+E-MTAB-1733		ERR315391	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315391	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315391	characteristic	individual	V257
+E-MTAB-1733		ERR315391	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315391	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315391	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-MTAB-1733		ERR315491	characteristic	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315491	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315491	characteristic	individual	V199
+E-MTAB-1733		ERR315491	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315491	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315491	factor	organism part	thyroid	http://purl.obolibrary.org/obo/UBERON_0002046
+E-MTAB-1733		ERR315382	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-MTAB-1733		ERR315382	characteristic	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044
+E-MTAB-1733		ERR315382	characteristic	individual	V238
+E-MTAB-1733		ERR315382	characteristic	specimen with known storage state	frozen specimen	http://purl.obolibrary.org/obo/OBI_0000922
+E-MTAB-1733		ERR315382	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-1733		ERR315382	factor	organism part	salivary gland	http://purl.obolibrary.org/obo/UBERON_0001044

@@ -1,0 +1,54 @@
+E-MTAB-698		ERR036349	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-698		ERR036349	characteristic	biosource provider	The Scripps Research Institute, La Jolla, California, USA
+E-MTAB-698		ERR036349	characteristic	organism part	vomeronasal organ	http://purl.obolibrary.org/obo/UBERON_0002255
+E-MTAB-698		ERR036349	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-698		ERR036349	characteristic	age	8 week
+E-MTAB-698		ERR036349	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-698		ERR036349	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-698		ERR036349	characteristic	biosource type	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-698		ERR036349	factor	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-698		ERR036351	characteristic	biosource provider	The Scripps Research Institute, La Jolla, California, USA
+E-MTAB-698		ERR036351	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-698		ERR036351	characteristic	organism part	vomeronasal organ	http://purl.obolibrary.org/obo/UBERON_0002255
+E-MTAB-698		ERR036351	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-698		ERR036351	characteristic	age	8 week
+E-MTAB-698		ERR036351	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-698		ERR036351	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-698		ERR036351	characteristic	biosource type	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-698		ERR036351	factor	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-698		ERR036350	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-698		ERR036350	characteristic	biosource type	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-698		ERR036350	characteristic	age	8 week
+E-MTAB-698		ERR036350	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-698		ERR036350	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-698		ERR036350	characteristic	biosource provider	The Scripps Research Institute, La Jolla, California, USA
+E-MTAB-698		ERR036350	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-698		ERR036350	characteristic	organism part	vomeronasal organ	http://purl.obolibrary.org/obo/UBERON_0002255
+E-MTAB-698		ERR036350	factor	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-698		ERR036353	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-698		ERR036353	characteristic	biosource type	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-698		ERR036353	characteristic	age	8 week
+E-MTAB-698		ERR036353	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-698		ERR036353	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-698		ERR036353	characteristic	organism part	vomeronasal organ	http://purl.obolibrary.org/obo/UBERON_0002255
+E-MTAB-698		ERR036353	characteristic	biosource provider	The Scripps Research Institute, La Jolla, California, USA
+E-MTAB-698		ERR036353	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-698		ERR036353	factor	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-698		ERR036348	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-698		ERR036348	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-698		ERR036348	characteristic	biosource provider	The Scripps Research Institute, La Jolla, California, USA
+E-MTAB-698		ERR036348	characteristic	organism part	vomeronasal organ	http://purl.obolibrary.org/obo/UBERON_0002255
+E-MTAB-698		ERR036348	characteristic	biosource type	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-698		ERR036348	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-698		ERR036348	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-698		ERR036348	characteristic	age	8 week
+E-MTAB-698		ERR036348	factor	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-MTAB-698		ERR036352	characteristic	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266
+E-MTAB-698		ERR036352	characteristic	biosource provider	The Scripps Research Institute, La Jolla, California, USA
+E-MTAB-698		ERR036352	characteristic	organism part	vomeronasal organ	http://purl.obolibrary.org/obo/UBERON_0002255
+E-MTAB-698		ERR036352	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-MTAB-698		ERR036352	characteristic	strain	C57BL/6J	http://www.ebi.ac.uk/efo/EFO_0000606
+E-MTAB-698		ERR036352	characteristic	age	8 week
+E-MTAB-698		ERR036352	characteristic	biosource type	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
+E-MTAB-698		ERR036352	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-MTAB-698		ERR036352	factor	sex	male	http://www.ebi.ac.uk/efo/EFO_0001266

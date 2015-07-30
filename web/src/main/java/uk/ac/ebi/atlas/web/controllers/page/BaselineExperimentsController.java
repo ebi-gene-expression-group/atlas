@@ -84,7 +84,7 @@ public class BaselineExperimentsController {
             try {
                 displayName = experimentTrader.getPublicExperiment(experimentAccession).getDisplayName();
             } catch (RuntimeException e) {
-                // we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
+                // we don't want the entire application to crash just because one condensedSdrf file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
                 displayName = experimentAccession;
             }
@@ -136,7 +136,7 @@ public class BaselineExperimentsController {
                     }
                 }
             } catch (RuntimeException e) {
-                // we don't want the entire application to crash just because one magetab file may be offline because a curator is modifying it
+                // we don't want the entire application to crash just because one condensedSdrf file may be offline because a curator is modifying it
                 LOGGER.error(e.getMessage(), e);
             }
 

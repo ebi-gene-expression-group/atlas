@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.trader.loader;
 
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.trader.ConfigurationTrader;
 import uk.ac.ebi.atlas.model.ExperimentConfiguration;
@@ -51,7 +50,7 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
 
     @Override
     protected DifferentialExperiment load(ExperimentDTO experimentDTO, String experimentDescription,
-                                          boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws ParseException, IOException {
+                                          boolean hasExtraInfoFile, ExperimentDesign experimentDesign) throws IOException {
 
         String experimentAccession = experimentDTO.getExperimentAccession();
 

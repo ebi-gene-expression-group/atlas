@@ -34,7 +34,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.arrayexpress2.magetab.exception.ParseException;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDAO;
 import uk.ac.ebi.atlas.experimentimport.ExperimentDTO;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -101,7 +100,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentShouldOnlyContainRunsFromDataFile() throws IOException, ParseException {
+    public void experimentShouldOnlyContainRunsFromDataFile() throws IOException {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         assertThat(experiment.getExperimentRunAccessions(), containsInAnyOrder(
@@ -118,7 +117,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentShouldContainAssayGroups() throws IOException, ParseException {
+    public void experimentShouldContainAssayGroups() throws IOException {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         assertThat(experiment.getAssayGroups().getAssayGroupIds(), contains("g1", "g2", "g3", "g4", "g5", "g6",
@@ -127,7 +126,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentalFactors() throws IOException, ParseException {
+    public void experimentalFactors() throws IOException {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         //ImmutableList<FactorGroup> allFactors = experiment.getExperimentalFactors().getFactorGroupsInOrder();
@@ -140,7 +139,7 @@ public class ProteomicsBaselineExperimentsCacheLoaderIT {
     }
 
     @Test
-    public void experimentDesign() throws IOException, ParseException {
+    public void experimentDesign() throws IOException {
         BaselineExperiment experiment = subject.load(E_PROT_1);
 
         ExperimentDesign experimentDesign = experiment.getExperimentDesign();

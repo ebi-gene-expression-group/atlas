@@ -26,7 +26,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.commons.readers.TsvReader;
-import uk.ac.ebi.atlas.commons.readers.TsvReaderBuilder;
+import uk.ac.ebi.atlas.commons.readers.FileTsvReaderBuilder;
 import uk.ac.ebi.atlas.model.Experiment;
 import uk.ac.ebi.atlas.web.controllers.ExperimentDispatcher;
 
@@ -45,21 +45,21 @@ public abstract class ExperimentDesignDownloadController<T extends Experiment> {
     @Value("#{configuration['experiment.experiment-design.path.template']}")
     private String pathTemplate;
 
-    private TsvReaderBuilder tsvReaderBuilder;
+    private FileTsvReaderBuilder fileTsvReaderBuilder;
 
     @PostConstruct
     protected void initializeTsvReader() {
-        this.tsvReaderBuilder = tsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
+        this.fileTsvReaderBuilder = fileTsvReaderBuilder.forTsvFilePathTemplate(pathTemplate);
     }
 
-    public ExperimentDesignDownloadController(TsvReaderBuilder tsvReaderBuilder) {
-        this.tsvReaderBuilder = tsvReaderBuilder;
+    public ExperimentDesignDownloadController(FileTsvReaderBuilder fileTsvReaderBuilder) {
+        this.fileTsvReaderBuilder = fileTsvReaderBuilder;
     }
 
     protected void extractExperimentDesign(HttpServletRequest request, HttpServletResponse response) throws IOException {
         T experiment = (T) request.getAttribute(ExperimentDispatcher.EXPERIMENT_ATTRIBUTE);
 
-        TsvReader tsvReader = tsvReaderBuilder.withExperimentAccession(experiment.getAccession()).build();
+        TsvReader tsvReader = fileTsvReaderBuilder.withExperimentAccession(experiment.getAccession()).build();
 
         // read contents from file
         List<String[]> csvLines = new ArrayList<>(tsvReader.readAll());
