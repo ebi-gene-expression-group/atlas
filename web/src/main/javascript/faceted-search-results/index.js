@@ -2,4 +2,6 @@
 
 //*------------------------------------------------------------------*
 
-module.exports = require('./src/differential-page.js');
+exports.differential = require('./src/differential-page.js');
+
+exports.baseline = require('./src/baseline-page.js');

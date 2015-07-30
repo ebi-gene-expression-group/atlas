@@ -17,6 +17,7 @@
     <div id="genenametooltip-content" style="display: none"></div>
 
         <script type="text/javascript">
+
             var heatmapData = <%@ include file="heatmap-data.jsp" %>;
 
             var heatmapModule = window.exposed;

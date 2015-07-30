@@ -98,11 +98,10 @@
 <c:if test="${hasDifferentialResults}">
     <script>
         var facetsData = ${empty jsonDifferentialGeneQueryFacets ? 'null' : jsonDifferentialGeneQueryFacets};
-        <%--var diffResultsData = ${empty jsonDifferentialGeneQueryResults ? 'null': jsonDifferentialGeneQueryResults};--%>
 
         var differential_page_js = window.exposed;
 
-        differential_page_js(facetsData, 'atlasAnalyticsSearchFacetContainer', 'atlasAnalyticsSearchDiffResultsContainer');
+        differential_page_js.differential(facetsData, 'atlasAnalyticsSearchFacetContainer', 'atlasAnalyticsSearchDiffResultsContainer');
     </script>
 </c:if>
 
