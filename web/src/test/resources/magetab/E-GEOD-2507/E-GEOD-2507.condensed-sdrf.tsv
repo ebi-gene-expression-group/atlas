@@ -1,150 +1,150 @@
-E-GEOD-2507	A-AFFY-6	N/LV3	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	N/LV3	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	N/LV3	characteristic	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/LV3	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
-E-GEOD-2507	A-AFFY-6	N/LV3	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	N/LV3	factor	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/LV3	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	S/LV1	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	S/LV1	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	S/LV1	characteristic	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/LV1	characteristic	disease	muscular dystrophy
-E-GEOD-2507	A-AFFY-6	S/LV1	characteristic	strain	SJL/J
-E-GEOD-2507	A-AFFY-6	S/LV1	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	S/LV1	factor	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/LV1	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	N/SM3	characteristic	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	N/SM3	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	N/SM3	characteristic	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/SM3	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	N/SM3	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
-E-GEOD-2507	A-AFFY-6	N/SM3	factor	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	N/SM3	factor	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/SM1	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
-E-GEOD-2507	A-AFFY-6	N/SM1	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	N/SM1	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
 E-GEOD-2507	A-AFFY-6	N/SM1	characteristic	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	N/SM1	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	N/SM1	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	N/SM1	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
 E-GEOD-2507	A-AFFY-6	N/SM1	characteristic	genotype	wild type genotype
 E-GEOD-2507	A-AFFY-6	N/SM1	factor	organism part	skeletal muscle
 E-GEOD-2507	A-AFFY-6	N/SM1	factor	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	S/LV3	characteristic	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/LV3	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	S/LV3	characteristic	disease	muscular dystrophy
-E-GEOD-2507	A-AFFY-6	S/LV3	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	S/LV3	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	S/LV3	characteristic	strain	SJL/J
-E-GEOD-2507	A-AFFY-6	S/LV3	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	S/LV3	factor	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/LV2	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	S/LV2	characteristic	strain	SJL/J
-E-GEOD-2507	A-AFFY-6	S/LV2	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	S/LV2	characteristic	disease	muscular dystrophy
-E-GEOD-2507	A-AFFY-6	S/LV2	characteristic	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/LV2	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	S/LV2	factor	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/LV2	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	S/LV5	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	S/LV5	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	S/LV5	characteristic	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/LV5	characteristic	disease	muscular dystrophy
-E-GEOD-2507	A-AFFY-6	S/LV5	characteristic	strain	SJL/J
 E-GEOD-2507	A-AFFY-6	S/LV5	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	S/LV5	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
+E-GEOD-2507	A-AFFY-6	S/LV5	characteristic	strain	SJL/J
+E-GEOD-2507	A-AFFY-6	S/LV5	characteristic	disease	muscular dystrophy
+E-GEOD-2507	A-AFFY-6	S/LV5	characteristic	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/LV5	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	S/LV5	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
 E-GEOD-2507	A-AFFY-6	S/LV5	factor	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/LV4	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	S/LV4	characteristic	strain	SJL/J
-E-GEOD-2507	A-AFFY-6	S/LV4	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	S/LV4	characteristic	disease	muscular dystrophy
-E-GEOD-2507	A-AFFY-6	S/LV4	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	S/LV4	characteristic	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/LV4	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	S/LV4	factor	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	N/LV5	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
-E-GEOD-2507	A-AFFY-6	N/LV5	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	N/LV5	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	N/LV5	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	N/LV5	characteristic	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/LV5	factor	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/LV5	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	N/SM4	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
-E-GEOD-2507	A-AFFY-6	N/SM4	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	N/SM4	characteristic	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	N/SM4	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	N/SM4	characteristic	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/SM4	factor	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	N/SM4	factor	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	S/SM2	characteristic	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/SM2	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	S/SM2	characteristic	disease	muscular dystrophy
-E-GEOD-2507	A-AFFY-6	S/SM2	characteristic	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	S/SM2	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	S/SM2	characteristic	strain	SJL/J
-E-GEOD-2507	A-AFFY-6	S/SM2	factor	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/SM2	factor	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	S/SM5	characteristic	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	S/SM5	characteristic	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/SM5	characteristic	disease	muscular dystrophy
-E-GEOD-2507	A-AFFY-6	S/SM5	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	S/SM5	characteristic	strain	SJL/J
-E-GEOD-2507	A-AFFY-6	S/SM5	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	S/SM5	factor	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	S/SM5	factor	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	N/LV1	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	N/LV1	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	N/LV1	characteristic	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/LV1	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	N/LV1	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
-E-GEOD-2507	A-AFFY-6	N/LV1	factor	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/LV1	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	N/SM2	characteristic	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	N/SM2	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	N/SM2	characteristic	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/SM2	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
-E-GEOD-2507	A-AFFY-6	N/SM2	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	N/SM2	factor	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	N/SM2	factor	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	S/SM4	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	S/SM4	characteristic	strain	SJL/J
-E-GEOD-2507	A-AFFY-6	S/SM4	characteristic	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	S/SM4	characteristic	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/SM4	characteristic	disease	muscular dystrophy
-E-GEOD-2507	A-AFFY-6	S/SM4	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	S/SM4	factor	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	S/SM4	factor	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	N/SM5	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	N/SM5	characteristic	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	N/SM5	characteristic	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/SM5	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	N/SM5	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
-E-GEOD-2507	A-AFFY-6	N/SM5	factor	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/SM5	factor	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	S/SM1	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	S/SM1	characteristic	strain	SJL/J
-E-GEOD-2507	A-AFFY-6	S/SM1	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	S/SM1	characteristic	disease	muscular dystrophy
-E-GEOD-2507	A-AFFY-6	S/SM1	characteristic	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	S/SM1	characteristic	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	S/SM1	factor	organism part	skeletal muscle
-E-GEOD-2507	A-AFFY-6	S/SM1	factor	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/LV5	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
 E-GEOD-2507	A-AFFY-6	S/SM3	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
 E-GEOD-2507	A-AFFY-6	S/SM3	characteristic	organism part	skeletal muscle
 E-GEOD-2507	A-AFFY-6	S/SM3	characteristic	genotype	dysferlin mutant
 E-GEOD-2507	A-AFFY-6	S/SM3	characteristic	disease	muscular dystrophy
 E-GEOD-2507	A-AFFY-6	S/SM3	characteristic	strain	SJL/J
 E-GEOD-2507	A-AFFY-6	S/SM3	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	S/SM3	factor	organism part	skeletal muscle
 E-GEOD-2507	A-AFFY-6	S/SM3	factor	genotype	dysferlin mutant
-E-GEOD-2507	A-AFFY-6	N/LV4	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	N/LV4	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	N/LV4	characteristic	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	S/SM3	factor	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	S/SM4	characteristic	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/SM4	characteristic	disease	muscular dystrophy
+E-GEOD-2507	A-AFFY-6	S/SM4	characteristic	strain	SJL/J
+E-GEOD-2507	A-AFFY-6	S/SM4	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	S/SM4	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	S/SM4	characteristic	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	S/SM4	factor	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	S/SM4	factor	genotype	dysferlin mutant
 E-GEOD-2507	A-AFFY-6	N/LV4	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
 E-GEOD-2507	A-AFFY-6	N/LV4	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	N/LV4	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
+E-GEOD-2507	A-AFFY-6	N/LV4	characteristic	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/LV4	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	N/LV4	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
 E-GEOD-2507	A-AFFY-6	N/LV4	factor	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/LV2	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
-E-GEOD-2507	A-AFFY-6	N/LV2	characteristic	genotype	wild type genotype
-E-GEOD-2507	A-AFFY-6	N/LV2	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
-E-GEOD-2507	A-AFFY-6	N/LV2	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-2507	A-AFFY-6	N/LV4	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	S/SM1	characteristic	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	S/SM1	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	S/SM1	characteristic	strain	SJL/J
+E-GEOD-2507	A-AFFY-6	S/SM1	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	S/SM1	characteristic	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/SM1	characteristic	disease	muscular dystrophy
+E-GEOD-2507	A-AFFY-6	S/SM1	factor	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/SM1	factor	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	S/SM2	characteristic	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/SM2	characteristic	disease	muscular dystrophy
+E-GEOD-2507	A-AFFY-6	S/SM2	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	S/SM2	characteristic	strain	SJL/J
+E-GEOD-2507	A-AFFY-6	S/SM2	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	S/SM2	characteristic	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	S/SM2	factor	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/SM2	factor	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	N/LV1	characteristic	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/LV1	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	N/LV1	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-2507	A-AFFY-6	N/LV1	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	N/LV1	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	N/LV1	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	N/LV1	factor	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	S/LV3	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	S/LV3	characteristic	strain	SJL/J
+E-GEOD-2507	A-AFFY-6	S/LV3	characteristic	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/LV3	characteristic	disease	muscular dystrophy
+E-GEOD-2507	A-AFFY-6	S/LV3	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	S/LV3	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	S/LV3	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	S/LV3	factor	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/LV2	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	S/LV2	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	S/LV2	characteristic	disease	muscular dystrophy
+E-GEOD-2507	A-AFFY-6	S/LV2	characteristic	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/LV2	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	S/LV2	characteristic	strain	SJL/J
+E-GEOD-2507	A-AFFY-6	S/LV2	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	S/LV2	factor	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	N/LV3	characteristic	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/LV3	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	N/LV3	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-2507	A-AFFY-6	N/LV3	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	N/LV3	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	N/LV3	factor	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/LV3	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	S/LV1	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	S/LV1	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	S/LV1	characteristic	disease	muscular dystrophy
+E-GEOD-2507	A-AFFY-6	S/LV1	characteristic	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/LV1	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	S/LV1	characteristic	strain	SJL/J
+E-GEOD-2507	A-AFFY-6	S/LV1	factor	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/LV1	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
 E-GEOD-2507	A-AFFY-6	N/LV2	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
-E-GEOD-2507	A-AFFY-6	N/LV2	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/|http://purl.obolibrary.org/obo/UBERON_0002349|UBERON_0002082
+E-GEOD-2507	A-AFFY-6	N/LV2	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-2507	A-AFFY-6	N/LV2	characteristic	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/LV2	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	N/LV2	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
 E-GEOD-2507	A-AFFY-6	N/LV2	factor	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/LV2	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	N/LV5	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-2507	A-AFFY-6	N/LV5	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	N/LV5	characteristic	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/LV5	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	N/LV5	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	N/LV5	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	N/LV5	factor	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	S/SM5	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	S/SM5	characteristic	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	S/SM5	characteristic	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/SM5	characteristic	disease	muscular dystrophy
+E-GEOD-2507	A-AFFY-6	S/SM5	characteristic	strain	SJL/J
+E-GEOD-2507	A-AFFY-6	S/SM5	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	S/SM5	factor	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/SM5	factor	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	N/SM5	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	N/SM5	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-2507	A-AFFY-6	N/SM5	characteristic	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/SM5	characteristic	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	N/SM5	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	N/SM5	factor	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/SM5	factor	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	N/SM2	characteristic	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/SM2	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-2507	A-AFFY-6	N/SM2	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	N/SM2	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	N/SM2	characteristic	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	N/SM2	factor	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/SM2	factor	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	N/SM3	characteristic	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	N/SM3	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	N/SM3	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-2507	A-AFFY-6	N/SM3	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	N/SM3	characteristic	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/SM3	factor	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/SM3	factor	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	S/LV4	characteristic	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	S/LV4	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	S/LV4	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	S/LV4	characteristic	strain	SJL/J
+E-GEOD-2507	A-AFFY-6	S/LV4	characteristic	disease	muscular dystrophy
+E-GEOD-2507	A-AFFY-6	S/LV4	characteristic	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/LV4	factor	genotype	dysferlin mutant
+E-GEOD-2507	A-AFFY-6	S/LV4	factor	organism part	left ventricle cardiac muscle	http://purl.obolibrary.org/obo/UBERON_0002349 http://purl.obolibrary.org/obo/UBERON_0002082
+E-GEOD-2507	A-AFFY-6	N/SM4	characteristic	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/SM4	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
+E-GEOD-2507	A-AFFY-6	N/SM4	characteristic	sex	female	http://www.ebi.ac.uk/efo/EFO_0001265
+E-GEOD-2507	A-AFFY-6	N/SM4	characteristic	organism	Mus musculus	http://purl.obolibrary.org/obo/NCBITaxon_10090
+E-GEOD-2507	A-AFFY-6	N/SM4	characteristic	organism part	skeletal muscle
+E-GEOD-2507	A-AFFY-6	N/SM4	factor	genotype	wild type genotype
+E-GEOD-2507	A-AFFY-6	N/SM4	factor	organism part	skeletal muscle

@@ -89,11 +89,8 @@ public class ExperimentMetadataCRUD {
 
         ExperimentType experimentType = experimentConfiguration.getExperimentType();
         CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(accession, experimentType);
+
         ExperimentDesign experimentDesign = condensedSdrfParserOutput.getExperimentDesign();
-
-//        MageTabParserOutput mageTabParserOutput = readMageTab(accession, experimentType);
-//        ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
-
         writeExperimentDesignFile(accession, experimentType, experimentDesign);
 
         Set<String> assayAccessions = experimentConfiguration.getAssayAccessions();
@@ -133,7 +130,8 @@ public class ExperimentMetadataCRUD {
         return experimentDTOBuilder
                 .forExperimentAccession(condensedSdrfParserOutput.getExperimentAccession())
                 .withExperimentType(condensedSdrfParserOutput.getExperimentType())
-                .withPrivate(isPrivate).withSpecies(species)
+                .withPrivate(isPrivate)
+                .withSpecies(species)
                 .withTitle(condensedSdrfParserOutput.getTitle())
                 .withPubMedIds(condensedSdrfParserOutput.getPubmedIds())
                 .build();
@@ -206,11 +204,8 @@ public class ExperimentMetadataCRUD {
             experimentTrader.removeExperimentFromCache(accession, type);
 
             CondensedSdrfParserOutput condensedSdrfParserOutput = condensedSdrfParser.parse(accession, type);
+
             ExperimentDesign experimentDesign = condensedSdrfParserOutput.getExperimentDesign();
-
-//            MageTabParserOutput mageTabParserOutput = readMageTab(accession, type);
-//            ExperimentDesign experimentDesign = mageTabParserOutput.getExperimentDesign();
-
             writeExperimentDesignFile(accession, type, experimentDesign);
 
             LOGGER.info("updated design for experiment " + accession);

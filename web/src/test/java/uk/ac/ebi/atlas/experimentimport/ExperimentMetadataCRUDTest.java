@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Sets;
@@ -32,6 +33,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.dao.ArrayDesignDao;
@@ -105,7 +107,7 @@ public class ExperimentMetadataCRUDTest {
     private ConditionsIndexTrader conditionsIndexTrader;
 
     @Mock
-    private ConditionsIndex conditionsIndex;
+    private ConditionsIndex<Experiment> conditionsIndex;
 
     @Mock
     private ExperimentDTOBuilder experimentDTOBuilderMock;
@@ -153,16 +155,22 @@ public class ExperimentMetadataCRUDTest {
         given(experimentDTOBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE)).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withPrivate(false)).willReturn(experimentDTOBuilderMock);
-        given(experimentDTOBuilderMock.withSpecies(anySet())).willReturn(experimentDTOBuilderMock);
-        given(experimentDTOBuilderMock.withPubMedIds(anySet())).willReturn(experimentDTOBuilderMock);
+        given(experimentDTOBuilderMock.withSpecies(anySetOf(String.class))).willReturn(experimentDTOBuilderMock);
+        given(experimentDTOBuilderMock.withPubMedIds(anySetOf(String.class))).willReturn(experimentDTOBuilderMock);
         given(experimentDTOBuilderMock.withTitle(anyString())).willReturn(experimentDTOBuilderMock);
 
         given(condensedSdrfParserMock.parse(anyString(), any(ExperimentType.class))).willReturn(condensedSdrfParserOutputMock);
+        given(condensedSdrfParserOutputMock.getExperimentDesign()).willReturn(experimentDesignMock);
+
+        given(condensedSdrfParserOutputMock.getExperimentAccession()).willReturn(EXPERIMENT_ACCESSION);
+        given(condensedSdrfParserOutputMock.getExperimentType()).willReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
+        given(condensedSdrfParserOutputMock.getPubmedIds()).willReturn(new ImmutableSet.Builder<String>().build());
+        given(condensedSdrfParserOutputMock.getTitle()).willReturn("");
 
         ImmutableSetMultimap.Builder<String, String> builder = new ImmutableSetMultimap.Builder<>();
         builder.put(EXPERIMENT_ASSAY, EFO_0000761);
         when(experimentDesignMock.getAllOntologyTermIdsByAssayAccession()).thenReturn(builder.build());
-        when(efoParentsLookupServiceMock.getAllParents(anySet())).thenReturn(EXPANDED_EFO_TERMS);
+        when(efoParentsLookupServiceMock.getAllParents(anySetOf(String.class))).thenReturn(EXPANDED_EFO_TERMS);
 
         subject = new ExperimentMetadataCRUD(
                 experimentDAOMock, experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock,
@@ -196,13 +204,13 @@ public class ExperimentMetadataCRUDTest {
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(conditionsIndex).updateConditions(any(Experiment.class), any(SetMultimap.class));
+        verify(conditionsIndex).updateConditions(any(Experiment.class), Matchers.<SetMultimap<String,String>>any());
     }
 
     @Test
     public void importExperimentShouldAddExperimentToIndex() throws Exception {
         subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false, Optional.<String>absent());
-        verify(conditionsIndex).addConditions(any(Experiment.class), any(SetMultimap.class));
+        verify(conditionsIndex).addConditions(any(Experiment.class), Matchers.<SetMultimap<String,String>>any());
     }
 
     @Test
