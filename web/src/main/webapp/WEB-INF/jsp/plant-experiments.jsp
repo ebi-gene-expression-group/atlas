@@ -64,27 +64,33 @@
             <c:choose>
                 <c:when test="${specie == 'Arabidopsis thaliana'}">
                     <c:set var="speciesIconCode" value="B"/>
+					<c:set var="speciesColorCode" value="green" />
                 </c:when>
                 <c:when test="${specie == 'Hordeum vulgare subsp. vulgare'}">
                     <c:set var="speciesIconCode" value="5"/>
+					<c:set var="speciesColorCode" value="green" />
                 </c:when>
                 <c:when test="${specie == 'Oryza sativa Indica Group'}">
                     <c:set var="speciesIconCode" value="6"/>
+					<c:set var="speciesColorCode" value="green" />
                 </c:when>
                 <c:when test="${specie == 'Oryza sativa Japonica Group'}">
                     <c:set var="speciesIconCode" value="6"/>
+					<c:set var="speciesColorCode" value="green" />
                 </c:when>
                 <c:when test="${specie == 'Zea mays'}">
                     <c:set var="speciesIconCode" value="5"/>
+					<c:set var="speciesColorCode" value="green" />
                 </c:when>
 
                 <c:otherwise>
                     <c:set var="speciesIconCode" value="P"/>
+					<c:set var="speciesColorCode" value="green" />
                 </c:otherwise>
             </c:choose>
 
                 <h4>${specie}</h4>
-                <span class="icon icon-species" data-icon="${speciesIconCode}"></span>
+				<span class="icon icon-species ${speciesColorCode}" data-icon="${speciesIconCode}"></span>
                 <ul style="list-style:none;padding-left:0; margin-left:0;">
                     <c:forEach items="${baselineExperimentAccessionsBySpecies.get(specie)}" begin="0" end="20" var="experimentAccession">
                         <c:set var="key" value="${experimentAccession}${specie}"/>
@@ -108,27 +114,33 @@
                     <c:choose>
                         <c:when test="${specie == 'Arabidopsis thaliana'}">
                             <c:set var="speciesIconCode" value="B"/>
+							<c:set var="speciesColorCode" value="green" />
                         </c:when>
                         <c:when test="${specie == 'Hordeum vulgare subsp. vulgare'}">
                             <c:set var="speciesIconCode" value="5"/>
+							<c:set var="speciesColorCode" value="green" />
                         </c:when>
                         <c:when test="${specie == 'Oryza sativa Japonica Group'}">
                             <c:set var="speciesIconCode" value="6"/>
+							<c:set var="speciesColorCode" value="green" />
                         </c:when>
                         <c:when test="${specie == 'Oryza sativa Indica Group'}">
                             <c:set var="speciesIconCode" value="6"/>
+							<c:set var="speciesColorCode" value="green" />
                         </c:when>
                         <c:when test="${specie == 'Zea mays'}">
                             <c:set var="speciesIconCode" value="5"/>
+							<c:set var="speciesColorCode" value="green" />
                         </c:when>
 
                         <c:otherwise>
                             <c:set var="speciesIconCode" value="P"/>
+							<c:set var="speciesColorCode" value="green" />
                         </c:otherwise>
                     </c:choose>
 
                     <h4>${specie}</h4>
-                    <span class="icon icon-species" data-icon="${speciesIconCode}"></span>
+					<span class="icon icon-species ${speciesColorCode}" data-icon="${speciesIconCode}"></span>
                     <ul style="list-style:none;padding-left:0; margin-left:0;">
                         <a href="experiments?organism=${specie}" style="color:#337ab7; border-bottom: none;">
                                 ${numDifferentialExperimentsBySpecies.get(specie)} experiment${numDifferentialExperimentsBySpecies.get(specie) > 1 ? "s" : "" }</a>

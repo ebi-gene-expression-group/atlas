@@ -45,7 +45,7 @@
             <c:choose>
                 <c:when test="${specie == 'Anolis carolinensis'}">
                     <c:set var="speciesIconCode" value="7"/>
-                    <c:set var="speciesColorCode" value="blue"/>
+                    <c:set var="speciesColorCode" value="red"/>
                 </c:when>
                 <c:when test="${specie == 'Arabidopsis thaliana'}">
                     <c:set var="speciesIconCode" value="B"/>
@@ -57,7 +57,7 @@
                 </c:when>
                 <c:when test="${specie == 'Caenorhabditis elegans'}">
                     <c:set var="speciesIconCode" value="W"/>
-                    <c:set var="speciesColorCode" value="blue"/>
+                    <c:set var="speciesColorCode" value="red"/>
                 </c:when>
                 <c:when test="${specie == 'Gallus gallus'}">
                     <c:set var="speciesIconCode" value="k"/>
@@ -93,6 +93,7 @@
                 </c:when>
                 <c:when test="${specie == 'Oryctolagus cuniculus'}">
                     <c:set var="speciesIconCode" value="t"/>
+					<c:set var="speciesColorCode" value="red" />
                 </c:when>
                 <c:when test="${specie == 'Oryza sativa Japonica Group'}">
                     <c:set var="speciesIconCode" value="6"/>
@@ -120,17 +121,19 @@
                 </c:when>
                 <c:when test="${specie == 'Tetraodon nigroviridis'}">
                     <c:set var="speciesIconCode" value="E"/>
-                    <c:set var="speciesColorCode" value="blue"/>
+                    <c:set var="speciesColorCode" value="red"/>
                 </c:when>
                 <c:when test="${specie == 'Zea mays'}">
                     <c:set var="speciesIconCode" value="5"/>
+					<c:set var="speciesColorCode" value="green" />
                 </c:when>
                 <c:when test="${specie == 'Xenopus (Silurana) tropicalis'}">
                     <c:set var="speciesIconCode" value="f"/>
-                    <c:set var="speciesColorCode" value="blue"/>
+                    <c:set var="speciesColorCode" value="red"/>
                 </c:when>
                 <c:otherwise>
                     <c:set var="speciesIconCode" value="X"/>
+					<c:set var="speciesColorCode" value="grey" />
                 </c:otherwise>
             </c:choose>
 
