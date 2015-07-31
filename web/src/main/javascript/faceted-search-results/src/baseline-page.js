@@ -2,7 +2,7 @@
 
 //*------------------------------------------------------------------*
 
-var HeatmapsRouter = require('./heatmapsRouter.jsx');
+var HeatmapsRouter = require('./baseline-heatmaps-router.jsx');
 
 //*------------------------------------------------------------------*
 

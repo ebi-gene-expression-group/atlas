@@ -5,6 +5,7 @@
 var React = require('react');
 var $ = require('jquery');
 var jQuery = $;
+require('jquery.browser');
 var queryString = require('query-string');
 
 //*------------------------------------------------------------------*
@@ -17,12 +18,18 @@ var DifferentialResults = require('./differential-results.jsx');
 module.exports = function (facetsElement, resultsElement, facetData) {
 
     //TODO: add this outside the module, when module is first loaded
-    window.addEventListener('popstate', renderPage, false);
+    var ie9 = $.browser.msie && $.browser.version < 10;
+    if (!ie9) {
+        window.addEventListener('popstate', renderPage, false);
+    }
+
 
     renderPage();
 
     function renderPage() {
-        var query = queryString.parse(window.location.search.slice(1)),
+        debugger;
+        var locationSearch = window.location.search;
+        var query = queryString.parse(locationSearch.slice(1)),
             pathname = window.location.pathname;
         query.select = query.select && JSON.parse(query.select);
         render(query, pathname);
@@ -30,7 +37,7 @@ module.exports = function (facetsElement, resultsElement, facetData) {
 
     function render(query, pathname) {
 
-        React.render(Facets({facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
+        React.render(React.createElement(Facets, {facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
             facetsElement);
 
         queryToResults(query.geneQuery, query.select);
@@ -40,13 +47,18 @@ module.exports = function (facetsElement, resultsElement, facetData) {
             var newQueryString = "?geneQuery=" + query.geneQuery + "&select=" + JSON.stringify(newSelect);
             console.log(newQueryString);
             queryToResults(query.geneQuery, newSelect);
-            navigateTo(pathname + newQueryString);
+            navigateTo(pathname, newQueryString);
         }
 
-        function navigateTo(url) {
+        function navigateTo(pathname, newQueryString) {
+            debugger;
             var state, title;
-            history.pushState(state, title, url);
-            renderPage();
+            if (ie9) {
+                window.location.search = newQueryString;
+            } else {
+                history.pushState(null, null, pathname + newQueryString);
+                renderPage();
+            }
         }
 
 

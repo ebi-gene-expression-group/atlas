@@ -5,12 +5,13 @@
 var React = require('react');
 var $ = require('jquery');
 var jQuery = $;
+require('jquery.browser');
 var queryString = require('query-string');
 
 //*------------------------------------------------------------------*
 
 var Facets = require('./facets.jsx');
-var Heatmaps = require('./heatmaps.jsx');
+var Heatmaps = require('./baseline-heatmaps.jsx');
 
 require('../css/facets.css');
 
@@ -19,7 +20,10 @@ require('../css/facets.css');
 module.exports = function (facetsElement, heatmapsElement, facetData) {
 
     //TODO: add this outside the module, when module is first loaded
-    window.addEventListener('popstate', renderPage, false);
+    var ie9 = $.browser.msie && $.browser.version < 10;
+    if (!ie9) {
+        window.addEventListener('popstate', renderPage, false);
+    }
 
     renderPage();
 
@@ -31,11 +35,11 @@ module.exports = function (facetsElement, heatmapsElement, facetData) {
     }
 
     function render(query, pathname) {
-        React.renderComponent(Facets({facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
+        React.render(React.createElement(Facets, {facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
             facetsElement
         );
 
-        React.renderComponent(Heatmaps({geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query)}),
+        React.render(React.createElement(Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query)}),
             heatmapsElement
         );
 
@@ -43,15 +47,18 @@ module.exports = function (facetsElement, heatmapsElement, facetData) {
             var newSelect = checked ? addSelection(query.select, species, factor) : removeSelection(query.select, species, factor);
             var newQueryString = "?geneQuery=" + query.geneQuery + "&select=" + JSON.stringify(newSelect);
             console.log(newQueryString);
-            navigateTo(pathname + newQueryString);
+            navigateTo(pathname, newQueryString);
         }
 
-        function navigateTo(url) {
+        function navigateTo(pathname, newQueryString) {
             var state, title;
-            history.pushState(state, title, url);
-            renderPage();
+            if (ie9) {
+                window.location.search = newQueryString;
+            } else {
+                history.pushState(null, null, pathname + newQueryString);
+                renderPage();
+            }
         }
-
 
         function addSelection(select, species, factor) {
             if (!select) {

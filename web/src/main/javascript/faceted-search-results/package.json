@@ -10,10 +10,11 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "expression-atlas-heatmap": "file:../heatmap",
     "jquery": "^2.1.4",
+    "jquery.browser": "0.0.8",
     "query-string": "^2.3.0",
-    "react": "^0.12.2",
-    "expression-atlas-heatmap":"file:../heatmap"
+    "react": "^0.12.2"
   },
   "devDependencies": {
     "chai": "^3.0.0",

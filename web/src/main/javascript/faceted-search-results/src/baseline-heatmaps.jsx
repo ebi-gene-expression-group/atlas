@@ -7,7 +7,7 @@ var React = require('react');
 //*------------------------------------------------------------------*
 
 require('../css/facets.css');
-var AtlasHeatmapWidget = require('./atlasHeatmapWidget.jsx');
+var BaselineHeatmapWidget = require('./baseline-heatmap-widget.jsx');
 
 //*------------------------------------------------------------------*
 
@@ -18,7 +18,7 @@ var Heatmaps = React.createClass({
         return (
             <div>
                 {this.props.heatmaps.map(function (heatmapParameters) {
-                    return <AtlasHeatmapWidget key={heatmapParameters.species + heatmapParameters.factor} gxaBaseUrl={"/gxa"}
+                    return <BaselineHeatmapWidget key={heatmapParameters.species + heatmapParameters.factor} gxaBaseUrl={"/gxa"}
                         geneQuery={geneQuery} species={heatmapParameters.species} factor={heatmapParameters.factor} />;
                 })}
             </div>

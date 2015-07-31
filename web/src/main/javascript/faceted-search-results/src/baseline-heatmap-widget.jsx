@@ -12,7 +12,7 @@ require('../css/facets.css');
 
 //*------------------------------------------------------------------*
 
-var AtlasHeatmapWidget = React.createClass({
+var BaselineHeatmapWidget = React.createClass({
 
     //    <Heatmaps gxaBaseUrl='/gxa/' geneQuery='blood' heatmaps={[
     //    {
@@ -54,4 +54,4 @@ var AtlasHeatmapWidget = React.createClass({
 
 //*------------------------------------------------------------------*
 
-module.exports = AtlasHeatmapWidget;
+module.exports = BaselineHeatmapWidget;
