@@ -129,7 +129,7 @@ public class AnalyticsIndexerManager extends Observable {
 
     private class ReindexTask implements Runnable {
         private final String experimentAccession;
-        private final Integer batchSize;
+        private final int batchSize;
 
         public ReindexTask(String experimentAccession, int batchSize) {
             this.experimentAccession = experimentAccession;

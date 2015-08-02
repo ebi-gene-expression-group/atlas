@@ -60,7 +60,7 @@ public class DiffAnalyticsIndexerService {
         this.diffAnalyticsDocumentStreamIndexer = diffAnalyticsDocumentStreamIndexer;
     }
 
-    public int index(DifferentialExperiment experiment, @Nullable Integer batchSize) {
+    public int index(DifferentialExperiment experiment, int batchSize) {
         String experimentAccession = experiment.getAccession();
 
         LOGGER.info("Preparing " + experimentAccession);

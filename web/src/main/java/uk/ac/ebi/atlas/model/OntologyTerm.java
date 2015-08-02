@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.model;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Strings;
 
 import javax.annotation.Nullable;
 
@@ -36,7 +37,7 @@ public abstract class OntologyTerm {
     }
 
     public String uri() {
-        return (source() == null || source().isEmpty()) ? id() : addTrailingSlashIfAbsent(source()) + id();
+        return (Strings.isNullOrEmpty(source()) ? id() : addTrailingSlashIfAbsent(source()) + id());
     }
 
     private String addTrailingSlashIfAbsent(String s) {

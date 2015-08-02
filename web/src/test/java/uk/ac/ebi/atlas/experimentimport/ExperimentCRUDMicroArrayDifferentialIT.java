@@ -44,7 +44,7 @@ public class ExperimentCRUDMicroArrayDifferentialIT {
         subject.importExperiment(NEW_EXPERIMENT_ACCESSION, false);
 
         assertThat("experiment row not loaded into db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(1));
-        assertThat("analytics not loaded into db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(60));
+        assertThat("analytics not loaded into db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(55));
 
         subject.deleteExperiment(NEW_EXPERIMENT_ACCESSION);
 

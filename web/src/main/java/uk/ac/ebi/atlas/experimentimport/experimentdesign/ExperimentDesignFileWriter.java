@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentimport.experimentdesign;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -56,7 +57,6 @@ public class ExperimentDesignFileWriter {
 
     public void write(ExperimentDesign experimentDesign) throws IOException {
         try {
-
             String[] columnHeaders = buildColumnHeaders(experimentType, experimentDesign);
             csvWriter.writeNext(columnHeaders);
             csvWriter.writeAll(asTableOntologyTermsData(experimentDesign));
@@ -110,7 +110,7 @@ public class ExperimentDesignFileWriter {
         List<String> row = Lists.newArrayList(runOrAssay);
 
         String arrayDesign = experimentDesign.getArrayDesign(runOrAssay);
-        if (arrayDesign != null) {
+        if (!Strings.isNullOrEmpty(arrayDesign)) {
             row.add(arrayDesign);
         }
 

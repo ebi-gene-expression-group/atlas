@@ -1,53 +1,27 @@
-Investigation Title	Transcription profiling by array of mouse neurospheres cultured from p107-/- embryos and their wildtype littermates							
-Comment[Submitted Name]	p107 knockout vs. wild type neurospheres							
-Comment[AEExperimentDisplayName]	Transcription profiling by array of mouse neurospheres cultured from p107-/- embryos and their wildtype littermates							
-Comment[AEExperimentType]	transcription profiling by array							
-Experimental Design	individual_genetic_characteristics_design	co-expression_design	transcription profiling by array					
-Experimental Design Term Source REF		mo	EFO					
-Comment[ArrayExpressReleaseDate]	2007-12-01							
-Comment[SecondaryAccession]	GSE3779							
-Comment[AEMIAMESCORE]	4							
-Comment[SecondaryAccession]	GDS1932							
-Comment[SecondaryAccession]	GDS1931							
-Comment[ArrayExpressAccession]	TEST-MICROARRAY
-Comment[MAGETAB TimeStamp_Version]	2011-01-22 16:24:00 Last Changed Rev: 14857							
-Experimental Factor Name	genotype							
-Experimental Factor Type	genotype							
-Experimental Factor Term Source REF								
-Person Last Name	(OGIC)							
-Person First Name	OGIC Info Ontario Genomics Innovation Centre							
-Person Mid Initials								
-Person Email	ogicinfo@ohri.ca							
-Person Phone								
-Person Fax								
-Person Address	"Cellular and Molecular Medicine, Bioinformatics, Ottawa Health Research Institute, Ontario Genomics Innovation Centre (OGIC), 501 Smyth Rd., Ottawa, K1H 8L6, Canada"							
-Person Affiliation	Ontario Genomics Innovation Centre (OGIC)							
-Person Roles	submitter							
-Person Roles Term Source REF								
-Quality Control Type								
-Quality Control Term Source REF								
-Replicate Type								
-Replicate Term Source REF								
-Normalization Type								
-Normalization Term Source REF								
-Date of Experiment								
-Public Release Date	2007-12-01							
-PubMed ID								
-Publication DOI								
-Publication Author List								
-Publication Title								
-Publication Status								
-Publication Status Term Source REF								
-Experiment Description	The ganglionic eminence was dissected and neurospheres were cultured from the brain of E13.5 embroys. RNA was isolated from neurospheres cultured from p107-/- embryos and their wildtype littermates. P107 knockout mice have previously been shown to have an increased number of stem cells and enhanced stem cell self renewal. With the microarray experiment we are hoping to discover the genes involved in stem cell number and self renewal along with p107. Experiment Overall Design: this experiment include 2 samples and 14 replicates							
-Protocol Name	P-G3779-1	P-G3779-3	P-G3779-2	Affymetrix:Protocol:Hybridization-EukGE-WS2v4	P-AFFY-6			
-Protocol Type	specified_biomaterial_action	grow	nucleic_acid_extraction	hybridization	feature_extraction			
-Protocol Description	"Assays to confirm viability:Nestin Positive Neurospheres, Cell culture"	"Culture conditions:Serum Free Stem Cell Medium, 37C, 5%CO2"	Contaminating cell type:progenitor cells	Title: Fluidics Station Protocol. Description: 	Title: Affymetrix CEL analysis. Description: 			
-Protocol Parameters								
-Protocol Hardware								
-Protocol Software				MicroArraySuite 5.0	MicroArraySuite 5.0			
-Protocol Contact								
-Protocol Term Source REF			The MGED Ontology					
-SDRF File	TEST-MICROARRAY.sdrf.txt
-Term Source Name	NCI_thesaurus		The MGED Ontology	ncbitax	ArrayExpress	mo	EFO	The MGED Ontology
-Term Source File	ncithesaurus.obo.alt		http://mged.sourceforge.net/ontologies/MGEDontology.php	http://www.ncbi.nlm.nih.gov/Taxonomy/taxonomyhome.html	http://www.ebi.ac.uk/arrayexpress	http://mged.sourceforge.net/ontologies/MGEDontology.php	http://www.ebi.ac.uk/efo/	http://mged.sourceforge.net/ontologies/MGEDontology.php
-Term Source Version								
+Comment[ArrayExpressAccession]	E-GEOD-43049
+MAGE-TAB Version	1.1
+Public Release Date	2012-12-21
+Investigation Title	Caco-2 cells: cultured in conventional vs apical anaerobic conditions
+Comment[Submitted Name]	Caco-2 cells: cultured in conventional vs apical anaerobic conditions
+Experiment Description	Transcriptional profiling of Caco-2 cells comparing Caco-2 monolayers cultured in a custom built co-culture chamber, either inside a 5% COâ incubator (conventional cell culture environment) or an anaerobic workstation (apical anaerobic environment) for 12 hours. Two-condition experiment with dye swap, A vs B, 6 biological replicates
+Term Source Name	ArrayExpress	EFO
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl
+Person Last Name	McCulloch	Ulluwishewa	Young
+Person First Name	Alan	Dulantha	Wayne
+Person Mid Initials	Francis
+Person Email	alan.mcculloch@agresearch.co.nz
+Person Affiliation	AgResearch NZ
+Person Phone	64 3 4899080
+Person Address	AgResearch NZ, Invermay, Puddle Alley, Mosgiel, New Zealand
+Person Roles	submitter
+Protocol Name	P-GSE43049-2	P-GSE43049-1	P-GSE43049-7	P-GSE43049-4	P-GSE43049-9	P-GSE43049-8	P-GSE43049-3	P-GSE43049-5	P-GSE43049-6
+Protocol Description	ID_REF =  VALUE = Normalized log2 ratio (Cy3/Cy5)	ID_REF =  VALUE = Normalized log2 ratio (Cy5/Cy3)	The labelled samples were hybridized onto Agilent Technologies 44k whole human genome oligonucleotide arrays (G4112A) according to the manufacturerâs instructions (Two-Color Microarray-Based Gene Expression Analysis (Quick Amp Labeling), Version 5.7, March 2008, Agilent Technologies).	Caco-2 cells were cultured in Transwell inserts in Medium 199 (M199; Invitrogen) containing 10% (v/v) fetal bovine serum (GIBCO), 1% (v/v) nonessential amino acids (MEM nonessential amino acids 100x solution; Sigma-Aldrich) and 1% Penicillin-Streptomycin (10,000 U penicillin G sodium salt and 10,000 mg streptomycin sulphate in 0.85% (v/v) saline; GIBCO) at 37ï¿½C in 5% COâ.	Microarrays scanned using Agilent Microarray Scanner G2565CA. Data processed using limma package in R 2.14.2. No background correction, Loess within array normalisation and Aquantile between array normalisation.	The microarray slides were scanned using a DNA Microarray Scanner G2565CA (Agilent Technologies) according to the manufacturerâs instructions.	After 14 days the inserts were transfered to one of two custom built co-culture chambers either placed in a 5 % COâ incubator (control, conventional conditions) or an anaerobic workstation for 12 hours. Caco-2 cell in the anaerobic workstation were exposed to an anaerobic environement (10% COâ, 10% Hâ in Nâ) on the apical side, while recieving oxygen from the basal side (apical anaerobic conditions).	RNAprotect Cell Reagent (Qiagen) was added at a volume of approximately nine times the volume of the apical media to lyse the Caco-2 cells and stabilize the RNA. Total RNA was extracted from the Caco-2 cells using an RNeasy mini kit (Qiagen) as per the manufacturerâs protocol.	The RNA samples were amplified and labeled with either cyanine-3 or cyanine-5 labeled CTP dye using the Agilent Quick-Amp Labeling Kit (5190-0424) as per the manufacturer's instructions (Two-Color Microarray-Based Gene Expression Analysis (Quick Amp Labeling), Version 5.7, March 2008, Agilent Technologies).
+Protocol Type	bioassay_data_transformation	bioassay_data_transformation	hybridization	grow	feature_extraction	image_aquisition	specified_biomaterial_action	nucleic_acid_extraction	labeling
+Experimental Factor Name	growth condition
+Experimental Factor Type	growth condition
+Comment[SecondaryAccession]	GSE43049
+Comment[GEOReleaseDate]	2012-12-21
+Comment[ArrayExpressSubmissionDate]	2012-12-20
+Comment[GEOLastUpdateDate]	2012-12-22
+Comment[AEExperimentType]	transcription profiling by array
+SDRF File	E-GEOD-43049.sdrf.txt

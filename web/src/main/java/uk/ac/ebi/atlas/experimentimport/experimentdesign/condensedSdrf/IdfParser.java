@@ -58,9 +58,10 @@ public class IdfParser {
                 for (int i = 1 ; i < tsvLine.length ; i++) {
                     pubmedIdsBuilder.add(tsvLine[i]);
                 }
-                pubmedIds = pubmedIdsBuilder.build();
             }
         }
+        pubmedIds = pubmedIdsBuilder.build();
+
     }
 
     public String getTitle() {

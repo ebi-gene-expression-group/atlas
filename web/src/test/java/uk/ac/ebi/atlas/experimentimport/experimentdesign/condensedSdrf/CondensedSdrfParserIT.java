@@ -35,14 +35,14 @@ public class CondensedSdrfParserIT {
     public void factorIsDescribedByFactorTypeAndNotName() throws IOException {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_WITH_FACTOR_TYPE_DIFFERENT_FROM_NAME, ExperimentType.MICROARRAY_1COLOUR_MICRORNA_DIFFERENTIAL).getExperimentDesign();
 
-        assertThat(experimentDesign.getSampleHeaders(), contains("DiseaseState", "Organism", "organism part"));
-        assertThat(experimentDesign.getFactorHeaders(), contains("disease state"));
+        assertThat(experimentDesign.getSampleHeaders(), contains("disease", "organism", "organism part"));
+        assertThat(experimentDesign.getFactorHeaders(), contains("disease"));
 
 
         FactorSet factors = experimentDesign.getFactors("Hybridization 1");
         Factor factor1 = factors.iterator().next();
-        assertThat(factor1.getHeader(), is("disease state"));
-        assertThat(factor1.getType(), is("DISEASE_STATE"));
+        assertThat(factor1.getHeader(), is("disease"));
+        assertThat(factor1.getType(), is("DISEASE"));
     }
 
     @Test

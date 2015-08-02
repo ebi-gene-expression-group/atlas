@@ -65,5 +65,5 @@ E-MEXP-1276	A-AFFY-36	G-DBZ3	characteristic	initial time point	birth
 E-MEXP-1276	A-AFFY-36	G-DBZ3	characteristic	specimen with known storage state	fresh specimen	http://purl.obolibrary.org/obo/OBI_0000971
 E-MEXP-1276	A-AFFY-36	G-DBZ3	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
 E-MEXP-1276	A-AFFY-36	G-DBZ3	characteristic	strain	C57BL/6	http://www.ebi.ac.uk/efo/EFO_0004472
-E-MEXP-1276	A-AFFY-36	G-DBZ3	factor	dose	10 micromole per kilogram
 E-MEXP-1276	A-AFFY-36	G-DBZ3	factor	compound	dibenzazepine	http://purl.obolibrary.org/obo/CHEBI_47804
+E-MEXP-1276	A-AFFY-36	G-DBZ3	factor	dose	10 micromole per kilogram

@@ -1,53 +1,32 @@
-<configuration experimentType="microarray_1colour_mrna_differential">
-    <analytics>
-        <array_design>
-            A-AFFY-24
-        </array_design>
-        <assay_groups>
-            <assay_group id="g1">
-                <assay>9447-4 -/-, chip MOE430B</assay>
-                <assay>9887-6 p107 -/-, chip MOE430B</assay>
-                <assay>9619-3 p107 -/-, chip MOE430B</assay>
-                <assay>9859-12 p107 -/-, chip MOE430B</assay>
-            </assay_group>
-            <assay_group id="g2">
-                <assay>9859-11, chip MOE430B</assay>
-                <assay>9887-4, chip MOE430B</assay>
-                <assay>9619-6, chip MOE430B</assay>
-            </assay_group>
-        </assay_groups>
-        <contrasts>
-            <contrast id="g2_g1">
-                <name>'10 micromolar 2,3-dimethoxy-1,4-naphthoquinone' vs 'none'</name>
-                <reference_assay_group>g2</reference_assay_group>
-                <test_assay_group>g1</test_assay_group>
-            </contrast>
-        </contrasts>
-    </analytics>
-    <analytics>
-        <array_design>
-            A-AFFY-23
-        </array_design>
-        <assay_groups>
-            <assay_group id="g3">
-                <assay>9859-11, chip MOE430A</assay>
-                <assay>9887-4, chip MOE430A</assay>
-                <assay>9619-6, chip MOE430A</assay>
-            </assay_group>
-            <assay_group id="g4">
-                <assay>9447-4 -/-, chip MOE430A</assay>
-                <assay>9619-3 p107 -/-, chip MOE430A</assay>
-                <assay>9887-6 p107 -/-, chip MOE430A</assay>
-                <assay>9859-12 p107 -/-, chip MOE430A</assay>
-            </assay_group>
-        </assay_groups>
-        <contrasts>
-            <contrast id="g3_g4">
-                <name>genotype:'p107 -/-' vs 'wild type' on A-AFFY-23</name>
-
-                <reference_assay_group>g3</reference_assay_group>
-                <test_assay_group>g4</test_assay_group>
-            </contrast>
-        </contrasts>
-    </analytics>
+<configuration experimentType="microarray_2colour_mrna_differential">
+	<analytics>
+		<array_design>
+			A-AGIL-28
+		</array_design>
+		<assay_groups>
+			<assay_group id="g1">
+				<assay>GSM1055616.Cy3</assay>
+				<assay>GSM1055614.Cy5</assay>
+				<assay>GSM1055615.Cy3</assay>
+				<assay>GSM1055617.Cy5</assay>
+				<assay>GSM1055613.Cy3</assay>
+				<assay>GSM1055612.Cy5</assay>
+			</assay_group>
+			<assay_group id="g2">
+				<assay>GSM1055616.Cy5</assay>
+				<assay>GSM1055614.Cy3</assay>
+				<assay>GSM1055615.Cy5</assay>
+				<assay>GSM1055617.Cy3</assay>
+				<assay>GSM1055613.Cy5</assay>
+				<assay>GSM1055612.Cy3</assay>
+			</assay_group>
+		</assay_groups>
+		<contrasts>
+			<contrast id="g2_g1">
+				<name>'Apical anaerobic' vs. 'Conventional'</name>
+				<reference_assay_group>g2</reference_assay_group>
+				<test_assay_group>g1</test_assay_group>
+			</contrast>
+		</contrasts>
+	</analytics>
 </configuration>

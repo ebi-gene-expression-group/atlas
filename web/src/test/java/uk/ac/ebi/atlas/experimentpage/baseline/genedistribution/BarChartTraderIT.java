@@ -60,7 +60,7 @@ public class BarChartTraderIT {
 
 
     @Test
-    public void chartDataAllExperimentalFactosTest() {
+    public void chartDataAllExperimentalFactorsTest() {
         SortedMap<Double, Integer> chartData = subject.getChart(null, null);
         //returns
         assertThat(chartData, hasEntry(0.0, 28295));

@@ -35,6 +35,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -66,16 +67,18 @@ public class DiffAnalyticsIndexerServiceIT {
     private DiffAnalyticsIndexerService subject;
 
     private ImmutableList<AnalyticsDocument> documents;
-    private String tsv38400 = "Gene ID\tGene Name\tg1_g4.p-value\tg1_g4.log2foldchange\tg1_g3.p-value\tg1_g3.log2foldchange\tg1_g2.p-value\tg1_g2.log2foldchange\n" +
-            "AT3G18710\tPUB29\t1\t-0.0979807106778182\t1\t0.0452223119926126\t1\t0.311218971678632\n" +
-            "AT4G25880\tAPUM6\t1\t0.0836848323581764\t1\t-0.0621211768519467\t1\t-0.000894189281532053\n" +
-            "AT1G71695\tPER12\t0.709632908784351\t-1.09780207038468\t1\t-0.185084447053408\t1\t-0.250199686097725\n" +
-            "AT5G41480\t\t1\t0.207244599170542\t1\t0.0726273346499253\t1\t0.0666913090347075";
 
     @Before
     public void before() {
+        String tsv38400 =
+                "Gene ID\tGene Name\tg1_g4.p-value\tg1_g4.log2foldchange\tg1_g3.p-value\tg1_g3.log2foldchange\tg1_g2.p-value\tg1_g2.log2foldchange\n" +
+                "AT3G18710\tPUB29\t1\t-0.0979807106778182\t1\t0.0452223119926126\t1\t0.311218971678632\n" +
+                "AT4G25880\tAPUM6\t1\t0.0836848323581764\t1\t-0.0621211768519467\t1\t-0.000894189281532053\n" +
+                "AT1G71695\tPER12\t0.709632908784351\t-1.09780207038468\t1\t-0.185084447053408\t1\t-0.250199686097725\n" +
+                "AT5G41480\t\t1\t0.207244599170542\t1\t0.0726273346499253\t1\t0.0666913090347075";
+
         MockitoAnnotations.initMocks(this);
-        when(analyticsIndexDaoMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), Matchers.<Integer>any())).thenAnswer(storeDocuments());
+        when(analyticsIndexDaoMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), anyInt())).thenAnswer(storeDocuments());
         Reader reader38400 = new StringReader(tsv38400);
         CSVReader csvReader38400 = new CSVReader(reader38400, '\t');
         RnaSeqDifferentialAnalyticsInputStream inputStream38400 = new RnaSeqDifferentialAnalyticsInputStream(csvReader38400, "38400 mock");
@@ -92,6 +95,7 @@ public class DiffAnalyticsIndexerServiceIT {
 
             @Override
             public Integer answer(InvocationOnMock invocationOnMock) throws Throwable {
+                @SuppressWarnings("unchecked")
                 Iterable<AnalyticsDocument> documentStream = (Iterable<AnalyticsDocument>) invocationOnMock.getArguments()[0];
 
                 ImmutableList.Builder<AnalyticsDocument> documentsBuilder = ImmutableList.builder();
@@ -111,7 +115,7 @@ public class DiffAnalyticsIndexerServiceIT {
     public void index() {
 
         DifferentialExperiment experiment = (DifferentialExperiment) experimentTrader.getPublicExperiment("E-GEOD-38400");
-        subject.index(experiment, null);
+        subject.index(experiment, 1024);
         assertThat(documents, hasSize(12));
 
         AnalyticsDocument document = documents.get(0);

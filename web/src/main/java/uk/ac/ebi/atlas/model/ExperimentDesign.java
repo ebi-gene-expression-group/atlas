@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.*;
 import uk.ac.ebi.atlas.model.baseline.Factor;
 import uk.ac.ebi.atlas.model.baseline.impl.FactorSet;
@@ -241,7 +242,7 @@ public class ExperimentDesign implements Serializable {
         List<String> row = Lists.newArrayList(runOrAssay);
 
         String arrayDesign = getArrayDesign(runOrAssay);
-        if (arrayDesign != null) {
+        if (!Strings.isNullOrEmpty(arrayDesign)) {
             row.add(arrayDesign);
         }
 

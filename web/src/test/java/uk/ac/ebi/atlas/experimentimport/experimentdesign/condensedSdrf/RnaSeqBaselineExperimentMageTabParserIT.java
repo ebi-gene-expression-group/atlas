@@ -60,7 +60,7 @@ public class RnaSeqBaselineExperimentMageTabParserIT {
     @Test
     public void testExtractCharacteristics513() throws Exception {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513, ExperimentType.RNASEQ_MRNA_BASELINE).getExperimentDesign();
-        assertThat(experimentDesign.getSampleHeaders(), containsInAnyOrder("sex", "age", "organism part", "Organism", "ethnic group"));
+        assertThat(experimentDesign.getSampleHeaders(), containsInAnyOrder("sex", "age", "organism part", "organism", "ethnic group"));
     }
 
     @Test
@@ -101,9 +101,9 @@ public class RnaSeqBaselineExperimentMageTabParserIT {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_GEOD_30352, ExperimentType.RNASEQ_MRNA_BASELINE).getExperimentDesign();
 
         ImmutableSetMultimap<String, String> allOntologyTermIdsByAssayAccession = experimentDesign.getAllOntologyTermIdsByAssayAccession();
-        String characteristicOntologyTermIdSex = "NCBITaxon:13616";
-        String characteristicOntologyTermIdOrganismPart = "EFO:0001265";
-        String factorOntologyTermIdOrganismPart = "UBERON:0000948";
+        String characteristicOntologyTermIdSex = "NCBITaxon_13616";
+        String characteristicOntologyTermIdOrganismPart = "EFO_0001265";
+        String factorOntologyTermIdOrganismPart = "UBERON_0000948";
 
         assertThat(allOntologyTermIdsByAssayAccession.get("SRR306747"), containsInAnyOrder(characteristicOntologyTermIdSex, characteristicOntologyTermIdOrganismPart, factorOntologyTermIdOrganismPart));
 
@@ -130,7 +130,7 @@ public class RnaSeqBaselineExperimentMageTabParserIT {
     public void testGetFactors() throws IOException {
         ExperimentDesign experimentDesign = subject.parse(EXPERIMENT_ACCESSION_E_MTAB_513, ExperimentType.RNASEQ_MRNA_BASELINE).getExperimentDesign();
 
-        Factor factor = new Factor("organism part", "adipose");
+        Factor factor = new Factor("organism part", "adipose tissue");
 
         FactorSet err030880 = experimentDesign.getFactors("ERR030880");
         assertThat(err030880, contains(factor));
@@ -139,8 +139,8 @@ public class RnaSeqBaselineExperimentMageTabParserIT {
         assertThat(organismPart.getValueOntologyTerms().isEmpty(), is(false));
 
         OntologyTerm ontologyTerm = organismPart.getValueOntologyTerms().iterator().next();
-        assertThat(ontologyTerm.id(), is("UBERON:0001013"));
-        assertThat(ontologyTerm.source(), is("UBERON"));
+        assertThat(ontologyTerm.id(), is("UBERON_0001013"));
+        assertThat(ontologyTerm.source(), is("http://purl.obolibrary.org/obo/"));
     }
 
     @Test
@@ -150,13 +150,14 @@ public class RnaSeqBaselineExperimentMageTabParserIT {
         SetMultimap<String, String> ontologyTerms = experimentDesign.getAllOntologyTermIdsByAssayAccession();
 
         assertThat(experimentDesign.asTableData().size(), is(48));
-        assertThat(experimentDesign.asTableData().get(0), arrayContaining("ERR030856","Homo sapiens",null,null,"16 tissues mixture",null,"16 tissues mixture"));
-        assertThat(experimentDesign.asTableData().get(47), arrayContaining("ERR030903","Homo sapiens","60 years","Caucasian","thyroid","female","thyroid"));
+        assertThat(experimentDesign.asTableData().get(0), arrayContaining("ERR030856", null, null, "Homo sapiens", "16 tissues mixture", null, "16 tissues mixture"));
+        // TODO https://www.pivotaltracker.com/story/show/100371514
+        assertThat(experimentDesign.asTableData().get(47), arrayContaining("ERR030903", "60 year", "Caucasian", "Homo sapiens", "thyroid", "female", "thyroid"));
 
         assertThat(ontologyTerms.entries().size(), is(142));
         assertThat(ontologyTerms.keySet().size(), is(48));
-        assertThat(ontologyTerms.get("ERR030856"), containsInAnyOrder("NCBITaxon:9606"));
-        assertThat(ontologyTerms.get("ERR030887"), containsInAnyOrder("NCBITaxon:9606", "UBERON:0002107", "EFO:0001266", "EFO:0003156"));
+        assertThat(ontologyTerms.get("ERR030856"), containsInAnyOrder("NCBITaxon_9606"));
+        assertThat(ontologyTerms.get("ERR030887"), containsInAnyOrder("NCBITaxon_9606", "UBERON_0002107", "EFO_0001266", "EFO_0003156"));
 
     }
 
