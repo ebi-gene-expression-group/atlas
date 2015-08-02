@@ -40,7 +40,7 @@ public class MicroArrayDiffAnalyticsDocumentStreamIndexer {
                      SetMultimap<String, String> conditionSearchTermsByContrastGroupId,
                      ImmutableMap<String, String> ensemblSpeciesGroupedByContrastId,
                      Map<String, Integer> numReplicatesByContrastId,
-                     @Nullable Integer batchSize) {
+                     int batchSize) {
 
 
         int count = 0;

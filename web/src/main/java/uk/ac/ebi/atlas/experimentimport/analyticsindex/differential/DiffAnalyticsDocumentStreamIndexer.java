@@ -39,7 +39,7 @@ public class DiffAnalyticsDocumentStreamIndexer {
                      SetMultimap<String, String> conditionSearchTermsByContrastGroupId,
                      ImmutableMap<String, String> ensemblSpeciesGroupedByContrastId,
                      Map<String, Integer> numReplicatesByContrastId,
-                     @Nullable Integer batchSize) {
+                     int batchSize) {
 
 
 

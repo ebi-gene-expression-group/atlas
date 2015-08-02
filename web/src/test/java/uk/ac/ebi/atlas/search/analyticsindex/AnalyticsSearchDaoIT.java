@@ -32,7 +32,7 @@ public class AnalyticsSearchDaoIT {
 
     @Test
     public void baselineResultOnly() {
-        ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("ENSG00000075407"));
+        ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("OS12G0515800"));
 
         assertThat(experimentTypes, contains("rnaseq_mrna_baseline"));
     }

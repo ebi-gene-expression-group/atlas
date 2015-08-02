@@ -17,6 +17,8 @@ import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInpu
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.ProteomicsBaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerMonitor;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
@@ -90,7 +92,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Test
     public void indexBaselineExperimentAnalytics() {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-MTAB-2039");
-        subject.index(experiment, null);
+        subject.index(experiment, 0);
         assertThat(documents, hasSize(14));
 
         AnalyticsDocument document = documents.get(0);
@@ -108,7 +110,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Test
     public void indexMultiSpeciesBaselineExperimentAnalytics() {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-GEOD-30352");
-        subject.index(experiment, null);
+        subject.index(experiment, 1024);
 
         assertThat(documents, hasSize(2179));
 
@@ -138,7 +140,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Test
     public void indexProteomicsBaselineExperimentAnalytics() {
         BaselineExperiment experiment = (BaselineExperiment) experimentTrader.getPublicExperiment("E-PROT-1");
-        subject.index(experiment, null);
+        subject.index(experiment, 1024);
 
         assertThat(documents, hasSize(3366));
 

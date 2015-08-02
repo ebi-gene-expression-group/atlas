@@ -58,7 +58,7 @@ public class MicroArrayDiffAnalyticsIndexerService {
         this.microArrayDiffAnalyticsDocumentStreamIndexer = microArrayDiffAnalyticsDocumentStreamIndexer;
     }
 
-    public int index(MicroarrayExperiment experiment, @Nullable Integer batchSize) {
+    public int index(MicroarrayExperiment experiment, int batchSize) {
         String experimentAccession = experiment.getAccession();
 
         LOGGER.info("Preparing " + experimentAccession);

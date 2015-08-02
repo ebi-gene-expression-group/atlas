@@ -47,7 +47,7 @@ public class AnalyticsIndexDao {
                 count += thisBatchSize;
             }
 
-//            solrClient.commit();
+            solrClient.commit(false, false);
         } catch (Exception e) {
             LOGGER.error(e);
             rollBack();

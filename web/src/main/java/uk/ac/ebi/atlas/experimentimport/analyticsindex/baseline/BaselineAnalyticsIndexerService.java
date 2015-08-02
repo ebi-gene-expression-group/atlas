@@ -76,7 +76,7 @@ public class BaselineAnalyticsIndexerService {
         this.baselineConditionsBuilder = baselineConditionsBuilder;
     }
 
-    public int index(BaselineExperiment experiment, @Nullable Integer batchSize) {
+    public int index(BaselineExperiment experiment, int batchSize) {
         String experimentAccession = experiment.getAccession();
 
         LOGGER.info("Preparing " + experiment);
@@ -145,7 +145,7 @@ public class BaselineAnalyticsIndexerService {
                                                       SetMultimap<String, String> conditionSearchTermsByAssayGroupId,
                                                       ImmutableMap<String, String> ensemblSpeciesGroupedByAssayGroupId,
                                                       ObjectInputStream<BaselineAnalytics> inputStream,
-                                                      @Nullable Integer batchSize) {
+                                                      int batchSize) {
 
         try (ObjectInputStream<BaselineAnalytics> closeableInputStream = inputStream) {
 

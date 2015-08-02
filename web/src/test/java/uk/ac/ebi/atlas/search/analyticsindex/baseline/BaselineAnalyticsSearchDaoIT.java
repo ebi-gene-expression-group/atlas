@@ -11,6 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import javax.inject.Inject;
 import java.util.List;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
@@ -45,10 +46,10 @@ public class BaselineAnalyticsSearchDaoIT {
         List<String> experimentsForHomoSapiensOrganismPart = jsonCtx.read("$.facets.experimentType.buckets[?(@.val=='rnaseq_mrna_baseline')].species.buckets[?(@.val=='homo sapiens')].defaultQueryFactorType.buckets[?(@.val=='ORGANISM_PART')].experimentAccession.buckets[*].val");
 
         assertThat(count, hasSize(1));
-        assertThat(count.get(0), is(greaterThan(300000)));
+        assertThat(count.get(0), is(greaterThan(30000)));
         assertThat(species, contains("homo sapiens"));
         assertThat(sourcesForHomoSapiens, hasItems("ORGANISM_PART", "CELL_LINE"));
-        assertThat(experimentsForHomoSapiensOrganismPart, hasItems("E-MTAB-1733", "E-MTAB-513"));
+        assertThat(experimentsForHomoSapiensOrganismPart, containsInAnyOrder("E-MTAB-2836", "E-MTAB-513", "E-GEOD-30352"));
     }
 
 }
