@@ -15,13 +15,13 @@ import javax.inject.Inject;
 
 @Controller
 @Scope("request")
-public final class WidgetEndPointController {
+public final class ExpressionDataController {
 
     private BaselineAnalyticsSearchService baselineAnalyticsSearchService;
     private OrganismsCache organismsCache;
 
     @Inject
-    public WidgetEndPointController(BaselineAnalyticsSearchService baselineAnalyticsSearchService,
+    public ExpressionDataController(BaselineAnalyticsSearchService baselineAnalyticsSearchService,
                                     OrganismsCache organismsCache) {
         this.baselineAnalyticsSearchService = baselineAnalyticsSearchService;
         this.organismsCache = organismsCache;

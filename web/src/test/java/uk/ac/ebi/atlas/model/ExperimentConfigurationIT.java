@@ -63,7 +63,7 @@ public class ExperimentConfigurationIT {
     public void testGetContrastWithCommaInName() throws Exception {
         subject = configurationTrader.getExperimentConfiguration("TEST-MICROARRAY");
         Contrast contrast = subject.getContrast("g2_g1", ARRAY_DESIGN);
-        assertThat(contrast.getDisplayName(), is("'10 micromolar 2,3-dimethoxy-1,4-naphthoquinone' vs 'none'"));
+        assertThat(contrast.getDisplayName(), is("'Apical anaerobic' vs. 'Conventional'"));
     }
 
    @Test
