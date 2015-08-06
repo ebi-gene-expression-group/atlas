@@ -28,7 +28,7 @@ import static org.hamcrest.core.Is.is;
 public class ExpressionDataControllerIT extends RestAssuredFixture {
 
     private static final String BASELINE_GENE = "ENSG00000000003";
-    private static final String DIFFERENTIAL_GENE = "ENSG00000126351";
+    private static final String DIFFERENTIAL_GENE = "AT2G06310";
     private static final String NON_EXISTENT_GENE = "FOOBAR";
 
     private static final String EMPTY_JSON_OBJECT = "{}";
@@ -42,7 +42,7 @@ public class ExpressionDataControllerIT extends RestAssuredFixture {
     private DifferentialAnalyticsSearchService differentialAnalyticsSearchService;
 
     @Test
-    public void baselineExpressionForGeneIdentifier() {
+    public void geneExpressedInBaselineAndDifferentialExperimentsReturnsTrue() {
         assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(BASELINE_GENE)).matches(NON_EMPTY_JSON_OBJECT_REGEX), is(true));
 
         Response response = get("/json/expressionData?geneId=" + BASELINE_GENE);
@@ -53,7 +53,7 @@ public class ExpressionDataControllerIT extends RestAssuredFixture {
     }
 
     @Test
-    public void differentialExpressionForGeneIdentifierReturnsFalse() {
+    public void geneExpressedInDifferentialExperimentsOnlyReturnsFalse() {
         assertThat(baselineAnalyticsSearchService.findFacetsForTreeSearch(GeneQuery.create(DIFFERENTIAL_GENE)).equals(EMPTY_JSON_OBJECT), is(true));
         assertThat(differentialAnalyticsSearchService.fetchDifferentialGeneQueryFacetsAsJson(GeneQuery.create(DIFFERENTIAL_GENE)).matches(NON_EMPTY_JSON_OBJECT_REGEX), is(true));
 

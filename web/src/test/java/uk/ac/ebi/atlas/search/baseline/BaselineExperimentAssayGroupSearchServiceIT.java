@@ -102,7 +102,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
                 "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284",
                 "E-PROT-1", "E-PROT-1",
                 "E-MTAB-513",
-                "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980",
+                "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980", "E-MTAB-2980",
                 "E-MTAB-2836",
                 "E-MTAB-1733",
                 "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352",
@@ -122,7 +122,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
         List<String> experimentAccessions = getExperimentAccessions(results);
 
-        assertThat(experimentAccessions, hasSize(64));
+        assertThat(experimentAccessions, hasSize(47));
     }
 
     @Test
@@ -324,7 +324,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
         Set<BaselineExperimentAssayGroup> results = subject.query(geneQuery, condition, species, isExactMatch);
 
-        assertThat(results.size(), is(0));
+        assertThat(results.size(), is(1));
     }
 
     @Test

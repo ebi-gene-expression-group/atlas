@@ -1,4 +1,4 @@
-<configuration experimentType="1color_microarray_mrna_differential">
+<configuration experimentType="microarray_1colour_mrna_differential">
 	<analytics>
 		<array_design>
 			A-AFFY-36

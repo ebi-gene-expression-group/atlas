@@ -49,7 +49,7 @@ public class BaselineAnalyticsSearchDaoIT {
         assertThat(count.get(0), is(greaterThan(30000)));
         assertThat(species, contains("homo sapiens"));
         assertThat(sourcesForHomoSapiens, hasItems("ORGANISM_PART", "CELL_LINE"));
-        assertThat(experimentsForHomoSapiensOrganismPart, containsInAnyOrder("E-MTAB-2836", "E-MTAB-513", "E-GEOD-30352"));
+        assertThat(experimentsForHomoSapiensOrganismPart, containsInAnyOrder("E-MTAB-2836", "E-MTAB-513", "E-GEOD-30352", "E-MTAB-1733"));
     }
 
 }

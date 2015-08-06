@@ -17,10 +17,12 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 import javax.inject.Inject;
 import java.util.SortedSet;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -105,7 +107,6 @@ public class BaselineAnalyticsSearchServiceIT {
     private static final Factor SK_N_SH = new Factor(CELL_LINE, "SK-N-SH");
     private static final Factor SK_N_SH_RA = new Factor(CELL_LINE, "SK-N-SH_RA");
     private static final Factor hMSC_AT = new Factor(CELL_LINE, "hMSC-AT cell line");
-
 
     @Inject
     private BaselineAnalyticsSearchService subject;
@@ -204,22 +205,22 @@ public class BaselineAnalyticsSearchServiceIT {
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
-        assertThat(baselineProfilesList, hasSize(16));
-        assertThat(baselineProfilesList.getTotalResultCount(), is(16));
+        assertThat(baselineProfilesList, hasSize(13));
+        assertThat(baselineProfilesList.getTotalResultCount(), is(13));
 
         BaselineExperimentProfile baselineProfile = baselineProfilesList.get(0);
         assertThat(baselineProfile.getId(), is("E-GEOD-26284"));
         assertThat(baselineProfile.getName(), is("ENCODE cell lines - long polyA RNA, whole cell"));
         assertThat(baselineProfile.getFilterFactors(), is((FactorGroup) new FactorSet(new Factor("RNA", "long polyA RNA"), new Factor("CELLULAR_COMPONENT", "whole cell"))));
-        assertThat(baselineProfile.getConditions(), hasSize(6));
+        assertThat(baselineProfile.getConditions(), hasSize(31));
         assertThat(baselineProfile.getMinExpressionLevel(), is(7D));
         assertThat(baselineProfile.getMaxExpressionLevel(), is(7D));
         assertThat(baselineProfile.getKnownExpressionLevel(H1_hESC), is(7D));
 
         SortedSet<Factor> factors = result.getFactorsAcrossAllExperiments();
-        ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
-        ImmutableSortedSet<Factor> allFactors = builder.addAll(getEGeod26284CellLines()).build();
-        assertThat(factors, contains(allFactors.toArray()));
+        assertThat(factors, hasItems(getEGeod26284CellLines().toArray(new Factor[getEGeod26284CellLines().size()])));
+
+        assertThat(factors, hasSize(48));
     }
 
 }
