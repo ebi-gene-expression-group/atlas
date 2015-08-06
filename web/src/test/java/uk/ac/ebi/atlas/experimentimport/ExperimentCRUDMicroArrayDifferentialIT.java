@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,8 +32,13 @@ public class ExperimentCRUDMicroArrayDifferentialIT {
     @Inject
     private JdbcTemplate jdbcTemplate;
 
+    @Before
+    public void cleanUpBefore() {
+        deleteInactiveAnalytics();
+    }
+
     @After
-    public void cleanUp() {
+    public void cleanUpAfter() {
         deleteInactiveAnalytics();
     }
 

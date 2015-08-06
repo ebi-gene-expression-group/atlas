@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.experimentimport;
 
 import org.apache.log4j.Logger;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +38,12 @@ public class ExperimentCRUDBaselineIT {
     private JdbcTemplate jdbcTemplate;
 
     @Before
-    public void cleanUp() {
+    public void cleanUpBefore() {
+        deleteInactiveAnalytics();
+    }
+
+    @After
+    public void cleanUpAfter() {
         deleteInactiveAnalytics();
     }
 

@@ -2,6 +2,7 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,11 +32,15 @@ public class ExperimentCRUDRnaSeqDifferentialIT {
     @Inject
     private JdbcTemplate jdbcTemplate;
 
-    @After
-    public void cleanUp() {
+    @Before
+    public void cleanUpBefore() {
         deleteInactiveAnalytics();
     }
 
+    @After
+    public void cleanUpAfter() {
+        deleteInactiveAnalytics();
+    }
 
     @Test
     public void loadAndDeleteNewExperiment() throws IOException {
