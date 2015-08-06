@@ -24,8 +24,6 @@ import static org.hamcrest.core.Is.is;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class DifferentialAnalyticsSearchDaoIT {
 
-    public static final String SPECIES_HOMO_SAPIENS = "species:\"homo sapiens\"";
-
     @Inject
     private DifferentialAnalyticsSearchDao subject;
 
@@ -53,12 +51,10 @@ public class DifferentialAnalyticsSearchDaoIT {
         List<String> speciesJson = jsonCtx.read("$.facets.species.buckets[*].val");//   mus musculus
         List<String> experimentType = jsonCtx.read("$.facets.species.buckets[*].experimentType.buckets[*].val"); // rnaseq_mrna_differential
 
-        assertThat(count, is(41));
+        assertThat(count, is(78));
         assertThat(speciesJson, contains("mus musculus"));
         assertThat(experimentType, contains("rnaseq_mrna_differential"));
 
     }
-
-
 
 }

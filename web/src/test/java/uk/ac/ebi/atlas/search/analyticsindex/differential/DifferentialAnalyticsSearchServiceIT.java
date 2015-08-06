@@ -47,8 +47,8 @@ public class DifferentialAnalyticsSearchServiceIT extends TestCase {
 
         assertTrue(!json.isEmpty());
 
-        assertThat(json, is("[{\"geneCount\":41,\"organism\":\"mus musculus\",\"contrastId\":\"g1_g2\",\"comparison\":\"genotype:'expressing human TDP-43' vs 'non transgenic'\"," +
-                "\"experimentAccession\":\"E-GEOD-22351\",\"experimentName\":\"RNA-seq of mouse spinal cord expressing wild type human TDP-43\"},{\"geneCount\":28,\"organism\":\"mus musculus\"," +
-                "\"contrastId\":\"g1_g2\",\"comparison\":\"sex:'male' vs 'female'\",\"experimentAccession\":\"E-MTAB-698\",\"experimentName\":\"RNA-seq of vomeronasal tissue from adult male and female mice\"}]"));
+        assertThat(json, is("" +
+                "[{\"geneCount\":78,\"organism\":\"mus musculus\",\"contrastId\":\"g1_g2\",\"comparison\":\"genotype:'expressing human TDP-43' vs 'non transgenic'\",\"experimentAccession\":\"E-GEOD-22351\",\"experimentName\":\"RNA-seq of mouse spinal cord expressing wild type human TDP-43\"}," +
+                "{\"geneCount\":36,\"organism\":\"mus musculus\",\"contrastId\":\"g1_g2\",\"comparison\":\"sex:'male' vs 'female'\",\"experimentAccession\":\"E-MTAB-698\",\"experimentName\":\"RNA-seq of vomeronasal tissue from adult male and female mice\"}]"));
     }
 }

@@ -80,9 +80,32 @@ public class BaselineAnalyticsSearchServiceIT {
     private static final FactorGroup EMPTY_FACTOR_SET = new FactorSet();
     private static final FactorGroup ORGANISM_HOMO_SAPIENS = new FactorSet(new Factor("ORGANISM", "Homo sapiens"));
     private static final FactorGroup STAGE_ADULT = new FactorSet(new Factor("DEVELOPMENTAL_STAGE", "adult"));
+
     private static final String CELL_LINE = "CELL_LINE";
+
+    private static final Factor A549 = new Factor(CELL_LINE, "A549");
     private static final Factor AG445 = new Factor(CELL_LINE, "AG445");
+    private static final Factor BJ = new Factor(CELL_LINE, "BJ");
+    private static final Factor CD20_POSITIVE_B_CELL = new Factor(CELL_LINE, "CD20-positive B cell cell line");
+    private static final Factor CD34_POSITIVE_MOBILIZED_CELL = new Factor(CELL_LINE, "CD34-positive mobilized cell cell line");
+    private static final Factor GM12878 = new Factor(CELL_LINE, "GM12878");
     private static final Factor H1_hESC = new Factor(CELL_LINE, "H1-hESC");
+    private static final Factor HFDPC = new Factor(CELL_LINE, "HFDPC cell line");
+    private static final Factor HMEC = new Factor(CELL_LINE, "HMEC cell line");
+    private static final Factor HPC_PL = new Factor(CELL_LINE, "HPC-PL cell line");
+    private static final Factor HSMM = new Factor(CELL_LINE, "HSMM cell line");
+    private static final Factor HUVEC = new Factor(CELL_LINE, "HUVEC cell line");
+    private static final Factor HeLa_S3 = new Factor(CELL_LINE, "HeLa-S3");
+    private static final Factor HepG2 = new Factor(CELL_LINE, "HepG2");
+    private static final Factor IMR_90 = new Factor(CELL_LINE, "IMR-90");
+    private static final Factor K562 = new Factor(CELL_LINE, "K562");
+    private static final Factor MCF_7 = new Factor(CELL_LINE, "MCF-7");
+    private static final Factor NHEK = new Factor(CELL_LINE, "NHEK cell line");
+    private static final Factor NHLF = new Factor(CELL_LINE, "NHLF cell line");
+    private static final Factor SK_N_SH = new Factor(CELL_LINE, "SK-N-SH");
+    private static final Factor SK_N_SH_RA = new Factor(CELL_LINE, "SK-N-SH_RA");
+    private static final Factor hMSC_AT = new Factor(CELL_LINE, "hMSC-AT cell line");
+
 
     @Inject
     private BaselineAnalyticsSearchService subject;
@@ -148,29 +171,55 @@ public class BaselineAnalyticsSearchServiceIT {
         return builder.build();
     }
 
+    private static ImmutableSortedSet<Factor> getEGeod26284CellLines() {
+        ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
+        builder.add(A549);
+        builder.add(AG445);
+        builder.add(BJ);
+        builder.add(CD20_POSITIVE_B_CELL);
+        builder.add(CD34_POSITIVE_MOBILIZED_CELL);
+        builder.add(GM12878);
+        builder.add(H1_hESC);
+        builder.add(HFDPC);
+        builder.add(HMEC);
+        builder.add(HPC_PL);
+        builder.add(HSMM);
+        builder.add(HUVEC);
+        builder.add(HeLa_S3);
+        builder.add(HepG2);
+        builder.add(IMR_90);
+        builder.add(K562);
+        builder.add(MCF_7);
+        builder.add(NHEK);
+        builder.add(NHLF);
+        builder.add(SK_N_SH);
+        builder.add(SK_N_SH_RA);
+        builder.add(hMSC_AT);
+        return builder.build();
+    }
+
     @Test
     public void geneQuery_CellLine() {
         BaselineExperimentSearchResult result = subject.findExpressions(GeneQuery.create("blood"), "Homo sapiens", CELL_LINE);
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
-        assertThat(baselineProfilesList, hasSize(13));
-        assertThat(baselineProfilesList.getTotalResultCount(), is(13));
+        assertThat(baselineProfilesList, hasSize(16));
+        assertThat(baselineProfilesList.getTotalResultCount(), is(16));
 
         BaselineExperimentProfile baselineProfile = baselineProfilesList.get(0);
         assertThat(baselineProfile.getId(), is("E-GEOD-26284"));
         assertThat(baselineProfile.getName(), is("ENCODE cell lines - long polyA RNA, whole cell"));
         assertThat(baselineProfile.getFilterFactors(), is((FactorGroup) new FactorSet(new Factor("RNA", "long polyA RNA"), new Factor("CELLULAR_COMPONENT", "whole cell"))));
-        assertThat(baselineProfile.getConditions(), hasSize(32));
+        assertThat(baselineProfile.getConditions(), hasSize(6));
         assertThat(baselineProfile.getMinExpressionLevel(), is(7D));
         assertThat(baselineProfile.getMaxExpressionLevel(), is(7D));
         assertThat(baselineProfile.getKnownExpressionLevel(H1_hESC), is(7D));
 
         SortedSet<Factor> factors = result.getFactorsAcrossAllExperiments();
-        assertThat(factors, hasSize(49));
-//        ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
-//        ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab1733Tissues()).build();
-//        assertThat(factors, contains(allFactors.toArray()));
+        ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
+        ImmutableSortedSet<Factor> allFactors = builder.addAll(getEGeod26284CellLines()).build();
+        assertThat(factors, contains(allFactors.toArray()));
     }
 
 }
