@@ -209,7 +209,7 @@ th.gxaHeatmapTableDesignElement {
 .gxaStickyTableWrap .gxaStickyTableHeader,
 .gxaStickyTableWrap .gxaStickyTableColumn,
 .gxaStickyTableWrap .gxaStickyTableIntersect {
-    opacity: 0;
+    visibility: hidden;
     position: fixed;
     z-index: 40;
 }
@@ -235,12 +235,11 @@ th.gxaHeatmapTableDesignElement {
 }
 
 .gxaHeatmapCountAndLegend {
-    z-index: 45;
     background-color: white;
 }
 
-.sticky-active {
-    z-index: 45;
+.wrapper-sticky {
+    z-index: 25;
 }
 
 /* To hide sticky column and intersect when screen gets too narrow */

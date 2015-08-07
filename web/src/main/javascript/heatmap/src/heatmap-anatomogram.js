@@ -11,8 +11,8 @@ require('../lib/jquery.xdomainrequest.js');
 //*------------------------------------------------------------------*
 
 var heatmapModule = require('./heatmap.jsx');
-var HeatmapContainer = require('./heatmapContainer.jsx');
-var anatomogramModule = require('./anatomogramModule.js');
+var HeatmapContainer = require('./heatmap-container.jsx');
+var anatomogramModule = require('./anatomogram-module.js');
 
 //*------------------------------------------------------------------*
 

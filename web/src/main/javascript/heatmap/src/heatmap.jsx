@@ -22,10 +22,10 @@ var modernizr = require('../lib/modernizr.3.0.0-alpha3.js');  // Leaks Modernizr
 
 var HeatmapBaselineCellVariance = require('heatmap-baseline-cell-variance');
 
-var genePropertiesTooltipModule = require('./genePropertiesTooltipModule.js');
-var factorTooltipModule = require('./factorTooltipModule.js');
-var contrastTooltipModule = require('./contrastTooltipModule.js');
-var helpTooltipsModule = require('./helpTooltipsModule.js');
+var genePropertiesTooltipModule = require('./gene-properties-tooltip-module.js');
+var factorTooltipModule = require('./factor-tooltip-module.js');
+var contrastTooltipModule = require('./contrast-tooltip-module.js');
+var helpTooltipsModule = require('./help-tooltips-module.js');
 
 require('../css/table-grid.css');
 require('../css/jquery-ui.min.css');
@@ -197,18 +197,18 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                         $w.scrollTop() + $countAndLegend.outerHeight() < $t.offset().top + $t.outerHeight() - allowance) {
                         // When top of viewport is in the table itself
                         $stickyHead.add($stickyInsct).css({
-                            opacity: 1,
+                            visibility: "visible",
                             top: $countAndLegend.outerHeight()
                         });
                     } else if ($w.scrollTop() + $countAndLegend.outerHeight() > $t.offset().top + $t.outerHeight() - allowance) {
                         $stickyHead.add($stickyInsct).css({
-                            opacity: 1,
+                            visibility: "visible",
                             top: $t.offset().top + $t.outerHeight() - allowance - $w.scrollTop()
                         });
                     } else {
                         // When top of viewport is above or below table
                         $stickyHead.add($stickyInsct).css({
-                            opacity: 0,
+                            visibility: "hidden",
                             top: $stickyWrap.offset().top - $w.scrollTop()
                         });
                     }
@@ -217,12 +217,12 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                     if($stickyWrap.scrollLeft() > 0) {
                         // When left of wrapping parent is out of view
                         $stickyCol.css({
-                            opacity: 1,
+                            visibility: "visible",
                             "z-index": 40
                         });
                     } else {
                         $stickyCol.css({
-                            opacity: 0,
+                            visibility: "hidden",
                             "z-index": -5
                         });
                     }

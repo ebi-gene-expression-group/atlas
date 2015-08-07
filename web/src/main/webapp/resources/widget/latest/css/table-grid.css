@@ -93,14 +93,6 @@ th.gxaHorizontalHeaderCell {
     text-align: left !important;
 }
 
-tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell {
-    background-color: rgb(210, 233, 233) !important;
-}
-
-tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell:hover {
-    background-color: rgb(200, 220, 220) !important;
-}
-
 .gxaTableGrid th.gxaHighlight {
     background-color: #deebeb;
 }
@@ -181,71 +173,3 @@ tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomics
     width: 70px
 }
 
-th.gxaHeatmapTableDesignElement {
-    font-weight: normal;
-    text-align: left;
-    border: 1px solid #CDCDCD;
-}
-
-.gxaStickyTableWrap {
-    overflow-x: auto;
-    overflow-y: hidden;
-    position: relative;
-    width: 100%;
-}
-
-.gxaStickyTableWrap div[class^='gxaSticky'] {
-    overflow: hidden;
-}
-.gxaStickyTableWrap tfoot {
-    display: none;
-}
-.gxaStickyTableWrap div table {
-    margin: 0;
-    position: relative;
-    width: auto; /* Prevent table from stretching to full size */
-    border-collapse: collapse;
-}
-.gxaStickyTableWrap .gxaStickyTableHeader,
-.gxaStickyTableWrap .gxaStickyTableColumn,
-.gxaStickyTableWrap .gxaStickyTableIntersect {
-    opacity: 0;
-    position: fixed;
-    z-index: 40;
-}
-.gxaStickyTableWrap .gxaStickyTableHeader {
-    z-index: 50;
-    width: 100%; /* Force stretch */
-}
-.gxaStickyTableWrap .gxaStickyTableIntersect {
-    z-index: 60;
-}
-.gxaStickyTableWrap td,
-.gxaStickyTableWrap th {
-    box-sizing: border-box;
-}
-.gxaStickyTableWrap thead th {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-.gxaStickyEnabled {
-    margin: 0;
-    width: auto;
-}
-
-.gxaHeatmapCountAndLegend {
-    z-index: 45;
-    background-color: white;
-}
-
-.sticky-active {
-    z-index: 45;
-}
-
-/* To hide sticky column and intersect when screen gets too narrow */
-@media only screen and (max-width: 768px) {
-    .gxaStickyTableColumn, .gxaStickyTableIntersect {
-        display: none;
-    }
-}

@@ -4,11 +4,15 @@
 
 var $ = require('jquery');
 var jQuery = $;
+
+require('jquery-ui');
+require('../css/jquery-ui.min.css');
+
 var React = require('react');
 
 //*------------------------------------------------------------------*
 
-var ContrastTooltip = require('./contrastTooltip.jsx');
+var ContrastTooltip = require('./contrast-tooltip.jsx');
 require('../css/atlas.css');
 require('../css/heatmap-and-anatomogram.css');
 
@@ -18,10 +22,13 @@ function initTooltip(contextRoot, accessKey, elements) {
 
     $(elements).attr("title", "").tooltip({
 
-        hide:false,
-        show:false,
+        hide: true,
+
+        show: true,
+
         tooltipClass:"gxaHelpTooltip gxaPvalueTooltipStyling",
-        content:function (callback) {
+
+        content: function (callback) {
 
             //TODO: get this via parameter instead of from the DOM
             var experimentAccession = $(this).attr("data-experiment-accession"),
@@ -56,10 +63,10 @@ function initTooltip(contextRoot, accessKey, elements) {
                     callback(html);
                 }
             }).fail(function (data) {
-                    //"Sorry but there was an error: " + xhr.status + " " + xhr.statusText
-                    console.log("ERROR:  " + data);
-                    callback("ERROR: " + data);
-                });
+                //"Sorry but there was an error: " + xhr.status + " " + xhr.statusText
+                console.log("ERROR:  " + data);
+                callback("ERROR: " + data);
+            });
         }
     });
 };

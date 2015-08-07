@@ -42,15 +42,18 @@ function drawHeatmapContainer (heatmapData, isMultiExperiment, isDifferential, i
             }
 
             // Load anatomogram after heatmap is rendered so wiring works
+            var $anatomogram = $("#anatomogram");
+            var $ensemblLauncher = $('#ensembl-launcher');
+
             if (anatomogramData) {
                 anatomogramModule.init(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile,
                     anatomogramData.brainAnatomogramFile, anatomogramData.contextRoot, heatmapConfig.species, heatmapConfig.isSingleGene);
             } else {
-                $("#anatomogram").remove();
+                $anatomogram.remove();
             }
 
-            $('#anatomogram').hcSticky({responsive: true});
-            $('#ensembl-launcher').hcSticky({responsive: true});
+            $anatomogram.hcSticky({responsive: true});
+            $ensemblLauncher.hcSticky({responsive: true});
         });
 
     })($, React, isMultiExperiment, isDifferential, isProteomicsBaseline, heatmapData.config, heatmapData.columnHeaders, heatmapData.profiles, heatmapData.geneSetProfiles, heatmapData.anatomogram);

@@ -14,7 +14,7 @@ require('../css/table-grid.css');
 
 module.exports = function () {
 
-    function setHilighting(path, color, opacity) {
+    function setHighlighting(path, color, opacity) {
         path.style.fill = color;
         path.style.fillOpacity = opacity;
     }
@@ -25,18 +25,18 @@ module.exports = function () {
 
     function togglePathColor(path, evtType, isSingleGene, svgPathId, color) {
         if(isSingleGene && evtType === undefined && color === "red") { //We highlight the whole anatomogram with paths expressed in the gene
-            setHilighting(path, "red", 0.7);
+            setHighlighting(path, "red", 0.7);
         } else if(isSingleGene && (evtType === 'mouseenter' || evtType === 'mouseover')) { //highlight in different colors when onmouseover
-            setHilighting(path, "#421C52", 0.8);
+            setHighlighting(path, "#421C52", 0.8);
         } else {
             if (evtType === undefined) {
-                setHilighting(path, "gray", 0.5);
+                setHighlighting(path, "gray", 0.5);
             } else if (!isSingleGene && (evtType === 'mouseenter' || evtType === 'mouseover')) {
-                setHilighting(path, "red", 0.7);
+                setHighlighting(path, "red", 0.7);
             } else if (isSingleGene && (isFactorExpressed(svgPathId) || isFactorExpressed(path.id) || isFactorExpressed(path.parentElement.id))) {
-                setHilighting(path, "red", 0.7);
+                setHighlighting(path, "red", 0.7);
             } else {
-                setHilighting(path, "gray", 0.5);
+                setHighlighting(path, "gray", 0.5);
             }
         }
     }
