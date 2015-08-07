@@ -14,35 +14,17 @@ require('../css/heatmap-and-anatomogram.css');
 
 //*------------------------------------------------------------------*
 
-function initTooltip(contextRoot, accessKey, elements) {
+function initTooltip(contextRoot, accessKey, element, experimentAccession, assayGroupId) {
 
-    $(elements).attr("title", "").tooltip({
+    $(element).attr("title", "").tooltip({
+
         hide:false,
+
         show:false,
 
-        open: function(){
-            // make sure all other tooltips are closed when opening a new one
-            $.each($(elements).parent("tr").find("th"), function (index, element) {
-                if($(this).attr("aria-describedby") != undefined) {
-                    if(!elements.isEqualNode(this)) {
-                        $(element).attr("title", "").tooltip("close");
-                    }
-                }
+        tooltipClass: "gxaHelpTooltip gxaPvalueTooltipStyling",
 
-            });
-        },
-
-        tooltipClass:"gxaHelpTooltip gxaPvalueTooltipStyling",
-        content:function (callback) {
-
-            //TODO: get this via a function parameter instead of the DOM
-            var experimentAccession = $(this).attr("data-experiment-accession"),
-                assayGroupId = $(this).attr("data-assay-group-id");
-            if (experimentAccession === undefined) {
-                experimentAccession = $(this).find(":nth-child(1)").attr("data-experiment-accession");
-                assayGroupId = $(this).find(":nth-child(1)").attr("data-assay-group-id");
-            }
-
+        content: function (callback) {
             $.ajax({
                 url:contextRoot + "/rest/assayGroup-summary",
                 data:{
@@ -52,11 +34,19 @@ function initTooltip(contextRoot, accessKey, elements) {
                 },
                 type:"GET",
                 success:function (data) {
-                    var html = React.renderToString(FactorTooltip({properties: data.properties, replicates: data.replicates}));
+                    var html =
+                        React.renderToString(
+                            React.createElement(
+                                FactorTooltip,
+                                {
+                                    properties: data.properties,
+                                    replicates: data.replicates
+                                }
+                            )
+                        );
                     callback(html);
                 }
             }).fail(function (data) {
-                    //"Sorry but there was an error: " + xhr.status + " " + xhr.statusText
                     console.log("ERROR:  " + data);
                     callback("ERROR: " + data);
             });
@@ -66,7 +56,6 @@ function initTooltip(contextRoot, accessKey, elements) {
 
 //*------------------------------------------------------------------*
 
-exports.init =
-    function (contextRoot, accessKey, elements) {
-            initTooltip(contextRoot, accessKey, elements || ".factorNameCell");
-    };
+exports.init = function (contextRoot, accessKey, element, experimentAccession, assayGroupId) {
+    initTooltip(contextRoot, accessKey, element, experimentAccession, assayGroupId);
+};

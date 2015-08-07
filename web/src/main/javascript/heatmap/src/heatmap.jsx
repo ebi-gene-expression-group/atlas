@@ -466,6 +466,11 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
             onMouseLeave: function () {
                 this.setState({hover:false});
+                this._closeTooltip();
+            },
+
+            _closeTooltip: function() {
+                $(this.getDOMNode()).tooltip("close");
             },
 
             onClick: function () {
@@ -474,7 +479,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
             componentDidMount: function () {
                 if(!type.isMultiExperiment) {
-                    factorTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
+                    factorTooltipModule.init(contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
                 }
             },
 
@@ -486,7 +491,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 var factorName = csstransforms ? restrictLabelSize(this.props.factorName, 14) : this.props.factorName;
 
                 return (
-                    <th className={thClass} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined} rowSpan="2">
+                    <th className={thClass} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : this._closeTooltip} onClick={enableEnsemblLauncher ? this.onClick : undefined} rowSpan="2">
                         <div data-svg-path-id={this.props.svgPathId} data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className={divClass}>
                             {factorName}
                             {showSelectTextOnHover}
@@ -529,6 +534,11 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
             onMouseLeave: function () {
                 this.setState({hover:false});
+                this._closeTooltip();
+            },
+
+            _closeTooltip: function() {
+                $(this.getDOMNode()).tooltip("close");
             },
 
             onClick: function () {
@@ -536,18 +546,17 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             },
 
             componentDidMount: function () {
-                contrastTooltipModule.init(contextRoot, accessKey, this.getDOMNode());
+                contrastTooltipModule.init(contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
 
                 if (this.showPlotsButton()) {
                     this.renderToolBarContent(this.refs.plotsToolBarContent.getDOMNode());
 
                     var plotsButton = this.refs.plotsButton.getDOMNode();
-                    $(plotsButton).tooltip().button();
+                    $(plotsButton).tooltip({hide: false, show: false}).button();
                     $(plotsButton).toolbar({
                         content: this.refs.plotsToolBarContent.getDOMNode(),
                         position: 'right'
                     });
-
                 }
             },
 
@@ -562,10 +571,10 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
                 var content =
                     <div>
-                        {this.props.showMaPlotButton ? <a href={maPlotURL} id="maButtonID" title='Click to view MA plot for the contrast across all genes' onClick={this.clickButton}><img src={contextRoot + '/resources/images/maplot-button.png'} /></a> : null }
-                        {this.props.showGseaGoPlot ? <a href={gseaGoPlotUrl} id="goButtonID" title='Click to view GO terms enrichment analysis plot' onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-go-button.png'} /></a> : null }
-                        {this.props.showGseaInterproPlot ? <a href={gseaInterproPlotUrl} id="interproButtonID" title='Click to view Interpro domains enrichment analysis plot' onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-interpro-button.png'} /></a> : null }
-                        {this.props.showGseaReactomePlot ? <a href={gseaReactomePlotUrl} id="reactomeButtonID" title='Click to view Reactome pathways enrichment analysis plot' onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-reactome-button.png'} /></a> : null }
+                        {this.props.showMaPlotButton ? <a href={maPlotURL} id="maButtonID" title="Click to view MA plot for the contrast across all genes" onClick={this.clickButton}><img src={contextRoot + '/resources/images/maplot-button.png'} /></a> : null }
+                        {this.props.showGseaGoPlot ? <a href={gseaGoPlotUrl} id="goButtonID" title="Click to view GO terms enrichment analysis plot" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-go-button.png'} /></a> : null }
+                        {this.props.showGseaInterproPlot ? <a href={gseaInterproPlotUrl} id="interproButtonID" title="Click to view Interpro domains enrichment analysis plot" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-interpro-button.png'} /></a> : null }
+                        {this.props.showGseaReactomePlot ? <a href={gseaReactomePlotUrl} id="reactomeButtonID" title="Click to view Reactome pathways enrichment analysis plot" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-reactome-button.png'} /></a> : null }
                     </div>;
 
                 // the tool bar content will be copied around the DOM by the toolbar plugin
@@ -595,23 +604,23 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             },
 
             render: function () {
-                var thStyle = this.showPlotsButton() ? {"minWidth": "80px"} : {};
+                var thStyle = this.showPlotsButton() ? {minWidth: "80px"} : {};
                 var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
                 var plotsButton = (
-                    <div style={{"textAlign":"right", "paddingRight":"3px"}} >
-                        <a href="#" ref="plotsButton" onClick={this.clickButton} className='gxaButtonImage' title='Click to view plots'><img src={contextRoot + '/resources/images/yellow-chart-icon.png'}/></a>
+                    <div style={{textAlign: "right", paddingRight: "3px"}} >
+                        <a href="#" ref="plotsButton" onClick={this.clickButton} className="gxaButtonImage" title="Click to view plots"><img src={contextRoot + "/resources/images/yellow-chart-icon.png"}/></a>
                     </div>
                 );
 
-                var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", bottom:"-35px", color:"green"}}>  select</span> : null;
-                var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position:"absolute", width:"5px", right:"0px", left:"125px", bottom:"-35px", color:"green"}}> &#10004; </span>: null;
+                var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width: "10px", right: "0px", left: "95px", bottom: "-35px", color: "green"}}>  select</span> : null;
+                var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position: "absolute", width: "5px", right: "0px", left: "125px", bottom: "-35px", color: "green"}}> &#10004; </span>: null;
                 var thClass = "rotated_cell gxaHoverableHeader" + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (enableEnsemblLauncher ? " gxaSelectableHeader " : "");
                 var divClass = "rotate_text factor-header";
                 var contrastName = csstransforms ? restrictLabelSize(this.props.contrastName, 17) : this.props.contrastName;
 
                 return (
-                    <th className={thClass} rowSpan="2" style={thStyle} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
+                    <th className={thClass} rowSpan="2" style={thStyle} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : this._closeTooltip} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
                         <div data-contrast-id={this.props.contrastId} data-experiment-accession={this.props.experimentAccession} className={divClass} style={textStyle}>
                             {contrastName}
                             {showSelectTextOnHover}
@@ -841,7 +850,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         }
     });
 
-    var GeneProfileRow = (function (contextRoot, toolTipHighlightedWords, isExactMatch, enableGeneLinks, enableEnsemblLauncher, geneQuery) {
+    var GeneProfileRow = (function (contextRoot, isExactMatch, enableGeneLinks, enableEnsemblLauncher, geneQuery) {
 
         return React.createClass({
 
@@ -874,7 +883,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 return (
                     <span title={titleTooltip} style={{"display": "table-cell"}}>
                         <span className="icon icon-conceptual icon-c2" data-icon={type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}></span>
-                        <a ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
+                        <a ref="geneName" onMouseLeave={this._closeTooltip} id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
                     </span>
                 );
             },
@@ -888,7 +897,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 // don't render id for gene sets to prevent tooltips
                 return (
                     <span style={{"float": "left"}} ref="geneName" title="" id={this.props.showGeneSetProfiles ? '' : this.props.id}>{this.props.name}</span>
-                    );
+                );
             },
 
             displayLevelsRadio: function() {
@@ -955,11 +964,15 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
             componentDidMount: function () {
                 if(!type.isMultiExperiment) {
-                    genePropertiesTooltipModule.init(contextRoot, toolTipHighlightedWords, this.refs.geneName.getDOMNode());
+                    genePropertiesTooltipModule.init(contextRoot, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
                 }
+            },
+
+            _closeTooltip: function() {
+                $(this.refs.geneName.getDOMNode()).tooltip("close");
             }
         });
-    })(heatmapConfig.contextRoot, heatmapConfig.geneQuery, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
+    })(heatmapConfig.contextRoot, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
 
 
     // expects number in the format #E# and displays exponent in superscript

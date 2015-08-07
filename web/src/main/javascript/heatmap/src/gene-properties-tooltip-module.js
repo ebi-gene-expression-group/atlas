@@ -4,7 +4,6 @@
 
 var $ = require('jquery');
 var jQuery = $;
-require('jquery-highlight');
 
 //*------------------------------------------------------------------*
 
@@ -12,87 +11,45 @@ require('../css/atlas.css');
 
 //*------------------------------------------------------------------*
 
-function splitIntoWords(geneQuery){
-    var words = [];
-    geneQuery.replace(/"([^"]*)"|(\S+)/g,
-        function(m,g1,g2){
-            if (g1 || g2){
-                words.push(g1 || g2);
-            }
-        });
-    return words;
-}
+function initTooltip(contextRoot, element, identifier, geneName){
 
-function initTooltip(contextRoot, highlightedWords, element){
-    $(element).tooltip({
-        tooltipClass:"gxaGeneNameTooltip",
-        position: { my: "left+120 top", at: "left top", collision: "flipfit" },
-        hide:false,
-        show:false,
+    $(element).attr("title", "").tooltip({
 
-        open: function() {
-            var actual = $(this);
+        hide: false,
 
-            $('.ui-tooltip').each(function( index ) {
-                if(actual.attr("aria-describedby") != undefined) {
-                    if(actual.attr("aria-describedby") != $(this).attr("id")) {
-                        $(this).remove();
-                    }
-                }
+        show: false,
 
-            }, actual);
-        },
+        tooltipClass: "gxaGeneNameTooltip",
 
-        close: function() {
-            $('.ui-tooltip').each(function() {
-               $(this).remove();
-            });
-        },
-
-        content:function (callback) {
-
-            var identifier = $(this).attr("id"),
-                geneName = $.trim($(this).text());
-
+        content: function (callback) {
             if (identifier)  {
-
-                $("#genenametooltip-content").load(
-
-                    contextRoot + "/rest/genename-tooltip?geneName=" + geneName + "&identifier=" + identifier,
-
-                    function (response, status, xhr) {
-                        var tooltipContent;
-                        if (status === "error") {
-                            tooltipContent = "Sorry but there was an error: " + xhr.status + " " + xhr.statusText;
-                            callback(tooltipContent);
-                            return;
+                $.ajax({
+                    url: contextRoot + "/rest/genename-tooltip",
+                    data: {
+                        geneName: geneName,
+                        identifier: identifier
+                    },
+                    type:"GET",
+                    success: function (response) {
+                        if (!response) {
+                            callback("Missing properties for id = " + identifier + " in Solr.");
                         }
 
-                        if(highlightedWords){
-                            $(this).highlight(highlightedWords);
-                        }
-
-                        tooltipContent = $(this).html();
-                        if (!tooltipContent) {
-                            tooltipContent = "Missing properties for id = " + identifier + " in Solr.";
-                        }
-                        callback(tooltipContent);
+                        callback(response);
                     }
-                );
-
+                }).fail(function (data) {
+                    console.log("ERROR:  " + data);
+                    callback("ERROR: " + data);
+                });
             }
         }
+
     });
 
-    $('.ui-tooltip').each(function() {
-        $(this).remove();
-    });
 }
 
 //*------------------------------------------------------------------*
 
-exports.init =
-    function(contextRoot, highlightedWords, element) {
-            initTooltip(contextRoot, splitIntoWords(highlightedWords), element || ".genename");
-    };
-
+exports.init = function(contextRoot, element, identifier, geneName) {
+    initTooltip(contextRoot, element, identifier, geneName);
+};

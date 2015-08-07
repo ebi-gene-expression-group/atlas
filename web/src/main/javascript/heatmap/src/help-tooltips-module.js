@@ -72,12 +72,11 @@ function initTooltips(pageName, parentElementId) {
 
 //*------------------------------------------------------------------*
 
-exports.init =
-    function(pageName, contextRoot, parentElementId) {
-        _contextRoot = contextRoot;
-        initTooltips(pageName, parentElementId);
-    };
+exports.init = function(pageName, contextRoot, parentElementId) {
+    _contextRoot = contextRoot;
+    initTooltips(pageName, parentElementId);
+};
 
 exports.buildHelpAnchor = buildHelpAnchor;
 
-exports.getHelpFileName =  getHelpFileName;
+exports.getHelpFileName = getHelpFileName;

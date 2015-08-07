@@ -402,10 +402,6 @@ span.gxaGenePropertyLabel {
 
 }
 
-.gxaGeneNameTooltip {
-    text-align: justify;
-}
-
 /* TODO: Is this still needed and used in jquery.flot.pie.js ? */
 .pieLabel {
     font-size: 12px;

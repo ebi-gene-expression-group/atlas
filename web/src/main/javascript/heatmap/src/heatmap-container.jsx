@@ -144,9 +144,6 @@ var HeatmapContainer = React.createClass({
                         {/* TODO move into help tooltips module */}
                         <div id="help-placeholder" style={{display: "none"}}></div>
 
-                        {/* TODO move into gene tooltips module */}
-                        <div id="genenametooltip-content" style={{display: "none"}}></div>
-
                     </div>
 
                     { !this.props.heatmapClass ? <div id="disclaimer-message"><p><a href={geneURL}>See more expression data at Expression Atlas</a>

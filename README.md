@@ -1,4 +1,4 @@
-atlas
-=====
+Expression Atlas
+================
 
-Gene Expression Atlas
+http://www.ebi.ac.uk/gxa/
