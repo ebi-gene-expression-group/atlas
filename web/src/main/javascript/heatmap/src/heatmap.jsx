@@ -57,7 +57,15 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         return capitaliseFirstLetter(firstTwoWords(species).replace(" ", "_").toLowerCase());
     })(heatmapConfig.species);
 
-    var ensemblHost = "http://" + ((heatmapConfig.ensemblDB == "ensembl") ? "www" : heatmapConfig.ensemblDB) + ".ensembl.org/";
+    var ensemblHost = "http://";
+    if (heatmapConfig.ensemblDB === "plants") {
+        ensemblHost = ensemblHost + "plants.ensembl.org/";
+    } else if (heatmapConfig.ensemblDB === "fungi") {
+        ensemblHost = ensemblHost + "fungi.ensembl.org/";
+    } else {
+        ensemblHost = ensemblHost + "www.ensembl.org/";
+    }
+
     var grameneHost = "http://ensembl.gramene.org/";
 
     var Heatmap = React.createClass({
@@ -704,7 +712,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 this.updateButton();
             },
 
-            openEnsemblWindow: function (baseURL) {
+            _openEnsemblWindow: function (baseURL) {
                 if (!this.state.selectedColumnId || !this.state.selectedGeneId) {
                     return;
                 }
@@ -726,13 +734,13 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                         <div id="ensembl-launcher-box-ensembl">
                             <label>Ensembl Genome Browser</label>
                             <img src="/gxa/resources/images/ensembl.gif" style={{padding: "0px 5px"}}></img>
-                            <button ref="ensemblButton" onClick={this.openEnsemblWindow.bind(this, ensemblHost)}>Open</button>
+                            <button ref="ensemblButton" onClick={this._openEnsemblWindow.bind(this, ensemblHost)}>Open</button>
                         </div>
                         { heatmapConfig.ensemblDB == "plants" ?
                             <div id="ensembl-launcher-box-gramene" >
                                 <label>Gramene Genome Browser</label>
                                 <img src="/gxa/resources/images/gramene.png" style={{padding: "0px 5px"}}></img>
-                                <button ref="grameneButton" onClick={this.openEnsemblWindow.bind(this, grameneHost)}>Open</button>
+                                <button ref="grameneButton" onClick={this._openEnsemblWindow.bind(this, grameneHost)}>Open</button>
                             </div>
                             : null
                         }

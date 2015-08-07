@@ -20,6 +20,7 @@ function initTooltip(contextRoot, element, identifier, geneName){
         show: false,
 
         tooltipClass: "gxaGeneNameTooltip",
+        position: { my: "left+120 top", at: "left top", collision: "flipfit" },
 
         content: function (callback) {
             if (identifier)  {
