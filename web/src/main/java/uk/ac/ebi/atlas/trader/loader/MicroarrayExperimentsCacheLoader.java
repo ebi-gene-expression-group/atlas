@@ -73,9 +73,10 @@ public class MicroarrayExperimentsCacheLoader extends ExperimentsCacheLoader<Mic
         boolean hasLogFoldChangeFile = Files.exists(Paths.get(logFoldChangeFileLocation));
 
         String kingdom = speciesKingdomTrader.getKingdom(experimentDTO.getSpecies());
+        String ensemblDB = speciesKingdomTrader.getEnsemblDB(experimentDTO.getSpecies());
 
         return new MicroarrayExperiment(experimentDTO.getExperimentType(), experimentAccession, experimentDTO.getLastUpdate(),
-                                        contrasts, experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), kingdom, arrayDesignAccessions,
+                                        contrasts, experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), kingdom, ensemblDB, arrayDesignAccessions,
                                         hasLogFoldChangeFile, experimentDTO.getPubmedIds(), experimentDesign);
 
     }

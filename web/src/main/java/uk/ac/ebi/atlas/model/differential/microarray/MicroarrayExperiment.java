@@ -40,10 +40,10 @@ public class MicroarrayExperiment extends DifferentialExperiment {
 
     public MicroarrayExperiment(ExperimentType type, String accession, Date lastUpdate, Set<Contrast> contrasts,
                                 String description, boolean hasExtraInfoFile,
-                                Set<String> species, String kingdom, SortedSet<String> arrayDesignAccessions, boolean twoColour,
+                                Set<String> species, String kingdom, String ensemblDB, SortedSet<String> arrayDesignAccessions, boolean twoColour,
                                 Set<String> pubMedIds, ExperimentDesign experimentDesign) {
 
-        super(type, accession, lastUpdate, contrasts, description, hasExtraInfoFile, species, kingdom, pubMedIds, experimentDesign);
+        super(type, accession, lastUpdate, contrasts, description, hasExtraInfoFile, species, kingdom, ensemblDB, pubMedIds, experimentDesign);
         this.arrayDesignAccessions = arrayDesignAccessions;
 
         isTwoColour = twoColour;

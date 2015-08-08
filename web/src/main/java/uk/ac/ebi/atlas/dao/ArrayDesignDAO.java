@@ -36,14 +36,14 @@ import java.util.Map;
 
 @Named
 @Scope("singleton")
-public class ArrayDesignDao {
+public class ArrayDesignDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(ArrayDesignDao.class);
+    private static final Logger LOGGER = Logger.getLogger(ArrayDesignDAO.class);
 
     private JdbcTemplate jdbcTemplate;
 
     @Inject
-    public ArrayDesignDao(@Qualifier("dataSourceOracle") DataSource dataSource) {
+    public ArrayDesignDAO(@Qualifier("dataSourceOracle") DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

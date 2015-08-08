@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.trader;
 
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Scope;
-import uk.ac.ebi.atlas.dao.ArrayDesignDao;
+import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,8 +20,8 @@ public class ArrayDesignTrader {
     private Map<String, String> arrayDesignMap;
 
     @Inject
-    public ArrayDesignTrader(ArrayDesignDao arrayDesignDao) {
-        this.arrayDesignMap = arrayDesignDao.getArrayDesignMapNames();
+    public ArrayDesignTrader(ArrayDesignDAO arrayDesignDAO) {
+        this.arrayDesignMap = arrayDesignDAO.getArrayDesignMapNames();
     }
 
     public String getArrayDesignByName(String arrayDesignAccession) {

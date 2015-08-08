@@ -57,13 +57,15 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         return capitaliseFirstLetter(firstTwoWords(species).replace(" ", "_").toLowerCase());
     })(heatmapConfig.species);
 
-    var ensemblHost = "http://";
+    var ensemblHost = "";
     if (heatmapConfig.ensemblDB === "plants") {
-        ensemblHost = ensemblHost + "plants.ensembl.org/";
+        ensemblHost = "http://plants.ensembl.org/";
     } else if (heatmapConfig.ensemblDB === "fungi") {
-        ensemblHost = ensemblHost + "fungi.ensembl.org/";
-    } else {
-        ensemblHost = ensemblHost + "www.ensembl.org/";
+        ensemblHost = "http://fungi.ensembl.org/";
+    } else if (heatmapConfig.ensemblDB === "metazoa") {
+        ensemblHost = "http://metazoa.ensembl.org/";
+    } else if (heatmapConfig.ensemblDB === "ensembl") {
+        ensemblHost = "http://www.ensembl.org/";
     }
 
     var grameneHost = "http://ensembl.gramene.org/";

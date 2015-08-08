@@ -18,12 +18,12 @@ import static org.junit.Assert.assertThat;
 public class OrganismEnsemblDAOIT {
 
     @Inject
-    private OrganismEnsemblDAO subject;
+    private OrganismKingdomDAO subject;
 
 
     @Test
     public void getOrganismEnsemblNamesMap() throws Exception {
-        Map<String, String> organismEnsemblNames = subject.getEnsemblOrganismNamesMap();
+        Map<String, String> organismEnsemblNames = subject.getOrganismKingdomMap();
 
         assertThat(organismEnsemblNames.get("homo sapiens"), is("animals"));
         assertThat(organismEnsemblNames.get("mus musculus"), is("animals"));

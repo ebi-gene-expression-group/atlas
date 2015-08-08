@@ -41,7 +41,7 @@ import static org.hamcrest.Matchers.is;
 public class ArrayDesignDaoIT {
 
     @Inject
-    private ArrayDesignDao subject;
+    private ArrayDesignDAO subject;
 
     private static final String ARRAY_DESIGN = "A-AFFY-8";
 
