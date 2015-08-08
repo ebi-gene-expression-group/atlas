@@ -135,7 +135,7 @@ var experimentsPageModule = (function ($) {
             }
         } );
 
-        var $experimentsTable = $('#experiments-table');
+        var $experimentsTable = $("#experiments-table");
         //reset empty data message to avoid showing "Showing 0 to 0 of 0 entries"
         $experimentsTable.dataTable.defaults.oLanguage.sInfoEmpty = ' ';
 
@@ -191,11 +191,11 @@ var experimentsPageModule = (function ($) {
             }
         });
 
-        $experimentsTable("thead th").addClass("gxaHeaderCell gxaBT");
+        $experimentsTable.find("thead th").addClass("gxaHeaderCell gxaBT");
 
-        $experimentsTable("tfoot input").keyup(function () {
+        $experimentsTable.find("tfoot input").keyup(function () {
             /* Filter on the column (the index) of this element */
-            oTable.fnFilter(this.value, $experimentsTable("tfoot input").index(this));
+            oTable.fnFilter(this.value, $experimentsTable.find("tfoot input").index(this));
         });
 
         var $experimentsTableKingdomSelect = $("#gxaExperimentsTableKingdomSelect");
@@ -212,7 +212,7 @@ var experimentsPageModule = (function ($) {
         }
 
         $experimentsTableTypeSelect.change(function () {
-            var selected = $experimentsTableTypeSelect(":selected").val();
+            var selected = $experimentsTableTypeSelect.find(":selected").val();
 
             if(hiddenTypeSelected != selected) {
                 hiddenTypeSelected = selected;
@@ -229,7 +229,7 @@ var experimentsPageModule = (function ($) {
 
         function filterByExperimentType(value, selectionId) {
             /* same for drop down filter */
-            oTable.fnFilter(value, $experimentsTable("tfoot select").index(selectionId));
+            oTable.fnFilter(value, $experimentsTable.find("tfoot select").index(selectionId));
         }
 
         /*
@@ -241,7 +241,7 @@ var experimentsPageModule = (function ($) {
         }
 
         $experimentsTableKingdomSelect.change(function () {
-            var selected = $experimentsTableKingdomSelect(":selected").val();
+            var selected = $experimentsTableKingdomSelect.find(":selected").val();
 
             if(hiddenKingdomSelected != selected) {
                 hiddenKingdomSelected = selected;
@@ -272,21 +272,21 @@ var experimentsPageModule = (function ($) {
          * Support functions to provide a little bit of 'user friendliness' to the text boxes in
          * the footer
          */
-        $experimentsTable("tfoot input").each(function (i) {
+        $experimentsTable.find("tfoot input").each(function (i) {
             asInitVals[i] = this.value;
         });
 
-        $experimentsTable("tfoot input").focus(function () {
+        $experimentsTable.find("tfoot input").focus(function () {
             if (this.className === "search_init") {
                 this.className = "";
                 this.value = "";
             }
         });
 
-        $experimentsTable("tfoot input").blur(function () {
+        $experimentsTable.find("tfoot input").blur(function () {
             if (this.value === "") {
                 this.className = "search_init";
-                this.value = asInitVals[$experimentsTable("tfoot input").index(this)];
+                this.value = asInitVals[$experimentsTable.find("tfoot input").index(this)];
             }
         });
 
