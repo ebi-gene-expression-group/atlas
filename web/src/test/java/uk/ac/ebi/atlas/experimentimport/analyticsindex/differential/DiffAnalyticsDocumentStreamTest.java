@@ -31,6 +31,7 @@ public class DiffAnalyticsDocumentStreamTest {
     private static final String GENEID1 = "GENEID_1";
     public static final String SPECIES1 = "arabidopsis thaliana";
     public static final String PLANTS_KINGDOM = "plants";
+    public static final String PLANTS_ENSEMBLDB = "plants";
     private static final String SPECIES3 = "species3";
     public static final String PROTEIN_CODING = "protein_coding";
     public static final String CONDITION_SEARCH_1 = "condition1";
@@ -55,6 +56,7 @@ public class DiffAnalyticsDocumentStreamTest {
         Map<String, Integer> numReplicatesByContrastId = ImmutableMap.of(CONTRAST1, 3, CONTRAST2, 3, CONTRAST3, 3);
         when(identifierSearchTermsDao.fetchSearchTerms(Matchers.<String>any())).thenReturn(ImmutableSet.of(PROTEIN_CODING));
         when(speciesKingdomTraderMock.getKingdom(anyString())).thenReturn(PLANTS_KINGDOM);
+        when(speciesKingdomTraderMock.getEnsemblDB(anyString())).thenReturn(PLANTS_ENSEMBLDB);
 
         double pValue = 1.0;
         double foldChange = -0.0979807106778182;
