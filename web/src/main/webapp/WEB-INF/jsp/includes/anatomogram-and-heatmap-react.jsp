@@ -31,8 +31,6 @@
 
 <%-- TODO: replace this file with heatmapContainer.jsx (which duplicates this page)dd  --%>
 <c:if test="${not empty jsonProfiles}">
-    <%@ include file="anatomogram.jsp" %>
-
     <div id="heatmap-anatomogram" class="gxaHeatmapAnatomogramRow">
 
         <div id="anatomogram" class="gxaDoubleClickNoSelection gxaAside">
