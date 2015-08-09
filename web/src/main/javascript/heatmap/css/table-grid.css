@@ -243,7 +243,7 @@ th.gxaHeatmapTableDesignElement {
 }
 
 .wrapper-sticky {
-    z-index: 25;
+    z-index: 45;
 }
 
 /* To hide sticky column and intersect when screen gets too narrow */
