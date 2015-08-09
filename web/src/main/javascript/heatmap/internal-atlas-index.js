@@ -11,6 +11,7 @@ require('./lib/jquery.hc-sticky.js');
 //*------------------------------------------------------------------*
 
 var heatmapBuild = require('./src/heatmap.jsx');
+var anatomogramModule = require('./src/anatomogram-module.js');
 
 //*------------------------------------------------------------------*
 
@@ -46,7 +47,7 @@ function drawHeatmapContainer (heatmapData, isMultiExperiment, isDifferential, i
             var $ensemblLauncher = $('#ensembl-launcher');
 
             if (anatomogramData) {
-                anatomogramModule.init(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile,
+                anatomogramModule(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile,
                     anatomogramData.brainAnatomogramFile, anatomogramData.contextRoot, heatmapConfig.species, heatmapConfig.isSingleGene);
             } else {
                 $anatomogram.remove();

@@ -146,7 +146,7 @@ var factorsExpressed = [];
 
 function highlightExpressedOrganismsPartsOnly(svg, isSingleGene) {
 
-    var geneExpressions = $("#heatmap-table").find("tbody tr td").parent("tr").find('div[data-svg-path-id!=‘’]');
+    var geneExpressions = $(".gxaStickyTableWrap").find("tbody tr td").parent("tr").find('div[data-svg-path-id!=‘’]');
 
     var factorValues = geneExpressions.map(function () {
         if( $(this).find("span").text() != "NA" ){
@@ -197,26 +197,24 @@ function init(allSvgPathIds, fileNameMale, fileNameFemale, fileNameBrain, contex
     var svg = loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
 
     //hover on gene name, to highlight all organism parts involved on a single gene profile
-    $("#heatmap-table tbody > tr > th:first-child").add("").on("hover", function (evt) { //hover on cells of the first table column
-        var geneExpressions = $(this).parent("tr").find("div[data-svg-path-id!='']");
+    $("#heatmap-table").find("tbody > tr > th:first-child").hover(
+        function (evt) {
+            var geneExpressions = $(this).parent("tr").find("div[data-svg-path-id!='']");
 
-        var factorValues = geneExpressions.map(function () {
-            if( $(this).find("span").text() != "NA" ){
-                return $(this).attr('data-svg-path-id');
-            }
-        }).get();
+            var factorValues = geneExpressions.map(function () {
+                if ($(this).find("span").text() != "NA") {
+                    return $(this).attr('data-svg-path-id');
+                }
+            }).get();
 
-
-        //if(!isSingleGene) {  //if is not gene page then highlight
             $.each(factorValues, function () {
                 toggleOrganismPartColor(svg, isSingleGene, this, evt);
             });
-        //}
-
-    });
+        }
+    );
 
     //hover on a header or expression level cell to highlight related SVG organism part
-    $("#heatmap-table td,th").on("hover", function (evt) {
+    $(".gxaStickyTableWrap td,th").hover(function (evt) {
         var organismPart = $(this).find('div').attr("data-svg-path-id");
         if (organismPart !== undefined){ // && !isSingleGene) {  //if is not gene page then highlight
             toggleOrganismPartColor(svg, isSingleGene, organismPart, evt);
