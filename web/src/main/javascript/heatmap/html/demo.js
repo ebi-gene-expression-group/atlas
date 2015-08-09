@@ -2,4 +2,4 @@
 
 //*------------------------------------------------------------------*
 
-module.exports = require('../src/atlasHeatmap-page.js');
+module.exports = require('../src/heatmap-anatomogram.js');

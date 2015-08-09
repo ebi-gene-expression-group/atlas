@@ -480,7 +480,9 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             },
 
             _closeTooltip: function() {
-                $(this.getDOMNode()).tooltip("close");
+                if(!type.isMultiExperiment) {
+                    $(this.getDOMNode()).tooltip("close");
+                }
             },
 
             onClick: function () {
@@ -496,7 +498,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             render: function () {
                 var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width:"10px", right:"0px", left:"95px", float:"right", color:"green"}}>  select</span> : null;
                 var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position: "absolute", width:"5px", right:"0px", left:"125px", float:"right", color:"green"}}> &#10004; </span>: null ;
-                var thClass = "rotated_cell gxaHoverableHeader" + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (enableEnsemblLauncher ? " gxaSelectableHeader" : "");
+                var thClass = "rotated_cell " + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (enableEnsemblLauncher ? " gxaSelectableHeader" : "");
                 var divClass = "rotate_text factor-header";
                 var factorName = csstransforms ? restrictLabelSize(this.props.factorName, 14) : this.props.factorName;
 
@@ -625,7 +627,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
                 var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{position: "absolute", width: "10px", right: "0px", left: "95px", bottom: "-35px", color: "green"}}>  select</span> : null;
                 var showTickWhenSelected = this.props.selected ? <span className="rotate_tick" style={{position: "absolute", width: "5px", right: "0px", left: "125px", bottom: "-35px", color: "green"}}> &#10004; </span>: null;
-                var thClass = "rotated_cell gxaHoverableHeader" + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (enableEnsemblLauncher ? " gxaSelectableHeader " : "");
+                var thClass = "rotated_cell " + (this.props.selected ? " gxaVerticalHeaderCell-selected" : " gxaVerticalHeaderCell") + (enableEnsemblLauncher ? " gxaSelectableHeader " : "");
                 var divClass = "rotate_text factor-header";
                 var contrastName = csstransforms ? restrictLabelSize(this.props.contrastName, 17) : this.props.contrastName;
 
@@ -748,7 +750,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                         }
                         <div style={{"fontSize": "x-small", height: "30px", padding: "9px 9px"}}>{this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)}</div>
                     </div>
-                    );
+                );
             }
         });
     })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, ensemblHost, ensemblSpecies, heatmapConfig.ensemblDB, heatmapConfig.columnType);
@@ -952,7 +954,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 var showSelectTextOnHover = this.state.hover && !this.props.selected ? <span style={{"display": "table-cell", "textAlign": "right", "paddingLeft": "10px", "color": "green", "visibility": "visible"}}>select</span> :
                                                                                        <span style={{"display": "table-cell", "textAlign": "right", "paddingLeft": "10px", "color": "green", "visibility": "hidden"}}>select</span>;
                 var showTickWhenSelected = this.props.selected ? <span style={{"float": "right", "color": "green"}}> &#10004; </span>: null ;
-                var className = (this.props.selected ? "gxaHorizontalHeaderCell-selected gxaHoverableHeader" : "gxaHorizontalHeaderCell gxaHoverableHeader") + (enableEnsemblLauncher ? " gxaSelectableHeader" : "");
+                var className = (this.props.selected ? "gxaHorizontalHeaderCell-selected" : "gxaHorizontalHeaderCell") + (enableEnsemblLauncher ? " gxaSelectableHeader" : "");
                 var rowClassName = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "gxaProteomicsExperiment" : "gxaTranscriptomicsExperiment" ) : "";
 
                 return (
@@ -979,7 +981,9 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             },
 
             _closeTooltip: function() {
-                $(this.refs.geneName.getDOMNode()).tooltip("close");
+                if(!type.isMultiExperiment) {
+                    $(this.refs.geneName.getDOMNode()).tooltip("close");
+                }
             }
         });
     })(heatmapConfig.contextRoot, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);

@@ -21,6 +21,10 @@ function initTooltip(contextRoot, element, identifier, geneName){
 
         tooltipClass: "gxaGeneNameTooltip",
 
+        close: function() {
+            $(".gxaGeneNameTooltip").remove();
+        },
+
         position: { my: "left+120 top", at: "left top", collision: "flipfit" },
 
         content: function (callback) {

@@ -32,7 +32,7 @@ function drawHeatmap (data, targetElement, heatmapClass, heatmapBuilder, heatmap
 
             // load anatomogram after heatmap is rendered so wiring works
             if (anatomogramData) {
-                anatomogramModule.init(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile,
+                anatomogramModule(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile,
                     anatomogramData.brainAnatomogramFile, anatomogramData.contextRoot, heatmapConfig.species, heatmapConfig.isSingleGene, heatmapKey);
             }
         });
@@ -71,7 +71,6 @@ module.exports = function(opt) {
             if (data.anatomogram) {
                 data.anatomogram.contextRoot = gxaBaseUrl;
             }
-
             if (data.experiment) {
                 data.experiment.contextRoot = gxaBaseUrl;
             }
@@ -84,6 +83,7 @@ module.exports = function(opt) {
         } else {
             drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildBaseline);
         }
+
     }).fail(function (jqXHR, textStatus, errorThrown) {
         //containerDiv.html("An error occurred while retrieving the data: " + jqXHR.status + " - " + jqXHR.statusText);
         if (textStatus === "parsererror") {

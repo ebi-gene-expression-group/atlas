@@ -72,7 +72,11 @@ th.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {
     background-color: rgb(237, 246, 246) !important;
 }
 
-th.gxaHoverableHeader:hover, .gxaHeaderHover {
+th.gxaVerticalHeaderCell:hover, .gxaHorizontalHeaderCell:hover {
+    background-color: #deebeb !important;
+}
+
+th.gxaHeaderHover {
     background-color: #deebeb !important;
 }
 

@@ -26,7 +26,7 @@ var FactorTooltip = React.createClass({
         }
 
         return (
-            <tr>
+            <tr key={property.propertyName}>
                 <td style={style}>{property.propertyName}</td>
                 <td style={style}>{property.testValue}</td>
             </tr>
