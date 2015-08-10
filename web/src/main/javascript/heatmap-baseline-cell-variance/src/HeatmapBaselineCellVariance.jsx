@@ -31,7 +31,14 @@ var HeatmapBaselineCellVariance = React.createClass({
             title:   { text: "" },
             legend:  { enabled: false },
             xAxis:   { title: { text: "Variance" } },
-            yAxis:   { title: { text: "Expression level" } },
+            yAxis:   {
+                title: { text: "Expression level" },
+                labels: {
+                    align: 'left',
+                    x: 0,
+                    y: -2
+                }
+            },
             plotOptions: {
                 boxplot: {
                     fillColor: "#F0F0E0",
