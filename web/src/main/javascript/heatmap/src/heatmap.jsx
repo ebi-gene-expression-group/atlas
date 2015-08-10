@@ -108,6 +108,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             if ($prefFormDisplayLevelsInputElement) {
                 $prefFormDisplayLevelsInputElement.val(newDisplayLevels);
             }
+            $(window).resize();
         },
 
         toggleRadioButton: function(newSelected) {
@@ -831,6 +832,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         handleChange: function(event) {
             this.props.toggleRadioButton(event.target.value);
             this.setState({value: this.props.selectedRadioButton});
+            $(window).resize();
         }
     });
 
@@ -977,13 +979,13 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
             componentDidMount: function () {
                 if(!type.isMultiExperiment) {
-                    genePropertiesTooltipModule.init(contextRoot, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
+                    genePropertiesTooltipModule.init(contextRoot, this.getDOMNode(), this.props.id, this.props.name);
                 }
             },
 
             _closeTooltip: function() {
                 if(!type.isMultiExperiment) {
-                    $(this.refs.geneName.getDOMNode()).tooltip("close");
+                    $(this.getDOMNode()).tooltip("close");
                 }
             }
         });
