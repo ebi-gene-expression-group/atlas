@@ -72,7 +72,7 @@ th.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {
     background-color: rgb(237, 246, 246) !important;
 }
 
-th.gxaHoverableHeader:hover, .gxaHeaderHover {
+th.gxaHoverableHeader:hover, th.gxaHeaderHover {
     background-color: #deebeb !important;
 }
 
@@ -239,7 +239,7 @@ th.gxaHeatmapTableDesignElement {
 }
 
 .wrapper-sticky {
-    z-index: 25;
+    z-index: 45;
 }
 
 /* To hide sticky column and intersect when screen gets too narrow */

@@ -21,6 +21,9 @@ public class AnalyticsDocument {
     String kingdom;
 
     @Field
+    String ensemblDB;
+
+    @Field
     String experimentAccession;
 
     //TODO: add baseline boolean
@@ -70,6 +73,10 @@ public class AnalyticsDocument {
 
     public String getKingdom() {
         return kingdom;
+    }
+
+    public String getEnsemblDB() {
+        return ensemblDB;
     }
 
     public String getExperimentAccession() {
@@ -135,6 +142,7 @@ public class AnalyticsDocument {
             checkNotNull(build.bioentityIdentifier, "missing bioentityIdentifier");
             checkNotNull(build.species, "missing species");
             checkNotNull(build.kingdom, "missing kingdom");
+            checkNotNull(build.ensemblDB, "missing ensemblDB");
             checkNotNull(build.experimentAccession, "missing experimentAccession");
             checkNotNull(build.experimentType, "missing experimentType");
             checkNotNull(build.identifierSearch, "missing identifierSearch");
@@ -167,6 +175,11 @@ public class AnalyticsDocument {
 
         public Builder kingdom(String kingdom) {
             build.kingdom = kingdom;
+            return this;
+        }
+
+        public Builder ensemblDB(String ensemblDB) {
+            build.ensemblDB = ensemblDB;
             return this;
         }
 
@@ -225,7 +238,6 @@ public class AnalyticsDocument {
             build.regulation = Regulation.valueOf(foldChange);
             return this;
         }
-
     }
 
 }

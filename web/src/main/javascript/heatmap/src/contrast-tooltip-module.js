@@ -26,7 +26,11 @@ function initTooltip(contextRoot, accessKey, element, experimentAccession, contr
 
         show: false,
 
-        tooltipClass:"gxaHelpTooltip gxaPvalueTooltipStyling",
+        tooltipClass: "gxaHelpTooltip gxaPvalueTooltipStyling gxaContrastTooltip",
+
+        close: function() {
+            $(".gxaContrastTooltip").remove();
+        },
 
         content: function (callback) {
             $.ajax({

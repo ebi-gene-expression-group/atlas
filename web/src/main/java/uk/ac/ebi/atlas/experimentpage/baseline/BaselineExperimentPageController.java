@@ -142,8 +142,11 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         model.addAttribute("species", species);
 
         //required for genome track browser in ensembl
-        String ensemblDB = speciesKingdomTrader.getKingdom(species);
+        String ensemblDB = speciesKingdomTrader.getEnsemblDB(species);
         model.addAttribute("ensemblDB", ensemblDB);
+
+        String kingdom = speciesKingdomTrader.getKingdom(species);
+        model.addAttribute("kingdom", kingdom);
 
         if(!filteredAssayGroupFactors.isEmpty()) {
             model.addAttribute("enableEnsemblLauncher", tracksUtil.hasBaselineTracksPath(experiment.getAccession(), filteredAssayGroupFactors.iterator().next().getAssayGroupId()));

@@ -13,7 +13,6 @@ import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchT
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
-import javax.inject.Inject;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -49,7 +48,8 @@ public class BaselineAnalyticsDocumentStreamTest {
     public static final String GENE_2_SEARCHTERM_2 = "gene2_searchterm_2";
     private static final String MUS_MUSCULUS = "mus musculus";
 
-    private static final String ENSEMBL_KINGDOM = "ensembl";
+    private static final String ANIMAL_KINGDOM = "animals";
+    private static final String ENSEMBL_ENSEMBLDB = "ensembl";
 
     @Mock
     private IdentifierSearchTermsDao identifierSearchTermsDao;
@@ -66,8 +66,11 @@ public class BaselineAnalyticsDocumentStreamTest {
         when(identifierSearchTermsDao.fetchSearchTerms(GENEID2)).thenReturn(ImmutableSet.of(GENE_2_SEARCHTERM_1, GENE_2_SEARCHTERM_2));
         when(identifierSearchTermsDao.fetchSearchTerms(UNKNOWN_GENEID)).thenReturn(Collections.<String>emptySet());
 
-        when(speciesKingdomTraderMock.getKingdom(HOMO_SAPIENS)).thenReturn(ENSEMBL_KINGDOM);
-        when(speciesKingdomTraderMock.getKingdom(MUS_MUSCULUS)).thenReturn(ENSEMBL_KINGDOM);
+        when(speciesKingdomTraderMock.getKingdom(HOMO_SAPIENS)).thenReturn(ANIMAL_KINGDOM);
+        when(speciesKingdomTraderMock.getKingdom(MUS_MUSCULUS)).thenReturn(ANIMAL_KINGDOM);
+
+        when(speciesKingdomTraderMock.getEnsemblDB(HOMO_SAPIENS)).thenReturn(ENSEMBL_ENSEMBLDB);
+        when(speciesKingdomTraderMock.getEnsemblDB(MUS_MUSCULUS)).thenReturn(ENSEMBL_ENSEMBLDB);
 
         ImmutableSetMultimap.Builder<String, String> conditionSearchBuilder = ImmutableSetMultimap.builder();
 
@@ -91,7 +94,7 @@ public class BaselineAnalyticsDocumentStreamTest {
 
         assertThat(analyticsDocument1.getBioentityIdentifier(), is(GENEID1));
         assertThat(analyticsDocument1.getSpecies(), is(HOMO_SAPIENS));
-        assertThat(analyticsDocument1.getKingdom(), is(ENSEMBL_KINGDOM));
+        assertThat(analyticsDocument1.getKingdom(), is(ANIMAL_KINGDOM));
         assertThat(analyticsDocument1.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(analyticsDocument1.getExperimentType(), is(EXPERIMENT_TYPE));
         assertThat(analyticsDocument1.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));
@@ -102,7 +105,7 @@ public class BaselineAnalyticsDocumentStreamTest {
 
         assertThat(analyticsDocument2.getBioentityIdentifier(), is(GENEID2));
         assertThat(analyticsDocument2.getSpecies(), is(MUS_MUSCULUS));
-        assertThat(analyticsDocument2.getKingdom(), is(ENSEMBL_KINGDOM));
+        assertThat(analyticsDocument2.getKingdom(), is(ANIMAL_KINGDOM));
         assertThat(analyticsDocument2.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(analyticsDocument2.getExperimentType(), is(EXPERIMENT_TYPE));
         assertThat(analyticsDocument2.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));
@@ -113,7 +116,7 @@ public class BaselineAnalyticsDocumentStreamTest {
 
         assertThat(analyticsDocument3.getBioentityIdentifier(), is(UNKNOWN_GENEID));
         assertThat(analyticsDocument3.getSpecies(), is(MUS_MUSCULUS));
-        assertThat(analyticsDocument3.getKingdom(), is(ENSEMBL_KINGDOM));
+        assertThat(analyticsDocument3.getKingdom(), is(ANIMAL_KINGDOM));
         assertThat(analyticsDocument3.getExperimentAccession(), is(EXPERIMENT_ACCESSION));
         assertThat(analyticsDocument3.getExperimentType(), is(EXPERIMENT_TYPE));
         assertThat(analyticsDocument3.getDefaultQueryFactorType(), is(DEFAULT_QUERY_FACTOR_TYPE));
@@ -122,9 +125,6 @@ public class BaselineAnalyticsDocumentStreamTest {
         assertThat(analyticsDocument3.getAssayGroupId(), is(ASSAYGROUPID2));
         assertThat(analyticsDocument3.getExpressionLevel(), is(3.3));
 
-
     }
-
-
 
 }

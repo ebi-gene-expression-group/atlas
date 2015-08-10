@@ -58,9 +58,10 @@ public class DifferentialExperimentsCacheLoader extends ExperimentsCacheLoader<D
         Set<Contrast> contrasts = experimentConfiguration.getContrasts();
 
         String kingdom = speciesKingdomTrader.getKingdom(experimentDTO.getSpecies());
+        String ensemblDB = speciesKingdomTrader.getEnsemblDB(experimentDTO.getSpecies());
 
         return new DifferentialExperiment(experimentAccession, experimentDTO.getLastUpdate(), contrasts,
-                experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), kingdom, experimentDTO.getPubmedIds(), experimentDesign);
+                experimentDescription, hasExtraInfoFile, experimentDTO.getSpecies(), kingdom, ensemblDB, experimentDTO.getPubmedIds(), experimentDesign);
 
     }
 }

@@ -12,29 +12,28 @@ import java.util.Map;
 
 @Named
 @Scope("singleton")
-public class OrganismEnsemblDAO {
+public class OrganismKingdomDAO {
 
-    private static final String SELECT_ENSEMBLDB =
-            "SELECT ORGANISM_ENSEMBLDB.ENSEMBLDB, BIOENTITY_ORGANISM.NAME FROM ORGANISM_ENSEMBLDB" +
-            " JOIN BIOENTITY_ORGANISM ON ORGANISM_ENSEMBLDB.ORGANISMID=BIOENTITY_ORGANISM.ORGANISMID";
+    private static final String SELECT_KINGDOM = "SELECT ORGANISM_KINGDOM.KINGDOM, BIOENTITY_ORGANISM.NAME FROM ORGANISM_KINGDOM" +
+                                                   " JOIN BIOENTITY_ORGANISM ON ORGANISM_KINGDOM.ORGANISMID=BIOENTITY_ORGANISM.ORGANISMID";
 
     private JdbcTemplate jdbcTemplate;
 
     @Inject
-    public OrganismEnsemblDAO(JdbcTemplate jdbcTemplate) {
+    public OrganismKingdomDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public ImmutableMap<String, String> getOrganismEnsemblMap() {
+    public ImmutableMap<String, String> getOrganismKingdomMap() {
 
         ImmutableMap.Builder<String, String> mapBuilder = new ImmutableMap.Builder<>();
 
-        List<Map<String, Object>> ensemblNames = jdbcTemplate.queryForList(SELECT_ENSEMBLDB);
+        List<Map<String, Object>> ensemblNames = jdbcTemplate.queryForList(SELECT_KINGDOM);
 
         for (Map<String, Object> it : ensemblNames) {
             String name = (String) it.get("NAME");
-            String ensemblDb = (String)it.get("ENSEMBLDB");
-            mapBuilder.put(name.toLowerCase(), ensemblDb);
+            String kingdom = (String)it.get("KINGDOM");
+            mapBuilder.put(name.toLowerCase(), kingdom);
         }
 
         return mapBuilder.build();

@@ -20,11 +20,11 @@
  * http://gxa.github.com/gxa
  */
 
+"use strict";
+
 var experimentsPageModule = (function ($) {
 
-    "use strict";
-
-    function replaceZeroAndLinkExpDesign(data, type, full) {
+    function replaceZeroAndLinkExpDesign(data, full) {
         if (data === 0) {
             return '<span title="' + data + '"/>';
         }
@@ -33,7 +33,7 @@ var experimentsPageModule = (function ($) {
             '</a></span>';
     }
 
-    function withLineBreaks(data, type, full) {
+    function withLineBreaks(data) {
         var i, html;
         html = '';
         for (i = 0; i < data.length; i += 1) {
@@ -42,7 +42,7 @@ var experimentsPageModule = (function ($) {
         return html;
     }
 
-    function formatExperimentType(data, type, full) {
+    function formatExperimentType(data) {
         if (data === 'RNASEQ_MRNA_BASELINE' || data === 'PROTEOMICS_BASELINE') {
             return '<img src="resources/images/allup2_transparent_bkg.png" title="baseline"/>';
         }
@@ -52,20 +52,20 @@ var experimentsPageModule = (function ($) {
         return data;
     }
 
-    function formatExperimentAccession(data, type, full) {
+    function formatExperimentAccession(data) {
         return '<a href="http://www.ebi.ac.uk/arrayexpress/experiments/' + data + '" title="View in Array Express">' +
             '<span class="icon icon-generic" data-icon="L"></span>' + '</a>';
     }
 
-    function formatLastUpdate(data, type, full) {
+    function formatLastUpdate(data) {
         return data;
     }
 
-    function formatExperimentDescription(data, type, full) {
+    function formatExperimentDescription(data, full) {
         return '<a href="experiments/' + full.experimentAccession + '" title="View in Expression Atlas">' + data + '</a>';
     }
 
-    function formatArrayDesign(data, type, full) {
+    function formatArrayDesign(data, full) {
         var result = "";
         $(data).each(function (index, elem) {
             result = result + '<a href="http://www.ebi.ac.uk/arrayexpress/arrays/' + elem + '" title="View in Array Express">' + full.arrayDesignNames[index] + '</a><br/>';
@@ -74,7 +74,7 @@ var experimentsPageModule = (function ($) {
         return result;
     }
 
-    var asInitVals = new Array();
+    var asInitVals = [];
 
     function init(experimentType, kingdom, organism) {
 
@@ -103,28 +103,24 @@ var experimentsPageModule = (function ($) {
         /* Sorting by date */
         $.extend($.fn.dataTableExt.oSort, {
             "date-eu-pre": function ( date ) {
-                var date = date.replace(" ", "");
+                date = date.replace(" ", "");
 
                 /*date a, format dd/mn/(yyyy) ; (year is optional)*/
                 var eu_date = date.split('-');
 
                 /*year (optional)*/
-                if (eu_date[2]) {
-                    var year = eu_date[2];
-                } else {
-                    var year = 0;
-                }
+                var year = eu_date[2] ? eu_date[2] : 0;
 
                 /*month*/
                 var month = eu_date[1];
                 if (month.length == 1) {
-                    month = 0+month;
+                    month = 0 + month;
                 }
 
                 /*day*/
                 var day = eu_date[0];
                 if (day.length == 1) {
-                    day = 0+day;
+                    day = 0 + day;
                 }
 
                 return (year + month + day) * 1;
@@ -139,49 +135,50 @@ var experimentsPageModule = (function ($) {
             }
         } );
 
+        var $experimentsTable = $("#experiments-table");
         //reset empty data message to avoid showing "Showing 0 to 0 of 0 entries"
-        $('#experiments-table').dataTable.defaults.oLanguage.sInfoEmpty = ' ';
+        $experimentsTable.dataTable.defaults.oLanguage.sInfoEmpty = ' ';
 
-        var oTable = $('#experiments-table').dataTable({
+        var oTable = $experimentsTable.dataTable({
             "bAutoWidth": false,
             "bProcessing":true,
             "sAjaxSource":"json/experiments",
             "aoColumns":[
                 { "sTitle":"Type", "mData":"experimentType", "sClass":"center gxaBB gxaBL", "sSortDataType":"dom-text",
-                    "mRender":function (data, type, full) {
-                        return formatExperimentType(data, type, full);
+                    "mRender": function (data, type, full) {
+                        return formatExperimentType(data);
                     } },
                 { "sTitle":"Loaded", "mData":"lastUpdate", "sClass":"center gxaBB nowrap", 'sType': 'date-eu',
-                    "mRender":function (data, type, full) {
-                        return formatLastUpdate(data, type, full);
+                    "mRender": function (data, type, full) {
+                        return formatLastUpdate(data);
                     } },
                 { "sTitle":"Experiment", "mData":"experimentDescription", "sClass":"center gxaBB padding",
-                    "mRender":function (data, type, full) {
-                        return formatExperimentDescription(data, type, full);
+                    "mRender": function (data, type, full) {
+                        return formatExperimentDescription(data, full);
                     } },
                 { "sTitle":"Assays", "mData":"numberOfAssays", "sClass":"center gxaBB", "sType":"title-numeric", "sWidth":"5%",
-                    "mRender":function (data, type, full) {
+                    "mRender": function (data, type, full) {
                         return replaceZeroAndLinkExpDesign(data, type, full);
                     } },
                 { "sTitle":"Comparisons", "mData":"numberOfContrasts", "sClass":"center gxaBB", "sType":"title-numeric",
-                    "mRender":function (data, type, full) {
-                        return replaceZeroAndLinkExpDesign(data, type, full);
+                    "mRender": function (data, type, full) {
+                        return replaceZeroAndLinkExpDesign(data, full);
                     } },
                 { "sTitle":"Organisms", "mData":"species", "sClass":"center gxaBB italic", "sWidth":"10%",
-                    "mRender":function (data, type, full) {
-                        return withLineBreaks(data, type, full);
+                    "mRender": function (data, type, full) {
+                        return withLineBreaks(data);
                     } },
                 { "sTitle":"Experimental Variables", "mData":"experimentalFactors", "sClass":"center gxaBB",
-                    "mRender":function (data, type, full) {
-                        return withLineBreaks(data, type, full);
+                    "mRender": function (data, type, full) {
+                        return withLineBreaks(data);
                     } },
                 { "sTitle":"Array Designs", "mData":"arrayDesigns", "sClass":"center gxaBB", "sWidth":"15%",
-                    "mRender":function (data, type, full) {
-                        return formatArrayDesign(data, type, full);
+                    "mRender": function (data, type, full) {
+                        return formatArrayDesign(data, full);
                     } },
                 { "sTitle":"ArrayExpress", "mData":"experimentAccession", "sClass":"center gxaBB gxaBR",
-                    "mRender":function (data, type, full) {
-                        return formatExperimentAccession(data, type, full);
+                    "mRender": function (data, type, full) {
+                        return formatExperimentAccession(data);
                     } },
                 { "sTitle":"Kingdom", "mData":"kingdom", "sClass":"center gxaBB italic", "bVisible": false }
             ],
@@ -194,60 +191,57 @@ var experimentsPageModule = (function ($) {
             }
         });
 
-        $("#experiments-table thead th").addClass("gxaHeaderCell gxaBT");
+        $experimentsTable.find("thead th").addClass("gxaHeaderCell gxaBT");
 
-        $("#experiments-table tfoot input").keyup(function () {
+        $experimentsTable.find("tfoot input").keyup(function () {
             /* Filter on the column (the index) of this element */
-            oTable.fnFilter(this.value, $("#experiments-table tfoot input").index(this));
+            oTable.fnFilter(this.value, $experimentsTable.find("tfoot input").index(this));
         });
 
-        $("#gxaExperimentsTableKingdomSelect").val(kingdom.toLowerCase());
-        $("#gxaExperimentsTableExperimentTypeSelect").val(experimentType.toLowerCase());
-
+        var $experimentsTableKingdomSelect = $("#gxaExperimentsTableKingdomSelect");
+        $experimentsTableKingdomSelect.val(kingdom.toLowerCase());
+        var $experimentsTableTypeSelect = $("#gxaExperimentsTableExperimentTypeSelect");
+        $experimentsTableTypeSelect.val(experimentType.toLowerCase());
 
         /*
          * Filter by experiment type
-         *
          */
-
         var hiddenTypeSelected = $("#hiddenTypeSelected").val();
         if(experimentType.toLowerCase()!= "") {
             hiddenTypeSelected = experimentType.toLowerCase();
         }
 
-        $("#gxaExperimentsTableExperimentTypeSelect").change(function () {
-            var selected = $("#gxaExperimentsTableExperimentTypeSelect :selected").val();
+        $experimentsTableTypeSelect.change(function () {
+            var selected = $experimentsTableTypeSelect.find(":selected").val();
 
             if(hiddenTypeSelected != selected) {
                 hiddenTypeSelected = selected;
                 $("#hiddenTypeSelected").val(selected);
-                $("#gxaExperimentsTableExperimentTypeSelect").val(hiddenTypeSelected);
+                $experimentsTableTypeSelect.val(hiddenTypeSelected);
             }
             filterByExperimentType(this.value, this);
         });
 
-        $("#gxaExperimentsTableExperimentTypeSelect").val(hiddenTypeSelected);
+        $experimentsTableTypeSelect.val(hiddenTypeSelected);
         if(hiddenTypeSelected != undefined) {
-            var select = $("#gxaExperimentsTableExperimentTypeSelect");
-            filterByExperimentType(hiddenTypeSelected, select);
+            filterByExperimentType(hiddenTypeSelected, $experimentsTableTypeSelect);
         }
 
         function filterByExperimentType(value, selectionId) {
             /* same for drop down filter */
-            oTable.fnFilter(value, $("#experiments-table tfoot select").index(selectionId));
+            oTable.fnFilter(value, $experimentsTable.find("tfoot select").index(selectionId));
         }
 
         /*
          * Filter by kingdom
-         *
          */
         var hiddenKingdomSelected = $("#hiddenKingdomSelected").val();
         if(kingdom.toLowerCase()!= "") {
             hiddenKingdomSelected = kingdom.toLowerCase();
         }
 
-        $("#gxaExperimentsTableKingdomSelect").change(function () {
-            var selected = $("#gxaExperimentsTableKingdomSelect :selected").val();
+        $experimentsTableKingdomSelect.change(function () {
+            var selected = $experimentsTableKingdomSelect.find(":selected").val();
 
             if(hiddenKingdomSelected != selected) {
                 hiddenKingdomSelected = selected;
@@ -255,19 +249,18 @@ var experimentsPageModule = (function ($) {
                 $("#gxaExperimentsTableKingdomSelect").val(hiddenKingdomSelected);
             }
             filterByKingdom();
-
         });
 
-        $("#gxaExperimentsTableKingdomSelect").val(hiddenKingdomSelected);
+        $experimentsTableKingdomSelect.val(hiddenKingdomSelected);
         if(hiddenKingdomSelected != undefined) {
             filterByKingdom();
         }
 
         function filterByKingdom() {
-            if (hiddenKingdomSelected == 'plants') {
+            if (hiddenKingdomSelected === 'plants') {
                 oTable.fnFilter('plants', 9);
             }
-            else if (hiddenKingdomSelected == 'animals-fungi') {
+            else if (hiddenKingdomSelected === 'animals-fungi') {
                 oTable.fnFilter('animals|fungi', 9, true);
             }
             else {
@@ -279,21 +272,21 @@ var experimentsPageModule = (function ($) {
          * Support functions to provide a little bit of 'user friendliness' to the text boxes in
          * the footer
          */
-        $("#experiments-table tfoot input").each(function (i) {
+        $experimentsTable.find("tfoot input").each(function (i) {
             asInitVals[i] = this.value;
         });
 
-        $("#experiments-table tfoot input").focus(function () {
+        $experimentsTable.find("tfoot input").focus(function () {
             if (this.className === "search_init") {
                 this.className = "";
                 this.value = "";
             }
         });
 
-        $("#experiments-table tfoot input").blur(function (i) {
+        $experimentsTable.find("tfoot input").blur(function () {
             if (this.value === "") {
                 this.className = "search_init";
-                this.value = asInitVals[$("#experiments-table tfoot input").index(this)];
+                this.value = asInitVals[$experimentsTable.find("tfoot input").index(this)];
             }
         });
 

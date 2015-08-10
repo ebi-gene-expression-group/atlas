@@ -43,6 +43,7 @@ public class BaselineExperimentBuilder {
 
     private Set<String> organisms;
     private String kingdom;
+    private String ensemblDB;
     private String description;
     private List<String> dataProviderURL;
     private List<String> dataProviderDescription;
@@ -63,6 +64,11 @@ public class BaselineExperimentBuilder {
 
     public BaselineExperimentBuilder ofKingdom(String kingdom) {
         this.kingdom = kingdom;
+        return this;
+    }
+
+    public BaselineExperimentBuilder ofEnsemblDB(String ensemblDB) {
+        this.ensemblDB = ensemblDB;
         return this;
     }
 
@@ -130,7 +136,7 @@ public class BaselineExperimentBuilder {
         validate();
 
         return new BaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
-                displayName, organisms, kingdom, speciesMapping, hasExtraInfoFile,
+                displayName, organisms, kingdom, ensemblDB, speciesMapping, hasExtraInfoFile,
                 pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
     }
 
@@ -138,7 +144,7 @@ public class BaselineExperimentBuilder {
         validate();
 
         return new ProteomicsBaselineExperiment(experimentAccession, lastUpdate, experimentalFactors, description,
-                displayName, organisms, kingdom, speciesMapping, hasExtraInfoFile,
+                displayName, organisms, kingdom, ensemblDB, speciesMapping, hasExtraInfoFile,
                 pubMedIds, experimentDesign, assayGroups, dataProviderURL, dataProviderDescription);
     }
 

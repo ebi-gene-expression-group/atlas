@@ -28,7 +28,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
-import uk.ac.ebi.atlas.dao.ArrayDesignDao;
+import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.utils.UniProtClient;
 
 import javax.inject.Inject;
@@ -43,7 +43,7 @@ public class BioEntityPropertyService {
 
     private BioEntityPropertyDao bioEntityPropertyDao;
     private UniProtClient uniProtClient;
-    private ArrayDesignDao arrayDesignDao;
+    private ArrayDesignDAO arrayDesignDAO;
     private final BioEntityPropertyLinkBuilder linkBuilder;
 
     private SortedSetMultimap<String, String> propertyValuesByType;
@@ -59,10 +59,10 @@ public class BioEntityPropertyService {
 
 
     @Inject
-    public BioEntityPropertyService(BioEntityPropertyDao bioEntityPropertyDao, UniProtClient uniProtClient, BioEntityPropertyLinkBuilder linkBuilder, ArrayDesignDao arrayDesignDao) {
+    public BioEntityPropertyService(BioEntityPropertyDao bioEntityPropertyDao, UniProtClient uniProtClient, BioEntityPropertyLinkBuilder linkBuilder, ArrayDesignDAO arrayDesignDAO) {
         this.bioEntityPropertyDao = bioEntityPropertyDao;
         this.uniProtClient = uniProtClient;
-        this.arrayDesignDao = arrayDesignDao;
+        this.arrayDesignDAO = arrayDesignDAO;
         this.linkBuilder = linkBuilder;
     }
 
@@ -200,7 +200,7 @@ public class BioEntityPropertyService {
     }
 
     private void addDesignElements() {
-        List<String> designElements = arrayDesignDao.getDesignElements(identifier);
+        List<String> designElements = arrayDesignDAO.getDesignElements(identifier);
         if (!designElements.isEmpty()) {
             propertyValuesByType.putAll("design_element", designElements);
         }

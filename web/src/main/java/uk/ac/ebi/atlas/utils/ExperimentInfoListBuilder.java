@@ -81,7 +81,7 @@ public class ExperimentInfoListBuilder {
         experimentInfos.addAll(extractBaselineExperiments());
         experimentInfos.addAll(extractProteomicsBaselineExperiments());
         experimentInfos.addAll(extractRnaSeqDiffExperiments());
-        experimentInfos.addAll(extractMicrorarryExperiments());
+        experimentInfos.addAll(extractMicroarrayExperiments());
 
         for (ExperimentInfo experimentInfo : experimentInfos) {
             publicExperimentTypesCache.getExperimentType(experimentInfo.getExperimentAccession());
@@ -90,7 +90,7 @@ public class ExperimentInfoListBuilder {
         return experimentInfos;
     }
 
-    protected List<ExperimentInfo> extractMicrorarryExperiments() {
+    protected List<ExperimentInfo> extractMicroarrayExperiments() {
 
         List<ExperimentInfo> experimentInfos = Lists.newArrayList();
 
@@ -168,7 +168,7 @@ public class ExperimentInfoListBuilder {
         experimentInfo.setExperimentDescription(experiment.getDescription());
         experimentInfo.setSpecies(experiment.getOrganisms());
         experimentInfo.setKingdom(experiment.getKingdom());
-        //ToDo: there are only types (RNASEQ_MRNA_BASELINE, RNASEQ_MRNA_DIFFERENTIAL, MICROARRAY_ANY)
+        experimentInfo.setEnsemblDB(experiment.getEnsemblDB());
         experimentInfo.setExperimentType(experiment.getType().getParent());
         experimentInfo.setExperimentalFactors(experimentDesign.getFactorHeaders());
 

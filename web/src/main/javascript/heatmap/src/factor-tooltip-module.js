@@ -22,7 +22,11 @@ function initTooltip(contextRoot, accessKey, element, experimentAccession, assay
 
         show:false,
 
-        tooltipClass: "gxaHelpTooltip gxaPvalueTooltipStyling",
+        tooltipClass: "gxaHelpTooltip gxaPvalueTooltipStyling gxaFactorTooltip",
+
+        close: function() {
+            $(".gxaFactorTooltip").remove();
+        },
 
         content: function (callback) {
             $.ajax({

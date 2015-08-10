@@ -77,6 +77,14 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
             }
         }
 
+        String ensemblDB = speciesKingdomTrader.getEnsemblDB(experimentDTO.getSpecies());
+        if (ensemblDB.isEmpty()) {
+            Iterator<String> speciesIterator = experimentDTO.getSpecies().iterator();
+            while (speciesIterator.hasNext() && ensemblDB.isEmpty()) {
+                ensemblDB = speciesKingdomTrader.getEnsemblDB(factorsConfig.getSpeciesMapping().get(speciesIterator.next()));
+            }
+        }
+
         String[] orderedAssayGroupIds;
         boolean orderCurated;
 
@@ -92,6 +100,7 @@ public abstract class BaselineExperimentsCacheLoader extends ExperimentsCacheLoa
 
         return createExperimentBuilder().forOrganisms(experimentDTO.getSpecies())
                 .ofKingdom(kingdom)
+                .ofEnsemblDB(ensemblDB)
                 .withAccession(experimentAccession)
                 .withLastUpdate(experimentDTO.getLastUpdate())
                 .withDescription(experimentDescription)

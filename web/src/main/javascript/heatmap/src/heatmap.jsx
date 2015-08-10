@@ -57,13 +57,15 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         return capitaliseFirstLetter(firstTwoWords(species).replace(" ", "_").toLowerCase());
     })(heatmapConfig.species);
 
-    var ensemblHost = "http://";
+    var ensemblHost = "";
     if (heatmapConfig.ensemblDB === "plants") {
-        ensemblHost = ensemblHost + "plants.ensembl.org/";
+        ensemblHost = "http://plants.ensembl.org/";
     } else if (heatmapConfig.ensemblDB === "fungi") {
-        ensemblHost = ensemblHost + "fungi.ensembl.org/";
-    } else {
-        ensemblHost = ensemblHost + "www.ensembl.org/";
+        ensemblHost = "http://fungi.ensembl.org/";
+    } else if (heatmapConfig.ensemblDB === "metazoa") {
+        ensemblHost = "http://metazoa.ensembl.org/";
+    } else if (heatmapConfig.ensemblDB === "ensembl") {
+        ensemblHost = "http://www.ensembl.org/";
     }
 
     var grameneHost = "http://ensembl.gramene.org/";
@@ -267,9 +269,9 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         render: function () {
             var paddingMargin = "15px";
 
-            // TODO id="heatmap-table" used to highlight the anatomogram in anatomogramModule.js ; this will need to change for the faceted search with multiple anatomograms
             return (
                 <div>
+
                     <div ref="countAndLegend" className="gxaHeatmapCountAndLegend" style={{"paddingBottom": paddingMargin, "position": "sticky"}}>
                         <div style={{display: "inline-block", 'verticalAlign': "top"}}>
                             {type.isMultiExperiment ? <span id="geneCount">Showing {this.state.profiles.rows.length} of {this.state.profiles.searchResultTotal} experiments found: </span> :
@@ -478,7 +480,9 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             },
 
             _closeTooltip: function() {
-                $(this.getDOMNode()).tooltip("close");
+                if(!type.isMultiExperiment) {
+                    $(this.getDOMNode()).tooltip("close");
+                }
             },
 
             onClick: function () {
@@ -746,7 +750,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                         }
                         <div style={{"fontSize": "x-small", height: "30px", padding: "9px 9px"}}>{this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)}</div>
                     </div>
-                    );
+                );
             }
         });
     })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, ensemblHost, ensemblSpecies, heatmapConfig.ensemblDB, heatmapConfig.columnType);
@@ -838,10 +842,11 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
     var HeatmapTableRows = React.createClass({
 
         profileRowType: function (profile)  {
+            var geneProfileKey = type.isDifferential ? profile.name + "-" + profile.designElement : profile.name;
             return (type.isMultiExperiment ?
-                <GeneProfileRow key={profile.name} id={profile.id} name={profile.name} experimentType={profile.experimentType} expressions={profile.expressions} serializedFilterFactors={profile.serializedFilterFactors} displayLevels={this.props.displayLevels} renderExpressionCells={this.props.renderExpressionCells}/>
+                <GeneProfileRow key={geneProfileKey} id={profile.id} name={profile.name} experimentType={profile.experimentType} expressions={profile.expressions} serializedFilterFactors={profile.serializedFilterFactors} displayLevels={this.props.displayLevels} renderExpressionCells={this.props.renderExpressionCells}/>
                 :
-                <GeneProfileRow key={profile.name + profile.designElement} selected={profile.id === this.props.selectedGeneId} selectGene={this.props.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles} selectedRadioButton={this.props.selectedRadioButton} hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} renderExpressionCells={this.props.renderExpressionCells}/>
+                <GeneProfileRow key={geneProfileKey} selected={profile.id === this.props.selectedGeneId} selectGene={this.props.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles} selectedRadioButton={this.props.selectedRadioButton} hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} renderExpressionCells={this.props.renderExpressionCells}/>
             );
         },
 
@@ -977,7 +982,9 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             },
 
             _closeTooltip: function() {
-                $(this.refs.geneName.getDOMNode()).tooltip("close");
+                if(!type.isMultiExperiment) {
+                    $(this.refs.geneName.getDOMNode()).tooltip("close");
+                }
             }
         });
     })(heatmapConfig.contextRoot, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);

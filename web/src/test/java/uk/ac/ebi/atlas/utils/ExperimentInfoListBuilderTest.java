@@ -155,7 +155,7 @@ public class ExperimentInfoListBuilderTest {
 
     @Test
     public void testExtractMicroarrayExperiments()  {
-        List<ExperimentInfo> experimentInfos = subject.extractMicrorarryExperiments();
+        List<ExperimentInfo> experimentInfos = subject.extractMicroarrayExperiments();
         assertThat(experimentInfos.size(), is(1));
         ExperimentInfo experimentInfo = experimentInfos.get(0);
         assertThat(experimentInfo.getNumberOfAssays(), is(2));

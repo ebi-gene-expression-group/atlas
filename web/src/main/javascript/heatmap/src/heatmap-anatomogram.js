@@ -25,14 +25,19 @@ function drawHeatmap (data, targetElement, heatmapClass, heatmapBuilder, heatmap
             // call this inside ready() so all scripts load first in IE8
             var Heatmap = heatmapBuilder(heatmapConfig).Heatmap;
 
-            React.render(HeatmapContainer({Heatmap: Heatmap, isWidget: true, heatmapClass: heatmapClass, experiment: experimentData, anatomogram: anatomogramData,
-                    columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig:heatmapConfig}),
+            React.render(
+                React.createElement(
+                    HeatmapContainer,
+                    {Heatmap: Heatmap, isWidget: true, heatmapClass: heatmapClass, experiment: experimentData,
+                     anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
+                     geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig: heatmapConfig}
+                ),
                 targetElement
             );
 
             // load anatomogram after heatmap is rendered so wiring works
             if (anatomogramData) {
-                anatomogramModule.init(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile,
+                anatomogramModule(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile,
                     anatomogramData.brainAnatomogramFile, anatomogramData.contextRoot, heatmapConfig.species, heatmapConfig.isSingleGene, heatmapKey);
             }
         });
@@ -71,7 +76,6 @@ module.exports = function(opt) {
             if (data.anatomogram) {
                 data.anatomogram.contextRoot = gxaBaseUrl;
             }
-
             if (data.experiment) {
                 data.experiment.contextRoot = gxaBaseUrl;
             }
@@ -84,6 +88,7 @@ module.exports = function(opt) {
         } else {
             drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildBaseline);
         }
+
     }).fail(function (jqXHR, textStatus, errorThrown) {
         //containerDiv.html("An error occurred while retrieving the data: " + jqXHR.status + " - " + jqXHR.statusText);
         if (textStatus === "parsererror") {

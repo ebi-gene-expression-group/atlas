@@ -77,9 +77,7 @@
 
     (function ($) {
         $(document).ready(function () {
-
             experimentsPageModule.init("${experimentType}", "${kingdom}", "${organism}");
-
         });
     })(jQuery);
 

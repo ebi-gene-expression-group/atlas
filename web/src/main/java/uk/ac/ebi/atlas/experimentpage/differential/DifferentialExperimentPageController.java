@@ -122,9 +122,11 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
                 downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
 
                 //required for genome track browser in ensembl
-                String ensemblDB = speciesKingdomTrader.getKingdom(requestContext.getFilteredBySpecies());
+                String ensemblDB = speciesKingdomTrader.getEnsemblDB(requestContext.getFilteredBySpecies());
                 model.addAttribute("ensemblDB", ensemblDB);
 
+                String kingdom = speciesKingdomTrader.getKingdom(requestContext.getFilteredBySpecies());
+                model.addAttribute("kingdom", kingdom);
 
             } catch (GenesNotFoundException e) {
                 result.addError(new ObjectError("requestPreferences", "No genes found matching query: '" + requestPreferences.getGeneQuery().description() + "'"));

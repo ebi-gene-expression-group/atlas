@@ -75,7 +75,7 @@ public class DifferentialExperimentContrastLinesTest {
         experimentDesign.putFactor(ASSAY4, FACTOR_HEADER, FACTOR_VALUE2, FACTOR_ONTOLOGY_TERM2);
 
         Set<Contrast> contrasts = Collections.singleton(contrast1);
-        DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", false, Collections.EMPTY_SET, "", Collections.EMPTY_SET, experimentDesign);
+        DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts, "description", false, Collections.EMPTY_SET, "", "", Collections.EMPTY_SET, experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 
@@ -113,7 +113,7 @@ public class DifferentialExperimentContrastLinesTest {
         //Adding the contrasts
         Set<Contrast> contrasts = Collections.singleton(contrast1);
         DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts,
-                "description", false, Collections.EMPTY_SET, "", Collections.EMPTY_SET, experimentDesign);
+                "description", false, Collections.EMPTY_SET, "", "", Collections.EMPTY_SET, experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 
@@ -150,7 +150,7 @@ public class DifferentialExperimentContrastLinesTest {
         //Adding the contrasts
         Set<Contrast> contrasts = Collections.singleton(contrast1);
         DifferentialExperiment experiment = new DifferentialExperiment(EXPERIMENT_ACCESSION, new Date(), contrasts,
-                "description", false, Collections.EMPTY_SET, "", Collections.EMPTY_SET, experimentDesign);
+                "description", false, Collections.EMPTY_SET, "", "", Collections.EMPTY_SET, experimentDesign);
 
         this.subject = new DifferentialExperimentContrastLines(experiment);
 

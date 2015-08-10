@@ -36,7 +36,7 @@ import org.mockito.Captor;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.ac.ebi.atlas.dao.ArrayDesignDao;
+import uk.ac.ebi.atlas.dao.ArrayDesignDAO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriter;
 import uk.ac.ebi.atlas.experimentimport.experimentdesign.ExperimentDesignFileWriterBuilder;
@@ -84,7 +84,7 @@ public class ExperimentMetadataCRUDTest {
     private CSVWriter csvWriterMock;
 
     @Mock
-    private ArrayDesignDao arrayDesignDaoMock;
+    private ArrayDesignDAO arrayDesignDAOMock;
 
     @Mock
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;

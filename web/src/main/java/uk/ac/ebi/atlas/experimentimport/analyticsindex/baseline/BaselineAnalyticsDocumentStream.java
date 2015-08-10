@@ -84,6 +84,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
                     .defaultQueryFactorType(defaultQueryFactorType)
                     .species(getEnsemblSpecies(assayGroupId))
                     .kingdom(speciesKingdomTrader.getKingdom(getEnsemblSpecies(assayGroupId)))
+                    .ensemblDB(speciesKingdomTrader.getEnsemblDB(getEnsemblSpecies(assayGroupId)))
                     .bioentityIdentifier(geneId)
                     .expressionLevel(baselineAnalytics.getExpressionLevel())
                     .identifierSearch(identifierSearch)
