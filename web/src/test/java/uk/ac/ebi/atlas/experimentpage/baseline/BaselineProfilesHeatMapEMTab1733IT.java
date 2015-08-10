@@ -99,46 +99,46 @@ public class BaselineProfilesHeatMapEMTab1733IT {
     @Test
     public void eMTAB1733_NotSpecific_GeneSets_Averaged_Expression() throws GenesNotFoundException {
         setNotSpecific();
-        setGeneQuery("REACT_1619");
+        setGeneQuery("R-HSA-73887");
 
         BaselineProfilesList profiles = subject.fetch(asGeneSet(baselineRequestContext));
 
         assertThat(profiles.getTotalResultCount(), is(1));
-        assertThat(profiles.extractGeneNames(), contains("REACT_1619"));
+        assertThat(profiles.extractGeneNames(), contains("R-HSA-73887"));
 
         BaselineProfile baselineProfile0 = profiles.get(0);
         assertThat(baselineProfile0.getId(), is(nullValue()));
-        assertThat(baselineProfile0.getName(), is("REACT_1619"));
+        assertThat(baselineProfile0.getName(), is("R-HSA-73887"));
         assertThat(baselineProfile0.getConditions(), hasSize(27));
-        assertThat(baselineProfile0.getMinExpressionLevel(), CoreMatchers.is(3.0D));
-        assertThat(baselineProfile0.getMaxExpressionLevel(), CoreMatchers.is(25D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(ADIPOSE), CoreMatchers.is(14D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(ADRENAL_GLAND), CoreMatchers.is(16D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(ANIMAL_OVARY), CoreMatchers.is(11D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(APPENDIX), CoreMatchers.is(23D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(BLADDER), CoreMatchers.is(23D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(BONE_MARROW), CoreMatchers.is(20D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(CEREBRAL_CORTEX), CoreMatchers.is(7D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(COLON), CoreMatchers.is(17D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(DUODENUM), CoreMatchers.is(19D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(ENDOMETRIUM), CoreMatchers.is(14D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(ESOPHAGUS), CoreMatchers.is(15D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(GALL_BLADDER), CoreMatchers.is(20D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(HEART), CoreMatchers.is(9D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(KIDNEY), CoreMatchers.is(15D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(LIVER), CoreMatchers.is(12D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(LUNG), CoreMatchers.is(25D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(LYMPH_NODE), CoreMatchers.is(20D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(PANCREAS), CoreMatchers.is(3D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(PLACENTA), CoreMatchers.is(18D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(PROSTATE), CoreMatchers.is(14D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(SALIVARY_GLAND), CoreMatchers.is(9D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(SKIN), CoreMatchers.is(13D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(SMALL_INTESTINE), CoreMatchers.is(19D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(SPLEEN), CoreMatchers.is(18D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(STOMACH), CoreMatchers.is(13D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(TESTIS), CoreMatchers.is(12D));
-        assertThat(baselineProfile0.getKnownExpressionLevel(THYROID), CoreMatchers.is(13D));
+        assertThat(baselineProfile0.getMinExpressionLevel(), CoreMatchers.is(3.0));
+        assertThat(baselineProfile0.getMaxExpressionLevel(), CoreMatchers.is(30.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(ADIPOSE), CoreMatchers.is(14.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(ADRENAL_GLAND), CoreMatchers.is(15.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(ANIMAL_OVARY), CoreMatchers.is(13.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(APPENDIX), CoreMatchers.is(27.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(BLADDER), CoreMatchers.is(24.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(BONE_MARROW), CoreMatchers.is(30.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(CEREBRAL_CORTEX), CoreMatchers.is(7.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(COLON), CoreMatchers.is(16.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(DUODENUM), CoreMatchers.is(19.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(ENDOMETRIUM), CoreMatchers.is(14.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(ESOPHAGUS), CoreMatchers.is(15.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(GALL_BLADDER), CoreMatchers.is(21.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(HEART), CoreMatchers.is(9.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(KIDNEY), CoreMatchers.is(14.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(LIVER), CoreMatchers.is(12.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(LUNG), CoreMatchers.is(25.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(LYMPH_NODE), CoreMatchers.is(21.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(PANCREAS), CoreMatchers.is(3.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(PLACENTA), CoreMatchers.is(18.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(PROSTATE), CoreMatchers.is(13.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(SALIVARY_GLAND), CoreMatchers.is(9.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(SKIN), CoreMatchers.is(13.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(SMALL_INTESTINE), CoreMatchers.is(19.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(SPLEEN), CoreMatchers.is(19.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(STOMACH), CoreMatchers.is(13.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(TESTIS), CoreMatchers.is(12.0));
+        assertThat(baselineProfile0.getKnownExpressionLevel(THYROID), CoreMatchers.is(12.0));
     }
 
     private BaselineProfileStreamOptions asGeneSet(BaselineRequestContext baselineRequestContext) throws GenesNotFoundException {

@@ -23,7 +23,7 @@
 package uk.ac.ebi.atlas.solr.admin.index;
 
 import com.google.common.collect.Lists;
-import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.After;
 import org.junit.Before;
@@ -51,7 +51,7 @@ import static org.mockito.Mockito.*;
 public class BioentityIndexTest {
 
     @Mock
-    private SolrServer solrServerMock;
+    private SolrClient solrClientMock;
 
     @Mock
     private BioentityPropertiesStream propertiesStreamMock;
@@ -68,7 +68,7 @@ public class BioentityIndexTest {
     private Path tsvFilePath2;
     private Path nonTsvFilePath;
 
-    private Path mirbasePath;
+
     private Path reactomePath;
     private Path reactomeFilePath1;
 
@@ -94,7 +94,7 @@ public class BioentityIndexTest {
         bioentityProperties = Lists.newArrayList(mock(BioentityProperty.class));
         given(propertiesStreamMock.next()).willReturn(bioentityProperties, bioentityProperties, null);
 
-        subject = new BioentityIndex(bioentityIndexMonitorMock, solrServerMock, streamBuilderMock);
+        subject = new BioentityIndex(bioentityIndexMonitorMock, solrClientMock, streamBuilderMock);
     }
 
     @After
@@ -113,13 +113,13 @@ public class BioentityIndexTest {
     public void shouldInvokeDeleteOnSolrServer() throws IOException, SolrServerException {
         subject.deleteAll();
 
-        verify(solrServerMock).deleteByQuery("*:*");
-        verify(solrServerMock).commit();
+        verify(solrClientMock).deleteByQuery("*:*");
+        verify(solrClientMock).commit();
     }
 
     @Test
     public void shouldThrowIllegalStateExceptionInCaseOfFailure() throws IOException, SolrServerException {
-        given(solrServerMock.deleteByQuery(anyString())).willThrow(IOException.class);
+        given(solrClientMock.deleteByQuery(anyString())).willThrow(IOException.class);
 
         subject.indexAll(Files.newDirectoryStream(tempDirectoryPath));
     }
@@ -156,14 +156,14 @@ public class BioentityIndexTest {
         //3 times on on tsvFilePath1 and 1 time only (because we are using the same propertiesStreamMock for both files) on tsvFilePath2
         verify(propertiesStreamMock, times(4)).next();
 
-        verify(solrServerMock, times(2)).addBeans(bioentityProperties);
+        verify(solrClientMock, times(2)).addBeans(bioentityProperties);
 
-        verify(solrServerMock).optimize();
+        verify(solrClientMock).optimize();
     }
 
     @Test(expected = IllegalStateException.class)
     public void deleteAllShouldThrowIllegalStateExceptionInCaseOfFailure() throws IOException, SolrServerException {
-        given(solrServerMock.deleteByQuery(anyString())).willThrow(IOException.class);
+        given(solrClientMock.deleteByQuery(anyString())).willThrow(IOException.class);
 
         subject.deleteAll();
     }

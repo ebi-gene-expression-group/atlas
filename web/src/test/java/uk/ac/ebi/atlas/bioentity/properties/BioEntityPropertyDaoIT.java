@@ -38,6 +38,7 @@ import javax.inject.Inject;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 
@@ -60,19 +61,19 @@ public class BioEntityPropertyDaoIT {
         // index.types.genepage=symbol,description,synonym,ortholog,goterm,interproterm,ensfamily_description,ensgene,entrezgene,uniprot,mgi_id,mgi_description,gene_biotype,design_element
 
         assertThat(properties.size(), greaterThan(50));
-        assertThat(properties.get("synonym").size(), is(2));
-        assertThat(properties.get("synonym"), hasItems("Dchil", "Osteoactivin"));
-        assertThat(properties.get("ortholog"), hasItems("ENSRNOG00000008816", "ENSGALG00000010949", "ENSBTAG00000000604", "ENSXETG00000007393", "ENSG00000136235"));
-        assertThat(properties.get("go"), hasItems("GO:0001649", "GO:0003674", "GO:0005178", "GO:0005575", "GO:0005622", "GO:0005623", "GO:0005737", "GO:0005886", "GO:0005887", "GO:0007155", "GO:0008150", "GO:0008201", "GO:0016023", "GO:0030282", "GO:0043167", "GO:0043226"));
-        assertThat(properties.get("interpro"), hasItems("IPR000601", "IPR022409"));
-        assertThat(properties.get("ensfamily_description"), hasItems("TRANSMEMBRANE GLYCOPROTEIN NMB PRECURSOR"));
-        assertThat(properties.get("ensgene"), hasItems("ENSMUSG00000029816"));
-        assertThat(properties.get("entrezgene"), hasItems("93695"));
-        assertThat(properties.get("uniprot"), hasItems("Q99P91", "Q3UE75"));
-        assertThat(properties.get("mgi_id"), hasItems("MGI:1934765"));
-        assertThat(properties.get("mgi_description"), hasItems("glycoprotein (transmembrane) nmb"));
-        assertThat(properties.get("gene_biotype"), hasItems("protein_coding"));
-        assertThat(properties.get("design_element"), hasItems("5548029", "108822_at", "5610568", "5182097", "5246058"));
+        assertThat(properties.get("synonym").size(), is(3));
+        assertThat(properties.get("synonym"), containsInAnyOrder("DC-HIL", "Dchil", "Osteoactivin"));
+        assertThat(properties.get("ortholog"), containsInAnyOrder("ENSMMUG00000012648", "ENSECAG00000000658", "ENSDARG00000062688", "ENSCAFG00000002753", "ENSRNOG00000008816", "ENSGALG00000010949", "ENSBTAG00000000604", "ENSXETG00000007393", "ENSG00000136235"));
+        assertThat(properties.get("go"), containsInAnyOrder("GO:0042470", "GO:0032720", "GO:0030659", "GO:0012505", "GO:0001649", "GO:0005178", "GO:0005887", "GO:0007155", "GO:0008201", "GO:0016023", "GO:0030282"));
+        assertThat(properties.get("interpro"), containsInAnyOrder("IPR000601", "IPR022409"));
+        assertThat(properties.get("ensfamily_description"), containsInAnyOrder("TRANSMEMBRANE GLYCOPROTEIN NMB PRECURSOR"));
+        assertThat(properties.get("ensgene"), containsInAnyOrder("ENSMUSG00000029816"));
+        assertThat(properties.get("entrezgene"), containsInAnyOrder("93695"));
+        assertThat(properties.get("uniprot"), containsInAnyOrder("Q99P91"));
+        assertThat(properties.get("mgi_id"), containsInAnyOrder("MGI:1934765"));
+        assertThat(properties.get("mgi_description"), containsInAnyOrder("glycoprotein (transmembrane) nmb"));
+        assertThat(properties.get("gene_biotype"), containsInAnyOrder("protein_coding"));
+        assertThat(properties.get("design_element"), containsInAnyOrder("A_52_P417819", "A_51_P438967", "5605047", "5526274", "5345790", "5192219", "5052678", "5044337", "5030507", "4992000", "4723852", "4701136", "4619897", "4444155", "4386581", "1448303_at", "10538187", "5548029", "108822_at", "5610568", "5182097", "5246058"));
     }
 
     @Test
@@ -80,7 +81,7 @@ public class BioEntityPropertyDaoIT {
         // given
         Multimap<String, String> properties = subject.fetchTooltipProperties("ENSMODG00000012671");
 
-        assertThat(properties.size(), is(34));
+        assertThat(properties.size(), is(35));
         assertThat(properties.get("synonym").size(), Matchers.is(5));
         assertThat(properties.get("synonym"), hasItems("Calmbp1", "MCPH5", "ASP"));
         assertThat(properties.get("goterm"), hasItems("oogenesis", "developmental growth", "positive regulation of neuroblast proliferation"));

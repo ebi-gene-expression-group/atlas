@@ -22,8 +22,6 @@
 
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.support;
 
-import com.google.common.base.Joiner;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -33,7 +31,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import javax.inject.Inject;
 import java.util.Set;
 
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -49,9 +47,9 @@ public class IdentifierSearchTermsDaoIT {
     public void fetchSearchTerms() {
         Set<String> properties = subject.fetchSearchTerms("ENSMODG00000012671");
 
-        assertThat(properties.size(), is(38));
+        assertThat(properties.size(), is(39));
         //System.out.println("\"" + Joiner.on("\", \"").join(properties) + "\"");
-        assertThat(properties, contains("oogenesis", "developmental growth", "microtubule", "negative regulation of asymmetric cell division", "ASP", "IQ motif, EF-hand binding site", "neuron migration", "Calmbp1", "FLJ10549", "Calponin homology domain", "forebrain neuroblast division", "calmodulin binding", "F6VH23", "cytoplasm", "mitotic spindle pole", "ASPM", "positive regulation of neuroblast proliferation", "spindle pole", "positive regulation of canonical Wnt signaling pathway", "neuronal stem cell maintenance", "P-loop containing nucleoside triphosphate hydrolase", "maintenance of centrosome location", "male gonad development", "protein_coding", "asp (abnormal spindle) homolog, microcephaly associated (Drosophila) [Source:HGNC Symbol;Acc:HGNC:19048]", "negative regulation of neuron differentiation", "protein binding", "MCPH5", "Calmodulin-regulated spectrin-associated protein, CH domain", "FLJ10517", "binding", "spermatogenesis", "brain development", "cerebral cortex development", "spindle assembly involved in meiosis", "midbody", "Armadillo-type fold", "meiotic spindle"));
+        assertThat(properties, containsInAnyOrder("regulation of meiotic cell cycle", "oogenesis", "developmental growth", "microtubule", "negative regulation of asymmetric cell division", "ASP", "IQ motif, EF-hand binding site", "neuron migration", "Calmbp1", "FLJ10549", "Calponin homology domain", "forebrain neuroblast division", "calmodulin binding", "F6VH23", "cytoplasm", "mitotic spindle pole", "ASPM", "positive regulation of neuroblast proliferation", "spindle pole", "positive regulation of canonical Wnt signaling pathway", "neuronal stem cell maintenance", "P-loop containing nucleoside triphosphate hydrolase", "maintenance of centrosome location", "male gonad development", "protein_coding", "asp (abnormal spindle) homolog, microcephaly associated (Drosophila) [Source:HGNC Symbol;Acc:HGNC:19048]", "negative regulation of neuron differentiation", "protein binding", "MCPH5", "Calmodulin-regulated spectrin-associated protein, CH domain", "FLJ10517", "binding", "spermatogenesis", "brain development", "cerebral cortex development", "spindle assembly involved in meiosis", "midbody", "Armadillo-type fold", "meiotic spindle"));
 
         //assertThat(properties.get("synonym").size(), is(5));
         //assertThat(properties.get("synonym"), hasItems("Calmbp1", "MCPH5", "ASP"));

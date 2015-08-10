@@ -123,7 +123,7 @@ public class DiffAnalyticsIndexerServiceIT {
         assertThat(document.getSpecies(), is("arabidopsis thaliana"));
         assertThat(document.getExperimentAccession(), is("E-GEOD-38400"));
         assertThat(document.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL));
-        assertThat(document.getIdentifierSearch(), is("AT3G18710 Zinc finger, RING/FYVE/PHD-type U box domain 257748_at protein ubiquitination plasmodesma ubiquitin-protein transferase activity protein_coding transmembrane receptor protein serine/threonine kinase binding PUB29 Armadillo-like helical binding plant U-box 29 [Source:TAIR;Acc:AT3G18710] Q9LSA6 Armadillo-type fold response to chitin ATPUB29 ubiquitin ligase complex ligase activity"));
+        assertThat(document.getIdentifierSearch(), is("AT3G18710 Zinc finger, RING/FYVE/PHD-type U box domain 257748_at U-box domain-containing protein 29 [Source:UniProtKB/Swiss-Prot;Acc:Q9LSA6] plasmodesma protein ubiquitination ubiquitin-protein transferase activity protein_coding transmembrane receptor protein serine/threonine kinase binding PUB29 Armadillo-like helical binding Q9LSA6 Armadillo-type fold response to chitin ligase activity"));
         assertThat(document.getConditionsSearch(), is("NCBITaxon#NCBITaxon_3702 Arabidopsis thaliana seedling Col-0 2 to 3 weeks wild type genotype idn2-1"));
         assertThat(document.getContrastId(), is("g1_g4"));
         assertThat(document.getFactors(), contains("genotype"));
@@ -146,7 +146,7 @@ public class DiffAnalyticsIndexerServiceIT {
 
         AnalyticsDocument document4 = documents.get(3);
         assertThat(document4.getBioentityIdentifier(), is("AT4G25880"));
-        assertThat(document4.getIdentifierSearch(), is("AT4G25880 chloroplast plastid RNA binding Pumilio RNA-binding repeat pumilio 6 [Source:TAIR;Acc:AT4G25880] protein_coding regulation of translation mRNA binding Q9C5E7 nucleotide biosynthetic process Armadillo-like helical cytoplasm binding APUM6 Armadillo-type fold 254045_at PUM6"));
+        assertThat(document4.getIdentifierSearch(), is("AT4G25880 regulation of translation mRNA binding Pumilio homolog 6, chloroplastic [Source:UniProtKB/Swiss-Prot;Acc:Q9C5E7] Q9C5E7 chloroplast RNA binding Pumilio RNA-binding repeat Armadillo-like helical binding Armadillo-type fold APUM6 protein_coding 254045_at"));
         assertThat(document4.getContrastId(), is("g1_g4"));
         assertThat(document4.getFoldChange(), is(0.0836848323581764));
 

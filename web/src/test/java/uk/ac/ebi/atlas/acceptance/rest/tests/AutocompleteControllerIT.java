@@ -67,7 +67,7 @@ public class AutocompleteControllerIT {
 
         List<TermSourceSuggestion> suggestionList = Arrays.asList(suggestions);
 
-        assertThat(suggestionList.get(0).term, is("ASPDH"));
+        assertThat(suggestionList.get(0).term, is("ASPN"));
         assertThat(suggestionList.get(0).source, is("symbol"));
         assertThat(suggestionList, hasSize(15));
 
@@ -84,9 +84,9 @@ public class AutocompleteControllerIT {
         TermSourceSuggestion[] suggestions = gson.fromJson(jsonString, TermSourceSuggestion[].class);
         List<TermSourceSuggestion> suggestionList = Arrays.asList(suggestions);
 
-        assertThat(suggestionList.get(11).term, is("aspn"));
+        assertThat(suggestionList.get(11).term, is("ASPG (2 of 3)"));
         assertThat(suggestionList.get(11).source, is("symbol"));
-        assertThat(suggestionList.get(14).term, is("ASPHD2"));
+        assertThat(suggestionList.get(14).term, is("asph"));
         assertThat(suggestionList.get(14).source, is("symbol"));
 
         assertThat(suggestionList, hasSize(15));
