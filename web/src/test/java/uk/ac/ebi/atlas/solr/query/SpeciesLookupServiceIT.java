@@ -26,13 +26,13 @@ public class SpeciesLookupServiceIT {
 
     @Test
     public void widget_lookupProtein() {
-        assertThat(speciesLookupService.fetchFirstSpeciesByField(null, "REACT_1619"), is("homo sapiens"));
+        assertThat(speciesLookupService.fetchFirstSpeciesByField(null, "R-HSA-73887"), is("homo sapiens"));
     }
 
     @Test
     public void reactome_singleSpeciesGeneSet() {
         // REACT pathway ids are always for a single species
-        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("REACT_1619");
+        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("R-HSA-73887");
         assertThat(result.isMultiSpecies(), is(false));
         assertThat(result.firstSpecies(), is("homo sapiens"));
     }
@@ -48,15 +48,8 @@ public class SpeciesLookupServiceIT {
     public void GO_multiSpeciesGeneSet() {
         SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("GO:0003674");
         assertThat(result.isMultiSpecies(), is(true));
-        assertThat(result.firstSpecies(), is("homo sapiens"));
+        assertThat(result.firstSpecies(), is("mus musculus"));
     }
-
-     @Test
-     public void PO_multiSpeciesGeneSet() {
-         SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("PO:0009005");
-         assertThat(result.isMultiSpecies(), is(true));
-         assertThat(result.firstSpecies(), is("arabidopsis thaliana"));
-     }
 
     @Test
     public void PO_singleSpeciesGeneSet() {
@@ -77,7 +70,7 @@ public class SpeciesLookupServiceIT {
 
     @Test
     public void plantReactomeId() {
-        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("REACT_1619");
+        SpeciesLookupService.Result result = speciesLookupService.fetchSpeciesForGeneSet("R-HSA-73887");
         assertThat(result.isMultiSpecies(), is(false));
         assertThat(result.firstSpecies(), is("homo sapiens"));
     }

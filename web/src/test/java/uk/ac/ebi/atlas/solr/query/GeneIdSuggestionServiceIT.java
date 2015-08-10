@@ -53,7 +53,7 @@ public class GeneIdSuggestionServiceIT {
         List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInName("mt-at", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(2));
-        assertThat(properties.get(0).term, is("MT-ATP6"));
+        assertThat(properties.get(0).term, is("MT-ATP8"));
         assertThat(properties.get(0).source, is("symbol"));
 
         properties = subject.fetchGeneIdSuggestionsInIdentifier("mt-at", HOMO_SAPIENS_SPECIES);
@@ -93,19 +93,19 @@ public class GeneIdSuggestionServiceIT {
         List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInIdentifier("GO:0016", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties.get(7).term, is("GO:0016568"));
+        assertThat(properties.get(7).term, is("GO:0016323"));
         assertThat(properties.get(7).source, is("go"));
-        assertThat(properties.get(5).term, is("GO:0016446"));
+        assertThat(properties.get(5).term, is("GO:0016324"));
         assertThat(properties.get(5).source, is("go"));
-        assertThat(properties.get(10).term, is("GO:0016888"));
+        assertThat(properties.get(10).term, is("GO:0016884"));
         assertThat(properties.get(10).source, is("go"));
 
         properties = subject.fetchGeneIdSuggestionsInIdentifier("GO:001602", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(5));
-        assertThat(properties.get(1).term, is("GO:0016020"));
+        assertThat(properties.get(1).term, is("GO:0016021"));
         assertThat(properties.get(1).source, is("go"));
-        assertThat(properties.get(0).term, is("GO:0016021"));
+        assertThat(properties.get(0).term, is("GO:0016020"));
         assertThat(properties.get(0).source, is("go"));
         assertThat(properties.get(4).term, is("GO:0016028"));
         assertThat(properties.get(4).source, is("go"));
@@ -117,17 +117,17 @@ public class GeneIdSuggestionServiceIT {
         List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties.get(0).term, is("Hs2Affx.1.318.S1_3p_at"));
+        assertThat(properties.get(0).term, is("Hs2Affx.1.51.S1_3p_at"));
         assertThat(properties.get(0).source, is("design_element"));
-        assertThat(properties.get(4).term, is("Hs2Affx.1.193.S1_3p_at"));
+        assertThat(properties.get(4).term, is("Hs2Affx.1.309.S1_3p_at"));
         assertThat(properties.get(4).source, is("design_element"));
-        assertThat(properties.get(14).term, is("Hs2Affx.1.207.S1_3p_at"));
+        assertThat(properties.get(14).term, is("Hs2Affx.1.6.S1_3p_s_at"));
         assertThat(properties.get(14).source, is("design_element"));
 
         properties = subject.fetchGeneIdSuggestionsInIdentifier("Hs2Affx.1.41", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(7));
-        assertThat(properties.get(0).term, is("Hs2Affx.1.419.S1_3p_at"));
+        assertThat(properties.get(0).term, is("Hs2Affx.1.411.S1_3p_at"));
         assertThat(properties.get(0).source, is("design_element"));
     }
 
@@ -151,9 +151,9 @@ public class GeneIdSuggestionServiceIT {
 
         properties = subject.fetchGeneIdSuggestionsInSynonym("mtatp", HOMO_SAPIENS_SPECIES);
         assertThat(properties.size(), is(2));
-        assertThat(properties.get(0).term, is("MTATP6"));
+        assertThat(properties.get(0).term, is("MTATP8"));
         assertThat(properties.get(0).source, is("synonym"));
-        assertThat(properties.get(1).term, is("MTATP8"));
+        assertThat(properties.get(1).term, is("MTATP6"));
         assertThat(properties.get(1).source, is("synonym"));
 
         properties = subject.fetchGeneIdSuggestionsInSynonym("su6", HOMO_SAPIENS_SPECIES);
@@ -169,9 +169,9 @@ public class GeneIdSuggestionServiceIT {
         List<TermSourceSuggestion> properties = subject.fetchGeneIdSuggestionsInName("p", HOMO_SAPIENS_SPECIES);
 
         assertThat(properties.size(), is(15));
-        assertThat(properties.get(0).term, is("PHF19"));
+        assertThat(properties.get(0).term, is("PTRH2"));
         assertThat(properties.get(0).source, is("symbol"));
-        assertThat(properties.get(1).term, is("PTPN13"));
+        assertThat(properties.get(1).term, is("PSMD8P1"));
         assertThat(properties.get(1).source, is("symbol"));
     }
 
@@ -182,11 +182,11 @@ public class GeneIdSuggestionServiceIT {
 
         assertThat(properties.size(), is(3));
 
-        assertThat(properties.get(0).term, is("Musk"));
+        assertThat(properties.get(0).term, is("Mustn1"));
         assertThat(properties.get(0).source, is("symbol"));
-        assertThat(properties.get(1).term, is("Mus81"));
+        assertThat(properties.get(1).term, is("Musk"));
         assertThat(properties.get(1).source, is("symbol"));
-        assertThat(properties.get(2).term, is("Mustn1"));
+        assertThat(properties.get(2).term, is("Mus81"));
         assertThat(properties.get(2).source, is("symbol"));
     }
 

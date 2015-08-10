@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.solr.query;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Test;
@@ -50,7 +49,7 @@ public class SolrQueryServiceIT {
 
 
     @Test
-    public void shouldFindCaseInsentiveIdButReturnABioentityPropertyWithRightCase() throws SolrServerException {
+    public void shouldFindCaseInsensitiveIdButReturnABioentityPropertyWithRightCase() throws SolrServerException {
 
         BioentityProperty bioentityProperty = subject.findBioentityIdentifierProperty("enSG00000179218");
         assertThat(bioentityProperty.getBioentityType(), is("ensgene"));
@@ -121,9 +120,9 @@ public class SolrQueryServiceIT {
         Set<String> aspm = subject.expandGeneQueryIntoGeneIds("aspm", "", true).get();
 
         // then
-        assertThat(aspm, hasSize(19));
+        assertThat(aspm, hasSize(20));
         //System.out.println("\"" + Joiner.on("\", \"").join(aspm) + "\"");
-        assertThat(aspm, contains("ENSBTAG00000007860", "ENSPANG00000018539", "ENSG00000066279", "ENSSSCG00000010896", "ENSOCUG00000014733", "ENSDARG00000071442", "ENSPPYG00000000389", "ENSECAG00000020645", "ENSMUSG00000033952", "ENSOARG00000014713", "ENSPTRG00000001807", "ENSDNOG00000001112", "ENSCAFG00000011403", "ENSGALG00000002338", "ENSTNIG00000012330", "ENSGGOG00000025635", "ENSMMUG00000000245", "ENSRNOG00000012318", "ENSMODG00000012671"));
+        assertThat(aspm, contains("ENSBTAG00000007860", "ENSPANG00000018539", "ENSG00000066279", "ENSSSCG00000010896", "ENSOCUG00000014733", "ENSPPYG00000000389", "ENSMUSG00000033952", "ENSECAG00000020645", "ENSOARG00000014713", "ENSPTRG00000001807", "ENSDNOG00000001112", "ENSCAFG00000011403", "ENSDARG00000103754", "ENSGALG00000002338", "ENSTNIG00000012330", "ENSMMUG00000000245", "ENSGGOG00000025635", "ENSRNOG00000012318", "ENSMODG00000012671", "ENSAPLG00000007025"));
 
     }
 

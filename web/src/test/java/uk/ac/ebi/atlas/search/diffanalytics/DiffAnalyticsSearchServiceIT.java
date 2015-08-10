@@ -1,10 +1,10 @@
 package uk.ac.ebi.atlas.search.diffanalytics;
 
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -131,7 +131,7 @@ public class DiffAnalyticsSearchServiceIT {
 
         assertThat(bioentityExpressions, hasSize(50));
         // System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
-        assertThat(names, contains("BAG6", "IL1A", "IL1A", "TNF", "TNF", "CD14", "IL2RA", "CD14", "IL1B", "TNFSF15", "PYCARD", "IL1B", "PHLDA2", "GSN", "ITGB2", "TGFBR2", "LY86", "PYCARD", "TGFBR2", "CTSC", "RNF130", "IL24", "IFNG", "TRAF1", "PAK1", "DRAM2", "TNFRSF9", "Tnfrsf11b", "TRAF1", "PHLDA2", "ARHGEF6", "C5AR1", "RNF130", "PAK1", "ITGB2", "IL2RA", "GRAMD4", "ZFP36L1", "TNFSF15", "TRAF4", "IFNG", "TNFSF14", "TMEM219", "MAP3K8", "FAS", "RFK", "PKN2", "MST4", "MEF2C", "JAK2"));
+        assertThat(names, containsInAnyOrder("IL1A", "IL1A", "CD14", "IL2RA", "CD14", "IL1B", "SERPINB9", "TNFSF15", "PYCARD", "IL1B", "PHLDA2", "GSN", "LY96", "ITGB2", "TGFBR2", "LY86", "PYCARD", "TGFBR2", "CTSC", "RNF130", "IL24", "IFNG", "TRAF1", "PAK1", "DRAM2", "TNFRSF9", "Tnfrsf11b", "TRAF1", "PHLDA2", "ARHGEF6", "C5AR1", "RNF130", "PAK1", "ITGB2", "IL2RA", "GRAMD4", "ZFP36L1", "UNC5B", "TNFSF15", "TRAF4", "IFNG", "TNFSF14", "TMEM219", "FAS", "RFK", "PKN2", "MST4", "MEF2C", "JAK2", "GADD45B"));
     }
 
 
@@ -146,9 +146,9 @@ public class DiffAnalyticsSearchServiceIT {
         List<String> names = getBioentityNames(bioentityExpressions);
 
         assertThat(bioentityExpressions, hasSize(50));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(1647));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(1730));
         // System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
-        assertThat(names, contains("IL12B", "IL6", "IL6", "IL1A", "IL23A", "CCL19", "IL1A", "CSF3", "CD36", "CD36", "IL23A", "F3", "TNF", "TNF", "CNKSR3", "CD14", "NKX3-1", "PDGFA", "CSF1R", "SORL1", "TNIP3", "CD14", "FCER1A", "png", "IL1B", "CSF1R", "TNFSF15", "PYCARD", "PFK3", "F1O17.1", "IL1B", "Hsp89.1", "H2AFY", "SORL1", "SLAMF8", "CG8173", "IL1RN", "AKN2", "TNIP3", "PKIB", "LRRK2", "KIAA1199", "NRG1", "LY96", "TLR7", "ITGB2", "SNX9", "CCL19", "PKIB", "TGFBR2"));
+        assertThat(names, contains("IL12B", "IL6", "IL6", "FN1", "FN1", "IL1A", "IL23A", "CCL19", "IL1A", "CSF3", "CD36", "CD36", "IL23A", "F3", "TNF", "TNF", "CNKSR3", "CD14", "NKX3-1", "PDGFA", "CSF1R", "SORL1", "IL2RA", "TNIP3", "CD14", "FCER1A", "png", "IL1B", "CSF1R", "TNFSF15", "PYCARD", "F1O17.1", "IL1B", "Hsp89.1", "H2AFY", "SORL1", "SLAMF8", "CG8173", "IL1RN", "AKN2", "TNIP3", "PKIB", "LRRK2", "KIAA1199", "NRG1", "LY96", "TLR7", "ITGB2", "SNX9", "CCL19"));
     }
 
 
@@ -163,7 +163,7 @@ public class DiffAnalyticsSearchServiceIT {
         List<String> names = getBioentityNames(bioentityExpressions);
 
         assertThat(bioentityExpressions, hasSize(50));
-        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(12400));
+        assertThat(bioentityExpressions.getTotalNumberOfResults(), is(12402));
 
         //System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
 
@@ -216,7 +216,6 @@ public class DiffAnalyticsSearchServiceIT {
     }
 
     @Test
-    @Ignore //TODO: re-enable when performance fixed
     public void visitEachExpressionGeneQueryKeywordProteinCoding()  {
         GeneQuerySearchRequestParameters requestParameters = new GeneQuerySearchRequestParameters();
         requestParameters.setGeneQuery(GeneQuery.create("protein_coding"));
@@ -231,10 +230,8 @@ public class DiffAnalyticsSearchServiceIT {
             }
         });
 
-        assertThat(names, hasSize(482));
+        assertThat(names, hasSize(12402));
         //System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
-        assertThat(names, contains("Arl8b", "Ddx3y", "Eif2s3y", "Uty", "Kdm5d", "Cldn8", "Lactbl1", "Tph1", "Ivd", "Fmo1", "Matn2", "Chgb", "Cish", "Lrrc55", "Neb", "Ogdhl", "Ehhadh", "Wipi1", "Rgs2", "Gpnmb", "Tmem255a", "Gpr26", "Gpx6", "Reg3b", "Vip", "Prlr", "Dnahc8", "Hsbp1", "Cst7", "Tnfrsf11b", "Npas4", "Dnajb1", "Enpp2", "Sftpd", "Reg3a", "Disp2", "Igfals", "Itgax", "Mpeg1", "B3galnt1", "Ikzf4", "Nr4a1", "Lgals3", "Dnase1", "Lpl", "Cspg5", "Dnaja1", "Ern1", "Ch25h", "Dhcr7"));
-
     }
 
     @Test
@@ -256,7 +253,6 @@ public class DiffAnalyticsSearchServiceIT {
 
         // match the remaining in order, which will be the same in both ATLAS3DEV and ATLAS3IT
         assertThat(Iterables.skip(names, 3), contains("Gpr26", "Lrrc55", "Tph1", "Cldn8", "Gm17040", "Fmo1", "Sftpd", "Lonrf3", "Neb", "Tnfrsf11b", "A130066N16Rik", "Fmo4", "Gm13716", "Mctp1", "Tph2", "Ivd", "Matn2", "Dnahc8", "Cspg5", "Gbp8", "Cish", "Ehhadh", "Reg3b", "Cartpt", "Grem2", "Chgb", "Reg3a", "Tmem255a", "Ikzf4", "Gm16314", "Grp", "Ovol2", "Cntn3", "mt-Rnr2", "Synpr", "Npas4", "Txnrd2", "Acvr1c", "Rnf182", "Syce2", "Aqp4", "Grhl1", "Wipi1", "Rgs2", "Ogdhl", "Gas2", "Dnmt3b"));
-
     }
 
     @Test
@@ -293,9 +289,9 @@ public class DiffAnalyticsSearchServiceIT {
         DiffAnalyticsList bioentityExpressions = diffAnalyticsSearchService.fetchTop(requestParameters.getGeneQuery().asString(), requestParameters.getConditionQuery().asString(), species, requestParameters.isExactMatch());
         List<String> names = getBioentityNames(bioentityExpressions);
 
-        assertThat(bioentityExpressions, hasSize(11));
+        assertThat(bioentityExpressions, hasSize(15));
         // System.out.println("\"" + Joiner.on("\", \"").join(names) + "\"");
-        assertThat(names, contains("Cish", "Acvr1c", "Rgs2", "Prlr", "Dnaja1", "Igfbp5", "Prkd1", "Ern1", "Lrp8", "Dusp1", "Prkar2b"));
+        assertThat(names, contains("Cish", "Acvr1c", "Rgs2", "Socs2", "Prlr", "Dnaja1", "Igfbp5", "Ngfr", "Prkd1", "Ern1", "Lrp8", "Sptbn2", "Dusp1", "Prkar2b", "Hsph1"));
     }
 
     @Test

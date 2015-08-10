@@ -53,7 +53,7 @@ public class AutocompleteGroupedPropertyValueQueryBuilderIT {
         String propertyValue = doc.getFieldValue("property_value").toString();
         String propertyName = doc.getFieldValue("property_name").toString();
 
-        assertThat(propertyValue, is("ASPDH"));
+        assertThat(propertyValue, is("ASPN"));
         assertThat(propertyName, is("symbol"));
 
     }
