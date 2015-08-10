@@ -9,8 +9,7 @@ module.exports = {
         "expression-atlas-heatmap": './heatmap',
         "internal-atlas-heatmap": './heatmap/internal-atlas-index.js',
         "faceted-search-results": './faceted-search-results',
-        "vendor": []
-        //"vendor": [ 'react', 'jquery', 'jquery-ui' ]
+        "vendor": [ 'react', 'jquery', 'jquery.browser' ]
     },
 
     output: {
@@ -21,7 +20,7 @@ module.exports = {
 
     plugins: [
         new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js"),
-        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.DedupePlugin()
     ],
 
     module: {

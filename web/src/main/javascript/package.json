@@ -22,9 +22,7 @@
   },
   "dependencies": {
     "jquery": "^2.1.4",
-    "jquery-ui": "^1.10.5",
-    "react": "^0.12.2",
-    "react-highcharts": "^1.0.1",
-    "react-radio-group": "^1.1.0"
+    "jquery.browser": "0.0.8",
+    "react": "^0.12.2"
   }
 }
