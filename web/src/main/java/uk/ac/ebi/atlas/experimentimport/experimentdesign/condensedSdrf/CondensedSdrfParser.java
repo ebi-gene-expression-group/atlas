@@ -32,8 +32,6 @@ import java.util.Set;
 @Scope("prototype")
 public class CondensedSdrfParser {
 
-    private static final Logger LOGGER = Logger.getLogger(CondensedSdrfParser.class);
-
     @Value("#{configuration['experiment.condensed-sdrf.path.template']}")
     private String sdrfPathTemplate;
 
@@ -80,7 +78,7 @@ public class CondensedSdrfParser {
             } else if (tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX].equals(CHARACTERISTIC)) {
                 sampleCharacteristicsBuilder.add(tsvLine);
             } else {
-                LOGGER.warn(String.format(
+                throw new CondensedSdrfParserException(String.format(
                         "Parsing condensed SDRF for %s: Unknown factor/characteristic descriptor “%s”",
                         experimentAccession, tsvLine[FACTOR_OR_CHARACTERISTIC_INDEX]));
             }
