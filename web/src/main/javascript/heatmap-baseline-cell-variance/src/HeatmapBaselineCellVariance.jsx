@@ -21,7 +21,7 @@ var HeatmapBaselineCellVariance = React.createClass({
 
     render: function () {
 
-        var chartWidth = 105;
+        var chartWidth = 115;
         var chartHeight = 105;
         var chartMargin = 0;
 
@@ -34,7 +34,7 @@ var HeatmapBaselineCellVariance = React.createClass({
             yAxis:   {
                 title: { text: "Expression level" },
                 labels: {
-                    align: 'left',
+                    align: "left",
                     x: 0,
                     y: -2
                 }
