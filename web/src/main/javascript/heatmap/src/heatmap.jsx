@@ -879,6 +879,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
             onMouseLeave: function () {
                 this.setState({hover:false});
+                this._closeTooltip();
             },
 
             onClick: function () {
@@ -898,7 +899,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 return (
                     <span title={titleTooltip} style={{"display": "table-cell"}}>
                         <span className="icon icon-conceptual icon-c2" data-icon={type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}></span>
-                        <a ref="geneName" onMouseLeave={this._closeTooltip} id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
+                        <a id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
                     </span>
                 );
             },
@@ -962,7 +963,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
                 return (
                     <tr className={rowClassName}>
-                        <th className={className} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : undefined} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
+                        <th ref="geneName" className={className} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : this._closeTooltip} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
                             <div style={{"display": "table", "width": "100%"}}>
                                 <div style={{"display": "table-row"}}>
                                     { enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked()}
@@ -979,13 +980,13 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
             componentDidMount: function () {
                 if(!type.isMultiExperiment) {
-                    genePropertiesTooltipModule.init(contextRoot, this.getDOMNode(), this.props.id, this.props.name);
+                    genePropertiesTooltipModule.init(contextRoot, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
                 }
             },
 
             _closeTooltip: function() {
                 if(!type.isMultiExperiment) {
-                    $(this.getDOMNode()).tooltip("close");
+                    $(this.refs.geneName.getDOMNode()).tooltip("close");
                 }
             }
         });
