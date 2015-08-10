@@ -196,22 +196,23 @@ function init(allSvgPathIds, fileNameMale, fileNameFemale, fileNameBrain, contex
 
     var svg = loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
 
-    //hover on gene name, to highlight all organism parts involved on a single gene profile
-    $("#heatmap-table").find("tbody > tr > th:first-child").hover(
-        function (evt) {
-            var geneExpressions = $(this).parent("tr").find("div[data-svg-path-id!='']");
+    //hover on gene/experiment name to highlight all organism parts involved on a single gene profile
+    var $stickyColumnHeaders = $(".gxaStickyTableColumn").find("tbody > tr > th:first-child");
+    $("#heatmap-table").find("tbody > tr > th:first-child").each(function(i) {
+        var geneExpressions = $(this).parent("tr").find("div[data-svg-path-id!='']");
 
-            var factorValues = geneExpressions.map(function () {
-                if ($(this).find("span").text() != "NA") {
-                    return $(this).attr('data-svg-path-id');
-                }
-            }).get();
+        var factorValues = geneExpressions.map(function () {
+            if ($(this).find("span").text() != "NA") {
+                return $(this).attr('data-svg-path-id');
+            }
+        }).get();
 
+        $(this).add($stickyColumnHeaders.get(i)).hover(function (event) {
             $.each(factorValues, function () {
-                toggleOrganismPartColor(svg, isSingleGene, this, evt);
+                toggleOrganismPartColor(svg, isSingleGene, this, event);
             });
-        }
-    );
+        });
+    });
 
     //hover on a header or expression level cell to highlight related SVG organism part
     $(".gxaStickyTableWrap td,th").hover(function (evt) {
