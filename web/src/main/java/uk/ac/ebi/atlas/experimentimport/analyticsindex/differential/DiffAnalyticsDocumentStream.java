@@ -86,7 +86,6 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
                     .experimentType(experimentType)
                     .species(getEnsemblSpecies(contrastId))
                     .kingdom(speciesKingdomTrader.getKingdom(getEnsemblSpecies(contrastId)))
-                    .ensemblDB(speciesKingdomTrader.getEnsemblDB(getEnsemblSpecies(contrastId)))
                     .bioentityIdentifier(geneId)
                     .identifierSearch(identifierSearch)
                     .contrastId(contrastId)
