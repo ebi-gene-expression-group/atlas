@@ -21,8 +21,8 @@ var HeatmapBaselineCellVariance = React.createClass({
 
     render: function () {
 
-        var chartWidth = 110;
-        var chartHeight = 140;
+        var chartWidth = 105;
+        var chartHeight = 105;
         var chartMargin = 0;
 
         var highchartsOptions = {
