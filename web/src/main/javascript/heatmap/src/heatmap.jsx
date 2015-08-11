@@ -316,12 +316,14 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
     var DownloadProfilesButton = (function (contextRoot, downloadProfilesURL) {
         return React.createClass({
             render: function () {
+                var normalizedURL = (contextRoot + downloadProfilesURL).replace(/\/\//g, "/");
+                var normalizedSrcURL = (contextRoot + "/resources/images/download_blue_small.png").replace(/\/\//g, "/");
+
                 return (
                     <a id="download-profiles-link" ref="downloadProfilesLink"
                        title="Download all results"
-                       href={contextRoot + downloadProfilesURL} className="gxaButtonImage" target="_blank">
-                       <img id="download-profiles" alt="Download query results" style={{width: "20px"}}
-                            src={contextRoot + "/resources/images/download_blue_small.png"}/>
+                       href={normalizedURL} className="gxaButtonImage" target="_blank">
+                       <img id="download-profiles" alt="Download query results" style={{width: "20px"}} src={normalizedSrcURL}/>
                     </a>
                 );
             },
@@ -577,17 +579,28 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
                 var $contentNode = $(contentNode);
 
-                var maPlotURL = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + '/' : '' ) + this.props.contrastId + '/ma-plot.png';
-                var gseaGoPlotUrl = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + this.props.contrastId + '/gsea_go.png';
-                var gseaInterproPlotUrl = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + this.props.contrastId + '/gsea_interpro.png';
-                var gseaReactomePlotUrl = contextRoot + '/external-resources/' + this.props.experimentAccession + '/' + this.props.contrastId + '/gsea_reactome.png';
+                var maPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
+                var normalizedMaPlotURL = maPlotURL.replace(/\/\//g, "/");
+                var normalizedMaPlotSrcURL = (contextRoot + "/resources/images/maplot-button.png").replace(/\/\//g, "/");
+
+                var gseaGoPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_go.png";
+                var normalizedGSeaGoPlotURL = gseaGoPlotURL.replace(/\/\//g, "/");
+                var normalizedGseaGoPlotSrcURL = (contextRoot + "/resources/images/gsea-go-button.png").replace(/\/\//g, "/");
+
+                var gseaInterproPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_interpro.png";
+                var normalizedGSeaInterproURL = gseaInterproPlotURL.replace(/\/\//g, "/");
+                var normalizedGseaInterproSrcURL = (contextRoot + '/resources/images/gsea-interpro-button.png').replace(/\/\//g, "/");
+
+                var gseaReactomePlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_reactome.png";
+                var normalizedGseaReactomePlotURL = gseaReactomePlotURL.replace(/\/\//g, "/");
+                var normalizedGseaReactomePlotSrcURL = (contextRoot + "/resources/images/gsea-reactome-button.png").replace(/\/\//g, "/");
 
                 var content =
                     <div>
-                        {this.props.showMaPlotButton ? <a href={maPlotURL} id="maButtonID" title="Click to view MA plot for the contrast across all genes" onClick={this.clickButton}><img src={contextRoot + '/resources/images/maplot-button.png'} /></a> : null }
-                        {this.props.showGseaGoPlot ? <a href={gseaGoPlotUrl} id="goButtonID" title="Click to view GO terms enrichment analysis plot" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-go-button.png'} /></a> : null }
-                        {this.props.showGseaInterproPlot ? <a href={gseaInterproPlotUrl} id="interproButtonID" title="Click to view Interpro domains enrichment analysis plot" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-interpro-button.png'} /></a> : null }
-                        {this.props.showGseaReactomePlot ? <a href={gseaReactomePlotUrl} id="reactomeButtonID" title="Click to view Reactome pathways enrichment analysis plot" onClick={this.clickButton}><img src={contextRoot + '/resources/images/gsea-reactome-button.png'} /></a> : null }
+                        {this.props.showMaPlotButton ? <a href={normalizedMaPlotURL} id="maButtonID" title="Click to view MA plot for the contrast across all genes" onClick={this.clickButton}><img src={normalizedMaPlotSrcURL} /></a> : null }
+                        {this.props.showGseaGoPlot ? <a href={normalizedGSeaGoPlotURL} id="goButtonID" title="Click to view GO terms enrichment analysis plot" onClick={this.clickButton}><img src={normalizedGseaGoPlotSrcURL} /></a> : null }
+                        {this.props.showGseaInterproPlot ? <a href={normalizedGSeaInterproURL} id="interproButtonID" title="Click to view Interpro domains enrichment analysis plot" onClick={this.clickButton}><img src={normalizedGseaInterproSrcURL} /></a> : null }
+                        {this.props.showGseaReactomePlot ? <a href={normalizedGseaReactomePlotURL} id="reactomeButtonID" title="Click to view Reactome pathways enrichment analysis plot" onClick={this.clickButton}><img src={normalizedGseaReactomePlotSrcURL} /></a> : null }
                     </div>;
 
                 // the tool bar content will be copied around the DOM by the toolbar plugin
@@ -620,9 +633,11 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 var thStyle = this.showPlotsButton() ? {minWidth: "80px"} : {};
                 var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
+                var normalizedSrcURL = (contextRoot + "/resources/images/yellow-chart-icon.png").replace(/\/\//g, "/");;
+
                 var plotsButton = (
                     <div style={{textAlign: "right", paddingRight: "3px"}} >
-                        <a href="#" ref="plotsButton" onClick={this.clickButton} className="gxaButtonImage" title="Click to view plots"><img src={contextRoot + "/resources/images/yellow-chart-icon.png"}/></a>
+                        <a href="#" ref="plotsButton" onClick={this.clickButton} className="gxaButtonImage" title="Click to view plots"><img src={normalizedSrcURL}/></a>
                     </div>
                 );
 
@@ -722,13 +737,14 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                     return;
                 }
                 var trackFileHeader = experimentAccession + "." + this.state.selectedColumnId;
-                var atlasTrackBaseUrl = "http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession + "/tracks/";
-                var contigviewbottom = "contigviewbottom=url:" + atlasTrackBaseUrl + trackFileHeader + (type.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
-                var tiling = (type.isBaseline || ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseUrl + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
-                var url =  baseURL + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigviewbottom + tiling + ";format=BEDGRAPH";
+                var atlasTrackBaseURL = "http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession + "/tracks/";
+                var contigViewBottom = "contigviewbottom=url:" + atlasTrackBaseURL + trackFileHeader + (type.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
+                var tiling = (type.isBaseline || ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseURL + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
+                var ensemblTrackURL =  baseURL + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigViewBottom + tiling + ";format=BEDGRAPH";
+                var normalizedURL = ensemblTrackURL.replace(/\/\//g, "/");;
 
                 window.open(
-                    url,
+                    normalizedURL,
                     '_blank'
                 );
             },
@@ -892,14 +908,15 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
                 var titleTooltip = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "Protein Expression" : "RNA Expression" ) : "";
 
-                var url = (type.isMultiExperiment ? experimentURL : geneURL);
+                var experimentOrGeneURL = (type.isMultiExperiment ? experimentURL : geneURL);
+                var normalizedURL = (contextRoot + experimentOrGeneURL).replace(/\/\//g, "/");
 
                 // don't render id for gene sets to prevent tooltips
                 // The vertical align in the <a> element is needed because the kerning in the font used in icon-conceptual is vertically off
                 return (
                     <span title={titleTooltip} style={{"display": "table-cell"}}>
                         <span className="icon icon-conceptual icon-c2" data-icon={type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}></span>
-                        <a id={this.props.showGeneSetProfiles ? '' : this.props.id} href={contextRoot + url} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
+                        <a id={this.props.showGeneSetProfiles ? '' : this.props.id} href={normalizedURL} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
                     </span>
                 );
             },
