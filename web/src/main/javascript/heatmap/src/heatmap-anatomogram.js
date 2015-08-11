@@ -45,7 +45,7 @@ function drawHeatmap (data, targetElement, heatmapClass, heatmapBuilder, heatmap
     })($, React, HeatmapContainer,
        heatmapBuilder, data.config, data.columnHeaders, data.profiles, data.geneSetProfiles, data.anatomogram, data.experiment, heatmapKey);
 
-};
+}
 
 //*------------------------------------------------------------------*
 

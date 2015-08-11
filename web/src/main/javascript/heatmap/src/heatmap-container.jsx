@@ -7,6 +7,8 @@ var $ = require('jquery');
 var jQuery = $;
 require('../lib/jquery.hc-sticky.js');
 
+var URI = require('URIjs');
+
 //*------------------------------------------------------------------*
 
 require('../css/atlas.css');
@@ -58,7 +60,6 @@ var Anatomogram = React.createClass({
         var femaleToggleImage = this.props.heatmapKey ? "female-toggle-image" + heatmapKeyTrimmed : "female-toggle-image";
         var brainToggleImage = this.props.heatmapKey ? "brain-toggle-image" + heatmapKeyTrimmed : "brain-toggle-image";
         var keyId = this.props.heatmapKey ? "anatomogramBody" + heatmapKeyTrimmed : "anatomogramBody";
-
 
         return (
             <div ref="anatomogram" id={anatomogram} className="gxaAside gxaDoubleClickNoSelection" style={{display: "inline"}}>
@@ -122,8 +123,8 @@ var HeatmapContainer = React.createClass({
 
         var heatmapConfig = this.props.heatmapConfig;
 
-        var geneURL = "http://" + heatmapConfig.atlasHost + heatmapConfig.contextRoot +  'query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch='
-            + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
+        var geneURL = heatmapConfig.contextRoot +  'query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch=' + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
+        var normalizedGeneURL = URI(geneURL).normalize();
 
         return (
                 <div className="gxaBlock">
@@ -145,7 +146,7 @@ var HeatmapContainer = React.createClass({
 
                     </div>
 
-                    { !this.props.heatmapClass ? <div id="disclaimer-message"><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
+                    { !this.props.heatmapClass ? <div><p><a href={normalizedGeneURL}>See more expression data at Expression Atlas.</a>
                         <br/>This expression view is provided by <a href="http://www.ebi.ac.uk/gxa">Expression Atlas</a>.
                         <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p></div> : null}
 

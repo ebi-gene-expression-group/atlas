@@ -13,10 +13,11 @@ require('../lib/jquery.hc-sticky.js');
 require('../lib/jquery.toolbar.js');
 require('fancybox')($);
 
-
 var td = require('throttle-debounce');
 var EventEmitter = require('wolfy87-eventemitter');
 var modernizr = require('../lib/modernizr.3.0.0-alpha3.js');  // Leaks Modernizr to the global window namespace
+
+var URI = require('URIjs');
 
 //*------------------------------------------------------------------*
 
@@ -316,8 +317,8 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
     var DownloadProfilesButton = (function (contextRoot, downloadProfilesURL) {
         return React.createClass({
             render: function () {
-                var normalizedURL = (contextRoot + downloadProfilesURL).replace(/\/\//g, "/");
-                var normalizedSrcURL = (contextRoot + "/resources/images/download_blue_small.png").replace(/\/\//g, "/");
+                var normalizedURL = URI(contextRoot + downloadProfilesURL).normalize();
+                var normalizedSrcURL = URI(contextRoot + "/resources/images/download_blue_small.png").normalize();
 
                 return (
                     <a id="download-profiles-link" ref="downloadProfilesLink"
@@ -580,20 +581,20 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 var $contentNode = $(contentNode);
 
                 var maPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
-                var normalizedMaPlotURL = maPlotURL.replace(/\/\//g, "/");
-                var normalizedMaPlotSrcURL = (contextRoot + "/resources/images/maplot-button.png").replace(/\/\//g, "/");
+                var normalizedMaPlotURL = URI(maPlotURL).normalize();
+                var normalizedMaPlotSrcURL = URI(contextRoot + "/resources/images/maplot-button.png").normalize();
 
                 var gseaGoPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_go.png";
-                var normalizedGSeaGoPlotURL = gseaGoPlotURL.replace(/\/\//g, "/");
-                var normalizedGseaGoPlotSrcURL = (contextRoot + "/resources/images/gsea-go-button.png").replace(/\/\//g, "/");
+                var normalizedGSeaGoPlotURL = URI(gseaGoPlotURL).normalize();
+                var normalizedGseaGoPlotSrcURL = URI(contextRoot + "/resources/images/gsea-go-button.png").normalize();
 
                 var gseaInterproPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_interpro.png";
-                var normalizedGSeaInterproURL = gseaInterproPlotURL.replace(/\/\//g, "/");
-                var normalizedGseaInterproSrcURL = (contextRoot + '/resources/images/gsea-interpro-button.png').replace(/\/\//g, "/");
+                var normalizedGSeaInterproURL = URI(gseaInterproPlotURL).normalize();
+                var normalizedGseaInterproSrcURL = URI(contextRoot + '/resources/images/gsea-interpro-button.png').normalize();
 
                 var gseaReactomePlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_reactome.png";
-                var normalizedGseaReactomePlotURL = gseaReactomePlotURL.replace(/\/\//g, "/");
-                var normalizedGseaReactomePlotSrcURL = (contextRoot + "/resources/images/gsea-reactome-button.png").replace(/\/\//g, "/");
+                var normalizedGseaReactomePlotURL = URI(gseaReactomePlotURL).normalize();
+                var normalizedGseaReactomePlotSrcURL = URI(contextRoot + "/resources/images/gsea-reactome-button.png").normalize();
 
                 var content =
                     <div>
@@ -633,7 +634,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 var thStyle = this.showPlotsButton() ? {minWidth: "80px"} : {};
                 var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
-                var normalizedSrcURL = (contextRoot + "/resources/images/yellow-chart-icon.png").replace(/\/\//g, "/");;
+                var normalizedSrcURL = URI(contextRoot + "/resources/images/yellow-chart-icon.png").normalize();
 
                 var plotsButton = (
                     <div style={{textAlign: "right", paddingRight: "3px"}} >
@@ -741,7 +742,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 var contigViewBottom = "contigviewbottom=url:" + atlasTrackBaseURL + trackFileHeader + (type.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
                 var tiling = (type.isBaseline || ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseURL + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
                 var ensemblTrackURL =  baseURL + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigViewBottom + tiling + ";format=BEDGRAPH";
-                var normalizedURL = ensemblTrackURL.replace(/\/\//g, "/");;
+                var normalizedURL = URI(ensemblTrackURL).normalize();
 
                 window.open(
                     normalizedURL,
@@ -909,7 +910,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 var titleTooltip = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "Protein Expression" : "RNA Expression" ) : "";
 
                 var experimentOrGeneURL = (type.isMultiExperiment ? experimentURL : geneURL);
-                var normalizedURL = (contextRoot + experimentOrGeneURL).replace(/\/\//g, "/");
+                var normalizedURL = URI(contextRoot + experimentOrGeneURL).normalize();
 
                 // don't render id for gene sets to prevent tooltips
                 // The vertical align in the <a> element is needed because the kerning in the font used in icon-conceptual is vertically off

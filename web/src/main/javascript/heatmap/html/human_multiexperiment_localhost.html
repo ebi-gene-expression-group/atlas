@@ -9,16 +9,18 @@
     <script src="/dev-server/demo.bundle.js"></script>
 </head>
 <body>
-    <div id="heatmapContainer">
-
+    <div>
+        <h2>Bundles loaded from <em>webpack-dev-server</em>, request done to <code>http://localhost:8080/gxa</code></h2>
     </div>
+
+    <div id="heatmapContainer"></div>
 </body>
 
 <script language="JavaScript" type="text/javascript">
     var AtlasHeatmapBuilder = window.exposed;
     AtlasHeatmapBuilder({
-        gxaBaseUrl: "http://wwwdev.ebi.ac.uk/gxa/",
-        params: "geneQuery=ASPM&species=mus%20musculus",
+        gxaBaseUrl: "http://localhost:8080/gxa/",
+        params: "geneQuery=REACT_1619",
         isMultiExperiment: true,
         target: "heatmapContainer"
     });
