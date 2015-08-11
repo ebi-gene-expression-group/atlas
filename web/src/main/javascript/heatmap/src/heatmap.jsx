@@ -742,10 +742,9 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 var contigViewBottom = "contigviewbottom=url:" + atlasTrackBaseURL + trackFileHeader + (type.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
                 var tiling = (type.isBaseline || ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseURL + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
                 var ensemblTrackURL =  baseURL + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigViewBottom + tiling + ";format=BEDGRAPH";
-                var normalizedURL = URI(ensemblTrackURL).normalize();
 
                 window.open(
-                    normalizedURL,
+                    ensemblTrackURL,
                     '_blank'
                 );
             },
@@ -917,7 +916,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                 return (
                     <span title={titleTooltip} style={{"display": "table-cell"}}>
                         <span className="icon icon-conceptual icon-c2" data-icon={type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? 'P' : 'd') : ''}></span>
-                        <a id={this.props.showGeneSetProfiles ? '' : this.props.id} href={normalizedURL} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
+                        <a ref="geneName" id={this.props.showGeneSetProfiles ? '' : this.props.id} href={normalizedURL} onClick={this.geneNameLinkClicked} style={{"verticalAlign": "15%"}}>{this.props.name}</a>
                     </span>
                 );
             },
@@ -981,7 +980,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
                 return (
                     <tr className={rowClassName}>
-                        <th ref="geneName" className={className} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : this._closeTooltip} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
+                        <th className={className} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : this._closeTooltip} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
                             <div style={{"display": "table", "width": "100%"}}>
                                 <div style={{"display": "table-row"}}>
                                     { enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked()}
