@@ -7,6 +7,12 @@
 <c:set var="serverPort" value="${pageContext.request.serverPort == 80 ? '' : ':'.concat(pageContext.request.serverPort)}"/>
 <c:set var="atlasHost" value="${pageContext.request.serverName == 'localhost' ? 'wwwdev.ebi.ac.uk' : pageContext.request.serverName.concat(serverPort)}"/>
 
+<%--TODO Remove when anatomogram without brains are no longer supported https://www.pivotaltracker.com/story/show/101029574--%>
+<c:set var="toggleButtonImage" value="/resources/images/male_selected.png"/>
+<c:if test="${species.equals('oryza sativa') || species.equals('oryza sativa japonica group')}">
+    <c:set var="toggleButtonImage" value="/resources/images/plant_switch_buttons_1.png"/>
+</c:if>
+
 <c:choose>
     <c:when test="${empty jsonProfiles}">
         {
@@ -53,7 +59,9 @@
                     "contextRoot": "${pageContext.request.contextPath}",
                     "toggleButtonMaleImage": "${toggleButtonMaleImage}",
                     "toggleButtonFemaleImage": "${toggleButtonFemaleImage}",
-                    "toggleButtonBrainImage": "${toggleButtonBrainImage}"
+                    "toggleButtonBrainImage": "${toggleButtonBrainImage}",
+                    <%--TODO Remove when anatomogram without brains are no longer supported https://www.pivotaltracker.com/story/show/101029574--%>
+                    "toggleButtonImage": "${toggleButtonImage}"
                     }
                 </c:when>
                 <c:otherwise>
