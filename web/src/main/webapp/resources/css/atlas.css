@@ -25,10 +25,7 @@
 }
 
 td.gxaSearchFormFullWidthColumn {
-    /*border: none;*/
-    /*vertical-align: top;*/
     width: 100%;
-    /*padding: 5px;*/
 }
 
 td.gxaHomeSearchFluidTableColumn {
@@ -126,7 +123,7 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 
 #atlas-content table {
     border: none;
-    margin: 0px;
+    margin: 0;
 }
 
 #atlas-content th {
@@ -136,7 +133,7 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 
 #atlas-content td, .rotated-cell {
     border: none;
-    margin: 0px;
+    margin: 0;
     padding: 2px;
 }
 
@@ -145,14 +142,14 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 }
 
 #atlas-content form {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
 }
 
 #atlas-content form fieldset, #dialog-form form fieldset {
     background-color: transparent;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
 }
 
 #atlas-content input, #dialog-form input {
@@ -177,7 +174,7 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 }
 
 #atlas-content section img {
-    margin: 0px;
+    margin: 0;
 }
 
 /* ebi css and ebi-visual.css override: end */
@@ -241,10 +238,7 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 }
 
 .ui-button {
-    border-bottom-color: #cccccc !important;
-    border-bottom-style: solid !important;
-    /* Contrary to what Idea suggests, the following line renders a border-bottom twice as thick */
-    /* border-bottom: solid #cccccc !important; */
+    border-bottom: 1px solid #cccccc !important;
 }
 
 .ui-button:hover, .ui-button:active {
@@ -252,7 +246,7 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 }
 
 .fancybox-close {
-    border: 0px !important;
+    border: 0 !important;
 }
 
 /* JQuery UI overrides: end */
@@ -282,8 +276,7 @@ div.gxaExperimentRequestPreferencesBarchartTooltip {
 }
 
 .gxaButtonImage {
-    background-repeat: no-repeat;
-    background-position: center;
+    background: no-repeat center;
     cursor: pointer;
     padding: 2px !important;
 
@@ -306,11 +299,11 @@ div.gxaExperimentRequestPreferencesBarchartTooltip {
 
 .gxaBlock {
     padding-top: 1em;
-    min-height: 0px !important;
+    min-height: 0 !important;
 }
 
 .gxaBlockWithoutPaddingBottom {
-    padding-bottom: 0px !important;
+    padding-bottom: 0 !important;
 }
 
 div.gxaExperimentRequestPreferencesBlockMaxWidth {
@@ -329,18 +322,13 @@ div.gxaExperimentRequestPreferencesBlockMaxWidth {
 
 div.gxaDoubleClickNoSelection {
     -webkit-user-select: none;
-/ / webkit ( safari, chrome ) browsers -moz-user-select : none;
-/ / mozilla browsers -khtml-user-select : none;
     -ms-user-select: none;
-/ / IE 10
 }
 
 div.gxaFiltersFrame {
     display: inline-block;
     width: 95%;
-    border-style: solid;
-    border-width: 1px;
-    border-color: lightgray;
+    border: 1px solid lightgray;
     margin-bottom: 2px;
     padding-left: 4px;
     padding-right: 4px;
@@ -411,13 +399,11 @@ span.gxaGenePropertyLabel {
 
 div.gxaBioEntityCard {
     background: white !important;
-    background-color: white !important;
     font-family: Verdana, sans-serif;
 }
 
 ul.gxaBioEntityCardHeader {
     background: #f1fffa !important;
-    background-color: #f1fffa !important;
     border: 1px solid #CCCCCC !important;
 }
 
@@ -464,18 +450,18 @@ a.gxaBioEntityCardLink {
 .gxaBioEntityCardIconPlus {
     background-position: -16px -128px;
     position: relative !important;
-    top: 0px !important;
-    left: 0px !important;
-    margin-top: 0px !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin-top: 0 !important;
     float: right;
 }
 
 .gxaBioEntityCardIconMinus {
     background-position: -48px -128px;
     position: relative !important;
-    top: 0px !important;
-    left: 0px !important;
-    margin-top: 0px !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin-top: 0 !important;
     float: right;
 }
 
@@ -525,6 +511,6 @@ div.gxaExperimentsPageHeading {
 }
 
 /* TODO: This class is used in jquery-ui-1.10.2.custom.css - move out to a separate css file */
-#gxaExperimentHeader .ui-button-text {
-    padding: 0px !important;
+.ui-button-text {
+    padding: 0 !important;
 }

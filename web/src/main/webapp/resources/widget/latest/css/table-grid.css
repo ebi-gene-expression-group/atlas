@@ -1,13 +1,61 @@
-.gxaTableGrid {
+/*
+ * Copyright 2008-2012 Microarray Informatics Team, EMBL-European Bioinformatics Institute
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ * For further details of the Gene Expression Atlas project, including source code,
+ * downloads and documentation, please see:
+ *
+ * http://gxa.github.com/gxa
+ */
+
+.gxaFormGrid, .gxaTableGrid, .gxaAnalysisGrid {
     color: #404040;
     background-color: white;
+    /*background-color: rgb(237,246,246);*/
     border: 1px solid #cdcdcd !important;
     border-spacing: 0;
     empty-cells: show;
+    /*width: 100% !important;*/
     height: 100%;
+    /*font-size: 100% !important;*/
     text-align: left;
+}
+
+.gxaFormGrid {
+    width: 100%;
+    border: 2px solid #cdcdcd !important;
+}
+
+.gxaTableGrid, .gxaAnalysisGrid {
     width: auto;
     border-collapse: collapse;
+}
+
+.gxaFormGrid label, .gxaAnalysisGrid label {
+    font-weight: bold;
+    vertical-align: middle;
+    margin-right: 0 !important;
+}
+
+.gxaAnalysisGrid thead {
+    display: none;
+}
+
+.gxaAnalysisGrid td {
+    border: 1px solid #cdcdcd !important;
+    padding: 5px !important;
 }
 
 .gxaTableGrid>tbody>tr>td, .gxaTableGrid>thead>tr>td {
@@ -45,12 +93,14 @@ th.gxaHorizontalHeaderCell {
     text-align: left !important;
 }
 
-tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell {
-    background-color: rgb(210, 233, 233) !important;
+.gxaTableGrid th.gxaHighlight {
+    background-color: #deebeb;
 }
 
-tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell:hover {
-    background-color: rgb(200, 220, 220) !important;
+.gxaTableGrid td.gxaHighlight {
+    background-color: #deebeb;
+    opacity: .75;
+    -moz-opacity: .75;
 }
 
 .gxaHeatmapCell {
@@ -69,6 +119,16 @@ tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomics
     padding: 2px;
     white-space: nowrap;
     text-align: center;
+}
+
+/*next is a css hack patch that only gets enabled on IE7. It removes margins, that do not display properly in IE7.*/
+* + html .gxaShowCell {
+    PADDING-RIGHT: 0px;
+    DISPLAY: inline;
+    PADDING-LEFT: 0px;
+    PADDING-BOTTOM: 0px;
+    WIDTH: 100%;
+    PADDING-TOP: 0px
 }
 
 .gxaHideCell {
@@ -106,70 +166,10 @@ tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomics
     -o-transform: rotate(-270deg);
 }
 
-th.gxaHeatmapTableDesignElement {
-    font-weight: normal;
-    text-align: left;
-    border: 1px solid #CDCDCD;
+.gxaRotateTextIE {
 }
 
-.gxaHeatmapCountAndLegend {
-    background-color: white;
+.gxaFormGrid .ui-button.ui-widget {
+    width: 70px
 }
 
-.gxaStickyTableWrap {
-    overflow-x: auto;
-    overflow-y: hidden;
-    position: relative;
-    width: 100%;
-}
-
-.gxaStickyTableWrap div[class^='gxaSticky'] {
-    overflow: hidden;
-}
-.gxaStickyTableWrap tfoot {
-    display: none;
-}
-.gxaStickyTableWrap div table {
-    margin: 0;
-    position: relative;
-    width: auto; /* Prevent table from stretching to full size */
-    border-collapse: collapse;
-}
-.gxaStickyTableWrap .gxaStickyTableHeader,
-.gxaStickyTableWrap .gxaStickyTableColumn,
-.gxaStickyTableWrap .gxaStickyTableIntersect {
-    visibility: hidden;
-    position: fixed;
-    z-index: 40;
-}
-.gxaStickyTableWrap .gxaStickyTableHeader {
-    z-index: 50;
-    width: 100%; /* Force stretch */
-}
-.gxaStickyTableWrap .gxaStickyTableIntersect {
-    z-index: 60;
-}
-.gxaStickyTableWrap td,
-.gxaStickyTableWrap th {
-    box-sizing: border-box;
-}
-.gxaStickyTableWrap thead th {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-.gxaStickyEnabled {
-    margin: 0;
-    width: auto;
-}
-
-.wrapper-sticky {
-    z-index: 45;
-}
-
-/* To hide sticky column and intersect when screen gets too narrow */
-@media only screen and (max-width: 768px) {
-    .gxaStickyTableColumn, .gxaStickyTableIntersect {
-        display: none;
-    }
-}

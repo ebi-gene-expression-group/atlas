@@ -52,13 +52,13 @@
 #tooltip-span {
     display: block;
     position: absolute;
-    top: 0;
+    top: 0%;
     margin: 5px;
 }
 
 .gxaPvalueTooltipStyling {
     padding: 2px !important;
-    margin: 0 !important;
+    margin: 0px !important;
 }
 
 #ensembl-launcher-box {
@@ -77,4 +77,12 @@
 #ensembl-launcher-box-ensembl button, #ensembl-launcher-box-gramene button {
     display: table;
     margin: 0 auto;
+}
+
+/* TODO: This class is used in jQuery UI - move out to a separate css file */
+#download-profiles-link .ui-button-text,
+.gxaVerticalHeaderCell .ui-button-text,
+.gxaVerticalHeaderCell-selected .ui-button-text,
+#gene-distribution-button .ui-button-text {
+    padding: 0px !important;
 }

@@ -127,18 +127,6 @@
         <put-attribute name="body" value="/WEB-INF/jsp/fast-qc-template.jsp"/>
     </definition>
 
-    <definition name="widget.base.definition" template="/WEB-INF/jsp/widget-layout.jsp">
-        <put-attribute name="title" value="Expression Atlas"/>
-        <put-attribute name="header" value=""/>
-        <put-attribute name="menu" value=""/>
-        <put-attribute name="body" value=""/>
-        <put-attribute name="footer" value=""/>
-    </definition>
-
-    <definition name="baselineCounts-widget" extends="widget.base.definition">
-        <put-attribute name="body" value="/WEB-INF/jsp/baselineCounts-widget.jsp"/>
-    </definition>
-
     <definition name="heatmap-data" template="/WEB-INF/jsp/includes/heatmap-data.jsp">
     </definition>
 

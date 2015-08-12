@@ -23,20 +23,14 @@
 .gxaFormGrid, .gxaTableGrid, .gxaAnalysisGrid {
     color: #404040;
     background-color: white;
-    /*background-color: rgb(237,246,246);*/
     border: 1px solid #cdcdcd !important;
     border-spacing: 0;
     empty-cells: show;
-    /*width: 100% !important;*/
     height: 100%;
     font-size: 93%;
     text-align: left;
 }
 
-.gxaFormGrid {
-    /*width: 100%;*/
-    /*border: 2px solid #cdcdcd !important;*/
-}
 
 .gxaTableGrid, .gxaAnalysisGrid {
     width: auto;
@@ -127,16 +121,6 @@ tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomics
     text-align: center;
 }
 
-/*next is a css hack patch that only gets enabled on IE7. It removes margins, that do not display properly in IE7.*/
-* + html .gxaShowCell {
-    PADDING-RIGHT: 0px;
-    DISPLAY: inline;
-    PADDING-LEFT: 0px;
-    PADDING-BOTTOM: 0px;
-    WIDTH: 100%;
-    PADDING-TOP: 0px
-}
-
 .gxaHideCell {
     display: none;
     visibility: hidden;
@@ -178,9 +162,6 @@ tr.gxaProteomicsExperiment td.gxaHorizontalHeaderCell-selected, tr.gxaProteomics
 .gxaFormGrid .ui-button.ui-widget {
     width: 70px
 }
-
-
-
 
 #gxaExperimentPageHeatmapTableStickyWrapper {
     overflow-x: scroll;

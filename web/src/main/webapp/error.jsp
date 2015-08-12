@@ -8,7 +8,7 @@
 
 <head>
     <title>Experiment</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/widget/latest/css/atlas.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/atlas.css"/>
 </head>
 
 <body class="atlas-body">
