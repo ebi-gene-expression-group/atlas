@@ -14,6 +14,10 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import static uk.ac.ebi.atlas.utils.StringUtil.quote;
 
 @Named
 public class AnalyticsSearchDao {
@@ -33,9 +37,7 @@ public class AnalyticsSearchDao {
 
 
     public ImmutableSet<String> fetchExperimentTypes(GeneQuery geneQuery) {
-
         QueryResponse queryResponse = query(buildQuery(geneQuery));
-
         return SolrUtil.extractFirstFacetValues(queryResponse);
     }
 
@@ -53,9 +55,9 @@ public class AnalyticsSearchDao {
         StringBuilder sb = new StringBuilder("identifierSearch:(");
         if (geneQuery.terms().size() > 0) {
             for (int i = 0 ; i < geneQuery.terms().size() - 1 ; i++) {
-                sb.append(geneQuery.terms().get(i)).append(" OR ");
+                sb.append(quote(geneQuery.terms().get(i))).append(" OR ");
             }
-            sb.append(geneQuery.terms().get(geneQuery.terms().size() - 1));
+            sb.append(quote(geneQuery.terms().get(geneQuery.terms().size() - 1)));
         }
         sb.append(")");
 
