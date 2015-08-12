@@ -8,14 +8,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-public class AnalyticsDao {
+public class AnalyticsDAO {
 
     private final BaselineAnalyticsDao baselineAnalyticsDao;
     private final MicroarrayDifferentialAnalyticsDao microarrayDifferentialAnalyticsDao;
     private final RnaSeqDifferentialAnalyticsDao rnaSeqDifferentialAnalyticsDao;
 
     @Inject
-    public AnalyticsDao(BaselineAnalyticsDao baselineAnalyticsDao, MicroarrayDifferentialAnalyticsDao microarrayDifferentialAnalyticsDao,
+    public AnalyticsDAO(BaselineAnalyticsDao baselineAnalyticsDao, MicroarrayDifferentialAnalyticsDao microarrayDifferentialAnalyticsDao,
                         RnaSeqDifferentialAnalyticsDao rnaSeqDifferentialAnalyticsDao) {
         this.baselineAnalyticsDao = baselineAnalyticsDao;
         this.microarrayDifferentialAnalyticsDao = microarrayDifferentialAnalyticsDao;
