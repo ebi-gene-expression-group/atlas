@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex;
 
 import com.google.common.collect.ImmutableSet;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,7 +24,8 @@ public class AnalyticsSearchDaoIT {
     @Inject
     private AnalyticsSearchDao subject;
 
-    @Test
+    // TODO Ignore until https://www.pivotaltracker.com/story/show/101118548
+    @Ignore
     public void all() {
         ImmutableSet<String> experimentTypes = subject.fetchExperimentTypes(GeneQuery.create("*"));
 
