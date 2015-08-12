@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.experimentimport;
 import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -42,7 +43,7 @@ public class ExperimentCRUDRnaSeqDifferentialIT {
         deleteInactiveAnalytics();
     }
 
-    @Test
+    @Ignore
     public void loadAndDeleteNewExperiment() throws IOException {
         assertThat("experiment already exists in db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
         assertThat("analytics already exist in db", analyticsCount(NEW_EXPERIMENT_ACCESSION), is(0));
