@@ -43,7 +43,7 @@
     <!-- Simple page header -->
     <div class="container">
         <div class="page-header">
-            <h2 class="strapline">Search result for <span class="searchterm">"${searchDescription}"</span></h2>
+            <h2 class="strapline">Search result for <span class="searchterm">${searchDescription}</span></h2>
         </div>
         <!--  <h:ebiGlobalSearch ebiSearchTerm="${applicationProperties.urlParamEncode(globalSearchTerm)}"/>-->
     </div>
