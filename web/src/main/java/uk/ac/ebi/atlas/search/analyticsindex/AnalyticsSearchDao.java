@@ -19,7 +19,7 @@ import java.io.IOException;
 public class AnalyticsSearchDao {
     public static final String ABOVE_CUTOFF = "(" +
                                                "(experimentType:(rnaseq_mrna_baseline OR proteomics_baseline) AND expressionLevel:[0.5 TO *]) OR " +
-                                               "(experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential) AND foldChange:[1.0 TO *])" +
+                                               "(experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential) AND foldChange:([1.0 TO *] OR [* TO -1.0]))" +
                                               ")";
 
     private static final Logger LOGGER = Logger.getLogger(AnalyticsSearchDao.class);
@@ -49,14 +49,24 @@ public class AnalyticsSearchDao {
     }
 
     private SolrQuery buildQuery(GeneQuery geneQuery) {
-        String identifierSearch = geneQuery.asString(); //TODO: support multiple gene query terms
-        SolrQuery solrQuery = new SolrQuery("identifierSearch:" + identifierSearch);
+
+        StringBuilder sb = new StringBuilder("identifierSearch:(");
+        if (geneQuery.terms().size() > 0) {
+            for (int i = 0 ; i < geneQuery.terms().size() - 1 ; i++) {
+                sb.append(geneQuery.terms().get(i)).append(" OR ");
+            }
+            sb.append(geneQuery.terms().get(geneQuery.terms().size() - 1));
+        }
+        sb.append(")");
+
+        SolrQuery solrQuery = new SolrQuery(sb.toString());
+
         solrQuery.setRows(0);
         solrQuery.setFilterQueries(ABOVE_CUTOFF);
         solrQuery.setFacet(true);
         solrQuery.addFacetField("experimentType");
         solrQuery.setFacetMinCount(1);
         return solrQuery;
-    }
 
+    }
 }
