@@ -77,6 +77,8 @@ public class ExperimentMetadataCRUDTest {
     private static final String EFO_0001438 = "snap#Disposition";
     private static final Set<String> EXPANDED_EFO_TERMS = new HashSet<>(Arrays.asList(EFO_0001438, EFO_0001443, EFO_0000001));
 
+    private ExperimentMetadataCRUD subject;
+
     @Mock
     private ExperimentDesignFileWriter experimentDesignFileWriterMock;
 
@@ -89,8 +91,6 @@ public class ExperimentMetadataCRUDTest {
     @Mock
     private MicroarrayExperimentConfiguration microarrayExperimentConfigurationMock;
 
-    private ExperimentMetadataCRUD subject;
-
     @Mock
     private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilderMock;
 
@@ -101,13 +101,13 @@ public class ExperimentMetadataCRUDTest {
     private ExperimentTrader experimentTraderMock;
 
     @Mock
-    DifferentialExperiment differentialExperimentMock;
+    private DifferentialExperiment differentialExperimentMock;
 
     @Mock
-    private ConditionsIndexTrader conditionsIndexTrader;
+    private ConditionsIndexTrader conditionsIndexTraderMock;
 
     @Mock
-    private ConditionsIndex<Experiment> conditionsIndex;
+    private ConditionsIndex<Experiment> conditionsIndexMock;
 
     @Mock
     private ExperimentDTOBuilder experimentDTOBuilderMock;
@@ -116,7 +116,7 @@ public class ExperimentMetadataCRUDTest {
     private ExperimentDesign experimentDesignMock;
 
     @Mock
-    private ExperimentConfiguration experimentConfiguration;
+    private ExperimentConfiguration experimentConfigurationMock;
 
     @Mock
     private CondensedSdrfParser condensedSdrfParserMock;
@@ -140,16 +140,16 @@ public class ExperimentMetadataCRUDTest {
     public void setUp() throws Exception {
 
         when(microarrayExperimentConfigurationMock.getArrayDesignAccessions()).thenReturn(Sets.newTreeSet(Sets.newHashSet(ARRAY_DESIGN)));
-        when(experimentConfiguration.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
+        when(experimentConfigurationMock.getExperimentType()).thenReturn(ExperimentType.RNASEQ_MRNA_BASELINE);
 
         given(experimentDesignFileWriterBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_BASELINE)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.withExperimentType(ExperimentType.RNASEQ_MRNA_DIFFERENTIAL)).willReturn(experimentDesignFileWriterBuilderMock);
         given(experimentDesignFileWriterBuilderMock.build()).willReturn(experimentDesignFileWriterMock);
 
-        given(conditionsIndexTrader.getIndex(any(Experiment.class))).willReturn(conditionsIndex);
-        given(conditionsIndexTrader.getIndex(any(ExperimentType.class))).willReturn(conditionsIndex);
-        doNothing().when(conditionsIndex).removeConditions(anyString());
+        given(conditionsIndexTraderMock.getIndex(any(Experiment.class))).willReturn(conditionsIndexMock);
+        given(conditionsIndexTraderMock.getIndex(any(ExperimentType.class))).willReturn(conditionsIndexMock);
+        doNothing().when(conditionsIndexMock).removeConditions(anyString());
         given(experimentTraderMock.getPublicExperiment(EXPERIMENT_ACCESSION)).willReturn(differentialExperimentMock);
 
         given(experimentDTOBuilderMock.forExperimentAccession(EXPERIMENT_ACCESSION)).willReturn(experimentDTOBuilderMock);
@@ -174,7 +174,7 @@ public class ExperimentMetadataCRUDTest {
 
         subject = new ExperimentMetadataCRUD(
                 experimentDAOMock, experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock,
-                condensedSdrfParserMock, conditionsIndexTrader, efoParentsLookupServiceMock,
+                condensedSdrfParserMock, conditionsIndexTraderMock, efoParentsLookupServiceMock,
                 analyticsIndexerManagerMock);
     }
 
@@ -204,19 +204,19 @@ public class ExperimentMetadataCRUDTest {
     public void updateExperimentDesignShouldRemoveExperimentFromCache() throws Exception {
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
         verify(experimentTraderMock).removeExperimentFromCache(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE);
-        verify(conditionsIndex).updateConditions(any(Experiment.class), Matchers.<SetMultimap<String,String>>any());
+        verify(conditionsIndexMock).updateConditions(any(Experiment.class), Matchers.<SetMultimap<String,String>>any());
     }
 
     @Test
     public void importExperimentShouldAddExperimentToIndex() throws Exception {
-        subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false, Optional.<String>absent());
-        verify(conditionsIndex).addConditions(any(Experiment.class), Matchers.<SetMultimap<String,String>>any());
+        subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfigurationMock, false, Optional.<String>absent());
+        verify(conditionsIndexMock).addConditions(any(Experiment.class), Matchers.<SetMultimap<String,String>>any());
     }
 
     @Test
     public void importExperimentExpandsOntologyTerms() throws Exception {
-        subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfiguration, false, Optional.<String>absent());
-        verify(conditionsIndex).addConditions(any(Experiment.class), termIdsByAssayAccessionCaptor.capture());
+        subject.importExperiment(EXPERIMENT_ACCESSION, experimentConfigurationMock, false, Optional.<String>absent());
+        verify(conditionsIndexMock).addConditions(any(Experiment.class), termIdsByAssayAccessionCaptor.capture());
 
         ImmutableSetMultimap<String, String> termIdsByAssayAccession =  termIdsByAssayAccessionCaptor.getValue();
         assertThat(termIdsByAssayAccession.get(EXPERIMENT_ASSAY), containsInAnyOrder(EFO_0000001, EFO_0000761, EFO_0001438, EFO_0001443));
@@ -225,7 +225,7 @@ public class ExperimentMetadataCRUDTest {
     @Test
     public void updateExperimentExpandsOntologyTerms() throws Exception {
         subject.updateExperimentDesign(new ExperimentDTO(EXPERIMENT_ACCESSION, ExperimentType.RNASEQ_MRNA_BASELINE, null, null, null, false));
-        verify(conditionsIndex).updateConditions(any(Experiment.class), termIdsByAssayAccessionCaptor.capture());
+        verify(conditionsIndexMock).updateConditions(any(Experiment.class), termIdsByAssayAccessionCaptor.capture());
 
         ImmutableSetMultimap<String, String> termIdsByAssayAccession =  termIdsByAssayAccessionCaptor.getValue();
         assertThat(termIdsByAssayAccession.get(EXPERIMENT_ASSAY), containsInAnyOrder(EFO_0000001, EFO_0000761, EFO_0001438, EFO_0001443));

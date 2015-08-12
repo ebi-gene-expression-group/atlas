@@ -4,20 +4,15 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.hamcrest.Matchers;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.*;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsDao;
+import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsDAO;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.*;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
@@ -31,7 +26,11 @@ import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.UUID;
+import java.util.Iterator;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -61,6 +60,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
     private static final double E_PROT_1_LINE_1_G18_ABUNDANCE = 7.31E-06;
     private static final double E_PROT_1_LINE_1_G22_ABUNDANCE = 6.56E+06;
     private static final double E_PROT_1_LINE_1_G28_ABUNDANCE = 5.20E-05;
+
     private static final String E_PROT_1_LINE_2_GENE_ID = "ENSG00000000419";
     private static final double E_PROT_1_LINE_2_G1_ABUNDANCE = 8.43E-05;
     private static final double E_PROT_1_LINE_2_G2_ABUNDANCE = 2.20E-05;
@@ -90,15 +90,19 @@ public class ExperimentCRUDBaselineProteomicsIT {
     private static final double E_PROT_1_LINE_2_G29_ABUNDANCE = 3.24E-05;
     private static final double E_PROT_1_LINE_2_G30_ABUNDANCE = 4.82E-05;
 
+    private static final ExperimentDTO E_PROT_1_DTO = new ExperimentDTO(
+            E_PROT_1, ExperimentType.PROTEOMICS_BASELINE, Collections.<String>emptySet(), "title", new Date(), false, UUID.randomUUID().toString());
+
+    private ExperimentCRUD subject;
 
     @Inject
     private ExperimentChecker experimentChecker;
 
     @Mock
-    BaselineAnalyticsDao baselineAnalyticsDao;
+    BaselineAnalyticsDao baselineAnalyticsDaoMock;
 
     @Mock
-    AnalyticsLoaderFactory analyticsLoaderFactory;
+    AnalyticsLoaderFactory analyticsLoaderFactoryMock;
 
     @Inject
     ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
@@ -110,15 +114,13 @@ public class ExperimentCRUDBaselineProteomicsIT {
     private ConditionsIndexTraderFactory conditionsIndexTraderFactory;
 
     @Mock
-    private AnalyticsDao analyticsDao;
+    private AnalyticsDAO analyticsDAOMock;
 
     @Mock
-    private ExperimentDAO experimentDao;
+    private ExperimentDAO experimentDAOMock;
 
     @Mock
-    private SolrClient solrClient;
-
-    private ExperimentCRUD subject;
+    private SolrClient solrClientMock;
 
     @Inject
     private ConfigurationTrader configurationTrader;
@@ -136,41 +138,37 @@ public class ExperimentCRUDBaselineProteomicsIT {
     ArgumentCaptor<ProteomicsBaselineAnalyticsInputStream> baselineProteomicsAnalyticsInputStreamArgumentCaptor;
 
     @Mock
-    private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder;
-    @Mock
-    private ExperimentDesignFileWriter experimentDesignFileWriter;
+    private ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilderMock;
 
-    private static final ExperimentDTO E_PROT_1_DTO = new ExperimentDTO(E_PROT_1,
-                                                   ExperimentType.PROTEOMICS_BASELINE,
-                                                   Collections.<String>emptySet(),
-                                                   "title", new Date(), false, UUID.randomUUID().toString());
+    @Mock
+    private ExperimentDesignFileWriter experimentDesignFileWriterMock;
 
     @Before
     public void mockOutDatabaseAndSolrAndArrayExpress() throws IOException {
         MockitoAnnotations.initMocks(this);
 
-        ConditionsIndexTrader conditionsIndexTrader = conditionsIndexTraderFactory.create(solrClient);
+        ConditionsIndexTrader conditionsIndexTrader = conditionsIndexTraderFactory.create(solrClientMock);
 
-        when(experimentDesignFileWriterBuilder.forExperimentAccession(anyString())).thenReturn(experimentDesignFileWriterBuilder);
-        when(experimentDesignFileWriterBuilder.withExperimentType(any(ExperimentType.class))).thenReturn(experimentDesignFileWriterBuilder);
-        when(experimentDesignFileWriterBuilder.build()).thenReturn(experimentDesignFileWriter);
+        when(experimentDesignFileWriterBuilderMock.forExperimentAccession(anyString())).thenReturn(experimentDesignFileWriterBuilderMock);
+        when(experimentDesignFileWriterBuilderMock.withExperimentType(any(ExperimentType.class))).thenReturn(experimentDesignFileWriterBuilderMock);
+        when(experimentDesignFileWriterBuilderMock.build()).thenReturn(experimentDesignFileWriterMock);
 
-        ExperimentMetadataCRUD experimentMetadataCRUD = experimentMetadataCRUDFactory.create(experimentDesignFileWriterBuilder, experimentDao, conditionsIndexTrader);
+        ExperimentMetadataCRUD experimentMetadataCRUD = experimentMetadataCRUDFactory.create(experimentDesignFileWriterBuilderMock, experimentDAOMock, conditionsIndexTrader);
 
         subject = new ExperimentCRUD();
-        subject.setAnalyticsDao(analyticsDao);
+        subject.setAnalyticsDAO(analyticsDAOMock);
 
-        when(analyticsLoaderFactory.getLoader(ExperimentType.PROTEOMICS_BASELINE)).thenReturn(new ProteomicsBaselineAnalyticsLoader(baselineAnalyticsDao, proteomicsBaselineAnalyticsInputStreamFactory));
+        when(analyticsLoaderFactoryMock.getLoader(ExperimentType.PROTEOMICS_BASELINE)).thenReturn(new ProteomicsBaselineAnalyticsLoader(baselineAnalyticsDaoMock, proteomicsBaselineAnalyticsInputStreamFactory));
 
-        subject.setAnalyticsLoaderFactory(analyticsLoaderFactory);
+        subject.setAnalyticsLoaderFactory(analyticsLoaderFactoryMock);
         subject.setExperimentChecker(experimentChecker);
         subject.setConfigurationTrader(configurationTrader);
         subject.setExperimentMetadataCRUD(experimentMetadataCRUD);
     }
 
     private void setupDao() {
-        when(experimentDao.findExperiment(E_PROT_1, true)).thenThrow(new ResourceNotFoundException("")).thenReturn(E_PROT_1_DTO);
-        when(experimentDao.findPublicExperiment(E_PROT_1)).thenReturn(E_PROT_1_DTO);
+        when(experimentDAOMock.findExperiment(E_PROT_1, true)).thenThrow(new ResourceNotFoundException("")).thenReturn(E_PROT_1_DTO);
+        when(experimentDAOMock.findPublicExperiment(E_PROT_1)).thenReturn(E_PROT_1_DTO);
     }
 
     @Test
@@ -178,7 +176,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
         setupDao();
         subject.importExperiment(E_PROT_1, false);
 
-        verify(solrClient).addBeans(collectionArgumentCaptor.capture());
+        verify(solrClientMock).addBeans(collectionArgumentCaptor.capture());
 
         Collection<Condition> beans = collectionArgumentCaptor.getValue();
 
@@ -191,7 +189,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
         setupDao();
         subject.importExperiment(E_PROT_1, false);
 
-        verify(experimentDao).addExperiment(experimentDTOArgumentCaptor.capture(), any(Optional.class));
+        verify(experimentDAOMock).addExperiment(experimentDTOArgumentCaptor.capture(), Matchers.<Optional<String>>any());
 
         ExperimentDTO experimentDTO = experimentDTOArgumentCaptor.getValue();
 
@@ -208,7 +206,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
         setupDao();
         subject.importExperiment(E_PROT_1, false);
 
-        verify(baselineAnalyticsDao).loadAnalytics(eq(E_PROT_1), baselineProteomicsAnalyticsInputStreamArgumentCaptor.capture());
+        verify(baselineAnalyticsDaoMock).loadAnalytics(eq(E_PROT_1), baselineProteomicsAnalyticsInputStreamArgumentCaptor.capture());
 
         ProteomicsBaselineAnalyticsInputStream proteomicsBaselineAnalyticsInputStream = baselineProteomicsAnalyticsInputStreamArgumentCaptor.getValue();
 
@@ -383,7 +381,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
         setupDao();
         subject.importExperiment(E_PROT_1, false);
 
-        verify(experimentDesignFileWriter).write(experimentDesignArgumentCaptor.capture());
+        verify(experimentDesignFileWriterMock).write(experimentDesignArgumentCaptor.capture());
 
         ExperimentDesign experimentDesign = experimentDesignArgumentCaptor.getValue();
 
@@ -393,35 +391,33 @@ public class ExperimentCRUDBaselineProteomicsIT {
         Iterator<SampleCharacteristic> sampleCharacteristicIterator = experimentDesign.getSampleCharacteristics("Adult_Ovary").iterator();
 
         SampleCharacteristic sampleCharacteristic = sampleCharacteristicIterator.next();
-        assertThat(sampleCharacteristic.header(), Matchers.is(ORGANISM_PART));
-        assertThat(sampleCharacteristic.value(), Matchers.is("animal ovary"));
+        assertThat(sampleCharacteristic.header(), is(ORGANISM_PART));
+        assertThat(sampleCharacteristic.value(), is("animal ovary"));
         // TODO Uncomment as soon as condensed SDRF file contains ontology terms
         //assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0000973"));
 
         sampleCharacteristic = sampleCharacteristicIterator.next();
-        assertThat(sampleCharacteristic.header(), Matchers.is(ORGANISM));
-        assertThat(sampleCharacteristic.value(), Matchers.is("Homo sapiens"));
+        assertThat(sampleCharacteristic.header(), is(ORGANISM));
+        assertThat(sampleCharacteristic.value(), is("Homo sapiens"));
         // TODO Uncomment as soon as condensed SDRF file contains ontology terms
         //assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
 
         sampleCharacteristic = sampleCharacteristicIterator.next();
-        assertThat(sampleCharacteristic.header(), Matchers.is(DEVELOPMENTAL_STAGE));
-        assertThat(sampleCharacteristic.value(), Matchers.is("adult"));
+        assertThat(sampleCharacteristic.header(), is(DEVELOPMENTAL_STAGE));
+        assertThat(sampleCharacteristic.value(), is("adult"));
         // TODO Uncomment as soon as condensed SDRF file contains ontology terms
         //assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0001272"));
     }
 
-    @Ignore
+    @Test
     public void deleteExperiment_DeletesFromSolrAndDatabase() throws IOException, SolrServerException {
-        when(experimentDao.findExperiment(E_PROT_1, true)).thenReturn(E_PROT_1_DTO);
+        when(experimentDAOMock.findExperiment(E_PROT_1, true)).thenReturn(E_PROT_1_DTO);
 
         subject.deleteExperiment(E_PROT_1);
 
-        verify(solrClient).deleteByQuery("experiment_accession:" + E_PROT_1);
-        verify(experimentDao).deleteExperiment(E_PROT_1);
-        verify(baselineAnalyticsDao).deleteAnalytics(E_PROT_1);
-
-        // TODO Add E-PROT-1 back
+        verify(solrClientMock).deleteByQuery("experiment_accession:" + E_PROT_1);
+        verify(experimentDAOMock).deleteExperiment(E_PROT_1);
+        verify(baselineAnalyticsDaoMock).deleteAnalytics(E_PROT_1);
     }
 
 }

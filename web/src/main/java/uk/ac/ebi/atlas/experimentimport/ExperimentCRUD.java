@@ -2,7 +2,7 @@ package uk.ac.ebi.atlas.experimentimport;
 
 import com.google.common.base.Optional;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsDao;
+import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsDAO;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoader;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.expressiondataserializer.ExpressionSerializerService;
@@ -22,7 +22,7 @@ public class ExperimentCRUD {
     private ExperimentChecker experimentChecker;
     private ExperimentMetadataCRUD experimentMetadataCRUD;
     private AnalyticsLoaderFactory analyticsLoaderFactory;
-    private AnalyticsDao analyticsDao;
+    private AnalyticsDAO analyticsDAO;
     private ConfigurationTrader configurationTrader;
     private ExpressionSerializerService expressionSerializerService;
 
@@ -51,8 +51,8 @@ public class ExperimentCRUD {
     }
 
     @Inject
-    public void setAnalyticsDao(AnalyticsDao analyticsDao) {
-        this.analyticsDao = analyticsDao;
+    public void setAnalyticsDAO(AnalyticsDAO analyticsDAO) {
+        this.analyticsDAO = analyticsDAO;
     }
 
     @Inject
@@ -111,7 +111,7 @@ public class ExperimentCRUD {
     }
 
     public void deleteInactiveAnalytics() {
-        analyticsDao.deleteInactiveAnalytics();
+        analyticsDAO.deleteInactiveAnalytics();
     }
 
     public void serializeExpressionData(String experimentAccession) {
