@@ -25,6 +25,7 @@ package uk.ac.ebi.atlas.acceptance.rest.tests.admin;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.response.Response;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
 
@@ -54,7 +55,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
         get("/deleteInactiveAnalytics").then().assertThat().statusCode(200);
     }
 
-    @Test
+    @Ignore
     public void loadAndDeleteNewBaselineExperimentPublic() {
 
         expect().body(startsWith("Experiment " + NEW_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()
@@ -73,7 +74,7 @@ public class ExperimentAdminControllerIT extends RestAssuredAuthenticatedFixture
 
     }
 
-    @Test
+    @Ignore
     public void loadAndDeleteNewBaselineExperimentPrivate() {
 
         expect().body(startsWith("Experiment " + NEW_EXPERIMENT_ACCESSION + " loaded, accessKey:")).when()

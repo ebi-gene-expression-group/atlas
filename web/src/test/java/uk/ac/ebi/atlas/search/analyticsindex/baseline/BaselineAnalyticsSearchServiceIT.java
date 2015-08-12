@@ -1,6 +1,7 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
 import com.google.common.collect.ImmutableSortedSet;
+import oracle.jdbc.dcn.TableChangeDescription;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,6 +21,7 @@ import java.util.SortedSet;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.IsCollectionContaining.hasItem;
@@ -29,62 +31,44 @@ import static org.hamcrest.core.IsCollectionContaining.hasItem;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class BaselineAnalyticsSearchServiceIT {
 
-    public static final String ORGANISM_PART = "ORGANISM_PART";
-
-    public static final Factor B_CELL = new Factor(ORGANISM_PART, "B cell");
-    public static final Factor CD4 = new Factor(ORGANISM_PART, "CD4-positive T cell");
-    public static final Factor CD8 = new Factor(ORGANISM_PART, "CD8-positive T cell");
-    public static final Factor FRONTAL_CORTEX = new Factor(ORGANISM_PART, "frontal cortex");
-    public static final Factor GALLBLADDER = new Factor(ORGANISM_PART, "gallbladder");
-    public static final Factor MONOCYTE = new Factor(ORGANISM_PART, "monocyte");
-    public static final Factor NATURAL_KILLER = new Factor(ORGANISM_PART, "natural killer cell");
-    public static final Factor OVARY = new Factor(ORGANISM_PART, "ovary");
-    public static final Factor PLATELET = new Factor(ORGANISM_PART, "platelet");
-    public static final Factor RECTUM = new Factor(ORGANISM_PART, "rectum");
-    public static final Factor RETINA = new Factor(ORGANISM_PART, "retina");
-    public static final Factor SPINAL_CORD = new Factor(ORGANISM_PART, "spinal cord");
-    public static final Factor URINARY_BLADDER = new Factor(ORGANISM_PART, "urinary bladder");
-
-    public static final Factor LIVER = new Factor(ORGANISM_PART, "liver");
-    public static final Factor APPENDIX = new Factor(ORGANISM_PART, "appendix");
-    public static final Factor ENDOMETRIUM = new Factor(ORGANISM_PART, "endometrium");
-    public static final Factor STOMACH = new Factor(ORGANISM_PART, "stomach");
-    public static final Factor PROSTATE = new Factor(ORGANISM_PART, "prostate");
-
-    public static final Factor TEMPORAL_LOBE = new Factor(ORGANISM_PART, "temporal lobe");
-    public static final Factor PREFRONTAL_CORTEX = new Factor(ORGANISM_PART, "prefrontal cortex");
-    public static final Factor FRONTAL_LOBE = new Factor(ORGANISM_PART, "frontal lobe");
-    public static final Factor CEREBELLUM = new Factor(ORGANISM_PART, "cerebellum");
-
-    public static final Factor THYROID = new Factor(ORGANISM_PART, "thyroid");
-    public static final Factor TESTIS = new Factor(ORGANISM_PART, "testis");
-    public static final Factor SPLEEN = new Factor(ORGANISM_PART, "spleen");
-    public static final Factor SMALL_INTESTINE = new Factor(ORGANISM_PART, "small intestine");
-    public static final Factor SKIN = new Factor(ORGANISM_PART, "skin");
-    public static final Factor SALIVARY_GLAND = new Factor(ORGANISM_PART, "salivary gland");
-    public static final Factor PLACENTA = new Factor(ORGANISM_PART, "placenta");
-    public static final Factor PANCREAS = new Factor(ORGANISM_PART, "pancreas");
-    public static final Factor LYMPH_NODE = new Factor(ORGANISM_PART, "lymph node");
-    public static final Factor LUNG = new Factor(ORGANISM_PART, "lung");
-    public static final Factor KIDNEY = new Factor(ORGANISM_PART, "kidney");
-    public static final Factor HEART = new Factor(ORGANISM_PART, "heart");
-    public static final Factor GALL_BLADDER = new Factor(ORGANISM_PART, "gall bladder");
-    public static final Factor ESOPHAGUS = new Factor(ORGANISM_PART, "esophagus");
-    public static final Factor DUODENUM = new Factor(ORGANISM_PART, "duodenum");
-    public static final Factor COLON = new Factor(ORGANISM_PART, "colon");
-    public static final Factor CEREBRAL_CORTEX = new Factor(ORGANISM_PART, "cerebral cortex");
-    public static final Factor BONE_MARROW = new Factor(ORGANISM_PART, "bone marrow");
-    public static final Factor BLADDER = new Factor(ORGANISM_PART, "bladder");
-    public static final Factor ANIMAL_OVARY = new Factor(ORGANISM_PART, "animal ovary");
-    public static final Factor ADRENAL_GLAND = new Factor(ORGANISM_PART, "adrenal gland");
-    public static final Factor ADIPOSE = new Factor(ORGANISM_PART, "adipose tissue");
-
     private static final FactorGroup EMPTY_FACTOR_SET = new FactorSet();
-    private static final FactorGroup ORGANISM_HOMO_SAPIENS = new FactorSet(new Factor("ORGANISM", "Homo sapiens"));
-    private static final FactorGroup STAGE_ADULT = new FactorSet(new Factor("DEVELOPMENTAL_STAGE", "adult"));
+
+    public static final String ORGANISM_PART = "ORGANISM_PART";
+    public static final Factor ADIPOSE = new Factor(ORGANISM_PART, "adipose tissue");public static final Factor CD4 = new Factor(ORGANISM_PART, "CD4-positive T cell");
+    public static final Factor ADRENAL_GLAND = new Factor(ORGANISM_PART, "adrenal gland");
+    public static final Factor ANIMAL_OVARY = new Factor(ORGANISM_PART, "animal ovary");
+    public static final Factor APPENDIX = new Factor(ORGANISM_PART, "appendix");
+    public static final Factor BLADDER = new Factor(ORGANISM_PART, "bladder");
+    public static final Factor BONE_MARROW = new Factor(ORGANISM_PART, "bone marrow");
+    public static final Factor CD8 = new Factor(ORGANISM_PART, "CD8-positive T cell");
+    public static final Factor CEREBRAL_CORTEX = new Factor(ORGANISM_PART, "cerebral cortex");
+    public static final Factor COLON = new Factor(ORGANISM_PART, "colon");
+    public static final Factor DUODENUM = new Factor(ORGANISM_PART, "duodenum");
+    public static final Factor ENDOMETRIUM = new Factor(ORGANISM_PART, "endometrium");
+    public static final Factor ESOPHAGUS = new Factor(ORGANISM_PART, "esophagus");
+    public static final Factor FALLOPIAN_TUBE = new Factor(ORGANISM_PART, "fallopian tube");
+    public static final Factor GALL_BLADDER = new Factor(ORGANISM_PART, "gall bladder");
+    public static final Factor HEART = new Factor(ORGANISM_PART, "heart");
+    public static final Factor KIDNEY = new Factor(ORGANISM_PART, "kidney");
+    public static final Factor LIVER = new Factor(ORGANISM_PART, "liver");
+    public static final Factor LUNG = new Factor(ORGANISM_PART, "lung");
+    public static final Factor LYMPH_NODE = new Factor(ORGANISM_PART, "lymph node");
+    public static final Factor PANCREAS = new Factor(ORGANISM_PART, "pancreas");
+    public static final Factor PLACENTA = new Factor(ORGANISM_PART, "placenta");
+    public static final Factor PROSTATE = new Factor(ORGANISM_PART, "prostate");
+    public static final Factor RECTUM = new Factor(ORGANISM_PART, "rectum");
+    public static final Factor SALIVARY_GLAND = new Factor(ORGANISM_PART, "salivary gland");
+    public static final Factor SKELETAL_MUSCLE = new Factor(ORGANISM_PART, "skeletal muscle");
+    public static final Factor SKIN = new Factor(ORGANISM_PART, "skin");
+    public static final Factor SMALL_INTESTINE = new Factor(ORGANISM_PART, "small intestine");
+    public static final Factor SMOOTH_MUSCLE = new Factor(ORGANISM_PART, "smooth muscle");
+    public static final Factor SPLEEN = new Factor(ORGANISM_PART, "spleen");
+    public static final Factor STOMACH = new Factor(ORGANISM_PART, "stomach");
+    public static final Factor TESTIS = new Factor(ORGANISM_PART, "testis");
+    public static final Factor TONSIL = new Factor(ORGANISM_PART, "tonsil");
+    public static final Factor THYROID = new Factor(ORGANISM_PART, "thyroid");
 
     private static final String CELL_LINE = "CELL_LINE";
-
     private static final Factor A549 = new Factor(CELL_LINE, "A549");
     private static final Factor AG445 = new Factor(CELL_LINE, "AG445");
     private static final Factor BJ = new Factor(CELL_LINE, "BJ");
@@ -99,6 +83,7 @@ public class BaselineAnalyticsSearchServiceIT {
     private static final Factor HUVEC = new Factor(CELL_LINE, "HUVEC cell line");
     private static final Factor HeLa_S3 = new Factor(CELL_LINE, "HeLa-S3");
     private static final Factor HepG2 = new Factor(CELL_LINE, "HepG2");
+    private static final Factor hMSC_AT = new Factor(CELL_LINE, "hMSC-AT cell line");
     private static final Factor IMR_90 = new Factor(CELL_LINE, "IMR-90");
     private static final Factor K562 = new Factor(CELL_LINE, "K562");
     private static final Factor MCF_7 = new Factor(CELL_LINE, "MCF-7");
@@ -106,14 +91,13 @@ public class BaselineAnalyticsSearchServiceIT {
     private static final Factor NHLF = new Factor(CELL_LINE, "NHLF cell line");
     private static final Factor SK_N_SH = new Factor(CELL_LINE, "SK-N-SH");
     private static final Factor SK_N_SH_RA = new Factor(CELL_LINE, "SK-N-SH_RA");
-    private static final Factor hMSC_AT = new Factor(CELL_LINE, "hMSC-AT cell line");
 
     @Inject
     private BaselineAnalyticsSearchService subject;
 
     @Test
     public void singleSpeciesGeneAccession_Tissues() {
-        BaselineExperimentSearchResult result = subject.findExpressions(GeneQuery.create("ENSG00000126549"), "Homo sapiens", "ORGANISM_PART");
+        BaselineExperimentSearchResult result = subject.findExpressions(GeneQuery.create("ENSG00000006062"), "Homo sapiens", "ORGANISM_PART");
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
@@ -121,26 +105,30 @@ public class BaselineAnalyticsSearchServiceIT {
         assertThat(baselineProfilesList.getTotalResultCount(), is(1));
 
         BaselineExperimentProfile baselineProfile = baselineProfilesList.get(0);
-        assertThat(baselineProfile.getId(), is("E-MTAB-1733"));
-        assertThat(baselineProfile.getName(), is("Twenty seven tissues"));
+        assertThat(baselineProfile.getId(), is("E-MTAB-2836"));
+        assertThat(baselineProfile.getName(), is("Thirty two tissues"));
         assertThat(baselineProfile.getFilterFactors(), is(EMPTY_FACTOR_SET));
-        assertThat(baselineProfile.getConditions(), hasSize(6));
-        assertThat(baselineProfile.getMinExpressionLevel(), is(0.5D));
-        assertThat(baselineProfile.getMaxExpressionLevel(), is(80452D));
-        assertThat(baselineProfile.getKnownExpressionLevel(ANIMAL_OVARY), is(37D));
-        assertThat(baselineProfile.getKnownExpressionLevel(BONE_MARROW), is(3D));
-        assertThat(baselineProfile.getKnownExpressionLevel(ESOPHAGUS), is(0.5D));
-        assertThat(baselineProfile.getKnownExpressionLevel(PANCREAS), is(33D));
-        assertThat(baselineProfile.getKnownExpressionLevel(PLACENTA), is(36D));
-        assertThat(baselineProfile.getKnownExpressionLevel(SALIVARY_GLAND), is(80452D));
+        assertThat(baselineProfile.getConditions(), hasSize(10));
+        assertThat(baselineProfile.getMinExpressionLevel(), is(2.0));
+        assertThat(baselineProfile.getMaxExpressionLevel(), is(14.0));
+        assertThat(baselineProfile.getKnownExpressionLevel(RECTUM), is(4.0));
+        assertThat(baselineProfile.getKnownExpressionLevel(ESOPHAGUS), is(6.0));
+        assertThat(baselineProfile.getKnownExpressionLevel(KIDNEY), is(2.0));
+        assertThat(baselineProfile.getKnownExpressionLevel(BONE_MARROW), is(3.0));
+        assertThat(baselineProfile.getKnownExpressionLevel(STOMACH), is(4.0));
+        assertThat(baselineProfile.getKnownExpressionLevel(ADIPOSE), is(2.0));
+        assertThat(baselineProfile.getKnownExpressionLevel(SMOOTH_MUSCLE), is(3.0));
+        assertThat(baselineProfile.getKnownExpressionLevel(LYMPH_NODE), is(14.0));
+        assertThat(baselineProfile.getKnownExpressionLevel(PLACENTA), is(2.0));
+        assertThat(baselineProfile.getKnownExpressionLevel(FALLOPIAN_TUBE), is(5.0));
 
         SortedSet<Factor> factors = result.getFactorsAcrossAllExperiments();
         ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
-        ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab1733Tissues()).build();
-        assertThat(factors, contains(allFactors.toArray()));
+        ImmutableSortedSet<Factor> allFactors = builder.addAll(getEMtab2836Tissues()).build();
+        assertThat(factors, containsInAnyOrder(allFactors.toArray()));
     }
 
-    private static ImmutableSortedSet<Factor> getEMtab1733Tissues() {
+    private static ImmutableSortedSet<Factor> getEMtab2836Tissues() {
         ImmutableSortedSet.Builder<Factor> builder = ImmutableSortedSet.naturalOrder();
         builder.add(ADIPOSE);
         builder.add(ADRENAL_GLAND);
@@ -153,6 +141,7 @@ public class BaselineAnalyticsSearchServiceIT {
         builder.add(DUODENUM);
         builder.add(ENDOMETRIUM);
         builder.add(ESOPHAGUS);
+        builder.add(FALLOPIAN_TUBE);
         builder.add(GALL_BLADDER);
         builder.add(HEART);
         builder.add(KIDNEY);
@@ -162,13 +151,17 @@ public class BaselineAnalyticsSearchServiceIT {
         builder.add(PANCREAS);
         builder.add(PLACENTA);
         builder.add(PROSTATE);
+        builder.add(RECTUM);
         builder.add(SALIVARY_GLAND);
+        builder.add(SKELETAL_MUSCLE);
         builder.add(SKIN);
         builder.add(SMALL_INTESTINE);
+        builder.add(SMOOTH_MUSCLE);
         builder.add(SPLEEN);
         builder.add(STOMACH);
         builder.add(TESTIS);
         builder.add(THYROID);
+        builder.add(TONSIL);
         return builder.build();
     }
 
@@ -213,9 +206,9 @@ public class BaselineAnalyticsSearchServiceIT {
         assertThat(baselineProfile.getName(), is("ENCODE cell lines - long polyA RNA, whole cell"));
         assertThat(baselineProfile.getFilterFactors(), is((FactorGroup) new FactorSet(new Factor("RNA", "long polyA RNA"), new Factor("CELLULAR_COMPONENT", "whole cell"))));
         assertThat(baselineProfile.getConditions(), hasSize(31));
-        assertThat(baselineProfile.getMinExpressionLevel(), is(7D));
-        assertThat(baselineProfile.getMaxExpressionLevel(), is(7D));
-        assertThat(baselineProfile.getKnownExpressionLevel(H1_hESC), is(7D));
+        assertThat(baselineProfile.getMinExpressionLevel(), is(7.0));
+        assertThat(baselineProfile.getMaxExpressionLevel(), is(7.0));
+        assertThat(baselineProfile.getKnownExpressionLevel(H1_hESC), is(7.0));
 
         SortedSet<Factor> factors = result.getFactorsAcrossAllExperiments();
         assertThat(factors, hasItems(getEGeod26284CellLines().toArray(new Factor[getEGeod26284CellLines().size()])));

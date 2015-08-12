@@ -54,8 +54,7 @@ public class PrivateExperimentWithAccessKeySIT extends SeleniumFixture {
     @Before
     public void init() {
 
-        expect().body(containsString(EXPERIMENT_ACCESSION))
-                .when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=true");
+        expect().body(containsString(EXPERIMENT_ACCESSION)).when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=true");
 
         String jsonResponse = given().get("listExperiments?accession=" + EXPERIMENT_ACCESSION).body().asString();
 
@@ -67,8 +66,7 @@ public class PrivateExperimentWithAccessKeySIT extends SeleniumFixture {
 
     @After
     public void cleanup() {
-        expect().body(containsString(EXPERIMENT_ACCESSION))
-                .when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=false");
+        expect().body(containsString(EXPERIMENT_ACCESSION)).when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=false");
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -102,8 +100,7 @@ public class PrivateExperimentWithAccessKeySIT extends SeleniumFixture {
 
     @Test
     public void experimentDesignPageWillBeAvailableWithAccessKey() {
-        ExperimentDesignTablePage experimentDesignPage =
-                new ExperimentDesignTablePage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
+        ExperimentDesignTablePage experimentDesignPage = new ExperimentDesignTablePage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
         experimentDesignPage.get();
         experimentDesignPage.getExperimentDescription();
     }

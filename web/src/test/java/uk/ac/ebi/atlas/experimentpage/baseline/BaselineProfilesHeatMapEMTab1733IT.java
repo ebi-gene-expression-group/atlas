@@ -95,7 +95,7 @@ public class BaselineProfilesHeatMapEMTab1733IT {
                 .build();
     }
 
-    // http://localhost:8080/gxa/experiments/E-MTAB-1733?displayLevels=true&_specific=on&geneQuery=REACT_1619&geneSetMatch=true
+    // http://localhost:8080/gxa/experiments/E-MTAB-1733?displayLevels=true&_specific=on&geneQuery=R-HSA-73887&geneSetMatch=true
     @Test
     public void eMTAB1733_NotSpecific_GeneSets_Averaged_Expression() throws GenesNotFoundException {
         setNotSpecific();
