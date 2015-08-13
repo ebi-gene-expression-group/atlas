@@ -417,7 +417,6 @@ public class ExperimentCRUDBaselineProteomicsIT {
 
         verify(solrClientMock).deleteByQuery("experiment_accession:" + E_PROT_1);
         verify(experimentDAOMock).deleteExperiment(E_PROT_1);
-        verify(baselineAnalyticsDAOMock).deleteAnalytics(E_PROT_1);
     }
 
 }
