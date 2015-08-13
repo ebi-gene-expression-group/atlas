@@ -5,7 +5,10 @@
 var React = require('react');
 
 //*------------------------------------------------------------------*
-require('../css/facets.css');
+
+require('../css/differential-results.css');
+
+//*------------------------------------------------------------------*
 
 var DifferentialResults = React.createClass({
 
@@ -51,7 +54,7 @@ var DifferentialResults = React.createClass({
         }.bind(this));
 
         return (
-            <table className="table-striped">
+            <table className="table-striped atlasDifferentialFacetedSearchResults">
                 <thead>
                     <tr>
                         <th>Genes</th>

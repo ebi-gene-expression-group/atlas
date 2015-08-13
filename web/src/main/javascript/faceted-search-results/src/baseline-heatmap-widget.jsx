@@ -8,8 +8,6 @@ var React = require('react');
 
 var AtlasHeatmapBuilder = require('expression-atlas-heatmap');
 
-require('../css/facets.css');
-
 //*------------------------------------------------------------------*
 
 var BaselineHeatmapWidget = React.createClass({

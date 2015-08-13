@@ -10,7 +10,7 @@ var queryString = require('query-string');
 
 //*------------------------------------------------------------------*
 
-var Facets = require('./facets.jsx');
+var FacetsTree = require('./facets-tree.jsx');
 var DifferentialResults = require('./differential-results.jsx');
 
 //*------------------------------------------------------------------*
@@ -27,7 +27,6 @@ module.exports = function (facetsElement, resultsElement, facetData) {
     renderPage();
 
     function renderPage() {
-        debugger;
         var locationSearch = window.location.search;
         var query = queryString.parse(locationSearch.slice(1)),
             pathname = window.location.pathname;
@@ -37,7 +36,8 @@ module.exports = function (facetsElement, resultsElement, facetData) {
 
     function render(query, pathname) {
 
-        React.render(React.createElement(Facets, {facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
+        React.render(
+            React.createElement(FacetsTree, {facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
             facetsElement);
 
         queryToResults(query.geneQuery, query.select);
@@ -51,7 +51,6 @@ module.exports = function (facetsElement, resultsElement, facetData) {
         }
 
         function navigateTo(pathname, newQueryString) {
-            debugger;
             var state, title;
             if (ie9) {
                 window.location.search = newQueryString;

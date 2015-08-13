@@ -6,12 +6,11 @@ var React = require('react');
 
 //*------------------------------------------------------------------*
 
-require('../css/facets.css');
+require('../css/facets-tree.css');
 
 //*------------------------------------------------------------------*
 
-
-var Facets = React.createClass({
+var FacetsTree = React.createClass({
     propTypes: {
 
         /*
@@ -58,7 +57,7 @@ var Facets = React.createClass({
         }.bind(this));
 
         return (
-            <div className="filter_container hidden-xs"><h3>Filter your results</h3>
+            <div className="hidden-xs atlasFacetedSearchFacetsContainer"><h3>Filter your results</h3>
                 {facets}
             </div>
         );
@@ -95,7 +94,7 @@ var Facet = React.createClass({
         }.bind(this));
 
         return (
-            <div className="facet_item atlasAnalyticsSearchFacet">
+            <div className="atlasFacetedSearchFacetItem">
                 <h4>{this.props.facetName}</h4>
                 <ul >
                     {facetItems}
@@ -129,4 +128,4 @@ var FacetItem = React.createClass({
 
 //*------------------------------------------------------------------*
 
-module.exports = Facets;
+module.exports = FacetsTree;

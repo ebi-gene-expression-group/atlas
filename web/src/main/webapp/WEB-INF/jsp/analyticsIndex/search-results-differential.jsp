@@ -26,6 +26,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/faceted-search.css"/>
+
 <c:set var="thisPage" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
 <div id="search_result_pg">
@@ -40,70 +42,55 @@
 
 <c:if test="${not empty searchDescription}" >
 
-    <!-- Simple page header -->
-    <div class="container">
-        <div class="page-header">
-            <h2 class="strapline">Search result for <span class="searchterm">${searchDescription}</span></h2>
-        </div>
-        <!--  <h:ebiGlobalSearch ebiSearchTerm="${applicationProperties.urlParamEncode(globalSearchTerm)}"/>-->
+<!-- Simple page header -->
+<div class="container">
+    <div class="page-header">
+        <h2 class="strapline">Search result for <span class="searchterm">${searchDescription}</span></h2>
     </div>
-    <!-- /Simple page header -->
+    <!--  <h:ebiGlobalSearch ebiSearchTerm="${applicationProperties.urlParamEncode(globalSearchTerm)}"/>-->
+</div>
+<!-- /Simple page header -->
 
 </c:if>
 
 
 <section class="grid_24">
-        <div class="grid_6 alpha" id="atlasAnalyticsSearchFacetContainer"></div>
+
+    <ul class="nav nav-tabs">
+        <c:if test="${hasBaselineResults}"><li title="Baseline experiments"><a href="${pageContext.request.contextPath}/search?geneQuery=${geneQuery.asUrlQueryParameter()}" >Baseline experiments</a></li></c:if>
+        <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" class="disabled" >Baseline experiments</li></c:if>
+        <c:if test="${hasDifferentialResults}"><li title="Differential experiments" class="active"><a data-toggle="tab" href="${pageContext.request.contextPath}/search/differential?geneQuery=${geneQuery.asUrlQueryParameter()}">Differential experiments</a></li></c:if>
+        <c:if test="${!hasDifferentialResults}"> <li title="Differential experiments" class="disabled">Differential experiments</li></c:if>
+    </ul>
+
+    <div id="differential" class="tab-pane fade in active">
+        <div class="grid_6 alpha" id="atlasDifferentialFacetedSearchFacetsContainer"></div>
 
         <div class="grid_18 omega">
-
-            <div class="container">
-
-                <ul class="nav nav-tabs">
-                    <c:if test="${hasBaselineResults}"><li title="Baseline experiments"><a data-toggle="tab" href="#baseline" >Baseline experiments</a></li></c:if>
-                    <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" class="disabled" >Baseline experiments</li></c:if>
-                    <c:if test="${hasDifferentialResults}"><li title="Differential experiments" class="active"><a data-toggle="tab" href="#differential">Differential experiments</a></li></c:if>
-                    <c:if test="${!hasDifferentialResults}"> <li title="Differential experiments" class="disabled">Differential experiments</li></c:if>
-                </ul>
-
-                <div class="tab-content">
-                    <div id="baseline" class="tab-pane fade ">
-                        <c:if test="${!hasBaselineResults}"><p>No baseline results<p></c:if>
-                        <c:if test="${hasBaselineResults}">
-                        <h3>List of baseline experiments</h3>
-                        <p class="searchterm_det">Showing XX to XX of XX results</p>
-                        <div id="atlasAnalyticsSearchHeatmapsContainer"></div>
-                        </c:if>
-
-                    </div>
-                    <div id="differential" class="tab-pane fade in active">
-                        <c:if test="${!hasDifferentialResults}"><p>No differential results<p></c:if>
-                        <c:if test="${hasDifferentialResults}">
-                        <h3>List of differential experiments</h3>
-                            <p class="searchterm_det">Showing XX to XX of XX results</p> <a href="${pageContext.request.contextPath}/search?geneQuery=${geneQuery.asUrlQueryParameter()}">base</a>
-                        <div  id="atlasAnalyticsSearchDiffResultsContainer" ></div>
-                        </c:if>
-                    </div>
-                </div>
-
-            </div>
+            <c:if test="${!hasDifferentialResults}"><p>No differential results<p></c:if>
+            <c:if test="${hasDifferentialResults}">
+            <h3>List of differential experiments</h3>
+            <a href="${pageContext.request.contextPath}/search?geneQuery=${geneQuery.asUrlQueryParameter()}">base</a>
+            <div id="atlasDifferentialFacetedSearchResultsContainer"></div>
+            </c:if>
         </div>
-</section>
+    </div>
 
-</div><!-- /search_facet -->
+</section><!-- /search_facet -->
 
 <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor.bundle.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js-bundles/faceted-search-results.bundle.js"></script>
 
-<c:if test="${hasDifferentialResults}">
-    <script>
-        var facetsData = ${empty jsonDifferentialGeneQueryFacets ? 'null' : jsonDifferentialGeneQueryFacets};
+<script>
+    var facetedSearcher = window.exposed;
 
-        var differential_page_js = window.exposed;
+    <c:if test="${hasBaselineResults}">
+    var differentialFacetsData = ${empty jsonDifferentialGeneQueryFacets ? 'null' : jsonDifferentialGeneQueryFacets};
+    facetedSearcher.differential(differentialFacetsData, 'atlasDifferentialFacetedSearchFacetsContainer', 'atlasDifferentialFacetedSearchResultsContainer');
+    </c:if>
 
-        differential_page_js.differential(facetsData, 'atlasAnalyticsSearchFacetContainer', 'atlasAnalyticsSearchDiffResultsContainer');
-    </script>
-</c:if>
+</script>
+
 
 <!-- absolute Link to bootstrap script - temp - make it relative-->
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>

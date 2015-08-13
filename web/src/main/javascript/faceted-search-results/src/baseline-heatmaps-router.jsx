@@ -10,10 +10,8 @@ var queryString = require('query-string');
 
 //*------------------------------------------------------------------*
 
-var Facets = require('./facets.jsx');
+var FacetsTree = require('./facets-tree.jsx');
 var Heatmaps = require('./baseline-heatmaps.jsx');
-
-require('../css/facets.css');
 
 //*------------------------------------------------------------------*
 
@@ -35,9 +33,9 @@ module.exports = function (facetsElement, heatmapsElement, facetData) {
     }
 
     function render(query, pathname) {
-        React.render(React.createElement(Facets, {facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
-            facetsElement
-        );
+        React.render(
+            React.createElement(FacetsTree, {facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
+            facetsElement);
 
         React.render(React.createElement(Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query)}),
             heatmapsElement
@@ -87,19 +85,15 @@ module.exports = function (facetsElement, heatmapsElement, facetData) {
          ->
 
          [
-         {
-         "geneQuery": "blood",
-         "species": "Homo sapiens",
-         "factor": "ORGANISM_PART"
-         },
-         {
-         "geneQuery": "blood",
-         "species": "Homo sapiens",
-         "factor": "CELL_LINE"
-         }
-         ]
+            {"geneQuery": "blood",
+             "species": "Homo sapiens",
+             "factor": "ORGANISM_PART"},
 
-         */
+            {"geneQuery": "blood",
+             "species": "Homo sapiens",
+             "factor": "CELL_LINE"}
+         ]
+        */
         var select = query.select;
         var geneQuery = query.geneQuery;
         var heatmaps = [];

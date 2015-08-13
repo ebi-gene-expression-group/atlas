@@ -6,7 +6,6 @@ var React = require('react');
 
 //*------------------------------------------------------------------*
 
-require('../css/facets.css');
 var BaselineHeatmapWidget = require('./baseline-heatmap-widget.jsx');
 
 //*------------------------------------------------------------------*
