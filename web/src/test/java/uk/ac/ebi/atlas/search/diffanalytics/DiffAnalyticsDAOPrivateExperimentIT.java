@@ -29,10 +29,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import uk.ac.ebi.atlas.experimentimport.ExperimentMetadataCRUD;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.solr.query.conditions.IndexedAssayGroup;
 
 import javax.inject.Inject;
@@ -40,6 +42,8 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import static org.mockito.Mockito.doNothing;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -54,8 +58,13 @@ public class DiffAnalyticsDAOPrivateExperimentIT {
     @Inject
     private ExperimentMetadataCRUD experimentMetadataCRUD;
 
+    @Mock
+    private AnalyticsIndexerManager analyticsIndexerManagerMock;
+
     @Before
     public void setPrivate() throws IOException {
+        doNothing().when(analyticsIndexerManagerMock).deleteFromAnalyticsIndex(EXPERIMENT_ACCESSION);
+        experimentMetadataCRUD.setAnalyticsIndexerManager(analyticsIndexerManagerMock);
         experimentMetadataCRUD.updateExperiment(EXPERIMENT_ACCESSION, true);
     }
 

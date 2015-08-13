@@ -49,10 +49,7 @@ public class ExperimentMetadataCRUDFactory {
     @Inject
     EFOParentsLookupService efoParentsLookupService;
 
-    @Inject
-    AnalyticsIndexerManager analyticsIndexerManager;
-
-    public ExperimentMetadataCRUD create(ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder, ExperimentDAO experimentDao, ConditionsIndexTrader conditionsIndexTrader, AnalyticsIndexerManager analyticsIndexerManager) {
+    public ExperimentMetadataCRUD create(ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder, ExperimentDAO experimentDao, ConditionsIndexTrader conditionsIndexTrader) {
 
         ProteomicsBaselineExperimentsCacheLoader loader = loaderFactory.create(experimentDao);
         LoadingCache<String, ProteomicsBaselineExperiment> loadingCache = CacheBuilder.newBuilder().maximumSize(1).build(loader);
@@ -62,8 +59,7 @@ public class ExperimentMetadataCRUDFactory {
         return new ExperimentMetadataCRUD(
                 experimentDao, experimentDesignFileWriterBuilder,
                 experimentTrader, experimentDTOBuilder, condensedSdrfParser,
-                conditionsIndexTrader, efoParentsLookupService,
-                analyticsIndexerManager);
+                conditionsIndexTrader, efoParentsLookupService);
 
     }
 }

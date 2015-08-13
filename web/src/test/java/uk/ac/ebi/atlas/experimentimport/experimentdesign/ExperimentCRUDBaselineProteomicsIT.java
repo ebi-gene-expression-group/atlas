@@ -160,7 +160,8 @@ public class ExperimentCRUDBaselineProteomicsIT {
 
         doNothing().when(analyticsIndexerManagerMock).deleteFromAnalyticsIndex(E_PROT_1);
 
-        ExperimentMetadataCRUD experimentMetadataCRUD = experimentMetadataCRUDFactory.create(experimentDesignFileWriterBuilderMock, experimentDAOMock, conditionsIndexTrader, analyticsIndexerManagerMock);
+        ExperimentMetadataCRUD experimentMetadataCRUD = experimentMetadataCRUDFactory.create(experimentDesignFileWriterBuilderMock, experimentDAOMock, conditionsIndexTrader);
+        experimentMetadataCRUD.setAnalyticsIndexerManager(analyticsIndexerManagerMock);
 
         subject = new ExperimentCRUD();
         subject.setAnalyticsDAO(analyticsDAOMock);

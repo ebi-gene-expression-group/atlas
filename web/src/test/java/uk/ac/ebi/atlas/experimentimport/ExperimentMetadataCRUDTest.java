@@ -174,8 +174,8 @@ public class ExperimentMetadataCRUDTest {
 
         subject = new ExperimentMetadataCRUD(
                 experimentDAOMock, experimentDesignFileWriterBuilderMock, experimentTraderMock, experimentDTOBuilderMock,
-                condensedSdrfParserMock, conditionsIndexTraderMock, efoParentsLookupServiceMock,
-                analyticsIndexerManagerMock);
+                condensedSdrfParserMock, conditionsIndexTraderMock, efoParentsLookupServiceMock);
+        subject.setAnalyticsIndexerManager(analyticsIndexerManagerMock);
     }
 
     @Test

@@ -61,7 +61,7 @@ public class ExperimentMetadataCRUD {
     private final CondensedSdrfParser condensedSdrfParser;
     private final ConditionsIndexTrader conditionsIndexTrader;
     private EFOParentsLookupService efoParentsLookupService;
-    private final AnalyticsIndexerManager analyticsIndexerManager;
+    private AnalyticsIndexerManager analyticsIndexerManager;
 
     //TODO: refactor this class - it has too many collaborators
     @Inject
@@ -71,8 +71,7 @@ public class ExperimentMetadataCRUD {
                                   ExperimentDTOBuilder experimentDTOBuilder,
                                   CondensedSdrfParser condensedSdrfParser,
                                   ConditionsIndexTrader conditionsIndexTrader,
-                                  EFOParentsLookupService efoParentsLookupService,
-                                  AnalyticsIndexerManager analyticsIndexerManager) {
+                                  EFOParentsLookupService efoParentsLookupService) {
         this.experimentDAO = experimentDAO;
         this.experimentDesignFileWriterBuilder = experimentDesignFileWriterBuilder;
         this.experimentTrader = experimentTrader;
@@ -80,6 +79,12 @@ public class ExperimentMetadataCRUD {
         this.condensedSdrfParser = condensedSdrfParser;
         this.conditionsIndexTrader = conditionsIndexTrader;
         this.efoParentsLookupService = efoParentsLookupService;
+    }
+
+    // The purpose of having AnalyticsIndexerManager in a setter is to allow mocking. By having the mock do nothing,
+    // tests that delete experiments or set them private have no effect on the Analytics index.
+    @Inject
+    public void setAnalyticsIndexerManager(AnalyticsIndexerManager analyticsIndexerManager) {
         this.analyticsIndexerManager = analyticsIndexerManager;
     }
 
