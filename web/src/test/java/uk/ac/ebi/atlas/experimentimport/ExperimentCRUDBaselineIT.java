@@ -6,10 +6,13 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -17,6 +20,7 @@ import java.io.IOException;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doNothing;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -38,6 +42,9 @@ public class ExperimentCRUDBaselineIT {
     @Inject
     private JdbcTemplate jdbcTemplate;
 
+    @Mock
+    private AnalyticsIndexerManager analyticsIndexerManagerMock;
+
     @Before
     public void cleanUpBefore() {
         deleteInactiveAnalytics();
@@ -48,8 +55,15 @@ public class ExperimentCRUDBaselineIT {
         deleteInactiveAnalytics();
     }
 
-    @Ignore
+    @Test
     public void loadAndDeleteNewExperiment() throws IOException {
+        MockitoAnnotations.initMocks(this);
+
+        doNothing().when(analyticsIndexerManagerMock).deleteFromAnalyticsIndex(NEW_EXPERIMENT_ACCESSION);
+
+        experimentMetadataCRUD.setAnalyticsIndexerManager(analyticsIndexerManagerMock);
+        subject.setExperimentMetadataCRUD(experimentMetadataCRUD);
+
         assertThat("experiment already exists in db", experimentCount(NEW_EXPERIMENT_ACCESSION), is(0));
         assertThat("baseline expressions already exist in db", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
 

@@ -30,6 +30,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -63,6 +64,8 @@ public class DiffAnalyticsDAOPrivateExperimentIT {
 
     @Before
     public void setPrivate() throws IOException {
+        MockitoAnnotations.initMocks(this);
+
         doNothing().when(analyticsIndexerManagerMock).deleteFromAnalyticsIndex(EXPERIMENT_ACCESSION);
         experimentMetadataCRUD.setAnalyticsIndexerManager(analyticsIndexerManagerMock);
         experimentMetadataCRUD.updateExperiment(EXPERIMENT_ACCESSION, true);
