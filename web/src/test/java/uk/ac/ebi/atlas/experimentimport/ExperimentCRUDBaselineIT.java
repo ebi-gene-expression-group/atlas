@@ -78,7 +78,7 @@ public class ExperimentCRUDBaselineIT {
         assertThat("baseline expressions were not deleted from db", baselineExpressionsCount(NEW_EXPERIMENT_ACCESSION), is(0));
     }
 
-    @Ignore
+    @Test
     public void reloadExistingExperiment() throws IOException {
         ExperimentDTO originalExperimentDTO = experimentMetadataCRUD.findExperiment(EXISTING_EXPERIMENT_ACCESSION);
 
