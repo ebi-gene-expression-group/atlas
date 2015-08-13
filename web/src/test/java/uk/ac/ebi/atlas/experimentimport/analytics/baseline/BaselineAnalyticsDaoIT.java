@@ -29,7 +29,7 @@ public class BaselineAnalyticsDaoIT {
     public static final String EXPERIMENT_ACCESSION = "delme";
 
     @Inject
-    private BaselineAnalyticsDao baselineAnalyticsDao;
+    private BaselineAnalyticsDAO baselineAnalyticsDAO;
 
     @Inject
     private JdbcTemplate jdbcTemplate;
@@ -47,11 +47,11 @@ public class BaselineAnalyticsDaoIT {
     public void insertAndDeleteBaselineExpressions() throws IOException {
         assertThat(getCount(), is(0));
 
-        baselineAnalyticsDao.loadAnalytics(EXPERIMENT_ACCESSION, baselineAnalyticsInputStream);
+        baselineAnalyticsDAO.loadAnalytics(EXPERIMENT_ACCESSION, baselineAnalyticsInputStream);
 
         assertThat(getCount(), is(2));
 
-        baselineAnalyticsDao.deleteAnalytics(EXPERIMENT_ACCESSION);
+        baselineAnalyticsDAO.deleteAnalytics(EXPERIMENT_ACCESSION);
 
         assertThat(getCount(), is(0));
 

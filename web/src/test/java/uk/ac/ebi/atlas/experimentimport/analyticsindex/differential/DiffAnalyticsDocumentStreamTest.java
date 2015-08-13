@@ -9,7 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -41,7 +41,7 @@ public class DiffAnalyticsDocumentStreamTest {
     DiffAnalyticsDocumentStream subject;
 
     @Mock
-    IdentifierSearchTermsDao identifierSearchTermsDao;
+    IdentifierSearchTermsDAO identifierSearchTermsDAO;
 
     @Mock
     SpeciesKingdomTrader speciesKingdomTraderMock;
@@ -54,7 +54,7 @@ public class DiffAnalyticsDocumentStreamTest {
         Map<String, String> ensemblSpeciesByContrastId = ImmutableMap.of(CONTRAST1, SPECIES1, CONTRAST2, SPECIES1, CONTRAST3, SPECIES3);
         SetMultimap<String, String> conditionSearchTermsByContrastId = ImmutableSetMultimap.of(CONTRAST1, CONDITION_SEARCH_1, CONTRAST2, CONDITION_SEARCH_2, CONTRAST3, CONDITION_SEARCH_3);
         Map<String, Integer> numReplicatesByContrastId = ImmutableMap.of(CONTRAST1, 3, CONTRAST2, 3, CONTRAST3, 3);
-        when(identifierSearchTermsDao.fetchSearchTerms(Matchers.<String>any())).thenReturn(ImmutableSet.of(PROTEIN_CODING));
+        when(identifierSearchTermsDAO.fetchSearchTerms(Matchers.<String>any())).thenReturn(ImmutableSet.of(PROTEIN_CODING));
         when(speciesKingdomTraderMock.getKingdom(anyString())).thenReturn(PLANTS_KINGDOM);
         when(speciesKingdomTraderMock.getEnsemblDB(anyString())).thenReturn(PLANTS_ENSEMBLDB);
 
@@ -64,7 +64,7 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, identifierSearchTermsDao, speciesKingdomTraderMock);
+                numReplicatesByContrastId, identifierSearchTermsDAO, speciesKingdomTraderMock);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();
 
@@ -90,7 +90,7 @@ public class DiffAnalyticsDocumentStreamTest {
         Map<String, String> ensemblSpeciesByContrastId = ImmutableMap.of(CONTRAST1, SPECIES1, CONTRAST2, SPECIES1, CONTRAST3, SPECIES3);
         SetMultimap<String, String> conditionSearchTermsByContrastId = ImmutableSetMultimap.of(CONTRAST1, CONDITION_SEARCH_1, CONTRAST2, CONDITION_SEARCH_2, CONTRAST3, CONDITION_SEARCH_3);
         Map<String, Integer> numReplicatesByContrastId = ImmutableMap.of(CONTRAST1, 3, CONTRAST2, 3, CONTRAST3, 3);
-        when(identifierSearchTermsDao.fetchSearchTerms(Matchers.<String>any())).thenReturn(ImmutableSet.of(PROTEIN_CODING));
+        when(identifierSearchTermsDAO.fetchSearchTerms(Matchers.<String>any())).thenReturn(ImmutableSet.of(PROTEIN_CODING));
 
         double pValue = 1.0;
         double foldChange = 0;
@@ -98,7 +98,7 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, identifierSearchTermsDao, speciesKingdomTraderMock
+                numReplicatesByContrastId, identifierSearchTermsDAO, speciesKingdomTraderMock
         );
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();

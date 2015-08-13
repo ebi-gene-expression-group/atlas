@@ -1,6 +1,6 @@
 package uk.ac.ebi.atlas.experimentimport.analytics;
 
-import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsDao;
+import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsDAO;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.microarray.MicroarrayDifferentialAnalyticsDao;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsDao;
 
@@ -10,20 +10,21 @@ import javax.inject.Named;
 @Named
 public class AnalyticsDAO {
 
-    private final BaselineAnalyticsDao baselineAnalyticsDao;
+    private final BaselineAnalyticsDAO baselineAnalyticsDAO;
     private final MicroarrayDifferentialAnalyticsDao microarrayDifferentialAnalyticsDao;
     private final RnaSeqDifferentialAnalyticsDao rnaSeqDifferentialAnalyticsDao;
 
     @Inject
-    public AnalyticsDAO(BaselineAnalyticsDao baselineAnalyticsDao, MicroarrayDifferentialAnalyticsDao microarrayDifferentialAnalyticsDao,
+    public AnalyticsDAO(BaselineAnalyticsDAO baselineAnalyticsDAO,
+                        MicroarrayDifferentialAnalyticsDao microarrayDifferentialAnalyticsDao,
                         RnaSeqDifferentialAnalyticsDao rnaSeqDifferentialAnalyticsDao) {
-        this.baselineAnalyticsDao = baselineAnalyticsDao;
+        this.baselineAnalyticsDAO = baselineAnalyticsDAO;
         this.microarrayDifferentialAnalyticsDao = microarrayDifferentialAnalyticsDao;
         this.rnaSeqDifferentialAnalyticsDao = rnaSeqDifferentialAnalyticsDao;
     }
 
     public void deleteInactiveAnalytics() {
-        baselineAnalyticsDao.deleteInactiveAnalytics();
+        baselineAnalyticsDAO.deleteInactiveAnalytics();
         microarrayDifferentialAnalyticsDao.deleteInactiveAnalytics();
         rnaSeqDifferentialAnalyticsDao.deleteInactiveAnalytics();
     }

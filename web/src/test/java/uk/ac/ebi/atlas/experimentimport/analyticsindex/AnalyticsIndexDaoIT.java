@@ -6,10 +6,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import uk.ac.ebi.atlas.model.ExperimentType;
 
 import javax.inject.Inject;
-import java.util.Collections;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -17,7 +15,7 @@ import java.util.Collections;
 public class AnalyticsIndexDaoIT {
 
     @Inject
-    AnalyticsIndexDao analyticsIndexDao;
+    AnalyticsIndexDAO analyticsIndexDAO;
 
     @Test
     @Ignore

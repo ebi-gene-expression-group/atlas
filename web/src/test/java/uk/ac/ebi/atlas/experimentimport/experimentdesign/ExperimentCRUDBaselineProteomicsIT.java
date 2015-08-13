@@ -99,7 +99,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
     private ExperimentChecker experimentChecker;
 
     @Mock
-    BaselineAnalyticsDao baselineAnalyticsDaoMock;
+    BaselineAnalyticsDAO baselineAnalyticsDAOMock;
 
     @Mock
     AnalyticsLoaderFactory analyticsLoaderFactoryMock;
@@ -158,7 +158,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
         subject = new ExperimentCRUD();
         subject.setAnalyticsDAO(analyticsDAOMock);
 
-        when(analyticsLoaderFactoryMock.getLoader(ExperimentType.PROTEOMICS_BASELINE)).thenReturn(new ProteomicsBaselineAnalyticsLoader(baselineAnalyticsDaoMock, proteomicsBaselineAnalyticsInputStreamFactory));
+        when(analyticsLoaderFactoryMock.getLoader(ExperimentType.PROTEOMICS_BASELINE)).thenReturn(new ProteomicsBaselineAnalyticsLoader(baselineAnalyticsDAOMock, proteomicsBaselineAnalyticsInputStreamFactory));
 
         subject.setAnalyticsLoaderFactory(analyticsLoaderFactoryMock);
         subject.setExperimentChecker(experimentChecker);
@@ -206,7 +206,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
         setupDao();
         subject.importExperiment(E_PROT_1, false);
 
-        verify(baselineAnalyticsDaoMock).loadAnalytics(eq(E_PROT_1), baselineProteomicsAnalyticsInputStreamArgumentCaptor.capture());
+        verify(baselineAnalyticsDAOMock).loadAnalytics(eq(E_PROT_1), baselineProteomicsAnalyticsInputStreamArgumentCaptor.capture());
 
         ProteomicsBaselineAnalyticsInputStream proteomicsBaselineAnalyticsInputStream = baselineProteomicsAnalyticsInputStreamArgumentCaptor.getValue();
 
@@ -417,7 +417,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
 
         verify(solrClientMock).deleteByQuery("experiment_accession:" + E_PROT_1);
         verify(experimentDAOMock).deleteExperiment(E_PROT_1);
-        verify(baselineAnalyticsDaoMock).deleteAnalytics(E_PROT_1);
+        verify(baselineAnalyticsDAOMock).deleteAnalytics(E_PROT_1);
     }
 
 }

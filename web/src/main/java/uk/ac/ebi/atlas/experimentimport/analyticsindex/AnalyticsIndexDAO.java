@@ -7,7 +7,6 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -15,15 +14,15 @@ import java.util.Iterator;
 
 @Named
 @Scope("prototype")
-public class AnalyticsIndexDao {
-    private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexDao.class);
+public class AnalyticsIndexDAO {
+    private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexDAO.class);
 
     private SolrClient solrClient;
 
     private static final int COMMIT_TIME_IN_MILLISECONDS = 15 * 60 * 1000;  // 15 minutes
 
     @Inject
-    public AnalyticsIndexDao(@Qualifier("analyticsSolrClient") SolrClient solrClient) {
+    public AnalyticsIndexDAO(@Qualifier("analyticsSolrClient") SolrClient solrClient) {
         this.solrClient = solrClient;
     }
 

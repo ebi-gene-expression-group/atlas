@@ -11,9 +11,7 @@ import javax.inject.Named;
 import java.util.Set;
 
 @Named
-public class IdentifierSearchTermsDao {
-
-    private static final Logger LOGGER = Logger.getLogger(IdentifierSearchTermsDao.class);
+public class IdentifierSearchTermsDAO {
 
     private final SolrQueryBuilderFactory solrQueryBuilderFactory;
     private final GxaSolrClient solrClient;
@@ -23,7 +21,7 @@ public class IdentifierSearchTermsDao {
     private static final int PROPERTY_VALUES_LIMIT = 1000;
 
     @Inject
-    public IdentifierSearchTermsDao(SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrClient solrClient, @Value("#{configuration['index.property_names.identifier.search']}") String[] searchProperties) {
+    public IdentifierSearchTermsDAO(SolrQueryBuilderFactory solrQueryBuilderFactory, GxaSolrClient solrClient, @Value("#{configuration['index.property_names.identifier.search']}") String[] searchProperties) {
         this.solrQueryBuilderFactory = solrQueryBuilderFactory;
         this.solrClient = solrClient;
         this.searchProperties = searchProperties;
@@ -31,8 +29,8 @@ public class IdentifierSearchTermsDao {
 
     public Set<String> fetchSearchTerms(String identifier) {
 
-        SolrQuery query = solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder()
-                .withPropertyNames(searchProperties).buildBioentityQuery(identifier);
+        SolrQuery query =
+                solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder().withPropertyNames(searchProperties).buildBioentityQuery(identifier);
         query.setFields(PROPERTY_VALUE_FIELD);
         query.setRows(PROPERTY_VALUES_LIMIT);
 

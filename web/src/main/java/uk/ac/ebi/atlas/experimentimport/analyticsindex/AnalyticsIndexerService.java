@@ -34,7 +34,6 @@ import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.microarray.MicroarrayExperiment;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -43,14 +42,14 @@ import javax.inject.Named;
 public class AnalyticsIndexerService {
     private static final Logger LOGGER = Logger.getLogger(AnalyticsIndexerService.class);
 
-    private final AnalyticsIndexDao analyticsIndexDao;
+    private final AnalyticsIndexDAO analyticsIndexDAO;
     private final BaselineAnalyticsIndexerService baselineAnalyticsIndexerService;
     private final DiffAnalyticsIndexerService diffAnalyticsIndexerService;
     private final MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService;
 
     @Inject
-    public AnalyticsIndexerService(AnalyticsIndexDao analyticsIndexDao, BaselineAnalyticsIndexerService baselineAnalyticsIndexerService, DiffAnalyticsIndexerService diffAnalyticsIndexerService, MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService, ExperimentTrader experimentTrader) {
-        this.analyticsIndexDao = analyticsIndexDao;
+    public AnalyticsIndexerService(AnalyticsIndexDAO analyticsIndexDAO, BaselineAnalyticsIndexerService baselineAnalyticsIndexerService, DiffAnalyticsIndexerService diffAnalyticsIndexerService, MicroArrayDiffAnalyticsIndexerService microArrayDiffAnalyticsIndexerService, ExperimentTrader experimentTrader) {
+        this.analyticsIndexDAO = analyticsIndexDAO;
         this.baselineAnalyticsIndexerService = baselineAnalyticsIndexerService;
         this.diffAnalyticsIndexerService = diffAnalyticsIndexerService;
         this.microArrayDiffAnalyticsIndexerService = microArrayDiffAnalyticsIndexerService;
@@ -77,7 +76,7 @@ public class AnalyticsIndexerService {
     // synchronized necessary because analyticsIndexDao#delete does an explicit commit
     public synchronized void deleteExperimentFromIndex(String accession) {
         LOGGER.info("Deleting documents for " + accession);
-        analyticsIndexDao.deleteDocumentsForExperiment(accession);
+        analyticsIndexDAO.deleteDocumentsForExperiment(accession);
         LOGGER.info("Done deleting documents for " + accession);
     }
 }

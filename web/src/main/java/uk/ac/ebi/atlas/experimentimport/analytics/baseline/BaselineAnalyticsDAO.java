@@ -12,9 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Named
-public class BaselineAnalyticsDao {
+public class BaselineAnalyticsDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsDao.class);
+    private static final Logger LOGGER = Logger.getLogger(BaselineAnalyticsDAO.class);
 
     private static final String ANALYTICS_INSERT = "INSERT INTO RNASEQ_BSLN_EXPRESSIONS " +
             "(identifier, experiment, assaygroupid, isactive, expression) VALUES (?, ?, ?, ?, ?)";
@@ -27,7 +27,7 @@ public class BaselineAnalyticsDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Inject
-    public BaselineAnalyticsDao(JdbcTemplate jdbcTemplate) {
+    public BaselineAnalyticsDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -65,8 +65,7 @@ public class BaselineAnalyticsDao {
 
     public void deleteAnalytics(String experimentAccession) {
         LOGGER.info("deleteAnalytics for experiment " + experimentAccession);
-        jdbcTemplate.update("UPDATE RNASEQ_BSLN_EXPRESSIONS SET ISACTIVE='F' WHERE experiment = ?",
-                experimentAccession);
+        jdbcTemplate.update("UPDATE RNASEQ_BSLN_EXPRESSIONS SET ISACTIVE='F' WHERE experiment = ?", experimentAccession);
     }
 
     public void deleteInactiveAnalytics() {

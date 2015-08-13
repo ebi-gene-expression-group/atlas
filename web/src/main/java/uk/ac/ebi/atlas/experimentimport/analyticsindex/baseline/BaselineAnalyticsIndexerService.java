@@ -34,7 +34,7 @@ import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.ProteomicsBaselineAnalyticsInputStreamFactory;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDAO;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.SpeciesGrouper;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
@@ -43,7 +43,6 @@ import uk.ac.ebi.atlas.profiles.IterableObjectInputStream;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.Condition;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -63,16 +62,16 @@ public class BaselineAnalyticsIndexerService {
     private final EFOParentsLookupService efoParentsLookupService;
     private final BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory;
     private final ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
-    private final AnalyticsIndexDao analyticsIndexDao;
+    private final AnalyticsIndexDAO analyticsIndexDAO;
     private final BaselineConditionsBuilder baselineConditionsBuilder;
 
     @Inject
-    public BaselineAnalyticsIndexerService(BaselineAnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory, AnalyticsIndexDao analyticsIndexDao,  BaselineConditionsBuilder baselineConditionsBuilder) {
+    public BaselineAnalyticsIndexerService(BaselineAnalyticsDocumentStreamFactory streamFactory, EFOParentsLookupService efoParentsLookupService, BaselineAnalyticsInputStreamFactory baselineAnalyticsInputStreamFactory, ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory, AnalyticsIndexDAO analyticsIndexDAO,  BaselineConditionsBuilder baselineConditionsBuilder) {
         this.streamFactory = streamFactory;
         this.efoParentsLookupService = efoParentsLookupService;
         this.baselineAnalyticsInputStreamFactory = baselineAnalyticsInputStreamFactory;
         this.proteomicsBaselineAnalyticsInputStreamFactory = proteomicsBaselineAnalyticsInputStreamFactory;
-        this.analyticsIndexDao = analyticsIndexDao;
+        this.analyticsIndexDAO = analyticsIndexDAO;
         this.baselineConditionsBuilder = baselineConditionsBuilder;
     }
 
@@ -155,7 +154,7 @@ public class BaselineAnalyticsIndexerService {
                     defaultQueryFactorType,
                     iterableInputStream, conditionSearchTermsByAssayGroupId);
 
-            return analyticsIndexDao.addDocuments(analyticsDocuments, batchSize);
+            return analyticsIndexDAO.addDocuments(analyticsDocuments, batchSize);
 
         } catch (IOException e) {
             throw new AnalyticsIndexerServiceException(e);

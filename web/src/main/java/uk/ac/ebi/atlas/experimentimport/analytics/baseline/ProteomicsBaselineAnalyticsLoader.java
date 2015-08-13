@@ -10,13 +10,13 @@ import java.io.IOException;
 @Named
 public class ProteomicsBaselineAnalyticsLoader implements AnalyticsLoader {
 
-    private final BaselineAnalyticsDao baselineAnalyticsDao;
+    private final BaselineAnalyticsDAO baselineAnalyticsDAO;
     private final ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
 
     @Inject
-    public ProteomicsBaselineAnalyticsLoader(BaselineAnalyticsDao baselineAnalyticsDao,
+    public ProteomicsBaselineAnalyticsLoader(BaselineAnalyticsDAO baselineAnalyticsDAO,
                                              ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory) {
-        this.baselineAnalyticsDao = baselineAnalyticsDao;
+        this.baselineAnalyticsDAO = baselineAnalyticsDAO;
         this.proteomicsBaselineAnalyticsInputStreamFactory = proteomicsBaselineAnalyticsInputStreamFactory;
     }
 
@@ -29,13 +29,13 @@ public class ProteomicsBaselineAnalyticsLoader implements AnalyticsLoader {
     private void loadBaselineExpressions(String accession) {
         ProteomicsBaselineAnalyticsInputStream proteomicsBaselineAnalyticsInputStream =
                 proteomicsBaselineAnalyticsInputStreamFactory.create(accession);
-        baselineAnalyticsDao.loadAnalytics(accession, proteomicsBaselineAnalyticsInputStream);
+        baselineAnalyticsDAO.loadAnalytics(accession, proteomicsBaselineAnalyticsInputStream);
     }
 
     @Override
     @Transactional
     public void deleteAnalytics(String accession) {
-        baselineAnalyticsDao.deleteAnalytics(accession);
+        baselineAnalyticsDAO.deleteAnalytics(accession);
     }
 
 }

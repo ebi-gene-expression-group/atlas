@@ -16,9 +16,7 @@ import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.ProteomicsBaselineAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDao;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerMonitor;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.baseline.BaselineExperiment;
 import uk.ac.ebi.atlas.solr.admin.index.conditions.baseline.BaselineConditionsBuilder;
@@ -26,7 +24,6 @@ import uk.ac.ebi.atlas.trader.ExperimentTrader;
 
 import javax.inject.Inject;
 
-import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -51,7 +48,7 @@ public class BaselineAnalyticsIndexerServiceIT {
     ProteomicsBaselineAnalyticsInputStreamFactory proteomicsBaselineAnalyticsInputStreamFactory;
 
     @Mock
-    AnalyticsIndexDao analyticsIndexDaoMock;
+    AnalyticsIndexDAO analyticsIndexDAOMock;
 
     @Inject
     ExperimentTrader experimentTrader;
@@ -66,8 +63,8 @@ public class BaselineAnalyticsIndexerServiceIT {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        when(analyticsIndexDaoMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), anyInt())).thenAnswer(storeDocuments());
-        subject = new BaselineAnalyticsIndexerService(streamFactory, efoParentsLookupService, baselineAnalyticsInputStreamFactory, proteomicsBaselineAnalyticsInputStreamFactory, analyticsIndexDaoMock, baselineConditionsBuilder);
+        when(analyticsIndexDAOMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), anyInt())).thenAnswer(storeDocuments());
+        subject = new BaselineAnalyticsIndexerService(streamFactory, efoParentsLookupService, baselineAnalyticsInputStreamFactory, proteomicsBaselineAnalyticsInputStreamFactory, analyticsIndexDAOMock, baselineConditionsBuilder);
     }
 
     Answer<Integer> storeDocuments() {

@@ -41,7 +41,7 @@ import static org.junit.Assert.assertThat;
 public class IdentifierSearchTermsDaoIT {
 
     @Inject
-    private IdentifierSearchTermsDao subject;
+    private IdentifierSearchTermsDAO subject;
 
     @Test
     public void fetchSearchTerms() {

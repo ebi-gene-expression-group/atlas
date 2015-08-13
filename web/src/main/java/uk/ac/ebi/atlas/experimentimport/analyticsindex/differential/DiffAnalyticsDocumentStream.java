@@ -6,7 +6,7 @@ import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -26,7 +26,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
     private final Map<String, Integer> numReplicatesByContrastId;
     private final Iterable<? extends DifferentialAnalytics> inputStream;
     private final SetMultimap<String, String> conditionSearchTermsByContrastId;
-    private final IdentifierSearchTermsDao identifierSearchTermsDao;
+    private final IdentifierSearchTermsDAO identifierSearchTermsDAO;
     private final Set<String> factors;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
@@ -37,7 +37,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
                                        Iterable<? extends DifferentialAnalytics> inputStream,
                                        SetMultimap<String, String> conditionSearchTermsByContrastId,
                                        Map<String, Integer> numReplicatesByContrastId,
-                                       IdentifierSearchTermsDao identifierSearchTermsDao,
+                                       IdentifierSearchTermsDAO identifierSearchTermsDAO,
                                        SpeciesKingdomTrader speciesKingdomTrader) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
@@ -45,7 +45,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
         this.ensemblSpeciesByContrastId = ensemblSpeciesByContrastId;
         this.inputStream = inputStream;
         this.conditionSearchTermsByContrastId = conditionSearchTermsByContrastId;
-        this.identifierSearchTermsDao = identifierSearchTermsDao;
+        this.identifierSearchTermsDAO = identifierSearchTermsDAO;
         this.numReplicatesByContrastId = numReplicatesByContrastId;
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
@@ -123,7 +123,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
         private String fetchIdentifierSearchTerms(String geneId) {
             if (!lastSeenGeneId.equals(geneId)) {
                 lastSeenGeneId = geneId;
-                Set<String> searchTerms = identifierSearchTermsDao.fetchSearchTerms(geneId);
+                Set<String> searchTerms = identifierSearchTermsDAO.fetchSearchTerms(geneId);
 
                 if (searchTerms.isEmpty()) {
                     LOGGER.warn("No identifier search terms found for " + geneId);

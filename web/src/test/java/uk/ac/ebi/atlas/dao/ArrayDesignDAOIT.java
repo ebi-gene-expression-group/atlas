@@ -38,7 +38,7 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
-public class ArrayDesignDaoIT {
+public class ArrayDesignDAOIT {
 
     @Inject
     private ArrayDesignDAO subject;

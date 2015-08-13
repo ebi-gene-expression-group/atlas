@@ -6,7 +6,7 @@ import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -26,7 +26,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
     private final String defaultQueryFactorType;
     private final Iterable<BaselineAnalytics> inputStream;
     private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
-    private final IdentifierSearchTermsDao identifierSearchTermsDao;
+    private final IdentifierSearchTermsDAO identifierSearchTermsDAO;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     public BaselineAnalyticsDocumentStream(String experimentAccession,
@@ -35,7 +35,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
                                            String defaultQueryFactorType,
                                            Iterable<BaselineAnalytics> inputStream,
                                            SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
-                                           IdentifierSearchTermsDao identifierSearchTermsDao,
+                                           IdentifierSearchTermsDAO identifierSearchTermsDAO,
                                            SpeciesKingdomTrader speciesKingdomTrader) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
@@ -43,7 +43,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.inputStream = inputStream;
         this.conditionSearchTermsByAssayAccessionId = conditionSearchTermsByAssayAccessionId;
-        this.identifierSearchTermsDao = identifierSearchTermsDao;
+        this.identifierSearchTermsDAO = identifierSearchTermsDAO;
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
@@ -113,7 +113,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
         private String fetchIdentifierSearchTerms(String geneId) {
             if (!lastSeenGeneId.equals(geneId)) {
                 lastSeenGeneId = geneId;
-                Set<String> searchTerms = identifierSearchTermsDao.fetchSearchTerms(geneId);
+                Set<String> searchTerms = identifierSearchTermsDAO.fetchSearchTerms(geneId);
 
                 if (searchTerms.isEmpty()) {
                     LOGGER.warn("No identifier search terms found for " + geneId);

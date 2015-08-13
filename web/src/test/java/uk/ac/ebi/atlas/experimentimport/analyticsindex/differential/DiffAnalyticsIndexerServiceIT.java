@@ -19,7 +19,7 @@ import uk.ac.ebi.atlas.experimentimport.EFOParentsLookupService;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsInputStream;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalyticsInputStreamFactory;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.DifferentialExperiment;
 import uk.ac.ebi.atlas.model.differential.Regulation;
@@ -56,7 +56,7 @@ public class DiffAnalyticsIndexerServiceIT {
     private RnaSeqDifferentialAnalyticsInputStreamFactory rnaSeqDifferentialAnalyticsInputStreamFactory;
 
     @Mock
-    AnalyticsIndexDao analyticsIndexDaoMock;
+    AnalyticsIndexDAO analyticsIndexDAOMock;
 
     @Inject
     ExperimentTrader experimentTrader;
@@ -78,12 +78,12 @@ public class DiffAnalyticsIndexerServiceIT {
                 "AT5G41480\t\t1\t0.207244599170542\t1\t0.0726273346499253\t1\t0.0666913090347075";
 
         MockitoAnnotations.initMocks(this);
-        when(analyticsIndexDaoMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), anyInt())).thenAnswer(storeDocuments());
+        when(analyticsIndexDAOMock.addDocuments(Matchers.<Iterable<AnalyticsDocument>>any(), anyInt())).thenAnswer(storeDocuments());
         Reader reader38400 = new StringReader(tsv38400);
         CSVReader csvReader38400 = new CSVReader(reader38400, '\t');
         RnaSeqDifferentialAnalyticsInputStream inputStream38400 = new RnaSeqDifferentialAnalyticsInputStream(csvReader38400, "38400 mock");
         when(rnaSeqDifferentialAnalyticsInputStreamFactory.create("E-GEOD-38400")).thenReturn(inputStream38400);
-        DiffAnalyticsDocumentStreamIndexer streamIndexer = new DiffAnalyticsDocumentStreamIndexer(rnaSeqDifferentialAnalyticsInputStreamFactory, streamFactory, analyticsIndexDaoMock);
+        DiffAnalyticsDocumentStreamIndexer streamIndexer = new DiffAnalyticsDocumentStreamIndexer(rnaSeqDifferentialAnalyticsInputStreamFactory, streamFactory, analyticsIndexDAOMock);
 
         when(efoTreeNodesTrader.getTreeNodes()).thenReturn(Collections.<String, EFONode>emptyMap());
         efoParentsLookupService = new EFOParentsLookupService(efoTreeNodesTrader);

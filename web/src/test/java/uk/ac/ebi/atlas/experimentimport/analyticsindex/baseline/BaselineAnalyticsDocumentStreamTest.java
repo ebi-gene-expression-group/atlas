@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDao;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -52,7 +52,7 @@ public class BaselineAnalyticsDocumentStreamTest {
     private static final String ENSEMBL_ENSEMBLDB = "ensembl";
 
     @Mock
-    private IdentifierSearchTermsDao identifierSearchTermsDao;
+    private IdentifierSearchTermsDAO identifierSearchTermsDAO;
 
     @Mock
     private SpeciesKingdomTrader speciesKingdomTraderMock;
@@ -62,9 +62,9 @@ public class BaselineAnalyticsDocumentStreamTest {
     @Test
     public void test() {
 
-        when(identifierSearchTermsDao.fetchSearchTerms(GENEID1)).thenReturn(ImmutableSet.of(GENE_1_SEARCHTERM_1));
-        when(identifierSearchTermsDao.fetchSearchTerms(GENEID2)).thenReturn(ImmutableSet.of(GENE_2_SEARCHTERM_1, GENE_2_SEARCHTERM_2));
-        when(identifierSearchTermsDao.fetchSearchTerms(UNKNOWN_GENEID)).thenReturn(Collections.<String>emptySet());
+        when(identifierSearchTermsDAO.fetchSearchTerms(GENEID1)).thenReturn(ImmutableSet.of(GENE_1_SEARCHTERM_1));
+        when(identifierSearchTermsDAO.fetchSearchTerms(GENEID2)).thenReturn(ImmutableSet.of(GENE_2_SEARCHTERM_1, GENE_2_SEARCHTERM_2));
+        when(identifierSearchTermsDAO.fetchSearchTerms(UNKNOWN_GENEID)).thenReturn(Collections.<String>emptySet());
 
         when(speciesKingdomTraderMock.getKingdom(HOMO_SAPIENS)).thenReturn(ANIMAL_KINGDOM);
         when(speciesKingdomTraderMock.getKingdom(MUS_MUSCULUS)).thenReturn(ANIMAL_KINGDOM);
@@ -79,7 +79,7 @@ public class BaselineAnalyticsDocumentStreamTest {
 
         ImmutableSetMultimap<String, String> conditionSearchTermByAssayAccessionId = conditionSearchBuilder.build();
 
-        BaselineAnalyticsDocumentStream stream = new BaselineAnalyticsDocumentStreamFactory(identifierSearchTermsDao, speciesKingdomTraderMock).create(
+        BaselineAnalyticsDocumentStream stream = new BaselineAnalyticsDocumentStreamFactory(identifierSearchTermsDAO, speciesKingdomTraderMock).create(
                 EXPERIMENT_ACCESSION, EXPERIMENT_TYPE, ensemblSpeciesGroupedByAssayGroupId, DEFAULT_QUERY_FACTOR_TYPE,
                 ImmutableSet.of(BASELINE_ANALYTICS1, BASELINE_ANALYTICS2, BASELINE_ANALYTICS3),
                 conditionSearchTermByAssayAccessionId);
