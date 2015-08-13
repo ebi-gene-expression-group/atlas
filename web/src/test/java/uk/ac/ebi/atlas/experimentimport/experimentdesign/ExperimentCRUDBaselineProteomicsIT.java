@@ -15,6 +15,7 @@ import uk.ac.ebi.atlas.experimentimport.*;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsDAO;
 import uk.ac.ebi.atlas.experimentimport.analytics.AnalyticsLoaderFactory;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.*;
+import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsIndexerManager;
 import uk.ac.ebi.atlas.model.ExperimentDesign;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.SampleCharacteristic;
@@ -40,6 +41,7 @@ import static org.hamcrest.core.IsCollectionContaining.hasItem;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -117,6 +119,9 @@ public class ExperimentCRUDBaselineProteomicsIT {
     private AnalyticsDAO analyticsDAOMock;
 
     @Mock
+    private AnalyticsIndexerManager analyticsIndexerManagerMock;
+
+    @Mock
     private ExperimentDAO experimentDAOMock;
 
     @Mock
@@ -153,7 +158,9 @@ public class ExperimentCRUDBaselineProteomicsIT {
         when(experimentDesignFileWriterBuilderMock.withExperimentType(any(ExperimentType.class))).thenReturn(experimentDesignFileWriterBuilderMock);
         when(experimentDesignFileWriterBuilderMock.build()).thenReturn(experimentDesignFileWriterMock);
 
-        ExperimentMetadataCRUD experimentMetadataCRUD = experimentMetadataCRUDFactory.create(experimentDesignFileWriterBuilderMock, experimentDAOMock, conditionsIndexTrader);
+        doNothing().when(analyticsIndexerManagerMock).deleteFromAnalyticsIndex(E_PROT_1);
+
+        ExperimentMetadataCRUD experimentMetadataCRUD = experimentMetadataCRUDFactory.create(experimentDesignFileWriterBuilderMock, experimentDAOMock, conditionsIndexTrader, analyticsIndexerManagerMock);
 
         subject = new ExperimentCRUD();
         subject.setAnalyticsDAO(analyticsDAOMock);
@@ -417,6 +424,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
 
         verify(solrClientMock).deleteByQuery("experiment_accession:" + E_PROT_1);
         verify(experimentDAOMock).deleteExperiment(E_PROT_1);
+        verify(analyticsIndexerManagerMock).deleteFromAnalyticsIndex(E_PROT_1);
     }
 
 }

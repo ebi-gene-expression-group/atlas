@@ -52,15 +52,18 @@ public class ExperimentMetadataCRUDFactory {
     @Inject
     AnalyticsIndexerManager analyticsIndexerManager;
 
-    public ExperimentMetadataCRUD create(ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder, ExperimentDAO experimentDao, ConditionsIndexTrader conditionsIndexTrader) {
+    public ExperimentMetadataCRUD create(ExperimentDesignFileWriterBuilder experimentDesignFileWriterBuilder, ExperimentDAO experimentDao, ConditionsIndexTrader conditionsIndexTrader, AnalyticsIndexerManager analyticsIndexerManager) {
+
         ProteomicsBaselineExperimentsCacheLoader loader = loaderFactory.create(experimentDao);
         LoadingCache<String, ProteomicsBaselineExperiment> loadingCache = CacheBuilder.newBuilder().maximumSize(1).build(loader);
         ProteomicsBaselineExperimentsCache proteomicsBaselineExperimentsCache = new ProteomicsBaselineExperimentsCache(loadingCache);
         ExperimentTrader experimentTrader = new ExperimentTrader(experimentDao, baselineExperimentsCache, rnaSeqDiffExperimentsCache, microarrayExperimentsCache, proteomicsBaselineExperimentsCache, publicExperimentTypesCache);
+
         return new ExperimentMetadataCRUD(
                 experimentDao, experimentDesignFileWriterBuilder,
                 experimentTrader, experimentDTOBuilder, condensedSdrfParser,
                 conditionsIndexTrader, efoParentsLookupService,
                 analyticsIndexerManager);
+
     }
 }
