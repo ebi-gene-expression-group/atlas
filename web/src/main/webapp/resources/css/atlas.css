@@ -202,19 +202,12 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     box-shadow: 0 0 7px gray;
 }
 
-#filterby-menu .ui-menu {
-    width: 150px;
-}
-
-#filterby-menu .ui-menu,
 .ui-autocomplete {
     z-index: 600;
     border-radius: 4px;
     background: #FFF none !important;
 }
 
-#filterby-menu .ui-state-focus,
-#filterby-menu .ui-state-active,
 .ui-autocomplete .ui-state-focus,
 .ui-autocomplete .ui-state-active {
     color: #EB8F00;
@@ -222,7 +215,6 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     background: #E0EAF1 none !important;
 }
 
-#filterby-menu li,
 .ui-autocomplete li {
     border-radius: 4px;
 }
@@ -231,7 +223,6 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     font-size: 85%;
 }
 
-#filterby-menu li a,
 .ui-autocomplete li a {
     border: none;
     color: #46799B;
@@ -247,6 +238,10 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
 
 .fancybox-close {
     border: 0 !important;
+}
+
+#gxaExperimentHeader .ui-button-text, #download-experiment-design-link .ui-button-text {
+    padding: 0;
 }
 
 /* JQuery UI overrides: end */
@@ -279,7 +274,6 @@ div.gxaExperimentRequestPreferencesBarchartTooltip {
     background: no-repeat center;
     cursor: pointer;
     padding: 2px !important;
-
 }
 
 /****  STYLING FOR BUTTONS IN GENE SET TYPE ANALYSIS PLOTS *****/
@@ -295,7 +289,6 @@ div.gxaExperimentRequestPreferencesBarchartTooltip {
     display: block;
     padding-bottom: 5px;
 }
-
 
 .gxaBlock {
     padding-top: 1em;
@@ -508,9 +501,4 @@ div.gxaExperimentsPageHeading {
 
 #experiments-table .nowrap {
     white-space: nowrap;
-}
-
-/* TODO: This class is used in jquery-ui-1.10.2.custom.css - move out to a separate css file */
-#gxaExperimentHeader .ui-button-text, #download-experiment-design-link .ui-button-text {
-    padding: 0;
 }
