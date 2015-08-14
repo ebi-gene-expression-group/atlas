@@ -511,6 +511,6 @@ div.gxaExperimentsPageHeading {
 }
 
 /* TODO: This class is used in jquery-ui-1.10.2.custom.css - move out to a separate css file */
-.ui-button-text {
-    padding: 0 !important;
+#gxaExperimentHeader .ui-button-text, #download-experiment-design-link .ui-button-text {
+    padding: 0;
 }

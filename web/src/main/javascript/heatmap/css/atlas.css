@@ -25,8 +25,8 @@
     border-bottom: 1px solid #cccccc !important;
 }
 
-.ui-button-text {
-    padding: 0 !important;
+#download-profiles-link .ui-button-text {
+    padding: 0;
 }
 
 .ui-button:hover, .ui-button:active {
@@ -124,7 +124,4 @@ span.gxaGenePropertyLabel {
     text-align: justify;
 }
 
-/* TODO: This class is used in jquery-ui-1.10.2.custom.css - move out to a separate css file */
-#gxaExperimentHeader .ui-button-text {
-    padding: 0 !important;
-}
+
