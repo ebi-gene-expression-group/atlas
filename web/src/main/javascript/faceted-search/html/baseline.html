@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Differential faceted search results demos</title>
+
+    <script src="/dev-server/vendor.bundle.js"></script>
+    <script src="/dev-server/demo.bundle.js"></script>
+</head>
+
+<body>
+
+<div id="facets">If you see this then something is wrong.</div>
+<div id="results"></div>
+
+</body>
+
+<script>
+    var facetsData = {
+        "Homo sapiens":
+                [{"name":"CELL_LINE","value":"Cell line"},
+                 {"name":"ORGANISM_PART","value":"Organism part"}],
+        "Rattus norvegicus":
+                [{"name":"ORGANISM_PART","value":"Organism part"}],
+        "Caenorhabditis elegans":
+                [{"name":"DEVELOPMENTAL_STAGE","value":"Developmental stage"}],
+        "Pan paniscus":
+                [{"name":"ORGANISM_PART","value":"Organism part"}],
+        "Pan troglodytes":
+                [{"name":"ORGANISM_PART","value":"Organism part"}],
+        "Mus musculus":
+                [{"name":"ORGANISM_PART","value":"Organism part"}],
+        "Gallus gallus":
+                [{"name":"ORGANISM_PART","value":"Organism part"}],
+        "Pongo pygmaeus":
+                [{"name":"ORGANISM_PART","value":"Organism part"}],
+        "Gorilla gorilla":
+                [{"name":"ORGANISM_PART","value":"Organism part"}],
+        "Monodelphis domestica":
+                [{"name":"ORGANISM_PART","value":"Organism part"}]};
+
+    var baselineResultsData = [];
+    var facetedSearcher = window.exposed;
+    facetedSearcher.baseline("facets", "results", facetsData, "localhost:8080");
+
+</script>
+
+</html>

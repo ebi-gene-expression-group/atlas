@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Differential faceted search results demos</title>
+
+    <script src="/dev-server/vendor.bundle.js"></script>
+    <script src="/dev-server/demo.bundle.js"></script>
+</head>
+
+<body>
+
+<div id="facets">If you see this then something is wrong.</div>
+<div id="results"></div>
+
+</body>
+
+<script>
+    var facetsData = {
+        "kingdom":
+                [{"name":"animals","value":"animals"},
+                 {"name":"plants","value":"plants"}],
+        "species":
+                [{"name":"homo sapiens","value":"homo sapiens"},
+                 {"name":"arabidopsis thaliana","value":"arabidopsis thaliana"},
+                 {"name":"drosophila melanogaster","value":"drosophila melanogaster"},
+                 {"name":"mus musculus","value":"mus musculus"}],
+        "experimentType":
+                [{"name":"microarray_1colour_mrna_differential","value":"microarray_1colour_mrna_differential"},
+                 {"name":"rnaseq_mrna_differential","value":"rnaseq_mrna_differential"},
+                 {"name":"microarray_2colour_mrna_differential","value":"microarray_2colour_mrna_differential"}],
+        "factors":
+                [{"name":"genotype","value":"genotype"},
+                 {"name":"infect","value":"infect"},
+                 {"name":"compound","value":"compound"},
+                 {"name":"temperature","value":"temperature"},
+                 {"name":"ecotype","value":"ecotype"},
+                 {"name":"growth condition","value":"growth condition"},
+                 {"name":"time","value":"time"},
+                 {"name":"organism part","value":"organism part"},
+                 {"name":"culture condition","value":"culture condition"}],
+        "numReplicates":
+                [{"name":"3","value":"3"},
+                 {"name":"4","value":"4"},
+                 {"name":"5","value":"5"},
+                 {"name":"6","value":"6"}],
+        "regulation":
+                [{"name":"UP","value":"UP"}]
+    };
+
+    var diffResultsData = [];
+    var facetedSearcher = window.exposed;
+    facetedSearcher.differential("facets", "results", facetsData, "localhost:8080");
+
+</script>
+
+</html>

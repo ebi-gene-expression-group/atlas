@@ -4,7 +4,7 @@
   "description": "Expression Atlas JavaScript Webpack bundles ",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "webpack --progress --colors --watch --debug --output-pathinfo --display-chunks --display-modules",
+    "dev": "webpack --progress --colors --watch --debug --output-pathinfo --display-chunks --display-modules --devtool source-map",
     "prod": "webpack --progress --colors --optimize-minimize --output-pathinfo --display-chunks --display-modules"
   },
   "author": "Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",

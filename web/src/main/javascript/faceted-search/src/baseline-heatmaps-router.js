@@ -6,7 +6,10 @@ var React = require('react');
 var $ = require('jquery');
 var jQuery = $;
 require('jquery.browser');
+
 var queryString = require('query-string');
+
+var URI = require('URIjs');
 
 //*------------------------------------------------------------------*
 
@@ -15,7 +18,10 @@ var Heatmaps = require('./baseline-heatmaps.jsx');
 
 //*------------------------------------------------------------------*
 
-module.exports = function (facetsElement, heatmapsElement, facetData) {
+module.exports = function (facetsContainerId, heatmapsConatinerId, facetsTreeData, atlasHost) {
+
+    var facetsElement = document.getElementById(facetsContainerId),
+        heatmapsElement = document.getElementById(heatmapsConatinerId);
 
     //TODO: add this outside the module, when module is first loaded
     var ie9 = $.browser.msie && $.browser.version < 10;
@@ -26,34 +32,34 @@ module.exports = function (facetsElement, heatmapsElement, facetData) {
     renderPage();
 
     function renderPage() {
-        var query = queryString.parse(window.location.search.slice(1)),
-            pathname = window.location.pathname;
+        var query = queryString.parse(window.location.search.slice(1));
         query.select = query.select && JSON.parse(query.select);
-        render(query, pathname);
+        render(query);
     }
 
-    function render(query, pathname) {
+    function render(query) {
+        var host = atlasHost ? atlasHost : window.location.host;
+
         React.render(
-            React.createElement(FacetsTree, {facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
+            React.createElement(FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked}),
             facetsElement);
 
-        React.render(React.createElement(Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query)}),
+        React.render(React.createElement(Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), host: host}),
             heatmapsElement
         );
 
         function setChecked(checked, species, factor) {
             var newSelect = checked ? addSelection(query.select, species, factor) : removeSelection(query.select, species, factor);
-            var newQueryString = "?geneQuery=" + query.geneQuery + "&select=" + JSON.stringify(newSelect);
-            console.log(newQueryString);
-            navigateTo(pathname, newQueryString);
+            var newQueryString = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(newSelect)}).normalize();
+            navigateTo(newQueryString);
         }
 
-        function navigateTo(pathname, newQueryString) {
+        function navigateTo(newQueryString) {
             var state, title;
             if (ie9) {
                 window.location.search = newQueryString;
             } else {
-                history.pushState(null, null, pathname + newQueryString);
+                history.pushState(null, null, window.location.pathname + newQueryString);
                 renderPage();
             }
         }

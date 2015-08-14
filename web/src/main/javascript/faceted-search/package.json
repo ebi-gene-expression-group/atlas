@@ -10,6 +10,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "URIjs": "^1.16.0",
     "expression-atlas-heatmap": "file:../heatmap",
     "jquery": "^2.1.4",
     "jquery.browser": "0.0.8",

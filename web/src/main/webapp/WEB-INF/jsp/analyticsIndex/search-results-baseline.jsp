@@ -78,14 +78,14 @@
 </section><!-- /search_facet -->
 
 <script src="${pageContext.request.contextPath}/resources/js-bundles/vendor.bundle.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js-bundles/faceted-search-results.bundle.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js-bundles/faceted-search.bundle.js"></script>
 
 <script>
     var facetedSearcher = window.exposed;
 
     <c:if test="${hasBaselineResults}">
     var facetsData = ${empty jsonFacets ? 'null' : jsonFacets};
-    facetedSearcher.baseline(facetsData, "atlasBaselineFacetedSearchFacetsContainer", "atlasBaselineFacetedSearchResultsContainer");
+        facetedSearcher.baseline("atlasBaselineFacetedSearchFacetsContainer", "atlasBaselineFacetedSearchResultsContainer", facetsData);
     </c:if>
 
 </script>

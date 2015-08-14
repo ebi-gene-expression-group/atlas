@@ -11,21 +11,12 @@ var AtlasHeatmapBuilder = require('expression-atlas-heatmap');
 //*------------------------------------------------------------------*
 
 var BaselineHeatmapWidget = React.createClass({
-
-    //    <Heatmaps gxaBaseUrl='/gxa/' geneQuery='blood' heatmaps={[
-    //    {
-    //        // Data for first heatmap
-    //        "geneQuery": "blood",
-    //        "species": "Homo sapiens",
-    //        "factor": "ORGANISM_PART"
-    //    },
-    //    {
-    //        // Data for second heatmap
-    //        "geneQuery": "blood",
-    //        "species": "Mus musculus",
-    //        "factor": "CELL_LINE"
-    //    }
-    //    ]} />
+    propTypes: {
+        gxaBaseUrl: React.PropTypes.string.isRequired,
+        geneQuery: React.PropTypes.string.isRequired,
+        species: React.PropTypes.string.isRequired,
+        factor: React.PropTypes.string.isRequired
+    },
 
     componentDidMount: function() {
         AtlasHeatmapBuilder({
@@ -40,11 +31,8 @@ var BaselineHeatmapWidget = React.createClass({
     },
 
     render: function() {
-        // render a heatmap per each element in the array heatmapsParams
         return(
-            <div ref="widgetBody">
-
-            </div>
+            <div ref="widgetBody"></div>
         );
     }
 

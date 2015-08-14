@@ -6,7 +6,10 @@ var React = require('react');
 var $ = require('jquery');
 var jQuery = $;
 require('jquery.browser');
+
 var queryString = require('query-string');
+
+var URI = require('URIjs');
 
 //*------------------------------------------------------------------*
 
@@ -15,7 +18,10 @@ var DifferentialResults = require('./differential-results.jsx');
 
 //*------------------------------------------------------------------*
 
-module.exports = function (facetsElement, resultsElement, facetData) {
+module.exports = function (facetsContainerId, resultsContainerId, facetsTreeData, atlasHost) {
+
+    var facetsElement = document.getElementById(facetsContainerId),
+        resultsElement = document.getElementById(resultsContainerId);
 
     //TODO: add this outside the module, when module is first loaded
     var ie9 = $.browser.msie && $.browser.version < 10;
@@ -28,16 +34,15 @@ module.exports = function (facetsElement, resultsElement, facetData) {
 
     function renderPage() {
         var locationSearch = window.location.search;
-        var query = queryString.parse(locationSearch.slice(1)),
-            pathname = window.location.pathname;
+        var query = queryString.parse(locationSearch.slice(1));
         query.select = query.select && JSON.parse(query.select);
-        render(query, pathname);
+        render(query);
     }
 
-    function render(query, pathname) {
+    function render(query) {
 
         React.render(
-            React.createElement(FacetsTree, {facets: facetData, checkedFacets: query.select, setChecked: setChecked}),
+            React.createElement(FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked}),
             facetsElement);
 
         queryToResults(query.geneQuery, query.select);
@@ -45,17 +50,16 @@ module.exports = function (facetsElement, resultsElement, facetData) {
         function setChecked(checked, facet, facetItem) {
             var newSelect = checked ? addSelection(query.select, facet, facetItem) : removeSelection(query.select, facet, facetItem);
             var newQueryString = "?geneQuery=" + query.geneQuery + "&select=" + JSON.stringify(newSelect);
-            console.log(newQueryString);
             queryToResults(query.geneQuery, newSelect);
-            navigateTo(pathname, newQueryString);
+            navigateTo(newQueryString);
         }
 
-        function navigateTo(pathname, newQueryString) {
+        function navigateTo(newQueryString) {
             var state, title;
             if (ie9) {
                 window.location.search = newQueryString;
             } else {
-                history.pushState(null, null, pathname + newQueryString);
+                history.pushState(null, null, window.location.pathname + newQueryString);
                 renderPage();
             }
         }
@@ -124,10 +128,12 @@ module.exports = function (facetsElement, resultsElement, facetData) {
             }
         }
 
-        $.ajaxSetup({ traditional:true });
+        var host = atlasHost ? atlasHost : window.location.host;
+        var differentialResultsPath = "gxa/search/differential/json";
 
+        $.ajaxSetup({ traditional:true });
         $.ajax({
-            url: window.location.pathname + '/json',
+            url: new URI({protocol: "http", hostname: host, path: differentialResultsPath}).normalize(),
             data: {
                 'geneQuery': geneQuery,
                 'species': species.toString(),

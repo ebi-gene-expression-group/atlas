@@ -8,7 +8,7 @@ module.exports = {
     entry: {
         "expression-atlas-heatmap": './heatmap',
         "internal-atlas-heatmap": './heatmap/internal-atlas-index.js',
-        "faceted-search-results": './faceted-search-results',
+        "faceted-search": './faceted-search',
         "vendor": [ 'react', 'jquery', 'jquery.browser', 'URIjs' ]
     },
 

@@ -11,29 +11,28 @@ require('../css/differential-results.css');
 //*------------------------------------------------------------------*
 
 var DifferentialResults = React.createClass({
-
-    propTypes: {
-        /*
-         eg: from http://www.ebi.ac.uk/gxa/query?geneQuery=zinc&_exactMatch=on&organism=Any&condition=
-         [
-         {
+    /*
+     eg: from http://www.ebi.ac.uk/gxa/query?geneQuery=zinc&_exactMatch=on&organism=Any&condition=
+     [
+        {
          "geneCount": 10,
          "organism": "Mus musculus",
          "contrastId": "g2_g4",
          "comparison": "'LDB1 knock-down with Ldb1 delta 4/5 construct' vs 'control shRNA",
          "experimentAccession": "E-GEOD-54549",
          "experimentName": "Role of LDB1 in the transition from chromatin looping to transcription activation"
-         },
-         {
+        },
+        {
          "geneCount": 2,
          "organism": "Homo sapiens",
          "contrastId": "g2_g5",
          "comparison": "'SAP130 knock-down' vs 'mock'",
          "experimentAccession": "E-GEOD-56788",
          "experimentName": "RNA-seq analysis of vorinostat-resistant HCT116 cells following gene knockdown of potential vorinostat-resistance candidate genes"
-         }
-         ]
-         */
+        }
+     ]
+     */
+    propTypes: {
         diffResultsData: React.PropTypes.arrayOf(React.PropTypes.shape({
             geneCount: React.PropTypes.number.isRequired,
             organism: React.PropTypes.string.isRequired,
