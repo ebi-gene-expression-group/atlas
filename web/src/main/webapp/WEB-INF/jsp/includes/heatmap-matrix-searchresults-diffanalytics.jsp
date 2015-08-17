@@ -123,8 +123,6 @@
 </table>
 
 
-<%@ include file="react.jsp" %>
-
 <script language="JavaScript" type="text/javascript" src="${base}/resources/js/heatmapModuleDeprecated.js"></script>
 <script src="${pageContext.request.contextPath}/resources/widget/latest/jsx/contrastTooltip.js"></script>
 <script src="${pageContext.request.contextPath}/resources/widget/latest/js/contrastTooltipModule.js"></script>
