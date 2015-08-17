@@ -24,7 +24,7 @@
 
             var multiExperiment = ${isMultiExperiment ? true : false};
 
-            heatmapModule(heatmapData, multiExperiment , ${type.differential}, ${type.proteomicsBaseline});
+            heatmapModule(heatmapData, multiExperiment, ${type.differential}, ${type.proteomicsBaseline});
 
         </script>
     </c:otherwise>

@@ -33,12 +33,12 @@
     <c:import url="includes/request-preferences.jsp"/>
 </section>
 
-<section style="overflow: auto;" class="gxaExtraPadding">
+<section style="overflow: auto;" class="gxaExtraPadding" id="lolapalooza">
     <spring:hasBindErrors name="preferences">
         <c:set var="isPreferenceError" value="true"/>
     </spring:hasBindErrors>
 
-    <%@ include file="includes/anatomogram-and-heatmap-react.jsp" %>
+    <%--<%@ include file="includes/anatomogram-and-heatmap-react.jsp" %>--%>
 </section>
 
 <script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/resources/js/lib/chosen/chosen.jquery.min.js"></script>

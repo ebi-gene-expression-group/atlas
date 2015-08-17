@@ -256,7 +256,6 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                     repositionSticky();
                 }))
                 .scroll(repositionSticky);
-            ;
 
             $(this.refs.countAndLegend.getDOMNode()).hcSticky({bottomEnd: calcAllowance()});
             $w.resize();

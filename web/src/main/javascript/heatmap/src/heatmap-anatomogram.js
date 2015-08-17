@@ -2,54 +2,47 @@
 
 //*------------------------------------------------------------------*
 
-var React = require('react');
+function drawHeatmap (data, targetElement, heatmapBuilder, heatmapKey) {
 
-var $ = require('jquery');
-var jQuery = $;
-require('../lib/jquery.xdomainrequest.js');
+    var React = require('react');
 
-//*------------------------------------------------------------------*
+    var HeatmapAnatomogramContainer = require('./heatmap-anatomogram-container.jsx');
+    var anatomogramModule = require('./anatomogram-module.js');
 
-var heatmapModule = require('./heatmap.jsx');
-var HeatmapContainer = require('./heatmap-container.jsx');
-var anatomogramModule = require('./anatomogram-module.js');
+    var heatmapConfig = data.config,
+        columnHeaders = data.columnHeaders,
+        profiles = data.profiles,
+        geneSetProfiles = data.geneSetProfiles,
+        anatomogramData = data.anatomogram,
+        experimentData = data.experiment;
 
-//*------------------------------------------------------------------*
+    var Heatmap = heatmapBuilder(heatmapConfig).Heatmap;
 
-function drawHeatmap (data, targetElement, heatmapClass, heatmapBuilder, heatmapKey) {
+    React.render(
+        React.createElement(
+            HeatmapAnatomogramContainer,
+            {Heatmap: Heatmap, isWidget: true, experiment: experimentData,
+             anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
+             geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig: heatmapConfig}
+        ),
+        targetElement
+    );
 
-    (function ($, React, HeatmapContainer,
-               heatmapBuilder, heatmapConfig, columnHeaders, profiles, geneSetProfiles, anatomogramData, experimentData, heatmapKey) {
-
-        $(document).ready(function () {
-            // call this inside ready() so all scripts load first in IE8
-            var Heatmap = heatmapBuilder(heatmapConfig).Heatmap;
-
-            React.render(
-                React.createElement(
-                    HeatmapContainer,
-                    {Heatmap: Heatmap, isWidget: true, heatmapClass: heatmapClass, experiment: experimentData,
-                     anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
-                     geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig: heatmapConfig}
-                ),
-                targetElement
-            );
-
-            // load anatomogram after heatmap is rendered so wiring works
-            if (anatomogramData) {
-                anatomogramModule(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile,
-                    anatomogramData.brainAnatomogramFile, anatomogramData.contextRoot, heatmapConfig.species, heatmapConfig.isSingleGene, heatmapKey);
-            }
-        });
-
-    })($, React, HeatmapContainer,
-       heatmapBuilder, data.config, data.columnHeaders, data.profiles, data.geneSetProfiles, data.anatomogram, data.experiment, heatmapKey);
-
+    // load anatomogram after heatmap is rendered so wiring works
+    if (anatomogramData) {
+        anatomogramModule(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile,
+            anatomogramData.brainAnatomogramFile, anatomogramData.contextRoot, heatmapConfig.species, heatmapConfig.isSingleGene, heatmapKey);
+    }
 }
 
 //*------------------------------------------------------------------*
 
 module.exports = function(opt) {
+
+    var heatmapModule = require('./heatmap.jsx');
+
+    var $ = require('jquery');
+    require('../lib/jquery.xdomainrequest.js');
 
     var targetElement = (typeof opt.target == 'string') ? document.getElementById(opt.target) : opt.target;
     var $targetElement = $(targetElement);
@@ -84,9 +77,9 @@ module.exports = function(opt) {
         overrideContextRoot(data, opt.gxaBaseUrl);
 
         if (opt.isMultiExperiment) {
-            drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildMultiExperiment, opt.heatmapKey);
+            drawHeatmap(data, targetElement, heatmapModule.buildMultiExperiment, opt.heatmapKey);
         } else {
-            drawHeatmap(data, targetElement, opt.heatmapClass, heatmapModule.buildBaseline);
+            drawHeatmap(data, targetElement, heatmapModule.buildBaseline);
         }
 
     }).fail(function (jqXHR, textStatus, errorThrown) {
