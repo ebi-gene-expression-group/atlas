@@ -33,7 +33,7 @@
     <c:import url="includes/request-preferences.jsp"/>
 </section>
 
-<section style="overflow: auto;" class="gxaExtraPadding" id="lolapalooza">
+<section style="overflow: auto;" class="gxaExtraPadding" id="gxaExperimentPageHeatmapAnatomogram">
     <spring:hasBindErrors name="preferences">
         <c:set var="isPreferenceError" value="true"/>
     </spring:hasBindErrors>

@@ -14,7 +14,6 @@ require('../lib/jquery.toolbar.js');
 require('fancybox')($);
 
 var td = require('throttle-debounce');
-var EventEmitter = require('wolfy87-eventemitter');
 var modernizr = require('../lib/modernizr.3.0.0-alpha3.js');  // Leaks Modernizr to the global window namespace
 
 var URI = require('URIjs');
@@ -40,36 +39,7 @@ var TypeEnum = {
     MULTIEXPERIMENT: { isMultiExperiment: true, heatmapTooltip: '#heatMapTableCellInfo-multiexp', legendTooltip: '#gradient-base-crossexp' }
 };
 
-var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLevelsInputElement) {
-
-    // ensemblSpecies is the first two words only, with underscores instead of spaces, and all lower case except for the first character
-    // used to launch the ensembl genome browser for tracks
-    var ensemblSpecies = (function toEnsemblSpecies(species) {
-        function capitaliseFirstLetter(string)
-        {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-
-        function firstTwoWords(text) {
-            var words = text.split(" ");
-            return (words.length <= 2) ? text : words[0] + " " + words[1];
-        }
-
-        return capitaliseFirstLetter(firstTwoWords(species).replace(" ", "_").toLowerCase());
-    })(heatmapConfig.species);
-
-    var ensemblHost = "";
-    if (heatmapConfig.ensemblDB === "plants") {
-        ensemblHost = "http://plants.ensembl.org/";
-    } else if (heatmapConfig.ensemblDB === "fungi") {
-        ensemblHost = "http://fungi.ensembl.org/";
-    } else if (heatmapConfig.ensemblDB === "metazoa") {
-        ensemblHost = "http://metazoa.ensembl.org/";
-    } else if (heatmapConfig.ensemblDB === "ensembl") {
-        ensemblHost = "http://www.ensembl.org/";
-    }
-
-    var grameneHost = "http://ensembl.gramene.org/";
+var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputElement) {
 
     var Heatmap = React.createClass({
 
@@ -87,14 +57,14 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         selectColumn: function (columnId) {
             var selectedColumnId = (columnId === this.state.selectedColumnId) ? null : columnId;
             this.setState({selectedColumnId: selectedColumnId}, function() {
-                eventEmitter.emitEvent('onColumnSelectionChange', [selectedColumnId]);
+                this.props.eventEmitter.emitEvent('onColumnSelectionChange', [selectedColumnId]);
             });
         },
 
         selectGene: function (geneId) {
             var selectedGeneId = (geneId === this.state.selectedGeneId) ? null : geneId;
             this.setState({selectedGeneId: selectedGeneId}, function() {
-                eventEmitter.emitEvent('onGeneSelectionChange', [selectedGeneId]);
+                this.props.eventEmitter.emitEvent('onGeneSelectionChange', [selectedGeneId]);
             });
         },
 
@@ -313,6 +283,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         }
     });
 
+
     var DownloadProfilesButton = (function (contextRoot, downloadProfilesURL) {
         return React.createClass({
             render: function () {
@@ -340,6 +311,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             }
         });
     })(heatmapConfig.contextRoot, heatmapConfig.downloadProfilesURL);
+
 
     var LegendBaseline = (function (contextRoot, formatBaselineExpression) {
         return React.createClass({
@@ -403,6 +375,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         }
     });
 
+
     var HeatmapTableHeader = React.createClass({
         renderContrastFactorHeaders: function () {
             if (type.isBaseline) {
@@ -440,6 +413,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
     });
 
+
     function restrictLabelSize(label, maxSize) {
         var result = label;
         if (result.length > maxSize + 1) {  // +1 to account for the extra ellipsis character appended
@@ -451,6 +425,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         }
         return result;
     }
+
 
     var FactorHeaders = React.createClass({
         render: function () {
@@ -465,6 +440,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         }
 
     });
+
 
     var FactorHeader = (function (contextRoot, accessKey, enableEnsemblLauncher, csstransforms) {
         return React.createClass({
@@ -518,6 +494,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         });
     })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
 
+
     var ContrastHeaders = React.createClass({
 
         render: function () {
@@ -535,6 +512,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         }
 
     });
+
 
     var ContrastHeader = (function (contextRoot, accessKey, enableEnsemblLauncher, csstransforms) {
         return React.createClass({
@@ -663,115 +641,6 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
     })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
 
 
-    var EnsemblLauncher = (function (atlasHost, contextRoot, experimentAccession, accessKey, ensemblHost, ensemblSpecies, ensemblDB, columnType ) {
-
-        var noSelectedColumnMessageArticle = (function (columnType) {
-            var isVowel = (function() {
-                var re = /^[aeiou]$/i;
-                return function(char) {
-                    return re.test(char);
-                }
-            })();
-
-            var beginsWithVowel = function (string) {
-                return isVowel(string.charAt(0));
-            };
-
-            return beginsWithVowel(columnType) ? "an " : "a ";
-        })(columnType);
-
-        return React.createClass({
-
-            getInitialState: function () {
-                return {selectedColumnId: null, selectedGeneId: null, buttonText: ""};
-            },
-
-            componentDidMount: function () {
-                $(this.refs.ensemblButton.getDOMNode()).button({icons: {primary: "ui-icon-newwin"}});
-                if (heatmapConfig.ensemblDB == "plants") {
-                    $(this.refs.grameneButton.getDOMNode()).button({icons: {primary: "ui-icon-newwin"}});
-                }
-                this.updateButton();
-                eventEmitter.addListener('onColumnSelectionChange', this.onColumnSelectionChange);
-                eventEmitter.addListener('onGeneSelectionChange', this.onGeneSelectionChange);
-            },
-
-            componentWillUnmount: function () {
-                eventEmitter.addListener('onColumnSelectionChange', this.onColumnSelectionChange);
-                eventEmitter.addListener('onGeneSelectionChange', this.onGeneSelectionChange);
-            },
-
-            onColumnSelectionChange: function (selectedColumnId) {
-                this.setState({selectedColumnId: selectedColumnId});
-            },
-
-            onGeneSelectionChange: function (selectedGeneId) {
-                this.setState({selectedGeneId: selectedGeneId});
-            },
-
-            updateButton: function() {
-                var buttonEnabled = this.state.selectedColumnId && this.state.selectedGeneId ? true : false;
-                $(this.refs.ensemblButton.getDOMNode()).button("option", "disabled", !buttonEnabled);
-                if (heatmapConfig.ensemblDB == "plants") {
-                    $(this.refs.grameneButton.getDOMNode()).button("option", "disabled", !buttonEnabled);
-                }
-            },
-
-            helpMessage: function (selectedColumnId, selectedGeneId) {
-                if (selectedColumnId && selectedGeneId) {
-                    return "";
-                }
-
-                var noSelectedColumnMessage = selectedColumnId ? "" : columnType;
-                var noSelectedGeneMessage = selectedGeneId ? "" : "gene";
-
-                return "Please select " + noSelectedColumnMessageArticle + noSelectedColumnMessage + (!(selectedColumnId || selectedGeneId) ? " and a " : "") + noSelectedGeneMessage + " from the table";
-            },
-
-            componentDidUpdate: function () {
-                this.updateButton();
-            },
-
-            _openEnsemblWindow: function (baseURL) {
-                if (!this.state.selectedColumnId || !this.state.selectedGeneId) {
-                    return;
-                }
-                var trackFileHeader = experimentAccession + "." + this.state.selectedColumnId;
-                var atlasTrackBaseURL = "http://" + atlasHost + contextRoot + "/experiments/" + experimentAccession + "/tracks/";
-                var contigViewBottom = "contigviewbottom=url:" + atlasTrackBaseURL + trackFileHeader + (type.isBaseline ? ".genes.expressions.bedGraph" : ".genes.log2foldchange.bedGraph");
-                var tiling = (type.isBaseline || ensemblDB == "ensembl") ? "" : "=tiling,url:" + atlasTrackBaseURL + trackFileHeader + ".genes.pval.bedGraph=pvalue;";
-                var ensemblTrackURL =  baseURL + ensemblSpecies + "/Location/View?g=" + this.state.selectedGeneId + ";db=core;" + contigViewBottom + tiling + ";format=BEDGRAPH";
-
-                window.open(
-                    ensemblTrackURL,
-                    '_blank'
-                );
-            },
-
-            render: function () {
-                return (
-                    <div id="ensembl-launcher-box" style={{width: "245px"}}>
-                        <div id="ensembl-launcher-box-ensembl">
-                            <label>Ensembl Genome Browser</label>
-                            <img src="/gxa/resources/images/ensembl.gif" style={{padding: "0px 5px"}}></img>
-                            <button ref="ensemblButton" onClick={this._openEnsemblWindow.bind(this, ensemblHost)}>Open</button>
-                        </div>
-                        { heatmapConfig.ensemblDB == "plants" ?
-                            <div id="ensembl-launcher-box-gramene" >
-                                <label>Gramene Genome Browser</label>
-                                <img src="/gxa/resources/images/gramene.png" style={{padding: "0px 5px"}}></img>
-                                <button ref="grameneButton" onClick={this._openEnsemblWindow.bind(this, grameneHost)}>Open</button>
-                            </div>
-                            : null
-                        }
-                        <div style={{"fontSize": "x-small", height: "30px", padding: "9px 9px"}}>{this.helpMessage(this.state.selectedColumnId, this.state.selectedGeneId)}</div>
-                    </div>
-                );
-            }
-        });
-    })(heatmapConfig.atlasHost, heatmapConfig.contextRoot, heatmapConfig.experimentAccession, heatmapConfig.accessKey, ensemblHost, ensemblSpecies, heatmapConfig.ensemblDB, heatmapConfig.columnType);
-
-
     var TopLeftCorner = (function (contextRoot) {
         return React.createClass({
 
@@ -797,6 +666,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             }
         });
     })(heatmapConfig.contextRoot);
+
 
     var createDisplayLevelsButton = function (hideText, showText) {
 
@@ -827,6 +697,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         });
     };
 
+
     var LevelsRadioGroup = React.createClass({
         getInitialState: function() {
             return {value: this.props.selectedRadioButton};
@@ -854,7 +725,9 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
     var DisplayLevelsButtonBaseline = createDisplayLevelsButton('Hide levels', 'Display levels');
 
+
     var DisplayLevelsButtonDifferential = createDisplayLevelsButton('Hide log<sub>2</sub>-fold change', 'Display log<sub>2</sub>-fold change');
+
 
     var HeatmapTableRows = React.createClass({
 
@@ -879,6 +752,7 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             );
         }
     });
+
 
     var GeneProfileRow = (function (contextRoot, isExactMatch, enableGeneLinks, enableEnsemblLauncher, geneQuery) {
 
@@ -1030,12 +904,14 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         );
     }
 
+
     function formatBaselineExpression(expressionLevel) {
         var numberExpressionLevel = +expressionLevel;
         return (numberExpressionLevel >= 100000 || numberExpressionLevel < 0.1) ? formatScientificNotation(numberExpressionLevel.toExponential(1).replace('+','')) : '' + numberExpressionLevel;
     }
 
-    var CellBaseline = (function (contextRoot, experimentAccession, ensemblHost, ensemblSpecies, formatBaselineExpression) {
+
+    var CellBaseline = (function (contextRoot, formatBaselineExpression) {
 
         function hasKnownExpression(value) {
             // true if not blank or UNKNOWN, ie: has a expression with a known value
@@ -1097,10 +973,10 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
             }
 
         });
-    })(heatmapConfig.contextRoot, heatmapConfig.experimentAccession, ensemblHost, ensemblSpecies, formatBaselineExpression);
+    })(heatmapConfig.contextRoot, formatBaselineExpression);
 
 
-    var CellMultiExperiment = (function (contextRoot, ensemblHost, ensemblSpecies, geneId, geneName, formatBaselineExpression) {
+    var CellMultiExperiment = (function (formatBaselineExpression) {
 
         function isNAExpression(value) {
             return (value === "NT")
@@ -1138,7 +1014,8 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
                     );
             }
         });
-    })(heatmapConfig.contextRoot, ensemblHost, ensemblSpecies, heatmapConfig.geneQuery, heatmapConfig.geneQuery, formatBaselineExpression);
+    })(formatBaselineExpression);
+
 
     var CellDifferential = (function () {
 
@@ -1200,9 +1077,9 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
         });
     })();
 
+
     return {
-        Heatmap: Heatmap,
-        EnsemblLauncher: heatmapConfig.enableEnsemblLauncher ? EnsemblLauncher : undefined
+        Heatmap: Heatmap
     };
 };
 
@@ -1210,20 +1087,20 @@ var build = function build(type, heatmapConfig, eventEmitter, $prefFormDisplayLe
 
 exports.buildBaseline =
     function (heatmapConfig, $prefFormDisplayLevelsInputElement) {
-        return build(TypeEnum.BASELINE, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement);
+        return build(TypeEnum.BASELINE, heatmapConfig, $prefFormDisplayLevelsInputElement);
     };
 
 exports.buildProteomicsBaseline =
     function (heatmapConfig, $prefFormDisplayLevelsInputElement) {
-        return build(TypeEnum.PROTEOMICS_BASELINE, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement);
+        return build(TypeEnum.PROTEOMICS_BASELINE, heatmapConfig, $prefFormDisplayLevelsInputElement);
     };
 
 exports.buildDifferential =
     function (heatmapConfig, $prefFormDisplayLevelsInputElement) {
-        return build(TypeEnum.DIFFERENTIAL, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement);
+        return build(TypeEnum.DIFFERENTIAL, heatmapConfig, $prefFormDisplayLevelsInputElement);
     };
 
 exports.buildMultiExperiment =
     function (heatmapConfig, $prefFormDisplayLevelsInputElement) {
-        return build(TypeEnum.MULTIEXPERIMENT, heatmapConfig, new EventEmitter(), $prefFormDisplayLevelsInputElement);
+        return build(TypeEnum.MULTIEXPERIMENT, heatmapConfig, $prefFormDisplayLevelsInputElement);
     };

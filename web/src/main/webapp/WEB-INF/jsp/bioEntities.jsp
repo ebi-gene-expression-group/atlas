@@ -366,14 +366,13 @@
         var widgetParameters = "${isGeneSet ? "" : "&propertyType=bioentity_identifier" }" + "${not empty species ? "&species=".concat(species) : ""}";
 
 
-        var AtlasHeatmapBuilder = window.exposed;
-
-        AtlasHeatmapBuilder({
+        var heatmapBuilder = window.exposed;
+        heatmapBuilder({
             gxaBaseUrl: '${pageContext.request.contextPath}/',
             params: 'geneQuery=${geneQuery.asUrlQueryParameter()}' + widgetParameters,
             isMultiExperiment: true,
             target: "widgetBody",
-            heatmapClass: "gxaHeatmapPosition"
+            isWidget: false
         });
 
         </c:if>

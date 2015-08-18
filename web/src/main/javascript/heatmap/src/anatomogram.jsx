@@ -9,7 +9,15 @@ var React = require('react');
 
 //*------------------------------------------------------------------*
 
+var anatomogramModule = require('./anatomogram-module.js');
+
+//*------------------------------------------------------------------*
+
 var Anatomogram = React.createClass({
+    propTypes: {
+        anatomogram: React.PropTypes.object.isRequired,
+        heatmapConfig: React.PropTypes.object.isRequired
+    },
 
     render: function () {
         function containsHuman(s) {
@@ -62,6 +70,12 @@ var Anatomogram = React.createClass({
                 </table>
             </div>
         );
+    },
+
+    componentDidMount: function() {
+        anatomogramModule(
+            this.props.anatomogram.allSvgPathIds, this.props.anatomogram.maleAnatomogramFile, this.props.anatomogram.femaleAnatomogramFile,
+            this.props.anatomogram.brainAnatomogramFile, this.props.anatomogram.contextRoot, this.props.heatmapConfig.species, this.props.heatmapConfig.isSingleGene);
     }
 
 });

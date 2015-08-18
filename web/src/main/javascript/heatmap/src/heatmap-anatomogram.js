@@ -2,12 +2,11 @@
 
 //*------------------------------------------------------------------*
 
-function drawHeatmap (data, targetElement, heatmapBuilder, heatmapKey) {
+function drawHeatmap (data, targetElement, heatmapBuilder, isWidget, heatmapKey) {
 
     var React = require('react');
 
     var HeatmapAnatomogramContainer = require('./heatmap-anatomogram-container.jsx');
-    var anatomogramModule = require('./anatomogram-module.js');
 
     var heatmapConfig = data.config,
         columnHeaders = data.columnHeaders,
@@ -21,18 +20,13 @@ function drawHeatmap (data, targetElement, heatmapBuilder, heatmapKey) {
     React.render(
         React.createElement(
             HeatmapAnatomogramContainer,
-            {Heatmap: Heatmap, isWidget: true, experiment: experimentData,
+            {Heatmap: Heatmap, isWidget: isWidget, experiment: experimentData,
              anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
-             geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig: heatmapConfig}
+             geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig: heatmapConfig,
+            }
         ),
         targetElement
     );
-
-    // load anatomogram after heatmap is rendered so wiring works
-    if (anatomogramData) {
-        anatomogramModule(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile,
-            anatomogramData.brainAnatomogramFile, anatomogramData.contextRoot, heatmapConfig.species, heatmapConfig.isSingleGene, heatmapKey);
-    }
 }
 
 //*------------------------------------------------------------------*
@@ -74,12 +68,14 @@ module.exports = function(opt) {
             }
         }
 
+        var isWidget = opt.hasOwnProperty("isWidget") ? opt.isWidget : true;
+
         overrideContextRoot(data, opt.gxaBaseUrl);
 
         if (opt.isMultiExperiment) {
-            drawHeatmap(data, targetElement, heatmapModule.buildMultiExperiment, opt.heatmapKey);
+            drawHeatmap(data, targetElement, heatmapModule.buildMultiExperiment, isWidget, opt.heatmapKey);
         } else {
-            drawHeatmap(data, targetElement, heatmapModule.buildBaseline);
+            drawHeatmap(data, targetElement, heatmapModule.buildBaseline, isWidget);
         }
 
     }).fail(function (jqXHR, textStatus, errorThrown) {

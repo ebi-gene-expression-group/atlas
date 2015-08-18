@@ -11,7 +11,6 @@ var jQuery = $;
 
 var heatmapModule = require('./heatmap.jsx');
 var HeatmapAnatomogramContainer = require('./internal-heatmap-anatomogram-container.jsx');
-var anatomogramModule = require('./anatomogram-module.js');
 
 //*------------------------------------------------------------------*
 
@@ -23,31 +22,25 @@ function drawHeatmap (heatmapData, isMultiExperiment, isDifferential, isProteomi
         geneSetProfiles = heatmapData.geneSetProfiles,
         anatomogramData = heatmapData.anatomogram;
 
+    var isBaseline = (!isMultiExperiment && !isDifferential && !isProteomicsBaseline);
 
     var heatmapBuilder =
         isMultiExperiment ? heatmapModule.buildMultiExperiment :
             (isDifferential ? heatmapModule.buildDifferential :
                 (isProteomicsBaseline ? heatmapModule.buildProteomicsBaseline :
                     heatmapModule.buildBaseline));
-
-    var heatmapAndEnsemblLauncher = heatmapBuilder(heatmapConfig, $('#displayLevels'));
-    var Heatmap = heatmapAndEnsemblLauncher.Heatmap;
-    var EnsemblLauncher = heatmapAndEnsemblLauncher.EnsemblLauncher;
+    var Heatmap = heatmapBuilder(heatmapConfig, $('#displayLevels')).Heatmap;
 
     React.render(
         React.createElement(
             HeatmapAnatomogramContainer,
-            {Heatmap: Heatmap, EnsemblLauncher: EnsemblLauncher,
+            {Heatmap: Heatmap,
              anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles, heatmapConfig: heatmapConfig,
-             isWidget: false}
+             isBaseline: isBaseline, isWidget: false}
         ),
-        document.getElementById("lolapalooza")
+        document.getElementById("gxaExperimentPageHeatmapAnatomogram")
     );
 
-    if (anatomogramData) {
-        anatomogramModule(anatomogramData.allSvgPathIds, anatomogramData.maleAnatomogramFile, anatomogramData.femaleAnatomogramFile,
-            anatomogramData.brainAnatomogramFile, anatomogramData.contextRoot, heatmapConfig.species, heatmapConfig.isSingleGene);
-    }
 }
 
 //*------------------------------------------------------------------*

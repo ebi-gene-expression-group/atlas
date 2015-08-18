@@ -9,6 +9,8 @@ require('../lib/jquery.hc-sticky.js');
 
 var URI = require('URIjs');
 
+var EventEmitter = require('wolfy87-eventemitter');
+
 //*------------------------------------------------------------------*
 
 require('../css/atlas.css');
@@ -40,6 +42,8 @@ var ExperimentDescription = React.createClass({
 var HeatmapAnatomogramContainer = React.createClass({
 
     render: function () {
+        var eventEmitter = new EventEmitter();
+
         var Heatmap = this.props.Heatmap;
 
         var heatmapConfig = this.props.heatmapConfig;
@@ -55,11 +59,12 @@ var HeatmapAnatomogramContainer = React.createClass({
                     <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
                         <div ref="anatomogramEnsembl" className="gxaAside">
-                            { this.props.anatomogram ? <Anatomogram anatomogram={this.props.anatomogram} heatmapKey={this.props.heatmapKey} /> : null}
+                            { this.props.anatomogram ? <Anatomogram anatomogram={this.props.anatomogram} heatmapConfig={this.props.heatmapConfig} heatmapKey={this.props.heatmapKey} /> : null}
                         </div>
 
                         <div id="heatmap-react" className="gxaHeatmapPosition">
-                            <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} isWidget={this.props.isWidget}/>
+                            <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} isWidget={this.props.isWidget}
+                                     eventEmitter={eventEmitter} />
                         </div>
 
                         {/* TODO move into help tooltips module */}
