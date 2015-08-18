@@ -158,14 +158,8 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
             try {
 
-                //TODO: remove model attributes for profiles when widget is converted over to React and /widgets/heatmap/protein is removed
                 BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext);
-                model.addAttribute("geneProfiles", baselineProfiles);
-
                 BaselineProfilesList profilesAsGeneSets = requestContext.geneQueryResponseContainsGeneSets() ? fetchGeneProfilesAsGeneSets() : null;
-                if (profilesAsGeneSets != null) {
-                    model.addAttribute("profilesAsGeneSets", profilesAsGeneSets);
-                }
 
                 addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, model);
 
