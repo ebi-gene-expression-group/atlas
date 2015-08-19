@@ -40,6 +40,10 @@ module.exports = function (facetsContainerId, heatmapsConatinerId, facetsTreeDat
     function render(query) {
         var host = atlasHost ? atlasHost : window.location.host;
 
+        if(query.select == undefined) {
+            initializeQuery(query);
+        }
+
         React.render(
             React.createElement(FacetsTree, {facets: facetsTreeData, checkedFacets: query.select, setChecked: setChecked}),
             facetsElement);
@@ -47,6 +51,22 @@ module.exports = function (facetsContainerId, heatmapsConatinerId, facetsTreeDat
         React.render(React.createElement(Heatmaps, {geneQuery: query.geneQuery, heatmaps: queryToHeatmaps(query), host: host}),
             heatmapsElement
         );
+
+        function initializeQuery(query) {
+            for (var facet in facetsTreeData) {
+                var factors = facetsTreeData[facet];
+                for(var factor in factors) {
+                    if(factors[factor].name == "ORGANISM_PART") {
+                        var newSelect = addSelection(query.select, facet, factors[factor].name);
+                        query.select = newSelect;
+                    }
+                }
+            }
+
+            var newQueryString = new URI("").search({geneQuery: query.geneQuery, select: JSON.stringify(query.select)}).normalize();
+            navigateTo(newQueryString);
+            return query.select;
+        }
 
         function setChecked(checked, species, factor) {
             var newSelect = checked ? addSelection(query.select, species, factor) : removeSelection(query.select, species, factor);
