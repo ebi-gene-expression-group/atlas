@@ -196,7 +196,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
     }
 
     private void addAnatomogram(ImmutableSet<String> allSvgPathIds, Model model, String species) {
-        //ToDo: check if this can be externalized in the view with a cutom EL or tag function
+        //ToDo: check if this can be externalized in the view with a custom EL or tag function
         String maleAnatomogramFileName = applicationProperties.getAnatomogramFileName(species, AnatomogramType.MALE);
         model.addAttribute("maleAnatomogramFile", maleAnatomogramFileName);
 
@@ -214,12 +214,13 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
     private void setToggleImageButton(Model model, String species) {
         if(species.equals("oryza sativa") || species.equals("oryza sativa japonica group")){
-            model.addAttribute("toggleButtonMaleImage", "/resources/images/plant_switch_buttons_1.png");
+            model.addAttribute("toggleButtonMaleImageTemplate", "/resources/images/whole_plant");
+            model.addAttribute("toggleButtonFemaleImageTemplate", "/resources/images/flower_parts");
         }
         else {
-            model.addAttribute("toggleButtonMaleImage", "/resources/images/male_selected.png");
-            model.addAttribute("toggleButtonFemaleImage", "/resources/images/female_unselected.png");
-            model.addAttribute("toggleButtonBrainImage", "/resources/images/brain_unselected.png");
+            model.addAttribute("toggleButtonMaleImageTemplate", "/resources/images/male");
+            model.addAttribute("toggleButtonFemaleImageTemplate", "/resources/images/female");
+            model.addAttribute("toggleButtonBrainImageTemplate", "/resources/images/brain");
         }
     }
 

@@ -2,17 +2,20 @@
 
 //*------------------------------------------------------------------*
 
+var React = require('react');
+
 var $ = require('jquery');
 var jQuery = $;
 
 require('jquery-ui');
 require('../css/jquery-ui.min.css');
 
-var React = require('react');
-
 //*------------------------------------------------------------------*
 
 var ContrastTooltip = require('./contrast-tooltip.jsx');
+
+//*------------------------------------------------------------------*
+
 require('../css/atlas.css');
 require('../css/heatmap-and-anatomogram.css');
 

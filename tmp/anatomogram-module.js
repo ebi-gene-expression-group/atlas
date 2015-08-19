@@ -4,6 +4,10 @@
 
 var $ = require('jquery');
 var jQuery = $;
+
+require('jquery-ui');
+require('../css/jquery-ui.min.css');
+
 require('../lib/jquery.svg.js');
 
 //*------------------------------------------------------------------*
@@ -125,7 +129,7 @@ function loadAnatomogram(anatomogramBodyId, location, allSvgPathIds, isSingleGen
 
     svg.load(location, {
         onLoad:function(){
-            scaleAnatomogram(svg, anatomogramBodyId);
+            //scaleAnatomogram(svg, anatomogramBodyId);
             if(isSingleGene) {
                 highlightAllOrganismParts(svg, isSingleGene, allSvgPathIds);
                 highlightExpressedOrganismsPartsOnly(svg, isSingleGene);
@@ -170,29 +174,7 @@ function replaceSpaces (value) {
 
 
 function init(allSvgPathIds, fileNameMale, fileNameFemale, fileNameBrain, contextRoot, species, isSingleGene, heatmapkey) {
-    var anatomogramBody = "#anatomogramBody";
-    var sexToggle = "#sex-toggle";
-    var maleToggleImage = "#male-toggle-image";
-    var femaleToggleImage = "#female-toggle-image";
-    var brainToggleImage = "#brain-toggle-image";
 
-    if(heatmapkey != null) {
-        var heatmapKeyTrimmed = replaceSpaces(heatmapkey);
-
-        anatomogramBody = anatomogramBody + heatmapKeyTrimmed;
-        sexToggle = sexToggle + heatmapKeyTrimmed;
-        maleToggleImage = maleToggleImage + heatmapKeyTrimmed;
-        femaleToggleImage = femaleToggleImage + heatmapKeyTrimmed;
-        brainToggleImage = brainToggleImage + heatmapKeyTrimmed;
-    }
-
-
-    if ($(anatomogramBody).length === 0) {
-        return;
-    }
-
-    //init svg
-    $(anatomogramBody).svg();
 
     var svg = loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
 
@@ -222,59 +204,7 @@ function init(allSvgPathIds, fileNameMale, fileNameFemale, fileNameBrain, contex
         }
     });
 
-    if (fileNameMale !== fileNameFemale) {
-        //switch sex toggle button
-        if(species === "oryza sativa japonica group" || species === "oryza sativa") {
-            $(maleToggleImage).height("38px");
-            $(maleToggleImage).show();
 
-            $(maleToggleImage).button().toggle(
-                function () {
-                    $(this).attr("src", contextRoot + "/resources/images/plant_switch_buttons_2.png");
-                    loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameFemale, allSvgPathIds, isSingleGene);
-                },
-                function () {
-                    $(this).attr("src", contextRoot + "/resources/images/plant_switch_buttons_1.png");
-                    loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
-                }
-            ).tooltip();
-        }
-
-        else {
-            $(maleToggleImage).show();
-            $(femaleToggleImage).show();
-            $(brainToggleImage).show();
-
-            $(maleToggleImage).button().click(
-                function () {
-                    $(this).attr("src", contextRoot + "/resources/images/male_selected.png");
-                    $(femaleToggleImage).attr("src", contextRoot + "/resources/images/female_unselected.png");
-                    $(brainToggleImage).attr("src", contextRoot + "/resources/images/brain_unselected.png");
-                    loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameMale, allSvgPathIds, isSingleGene);
-                }
-            );
-
-            $(femaleToggleImage).button().click(
-                function () {
-                    $(this).attr("src", contextRoot + "/resources/images/female_selected.png");
-                    $(maleToggleImage).attr("src", contextRoot + "/resources/images/male_unselected.png");
-                    $(brainToggleImage).attr("src", contextRoot + "/resources/images/brain_unselected.png");
-                    loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameFemale, allSvgPathIds, isSingleGene);
-                }
-            );
-
-            $(brainToggleImage).button().click(
-                function () {
-                    $(this).attr("src", contextRoot + "/resources/images/brain_selected.png");
-                    $(maleToggleImage).attr("src", contextRoot + "/resources/images/male_unselected.png");
-                    $(femaleToggleImage).attr("src", contextRoot + "/resources/images/female_unselected.png");
-                    loadAnatomogram(anatomogramBody, contextRoot + "/resources/svg/" + fileNameBrain, allSvgPathIds, isSingleGene);
-                }
-            );
-        }
-    } else {
-        $(sexToggle).hide();
-    }
 }
 
 //*------------------------------------------------------------------*

@@ -3,20 +3,23 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
+
 var $ = require('jquery');
 var jQuery = $;
+
 require('../lib/jquery.hc-sticky.js');
 
 var URI = require('URIjs');
-
 var EventEmitter = require('wolfy87-eventemitter');
+
+//*------------------------------------------------------------------*
+
+var Anatomogram = require('./anatomogram.jsx');
 
 //*------------------------------------------------------------------*
 
 require('../css/atlas.css');
 require('../css/heatmap-and-anatomogram.css');
-
-var Anatomogram = require('./anatomogram.jsx');
 
 //*------------------------------------------------------------------*
 
@@ -59,7 +62,7 @@ var HeatmapAnatomogramContainer = React.createClass({
                     <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
                         <div ref="anatomogramEnsembl" className="gxaAside">
-                            { this.props.anatomogram ? <Anatomogram anatomogram={this.props.anatomogram} heatmapConfig={this.props.heatmapConfig} heatmapKey={this.props.heatmapKey} /> : null}
+                            { this.props.anatomogram ? <Anatomogram anatomogram={this.props.anatomogram} heatmapConfig={this.props.heatmapConfig} /> : null}
                         </div>
 
                         <div id="heatmap-react" className="gxaHeatmapPosition">

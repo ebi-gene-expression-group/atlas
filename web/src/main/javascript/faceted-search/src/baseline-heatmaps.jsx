@@ -35,8 +35,7 @@ var Heatmaps = React.createClass({
             <div>
                 {this.props.heatmaps.map(function (heatmap) {
                     return <BaselineHeatmapWidget key={heatmap.species + "_" + heatmap.factor}
-                                                  gxaBaseUrl={gxaBaseURL.normalize().toString()} geneQuery={geneQuery} species={heatmap.species} factor={heatmap.factor}
-                                                  isWidget={false} />;
+                                                  gxaBaseUrl={gxaBaseURL.normalize().toString()} geneQuery={geneQuery} species={heatmap.species} factor={heatmap.factor} />;
                 })}
             </div>
         );

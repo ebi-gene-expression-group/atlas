@@ -60,8 +60,8 @@ public class ApplicationProperties {
         this.arrayDesignTrader = arrayDesignTrader;
     }
 
-    public String getAnatomogramFileName(String specie, AnatomogramType anatomogramType) {
-        String key = "organism.anatomogram." + specie.toLowerCase();
+    public String getAnatomogramFileName(String species, AnatomogramType anatomogramType) {
+        String key = "organism.anatomogram." + species.toLowerCase();
         String ending = "";
         if(anatomogramType.equals(AnatomogramType.MALE)) {
             ending = ".male";
@@ -71,8 +71,7 @@ public class ApplicationProperties {
             ending = ".brain";
         }
 
-        String fileName = configurationProperties.getProperty(key + ending);
-        return fileName != null ? fileName : configurationProperties.getProperty(key);
+        return configurationProperties.getProperty(key + ending);
     }
 
     //This is invoked from jsp el

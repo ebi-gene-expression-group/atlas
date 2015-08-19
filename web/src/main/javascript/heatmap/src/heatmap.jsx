@@ -7,15 +7,18 @@ var RadioGroup = require('react-radio-group');
 
 var $ = require('jquery');
 var jQuery = $;
+
 require('jquery-ui');
+require('../css/jquery-ui.min.css');
+
 require('jquery.browser');
+require('fancybox')($);
+var td = require('throttle-debounce');
+
 require('../lib/jquery.hc-sticky.js');
 require('../lib/jquery.toolbar.js');
-require('fancybox')($);
 
-var td = require('throttle-debounce');
 var modernizr = require('../lib/modernizr.3.0.0-alpha3.js');  // Leaks Modernizr to the global window namespace
-
 var URI = require('URIjs');
 
 //*------------------------------------------------------------------*
@@ -26,6 +29,8 @@ var genePropertiesTooltipModule = require('./gene-properties-tooltip-module.js')
 var factorTooltipModule = require('./factor-tooltip-module.js');
 var contrastTooltipModule = require('./contrast-tooltip-module.js');
 var helpTooltipsModule = require('./help-tooltips-module.js');
+
+//*------------------------------------------------------------------*
 
 require('../css/table-grid.css');
 require('../css/jquery-ui.min.css');
@@ -718,6 +723,8 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
         handleChange: function(event) {
             this.props.toggleRadioButton(event.target.value);
             this.setState({value: this.props.selectedRadioButton});
+
+            // To resize the sticky column/header in case the row height or column width changes
             $(window).resize();
         }
     });

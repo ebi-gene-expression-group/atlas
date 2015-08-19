@@ -3,22 +3,26 @@
 //*------------------------------------------------------------------*
 
 var React = require('react');
+
 var $ = require('jquery');
 var jQuery = $;
+
 require('../lib/jquery.hc-sticky.js');
 
 var URI = require('URIjs');
-
 var EventEmitter = require('wolfy87-eventemitter');
 
 //*------------------------------------------------------------------*
-
-require('../css/heatmap-and-anatomogram.css');
 
 var Anatomogram = require('./anatomogram.jsx');
 var EnsemblLauncher = require('./ensembl-launcher.jsx');
 
 //*------------------------------------------------------------------*
+
+require('../css/heatmap-and-anatomogram.css');
+
+//*------------------------------------------------------------------*
+
 
 var InternalHeatmapAnatomogramContainer = React.createClass({
     propTypes: {

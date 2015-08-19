@@ -2,6 +2,10 @@
 
 //*------------------------------------------------------------------*
 
+var URI = require('URIjs');
+
+//*------------------------------------------------------------------*
+
 function drawHeatmap (data, targetElement, heatmapBuilder, isWidget, heatmapKey) {
 
     var React = require('react');
@@ -41,7 +45,7 @@ module.exports = function(opt) {
     var targetElement = (typeof opt.target == 'string') ? document.getElementById(opt.target) : opt.target;
     var $targetElement = $(targetElement);
 
-    var endpoint = opt.heatmapUrl ? opt.heatmapUrl : opt.isMultiExperiment ? 'widgets/heatmap/multiExperiment' : 'widgets/heatmap/referenceExperiment';
+    var endpoint = opt.heatmapUrl ? opt.heatmapUrl : opt.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
     var url = opt.gxaBaseUrl + endpoint + '?' + opt.params;
 
     var httpRequest = {

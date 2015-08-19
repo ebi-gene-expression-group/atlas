@@ -57,9 +57,9 @@
                     "brainAnatomogramFile": "${brainAnatomogramFile}",
                     "allSvgPathIds": ${empty allSvgPathIds ? "null" : allSvgPathIds},
                     "contextRoot": "${pageContext.request.contextPath}",
-                    "toggleButtonMaleImage": "${toggleButtonMaleImage}",
-                    "toggleButtonFemaleImage": "${toggleButtonFemaleImage}",
-                    "toggleButtonBrainImage": "${toggleButtonBrainImage}",
+                    "toggleButtonMaleImageTemplate": "${toggleButtonMaleImageTemplate}",
+                    "toggleButtonFemaleImageTemplate": "${toggleButtonFemaleImageTemplate}",
+                    "toggleButtonBrainImageTemplate": "${toggleButtonBrainImageTemplate}",
                     <%--TODO Remove when anatomogram without brains are no longer supported https://www.pivotaltracker.com/story/show/101029574--%>
                     "toggleButtonImage": "${toggleButtonImage}"
                     }

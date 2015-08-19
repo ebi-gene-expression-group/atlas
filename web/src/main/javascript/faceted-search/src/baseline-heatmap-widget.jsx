@@ -24,9 +24,9 @@ var BaselineHeatmapWidget = React.createClass({
             params: 'geneQuery=' + this.props.geneQuery + "&species=" + this.props.species + "&source=" + this.props.factor,
             isMultiExperiment: true,
             target: this.refs.widgetBody.getDOMNode(),
-            heatmapClass: "gxaHeatmapPosition",
             heatmapUrl: "/widgets/heatmap/baselineAnalytics",
-            heatmapKey:this.props.species + this.props.factor
+            heatmapKey: this.props.species + this.props.factor,
+            isWidget: false
         });
     },
 
