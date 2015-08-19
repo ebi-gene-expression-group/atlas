@@ -40,7 +40,7 @@ module.exports = function (facetsContainerId, heatmapsConatinerId, facetsTreeDat
     function render(query) {
         var host = atlasHost ? atlasHost : window.location.host;
 
-        if(query.select == undefined) {
+        if(query.select === undefined) {
             initializeQuery(query);
         }
 
@@ -56,9 +56,8 @@ module.exports = function (facetsContainerId, heatmapsConatinerId, facetsTreeDat
             for (var facet in facetsTreeData) {
                 var factors = facetsTreeData[facet];
                 for(var factor in factors) {
-                    if(factors[factor].name == "ORGANISM_PART") {
-                        var newSelect = addSelection(query.select, facet, factors[factor].name);
-                        query.select = newSelect;
+                    if(factors[factor].name === "ORGANISM_PART") {
+                        query.select = addSelection(query.select, facet, factors[factor].name);
                     }
                 }
             }
