@@ -116,9 +116,6 @@ public abstract class DifferentialExperimentPageController<T extends Differentia
                 DifferentialProfilesList differentialProfiles = profilesHeatMap.fetch(requestContext);
                 addJsonForHeatMap(differentialProfiles, contrasts, gseaPlots, model);
 
-                //TODO: remove when widget converted to React
-                model.addAttribute("geneProfiles", differentialProfiles);
-
                 downloadURLBuilder.addDataDownloadUrlsToModel(model, request);
 
                 //required for genome track browser in ensembl

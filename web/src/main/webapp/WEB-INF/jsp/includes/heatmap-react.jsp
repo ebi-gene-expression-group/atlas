@@ -19,12 +19,10 @@
         <script type="text/javascript">
 
             var heatmapData = <%@ include file="heatmap-data.jsp" %>;
-
-            var heatmapModule = window.exposed;
-
             var multiExperiment = ${isMultiExperiment ? true : false};
 
-            heatmapModule(heatmapData, multiExperiment , ${type.differential}, ${type.proteomicsBaseline});
+            var heatmapBuilder = window.exposed;
+            heatmapBuilder(heatmapData, multiExperiment, ${type.differential}, ${type.proteomicsBaseline});
 
         </script>
     </c:otherwise>
