@@ -491,6 +491,46 @@
          x="0"
          id="UBERON_0001637"
          xlink:href="#CL_0000738" />
+      <use
+         height="100%"
+         width="100%"
+         y="0"
+         x="0"
+         transform="translate(-0.2172169,0)"
+         id="CL_0000236"
+         xlink:href="#CL_0000738" />
+      <use
+         height="100%"
+         width="100%"
+         y="0"
+         x="0"
+         transform="translate(-0.2172169,0)"
+         id="CL_0000084"
+         xlink:href="#CL_0000738" />
+      <use
+         height="100%"
+         width="100%"
+         y="0"
+         x="0"
+         transform="translate(-0.2172169,0)"
+         id="CL_0000623"
+         xlink:href="#CL_0000738" />
+      <use
+         height="100%"
+         width="100%"
+         y="0"
+         x="0"
+         transform="translate(-0.2172169,0)"
+         id="CL_0000576"
+         xlink:href="#CL_0000738" />
+      <use
+         height="100%"
+         width="100%"
+         y="0"
+         x="0"
+         transform="translate(-0.2172169,0)"
+         id="CL_0000233"
+         xlink:href="#CL_0000738" />
       <path
          inkscape:label="UBERON_0001870"
          inkscape:connector-curvature="0"
@@ -733,7 +773,7 @@
            rx="1.0008202"
            cy="168.88368"
            cx="59.421902"
-           style=""
+           style="fill:none;stroke:none"
            id="path4749" />
         <ellipse
            ry="1.6421267"
@@ -741,7 +781,7 @@
            cy="169.0378"
            cx="66.046127"
            id="path4751"
-           style="" />
+           style="fill:none;stroke:none" />
       </g>
       <g
          transform="matrix(0.96993382,0,0,1.0484324,-17.347893,12.676345)"
@@ -2468,7 +2508,6 @@
          transform="matrix(1.0898887,0,0,1.0898887,-173.94593,-6.60907)"
          inkscape:label="UBERON_0002113"
          id="UBERON_0002113"
-         inkscape:export-filename="/Users/mkeays/Desktop/kidneys.png"
          inkscape:export-xdpi="551.35999"
          inkscape:export-ydpi="551.35999">
         <g
@@ -2493,7 +2532,6 @@
          transform="matrix(1.0898887,0,0,1.0898887,-173.91739,-6.43772)"
          inkscape:label="EFO_0005891"
          id="EFO_0005891"
-         inkscape:export-filename="/Users/mkeays/Desktop/rcort.png"
          inkscape:export-xdpi="551.35999"
          inkscape:export-ydpi="551.35999">
         <g
