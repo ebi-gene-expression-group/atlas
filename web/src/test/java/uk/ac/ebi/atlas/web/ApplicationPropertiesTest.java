@@ -35,6 +35,7 @@ import uk.ac.ebi.atlas.trader.cache.BaselineExperimentsCache;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Properties;
 
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
@@ -42,12 +43,15 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicationPropertiesTest {
-    private static final String HOMO_SAPIENS_SPECIE = "homo sapiens";
-    private static final String MOUSE_SPECIE = "mousy";
+    private static final String HOMO_SAPIENS_SPECIES = "homo sapiens";
+    private static final String MOUSE_SPECIES = "mousy";
+    private static final String RAT_SPECIES = "rattus";
 
-    private static final String HOMO_SAPIENS_FILE_NAME = "homoSapiens";
-    private static final String FEMALE_SAPIENS_FILE_NAME = "femaleSapiens";
-    private static final String MOUSE_FILE_NAME = "mouseFileName";
+    private static final String HOMO_SAPIENS_MALE_FILE_NAME = "homoSapiensMale";
+    private static final String HOMO_SAPIENS_FEMALE_FILE_NAME = "homoSapiensFemale";
+    private static final String MOUSE_MALE_FILE_NAME = "mouseMale";
+    private static final String MOUSE_FEMALE_FILE_NAME = "mouseFemale";
+    private static final String RAT_FILE_NAME = "rat";
 
     private static final String ORGANISM_PARTS_PROPERTY_KEY = "organism.parts";
     private static final String ANATOMOGRAM_PROPERTY_KEY = "organism.anatomogram.";
@@ -99,9 +103,12 @@ public class ApplicationPropertiesTest {
     @Before
     public void setUp() throws Exception {
         when(configurationPropertiesMock.getProperty(ORGANISM_PARTS_PROPERTY_KEY)).thenReturn("heart" + LIST_SEPARATOR + "wind" + LIST_SEPARATOR + "fire");
-        when(configurationPropertiesMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + HOMO_SAPIENS_SPECIE + ".male")).thenReturn(HOMO_SAPIENS_FILE_NAME);
-        when(configurationPropertiesMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + HOMO_SAPIENS_SPECIE + ".female")).thenReturn(FEMALE_SAPIENS_FILE_NAME);
-        when(configurationPropertiesMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + MOUSE_SPECIE)).thenReturn(MOUSE_FILE_NAME);
+        when(configurationPropertiesMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + HOMO_SAPIENS_SPECIES + ".male")).thenReturn(HOMO_SAPIENS_MALE_FILE_NAME);
+        when(configurationPropertiesMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + HOMO_SAPIENS_SPECIES + ".female")).thenReturn(HOMO_SAPIENS_FEMALE_FILE_NAME);
+        when(configurationPropertiesMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + MOUSE_SPECIES + ".male")).thenReturn(MOUSE_MALE_FILE_NAME);
+        when(configurationPropertiesMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + MOUSE_SPECIES + ".female")).thenReturn(MOUSE_FEMALE_FILE_NAME);
+        when(configurationPropertiesMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + RAT_SPECIES + ".male")).thenReturn(RAT_FILE_NAME);
+        when(configurationPropertiesMock.getProperty(ANATOMOGRAM_PROPERTY_KEY + RAT_SPECIES + ".female")).thenReturn(null);
 
         when(configurationPropertiesMock.getProperty(EXPERIMENT_ARRAYEXPRESS_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_URL + "{0}");
         when(configurationPropertiesMock.getProperty(EXPERIMENT_ARRAYEXPRESS_REST_URL_TEMPLATE)).thenReturn(ARRAYEXPRESS_REST_URL + "{0}");
@@ -111,8 +118,8 @@ public class ApplicationPropertiesTest {
         when(configurationPropertiesMock.getProperty(EXPERIMENT_PUBMED_URL_TEMPLATE)).thenReturn(PUBMED_URL + "{0}");
         when(configurationPropertiesMock.getProperty(EXPERIMENT_ATLAS_URL_TEMPLATE)).thenReturn(ATLAS_URL + "{0}");
 
-        when(homoSapiensExperimentMock.getFirstOrganism()).thenReturn(HOMO_SAPIENS_SPECIE);
-        when(mouseExperimentMock.getFirstOrganism()).thenReturn(MOUSE_SPECIE);
+        when(homoSapiensExperimentMock.getFirstOrganism()).thenReturn(HOMO_SAPIENS_SPECIES);
+        when(mouseExperimentMock.getFirstOrganism()).thenReturn(MOUSE_SPECIES);
 
         //given
         when(httpServletRequestMock.getAttribute("javax.servlet.forward.request_uri")).thenReturn(EXPERIMENT_URL);
@@ -125,15 +132,19 @@ public class ApplicationPropertiesTest {
 
     @Test
     public void testGetAnatomogramFileName() throws Exception {
-        String fileNameMale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, AnatomogramType.MALE);
-        String fileNameFemale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIE, AnatomogramType.FEMALE);
-        String fileNameMouseMale = subject.getAnatomogramFileName(MOUSE_SPECIE, AnatomogramType.MALE);
-        String fileNameMouseFemale = subject.getAnatomogramFileName(MOUSE_SPECIE, AnatomogramType.FEMALE);
+        String fileNameMale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIES, AnatomogramType.MALE);
+        String fileNameFemale = subject.getAnatomogramFileName(HOMO_SAPIENS_SPECIES, AnatomogramType.FEMALE);
+        String fileNameMouseMale = subject.getAnatomogramFileName(MOUSE_SPECIES, AnatomogramType.MALE);
+        String fileNameMouseFemale = subject.getAnatomogramFileName(MOUSE_SPECIES, AnatomogramType.FEMALE);
+        String fileNameRatMale = subject.getAnatomogramFileName(RAT_SPECIES, AnatomogramType.MALE);
+        String fileNameRatFemale = subject.getAnatomogramFileName(RAT_SPECIES, AnatomogramType.FEMALE);
 
-        assertThat(fileNameMale, is(HOMO_SAPIENS_FILE_NAME));
-        assertThat(fileNameFemale, is(FEMALE_SAPIENS_FILE_NAME));
-        assertThat(fileNameMouseMale, is(MOUSE_FILE_NAME));
-        assertThat(fileNameMouseFemale, is(MOUSE_FILE_NAME));
+        assertThat(fileNameMale, is(HOMO_SAPIENS_MALE_FILE_NAME));
+        assertThat(fileNameFemale, is(HOMO_SAPIENS_FEMALE_FILE_NAME));
+        assertThat(fileNameMouseMale, is(MOUSE_MALE_FILE_NAME));
+        assertThat(fileNameMouseFemale, is(MOUSE_FEMALE_FILE_NAME));
+        assertThat(fileNameRatMale, is(RAT_FILE_NAME));
+        assertThat(fileNameRatFemale, is(nullValue()));
     }
 
     @Test
