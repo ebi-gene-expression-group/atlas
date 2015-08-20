@@ -22,7 +22,7 @@ import static uk.ac.ebi.atlas.utils.StringUtil.quote;
 @Named
 public class AnalyticsSearchDao {
     public static final String ABOVE_CUTOFF = "(" +
-                                               "(experimentType:(rnaseq_mrna_baseline OR proteomics_baseline) AND expressionLevel:[0.5 TO *]) OR " +
+                                               "(experimentType:rnaseq_mrna_baseline AND expressionLevel:[0.5 TO *]) OR (experimentType:proteomics_baseline  AND expressionLevel:[0 TO *]) OR " +
                                                "(experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential) AND foldChange:([1.0 TO *] OR [* TO -1.0]))" +
                                               ")";
 
