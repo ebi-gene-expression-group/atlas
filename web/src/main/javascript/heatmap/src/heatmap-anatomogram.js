@@ -26,7 +26,7 @@ function drawHeatmap (data, targetElement, heatmapBuilder, isWidget, heatmapKey)
             HeatmapAnatomogramContainer,
             {Heatmap: Heatmap, isWidget: isWidget, experiment: experimentData,
              anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
-             geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig: heatmapConfig,
+             geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig: heatmapConfig
             }
         ),
         targetElement

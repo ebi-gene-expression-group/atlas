@@ -5,12 +5,12 @@
 
     <title>Heatmap demo</title>
 
-    <script src="/dev-server/vendor.bundle.js"></script>
-    <script src="/dev-server/demo.bundle.js"></script>
+    <script src="../../dist/vendor.bundle.js"></script>
+    <script src="../../dist/demo.bundle.js"></script>
 </head>
 <body>
     <div>
-        <h2>Bundles loaded from <em>webpack-dev-server</em>, request done to <code>http://wwwdev.ebi.ac.uk/gxa</code></h2>
+        <h2>Bundles loaded from <em>webpack-dev-server</em>, request done to <code>http://www.ebi.ac.uk/gxa</code></h2>
     </div>
 
     <div id="heatmapContainer"></div>
@@ -19,8 +19,8 @@
 <script language="JavaScript" type="text/javascript">
     var AtlasHeatmapBuilder = window.exposed;
     AtlasHeatmapBuilder({
-        gxaBaseUrl: "http://wwwdev.ebi.ac.uk/gxa/",
-        params: "geneQuery=R-HSA-73864",
+        gxaBaseUrl: "http://www.ebi.ac.uk/gxa/",
+        params: "geneQuery=CALCR&species=homo%20sapiens",
         isMultiExperiment: false,
         target: "heatmapContainer"
     });

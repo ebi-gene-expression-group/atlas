@@ -4,7 +4,8 @@
   "description": "Heatmap and anatomogram visualization of baseline expression and differential expression experiments from the Expression Atlas project (http://www.ebi.ac.uk/gxa).",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers .jsx:lib/mocha-jsx-compiler.js test/test.js"
+    "test": "mocha --compilers .jsx:lib/mocha-jsx-compiler.js test/test.js",
+    "package": "webpack --progress --colors --optimize-minimize --output-pathinfo --display-chunks --display-modules"
   },
   "author": "Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
   "license": "MIT",

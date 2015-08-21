@@ -45,7 +45,8 @@ var ExperimentDescription = React.createClass({
 var HeatmapAnatomogramContainer = React.createClass({
 
     render: function () {
-        var eventEmitter = new EventEmitter();
+        var ensemblEventEmitter = new EventEmitter();
+        var anatomogramEventEmitter = new EventEmitter();
 
         var Heatmap = this.props.Heatmap;
 
@@ -62,12 +63,12 @@ var HeatmapAnatomogramContainer = React.createClass({
                     <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
                         <div ref="anatomogramEnsembl" className="gxaAside">
-                            { this.props.anatomogram ? <Anatomogram anatomogram={this.props.anatomogram} heatmapConfig={this.props.heatmapConfig} profileRows={this.props.profiles.rows}/> : null}
+                            { this.props.anatomogram ? <Anatomogram anatomogram={this.props.anatomogram} heatmapConfig={this.props.heatmapConfig} profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} /> : null}
                         </div>
 
                         <div id="heatmap-react" className="gxaHeatmapPosition">
                             <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} isWidget={this.props.isWidget}
-                                     eventEmitter={eventEmitter} />
+                                     ensemblEventEmitter={ensemblEventEmitter} anatomogramEventEmitter={anatomogramEventEmitter} />
                         </div>
 
                         {/* TODO move into help tooltips module */}

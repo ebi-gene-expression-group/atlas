@@ -5,8 +5,8 @@
 
     <title>Heatmap demo</title>
 
-    <script src="/dev-server/vendor.bundle.js"></script>
-    <script src="/dev-server/demo.bundle.js"></script>
+    <script src="../../dist/vendor.bundle.js"></script>
+    <script src="../../dist/demo.bundle.js"></script>
 </head>
 <body>
     <div>
@@ -20,8 +20,8 @@
     var AtlasHeatmapBuilder = window.exposed;
     AtlasHeatmapBuilder({
         gxaBaseUrl: "http://www.ebi.ac.uk/gxa/",
-        params: "geneQuery=ASPM&species=mus%20musculus",
-        isMultiExperiment: true,
+        params: "geneQuery=R-HSA-73864",
+        isMultiExperiment: false,
         target: "heatmapContainer"
     });
 </script>

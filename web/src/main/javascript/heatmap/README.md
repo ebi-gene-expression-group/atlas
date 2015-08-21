@@ -14,3 +14,9 @@ Visualizations include, where available, an anatomogram to the left of the table
 
 For more information visit [http://www.ebi.ac.uk/gxa](http://www.ebi.ac.uk/gxa).
 
+TODO
+====
+* Decide what stays into `html`. Should we remove the references and demo pages that point at `wwwdev`? 
+* Installation instructions (`npm`, `webpack` copying resources from `dist`)
+* Testing instructions (`webpack-dev-server`, directory `html`)
+* API (invoking the heatmap with `window.exposed`)

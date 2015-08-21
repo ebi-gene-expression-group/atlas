@@ -10,9 +10,10 @@ var jQuery = $;
 require('jquery-ui');
 require('../css/jquery-ui.min.css');
 
-var Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
-
 require('../lib/jquery.hc-sticky.js');
+
+var Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
+var EventEmitter = require('wolfy87-eventemitter');
 
 //*------------------------------------------------------------------*
 
@@ -112,7 +113,8 @@ var Anatomogram = React.createClass({
                     })
                 ).isRequired
             })
-        ).isRequired
+        ).isRequired,
+        eventEmitter: React.PropTypes.instanceOf(EventEmitter)
     },
 
     _handleChange: function(newSelectedId) {
@@ -189,11 +191,18 @@ var Anatomogram = React.createClass({
     },
 
     componentDidMount: function() {
+        this.props.eventEmitter.addListener('onColumnHoverChange', this._onColumnHoverChange);
         this._loadAnatomogram();
     },
 
     componentDidUpdate: function() {
         this._loadAnatomogram();
+    },
+
+    _onColumnHoverChange: function(svgPathId) {
+        var svgCanvas = Snap(this.refs.anatomogram.getDOMNode());
+        var g = svgCanvas.select("g");
+        Anatomogram._recursivelyChangeProperties(g.select("#" + svgPathId), "indigo", 0.8);
     },
 
     _getSelectedSvg: function() {
@@ -246,6 +255,11 @@ var Anatomogram = React.createClass({
     },
 
     _highlightAllOrganismParts: function(svg) {
+
+        var colourForTissuesWithNoExpression = "gray";
+        var colourForTissuesWithExpression = this.props.heatmapConfig.isSingleGene ? "gray" : "red";
+        var colourForHoveredTissues = this.props.heatmapConfig.isSingleGene ? "red" : "indigo";
+
         this.props.anatomogram.allSvgPathIds.forEach(function(svgPathId) {
 
             if (this.state.expressedFactors.indexOf(svgPathId) > -1) {

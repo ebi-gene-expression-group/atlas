@@ -37,7 +37,8 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
     },
 
     render: function () {
-        var eventEmitter = new EventEmitter();
+        var ensemblEventEmitter = new EventEmitter();
+        var anatomogramEventEmitter = new EventEmitter();
 
         var Heatmap = this.props.Heatmap;
 
@@ -46,17 +47,17 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
 
                 <div ref="anatomogramEnsembl" className="gxaAside">
                     { this.props.anatomogram ?
-                        <Anatomogram anatomogram={this.props.anatomogram} heatmapConfig={this.props.heatmapConfig} profileRows={this.props.profiles.rows} />
+                        <Anatomogram anatomogram={this.props.anatomogram} heatmapConfig={this.props.heatmapConfig} profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} />
                         : null}
                     { this.props.heatmapConfig.enableEnsemblLauncher ?
                         <EnsemblLauncher isBaseline={this.props.isBaseline} atlasHost={this.props.heatmapConfig.atlasHost} contextRoot={this.props.heatmapConfig.contextRoot} experimentAccession={this.props.heatmapConfig.experimentAccession} species={this.props.heatmapConfig.species} ensemblDB={this.props.heatmapConfig.ensemblDB} columnType={this.props.heatmapConfig.columnType}
-                                         eventEmitter={eventEmitter} />
+                                         eventEmitter={ensemblEventEmitter} />
                         : null }
                 </div>
 
                 <div id="heatmap-react" className="gxaHeatmapPosition">
                     <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} isWidget={false}
-                             eventEmitter={eventEmitter}/>
+                             ensemblEventEmitter={ensemblEventEmitter} anatomogramEventEmitter={anatomogramEventEmitter} />
                 </div>
 
             </div>
