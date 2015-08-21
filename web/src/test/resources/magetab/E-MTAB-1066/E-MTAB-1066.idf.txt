@@ -1,0 +1,30 @@
+Comment[ArrayExpressAccession]	E-MTAB-1066
+Investigation Title	Transcription profiling by array of Drosophila melanogaster CDK8 and Cyclin C homozygous mutants, determined using Affymetrix GeneChip Drosophila Genome 2.0 Array
+Experiment Description	Gene expression profile in CDK8 and Cyclin C homozygous mutants (the third instar larvae) is determined using Affymetrix GeneChip Drosophila Genome 2.0 Array
+Experimental Design	development_or_differentiation_design	in_vivo_design	co-expression_design
+Comment[AEExperimentType]	transcription profiling by array
+Comment[Submitted Name]	Transcription profiling by array of Drosophila melanogaster CDK8 and Cyclin C homozygous mutants, determined using Affymetrix GeneChip Drosophila Genome 2.0 Array	Drosophila CDK8 and Cyclin C mutant
+Experimental Factor Name	genotype
+Experimental Factor Type	genotype
+Quality Control Type	biological_replicate
+Public Release Date	2012-06-01
+Person Last Name	Ji
+Person First Name	Jun-yuan
+Person Mid Initials	
+Person Email	ji@medicine.tamhsc.edu
+Person Phone	1-979-845-6389
+Person Address	Department of Molecular and Cellular Medicine, College of Medicine, Texas A&M Health Science Center, College Station, TX 77843, USA
+Person Affiliation	Texas A&M Health Science Center
+Person Roles	submitter; investigator
+PubMed ID	
+Publication Author List	Zhao, X., Feng, D., Wang, Q., Abdulla, A., Xie, X.J., Zhou, J., Sun, Y., Yang, E.S., Liy, L.P., Vaitheesvaran, B., Bridges, L., Kurland, I., Strich, R., Ni, J.Q., Wang, C., Ericsson, J., Pessin, J.E., Ji, J.Y., and Yang, F.
+Publication Title	Conserved regulation of lipid homeostasis by CDK8-mediated control of nuclear SREBP-1 protein stability
+Publication Status	submitted
+Protocol Name	P-MTAB-26156	P-MTAB-26157	P-MTAB-26158	P-MTAB-26159	P-MTAB-26160
+Protocol Type	grow	nucleic_acid_extraction	labeling	image_acquisition	bioassay_data_transformation
+Protocol Description	Drosophila mutant larvae were reared on standard cornmeal-agar-molasses medium at 25C. The Oregon R strain larvae of the same stage were used as the control.	Total RNA was extracted from ten larvae (triplicate for each genotype) with 1ml of Trizol Regent (Invitrogen) according to the manufacturers instructions. RNA quality was evaluated using the Agilent 2100 Bioanalyzer (Agilent).	Each of six Affymetrix Drosophila Genome arrays was hybridized for 16-18 hrs with biotin-labeled fragmented cRNA (10 ug) in 200 ul hybridization mixture according to the manufacturer's protocol.	Arrays were washed and stained using GeneChip Fluidic Station 450 and hybridization signals were amplified using antibody amplification with goat IgG (Sigma-Aldrich) and anti-streptavidin biotinylated antibody. Chips were scanned on Affymetrix GeneChip Scanner 3000 using Affymetrix Command Console Software.	Raw data were normalized using Robust Multichip Average and normalized to control samples with GeneSpring GX 11.0.2 software (Agilent).
+Term Source Name	ArrayExpress
+Term Source File	http://www.ebi.ac.uk/arrayexpress/
+SDRF File	E-MTAB-1066.sdrf.txt
+
+MAGE-TAB Version	1.1

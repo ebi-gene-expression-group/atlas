@@ -1,0 +1,39 @@
+E-MTAB-1066	A-AFFY-35	WT3	characteristic	developmental stage	3rd instar larva
+E-MTAB-1066	A-AFFY-35	WT3	characteristic	genotype	wild type genotype
+E-MTAB-1066	A-AFFY-35	WT3	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MTAB-1066	A-AFFY-35	WT3	characteristic	strain	Oregon R
+E-MTAB-1066	A-AFFY-35	WT3	factor	genotype	wild type genotype
+E-MTAB-1066	A-AFFY-35	WT1	characteristic	strain	Oregon R
+E-MTAB-1066	A-AFFY-35	WT1	characteristic	developmental stage	3rd instar larva
+E-MTAB-1066	A-AFFY-35	WT1	characteristic	genotype	wild type genotype
+E-MTAB-1066	A-AFFY-35	WT1	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MTAB-1066	A-AFFY-35	WT1	factor	genotype	wild type genotype
+E-MTAB-1066	A-AFFY-35	WT2	characteristic	strain	Oregon R
+E-MTAB-1066	A-AFFY-35	WT2	characteristic	genotype	wild type genotype
+E-MTAB-1066	A-AFFY-35	WT2	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MTAB-1066	A-AFFY-35	WT2	characteristic	developmental stage	3rd instar larva
+E-MTAB-1066	A-AFFY-35	WT2	factor	genotype	wild type genotype
+E-MTAB-1066	A-AFFY-35	C1	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MTAB-1066	A-AFFY-35	C1	characteristic	genotype	w1118; +; cycCY5
+E-MTAB-1066	A-AFFY-35	C1	characteristic	developmental stage	3rd instar larva
+E-MTAB-1066	A-AFFY-35	C1	factor	genotype	cycC mutant
+E-MTAB-1066	A-AFFY-35	K3	characteristic	genotype	w1118; +; cdk8K185
+E-MTAB-1066	A-AFFY-35	K3	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MTAB-1066	A-AFFY-35	K3	characteristic	developmental stage	3rd instar larva
+E-MTAB-1066	A-AFFY-35	K3	factor	genotype	cdk8 mutant
+E-MTAB-1066	A-AFFY-35	K2	characteristic	developmental stage	3rd instar larva
+E-MTAB-1066	A-AFFY-35	K2	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MTAB-1066	A-AFFY-35	K2	characteristic	genotype	w1118; +; cdk8K185
+E-MTAB-1066	A-AFFY-35	K2	factor	genotype	cdk8 mutant
+E-MTAB-1066	A-AFFY-35	K1	characteristic	developmental stage	3rd instar larva
+E-MTAB-1066	A-AFFY-35	K1	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MTAB-1066	A-AFFY-35	K1	characteristic	genotype	w1118; +; cdk8K185
+E-MTAB-1066	A-AFFY-35	K1	factor	genotype	cdk8 mutant
+E-MTAB-1066	A-AFFY-35	C3	characteristic	genotype	w1118; +; cycCY5
+E-MTAB-1066	A-AFFY-35	C3	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MTAB-1066	A-AFFY-35	C3	characteristic	developmental stage	3rd instar larva
+E-MTAB-1066	A-AFFY-35	C3	factor	genotype	cycC mutant
+E-MTAB-1066	A-AFFY-35	C2	characteristic	developmental stage	3rd instar larva
+E-MTAB-1066	A-AFFY-35	C2	characteristic	genotype	w1118; +; cycCY5
+E-MTAB-1066	A-AFFY-35	C2	characteristic	organism	Drosophila melanogaster	http://purl.obolibrary.org/obo/NCBITaxon_7227
+E-MTAB-1066	A-AFFY-35	C2	factor	genotype	cycC mutant
