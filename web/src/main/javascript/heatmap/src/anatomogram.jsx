@@ -85,9 +85,34 @@ var AnatomogramSelectImageButtons = React.createClass({
 
 
 var Anatomogram = React.createClass({
+    /*
+     E.g. of profileRows:
+     {"id":"ENSMUSG00000029019","name":"Nppb","expressions":[{"factorName":"heart","color":"#C0C0C0","value":"152","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"","value":"","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"","value":"","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},
+     {"id":"ENSMUSG00000027350","name":"Chgb","expressions":[{"factorName":"heart","color":"","value":"","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"#C0C0C0","value":"148","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"","value":"","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},
+     {"id":"ENSMUSG00000033981","name":"Gria2","expressions":[{"factorName":"heart","color":"","value":"","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"#C0C0C0","value":"140","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"","value":"","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},
+     {"id":"ENSMUSG00000026368","name":"F13b","expressions":[{"factorName":"heart","color":"","value":"","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"","value":"","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"#C0C0C0","value":"136","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},
+     {"id":"ENSMUSG00000039278","name":"Pcsk1n","expressions":[{"factorName":"heart","color":"","value":"","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"#C0C0C0","value":"132","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"","value":"","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},
+     {"id":"ENSMUSG00000090298","name":"Gm4794","expressions":[{"factorName":"heart","color":"","value":"","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"","value":"","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"#C0C0C0","value":"132","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},
+     {"id":"ENSMUSG00000002500","name":"Rpl3l","expressions":[{"factorName":"heart","color":"#C0C0C0","value":"127","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"","value":"","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"","value":"","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},
+     {"id":"ENSMUSG00000029158","name":"Yipf7","expressions":[{"factorName":"heart","color":"#C0C0C0","value":"123","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"","value":"","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"","value":"","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},
+     */
     propTypes: {
         anatomogram: React.PropTypes.object.isRequired,
-        heatmapConfig: React.PropTypes.object.isRequired
+        heatmapConfig: React.PropTypes.object.isRequired,
+        profileRows: React.PropTypes.arrayOf(
+            React.PropTypes.shape({
+                id: React.PropTypes.string.isRequired,
+                name: React.PropTypes.string.isRequired,
+                expressions: React.PropTypes.arrayOf(
+                    React.PropTypes.shape({
+                        factorName: React.PropTypes.string.isRequired,
+                        color: React.PropTypes.string.isRequired,
+                        value: React.PropTypes.string.isRequired,
+                        svgPathId: React.PropTypes.string.isRequired
+                    })
+                ).isRequired
+            })
+        ).isRequired
     },
 
     _handleChange: function(newSelectedId) {
@@ -119,9 +144,26 @@ var Anatomogram = React.createClass({
             );
         }
 
+
+        var expressedFactors = [];
+        this.props.profileRows.forEach(function(profileRow) {
+            profileRow.expressions.forEach(function(expression) {
+                if (expression.value) {
+                    expressedFactors.push(expression.svgPathId);
+                }
+            });
+        });
+
+        function onlyUnique(value, index, self) {
+            return self.indexOf(value) === index;
+        }
+        var uniqueExpressedFactors = expressedFactors.filter(onlyUnique);
+
+
         return {
             selectedId: availableAnatomograms[0].id,
-            availableAnatomograms: availableAnatomograms
+            availableAnatomograms: availableAnatomograms,
+            expressedFactors: uniqueExpressedFactors
         }
     },
 
@@ -133,13 +175,15 @@ var Anatomogram = React.createClass({
         var height = containsHuman(this.props.anatomogram.maleAnatomogramFile) ? "360" : "250";
 
         return (
-            <div className="gxaDoubleClickNoSelection" style={{display: "inline"}}>
-                <div style={{paddingTop: "60px"}}>
-                    <AnatomogramSelectImageButtons selectedId={this.state.selectedId} availableAnatomograms={this.state.availableAnatomograms} onClick={this._handleChange}/>
-                </div>
+            <div className="gxaDoubleClickNoSelection" style={{display: "table", paddingTop: "60px"}}>
+                <div style={{display: "table-row"}}>
+                    <div style={{display: "table-cell", verticalAlign: "top"}}>
+                        <AnatomogramSelectImageButtons selectedId={this.state.selectedId} availableAnatomograms={this.state.availableAnatomograms} onClick={this._handleChange}/>
+                    </div>
 
-                <svg ref="anatomogram" style={{width: "230px", height:height + "px"}}>
-                </svg>
+                    <svg ref="anatomogram" style={{display: "table-cell", width: "230px", height:height + "px"}}>
+                    </svg>
+                </div>
             </div>
         );
     },
@@ -204,7 +248,11 @@ var Anatomogram = React.createClass({
     _highlightAllOrganismParts: function(svg) {
         this.props.anatomogram.allSvgPathIds.forEach(function(svgPathId) {
 
-            Anatomogram._recursivelyChangeProperties(svg.select("#" + svgPathId), "gray", 0.5);
+            if (this.state.expressedFactors.indexOf(svgPathId) > -1) {
+                Anatomogram._recursivelyChangeProperties(svg.select("#" + svgPathId), "red", 0.5);
+            } else {
+                Anatomogram._recursivelyChangeProperties(svg.select("#" + svgPathId), "gray", 0.5);
+            }
 
         }, this);
     },

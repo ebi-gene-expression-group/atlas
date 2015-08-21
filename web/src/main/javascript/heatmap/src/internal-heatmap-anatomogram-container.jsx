@@ -46,7 +46,7 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
 
                 <div ref="anatomogramEnsembl" className="gxaAside">
                     { this.props.anatomogram ?
-                        <Anatomogram anatomogram={this.props.anatomogram} heatmapConfig={this.props.heatmapConfig} />
+                        <Anatomogram anatomogram={this.props.anatomogram} heatmapConfig={this.props.heatmapConfig} profileRows={this.props.profiles.rows} />
                         : null}
                     { this.props.heatmapConfig.enableEnsemblLauncher ?
                         <EnsemblLauncher isBaseline={this.props.isBaseline} atlasHost={this.props.heatmapConfig.atlasHost} contextRoot={this.props.heatmapConfig.contextRoot} experimentAccession={this.props.heatmapConfig.experimentAccession} species={this.props.heatmapConfig.species} ensemblDB={this.props.heatmapConfig.ensemblDB} columnType={this.props.heatmapConfig.columnType}
