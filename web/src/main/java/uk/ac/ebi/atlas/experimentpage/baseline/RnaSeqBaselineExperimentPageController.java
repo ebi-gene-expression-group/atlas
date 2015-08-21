@@ -77,6 +77,7 @@ public class RnaSeqBaselineExperimentPageController extends BaselineExperimentPa
 
         model.addAttribute("isWidget", false);
 
+        // TODO https://www.pivotaltracker.com/story/show/101029574
         model.addAttribute("isSingleGene", false);
 
         return "experiment";

@@ -65,6 +65,7 @@ public class GenePageController extends BioEntityPageController {
         checkIdentifierDoesNotContainColon(identifier);
 
         model.addAttribute("disableGeneLinks", true);
+        // TODO https://www.pivotaltracker.com/story/show/101029574
         model.addAttribute("isSingleGene", true);
 
         addBaselineResults(ImmutableSet.of(identifier), model);

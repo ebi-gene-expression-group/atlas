@@ -186,6 +186,7 @@ public final class HeatmapWidgetController {
             return "widget-error";
         }
 
+        // TODO https://www.pivotaltracker.com/story/show/101029574
         model.addAttribute("isSingleGene", true);
 
         populateModelWithMultiExperimentResults(geneQuery, ensemblSpecies, searchResult, model);
