@@ -48,6 +48,9 @@ var HeatmapAnatomogramContainer = React.createClass({
         var ensemblEventEmitter = new EventEmitter();
         var anatomogramEventEmitter = new EventEmitter();
 
+        var anatomogramExpressedTissueColour = this.props.isMultiExperiment ? "red" : "gray";
+        var anatomogramHoveredTissueColour = this.props.isMultiExperiment ? "indigo" : "red";
+
         var Heatmap = this.props.Heatmap;
 
         var heatmapConfig = this.props.heatmapConfig;
@@ -63,7 +66,9 @@ var HeatmapAnatomogramContainer = React.createClass({
                     <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
                         <div ref="anatomogramEnsembl" className="gxaAside">
-                            { this.props.anatomogram ? <Anatomogram anatomogram={this.props.anatomogram} heatmapConfig={this.props.heatmapConfig} profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} /> : null}
+                            { this.props.anatomogram ?
+                                <Anatomogram anatomogram={this.props.anatomogram} expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour} heatmapConfig={this.props.heatmapConfig} profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} />
+                                : null}
                         </div>
 
                         <div id="heatmap-react" className="gxaHeatmapPosition">

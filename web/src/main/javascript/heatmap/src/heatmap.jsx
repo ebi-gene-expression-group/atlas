@@ -493,7 +493,9 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             onClick: function () {
-                this.props.selectColumn(this.props.assayGroupId);
+                if (enableEnsemblLauncher) {
+                    this.props.selectColumn(this.props.assayGroupId);
+                }
             },
 
             componentDidMount: function () {

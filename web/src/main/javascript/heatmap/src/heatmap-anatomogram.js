@@ -6,7 +6,7 @@ var URI = require('URIjs');
 
 //*------------------------------------------------------------------*
 
-function drawHeatmap (data, targetElement, heatmapBuilder, isWidget, heatmapKey) {
+function drawHeatmap (data, targetElement, heatmapBuilder, isWidget, isMultiExperiment, heatmapKey) {
 
     var React = require('react');
 
@@ -24,7 +24,7 @@ function drawHeatmap (data, targetElement, heatmapBuilder, isWidget, heatmapKey)
     React.render(
         React.createElement(
             HeatmapAnatomogramContainer,
-            {Heatmap: Heatmap, isWidget: isWidget, experiment: experimentData,
+            {Heatmap: Heatmap, isWidget: isWidget, isMultiExperiment: isMultiExperiment, experiment: experimentData,
              anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles,
              geneSetProfiles: geneSetProfiles, heatmapKey: heatmapKey, heatmapConfig: heatmapConfig
             }
@@ -77,9 +77,9 @@ module.exports = function(opt) {
         overrideContextRoot(data, opt.gxaBaseUrl);
 
         if (opt.isMultiExperiment) {
-            drawHeatmap(data, targetElement, heatmapModule.buildMultiExperiment, isWidget, opt.heatmapKey);
+            drawHeatmap(data, targetElement, heatmapModule.buildMultiExperiment, isWidget, opt.isMultiExperiment, opt.heatmapKey);
         } else {
-            drawHeatmap(data, targetElement, heatmapModule.buildBaseline, isWidget);
+            drawHeatmap(data, targetElement, heatmapModule.buildBaseline, isWidget, opt.isMultiExperiment);
         }
 
     }).fail(function (jqXHR, textStatus, errorThrown) {

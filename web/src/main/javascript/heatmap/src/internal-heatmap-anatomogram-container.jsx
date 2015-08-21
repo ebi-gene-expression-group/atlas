@@ -33,6 +33,7 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
         geneSetProfiles: React.PropTypes.object.isRequired,
         heatmapConfig: React.PropTypes.object.isRequired,
         isBaseline: React.PropTypes.bool.isRequired,
+        isMultiExperiment: React.PropTypes.bool.isRequired,
         isWidget: React.PropTypes.bool.isRequired
     },
 
@@ -42,12 +43,18 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
 
         var Heatmap = this.props.Heatmap;
 
+        var anatomogramExpressedTissueColour = this.props.isMultiExperiment ? "red" : "gray";
+        var anatomogramHoveredTissueColour = this.props.isMultiExperiment ? "indigo" : "red";
+
         return (
             <div id="heatmap-anatomogram" className="gxaHeatmapAnatomogramRow">
 
                 <div ref="anatomogramEnsembl" className="gxaAside">
                     { this.props.anatomogram ?
-                        <Anatomogram anatomogram={this.props.anatomogram} heatmapConfig={this.props.heatmapConfig} profileRows={this.props.profiles.rows} eventEmitter={anatomogramEventEmitter} />
+                        <Anatomogram anatomogram={this.props.anatomogram}
+                                     expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
+                                     heatmapConfig={this.props.heatmapConfig} profileRows={this.props.profiles.rows}
+                                     eventEmitter={anatomogramEventEmitter} />
                         : null}
                     { this.props.heatmapConfig.enableEnsemblLauncher ?
                         <EnsemblLauncher isBaseline={this.props.isBaseline} atlasHost={this.props.heatmapConfig.atlasHost} contextRoot={this.props.heatmapConfig.contextRoot} experimentAccession={this.props.heatmapConfig.experimentAccession} species={this.props.heatmapConfig.species} ensemblDB={this.props.heatmapConfig.ensemblDB} columnType={this.props.heatmapConfig.columnType}

@@ -36,7 +36,7 @@ function drawHeatmap (heatmapData, isMultiExperiment, isDifferential, isProteomi
             HeatmapAnatomogramContainer,
             {Heatmap: Heatmap,
              anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles, heatmapConfig: heatmapConfig,
-             isBaseline: isBaseline, isWidget: false}
+             isBaseline: isBaseline, isMultiExperiment: isMultiExperiment, isWidget: false}
         ),
         document.getElementById("gxaExperimentPageHeatmapAnatomogram")
     );

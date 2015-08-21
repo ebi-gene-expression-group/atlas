@@ -42,6 +42,7 @@
                 "showMaPlotButton": true,
                 "gseaPlots": ${empty gseaPlots ? "null" : gseaPlots},
                 "downloadProfilesURL": "${not empty downloadURL ? downloadURL : applicationProperties.buildDownloadURL(pageContext.request)}",
+                <%-- TODO: Not needed with the React version of the anatomogram https://www.pivotaltracker.com/story/show/101029574 --%>
                 "isSingleGene": ${empty isSingleGene ? "false" : isSingleGene}
             },
             "columnHeaders": ${not empty jsonColumnHeaders ? jsonColumnHeaders : "null"},
