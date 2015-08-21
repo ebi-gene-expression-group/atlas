@@ -10,8 +10,7 @@ var jQuery = $;
 require('jquery-ui');
 require('../css/jquery-ui.min.css');
 
-require('../lib/jquery.svg.1.5.0.js');
-require('../lib/jquery.svg.1.5.0.css');
+var Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
 
 require('../lib/jquery.hc-sticky.js');
 
@@ -131,22 +130,21 @@ var Anatomogram = React.createClass({
             return s.indexOf("human") > -1;
         }
 
-        var height = containsHuman(this.props.anatomogram.maleAnatomogramFile) ? 360 : 250;
+        var height = containsHuman(this.props.anatomogram.maleAnatomogramFile) ? "360" : "250";
 
         return (
             <div className="gxaDoubleClickNoSelection" style={{display: "inline"}}>
-                <div style={{"paddingTop": "15px", "verticalAlign":"top"}}>
+                <div style={{paddingTop: "60px"}}>
                     <AnatomogramSelectImageButtons selectedId={this.state.selectedId} availableAnatomograms={this.state.availableAnatomograms} onClick={this._handleChange}/>
                 </div>
 
-                <div ref="anatomogram" style={{"display":"inline-block", "width": "230px", "height":height}}>
-                </div>
+                <svg ref="anatomogram" style={{width: "230px", height:height + "px"}}>
+                </svg>
             </div>
         );
     },
 
     componentDidMount: function() {
-        $(this.refs.anatomogram.getDOMNode()).svg();
         this._loadAnatomogram();
     },
 
@@ -154,61 +152,105 @@ var Anatomogram = React.createClass({
         this._loadAnatomogram();
     },
 
-
+    _getSelectedSvg: function() {
+        for (var i = 0 ; i < this.state.availableAnatomograms.length ; i++) {
+            if (this.state.selectedId === this.state.availableAnatomograms[i].id) {
+                return this.state.availableAnatomograms[i].anatomogramFile;
+            }
+        }
+    },
 
     _loadAnatomogram: function() {
-        var selectedId = this.state.selectedId;
-        var selectedAnatomogram = this.state.availableAnatomograms.filter(function(availableAnatomogram) {
-            return selectedId === availableAnatomogram.id
-        })[0];
 
-        var svg = $(this.refs.anatomogram.getDOMNode()).svg("get");
+        var svgCanvas = Snap(this.refs.anatomogram.getDOMNode()),
+            allElements = svgCanvas.selectAll("*");
 
-        var highlightAllOrganismParts = this._highlightAllOrganismParts;
+        if (allElements) {
+            allElements.remove();
+        }
 
-        svg.load(
-            selectedAnatomogram.anatomogramFile,
-            { onLoad:
-                function() {
-                    svg.getElementById("group_all").setAttribute("transform", "scale(1.6)");
-                    //svg.configure({"transform": "scale(1.6)"});  // Doesn’t work in Chrome :(
-                    highlightAllOrganismParts(svg);
-                }
+        var callback = this._highlightAllOrganismParts;
+
+        Snap.load(
+            this._getSelectedSvg(),
+            function (fragment) {
+                var g = fragment.select("g");
+                g.transform("S1.6,0,0");
+
+                callback(g);
+
+                svgCanvas.append(g);
             }
         );
+
+        //this._highlightAllOrganismParts(svgCanvas);
+
+        //var svg = $(this.refs.anatomogram.getDOMNode()).svg("get");
+        //
+        //var highlightAllOrganismParts = this._highlightAllOrganismParts;
+        //
+        //svg.load(
+        //    selectedAnatomogram.anatomogramFile,
+        //    { onLoad:
+        //        function() {
+        //            svg.getElementById("group_all").setAttribute("transform", "scale(1.6)");
+        //            //svg.configure({"transform": "scale(1.6)"});  // Doesn’t work in Chrome :(
+        //            highlightAllOrganismParts(svg);
+        //        }
+        //    }
+        //);
     },
 
     _highlightAllOrganismParts: function(svg) {
         this.props.anatomogram.allSvgPathIds.forEach(function(svgPathId) {
-            this._toggleOrganismPartColor(svg, svgPathId);
+
+            Anatomogram._recursivelyChangeProperties(svg.select("#" + svgPathId), "gray", 0.5);
+
         }, this);
     },
 
-    _toggleOrganismPartColor: function(svg, svgPathId, event, colour) {
-        var pathElement = svg.getElementById(svgPathId);
+    statics: {
+        _recursivelyChangeProperties: function(svgElement, colour, opacity) {
 
-        if (pathElement === null) {
-            return;
-        }
+            if (svgElement) {
+                var innerElements = svgElement.selectAll("*");
 
-        // if pathElement is a group of paths
-        if (pathElement.nodeName === 'g') {
-            var pathElements = pathElement.getElementsByTagName("path");
-            for (var i = 0 ; i < pathElements.length ; i++) {
-                this._togglePathColour(pathElements[i], svgPathId, event, colour);
+                if (innerElements.length > 0) {
+                    innerElements.forEach(function(innerElement) {
+                        Anatomogram._recursivelyChangeProperties(innerElement);
+                    });
+                }
+
+                svgElement.attr({"fill": colour, "fill-opacity": opacity});
             }
-        } else {
-            this._togglePathColour(pathElement, svgPathId, event, colour);
         }
+    },
+
+    _toggleOrganismPartColor: function(svg, svgPathId, event, colour) {
+        //var pathElement = svg.getElementById(svgPathId);
+        //
+        //if (pathElement === null) {
+        //    return;
+        //}
+        //
+        //// if pathElement is a group of paths
+        //if (pathElement.nodeName === 'g') {
+        //    var pathElements = pathElement.getElementsByTagName("path");
+        //    for (var i = 0 ; i < pathElements.length ; i++) {
+        //        this._togglePathColour(pathElements[i], svgPathId, event, colour);
+        //    }
+        //} else {
+        //    this._togglePathColour(pathElement, svgPathId, event, colour);
+        //}
     },
 
     _togglePathColour: function(path, svgPathId, event, colour) {
-        this._setHighlighting(path, "gray", 0.5)
+        //this._setHighlighting(path, "gray", 0.5)
     },
 
     _setHighlighting: function(path, colour, opacity) {
-        path.style.fill = colour;
-        path.style.fillOpacity = opacity;
+        //path.style.fill = colour;
+        //path.style.fillOpacity = opacity;
     }
 
     //componentDidMount: function() {

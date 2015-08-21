@@ -18,10 +18,10 @@ var Heatmaps = require('./baseline-heatmaps.jsx');
 
 //*------------------------------------------------------------------*
 
-module.exports = function (facetsContainerId, heatmapsConatinerId, facetsTreeData, atlasHost) {
+module.exports = function (facetsContainerId, heatmapsContainerId, facetsTreeData, atlasHost) {
 
     var facetsElement = document.getElementById(facetsContainerId),
-        heatmapsElement = document.getElementById(heatmapsConatinerId);
+        heatmapsElement = document.getElementById(heatmapsContainerId);
 
     //TODO: add this outside the module, when module is first loaded
     var ie9 = $.browser.msie && $.browser.version < 10;
