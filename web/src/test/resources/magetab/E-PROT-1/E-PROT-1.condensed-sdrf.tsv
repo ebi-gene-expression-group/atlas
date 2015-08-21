@@ -1,150 +1,150 @@
-E-PROT-1		Adult_Bcells	characteristic	developmental stage	adult
-E-PROT-1		Adult_Bcells	characteristic	organism part	B cell
-E-PROT-1		Adult_Bcells	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Bcells	factor	developmental stage	adult
-E-PROT-1		Adult_Bcells	factor	organism part	B cell
-E-PROT-1		Adult_Monocytes	characteristic	organism part	monocyte
-E-PROT-1		Adult_Monocytes	characteristic	developmental stage	adult
-E-PROT-1		Adult_Monocytes	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Monocytes	factor	developmental stage	adult
-E-PROT-1		Adult_Monocytes	factor	organism part	monocyte
-E-PROT-1		Fetal_Placenta	characteristic	organism	Homo sapiens
-E-PROT-1		Fetal_Placenta	characteristic	organism part	placenta
-E-PROT-1		Fetal_Placenta	characteristic	developmental stage	fetus
-E-PROT-1		Fetal_Placenta	factor	organism part	placenta
-E-PROT-1		Fetal_Placenta	factor	developmental stage	fetus
-E-PROT-1		Adult_Kidney	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Kidney	characteristic	organism part	kidney
-E-PROT-1		Adult_Kidney	characteristic	developmental stage	adult
-E-PROT-1		Adult_Kidney	factor	developmental stage	adult
-E-PROT-1		Adult_Kidney	factor	organism part	kidney
-E-PROT-1		Adult_Lung	characteristic	organism part	lung
-E-PROT-1		Adult_Lung	characteristic	developmental stage	adult
-E-PROT-1		Adult_Lung	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Lung	factor	organism part	lung
-E-PROT-1		Adult_Lung	factor	developmental stage	adult
-E-PROT-1		Fetal_Testis	characteristic	organism part	testis
-E-PROT-1		Fetal_Testis	characteristic	developmental stage	fetus
-E-PROT-1		Fetal_Testis	characteristic	organism	Homo sapiens
-E-PROT-1		Fetal_Testis	factor	organism part	testis
-E-PROT-1		Fetal_Testis	factor	developmental stage	fetus
-E-PROT-1		Fetal_Heart	characteristic	organism	Homo sapiens
-E-PROT-1		Fetal_Heart	characteristic	organism part	heart
-E-PROT-1		Fetal_Heart	characteristic	developmental stage	fetus
-E-PROT-1		Fetal_Heart	factor	organism part	heart
-E-PROT-1		Fetal_Heart	factor	developmental stage	fetus
-E-PROT-1		Fetal_Ovary	characteristic	organism part	animal ovary
-E-PROT-1		Fetal_Ovary	characteristic	developmental stage	fetus
-E-PROT-1		Fetal_Ovary	characteristic	organism	Homo sapiens
-E-PROT-1		Fetal_Ovary	factor	organism part	animal ovary
-E-PROT-1		Fetal_Ovary	factor	developmental stage	fetus
-E-PROT-1		Adult_Colon	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Colon	characteristic	organism part	colon
-E-PROT-1		Adult_Colon	characteristic	developmental stage	adult
-E-PROT-1		Adult_Colon	factor	developmental stage	adult
-E-PROT-1		Adult_Colon	factor	organism part	colon
-E-PROT-1		Adult_NKcells	characteristic	developmental stage	adult
-E-PROT-1		Adult_NKcells	characteristic	organism part	natural killer cell
-E-PROT-1		Adult_NKcells	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_NKcells	factor	developmental stage	adult
-E-PROT-1		Adult_NKcells	factor	organism part	natural killer cell
-E-PROT-1		Fetal_Liver	characteristic	organism part	liver
+E-PROT-1		Adult_Kidney	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Kidney	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Kidney	characteristic	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-PROT-1		Adult_Kidney	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Kidney	factor	organism part	kidney	http://purl.obolibrary.org/obo/UBERON_0002113
+E-PROT-1		Adult_Testis	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Testis	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Testis	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-PROT-1		Adult_Testis	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Testis	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-PROT-1		Adult_Prostate	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Prostate	characteristic	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-PROT-1		Adult_Prostate	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Prostate	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Prostate	factor	organism part	prostate	http://purl.obolibrary.org/obo/UBERON_0002367
+E-PROT-1		Adult_CD8Tcells	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_CD8Tcells	characteristic	organism part	CD8-positive T cell	http://purl.obolibrary.org/obo/CL_0000084
+E-PROT-1		Adult_CD8Tcells	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_CD8Tcells	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_CD8Tcells	factor	organism part	CD8-positive T cell	http://purl.obolibrary.org/obo/CL_0000084
 E-PROT-1		Fetal_Liver	characteristic	developmental stage	fetus
-E-PROT-1		Fetal_Liver	characteristic	organism	Homo sapiens
-E-PROT-1		Fetal_Liver	factor	organism part	liver
+E-PROT-1		Fetal_Liver	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-PROT-1		Fetal_Liver	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
 E-PROT-1		Fetal_Liver	factor	developmental stage	fetus
-E-PROT-1		Adult_Testis	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Testis	characteristic	organism part	testis
-E-PROT-1		Adult_Testis	characteristic	developmental stage	adult
-E-PROT-1		Adult_Testis	factor	organism part	testis
-E-PROT-1		Adult_Testis	factor	developmental stage	adult
-E-PROT-1		Adult_Adrenalgland	characteristic	organism part	adrenal gland
-E-PROT-1		Adult_Adrenalgland	characteristic	developmental stage	adult
-E-PROT-1		Adult_Adrenalgland	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Adrenalgland	factor	organism part	adrenal gland
-E-PROT-1		Adult_Adrenalgland	factor	developmental stage	adult
-E-PROT-1		Adult_Spinalcord	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Spinalcord	characteristic	developmental stage	adult
-E-PROT-1		Adult_Spinalcord	characteristic	organism part	spinal cord
-E-PROT-1		Adult_Spinalcord	factor	organism part	spinal cord
-E-PROT-1		Adult_Spinalcord	factor	developmental stage	adult
-E-PROT-1		Adult_Frontalcortex	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Frontalcortex	characteristic	developmental stage	adult
-E-PROT-1		Adult_Frontalcortex	characteristic	organism part	frontal cortex
-E-PROT-1		Adult_Frontalcortex	factor	developmental stage	adult
-E-PROT-1		Adult_Frontalcortex	factor	organism part	frontal cortex
-E-PROT-1		Adult_CD8Tcells	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_CD8Tcells	characteristic	developmental stage	adult
-E-PROT-1		Adult_CD8Tcells	characteristic	organism part	CD8-positive T cell
-E-PROT-1		Adult_CD8Tcells	factor	organism part	CD8-positive T cell
-E-PROT-1		Adult_CD8Tcells	factor	developmental stage	adult
-E-PROT-1		Adult_Rectum	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Rectum	characteristic	developmental stage	adult
-E-PROT-1		Adult_Rectum	characteristic	organism part	rectum
-E-PROT-1		Adult_Rectum	factor	organism part	rectum
-E-PROT-1		Adult_Rectum	factor	developmental stage	adult
-E-PROT-1		Adult_Platelets	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Platelets	characteristic	organism part	platelet
-E-PROT-1		Adult_Platelets	characteristic	developmental stage	adult
-E-PROT-1		Adult_Platelets	factor	organism part	platelet
-E-PROT-1		Adult_Platelets	factor	developmental stage	adult
-E-PROT-1		Adult_Ovary	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Ovary	characteristic	organism part	animal ovary
-E-PROT-1		Adult_Ovary	characteristic	developmental stage	adult
-E-PROT-1		Adult_Ovary	factor	developmental stage	adult
-E-PROT-1		Adult_Ovary	factor	organism part	animal ovary
-E-PROT-1		Adult_Urinarybladder	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Urinarybladder	characteristic	developmental stage	adult
-E-PROT-1		Adult_Urinarybladder	characteristic	organism part	urinary bladder
-E-PROT-1		Adult_Urinarybladder	factor	developmental stage	adult
-E-PROT-1		Adult_Urinarybladder	factor	organism part	urinary bladder
-E-PROT-1		Adult_Esophagus	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Esophagus	characteristic	organism part	esophagus
-E-PROT-1		Adult_Esophagus	characteristic	developmental stage	adult
-E-PROT-1		Adult_Esophagus	factor	organism part	esophagus
-E-PROT-1		Adult_Esophagus	factor	developmental stage	adult
-E-PROT-1		Adult_Retina	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Retina	characteristic	developmental stage	adult
-E-PROT-1		Adult_Retina	characteristic	organism part	retina
-E-PROT-1		Adult_Retina	factor	developmental stage	adult
-E-PROT-1		Adult_Retina	factor	organism part	retina
-E-PROT-1		Fetal_Gut	characteristic	developmental stage	fetus
-E-PROT-1		Fetal_Gut	characteristic	organism part	gut
-E-PROT-1		Fetal_Gut	characteristic	organism	Homo sapiens
-E-PROT-1		Fetal_Gut	factor	organism part	gut
-E-PROT-1		Fetal_Gut	factor	developmental stage	fetus
-E-PROT-1		Adult_Gallbladder	characteristic	organism part	gall bladder
-E-PROT-1		Adult_Gallbladder	characteristic	developmental stage	adult
-E-PROT-1		Adult_Gallbladder	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Gallbladder	factor	organism part	gall bladder
-E-PROT-1		Adult_Gallbladder	factor	developmental stage	adult
-E-PROT-1		Adult_Prostate	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Prostate	characteristic	organism part	prostate
-E-PROT-1		Adult_Prostate	characteristic	developmental stage	adult
-E-PROT-1		Adult_Prostate	factor	developmental stage	adult
-E-PROT-1		Adult_Prostate	factor	organism part	prostate
-E-PROT-1		Fetal_Brain	characteristic	organism	Homo sapiens
-E-PROT-1		Fetal_Brain	characteristic	organism part	brain
+E-PROT-1		Fetal_Liver	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-PROT-1		Adult_Esophagus	characteristic	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-PROT-1		Adult_Esophagus	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Esophagus	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Esophagus	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Esophagus	factor	organism part	esophagus	http://purl.obolibrary.org/obo/UBERON_0001043
+E-PROT-1		Adult_Monocytes	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Monocytes	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Monocytes	characteristic	organism part	monocyte	http://purl.obolibrary.org/obo/CL_0000576
+E-PROT-1		Adult_Monocytes	factor	organism part	monocyte	http://purl.obolibrary.org/obo/CL_0000576
+E-PROT-1		Adult_Monocytes	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Heart	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-PROT-1		Adult_Heart	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Heart	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Heart	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-PROT-1		Adult_Heart	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Lung	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Lung	characteristic	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-PROT-1		Adult_Lung	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Lung	factor	organism part	lung	http://purl.obolibrary.org/obo/UBERON_0002048
+E-PROT-1		Adult_Lung	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Gallbladder	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Gallbladder	characteristic	organism part	gallbladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-PROT-1		Adult_Gallbladder	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Gallbladder	factor	organism part	gallbladder	http://purl.obolibrary.org/obo/UBERON_0002110
+E-PROT-1		Adult_Gallbladder	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Bcells	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Bcells	characteristic	organism part	B cell	http://purl.obolibrary.org/obo/CL_0000236
+E-PROT-1		Adult_Bcells	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Bcells	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Bcells	factor	organism part	B cell	http://purl.obolibrary.org/obo/CL_0000236
+E-PROT-1		Adult_Adrenalgland	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Adrenalgland	characteristic	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-PROT-1		Adult_Adrenalgland	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Adrenalgland	factor	organism part	adrenal gland	http://purl.obolibrary.org/obo/CL_0000336
+E-PROT-1		Adult_Adrenalgland	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Fetal_Placenta	characteristic	developmental stage	fetus
+E-PROT-1		Fetal_Placenta	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Fetal_Placenta	characteristic	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-PROT-1		Fetal_Placenta	factor	organism part	placenta	http://purl.obolibrary.org/obo/UBERON_0001987
+E-PROT-1		Fetal_Placenta	factor	developmental stage	fetus
+E-PROT-1		Adult_Liver	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Liver	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Liver	characteristic	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-PROT-1		Adult_Liver	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Liver	factor	organism part	liver	http://purl.obolibrary.org/obo/UBERON_0002107
+E-PROT-1		Fetal_Brain	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Fetal_Brain	characteristic	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
 E-PROT-1		Fetal_Brain	characteristic	developmental stage	fetus
-E-PROT-1		Fetal_Brain	factor	organism part	brain
+E-PROT-1		Fetal_Brain	factor	organism part	brain	http://purl.obolibrary.org/obo/UBERON_0000955
 E-PROT-1		Fetal_Brain	factor	developmental stage	fetus
-E-PROT-1		Adult_CD4Tcells	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_CD4Tcells	characteristic	developmental stage	adult
-E-PROT-1		Adult_CD4Tcells	characteristic	organism part	CD4-positive T cell
-E-PROT-1		Adult_CD4Tcells	factor	developmental stage	adult
-E-PROT-1		Adult_CD4Tcells	factor	organism part	CD4-positive T cell
-E-PROT-1		Adult_Heart	characteristic	organism part	heart
-E-PROT-1		Adult_Heart	characteristic	developmental stage	adult
-E-PROT-1		Adult_Heart	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Heart	factor	developmental stage	adult
-E-PROT-1		Adult_Heart	factor	organism part	heart
-E-PROT-1		Adult_Pancreas	characteristic	developmental stage	adult
-E-PROT-1		Adult_Pancreas	characteristic	organism part	pancreas
-E-PROT-1		Adult_Pancreas	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Pancreas	factor	organism part	pancreas
-E-PROT-1		Adult_Pancreas	factor	developmental stage	adult
-E-PROT-1		Adult_Liver	characteristic	organism part	liver
-E-PROT-1		Adult_Liver	characteristic	developmental stage	adult
-E-PROT-1		Adult_Liver	characteristic	organism	Homo sapiens
-E-PROT-1		Adult_Liver	factor	developmental stage	adult
-E-PROT-1		Adult_Liver	factor	organism part	liver
+E-PROT-1		Adult_Urinarybladder	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Urinarybladder	characteristic	organism part	urinary bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-PROT-1		Adult_Urinarybladder	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Urinarybladder	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Urinarybladder	factor	organism part	urinary bladder	http://purl.obolibrary.org/obo/UBERON_0001255
+E-PROT-1		Fetal_Gut	characteristic	developmental stage	fetus
+E-PROT-1		Fetal_Gut	characteristic	organism part	gut	http://purl.obolibrary.org/obo/UBERON_0001007
+E-PROT-1		Fetal_Gut	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Fetal_Gut	factor	developmental stage	fetus
+E-PROT-1		Fetal_Gut	factor	organism part	gut	http://purl.obolibrary.org/obo/UBERON_0001007
+E-PROT-1		Adult_CD4Tcells	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_CD4Tcells	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_CD4Tcells	characteristic	organism part	CD4-positive T cell	http://purl.obolibrary.org/obo/CL_0000084
+E-PROT-1		Adult_CD4Tcells	factor	organism part	CD4-positive T cell	http://purl.obolibrary.org/obo/CL_0000084
+E-PROT-1		Adult_CD4Tcells	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Platelets	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Platelets	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Platelets	characteristic	organism part	platelet	http://purl.obolibrary.org/obo/CL_0000233
+E-PROT-1		Adult_Platelets	factor	organism part	platelet	http://purl.obolibrary.org/obo/CL_0000233
+E-PROT-1		Adult_Platelets	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Fetal_Testis	characteristic	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-PROT-1		Fetal_Testis	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Fetal_Testis	characteristic	developmental stage	fetus
+E-PROT-1		Fetal_Testis	factor	organism part	testis	http://purl.obolibrary.org/obo/UBERON_0000473
+E-PROT-1		Fetal_Testis	factor	developmental stage	fetus
+E-PROT-1		Adult_Pancreas	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Pancreas	characteristic	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-PROT-1		Adult_Pancreas	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Pancreas	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Pancreas	factor	organism part	pancreas	http://purl.obolibrary.org/obo/UBERON_0001264
+E-PROT-1		Adult_Ovary	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Ovary	characteristic	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-PROT-1		Adult_Ovary	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Ovary	factor	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-PROT-1		Adult_Ovary	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Spinalcord	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Spinalcord	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Spinalcord	characteristic	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-PROT-1		Adult_Spinalcord	factor	organism part	spinal cord	http://purl.obolibrary.org/obo/UBERON_0002240
+E-PROT-1		Adult_Spinalcord	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Retina	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Retina	characteristic	organism part	retina	http://purl.obolibrary.org/obo/UBERON_0000966
+E-PROT-1		Adult_Retina	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Retina	factor	organism part	retina	http://purl.obolibrary.org/obo/UBERON_0000966
+E-PROT-1		Adult_Retina	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_NKcells	characteristic	organism part	natural killer cell	http://purl.obolibrary.org/obo/CL_0000623
+E-PROT-1		Adult_NKcells	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_NKcells	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_NKcells	factor	organism part	natural killer cell	http://purl.obolibrary.org/obo/CL_0000623
+E-PROT-1		Adult_NKcells	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Fetal_Ovary	characteristic	developmental stage	fetus
+E-PROT-1		Fetal_Ovary	characteristic	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-PROT-1		Fetal_Ovary	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Fetal_Ovary	factor	organism part	ovary	http://www.ebi.ac.uk/efo/EFO_0000973
+E-PROT-1		Fetal_Ovary	factor	developmental stage	fetus
+E-PROT-1		Adult_Rectum	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Rectum	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Rectum	characteristic	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-PROT-1		Adult_Rectum	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Rectum	factor	organism part	rectum	http://purl.obolibrary.org/obo/UBERON_0001052
+E-PROT-1		Adult_Colon	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Colon	characteristic	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-1		Adult_Colon	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Colon	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Colon	factor	organism part	colon	http://purl.obolibrary.org/obo/UBERON_0001155
+E-PROT-1		Fetal_Heart	characteristic	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-PROT-1		Fetal_Heart	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Fetal_Heart	characteristic	developmental stage	fetus
+E-PROT-1		Fetal_Heart	factor	developmental stage	fetus
+E-PROT-1		Fetal_Heart	factor	organism part	heart	http://purl.obolibrary.org/obo/UBERON_0000948
+E-PROT-1		Adult_Frontalcortex	characteristic	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
+E-PROT-1		Adult_Frontalcortex	characteristic	organism	Homo sapiens	http://purl.obolibrary.org/obo/NCBITaxon_9606
+E-PROT-1		Adult_Frontalcortex	characteristic	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-PROT-1		Adult_Frontalcortex	factor	organism part	frontal cortex	http://purl.obolibrary.org/obo/UBERON_0001870
+E-PROT-1		Adult_Frontalcortex	factor	developmental stage	adult	http://www.ebi.ac.uk/efo/EFO_0001272
