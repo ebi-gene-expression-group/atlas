@@ -64,7 +64,7 @@ public class ProteomicsBaselineExperimentCondensedSdrfParserIT {
 
         SampleCharacteristic sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), Matchers.is(ORGANISM_PART));
-        assertThat(sampleCharacteristic.value(), Matchers.is("animal ovary"));
+        assertThat(sampleCharacteristic.value(), Matchers.is("ovary"));
         // TODO Uncomment as soon as condensed SDRF file contains ontology terms
         //assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0000973"));
 
