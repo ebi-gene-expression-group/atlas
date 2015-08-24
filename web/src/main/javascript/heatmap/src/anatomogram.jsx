@@ -204,7 +204,7 @@ var Anatomogram = React.createClass({
 
     componentDidUpdate: function() {
         var svg = Snap(this.refs.anatomogram.getDOMNode()).select("g");
-        this._highlightAllOrganismParts(svg);
+        this._displayAllOrganismParts(svg);
     },
 
     _highlightPath: function(svgPathId) {
@@ -232,35 +232,66 @@ var Anatomogram = React.createClass({
             allElements.remove();
         }
 
-        var highlightAllOrganismPartsCallback = this._highlightAllOrganismParts;
+        var displayAllOrganismPartsCallback = this._displayAllOrganismParts;
+        var registerHoverEventsCallback = this._registerHoverEvents;
         Snap.load(
             svgFile,
             function (fragment) {
                 var g = fragment.select("g");
                 g.transform("S1.6,0,0");
-                highlightAllOrganismPartsCallback(g);
+                displayAllOrganismPartsCallback(g);
+                registerHoverEventsCallback(g);
                 svgCanvas.append(g);
             }
         );
     },
 
-    _highlightAllOrganismParts: function(svg) {
+    _displayAllOrganismParts: function(svg) {
         if (svg) {  // Sometimes svg is null... why?
             this.props.anatomogram.allSvgPathIds.forEach(function(svgPathId) {
-                this._highlightOrganismParts(svg, svgPathId);
+                this._displayOrganismPartsWithDefaultProperties(svg, svgPathId);
             }, this);
         }
     },
 
-    _highlightOrganismParts: function(svg, svgPathId) {
-
+    _displayOrganismPartsWithDefaultProperties: function(svg, svgPathId) {
         var colour = (this.state.hoveredPathId === svgPathId) ? this.props.hoveredTissueColour : this.props.expressedTissueColour;
         var opacity = (this.state.hoveredPathId === svgPathId) ? 0.7 : 0.5;
 
         if (this.state.expressedFactors.indexOf(svgPathId) > -1) {
-            Anatomogram._recursivelyChangeProperties(svg.select("#" + svgPathId), colour, opacity);
+            this._highlightOrganismParts(svg, svgPathId, colour, opacity);
         } else {
-            Anatomogram._recursivelyChangeProperties(svg.select("#" + svgPathId), "gray", 0.5);
+            this._highlightOrganismParts(svg, svgPathId, "gray", 0.5);
+        }
+    },
+
+    _highlightOrganismParts: function(svg, svgPathId, colour, opacity) {
+        Anatomogram._recursivelyChangeProperties(svg.select("#" + svgPathId), colour, opacity);
+    },
+
+    _registerHoverEvents: function(svg) {
+        if (svg) {  // Sometimes svg is null... why?
+
+            var eventEmitter = this.props.eventEmitter,
+                hoverColour = this.props.hoveredTissueColour,
+                highlightOrganismPartsCallback = this._highlightOrganismParts,
+                displayOrganismPartsWithDefaultPropertiesCallback = this._displayOrganismPartsWithDefaultProperties;
+            var mouseoverCallback = function(svgPathId) {
+                highlightOrganismPartsCallback(svg, svgPathId, hoverColour, 0.7);
+                eventEmitter.emitEvent('gxaAnatomogramTissueMouseEnter', [svgPathId]);
+            };
+            var mouseoutCallback = function(svgPathId) {
+                displayOrganismPartsWithDefaultPropertiesCallback(svg, svgPathId);
+                eventEmitter.emitEvent('gxaAnatomogramTissueMouseLeave', [svgPathId]);
+            };
+
+            this.props.anatomogram.allSvgPathIds.forEach(function(svgPathId) {
+                var svgElement = svg.select("#" + svgPathId);
+                if (svgElement) {
+                    svgElement.mouseover(function() {mouseoverCallback(svgPathId)});
+                    svgElement.mouseout(function() {mouseoutCallback(svgPathId)});
+                }
+            }, this);
         }
     },
 
@@ -277,6 +308,23 @@ var Anatomogram = React.createClass({
                 }
 
                 svgElement.attr({"fill": colour, "fill-opacity": opacity});
+            }
+        },
+
+        _recursivelySelectElements: function(svgElement) {
+            if (!svgElement) {
+                return [];
+            }
+
+            var innerElements = svgElement.selectAll("*");
+            if (innerElements.length === 0) {
+                return [svgElement];
+            } else {
+                var allElements = [];
+                innerElements.forEach(function(innerElement) {
+                    allElements.concat(Anatomogram._recursivelySelectElements(innerElement));
+                });
+                return allElements;
             }
         }
     }

@@ -277,7 +277,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
 
                     <div ref="stickyWrap" className="gxaStickyTableWrap" style={{"marginTop": paddingMargin}}>
                         <table ref="heatmapTable" className="gxaTableGrid gxaStickyEnabled" id="heatmap-table">
-                            <HeatmapTableHeader ref="heatmapTableHeader" radioId="table" isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} hoverColumnCallback={this._hoverColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} renderContrastFactorHeaders={true}/>
+                            <HeatmapTableHeader ref="heatmapTableHeader" radioId="table" isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} hoverColumnCallback={this._hoverColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} renderContrastFactorHeaders={true} anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>
                             <HeatmapTableRows profiles={this.state.profiles.rows} selectedGeneId={this.state.selectedGeneId} selectGene={this.selectGene} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} hoverColumnCallback={this._hoverColumn} hoverRowCallback={this._hoverRow} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} renderExpressionCells={true}/>
                         </table>
                         <div ref="stickyIntersect" className="gxaStickyTableIntersect">
@@ -293,7 +293,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                         </div>
                         <div ref="stickyHeader" className="gxaStickyTableHeader">
                             <table>
-                                <HeatmapTableHeader isMicroarray={this.isMicroarray()} radioId="header" hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} hoverColumnCallback={this._hoverColumn} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} renderContrastFactorHeaders={true}/>
+                                <HeatmapTableHeader isMicroarray={this.isMicroarray()} radioId="header" hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} hoverColumnCallback={this._hoverColumn} columnHeaders={this.props.columnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} renderContrastFactorHeaders={true} anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>
                             </table>
                         </div>
                     </div>
@@ -399,13 +399,13 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     var HeatmapTableHeader = React.createClass({
         renderContrastFactorHeaders: function () {
             if (type.isBaseline) {
-                return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} selectedColumnId={this.props.selectedColumnId} hoverColumnCallback={this.props.hoverColumnCallback} selectColumn={this.props.selectColumn} experimentAccession={heatmapConfig.experimentAccession}/> );
+                return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} selectedColumnId={this.props.selectedColumnId} hoverColumnCallback={this.props.hoverColumnCallback} selectColumn={this.props.selectColumn} experimentAccession={heatmapConfig.experimentAccession} anatomogramEventEmitter={this.props.anatomogramEventEmitter}/> );
             }
             else if (type.isDifferential) {
                 return (<ContrastHeaders contrasts={this.props.columnHeaders} selectedColumnId={this.props.selectedColumnId} selectColumn={this.props.selectColumn} experimentAccession={heatmapConfig.experimentAccession} showMaPlotButton={heatmapConfig.showMaPlotButton} gseaPlots={heatmapConfig.gseaPlots}/>);
             }
             else if (type.isMultiExperiment) {
-                 return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} selectedColumnId={this.props.selectedColumnId} hoverColumnCallback={this.props.hoverColumnCallback}  selectColumn={this.props.selectColumn}/>);
+                 return (<FactorHeaders assayGroupFactors={this.props.columnHeaders} selectedColumnId={this.props.selectedColumnId} hoverColumnCallback={this.props.hoverColumnCallback}  selectColumn={this.props.selectColumn} anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>);
             }
         },
 
@@ -451,7 +451,8 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
         render: function () {
             var factorHeaders = this.props.assayGroupFactors.map(function (assayGroupFactor) {
                 return <FactorHeader key={assayGroupFactor.factorValue} factorName={assayGroupFactor.factorValue} svgPathId={assayGroupFactor.factorValueOntologyTermId} assayGroupId={assayGroupFactor.assayGroupId} experimentAccession={this.props.experimentAccession}
-                        selectColumn={this.props.selectColumn} selected={assayGroupFactor.assayGroupId === this.props.selectedColumnId} hoverColumnCallback={this.props.hoverColumnCallback}/>;
+                                     selectColumn={this.props.selectColumn} selected={assayGroupFactor.assayGroupId === this.props.selectedColumnId} hoverColumnCallback={this.props.hoverColumnCallback}
+                                     anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>;
             }.bind(this));
 
             return (
@@ -490,6 +491,18 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 }
             },
 
+            _anatomogramTissueMouseEnter: function(svgPathId) {
+                if (svgPathId === this.props.svgPathId) {
+                    $(this.refs.headerCell.getDOMNode()).addClass("gxaHeaderHover");
+                }
+            },
+
+            _anatomogramTissueMouseLeave: function(svgPathId) {
+                if (svgPathId === this.props.svgPathId) {
+                    $(this.refs.headerCell.getDOMNode()).removeClass("gxaHeaderHover");
+                }
+            },
+
             onClick: function () {
                 if (enableEnsemblLauncher) {
                     this.props.selectColumn(this.props.assayGroupId);
@@ -499,6 +512,10 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             componentDidMount: function () {
                 if(!type.isMultiExperiment) {
                     factorTooltipModule.init(contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
+                }
+                if (this.props.anatomogramEventEmitter) {
+                    this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
+                    this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseLeave', this._anatomogramTissueMouseLeave);
                 }
             },
 
@@ -510,7 +527,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 var factorName = csstransforms ? restrictLabelSize(this.props.factorName, 14) : this.props.factorName;
 
                 return (
-                    <th className={thClass} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick} rowSpan="2">
+                    <th ref="headerCell" className={thClass} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick} rowSpan="2">
                         <div data-assay-group-id={this.props.assayGroupId} data-experiment-accession={this.props.experimentAccession} className={divClass}>
                             {factorName}
                             {showSelectTextOnHover}
