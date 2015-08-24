@@ -63,16 +63,14 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
         },
 
         _hoverColumn: function(columnId) {
-            var hoveredColumnId = (columnId === this.state.hoveredColumnId) ? null : columnId;
-            this.setState({hoveredColumnId: hoveredColumnId}, function() {
-                this.props.anatomogramEventEmitter.emitEvent('onColumnHoverChange', [hoveredColumnId]);
+            this.setState({hoveredColumnId: columnId}, function() {
+                this.props.anatomogramEventEmitter.emitEvent('ebiGxaHeatmapColumnHoverChange', [columnId]);
             });
         },
 
         _hoverRow: function(rowId) {
-            var hoveredRowId = (rowId === this.state.hoveredRowId) ? null : rowId;
-            this.setState({hoveredRowId: hoveredRowId}, function() {
-                this.props.anatomogramEventEmitter.emitEvent('onRowHoverChange', [rowId]);
+            this.setState({hoveredRowId: rowId}, function() {
+                this.props.anatomogramEventEmitter.emitEvent('ebiGxaHeatmapRowHoverChange', [rowId]);
             });
         },
 
@@ -766,9 +764,9 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
         profileRowType: function (profile)  {
             var geneProfileKey = type.isDifferential ? profile.name + "-" + profile.designElement : profile.name;
             return (type.isMultiExperiment ?
-                <GeneProfileRow key={geneProfileKey} id={profile.id} name={profile.name} experimentType={profile.experimentType} expressions={profile.expressions} serializedFilterFactors={profile.serializedFilterFactors} displayLevels={this.props.displayLevels} renderExpressionCells={this.props.renderExpressionCells}/>
+                <GeneProfileRow key={geneProfileKey} id={profile.id} name={profile.name} experimentType={profile.experimentType} expressions={profile.expressions} serializedFilterFactors={profile.serializedFilterFactors} displayLevels={this.props.displayLevels} renderExpressionCells={this.props.renderExpressionCells} hoverColumnCallback={this.props.hoverColumnCallback} hoverRowCallback={this.props.hoverRowCallback}/>
                 :
-                <GeneProfileRow key={geneProfileKey} selected={profile.id === this.props.selectedGeneId} selectGene={this.props.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles} selectedRadioButton={this.props.selectedRadioButton} hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} renderExpressionCells={this.props.renderExpressionCells}/>
+                <GeneProfileRow key={geneProfileKey} selected={profile.id === this.props.selectedGeneId} selectGene={this.props.selectGene} designElement={profile.designElement} id={profile.id} name={profile.name} expressions={profile.expressions} displayLevels={this.props.displayLevels} showGeneSetProfiles={this.props.showGeneSetProfiles} selectedRadioButton={this.props.selectedRadioButton} hasQuartiles={this.props.hasQuartiles} isSingleGeneResult={this.props.isSingleGeneResult} renderExpressionCells={this.props.renderExpressionCells} hoverColumnCallback={this.props.hoverColumnCallback} hoverRowCallback={this.props.hoverRowCallback}/>
             );
         },
 
@@ -795,16 +793,24 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             onMouseEnter: function () {
-                this.setState({hover:true});
+                if (enableEnsemblLauncher) {
+                    this.setState({hover:true});
+                }
+                this.props.hoverRowCallback(this.props.id);
             },
 
             onMouseLeave: function () {
-                this.setState({hover:false});
+                if (enableEnsemblLauncher) {
+                    this.setState({hover:false});
+                }
                 this._closeTooltip();
+                this.props.hoverRowCallback(null);
             },
 
             onClick: function () {
-                this.props.selectGene(this.props.id);
+                if (enableEnsemblLauncher) {
+                    this.props.selectGene(this.props.id);
+                }
             },
 
             geneNameLinked: function () {
@@ -849,12 +855,12 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 if (type.isBaseline) {
                     if(this.props.selectedRadioButton === "variance" && expression.quartiles) {
                         return (
-                            <HeatmapBaselineCellVariance quartiles={expression.quartiles}/>
+                            <HeatmapBaselineCellVariance quartiles={expression.quartiles} hoverColumnCallback={this.props.hoverColumnCallback}/>
                         );
                     }
                     else {
                         return (
-                            <CellBaseline key={this.props.id + expression.factorName} factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.displayLevelsRadio()} svgPathId={expression.svgPathId} geneSetProfiles={this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name}/>
+                            <CellBaseline key={this.props.id + expression.factorName} factorName={expression.factorName} color={expression.color} value={expression.value} displayLevels={this.displayLevelsRadio()} svgPathId={expression.svgPathId} geneSetProfiles={this.props.showGeneSetProfiles} id={this.props.id} name={this.props.name} hoverColumnCallback={this.props.hoverColumnCallback}/>
                         );
                     }
                 }
@@ -865,7 +871,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 }
                 else if (type.isMultiExperiment) {
                     return (
-                            <CellMultiExperiment key={this.props.id + expression.factorName} factorName={expression.factorName} serializedFilterFactors={this.props.serializedFilterFactors} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} id={this.props.id} name={this.props.name}/>
+                            <CellMultiExperiment key={this.props.id + expression.factorName} factorName={expression.factorName} serializedFilterFactors={this.props.serializedFilterFactors} color={expression.color} value={expression.value} displayLevels={this.props.displayLevels} svgPathId={expression.svgPathId} id={this.props.id} name={this.props.name} hoverColumnCallback={this.props.hoverColumnCallback}/>
                         );
                 }
             },
@@ -885,7 +891,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
 
                 return (
                     <tr className={rowClassName}>
-                        <th className={className} onMouseEnter={enableEnsemblLauncher ? this.onMouseEnter : undefined} onMouseLeave={enableEnsemblLauncher ? this.onMouseLeave : this._closeTooltip} onClick={enableEnsemblLauncher ? this.onClick : undefined}>
+                        <th className={className} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} onClick={this.onClick}>
                             <div style={{"display": "table", "width": "100%"}}>
                                 <div style={{"display": "table-row"}}>
                                     { enableGeneLinks ?  this.geneNameLinked() : this.geneNameNotLinked()}
@@ -945,40 +951,20 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
 
     var CellBaseline = (function (contextRoot, formatBaselineExpression) {
 
-        function hasKnownExpression(value) {
-            // true if not blank or UNKNOWN, ie: has a expression with a known value
-            return (value && !isUnknownExpression(value));
-        }
-
-        function isUnknownExpression(value) {
-            return (value === "UNKNOWN")
-        }
-
-        function noExpression(value) {
-            return !value;
-        }
-
-        function unknownCell(geneSetProfiles) {
-            return (
-                <span ref='unknownCell' data-help-loc={geneSetProfiles ? '#heatMapTableGeneSetUnknownCell' : '#heatMapTableUnknownCell'}></span>
-                );
-        }
-
         return React.createClass({
             render: function () {
-                if (noExpression(this.props.value)) {
+                if (this._noExpression()) {
                     return (<td></td>);
                 }
 
-                var style = {"backgroundColor": isUnknownExpression(this.props.value) ? "white" : this.props.color};
+                var style = {"backgroundColor": this._isUnknownExpression() ? "white" : this.props.color};
 
                 return (
-                    <td style={style}>
+                    <td style={style} onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave}>
                         <div
                         className="gxaHeatmapCell"
-                        style={{visibility: isUnknownExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
-                        data-svg-path-id={this.props.svgPathId}>
-                            {isUnknownExpression(this.props.value) ? unknownCell(this.props.geneSetProfiles) : formatBaselineExpression(this.props.value)}
+                        style={{visibility: this._isUnknownExpression() || this.props.displayLevels ? "visible" : "hidden"}}>
+                            {this._isUnknownExpression() ? this._unknownCell() : formatBaselineExpression(this.props.value)}
                         </div>
                     </td>
                     );
@@ -999,48 +985,87 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                     return unknownElement.children.length;
                 }
 
-                if (isUnknownExpression(this.props.value) && !hasQuestionMark(this.refs.unknownCell.getDOMNode())) {
+                if (this._isUnknownExpression() && !hasQuestionMark(this.refs.unknownCell.getDOMNode())) {
                     helpTooltipsModule.init('experiment', contextRoot, this.refs.unknownCell.getDOMNode());
                 }
-            }
+            },
 
+            _hasKnownExpression: function () {
+                // true if not blank or UNKNOWN, ie: has a expression with a known value
+                return (this.props.value && !this._isUnknownExpression());
+            },
+
+            _isUnknownExpression: function () {
+                return (this.propsvalue === "UNKNOWN")
+            },
+
+            _noExpression: function () {
+                return !this.props.value;
+            },
+
+            _unknownCell: function () {
+                return (
+                    <span ref='unknownCell' data-help-loc={this.props.geneSetProfiles ? '#heatMapTableGeneSetUnknownCell' : '#heatMapTableUnknownCell'}></span>
+                );
+            },
+
+            _onMouseEnter: function() {
+                if (this._hasKnownExpression()) {
+                    this.props.hoverColumnCallback(this.props.svgPathId);
+                }
+            },
+
+            _onMouseLeave: function() {
+                if (this._hasKnownExpression()) {
+                    this.props.hoverColumnCallback(null);
+                }
+            }
         });
+
     })(heatmapConfig.contextRoot, formatBaselineExpression);
 
 
     var CellMultiExperiment = (function (formatBaselineExpression) {
 
-        function isNAExpression(value) {
-            return (value === "NT")
-        }
-
-        function noExpression(value) {
-            return !value;
-        }
-
-        function tissueNotStudiedInExperiment() {
-            return (
-                <span>NA</span>
-                );
-        }
-
         return React.createClass({
+            _isNAExpression : function () {
+                return (this.props.value === "NT");
+            },
+
+            _noExpression: function () {
+                return !this.props.value;
+            },
+
+            _tissueNotStudiedInExperiment: function () {
+                return (
+                    <span>NA</span>
+                );
+            },
+
+            _onMouseEnter: function() {
+                if (!this._noExpression() && !this._isNAExpression()) {
+                    this.props.hoverColumnCallback(this.props.svgPathId);
+                }
+            },
+
+            _onMouseLeave: function() {
+                if (!this._noExpression() && !this._isNAExpression()) {
+                    this.props.hoverColumnCallback(null);
+                }
+            },
 
             render: function () {
 
-                if (noExpression(this.props.value)) {
+                if (this._noExpression()) {
                     return (<td></td>);
                 }
 
                 var style = {"backgroundColor": this.props.color};
 
                 return (
-                    <td style={style}>
-                        <div
-                        className="gxaHeatmapCell"
-                        style={{visibility: isNAExpression(this.props.value) || this.props.displayLevels ? "visible" : "hidden"}}
-                        data-svg-path-id={this.props.svgPathId}>
-                            {isNAExpression(this.props.value) ? tissueNotStudiedInExperiment() : formatBaselineExpression(this.props.value)}
+                    <td style={style} onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave}>
+                        <div className="gxaHeatmapCell" style={{visibility: this._isNAExpression() || this.props.displayLevels ? "visible" : "hidden"}}>
+                            {this._isNAExpression(this.props.value) ? this._tissueNotStudiedInExperiment() : formatBaselineExpression(this.props.value)}
                         </div>
                     </td>
                     );

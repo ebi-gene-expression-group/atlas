@@ -155,7 +155,7 @@ var Anatomogram = React.createClass({
         var expressedFactors = [];
         this.props.profileRows.forEach(function(profileRow) {
             profileRow.expressions.forEach(function(expression) {
-                if (expression.value !== "NA" && expression.value !== "") {
+                if (expression.value !== "NT" && expression.value !== "") {
                     expressedFactors.push(expression.svgPathId);
                 }
             });
@@ -197,7 +197,8 @@ var Anatomogram = React.createClass({
     },
 
     componentDidMount: function() {
-        this.props.eventEmitter.addListener('onColumnHoverChange', this._onColumnHoverChange);
+        this.props.eventEmitter.addListener('ebiGxaHeatmapColumnHoverChange', this._highlightPath);
+        this.props.eventEmitter.addListener('ebiGxaHeatmapRowHoverChange', this._onRowHoverChange);
         this._loadAnatomogram(this._getAnatomogramSVGFile(this.state.selectedId));
     },
 
@@ -206,8 +207,12 @@ var Anatomogram = React.createClass({
         this._highlightAllOrganismParts(svg);
     },
 
-    _onColumnHoverChange: function(svgPathId) {
+    _highlightPath: function(svgPathId) {
         this.setState({hoveredPathId: svgPathId});
+    },
+
+    _onRowHoverChange: function(rowId) {
+        console.log(rowId);
     },
 
     _getAnatomogramSVGFile: function(id) {
@@ -240,10 +245,11 @@ var Anatomogram = React.createClass({
     },
 
     _highlightAllOrganismParts: function(svg) {
-
-        this.props.anatomogram.allSvgPathIds.forEach(function(svgPathId) {
-            this._highlightOrganismParts(svg, svgPathId);
-        }, this);
+        if (svg) {  // Sometimes svg is null... why?
+            this.props.anatomogram.allSvgPathIds.forEach(function(svgPathId) {
+                this._highlightOrganismParts(svg, svgPathId);
+            }, this);
+        }
     },
 
     _highlightOrganismParts: function(svg, svgPathId) {
