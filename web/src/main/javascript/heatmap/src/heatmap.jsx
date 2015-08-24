@@ -813,7 +813,8 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 if (enableEnsemblLauncher) {
                     this.setState({hover:true});
                 }
-                this.props.hoverRowCallback(this.props.id);
+                // We use name instead of id because in multiexperiment the same id can appear under different name (same experiment, different conditions)
+                this.props.hoverRowCallback(this.props.name);
             },
 
             onMouseLeave: function () {

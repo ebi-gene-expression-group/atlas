@@ -154,7 +154,7 @@ var Anatomogram = React.createClass({
                     expressedFactors.push(expression.svgPathId);
                 }
             });
-            expressedFactorsPerRow[profileRow.id] = expressedFactors;
+            expressedFactorsPerRow[profileRow.name] = expressedFactors;
             allExpressedFactors = allExpressedFactors.concat(expressedFactors);
         });
 
@@ -218,7 +218,6 @@ var Anatomogram = React.createClass({
     },
 
     _highlightRow: function(rowId) {
-        console.log(rowId);
         this.setState({hoveredRowId: rowId});
 
     },
