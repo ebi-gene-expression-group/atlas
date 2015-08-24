@@ -14,6 +14,7 @@
     "URIjs": "^1.16.0",
     "fancybox": "^3.0.0",
     "heatmap-baseline-cell-variance": "file:../heatmap-baseline-cell-variance",
+    "anatomogram": "file:../anatomogram",
     "jquery": "^2.1.4",
     "jquery-highlight": "^3.2.2",
     "jquery-ui": "^1.10.5",
@@ -21,7 +22,6 @@
     "modernizr": "^3.0.0-alpha.3",
     "react": "^0.12.2",
     "react-radio-group": "^1.1.0",
-    "snapsvg": "^0.4.0",
     "throttle-debounce": "^0.1.1",
     "wolfy87-eventemitter": "^4.2.11"
   },
@@ -32,7 +32,6 @@
     "file-loader": "^0.8.4",
     "image-webpack-loader": "^1.6.1",
     "imagemin": "^3.2.0",
-    "imports-loader": "^0.6.4",
     "jsdom": "^5.6.1",
     "jsx-loader": "^0.12.2",
     "mocha": "^2.2.5",

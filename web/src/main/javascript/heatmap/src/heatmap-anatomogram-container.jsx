@@ -14,7 +14,7 @@ var EventEmitter = require('wolfy87-eventemitter');
 
 //*------------------------------------------------------------------*
 
-var Anatomogram = require('./anatomogram.jsx');
+var Anatomogram = require('./anatomogram');
 
 //*------------------------------------------------------------------*
 
