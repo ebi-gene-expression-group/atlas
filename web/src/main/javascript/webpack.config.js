@@ -6,6 +6,7 @@ module.exports = {
 
     // define the bundles we want
     entry: {
+        "anatomogram": './anatomogram',
         "expression-atlas-heatmap": './heatmap',
         "internal-atlas-heatmap": './heatmap/internal-atlas-index.js',
         "faceted-search": './faceted-search',
