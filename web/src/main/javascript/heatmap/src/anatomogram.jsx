@@ -119,13 +119,6 @@ var Anatomogram = React.createClass({
         eventEmitter: React.PropTypes.instanceOf(EventEmitter)
     },
 
-    _handleChange: function(newSelectedId) {
-        if (newSelectedId !== this.state.selectedId) {
-            this._loadAnatomogram(this._getAnatomogramSVGFile(newSelectedId));
-            this.setState({selectedId: newSelectedId});
-        }
-    },
-
     getInitialState: function() {
         var contextRoot = this.props.heatmapConfig.contextRoot;
         var availableAnatomograms = [];
@@ -152,26 +145,30 @@ var Anatomogram = React.createClass({
         }
 
 
-        var expressedFactors = [];
+        var allExpressedFactors = [],
+            expressedFactorsPerRow = {};
         this.props.profileRows.forEach(function(profileRow) {
+            var expressedFactors = [];
             profileRow.expressions.forEach(function(expression) {
                 if (expression.value !== "NT" && expression.value !== "") {
                     expressedFactors.push(expression.svgPathId);
                 }
             });
+            expressedFactorsPerRow[profileRow.id] = expressedFactors;
+            allExpressedFactors = allExpressedFactors.concat(expressedFactors);
         });
 
         function onlyUnique(value, index, self) {
             return self.indexOf(value) === index;
         }
-        var uniqueExpressedFactors = expressedFactors.filter(onlyUnique);
-
 
         return {
             selectedId: availableAnatomograms[0].id,
             availableAnatomograms: availableAnatomograms,
-            expressedFactors: uniqueExpressedFactors,
-            hoveredPathId: null
+            expressedFactors: allExpressedFactors.filter(onlyUnique),
+            expressedFactorsPerRow: expressedFactorsPerRow,
+            hoveredPathId: null,
+            hoveredRowId: null
         }
     },
 
@@ -197,22 +194,33 @@ var Anatomogram = React.createClass({
     },
 
     componentDidMount: function() {
-        this.props.eventEmitter.addListener('ebiGxaHeatmapColumnHoverChange', this._highlightPath);
-        this.props.eventEmitter.addListener('ebiGxaHeatmapRowHoverChange', this._onRowHoverChange);
+        this.props.eventEmitter.addListener("gxaHeatmapColumnHoverChange", this._highlightPath);
+        this.props.eventEmitter.addListener("gxaHeatmapRowHoverChange", this._highlightRow);
         this._loadAnatomogram(this._getAnatomogramSVGFile(this.state.selectedId));
     },
 
+    // Only displays/highlights the relevant tissues to avoid loading the anatomogram every time we hover over a tissue or a factor header
     componentDidUpdate: function() {
         var svg = Snap(this.refs.anatomogram.getDOMNode()).select("g");
         this._displayAllOrganismParts(svg);
     },
 
+    _handleChange: function(newSelectedId) {
+        if (newSelectedId !== this.state.selectedId) {
+            this._loadAnatomogram(this._getAnatomogramSVGFile(newSelectedId));
+            this.setState({selectedId: newSelectedId});
+        }
+    },
+
+    // TODO We could manually highlight un-highlight the affected tissues instead of re-displaying all of them, as setState triggers componentDidUpdate
     _highlightPath: function(svgPathId) {
         this.setState({hoveredPathId: svgPathId});
     },
 
-    _onRowHoverChange: function(rowId) {
+    _highlightRow: function(rowId) {
         console.log(rowId);
+        this.setState({hoveredRowId: rowId});
+
     },
 
     _getAnatomogramSVGFile: function(id) {
@@ -254,12 +262,23 @@ var Anatomogram = React.createClass({
         }
     },
 
+    _hoveredRowContainsPathId: function(svgPathId) {
+        if (!this.state.hoveredRowId) {
+            return false;
+        }
+
+        return (this.state.expressedFactorsPerRow[this.state.hoveredRowId].indexOf(svgPathId) > -1);
+    },
+
     _displayOrganismPartsWithDefaultProperties: function(svg, svgPathId) {
-        var colour = (this.state.hoveredPathId === svgPathId) ? this.props.hoveredTissueColour : this.props.expressedTissueColour;
-        var opacity = (this.state.hoveredPathId === svgPathId) ? 0.7 : 0.5;
+
+        var colour = this.props.expressedTissueColour;
+        if (this.state.hoveredPathId === svgPathId || this._hoveredRowContainsPathId(svgPathId))  {
+            colour = this.props.hoveredTissueColour;
+        }
 
         if (this.state.expressedFactors.indexOf(svgPathId) > -1) {
-            this._highlightOrganismParts(svg, svgPathId, colour, opacity);
+            this._highlightOrganismParts(svg, svgPathId, colour, 0.7);
         } else {
             this._highlightOrganismParts(svg, svgPathId, "gray", 0.5);
         }
@@ -322,7 +341,7 @@ var Anatomogram = React.createClass({
             } else {
                 var allElements = [];
                 innerElements.forEach(function(innerElement) {
-                    allElements.concat(Anatomogram._recursivelySelectElements(innerElement));
+                    allElements = allElements.concat(Anatomogram._recursivelySelectElements(innerElement));
                 });
                 return allElements;
             }

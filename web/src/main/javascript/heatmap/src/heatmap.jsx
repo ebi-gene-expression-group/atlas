@@ -64,13 +64,13 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
 
         _hoverColumn: function(columnId) {
             this.setState({hoveredColumnId: columnId}, function() {
-                this.props.anatomogramEventEmitter.emitEvent('ebiGxaHeatmapColumnHoverChange', [columnId]);
+                this.props.anatomogramEventEmitter.emitEvent('gxaHeatmapColumnHoverChange', [columnId]);
             });
         },
 
         _hoverRow: function(rowId) {
             this.setState({hoveredRowId: rowId}, function() {
-                this.props.anatomogramEventEmitter.emitEvent('ebiGxaHeatmapRowHoverChange', [rowId]);
+                this.props.anatomogramEventEmitter.emitEvent('gxaHeatmapRowHoverChange', [rowId]);
             });
         },
 

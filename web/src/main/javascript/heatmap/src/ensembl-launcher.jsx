@@ -88,11 +88,6 @@ var EnsemblLauncher = React.createClass({
         this.props.eventEmitter.addListener('onGeneSelectionChange', this._onGeneSelectionChange);
     },
 
-    //componentWillUnmount: function () {
-    //    this.props.eventEmitter.addListener('onColumnSelectionChange', this._onColumnSelectionChange);
-    //    this.props.eventEmitter.addListener('onGeneSelectionChange', this._onGeneSelectionChange);
-    //},
-
     getInitialState: function () {
         return {selectedColumnId: null, selectedGeneId: null, buttonText: ""};
     },
