@@ -236,6 +236,46 @@ ul#gxaLocalNav a:hover, ul#gxaLocalNav a:active, ul#gxaLocalNav li.active a {
     border: 1px solid #fbd850 !important;
 }
 
+#filterby-menu .ui-menu {
+    width: 150px;
+}
+
+#filterby-menu .ui-menu,
+#filterby-menu .ui-menu,
+.ui-autocomplete {
+    z-index: 600;
+    border-radius: 4px;
+    background: #FFF none !important;
+}
+
+#filterby-menu .ui-state-focus,
+#filterby-menu .ui-state-active,
+.ui-autocomplete .ui-state-focus,
+.ui-autocomplete .ui-state-active {
+    color: #EB8F00;
+    font-weight: normal;
+    background: #E0EAF1 none !important;
+}
+
+#filterby-menu li,
+.ui-autocomplete li {
+    border-radius: 4px;
+}
+
+#filterby-menu .ui-menu-item {
+    text-decoration: none !important;
+}
+
+.ui-autocomplete li {
+    font-size: 85%;
+}
+
+#filterby-menu li a,
+.ui-autocomplete li a {
+    border: none;
+    color: #46799B;
+}
+
 .fancybox-close {
     border: 0 !important;
 }
