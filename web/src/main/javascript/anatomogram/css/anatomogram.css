@@ -1,0 +1,10 @@
+.ui-button {
+    border-bottom: 1px solid #cccccc !important;
+}
+
+/* selected link */
+
+.gxaDoubleClickNoSelection {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}

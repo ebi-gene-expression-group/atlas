@@ -17,13 +17,13 @@ var EventEmitter = require('wolfy87-eventemitter');
 
 //*------------------------------------------------------------------*
 
-require('../css/atlas.css');
+require('../css/anatomogram.css');
 
 //*------------------------------------------------------------------*
 
 var AnatomogramSelectImageButton = React.createClass({
     propTypes: {
-        id: React.PropTypes.string.isRequired,
+        anatomogramId: React.PropTypes.string.isRequired,
         selected: React.PropTypes.bool.isRequired,
         toggleSrcTemplate: React.PropTypes.string.isRequired,
         onClick: React.PropTypes.func.isRequired
@@ -46,7 +46,7 @@ var AnatomogramSelectImageButton = React.createClass({
     },
 
     _onClick: function() {
-        this.props.onClick(this.props.id);
+        this.props.onClick(this.props.anatomogramId);
     }
 });
 
@@ -65,7 +65,7 @@ var AnatomogramSelectImageButtons = React.createClass({
             var anatomogramSelectImageButtons = this.props.availableAnatomograms.map(function(availableAnatomogram) {
                return(
                    <AnatomogramSelectImageButton key={availableAnatomogram.id + "_toggle"}
-                    id={availableAnatomogram.id} selected={selectedId === availableAnatomogram.id} toggleSrcTemplate={availableAnatomogram.toggleSrcTemplate} onClick={onClick}/>
+                    anatomogramId={availableAnatomogram.id} selected={selectedId === availableAnatomogram.id} toggleSrcTemplate={availableAnatomogram.toggleSrcTemplate} onClick={onClick}/>
                )
             });
 
