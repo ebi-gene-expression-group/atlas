@@ -14,7 +14,7 @@ var EventEmitter = require('wolfy87-eventemitter');
 
 //*------------------------------------------------------------------*
 
-var Anatomogram = require('./anatomogram');
+var Anatomogram = require('anatomogram');
 var EnsemblLauncher = require('./ensembl-launcher.jsx');
 
 //*------------------------------------------------------------------*
