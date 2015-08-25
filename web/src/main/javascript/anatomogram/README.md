@@ -1,7 +1,7 @@
 Expression Atlas Anatomogram
 ============================
 
-- Installation (bundles, etc.)
-- How to use (API, parameters)
+- Installation
+- How to use (parameters in `propTypes`)
 - Description of events
 

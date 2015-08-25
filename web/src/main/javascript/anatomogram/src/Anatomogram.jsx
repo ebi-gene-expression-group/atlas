@@ -98,18 +98,18 @@ var Anatomogram = React.createClass({
      {"id":"ENSMUSG00000029158","name":"Yipf7","expressions":[{"factorName":"heart","color":"#C0C0C0","value":"123","svgPathId":"UBERON_0000948"},{"factorName":"hippocampus","color":"","value":"","svgPathId":"EFO_0000530"},{"factorName":"liver","color":"","value":"","svgPathId":"UBERON_0002107"},{"factorName":"lung","color":"","value":"","svgPathId":"UBERON_0002048"},{"factorName":"spleen","color":"","value":"","svgPathId":"UBERON_0002106"},{"factorName":"thymus","color":"","value":"","svgPathId":"UBERON_0002370"}]},
      */
     propTypes: {
-        anatomogram: React.PropTypes.object.isRequired,
+        anatomogramData: React.PropTypes.object.isRequired,
         expressedTissueColour: React.PropTypes.string.isRequired,
         hoveredTissueColour: React.PropTypes.string.isRequired,
         heatmapConfig: React.PropTypes.object.isRequired,
         profileRows: React.PropTypes.arrayOf(
             React.PropTypes.shape({
-                id: React.PropTypes.string.isRequired,
+                id: React.PropTypes.string,
                 name: React.PropTypes.string.isRequired,
                 expressions: React.PropTypes.arrayOf(
                     React.PropTypes.shape({
-                        factorName: React.PropTypes.string.isRequired,
-                        color: React.PropTypes.string.isRequired,
+                        factorName: React.PropTypes.string,
+                        color: React.PropTypes.string,
                         value: React.PropTypes.string.isRequired,
                         svgPathId: React.PropTypes.string
                     })
@@ -122,25 +122,25 @@ var Anatomogram = React.createClass({
     getInitialState: function() {
         var contextRoot = this.props.heatmapConfig.contextRoot;
         var availableAnatomograms = [];
-        if (this.props.anatomogram.maleAnatomogramFile) {
+        if (this.props.anatomogramData.maleAnatomogramFile) {
             availableAnatomograms.push(
                 {id: "male",
-                 anatomogramFile: contextRoot + "/resources/svg/" + this.props.anatomogram.maleAnatomogramFile,
-                 toggleSrcTemplate: contextRoot + this.props.anatomogram.toggleButtonMaleImageTemplate}
+                 anatomogramFile: contextRoot + "/resources/svg/" + this.props.anatomogramData.maleAnatomogramFile,
+                 toggleSrcTemplate: contextRoot + this.props.anatomogramData.toggleButtonMaleImageTemplate}
             );
         }
-        if (this.props.anatomogram.femaleAnatomogramFile) {
+        if (this.props.anatomogramData.femaleAnatomogramFile) {
             availableAnatomograms.push(
                 {id: "female",
-                 anatomogramFile: contextRoot + "/resources/svg/" + this.props.anatomogram.femaleAnatomogramFile,
-                 toggleSrcTemplate: contextRoot + this.props.anatomogram.toggleButtonFemaleImageTemplate}
+                 anatomogramFile: contextRoot + "/resources/svg/" + this.props.anatomogramData.femaleAnatomogramFile,
+                 toggleSrcTemplate: contextRoot + this.props.anatomogramData.toggleButtonFemaleImageTemplate}
             );
         }
-        if (this.props.anatomogram.brainAnatomogramFile) {
+        if (this.props.anatomogramData.brainAnatomogramFile) {
             availableAnatomograms.push(
                 {id: "brain",
-                 anatomogramFile: contextRoot + "/resources/svg/" + this.props.anatomogram.brainAnatomogramFile,
-                 toggleSrcTemplate: contextRoot + this.props.anatomogram.toggleButtonBrainImageTemplate}
+                 anatomogramFile: contextRoot + "/resources/svg/" + this.props.anatomogramData.brainAnatomogramFile,
+                 toggleSrcTemplate: contextRoot + this.props.anatomogramData.toggleButtonBrainImageTemplate}
             );
         }
 
@@ -177,7 +177,7 @@ var Anatomogram = React.createClass({
             return s.indexOf("human") > -1;
         }
 
-        var height = containsHuman(this.props.anatomogram.maleAnatomogramFile) ? "360" : "250";
+        var height = containsHuman(this.props.anatomogramData.maleAnatomogramFile) ? "360" : "250";
 
         return (
             <div className="gxaDoubleClickNoSelection" style={{display: "table", paddingTop: "60px"}}>
@@ -255,7 +255,7 @@ var Anatomogram = React.createClass({
 
     _displayAllOrganismParts: function(svg) {
         if (svg) {  // Sometimes svg is null... why?
-            this.props.anatomogram.allSvgPathIds.forEach(function(svgPathId) {
+            this.props.anatomogramData.allSvgPathIds.forEach(function(svgPathId) {
                 this._displayOrganismPartsWithDefaultProperties(svg, svgPathId);
             }, this);
         }
@@ -303,7 +303,7 @@ var Anatomogram = React.createClass({
                 eventEmitter.emitEvent('gxaAnatomogramTissueMouseLeave', [svgPathId]);
             };
 
-            this.props.anatomogram.allSvgPathIds.forEach(function(svgPathId) {
+            this.props.anatomogramData.allSvgPathIds.forEach(function(svgPathId) {
                 var svgElement = svg.select("#" + svgPathId);
                 if (svgElement) {
                     svgElement.mouseover(function() {mouseoverCallback(svgPathId)});

@@ -51,7 +51,7 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
 
                 <div ref="anatomogramEnsembl" className="gxaAside">
                     { this.props.anatomogram ?
-                        <Anatomogram anatomogram={this.props.anatomogram}
+                        <Anatomogram anatomogramData={this.props.anatomogram}
                                      expressedTissueColour={anatomogramExpressedTissueColour} hoveredTissueColour={anatomogramHoveredTissueColour}
                                      heatmapConfig={this.props.heatmapConfig} profileRows={this.props.profiles.rows}
                                      eventEmitter={anatomogramEventEmitter} />
