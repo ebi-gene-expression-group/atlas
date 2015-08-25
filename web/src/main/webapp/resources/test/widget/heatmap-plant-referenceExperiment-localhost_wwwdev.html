@@ -46,7 +46,7 @@
 
 <body>
 <div>
-    <h2>Resources loaded from <code>localhost:8080/gxa</code>, request done to <code>http://localhost:8080/gxa/</code></h2>
+    <h2>Resources loaded from <code>localhost:8080/gxa</code>, request done to <code>http://wwwdev.ebi.ac.uk/gxa/</code></h2>
 </div>
 <div id="heatmapContainer"></div>
 </body>
@@ -54,8 +54,8 @@
 <script language="JavaScript" type="text/javascript">
     $(document).ready(function() {
         new Biojs.AtlasHeatmap({
-            gxaBaseUrl: 'http://localhost:8080/gxa/',
-            params: 'geneQuery=OS05G0595000',
+            gxaBaseUrl: "http://wwwdev.ebi.ac.uk/gxa/",
+            params: "geneQuery=OS05G0595000",
             isMultiExperiment: false,
             target: "heatmapContainer"
         });

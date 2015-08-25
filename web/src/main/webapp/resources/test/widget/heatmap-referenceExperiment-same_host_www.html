@@ -26,30 +26,28 @@
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/lib/highlight.js"></script>
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/anatomogramModule.js"></script>
 
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/lib/jquery.svg.package-1.4.5/jquery.svg.js"></script>
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/lib/EventEmitter-4.2.7.js"></script>
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/lib/jquery-hcsticky/jquery.hc-sticky.min.js"></script>
-
-    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
-
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/lib/highcharts-4.1.5/js/highcharts.js"></script>
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/lib/highcharts-4.1.5/js/highcharts-more.js"></script>
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/lib/highcharts-4.1.5/js/modules/exporting.js"></script>
 
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/lib/jquery.svg.package-1.4.5/jquery.svg.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/lib/EventEmitter-4.2.7.js"></script>
+
+    <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/web_guidelines/js/libs/modernizr.minified.2.1.6.js"></script>
+
     <script language="JavaScript" type="text/javascript" src="//www.ebi.ac.uk/Tools/biojs/biojs/Biojs.js"></script>
 
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/AtlasHeatmapReact.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/js/lib/react-radiogroup.js"></script>
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/jsx/cellBaselineVariance.js"></script>
 
-    <script language="JavaScript" type="text/javascript" src="/gxa/resources/biojs/AtlasHeatmapReact.js"></script>
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/jsx/heatmap.js"></script>
     <script language="JavaScript" type="text/javascript" src="/gxa/resources/jsx/heatmapContainer.js"></script>
 </head>
 
 <body>
     <div>
-        <h2>Resources loaded locally, request done locally</h2>
+        <h2>Resources loaded locally, request done to <code>http://www.ebi.ac.uk/gxa/</code></h2>
     </div>
     <div id="heatmapContainer"></div>
 </body>
@@ -57,9 +55,8 @@
 <script language="JavaScript" type="text/javascript">
     $(document).ready(function() {
         new Biojs.AtlasHeatmap({
-            gxaBaseUrl: "/gxa/",
-            params: 'geneQuery=ASPM&species=mus%20musculus',
-            isMultiExperiment: true,
+            gxaBaseUrl: "http://www.ebi.ac.uk/gxa/",
+            params: "geneQuery=R-HSA-73864",
             target: "heatmapContainer"
         });
     });
