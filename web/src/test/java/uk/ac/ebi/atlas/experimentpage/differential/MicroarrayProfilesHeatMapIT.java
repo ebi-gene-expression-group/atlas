@@ -32,7 +32,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 @ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:solrContextIT.xml", "classpath:oracleContext.xml"})
 public class MicroarrayProfilesHeatMapIT {
 
-    public static final String E_GEOD_8122 = "E-GEOD-8122";
+    public static final String E_MEXP_3628 = "E-MEXP-3628";
     private static final String E_GEOD_43049 = "E-GEOD-43049";
     private static final String E_MTAB_1066 = "E-MTAB-1066";
 
@@ -107,7 +107,7 @@ public class MicroarrayProfilesHeatMapIT {
     // http://localhost:8080/gxa/experiments/E-GEOD-43049?regulation=UP&foldChangeCutOff=0
     @Test
     public void upRegulatedOnly() throws GenesNotFoundException {
-        setFoldChangeCuttOff(0);
+        setFoldChangeCutOff(0);
         requestPreferences.setRegulation(Regulation.UP);
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
         DifferentialProfilesList profiles = subject.fetch(requestContext);
@@ -121,7 +121,7 @@ public class MicroarrayProfilesHeatMapIT {
     // http://localhost:8080/gxa/experiments/E-GEOD-43049?regulation=DOWN&foldChangeCutOff=0
     @Test
     public void downRegulatedOnly() throws GenesNotFoundException {
-        setFoldChangeCuttOff(0);
+        setFoldChangeCutOff(0);
         requestPreferences.setRegulation(Regulation.DOWN);
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
         DifferentialProfilesList profiles = subject.fetch(requestContext);
@@ -171,26 +171,19 @@ public class MicroarrayProfilesHeatMapIT {
     }
 
 
-    // http://localhost:8080/gxa/experiments/E-GEOD-8122?foldChangeCutOff=0
+    // http://localhost:8080/gxa/experiments/E-MEXP-3628?foldChangeCutOff=0
     @Test
-    public void eGeod8122() throws GenesNotFoundException {
-        setFoldChangeCuttOff(0);
-        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_8122);
+    public void eMexp3628() throws GenesNotFoundException {
+        setFoldChangeCutOff(0);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_MEXP_3628);
         DifferentialProfilesList profiles = subject.fetch(requestContext);
 
-        assertThat(profiles.getTotalResultCount(), is(1));
-        assertThat(profiles.extractGeneNames(), (Matcher)contains("VMA16"));
+        assertThat(profiles.getTotalResultCount(), is(7));
+        assertThat(profiles.extractGeneNames(), (Matcher)contains("FGR", "TSPAN6", "UTY", "C1orf112", "NFYA", "TSPAN6", "GCLC"));
     }
 
-    private void setFoldChangeCuttOff(double cuttOff) {
+    private void setFoldChangeCutOff(double cuttOff) {
         requestPreferences.setFoldChangeCutOff(cuttOff);
-    }
-
-    // http://localhost:8080/gxa/experiments/E-GEOD-8122?geneQuery=YHR026W&foldChangeCutOff=0
-    @Test
-    public void eGeod8122_GeneQueryForGeneNotInExperimentSpecies() throws GenesNotFoundException {
-        setGeneQuery("YHR026W");
-        eGeod8122();
     }
 
     private void setGeneQuery(String geneQuery) {

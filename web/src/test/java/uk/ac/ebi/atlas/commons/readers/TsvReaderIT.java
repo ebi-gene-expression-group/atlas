@@ -89,7 +89,7 @@ public class TsvReaderIT {
         String[] lastLine = result.get(result.size() - 1);
 
         // then
-        assertThat(firstLine, arrayContaining("Run", "Sample Characteristic[Organism]", "Sample Characteristic Ontology Term[Organism]", "Sample Characteristic[age]", "Sample Characteristic Ontology Term[age]", "Sample Characteristic[ethnic group]", "Sample Characteristic Ontology Term[ethnic group]", "Sample Characteristic[organism part]", "Sample Characteristic Ontology Term[organism part]", "Sample Characteristic[sex]", "Sample Characteristic Ontology Term[sex]", "Factor Value[organism part]", "Factor Value Ontology Term[organism part]"));
-        assertThat(lastLine, arrayContaining("ERR030903", "Homo sapiens", "NCBITaxon/NCBITaxon:9606", "60 years", "", "Caucasian", "EFO/EFO:0003156", "thyroid", "UBERON/UBERON:0002046", "female", "EFO/EFO:0001265", "thyroid", "UBERON/UBERON:0002046"));
+        assertThat(firstLine, arrayContaining("Run", "Sample Characteristic[age]", "Sample Characteristic Ontology Term[age]", "Sample Characteristic[ethnic group]", "Sample Characteristic Ontology Term[ethnic group]", "Sample Characteristic[organism]", "Sample Characteristic Ontology Term[organism]", "Sample Characteristic[organism part]", "Sample Characteristic Ontology Term[organism part]", "Sample Characteristic[sex]", "Sample Characteristic Ontology Term[sex]", "Factor Value[organism part]", "Factor Value Ontology Term[organism part]"));
+        assertThat(lastLine, arrayContaining("ERR030903", "60 year", "", "Caucasian", "http://www.ebi.ac.uk/efo/EFO_0003156", "Homo sapiens", "http://purl.obolibrary.org/obo/NCBITaxon_9606", "thyroid", "http://purl.obolibrary.org/obo/UBERON_0002046", "female", "http://www.ebi.ac.uk/efo/EFO_0001265", "thyroid", "http://purl.obolibrary.org/obo/UBERON_0002046"));
     }
 }

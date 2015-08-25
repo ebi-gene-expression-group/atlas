@@ -101,7 +101,7 @@ public class BaselineAnalyticsIndexerServiceIT {
         assertThat(document.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(document.getDefaultQueryFactorType(), is("ORGANISM_PART"));
         assertThat(document.getIdentifierSearch(), is("OS12G0515800 Os.12120.1.S1_at Expressed protein; cDNA clone:J013098I09, full insert sequence  [Source:UniProtKB/TrEMBL;Acc:Q2QPV9] Os12g0515800|mRNA|AK120440|UTR Q2QPV9 protein_coding"));
-        assertThat(document.getConditionsSearch(), is("emerging inflorescence 60 days after sowing Oryza sativa Japonica Group Nipponbare NCBITaxon:39947 whole post-emergence inflorescence"));
+        assertThat(document.getConditionsSearch(), is("EFO_0000001 EFO_0000635 Oryza sativa Japonica Group 60 days after sowing EFO_0001029 OBI_0100026 NCBITaxon_33090 snap#MaterialEntity NCBITaxon_39947 emerging inflorescence EFO_0000786 NCBITaxon_2759 EFO_0000789 Nipponbare EFO_0000992 whole post-emergence inflorescence"));
         assertThat(document.getAssayGroupId(), is("g2"));
         assertThat(document.getExpressionLevel(), is(0.2));
     }
@@ -120,7 +120,7 @@ public class BaselineAnalyticsIndexerServiceIT {
         assertThat(document.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(document.getDefaultQueryFactorType(), is("ORGANISM_PART"));
         assertThat(document.getIdentifierSearch(), is("ENSGALG00000009623"));
-        assertThat(document.getConditionsSearch(), is("UBERON:0002037 EFO EFO:0001272 EFO:0001266 Gallus gallus male adult approx 1 year Facility of Linkoping University, Sweden cerebellum female EFO:0001265"));
+        assertThat(document.getConditionsSearch(), is("EFO_0001265 EFO_0000399 Gallus gallus EFO_0000635 EFO_0000001 EFO_0001272 adult OBI_0100026 approx 1 year snap#MaterialEntity EFO_0000786 NCBITaxon_2759 EFO_0000787 NCBITaxon_9031 UBERON_0002037 female snap#SpecificallyDependentContinuant snap#Quality EFO_0000695 span#ProcessualEntity Facility of Linkoping University, Sweden cerebellum male EFO_0001266"));
         assertThat(document.getAssayGroupId(), is("g52"));
         assertThat(document.getExpressionLevel(), is(0.4));
 
@@ -130,8 +130,8 @@ public class BaselineAnalyticsIndexerServiceIT {
         assertThat(document2.getExperimentAccession(), is("E-GEOD-30352"));
         assertThat(document2.getExperimentType(), is(ExperimentType.RNASEQ_MRNA_BASELINE));
         assertThat(document2.getDefaultQueryFactorType(), is("ORGANISM_PART"));
-        assertThat(document2.getIdentifierSearch(), is("ENSMMUG00000032178 Endonuclease/exonuclease/phosphatase Uncharacterized protein  [Source:UniProtKB/TrEMBL;Acc:F7FU52] protein_coding F7FU52"));
-        assertThat(document2.getConditionsSearch(), is("UBERON:0002037 8 year EFO female EFO:0001265 Macaque facility in Souzhou, China Macaca mulatta cerebellum EFO:0001266 male"));
+        assertThat(document2.getIdentifierSearch(), is("ENSMMUG00000032178 Endonuclease/exonuclease/phosphatase IPR005135 Uncharacterized protein  [Source:UniProtKB/TrEMBL;Acc:F7FU52] protein_coding F7FU52"));
+        assertThat(document2.getConditionsSearch(), is("8 year EFO_0000001 EFO_0000635 male Macaque facility in Souzhou, China OBI_0100026 snap#MaterialEntity EFO_0000786 NCBITaxon_2759 EFO_0000787 NCBITaxon_9544 UBERON_0002037 snap#Quality snap#SpecificallyDependentContinuant Macaca mulatta EFO_0000695 EFO_0001266 cerebellum EFO_0001265 female"));
         assertThat(document2.getAssayGroupId(), is("g27"));
         assertThat(document2.getExpressionLevel(), is(17.0));
     }
@@ -149,7 +149,7 @@ public class BaselineAnalyticsIndexerServiceIT {
         assertThat(document.getExperimentAccession(), is("E-PROT-1"));
         assertThat(document.getExperimentType(), is(ExperimentType.PROTEOMICS_BASELINE));
         assertThat(document.getDefaultQueryFactorType(), is("ORGANISM_PART"));
-        assertThat(document.getIdentifierSearch(), is("ENSG00000000003 g2995860_3p_at TSPAN6 O43657 39361_f_at negative regulation of viral-induced cytoplasmic pattern recognition receptor signaling pathway 4015421 209109_s_at 4015420 Tetraspanin/Peripherin signal transducer activity 64593_at 4015423 4015422 TSPAN-6 negative regulation of NIK/NF-kappaB signaling TM4SF6 A_24_P83262 extracellular exosome 39362_r_at A0A087WYV6 Tetraspanin 8173941 g4099210_3p_a_at 209108_at signal transduction 4015403 4015402 4015401 4015400 A_23_P171143 A0A087WZU5 4015409 4015408 4015407 4015406 4015405 4015404 Tetraspanin, conserved site T245 protein_coding tetraspanin 6 [Source:HGNC Symbol;Acc:HGNC:11858] integral component of membrane 4015412 protein binding 4015414 4015413 4015410 4015419 4015416 4015415 4015418 4015417 positive regulation of I-kappaB kinase/NF-kappaB signaling"));
+        assertThat(document.getIdentifierSearch(), is("ENSG00000000003 GO:0005515 g2995860_3p_at TSPAN6 O43657 39361_f_at negative regulation of viral-induced cytoplasmic pattern recognition receptor signaling pathway IPR018503 4015421 209109_s_at 4015420 Tetraspanin/Peripherin signal transducer activity 64593_at 4015423 4015422 TSPAN-6 GO:0043123 IPR000301 negative regulation of NIK/NF-kappaB signaling GO:0070062 TM4SF6 A_24_P83262 extracellular exosome 39362_r_at A0A087WYV6 Tetraspanin 8173941 g4099210_3p_a_at GO:1901223 209108_at signal transduction 4015403 4015402 4015401 4015400 A_23_P171143 A0A087WZU5 4015409 GO:0004871 4015408 IPR018499 4015407 4015406 4015405 4015404 Tetraspanin, conserved site T245 GO:0039532 protein_coding tetraspanin 6 [Source:HGNC Symbol;Acc:HGNC:11858] integral component of membrane 4015412 GO:0007165 protein binding 4015414 4015413 4015410 4015419 GO:0016021 4015416 4015415 4015418 positive regulation of I-kappaB kinase/NF-kappaB signaling 4015417"));
         assertThat(document.getConditionsSearch(), is("EFO_0000399 EFO_0000635 EFO_0000001 EFO_0001272 colon adult UBERON_0001155 OBI_0100026 snap#MaterialEntity NCBITaxon_9606 EFO_0000786 EFO_0000787 NCBITaxon_2759 Homo sapiens span#ProcessualEntity"));
         assertThat(document.getAssayGroupId(), is("g5"));
         assertThat(document.getExpressionLevel(), is(9.94E06));
