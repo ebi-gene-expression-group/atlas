@@ -1,0 +1,34 @@
+Comment[ArrayExpressAccession]	E-GEOD-3307
+MAGE-TAB Version	1.1
+Public Release Date	2005-10-14
+Investigation Title	Comparative profiling in 13 muscle disease groups
+Comment[Submitted Name]	Comparative profiling in 13 muscle disease groups
+Comment[AEExperimentDisplayName]	Transcription profiling by array of 12 human muscle diseases
+Experiment Description	Summary:   Genetic disorders of muscle cause muscular dystrophy, and are some of the most common inborn errors of metabolism. Muscle also rapidly remodels in response to training and innervation. Muscle weakness and wasting is important in such conditions as aging, critical care medicine, space flight, and diabetes. Finally, muscle can also be used to investigate systemic defects, and the compensatory mechansisms invoked by cells to overcome biochemical and genetic abnormalities. Here, we provide a 13 group data set for comparative profiling of human skeletal muscle. Groups studied are: Normal human skeletal muscle, Acute quadriplegic myopathy (AQM; critical care myopathy), Juvenile dermatomyositis (JDM), Amyotophic lateral sclerosis (ALS), spastic paraplegia (SPG4; spastin), Fascioscapulohumeral muscular dystrophy (FSHD), Emery Dreifuss muscular dystrophy (both X linked recessive emerin form; autosomal dominant Lamin A/C form), Becker muscular dystrophy (partial loss of dystrophin), Duchenne muscular dystrophy (complete loss of dystrophin), Calpain 3 (LGMD2A), dysferlin (LGMD2B), FKRP (glycosylation defect; homozygous for a missense mutation). U133A and U133B microarrays are both available. Hypothesis:   This data set is able to define biochemical pathways that are either specific for a disease group, or shared between disease groups. For example, this data set has been used to determine the biochemical pathway perturbations that are shared between the two different types of Emery Dreifuss muscular dystrophy (lamin A/C, and emerin).  Specific Aim:   The specific aim of this study is to determine the disease-specific transcriptional profiles of these 13 patient groups, and to determine if these expression fingerprints provide either pathophysiology or diagnostic information for these diseases. Some of the groups in this large data set have been reported previously using U95A microarrays, as follows:   Juvenile dermatomyositis (JDM): Tezak Z, Hoffman EP, Lutz JL, Fedczyna TO, Stephan D, Bremer EG, Krasnoselska-Riz I, Kumar A, Pachman LM. Gene expression profiling in DQA1*0501+ children with untreated dermatomyositis: a novel model of pathogenesis. J Immunol. 2002 Apr 15;168(8):4154-63. PMID: 11937576  Duchenne muscular dystrophy (DMD) Chen YW, Zhao P, Borup R, Hoffman EP. Expression profiling in the muscular dystrophies: identification of novel aspects of molecular pathophysiology. J Cell Biol. 2000 Dec 11;151(6):1321-36. PMID: 11121445   Spastic paraplegia (SPG4, spastin): Molon A, Di Giovanni S, Chen YW, Clarkson PM, Angelini C, Pegoraro E, Hoffman EP. Large-scale disruption of microtubule pathways in morphologically normal human spastin muscle. Neurology. 2004 Apr 13;62(7):1097-104. PMID: 15079007  Acute quadriplegic myopathy (AQM): Di Giovanni S, Molon A, Broccolini A, Melcon G, Mirabella M, Hoffman EP, Servidei S. Constitutive activation of MAPK cascade in acute quadriplegic myopathy. Ann Neurol. 2004 Feb;55(2):195-206. PMID: 14755723  Fascioscapulohumeral muscular dystrophy (FSHD): Winokur ST, Chen YW, Masny PS, Martin JH, Ehmsen JT, Tapscott SJ, van der Maarel SM, Hayashi Y, Flanigan KM. Expression profiling of FSHD muscle supports a defect in specific stages of myogenic differentiation. Hum Mol Genet. 2003 Nov 15;12(22):2895-907. Epub 2003 Sep 30. PMID: 14519683 Keywords: muscle disease comparison Groups studied are: Normal human skeletal muscle, Acute quadriplegic myopathy (AQM; critical care myopathy), Juvenile dermatomyositis (JDM), Amyotophic lateral sclerosis (ALS), spastic paraplegia (SPG4; spastin), Fascioscapulohumeral muscular dystrophy (FSHD), Emery Dreifuss muscular dystrophy (both X linked recessive emerin form; autosomal dominant Lamin A/C form), Becker muscular dystrophy (partial loss of dystrophin), Duchenne muscular dystrophy (complete loss of dystrophin), Calpain 3 (LGMD2A), dysferlin (LGMD2B), FKRP (glycosylation defect; homozygous for a missense mutation).
+Experimental Design	disease state design
+Experimental Factor Name	disease
+Experimental Factor Type	disease
+Experimental Factor Term Source REF	
+Term Source Name	ArrayExpress	EFO
+Term Source File	http://www.ebi.ac.uk/arrayexpress/	http://www.ebi.ac.uk/efo/efo.owl
+Person Last Name	Hoffman
+Person First Name	Eric
+Person Email	ehoffman@cnmcresearch.org
+Person Affiliation	Children's National Medical Center
+Person Phone	202-884-6011
+Person Fax	202-884-6014
+Person Address	Children's Research Institute, Children's National Medical Center, 111 Michigan Ave. 5th Floor, Washington, DC, USA
+Person Roles	submitter
+Protocol Name	P-GSE3307-1	P-GSE3307-2	P-GSE3307-3	P-GSE3307-4	P-GSE3307-5
+Protocol Description	Affymetrix MAS5.0 ID_REF =  VALUE = SIGNAL Affymetrix MAS5.0 ABS_CALL =	Affymetrix MAS5.0 ID_REF =  VALUE = SIGNAL MAS5.0 ABS_CALL = Presence or Absence of gene transcript in sample	MAS5.0 ID_REF =  VALUE = SIGNAL (See Affymetrix Literature) ABS_CALL =	standard Affymetrix procedures	standard Affymetrix procedures
+Protocol Type	normalization data transformation protocol	normalization data transformation protocol	normalization data transformation protocol	hybridization protocol	array scanning protocol
+Publication Title	Nuclear envelope dystrophies show a transcriptional fingerprint suggesting disruption of Rb-MyoD pathways in muscle regeneration.
+Publication Author List	Bakay M, Wang Z, Melcon G, Schiltz L, Xuan J, Zhao P, Sartorelli V, Seo J, Pegoraro E, Angelini C, Shneiderman B, Escolar D, Chen YW, Winokur ST, Pachman LM, Fan C, Mandler R, Nevo Y, Gordon E, Zhu Y, Dong Y, Wang Y, Hoffman EP
+PubMed ID	16478798
+Publication DOI	10.1093/brain/awl023
+Comment[GEOReleaseDate]	2005-10-14
+Comment[ArrayExpressSubmissionDate]	2005-09-14
+Comment[GEOLastUpdateDate]	2013-08-29
+Comment[AEExperimentType]	transcription profiling by array
+Comment[SecondaryAccession]	GDS1956	GSE3307	GDS2855
+SDRF File	E-GEOD-3307.sdrf.txt
