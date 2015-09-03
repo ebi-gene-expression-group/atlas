@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
+import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -36,7 +38,7 @@ public class SearchDifferentialController extends SearchController {
     }
 
     @RequestMapping(value = "/search/differential")
-    public String searchDifferential(@Valid GeneQuerySearchRequestParameters requestParameters, Model model) {
+    public String searchDifferential(@Valid GeneQuerySearchRequestParameters requestParameters, Model model) throws IOException, SolrServerException {
 
         GeneQuery geneQuery = requestParameters.getGeneQuery();
 

@@ -14,8 +14,6 @@ import uk.ac.ebi.atlas.web.GeneQuery;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import static uk.ac.ebi.atlas.utils.StringUtil.quote;
 

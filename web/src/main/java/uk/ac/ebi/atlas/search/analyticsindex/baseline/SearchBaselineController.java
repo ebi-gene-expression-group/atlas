@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.baseline;
 
+import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @Scope("request")
@@ -26,7 +28,7 @@ public class SearchBaselineController extends SearchController {
     }
 
     @RequestMapping(value = "/search")
-    public String searchBaseline(@Valid GeneQuerySearchRequestParameters requestParameters, Model model) {
+    public String searchBaseline(@Valid GeneQuerySearchRequestParameters requestParameters, Model model) throws IOException, SolrServerException {
 
         GeneQuery geneQuery = requestParameters.getGeneQuery();
 

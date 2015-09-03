@@ -80,6 +80,13 @@ public class BioEntityPropertyService {
         }
     }
 
+    public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, SortedSet<String> entityNames, String identifier) {
+        this.species = species;
+        this.propertyValuesByType = propertyValuesByType;
+        this.entityNames = entityNames;
+        this.identifier = identifier;
+    }
+
     public String getSpecies() {
         return species;
     }

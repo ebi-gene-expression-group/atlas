@@ -90,6 +90,12 @@
         <put-attribute name="body" value="/WEB-INF/jsp/analyticsIndex/search-results-differential.jsp"/>
     </definition>
 
+    <definition name="search-gene-information" extends="base.definition">
+        <put-attribute name="title" value="Expression Atlas"/>
+        <put-attribute name="menu" value=""/>
+        <put-attribute name="body" value="/WEB-INF/jsp/analyticsIndex/search-gene-information.jsp"/>
+    </definition>
+
     <!-- error pages -->
     <definition name="error-page" extends="base.definition">
         <put-attribute name="menu" value=""/>
