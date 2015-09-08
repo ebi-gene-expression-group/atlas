@@ -73,7 +73,7 @@
         </div>
     </c:if>
     <c:if test="${not empty dataProviderURL and not empty dataProviderDescription}">
-        <div id="dataProvider">Data Provider:
+        <div id="dataProvider">Raw Data Provider:
             <c:forEach var="dataProvider" items="${dataProviderURL}" varStatus="i">
                 <a id="goto-dataprovider" class="thick-link" title="Experiment Data Provider"
             href="${dataProvider}">${dataProviderDescription.get(i.index)}</a>
