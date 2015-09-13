@@ -117,6 +117,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         model.addAttribute("serializedFilterFactors", preferences.getSerializedFilterFactors());
 
         Set<Factor> selectedFilterFactors = requestContext.getSelectedFilterFactors();
+        List<String> headerFactors = experimentalFactors.getHeaderFactorNames();
 
         Set<Factor> orderedFactors;
         Set<AssayGroupFactor> filteredAssayGroupFactors;
@@ -161,7 +162,7 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
                 BaselineProfilesList baselineProfiles = baselineProfilesHeatMap.fetch(requestContext);
                 BaselineProfilesList profilesAsGeneSets = requestContext.geneQueryResponseContainsGeneSets() ? fetchGeneProfilesAsGeneSets() : null;
 
-                addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, model);
+                addJsonForHeatMap(baselineProfiles, profilesAsGeneSets, filteredAssayGroupFactors, orderedFactors, headerFactors, selectedFilterFactors, model);
 
                 if ("ORGANISM_PART".equals(requestContext.getQueryFactorType())) {
                     ImmutableSet<String> allSvgPathIds = extractOntologyTerm(filteredAssayGroupFactors);
@@ -225,7 +226,8 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
     }
 
     private void addJsonForHeatMap(BaselineProfilesList baselineProfiles, BaselineProfilesList geneSetProfiles,
-                                   Set<AssayGroupFactor> filteredAssayGroupFactors, Set<Factor> orderedFactors, Model model) {
+                                   Set<AssayGroupFactor> filteredAssayGroupFactors, Set<Factor> orderedFactors,
+                                   List<String> headerFactors, Set<Factor> selectedFilterFactors, Model model) {
         if (baselineProfiles.isEmpty()) {
             return;
         }
@@ -237,6 +239,18 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
         Type type = new TypeToken<ImmutableList<AssayGroupFactorViewModel>>() {}.getType();
         JsonElement jsonElement = gson.toJsonTree(assayGroupFactorViewModels, type);
         jsonObject.add("primary", jsonElement);
+
+        if(!headerFactors.isEmpty()) {
+            int num=1;
+            for(String filterFactor : headerFactors) {
+                String title = "header" + num;
+                JsonElement element  = gson.toJsonTree(filterFactor);
+                jsonObject.add(title, element);
+                num++;
+            }
+        }
+
+        model.addAttribute("showMultipleColumnHeaders", !headerFactors.isEmpty());
 
         model.addAttribute("jsonMultipleColumnHeaders", jsonObject);
 

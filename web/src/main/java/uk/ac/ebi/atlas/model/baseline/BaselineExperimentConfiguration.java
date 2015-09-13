@@ -22,6 +22,7 @@
 
 package uk.ac.ebi.atlas.model.baseline;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
 import static com.google.common.collect.Lists.newArrayList;
@@ -96,6 +97,19 @@ public class BaselineExperimentConfiguration {
             }
         }
 
+        return results;
+    }
+
+    public List<String> getFactorTypes() {
+        List<String> results = Lists.newArrayList();
+
+        List<Object> factorTypes = config.getList("factorTypes");
+        for (Object o : factorTypes) {
+            String filterFactorType = (String) o;
+            if (filterFactorType.trim().length() > 0) {
+                results.add(filterFactorType);
+            }
+        }
         return results;
     }
 

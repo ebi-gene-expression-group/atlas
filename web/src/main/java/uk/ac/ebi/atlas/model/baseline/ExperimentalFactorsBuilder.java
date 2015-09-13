@@ -49,6 +49,8 @@ public class ExperimentalFactorsBuilder {
 
     private Set<String> menuFilterFactorTypes;
 
+    private List<String> factorTypes;
+
     public ExperimentalFactorsBuilder withDefaultQueryType(String defaultQueryType) {
         this.defaultQueryType = defaultQueryType;
         return this;
@@ -80,6 +82,11 @@ public class ExperimentalFactorsBuilder {
         return this;
     }
 
+    public ExperimentalFactorsBuilder withFactorTypes(List<String> factorTypes) {
+        this.factorTypes = factorTypes;
+        return this;
+    }
+
     public ExperimentalFactors create() {
         checkState(menuFilterFactorTypes != null, "Please provide a set of menu filter factor types");
         checkState(StringUtils.isNotBlank(defaultQueryType), "Please provide a non blank defaultQueryType");
@@ -89,7 +96,7 @@ public class ExperimentalFactorsBuilder {
         SortedSetMultimap<Factor, Factor> coOccurringFactors = buildCoOccurringFactors();
 
         return new ExperimentalFactors(factorsByType, factorNamesByType, orderedFactorGroups,
-                coOccurringFactors, menuFilterFactorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
+                coOccurringFactors, menuFilterFactorTypes, factorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
     }
 
     public ExperimentalFactors createFromXML() {
@@ -101,7 +108,7 @@ public class ExperimentalFactorsBuilder {
         LinkedHashMultimap<Factor, Factor> coOccurringFactors = buildXmlCoOccurringFactors();
 
         return new ExperimentalFactors(xmlFactorsByType, factorNamesByType, orderedFactorGroups,
-                coOccurringFactors, menuFilterFactorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
+                coOccurringFactors, menuFilterFactorTypes, factorTypes, orderedFactorGroupsByAssayGroupId, defaultQueryType, defaultFilterFactors);
     }
 
     SortedSetMultimap<String, Factor> buildFactorsByType() {

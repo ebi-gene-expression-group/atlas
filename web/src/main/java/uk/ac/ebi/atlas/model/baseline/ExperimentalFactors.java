@@ -60,6 +60,8 @@ public class ExperimentalFactors implements Serializable {
 
     private Set<String> menuFilterFactorTypes;
 
+    private List<String> headerFactorTypes;
+
     private List<FactorGroup> orderedFactorGroups;
 
     private Map<String, FactorGroup> orderedFactorGroupsByAssayGroupId;
@@ -69,6 +71,7 @@ public class ExperimentalFactors implements Serializable {
                         List<FactorGroup> orderedFactorGroups,
                         SortedSetMultimap<Factor, Factor> coOccurringFactors,
                         Set<String> menuFilterFactorTypes,
+                        List<String> headerFactorTypes,
                         Map<String, FactorGroup> orderedFactorGroupsByAssayGroupId,
                         String defaultQueryFactorType,
                         Set<Factor> defaultFilterFactors) {
@@ -78,6 +81,7 @@ public class ExperimentalFactors implements Serializable {
         this.orderedFactorGroups = orderedFactorGroups;
         this.coOccurringFactors = coOccurringFactors;
         this.menuFilterFactorTypes = menuFilterFactorTypes;
+        this.headerFactorTypes = headerFactorTypes;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
     }
@@ -89,6 +93,7 @@ public class ExperimentalFactors implements Serializable {
                         List<FactorGroup> orderedFactorGroups,
                         LinkedHashMultimap<Factor, Factor> coOccurringFactors,
                         Set<String> menuFilterFactorTypes,
+                        List<String> headerFactorTypes,
                         Map<String, FactorGroup> orderedFactorGroupsByAssayGroupId,
                         String defaultQueryFactorType,
                         Set<Factor> defaultFilterFactors) {
@@ -98,6 +103,7 @@ public class ExperimentalFactors implements Serializable {
         this.orderedFactorGroups = orderedFactorGroups;
         this.xmlCoOcurringFactors = coOccurringFactors;
         this.menuFilterFactorTypes = menuFilterFactorTypes;
+        this.headerFactorTypes = headerFactorTypes;
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.defaultFilterFactors = defaultFilterFactors;
     }
@@ -303,6 +309,24 @@ public class ExperimentalFactors implements Serializable {
     // ordered the same as the assay group ids in the expression levels .tsv
     public ImmutableList<FactorGroup> getFactorGroupsInOrder() {
         return ImmutableList.copyOf(orderedFactorGroups);
+    }
+
+    public List<String> getHeaderFactorNames() {
+        List<String> headerFactorNames = Lists.newArrayList();
+
+        for(String type : headerFactorTypes) { //TODO: change defaultQueryFactorType and getDefaultFilterFActors by all the different factors filtered by the headerFactorTypes
+            if(!type.equals(defaultQueryFactorType)) {
+                for(Factor factor : getDefaultFilterFactors()) {
+                    if(factor.getType().equals(type)) {
+                        headerFactorNames.add(factor.getValue());
+                    }
+                }
+
+            }
+        }
+
+        return headerFactorNames;
+
     }
 
     @Override
