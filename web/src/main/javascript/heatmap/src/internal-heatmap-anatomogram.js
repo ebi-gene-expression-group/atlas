@@ -18,6 +18,7 @@ function drawHeatmap (heatmapData, isMultiExperiment, isDifferential, isProteomi
 
     var heatmapConfig = heatmapData.config,
         columnHeaders = heatmapData.columnHeaders,
+        multipleColumnHeaders = heatmapData.multipleColumnHeaders,
         profiles = heatmapData.profiles,
         geneSetProfiles = heatmapData.geneSetProfiles,
         anatomogramData = heatmapData.anatomogram;
@@ -35,7 +36,7 @@ function drawHeatmap (heatmapData, isMultiExperiment, isDifferential, isProteomi
         React.createElement(
             HeatmapAnatomogramContainer,
             {Heatmap: Heatmap,
-             anatomogram: anatomogramData, columnHeaders: columnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles, heatmapConfig: heatmapConfig,
+             anatomogram: anatomogramData, columnHeaders: columnHeaders, multipleColumnHeaders: multipleColumnHeaders, profiles: profiles, geneSetProfiles: geneSetProfiles, heatmapConfig: heatmapConfig,
              isBaseline: isBaseline, isMultiExperiment: isMultiExperiment, isWidget: false}
         ),
         document.getElementById("gxaExperimentPageHeatmapAnatomogram")

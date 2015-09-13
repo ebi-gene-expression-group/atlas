@@ -29,6 +29,7 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
         Heatmap: React.PropTypes.func.isRequired,
         anatomogram: React.PropTypes.object.isRequired,
         columnHeaders: React.PropTypes.array.isRequired,
+        multipleColumnHeaders: React.PropTypes.object.isRequired,
         profiles: React.PropTypes.object.isRequired,
         geneSetProfiles: React.PropTypes.object.isRequired,
         heatmapConfig: React.PropTypes.object.isRequired,
@@ -63,8 +64,8 @@ var InternalHeatmapAnatomogramContainer = React.createClass({
                 </div>
 
                 <div id="heatmap-react" className="gxaHeatmapPosition">
-                    <Heatmap columnHeaders={this.props.columnHeaders} profiles={this.props.profiles} geneSetProfiles={this.props.geneSetProfiles} isWidget={false}
-                             ensemblEventEmitter={ensemblEventEmitter} anatomogramEventEmitter={anatomogramEventEmitter} />
+                    <Heatmap columnHeaders={this.props.columnHeaders} multipleColumnHeaders={this.props.multipleColumnHeaders} profiles={this.props.profiles}
+                             geneSetProfiles={this.props.geneSetProfiles} isWidget={false} ensemblEventEmitter={ensemblEventEmitter} anatomogramEventEmitter={anatomogramEventEmitter} />
                 </div>
 
             </div>

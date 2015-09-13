@@ -24,6 +24,15 @@ th.gxaVerticalHeaderCell, .gxaHorizontalHeaderCell {
     background-color: rgb(237, 246, 246) !important;
 }
 
+th.gxaEmptyMultipleHeatmapHeaderFactor {
+    background-color: rgb(237, 246, 246) !important;
+    border-right: 1px solid #CEC2C2;
+    border-bottom-color: rgb(237, 246, 246);
+    border-bottom-width: 1px;
+    border-top: 1px solid #CEC2C2;
+    border-left: 1px solid #CEC2C2;
+}
+
 th.gxaHoverableHeader:hover, th.gxaHeaderHover {
     background-color: #deebeb !important;
 }
