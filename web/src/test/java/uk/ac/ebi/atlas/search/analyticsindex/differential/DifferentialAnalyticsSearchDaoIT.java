@@ -41,7 +41,7 @@ public class DifferentialAnalyticsSearchDaoIT {
         kingdoms.add("animals"); kingdoms.add("plants");
 
         List<String> factors = Lists.newArrayList();
-        factors.add("genotype");
+        factors.add("clinical information");
 
         String json = subject.fetchDifferentialGeneQueryResultsAboveDefaultFoldChange(GeneQuery.create("zinc finger"), species, experimentTypes, kingdoms, factors, null, null);
 
@@ -51,7 +51,7 @@ public class DifferentialAnalyticsSearchDaoIT {
         List<String> speciesJson = jsonCtx.read("$.facets.species.buckets[*].val");//   mus musculus
         List<String> experimentType = jsonCtx.read("$.facets.species.buckets[*].experimentType.buckets[*].val"); // rnaseq_mrna_differential
 
-        assertThat(count, is(78));
+        assertThat(count, is(98));
         assertThat(speciesJson, contains("mus musculus"));
         assertThat(experimentType, contains("rnaseq_mrna_differential"));
 

@@ -38,7 +38,7 @@ public class DifferentialAnalyticsSearchServiceIT extends TestCase {
         kingdoms.add("animals");
 
         List<String> factors = Lists.newArrayList();
-        factors.add("genotype");
+        factors.add("clinical information");
         factors.add("sex");
 
         GeneQuery geneQuery = GeneQuery.create("zinc finger");
@@ -51,6 +51,6 @@ public class DifferentialAnalyticsSearchServiceIT extends TestCase {
         // assertThat(json, is("" +
         //   "[{\"geneCount\":78,\"organism\":\"mus musculus\",\"contrastId\":\"g1_g2\",\"comparison\":\"genotype:'expressing human TDP-43' vs 'non transgenic'\",\"experimentAccession\":\"E-GEOD-22351\",\"experimentName\":\"RNA-seq of mouse spinal cord expressing wild type human TDP-43\"}," +
         //   "{\"geneCount\":36,\"organism\":\"mus musculus\",\"contrastId\":\"g1_g2\",\"comparison\":\"sex:'male' vs 'female'\",\"experimentAccession\":\"E-MTAB-698\",\"experimentName\":\"RNA-seq of vomeronasal tissue from adult male and female mice\"}]"));
-        assertThat(json, is("[{\"geneCount\":78,\"organism\":\"mus musculus\",\"contrastId\":\"g1_g2\",\"comparison\":\"genotype:'expressing human TDP-43' vs 'non transgenic'\",\"experimentAccession\":\"E-GEOD-22351\",\"experimentName\":\"RNA-seq of mouse spinal cord expressing wild type human TDP-43\"}]"));
+        assertThat(json, is("[{\"geneCount\":98,\"organism\":\"mus musculus\",\"contrastId\":\"g1_g2\",\"comparison\":\"clinical information:'non-pregnant' vs 'pregnant'\",\"experimentAccession\":\"E-GEOD-21860\",\"experimentName\":\"RNA-seq of pancreatic islets from pregnant mice\"},{\"geneCount\":37,\"organism\":\"mus musculus\",\"contrastId\":\"g1_g2\",\"comparison\":\"sex:'male' vs 'female'\",\"experimentAccession\":\"E-MTAB-698\",\"experimentName\":\"RNA-seq of vomeronasal tissue from adult male and female mice\"}]"));
     }
 }
