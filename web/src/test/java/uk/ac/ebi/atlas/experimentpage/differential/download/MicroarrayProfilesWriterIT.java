@@ -3,7 +3,7 @@ package uk.ac.ebi.atlas.experimentpage.differential.download;
 import au.com.bytecode.opencsv.CSVWriter;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -47,10 +47,10 @@ import static org.mockito.Mockito.*;
 public class MicroarrayProfilesWriterIT {
 
     public static final int GENE_NAME_INDEX = 1;
-    public static final String E_GEOD_8122 = "E-GEOD-8122";
+    public static final String E_TABM_713 = "E-TABM-713";
     private static final String E_GEOD_43049 = "E-GEOD-43049";
     private static final String E_MTAB_1066 = "E-MTAB-1066";
-    private static final String E_GEOD_3779 = "E-GEOD-3779";
+    private static final String E_GEOD_3307 = "E-GEOD-3307";
 
     private MicroarrayProfilesWriter subject;
 
@@ -116,7 +116,7 @@ public class MicroarrayProfilesWriterIT {
         assertThat(queryLine, is("# Query: Genes matching: '' exactly, specifically up/down differentially expressed in any contrast given the p-value cutoff 0.05 and log2-fold change cutoff 1 in experiment E-MTAB-1066"));
 
         String[] columnHeaders = csvLines().get(0);
-        assertThat(columnHeaders, is(new String[] {"Gene ID", "Gene Name", "Design Element", "genotype:'cycC mutant' vs 'wild type'.p-value", "genotype:'cycC mutant' vs 'wild type'.log2foldchange", "genotype:'cycC mutant' vs 'wild type'.t-statistic", "genotype:'cdk8 mutant' vs 'wild type'.p-value", "genotype:'cdk8 mutant' vs 'wild type'.log2foldchange", "genotype:'cdk8 mutant' vs 'wild type'.t-statistic"}));
+        assertThat(columnHeaders, is(new String[]{"Gene ID", "Gene Name", "Design Element", "genotype:'cycC mutant' vs 'wild type'.p-value", "genotype:'cycC mutant' vs 'wild type'.log2foldchange", "genotype:'cycC mutant' vs 'wild type'.t-statistic", "genotype:'cdk8 mutant' vs 'wild type'.p-value", "genotype:'cdk8 mutant' vs 'wild type'.log2foldchange", "genotype:'cdk8 mutant' vs 'wild type'.t-statistic"}));
     }
 
     // http://localhost:8080/gxa/experiments/E-MTAB-1066.tsv
@@ -150,7 +150,7 @@ public class MicroarrayProfilesWriterIT {
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
-        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
+        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
 
         System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
@@ -159,8 +159,8 @@ public class MicroarrayProfilesWriterIT {
         assertThat(genesCount, is((long) expectedCount));
         assertThat(geneNames, hasSize(expectedCount));
 
-        String[] sc5d = geneNameToLine.get("SC5D");
-        String[] spire1 = geneNameToLine.get("SPIRE1");
+        String[] sc5d = geneNameToLine.get("SC5D").asList().get(0);
+        String[] spire1 = geneNameToLine.get("SPIRE1").asList().get(0);
 
         assertThat(geneNames, containsInAnyOrder("SC5D", "SPIRE1"));
         assertThat(spire1, is("ENSG00000134278\tSPIRE1\tA_23_P135878\t1.54888175264243E-4\t1.0942741427441\t10.0906730728867".split("\t")));
@@ -174,7 +174,7 @@ public class MicroarrayProfilesWriterIT {
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
-        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
+        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
 
         System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
@@ -194,7 +194,7 @@ public class MicroarrayProfilesWriterIT {
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
-        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
+        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
 
         System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
@@ -214,7 +214,7 @@ public class MicroarrayProfilesWriterIT {
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
-        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
+        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
 
         int expectedCount = 14;
@@ -231,7 +231,7 @@ public class MicroarrayProfilesWriterIT {
         MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_43049);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
-        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
+        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
 
         int expectedCount = 1;
@@ -249,7 +249,7 @@ public class MicroarrayProfilesWriterIT {
         MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
-        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
+        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
 
         System.out.println("\"" + Joiner.on("\", \"").join(geneNames) + "\"");
@@ -269,7 +269,7 @@ public class MicroarrayProfilesWriterIT {
         MicroarrayRequestContext requestContext = populateRequestContext(E_MTAB_1066);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
-        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
+        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
 
 
@@ -283,85 +283,80 @@ public class MicroarrayProfilesWriterIT {
     }
 
 
-    // http://localhost:8080/gxa/experiments/E-GEOD-8122.tsv?foldChangeCutOff=0
+    // http://localhost:8080/gxa/experiments/E-TABM-713.tsv?foldChangeCutOff=0
     @Test
-    public void eGeod8122() throws GenesNotFoundException {
+    public void eTabm713() throws GenesNotFoundException {
         setFoldChangeCutOff(0);
-        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_8122);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_TABM_713);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
-        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
+        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
 
-        int expectedCount = 1;
+        int expectedCount = 73;
+        int uniqueExpectedCount = 48;
         assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(expectedCount));
+        assertThat(geneNames, hasSize(uniqueExpectedCount));
 
-        String[] vma16 = geneNameToLine.get("VMA16");
+        assertThat(geneNames, containsInAnyOrder("MIMAT0000267", "MIMAT0000083", "MIMAT0002826", "MIMAT0003306", "MIMAT0003249", "MIMAT0003237", "MIMAT0000255", "MIMAT0003303", "MIMAT0000448", "MIMAT0000274", "MIMAT0000095", "MIMAT0002821", "MIMAT0000069", "MIMAT0000693", "MIMAT0002843", "MIMAT0002809", "MIMAT0000089", "MIMAT0003227", "MIMAT0000259", "MIMAT0002869", "MIMAT0003289", "MIMAT0002844", "MIMAT0001618", "MIMAT0003883", "MIMAT0004800", "MIMAT0003304", "MIMAT0000078", "MIMAT0003242", "MIMAT0002874", "MIMAT0000093", "MIMAT0002177", "MIMAT0000258", "MIMAT0002851", "MIMAT0000449", "MIMAT0003301", "MIMAT0003220", "MIMAT0003246", "MIMAT0003337", "MIMAT0000420", "MIMAT0000269", "MIMAT0001075", "MIMAT0000439", "MIMAT0000458", "MIMAT0003253", "MIMAT0000082", "MIMAT0001541", "MIMAT0000753", "MIMAT0000261"));
 
-        assertThat(geneNames, containsInAnyOrder("VMA16"));
-        assertThat(vma16, is("YHR026W\tVMA16\t1779820_at\t0.0415772172547035\t-0.540554090488339\t-6.70529872966727".split("\t")));
+        String[] mimat0000267 = geneNameToLine.get("MIMAT0000267").asList().get(0);
+        assertThat(mimat0000267, is(new String[] {"hsa-miR-210-3p", "MIMAT0000267", "A_25_P00010995", "0.0333837230765599", "0.827455526749746", "3.82721624713512"}));
     }
 
     private void setFoldChangeCutOff(double cutOff) {
         requestPreferences.setFoldChangeCutOff(cutOff);
     }
 
-
-    // http://localhost:8080/gxa/experiments/E-GEOD-8122.tsv?geneQuery=YHR026W&foldChangeCutOff=0
-    @Test
-    public void eGeod8122_GeneQuery_For_Gene_Not_In_Experiment_Species() throws GenesNotFoundException {
-        setGeneQuery("YHR026W");
-        eGeod8122();
-    }
-
-    // http://localhost:8080/gxa/experiments/E-GEOD-3779.tsv?foldChangeCutOff=0
+    // http://localhost:8080/gxa/experiments/E-GEOD-3307.tsv?foldChangeCutOff=0
     @Test
     public void experimentWithMultipleArrayDesigns_ArrayDesignAccession1() throws GenesNotFoundException {
         setFoldChangeCutOff(0);
-        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_3779);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_3307);
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getArrayDesignAccessions().iterator().next());
 
         String[] columnHeaders = csvLines().get(0);
         System.out.println("\"" + Joiner.on("\", \"").join(columnHeaders) + "\"");
-        assertThat(columnHeaders, is(new String[] {"Gene ID", "Gene Name", "Design Element", "genotype:'p107 -/-' vs 'wild type' on A-AFFY-23.p-value", "genotype:'p107 -/-' vs 'wild type' on A-AFFY-23.log2foldchange", "genotype:'p107 -/-' vs 'wild type' on A-AFFY-23.t-statistic"}));
+        assertThat(columnHeaders, is(new String[] {"Gene ID", "Gene Name", "Design Element", "'LGMD2I' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'LGMD2I' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'LGMD2I' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'EDMD XR' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'EDMD XR' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'EDMD XR' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'BMD' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'BMD' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'BMD' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'EDMD AD' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'EDMD AD' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'EDMD AD' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'HSP' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'HSP' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'HSP' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'FSHD' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'FSHD' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'FSHD' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'JDM' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'JDM' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'JDM' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'LGMD2A' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'LGMD2A' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'LGMD2A' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'AQM' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'AQM' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'AQM' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'ALS' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'ALS' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'ALS' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'LGMD2B' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'LGMD2B' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'LGMD2B' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic", "'DMD' vs 'normal' on 'Affymetrix HG-U133A'.p-value", "'DMD' vs 'normal' on 'Affymetrix HG-U133A'.log2foldchange", "'DMD' vs 'normal' on 'Affymetrix HG-U133A'.t-statistic"}));
 
-        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
+        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
 
-        int expectedCount = 1;
+        int expectedCount = 89;
+        int uniqueExpectedCount = 45;
         assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(expectedCount));
+        assertThat(geneNames, hasSize(uniqueExpectedCount));
 
-        assertThat(geneNames, containsInAnyOrder("Mycl1"));
+        assertThat(geneNames, containsInAnyOrder("TSPAN6", "DPM1", "SCYL3", "C1orf112", "CFH", "GCLC", "NFYA", "NIPAL3", "LAS1L", "ENPP4", "SEMA3F", "CFTR", "RAD52", "BAD", "LAP3", "CD99", "HS3ST1", "AOC1", "HECW1", "MAD1L1", "LASP1", "SNX11", "TMEM176A", "M6PR", "CYP26B1", "ICA1", "DBNDD1", "CASP10", "CFLAR", "TFPI", "RBM5", "SLC7A2", "SARM1", "POLDIP2", "PLXND1", "AK2", "CD38", "FKBP4", "KDM1A", "RBM6", "RECQL", "CCDC132", "HSPB6", "ARHGAP33", "NDUFAB1"));
 
-        String[] geneLine = geneNameToLine.get("Mycl1");
-        assertThat(geneLine, is(new String[] {"ENSMUSG00000028654", "Mycl1", "1422088_at", "0.04", "0.00409480833333209", "0.0502355223125666"}));
+        String[] geneLine = geneNameToLine.get("TSPAN6").asList().get(0);
+        assertThat(geneLine, is(new String[] {"ENSG00000000003", "TSPAN6", "209108_at", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "3.22392001630122E-5", "0.413107096522765", "5.02112235896101", null, null, null, null, null, null, "0.0119843116644908", "0.313794065216056", "3.12520915964694", null, null, null, "0.0110142369806691", "0.453232593478132", "3.27165792658763"}));
     }
 
 
-    // http://localhost:8080/gxa/experiments/E-GEOD-3779.tsv?foldChangeCutOff=0
+    // http://localhost:8080/gxa/experiments/E-GEOD-3307.tsv?foldChangeCutOff=0
     @Test
     public void experimentWithMultipleArrayDesigns_ArrayDesignAccession2() throws GenesNotFoundException {
         setFoldChangeCutOff(0);
-        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_3779);
+        MicroarrayRequestContext requestContext = populateRequestContext(E_GEOD_3307);
         requestContext.setArrayDesignAccession(requestContext.getExperiment().getArrayDesignAccessions().last());
         long genesCount = subject.write(printWriterMock, requestContext, requestContext.getExperiment().getArrayDesignAccessions().last());
 
         String[] columnHeaders = csvLines().get(0);
-        assertThat(columnHeaders, is(new String[] {"Gene ID", "Gene Name", "Design Element", "genotype:'p107 -/-' vs 'wild type' on A-AFFY-24.p-value", "genotype:'p107 -/-' vs 'wild type' on A-AFFY-24.log2foldchange", "genotype:'p107 -/-' vs 'wild type' on A-AFFY-24.t-statistic"}));
+        assertThat(columnHeaders, is(new String[] {"Gene ID", "Gene Name", "Design Element", "'FSHD' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'FSHD' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'FSHD' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'EDMD AD' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'EDMD AD' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'EDMD AD' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'BMD' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'BMD' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'BMD' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'DMD' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'DMD' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'DMD' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'LGMD2I' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'LGMD2I' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'LGMD2I' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'EDMD XR' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'EDMD XR' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'EDMD XR' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'AQM' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'AQM' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'AQM' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'LGMD2A' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'LGMD2A' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'LGMD2A' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'HSP' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'HSP' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'HSP' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'JDM' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'JDM' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'JDM' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'LGMD2B' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'LGMD2B' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'LGMD2B' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic", "'ALS' vs 'normal' on 'Affymetrix HG-U133B'.p-value", "'ALS' vs 'normal' on 'Affymetrix HG-U133B'.log2foldchange", "'ALS' vs 'normal' on 'Affymetrix HG-U133B'.t-statistic"}));
 
-        ImmutableMap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
+        ImmutableMultimap<String, String[]> geneNameToLine = indexByGeneName(csvLines());
         Set<String> geneNames = geneNameToLine.keySet();
 
-        int expectedCount = 1;
+        int expectedCount = 88;
+        int uniqueExpectedCount = 61;
         assertThat(genesCount, is((long) expectedCount));
-        assertThat(geneNames, hasSize(expectedCount));
+        assertThat(geneNames, hasSize(uniqueExpectedCount));
 
-        assertThat(geneNames, containsInAnyOrder("Snx30"));
+        assertThat(geneNames, containsInAnyOrder("SCYL3", "FUCA2", "NFYA", "STPG1", "NIPAL3", "LAS1L", "CFTR", "ANKIB1", "HECW1", "KLHL13", "CYP26B1", "ICA1", "ALS2", "CFLAR", "NDUFAF7", "RBM5", "MTMR7", "SLC7A2", "SARM1", "POLDIP2", "CAMKK1", "CCDC132", "HSPB6", "ARHGAP33", "PDK4", "SLC22A16", "ARX", "SLC25A13", "SKAP2", "DHX33", "THSD7A", "LIG3", "SPPL2B", "COPZ2", "CREBBP", "WDR54", "KMT2E", "RHBDD2", "SOX8", "FBXL3", "ZFX", "ASB4", "GDE1", "OSBPL7", "TMEM98", "TMEM132A", "ZNF263", "DLX6", "RALA", "BAIAP2L1", "KDM7A", "TTC22", "CCL26", "FARP2", "IFRD1", "ARSD", "UPP2", "CCDC124", "DNAH9", "SLC13A2", "ST7L"));
 
-        String[] geneLine = geneNameToLine.get("Snx30");
-        assertThat(geneLine, is(new String[] {"ENSMUSG00000028385", "Snx30", "1456479_at", "0.02", "0.00641014999999978", "0.120394369986336"}));
+        String[] geneLine = geneNameToLine.get("SCYL3").asList().get(0);
+        assertThat(geneLine, is(new String[] {"ENSG00000000457", "SCYL3", "231111_at", "0.0130556396535823", "0.212702005676215", "3.1690924162594", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "7.74486134849082E-4", "0.300456061009448", "3.9026735704204", null, null, null, null, null, null}));
     }
 
 
@@ -379,8 +374,8 @@ public class MicroarrayProfilesWriterIT {
         return lineCaptor.getAllValues();
     }
 
-    private ImmutableMap<String, String[]> indexByGeneName(List<String[]> lines) {
-        ImmutableMap.Builder<String, String[]> builder = ImmutableMap.builder();
+    private ImmutableMultimap<String, String[]> indexByGeneName(List<String[]> lines) {
+        ImmutableMultimap.Builder<String, String[]> builder = ImmutableMultimap.builder();
         for (String line[] : lines) {
             String geneName = line[GENE_NAME_INDEX];
             if (!"Gene Name".equals(geneName)) {

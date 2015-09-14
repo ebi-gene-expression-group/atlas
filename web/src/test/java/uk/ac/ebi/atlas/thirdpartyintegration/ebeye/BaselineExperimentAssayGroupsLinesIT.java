@@ -56,7 +56,7 @@ public class BaselineExperimentAssayGroupsLinesIT {
         assertThat(line2[2], is("characteristic"));
         assertThat(line2[3], is("sex"));
         assertThat(line2[4], is("male"));
-        assertThat(line2[5], is("NCBITaxon/NCBITaxon:9606"));
+        assertThat(line2[5], is("http://www.ebi.ac.uk/efo/EFO_0001266"));
     }
 
 }

@@ -54,35 +54,35 @@ public class MicroarrayExperimentConfigurationIT {
 
     @Before
     public void setUp() throws Exception {
-        subject = configurationTrader.getMicroarrayExperimentConfiguration("E-GEOD-3779");
+        subject = configurationTrader.getMicroarrayExperimentConfiguration("E-GEOD-3307");
     }
 
     @Test
     public void testGetArrayDesignNames() throws Exception {
-        assertThat(subject.getArrayDesignAccessions(), contains("A-AFFY-23", "A-AFFY-24"));
+        assertThat(subject.getArrayDesignAccessions(), contains("A-AFFY-33", "A-AFFY-34"));
     }
 
     @Test
     public void testGetContrasts() throws Exception {
         Set<Contrast> contrasts = subject.getContrasts();
-        assertThat(contrasts.size(), is(2));
+        assertThat(contrasts.size(), is(24));
     }
 
     @Test
     public void testFirstContrast() throws Exception {
         SortedSet<Contrast> contrasts = Sets.newTreeSet(subject.getContrasts());
         Contrast first = contrasts.first();
-        assertThat(first.getId(), is("g3_g4"));
-        assertThat(first.getDisplayName(), is("genotype:'p107 -/-' vs 'wild type' on A-AFFY-23"));
-        assertThat(first.getReferenceAssayGroup(), hasItems("9859-11, chip MOE430A", "9887-4, chip MOE430A", "9619-6, chip MOE430A"));
-        assertThat(first.getTestAssayGroup(), hasItems("9447-4 -/-, chip MOE430A", "9887-6 p107 -/-, chip MOE430A", "9619-3 p107 -/-, chip MOE430A", "9859-12 p107 -/-, chip MOE430A"));
+        assertThat(first.getId(), is("g1_g11"));
+        assertThat(first.getDisplayName(), is("'ALS' vs 'normal' on 'Affymetrix HG-U133A'"));
+        assertThat(first.getReferenceAssayGroup(), hasItems("GSM74356", "GSM74408", "GSM74357", "GSM74409", "GSM74406", "GSM74407", "GSM74404", "GSM119936", "GSM74361", "GSM74362", "GSM119937", "GSM74402", "GSM74363", "GSM74403", "GSM74358", "GSM74359", "GSM74410", "GSM74360"));
+        assertThat(first.getTestAssayGroup(), hasItems("GSM74248", "GSM74244", "GSM74245", "GSM74246", "GSM74247", "GSM74240", "GSM74241", "GSM74242", "GSM74243"));
     }
 
     @Test
     public void testLastContrast() throws Exception {
         SortedSet<Contrast> contrasts = Sets.newTreeSet(subject.getContrasts());
         Contrast last = contrasts.last();
-        assertThat(last.getId(), is("g2_g1"));
-        assertThat(last.getDisplayName(), is("genotype:'p107 -/-' vs 'wild type' on A-AFFY-24"));
+        assertThat(last.getId(), is("g14_g17"));
+        assertThat(last.getDisplayName(), is("'LGMD2I' vs 'normal' on 'Affymetrix HG-U133B'"));
     }
 }

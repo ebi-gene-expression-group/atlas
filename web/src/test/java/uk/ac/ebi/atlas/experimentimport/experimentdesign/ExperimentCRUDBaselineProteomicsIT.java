@@ -205,7 +205,7 @@ public class ExperimentCRUDBaselineProteomicsIT {
         assertThat(experimentDTO.getExperimentType(), is(ExperimentType.PROTEOMICS_BASELINE));
         assertThat(experimentDTO.getSpecies(), contains("Homo sapiens"));
         assertThat(experimentDTO.getPubmedIds(), contains("24669763", "24870542"));
-        assertThat(experimentDTO.getTitle(), is("A draft map of the human proteome"));
+        assertThat(experimentDTO.getTitle(), is("Reanalysis of Pandey lab's draft of the human proteome"));
         assertThat(experimentDTO.isPrivate(), is(false));
     }
 
@@ -401,20 +401,17 @@ public class ExperimentCRUDBaselineProteomicsIT {
         SampleCharacteristic sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), is(ORGANISM_PART));
         assertThat(sampleCharacteristic.value(), is("ovary"));
-        // TODO Uncomment as soon as condensed SDRF file contains ontology terms
-        //assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0000973"));
+        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), is("http://www.ebi.ac.uk/efo/EFO_0000973"));
 
         sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), is(ORGANISM));
         assertThat(sampleCharacteristic.value(), is("Homo sapiens"));
-        // TODO Uncomment as soon as condensed SDRF file contains ontology terms
-        //assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
+        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), is("http://purl.obolibrary.org/obo/NCBITaxon_9606"));
 
         sampleCharacteristic = sampleCharacteristicIterator.next();
         assertThat(sampleCharacteristic.header(), is(DEVELOPMENTAL_STAGE));
         assertThat(sampleCharacteristic.value(), is("adult"));
-        // TODO Uncomment as soon as condensed SDRF file contains ontology terms
-        //assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), Matchers.is("http://www.ebi.ac.uk/efo/EFO_0001272"));
+        assertThat(sampleCharacteristic.valueOntologyTerms().iterator().next().uri(), is("http://www.ebi.ac.uk/efo/EFO_0001272"));
     }
 
     @Test

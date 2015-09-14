@@ -81,7 +81,7 @@ public class BaselineDesignPageControllerIT {
 
         // and
         String[] samples = gson.fromJson((String) map.get("sampleHeaders"), String[].class);
-        assertThat(samples, arrayContaining("Organism", "age", "ethnic group", "organism part", "sex"));
+        assertThat(samples, arrayContaining("age", "ethnic group", "organism", "organism part", "sex"));
         String[] factors = gson.fromJson((String) map.get("factorHeaders"), String[].class);
         assertThat(factors, arrayContaining("organism part"));
 
