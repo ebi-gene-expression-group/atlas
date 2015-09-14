@@ -101,8 +101,8 @@ public class BaselineAnalyticsSearchServiceIT {
 
         BaselineExperimentProfilesList baselineProfilesList = result.getExperimentProfiles();
 
-        assertThat(baselineProfilesList, hasSize(1));
-        assertThat(baselineProfilesList.getTotalResultCount(), is(1));
+        assertThat(baselineProfilesList, hasSize(2));
+        assertThat(baselineProfilesList.getTotalResultCount(), is(2));
 
         BaselineExperimentProfile baselineProfile = baselineProfilesList.get(0);
         assertThat(baselineProfile.getId(), is("E-MTAB-2836"));
