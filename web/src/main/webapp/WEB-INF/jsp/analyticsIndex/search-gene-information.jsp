@@ -74,10 +74,10 @@
 <section class="grid_24">
 
   <ul class="nav nav-tabs">
-    <c:if test="${hasBaselineResults}"><li title="Baseline experiments"><a href="${pageContext.request.contextPath}/search?geneQuery=${geneQuery.asUrlQueryParameter()}" >Baseline experiments</a></li></c:if>
-    <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" class="disabled" >Baseline experiments</li></c:if>
-    <c:if test="${hasDifferentialResults}"><li title="Differential experiments"><a href="${pageContext.request.contextPath}/search/differential?geneQuery=${geneQuery.asUrlQueryParameter()}">Differential experiments</a></li></c:if>
-    <c:if test="${!hasDifferentialResults}"> <li title="Differential experiments" class="disabled">Differential experiments</li></c:if>
+    <c:if test="${hasBaselineResults}"><li title="Baseline experiments"><a href="${pageContext.request.contextPath}/search?geneQuery=${geneQuery.asUrlQueryParameter()}" >Baseline expression</a></li></c:if>
+    <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" class="disabled" >Baseline expression</li></c:if>
+    <c:if test="${hasDifferentialResults}"><li title="Differential experiments"><a href="${pageContext.request.contextPath}/search/differential?geneQuery=${geneQuery.asUrlQueryParameter()}">Differential expression</a></li></c:if>
+    <c:if test="${!hasDifferentialResults}"> <li title="Differential experiments" class="disabled">Differential expression</li></c:if>
     <c:if test="${hasGeneInformation}"> <li title="Bioentity information" class="active"><a data-toggle="tab" href="${pageContext.request.contextPath}/search/bioentity?geneQuery=${geneQuery.asUrlQueryParameter()}">Bioentity information</a></li> </c:if>
     <c:if test="${!hasGeneInformation}"><li title="Bioentity information" class="disabled">Bioentity information</li> </c:if>
   </ul>
