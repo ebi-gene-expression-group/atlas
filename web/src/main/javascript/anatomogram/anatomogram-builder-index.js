@@ -12,7 +12,7 @@ var Anatomogram = require('./src/Anatomogram.jsx');
 function AnatomogramBuilder(domNode, anatomogramData, profileRows, expressedColour, hoverColour, eventEmitter) {
     // Default parameters
     var heatmapConfig = {
-        contextRoot: "http://www.ebi.ac.uk/gxa"
+        contextRoot: "https://www.ebi.ac.uk/gxa"
     };
 
     React.render(
