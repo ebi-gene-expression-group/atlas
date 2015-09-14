@@ -233,6 +233,7 @@
                         </additionalClasspathDirs>
                     </configuration>
                 </plugin>
+
             </plugins>
         </pluginManagement>
 
@@ -595,9 +596,9 @@
     <!-- Developer Listing -->
     <developers>
         <developer>
-            <id>bennyfio</id>
-            <name>Benedetto Fiorelli</name>
-            <email>bennyfio@ebi.ac.uk</email>
+            <id>amunoz</id>
+            <name>Alfonso Muñoz-Pome Fuentes</name>
+            <email>amunoz@ebi.ac.uk</email>
             <organization>EBI</organization>
             <organizationUrl>http://www.ebi.ac.uk</organizationUrl>
             <roles>
@@ -607,9 +608,9 @@
             <properties/>
         </developer>
         <developer>
-            <id>nsklyar</id>
-            <name>Nataliya Kryvych</name>
-            <email>nsklyar@ebi.ac.uk</email>
+            <id>ebarrera</id>
+            <name>Elisabet Barrera Casanova</name>
+            <email>barrera@ebi.ac.uk</email>
             <organization>EBI</organization>
             <organizationUrl>http://www.ebi.ac.uk</organizationUrl>
             <roles>
@@ -632,6 +633,7 @@
             <!-- oracleContext.xml is located on the filesystem and specified in tomcat's context xml -->
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
+                <npm.target>prod</npm.target>
             </properties>
         </profile>
         <profile>
@@ -646,6 +648,7 @@
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>
                 <mail.smtp.auth>false</mail.smtp.auth>
+                <npm.target>prod</npm.target>
             </properties>
         </profile>
         <profile>
@@ -672,6 +675,7 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3it</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3it</oracle.jdbc.password>
+                <npm.target>ci</npm.target>
             </properties>
         </profile>
         <profile>
@@ -695,6 +699,7 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <npm.target>ci</npm.target>
             </properties>
         </profile>
         <profile>
@@ -719,6 +724,7 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@localhost:1521:orcl</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <npm.target>ci</npm.target>
             </properties>
         </profile>
         <profile>
@@ -742,6 +748,7 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3it</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3it</oracle.jdbc.password>
+                <npm.target>ci</npm.target>
             </properties>
         </profile>
         <profile>
@@ -765,6 +772,7 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3</oracle.jdbc.password>
+                <npm.target>ci</npm.target>
             </properties>
         </profile>
         <profile>
@@ -788,6 +796,7 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@localhost:5205:ATLASDEV</oracle.jdbc.url>
                 <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
                 <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <npm.target>ci</npm.target>
             </properties>
         </profile>
         <profile>
@@ -810,6 +819,7 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-oyvm-009.ebi.ac.uk:1531:ATLASPUB</oracle.jdbc.url>
                 <oracle.jdbc.username>atlasprd3</oracle.jdbc.username>
                 <oracle.jdbc.password>atla5p4d3</oracle.jdbc.password>
+                <npm.target>prod</npm.target>
             </properties>
         </profile>
         <profile>
@@ -832,6 +842,7 @@
                 <oracle.jdbc.url>jdbc:oracle:thin:@ora-pgvm-009.ebi.ac.uk:1531:ATLASPUB</oracle.jdbc.url>
                 <oracle.jdbc.username>atlasprd3</oracle.jdbc.username>
                 <oracle.jdbc.password>atla5p4d3</oracle.jdbc.password>
+                <npm.target>prod</npm.target>
             </properties>
         </profile>
         <!-- execution profiles -->
