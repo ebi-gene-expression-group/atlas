@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+export NVM_DIR="/nfs/ma/home/ma-svc/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
 mkdir -p ../node_modules
 
 for dir in `ls -d */`
@@ -15,5 +18,4 @@ rm -rf ./node_modules
 ln -sf ../node_modules ./node_modules
 npm install
 
-npm install -g react-tools@0.12.2
-npm install -g webpack@1.10.1
+npm run $1
