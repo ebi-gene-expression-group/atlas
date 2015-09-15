@@ -57,7 +57,7 @@ public class MTAB513BaselineExperimentDownloadControllerSIT {
         List<String> firstLine = subject.getRowValues(3);
 
         assertThat(firstLine,
-                contains("Gene ID", "Gene Name", "adipose", "adrenal gland", "brain", "breast", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "ovary", "prostate", "skeletal muscle", "testis", "thyroid")
+                contains("Gene ID", "Gene Name", "adipose tissue", "adrenal gland", "animal ovary", "brain", "breast", "colon", "heart", "kidney", "leukocyte", "liver", "lung", "lymph node", "prostate", "skeletal muscle", "testis", "thyroid")
         );
 
     }
@@ -76,7 +76,7 @@ public class MTAB513BaselineExperimentDownloadControllerSIT {
         assertThat(secondLine.get(4), isEmptyString());
         assertThat(secondLine.get(5), isEmptyString());
         assertThat(secondLine.get(6), isEmptyString());
-        assertThat(secondLine.get(8), isEmptyString());
+        assertThat(secondLine.get(7), isEmptyString());
         assertThat(secondLine.get(9), isEmptyString());
         assertThat(secondLine.get(10), isEmptyString());
         assertThat(secondLine.get(11), isEmptyString());

@@ -30,7 +30,7 @@ public class AnalysisMethodsPageSIT extends RestAssuredFixture {
 
     @Test
     public void microArrayExperiment(){
-        Response response = get("/experiments/E-GEOD-3779/analysis-methods");
+        Response response = get("/experiments/E-GEOD-3307/analysis-methods");
 
         response.then().assertThat().statusCode(200);
         response.then().assertThat().contentType("text/html");

@@ -64,7 +64,7 @@ public class GenePageControllerGeneNotInReferenceExperimentBaselineWidgetSIT ext
 
         assertThat(subject.getGeneNames().size(), is(1));
         assertThat(subject.getGeneNames(), contains("Vertebrate tissues"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSMUSG00000062154&serializedFilterFactors=ORGANISM%3AMus%20musculus"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSMUSG00000062154&serializedFilterFactors=ORGANISM%3AMus+musculus"));
     }
 
 

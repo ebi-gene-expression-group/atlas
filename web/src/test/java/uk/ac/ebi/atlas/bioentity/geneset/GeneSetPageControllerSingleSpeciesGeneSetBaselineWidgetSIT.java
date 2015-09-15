@@ -32,7 +32,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 public class GeneSetPageControllerSingleSpeciesGeneSetBaselineWidgetSIT extends SinglePageSeleniumFixture {
 
-    private static final String IDENTIFIER = "REACT_1619";
+    private static final String IDENTIFIER = "R-HSA-73887";
 
     private BioEntityPage subject;
 
@@ -53,23 +53,22 @@ public class GeneSetPageControllerSingleSpeciesGeneSetBaselineWidgetSIT extends 
     @Test
     public void checkInfoCard() {
         subject.clickInfoCard(true);
-        assertThat(subject.getBioEntityCardTitle(), is("REACT_1619 Homo sapiens Death Receptor Signalling"));
+        assertThat(subject.getBioEntityCardTitle(), is("R-HSA-73887 Homo sapiens Death Receptor Signalling"));
         assertThat(subject.getPropertiesTableSize(), is(1));
         assertThat(subject.getPropertiesTableRow(0), hasItems("Reactome", "Death Receptor Signalling"));
-        assertThat(subject.getLinksInTableRow(0).get(0), is("http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_1619"));
+        assertThat(subject.getLinksInTableRow(0).get(0), is("http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=R-HSA-73887"));
     }
 
     @Test
     public void checkWidget() {
-        // wait for ajax widget to load
         subject.waitForHeatmapToBeVisible();
         assertThat(subject.getGeneCount(), is("Showing 4 of 4 experiments found:"));
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
         assertThat(subject.getGeneNames(), contains("Thirty two tissues", "Twenty seven tissues", "Vertebrate tissues", "Human Proteome Map - adult"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-2836?geneQuery=REACT_1619"));
-        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-1733?geneQuery=REACT_1619"));
-        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-GEOD-30352?geneQuery=REACT_1619&serializedFilterFactors=ORGANISM%3AHomo%20sapiens"));
-        assertThat(subject.getGeneLink(3), endsWith("/experiments/E-PROT-1?geneQuery=REACT_1619&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Aadult"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-2836?geneQuery=R-HSA-73887"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-1733?geneQuery=R-HSA-73887"));
+        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-GEOD-30352?geneQuery=R-HSA-73887&serializedFilterFactors=ORGANISM%3AHomo+sapiens"));
+        assertThat(subject.getGeneLink(3), endsWith("/experiments/E-PROT-1?geneQuery=R-HSA-73887&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Aadult"));
     }
 }

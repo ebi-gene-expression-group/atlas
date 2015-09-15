@@ -22,6 +22,8 @@
 
 package uk.ac.ebi.atlas.bioentity;
 
+import org.codehaus.jackson.annotate.JsonIgnoreType;
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
@@ -47,7 +49,9 @@ public class GenePageControllerEBIGlobalSearchSIT extends SinglePageSeleniumFixt
         assertThat(subject.getGlobalSearchTerm(), is(GENE_IDENTIFIER));
     }
 
-    @Test
+    // Unignore when EBI enables CORS headers:
+    // Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at http://www.ebi.ac.uk/ebisearch/globalsearchsummary.ebi?query=ENSMUSG00000029816&noResults=undefined. (Reason: CORS header 'Access-Control-Allow-Origin' missing).
+    @Ignore
     public void clickingOnGlobalSearchWidgetShouldDisplayGlobalSearchResults(){
         subject.clickShowMoreDataWidget();
         assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));

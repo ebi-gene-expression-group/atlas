@@ -66,15 +66,15 @@ public class GenePageControllerContrastTooltipMultiFactorSIT extends SinglePageS
     @Test
     public void checkContrastSummaryTooltipTableThirdRow() {
         assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(2, 0), is("time"));
-        assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(2, 1), is("4 hours"));
-        assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(2, 2), is("4 hours"));
+        assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(2, 1), is("4 hour"));
+        assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(2, 2), is("4 hour"));
     }
 
     @Test
     public void checkContrastSummaryTooltipTableFourthRow() {
         assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(3, 0), is("age"));
-        assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(3, 1), is("6-7 weeks"));
-        assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(3, 2), is("6-7 weeks"));
+        assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(3, 1), is("6-7 week"));
+        assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(3, 2), is("6-7 week"));
     }
 
     @Test

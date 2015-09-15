@@ -22,7 +22,6 @@
 
 package uk.ac.ebi.atlas.bioentity.geneset;
 
-import com.google.common.base.Joiner;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
@@ -76,13 +75,13 @@ public class GeneSetPageControllerGoTermSIT extends SinglePageSeleniumFixture {
     public void hasDifferentialResults() {
         subject.clickDifferentialPane();
         subject.clickDiffResultsDisplayLevelsButton();
-        assertThat(subject.getDiffPaneHeaderResultsMessage(), is("6237 results"));
+        assertThat(subject.getDiffPaneHeaderResultsMessage(), is("6855 results"));
 
         assertThat(subject.getDiffHeatmapHeaders(), contains("Gene", "Organism", "Comparison", "Log2-fold change"));
         assertThat(subject.getDiffHeatmapRow(1), contains("Uty", "Mus musculus", "sex:'male' vs 'female'", "10.5"));
 
-        System.out.println("\"" + Joiner.on("\", \"").join(subject.getDiffHeatmapTableGeneColumn()) + "\"");
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Uty", "IL12B", "Hop3", "IL6", "ATHSP101", "PTGS2", "IL6", "BAG6", "FN1", "CCL20", "FN1", "ROF2", "ATHSFA2", "CD9", "FCN1", "IL1A", "IL23A", "FCGR2B", "IL1A", "A37", "CD36", "CD36", "SAMHD1", "IL23A", "PTGS2", "TGFBI", "MNDA", "ATHSFA2", "CCL20", "SLAMF1", "MNDA", "F3", "ROF2", "INHBA", "IL1R2", "TNF", "DREB2A", "KCTD12", "SPINK1", "IL1R2", "Cldn8", "TIMP2", "ATHSP101", "RNASE1", "CDC48D", "TNF", "EBI3", "RNASE1", "CNKSR3", "CD9"));
+        // System.out.println("\"" + Joiner.on("\", \"").join(subject.getDiffHeatmapTableGeneColumn()) + "\"");
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("Uty", "IL12B", "Hop3", "IL6", "PTGS2", "IL6", "BAG6", "FN1", "CCL20", "FN1", "ROF2", "CD9", "FCN1", "IL1A", "IL23A", "FCGR2B", "IL1A", "CD36", "CD36", "SAMHD1", "IL23A", "PTGS2", "TGFBI", "MNDA", "CCL20", "SLAMF1", "MNDA", "F3", "ROF2", "INHBA", "IL1R2", "TNF", "KCTD12", "SPINK1", "IL1R2", "Cldn8", "TIMP2", "fs(1)Ya", "RNASE1", "TNF", "EBI3", "RNASE1", "CNKSR3", "CD9", "TIMP2", "CYBB", "CD14", "DLL1", "RCBTB2", "PLXDC2"));
     }
 
 

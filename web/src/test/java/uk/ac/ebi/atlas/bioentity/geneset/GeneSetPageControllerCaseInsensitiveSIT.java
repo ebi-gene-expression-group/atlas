@@ -4,14 +4,12 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
 
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class GeneSetPageControllerCaseInsensitiveSIT extends SinglePageSeleniumFixture {
 
-    private static final String REACT_IDENTIFIER = "REACT_118779";
+    private static final String REACTOME_IDENTIFIER = "R-HSA-1474244";
     private static final String INTERPRO_IDENTIFIER = "IPR000003";
     private static final String GO_IDENTIFIER = "GO:0043167";
     private static final String PO_IDENTIFIER = "PO:0000013";
@@ -23,11 +21,11 @@ public class GeneSetPageControllerCaseInsensitiveSIT extends SinglePageSeleniumF
     }
 
     @Test
-    public void reactIdentifierIsCaseInsensitive() {
-        subject = new BioEntityPage(driver, REACT_IDENTIFIER.toLowerCase(), "genesets");
+    public void reactomeIdentifierIsCaseInsensitive() {
+        subject = new BioEntityPage(driver, REACTOME_IDENTIFIER.toLowerCase(), "genesets");
         subject.get();
 
-        BioEntityPage target = new BioEntityPage(driver, REACT_IDENTIFIER, "genesets");
+        BioEntityPage target = new BioEntityPage(driver, REACTOME_IDENTIFIER, "genesets");
         target.get();
 
         subject.clickInfoCard(true);

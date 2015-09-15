@@ -98,7 +98,7 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(xpath = "//label[@for='queryFactorValues']")
     private WebElement queryFactorLabel;
 
-    @FindBy(id = "anatomogram")
+    @FindBy(css = "#heatmap-anatomogram svg")
     private WebElement anatomogram;
 
     @FindBy(css = ".gxaHeatmapCountAndLegend > div > div")
@@ -493,7 +493,7 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public boolean hasAnatomogram() {
-        return !driver.findElements(By.cssSelector("#anatomogram svg")).isEmpty();
+        return !driver.findElements(By.cssSelector("#heatmap-anatomogram svg")).isEmpty();
     }
 
     public boolean hasEnsemblLauncher() {

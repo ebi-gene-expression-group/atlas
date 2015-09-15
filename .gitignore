@@ -17,6 +17,6 @@ web/src/test/resources/serialized_expression
 .DS_Store
 .module-cache
 npm-debug.log
-web/src/main/javascript/**/node_modules
+web/src/main/**/node_modules
 web/src/main/javascript/**/dist
 web/src/main/webapp/resources/js-bundles/**
