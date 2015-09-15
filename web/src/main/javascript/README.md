@@ -4,7 +4,7 @@ Expression Atlas JavaScript Webpack bundles
 Development mode
 ----------------
 
-To build uncompressed bundles into `webapp/resources/js-bundles`:
+To build source-mapped bundles into `webapp/resources/js-bundles`:
 
 ```
 $ npm run dev
@@ -13,7 +13,7 @@ $ npm run dev
 Production mode
 ---------------
 
-To build minified production bundles into `webapp/resources/js-bundles`:
+To build production bundles into `webapp/resources/js-bundles`:
 
 ```
 $ npm run prod
