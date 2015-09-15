@@ -7,11 +7,14 @@ mkdir -p ../node_modules
 
 for dir in `ls -d */`
 do
-    cd $dir
-    rm -rf ./node_modules
-    ln -sf ../../node_modules ./node_modules
-    npm install
-    cd ..
+    if [[ $dir != node_modules ]]
+    then
+        cd $dir
+        rm -rf ./node_modules
+        ln -sf ../../node_modules ./node_modules
+        npm install
+        cd ..
+    fi
 done
 
 rm -rf ./node_modules
