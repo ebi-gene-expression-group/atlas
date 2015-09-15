@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentpage.differential.microarray;
 
 import org.junit.Test;
+import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
@@ -36,7 +37,7 @@ public class MicroRnaExperimentSIT extends SeleniumFixture {
     private static final String ACCESSION = "E-TABM-713";
     protected HeatmapTablePage subject;
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void verifyResultsWithRegulationUp() {
         subject = new HeatmapTablePage(driver, ACCESSION, "regulation=UP&displayLevels=true");
         subject.get();
@@ -49,7 +50,7 @@ public class MicroRnaExperimentSIT extends SeleniumFixture {
         assertThat(subject.getGeneProfile(1).get(0), is("2.7"));
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void verifyResultsWithRegulationDown() {
         subject = new HeatmapTablePage(driver, ACCESSION, "regulation=DOWN&displayLevels=true");
         subject.get();

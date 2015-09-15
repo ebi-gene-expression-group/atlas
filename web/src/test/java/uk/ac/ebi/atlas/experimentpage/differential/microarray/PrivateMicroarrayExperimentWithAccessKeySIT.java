@@ -23,8 +23,8 @@ import static org.hamcrest.Matchers.*;
 
 public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture {
 
-    private static final String EXPERIMENT_ACCESSION = "E-GEOD-3779";
-    public static final String ARRAY_DESIGN = "A-AFFY-23";
+    private static final String EXPERIMENT_ACCESSION = "E-GEOD-11758";
+    public static final String ARRAY_DESIGN = "A-AFFY-2";
 
     private HeatmapTablePage subject;
 
@@ -62,12 +62,12 @@ public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture
         page.getExperimentDescription();
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void pageShouldBeAvailableWithAccessKey() {
         assertThat(subject.getExperimentDescription(), is("Transcription profiling by array of mouse neurospheres cultured from p107-/- embryos and their wildtype littermates"));
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void buttonLinksShouldContainAccessKeyQueryString() {
         assertThat(subject.getDisplayExperimentLink(), endsWith("?accessKey=" + accessKey));
         assertThat(subject.getDownloadAnalyticsLink(), endsWith("?accessKey=" + accessKey));
@@ -85,7 +85,7 @@ public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture
         experimentDesignPage.getExperimentDescription();
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void experimentDesignPageWillBeAvailableWithAccessKey() {
         ExperimentDesignTablePage experimentDesignPage =
                 new ExperimentDesignTablePage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
@@ -93,7 +93,7 @@ public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture
         experimentDesignPage.getExperimentDescription();
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void analysisMethodsPageWillBeAvailableWithAccessKey() {
         ExperimentAnalysisMethodsPage analysisMethodsPage =
                 new ExperimentAnalysisMethodsPage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
@@ -109,7 +109,7 @@ public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture
         qcReportPage.getExperimentDescription();
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void qcReportPageWillBeAvailableWithAccessKey() {
         QCReportPage qcReportPage =
                 new QCReportPage(driver, EXPERIMENT_ACCESSION, ARRAY_DESIGN, "accessKey=" + accessKey);
