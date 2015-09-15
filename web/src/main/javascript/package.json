@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "rm -rf ../webapp/resources/js-bundles/* && webpack --progress --colors --watch --debug --output-pathinfo --display-chunks --display-modules --devtool source-map",
     "dev-min": "rm -rf ../webapp/resources/js-bundles/* && webpack --progress --colors --optimize-minimize --output-pathinfo --display-chunks --display-modules",
-    "ci": "rm -rf ../webapp/resources/js-bundles/* && ./install-dependencies.sh && webpack --debug --output-pathinfo --display-chunks --display-modules --devtool source-map",
-    "prod": "rm -rf ../webapp/resources/js-bundles/* && ./install-dependencies.sh && webpack --debug --optimize-minimize --output-pathinfo --display-chunks --display-modules"
+    "ci": "rm -rf ../webapp/resources/js-bundles/* && webpack --debug --output-pathinfo --display-chunks --display-modules --devtool source-map",
+    "prod": "rm -rf ../webapp/resources/js-bundles/* && webpack --debug --optimize-minimize --output-pathinfo --display-chunks --display-modules"
   },
   "author": "Elisabet Barrera <barrera@ebi.ac.uk> and Alfonso Muñoz-Pomer <amunoz@ebi.ac.uk>",
   "license": "MIT",
