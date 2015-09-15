@@ -122,7 +122,8 @@
     </tbody>
 </table>
 
-
+<script language="JavaScript" type="text/javascript" src="${base}/resources/js/lib/react/es5-shim-4.0.1.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="${base}/resources/js/lib/react/react-0.11.1.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="${base}/resources/js/heatmapModuleDeprecated.js"></script>
 <script src="${pageContext.request.contextPath}/resources/widget/latest/jsx/contrastTooltip.js"></script>
 <script src="${pageContext.request.contextPath}/resources/widget/latest/js/contrastTooltipModule.js"></script>
