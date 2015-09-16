@@ -1,10 +1,7 @@
 package uk.ac.ebi.atlas.experimentpage.differential.microarray;
 
 import com.jayway.restassured.response.Response;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.NoSuchElementException;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredFixture;
@@ -37,16 +34,16 @@ public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture
 
     @Before
     public void init() {
+        // TODO Uncomment when https://www.pivotaltracker.com/story/show/101118548 is done
+        //expect().body(containsString(EXPERIMENT_ACCESSION))
+        //        .when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=true");
 
-        expect().body(containsString(EXPERIMENT_ACCESSION))
-                .when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=true");
+        //String jsonResponse = given().get("listExperiments?accession=" + EXPERIMENT_ACCESSION).body().asString();
 
-        String jsonResponse = given().get("listExperiments?accession=" + EXPERIMENT_ACCESSION).body().asString();
+        //accessKey = from(jsonResponse).get("accessKey[0]");
 
-        accessKey = from(jsonResponse).get("accessKey[0]");
-
-        subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
-        subject.get();
+        //subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
+        //subject.get();
     }
 
     @After
@@ -55,19 +52,19 @@ public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture
                 .when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=false");
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Ignore//(expected = NoSuchElementException.class)
     public void pageShouldNotBeAvailableWithoutAccessKey() {
         HeatmapTablePage page = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION);
         page.get();
         page.getExperimentDescription();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Ignore//(expected = NoSuchElementException.class)
     public void pageShouldBeAvailableWithAccessKey() {
         assertThat(subject.getExperimentDescription(), is("Transcription profiling by array of mouse neurospheres cultured from p107-/- embryos and their wildtype littermates"));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Ignore//(expected = NoSuchElementException.class)
     public void buttonLinksShouldContainAccessKeyQueryString() {
         assertThat(subject.getDisplayExperimentLink(), endsWith("?accessKey=" + accessKey));
         assertThat(subject.getDownloadAnalyticsLink(), endsWith("?accessKey=" + accessKey));
@@ -78,14 +75,14 @@ public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture
         assertThat(subject.getQCReportLink(), endsWith("?accessKey=" + accessKey));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Ignore//(expected = NoSuchElementException.class)
     public void experimentDesignPageWillFailWithoutAccessKey() {
         ExperimentDesignTablePage experimentDesignPage = new ExperimentDesignTablePage(driver, EXPERIMENT_ACCESSION);
         experimentDesignPage.get();
         experimentDesignPage.getExperimentDescription();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Ignore//(expected = NoSuchElementException.class)
     public void experimentDesignPageWillBeAvailableWithAccessKey() {
         ExperimentDesignTablePage experimentDesignPage =
                 new ExperimentDesignTablePage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
@@ -93,7 +90,7 @@ public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture
         experimentDesignPage.getExperimentDescription();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Ignore//(expected = NoSuchElementException.class)
     public void analysisMethodsPageWillBeAvailableWithAccessKey() {
         ExperimentAnalysisMethodsPage analysisMethodsPage =
                 new ExperimentAnalysisMethodsPage(driver, EXPERIMENT_ACCESSION, "accessKey=" + accessKey);
@@ -101,7 +98,7 @@ public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture
         analysisMethodsPage.getExperimentDescription();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Ignore//(expected = NoSuchElementException.class)
     public void qcReportPageWillFailWithoutAccessKey() {
         QCReportPage qcReportPage =
                 new QCReportPage(driver, EXPERIMENT_ACCESSION, ARRAY_DESIGN);
@@ -109,7 +106,7 @@ public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture
         qcReportPage.getExperimentDescription();
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Ignore//(expected = NoSuchElementException.class)
     public void qcReportPageWillBeAvailableWithAccessKey() {
         QCReportPage qcReportPage =
                 new QCReportPage(driver, EXPERIMENT_ACCESSION, ARRAY_DESIGN, "accessKey=" + accessKey);
@@ -117,7 +114,7 @@ public class PrivateMicroarrayExperimentWithAccessKeySIT extends SeleniumFixture
         qcReportPage.getExperimentDescription();
     }
 
-    @Test
+    @Ignore
     public void qcReportResourcesAvailableWithoutAccessKey(){
         RestAssuredFixture.initRestAssured();
 
