@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.experimentimport.analyticsindex.support;
 
-import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.beans.factory.annotation.Value;
 import uk.ac.ebi.atlas.solr.query.GxaSolrClient;
