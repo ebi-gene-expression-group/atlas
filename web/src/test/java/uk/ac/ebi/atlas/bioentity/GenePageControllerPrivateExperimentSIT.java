@@ -22,10 +22,7 @@
 
 package uk.ac.ebi.atlas.bioentity;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import uk.ac.ebi.atlas.acceptance.rest.fixtures.RestAssuredAuthenticatedFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntityPage;
@@ -49,14 +46,16 @@ public class GenePageControllerPrivateExperimentSIT extends SinglePageSeleniumFi
 
     @Before
     public void init() {
-        expect().body(containsString(EXPERIMENT_ACCESSION))
-                .when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=true");
+        // TODO Uncomment when https://www.pivotaltracker.com/story/show/101118548 is done
+        //expect().body(containsString(EXPERIMENT_ACCESSION))
+        //        .when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=true");
     }
 
     @After
     public void cleanup() {
-        expect().body(containsString(EXPERIMENT_ACCESSION))
-                .when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=false");
+        // TODO Uncomment when https://www.pivotaltracker.com/story/show/101118548 is done
+        //expect().body(containsString(EXPERIMENT_ACCESSION))
+        //        .when().get("updateStatus?accession=" + EXPERIMENT_ACCESSION + "&private=false");
     }
 
     @Override
@@ -64,7 +63,7 @@ public class GenePageControllerPrivateExperimentSIT extends SinglePageSeleniumFi
         subject = new BioEntityPage(driver, GENE_IDENTIFIER, "genes");
     }
 
-    @Test
+    @Ignore
     public void privateExperimentsAreNotShown() {
         subject.get();
         subject.waitForHeatmapToBeVisible();
