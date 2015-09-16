@@ -10,7 +10,7 @@ mkdir -p ../node_modules
 
 for dir in `ls -d */`
 do
-    if [[ $dir != node_modules ]]
+    if [[ $dir != node_modules/ ]]
     then
         cd $dir
         rm -rf ./node_modules
