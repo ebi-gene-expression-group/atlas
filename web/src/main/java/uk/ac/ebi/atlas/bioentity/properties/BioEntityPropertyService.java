@@ -54,6 +54,7 @@ public class BioEntityPropertyService {
     private String species;
 
     private SortedSet<String> entityNames;
+    private String entityName;
 
     private String identifier;
 
@@ -78,12 +79,13 @@ public class BioEntityPropertyService {
         if (propertyValuesByType.containsKey("mirbase_id") && !propertyValuesByType.containsKey("mirbase_sequence")) {
             addMirBaseSequence();
         }
+        this.init(species, propertyValuesByType, entityNames.first(),identifier);
     }
 
-    public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, SortedSet<String> entityNames, String identifier) {
+    public void init(String species, SortedSetMultimap<String, String> propertyValuesByType, String entityName, String identifier) {
         this.species = species;
         this.propertyValuesByType = propertyValuesByType;
-        this.entityNames = entityNames;
+        this.entityName = entityName;
         this.identifier = identifier;
     }
 
@@ -220,6 +222,10 @@ public class BioEntityPropertyService {
 
     public SortedSet<String> getEntityNames() {
         return entityNames;
+    }
+
+    public String getEntityName() {
+        return entityName;
     }
 
     String getFirstValueOfProperty(String propertyType) {

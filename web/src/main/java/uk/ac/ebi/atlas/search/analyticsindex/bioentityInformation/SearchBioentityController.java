@@ -14,7 +14,8 @@ import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDao;
-import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSpeciesLookupService;
+import uk.ac.ebi.atlas.search.analyticsindex.SearchController;
+import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.web.GeneQuery;
 
 import javax.inject.Inject;
@@ -28,7 +29,7 @@ public abstract class SearchBioentityController {
 
     protected static final String BIOENTITY_PROPERTY_NAME = "symbol";
 
-    protected AnalyticsSpeciesLookupService speciesLookupService;
+    protected SpeciesLookupService speciesLookupService;
 
     protected BioEntityPropertyDao bioEntityPropertyDao;
 
@@ -51,7 +52,7 @@ public abstract class SearchBioentityController {
     }
 
     @Inject
-    public void setSpeciesLookupService(AnalyticsSpeciesLookupService speciesLookupService) {
+    public void setSpeciesLookupService(SpeciesLookupService speciesLookupService) {
         this.speciesLookupService = speciesLookupService;
     }
 
@@ -113,9 +114,9 @@ public abstract class SearchBioentityController {
         return !propertyType.equals(SearchGeneController.PROPERTY_TYPE_DESCRIPTION) && !propertyType.equals(BIOENTITY_PROPERTY_NAME);
     }
 
-    abstract String[] getPagePropertyTypes();
+    public abstract String[] getPagePropertyTypes();
 
-    abstract String getBioentityPropertyName();
+    public abstract String getBioentityPropertyName();
 
     protected void initBioentityPropertyService(String identifier, Model model) throws IOException, SolrServerException {
         String species = speciesLookupService.fetchSpeciesForBioentityId(identifier);

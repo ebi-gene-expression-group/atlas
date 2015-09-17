@@ -17,6 +17,7 @@
     text-decoration: none;
     background-color: #eee;
 }
+.nav .noBorderTab {border:none !important;}
 .nav  li.disabled  a {color: red;}
 .nav  li.disabled  a:hover, .nav > li.disabled > a:focus {color: #777;  text-decoration: none; cursor: not-allowed;  background-color: transparent;}
 .nav .open > a,

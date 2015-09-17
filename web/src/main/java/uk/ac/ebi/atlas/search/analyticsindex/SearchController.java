@@ -1,8 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.*;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrException;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,11 +14,15 @@ import uk.ac.ebi.atlas.bioentity.GeneSetUtil;
 import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
 import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
 import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
+import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.model.ExperimentType;
+import uk.ac.ebi.atlas.search.analyticsindex.bioentityInformation.SearchBioentityController;
+import uk.ac.ebi.atlas.search.analyticsindex.bioentityInformation.SearchGeneSetController;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
 import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
+import uk.ac.ebi.atlas.utils.ReactomeClient;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.GeneQuerySearchRequestParameters;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -36,27 +38,28 @@ public abstract class SearchController {
 
     private final AnalyticsSearchDao analyticsSearchDao;
 
-    public static final String PROPERTY_TYPE_DESCRIPTION = "description";
-
     protected static final String BIOENTITY_PROPERTY_NAME = "symbol";
 
-    protected AnalyticsSpeciesLookupService speciesLookupService;
+    protected SpeciesLookupService speciesLookupService;
+    private SpeciesLookupService.Result speciesResult;
 
     protected BioEntityPropertyDao bioEntityPropertyDao;
-//    protected AnalyticsBioentityPropertyDao bioEntityPropertyDao;
 
     private BioEntityPropertyService bioEntityPropertyService;
 
+    private  ReactomeClient reactomeClient;
+
+    private  GoTermTrader goTermTrader;
+
+    private  PoTermTrader poTermTrader;
+
+    private  InterProTermTrader interProTermTrader;
+
     @Inject
-    public void setSpeciesLookupService(AnalyticsSpeciesLookupService speciesLookupService) {
+    public void setSpeciesLookupService(SpeciesLookupService speciesLookupService) {
         this.speciesLookupService = speciesLookupService;
     }
 
-//    @Inject
-//    public void setBioEntityPropertyDao(AnalyticsBioentityPropertyDao bioEntityPropertyDao) {
-//        this.bioEntityPropertyDao = bioEntityPropertyDao;
-//    }
-    //TODO: After updating solr analytics with the new bioentity types - value and name - replace this for the previous one
     @Inject
     public void setBioEntityPropertyDao(BioEntityPropertyDao bioEntityPropertyDao) {
         this.bioEntityPropertyDao = bioEntityPropertyDao;
@@ -65,6 +68,26 @@ public abstract class SearchController {
     @Inject
     public void setBioEntityPropertyService(BioEntityPropertyService bioEntityPropertyService) {
         this.bioEntityPropertyService = bioEntityPropertyService;
+    }
+
+    @Inject
+    public void setReactomeClient(ReactomeClient reactomeClient) {
+        this.reactomeClient = reactomeClient;
+    }
+
+    @Inject
+    public void setGoTermTrader(GoTermTrader goTermTrader) {
+        this.goTermTrader = goTermTrader;
+    }
+
+    @Inject
+    public void setPoTermTrader(PoTermTrader poTermTrader) {
+        this.poTermTrader = poTermTrader;
+    }
+
+    @Inject
+    public void setInterProTermTrader(InterProTermTrader interProTermTrader) {
+        this.interProTermTrader = interProTermTrader;
     }
 
     private String[] bioentityPropertyNames;
@@ -87,7 +110,6 @@ public abstract class SearchController {
 
         model.addAttribute("hasBaselineResults", ExperimentType.containsBaseline(experimentTypes));
         model.addAttribute("hasDifferentialResults", ExperimentType.containsDifferential(experimentTypes));
-        model.addAttribute("hasGeneInformation", hasBioEntities);
 
         model.addAttribute("searchDescription", requestParameters.getDescription());
         model.addAttribute("geneQuery", geneQuery);
@@ -95,23 +117,61 @@ public abstract class SearchController {
         String globalSearchTerm = ebiGlobalSearchQueryBuilder.buildGlobalSearchTerm(geneQuery.asString(), requestParameters.getConditionQuery());
         model.addAttribute("globalSearchTerm", globalSearchTerm);
 
-        if(hasBioEntities) {
-            initBioentityIdentifierHeader(geneQuery.description(), model);
-        }
+        initBioentityIdentifierHeader(geneQuery.description(), model, hasBioEntities);
     }
 
-    public void initBioentityIdentifierHeader(String identifier, Model model) throws IOException, SolrServerException {
-        String species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
+    public void initBioentityIdentifierHeader(String identifier, Model model, boolean hasBioEntities) throws IOException, SolrServerException {
+        String species = null, entityName = null;
+        SortedSet<String> entityNames = Sets.newTreeSet();
+        SortedSetMultimap<String, String> propertyValuesByType = TreeMultimap.create();
 
-        SortedSetMultimap<String, String> propertyValuesByType = bioEntityPropertyDao.fetchGenePageProperties(identifier, getPagePropertyTypes());
-        SortedSet<String> entityNames = propertyValuesByType.get(getBioentityPropertyName());
-        if (entityNames.isEmpty()) {
+        boolean hasGeneInformationTab = true;
+
+        if(!GeneSetUtil.isGeneSet(identifier) && hasBioEntities) {
+            species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
+            propertyValuesByType = bioEntityPropertyDao.fetchGenePageProperties(identifier, getPagePropertyTypes());
+            entityNames = propertyValuesByType.get(getBioentityPropertyName());
+            entityName = entityNames.first();
+            if (entityNames.isEmpty()) {
+                entityNames.add(identifier);
+                entityName = identifier;
+            }
+
+        } else if (GeneSetUtil.isGeneSet(identifier)) {
+            speciesResult = speciesLookupService.fetchSpeciesForGeneSet(identifier);
+            species = speciesResult.firstSpecies();
+
+            identifier = identifier.toUpperCase();
+            if (GeneSetUtil.isReactome(identifier)) {
+                propertyValuesByType.put("reactome", identifier);
+                propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, reactomeClient.fetchPathwayNameFailSafe(identifier));
+            } else if (GeneSetUtil.isGeneOntology(identifier)) {
+                String termName = goTermTrader.getTermName(identifier);
+                propertyValuesByType.put("go", identifier);
+                propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
+            } else if (GeneSetUtil.isPlantOntology(identifier)) {
+                String termName = poTermTrader.getTermName(identifier);
+                propertyValuesByType.put("po", identifier);
+                propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, termName);
+            } else if (GeneSetUtil.isInterPro(identifier)) {
+                String term = interProTermTrader.getTerm(identifier);
+                propertyValuesByType.put("interpro", identifier);
+                propertyValuesByType.put(BioEntityPropertyService.PROPERTY_TYPE_DESCRIPTION, term);
+            } else if (GeneSetUtil.isPlantReactome(identifier)) {
+                propertyValuesByType.put("plant_reactome", identifier);
+            }
+            entityName = identifier;
             entityNames.add(identifier);
+        } else {
+            model.addAttribute("identifierDescription", identifier.toUpperCase());
+            hasGeneInformationTab = false;
         }
-
-        model.addAttribute("mainTitle", "Expression summary for " + entityNames.first() + " - " + org.apache.commons.lang.StringUtils.capitalize(species));
-
-        bioEntityPropertyService.init(species, propertyValuesByType, entityNames, identifier);
+        model.addAttribute("hasGeneInformation", hasGeneInformationTab);
+        model.addAttribute("noTabLine", hasGeneInformationTab);
+        model.addAttribute("mainTitle", "Expression summary for " + (hasGeneInformationTab ? entityName : identifier) + " - " + org.apache.commons.lang.StringUtils.capitalize(species));
+        if(hasGeneInformationTab) {
+            bioEntityPropertyService.init(species, propertyValuesByType, entityName, identifier);
+        }
     }
 
     public String[] getPagePropertyTypes() {
@@ -137,6 +197,12 @@ public abstract class SearchController {
         mav.addObject("exceptionMessage", e.getMessage());
 
         return mav;
+    }
+
+    private void checkIdentifierIsGeneSet(String identifier) {
+        if (!GeneSetUtil.isGeneSet(identifier)) {
+            throw new ResourceNotFoundException("Resource not found");
+        }
     }
 
 }

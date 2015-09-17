@@ -23,25 +23,19 @@ public class BioentityManagerController {
 
         GeneQuery geneQuery = requestParameters.getGeneQuery();
 
-        model.addAttribute("hasBaselineResults", true);
-
         redirectAttributes.addFlashAttribute("searchDescription", requestParameters.getDescription());
-        model.addAttribute("bioentity", true);
 
-        return getGeneIdRedirectString(geneQuery, "", requestParameters.isExactMatch());
+        return getGeneIdRedirectString(geneQuery);
     }
 
 
-    private String getGeneIdRedirectString(GeneQuery geneQuery, String species, boolean isExactMatch) {
+    private String getGeneIdRedirectString(GeneQuery geneQuery) {
 
-        return "redirect:/search/genes/" +  geneQuery.description();
-
-//        boolean singleTerm = !StringUtils.containsWhitespace(geneQuery.description());
-//        if (singleTerm && GeneSetUtil.isGeneSet(geneQuery.description().toUpperCase())) {
-//            return ("redirect:/search/genesets/" + geneQuery.description());
-//        } else {
-//            return("redirect:/search/genes/" +  geneQuery.description());
-//        }
+        if (!StringUtils.containsWhitespace(geneQuery.description()) && GeneSetUtil.isGeneSet(geneQuery.description().toUpperCase())) {
+            return ("redirect:/search/genesets/" + geneQuery.description());
+        } else {
+            return("redirect:/search/genes/" +  geneQuery.description());
+        }
 
     }
     

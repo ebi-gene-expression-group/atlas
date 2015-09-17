@@ -41,30 +41,18 @@
 <!-- /Search box -->
 
 <c:if test="${not empty searchDescription}" >
-    <c:if test="${hasGeneInformation}" >
-        <!-- Simple page header -->
-        <div id="headerBody" class="gxaBioEntityCardHeader" style="margin-bottom: 20px;margin-top: 10px;">
-                  <span class="gxaBioEntityCardBioentityName">
-                      <c:forEach var="entityName" varStatus="loopStatus"
-                                 items="${bioEntityPropertyService.entityNames}">
-                          ${entityName}<c:if test="${not loopStatus.last}">, </c:if>
-                          <c:set var="entityNamesList" value="${entityNamesList} ${entityName}"/>
-                      </c:forEach>
-                  </span>
+    <!-- Simple page header -->
+    <div id="headerBody" class="gxaBioEntityCardHeader" style="margin-bottom: 20px;margin-top: 10px;">
+        <c:if test="${hasGeneInformation}">
+            <span class="gxaBioEntityCardBioentityName">${bioEntityPropertyService.entityName}</span>
             <c:set var="species" value="${bioEntityPropertyService.getSpecies()}"/>
             <span class="gxaBioEntityCardSpecies">${fn:toUpperCase(fn:substring(species, 0, 1))}${fn:substring(species, 1,fn:length(species))}</span>
             <span class="gxaBioEntityCardDescription">${bioEntityPropertyService.getBioEntityDescription()}</span>
-        </div>
-    </c:if>
-    <c:if test="${!hasGeneInformation}" >
-            <div class="container">
-                <div class="page-header">
-                    <h2 class="strapline">Search result for <span class="searchterm">${searchDescription}</span></h2>
-                </div>
-                    <%--<h:ebiGlobalSearch ebiSearchTerm="${applicationProperties.urlParamEncode(globalSearchTerm)}"/>--%>
-            </div>
-    </c:if>
-
+        </c:if>
+        <c:if test="${!hasGeneInformation}">
+            <h2 class="strapline">Search result for: <span class="searchTerm">${searchDescription}</span></h2>
+        </c:if>
+    </div>
     <!-- /Simple page header -->
 </c:if>
 
@@ -73,11 +61,11 @@
 
     <ul class="nav nav-tabs">
         <c:if test="${hasBaselineResults}"><li title="Baseline experiments" class="active"><a data-toggle="tab" href="${pageContext.request.contextPath}/search?geneQuery=${geneQuery.asUrlQueryParameter()}" >Baseline expression</a></li></c:if>
-        <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" class="disabled" >Baseline expression</li></c:if>
+        <c:if test="${!hasBaselineResults}"><li title="Baseline experiments" class="disabled noBorderTab" >Baseline expression</li></c:if>
         <c:if test="${hasDifferentialResults}"><li title="Differential experiments"><a href="${pageContext.request.contextPath}/search/differential?geneQuery=${geneQuery.asUrlQueryParameter()}">Differential expression</a></li></c:if>
-        <c:if test="${!hasDifferentialResults}"> <li title="Differential experiments" class="disabled">Differential expression</li></c:if>
+        <c:if test="${!hasDifferentialResults}"> <li title="Differential experiments" class="disabled noBorderTab">Differential expression</li></c:if>
         <c:if test="${hasGeneInformation}"><li title="Bioentity information"><a href="${pageContext.request.contextPath}/search/bioentity?geneQuery=${geneQuery.asUrlQueryParameter()}">Bioentity information</a></li> </c:if>
-        <c:if test="${!hasGeneInformation}"><li title="Bioentity information" class="disabled">Bioentity information</li> </c:if>
+        <c:if test="${!hasGeneInformation}"><li title="Bioentity information" class="disabled noBorderTab">Bioentity information</li> </c:if>
     </ul>
 
     <div id="baseline" class="tab-pane fade in active">

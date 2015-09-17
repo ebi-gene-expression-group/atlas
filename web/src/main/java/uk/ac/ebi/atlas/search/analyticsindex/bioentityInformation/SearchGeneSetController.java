@@ -18,9 +18,12 @@ import uk.ac.ebi.atlas.bioentity.go.GoPoTerm;
 import uk.ac.ebi.atlas.bioentity.go.GoTermTrader;
 import uk.ac.ebi.atlas.bioentity.go.PoTermTrader;
 import uk.ac.ebi.atlas.bioentity.interpro.InterProTermTrader;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityCardProperties;
+import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyDao;
 import uk.ac.ebi.atlas.bioentity.properties.BioEntityPropertyService;
 import uk.ac.ebi.atlas.search.analyticsindex.AnalyticsSearchDao;
 import uk.ac.ebi.atlas.solr.query.SpeciesLookupService;
+import uk.ac.ebi.atlas.thirdpartyintegration.EBIGlobalSearchQueryBuilder;
 import uk.ac.ebi.atlas.utils.ReactomeClient;
 import uk.ac.ebi.atlas.web.GeneQuery;
 import uk.ac.ebi.atlas.web.controllers.ResourceNotFoundException;
@@ -62,11 +65,11 @@ public class SearchGeneSetController extends SearchBioentityController {
         model.addAttribute("geneQuery", geneQuery);
         model.addAttribute("searchDescription", geneQuery.description());
 
-//        speciesResult = speciesLookupService.fetchSpeciesForGeneSet(identifier);
-//
-//        if (speciesResult.isEmpty()) {
-//            throw new ResourceNotFoundException("Bioentity " + identifier + " does not exist in Solr");
-//        }
+        speciesResult = speciesLookupService.fetchSpeciesForGeneSet(identifier);
+
+        if (speciesResult.isEmpty()) {
+            throw new ResourceNotFoundException("Bioentity " + identifier + " does not exist in Solr");
+        }
 
 
         return showBioentityPage(geneQuery, model);
@@ -115,19 +118,13 @@ public class SearchGeneSetController extends SearchBioentityController {
     }
 
     @Override
-    String[] getPagePropertyTypes() {
+    public String[] getPagePropertyTypes() {
         return geneSetPagePropertyTypes;
     }
 
     @Override
-    String getBioentityPropertyName() {
+    public String getBioentityPropertyName() {
         return null;
-    }
-
-    private void checkIdentifierIsGeneSet(String identifier) {
-        if (!GeneSetUtil.isGeneSet(identifier)) {
-            throw new ResourceNotFoundException("Resource not found");
-        }
     }
 
 }
