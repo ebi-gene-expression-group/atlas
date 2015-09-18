@@ -66,6 +66,6 @@ public class ProteinPageControllerSIT extends SinglePageSeleniumFixture {
         assertThat(subject.getLinksInTableRow(1).get(0), containsString("http://www.ensemblgenomes.org/id/ENST00000366478"));
         assertThat(subject.getLinksInTableRow(2).get(0), startsWith("http://www.ensemblgenomes.org/id-gene/ENSG00000196071"));
         assertThat(subject.getLinksInTableRow(3).get(0), startsWith("http://www.uniprot.org/uniprot/Q8N349"));
-        assertThat(subject.getLinksInTableRow(5).get(0), is("http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=REACT_15488"));
+        assertThat(subject.getLinksInTableRow(5).get(0), is("http://www.reactome.org/cgi-bin/eventbrowser_st_id?ST_ID=R-HSA-381753"));
     }
 }

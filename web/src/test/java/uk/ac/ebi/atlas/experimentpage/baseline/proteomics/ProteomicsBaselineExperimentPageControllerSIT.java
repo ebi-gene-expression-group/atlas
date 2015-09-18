@@ -44,11 +44,13 @@ public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixtu
 
     @Test
     public void first5Genes() {
-        // Remove accessKey when experiment goes public
-        subject = new HeatmapTablePage(driver, E_PROT_1, "displayLevels=true" + E_PROT_1_ACCESS_KEY);
+        // Removed accessKey when experiment goes public
+        subject = new HeatmapTablePage(driver, E_PROT_1, "displayLevels=true");
         subject.get();
 
         assertThat(subject.getFactorValueHeaders(), contains("B cell", "CD4-positive…", "CD8-positive…", "adrenal gland", "colon", "esophagus", "frontal cortex", "gallbladder", "heart", "kidney", "liver", "lung", "monocyte", "natural killer…", "ovary", "pancreas", "platelet", "prostate", "rectum", "retina", "spinal cord", "testis", "urinary bladder"));
+
+//        subject.getFrontalCortex();
 
         List<String> first5Genes = subject.getGeneNames().subList(0, 5);
         assertThat(first5Genes, contains("RHBDD2","TMEM132A", "GABRA3", "CXorf56", "BTN3A1"));
@@ -60,8 +62,8 @@ public class ProteomicsBaselineExperimentPageControllerSIT extends SeleniumFixtu
     }
 
     @Test
-    public void first5Genes_Fetus() {
-        subject = new HeatmapTablePage(driver, E_PROT_1, "serializedFilterFactors=DEVELOPMENTAL_STAGE%3Afetus&displayLevels=true" + E_PROT_1_ACCESS_KEY);
+    public void firstd5Genes_Fetus() {
+        subject = new HeatmapTablePage(driver, E_PROT_1, "serializedFilterFactors=DEVELOPMENTAL_STAGE%3Afetus&displayLevels=true");
         subject.get();
 
         //System.out.println(Joiner.on("\", \"").join(subject.getFactorValueHeaders()));

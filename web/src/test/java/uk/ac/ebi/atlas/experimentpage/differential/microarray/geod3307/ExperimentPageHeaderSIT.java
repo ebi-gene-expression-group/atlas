@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.differential.microarray.geod3779;
+package uk.ac.ebi.atlas.experimentpage.differential.microarray.geod3307;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.startsWith;
 
 public class ExperimentPageHeaderSIT extends SinglePageSeleniumFixture {
 
-    private static final String EXPERIMENT_ACCESSION = "E-GEOD-3779";
+    private static final String EXPERIMENT_ACCESSION = "E-GEOD-3307";
 
     private HeatmapTablePage subject;
 
@@ -43,17 +43,17 @@ public class ExperimentPageHeaderSIT extends SinglePageSeleniumFixture {
 
     @Test
     public void testTitle() {
-        assertThat(subject.getExperimentDescription(), startsWith("Transcription profiling by array of mouse neurospheres cultured from p107-/- embryos and their wildtype littermates"));
+        assertThat(subject.getExperimentDescription(), startsWith("Transcription profiling by array of 12 human muscle diseases"));
     }
 
     @Test
     public void testOrganisms() {
-        assertThat(subject.getExperimentOrganisms(), is("Organism(s): Mus musculus"));
+        assertThat(subject.getExperimentOrganisms(), is("Organism(s): Homo sapiens"));
     }
 
     @Test
     public void testArrayDesigns() {
-        assertThat(subject.getExperimentArrayDesigns(), is("Array Design(s): Affymetrix GeneChip Mouse Expression Array MOE430A [MOE430A] Affymetrix GeneChip Mouse Expression Array MOE430B [MOE430B]"));
+        assertThat(subject.getExperimentArrayDesigns(), is("Array Design(s): Affymetrix GeneChip Human Genome HG-U133A [HG-U133A] Affymetrix GeneChip Human Genome HG-U133B [HG-U133B]"));
     }
 
 }

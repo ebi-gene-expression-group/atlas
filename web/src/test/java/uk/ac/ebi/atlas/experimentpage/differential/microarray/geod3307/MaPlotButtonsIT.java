@@ -20,7 +20,7 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.experimentpage.differential.microarray.geod3779;
+package uk.ac.ebi.atlas.experimentpage.differential.microarray.geod3307;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -33,12 +33,12 @@ import static org.junit.Assert.assertThat;
 
 public class MaPlotButtonsIT extends SeleniumFixture {
 
-    private static final String E_GEOD_3779_ACCESSION = "E-GEOD-3779?foldChangeCutOff=0";
+    private static final String E_GEOD_3307_ACCESSION = "E-GEOD-3307?foldChangeCutOff=0";
     protected HeatmapTableWithMaPlotButtonsPage subject;
 
     @Before
     public void initSubject() {
-        subject = new HeatmapTableWithMaPlotButtonsPage(driver, E_GEOD_3779_ACCESSION);
+        subject = new HeatmapTableWithMaPlotButtonsPage(driver, E_GEOD_3307_ACCESSION);
         subject.get();
     }
 
