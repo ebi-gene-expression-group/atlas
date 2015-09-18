@@ -23,6 +23,7 @@
 package uk.ac.ebi.atlas.experimentpage.heatmap.genesetmatch;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTableWithSearchFormPageAsGeneSets;
@@ -72,7 +73,8 @@ public class GeneSetExpressionLevelsSIT extends SeleniumFixture {
     }
 
     @Test
-    public void shouldFindExpressionLevelsForReactomeTerm() {
+    @Ignore
+    public void shouldFindExpressionLevelsForReactomeTerm() { //This react_1619 does not exist anymore
         String geneSetMatchQuery = "serializedFilterFactors=ORGANISM%3AHomo+sapiens&queryFactorType=ORGANISM_PART&heatmapMatrixSize=50&" +
                 "displayLevels=true&displayGeneDistribution=true&geneQuery=react_1619&" +
                 "_exactMatch=on&geneSetMatch=true&_geneSetMatch=on&_queryFactorValues=1&specific=true&_specific=on&cutoff=0.5";
@@ -98,10 +100,8 @@ public class GeneSetExpressionLevelsSIT extends SeleniumFixture {
         subject.get();
         subject.clickShowGeneSetProfiles();
         //then
-        assertThat(subject.getGeneNames(), contains("\"Alpha-1-acid glycoprotein\"", "react_1619"));
+        assertThat(subject.getGeneNames(), contains("\"Alpha-1-acid glycoprotein\""));
         assertThat(subject.getFirstGeneProfile(), contains("", "", "0.5", "0.5", "6451", "", "", "3" ));
-        assertThat(subject.getGeneProfile(2), contains("4", "4", "12", "22", "17", "4", "6", "14"));
-
     }
 
     @Test
@@ -116,7 +116,7 @@ public class GeneSetExpressionLevelsSIT extends SeleniumFixture {
         subject.clickShowGeneSetProfiles();
         String geneCountMessage = subject.getGeneCount();
         //then
-        assertThat(geneCountMessage, is("Showing 2 of 2 gene sets found:"));
+        assertThat(geneCountMessage, is("Showing 1 of 1 gene sets found:"));
     }
 
 }

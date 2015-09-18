@@ -60,7 +60,7 @@ public class NonSpecificAndCutoff05AndBrainAndBreastSIT extends SinglePageSeleni
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("1728", "2286", "704", "1344", "1633", "326", "793", "2380", "156", "1825", "1265", "1206", "807", "129", "1040", "425"));
+        assertThat(subject.getFirstGeneProfile(), contains("1728", "2286", "1206", "704", "1344", "1633", "326", "793", "2380", "156", "1825", "1265", "807", "129", "1040", "425"));
     }
 
     @Test

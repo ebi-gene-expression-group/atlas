@@ -59,13 +59,13 @@ public class SpecificAndCutoff05AndBrainAndBreastSIT extends SinglePageSeleniumF
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("", "", "109", "", "", "", "", "", "", "", "", "", "", "", "", ""));
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "", "109", "", "", "", "", "", "", "", "", "", "", "", ""));
     }
 
     @Test
     public void verifyLastGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getLastGeneProfile(), contains("", "", "0.6", "", "", "", "", "", ""
+        assertThat(subject.getLastGeneProfile(), contains("", "", "", "0.6", "", "", "", "", ""
                 , "", "", "", "", "", "", ""));
     }
 
