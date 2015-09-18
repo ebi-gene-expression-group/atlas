@@ -26,7 +26,9 @@ import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.HeatmapTablePage;
 
-import static org.hamcrest.Matchers.contains;
+import java.util.List;
+
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
@@ -58,9 +60,11 @@ public class Cutoff05AndGenePropertySIT extends SinglePageSeleniumFixture {
     public void verifyResultOnMultiplePropertyAndOrganismPartQuery() {
         subject = new HeatmapTablePage(driver, EXPERIMENT_ACCESSION, "geneQuery=&queryFactorValues=skeletal+muscle&queryFactorValues=thyroid&_queryFactorValues=2&cutoff=0.5");
         subject.get();
+
         assertThat(subject.getGeneCount(), containsString("of 15"));
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("0.6", "", "1", "", "", "0.6", "0.9", "1", "", "", "1", "", "", "8", "", "3"));
+        List<String> geneProfile = subject.getFirstGeneProfile();
+        assertThat(geneProfile, hasItems("0.6","","","1","","","0.6","0.9","1","","","1","","8","8","","3" ));
     }
 
 }

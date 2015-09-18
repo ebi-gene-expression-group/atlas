@@ -110,10 +110,10 @@ public class HeatmapTablePage extends TablePage {
     @FindBy(xpath = "id('heatmap-table')/thead/tr[2]/th[2]")
     private WebElement designElementHeader;
 
-    @FindBy(id = "ensembl-launcher")
+    @FindBy(id = "ensembl-launcher-box-ensembl")
     private WebElement ensemblLauncher;
 
-    @FindBy(id = "anatomogram-ensembl-launcher")
+    @FindBy(id = "ensembl-launcher-box")
     private WebElement anatomogramEnsemblLauncher;
 
     @FindBy(id = "ensembl-launcher-box-gramene")
@@ -497,7 +497,11 @@ public class HeatmapTablePage extends TablePage {
     }
 
     public boolean hasEnsemblLauncher() {
-        return (hasAnatomogram() && SeleniumUtil.findChildElements(anatomogramEnsemblLauncher).size() > 0) || SeleniumUtil.findChildElements(ensemblLauncher).size() > 0;
+        boolean existLauncherElement = SeleniumUtil.elementExists(driver, By.id("ensembl-launcher-box-ensembl")) ||
+                SeleniumUtil.elementExists(driver, By.id("ensembl-launcher-box"));
+
+        return existLauncherElement && ((hasAnatomogram() && SeleniumUtil.findChildElements(anatomogramEnsemblLauncher).size() > 0)
+                || SeleniumUtil.findChildElements(ensemblLauncher).size() > 0);
     }
 
     public boolean hasGrameneLauncher() {
