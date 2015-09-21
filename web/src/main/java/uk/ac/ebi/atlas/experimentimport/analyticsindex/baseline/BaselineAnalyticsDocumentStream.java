@@ -73,7 +73,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
             BaselineAnalytics baselineAnalytics = inputIterator.next();
 
             String geneId = baselineAnalytics.getGeneId();
-            String identifierSearch = fetchIdentifierSearchTerms(geneId);
+//            String identifierSearch = fetchIdentifierSearchTerms(geneId);
 
             String assayGroupId = baselineAnalytics.getAssayGroupId();
             String conditionSearch = getConditionSearchTerms(assayGroupId);
@@ -86,7 +86,7 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
                     .kingdom(speciesKingdomTrader.getKingdom(getEnsemblSpecies(assayGroupId)))
                     .bioentityIdentifier(geneId)
                     .expressionLevel(baselineAnalytics.getExpressionLevel())
-                    .identifierSearch(identifierSearch)
+//                    .identifierSearch(identifierSearch)
                     .assayGroupId(assayGroupId)
                     .conditionsSearch(conditionSearch);
 

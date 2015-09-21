@@ -40,7 +40,7 @@ public class BaselineAnalyticsSearchDao {
 
 
     public String fetchFacetsThatHaveExpression(GeneQuery geneQuery) {
-        //if needed, could improve perf by getting counts only, and not sum(expressionLevel) or unique(bioentity_identifier)
+        //if needed, could improve perf by getting counts only, and not sum(expressionLevel) or unique(bioentityIdentifier)
         return fetchExpressionLevelFaceted(geneQuery);
     }
 

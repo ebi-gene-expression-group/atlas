@@ -697,6 +697,31 @@
         </profile>
         <profile>
             <!-- for development -->
+            <id>dev.local.solr</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>
+                                oracleContext.xml
+                            </include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+            <properties>
+                <solr.host>localhost</solr.host>
+                <solr.test.host>localhost</solr.test.host>
+                <data.files.location>${user.home}/ATLAS3.TEST/integration-test-data</data.files.location>
+                <oracle.jdbc.url>jdbc:oracle:thin:@ora-vm-029.ebi.ac.uk:1531:ATLASDEV</oracle.jdbc.url>
+                <oracle.jdbc.username>atlas3dev</oracle.jdbc.username>
+                <oracle.jdbc.password>atlas3dev</oracle.jdbc.password>
+                <npm.target>ci</npm.target>
+            </properties>
+        </profile>
+        <profile>
+            <!-- for development -->
             <id>dev.local.vm</id>
             <build>
                 <resources>

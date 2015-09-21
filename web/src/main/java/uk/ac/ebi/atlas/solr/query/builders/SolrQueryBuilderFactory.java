@@ -43,4 +43,5 @@ public class SolrQueryBuilderFactory {
         return new AutocompleteGroupedPropertyValueQueryBuilder();
     }
 
+
 }

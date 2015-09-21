@@ -11,7 +11,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class AnalyticsDocument {
 
-    @Field("bioentity_identifier")
+    @Field("bioentityIdentifier")
     String bioentityIdentifier;
 
     @Field
@@ -137,7 +137,7 @@ public class AnalyticsDocument {
             checkNotNull(build.kingdom, "missing kingdom");
             checkNotNull(build.experimentAccession, "missing experimentAccession");
             checkNotNull(build.experimentType, "missing experimentType");
-            checkNotNull(build.identifierSearch, "missing identifierSearch");
+            //checkNotNull(build.identifierSearch, "missing identifierSearch");
             checkNotNull(build.conditionsSearch, "missing conditionsSearch");
 
             if (build.experimentType.isBaseline()) {

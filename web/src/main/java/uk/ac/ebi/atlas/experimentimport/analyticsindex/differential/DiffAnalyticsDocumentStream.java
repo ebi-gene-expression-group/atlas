@@ -76,7 +76,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
             DifferentialAnalytics analytics = inputIterator.next();
 
             String geneId = analytics.getGeneId();
-            String identifierSearch = fetchIdentifierSearchTerms(geneId);
+//            String identifierSearch = fetchIdentifierSearchTerms(geneId);
 
             String contrastId = analytics.getContrastId();
             String conditionSearch = getConditionSearchTerms(contrastId);
@@ -87,7 +87,7 @@ public class DiffAnalyticsDocumentStream implements Iterable<AnalyticsDocument> 
                     .species(getEnsemblSpecies(contrastId))
                     .kingdom(speciesKingdomTrader.getKingdom(getEnsemblSpecies(contrastId)))
                     .bioentityIdentifier(geneId)
-                    .identifierSearch(identifierSearch)
+//                    .identifierSearch(identifierSearch)
                     .contrastId(contrastId)
                     .factors(factors)
                     .foldChange(analytics.getFoldChange())

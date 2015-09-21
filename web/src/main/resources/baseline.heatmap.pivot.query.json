@@ -23,7 +23,7 @@
                               }
                             }
                           },
-                          "uniqueIdentifiers": "unique(bioentity_identifier)"
+                          "uniqueIdentifiers": "unique(bioentityIdentifier)"
                         }
                       }
                     }

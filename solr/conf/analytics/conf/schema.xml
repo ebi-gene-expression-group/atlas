@@ -89,13 +89,14 @@
            and back compatibility is not guaranteed.  Names with both leading and
            trailing underscores (e.g. _version_) are reserved.
         -->
-        <field name="bioentity_identifier" type="string" indexed="true" stored="true" required="true"/>
+        <field name="id" type="uuid" indexed="true" stored="true" required="true" />
+        <field name="bioentityIdentifier" type="string" indexed="true" stored="true" required="true"/>
         <field name="species" type="string" indexed="true" stored="true" required="true"/>
         <field name="kingdom" type="string" indexed="true" stored="true" required="true" />
         <field name="experimentAccession" type="string" indexed="true" stored="true" required="true"/>
         <field name="experimentType" type="string" indexed="true" stored="true" required="true"/>
         <field name="defaultQueryFactorType" type="string" indexed="true" stored="true"/>
-        <field name="identifierSearch" type="text_en" indexed="true" stored="false"/>
+        <field name="identifierSearch" type="text_en" indexed="true" stored="true"/>
         <field name="conditionsSearch" type="text" indexed="true" stored="false"/>
         <field name="assayGroupId" type="string" indexed="true" stored="true"/>
         <field name="expressionLevel" type="tdouble4" indexed="true" stored="true"/>
@@ -109,7 +110,10 @@
 
     </fields>
 
+    <uniqueKey>id</uniqueKey>
+
     <types>
+        <fieldType name="uuid" class="solr.UUIDField" indexed="true" />
 
         <fieldType name="regulationEnum" class="solr.EnumField" enumsConfig="enumsConfig.xml" enumName="regulation"/>
         <fieldType name="kingdomEnum" class="solr.EnumField" enumsConfig="enumsConfig.xml" enumName="kingdom"/>

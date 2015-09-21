@@ -39,7 +39,7 @@ import java.util.List;
 
 @Named
 @Scope("singleton")
-//can be singleton because HttpSolrServer is documented to be thread safe, please be careful not to add any other non thread safe state!
+//can be singleton because HttpSolrClient is documented to be thread safe, please be careful not to add any other non thread safe state!
 public class SpeciesLookupService {
 
     private static final Logger LOGGER = Logger.getLogger(SpeciesLookupService.class);

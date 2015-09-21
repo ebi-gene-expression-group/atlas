@@ -35,13 +35,11 @@ public class FacetedPropertyValueQueryBuilder extends SolrQueryBuilder<FacetedPr
     public static final String PROPERTY_LOWER_FIELD = "property_value_lower";
 
     public SolrQuery buildPropertyValueAutocompleteQuery(String queryString) {
-
         String solrQueryString = "property_value_edgengram:\"" + queryString + "\"" + queryStringBuilder.toString();
         return buildQueryObject(solrQueryString);
     }
 
     public SolrQuery buildBioentityQuery(String bioentityId) {
-
         String solrQueryString = "bioentity_identifier:\"" + bioentityId + "\"" + queryStringBuilder.toString();
         return buildQueryObject(solrQueryString);
     }

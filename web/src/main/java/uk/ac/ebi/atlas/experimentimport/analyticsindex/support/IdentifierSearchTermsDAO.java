@@ -27,15 +27,11 @@ public class IdentifierSearchTermsDAO {
     }
 
     public Set<String> fetchSearchTerms(String identifier) {
-
-        SolrQuery query =
-                solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder().withPropertyNames(searchProperties).buildBioentityQuery(identifier);
+        SolrQuery query = solrQueryBuilderFactory.createFacetedPropertyValueQueryBuilder().withPropertyNames(searchProperties).buildBioentityQuery(identifier);
         query.setFields(PROPERTY_VALUE_FIELD);
         query.setRows(PROPERTY_VALUES_LIMIT);
 
         return solrClient.query(query, PROPERTY_VALUE_FIELD, false);
-
     }
-
 
 }

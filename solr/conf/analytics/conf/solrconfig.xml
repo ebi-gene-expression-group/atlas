@@ -906,7 +906,7 @@
     -->
   <requestHandler name="/update" class="solr.UpdateRequestHandler">
     <!-- See below for information on defining
-         updateRequestProcessorChains that can be used by name
+            updateRequestProcessorChains that can be used by name
          on each Update Request
       -->
     <!--
@@ -1117,5 +1117,19 @@
   <admin>
     <defaultQuery>*:*</defaultQuery>
   </admin>
+
+  <!-- To automatically generate a UUID in the id field -->
+  <updateRequestProcessorChain name="uuid">
+    <processor class="solr.UUIDUpdateProcessorFactory">
+      <str name="fieldName">id</str>
+    </processor>
+    <processor class="solr.RunUpdateProcessorFactory" />
+  </updateRequestProcessorChain>
+
+  <requestHandler name="/update" class="solr.UpdateRequestHandler">
+    <lst name="defaults">
+      <str name="update.chain">uuid</str>
+    </lst>
+  </requestHandler>
 
 </config>

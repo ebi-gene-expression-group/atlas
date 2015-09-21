@@ -49,7 +49,7 @@ import static uk.ac.ebi.atlas.solr.BioentityType.GENE;
 
 @Named
 @Scope("singleton")
-//can be singleton because HttpSolrServer is documented to be thread safe, please be careful not to add any other non thread safe state!
+//can be singleton because HttpSolrClient is documented to be thread safe, please be careful not to add any other non thread safe state!
 public class SolrQueryService {
     private static final Logger LOGGER = Logger.getLogger(SolrQueryService.class);
 

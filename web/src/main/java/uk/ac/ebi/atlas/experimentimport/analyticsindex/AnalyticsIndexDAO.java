@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 
@@ -11,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 @Named
 @Scope("prototype")
@@ -46,6 +48,21 @@ public class AnalyticsIndexDAO {
                 count += thisBatchSize;
             }
 
+            solrClient.commit(false, false);
+        } catch (Exception e) {
+            LOGGER.error(e);
+            rollBack();
+            throw new AnalyticsIndexerException(e);
+        }
+
+        return count;
+    }
+
+    public int addDocuments(List<SolrInputDocument> documents) {
+        int count = 0;
+
+        try {
+            solrClient.add(documents, COMMIT_TIME_IN_MILLISECONDS);
             solrClient.commit(false, false);
         } catch (Exception e) {
             LOGGER.error(e);
