@@ -48,8 +48,8 @@ public class BaselineExperimentAssayGroupsDaoIT {
     @Test
     public void findsExpressionByGeneId() throws Exception {
         SetMultimap<String, String> results = subject.fetchExperimentAssayGroupsWithNonSpecificExpression(Optional.<Collection<IndexedAssayGroup>>absent(), Optional.<Collection<String>>of(ImmutableList.of("ENSMUSG00000093014")));
-        assertThat(results.entries(), hasSize(3));
-        assertThat(results.asMap(), hasEntry(equalTo(E_MTAB_599), containsInAnyOrder("g3","g5","g6")));
+        assertThat(results.entries(), hasSize(1));
+        assertThat(results.asMap(), hasEntry(equalTo(E_MTAB_599), contains("g6")));
         //assertThat(results.asMap(), containsInAnyOrder(E_MTAB_599_g5, E_MTAB_599_g3, E_MTAB_599_g6));
     }
 

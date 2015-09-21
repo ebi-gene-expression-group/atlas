@@ -1,6 +1,5 @@
 package uk.ac.ebi.atlas.search.baseline;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Iterables;
@@ -82,7 +81,7 @@ public class BaselineExperimentAssayGroupSearchServiceIT {
 
         // System.out.println("\"" + Joiner.on("\", \"").join(descriptions) + "\"");
         assertThat(experimentAccessions, contains("E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-GEOD-26284", "E-PROT-1", "E-MTAB-513", "E-MTAB-2836", "E-MTAB-1733", "E-MTAB-599", "E-GEOD-30352", "E-GEOD-30352", "E-GEOD-30352"));
-        assertThat(descriptions, contains("Homo sapiens - ENCODE cell lines - long non-polyA RNA, cytosol", "Homo sapiens - ENCODE cell lines - long non-polyA RNA, nucleus", "Homo sapiens - ENCODE cell lines - long non-polyA RNA, whole cell", "Homo sapiens - ENCODE cell lines - long polyA RNA, cytosol", "Homo sapiens - ENCODE cell lines - long polyA RNA, nucleus", "Homo sapiens - ENCODE cell lines - long polyA RNA, whole cell", "Homo sapiens - ENCODE cell lines - total RNA, chromatin", "Homo sapiens - ENCODE cell lines - total RNA, nucleolus", "Homo sapiens - ENCODE cell lines - total RNA, nucleoplasm", "Homo sapiens - ENCODE cell lines - total RNA, whole cell", "Homo sapiens - Human Proteome Map - adult", "Homo sapiens - Illumina Body Map", "Homo sapiens - Thirty two tissues", "Homo sapiens - Twenty seven tissues", "Mus musculus - Six tissues", "Pan paniscus - Vertebrate tissues", "Pan troglodytes - Vertebrate tissues", "Pongo pygmaeus - Vertebrate tissues"));
+        assertThat(descriptions, contains("Homo sapiens - ENCODE cell lines - long non-polyA RNA, cytosol", "Homo sapiens - ENCODE cell lines - long non-polyA RNA, nucleus", "Homo sapiens - ENCODE cell lines - long non-polyA RNA, whole cell", "Homo sapiens - ENCODE cell lines - long polyA RNA, cytosol", "Homo sapiens - ENCODE cell lines - long polyA RNA, nucleus", "Homo sapiens - ENCODE cell lines - long polyA RNA, whole cell", "Homo sapiens - ENCODE cell lines - total RNA, chromatin", "Homo sapiens - ENCODE cell lines - total RNA, nucleolus", "Homo sapiens - ENCODE cell lines - total RNA, nucleoplasm", "Homo sapiens - ENCODE cell lines - total RNA, whole cell", "Homo sapiens - Human Proteome Map - adult", "Homo sapiens - Illumina Body Map", "Homo sapiens - Thirty two tissues", "Homo sapiens - Twenty seven tissues", "Mus musculus - Tissues - 6", "Pan paniscus - Vertebrate tissues", "Pan troglodytes - Vertebrate tissues", "Pongo pygmaeus - Vertebrate tissues"));
     }
 
     @Test

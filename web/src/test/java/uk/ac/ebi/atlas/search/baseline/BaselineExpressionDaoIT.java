@@ -31,12 +31,6 @@ public class BaselineExpressionDaoIT {
         List<BaselineExperimentExpression> results = subject.fetchAverageExpressionByExperimentAssayGroup(ImmutableList.of("ENSMUSG00000093014"));
         assertThat(results, hasSize(1));
 
-
-        //BaselineExperimentExpression g3 = BaselineExperimentExpression.create("E-MTAB-599", "g3", 54922);
-        //BaselineExperimentExpression g5 = BaselineExperimentExpression.create("E-MTAB-599", "g5", 48948);
-        //BaselineExperimentExpression g6 = BaselineExperimentExpression.create("E-MTAB-599", "g6", 387123);
-
-        //assertThat(results, containsInAnyOrder(g3, g5, g6));
     }
 
     @Test

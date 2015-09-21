@@ -83,12 +83,12 @@ public class ExperimentCRUDBaselineIT {
         ExperimentDTO originalExperimentDTO = experimentMetadataCRUD.findExperiment(EXISTING_EXPERIMENT_ACCESSION);
 
         assertThat("experiment does not already exist in db", experimentCount(EXISTING_EXPERIMENT_ACCESSION), is(1));
-        assertThat("baseline expressions do not already exist in db", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(124394));
+        assertThat("baseline expressions do not already exist in db", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(134194));
 
         subject.importExperiment(EXISTING_EXPERIMENT_ACCESSION, false);
 
         assertThat("count of experiment rows has changed", experimentCount(EXISTING_EXPERIMENT_ACCESSION), is(1));
-        assertThat("count of baseline expressions has changed", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(124394));
+        assertThat("count of baseline expressions has changed", baselineExpressionsCount(EXISTING_EXPERIMENT_ACCESSION), is(134194));
 
         ExperimentDTO newExperimentDTO = experimentMetadataCRUD.findExperiment(EXISTING_EXPERIMENT_ACCESSION);
 
