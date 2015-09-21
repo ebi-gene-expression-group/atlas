@@ -79,7 +79,7 @@
 										  placeholder="(all genes)" tabindex="1"></textarea>
 								<div>
 									<span style="float:left">E.g.
-											<a href="query?geneQuery=SFTPA2&organism=Homo+sapiens">SFTPA2</a>,
+											<a href="query?geneQuery=REG1B&organism=Homo+sapiens">REG1B</a>,
 											<a href="query?geneQuery=%22zinc+finger%22">zinc finger</a>
 										</span>
 
