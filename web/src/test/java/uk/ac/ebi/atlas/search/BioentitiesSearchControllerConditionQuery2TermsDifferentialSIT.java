@@ -49,11 +49,10 @@ public class BioentitiesSearchControllerConditionQuery2TermsDifferentialSIT exte
     }
 
     @Test
-    public void globalSearchWidgetShouldHaveResults(){
+    public void globalSearchBaselineDoNotHaveResults(){
         BioEntitiesPage subject = BioEntitiesPage.search(driver, "condition=nrpe1%09cdk8");
         subject.get();
-        subject.clickShowMoreDataWidget();
-        assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
     }
 
     @Test
@@ -65,6 +64,6 @@ public class BioentitiesSearchControllerConditionQuery2TermsDifferentialSIT exte
         // should not be E-GEOD-21860 (which contains the word "weeks" but not "5 weeks"
 
         assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(1, 2), is(not("12 weeks")));
-        assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(2, 2), is("5 weeks"));
+        assertThat(subject.getDiffHeatmapContrastSummaryTooltipTableCell(2, 2), is("5 week"));
     }
 }

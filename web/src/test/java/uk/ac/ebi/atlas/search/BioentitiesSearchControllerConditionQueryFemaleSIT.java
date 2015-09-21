@@ -52,7 +52,7 @@ public class BioentitiesSearchControllerConditionQueryFemaleSIT extends SinglePa
         BaselineBioEntitiesSearchResult result = selectResult(baselineCounts, "E-MTAB-513");
         assertThat(result.getExperimentName(), is("Illumina Body Map"));
         assertThat(result.getSpecies(), is("Homo sapiens"));
-        assertThat(result.getHref(), endsWith("E-MTAB-513?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=adipose,brain,breast,colon,kidney,lymph%20node,ovary,thyroid&geneQuery=&exactMatch=true"));
+        assertThat(result.getHref(), endsWith("E-MTAB-513?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=adipose%20tissue,animal%20ovary,brain,breast,colon,kidney,lymph%20node,thyroid&geneQuery=&exactMatch=true"));
 
     }
 

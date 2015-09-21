@@ -24,11 +24,13 @@ package uk.ac.ebi.atlas.search;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
+import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT extends SinglePageSeleniumFixture {
 
@@ -53,10 +55,19 @@ public class BioentitiesSearchControllerConditionQuery2ANDTermsDifferentialSIT e
     }
 
     @Test
-    public void globalSearchWidgetShouldHaveResults(){
-        subject.clickShowMoreDataWidget();
-        assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
-    }
+    public void checkBaselineExperimentCounts() {
+        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
 
+        assertThat(baselineCounts, hasSize(2));
+        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-599"));
+        assertThat(baselineCounts.get(0).getExperimentName(), is("Tissues - 6"));
+        assertThat(baselineCounts.get(0).getSpecies(), is("Mus musculus"));
+        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-599?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=&geneQuery=&exactMatch=true"));
+
+        assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-GEOD-30352"));
+        assertThat(baselineCounts.get(1).getExperimentName(), is("Vertebrate tissues"));
+        assertThat(baselineCounts.get(1).getSpecies(), is("Mus musculus"));
+        assertThat(baselineCounts.get(1).getHref(), endsWith("E-GEOD-30352?_specific=on&queryFactorType=ORGANISM_PART&queryFactorValues=brain,cerebellum,heart,kidney,liver,testis&geneQuery=&exactMatch=true&serializedFilterFactors=ORGANISM:Mus%20musculus"));
+    }
 
 }

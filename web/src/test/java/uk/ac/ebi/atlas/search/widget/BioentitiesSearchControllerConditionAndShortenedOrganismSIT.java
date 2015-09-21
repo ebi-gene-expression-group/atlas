@@ -20,14 +20,12 @@
  * http://gxa.github.com/gxa
  */
 
-package uk.ac.ebi.atlas.search;
+package uk.ac.ebi.atlas.search.widget;
 
 import org.junit.Test;
 import uk.ac.ebi.atlas.acceptance.selenium.fixture.SinglePageSeleniumFixture;
-import uk.ac.ebi.atlas.acceptance.selenium.pages.BaselineBioEntitiesSearchResult;
 import uk.ac.ebi.atlas.acceptance.selenium.pages.BioEntitiesPage;
 
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -43,15 +41,17 @@ public class BioentitiesSearchControllerConditionAndShortenedOrganismSIT extends
     }
 
     @Test
-    public void checkBaselineExperimentCounts() {
-        List<BaselineBioEntitiesSearchResult> baselineCounts = subject.getAllBaselineResults();
+    public void baselinePaneResultsMessage() {
+        assertThat(subject.isBaselinePaneExpanded(), is(true));
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
+    }
 
-        assertThat(baselineCounts, hasSize(1));
-        assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-2809"));
-        assertThat(baselineCounts.get(0).getExperimentName(), is("Eight developmental stages"));
-        assertThat(baselineCounts.get(0).getSpecies(), is("Hordeum vulgare subsp. vulgare"));
-        assertThat(baselineCounts.get(0).getHref(), endsWith("E-MTAB-2809?_specific=on&queryFactorType=DEVELOPMENTAL_STAGE&queryFactorValues=&geneQuery=u2&exactMatch=true"));
-
+    @Test
+    public void displaysWidget() {
+        // wait for ajax widget to load
+        subject.waitForHeatmapToBeVisible();
+        assertThat(subject.getGeneNames(), contains("Tissues - 8 Mayer"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-2809?geneQuery=u2"));
     }
 
 

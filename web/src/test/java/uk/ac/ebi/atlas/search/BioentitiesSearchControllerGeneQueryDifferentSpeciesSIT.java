@@ -55,7 +55,7 @@ public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends Sin
         assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("2 results"));
 
         assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(baselineCounts.get(1).getExperimentName(), is("Six tissues"));
+        assertThat(baselineCounts.get(1).getExperimentName(), is("Tissues - 6"));
         assertThat(baselineCounts.get(1).getSpecies(), is("Mus musculus"));
 
         assertThat(baselineCounts.get(0).getExperimentAccession(), is("E-MTAB-1733"));
@@ -74,12 +74,6 @@ public class BioentitiesSearchControllerGeneQueryDifferentSpeciesSIT extends Sin
     @Test
     public void globalSearchTermIsIdentifiersSeparatedByOR() {
         assertThat(subject.getGlobalSearchTerm(), is(GLOBAL_SEARCH_TERM));
-    }
-
-    @Test
-    public void globalSearchWidgetShouldHaveResults(){
-        subject.clickShowMoreDataWidget();
-        assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
     }
 
 }

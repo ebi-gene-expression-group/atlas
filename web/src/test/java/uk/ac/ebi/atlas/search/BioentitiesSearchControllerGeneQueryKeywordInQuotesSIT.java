@@ -51,7 +51,7 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
         assertThat(baselineCounts, hasSize(3));
 
         assertThat(baselineCounts.get(2).getExperimentAccession(), is("E-MTAB-599"));
-        assertThat(baselineCounts.get(2).getExperimentName(), is("Six tissues"));
+        assertThat(baselineCounts.get(2).getExperimentName(), is("Tissues - 6"));
         assertThat(baselineCounts.get(2).getSpecies(), is("Mus musculus"));
 
         assertThat(baselineCounts.get(1).getExperimentAccession(), is("E-MTAB-1733"));
@@ -63,28 +63,22 @@ public class BioentitiesSearchControllerGeneQueryKeywordInQuotesSIT extends Sing
     public void differentialPaneHasResults() {
         subject.clickDifferentialPane();
 
-        assertThat(subject.diffExpressionResultCount(), is("Showing 18 results"));
+        assertThat(subject.diffExpressionResultCount(), is("Showing 16 results"));
         // System.out.println("\"" + Joiner.on("\", \"").join(subject.getDiffHeatmapTableGeneColumn()) + "\"");
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("LMO2", "ASNS", "LMO2", "PHYH", "PHYH", "ACLY", "HIF1AN", "ACLY", "ATCAD1", "TKT", "UROS", "ATCAD1", "HIF1AN", "SUCLG1", "SUCLG1", "UROS", "TKT", "HACL1"));
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), contains("LMO2", "ASNS", "LMO2", "PHYH", "PHYH", "ACLY", "HIF1AN", "ACLY", "TKT", "UROS", "HIF1AN", "SUCLG1", "SUCLG1", "UROS", "TKT", "HACL1"));
 
     }
 
     @Test
     public void differentialPaneHasCorrectGenesAndSpecies() {
         subject.clickDifferentialPane();
-        assertThat(subject.getDiffHeatmapTableGeneColumn(), hasItems("ATCAD1"));
-        assertThat(subject.getDiffHeatmapTableOrganismColumn(), hasItems("Arabidopsis thaliana"));
+        assertThat(subject.getDiffHeatmapTableGeneColumn(), hasItems("ASNS"));
+        assertThat(subject.getDiffHeatmapTableOrganismColumn(), hasItems("Homo sapiens"));
     }
 
     @Test
     public void globalSearchTermIsCorrectlyFormed() {
         assertThat(subject.getGlobalSearchTerm(), is(GENE_QUERY_PARAM));
-    }
-
-    @Test
-    public void globalSearchWidgetShouldHaveResults(){
-        subject.clickShowMoreDataWidget();
-        assertThat(subject.getGlobalSearchAllResultsTotal(), is(greaterThan(0)));
     }
 
 }
