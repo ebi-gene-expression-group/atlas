@@ -36,14 +36,6 @@ public class GenePageControllerNoBaselineResultSIT extends SinglePageSeleniumFix
     }
 
     @Test
-    public void baselinePanelHasNoResultsAndNoWidgetForSpeciesWithReferenceExperimentButNoExpressions() {
-        BioEntityPage  subject = new BioEntityPage(driver, "ENSMUSG00000042800", "genes"); // mus musculus
-        subject.get();
-        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("No results"));
-        assertThat(subject.getBaselinePaneContents(), is(""));
-    }
-
-    @Test
     public void baselinePanelHasNoResultsAndNoWidgetForSpeciesWithReferenceExperimentNoInDevDatabase() {
         BioEntityPage  subject = new BioEntityPage(driver, "AT3G29644", "genes"); // arabidopsis thaliana
         subject.get();

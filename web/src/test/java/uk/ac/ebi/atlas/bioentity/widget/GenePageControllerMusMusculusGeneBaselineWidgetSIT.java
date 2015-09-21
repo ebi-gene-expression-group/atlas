@@ -63,7 +63,7 @@ public class GenePageControllerMusMusculusGeneBaselineWidgetSIT extends SinglePa
         assertThat(factorValueHeaders, containsInAnyOrder("brain", "cerebellum", "heart", "hippocampus", "kidney", "liver", "lung", "spleen", "testis", "thymus"));
 
         assertThat(subject.getGeneNames().size(), is(2));
-        assertThat(subject.getGeneNames(), contains("Six tissues","Vertebrate tissues"));
+        assertThat(subject.getGeneNames(), contains("Tissues - 6","Vertebrate tissues"));
         assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-599?geneQuery=ENSMUSG00000040505"));
         assertThat(subject.getGeneLink(1), endsWith("/experiments/E-GEOD-30352?geneQuery=ENSMUSG00000040505&serializedFilterFactors=ORGANISM%3AMus+musculus"));
     }

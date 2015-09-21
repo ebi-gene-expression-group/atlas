@@ -24,6 +24,7 @@ package uk.ac.ebi.atlas.experimentpage.baseline.genedistribution;
 
 import com.google.common.collect.Sets;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -60,6 +61,7 @@ public class BarChartTraderIT {
 
 
     @Test
+    @Ignore
     public void chartDataAllExperimentalFactorsTest() {
         SortedMap<Double, Integer> chartData = subject.getChart(null, null);
         //returns
@@ -70,6 +72,7 @@ public class BarChartTraderIT {
     }
 
     @Test
+    @Ignore
     public void chartDataForSomeExperimentalFactorsTest() {
         SortedMap<Double, Integer> chartData = subject.getChart(null, Sets.newHashSet(new Factor(ORGANISM_PART, "liver")
                 , new Factor(ORGANISM_PART, "lung")));

@@ -47,25 +47,25 @@ public class SpecificAndOrganismPartSIT extends SinglePageSeleniumFixture {
     @Test
     public void verifySelectedGenes() {
         List<String> selectedGenes = subject.getGeneNames();
-        assertThat(selectedGenes.size(), is(8));
-        assertThat(selectedGenes, contains("Afm", "Tdo2", "Gc", "Apoh",  "Serpina1d", "Cyp2d10", "5830473C10Rik", "Ecm1"));
+        assertThat(selectedGenes.size(), is(9));
+        assertThat(selectedGenes, contains("Gc", "Alb", "Apoh", "Cyp2d10",  "Afm", "Serpina1d", "Tdo2", "5830473C10Rik", "Afp"));
     }
 
     @Test
     public void verifyFirstGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getFirstGeneProfile(), contains("", "", "270", "", "1", ""));
+        assertThat(subject.getFirstGeneProfile(), contains("", "", "4209", "", "", ""));
     }
 
     @Test
     public void verifyLastGeneProfile() {
         subject.clickDisplayLevelsButton();
-        assertThat(subject.getLastGeneProfile(), contains("25", "4", "112", "94", "23", "11"));
+        assertThat(subject.getLastGeneProfile(), contains("", "", "3", "", "1", ""));
     }
 
     @Test
     public void verifyGeneCount() {
-        assertThat(subject.getGeneCount().contains("8"), is(true));
+        assertThat(subject.getGeneCount().contains("9"), is(true));
     }
 
 }

@@ -53,7 +53,7 @@ public class DifferentialExperimentContrastTooltipSIT extends SinglePageSelenium
     public void checkContrastSummaryTooltipTableContext() {
         assertThat(subject.getContrastTooltipContent(1, 0, 0), is("genotype"));
         assertThat(subject.getContrastTooltipContent(1, 0, 1), is("heterozygous for chico mutation"));
-        assertThat(subject.getContrastTooltipContent(1, 0, 2), is("wild type"));
+        assertThat(subject.getContrastTooltipContent(1, 0, 2), is("wild type genotype"));
         assertThat(subject.getContrastTooltipContent(1, 7, 0), is("sex"));
         assertThat(subject.getContrastTooltipContent(1, 7, 1), is("female"));
         assertThat(subject.getContrastTooltipContent(1, 7, 2), is("female"));

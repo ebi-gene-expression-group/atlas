@@ -3,8 +3,8 @@ MAGE-TAB Version	1.1
 Investigation Title	BBSRC Waugh BarleyRNAseq
 Comment[Submitted Name]	BBSRC Waugh BarleyRNAseq
 Experiment Description	Eight tissues of cultivar ÔMorexÕ (three biological replications each) earmarking stages of the barley life cycle from germinating grain to maturing caryopsis were selected for deep RNA sequencing (RNA-seq)
-Experimental Factor Name	developmental stage
-Experimental Factor Type	developmental stage
+Experimental Factor Name	organism part
+Experimental Factor Type	organism part
 Person Last Name	Davey
 Person First Name	Robert
 Person Email	robert.davey@tgac.ac.uk
@@ -27,6 +27,6 @@ PubMed ID	23075845
 Comment[SecondaryAccession]	ERP001600
 Comment[SequenceDataURI]	http://www.ebi.ac.uk/ena/data/view/ERP001600
 Comment[AEExperimentType]	RNA-seq of coding RNA
-Comment[SRASubmissionDate]	2012-07-13
-Comment[AEExperimentDisplayName]	RNA-seq of coding RNA of barley from 8 different developmental stages
+Comment[SRASubmissionDate]	13/07/2012
+Comment[AEExperimentDisplayName]	RNA-seq of coding RNA of eight barley tissues from different developmental stages
 SDRF File	E-MTAB-2809.sdrf.txt

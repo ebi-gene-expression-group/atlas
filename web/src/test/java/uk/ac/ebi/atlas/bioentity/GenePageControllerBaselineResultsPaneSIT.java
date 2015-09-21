@@ -62,5 +62,13 @@ public class GenePageControllerBaselineResultsPaneSIT extends SinglePageSelenium
         assertThat(subject.isInfoCardExpanded(), is(true));
     }
 
+    @Test
+    public void whenBaselineResultsThenIfonPaneIsOpenAndNoDiffResults() {
+        BioEntityPage subject = new BioEntityPage(driver, "ENSMUSG00000042800", "genes"); // mus musculus
+        subject.get();
+        assertThat(subject.getBaselinePaneHeaderResultsMessage(), is("Results in tissues"));
+        assertThat(subject.getDiffPaneHeaderResultsMessage(), is("No results"));
+        assertThat(subject.isBaselinePaneExpanded(), is(true));
+    }
 
 }

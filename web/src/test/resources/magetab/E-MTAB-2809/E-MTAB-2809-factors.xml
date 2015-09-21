@@ -23,8 +23,8 @@
 
 <factors-definition>
     <defaultFilterFactors/>
-    <defaultQueryFactorType>DEVELOPMENTAL_STAGE</defaultQueryFactorType>
+    <defaultQueryFactorType>ORGANISM_PART</defaultQueryFactorType>
     <menuFilterFactorTypes/>
-    <landingPageDisplayName>Eight developmental stages</landingPageDisplayName>
+    <landingPageDisplayName>Tissues - 8 Mayer</landingPageDisplayName>
     <speciesMapping/>
 </factors-definition>

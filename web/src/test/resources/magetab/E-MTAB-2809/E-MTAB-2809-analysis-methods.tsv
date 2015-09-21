@@ -1,11 +1,10 @@
-Pipeline version	<a href="https://code.google.com/p/irap/">iRAP</a> 0.4.3d2 
+Pipeline version	<a href="http://nunofonseca.github.io/irap/">iRAP</a> 0.6.1p9 
 # Libraries	ERR233228, ERR233229, ERR233230, ERR233231, ERR233232, ERR233233, ERR233234, ERR233235, ERR233236, ERR233237, ERR233238, ERR233239, ERR233240, ERR233241, ERR233242, ERR233243, ERR233244, ERR233245, ERR233246, ERR233247, ERR233248, ERR233249, ERR233250, ERR233251, ERR233252, ERR233253, ERR233254, ERR233255, ERR233256, ERR233257, ERR233258, ERR233259, ERR233260, ERR233261, ERR233262, ERR233263, ERR233264, ERR233265, ERR233266, ERR233267, ERR233268, ERR233269, ERR233270, ERR233271, ERR233272, ERR233273, ERR233274
 Analyzed Libraries	<a href="experiments/E-MTAB-2809/experiment-design">Paired-end only</a>
 Filtering Step 1	Discard reads below minimum quality threshold
 Filtering Step 2	Check of bacterial contamination; discard offending reads
 Filtering Step 3	Discard reads with common uncalled characters (e.g. N)
 Filtering Step 4	Remove reads from pair-end libraries that were orphaned by filtering steps 1-3
-Insert size and standard deviation	Calculated for each library from BAM files obtained by mapping a random sample (one million reads) of each FASTQ file against transcriptome reference (Ensembl Plants release: 23)
-Read Mapping 	Against genome reference (Ensembl Plants release: 23) tophat2 version: 2.0.10
-Quantification	cufflinks2 version: 2.1.1 (no novel transcript discovery)
-Normalized Counts per Gene	Obtained from the <a href="http://cufflinks.cbcb.umd.edu/manual.html#fpkm_tracking_format">genes.fpkm_tracking files</a>, then averaged for all biological replicates (if any)
+Read Mapping 	Against genome reference (Ensembl Plants release: 26) tophat2 version: 2.0.12
+Quantification	htseq2 version: 0.6.1p1
+Normalized Counts per Gene	(FPKMs) are calculated from the raw counts by <a href="http://nunofonseca.github.io/irap/">iRAP</a>. These are averaged for each set of technical replicates, and then quantile normalized within each set of biological replicates using <a href="http://www.bioconductor.org/packages/release/bioc/html/limma.html">limma</a>. Finally, they are averaged for all biological replicates (if any)
