@@ -633,7 +633,7 @@
             <!-- oracleContext.xml is located on the filesystem and specified in tomcat's context xml -->
             <properties>
                 <data.files.location>/srv/gxa/data</data.files.location>
-                <npm.target>prod</npm.target>
+                <npm.target>ci</npm.target>
             </properties>
         </profile>
         <profile>
@@ -648,7 +648,7 @@
                 <mail.smtp.host>smtp.ebi.ac.uk</mail.smtp.host>
                 <mail.smtp.port>25</mail.smtp.port>
                 <mail.smtp.auth>false</mail.smtp.auth>
-                <npm.target>prod</npm.target>
+                <npm.target>ci</npm.target>
             </properties>
         </profile>
         <profile>
