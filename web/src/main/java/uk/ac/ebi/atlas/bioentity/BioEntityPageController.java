@@ -304,7 +304,12 @@ public abstract class BioEntityPageController {
         ImmutableSetMultimap.Builder<Integer, GoPoTerm> builder = new ImmutableSetMultimap.Builder<>();
 
         for (String accession : accessions) {
-            builder.put(goTermTrader.getDepth(accession), goTermTrader.getTerm(accession));
+            try {
+                builder.put(goTermTrader.getDepth(accession), goTermTrader.getTerm(accession));
+            } catch (NullPointerException e) {
+                // Put terms which aren’t found in goIDToTerm.tsv at the beginning of the list with a very high depth value
+                builder.put(999, goTermTrader.getTerm(accession));
+            }
         }
 
         return builder.build();
