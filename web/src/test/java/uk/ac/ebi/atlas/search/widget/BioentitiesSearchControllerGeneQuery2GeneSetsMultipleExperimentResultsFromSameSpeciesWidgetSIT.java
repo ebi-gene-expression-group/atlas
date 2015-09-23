@@ -35,7 +35,7 @@ public class BioentitiesSearchControllerGeneQuery2GeneSetsMultipleExperimentResu
 
     @Override
     protected void getStartingPage() {
-        subject = BioEntitiesPage.search(driver, "geneQuery=REACT_152%09REACT_111102");
+        subject = BioEntitiesPage.search(driver, "geneQuery=R-HSA-69278%09R-HSA-162582");
         subject.get();
     }
 
@@ -50,12 +50,12 @@ public class BioentitiesSearchControllerGeneQuery2GeneSetsMultipleExperimentResu
         // wait for ajax widget to load
         subject.waitForHeatmapToBeVisible();
         assertThat(subject.getGeneNames(), contains("Thirty two tissues", "Twenty seven tissues", "Illumina Body Map", "Vertebrate tissues", "Human Proteome Map - adult", "Human Proteome Map - fetus"));
-        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-2836?geneQuery=REACT_152%09REACT_111102"));
-        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-1733?geneQuery=REACT_152%09REACT_111102"));
-        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-MTAB-513?geneQuery=REACT_152%09REACT_111102"));
-        assertThat(subject.getGeneLink(3), endsWith("E-GEOD-30352?geneQuery=REACT_152%09REACT_111102&serializedFilterFactors=ORGANISM%3AHomo%20sapiens"));
-        assertThat(subject.getGeneLink(4), endsWith("/experiments/E-PROT-1?geneQuery=REACT_152%09REACT_111102&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Aadult"));
-        assertThat(subject.getGeneLink(5), endsWith("/experiments/E-PROT-1?geneQuery=REACT_152%09REACT_111102&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Afetus"));
+        assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-2836?geneQuery=R-HSA-69278%09R-HSA-162582"));
+        assertThat(subject.getGeneLink(1), endsWith("/experiments/E-MTAB-1733?geneQuery=R-HSA-69278%09R-HSA-162582"));
+        assertThat(subject.getGeneLink(2), endsWith("/experiments/E-MTAB-513?geneQuery=R-HSA-69278%09R-HSA-162582"));
+        assertThat(subject.getGeneLink(3), endsWith("/experiments/E-GEOD-30352?geneQuery=R-HSA-69278%09R-HSA-162582&serializedFilterFactors=ORGANISM%3AHomo+sapiens"));
+        assertThat(subject.getGeneLink(4), endsWith("/experiments/E-PROT-1?geneQuery=R-HSA-69278%09R-HSA-162582&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Aadult"));
+        assertThat(subject.getGeneLink(5), endsWith("/experiments/E-PROT-1?geneQuery=R-HSA-69278%09R-HSA-162582&serializedFilterFactors=DEVELOPMENTAL_STAGE%3Afetus"));
     }
 
     @Test

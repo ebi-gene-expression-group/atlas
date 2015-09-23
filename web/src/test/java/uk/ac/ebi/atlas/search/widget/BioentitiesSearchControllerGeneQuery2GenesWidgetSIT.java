@@ -49,7 +49,7 @@ public class BioentitiesSearchControllerGeneQuery2GenesWidgetSIT extends SingleP
     public void displaysWidget() {
         // wait for ajax widget to load
         subject.waitForHeatmapToBeVisible();
-        assertThat(subject.getGeneNames(), contains("Six tissues"));
+        assertThat(subject.getGeneNames(), contains("Tissues - 6"));
         assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-599?geneQuery=ENSMUSG00000097801%09ENSMUSG00000090429"));
     }
 

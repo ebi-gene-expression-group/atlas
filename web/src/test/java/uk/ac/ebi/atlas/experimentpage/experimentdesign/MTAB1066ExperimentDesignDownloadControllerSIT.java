@@ -58,7 +58,7 @@ public class MTAB1066ExperimentDesignDownloadControllerSIT {
         List<String> firstLine = subject.getRowValues(0);
 
         assertThat(firstLine,
-                contains("Assay", "Array", "Sample Characteristic[DevelopmentalStage]", "Sample Characteristic Ontology Term[DevelopmentalStage]", "Sample Characteristic[Genotype]", "Sample Characteristic Ontology Term[Genotype]", "Sample Characteristic[Organism]", "Sample Characteristic Ontology Term[Organism]", "Sample Characteristic[StrainOrLine]", "Sample Characteristic Ontology Term[StrainOrLine]", "Factor Value[genotype]", "Factor Value Ontology Term[genotype]", "Analysed")
+                contains("Assay", "Array", "Sample Characteristic[developmental stage]", "Sample Characteristic Ontology Term[developmental stage]", "Sample Characteristic[genotype]", "Sample Characteristic Ontology Term[genotype]", "Sample Characteristic[organism]", "Sample Characteristic Ontology Term[organism]", "Sample Characteristic[strain]", "Sample Characteristic Ontology Term[strain]", "Factor Value[genotype]", "Factor Value Ontology Term[genotype]", "Analysed")
         );
 
     }
@@ -70,7 +70,7 @@ public class MTAB1066ExperimentDesignDownloadControllerSIT {
         List<String> secondLine = subject.getRowValues(1);
 
         assertThat(secondLine,
-                contains("C1", "A-AFFY-35", "3rd instar larva", "", "w1118; +; cycCY5", "", "Drosophila melanogaster", "", "", "", "cycC mutant", "", "Yes")
+                contains("C1", "A-AFFY-35", "3rd instar larva", "", "w1118; +; cycCY5", "", "Drosophila melanogaster", "http://purl.obolibrary.org/obo/NCBITaxon_7227", "", "", "cycC mutant", "", "Yes")
         );
 
     }

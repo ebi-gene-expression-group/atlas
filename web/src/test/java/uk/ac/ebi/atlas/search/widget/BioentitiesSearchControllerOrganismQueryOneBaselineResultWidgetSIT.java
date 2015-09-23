@@ -36,7 +36,7 @@ public class BioentitiesSearchControllerOrganismQueryOneBaselineResultWidgetSIT 
         assertThat(subject.getGeneCount(), is("Showing 1 of 1 experiments found:"));
         assertThat(subject.getGeneColumnHeader(), is("Experiment"));
 
-        assertThat(subject.getGeneNames(), IsIterableContainingInOrder.contains("Six tissues"));
+        assertThat(subject.getGeneNames(), IsIterableContainingInOrder.contains("Tissues - 6"));
         assertThat(subject.getGeneLink(0), endsWith("/experiments/E-MTAB-599?geneQuery=zinc+finger"));
     }
 

@@ -26,7 +26,9 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
 
         String[] lines = body.asString().split("\n");
         assertThat(lines.length, is(greaterThan(4)));
-        assertThat(lines[4], startsWith("Cp36\tDrosophila melanogaster\tE-MEXP-1099\t'homozygous for chico mutation' vs 'wild type'"));
+        // TODO Sometimes one, sometimes the other
+        // assertThat(lines[4], startsWith("Gbp11\tMus musculus\tE-GEOD-21860\tclinical information:'non-pregnant' vs 'pregnant'\t4.44328878860028E-4\tInf\tNA"));
+        assertThat(lines[4], startsWith("Prok1\tMus musculus\tE-GEOD-21860\tclinical information:'non-pregnant' vs 'pregnant'"));
     }
 
     @Test
@@ -128,14 +130,14 @@ public class BioentitiesSearchDifferentialDownloadControllerSIT extends RestAssu
 
     @Test
     public void downloadGeneSet() {
-        String url = "/genesets/REACT_1619.tsv";
+        String url = "/genesets/R-HSA-73887.tsv";
 
         Response response = given().urlEncodingEnabled(false).get(url);
 
         response.then().assertThat().statusCode(200).contentType(ContentType.TEXT);
 
         String[] lines = response.body().asString().split("\n");
-        assertThat(lines.length, is(26));
+        assertThat(lines.length, is(28));
 
         String firstGene = lines[4];
         assertThat(firstGene,

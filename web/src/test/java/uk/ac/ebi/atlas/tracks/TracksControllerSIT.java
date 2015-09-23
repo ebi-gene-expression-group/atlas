@@ -37,12 +37,12 @@ public class TracksControllerSIT extends RestAssuredFixture {
 
     @Test
     public void microarrayTracks(){
-        Response response_g1 = get("/experiments/E-GEOD-3779/tracks/E-GEOD-3779.g2_g1.genes.log2foldchange.bedGraph");
+        Response response_g1 = get("/experiments/E-GEOD-3307/tracks/E-GEOD-3307.g1_g2.genes.log2foldchange.bedGraph");
 
         response_g1.then().assertThat().statusCode(200);
         response_g1.then().assertThat().contentType("");
 
-        Response response_g2 = get("/experiments/E-GEOD-3779/tracks/E-GEOD-3779.g2_g1.genes.pval.bedGraph");
+        Response response_g2 = get("/experiments/E-GEOD-3307/tracks/E-GEOD-3307.g1_g2.genes.pval.bedGraph");
 
         response_g2.then().assertThat().statusCode(200);
         response_g2.then().assertThat().contentType("");

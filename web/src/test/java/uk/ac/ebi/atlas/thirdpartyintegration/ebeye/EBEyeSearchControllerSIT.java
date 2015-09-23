@@ -40,6 +40,6 @@ public class EBEyeSearchControllerSIT extends RestAssuredFixture {
         response.then().assertThat().statusCode(200);
         response.then().assertThat().contentType(ContentType.XML);
         response.then().assertThat().body("database.entry_count", equalTo(String.valueOf(NumberOfExperiments.ALL)));
-        response.then().assertThat().body(hasXPath("/database/entries/entry[@id='E-GEOD-3779']/description", containsString("Transcription profiling by array of mouse neurospheres")));
+        response.then().assertThat().body(hasXPath("/database/entries/entry[@id='E-GEOD-3307']/description", containsString("Comparative profiling in 13 muscle disease groups")));
     }
 }

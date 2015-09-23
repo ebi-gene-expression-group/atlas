@@ -41,12 +41,12 @@ public class BioentitiesSearchControllerRedirectsSIT extends RestAssuredFixture 
 
     @Test
     public void geneSetReact(){
-        assertRedirect("/query?geneQuery=REACT_1619", "genesets/REACT_1619");
+        assertRedirect("/query?geneQuery=R-HSA-73887", "genesets/R-HSA-73887");
     }
 
     @Test
     public void geneSetReactLowercase() {
-        assertRedirect("/query?geneQuery=react_111217","genesets/react_111217");
+        assertRedirect("/query?geneQuery=r-hsa-1430728", "genesets/r-hsa-1430728");
     }
 
     @Test
@@ -61,7 +61,7 @@ public class BioentitiesSearchControllerRedirectsSIT extends RestAssuredFixture 
 
     @Test
     public void uniprotAccession() {
-        assertRedirect("/query?geneQuery=Q01130","genes/ENSG00000161547");
+        assertRedirect("/query?geneQuery=Q01130", "genes/ENSG00000161547");
     }
 
     @Test

@@ -17,6 +17,6 @@ public class DifferentialExperimentContrastsTsvControllerSIT extends RestAssured
         response.then().assertThat().contentType("text/tab-separated-values");
         response.then().assertThat().body(containsString("E-MTAB-698"));
         response.then().assertThat().body(containsString("vomeronasal organ"));
-        response.then().assertThat().body(containsString("EFO/EFO_0001265"));
+        response.then().assertThat().body(containsString("http://www.ebi.ac.uk/efo/EFO_0001265"));
     }
 }

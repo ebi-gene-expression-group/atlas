@@ -17,6 +17,6 @@ public class BaselineExperimentAssayGroupsTsvControllerSIT extends RestAssuredFi
         response.then().assertThat().contentType("text/tab-separated-values");
         response.then().assertThat().body(containsString("E-GEOD-41338"));
         response.then().assertThat().body(containsString("g9"));
-        response.then().assertThat().body(containsString("http://purl.obolibrary.org/obo/UBERON:0000948"));
+        response.then().assertThat().body(containsString("http://purl.obolibrary.org/obo/UBERON_0000948"));
     }
 }
