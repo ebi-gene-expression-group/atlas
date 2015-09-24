@@ -113,7 +113,7 @@
                               </c:forEach>
 
                               <c:if test="${allGoPoLinks.size() > relevantGoPoLinks.size()}">
-                                <a id="${propertyType}MoreLinks" href="">(... and ${allGoPoLinks.size() - relevantGoPoLinks.size()} more)</a>
+                                <a id="${propertyType}MoreLinks" role="button" style="cursor: pointer">(... and ${allGoPoLinks.size() - relevantGoPoLinks.size()} more)</a>
                               </c:if>
                             </div>
 
@@ -137,7 +137,7 @@
                                   </c:if>
                                   <span>${preLinkHTML}${goLink.getText()}${postLinkHTML}${comma}</span>
                                 </c:forEach>
-                                <a id="${propertyType}LessLinks" href="">(show less)</a>
+                                <a id="${propertyType}LessLinks" role="button" style="cursor: pointer">(show less)</a>
                               </div>
                             </c:if>
                           </td>
@@ -181,13 +181,33 @@
 
         </c:if>
 
-
-
-
     </div>
   </div>
 
 </section><!-- /search_facet -->
 
-
 </div>
+
+
+<script>
+  (function addClickEventsToExpandAndCollapseGoAndPoTermNames() {
+    $.each(
+            ["go", "po"],
+            function (i, val) {
+              $('#' + val + 'MoreLinks').click(function () {
+                $('#' + val + 'MoreLinks').hide();
+                $('#' + val + 'RelevantLinks').hide();
+                $('#' + val + 'AllLinks').show();
+                $('#' + val + 'LessLinks').show();
+                return false;
+              });
+              $('#' + val + 'LessLinks').click(function () {
+                $('#' + val + 'LessLinks').hide();
+                $('#' + val + 'AllLinks').hide();
+                $('#' + val + 'RelevantLinks').show();
+                $('#' + val + 'MoreLinks').show();
+                return false;
+              });
+            });
+  })();
+</script>
