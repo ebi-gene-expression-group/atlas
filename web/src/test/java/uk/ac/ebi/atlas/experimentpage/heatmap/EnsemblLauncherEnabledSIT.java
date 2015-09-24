@@ -38,7 +38,7 @@ public class EnsemblLauncherEnabledSIT extends SinglePageSeleniumFixture {
     public void diffExperimentWithTracksShouldHaveEnsemblLauncher() {
         HeatmapTablePage subject = new HeatmapTablePage(driver, "E-GEOD-3307", "foldChangeCutOff=0&cutoff=1");
         subject.get();
-        assertThat(subject.hasEnsemblLauncher(), is(false));
+        assertThat(subject.hasEnsemblLauncher(), is(true));
     }
 
     @Test
