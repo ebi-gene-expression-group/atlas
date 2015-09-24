@@ -307,8 +307,7 @@ public abstract class BioEntityPageController {
             try {
                 builder.put(goTermTrader.getDepth(accession), goTermTrader.getTerm(accession));
             } catch (NullPointerException e) {
-                // Put terms which aren’t found in goIDToTerm.tsv at the beginning of the list with a very high depth value
-                builder.put(999, goTermTrader.getTerm(accession));
+                // Ignore terms which aren’t found in goIDToTerm.tsv
             }
         }
 
