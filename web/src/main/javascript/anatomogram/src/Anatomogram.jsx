@@ -101,7 +101,6 @@ var Anatomogram = React.createClass({
         anatomogramData: React.PropTypes.object.isRequired,
         expressedTissueColour: React.PropTypes.string.isRequired,
         hoveredTissueColour: React.PropTypes.string.isRequired,
-        heatmapConfig: React.PropTypes.object.isRequired,
         profileRows: React.PropTypes.arrayOf(
             React.PropTypes.shape({
                 id: React.PropTypes.string,
@@ -120,7 +119,7 @@ var Anatomogram = React.createClass({
     },
 
     getInitialState: function() {
-        var contextRoot = this.props.heatmapConfig.contextRoot;
+        var contextRoot = this.props.anatomogramData.proxyPrefix + this.props.anatomogramData.contextRoot;
         var availableAnatomograms = [];
         if (this.props.anatomogramData.maleAnatomogramFile) {
             availableAnatomograms.push(

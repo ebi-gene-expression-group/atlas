@@ -333,7 +333,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     })(heatmapConfig.contextRoot, heatmapConfig.downloadProfilesURL);
 
 
-    var LegendBaseline = (function (contextRoot, formatBaselineExpression) {
+    var LegendBaseline = (function (proxyPrefxi, contextRoot, formatBaselineExpression) {
         return React.createClass({
             render: function () {
                 return (
@@ -347,13 +347,13 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                helpTooltipsModule.init('experiment', contextRoot, this.refs.legendHelp.getDOMNode());
+                helpTooltipsModule.init('experiment', proxyPrefix + contextRoot, this.refs.legendHelp.getDOMNode());
             }
         });
-    })(heatmapConfig.contextRoot, formatBaselineExpression);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, formatBaselineExpression);
 
 
-    var LegendDifferential = (function (contextRoot) {
+    var LegendDifferential = (function (proxyPrefix, contextRoot) {
         return React.createClass({
             render: function () {
                 return (
@@ -368,10 +368,10 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                helpTooltipsModule.init('experiment', contextRoot, this.refs.legendHelp.getDOMNode());
+                helpTooltipsModule.init('experiment', proxyPrefix + contextRoot, this.refs.legendHelp.getDOMNode());
             }
         });
-    })(heatmapConfig.contextRoot);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot);
 
 
     var LegendRow = React.createClass({
@@ -489,7 +489,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
 
-    var FactorHeader = (function (contextRoot, accessKey, enableEnsemblLauncher, csstransforms) {
+    var FactorHeader = (function (proxyPrefix, contextRoot, accessKey, enableEnsemblLauncher, csstransforms) {
         return React.createClass({
 
             getInitialState: function () {
@@ -537,7 +537,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
 
             componentDidMount: function () {
                 if(!type.isMultiExperiment) {
-                    factorTooltipModule.init(contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
+                    factorTooltipModule.init(proxyPrefix + contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
                 }
                 if (this.props.anatomogramEventEmitter) {
                     this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
@@ -563,7 +563,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 );
             }
         });
-    })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
 
 
     var ContrastHeaders = React.createClass({
@@ -585,7 +585,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
 
-    var ContrastHeader = (function (contextRoot, accessKey, enableEnsemblLauncher, csstransforms) {
+    var ContrastHeader = (function (proxyPrefix, contextRoot, accessKey, enableEnsemblLauncher, csstransforms) {
         return React.createClass({
 
             getInitialState: function () {
@@ -610,7 +610,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                contrastTooltipModule.init(contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
+                contrastTooltipModule.init(proxyPrefix + contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
 
                 if (this.showPlotsButton()) {
                     this.renderToolBarContent(this.refs.plotsToolBarContent.getDOMNode());
@@ -628,19 +628,19 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
 
                 var $contentNode = $(contentNode);
 
-                var maPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
+                var maPlotURL = proxyPrefix + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
                 var normalizedMaPlotURL = URI(maPlotURL).normalize();
                 var normalizedMaPlotSrcURL = URI(contextRoot + "/resources/images/maplot-button.png").normalize();
 
-                var gseaGoPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_go.png";
+                var gseaGoPlotURL = proxyPrefix + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_go.png";
                 var normalizedGSeaGoPlotURL = URI(gseaGoPlotURL).normalize();
                 var normalizedGseaGoPlotSrcURL = URI(contextRoot + "/resources/images/gsea-go-button.png").normalize();
 
-                var gseaInterproPlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_interpro.png";
+                var gseaInterproPlotURL = proxyPrefix + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_interpro.png";
                 var normalizedGSeaInterproURL = URI(gseaInterproPlotURL).normalize();
                 var normalizedGseaInterproSrcURL = URI(contextRoot + '/resources/images/gsea-interpro-button.png').normalize();
 
-                var gseaReactomePlotURL = contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_reactome.png";
+                var gseaReactomePlotURL = proxyPrefix + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_reactome.png";
                 var normalizedGseaReactomePlotURL = URI(gseaReactomePlotURL).normalize();
                 var normalizedGseaReactomePlotSrcURL = URI(contextRoot + "/resources/images/gsea-reactome-button.png").normalize();
 
@@ -682,7 +682,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 var thStyle = this.showPlotsButton() ? {minWidth: "80px"} : {};
                 var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
-                var normalizedSrcURL = URI(contextRoot + "/resources/images/yellow-chart-icon.png").normalize();
+                var normalizedSrcURL = URI(proxyPrefix + contextRoot + "/resources/images/yellow-chart-icon.png").normalize();
 
                 var plotsButton = (
                     <div style={{textAlign: "right", paddingRight: "3px"}} >
@@ -709,10 +709,10 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 );
             }
         });
-    })(heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, heatmapConfig.accessKey, heatmapConfig.enableEnsemblLauncher, Modernizr.csstransforms);
 
 
-    var TopLeftCorner = (function (contextRoot) {
+    var TopLeftCorner = (function (proxyPrefix, contextRoot) {
         return React.createClass({
 
             displayLevelsBaseline: function() {
@@ -733,10 +733,10 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                helpTooltipsModule.init('experiment', contextRoot, this.refs.tooltipSpan.getDOMNode());
+                helpTooltipsModule.init('experiment', proxyPrefix + contextRoot, this.refs.tooltipSpan.getDOMNode());
             }
         });
-    })(heatmapConfig.contextRoot);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot);
 
 
     var createDisplayLevelsButton = function (hideText, showText) {
@@ -827,7 +827,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
 
-    var GeneProfileRow = (function (contextRoot, isExactMatch, enableGeneLinks, enableEnsemblLauncher, geneQuery) {
+    var GeneProfileRow = (function (proxyPrefix, contextRoot, isExactMatch, enableGeneLinks, enableEnsemblLauncher, geneQuery) {
 
         return React.createClass({
 
@@ -952,7 +952,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
 
             componentDidMount: function () {
                 if(!type.isMultiExperiment) {
-                    genePropertiesTooltipModule.init(contextRoot, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
+                    genePropertiesTooltipModule.init(proxyPrefix + contextRoot, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
                 }
             },
 
@@ -962,7 +962,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 }
             }
         });
-    })(heatmapConfig.contextRoot, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, heatmapConfig.isExactMatch, heatmapConfig.enableGeneLinks, heatmapConfig.enableEnsemblLauncher, heatmapConfig.geneQuery);
 
 
     // expects number in the format #E# and displays exponent in superscript
@@ -993,7 +993,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     }
 
 
-    var CellBaseline = (function (contextRoot, formatBaselineExpression) {
+    var CellBaseline = (function (proxyPrefix, contextRoot, formatBaselineExpression) {
 
         return React.createClass({
             render: function () {
@@ -1030,7 +1030,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 }
 
                 if (this._isUnknownExpression() && !hasQuestionMark(this.refs.unknownCell.getDOMNode())) {
-                    helpTooltipsModule.init('experiment', contextRoot, this.refs.unknownCell.getDOMNode());
+                    helpTooltipsModule.init('experiment', proxyPrefix + contextRoot, this.refs.unknownCell.getDOMNode());
                 }
             },
 
@@ -1066,7 +1066,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             }
         });
 
-    })(heatmapConfig.contextRoot, formatBaselineExpression);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, formatBaselineExpression);
 
 
     var CellMultiExperiment = (function (formatBaselineExpression) {

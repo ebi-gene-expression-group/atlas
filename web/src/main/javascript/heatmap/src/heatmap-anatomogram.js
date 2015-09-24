@@ -37,6 +37,10 @@ function drawHeatmap (data, targetElement, heatmapBuilder, isWidget, isMultiExpe
 
 module.exports = function(opt) {
 
+    // Use proxy if set (required by CTTV), and used by AJAX calls (JSON endpoint, anatomogram and tooltips), not used
+    // for URLs and redirections (footer and gene/experiment links)
+    var proxyPrefix = opt.proxyPrefix ? opt.proxyPrefix : "";
+
     var heatmapModule = require('./heatmap.jsx');
 
     var $ = require('jquery');
@@ -46,7 +50,7 @@ module.exports = function(opt) {
     var $targetElement = $(targetElement);
 
     var endpoint = opt.heatmapUrl ? opt.heatmapUrl : opt.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
-    var url = opt.gxaBaseUrl + endpoint + '?' + opt.params;
+    var url = proxyPrefix + opt.gxaBaseUrl + endpoint + '?' + opt.params;
 
     var httpRequest = {
         url: url,
@@ -61,20 +65,23 @@ module.exports = function(opt) {
 
     $.ajax(httpRequest).done(function (data) {
 
-        function overrideContextRoot(data, gxaBaseUrl) {
+        function overrideContextRoot(data, proxyPrefix, gxaBaseUrl) {
+            data.config.proxyPrefix = proxyPrefix;
             data.config.contextRoot = gxaBaseUrl;
 
             if (data.anatomogram) {
+                data.anatomogram.proxyPrefix = proxyPrefix;
                 data.anatomogram.contextRoot = gxaBaseUrl;
             }
             if (data.experiment) {
+                data.experiment.proxyPrefix = proxyPrefix;
                 data.experiment.contextRoot = gxaBaseUrl;
             }
         }
 
         var isWidget = opt.hasOwnProperty("isWidget") ? opt.isWidget : true;
 
-        overrideContextRoot(data, opt.gxaBaseUrl);
+        overrideContextRoot(data, proxyPrefix, opt.gxaBaseUrl);
 
         if (opt.isMultiExperiment) {
             drawHeatmap(data, targetElement, heatmapModule.buildMultiExperiment, isWidget, opt.isMultiExperiment, opt.heatmapKey);
