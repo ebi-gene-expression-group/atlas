@@ -24,8 +24,9 @@ public class DifferentialAnalyticsSearchDao {
     private static final Logger LOGGER = Logger.getLogger(DifferentialAnalyticsSearchDao.class);
 
     public static final String DIFFERENTIAL_ONLY = "experimentType:(rnaseq_mrna_differential OR microarray_1colour_mrna_differential OR microarray_2colour_mrna_differential OR microarray_1colour_microrna_differential)";
-    public static final double DEFAULT_FOLD_CHANGE = 1.0;
-    private static final String FQ_TEMPLATE = "&fq=foldChange:[{0} TO *]";
+    public static final double POSITIVE_DEFAULT_FOLD_CHANGE = 1.0;
+    public static final double NEGATIVE_DEFAULT_FOLD_CHANGE = -1.0;
+    private static final String FQ_TEMPLATE = "&fq=foldChange:([* TO {0}] OR [{1} TO *])";
     private static final String QUERY_TEMPLATE = "query?q={0}&rows=0&omitHeader=true";
     private final RestTemplate restTemplate;
 
@@ -50,26 +51,26 @@ public class DifferentialAnalyticsSearchDao {
 
     private String fetchFacetsAboveDefaultFoldChange(GeneQuery geneQuery) {
         String identifierSearch = buildGeneIdentifierQuery(geneQuery);
-        return fetchFacetsAboveFoldChange(identifierSearch, DEFAULT_FOLD_CHANGE);
+        return fetchFacetsAboveFoldChange(identifierSearch, NEGATIVE_DEFAULT_FOLD_CHANGE, POSITIVE_DEFAULT_FOLD_CHANGE);
     }
 
 
-    private String fetchFacetsAboveFoldChange(String q, double foldChange) {
+    private String fetchFacetsAboveFoldChange(String q, double negativeFoldChange, double positiveFoldChange) {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        String result = fetchResponseAsString(buildDifferentialFacetsAboveFoldChangeQueryUrl(q, foldChange));
+        String result = fetchResponseAsString(buildDifferentialFacetsAboveFoldChangeQueryUrl(q, negativeFoldChange, positiveFoldChange));
 
         stopwatch.stop();
-        LOGGER.debug(String.format("fetchFacetsAboveFoldChange q=%s foldChange=%s took %.2f seconds", q, foldChange, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
+        LOGGER.debug(String.format("fetchFacetsAboveFoldChange q=%s foldChange=%s/%s took %.2f seconds", q, negativeFoldChange, positiveFoldChange, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
 
         return result;
     }
 
 
-    private String buildDifferentialFacetsAboveFoldChangeQueryUrl(String q, double foldChange) {
+    private String buildDifferentialFacetsAboveFoldChangeQueryUrl(String q, double negativeFoldChange, double positiveFoldChange) {
         String query = q.isEmpty() ? DIFFERENTIAL_ONLY : q + " AND " + DIFFERENTIAL_ONLY;
-        return solrBaseUrl + buildQueryParameters(query, foldChange) + differentialGeneFacetsQuery;
+        return solrBaseUrl + buildQueryParameters(query, negativeFoldChange, positiveFoldChange) + differentialGeneFacetsQuery;
     }
 
 
@@ -120,7 +121,7 @@ public class DifferentialAnalyticsSearchDao {
     private String buildDifferentialResultsAboveDefaultFoldChangeUrl(String q) {
         String query = q.isEmpty() ? DIFFERENTIAL_ONLY : q + " AND " + DIFFERENTIAL_ONLY;
 
-        return solrBaseUrl + buildQueryParameters(query, DEFAULT_FOLD_CHANGE) + differentialGenePivotQuery;
+        return solrBaseUrl + buildQueryParameters(query, NEGATIVE_DEFAULT_FOLD_CHANGE, POSITIVE_DEFAULT_FOLD_CHANGE) + differentialGenePivotQuery;
     }
 
     private String buildDifferentialResultsAboveDefaultFoldChangeUrl(String q, List<String> species, List<String> experimentTypes, List<String> kingdoms,
@@ -146,12 +147,12 @@ public class DifferentialAnalyticsSearchDao {
             query = query + " AND regulation:" + regulation;
         }
 
-        return solrBaseUrl + buildQueryParameters(query, DEFAULT_FOLD_CHANGE) + differentialGenePivotQuery;
+        return solrBaseUrl + buildQueryParameters(query, NEGATIVE_DEFAULT_FOLD_CHANGE, POSITIVE_DEFAULT_FOLD_CHANGE) + differentialGenePivotQuery;
     }
 
 
-    private String buildQueryParameters(String q, double foldChange) {
-        return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q)) + encodeQuery(MessageFormat.format(FQ_TEMPLATE, foldChange));
+    private String buildQueryParameters(String q, double negativeFoldChange, double positiveFoldChange) {
+        return MessageFormat.format(QUERY_TEMPLATE, encodeQueryParam(q)) + encodeQuery(MessageFormat.format(FQ_TEMPLATE, negativeFoldChange, positiveFoldChange));
     }
 
 
