@@ -27,11 +27,11 @@ require('../css/heatmap-and-anatomogram.css');
 var InternalHeatmapAnatomogramContainer = React.createClass({
     propTypes: {
         Heatmap: React.PropTypes.func.isRequired,
-        anatomogram: React.PropTypes.object.isRequired,
+        anatomogram: React.PropTypes.object,
         columnHeaders: React.PropTypes.array.isRequired,
-        multipleColumnHeaders: React.PropTypes.object.isRequired,
+        multipleColumnHeaders: React.PropTypes.object,
         profiles: React.PropTypes.object.isRequired,
-        geneSetProfiles: React.PropTypes.object.isRequired,
+        geneSetProfiles: React.PropTypes.object,
         heatmapConfig: React.PropTypes.object.isRequired,
         isBaseline: React.PropTypes.bool.isRequired,
         isMultiExperiment: React.PropTypes.bool.isRequired,

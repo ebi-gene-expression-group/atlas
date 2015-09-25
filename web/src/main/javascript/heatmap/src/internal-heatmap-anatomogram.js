@@ -25,15 +25,17 @@ function drawHeatmap (heatmapData, isMultiExperiment, isDifferential, isProteomi
 
     var isBaseline = (!isMultiExperiment && !isDifferential && !isProteomicsBaseline);
 
+    heatmapConfig.proxyPrefix = "";
+    if (anatomogramData) {
+        anatomogramData.proxyPrefix = "";
+    }
+
     var heatmapBuilder =
         isMultiExperiment ? heatmapModule.buildMultiExperiment :
             (isDifferential ? heatmapModule.buildDifferential :
                 (isProteomicsBaseline ? heatmapModule.buildProteomicsBaseline :
                     heatmapModule.buildBaseline));
     var Heatmap = heatmapBuilder(heatmapConfig, $('#displayLevels')).Heatmap;
-
-    heatmapConfig.proxyPrefix = "";
-    anatomogramData.proxyPrefix = "";
 
     React.render(
         React.createElement(
