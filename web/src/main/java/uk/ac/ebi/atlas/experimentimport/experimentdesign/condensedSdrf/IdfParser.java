@@ -56,7 +56,9 @@ public class IdfParser {
                 title = tsvLine[1];
             } else if (tsvLine[0].equalsIgnoreCase(PUBMED_ID)) {
                 for (int i = 1 ; i < tsvLine.length ; i++) {
-                    pubmedIdsBuilder.add(tsvLine[i]);
+                    if (!tsvLine[i].isEmpty()) {
+                        pubmedIdsBuilder.add(tsvLine[i]);
+                    }
                 }
             }
         }
