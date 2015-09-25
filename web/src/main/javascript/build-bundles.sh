@@ -11,11 +11,13 @@ do
     if [[ $dir != node_modules/ ]]
     then
         cd $dir
+        rm -rf node_modules
         npm install
         cd ..
     fi
 done
 
+rm -rf node_modules
 npm install
 
 npm run $1

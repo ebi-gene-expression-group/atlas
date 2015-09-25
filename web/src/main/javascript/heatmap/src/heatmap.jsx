@@ -333,7 +333,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     })(heatmapConfig.contextRoot, heatmapConfig.downloadProfilesURL);
 
 
-    var LegendBaseline = (function (proxyPrefxi, contextRoot, formatBaselineExpression) {
+    var LegendBaseline = (function (proxyPrefix, contextRoot, formatBaselineExpression) {
         return React.createClass({
             render: function () {
                 return (

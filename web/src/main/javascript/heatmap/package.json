@@ -11,7 +11,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "URIjs": "^1.16.0",
+    "urijs": "^1.16.0",
     "fancybox": "^3.0.0",
     "heatmap-baseline-cell-variance": "file:../heatmap-baseline-cell-variance",
     "anatomogram": "file:../anatomogram",
