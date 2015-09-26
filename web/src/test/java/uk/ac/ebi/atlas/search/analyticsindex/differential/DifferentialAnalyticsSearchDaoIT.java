@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.Is.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,14 +48,12 @@ public class DifferentialAnalyticsSearchDaoIT {
 
         ReadContext jsonCtx = JsonPath.parse(json);
 
-        Integer count = jsonCtx.read("$.facets.count");
-        List<String> speciesJson = jsonCtx.read("$.facets.species.buckets[*].val");//   mus musculus
-        List<String> experimentType = jsonCtx.read("$.facets.species.buckets[*].experimentType.buckets[*].val"); // rnaseq_mrna_differential
+        List<String> speciesFromJson = jsonCtx.read("$.response.docs[*].species");
+        List<String> experimentTypesFromJson = jsonCtx.read("$.response.docs[*].experimentType");
 
         // TODO Uncomment when https://www.pivotaltracker.com/story/show/101118548 gets fixed
-        //assertThat(count, is(98));
-        assertThat(speciesJson, contains("mus musculus"));
-        assertThat(experimentType, contains("rnaseq_mrna_differential"));
+        assertThat(speciesFromJson, hasItem("mus musculus"));
+        assertThat(experimentTypesFromJson, hasItem("rnaseq_mrna_differential"));
 
     }
 
