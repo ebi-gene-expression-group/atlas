@@ -1,5 +1,6 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jayway.jsonpath.JsonPath;
@@ -7,10 +8,12 @@ import com.jayway.jsonpath.ReadContext;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.Map;
 
 @Named
 public class DifferentialAnalyticsFacetsReader {
@@ -20,44 +23,60 @@ public class DifferentialAnalyticsFacetsReader {
 
     private static final String[] FACET_FIELDS = {"kingdom", "species", "experimentType", "factors", "numReplicates", "regulation"};
 
-    private static final String SPECIES_PATH              = "$.facets.species.buckets[*].val";
-    private static final String EXPERIMENT_TYPE_PATH      = "$.facets.species.buckets[?(@.val=='%s')].experimentType.buckets[*].val";
-    private static final String EXPERIMENT_ACCESSION_PATH = "$.facets.species.buckets[?(@.val=='%s')].experimentType.buckets[?(@.val=='%s')].experimentAccession.buckets[*].val";
-    private static final String CONTRASTID_PATH           = "$.facets.species.buckets[?(@.val=='%s')].experimentType.buckets[?(@.val=='%s')].experimentAccession.buckets[?(@.val=='%s')].contrastId.buckets[*].val";
-    private static final String GENE_COUNT_PATH           = "$.facets.species.buckets[?(@.val=='%s')].experimentType.buckets[?(@.val=='%s')].experimentAccession.buckets[?(@.val=='%s')].contrastId.buckets[?(@.val=='%s')].geneCount";
+    private static final String DOCS_PATH                  = "$.response.docs[*]";
+    private static final String LOG2_FOLD_CHANGE_PATH      = "$.response.docs[*].foldChange";
+    private static final String EXPERIMENT_TYPE_FIELD      = "experimentType";
+    private static final String EXPERIMENT_ACCESSION_FIELD = "experimentAccession";
+    private static final String CONTRAST_ID_FIELD          = "contrastId";
+    private static final String LOG2_FOLD_CHANGE_FIELD     = "foldChange";
+
+    private final ColourGradient colourGradient;
 
     @Inject
-    public DifferentialAnalyticsFacetsReader(ExperimentTrader experimentTrader, ContrastTrader contrastTrader) {
+    public DifferentialAnalyticsFacetsReader(ExperimentTrader experimentTrader, ContrastTrader contrastTrader, ColourGradient colourGradient) {
         this.experimentTrader = experimentTrader;
         this.contrastTrader = contrastTrader;
+        this.colourGradient = colourGradient;
     }
 
 
     public String extractResultsAsJson(String solrResponseAsJson) {
-        JsonArray differentialResults = new JsonArray();
+        Gson gson = new Gson();
 
         ReadContext jsonReadContext = JsonPath.parse(solrResponseAsJson);
 
-        for (String species : (List<String>) jsonReadContext.read(SPECIES_PATH)) {
-            for (String experimentTypeDesc : (List<String>) jsonReadContext.read(String.format(EXPERIMENT_TYPE_PATH, species))) {
-                for (String experimentAccession: (List<String>) jsonReadContext.read(String.format(EXPERIMENT_ACCESSION_PATH, species, experimentTypeDesc))) {
-                    for (String contrastId : (List<String>) jsonReadContext.read(String.format(CONTRASTID_PATH, species, experimentTypeDesc, experimentAccession))) {
-                        int geneCount = ((List<Integer>) jsonReadContext.read(String.format(GENE_COUNT_PATH, species, experimentTypeDesc, experimentAccession, contrastId))).get(0);
-                        ExperimentType experimentType = ExperimentType.get(experimentTypeDesc);
-                        JsonObject jsonObject = new JsonObject();
-                        jsonObject.addProperty("geneCount", geneCount);
-                        jsonObject.addProperty("organism", species);
-                        jsonObject.addProperty("contrastId", contrastId);
-                        jsonObject.addProperty("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
-                        jsonObject.addProperty("experimentAccession", experimentAccession);
-                        jsonObject.addProperty("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
-                        differentialResults.add(jsonObject);
-                    }
-                }
+        double minUpLevel = 0.0, maxUpLevel = Double.MAX_VALUE, minDownLevel = 0.0, maxDownLevel = Double.MIN_VALUE;
+        // We can’t use Double https://github.com/jayway/JsonPath/issues/130
+        List<Object> foldChanges = jsonReadContext.read(LOG2_FOLD_CHANGE_PATH);
+        for (Object foldChangeSymbol : foldChanges) {
+            double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
+
+            if (foldChange > 0.0) {
+                minUpLevel = Math.min(minUpLevel, foldChange);
+                maxUpLevel = Math.max(maxUpLevel, foldChange);
+            } else {
+                minDownLevel = Math.max(minDownLevel, foldChange);
+                maxDownLevel = Math.min(maxDownLevel, foldChange);
             }
         }
 
-        return differentialResults.toString();
+        List<Map<String, Object>> documents = jsonReadContext.read(DOCS_PATH);
+        for (Map<String, Object> document : documents) {
+            ExperimentType experimentType = ExperimentType.get((String) document.get(EXPERIMENT_TYPE_FIELD));
+            String experimentAccession = (String) document.get(EXPERIMENT_ACCESSION_FIELD);
+            String contrastId = (String) document.get(CONTRAST_ID_FIELD);
+
+            Object foldChangeSymbol = document.get(LOG2_FOLD_CHANGE_FIELD);
+            double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
+            String colour = foldChange > 0.0 ? colourGradient.getGradientColour(foldChange, minUpLevel, maxUpLevel, "pink", "red") : colourGradient.getGradientColour(foldChange, minDownLevel, maxDownLevel, "lightGray", "blue");
+
+            document.put("colour", colour);
+            document.put("comparison", contrastTrader.getContrastFromCache(experimentAccession, experimentType, contrastId).getDisplayName());
+            document.put("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
+
+        }
+
+        return gson.toJson(documents);
     }
 
     // TODO Prettify fields with a Hashmap: <Field as it is stored in Solr> -> <Pretty field>

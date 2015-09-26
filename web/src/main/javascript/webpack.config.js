@@ -10,7 +10,7 @@ module.exports = {
         "expression-atlas-heatmap": './heatmap',
         "internal-atlas-heatmap": './heatmap/internal-atlas-index.js',
         "faceted-search": './faceted-search',
-        "vendor": [ 'react', 'jquery', 'jquery-ui', 'jquery.browser', 'URIjs', 'wolfy87-eventemitter' ]
+        "vendor": [ 'react', 'jquery', 'jquery-ui', 'jquery.browser', 'urijs', 'wolfy87-eventemitter' ]
     },
 
     output: {

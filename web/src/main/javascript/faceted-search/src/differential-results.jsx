@@ -12,34 +12,47 @@ require('../css/differential-results.css');
 
 var DifferentialResults = React.createClass({
     /*
-     eg: from http://www.ebi.ac.uk/gxa/query?geneQuery=zinc&_exactMatch=on&organism=Any&condition=
-     [
-        {
-         "geneCount": 10,
-         "organism": "Mus musculus",
-         "contrastId": "g2_g4",
-         "comparison": "'LDB1 knock-down with Ldb1 delta 4/5 construct' vs 'control shRNA",
-         "experimentAccession": "E-GEOD-54549",
-         "experimentName": "Role of LDB1 in the transition from chromatin looping to transcription activation"
-        },
-        {
-         "geneCount": 2,
-         "organism": "Homo sapiens",
-         "contrastId": "g2_g5",
-         "comparison": "'SAP130 knock-down' vs 'mock'",
-         "experimentAccession": "E-GEOD-56788",
-         "experimentName": "RNA-seq analysis of vorinostat-resistant HCT116 cells following gene knockdown of potential vorinostat-resistance candidate genes"
-        }
-     ]
-     */
+    [
+     {
+       "bioentity_identifier":"ENSMUSG00000072476",
+       "species":"mus musculus",
+       "kingdom":"animals",
+       "experimentAccession":"E-MTAB-698",
+       "experimentType":"rnaseq_mrna_differential",
+       "contrastId":"g1_g2",
+       "numReplicates":"3",
+       "foldChange":"-Infinity",
+       "regulation":"DOWN"
+       "colour": some_hex_value
+     },
+     {
+       "bioentity_identifier":"ENSMUSG00000071341",
+       "species":"mus musculus",
+       "kingdom":"animals",
+       "experimentAccession":"E-MTAB-698",
+       "experimentType":"rnaseq_mrna_differential",
+       "contrastId":"g1_g2",
+       "numReplicates":"3",
+       "foldChange":"-Infinity",
+       "regulation":"DOWN",
+       "colour": some_hex_value
+
+     }
+    ]
+    */
     propTypes: {
         diffResultsData: React.PropTypes.arrayOf(React.PropTypes.shape({
-            geneCount: React.PropTypes.number.isRequired,
-            organism: React.PropTypes.string.isRequired,
+            bioentity_identifier: React.PropTypes.string.isRequired,
+            species: React.PropTypes.string.isRequired,
+            kingdom: React.PropTypes.string.isRequired,
+            experimentAccession: React.PropTypes.string.isRequired,
+            experimentName: React.PropTypes.string.isRequired,
+            experimentType: React.PropTypes.string.isRequired,
             contrastId: React.PropTypes.string.isRequired,
             comparison: React.PropTypes.string.isRequired,
-            experimentAccession: React.PropTypes.string.isRequired,
-            experimentName: React.PropTypes.string.isRequired
+            numReplicates: React.PropTypes.number.isRequired,
+            foldChange: React.PropTypes.number.isRequired,
+            regulation: React.PropTypes.string.isRequired
         })).isRequired
     },
 
@@ -47,7 +60,7 @@ var DifferentialResults = React.createClass({
         var differentialResultRows = this.props.diffResultsData.map(function (diffResult) {
             return <DifferentialResultRow
                 key={diffResult.experimentAccession + diffResult.contrastId}
-                geneCount={diffResult.geneCount} organism={diffResult.organism} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
+                foldChange={diffResult.foldChange} species={diffResult.species} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
                 contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession}
             />;
         }.bind(this));
@@ -56,7 +69,7 @@ var DifferentialResults = React.createClass({
             <table className="table-striped atlasDifferentialFacetedSearchResults">
                 <thead>
                     <tr>
-                        <th>Genes</th>
+                        <th>Log<sub>2</sub>-fold change</th>
                         <th>Species</th>
                         <th>Comparison</th>
                         <th>Experimental variables</th>
@@ -74,8 +87,8 @@ var DifferentialResults = React.createClass({
 
 var DifferentialResultRow = React.createClass({
     propTypes: {
-        geneCount: React.PropTypes.number.isRequired,
-        organism: React.PropTypes.string.isRequired,
+        foldChange: React.PropTypes.number.isRequired,
+        species: React.PropTypes.string.isRequired,
         comparison: React.PropTypes.string.isRequired,
         experimentName: React.PropTypes.string.isRequired,
         contrastId: React.PropTypes.string.isRequired,
@@ -86,64 +99,64 @@ var DifferentialResultRow = React.createClass({
     render: function () {
         var classColor="";
 
-        if (this.props.organism === "homo sapiens" || this.props.organism === "gallus gallus" || this.props.organism === "gorilla gorilla" || this.props.organism === "macaca mulatta" || this.props.organism === "monodelphis domestica" || this.props.organism === "mus musculus" || this.props.organism === "pan paniscus" || this.props.organism === "pan troglodytes" || this.props.organism === "rattus norvegicus") {
+        if (this.props.species === "homo sapiens" || this.props.species === "gallus gallus" || this.props.species === "gorilla gorilla" || this.props.species === "macaca mulatta" || this.props.species === "monodelphis domestica" || this.props.species === "mus musculus" || this.props.species === "pan paniscus" || this.props.species === "pan troglodytes" || this.props.species === "rattus norvegicus") {
             classColor="red";
-        } else if (this.props.organism == "arabidopsis thaliana" || this.props.organism === "hordeum vulgare subsp. vulgare" || this.props.organism === "oryza sativa japonica group" ) {
+        } else if (this.props.species == "arabidopsis thaliana" || this.props.species === "hordeum vulgare subsp. vulgare" || this.props.species === "oryza sativa japonica group" ) {
             classColor="green";
-        } else if (this.props.organism === "anolis carolinensis" || this.props.organism === "drosophila melanogaster" || this.props.organism === "caenorhabditis elegans" || this.props.organism === "tetraodon nigroviridis" || this.props.organism === "xenopus (silurana) tropicalis") {
+        } else if (this.props.species === "anolis carolinensis" || this.props.species === "drosophila melanogaster" || this.props.species === "caenorhabditis elegans" || this.props.species === "tetraodon nigroviridis" || this.props.species === "xenopus (silurana) tropicalis") {
             classColor="blue";
         }
-//        || this.props.organism === "gallus gallus" || this.props.organism === "gorilla gorilla" || this.props.organism === "macaca mulatta" || this.props.organism === "monodelphis domestica" ||  this.props.organism === "pan paniscus" || this.props.organism === "pan troglodytes" || this.props.organism === "rattus norvegicus"
-//        || this.props.organism === "hordeum vulgare subsp. vulgare" || this.props.organism === "oryza sativa japonica group"
-//        || this.props.organism === "drosophila melanogaster" || this.props.organism === "caenorhabditis elegans" || this.props.organism === "tetraodon nigroviridis" || this.props.organism === "xenopus (silurana) tropicalis"
+//        || this.props.species === "gallus gallus" || this.props.species === "gorilla gorilla" || this.props.species === "macaca mulatta" || this.props.species === "monodelphis domestica" ||  this.props.species === "pan paniscus" || this.props.species === "pan troglodytes" || this.props.species === "rattus norvegicus"
+//        || this.props.species === "hordeum vulgare subsp. vulgare" || this.props.species === "oryza sativa japonica group"
+//        || this.props.species === "drosophila melanogaster" || this.props.species === "caenorhabditis elegans" || this.props.species === "tetraodon nigroviridis" || this.props.species === "xenopus (silurana) tropicalis"
         var classIcon="";
 
-        if (this.props.organism === "homo sapiens") {
+        if (this.props.species === "homo sapiens") {
             classIcon="H";
-        } else if (this.props.organism == "mus musculus") {
+        } else if (this.props.species == "mus musculus") {
             classIcon="M";
-        } else if (this.props.organism === "anolis carolinensis") {
+        } else if (this.props.species === "anolis carolinensis") {
             classIcon="7";
-        } else if (this.props.organism === "arabidopsis thaliana") {
+        } else if (this.props.species === "arabidopsis thaliana") {
             classIcon="B";
-        } else if (this.props.organism === "bos taurus") {
+        } else if (this.props.species === "bos taurus") {
             classIcon="C";
-        } else if (this.props.organism === "caenorhabditis elegans") {
+        } else if (this.props.species === "caenorhabditis elegans") {
             classIcon="W";
-        } else if (this.props.organism === "gallus gallus") {
+        } else if (this.props.species === "gallus gallus") {
             classIcon="k";
-        } else if (this.props.organism === "gorilla gorilla") {
+        } else if (this.props.species === "gorilla gorilla") {
             classIcon="G";
-        } else if (this.props.organism === "hordeum vulgare subsp. vulgare") {
+        } else if (this.props.species === "hordeum vulgare subsp. vulgare") {
             classIcon="5";
-        } else if (this.props.organism === "macaca mulatta") {
+        } else if (this.props.species === "macaca mulatta") {
             classIcon="r";
-        } else if (this.props.organism === "monodelphis domestica") {
+        } else if (this.props.species === "monodelphis domestica") {
             classIcon="9";
-        } else if (this.props.organism === "oryctolagus cuniculus") {
+        } else if (this.props.species === "oryctolagus cuniculus") {
             classIcon="t";
-        } else if (this.props.organism === "oryza sativa japonica group") {
+        } else if (this.props.species === "oryza sativa japonica group") {
             classIcon="6";
-        } else if (this.props.organism === "pan paniscus" || this.props.organism === "pan troglodytes" ) {
+        } else if (this.props.species === "pan paniscus" || this.props.species === "pan troglodytes" ) {
             classIcon="i";
-        } else if (this.props.organism === "papio anubis") {
+        } else if (this.props.species === "papio anubis") {
             classIcon="8";
-        } else if (this.props.organism === "rattus norvegicus") {
+        } else if (this.props.species === "rattus norvegicus") {
             classIcon="R";
-        } else if (this.props.organism === "tetraodon nigroviridis") {
+        } else if (this.props.species === "tetraodon nigroviridis") {
             classIcon="E";
-        } else if (this.props.organism === "zea mays") {
+        } else if (this.props.species === "zea mays") {
             classIcon="5";
-        } else if (this.props.organism === "xenopus (silurana) tropicalis") {
+        } else if (this.props.species === "xenopus (silurana) tropicalis") {
             classIcon="f";
-        } else if (this.props.organism === "drosophila melanogaster") {
+        } else if (this.props.species === "drosophila melanogaster") {
             classIcon="F";
         } else {classIcon="";}
 
         return (
             <tr>
-                <td className="col_count">{this.props.geneCount}</td>
-                <td className="col_species"><span className={"icon icon-species " + classColor} data-icon={classIcon} style={{color: 'red'}} title={this.props.organism}></span></td>
+                <td className="col_count">{this.props.foldChange}</td>
+                <td className="col_species"><span className={"icon icon-species " + classColor} data-icon={classIcon} style={{color: 'red'}} title={this.props.species}></span></td>
                 <td><a href="#">{this.props.comparison}</a></td>
                 <td>organism part</td>
                 <td>{this.props.experimentName}</td>

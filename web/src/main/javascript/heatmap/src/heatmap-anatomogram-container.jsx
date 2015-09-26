@@ -9,7 +9,7 @@ var jQuery = $;
 
 require('../lib/jquery.hc-sticky.js');
 
-var URI = require('URIjs');
+var URI = require('urijs');
 var EventEmitter = require('wolfy87-eventemitter');
 
 //*------------------------------------------------------------------*

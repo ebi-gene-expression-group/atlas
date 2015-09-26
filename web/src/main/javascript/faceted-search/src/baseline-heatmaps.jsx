@@ -4,7 +4,7 @@
 
 var React = require('react');
 
-var URI = require('URIjs');
+var URI = require('urijs');
 
 //*------------------------------------------------------------------*
 

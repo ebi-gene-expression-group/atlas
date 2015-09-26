@@ -27,7 +27,8 @@ public class DifferentialAnalyticsSearchDao {
     public static final double POSITIVE_DEFAULT_FOLD_CHANGE = 1.0;
     public static final double NEGATIVE_DEFAULT_FOLD_CHANGE = -1.0;
     private static final String FQ_TEMPLATE = "&fq=foldChange:([* TO {0}] OR [{1} TO *])";
-    private static final String QUERY_TEMPLATE = "query?q={0}&rows=0&omitHeader=true";
+    private static final String SORT_FIELD = "&sort=abs(foldChange)desc";
+    private static final String QUERY_TEMPLATE = "query?q={0}&rows=1000&omitHeader=true";
     private final RestTemplate restTemplate;
 
     private String solrBaseUrl;
@@ -89,7 +90,7 @@ public class DifferentialAnalyticsSearchDao {
     private String fetchDifferentialResultsAboveDefaultFoldChange(String q) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        String result = fetchResponseAsString(buildDifferentialResultsAboveDefaultFoldChangeUrl(q));
+        String result = fetchResponseAsString(buildDifferentialResultsSortedAboveDefaultFoldChangeUrl(q));
 
         stopwatch.stop();
         LOGGER.debug(String.format("fetchDifferentialGeneResults q=%s took %.2f seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
@@ -101,7 +102,7 @@ public class DifferentialAnalyticsSearchDao {
                                                                             List<String> factors, List<Integer> numReplicates, String regulation) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        String result = fetchResponseAsString(buildDifferentialResultsAboveDefaultFoldChangeUrl(q, species, experimentType, kingdom, factors, numReplicates, regulation));
+        String result = fetchResponseAsString(buildDifferentialResultsSortedAboveDefaultFoldChangeUrl(q, species, experimentType, kingdom, factors, numReplicates, regulation));
 
         stopwatch.stop();
         LOGGER.debug(String.format("fetchDifferentialGeneResults q=%s took %.2f seconds", q, stopwatch.elapsed(TimeUnit.MILLISECONDS) / 1000D));
@@ -118,14 +119,14 @@ public class DifferentialAnalyticsSearchDao {
         return (params != null && !params.isEmpty()) ? String.format(" AND %s :(\"%s\")", name, StringUtils.join(params, "\" OR \"")) : "";
     }
 
-    private String buildDifferentialResultsAboveDefaultFoldChangeUrl(String q) {
+    private String buildDifferentialResultsSortedAboveDefaultFoldChangeUrl(String q) {
         String query = q.isEmpty() ? DIFFERENTIAL_ONLY : q + " AND " + DIFFERENTIAL_ONLY;
 
-        return solrBaseUrl + buildQueryParameters(query, NEGATIVE_DEFAULT_FOLD_CHANGE, POSITIVE_DEFAULT_FOLD_CHANGE) + differentialGenePivotQuery;
+        return solrBaseUrl + buildQueryParameters(query, NEGATIVE_DEFAULT_FOLD_CHANGE, POSITIVE_DEFAULT_FOLD_CHANGE) + SORT_FIELD;
     }
 
-    private String buildDifferentialResultsAboveDefaultFoldChangeUrl(String q, List<String> species, List<String> experimentTypes, List<String> kingdoms,
-                                                                     List<String> factors, List<Integer> numReplicates, String regulation) {
+    private String buildDifferentialResultsSortedAboveDefaultFoldChangeUrl(String q, List<String> species, List<String> experimentTypes, List<String> kingdoms,
+                                                                           List<String> factors, List<Integer> numReplicates, String regulation) {
         String query;
 
         if(q.isEmpty() && experimentTypes == null) {
@@ -147,7 +148,7 @@ public class DifferentialAnalyticsSearchDao {
             query = query + " AND regulation:" + regulation;
         }
 
-        return solrBaseUrl + buildQueryParameters(query, NEGATIVE_DEFAULT_FOLD_CHANGE, POSITIVE_DEFAULT_FOLD_CHANGE) + differentialGenePivotQuery;
+        return solrBaseUrl + buildQueryParameters(query, NEGATIVE_DEFAULT_FOLD_CHANGE, POSITIVE_DEFAULT_FOLD_CHANGE) + SORT_FIELD;
     }
 
 

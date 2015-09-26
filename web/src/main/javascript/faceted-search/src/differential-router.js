@@ -9,7 +9,7 @@ require('jquery.browser');
 
 var queryString = require('query-string');
 
-var URI = require('URIjs');
+var URI = require('urijs');
 
 //*------------------------------------------------------------------*
 

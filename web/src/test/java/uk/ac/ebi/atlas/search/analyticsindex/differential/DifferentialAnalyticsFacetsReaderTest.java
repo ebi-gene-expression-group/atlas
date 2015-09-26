@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.model.differential.Contrast;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
 import uk.ac.ebi.atlas.trader.ExperimentTrader;
+import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -34,6 +35,9 @@ public class DifferentialAnalyticsFacetsReaderTest {
 
     @Mock
     ContrastTrader contrastTraderMock;
+
+    @Mock
+    ColourGradient colourGradientMock;
 
     @Mock
     Experiment E_MTAB_698ExperimentMock, E_MEXP_1276ExperimentMock, E_GEOD_21860ExperimentMock,
@@ -176,7 +180,7 @@ public class DifferentialAnalyticsFacetsReaderTest {
     @Before
     public void setUp() {
 
-        subject = new DifferentialAnalyticsFacetsReader(experimentTraderMock, contrastTraderMock);
+        subject = new DifferentialAnalyticsFacetsReader(experimentTraderMock, contrastTraderMock, colourGradientMock);
         gson = new GsonBuilder().disableHtmlEscaping().create();
         //gson = new GsonBuilder().create();
     }

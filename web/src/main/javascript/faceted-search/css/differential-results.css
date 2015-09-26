@@ -1,8 +1,26 @@
 table.table-striped tr:nth-child(even) {background-color: #f9f9f9;}
 table.table-striped tr:nth-child(odd) {background: #FFF;}
 
-table.atlasDifferentialFacetedSearchResults th {font-size: 90%; border-top: 0px #ddd solid;border-left: 0px #ddd solid; border-right: 0px #ddd solid; border-bottom: 2px solid #ddd;vertical-align: bottom;}
-table.atlasDifferentialFacetedSearchResults tr td {padding: 8px; line-height: 1.42857143; vertical-align: top; border-top: 1px solid #ddd}
+table.atlasDifferentialFacetedSearchResults th, table.atlasDifferentialFacetedSearchResults th span {
+    font-weight: bold;
+}
+
+table.atlasDifferentialFacetedSearchResults th {
+    font-size: 90%;
+    border-top: 0px #ddd solid;
+    border-left: 0px #ddd solid;
+    border-right: 0px #ddd solid;
+    border-bottom: 2px solid #ddd;
+    vertical-align: bottom;
+}
+
+table.atlasDifferentialFacetedSearchResults tr td {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd
+}
+
 table.atlasDifferentialFacetedSearchResults tr td.col_count {min-width: 46px;}
 /* table.atlasDifferentialFacetedSearchResults table tr td.col_species {min-width: 162px;font-style: italic;} TEMP for species column, text version*/
 table.atlasDifferentialFacetedSearchResults tr td.col_species span.icon-species {  font-size: 300%; margin-left: 4px;}

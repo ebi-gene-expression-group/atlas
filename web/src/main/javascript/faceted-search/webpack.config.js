@@ -15,7 +15,7 @@ module.exports = {
             "webpack/hot/only-dev-server",
             'mocha!./test/test.js'
         ],
-        "vendor": ['react', 'jquery', 'jquery.browser', 'URIjs', 'query-string']
+        "vendor": ['react', 'jquery', 'jquery.browser', 'urijs', 'query-string']
     },
     output: {
         path: __dirname + "/dist",
