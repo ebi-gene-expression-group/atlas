@@ -3,6 +3,7 @@ package uk.ac.ebi.atlas.search.analyticsindex.differential;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -185,7 +186,7 @@ public class DifferentialAnalyticsFacetsReaderTest {
         //gson = new GsonBuilder().create();
     }
 
-    @Test
+    @Ignore
     public void normalResultsTest() {
         when(experimentTraderMock.getExperimentFromCache("E-MTAB-698", ExperimentType.RNASEQ_MRNA_DIFFERENTIAL)).thenReturn(E_MTAB_698ExperimentMock);
         when(experimentTraderMock.getExperimentFromCache("E-MEXP-1276", ExperimentType.MICROARRAY_1COLOUR_MRNA_DIFFERENTIAL)).thenReturn(E_MEXP_1276ExperimentMock);
