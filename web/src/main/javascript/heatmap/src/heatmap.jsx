@@ -337,11 +337,11 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
         return React.createClass({
             render: function () {
                 return (
-                    <div style={{display: "inline-block", "paddingLeft": "20px"}} className="gxaHeatmapLegendGradient">
+                    <div style={{display: "inline-block", paddingLeft: "20px"}} className="gxaHeatmapLegendGradient">
                         <div style={{display: "inline-table"}}>
                             <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={formatBaselineExpression(this.props.minExpressionLevel)} highExpressionLevel={formatBaselineExpression(this.props.maxExpressionLevel)} lowValueColour="#C0C0C0" highValueColour="#0000FF"/>
                         </div>
-                        <div ref="legendHelp" data-help-loc={type.legendTooltip} style={{display: "inline-block", "verticalAlign": "top", "paddingLeft": "2px"}}/>
+                        <div ref="legendHelp" data-help-loc={type.legendTooltip} style={{display: "inline-block", verticalAlign: "top", paddingLeft: "2px"}}/>
                     </div>
                     );
             },
@@ -357,12 +357,12 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
         return React.createClass({
             render: function () {
                 return (
-                    <div style={{display: "inline-block", "paddingLeft": "20px"}} className="gxaHeatmapLegendGradient">
+                    <div style={{display: "inline-block", paddingLeft: "20px"}} className="gxaHeatmapLegendGradient">
                         <div style={{display: "inline-table"}}>
                             {!isNaN(this.props.minDownLevel) && !isNaN(this.props.maxDownLevel) ? <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minDownLevel} highExpressionLevel={this.props.maxDownLevel} lowValueColour="#C0C0C0" highValueColour="#0000FF"/> : null }
                             {!isNaN(this.props.minUpLevel) && !isNaN(this.props.maxUpLevel) ? <LegendRow displayLevels={this.props.displayLevels} lowExpressionLevel={this.props.minUpLevel} highExpressionLevel={this.props.maxUpLevel} lowValueColour="#FFAFAF" highValueColour="#FF0000"/> : null }
                         </div>
-                        <div ref="legendHelp" data-help-loc="#gradient-differential" style={{display: "inline-block", 'verticalAalign': "top", "paddingLeft": "2px"}}/>
+                        <div ref="legendHelp" data-help-loc="#gradient-differential" style={{display: "inline-block", verticalAlign: "top", paddingLeft: "2px"}}/>
                     </div>
                 );
             },
