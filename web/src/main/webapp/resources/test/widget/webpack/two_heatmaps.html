@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Heatmap demo</title>
+
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/vendor.bundle.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/gxa/resources/js-bundles/expression-atlas-heatmap.bundle.js"></script>
+</head>
+<body>
+    <div>
+        <h2>Bundles loaded locally, request done to <code>http://www.ebi.ac.uk/gxa</code></h2>
+    </div>
+
+    <div id="heatmapContainer"></div>
+
+    <div id="heatmapContainer2"></div>
+</body>
+
+<script language="JavaScript" type="text/javascript">
+    var AtlasHeatmapBuilder = window.exposed;
+    AtlasHeatmapBuilder({
+        gxaBaseUrl: "http://www.ebi.ac.uk/gxa/",
+        params: "geneQuery=ASPM&species=mus%20musculus",
+        isMultiExperiment: true,
+        target: "heatmapContainer"
+    });
+</script>
+
+<script language="JavaScript" type="text/javascript">
+    var AtlasHeatmapBuilder2 = window.exposed;
+    AtlasHeatmapBuilder2({
+        gxaBaseUrl: "http://www.ebi.ac.uk/gxa/",
+        params: "geneQuery=R-HSA-73864",
+        isMultiExperiment: false,
+        target: "heatmapContainer2"
+    });
+</script>
+
+</html>
