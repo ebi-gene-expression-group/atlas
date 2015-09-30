@@ -43,15 +43,6 @@ function initTooltips(contextRoot, pageName, parentElementId) {
             content: function (callback) {
                 var tooltipHelpHtmlId = $(this).parent().attr("data-help-loc");
 
-                $.get("x", function(data) {
-                    console.log(data);
-                }).fail(function() {
-                    console.log("Error");
-                })
-                    .always(function() {
-                        console.log("Finished");
-                    });
-
                 $.get(contextRoot + "/resources/html/" + getHelpFileName(pageName),
                     function (response, status, xhr) {
                         var tooltipContent;
@@ -73,6 +64,7 @@ function initTooltips(contextRoot, pageName, parentElementId) {
             }
         }
     );
+
 }
 
 //*------------------------------------------------------------------*

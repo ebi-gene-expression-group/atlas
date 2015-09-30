@@ -14,7 +14,7 @@ describe("HelpTooltipsModule <div id=\"help\" data-help-loc=\"#gradient-differen
 
     before(function() {
         $('<div id="help" data-help-loc="#gradient-differential"></div>').appendTo("body");
-        var HelpTooltipsModuleInit = require("../src/HelpTooltipsModule.js");
+        var HelpTooltipsModuleInit = require("../src/HelpTooltips.js");
         HelpTooltipsModuleInit("http://localhost:8080/gxa", "experiment", document.getElementById("help"));
     });
 
@@ -26,23 +26,19 @@ describe("HelpTooltipsModule <div id=\"help\" data-help-loc=\"#gradient-differen
         expect($("#help").text()).to.equal("?");
     });
 
-    // $.get doesn’t work in jsdom, enable tests when it’s fixed
+    // $.get doesn’t work in jsdom, expect this to fail
     // Also, use sinon to fake server: http://stackoverflow.com/questions/29945046/stubbing-jquery-ajax-in-node-environment-jquery-2-x
-    //it("shows the tooltip when hovered", function(done) {
-    //    $("#help a").trigger("mouseenter");
-    //    setTimeout(function() {
-    //        expect($(".gxaHelpTooltip").length).to.equal(1);
-    //        done();
-    //    }, 1000);
-    //});
-    //
-    //it("hides the tooltip when hovered away", function(done) {
-    //    $("#help a").trigger("mouseout");
-    //    setTimeout(function() {
-    //        expect($(".gxaHelpTooltip").length).to.equal(1);
-    //        done();
-    //    }, 1000);
-    //});
+    it("shows amd hides the tooltip when the mouse enters and then moves away", function(done) {
+        $("#help a").trigger("mouseenter");
+        setTimeout(function() {
+            expect($(".gxaHelpTooltip").length).to.equal(1);
+            $("#help a").trigger("mouseout");
+            setTimeout(function() {
+                expect($(".gxaHelpTooltip").length).to.equal(0);
+                done();
+            }, 500);
+        }, 500);
+    });
 
 });
 

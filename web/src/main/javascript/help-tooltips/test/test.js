@@ -2,4 +2,4 @@
 
 //*------------------------------------------------------------------*
 
-require('./HelpTooltipsModuleWithDom.js');
+require('./HelpTooltipsWithDom.js');
