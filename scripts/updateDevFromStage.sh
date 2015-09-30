@@ -8,6 +8,17 @@ scriptDir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 IFS="
 "
 
+# Get password for the stage instance API
+get_curator_pass() {
+    curatorUser=$1
+    if [ -e "${ATLAS_PROD}/sw/${curatorUser}" ]; then
+	cat ${ATLAS_PROD}/sw/${curatorUser}
+    else
+	echo "ERROR: Failed to retrieve password for the stage instance API" >&2
+	return 1
+    fi
+}
+
 # Load the experiments
 
 load_experiment() {
