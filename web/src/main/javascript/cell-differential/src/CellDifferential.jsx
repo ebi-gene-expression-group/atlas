@@ -38,7 +38,7 @@ var CellDifferential = React.createClass({
         }
 
         return (
-            <td style={{"backgroundColor": this.props.colour}}>
+            <td style={{backgroundColor: this.props.colour, verticalAlign: "middle"}}>
                 <div className={this.props.displayLevels ? "gxaShowCell" : "gxaHideCell"}>
                     {this.props.foldChange}
                 </div>

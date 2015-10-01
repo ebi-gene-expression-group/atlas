@@ -21,8 +21,6 @@ table.atlasDifferentialFacetedSearchResults tr td {
     border-top: 1px solid #ddd
 }
 
-table.atlasDifferentialFacetedSearchResults tr td.col_count {min-width: 46px;}
-/* table.atlasDifferentialFacetedSearchResults table tr td.col_species {min-width: 162px;font-style: italic;} TEMP for species column, text version*/
 table.atlasDifferentialFacetedSearchResults tr td.col_species span.icon-species {  font-size: 300%; margin-left: 4px;}
 table.atlasDifferentialFacetedSearchResults tr td.col_species span.icon-species.red:before {color:#d9534f;} /*animal*/
 table.atlasDifferentialFacetedSearchResults tr td.col_species span.icon-species.green:before {color:#5cb85c;}/*plants*/

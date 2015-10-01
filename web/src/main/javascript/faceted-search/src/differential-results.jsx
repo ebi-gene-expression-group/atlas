@@ -6,6 +6,11 @@ var React = require('react');
 
 //*------------------------------------------------------------------*
 
+var Legend = require('legend');
+var CellDifferential = require('cell-differential');
+
+//*------------------------------------------------------------------*
+
 require('../css/differential-results.css');
 
 //*------------------------------------------------------------------*
@@ -41,7 +46,7 @@ var DifferentialResults = React.createClass({
     ]
     */
     propTypes: {
-        diffResultsData: React.PropTypes.arrayOf(React.PropTypes.shape({
+        results: React.PropTypes.arrayOf(React.PropTypes.shape({
             bioentity_identifier: React.PropTypes.string.isRequired,
             species: React.PropTypes.string.isRequired,
             kingdom: React.PropTypes.string.isRequired,
@@ -50,36 +55,48 @@ var DifferentialResults = React.createClass({
             experimentType: React.PropTypes.string.isRequired,
             contrastId: React.PropTypes.string.isRequired,
             comparison: React.PropTypes.string.isRequired,
-            numReplicates: React.PropTypes.number.isRequired,
+            numReplicates: React.PropTypes.string.isRequired,  // faceting only works with strings https://issues.apache.org/jira/browse/SOLR-7496
             foldChange: React.PropTypes.number.isRequired,
+            colour: React.PropTypes.string.isRequired,
             regulation: React.PropTypes.string.isRequired
-        })).isRequired
+        })).isRequired,
+        maxDownLevel: React.PropTypes.number.isRequired,
+        minDownLevel: React.PropTypes.number.isRequired,
+        minUpLevel: React.PropTypes.number.isRequired,
+        maxUpLevel: React.PropTypes.number.isRequired
     },
 
     render: function () {
-        var differentialResultRows = this.props.diffResultsData.map(function (diffResult) {
+        var differentialResultRows = this.props.results.map(function (diffResult) {
             return <DifferentialResultRow
-                key={diffResult.experimentAccession + diffResult.contrastId}
-                foldChange={diffResult.foldChange} species={diffResult.species} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
+                key={diffResult.experimentAccession + diffResult.contrastId + diffResult.foldChange}
+                colour={diffResult.colour} foldChange={diffResult.foldChange} species={diffResult.species} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
                 contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession}
             />;
         }.bind(this));
 
         return (
-            <table className="table-striped atlasDifferentialFacetedSearchResults">
-                <thead>
-                    <tr>
-                        <th>Log<sub>2</sub>-fold change</th>
-                        <th>Species</th>
-                        <th>Comparison</th>
-                        <th>Experimental variables</th>
-                        <th>Experiment name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        {differentialResultRows}
-                </tbody>
-            </table>
+            <div>
+                <Legend.LegendDifferential
+                    proxyPrefix={""} contextRoot={"/gxa"}
+                    minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
+                    displayLevels={true}/>
+
+                <table className="table-striped atlasDifferentialFacetedSearchResults">
+                    <thead>
+                        <tr>
+                            <th>Log<sub>2</sub>-fold change</th>
+                            <th>Species</th>
+                            <th>Comparison</th>
+                            <th>Experimental variables</th>
+                            <th>Experiment name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {differentialResultRows}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 });
@@ -88,6 +105,7 @@ var DifferentialResults = React.createClass({
 var DifferentialResultRow = React.createClass({
     propTypes: {
         foldChange: React.PropTypes.number.isRequired,
+        colour: React.PropTypes.string.isRequired,
         species: React.PropTypes.string.isRequired,
         comparison: React.PropTypes.string.isRequired,
         experimentName: React.PropTypes.string.isRequired,
@@ -155,7 +173,7 @@ var DifferentialResultRow = React.createClass({
 
         return (
             <tr>
-                <td className="col_count">{this.props.foldChange}</td>
+                <CellDifferential colour={this.props.colour} foldChange={this.props.foldChange} displayLevels={true}/>
                 <td className="col_species"><span className={"icon icon-species " + classColor} data-icon={classIcon} style={{color: 'red'}} title={this.props.species}></span></td>
                 <td><a href="#">{this.props.comparison}</a></td>
                 <td>organism part</td>
