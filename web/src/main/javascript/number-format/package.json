@@ -1,0 +1,35 @@
+{
+  "name": "number-format",
+  "version": "1.0.0",
+  "description": "Legend for differential expression experiments",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers css:lib/mocha-css-null-compiler.js jsx:lib/mocha-jsx-compiler.js test/test.js"
+  },
+  "author": "Alfonso Muñoz-Pomer Fuentes <amunoz@ebi.ac.uk>",
+  "license": "MIT",
+  "private": true,
+
+  "dependencies": {
+    "react": "^0.12.2"
+  },
+
+  "devDependencies": {
+    "jsx-loader": "^0.12.2",
+    "react-hot-loader": "^1.2.8",
+
+    "chai": "^3.0.0",
+
+    "expose-loader": "^0.7.0",
+
+    "file-loader": "^0.8.4",
+
+    "mocha": "^2.0.1",
+    "mocha-loader": "^0.7.1",
+
+    "testdom": "^2.0.0",
+
+    "webpack": "^1.10.1",
+    "webpack-dev-server": "^1.10.1"
+  }
+}

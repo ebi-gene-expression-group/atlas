@@ -4,7 +4,7 @@ var path = require('path');
 module.exports = {
     context: __dirname,
     entry: {
-	    "help-tooltips": "./index.js",
+	    "number-format": "./index.js",
         "demo": [
             "webpack-dev-server/client?http://localhost:9000", // WebpackDevServer host and port
             "webpack/hot/only-dev-server",
@@ -15,7 +15,7 @@ module.exports = {
             "webpack/hot/only-dev-server",
             "mocha!./test/test.js"
         ],
-        "vendor": ['jquery', 'jquery-ui']
+        "vendor": ['react']
     },
     output: {
         path: __dirname + "/dist",
@@ -32,15 +32,10 @@ module.exports = {
 
     module: {
         loaders: [
+            {test: /\.jsx?$/, loaders: ['react-hot', "jsx?harmony"], include: path.join(__dirname, "src")},
+            {test: /\.jsx$/, loader: 'jsx-loader'},
             {test: /demo.js$/, loader: 'expose?exposed'},
             {test: /index.js$/, loader: 'expose?exposed'},
-            {test: /\.css$/, loader: 'style-loader!css-loader'},
-            {test: /\.(jpe?g|png|gif|svg)$/i,
-                loaders: [
-                    'file?hash=sha512&digest=hex&name=[hash].[ext]',
-                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                ]
-            }
         ]
     },
 

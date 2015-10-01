@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/dev-server/vendor.bundle.js"></script>
+    <script src="/dev-server/demo.bundle.js"></script>
+    <title>Number Format demo</title>
+</head>
+<body>
+    <div id="main">
+        <div id="baseline1"></div>
+        <div id="baseline2"></div>
+        <div id="baseline3"></div>
+        <div id="scientific1"></div>
+        <div id="scientific2"></div>
+        <div id="scientific3"></div>
+    </div>
+</body>
+
+<script>
+    var NumberFormat = window.exposed;
+    NumberFormat.baselineExpression(3943939000, document.getElementById("baseline1"));
+    NumberFormat.baselineExpression(10000000000000, document.getElementById("baseline2"));
+    NumberFormat.baselineExpression(.00000000000001, document.getElementById("baseline3"));
+    NumberFormat.scientificNotation("42.0", document.getElementById("scientific1"));
+    NumberFormat.scientificNotation("0.00000002344", document.getElementById("scientific2"));
+    NumberFormat.scientificNotation("1e100", document.getElementById("scientific2"));
+</script>
+
+</html>
