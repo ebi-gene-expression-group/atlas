@@ -1,0 +1,23 @@
+.gxaGradientColour {
+    overflow: auto;
+    vertical-align: middle;
+    width: 200px;
+    height: 15px;
+    margin: 2px 6px 2px 6px;
+    display: inline-block;
+}
+
+.gxaGradientLevel {
+    white-space: nowrap;
+    font-size: 10px;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.gxaGradientLevelMin {
+    text-align: right;
+}
+
+.gxaGradientLevelMax {
+    text-align: left;
+}
