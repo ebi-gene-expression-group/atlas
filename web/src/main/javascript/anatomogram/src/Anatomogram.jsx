@@ -119,7 +119,7 @@ var Anatomogram = React.createClass({
     },
 
     getInitialState: function() {
-        var contextRoot = this.props.anatomogramData.proxyPrefix + this.props.anatomogramData.contextRoot;
+        var contextRoot = "http://" + this.props.anatomogramData.proxyPrefix + this.props.anatomogramData.contextRoot;
         var availableAnatomograms = [];
         if (this.props.anatomogramData.maleAnatomogramFile) {
             availableAnatomograms.push(

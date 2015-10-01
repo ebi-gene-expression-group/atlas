@@ -50,7 +50,7 @@ module.exports = function(opt) {
     var $targetElement = $(targetElement);
 
     var endpoint = opt.heatmapUrl ? opt.heatmapUrl : opt.isMultiExperiment ? '/widgets/heatmap/multiExperiment' : '/widgets/heatmap/referenceExperiment';
-    var url = proxyPrefix + opt.gxaBaseUrl + endpoint + '?' + opt.params;
+    var url = URI("http://" + proxyPrefix + opt.gxaBaseUrl + endpoint + '?' + opt.params).normalize();
 
     var httpRequest = {
         url: url,

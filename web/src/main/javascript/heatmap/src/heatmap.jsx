@@ -304,11 +304,11 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
 
-    var DownloadProfilesButton = (function (contextRoot, downloadProfilesURL) {
+    var DownloadProfilesButton = (function (proxyPrefix, contextRoot, downloadProfilesURL) {
         return React.createClass({
             render: function () {
-                var normalizedURL = URI(contextRoot + downloadProfilesURL).normalize();
-                var normalizedSrcURL = URI(contextRoot + "/resources/images/download_blue_small.png").normalize();
+                var normalizedURL = URI("http://" + contextRoot + downloadProfilesURL).normalize();
+                var normalizedSrcURL = URI("http://" + proxyPrefix + contextRoot + "/resources/images/download_blue_small.png").normalize();
 
                 return (
                     <a id="download-profiles-link" ref="downloadProfilesLink"
@@ -330,7 +330,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 });
             }
         });
-    })(heatmapConfig.contextRoot, heatmapConfig.downloadProfilesURL);
+    })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, heatmapConfig.downloadProfilesURL);
 
 
     var LegendBaseline = (function (proxyPrefix, contextRoot, formatBaselineExpression) {
@@ -347,7 +347,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                helpTooltipsModule.init('experiment', proxyPrefix + contextRoot, this.refs.legendHelp.getDOMNode());
+                helpTooltipsModule.init('experiment', "http://" + proxyPrefix + contextRoot, this.refs.legendHelp.getDOMNode());
             }
         });
     })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot, formatBaselineExpression);
@@ -368,7 +368,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                helpTooltipsModule.init('experiment', proxyPrefix + contextRoot, this.refs.legendHelp.getDOMNode());
+                helpTooltipsModule.init('experiment', "http://" + proxyPrefix + contextRoot, this.refs.legendHelp.getDOMNode());
             }
         });
     })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot);
@@ -387,7 +387,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 <div style={{display: "table-row"}}>
                     <div style={this.props.displayLevels ? {'whiteSpace': "nowrap", "fontSize": "10px", 'verticalAlign': "middle", display: "table-cell"} : {'whiteSpace': "nowrap", "fontSize": "10px", 'verticalAlign': "middle", display: "table-cell", visibility: "hidden"}} className="gxaGradientLevelMin">{this.props.lowExpressionLevel}</div>
                     <div style={{display: "table-cell"}}>
-                        <span className="color-gradient" style={{overflow: "auto", 'verticalAlign': "middle", "backgroundImage": backgroundImage, filter: lt_ie10_filter, width: "200px", height: "15px", margin: "2px 6px 2px 6px", display: "inline-block"}} />
+                        <span className="gxaGradientColour" style={{overflow: "auto", 'verticalAlign': "middle", "backgroundImage": backgroundImage, filter: lt_ie10_filter, width: "200px", height: "15px", margin: "2px 6px 2px 6px", display: "inline-block"}} />
                     </div>
                     <div style={this.props.displayLevels ? {'whiteSpace': "nowrap", "fontSize": "10px", 'verticalAlign': "middle", display: "table-cell"} : {'whiteSpace': "nowrap", "fontSize": "10px", 'verticalAlign': "middle", display: "none", visibility: "hidden"}} className="gxaGradientLevelMax">{this.props.highExpressionLevel}</div>
                 </div>
@@ -537,7 +537,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
 
             componentDidMount: function () {
                 if(!type.isMultiExperiment) {
-                    factorTooltipModule.init(proxyPrefix + contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
+                    factorTooltipModule.init("http://" + proxyPrefix + contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.assayGroupId);
                 }
                 if (this.props.anatomogramEventEmitter) {
                     this.props.anatomogramEventEmitter.addListener('gxaAnatomogramTissueMouseEnter', this._anatomogramTissueMouseEnter);
@@ -610,7 +610,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                contrastTooltipModule.init(proxyPrefix + contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
+                contrastTooltipModule.init("http://" + proxyPrefix + contextRoot, accessKey, this.getDOMNode(), this.props.experimentAccession, this.props.contrastId);
 
                 if (this.showPlotsButton()) {
                     this.renderToolBarContent(this.refs.plotsToolBarContent.getDOMNode());
@@ -628,21 +628,21 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
 
                 var $contentNode = $(contentNode);
 
-                var maPlotURL = proxyPrefix + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
+                var maPlotURL = "http://" + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + (this.props.arrayDesignAccession ? this.props.arrayDesignAccession + "/" : "" ) + this.props.contrastId + "/ma-plot.png";
                 var normalizedMaPlotURL = URI(maPlotURL).normalize();
-                var normalizedMaPlotSrcURL = URI(contextRoot + "/resources/images/maplot-button.png").normalize();
+                var normalizedMaPlotSrcURL = URI("http://" + proxyPrefix + contextRoot + "/resources/images/maplot-button.png").normalize();
 
-                var gseaGoPlotURL = proxyPrefix + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_go.png";
+                var gseaGoPlotURL = "http://" + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_go.png";
                 var normalizedGSeaGoPlotURL = URI(gseaGoPlotURL).normalize();
-                var normalizedGseaGoPlotSrcURL = URI(contextRoot + "/resources/images/gsea-go-button.png").normalize();
+                var normalizedGseaGoPlotSrcURL = URI("http://" + proxyPrefix + contextRoot + "/resources/images/gsea-go-button.png").normalize();
 
-                var gseaInterproPlotURL = proxyPrefix + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_interpro.png";
+                var gseaInterproPlotURL = "http://" + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_interpro.png";
                 var normalizedGSeaInterproURL = URI(gseaInterproPlotURL).normalize();
-                var normalizedGseaInterproSrcURL = URI(contextRoot + '/resources/images/gsea-interpro-button.png').normalize();
+                var normalizedGseaInterproSrcURL = URI("http://" + proxyPrefix + contextRoot + '/resources/images/gsea-interpro-button.png').normalize();
 
-                var gseaReactomePlotURL = proxyPrefix + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_reactome.png";
+                var gseaReactomePlotURL = "http://" + contextRoot + "/external-resources/" + this.props.experimentAccession + '/' + this.props.contrastId + "/gsea_reactome.png";
                 var normalizedGseaReactomePlotURL = URI(gseaReactomePlotURL).normalize();
-                var normalizedGseaReactomePlotSrcURL = URI(contextRoot + "/resources/images/gsea-reactome-button.png").normalize();
+                var normalizedGseaReactomePlotSrcURL = URI("http://" + proxyPrefix + contextRoot + "/resources/images/gsea-reactome-button.png").normalize();
 
                 var content =
                     <div>
@@ -682,7 +682,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 var thStyle = this.showPlotsButton() ? {minWidth: "80px"} : {};
                 var textStyle = this.showPlotsButton() ? {top: "57px"} : {};
 
-                var normalizedSrcURL = URI(proxyPrefix + contextRoot + "/resources/images/yellow-chart-icon.png").normalize();
+                var normalizedSrcURL = URI("http://" + proxyPrefix + contextRoot + "/resources/images/yellow-chart-icon.png").normalize();
 
                 var plotsButton = (
                     <div style={{textAlign: "right", paddingRight: "3px"}} >
@@ -733,7 +733,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             },
 
             componentDidMount: function () {
-                helpTooltipsModule.init('experiment', proxyPrefix + contextRoot, this.refs.tooltipSpan.getDOMNode());
+                helpTooltipsModule.init('experiment', "http://" + proxyPrefix + contextRoot, this.refs.tooltipSpan.getDOMNode());
             }
         });
     })(heatmapConfig.proxyPrefix, heatmapConfig.contextRoot);
@@ -864,7 +864,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 var titleTooltip = type.isMultiExperiment ? (this.props.experimentType == "PROTEOMICS_BASELINE" ? "Protein Expression" : "RNA Expression" ) : "";
 
                 var experimentOrGeneURL = (type.isMultiExperiment ? experimentURL : geneURL);
-                var normalizedURL = URI(contextRoot + experimentOrGeneURL).normalize();
+                var normalizedURL = URI("http://" + contextRoot + experimentOrGeneURL).normalize();
 
                 // don't render id for gene sets to prevent tooltips
                 // The vertical align in the <a> element is needed because the kerning in the font used in icon-conceptual is vertically off
@@ -952,7 +952,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
 
             componentDidMount: function () {
                 if(!type.isMultiExperiment) {
-                    genePropertiesTooltipModule.init(proxyPrefix + contextRoot, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
+                    genePropertiesTooltipModule.init("http://" + proxyPrefix + contextRoot, this.refs.geneName.getDOMNode(), this.props.id, this.props.name);
                 }
             },
 
@@ -1030,7 +1030,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 }
 
                 if (this._isUnknownExpression() && !hasQuestionMark(this.refs.unknownCell.getDOMNode())) {
-                    helpTooltipsModule.init('experiment', proxyPrefix + contextRoot, this.refs.unknownCell.getDOMNode());
+                    helpTooltipsModule.init('experiment', "http://" + proxyPrefix + contextRoot, this.refs.unknownCell.getDOMNode());
                 }
             },
 

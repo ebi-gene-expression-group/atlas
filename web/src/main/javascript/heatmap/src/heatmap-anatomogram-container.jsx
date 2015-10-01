@@ -27,7 +27,7 @@ var ExperimentDescription = React.createClass({
 
     render: function () {
 
-        var experimentURL = this.props.experiment.contextRoot + this.props.experiment.URL;
+        var experimentURL = URI("http://" + this.props.experiment.contextRoot + this.props.experiment.URL).normalize();
 
         return (
             <div style={{width: "100%"}}>
@@ -55,8 +55,7 @@ var HeatmapAnatomogramContainer = React.createClass({
 
         var heatmapConfig = this.props.heatmapConfig;
 
-        var geneURL = heatmapConfig.contextRoot +  'query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch=' + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species;
-        var normalizedGeneURL = URI(geneURL).normalize();
+        var geneURL = URI("http://" + heatmapConfig.contextRoot +  'query?geneQuery=' + heatmapConfig.geneQuery + '&exactMatch=' + heatmapConfig.isExactMatch + "&organism=" + heatmapConfig.species).normalize();
 
         return (
                 <div className="gxaBlock">
@@ -84,7 +83,7 @@ var HeatmapAnatomogramContainer = React.createClass({
                     </div>
 
                     { this.props.isWidget ?
-                            <div><p><a href={normalizedGeneURL}>See more expression data at Expression Atlas.</a>
+                            <div><p><a href={geneURL}>See more expression data at Expression Atlas.</a>
                                 <br/>This expression view is provided by <a href="http://www.ebi.ac.uk/gxa">Expression Atlas</a>.
                                 <br/>Please direct any queries or feedback to <a href="mailto:arrayexpress-atlas@ebi.ac.uk">arrayexpress-atlas@ebi.ac.uk</a></p>
                             </div>
