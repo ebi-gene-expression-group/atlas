@@ -68,8 +68,7 @@ public class SearchDifferentialController extends SearchController {
         }
 
         ModelAndView mav = new ModelAndView(new MappingJacksonJsonView());
-        mav.addObject("species", jsonResults);
-
+        mav.addObject("results", jsonResults);
 
         return mav;
     }

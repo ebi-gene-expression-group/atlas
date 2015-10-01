@@ -12,6 +12,7 @@ import uk.ac.ebi.atlas.utils.ColourGradient;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +46,8 @@ public class DifferentialAnalyticsFacetsReader {
 
         ReadContext jsonReadContext = JsonPath.parse(solrResponseAsJson);
 
-        double minUpLevel = 0.0, maxUpLevel = Double.MAX_VALUE, minDownLevel = 0.0, maxDownLevel = Double.MIN_VALUE;
-        // We can’t use Double https://github.com/jayway/JsonPath/issues/130
+        double minUpLevel = Double.MAX_VALUE, maxUpLevel = 0.0, minDownLevel = Double.MAX_VALUE * -1.0, maxDownLevel = 0.0;
+        // We can’t use List<Double> https://github.com/jayway/JsonPath/issues/130
         List<Object> foldChanges = jsonReadContext.read(LOG2_FOLD_CHANGE_PATH);
         for (Object foldChangeSymbol : foldChanges) {
             double foldChange = foldChangeSymbol instanceof Double ? (double) foldChangeSymbol : Double.parseDouble((String) foldChangeSymbol);
@@ -59,6 +60,8 @@ public class DifferentialAnalyticsFacetsReader {
                 maxDownLevel = Math.min(maxDownLevel, foldChange);
             }
         }
+
+        Map<String, Object> resultsWithLevels = new HashMap<>(2);
 
         List<Map<String, Object>> documents = jsonReadContext.read(DOCS_PATH);
         for (Map<String, Object> document : documents) {
@@ -75,8 +78,14 @@ public class DifferentialAnalyticsFacetsReader {
             document.put("experimentName", experimentTrader.getExperimentFromCache(experimentAccession, experimentType).getDescription());
 
         }
+        resultsWithLevels.put("results", documents);
 
-        return gson.toJson(documents);
+        resultsWithLevels.put("maxDownLevel", maxDownLevel);
+        resultsWithLevels.put("minDownLevel", minDownLevel);
+        resultsWithLevels.put("minUpLevel", minUpLevel);
+        resultsWithLevels.put("maxUpLevel", maxUpLevel);
+
+        return gson.toJson(resultsWithLevels);
     }
 
     // TODO Prettify fields with a Hashmap: <Field as it is stored in Solr> -> <Pretty field>
