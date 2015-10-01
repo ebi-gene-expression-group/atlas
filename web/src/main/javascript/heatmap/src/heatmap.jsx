@@ -910,7 +910,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 }
                 else if (type.isDifferential) {
                     return (
-                            <CellDifferential key={this.props.designElement + this.props.name + expression.contrastName} color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={this.props.displayLevels} id={this.props.id} name={this.props.name}/>
+                            <CellDifferential key={this.props.designElement + this.props.name + expression.contrastName} color={expression.color} foldChange={expression.foldChange} pValue={expression.pValue} tStat={expression.tStat} displayLevels={this.props.displayLevels}/>
                         );
                 }
                 else if (type.isMultiExperiment) {
