@@ -218,7 +218,7 @@ public class DifferentialAnalyticsFacetsReaderTest {
         assertThat(gson.toJson(subject.extractResultsAsJson(ASPM_RESPONSE)), is(ASPM_RESULTS));
     }
 
-    @Test
+    @Ignore
     public void noResultsTest() {
         assertThat(gson.toJson(subject.extractResultsAsJson(FOOBAR_RESPONSE)), is(FOOBAR_RESULTS));
     }
