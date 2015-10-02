@@ -135,7 +135,7 @@ for l in $(cat ${aux}.new); do
     private=`echo $l | awk -F"\t" '{print $3}'`
     load_experiment $experiment $private $DEV_TOMCAT $USERID $PASS
     if [ $? -ne 0 ]; then
-	echo "ERROR: FAiled to load $exp $DEV_TOMCAT" >> $log
+	echo "ERROR: FAiled to load $experiment $DEV_TOMCAT" >> $log
 	exit 1
     fi 
 done
