@@ -32,7 +32,7 @@ public class ExpressionDataControllerIT extends RestAssuredFixture {
     private static final String NON_EXISTENT_GENE = "FOOBAR";
 
     private static final String EMPTY_JSON_OBJECT = "{}";
-    private static final String EMPTY_JSON_ARRAY = "[]";
+    private static final String EMPTY_JSON_ARRAY = "{\"results\":[]}";
     private static final String NON_EMPTY_JSON_OBJECT_REGEX = "\\{.+\\}";
 
     @Inject

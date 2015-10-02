@@ -85,10 +85,12 @@ public class DifferentialAnalyticsFacetsReader {
         }
         resultsWithLevels.put("results", documents);
 
-        resultsWithLevels.put("maxDownLevel", foldChangeRounder.format(maxDownLevel));
-        resultsWithLevels.put("minDownLevel", foldChangeRounder.format(minDownLevel));
-        resultsWithLevels.put("minUpLevel", foldChangeRounder.format(minUpLevel));
-        resultsWithLevels.put("maxUpLevel", foldChangeRounder.format(maxUpLevel));
+        if (documents.size() > 0) {
+            resultsWithLevels.put("maxDownLevel", foldChangeRounder.format(maxDownLevel));
+            resultsWithLevels.put("minDownLevel", foldChangeRounder.format(minDownLevel));
+            resultsWithLevels.put("minUpLevel", foldChangeRounder.format(minUpLevel));
+            resultsWithLevels.put("maxUpLevel", foldChangeRounder.format(maxUpLevel));
+        }
 
         return gson.toJson(resultsWithLevels);
     }
