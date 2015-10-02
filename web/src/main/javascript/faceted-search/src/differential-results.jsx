@@ -6,6 +6,7 @@ var React = require('react');
 
 //*------------------------------------------------------------------*
 
+var DisplayLevelsButton = require('display-levels-button');
 var Legend = require('legend');
 var CellDifferential = require('cell-differential');
 
@@ -56,7 +57,7 @@ var DifferentialResults = React.createClass({
             contrastId: React.PropTypes.string.isRequired,
             comparison: React.PropTypes.string.isRequired,
             numReplicates: React.PropTypes.string.isRequired,  // faceting only works with strings https://issues.apache.org/jira/browse/SOLR-7496
-            foldChange: React.PropTypes.number.isRequired,
+            foldChange: React.PropTypes.string.isRequired,     // a string, a formatted value, to be able to work with Infinity values and rounding
             colour: React.PropTypes.string.isRequired,
             regulation: React.PropTypes.string.isRequired
         })).isRequired,
@@ -66,21 +67,38 @@ var DifferentialResults = React.createClass({
         maxUpLevel: React.PropTypes.number.isRequired
     },
 
+    getInitialState: function () {
+        return {
+            displayLevels: false
+        };
+    },
+
+    _toggleDisplayLevels: function () {
+        var newDisplayLevels = !this.state.displayLevels;
+        this.setState({displayLevels: newDisplayLevels});
+    },
+
     render: function () {
         var differentialResultRows = this.props.results.map(function (diffResult) {
             return <DifferentialResultRow
-                key={diffResult.experimentAccession + diffResult.contrastId + diffResult.foldChange}
+                key={diffResult.bioentity_identifier + diffResult.experimentAccession + diffResult.contrastId + diffResult.foldChange}
                 colour={diffResult.colour} foldChange={diffResult.foldChange} species={diffResult.species} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
-                contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession}
+                contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession} displayLevels={this.state.displayLevels}
             />;
         }.bind(this));
 
         return (
             <div>
-                <Legend.LegendDifferential
-                    proxyPrefix={""} contextRoot={"/gxa"}
-                    minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
-                    displayLevels={true}/>
+                <div style={{display: "inline-block", verticalAlign: "middle"}}>
+                    <DisplayLevelsButton hideText="Hide log<sub>2</sub>-fold change" showText="Display log<sub>2</sub>-fold change" onClickCallback={this._toggleDisplayLevels} displayLevels={this.state.displayLevels} />
+                </div>
+
+                <div style={{display: "inline-block", verticalAlign: "middle"}}>
+                    <Legend.LegendDifferential
+                        proxyPrefix={""} contextRoot={"/gxa"}
+                        minDownLevel={this.props.minDownLevel} maxDownLevel={this.props.maxDownLevel} minUpLevel={this.props.minUpLevel} maxUpLevel={this.props.maxUpLevel}
+                        displayLevels={this.state.displayLevels}/>
+                </div>
 
                 <table className="table-striped atlasDifferentialFacetedSearchResults">
                     <thead>
@@ -104,13 +122,14 @@ var DifferentialResults = React.createClass({
 
 var DifferentialResultRow = React.createClass({
     propTypes: {
-        foldChange: React.PropTypes.number.isRequired,
+        foldChange: React.PropTypes.string.isRequired,
         colour: React.PropTypes.string.isRequired,
         species: React.PropTypes.string.isRequired,
         comparison: React.PropTypes.string.isRequired,
         experimentName: React.PropTypes.string.isRequired,
         contrastId: React.PropTypes.string.isRequired,
-        experimentAccession: React.PropTypes.string.isRequired
+        experimentAccession: React.PropTypes.string.isRequired,
+        displayLevels: React.PropTypes.bool.isRequired
     },
 
     // TODO Use this.props.contrastId and this.props.experimentAccession to add link to the relevant experiment/comparison
@@ -173,7 +192,7 @@ var DifferentialResultRow = React.createClass({
 
         return (
             <tr>
-                <CellDifferential colour={this.props.colour} foldChange={this.props.foldChange} displayLevels={true}/>
+                <CellDifferential colour={this.props.colour} infinity={this.props.infinity} foldChange={this.props.foldChange} displayLevels={this.props.displayLevels}/>
                 <td className="col_species"><span className={"icon icon-species " + classColor} data-icon={classIcon} style={{color: 'red'}} title={this.props.species}></span></td>
                 <td><a href="#">{this.props.comparison}</a></td>
                 <td>organism part</td>
