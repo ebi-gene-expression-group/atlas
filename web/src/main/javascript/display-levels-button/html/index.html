@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <script src="/dev-server/vendor.bundle.js"></script>
+    <script src="/dev-server/demo.bundle.js"></script>
+    <title>Legend Differential demo</title>
+</head>
+<body>
+    <div id="main">
+        <div id="displayLevelsButton"></div>
+    </div>
+</body>
+
+<script>
+    var displayLevels = false;
+    function toggleDisplayLevels() {
+        displayLevels = !displayLevels;
+    }
+
+    var renderDisplayLevelsButton = window.exposed;
+    renderDisplayLevelsButton("Hide it!", "Show it!", toggleDisplayLevels, displayLevels, document.getElementById("displayLevelsButton"));
+</script>
+
+</html>
