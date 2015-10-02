@@ -1,4 +1,4 @@
-.gxaShowCell {
+.gxaWebpackShowCell {
     background-color: white;
     margin: 4px;
     padding: 2px;
@@ -6,7 +6,7 @@
     text-align: center;
 }
 
-.gxaHideCell {
+.gxaWebpackHideCell {
     display: none;
     visibility: hidden;
 }

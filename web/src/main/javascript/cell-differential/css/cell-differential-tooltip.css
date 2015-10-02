@@ -1,4 +1,4 @@
-.gxaTableGrid {
+.gxaWebpackTableGrid {
     color: #404040;
     background-color: white;
     border: 1px solid #cdcdcd !important;
@@ -10,7 +10,7 @@
     border-collapse: collapse;
 }
 
-.gxaTableGrid>tbody>tr>td, .gxaTableGrid>thead>tr>td {
+.gxaWebpackTableGrid>tbody>tr>td, .gxaTableGrid>thead>tr>td {
     color: #3D3D3D;
     vertical-align: middle;
     border: 1px solid #cdcdcd !important;
@@ -19,7 +19,7 @@
     white-space: nowrap;
 }
 
-.gxaHeaderCell {
+.gxaWebpackHeaderCell {
     background-color: rgb(237, 246, 246) !important;
     font-weight: bold;
     padding-left: 5px;
@@ -27,17 +27,17 @@
 }
 
 /* needed for span inside header-cell that is added by React */
-.gxaHeaderCell span {
+.gxaWebpackHeaderCell span {
     font-weight: bold;
 }
 
-.gxaHeaderCell:hover {
+.gxaWebpackHeaderCell:hover {
     background-color: #deebeb !important;
     cursor: pointer;
     *cursor: hand;
 }
 
-.gxaHelpTooltip {
+.gxaWebpackHelpTooltip {
     background: #fafafa;
     border: 1px solid #2777A5 !important;
     padding: 4px;
@@ -48,7 +48,7 @@
     box-shadow: 0 0 7px gray;
 }
 
-.gxaPvalueTooltipStyling {
+.gxaWebpackPvalueTooltipStyling {
     padding: 2px !important;
     margin: 0 !important;
 }

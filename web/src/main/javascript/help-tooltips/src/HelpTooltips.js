@@ -7,7 +7,7 @@ require('jquery-ui');
 
 //*------------------------------------------------------------------*
 
-require('../css/atlas.css');
+require('../css/help-tooltips.css');
 
 //*------------------------------------------------------------------*
 
@@ -39,7 +39,7 @@ function initTooltips(contextRoot, pageName, parentElementId) {
         })
         .tooltip(
         {
-            tooltipClass: "gxaHelpTooltip",
+            tooltipClass: "gxaWebpackHelpTooltip",
             content: function (callback) {
                 var tooltipHelpHtmlId = $(this).parent().attr("data-help-loc");
 

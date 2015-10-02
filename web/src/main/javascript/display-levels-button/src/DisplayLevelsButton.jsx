@@ -9,6 +9,7 @@ require('jquery-ui');
 //*------------------------------------------------------------------*
 
 require('../css/jquery-ui.min.css');
+require('../css/display-levels-button.css');
 
 //*------------------------------------------------------------------*
 
@@ -31,7 +32,7 @@ var DisplayLevelsButton = React.createClass({
 
     render: function () {
         return (
-            <button id='display-levels' onClick={this.props.onClickCallback}></button>
+            <button className="gxaWebpackMediumButton" onClick={this.props.onClickCallback}></button>
         );
     },
 
