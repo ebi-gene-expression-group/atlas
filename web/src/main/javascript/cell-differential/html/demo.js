@@ -10,10 +10,10 @@ var CellDifferential = require('../src/CellDifferential.jsx');
 
 //*------------------------------------------------------------------*
 
-exports.render = function(colour, foldChange, pValue, tStat, displayLevels, mountNode) {
+exports.render = function(fontSize, colour, foldChange, pValue, tStat, displayLevels, mountNode) {
     React.render(
         React.createElement(
-            CellDifferential, {colour: colour, foldChange: foldChange, pValue: pValue, tStat: tStat, displayLevels: displayLevels}
+            CellDifferential, {fontSize: fontSize, colour: colour, foldChange: foldChange, pValue: pValue, tStat: tStat, displayLevels: displayLevels}
         ),
         mountNode
     );

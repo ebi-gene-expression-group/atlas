@@ -21,8 +21,9 @@ require('../css/cell-differential-tooltip.css');
 var CellDifferential = React.createClass({
 
     propTypes: {
+        fontSize: React.PropTypes.number,
         colour: React.PropTypes.string.isRequired,
-        foldChange: React.PropTypes.number.isRequired,
+        foldChange: React.PropTypes.string.isRequired,
         pValue: React.PropTypes.number,
         tStat: React.PropTypes.number,
         displayLevels: React.PropTypes.bool.isRequired
@@ -32,6 +33,14 @@ var CellDifferential = React.createClass({
         return (this.props.foldChange !== undefined);
     },
 
+    _fontSize: function() {
+        if (this.props.fontSize) {
+            return this.props.fontSize + "px";
+        } else {
+            return "9px";
+        }
+    },
+
     render: function () {
         if (!this._hasValue()) {
             return (<td></td>);
@@ -39,7 +48,7 @@ var CellDifferential = React.createClass({
 
         return (
             <td style={{backgroundColor: this.props.colour, verticalAlign: "middle"}}>
-                <div className={this.props.displayLevels ? "gxaShowCell" : "gxaHideCell"}>
+                <div style={{fontSize: this._fontSize()}} className={this.props.displayLevels ? "gxaShowCell" : "gxaHideCell"}>
                     {this.props.foldChange}
                 </div>
             </td>
