@@ -32,8 +32,6 @@
 
 <div id="search_result_pg">
 
-<div id="help-placeholder" style="display: none"></div>
-
 <!-- Search box -->
 <%--<section class="grid_24" style="margin-bottom:18px;">--%>
     <%--<%@ include file="includes/search-form.jsp" %>--%>
