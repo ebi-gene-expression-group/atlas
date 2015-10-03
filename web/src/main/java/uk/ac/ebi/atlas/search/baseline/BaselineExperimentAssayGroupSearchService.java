@@ -110,14 +110,16 @@ public class BaselineExperimentAssayGroupSearchService {
 
     // use above query instead, see TODO below
     @Deprecated
-    public SortedSet<BaselineExperimentAssayGroup> query(String geneQuery, String condition, String specie, boolean isExactMatch) {
+    public SortedSet<BaselineExperimentAssayGroup> query(String geneQuery, String condition, String species, boolean isExactMatch) {
         LOGGER.info(String.format("<query> geneQuery=%s, condition=%s", geneQuery, condition));
         StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
         stopWatch.start();
 
         Optional<ImmutableSet<IndexedAssayGroup>> indexedAssayGroups = fetchAssayGroupsForCondition(condition);
 
-        String species = StringUtils.isNotBlank(specie) ? specie : "";
+        if (StringUtils.isBlank(species)) {
+            species = "";
+        }
 
         //TODO: move outside into caller, because this is called twice, here and in DiffAnalyticsSearchService
         Optional<Set<String>> geneIds = solrQueryService.expandGeneQueryIntoGeneIds(geneQuery, species, isExactMatch);
