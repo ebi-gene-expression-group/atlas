@@ -179,7 +179,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                     // Set position sticky col
                     $stickyHead.add($stickyInsct).add($stickyCol).css({
                         left: $stickyWrap.offset().left,
-                        top: $stickyWrap.offset().top,
+                        top: $stickyWrap.offset().top
                     });
                 },
                 repositionSticky = function () {
@@ -257,6 +257,13 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
                 <LegendDifferential displayLevels={this.state.displayLevels} minDownLevel={this.state.profiles.minDownLevel} maxDownLevel={this.state.profiles.maxDownLevel} minUpLevel={this.state.profiles.minUpLevel} maxUpLevel={this.state.profiles.maxUpLevel}/>);
         },
 
+        tableHeaderType: function () {
+            return (heatmapConfig.showMultipleColumnHeaders ?
+                <MultipleHeatmapTableHeader ref="multipleHeatmapTableHeader" radioId="table" isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} multipleColumnHeaders={this.props.multipleColumnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} hoverColumnCallback={this._hoverColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} renderContrastFactorHeaders={true} anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>:
+                <HeatmapTableHeader ref="heatmapTableHeader" radioId="table" isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders}  multipleColumnHeaders={this.props.multipleColumnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} hoverColumnCallback={this._hoverColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} renderContrastFactorHeaders={true} anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>
+            );
+        },
+
         render: function () {
             var paddingMargin = "15px";
 
@@ -277,7 +284,7 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
 
                     <div ref="stickyWrap" className="gxaStickyTableWrap" style={{"marginTop": paddingMargin}}>
                         <table ref="heatmapTable" className="gxaTableGrid gxaStickyEnabled" id="heatmap-table">
-                            <HeatmapTableHeader ref="heatmapTableHeader" radioId="table" isMicroarray={this.isMicroarray()} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} columnHeaders={this.props.columnHeaders}  multipleColumnHeaders={this.props.multipleColumnHeaders} selectedColumnId={this.state.selectedColumnId} selectColumn={this.selectColumn} hoverColumnCallback={this._hoverColumn} displayLevels={this.state.displayLevels} toggleDisplayLevels={this.toggleDisplayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} toggleRadioButton={this.toggleRadioButton} renderContrastFactorHeaders={true} anatomogramEventEmitter={this.props.anatomogramEventEmitter}/>
+                            {this.tableHeaderType()}
                             <HeatmapTableRows profiles={this.state.profiles.rows} selectedGeneId={this.state.selectedGeneId} selectGene={this.selectGene} displayLevels={this.state.displayLevels} showGeneSetProfiles={this.state.showGeneSetProfiles} selectedRadioButton={this.state.selectedRadioButton} hoverColumnCallback={this._hoverColumn} hoverRowCallback={this._hoverRow} hasQuartiles={this.hasQuartiles()} isSingleGeneResult={this.isSingleGeneResult()} renderExpressionCells={true}/>
                         </table>
                         <div ref="stickyIntersect" className="gxaStickyTableIntersect">
@@ -409,15 +416,68 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
             }
         },
 
-        renderMultipleHeaders: function () {
-            var headers = Object.keys(this.props.multipleColumnHeaders).map(function (key) {
-                if (key != "primary") {
-                    return (<MultipleFactorHeader header={this.props.multipleColumnHeaders[key]} headerCols={this.props.columnHeaders ? this.props.columnHeaders.length : undefined} />);
-                }
-            }.bind(this));
+        render: function () {
+            var showGeneProfile = this.props.showGeneSetProfiles ? 'Gene set' : 'Gene';
+            var showExperimentProfile = type.isMultiExperiment ? 'Experiment' : showGeneProfile;
 
             return (
-                <div>{headers}</div>
+                <thead>
+                    <tr>
+                        <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" colSpan={this.props.isMicroarray ? 2 : undefined}>
+                            <TopLeftCorner hasQuartiles={this.props.hasQuartiles} radioId={this.props.radioId} isSingleGeneResult={this.props.isSingleGeneResult} displayLevels={this.props.displayLevels} toggleDisplayLevels={this.props.toggleDisplayLevels} selectedRadioButton={this.props.selectedRadioButton} toggleRadioButton={this.props.toggleRadioButton}/>
+                        </th>
+
+                        { this.props.renderContrastFactorHeaders ? this.renderContrastFactorHeaders() : null }
+                    </tr>
+
+                    <tr>
+                        <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" style={ this.props.isMicroarray ? {width:"166px"} : undefined}><div>{ showExperimentProfile }</div></th>
+                        { this.props.isMicroarray ? <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect"><div>Design Element</div></th> : null}
+                    </tr>
+                </thead>
+            );
+        }
+
+    });
+
+    var MultipleHeatmapTableHeader = React.createClass({
+
+        renderContrastFactorHeaders: function () {
+            var hoverColumnCallback = this.props.hoverColumnCallback;
+
+            if (type.isBaseline) {
+                return (this.props.multipleColumnHeaders.children).map(function (children) {
+                    return (children.children).map(function (child) {
+                        return child.children.map(function (cell){
+                            return (<FactorHeaders key={cell.cellLines}
+                                                   assayGroupFactors={cell.cellLines}
+                                                   experimentAccession={heatmapConfig.experimentAccession}
+                                                   hoverColumnCallback={hoverColumnCallback} />);
+                        });
+                    });
+                });
+            }
+        },
+
+        renderHeaders: function () {
+            var multipleHeaders = (this.props.multipleColumnHeaders.children).map(function (children) {
+                return (<MultipleFactorHeader key={children.name} name={children.name} colspan={children.colSpan} />);
+            });
+
+            return (
+                <div>{multipleHeaders}</div>
+            );
+        },
+
+        renderSubHeaders: function () {
+            var subHeaders = (this.props.multipleColumnHeaders.children).map(function (children) {
+                return (children.children).map(function (child) {
+                    return (<MultipleFactorHeader key={child.name} name={child.name} colspan={child.colSpan} />);
+                });
+            });
+
+            return (
+                <div>{subHeaders}</div>
             );
         },
 
@@ -427,7 +487,16 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
 
             return (
                 <thead>
-                    {heatmapConfig.showMultipleColumnHeaders ? this.renderMultipleHeaders() : null}
+
+                    <tr>
+                        <th className="gxaEmptyMultipleHeatmapHeaderFactor"></th>
+                        { this.renderHeaders() }
+                    </tr>
+
+                    <tr>
+                        <th className="gxaEmptyMultipleHeatmapHeaderFactor"></th>
+                        { this.renderSubHeaders() }
+                    </tr>
 
                     <tr>
                         <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" colSpan={this.props.isMicroarray ? 2 : undefined}>
@@ -448,16 +517,13 @@ var build = function build(type, heatmapConfig, $prefFormDisplayLevelsInputEleme
     });
 
     var MultipleFactorHeader = React.createClass({
-       render: function() {
-           return (
-               <tr>
-                   <th className="gxaEmptyMultipleHeatmapHeaderFactor"></th>
-                   <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" colSpan={this.props.headerCols}>
-                       <div>{this.props.header}</div>
-                   </th>
-               </tr>
-           );
-       }
+        render: function() {
+            return (
+                <th className="gxaHorizontalHeaderCell gxaHeatmapTableIntersect" colSpan={this.props.colspan}>
+                    <div>{this.props.name}</div>
+                </th>
+            );
+        }
     });
 
     function restrictLabelSize(label, maxSize) {

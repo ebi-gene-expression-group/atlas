@@ -205,7 +205,6 @@ public class ExperimentalFactors implements Serializable {
     }
 
     public Set<Factor> getComplementFactorsByXML(final Set<Factor> filterFactors) {
-
         if (CollectionUtils.isEmpty(filterFactors)) {
             return getAllFactorsOrderedByXML();
         }
@@ -224,6 +223,9 @@ public class ExperimentalFactors implements Serializable {
 
     }
 
+    public LinkedHashMultimap<String, Factor> getXmlFactorsByType() {
+        return xmlFactorsByType;
+    }
 
     // match each FactorGroup with the filterFactors, and for each match return the remaining single factor
     // (if there is one and only one)
@@ -260,6 +262,25 @@ public class ExperimentalFactors implements Serializable {
             }
             if (remainingFactors.size() == 1) {
                 result.add(new AssayGroupFactor(groupId, remainingFactors.get(0)));
+            }
+        }
+
+        return result;
+    }
+
+    public LinkedHashMap<String, List<Factor>> getHeadersComplementAssayGroupFactorsByXML(final Set<Factor> filterFactors) {
+        LinkedHashMap<String, List<Factor>> result = Maps.newLinkedHashMap();
+
+        for (String groupId : orderedFactorGroupsByAssayGroupId.keySet()) {
+            List<Factor> remainingFactors;
+
+            if (CollectionUtils.isNotEmpty(filterFactors)) {
+                remainingFactors = orderedFactorGroupsByAssayGroupId.get(groupId).remove(filterFactors);
+            } else {
+                remainingFactors = Lists.newArrayList(orderedFactorGroupsByAssayGroupId.get(groupId).iterator());
+            }
+            if (remainingFactors.size() == 2) {
+                result.put(groupId, remainingFactors);
             }
         }
 
@@ -311,22 +332,9 @@ public class ExperimentalFactors implements Serializable {
         return ImmutableList.copyOf(orderedFactorGroups);
     }
 
-    public List<String> getHeaderFactorNames() {
-        List<String> headerFactorNames = Lists.newArrayList();
 
-        for(String type : headerFactorTypes) { //TODO: change defaultQueryFactorType and getDefaultFilterFActors by all the different factors filtered by the headerFactorTypes
-            if(!type.equals(defaultQueryFactorType)) {
-                for(Factor factor : getDefaultFilterFactors()) {
-                    if(factor.getType().equals(type)) {
-                        headerFactorNames.add(factor.getValue());
-                    }
-                }
-
-            }
-        }
-
-        return headerFactorNames;
-
+    public List<String> getHeaderFactorTypes() {
+        return headerFactorTypes;
     }
 
     @Override
