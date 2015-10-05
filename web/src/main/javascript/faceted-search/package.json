@@ -10,6 +10,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "expression-atlas-heatmap": "file:../heatmap",
     "display-levels-button": "file:../display-levels-button",
     "legend": "file:../legend",
     "cell-differential": "file:../cell-differential",
