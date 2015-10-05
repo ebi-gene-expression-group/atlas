@@ -46,13 +46,10 @@ public class AnalyticsIndexerController {
     private AnalyticsIndexerManager analyticsIndexerManager;
     private AnalyticsIndexerMonitor analyticsIndexerMonitor;
 
-    private IdentifierSearchTermsManager identifierSearchTermsManager;
-
     @Inject
-    public AnalyticsIndexerController(AnalyticsIndexerManager analyticsIndexerManager, AnalyticsIndexerMonitor analyticsIndexerMonitor, IdentifierSearchTermsManager identifierSearchTermsManager) {
+    public AnalyticsIndexerController(AnalyticsIndexerManager analyticsIndexerManager, AnalyticsIndexerMonitor analyticsIndexerMonitor) {
         this.analyticsIndexerManager = analyticsIndexerManager;
         this.analyticsIndexerMonitor = analyticsIndexerMonitor;
-        this.identifierSearchTermsManager = identifierSearchTermsManager;
     }
 
     @RequestMapping("/analyticsIndex/buildIndex")
@@ -108,27 +105,6 @@ public class AnalyticsIndexerController {
         stopWatch.stop();
 
         return String.format("Experiment %s removed from index in %s seconds", experimentAccession, stopWatch.getTotalTimeSeconds());
-    }
-
-    @RequestMapping("/analyticsIndex/updateIdentifierSearchTerms")
-    @ResponseBody
-    public String updateIdentifierSearchTerms(@RequestParam(value = "accession", required = false) String experimentAccession) {
-        StopWatch stopWatch = new StopWatch(getClass().getSimpleName());
-        stopWatch.start();
-
-        int updatedIdentifiers = 0;
-        if (Strings.isNullOrEmpty(experimentAccession)) {
-            updatedIdentifiers = identifierSearchTermsManager.updateAllSearchTerms();
-        } else {
-            updatedIdentifiers = identifierSearchTermsManager.updateSearchTerms(experimentAccession);
-        }
-
-        stopWatch.stop();
-
-        String message = Strings.isNullOrEmpty(experimentAccession) ?
-                String.format("All experiments search terms added for %,d identifiers in %s seconds", updatedIdentifiers, stopWatch.getTotalTimeSeconds()) :
-                String.format("Experiment %s search terms added for %,d identifiers in %s seconds", experimentAccession, updatedIdentifiers, stopWatch.getTotalTimeSeconds());
-        return message;
     }
 
     @ExceptionHandler(Exception.class)

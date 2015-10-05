@@ -96,7 +96,6 @@
         <field name="experimentAccession" type="string" indexed="true" stored="true" required="true"/>
         <field name="experimentType" type="string" indexed="true" stored="true" required="true"/>
         <field name="defaultQueryFactorType" type="string" indexed="true" stored="true"/>
-        <field name="identifierSearch" type="text_en" indexed="true" stored="true"/>
         <field name="conditionsSearch" type="text" indexed="true" stored="false"/>
         <field name="assayGroupId" type="string" indexed="true" stored="true"/>
         <field name="expressionLevel" type="tdouble4" indexed="true" stored="true"/>

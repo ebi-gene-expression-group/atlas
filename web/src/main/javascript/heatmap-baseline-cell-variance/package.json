@@ -14,14 +14,24 @@
     "react-highcharts": "^1.0.1"
   },
   "devDependencies": {
-    "chai": "^3.0.0",
-    "expose-loader": "^0.7.0",
-    "jsdom": "^5.6.1",
-    "jsx-loader": "^0.13.2",
-    "mocha": "^2.2.5",
-    "mocha-loader": "^0.7.1",
+    "jsx-loader": "^0.12.2",
     "react-hot-loader": "^1.2.8",
+
+    "chai": "^3.0.0",
+
+    "expose-loader": "^0.7.0",
+    "imagemin": "^3.1.0",
+
+    "file-loader": "^0.8.4",
+    "image-webpack-loader": "^1.6.1",
+
+    "mocha": "^2.0.1",
+    "mocha-loader": "^0.7.1",
+
+    "style-loader": "^0.12.3",
+
     "testdom": "^2.0.0",
+
     "webpack": "^1.10.1",
     "webpack-dev-server": "^1.10.1"
   }
