@@ -1,11 +1,13 @@
 package uk.ac.ebi.atlas.search.analyticsindex.differential;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
+import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.profiles.differential.viewmodel.FoldChangeRounder;
 import uk.ac.ebi.atlas.trader.ContrastTrader;
@@ -106,12 +108,38 @@ public class DifferentialAnalyticsFacetsReader {
             for (Object facetFieldValue : (List<Object>) jsonReadContext.read("$.." + facetField + "..val")) {
                 JsonObject facetItem = new JsonObject();
                 facetItem.addProperty("name", facetFieldValue.toString());
-                facetItem.addProperty("value", facetFieldValue.toString());  // TODO Prettify (see above)
+                if(facetField.equals("experimentType")) {
+                    facetItem.addProperty("value", ExperimentsTypeMapConverter.getType(facetFieldValue.toString()));
+                } else {
+                    facetItem.addProperty("value", facetFieldValue.toString());
+                }
                 facet.add(facetItem);
             }
             facets.add(facetField, facet);
         }
 
         return facets.toString();
+    }
+
+    protected static class ExperimentsTypeMapConverter {
+        private static final Logger LOGGER = Logger.getLogger(ExperimentsTypeMapConverter.class);
+
+        private static final Map<String,String> EXPERIMENTS_TYPE_MAP = ImmutableMap.<String, String>builder()
+                .put("rnaseq_mrna_baseline", "RNA-seq mRNA baseline")
+                .put("rnaseq_mrna_differential", "RNA-seq mRNA differential")
+                .put("proteomics_baseline", "proteomics baseline")
+                .put("microarray_1colour_microrna_differential", "microarray 1_colour microRNA differential")
+                .put("microarray_1colour_mrna_differential", "microarray 1_colour mRNA differential")
+                .put("microarray_2colour_mrna_differential", "microarray 2_colour mRNA differential")
+                .build();
+
+        public static String getType(String type) {
+            if(EXPERIMENTS_TYPE_MAP.get(type) != null) {
+                return EXPERIMENTS_TYPE_MAP.get(type);
+            } else {
+                LOGGER.warn(String.format("Experiment type not found %s", type));
+                return type;
+            }
+        }
     }
 }
