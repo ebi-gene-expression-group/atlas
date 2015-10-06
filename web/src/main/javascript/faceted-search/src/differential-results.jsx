@@ -18,7 +18,7 @@ require('../css/differential-results.css');
 
 var DifferentialResults = React.createClass({
     /*
-    [
+    results: [
      {
        "bioentityIdentifier":"ENSMUSG00000072476",
        "species":"mus musculus",
@@ -27,7 +27,7 @@ var DifferentialResults = React.createClass({
        "experimentType":"rnaseq_mrna_differential",
        "contrastId":"g1_g2",
        "numReplicates":"3",
-       "foldChange":"-Infinity",
+       "foldChange":"2.4",
        "regulation":"DOWN"
        "colour": some_hex_value
      },
@@ -39,12 +39,16 @@ var DifferentialResults = React.createClass({
        "experimentType":"rnaseq_mrna_differential",
        "contrastId":"g1_g2",
        "numReplicates":"3",
-       "foldChange":"-Infinity",
+       "foldChange":"-∞",
        "regulation":"DOWN",
        "colour": some_hex_value
 
      }
-    ]
+    ],
+    maxDownLevel: "-∞" ,
+    minDownLevel: "0",
+    minUpLevel: "0",
+    maxUpLevel: "2.4"
     */
     propTypes: {
         results: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -61,10 +65,10 @@ var DifferentialResults = React.createClass({
             colour: React.PropTypes.string.isRequired,
             regulation: React.PropTypes.string.isRequired
         })).isRequired,
-        maxDownLevel: React.PropTypes.number.isRequired,
-        minDownLevel: React.PropTypes.number.isRequired,
-        minUpLevel: React.PropTypes.number.isRequired,
-        maxUpLevel: React.PropTypes.number.isRequired
+        maxDownLevel: React.PropTypes.string.isRequired,
+        minDownLevel: React.PropTypes.string.isRequired,
+        minUpLevel: React.PropTypes.string.isRequired,
+        maxUpLevel: React.PropTypes.string.isRequired
     },
 
     getInitialState: function () {
@@ -89,7 +93,7 @@ var DifferentialResults = React.createClass({
 
         return (
             <div>
-                <div style={{display: "inline-block", verticalAlign: "middle"}}>
+                <div style={{display: "inline-block", verticalAlign: "middle", paddingTop: "10px"}}>
                     <DisplayLevelsButton hideText="Hide log<sub>2</sub>-fold change" showText="Display log<sub>2</sub>-fold change" onClickCallback={this._toggleDisplayLevels} displayLevels={this.state.displayLevels} />
                 </div>
 

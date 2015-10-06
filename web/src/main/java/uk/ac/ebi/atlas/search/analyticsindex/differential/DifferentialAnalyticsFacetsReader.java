@@ -52,7 +52,7 @@ public class DifferentialAnalyticsFacetsReader {
 
         ReadContext jsonReadContext = JsonPath.parse(solrResponseAsJson);
 
-        double minUpLevel = Double.MAX_VALUE, maxUpLevel = 0.0, minDownLevel = Double.MAX_VALUE * -1.0, maxDownLevel = 0.0;
+        double minUpLevel = Double.POSITIVE_INFINITY, maxUpLevel = 0.0, minDownLevel = Double.NEGATIVE_INFINITY, maxDownLevel = 0.0;
         // We can’t use List<Double> https://github.com/jayway/JsonPath/issues/130
         List<Object> foldChanges = jsonReadContext.read(LOG2_FOLD_CHANGE_PATH);
         for (Object foldChangeSymbol : foldChanges) {

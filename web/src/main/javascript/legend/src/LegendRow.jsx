@@ -15,8 +15,8 @@ var LegendRow = React.createClass({
     propTypes: {
         lowValueColour: React.PropTypes.string.isRequired,
         highValueColour: React.PropTypes.string.isRequired,
-        lowExpressionLevel: React.PropTypes.number.isRequired,
-        highExpressionLevel: React.PropTypes.number.isRequired,
+        lowExpressionLevel: React.PropTypes.string.isRequired,
+        highExpressionLevel: React.PropTypes.string.isRequired,
         displayLevels: React.PropTypes.bool.isRequired
     },
 

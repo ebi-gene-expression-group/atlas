@@ -21,8 +21,8 @@ var LegendBaseline = React.createClass({
     propTypes: {
         proxyPrefix: React.PropTypes.string.isRequired,
         contextRoot: React.PropTypes.string.isRequired,
-        minExpressionLevel: React.PropTypes.number.isRequired,
-        maxExpressionLevel: React.PropTypes.number.isRequired,
+        minExpressionLevel: React.PropTypes.string.isRequired,
+        maxExpressionLevel: React.PropTypes.string.isRequired,
         helpTooltipLocation: React.PropTypes.string.isRequired,
         displayLevels: React.PropTypes.bool.isRequired
     },
