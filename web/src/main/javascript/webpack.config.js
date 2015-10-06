@@ -7,10 +7,10 @@ module.exports = {
     // define the bundles we want
     entry: {
         "anatomogram": './anatomogram/anatomogram-builder-index.js',
-        "expression-atlas-heatmap": './heatmap',
-        "internal-atlas-heatmap": './heatmap/internal-atlas-index.js',
+        "expression-atlas-heatmap": './heatmap-anatomogram',
+        "internal-atlas-heatmap": './heatmap-anatomogram/internal-atlas-index.js',
         "faceted-search": './faceted-search',
-        "vendor": [ 'react', 'jquery', 'jquery-ui', 'jquery.browser', 'urijs', 'wolfy87-eventemitter' ]
+        "vendor": [ 'react', 'jquery', 'jquery-ui', 'jquery.browser', 'urijs' ]
     },
 
     output: {

@@ -2,4 +2,4 @@
 
 //*------------------------------------------------------------------*
 
-require('./DisplayLevelsButtonWithDOM.js');
+require('./DisplayLevelsWithDOM.js');

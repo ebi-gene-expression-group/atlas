@@ -6,7 +6,7 @@ var React = require('react');
 
 //*------------------------------------------------------------------*
 
-var AtlasHeatmapBuilder = require('expression-atlas-heatmap');
+var AtlasHeatmapBuilder = require('heatmap-anatomogram');
 
 //*------------------------------------------------------------------*
 

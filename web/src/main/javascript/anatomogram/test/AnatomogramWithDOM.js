@@ -6,13 +6,13 @@ var ReactTestUtils = React.addons.TestUtils;
 require('testdom')('');
 
 
-describe("SimpleComponent", function() {
+describe("Anatomogram", function() {
 
-    var SimpleComponent;
+    var Anatomogram;
     var subject;
 
     beforeEach(function() {
-        SimpleComponent = require('../src/SimpleComponent.jsx');
+        Anatomogram = require('../src/Anatomogram.jsx');
         subject = React.createElement(SimpleComponent);
     });
 
@@ -20,16 +20,13 @@ describe("SimpleComponent", function() {
         expect(ReactTestUtils.isElement(subject)).to.equal(true);
     });
 
-    it("is a React element of type SimpleComponent", function() {
-        expect(ReactTestUtils.isElementOfType(subject, SimpleComponent)).to.equal(true);
+    it("is a React element of type Anatomogram", function() {
+        expect(ReactTestUtils.isElementOfType(subject, Anatomogram)).to.equal(true);
     });
 
     it("is a DOM component", function() {
         expect(ReactTestUtils.isDOMComponent(subject)).to.equal(false);
     });
 
-    it("should render on the page", function() {
-        expect(ReactTestUtils.renderIntoDocument(subject).getDOMNode().innerHTML).to.equal("Hello world, I’m not hot!");
-    });
 });
 
