@@ -3,13 +3,11 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 import com.google.common.collect.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.rnaseq.RnaSeqDifferentialAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -41,9 +39,6 @@ public class DiffAnalyticsDocumentStreamTest {
     DiffAnalyticsDocumentStream subject;
 
     @Mock
-    IdentifierSearchTermsDAO identifierSearchTermsDAO;
-
-    @Mock
     SpeciesKingdomTrader speciesKingdomTraderMock;
 
     @Test
@@ -54,7 +49,6 @@ public class DiffAnalyticsDocumentStreamTest {
         Map<String, String> ensemblSpeciesByContrastId = ImmutableMap.of(CONTRAST1, SPECIES1, CONTRAST2, SPECIES1, CONTRAST3, SPECIES3);
         SetMultimap<String, String> conditionSearchTermsByContrastId = ImmutableSetMultimap.of(CONTRAST1, CONDITION_SEARCH_1, CONTRAST2, CONDITION_SEARCH_2, CONTRAST3, CONDITION_SEARCH_3);
         Map<String, Integer> numReplicatesByContrastId = ImmutableMap.of(CONTRAST1, 3, CONTRAST2, 3, CONTRAST3, 3);
-        when(identifierSearchTermsDAO.fetchSearchTerms(Matchers.<String>any())).thenReturn(ImmutableSet.of(PROTEIN_CODING));
         when(speciesKingdomTraderMock.getKingdom(anyString())).thenReturn(PLANTS_KINGDOM);
         when(speciesKingdomTraderMock.getEnsemblDB(anyString())).thenReturn(PLANTS_ENSEMBLDB);
 
@@ -64,7 +58,7 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, identifierSearchTermsDAO, speciesKingdomTraderMock);
+                numReplicatesByContrastId, speciesKingdomTraderMock);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();
 
@@ -75,7 +69,6 @@ public class DiffAnalyticsDocumentStreamTest {
         assertThat(analyticsDocument1.getBioentityIdentifier(), is(GENEID1));
         assertThat(analyticsDocument1.getExperimentAccession(), is(experimentAccession));
         assertThat(analyticsDocument1.getExperimentType(), is(experimentType));
-        assertThat(analyticsDocument1.getIdentifierSearch(), is(GENEID1 + " " + PROTEIN_CODING));
         assertThat(analyticsDocument1.getContrastId(), is(CONTRAST3));
         assertThat(analyticsDocument1.getSpecies(), is(SPECIES3));
         assertThat(analyticsDocument1.getConditionsSearch(), is(CONDITION_SEARCH_3));
@@ -90,7 +83,6 @@ public class DiffAnalyticsDocumentStreamTest {
         Map<String, String> ensemblSpeciesByContrastId = ImmutableMap.of(CONTRAST1, SPECIES1, CONTRAST2, SPECIES1, CONTRAST3, SPECIES3);
         SetMultimap<String, String> conditionSearchTermsByContrastId = ImmutableSetMultimap.of(CONTRAST1, CONDITION_SEARCH_1, CONTRAST2, CONDITION_SEARCH_2, CONTRAST3, CONDITION_SEARCH_3);
         Map<String, Integer> numReplicatesByContrastId = ImmutableMap.of(CONTRAST1, 3, CONTRAST2, 3, CONTRAST3, 3);
-        when(identifierSearchTermsDAO.fetchSearchTerms(Matchers.<String>any())).thenReturn(ImmutableSet.of(PROTEIN_CODING));
 
         double pValue = 1.0;
         double foldChange = 0;
@@ -98,8 +90,7 @@ public class DiffAnalyticsDocumentStreamTest {
 
         subject = new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors,
                 ensemblSpeciesByContrastId, inputStream, conditionSearchTermsByContrastId,
-                numReplicatesByContrastId, identifierSearchTermsDAO, speciesKingdomTraderMock
-        );
+                numReplicatesByContrastId, speciesKingdomTraderMock);
 
         Iterator<AnalyticsDocument> analyticsDocumentIterator = subject.iterator();
 

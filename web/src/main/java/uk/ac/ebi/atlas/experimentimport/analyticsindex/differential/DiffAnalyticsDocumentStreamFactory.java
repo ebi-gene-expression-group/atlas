@@ -2,7 +2,6 @@ package uk.ac.ebi.atlas.experimentimport.analyticsindex.differential;
 
 import com.google.common.collect.SetMultimap;
 import uk.ac.ebi.atlas.experimentimport.analytics.differential.DifferentialAnalytics;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -14,12 +13,10 @@ import java.util.Set;
 @Named
 public class DiffAnalyticsDocumentStreamFactory {
 
-    private final IdentifierSearchTermsDAO identifierSearchTermsDAO;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     @Inject
-    public DiffAnalyticsDocumentStreamFactory(IdentifierSearchTermsDAO identifierSearchTermsDAO, SpeciesKingdomTrader speciesKingdomTrader) {
-        this.identifierSearchTermsDAO = identifierSearchTermsDAO;
+    public DiffAnalyticsDocumentStreamFactory(SpeciesKingdomTrader speciesKingdomTrader) {
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
@@ -31,7 +28,7 @@ public class DiffAnalyticsDocumentStreamFactory {
                                           SetMultimap<String, String> conditionSearchTermsByContrastId,
                                           Map<String, Integer> numReplicatesByContrastId) {
         return new DiffAnalyticsDocumentStream(experimentAccession, experimentType, factors, ensemblSpeciesGroupedByAssayGroupId,
-                inputStream, conditionSearchTermsByContrastId, numReplicatesByContrastId, identifierSearchTermsDAO, speciesKingdomTrader);
+                inputStream, conditionSearchTermsByContrastId, numReplicatesByContrastId, speciesKingdomTrader);
     }
 
 }

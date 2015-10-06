@@ -39,7 +39,6 @@ public class SearchDifferentialController extends SearchController {
 
     @RequestMapping(value = "/search/differential")
     public String searchDifferential(@Valid GeneQuerySearchRequestParameters requestParameters, Model model) throws IOException, SolrServerException {
-
         GeneQuery geneQuery = requestParameters.getGeneQuery();
 
         if (!geneQuery.isEmpty()) {

@@ -32,15 +32,12 @@ public class DifferentialAnalyticsSearchDao {
     private final RestTemplate restTemplate;
 
     private String solrBaseUrl;
-    private final String differentialGenePivotQuery;
     private final String differentialGeneFacetsQuery;
 
     @Inject
-    // TODO Move buildQuery to json.facet and implement using restTemplate to remove analyticsSolrServer
-    public DifferentialAnalyticsSearchDao(RestTemplate restTemplate, @Value("#{configuration['solr.analytics.base.url']}") String solrBaseUrl, String differentialGenePivotQuery, String differentialGeneFacetsQuery) {
+    public DifferentialAnalyticsSearchDao(RestTemplate restTemplate, @Value("#{configuration['solr.analytics.base.url']}") String solrBaseUrl, String differentialGeneFacetsQuery) {
         this.restTemplate = restTemplate;
         this.solrBaseUrl = solrBaseUrl;
-        this.differentialGenePivotQuery = "&json.facet=" + encodeQueryParam(differentialGenePivotQuery);
         this.differentialGeneFacetsQuery ="&json.facet=" + encodeQueryParam(differentialGeneFacetsQuery);
     }
 

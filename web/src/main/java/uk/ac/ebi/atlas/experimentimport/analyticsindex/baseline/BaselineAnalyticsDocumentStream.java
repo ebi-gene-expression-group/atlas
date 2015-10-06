@@ -6,7 +6,6 @@ import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.atlas.experimentimport.analytics.baseline.BaselineAnalytics;
 import uk.ac.ebi.atlas.experimentimport.analyticsindex.AnalyticsDocument;
-import uk.ac.ebi.atlas.experimentimport.analyticsindex.support.IdentifierSearchTermsDAO;
 import uk.ac.ebi.atlas.model.ExperimentType;
 import uk.ac.ebi.atlas.trader.SpeciesKingdomTrader;
 
@@ -26,7 +25,6 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
     private final String defaultQueryFactorType;
     private final Iterable<BaselineAnalytics> inputStream;
     private final SetMultimap<String, String> conditionSearchTermsByAssayAccessionId;
-    private final IdentifierSearchTermsDAO identifierSearchTermsDAO;
     private final SpeciesKingdomTrader speciesKingdomTrader;
 
     public BaselineAnalyticsDocumentStream(String experimentAccession,
@@ -35,7 +33,6 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
                                            String defaultQueryFactorType,
                                            Iterable<BaselineAnalytics> inputStream,
                                            SetMultimap<String, String> conditionSearchTermsByAssayAccessionId,
-                                           IdentifierSearchTermsDAO identifierSearchTermsDAO,
                                            SpeciesKingdomTrader speciesKingdomTrader) {
         this.experimentAccession = experimentAccession;
         this.experimentType = experimentType;
@@ -43,7 +40,6 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
         this.defaultQueryFactorType = defaultQueryFactorType;
         this.inputStream = inputStream;
         this.conditionSearchTermsByAssayAccessionId = conditionSearchTermsByAssayAccessionId;
-        this.identifierSearchTermsDAO = identifierSearchTermsDAO;
         this.speciesKingdomTrader = speciesKingdomTrader;
     }
 
@@ -55,8 +51,6 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
     private final class AnalyticsDocumentIterator implements Iterator<AnalyticsDocument> {
 
         private Iterator<BaselineAnalytics> inputIterator;
-        private String lastSeenGeneId = "";
-        private String lastGeneIdSearchTerms;
         private Set<String> assaysSeen = Sets.newHashSet();
 
         private AnalyticsDocumentIterator(Iterable<BaselineAnalytics> inputStream) {
@@ -73,7 +67,6 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
             BaselineAnalytics baselineAnalytics = inputIterator.next();
 
             String geneId = baselineAnalytics.getGeneId();
-//            String identifierSearch = fetchIdentifierSearchTerms(geneId);
 
             String assayGroupId = baselineAnalytics.getAssayGroupId();
             String conditionSearch = getConditionSearchTerms(assayGroupId);
@@ -86,7 +79,6 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
                     .kingdom(speciesKingdomTrader.getKingdom(getEnsemblSpecies(assayGroupId)))
                     .bioentityIdentifier(geneId)
                     .expressionLevel(baselineAnalytics.getExpressionLevel())
-//                    .identifierSearch(identifierSearch)
                     .assayGroupId(assayGroupId)
                     .conditionsSearch(conditionSearch);
 
@@ -108,20 +100,6 @@ public class BaselineAnalyticsDocumentStream implements Iterable<AnalyticsDocume
             }
 
             return Joiner.on(" ").join(searchTerms);
-        }
-
-        private String fetchIdentifierSearchTerms(String geneId) {
-            if (!lastSeenGeneId.equals(geneId)) {
-                lastSeenGeneId = geneId;
-                Set<String> searchTerms = identifierSearchTermsDAO.fetchSearchTerms(geneId);
-
-                if (searchTerms.isEmpty()) {
-                    LOGGER.warn("No identifier search terms found for " + geneId);
-                }
-                lastGeneIdSearchTerms = geneId + (searchTerms.isEmpty() ? "" : " " + Joiner.on(" ").join(searchTerms));
-            }
-
-            return lastGeneIdSearchTerms;
         }
 
         @Override

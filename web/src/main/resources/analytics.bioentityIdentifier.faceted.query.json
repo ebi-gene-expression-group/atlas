@@ -1,8 +1,0 @@
-{
-  "bioentityIdentifiers": {
-    "terms": {
-      "field": "bioentityIdentifier",
-      "limit": 100000
-    }
-  }
-}
