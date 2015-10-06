@@ -286,7 +286,9 @@ public abstract class BaselineExperimentPageController extends BaselineExperimen
 
         model.addAttribute("showMultipleColumnHeaders", !factorTypes.isEmpty());
 
-        model.addAttribute("jsonMultipleColumnHeaders", gson.toJson(createJsonForMultipleHeatmapHeaders(factorTypes)));
+        if(!factorTypes.isEmpty()) {
+            model.addAttribute("jsonMultipleColumnHeaders", gson.toJson(createJsonForMultipleHeatmapHeaders(factorTypes)));
+        }
 
         String jsonAssayGroupFactors = gson.toJson(assayGroupFactorViewModels);
         model.addAttribute("jsonColumnHeaders", jsonAssayGroupFactors);
