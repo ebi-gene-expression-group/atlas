@@ -50,7 +50,7 @@ public class AnalyticsSearchDao {
 
     private SolrQuery buildQuery(GeneQuery geneQuery) {
 
-        StringBuilder sb = new StringBuilder("identifierSearch:(");
+        StringBuilder sb = new StringBuilder("bioentityIdentifier:(");
         if (geneQuery.terms().size() > 0) {
             for (int i = 0 ; i < geneQuery.terms().size() - 1 ; i++) {
                 sb.append(quote(geneQuery.terms().get(i))).append(" OR ");

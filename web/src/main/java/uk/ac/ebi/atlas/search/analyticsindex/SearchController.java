@@ -32,6 +32,8 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.SortedSet;
 
+import static org.apache.commons.lang3.text.WordUtils.capitalize;
+
 public abstract class SearchController {
 
     private final EBIGlobalSearchQueryBuilder ebiGlobalSearchQueryBuilder;
@@ -128,16 +130,20 @@ public abstract class SearchController {
         boolean hasGeneInformationTab = true;
 
         if(!GeneSetUtil.isGeneSet(identifier) && hasBioEntities) {
+
             species = speciesLookupService.fetchSpeciesForBioentityId(identifier);
             propertyValuesByType = bioEntityPropertyDao.fetchGenePageProperties(identifier, getPagePropertyTypes());
             entityNames = propertyValuesByType.get(getBioentityPropertyName());
-            entityName = entityNames.first();
+
             if (entityNames.isEmpty()) {
                 entityNames.add(identifier);
                 entityName = identifier;
+            } else {
+                entityName = entityNames.first();
             }
 
         } else if (GeneSetUtil.isGeneSet(identifier)) {
+
             speciesResult = speciesLookupService.fetchSpeciesForGeneSet(identifier);
             species = speciesResult.firstSpecies();
 
@@ -162,13 +168,15 @@ public abstract class SearchController {
             }
             entityName = identifier;
             entityNames.add(identifier);
+
         } else {
             model.addAttribute("identifierDescription", identifier.toUpperCase());
             hasGeneInformationTab = false;
         }
+
         model.addAttribute("hasGeneInformation", hasGeneInformationTab);
         model.addAttribute("noTabLine", hasGeneInformationTab);
-        model.addAttribute("mainTitle", "Expression summary for " + (hasGeneInformationTab ? entityName : identifier) + " - " + org.apache.commons.lang.StringUtils.capitalize(species));
+        model.addAttribute("mainTitle", "Expression summary for " + (hasGeneInformationTab ? entityName : identifier) + " - " + capitalize(species));
         if(hasGeneInformationTab) {
             bioEntityPropertyService.init(species, propertyValuesByType, entityName, identifier);
         }
@@ -197,12 +205,6 @@ public abstract class SearchController {
         mav.addObject("exceptionMessage", e.getMessage());
 
         return mav;
-    }
-
-    private void checkIdentifierIsGeneSet(String identifier) {
-        if (!GeneSetUtil.isGeneSet(identifier)) {
-            throw new ResourceNotFoundException("Resource not found");
-        }
     }
 
 }

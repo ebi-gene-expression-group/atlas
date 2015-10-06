@@ -86,7 +86,7 @@
 <script>
     var facetedSearcher = window.exposed;
 
-    <c:if test="${hasBaselineResults}">
+    <c:if test="${hasDifferentialResults}">
     var differentialFacetsData = ${empty jsonDifferentialGeneQueryFacets ? 'null' : jsonDifferentialGeneQueryFacets};
     facetedSearcher.differential("atlasDifferentialFacetedSearchFacetsContainer", "atlasDifferentialFacetedSearchResultsContainer", differentialFacetsData);
     </c:if>

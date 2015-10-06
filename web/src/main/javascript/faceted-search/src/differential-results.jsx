@@ -20,7 +20,7 @@ var DifferentialResults = React.createClass({
     /*
     [
      {
-       "bioentity_identifier":"ENSMUSG00000072476",
+       "bioentityIdentifier":"ENSMUSG00000072476",
        "species":"mus musculus",
        "kingdom":"animals",
        "experimentAccession":"E-MTAB-698",
@@ -32,7 +32,7 @@ var DifferentialResults = React.createClass({
        "colour": some_hex_value
      },
      {
-       "bioentity_identifier":"ENSMUSG00000071341",
+       "bioentityIdentifier":"ENSMUSG00000071341",
        "species":"mus musculus",
        "kingdom":"animals",
        "experimentAccession":"E-MTAB-698",
@@ -48,7 +48,7 @@ var DifferentialResults = React.createClass({
     */
     propTypes: {
         results: React.PropTypes.arrayOf(React.PropTypes.shape({
-            bioentity_identifier: React.PropTypes.string.isRequired,
+            bioentityIdentifier: React.PropTypes.string.isRequired,
             species: React.PropTypes.string.isRequired,
             kingdom: React.PropTypes.string.isRequired,
             experimentAccession: React.PropTypes.string.isRequired,
@@ -81,7 +81,7 @@ var DifferentialResults = React.createClass({
     render: function () {
         var differentialResultRows = this.props.results.map(function (diffResult) {
             return <DifferentialResultRow
-                key={diffResult.bioentity_identifier + diffResult.experimentAccession + diffResult.contrastId + diffResult.foldChange}
+                key={diffResult.bioentityIdentifier + diffResult.experimentAccession + diffResult.contrastId + diffResult.foldChange}
                 colour={diffResult.colour} foldChange={diffResult.foldChange} species={diffResult.species} comparison={diffResult.comparison} experimentName={diffResult.experimentName}
                 contrastId={diffResult.contrastId} experimentAccession={diffResult.experimentAccession} displayLevels={this.state.displayLevels}
             />;

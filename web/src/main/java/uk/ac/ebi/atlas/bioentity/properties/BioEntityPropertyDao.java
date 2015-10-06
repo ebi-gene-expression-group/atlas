@@ -61,7 +61,7 @@ public class BioEntityPropertyDao {
     public boolean hasBioentityProperties(String identifier, String[] propertyNames) {
         SortedSetMultimap<String, String> propertiesByName = fetchProperties(identifier, propertyNames);
 
-        return propertiesByName.isEmpty() ? false : true;
+        return !propertiesByName.isEmpty();
     }
 
     SortedSetMultimap<String, String> fetchProperties(String bioentityIdentifier, String[] propertyNames) {
